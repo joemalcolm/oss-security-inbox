@@ -1,31 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/25/11
-Message-ID: <Pine.GSO.4.51.0802251052120.8463@faron.mitre.org>
-Date: Mon, 25 Feb 2008 10:56:12 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Josh Bressers <bressers@...hat.com>
-cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Help (CVE request for mysql bug #22413)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/16/2
+Message-ID: <18993.1203116325@devserv.devel.redhat.com>
+Date: Fri, 15 Feb 2008 17:58:45 -0500
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: welcome
 Content-Type: text/plain; charset=utf-8
 
+> 
+> Josh et al. - now it's your turn. :-)
+> 
 
-FYI, I'm not on oss-security or vendor-sec.  I don't necessarily see a
-need to be subscribed to them either, although it would be convenient.
+Here's the current draft of things I've been working on for a while now
+(this has been brewing in my brain for a while)
 
+Goals:
 
-On Thu, 21 Feb 2008, Josh Bressers wrote:
+* Public - only silent when needed
 
-> I think this is a good opportunity to ask you how we can use this list to
-> make your life easier.  Perhaps it's worth thinking about ways some of the
-> subscribed CNAs can dish out CVE ids to reduce your load a little bit for
-> these public issues that obviously lack a proper id.
+    The idea here is to have a group that is made up of individuals interested
+    in matters of open source security.  The group would be split with two
+    distinct functions (vendor-sec is currently one of these).  There would be
+    a very small group of trusted individuals who would handle sensitive
+    embargoed security flaws.  While the goal of open source is to be as open
+    as possible, there are times that flaws will need to be embargoed for the
+    common good.  This is best described by situations where it would be
+    trivial to write a worm with a given flaw.  Ideally we will want to give
+    select vendors a few days to patch the flaw before it goes public.
 
-I'd think that if it's a technically-public issue that probably hasn't
-made it into the "mainstream" yet, then some CNA who gets our "CVENEW"
-notifications could possibly assign ID's.  I'm thinking things like
-updates to upstream packages that aren't in a lot of distros, or a bug ID
-that isn't marked clearly as having security implications.  However, we
-would also need to be notified if a CVE was assigned, to further reduce
-the risk of duplication.
+* Organized - Not a mishmash of undecided people.  Have clear goals and
+    procedures.
 
-- Steve
+    There will be a wiki that contains the static information with respect to
+    how things are handled.  Some issues that will need deciding are:
+
+    1) How are new members accepted
+    2) When do we kick out unresponsive members
+    3) How do we deal with people who develop bad attitudes
+
+* Active - discuss flaws (not a bunch of sponges)
+
+    We want a group that is responsive and active with respect to the handling
+    of flaws.  There will always be a subset of members that don't care about
+    a certain flaw and this is fine, but if someone is always silent, how are
+    they a benefit?  Members should be encouraged to participate in
+    discussions and analysis.
+
+* Educate - many open source groups suck at security
+
+    Create several documents that are helpful to the open source community
+
+    1) How to report a security flaw
+    2) How to accept security reports from researchers
+    3) Basic ideas behind having a security response team
+
+* CVE - Help bridge the gap between CVE and open source
+
+    We will have several CNAs on the list.  Perhaps get MITRE to work with us
+    for quick CVE id assignment, and ideally we could help lessen their load a
+    bit.
+
+* Community - Let others help when possible
+
+    Right now the open source security universe is a black hole.  Hopefully
+    by having a public venue we will create an environment that encourages
+    outsiders to become involved.  The more involved we make the various
+    entities, the better the state of open source security should become.  We
+    love to beat the community drum for open source, but we've largely been
+    unable to do this with respect to security.  Changing that should bring
+    significant benefits.
+
+-- 
+    JB
