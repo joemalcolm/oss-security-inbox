@@ -1,29 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/11/10
-Message-ID: <Pine.GSO.4.51.0811111531300.6724@faron.mitre.org>
-Date: Tue, 11 Nov 2008 15:48:18 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Rémi Denis-Courmont <rem@...eolan.org>
-cc: "Steven M. Christey" <coley@...us.mitre.org>, Nico Golde <oss-security+ml@...lde.de>, oss-security@...ts.openwall.com, coley@...re.org
-Subject: Re: CVE id request: vlc
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/16/1
+Message-ID: <20080215223030.GA22837@openwall.com>
+Date: Sat, 16 Feb 2008 01:30:30 +0300
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: welcome
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-On Tue, 11 Nov 2008, [UTF-8] Rémi Denis-Courmont wrote:
+Welcome to this new mailing list.  I took the liberty of cloning the
+xvendor subscriber list because the topic we're going to discuss
+initially would also be on-topic for xvendor, but discussing it on the
+new list right away lets anyone opt-out of this specific discussion.
 
-> CVE.mitre.org says nothing about vendor obtaining a CVE number, only
-> researchers. And typically, these guys don't do it, when dealing with
-> videolan.org anyway.
+The idea behind this mailing list is not mine, but I have offered to
+host it (and the associated website/wiki) on Openwall resources.
 
-I'm sorry, I did not mean to sound critical of you or anybody on the
-oss-security mailing list.  Many consumers probably don't care if bug 1
-affects a slightly different set of versions than bug 2.  It just happens
-to be something that's important for CVE, and (indirectly) people who rely
-on it.
+Josh, Vincent, Jonathan - would you describe how you envision this list
+and the website/wiki?  Maybe start work on the initial list charter -
+maybe post a draft of it right away?
 
-I was using the vlc case as an example of a general challenge that we're
-facing in CVE that's arisen as a result of the creation of the
-oss-security list, which I fully support.  We certainly don't want to
-interfere with the way that open source developers handle security issues.
+Meanwhile, the following is my understanding:
 
-- Steve
+In short, this is meant to become a public mailing list for discussing
+Open Source Software security.  The subscribers (or posting ability?)
+may (or may not?) be limited to people involved with Open Source (or
+just plain open source?) projects.
+
+This is different from vendor-sec in that subscription is not limited to
+distribution vendors (rather, individual smaller projects are very
+welcome to join) and that the list is public (at least archives will be
+public on the web).  Any OSS project that is declined vendor-sec
+membership may join this list instead.
+
+This is different from Bugtraq in the focus on OSS and on collaboration
+between OSS projects (joint development and review of security patches,
+etc.), as well as maybe in that the list is to be discussion-only - no
+security advisories.  A separate non-discussion mailing list may be
+created for the advisories.
+
+Josh et al. - now it's your turn. :-)
+
+-- 
+Alexander Peslyak <solar at openwall.com>
+GPG key ID: 5B341F15  fp: B3FB 63F4 D7A3 BCCC 6F6E  FC55 A2FC 027C 5B34 1F15
+http://www.openwall.com - bringing security into open computing environments
