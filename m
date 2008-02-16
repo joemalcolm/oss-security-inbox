@@ -1,25 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/07/3
-Message-ID: <20080507194238.GX12850@outflux.net>
-Date: Wed, 7 May 2008 12:42:38 -0700
-From: Kees Cook <kees@...ntu.com>
-To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-2008-0352 is a dup of CVE-2007-4567
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/17/1
+Message-ID: <20080216211510.GA24921@openwall.com>
+Date: Sun, 17 Feb 2008 00:15:10 +0300
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: wiki
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi,
 
-I believe CVE-2008-0352 is an accidental dup of CVE-2007-4567.  The
-referenced 2.6.21.2 commit[1] matches the commit used to originally
-address CVE-2007-4567 in Ubuntu's 2.6.20-based kernel[2].
+Dmitry D. Khlebnikov aka (GalaxyMaster) <galaxy at openwall.com> has
+setup a wiki for this project at:
 
-Thanks,
+http://oss-security.openwall.org/wiki/
 
--Kees
+I think that you should be able to register for accounts at:
 
-[1] http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.21.y.git;a=commitdiff;h=08a6507044dd70c326de3ea484fd6d29b8101f17
-[2] http://kernel.ubuntu.com/git?p=ubuntu-security/ubuntu-feisty.git;a=commitdiff;h=158eeb50e460dd7f6e6bc13e2322989bd87dd804
+http://oss-security.openwall.org/wiki/welcome?do=register
+
+and start working on the content.
+
+If there are any issues or questions on the wiki, please post in here -
+Dmitry is subscribed, so I expect that he will provide the necessary
+support for this service.
 
 -- 
-Kees Cook
-Ubuntu Security Team
+Alexander Peslyak <solar at openwall.com>
+GPG key ID: 5B341F15  fp: B3FB 63F4 D7A3 BCCC 6F6E  FC55 A2FC 027C 5B34 1F15
+http://www.openwall.com - bringing security into open computing environments
