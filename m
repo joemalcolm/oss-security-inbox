@@ -1,63 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/01/5
-Message-ID: <Pine.GSO.4.51.0807011719400.19497@faron.mitre.org>
-Date: Tue, 1 Jul 2008 17:25:40 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Josh Bressers <bressers@...hat.com>
-cc: oss-security@...ts.openwall.com, coley@...re.org
-Subject: Re: CVE Request (pidgin)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/17/4
+Message-ID: <20434.1203215944@devserv.devel.redhat.com>
+Date: Sat, 16 Feb 2008 21:39:04 -0500
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: welcome
 Content-Type: text/plain; charset=utf-8
 
 
-Note that the UPnP functionality is characterized by the researchers as a
-bandwidth/disk DoS.  I don't know much about UPnP or Pidgin, but it might
-be reasonable to investigate what Pidgin does with the file once it's
-downloaded the contents.
+> > * Organized - Not a mishmash of undecided people.  Have clear goals and
+> >     procedures.
+> > 
+> >     There will be a wiki that contains the static information with respect to
+> >     how things are handled.  Some issues that will need deciding are:
+> > 
+> >     1) How are new members accepted
+> >     2) When do we kick out unresponsive members
+> >     3) How do we deal with people who develop bad attitudes
+> 
+> This sounds good, except that I see no need to "kick out unresponsive
+> members".  If they like to listen to our conversations in real time
+> (rather than browse the archives) and maybe learn from them - this can
+> only be good.  Of course, active contribution would be even better.
+> So is this "kick out policy" an attempt to encourage contribution?..
+> 
+> Or were you speaking of a vendor-sec equivalent - not this list, but
+> perhaps yet another list to be created for the small-and-trusted part of
+> the group?  If so, how would that differ from vendor-sec itself?   Would
+> it differ in that any (trusted?) Open Source projects would be accepted,
+> not just distribution "vendors"?
 
-- Steve
+We can probably disregard the whole kick out bits.  That really would only
+apply to a private list that deals with sensitive information.  I don't
+think there is a benefit to creating a private list at this time, as
+vendor-sec exists and is functional.
 
+> 
+> > * Active - discuss flaws (not a bunch of sponges)
+> > 
+> >     We want a group that is responsive and active with respect to the handling
+> >     of flaws.  There will always be a subset of members that don't care about
+> >     a certain flaw and this is fine, but if someone is always silent, how are
+> >     they a benefit?  Members should be encouraged to participate in
+> >     discussions and analysis.
+> 
+> The same comments apply here.
+> 
+> Yes, we would like to see a lot of active members, but do we really need
+> to kick out the sponges, would that be of benefit?
 
-======================================================
-Name: CVE-2008-2955
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2955
-Reference: BUGTRAQ:20080626 Pidgin 2.4.1 Vulnerability
-Reference: URL:http://www.securityfocus.com/archive/1/archive/1/493682/100/0/threaded
-Reference: FRSIRT:ADV-2008-1947
-Reference: URL:http://www.frsirt.com/english/advisories/2008/1947
-Reference: SECUNIA:30881
-Reference: URL:http://secunia.com/advisories/30881
+No, there isn't a benefit in this instance.  I do think that encouraging
+everyone to contribute in some meaningful manner is a good goal.  Anytime
+you have a list full of smart people, the new people are usually quite
+intimidated and afraid to engage.  We need to be mindful of this.
 
-Pidgin 2.4.1 allows remote attackers to cause a denial of service
-(crash) via a long filename that contains certain characters, as
-demonstrated using an MSN message that triggers the crash in the
-msn_slplink_process_msg function.
+> 
+> > * Educate - many open source groups suck at security
+> > 
+> >     Create several documents that are helpful to the open source community
+> > 
+> >     1) How to report a security flaw
+> >     2) How to accept security reports from researchers
+> >     3) Basic ideas behind having a security response team
+> 
+> Right - all of this should go on the wiki, and any discussions may occur
+> in here.
 
+Yes.  I have some notes on this as well.  I've been pondering how best to
+present this data for quite some time, and have unsuccessfully peddled a
+presentation to several conferences..  I'll have to dig out my old notes
+(which really means find them in the file ghetto that is my ~).
 
-======================================================
-Name: CVE-2008-2956
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2956
-Reference: MISC:http://crisp.cs.du.edu/?q=ca2007-1
-Reference: MLIST:[oss-security] 20080627 CVE Request (pidgin)
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/06/27/3
+Thanks for the feedback.
 
-Memory leak in Pidgin 2.0.0, and possibly other versions, allows
-remote attackers to cause a denial of service (memory consumption) via
-malformed XML documents.
-
-
-======================================================
-Name: CVE-2008-2957
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2957
-Reference: MISC:http://crisp.cs.du.edu/?q=ca2007-1
-Reference: MLIST:[oss-security] 20080627 CVE Request (pidgin)
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/06/27/3
-
-The UPnP functionality in Pidgin 2.0.0, and possibly other versions,
-allows remote attackers to trigger the download of arbitrary files and
-cause a denial of service (memory or disk consumption) via a UDP
-packet that specifies an arbitrary URL.
-
-
+-- 
+    JB
