@@ -1,46 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/24/1
-Message-ID: <20080224220132.GA21870@openwall.com>
-Date: Mon, 25 Feb 2008 01:01:32 +0300
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/17/5
+Message-ID: <20080217125553.GA26902@openwall.com>
+Date: Sun, 17 Feb 2008 15:55:53 +0300
 From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: list archive
+Subject: list archive
 Content-Type: text/plain; charset=utf-8
 
-On the 19th, I wrote:
-> >This list should definitely be submitted to Gmane and MARC, maybe to
-> >some others as well.  I am just not sure whether it's time to do that.
-...
-> >I think I am the one to do it since I will need to provide the mbox
-> >with past messages - and I am willing to do it if/when the most active
-> >list members (including you) request that.  Just have in mind that this
-> >might result in us having to turn on subscription and/or message
-> >moderation and disallow wiki editing by new users a bit earlier.
+Hi,
 
-On Tue, Feb 19, 2008 at 10:12:38AM -0700, Vincent Danen wrote:
-> Ok.  So leave things open for the time being so we don't hassle the
-> folks that should be here from the get-go, then clamp down on things
-> later (in a few weeks?) and send in the requests?
+The archive of this mailing list is now public on the web:
 
-That was my intent, but apparently things just don't work that way -
-someone has just submitted oss-security and xvendor to Gmane.  I wish
-that person asked me to do it instead - and I would have done it now.
-Anyway, I've just exchanged some e-mails with Lars of Gmane, requesting
-changes to the way those lists were submitted, and I've provided the
-archives of past messages.  I've also re-configured oss-security to no
-longer set the X-No-Archive header (xvendor was already configured that
-way).  The Gmane archive is now available at:
+http://www.openwall.com/lists/oss-security/
 
-	http://dir.gmane.org/gmane.comp.security.oss.general
+Perhaps this will move to the oss-security website later on (which is
+one of the reasons why we've setup the wiki under a subdirectory), in
+which case we'll make sure to put the proper redirects in place.
 
-and I've added this URL to the wiki, although some changes are still
-pending.  Since I am posting this anyway, the xvendor archive is here:
-
-	http://dir.gmane.org/gmane.comp.misc.xvendor
-
-MARC will likely be next - and please let me properly submit the lists,
-including archived messages.
-
-Thanks,
+Please feel free to link to message URLs in the above archive from the
+wiki as it may be appropriate.
 
 Alexander
