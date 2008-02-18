@@ -1,36 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/23/1
-Message-ID: <6922.1216840848@devserv.devel.redhat.com>
-Date: Wed, 23 Jul 2008 15:20:48 -0400
-From: Josh Bressers <bressers@...hat.com>
-To: Jamie Strandboge <jamie@...onical.com>
-cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com
-Subject: Re: CVE request for dnsmasq DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/18/12
+Message-ID: <20080218204259.GA32264@openwall.com>
+Date: Mon, 18 Feb 2008 23:42:59 +0300
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: wiki - e-mail address obfuscation
 Content-Type: text/plain; charset=utf-8
 
-On 8 July 2008, Jamie Strandboge wrote:
-> 
-> I finally had time to develop a PoC and confirm this on my own. A client
-> need only send a DHCPREQUEST for an IP address not on the same network
-> as dnsmasq. Eg:
-> 
-> 1. dnsmasq listening on and giving IP addresses for 192.168.122.0/24
-> 2. client requests IP address on another network, such as 192.168.0.1
-> 3. dnsmasq 2.25 (and presumably earlier) crashes
-> 
+I wrote:
+> ... it only
+> obfuscates e-mail addresses it recognizes - not anything with an @-sign.
+> So we need to be very careful about this - e-mail addresses must be
+> entered as <user@...mple.org> - with the angle brackets.
+...
+> As to page source, I've disabled the view source / export raw feature.
 
-It seems there is also a problem with newer dnsmasq that is very similar to
-this:
-http://bugs.gentoo.org/show_bug.cgi?id=232523
+I just found another issue: it is possible to "show differences to
+current version" without being logged in - and, of course, original
+(non-obfuscated) e-mail addresses are seen in these source diffs.
 
-That problem appears to be pretty much the same thing, but affecting
-versions 2.43 - 2.45
+Unless we come up with a way to address that (e.g., somehow disable this
+feature for anonymous visitors), I'm afraid that we'll have to obfuscate
+addresses manually prior to entering them into the wiki...
 
-Did this ever get a CVE id?
-
-I presume this new flaw will need one as well.
-
-Thanks.
-
--- 
-    JB
+Alexander
