@@ -1,20 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/31/7
-Message-ID: <c7b40f9d0807311545u5373de4dh82a83b5cd780c957@mail.gmail.com>
-Date: Fri, 1 Aug 2008 04:45:18 +0600
-From: "Alexander Konovalenko" <alexkon@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/18/9
+Message-ID: <20080218171801.GI24232@openwall.com>
+Date: Mon, 18 Feb 2008 20:18:01 +0300
+From: "(GalaxyMaster)" <galaxy@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: SVG vulnerability affecting Firefox, evince, eog, Gimp?
+Subject: Re: wiki
 Content-Type: text/plain; charset=utf-8
 
-Does anybody know whether this [1] is a real vulnerability? I
-currently lack a spare machine to test it. If it is real, it probably
-deserves CVE number.
+Vincent,
 
-The SHA-256 sum of the .zip file there was
-56d597cda98d796ec94723c540b967903886649412bce131eec4d232152aba3c
-when I fetched it.
+On Mon, Feb 18, 2008 at 10:00:52AM -0700, Vincent Danen wrote:
 
- -- Alexander Konovalenko
+> Errr... it's been Mandriva for a few years now... =)
 
-[1] http://www.milw0rm.com/exploits/6029
+Ouch, sorry, I know it but somehow my fingers recalled the former name :).
+
+> Good to know.  I don't think we're lacking for anything (yet), but as
+> things grow, who knows?
+
+One thing you might want to see is a spell-checker (this would require
+aspell libraries on the server).  Nowadays, many browsers provide their
+own spell-checking functionality for text fields.  This is why I didn't
+bother to install aspell initially, but we might want to provide our
+authors with a spell-checker regardless of their browser (there is one
+requirement though: to be able to use the online spell-checker their
+browsers should support AJAX).
+
+All in all, we can always install it later :), and extending wiki's
+feature list could be a never ending process :)).
+
+-- 
+(GM)
+
