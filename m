@@ -1,15 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/28/1
-Message-ID: <Pine.GSO.4.51.0805280915520.18085@faron.mitre.org>
-Date: Wed, 28 May 2008 09:18:43 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/18/13
+Message-ID: <47B9F137.4030007@freethemallocs.com>
+Date: Mon, 18 Feb 2008 11:57:27 -0900
+From: Jonathan Smith <smithj@...ethemallocs.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Security, Open Source Style
+Subject: FAQ for upstream maintainers
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-All, I don't think I said this directly before, but I think this list, and
-oCERT, are great ideas and I have a lot of hope for their success.  Early
-indications are quite promising :)
+Since my main goal (I understand if your goals differ, but they
+certainly should not conflict) for this list is to provide a way for
+upstream to coordinate with the vendors, I'm going to start a FAQ or
+tutorial or whatever dedicated to what upstream should do when they get
+a report from a user about a security issue.
 
-- Steve
+Basic rough draft:
+http://oss-security.openwall.org/wiki/whattodo
+
+I'm sure it can use some cleanup... Ideas, submissions, etc welcome!
+Also quite welcome would be someone with wiki-fu prettying up the page :-)
+
+	smithj
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.8 (GNU/Linux)
+
+iEYEARECAAYFAke58TcACgkQCG91qXPaRem2RACgh5bZX+OJ/luJGcXQRybsn1yS
+GHEAnj8tglycXD8SS+ta4asn1OdYCuyO
+=KMsb
+-----END PGP SIGNATURE-----
