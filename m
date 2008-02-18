@@ -1,50 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/21/3
-Message-ID: <39443.82.67.177.178.1203583074.squirrel@mail.rofes.fr>
-Date: Thu, 21 Feb 2008 09:37:54 +0100 (CET)
-From: "Pierre-Yves Rofes" <py@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/18/3
+Message-ID: <Pine.LNX.4.64.0802181026180.27709@wotan.suse.de>
+Date: Mon, 18 Feb 2008 10:28:36 +0100 (CET)
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: code review CVS
+Subject: code review CVS
 Content-Type: text/plain; charset=utf-8
 
-On Thu, February 21, 2008 7:24 am, Vincent Danen wrote:
-> * [2008-02-20 17:51:47 -0800] Kees Cook wrote:
->
->>> I like the patch idea, however.  A "vendor patch" database of sorts
->>> would be nice (would save me from hunting from, say, ubuntu packages
->>> for
->>> a patch for something they already fixed, or looking at ubuntu for one,
->>> and SUSE for another because of version differences).
->>
->>I'd really like to have at least a "how to find a patch for [distro],
->>release [version]".  I have an easier time finding Debian patches,
->>for example, since http://snapshot.debian.net/ exists.  Ubuntu is a
->>bit less patch-hunter-friendly in that regard, but we try to alway keep
->>patches external to from the source tree, so they're easy to locate from
->>change logs.  Doing this with src.rpms follows a similar convention,
->>but can sometimes get tricky too.  Finding them can sometimes be a chore
->>-- I always bang my head when looking for RHEL src.rpms.  :)
 
-[...]
+Hi,
 
-> And I'd *love* to see what the Gentoo folks will link to.. =)  They have
-> to be the biggest head-scratcher for me.
->
+>From my view it would be helpful to have some forum/CVS or whatever
+where code reviewers can submit the code they already audited along
+with remarks/exploits/patches etc.
+So everyone can match this against the version of the OSS project.
+In an ideal case their latest released version equals the
+version in the review CVS. It saves also the time to review
+files again which didnt change during versions.
 
-It's true that we currently don't have a centralized place for patches,
-maybe we should work something out. For now, I'd say that the best option
-is to use:
-
-http://sources.gentoo.org/viewcvs.py/gentoo-x86/<category>/<pkg>/
-Then all patches should be in the "files" directory.
-
-e.g. you want the last patch for an integer overflow in tcpdump, you'll
-find it in:
-http://sources.gentoo.org/viewcvs.py/gentoo-x86/net-analyzer/tcpdump/files/
-
-But FYI, we generally use the patches from Debian :)
+Sebastian
 
 -- 
-Pierre-Yves Rofes
-Gentoo Linux Security Team
+~
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+~ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
 
