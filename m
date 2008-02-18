@@ -1,48 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/29/4
-Message-ID: <48E0E615.7050700@redhat.com>
-Date: Mon, 29 Sep 2008 22:28:37 +0800
-From: Eugene Teo <eteo@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/18/10
+Message-ID: <20080218191653.GA31686@openwall.com>
+Date: Mon, 18 Feb 2008 22:16:53 +0300
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: coley@...re.org
-Subject: Re: CVE-2008-4113 update: kernel: sctp: fix random memory dereference with SCTP_HMAC_IDENT option
+Subject: Re: wiki
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
+On Mon, Feb 18, 2008 at 08:56:16AM -0700, Vincent Danen wrote:
+> Hmmm... so where's the Openwall vendor info, eh?  <wink wink>  =)
 
-Eugene Teo wrote:
-> Steven M. Christey wrote:
->> On Thu, 25 Sep 2008, Eugene Teo wrote:
->>> The first three references to CVE-2008-4113[1] are incorrect. Please
->>> update the CVE with the following references:
->>>
->>> http://marc.info/?l=linux-sctp&m=121986743009093&w=2
->>> http://marc.info/?l=linux-sctp&m=121986743209110&w=2
->>>
->>> [1] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4113
->> This was in reference to the TKADV2008-007 advisory.
->>
->> I guess the question becomes - TKADV2008-007 talks about separate issues,
->> one involving crashes by calling the API functions when SCTP-AUTH is
->> disabled (CVE-2008-3792), and another involving SCTP_HMAC_IDENT and a
->> length value for sctp_getsockopt_hmac_ident.
-> 
-> I see what the confusion is now.
-> 
-> TKADV2008-007[1] mentioned two separate, but related issues. The second
-> issue that the advisory mentioned is an example of a function that may
-> have two possible consequences, and it all depends on whether SCTP
-> authentication is enabled or not.
-> 
-> The patch[2] that addressed these issues mentioned only one of them in
-> the changelog description, even though it appears to be fixing possibly
-> more than two issues.
-> 
-> Should this be assigned with just one CVE name instead of two?
+Added.
 
-I re-read it over again, and I agree that assigning two CVE names for
-this makes sense. Sorry for the confusion.
+Earlier today, I wrote:
 
-Thanks, Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
+> >Also, I've noticed what I think is a major issue with the wiki -
+> >although it is configured to obfuscate e-mail addresses, it only does so
+> >when displaying the latest revision of a page.  Older revisions and page
+> >source appear with the e-mail addresses intact, ready to be grabbed by a
+> >"spambot".
+
+It turned out that the older revisions were also subject to automated
+e-mail address obfuscation, and the reason I got confused was that I was
+looking specifically at the welcome page where you did not enter this
+list's address in the DokuWiki-supported format right away.  And it only
+obfuscates e-mail addresses it recognizes - not anything with an @-sign.
+So we need to be very careful about this - e-mail addresses must be
+entered as <user@...mple.org> - with the angle brackets.  Anyway, I went
+ahead and corrected this in the old revisions for the welcome page
+(using VIM on files in the attic) - I hope you don't mind.
+
+As to page source, I've disabled the view source / export raw feature.
+Of course, logged in users with page editing rights can view the source
+with non-obfuscated e-mail addresses anyway, but let's hope "spambots"
+are not that good yet - and at a later time we might want to (or have
+to) revoke page editing rights for new user accounts anyway.
+
+> > ... I think that some of the content to add would be list charter for
+> >oss-security (Josh?) and official(?) or primary description of
+> >vendor-sec.  For the latter, we can take the text from the recently
+> >created Wikipedia page - http://en.wikipedia.org/wiki/Vendor-sec - then
+> >have the Wikipedia page backed by the already-public info on our wiki.
+> 
+> These sound like good ideas to me.  Particularly the bit on vendor-sec.
+
+OK, so who is to create the page on vendor-sec?  It'd be great if the
+same people who edited the Wikipedia page would do it, but Steve Kemp
+did not join us on this list - and I can't force people to join... OK,
+maybe I can ask him about that.
+
+> I think for this to become effective, we need to expose it more
+
+We'll definitely expose the oss-security wiki.  I am going to mention it
+in one of Openwall news items and in an announcement list posting.
+
+> and at the same time we can expose vendor-sec a little bit more too.
+
+Yes, this is what will happen, and it appears that vendor-sec members
+are either for greater exposure or feel neutral about it.
+
+Alexander
