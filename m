@@ -1,28 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/12/3
-Message-ID: <20080412193236.GA14019@steve.org.uk>
-Date: Sat, 12 Apr 2008 20:32:36 +0100
-From: Steve Kemp <steve@...ve.org.uk>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/18/2
+Message-id: <1203308295.11390.TMDA@linsec.ca>
+Date: Sun, 17 Feb 2008 21:17:04 -0700
+From: Vincent Danen <vdanen@...sec.ca>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: CVE request: tss <= 0.8.1-3: arbitary file reading
+Subject: Re: list archive
 Content-Type: text/plain; charset=utf-8
 
-  Due to a lack of permissions checking, or privilege reduction
- the setuid(0) binary tss allows local users to read arbitrary files
- upon the local system.
+* [2008-02-17 15:55:53 +0300] Solar Designer wrote:
 
-  Sample "exploit" is:
+>The archive of this mailing list is now public on the web:
+>
+>http://www.openwall.com/lists/oss-security/
+>
+>Perhaps this will move to the oss-security website later on (which is
+>one of the reasons why we've setup the wiki under a subdirectory), in
+>which case we'll make sure to put the proper redirects in place.
+>
+>Please feel free to link to message URLs in the above archive from the
+>wiki as it may be appropriate.
 
-              skx@...d:~$ tss -a /etc/shadow
+Have you requested any other 3rd-party archiving sites to archive the
+list too?
 
-  This opens up a console-based screen-saver displaying the animated
- contents of the shadow-file.
+The reason I ask is that the archive there isn't the friendliest in
+terms of easily scanning or viewing messages (like a mhonarc-based
+archive or MARC or something).
 
-  Reference: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=475747
+Just curious if anyone has done so or if I should go ahead and do it.
 
-Steve
 -- 
-Debian GNU/Linux System Administration
-http://www.debian-administration.org/
+Vincent Danen @ http://linsec.ca/
 
+Content of type "application/pgp-signature" skipped
