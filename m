@@ -1,25 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/07/12
-Message-ID: <87iqytlam6.fsf@mid.deneb.enyo.de>
-Date: Mon, 07 Apr 2008 21:37:37 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/18/7
+Message-ID: <20080218165051.GH24232@openwall.com>
+Date: Mon, 18 Feb 2008 19:50:51 +0300
+From: "(GalaxyMaster)" <galaxy@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: Re: Security fixes in m4-1.4.11
+Subject: Re: wiki
 Content-Type: text/plain; charset=utf-8
 
-* Lubomir Kundrak:
+Vincent,
 
-> On Sun, 2008-04-06 at 20:42 -0400, Steven M. Christey wrote:
->> On Sun, 6 Apr 2008, Patrick J. Volkerding wrote:
->> 
->> > Minor security fix: Quote output of mkstemp.
->> 
->> Use CVE-2008-1687
->
-> This does not sound like a security problem. Mkstemp would never output
-> any shell metacharacters.
+On Sun, Feb 17, 2008 at 08:49:34PM -0700, Vincent Danen wrote:
 
-M4 performs macro expansion without any special characters present,
-IIRC.  However, it's still unlikely that an mkstemp()-returned string
-matches a macro, I think.
+> Thanks, GalaxyMaster, for setting that up.  Docuwiki's syntax is a
+> little wierd but works well enough.  =)
+
+I'd like to point out that this weirdness is a result of DokuWiki's goal
+to provide Wiki owners with an almost plain-text on-disk version of the
+Wiki.  This on-disk version is still well structured and could be
+post-processed with a great number of text utils like docutils and
+alike.
+
+> Feel free to start adding content.  I think the structure is ok enough
+> to start with, we'll see how it goes from there.  It's pretty
+> straight-forward and should be easy enough to add to (I just added a few
+
+Re: the structure.  It's worth to mention that DokuWiki (unlike many other
+wiki engines) provides an efficient way to add structure to the entire
+wiki.  There are namespaces and pages.  Imagine that a namespace is
+a directory and a page is a file.  This way you can create a well
+structured hierarchy of pages (much like you do with your files on your
+workstation/server).
+
+For instance, http://oss-security.openwall.org/wiki/vendors/list could
+provide a list of all vendors participating in the project and
+http://oss-security.openwall.org/wiki/vendors/openwall could be
+a page/namespace for Openwall as a vendor.
+
+Moreover, DokuWiki allows to limit access on per namespace basis.  For
+example, you can grant create/modify/delete permissions on
+/wiki/vendors/mandrake to Mandrake folks, while others would be
+disallowed to change anything there.  Indeed this is just to make you
+aware of such a feature of DokuWiki.
+
+Additionally, I would like to point out that we are running a bare
+installation of DokuWiki with a default (minimal) set of plugins.  There
+is tremendous number of syntax plugins for DokuWiki and if you need some
+additional functionality just notify me (I'll search for a suitable
+plugin, will install it, and will provide you with usage instructions).
+
+-- 
+(GM)
+
