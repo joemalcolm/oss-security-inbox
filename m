@@ -1,61 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/03/5
-Message-ID: <20081103153743.GJ18126@ngolde.de>
-Date: Mon, 3 Nov 2008 16:37:43 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/18/6
+Message-id: <1203350498.25709.TMDA@linsec.ca>
+Date: Mon, 18 Feb 2008 09:00:24 -0700
+From: Vincent Danen <vdanen@...sec.ca>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: Re: CVE request - uw-imap
+Subject: Re: code review CVS
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Nico Golde <oss-security+ml@...lde.de> [2008-11-03 15:55]:
-> * Tomas Hoger <thoger@...hat.com> [2008-11-03 15:38]:
-> > uw-imap upstream released new version 2007d on friday, announcing it as
-> > security update fixing some issues in dmail and tmail utilities:
-> > 
-> > http://mailman2.u.washington.edu/pipermail/imap-uw/2008-October/002267.html
-> > http://mailman2.u.washington.edu/pipermail/imap-uw/2008-October/002268.html
-> > 
-> > Further digging into this, the issue seem to be a buffer overflow
-> > (strcpy) when handling command line arguments (overlong mailbox
-> > specification when utility is called with user+folder argument). This
-> > can have security implications in the setups where tmail is installed 
-> > setuid root (according to the resources I found, that's required in
-> > certain configurations; dmail is not expected to run under different
-> > user), or when one of the utilities is configured as deliver agent in
-> > the MTA.
-> 
-> Patch attached.
+* [2008-02-18 10:28:36 +0100] Sebastian Krahmer wrote:
 
-Didn't notice that you have this patch in your bz.
-There is also another code snippet in the diff:
-diff -Nurad uw-imap-2007b~dfsg/src/c-client/smtp.c imap-2007d/src/c-client/smtp.c
---- uw-imap-2007b~dfsg/src/c-client/smtp.c      2008-01-28 23:55:14.000000000 +0100
-+++ imap-2007d/src/c-client/smtp.c      2008-08-08 18:31:44.000000000 +0200
-@@ -396,7 +396,8 @@
-   if (stream) {                        /* send "QUIT" */
-     if (stream->netstream) {   /* do close actions if have netstream */
-       smtp_send (stream,"QUIT",NIL);
--      net_close (stream->netstream);
-+      if (stream->netstream)   /* could have been closed during "QUIT" */
-+        net_close (stream->netstream);
-     }
-                                /* clean up */
-     if (stream->host) fs_give ((void **) &stream->host);
+>>>From my view it would be helpful to have some forum/CVS or whatever
+>where code reviewers can submit the code they already audited along
+>with remarks/exploits/patches etc.
+>So everyone can match this against the version of the OSS project.
+>In an ideal case their latest released version equals the
+>version in the review CVS. It saves also the time to review
+>files again which didnt change during versions.
 
-Looks like a null ptr dereference is possible here if smtp_send returns
-smtp_fake (stream,"SMTP connection broken (command)");. Did anyone check the
-security implications of this yet?
+This is an intriguing idea, but I wonder if a version control system is
+actually required, or if we could use the wiki itself for something like
+this.
 
-In the meantime the discoverer of this released an advisory:
-http://www.bitsec.com/en/rad/bsa-081103.txt
+A code checkin of audited source might be nice for "pristine" code
+purposes, but then we almost duplicate an author's scm system.
 
-Cheers
-Nico
+Would not a simple list of software be sufficient?  For instance,
+something that listed:
+
+- software name
+- audited version
+- audit date
+- who did the audit
+- results of the audit (links to patches, whatever)
+
+Most authors keep old packages kicking around, so I don't think we need
+an scm for this.  I mean, if you review foo-1.1 and it's ok, and someone
+indicates a vuln in foo-1.3, then one could easily download both foo-1.1
+and foo-1.3 and just do a diff to see what's changed, right?
+
+Or do I miss something where a scm would be really valuable?
 
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+Vincent Danen @ http://linsec.ca/
 
 Content of type "application/pgp-signature" skipped
