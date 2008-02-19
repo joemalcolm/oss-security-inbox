@@ -1,50 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/06/2
-Message-ID: <20081006111814.396edc1c@redhat.com>
-Date: Mon, 6 Oct 2008 11:18:14 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: coley@...us.mitre.org
-Cc: oss-security@...ts.openwall.com, veillard@...hat.com, Robert Buchholz <rbu@...too.org>
-Subject: Re: Re: libxml2 "ampproblem" DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/19/15
+Message-ID: <20080219194422.GA3236@openwall.com>
+Date: Tue, 19 Feb 2008 22:44:22 +0300
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: charter - advisories
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 3 Oct 2008 17:09:15 -0400 (EDT) "Steven M. Christey"
-<coley@...us.mitre.org> wrote:
+On Tue, Feb 19, 2008 at 10:09:23AM -0700, Vincent Danen wrote:
+> Yeah, I noticed this as well.  I think advisories should be kept off the
+> list, for the same "signal-to-noise ratio" principal as bugtraq and FD.
 
-> > > The malicious XML file can be found on
-> > > http://bugzilla.gnome.org/show_bug.cgi?id=554660
-> > >
-> > > I'm not sure if and how this is related to CVE-2008-3281.
-> >
-> >   It's unrelated, the patch is attached to the bug, only 2.7.x is
-> > affected and I will release 2.7.2 within a couple of hours.
-> 
-> Use CVE-2008-4422
+For now, I've edited the charter draft as follows:
 
-Looks like this is also duplicate of previously assigned:
+Security advisories aimed at end-users only are not welcome (e.g., those
+from a distribution vendor announcing new pre-built packages).  There has
+to be desirable information for others in the Open Source community
+(e.g., an upstream maintainer may announce a new version of their
+software with security fixes to be picked up by distributors).
 
-Name: CVE-2008-4409
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4409
-Final-Decision: 
-Interim-Decision: 
-Modified: 
-Proposed: 
-Assigned: 20081003
-Category: 
-Reference: MLIST:[oss-security] 20081002 libxml2 "ampproblem" DoS
-Reference: URL:http://openwall.com/lists/oss-security/2008/10/02/4
-Reference: CONFIRM:http://bugzilla.gnome.org/show_bug.cgi?id=554660
+If anyone can word it better, please do.
 
-libxml2 2.7.0 and 2.7.1 does not properly handle "predefined entities
-definitions" in entities, which allows context-dependent attackers to
-cause a denial of service (memory consumption and application crash),
-as demonstrated by use of xmllint on a certain XML document, a
-different vulnerability than CVE-2003-1564 and CVE-2008-3281.
+> It may be a better idea, if desired, to make a separate list that is a
+> fully moderated (or possibly a reject-all with exceptions) list specific
+> to carrying vendor advisories.
 
+Yes, that was my idea too.  However, now that we mention the distinction
+between two kinds of advisories (those for end-users only vs. those
+useful to others as well), I am not sure which of these we want to go to
+that other list.  Should we create a list for advisories that are useful
+for us, then change the above guideline to "no advisories" for the main
+oss-security list?  Or should we create a list for both kinds of
+advisories?  In the latter case, should we ban the useful advisories
+from the main oss-security list or should these be CC'ed to both lists?
+Or should we create two new lists?..
 
-CVE-2008-4409 is public on NVD site, CVE-2008-4422 in Gentoo BZ and
-here...  CVE-2008-4422 should probably be rejected.
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+Alexander
