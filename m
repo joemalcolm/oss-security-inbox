@@ -1,42 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/17/4
-Message-ID: <Pine.GSO.4.51.0811171635140.16579@faron.mitre.org>
-Date: Mon, 17 Nov 2008 16:43:36 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security <oss-security@...ts.openwall.com>
-cc: coley@...re.org
-Subject: Re: CVE Request (syslog-ng)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/19/4
+Message-ID: <16735.1203429843@devserv.devel.redhat.com>
+Date: Tue, 19 Feb 2008 09:04:03 -0500
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: charter
 Content-Type: text/plain; charset=utf-8
 
+> 
+> Josh Bressers wrote:
+> | I just added my current working draft charter:
+> | http://oss-security.openwall.org/wiki/mailinglists/oss-security/charter
+> 
+> Good work, thanks :)
+> 
+> What do you mean by "Please don't send working vulnerabilities"?
 
-On Mon, 17 Nov 2008, Josh Bressers wrote:
+We don't need the heat of people posting vulnerabilities that would allow
+one to actually compromise a machine.  Ideally we want testcases the
+exercise the flaw, not tools that could be used for malicious purposes.
 
-> syslog-ng doesn't call chdir() before calling chroot().
+> 
+> I'd append "for non-public issues, please contact vendor-sec" to "Public
+> security issues only please"
 
-This falls under the notion of "protection mechanism works less securely
-than advertised" so is a clear case for inclusion in CVE.  Use
-CVE-2008-5110.
+Done
 
-Also - is the chdir supposed to come BEFORE or AFTER?  The CERT secure
-coding rules here:
+> 
+> "Advisories are welcome"? I thought we decided that this was
+> discussion-only?
 
-https://www.securecoding.cert.org/confluence/display/cplusplus/FIO16-CPP.+Limit+access+to+files+by+creating+a+jail
+What do others think?  I can see it either way, so I put it in.
 
-suggest it might be safer AFTER, not before, due to some race condition
-possibilities.
-
-- Steve
-
-======================================================
-Name: CVE-2008-5110
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5110
-Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=505791
-Reference: MLIST:[oss-security] 20081117 CVE Request (syslog-ng)
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/17/3
-
-syslog-ng does not call chdir before it calls chroot, which might
-allow attackers to escape the intended jail.  NOTE: this is only a
-vulnerability when a separate vulnerability is present.
-
-
+-- 
+    JB
