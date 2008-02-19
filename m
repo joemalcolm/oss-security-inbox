@@ -1,75 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/16/12
-Message-ID: <Pine.GSO.4.51.0806161830460.16840@faron.mitre.org>
-Date: Mon, 16 Jun 2008 18:30:56 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Hanno Böck <hanno@...eck.de>
-cc: oss-security@...ts.openwall.com, coley@...re.org
-Subject: Re: CVE id request: menalto gallery
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/19/18
+Message-ID: <20080219212223.GA4083@openwall.com>
+Date: Wed, 20 Feb 2008 00:22:23 +0300
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: subscription-request procedure?
 Content-Type: text/plain; charset=utf-8
 
+On Tue, Feb 19, 2008 at 10:15:15AM -0700, Vincent Danen wrote:
+> ... That should probably be added on the charter page that a
+> simple introductory email requesting subscription should suffice (i.e.
+> indicate who you are and what you're involved with).
 
-======================================================
-Name: CVE-2008-2720
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2720
-Reference: CONFIRM:http://gallery.menalto.com/gallery_2.2.5_released
-Reference: SECUNIA:30650
-Reference: URL:http://secunia.com/advisories/30650
+Feel free to do it.  We can always change this policy (and edit the wiki
+page accordingly) if needed.
 
-Cross-site scripting (XSS) vulnerability in Menalto Gallery before
-2.2.5 allows remote attackers to inject arbitrary web script or HTML
-via the (1) host and (2) path components of a URL.
+> Since folks like Jim are exactly the type of people we want on the list,
+> we need to make the process fairly simple (and fast, if possible) to
+> prevent turning people off.
 
+In fact, I think even something as simple as compulsory introduction
+will turn some people away - e.g., those Open Source authors who are new
+to security and would like to listen to our conversations before they
+might dare to introduce themselves.
 
-======================================================
-Name: CVE-2008-2721
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2721
-Reference: CONFIRM:http://gallery.menalto.com/gallery_2.2.5_released
-Reference: SECUNIA:30650
-Reference: URL:http://secunia.com/advisories/30650
+Maybe we don't really require it?  Maybe we don't really need to make
+this list subscription-moderated?  This implies that we'll have to
+enable message moderation (with its associated delays) even for list
+members at some point, though.
 
-Unspecified vulnerability in the album-select module in Menalto
-Gallery before 2.2.5 allows remote attackers to obtain titles of
-hidden albums by attempting to add a new album to a hidden album.
+To avoid the delays, we might enhance (patch) ezmlm-idx to honor its
+"allow" list even for fully-message-moderated lists.  This is probably
+not too hard to do, although I have not looked into it.  Normally, the
+"allow" list appears to only be honored for lists that are
+message-moderated for non-members.
 
-
-======================================================
-Name: CVE-2008-2722
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2722
-Reference: CONFIRM:http://gallery.menalto.com/gallery_2.2.5_released
-Reference: SECUNIA:30650
-Reference: URL:http://secunia.com/advisories/30650
-
-Menalto Gallery before 2.2.5 allows remote attackers to bypass
-permissions for sub-albums via a ZIP archive.
-
-
-======================================================
-Name: CVE-2008-2723
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2723
-Reference: CONFIRM:http://gallery.menalto.com/gallery_2.2.5_released
-Reference: SECUNIA:30650
-Reference: URL:http://secunia.com/advisories/30650
-
-embed.php in Menalto Gallery before 2.2.5 allows remote attackers to
-obtain the full path via unknown vectors related to "spoofing the
-remote address."
-
-
-======================================================
-Name: CVE-2008-2724
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2724
-Reference: CONFIRM:http://gallery.menalto.com/gallery_2.2.5_released
-Reference: SECUNIA:30650
-Reference: URL:http://secunia.com/advisories/30650
-
-Menalto Gallery before 2.2.5 does not enforce permissions for
-non-album items that have been protected by a password, which might
-allow remote attackers to bypass intended access restrictions.
-
-
+Alexander
