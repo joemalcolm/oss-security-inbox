@@ -1,25 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/12/6
-Message-ID: <Pine.GSO.4.51.0805121537211.12683@faron.mitre.org>
-Date: Mon, 12 May 2008 15:37:31 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/19/11
+Message-id: <1203441240.14722.TMDA@linsec.ca>
+Date: Tue, 19 Feb 2008 10:12:38 -0700
+From: Vincent Danen <vdanen@...sec.ca>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: wordpress
+Subject: Re: list archive
 Content-Type: text/plain; charset=utf-8
 
+* [2008-02-19 01:32:36 +0300] Solar Designer wrote:
 
-======================================================
-Name: CVE-2008-2146
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2146
-Reference: CONFIRM:http://trac.wordpress.org/changeset/6029
-Reference: CONFIRM:http://trac.wordpress.org/changeset?old_path=tags%2F2.2.2&old=6063&new_path=tags%2F2.2.3&new=6063#file10
-Reference: CONFIRM:http://trac.wordpress.org/ticket/4748
+>> >The archive of this mailing list is now public on the web:
+>> >
+>> >http://www.openwall.com/lists/oss-security/
+>...
+>
+>On Sun, Feb 17, 2008 at 09:17:04PM -0700, Vincent Danen wrote:
+>> Have you requested any other 3rd-party archiving sites to archive the
+>> list too?
+>
+>Not yet.
+>
+>I was thinking that we should get started first, with the list and the
+>wiki wide open like they are now, then decide on how we want to tighten
+>things up and do it, and only after that try to gain greater exposure.
 
-wp-includes/vars.php in Wordpress before 2.2.3 does not properly
-extract the current pafe from the PATH_INFO ($PHP_SELF), which allows
-remote attackers to bypass intended access restrictions for certain
-pages.
+Fair enough, makes sense.
 
+>> The reason I ask is that the archive there isn't the friendliest in
+>> terms of easily scanning or viewing messages (like a mhonarc-based
+>> archive or MARC or something).
+>
+>Yes, I am sorry about that.  This is my "blists" software that got stuck
+>in an early development stage (no time), with many desirable features
+>yet to be implemented.  It works off indexed mbox files, in case you're
+>curious - just two files per mailing list (the mbox and its index).
 
-1
+Ahhh... ok, gotchya.  It's not bad, you just need to hunt around a lot
+to get anything useful out of it.
+
+>This list should definitely be submitted to Gmane and MARC, maybe to
+>some others as well.  I am just not sure whether it's time to do that.
+
+Ok.
+
+>> Just curious if anyone has done so or if I should go ahead and do it.
+>
+>I think I am the one to do it since I will need to provide the mbox
+>with past messages - and I am willing to do it if/when the most active
+>list members (including you) request that.  Just have in mind that this
+>might result in us having to turn on subscription and/or message
+>moderation and disallow wiki editing by new users a bit earlier.
+
+Ok.  So leave things open for the time being so we don't hassle the
+folks that should be here from the get-go, then clamp down on things
+later (in a few weeks?) and send in the requests?
+
+I think when we "open the doors" more, we should disallow wiki editing
+for new users and moderate who gets to edit, etc.
+
+-- 
+Vincent Danen @ http://linsec.ca/
+
+Content of type "application/pgp-signature" skipped
