@@ -1,27 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/04/11
-Message-ID: <Pine.LNX.4.64.0804042230210.15329@forced.attrition.org>
-Date: Fri, 4 Apr 2008 22:31:11 +0000 (UTC)
-From: security curmudgeon <jericho@...rition.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: wiki: vendor info
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/19/16
+Message-ID: <20749.1203450603@devserv.devel.redhat.com>
+Date: Tue, 19 Feb 2008 14:50:03 -0500
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
+Subject: Re: charter - advisories
 Content-Type: text/plain; charset=utf-8
 
+> On Tue, Feb 19, 2008 at 10:09:23AM -0700, Vincent Danen wrote:
+> > Yeah, I noticed this as well.  I think advisories should be kept off the
+> > list, for the same "signal-to-noise ratio" principal as bugtraq and FD.
+> 
+> For now, I've edited the charter draft as follows:
+> 
+> Security advisories aimed at end-users only are not welcome (e.g., those
+> from a distribution vendor announcing new pre-built packages).  There has
+> to be desirable information for others in the Open Source community
+> (e.g., an upstream maintainer may announce a new version of their
+> software with security fixes to be picked up by distributors).
+> 
+> If anyone can word it better, please do.
+> 
+> > It may be a better idea, if desired, to make a separate list that is a
+> > fully moderated (or possibly a reject-all with exceptions) list specific
+> > to carrying vendor advisories.
+> 
+> Yes, that was my idea too.  However, now that we mention the distinction
+> between two kinds of advisories (those for end-users only vs. those
+> useful to others as well), I am not sure which of these we want to go to
+> that other list.  Should we create a list for advisories that are useful
+> for us, then change the above guideline to "no advisories" for the main
+> oss-security list?  Or should we create a list for both kinds of
+> advisories?  In the latter case, should we ban the useful advisories
+> from the main oss-security list or should these be CC'ed to both lists?
+> Or should we create two new lists?..
+> 
 
-: > I might also take the chance to expand vendor information with the additional
-: > vendors I contacted but that are not present in that page.
-: 
-: Good idea.  Also, maybe you could invite them to join this mailing list? 
-: (Perhaps ask me first to confirm that they are not already on the list.)
-: 
-: BTW, we currently have two pages with vendor info: one is with security 
-: contacts and advisory links, and the other is with "patch-finding" info. 
-: Perhaps you should update both whenever you can obtain the necessary 
-: info.  Or maybe we should combine them into one page - this needs to be 
-: discussed in here first.
+Let's leave it be for now.  Given how much speculation this is causing, I'm
+hesitant to solve a problem that doesn't yet exist.
 
-Just a reminder that the OSVDB Vendor Dictionary aims to capture this 
-information as well. At some point the two groups should probably 
-consolidate their information.
+I like the above text, that sounds nice.  If this proves to be a problem at
+a later date, we can create some new lists.
 
-	http://osvdb.org/vendors
+-- 
+    JB
