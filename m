@@ -1,23 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/26/2
-Message-ID: <20080526154449.GA13776@ngolde.de>
-Date: Mon, 26 May 2008 17:44:49 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/19/17
+Message-ID: <20080219205424.GA3811@openwall.com>
+Date: Tue, 19 Feb 2008 23:54:24 +0300
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: update on CVE-2008-2424
+Subject: Re: subscription-request procedure?
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-the CVE id description states this is fixed in 5.6.0.
-This is wrong, it's already fixed in 5.5.1, see:
-http://ftp.icdevgroup.org/interchange/5.5/WHATSNEW or the 
-diff between 5.5.3 and 5.6.0.
+I've subscribed Jim earlier today.  Welcome!
 
-Cheers
-Nico
+As to the procedure, right now subscriptions are not even moderated, so
+anyone who can figure out ezmlm's subscription address can join.
+Perhaps this will change, although I am personally unsure whether we
+want it to change (maybe message moderation is a better option), and
+whether we want it to happen before we even have the very first
+undesirable message in here.  We can apply this sort of changes quickly
+when the need arises - have other lists with pre-moderation enabled
+running nearby.
 
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+As to the introductions, yes, those are desirable (unless we want to
+allow "read-only" members, in which case we might not care who they are -
+the list is public anyway).  For now, introductions can be sent right to
+the list address.  A possible improvement can be to setup a web form on
+the oss-security website (outside of the wiki) that would submit a
+subscription request and at the same time request other info - such as
+what project(s) the person represents and in what role(s).  This info
+may be sent to list moderator(s), once we start to do any
+pre-moderation.  If we do subscription moderation, then the info will be
+available along with subscription requests pending approval.
 
-Content of type "application/pgp-signature" skipped
+Jim, Kees - thank you for introducing yourselves!
+
+> On Tue, Feb 19, 2008 at 11:19:29AM +0100, Jim Meyering wrote:
+> > I tend the upstream GNU coreutils and am co-maintainer of gnulib
+> > automake, autoconf, and a few others.
+
+Jim - you may want to add these projects to:
+
+http://oss-security.openwall.org/wiki/software
+
+Maybe there should be a sub-page for GNU software, if every GNU project
+has its own security contact info?
+
+On Tue, Feb 19, 2008 at 11:04:28AM -0800, Kees Cook wrote:
+> Among other things, I'm a member of the Ubuntu Security Team,
+
+Kees - would you add Ubuntu to:
+
+http://oss-security.openwall.org/wiki/vendors
+
+> the upstream security contact for Inkscape,
+
+...and Inkscape to:
+
+http://oss-security.openwall.org/wiki/software
+
+> and a kernel.org admin.
+
+Perhaps we should setup a third page for OSS-relevant infrastructure
+security contacts?  Would you do it?
+
+Thanks again,
+
+Alexander
