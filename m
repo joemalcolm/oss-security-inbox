@@ -1,35 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/16/1
-Message-ID: <20080616074200.GB9023@merlin.emma.line.org>
-Date: Mon, 16 Jun 2008 09:42:00 +0200
-From: Matthias Andree <matthias.andree@....de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/19/8
+Message-id: <1203440050.14346.TMDA@linsec.ca>
+Date: Tue, 19 Feb 2008 09:52:48 -0700
+From: Vincent Danen <vdanen@...sec.ca>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Id Request: fetchmail <= 6.3.8 DoS when logging long headers in -v -v mode
+Subject: Re: wiki
 Content-Type: text/plain; charset=utf-8
 
-On Sun, 15 Jun 2008, Robert Buchholz wrote:
+* [2008-02-18 20:18:01 +0300] (GalaxyMaster) wrote:
 
-> Hi Matthias,
-> 
-> On Friday 13 June 2008, Matthias Andree wrote:
-> > Affects:        fetchmail release < 6.3.9 exclusively
-> >
-> > Not affected:   fetchmail release 6.3.9 and newer
-> >                 systems without varargs (stdargs.h) support.
-> >
-> > Corrected:      2008-06-13 fetchmail SVN (rev XXX)
-> 
-> Is there an ETA for the 6.3.9 release? The last advisory in 2007-09 also 
-> recommended to upgrade to this still unreleased version.
+>> Errr... it's been Mandriva for a few years now... =)
+>
+>Ouch, sorry, I know it but somehow my fingers recalled the former name :).
 
-You're right, but I'm sorry to say there is no estimated release date -
-it's "as soon as it's ready", and the official patches are part of the
-advisories, taken from the SVN repository - and beyond that are what
-distributors usually ask for. fetchmail is, in spite of its widespread
-use, effectively a one-man spare-time show.
+That's ok... took me about 2 years too... =)
 
-Impeding the 6.3.9 release, there are some nasty bugs that aren't
-security relevant which are pending the fix, but are hard to debug.
+>> Good to know.  I don't think we're lacking for anything (yet), but as
+>> things grow, who knows?
+>
+>One thing you might want to see is a spell-checker (this would require
+>aspell libraries on the server).  Nowadays, many browsers provide their
+>own spell-checking functionality for text fields.  This is why I didn't
+>bother to install aspell initially, but we might want to provide our
+>authors with a spell-checker regardless of their browser (there is one
+>requirement though: to be able to use the online spell-checker their
+>browsers should support AJAX).
+>
+>All in all, we can always install it later :), and extending wiki's
+>feature list could be a never ending process :)).
+
+Oh yes, you could really go to town on that.  I suppose if pages end up
+with horrible spelling in them then maybe you should add it, but I think
+it's not really necessary yet.  Of course, you could add it if you felt
+like it and I doubt anyone would complain.
 
 -- 
-Matthias Andree
+Vincent Danen @ http://linsec.ca/
+
+Content of type "application/pgp-signature" skipped
