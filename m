@@ -1,64 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/11/1
-Message-ID: <20080611001422.GE7320@ngolde.de>
-Date: Wed, 11 Jun 2008 02:14:22 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/19/6
+Message-ID: <20080219143022.GA1979@openwall.com>
+Date: Tue, 19 Feb 2008 17:30:22 +0300
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: Re: exploitability of off-by-one in motion webserver
+Subject: Re: wiki - e-mail address obfuscation
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Solar Designer <solar@...nwall.com> [2008-06-11 01:41]:
-> On Tue, Jun 10, 2008 at 06:24:33PM +0200, Nico Golde wrote:
-> > 1950 static int read_client(int client_socket, void *userdata, char *auth)
-> > ....
-> > 1953         int ret = 1;
-> > 1954         char buffer[1024] = {'\0'};
-> > 1955         int length = 1024;
-> ...
-> > Overwriting the frame pointer should be not possible since there are variables
-> > on the stack before buffer.
+I wrote:
+> ... it only
+> obfuscates e-mail addresses it recognizes - not anything with an @-sign.
+> So we need to be very careful about this - e-mail addresses must be
+> entered as <user@...mple.org> - with the angle brackets.
+
+Of course, folks will often be entering e-mail addresses without
+the angle brackets, at least initially - and that's enough for the
+spammers because old revisions of wiki pages are available.  I've
+fixed a few of these right in the underlying files (for the old
+revisions), but I'm afraid I'll give up now.
+
+> I just found another issue: it is possible to "show differences to
+> current version" without being logged in - and, of course, original
+> (non-obfuscated) e-mail addresses are seen in these source diffs.
 > 
-> You're assuming that all automatic variables are allocated on the stack
-> and in-order, but neither has to be the case.  The compiler is free to
-> place these variables in registers (in which case it might or mIGHT NOT
-> also allocate stack space for them), to re-order the variables that it
-> does allocate stack space for, and even to optimize some variables out
-> if it can.
-> 
-> This means that the frame pointer attack is not out of consideration.
-> The risk is there.
+> Unless we come up with a way to address that (e.g., somehow disable this
+> feature for anonymous visitors), I'm afraid that we'll have to obfuscate
+> addresses manually prior to entering them into the wiki...
 
-True that makes sense. Thanks for pointing this out.
-In this case it might be good to have a CVE id allocated for 
-this. Steve, can you provide one?
+With many contributors to the wiki (which is great!), I'm afraid that we
+won't be able to "enforce manual obfuscation" either.
 
-> > However it should be possible to overwrite ret with 0 which is used in line 2073 as
-> > the return value of the function (normal termination returns 1).
-> ...
-> > This is the theoretical point but I was not able to reproduce this on
-> > a 64bit system. Does anyone have an idea why this could be the case or
-> > is even able to reproduce this?
-> 
-> I'd expect "ret" to be placed into a register, or at least cached in a
-> register, which explains why you're not able to affect its value.  Of
-> course, there's no guarantee that it won't be read back from the stack
-> in another build, allowing for the attack in case it's also placed right
-> above the buffer.  (I assume that you're on little-endian.)
+So I think that we need to enhance DokuWiki ourselves or request the
+enhancement from upstream - and do it urgently.  Specifically, we need
+two things:
 
-Yes this is little-endian(amd64) and having a deeper look at 
-the generated code you are right as well, this is indeed 
-place into a register.
+1. DokuWiki should optionally detect e-mail addresses that are not in
+angle brackets, and obfuscate those as well.  Alternatively, it should
+replace all @-signs.
 
-> I hope this helps.
+2. DokuWiki should optionally restrict the "show differences to current
+version" feature to logged in users (or even to certain groups).
+Alternatively, it should obfuscate e-mail addresses (or replace @-signs)
+even in the diffs.
 
-Yes it does, thanks for your help!
+Dmitry (Galaxy) - will you be able to take care of discussing this with
+upstream - and maybe developing, contributing, and applying a patch (to
+our install)?  Any other volunteers?
 
-Cheers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+Thanks in advance,
 
-Content of type "application/pgp-signature" skipped
+Alexander
