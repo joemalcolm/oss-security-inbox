@@ -1,34 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/17/15
-Message-ID: <gi9qdq$vo2$1@ger.gmane.org>
-Date: Tue, 16 Dec 2008 21:07:26 -0600
-From: Raphael Geissert <atomo64+debian@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE id request: gpsdrive
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/19/3
+Message-ID: <8184.1203428821@devserv.devel.redhat.com>
+Date: Tue, 19 Feb 2008 08:47:01 -0500
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com, Jim Meyering <jim@...ering.net>
+Subject: Re: subscription-request procedure?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+> Thanks for setting up this list.
+> It sounds like what I've been looking for.
+> 
+> I've skimmed the archives and looked through the wiki,
+> but didn't find a subscription-request procedure, so maybe
+> this will do.
+> 
+> I tend the upstream GNU coreutils and am co-maintainer of gnulib
+> automake, autoconf, and a few others.
 
-Hi,
+We don't really have a policy at this point.  I work with Jim, I'd say we
+should subscribe him.  His insight would likely be useful.
 
-There are more attack vectors in gpsdrive other than those mentioned in
-CVE-2008-5380. More information can be found at [1].
+I'm thinking the official subscription procedure should just be to mail the
+list, and as long as nobody has a good reason not to, let them in.
 
-Could a CVE id be assigned please? Thanks in advance.
-
-[1]http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=508597
-
-Cheers,
-- -- 
-Raphael Geissert - Debian Maintainer
-www.debian.org - get.debian.net
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAklIbO8ACgkQYy49rUbZzlpOnACeLJvYLU2LiFMafj0OBfHYabl6
-7C8An0v3OLgFeFCB6GY8XzUxeLoipmQy
-=FpnV
------END PGP SIGNATURE-----
-
+-- 
+    JB
