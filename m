@@ -1,31 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/07/4
-Message-Id: <1207552271.18618.13.camel@localhost.localdomain>
-Date: Mon, 07 Apr 2008 09:11:11 +0200
-From: Lubomir Kundrak <lkundrak@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/19/13
+Message-ID: <20080219172606.GA2697@openwall.com>
+Date: Tue, 19 Feb 2008 20:26:06 +0300
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: Re: Security fixes in m4-1.4.11
+Subject: Re: FAQ for upstream maintainers
 Content-Type: text/plain; charset=utf-8
 
+On Mon, Feb 18, 2008 at 11:57:27AM -0900, Jonathan Smith wrote:
+> Since my main goal (I understand if your goals differ, but they
+> certainly should not conflict) for this list is to provide a way for
+> upstream to coordinate with the vendors, I'm going to start a FAQ or
+> tutorial or whatever dedicated to what upstream should do when they get
+> a report from a user about a security issue.
+> 
+> Basic rough draft:
+> http://oss-security.openwall.org/wiki/whattodo
+> 
+> I'm sure it can use some cleanup... Ideas, submissions, etc welcome!
 
-On Sun, 2008-04-06 at 20:42 -0400, Steven M. Christey wrote:
-> On Sun, 6 Apr 2008, Patrick J. Volkerding wrote:
-> 
-> > Minor security fix: Quote output of mkstemp.
-> 
-> Use CVE-2008-1687
+I've just applied many minor edits to this page, as well as two
+important changes:
 
-This does not sound like a security problem. Mkstemp would never output
-any shell metacharacters.
+1. Added the text "... and promptly notify your users of the
+availability and importance of this new release."  This will need to be
+made more verbose later on - perhaps it deserves its own paragraph (what
+communication channels may or should exist, etc.)
 
-> > Security fix: avoid arbitrary code execution with 'm4 -F'.
-> 
-> Use CVE-2008-1688
-> 
-> Note - these CVE's will not be live until Monday.
-> 
-> - Steve
--- 
-Lubomir Kundrak (Red Hat Security Response Team)
+2. Replaced the suggestion to "... publish it during the embargo with
+no mention of any security-related impact" with a paragraph that allows
+such an action if it is absolutely necessary, but discourages it.
 
+> Also quite welcome would be someone with wiki-fu prettying up the page :-)
+
+Well, that does not apply to me, so I've only fixed the mailing lists
+link to be an internal one so far.
+
+We could also want to rename this web page to something containing the
+likely search keywords - and possibly move it to a namespace, which
+would give a keyword too, once we have a suitable one.  "whattodo" is
+not a likely keyword (or not a closely relevant one).
+
+Alexander
