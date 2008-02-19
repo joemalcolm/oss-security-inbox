@@ -1,41 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/03/4
-Message-ID: <20080703174953.GA10067@severus.strandboge.com>
-Date: Thu, 3 Jul 2008 13:49:53 -0400
-From: Jamie Strandboge <jamie@...onical.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com, Jamie Strandboge <jamie@...onical.com>
-Subject: Re: CVE request for dnsmasq DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/19/12
+Message-id: <1203441396.14803.TMDA@linsec.ca>
+Date: Tue, 19 Feb 2008 10:15:15 -0700
+From: Vincent Danen <vdanen@...sec.ca>
+To: oss-security@...ts.openwall.com
+Cc: Jim Meyering <jim@...ering.net>
+Subject: Re: subscription-request procedure?
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 01 Jul 2008, Steven M. Christey wrote:
+* [2008-02-19 08:47:01 -0500] Josh Bressers wrote:
 
-> 
-> On Mon, 30 Jun 2008, Jamie Strandboge wrote:
-> 
-> > Hi,
-> >
-> > There is a remote DoS in dnsmasq 2.25 (and presumably earlier) that is
-> > fixed in 2.26. Details can be found at [1]. Can we get a CVE assigned
-> > for this?
-> 
-> I'm not sure I fully understand Thierry Carrez' comment about the security
-> implications of this issue.  It seems like an exploit would require a
-> malicious DHCP server, in which case isn't DHCP service already
-> compromised?  If so, then a crash of dnsmasq (null dereference?) doesn't
-> seem to be any worse than the loss of DHCP itself.
-> 
-I haven't had time to develop a PoC, but from the dnsmasq 2.26 announce
-page at [1], a client need only send a crafted renewal request to crash
-the server. Thierry's comments were only for trying to reproduce the
-problem and test the patch.
+>> Thanks for setting up this list.
+>> It sounds like what I've been looking for.
+>> 
+>> I've skimmed the archives and looked through the wiki,
+>> but didn't find a subscription-request procedure, so maybe
+>> this will do.
+>> 
+>> I tend the upstream GNU coreutils and am co-maintainer of gnulib
+>> automake, autoconf, and a few others.
+>
+>We don't really have a policy at this point.  I work with Jim, I'd say we
+>should subscribe him.  His insight would likely be useful.
+>
+>I'm thinking the official subscription procedure should just be to mail the
+>list, and as long as nobody has a good reason not to, let them in.
 
-Jamie
+I agree.  That should probably be added on the charter page that a
+simple introductory email requesting subscription should suffice (i.e.
+indicate who you are and what you're involved with).
 
-[1] http://freshmeat.net/projects/dnsmasq/?branch_id=1991&release_id=217681
+Since folks like Jim are exactly the type of people we want on the list,
+we need to make the process fairly simple (and fast, if possible) to
+prevent turning people off.
 
 -- 
-Ubuntu Security Engineer     | http://www.ubuntu.com/
-Canonical Ltd.               | http://www.canonical.com/
+Vincent Danen @ http://linsec.ca/
 
-Download attachment "signature.asc" of type "application/pgp-signature" (190 bytes)
+Content of type "application/pgp-signature" skipped
