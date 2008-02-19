@@ -1,16 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/02/2
-Message-ID: <20081002132716.GL23137@genesis.frugalware.org>
-Date: Thu, 2 Oct 2008 15:27:16 +0200
-From: Miklos Vajna <vmiklos@...galware.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/19/7
+Message-ID: <20080219144835.GI20336@openwall.com>
+Date: Tue, 19 Feb 2008 17:48:35 +0300
+From: "(GalaxyMaster)" <galaxy@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: proftpd
+Subject: Re: wiki - e-mail address obfuscation
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Sep 22, 2008 at 05:57:45PM +1000, Steffen Joeris <steffen.joeris@...lelinux.de> wrote:
-> proftpd suffers from a Cross-site request forgery. Could we please get a CVE 
-> id for this?
+On Tue, Feb 19, 2008 at 05:30:22PM +0300, Solar Designer wrote:
 
-For the reference, this is CVE-2008-4242.
+> Dmitry (Galaxy) - will you be able to take care of discussing this with
+> upstream - and maybe developing, contributing, and applying a patch (to
+> our install)?  Any other volunteers?
 
-Content of type "application/pgp-signature" skipped
+Got it.  I'll try to address both things ASAP and will contact Andreas
+(he is the author of DokuWiki and he is quite open, I had submitted
+several things most of them were accepted).
+
+-- 
+(GM)
+
