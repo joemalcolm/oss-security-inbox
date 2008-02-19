@@ -1,22 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/30/5
-Message-ID: <1137093294.964811222799647193.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 30 Sep 2008 14:34:07 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/19/19
+Message-ID: <3633.1203457005@devserv.devel.redhat.com>
+Date: Tue, 19 Feb 2008 16:36:45 -0500
 From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: ftpd
+To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
+Subject: Re: subscription-request procedure?
 Content-Type: text/plain; charset=utf-8
 
-
------ "Steven M. Christey" <coley@...us.mitre.org> wrote:
-
-> CVE-2008-4247 is for *BSD's ftpd; CVE-2008-4242 is for ProFTPD.
+> 
+> > Since folks like Jim are exactly the type of people we want on the list,
+> > we need to make the process fairly simple (and fast, if possible) to
+> > prevent turning people off.
+> 
+> In fact, I think even something as simple as compulsory introduction
+> will turn some people away - e.g., those Open Source authors who are new
+> to security and would like to listen to our conversations before they
+> might dare to introduce themselves.
+> 
+> Maybe we don't really require it?  Maybe we don't really need to make
+> this list subscription-moderated?  This implies that we'll have to
+> enable message moderation (with its associated delays) even for list
+> members at some point, though.
+> 
+> To avoid the delays, we might enhance (patch) ezmlm-idx to honor its
+> "allow" list even for fully-message-moderated lists.  This is probably
+> not too hard to do, although I have not looked into it.  Normally, the
+> "allow" list appears to only be honored for lists that are
+> message-moderated for non-members.
 > 
 
-I'm pretty sure this also affects at least wu-ftpd, but looking into what
-else is on my list of things to do.  From my quick investigation, the file
-in question (ftpcmd.y) is in lots of other ftp daemons, and the code is
-eerily similar.
+Yes, these are very good points.  I think the best solution at the moment
+would be to let anyone who is subscribed to post, and let anyone subscribe.
+If we have problems, we can tighten things up a bit later.
+
+This is one of the tricking things when starting something up such as this.
+It's easy to solve problems that don't exist, which then end up turning
+people away.
+
+FWIW, mailman has the ability to enable individual user moderation.
+Something similar would certainly be a useful feature here.
 
 -- 
     JB
