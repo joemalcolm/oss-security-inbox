@@ -1,20 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/02/3
-Message-Id: <200810021817.38762.hanno@hboeck.de>
-Date: Thu, 2 Oct 2008 18:17:38 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/19/14
+Message-ID: <20080219190428.GD32357@outflux.net>
+Date: Tue, 19 Feb 2008 11:04:28 -0800
+From: Kees Cook <kees@...flux.net>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: XSS in mediawiki 1.13.1 and 1.12.0
+Subject: Re: subscription-request procedure?
 Content-Type: text/plain; charset=utf-8
 
-http://svn.wikimedia.org/svnroot/mediawiki/tags/REL1_13_2/phase3/RELEASE-NOTES
+On Tue, Feb 19, 2008 at 11:19:29AM +0100, Jim Meyering wrote:
+> I tend the upstream GNU coreutils and am co-maintainer of gnulib
+> automake, autoconf, and a few others.
+
+Hi!
+
+Among other things, I'm a member of the Ubuntu Security Team, the upstream
+security contact for Inkscape, and a kernel.org admin.
+
+-Kees
 
 -- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-
-http://freiheitstattangst.de/ - 11.10. Berlin gegen Überwachung
-http://x1000malquer.de/ - ab 8.11. Atomtransporte stoppen
-
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+Kees Cook                                            @outflux.net
