@@ -1,23 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/16/3
-Message-ID: <Pine.GSO.4.51.0804161108540.22069@faron.mitre.org>
-Date: Wed, 16 Apr 2008 11:09:02 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/19/10
+Message-id: <1203441045.14668.TMDA@linsec.ca>
+Date: Tue, 19 Feb 2008 10:09:23 -0700
+From: Vincent Danen <vdanen@...sec.ca>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Swfdec <0.6.4 remote file disclosure
+Subject: Re: charter
 Content-Type: text/plain; charset=utf-8
 
+* [2008-02-19 09:04:03 -0500] Josh Bressers wrote:
 
-======================================================
-Name: CVE-2008-1834
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1834
-Reference: MLIST:[Swfdec] 20080409 Swfdec 0.6.4 released
-Reference: URL:http://lists.freedesktop.org/archives/swfdec/2008-April/001321.html
-Reference: CONFIRM:http://gitweb.freedesktop.org/?p=swfdec/swfdec.git;a=commit;h=326ee4ff631ecc11605f1251e1923a94561a3823
+>> "Advisories are welcome"? I thought we decided that this was
+>> discussion-only?
+>
+>What do others think?  I can see it either way, so I put it in.
 
-swfdec_load_object.c in Swfdec before 0.6.4 does not properly restrict
-local file access from untrusted sandboxes, which allows remote
-attackers to read arbitrary files via a crafted Flash file.
+Yeah, I noticed this as well.  I think advisories should be kept off the
+list, for the same "signal-to-noise ratio" principal as bugtraq and FD.
 
+It may be a better idea, if desired, to make a separate list that is a
+fully moderated (or possibly a reject-all with exceptions) list specific
+to carrying vendor advisories.
 
+-- 
+Vincent Danen @ http://linsec.ca/
+
+Content of type "application/pgp-signature" skipped
