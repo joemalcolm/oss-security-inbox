@@ -1,34 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/22/2
-Message-ID: <8364.1203646999@devserv.devel.redhat.com>
-Date: Thu, 21 Feb 2008 21:23:19 -0500
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/20/11
+Message-ID: <16907.1203541661@devserv.devel.redhat.com>
+Date: Wed, 20 Feb 2008 16:07:41 -0500
 From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
-Subject: Re: first spam message on the list
+To: oss-security@...ts.openwall.com, Jonathan Smith <smithj@...ethemallocs.com>
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: cups
 Content-Type: text/plain; charset=utf-8
 
-> This was unusually quick.  S - thank you for posting the list address on
-> a blog non-obfuscated. :-(
 > 
-> http://c-skills.blogspot.com/2008/02/open-source-software-security-wiki.html
-
-Well, while this is lame, it was bound to happen eventually anyhow.
-
+> OK, lets start actually using this list... below is an advisory from
+> secunia detailing a cups DoS.
 > 
-> I've just enabled a simple spam filter for the list address (it will
-> drop HTML-only messages - and more).  I will also be turning on message
-> pre-moderation.  It's a pity that we have to do this so early.
-
-What is message pre-moderation?  Can you expand on what that means?  Will
-it let subscribers still post unmoderated?
-
+> Steve, could we get a CVE assigned?
 > 
-> Anyone would like to be a moderator (and receive the undetected spam)?
+> Attached is the patch upstream used to fix it (against 1.1.23, but it is
+> the same for other versions, just with a different offset).
 > 
 
-I can do this.  It's a horrible thankless job, but the more we have, the
-better things will be.  Getting some folks scattered around the world would
-be helpful.
+The upstream bug:
+http://www.cups.org/str.php?L2656
+
+claims this is a better patch:
+http://www.cups.org/strfiles/2656/str2656.patch
 
 -- 
     JB
