@@ -1,19 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/27/6
-Message-ID: <20080827162556.GD31017@suse.de>
-Date: Wed, 27 Aug 2008 18:25:56 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: coley@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: CVE request: mono Sys.Web header injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/20/9
+Message-id: <1203536280.7673.TMDA@linsec.ca>
+Date: Wed, 20 Feb 2008 12:36:31 -0700
+From: Vincent Danen <vdanen@...sec.ca>
+To: oss-security@...ts.openwall.com
+Subject: Re: FAQ for upstream maintainers
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+* [2008-02-20 08:37:31 -0500] Josh Bressers wrote:
 
-Monos Sys.Web DLL is prone to HTTP header injection attacks,
-which have been fixed in mono SVN now.
+>> We could also want to rename this web page to something containing the
+>> likely search keywords - and possibly move it to a namespace, which
+>> would give a keyword too, once we have a suitable one.  "whattodo" is
+>> not a likely keyword (or not a closely relevant one).
+>> 
+>
+>I just created the namespace "disclosure" and added an outline I have to
+>them.  I also added a note that the things in "whattodo" should be merged
+>into the namespace.
+>
+>For the moment it's just my outlines, I've not gotten around to filling it
+>out yet.  I did this, as I think it's important we have some amount of
+>organized information up, as this:
+>http://linsec.ca/blog/2008/02/17/new-informal-security-organization-oss-security/
+>
+>Was just picked up by linuxsecurity.com
 
-(bug for reference)
-https://bugzilla.novell.com/show_bug.cgi?id=418620
+Hmmm... and here I thought no one really read my blog.
 
-Ciao, Marcus
+Oh well, we wanted exposure, right?  =)
+
+>We will only get one look from a lot of people, and if they don't see
+>anything of value, they will likely never look again.
+
+True, but I think the people that we really want here will see some
+value in it despite the lack of perfect organization.  The average joe
+may not, but that's ok.
+
+I'll see if I can find some time today to flush those outlines out a
+bit.
+
+-- 
+Vincent Danen @ http://linsec.ca/
+
+Content of type "application/pgp-signature" skipped
