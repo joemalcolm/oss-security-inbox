@@ -1,51 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/21/5
-Message-ID: <20080221162611.GA864@suse.de>
-Date: Thu, 21 Feb 2008 17:26:12 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com, coley@...us.mitre.org
-Subject: Acrobat Reader 8.1.2 tmp racy wrapper script
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/20/4
+Message-ID: <31399.1203514651@devserv.devel.redhat.com>
+Date: Wed, 20 Feb 2008 08:37:31 -0500
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
+Subject: Re: FAQ for upstream maintainers
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+> 
+> We could also want to rename this web page to something containing the
+> likely search keywords - and possibly move it to a namespace, which
+> would give a keyword too, once we have a suitable one.  "whattodo" is
+> not a likely keyword (or not a closely relevant one).
+> 
 
-I wonder if we will ever get rid of tmpraces, but /usr/bin/acroread from
-Acrobat Reader 8.1.2 has this gem that shows someone is forgetting the
-past again:
+I just created the namespace "disclosure" and added an outline I have to
+them.  I also added a note that the things in "whattodo" should be merged
+into the namespace.
 
-	MkTemp()
-	{
-	    if [ "${mktemp_count+set}" != "set" ]; then
-		mktemp_count="0"
-	    fi
+For the moment it's just my outlines, I've not gotten around to filling it
+out yet.  I did this, as I think it's important we have some amount of
+organized information up, as this:
+http://linsec.ca/blog/2008/02/17/new-informal-security-organization-oss-security/
 
-	    mktemp_file="/tmp/acrobat.$$.${mktemp_count}"
+Was just picked up by linuxsecurity.com
 
-	    while /usr/bin/test -e "$mktemp_file"
-	    do
-		mktemp_count="`expr $mktemp_count + 1`"
-		mktemp_file="/tmp/adobe.$$.${mktemp_count}"
-	    done
+We will only get one look from a lot of people, and if they don't see
+anything of value, they will likely never look again.
 
-	    touch "$mktemp_file" && chmod 644 "$mktemp_file" && echo "$mktemp_file"
-	}
-
-called by:
-
-	LOGFILE="`MkTemp /tmp/ssl_logXXXXXX`"
-	CERTNAME="`MkTemp /tmp/certi.cerXXXXXX`"
-	CERTDATA="`MkTemp /tmp/certDataXXXXXX`"
-
-
-They seem to have replaced perfectly fine "mktemp" calls by their own unsecure
-wrapper again. Just replace it back by "mktemp" and it will work.
-
-No CVE allocated yet. I also have mailed PSIRT @ youknowhere.
-
-Since this code is only run if you start acroread with special options, it is not
-that problematic.
-
-Ciao, Marcus
 -- 
-Working, but not speaking, for the following german company:
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+    JB
