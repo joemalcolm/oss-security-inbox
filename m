@@ -1,27 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/27/5
-Message-ID: <20080827145211.GE9981@ngolde.de>
-Date: Wed, 27 Aug 2008 16:52:11 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/20/6
+Message-id: <1203535670.7392.TMDA@linsec.ca>
+Date: Wed, 20 Feb 2008 12:26:21 -0700
+From: Vincent Danen <vdanen@...sec.ca>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: awstats
+Subject: Re: charter - advisories
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
-* Steve Kemp <steve@...ve.org.uk> [2008-08-27 16:11]:
-> On Wed Aug 27, 2008 at 15:19:08 +0200, Nico Golde wrote:
-> > there is a new XSS issue and one remote code execution (php code)
-> > in awstats.
-> 
->   I was scared there for a minute.  This is a bug in "awstats totals"
->  not in "awstats".
+* [2008-02-19 22:44:22 +0300] Solar Designer wrote:
 
-Sorry, realized that I didn't add the "totals" after the 
-mail was already out :/
-Cheers
-Nico
+>> It may be a better idea, if desired, to make a separate list that is a
+>> fully moderated (or possibly a reject-all with exceptions) list specific
+>> to carrying vendor advisories.
+>
+>Yes, that was my idea too.  However, now that we mention the distinction
+>between two kinds of advisories (those for end-users only vs. those
+>useful to others as well), I am not sure which of these we want to go to
+>that other list.  Should we create a list for advisories that are useful
+>for us, then change the above guideline to "no advisories" for the main
+>oss-security list?  Or should we create a list for both kinds of
+>advisories?  In the latter case, should we ban the useful advisories
+>from the main oss-security list or should these be CC'ed to both lists?
+>Or should we create two new lists?..
+
+Hmmm... maybe we should clarify the advisories we don't want to see.  I
+guess advisories from, say, iDefense, would be valuable.  But advisories
+from Mandriva or SUSE not so much.
+
+Maybe we should indicate no *vendor* advisories, and make a second list
+specifically for that?
+
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+Vincent Danen @ http://linsec.ca/
 
 Content of type "application/pgp-signature" skipped
