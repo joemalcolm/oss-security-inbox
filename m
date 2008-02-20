@@ -1,48 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/03/2
-Message-ID: <20080703160520.GA23759@suse.de>
-Date: Thu, 3 Jul 2008 18:05:20 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/20/5
+Message-ID: <87r6f7bg4s.fsf@rho.meyering.net>
+Date: Wed, 20 Feb 2008 20:08:03 +0100
+From: Jim Meyering <jim@...ering.net>
 To: oss-security@...ts.openwall.com
-Subject: 2.6.25.10 security fixes, please assign CVE id
+Subject: Re: subscription-request procedure?
 Content-Type: text/plain; charset=utf-8
 
-http://lwn.net/Articles/288473/
+Solar Designer <solar@...nwall.com> wrote:
+> I've subscribed Jim earlier today.  Welcome!
 
-> Stable kernel 2.6.25.10
-> Posted Jul 3, 2008 15:34 UTC (Thu) by PaXTeam (subscriber, #24616) [Link] 
-> ..and once again, users get the usual treatment of not actually being told why an upgrade is
-> so strongly encouraged. it seems that in this episode of the -stable security fix coverup
-> series (that's not to say that the corresponding vanilla commits got a better treatment), we
-> got at least two fine examples of how such bugs should not fall victim of the kernel devs'
-> full disclosure policy.
-> 
-> as for the particular bugs:
-> 
-> 1.
-> http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.25.y.git;a=commitdiff;h=2a739dd53ad7ee010ae6e155438507f329dce788
-> adds several checks against NULL function pointers, which is an immediate 'get direct ring-0
-> code execution' flag, unfortunately we don't learn whether this is actually possible or not,
-> but one assumes the STRONGLY encouraged upgrade wasn't for nothing at least.
+Thank you :)
 
-This is CVE-2008-2812.
- 
-> 2.
-> http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.25.y.git;a=commitdiff;h=1e9a615bfce7996ea4d815d45d364b47ac6a74e8
-> is an even better one, it allows one to overflow the task struct refcount (a 32 bit atomic_t
-> on the affected amd64) and cause its subsequent freeing with dangling references to it all
-> over the place (including 'current' of the ptraced task itself). corresponding exploit avenues
-> abound.
+> Jim - you may want to add these projects to:
+>
+> http://oss-security.openwall.org/wiki/software
 
-I don't know if this one has a CVE yet.
-
-> Greg, instead of witchhunting on vendor-sec you guys should sit down and decide what you want
-> for your disclosure policy for real. the next Kernel Summit would be a good opportunity i
-> think.
-
-[no comment]
-
-Ciao, Marcus
--- 
-Working, but not speaking, for the following german company:
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+There have been so few security-related problems in
+those projects over all these years that I hesitate
+to list them there.
