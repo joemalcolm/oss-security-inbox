@@ -1,38 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/12/1
-Message-Id: <1226490125.3536.12.camel@dhcp-lab-164.englab.brq.redhat.com>
-Date: Wed, 12 Nov 2008 12:42:05 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...re.org>
-Cc: oss-security@...ts.openwall.com
-Subject: CVE Request -- OptiPNG
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/20/1
+Message-ID: <20080220002112.GM32357@outflux.net>
+Date: Tue, 19 Feb 2008 16:21:12 -0800
+From: Kees Cook <kees@...flux.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: subscription-request procedure?
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve,
+On Tue, Feb 19, 2008 at 11:54:24PM +0300, Solar Designer wrote:
+> Perhaps we should setup a third page for OSS-relevant infrastructure
+> security contacts?  Would you do it?
 
-  OptiPNG upstream has released new version, fixing between others
-one security issue -- buffer overflow present in reader responsible
-for BMP images handling.
+Sure, I've created:
+http://oss-security.openwall.org/wiki/infrastructure
 
-References:
-http://sourceforge.net/project/shownotes.php?release_id=639631&group_id=151404
-http://secunia.com/Advisories/32651/
-http://www.frsirt.com/english/advisories/2008/3108/references
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=505399
-http://optipng.sourceforge.net/
+I'll see if I can get the OSUOSL folks to add themselves as well.
 
-Affected versions: all prior to prior to 0.6.2. (from Secunia advisory)
+-Kees
 
-Proposed solution:
-
-Upgrade to 0.6.2 or security patch against 0.6.1 available at:
-http://prdownloads.sourceforge.net/optipng/optipng-0.6.1.1.diff?download
-
-Impact: arbitrary code execution (from Secunia advisory)
-
-Could you please allocate a new CVE id for this issue?
-
-Thanks, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
+-- 
+Kees Cook                                            @outflux.net
