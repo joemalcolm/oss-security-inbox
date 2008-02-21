@@ -1,27 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/01/4
-Message-ID: <Pine.GSO.4.51.0812010952420.843@faron.mitre.org>
-Date: Mon, 1 Dec 2008 09:52:46 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/21/1
+Message-ID: <20080221015147.GR32357@outflux.net>
+Date: Wed, 20 Feb 2008 17:51:47 -0800
+From: Kees Cook <kees@...flux.net>
 To: oss-security@...ts.openwall.com
-Subject: Re:  CVE request: no-ip DUC buffer overflow
+Subject: Re: code review CVS
 Content-Type: text/plain; charset=utf-8
 
+On Wed, Feb 20, 2008 at 12:28:44PM -0700, Vincent Danen wrote:
+> I like the patch idea, however.  A "vendor patch" database of sorts
+> would be nice (would save me from hunting from, say, ubuntu packages for
+> a patch for something they already fixed, or looking at ubuntu for one,
+> and SUSE for another because of version differences).
 
-======================================================
-Name: CVE-2008-5297
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5297
-Reference: MILW0RM:7151
-Reference: URL:http://www.milw0rm.com/exploits/7151
-Reference: MISC:http://xenomuta.tuxfamily.org/exploits/noIPwn3r.c
-Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=506179
-Reference: CONFIRM:http://git.debian.org/?p=collab-maint/no-ip.git;a=commit;h=60ed93621ff36d9731ba5d9f9336d6eb91122302
-Reference: MLIST:[oss-security] 20081120 CVE request: no-ip DUC buffer overflow
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/21/15
+I'd really like to have at least a "how to find a patch for [distro],
+release [version]".  I have an easier time finding Debian patches,
+for example, since http://snapshot.debian.net/ exists.  Ubuntu is a
+bit less patch-hunter-friendly in that regard, but we try to alway keep
+patches external to from the source tree, so they're easy to locate from
+change logs.  Doing this with src.rpms follows a similar convention,
+but can sometimes get tricky too.  Finding them can sometimes be a chore
+-- I always bang my head when looking for RHEL src.rpms.  :)
 
-Buffer overflow in No-IP DUC 2.1.7 and earlier allows remote DNS
-servers to execute arbitrary code via a crafted DNS response, related
-to a missing length check in the GetNextLine function.
+-Kees
 
-
+-- 
+Kees Cook                                            @outflux.net
