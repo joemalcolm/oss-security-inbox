@@ -1,26 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/02/1
-Message-ID: <20081102120602.GA8008@ngolde.de>
-Date: Sun, 2 Nov 2008 13:06:02 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/21/12
+Message-ID: <830.1203631935@devserv.devel.redhat.com>
+Date: Thu, 21 Feb 2008 17:12:15 -0500
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: htop
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Help (CVE request for mysql bug #22413)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-htop doesn't filter non printable characters in process 
-names which enables processes doing evil things with the 
-display using escape sequences.
+> 
+> Jamie Strandboge wrote:
+> | We have a bug report open to fix http://bugs.mysql.com/bug.php?id=22413.
+> | This is a DoS via a 'EXPLAIN SELECT FROM view with ORDER BY' statement
+> | and is fixed in 5.0.32. Can a CVE be assigned for this?
+> 
+> You'll probably want to CC Steve on such emails... I don't think he's
+> actually subscribed to the list (Steve, feel free to correct me if I'm
+> wrong here... I assumed it would be the same as vendor-sec).
+> 
 
-http://bugs.debian.org/504144
+Steve,
 
-Steve, can you assign a CVE id to this?
+I think this is a good opportunity to ask you how we can use this list to
+make your life easier.  Perhaps it's worth thinking about ways some of the
+subscribed CNAs can dish out CVE ids to reduce your load a little bit for
+these public issues that obviously lack a proper id.
 
-Cheers
-Nico
+Thanks.
 
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+    JB
