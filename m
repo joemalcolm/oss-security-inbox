@@ -1,57 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/04/7
-Message-ID: <20080404220718.GU23804@fuse.inversepath.com>
-Date: Fri, 4 Apr 2008 22:07:18 +0000
-From: Andrea Barisani <andrea@...ersepath.com>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: announcing oCERT & oss-security to Bugtraq & f-d
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/21/2
+Message-id: <1203575178.18236.TMDA@linsec.ca>
+Date: Wed, 20 Feb 2008 23:24:45 -0700
+From: Vincent Danen <vdanen@...sec.ca>
+To: oss-security@...ts.openwall.com
+Subject: Re: code review CVS
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Apr 05, 2008 at 01:08:58AM +0400, Solar Designer wrote:
-> Josh, Vincent, Jonathan - thank you for commenting on this so promptly!
-> 
-> Andrea - it appears that the oCERT announcement should be separate, then.
-> Please go ahead with it, and feel free to mention oss-security in passing
-> as a group that oCERT intends to work with, as Vincent suggested.  I'm
-> not sure if it's appropriate to include a link to the oss-security wiki;
-> I would do it, but Vincent suggested that we make "the intelligent" use
-> Google instead (and not invite the rest to our wiki just yet).
-> 
+* [2008-02-20 17:51:47 -0800] Kees Cook wrote:
 
-Ok, but if the only issue is time I'd be happy to delay until monday,
-(announcements on weekends are bad anyway). 
-
-> > Vincent Danen wrote:
-> > | I don't have a problem with it being announced at the same time, but I
-> > | do think that one day is pretty short notice to draft a decent
-> > | announcement (i.e. something that won't result in a "why do we need
-> > | another ml like fd or bugtraq" barrage of postings),
-> 
-> Good point, and I am sorry for the short notice.  To me, this was
-> expected, but I failed to notify the oss-security group of this
-> possibility earlier.  I did not expect that the press would pick oCERT
-> up before the Bugtraq & f-d announcement, though - and this is now a
-> reason for not delaying the announcement anymore.
-> 
-
-Yep, didn't expect much press either, it wasn't my intention to rush things.
-
-> 
-> Let's just not leave things undefined and non-announced forever.  If
-> oss-security is successful, and it appears that it is, it will become
-> known anyway - but possibly with more confusion around it if we don't
-> announce it ourselves.
+>> I like the patch idea, however.  A "vendor patch" database of sorts
+>> would be nice (would save me from hunting from, say, ubuntu packages for
+>> a patch for something they already fixed, or looking at ubuntu for one,
+>> and SUSE for another because of version differences).
 >
+>I'd really like to have at least a "how to find a patch for [distro],
+>release [version]".  I have an easier time finding Debian patches,
+>for example, since http://snapshot.debian.net/ exists.  Ubuntu is a
+>bit less patch-hunter-friendly in that regard, but we try to alway keep
+>patches external to from the source tree, so they're easy to locate from
+>change logs.  Doing this with src.rpms follows a similar convention,
+>but can sometimes get tricky too.  Finding them can sometimes be a chore
+>-- I always bang my head when looking for RHEL src.rpms.  :)
 
-I agree to this.
+hahah... as Mark can attest, you're not the only one.  I've had to email
+him a few times looking for some obscure src.rpm.
 
-Cheers!
+Usually I look at vendor advisories and grab from there; Debian and
+Ubuntu are the best for that although I sometimes find working with your
+massive diff's a bit of a pain, but that's neither here nor there.
+FWIW, yours are probably the easiest to find.
+
+The other RPM-based distros are usually pretty easy to find.  Mandriva
+also has a public svn where all our updates are committed, so standalone
+patches can be found there too.
+
+http://svn.mandriva.com/cgi-bin/viewvc.cgi/packages/updates_releases/
+
+Although that may change to just /updates/ in the future.  You'll find
+everything for our currently supported products in there.
+
+I think having a "patch page" on the wiki with this info might be useful
+too... others may have repositories or other means of getting patches
+without resorting to downloading diff's and src.rpm's.
+
+And I'd *love* to see what the Gentoo folks will link to.. =)  They have
+to be the biggest head-scratcher for me.
 
 -- 
-Andrea Barisani                             Inverse Path Ltd
-Chief Security Engineer                     -----> <--------
+Vincent Danen @ http://linsec.ca/
 
-<andrea@...ersepath.com>          http://www.inversepath.com
-0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
-       "Pluralitas non est ponenda sine necessitate"
+Content of type "application/pgp-signature" skipped
