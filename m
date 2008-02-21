@@ -1,22 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/20/2
-Message-Id: <200806201434.41285.turkay.eren@gmail.com>
-Date: Fri, 20 Jun 2008 14:34:41 +0300
-From: Eren Türkay <turkay.eren@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/21/3
+Message-ID: <39443.82.67.177.178.1203583074.squirrel@mail.rofes.fr>
+Date: Thu, 21 Feb 2008 09:37:54 +0100 (CET)
+From: "Pierre-Yves Rofes" <py@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: tmsnc
+Subject: Re: code review CVS
 Content-Type: text/plain; charset=utf-8
 
-On 20 Jun 2008 Fri 14:12:42 Nico Golde wrote:
-> Hi,
+On Thu, February 21, 2008 7:24 am, Vincent Danen wrote:
+> * [2008-02-20 17:51:47 -0800] Kees Cook wrote:
+>
+>>> I like the patch idea, however.  A "vendor patch" database of sorts
+>>> would be nice (would save me from hunting from, say, ubuntu packages
+>>> for
+>>> a patch for something they already fixed, or looking at ubuntu for one,
+>>> and SUSE for another because of version differences).
+>>
+>>I'd really like to have at least a "how to find a patch for [distro],
+>>release [version]".  I have an easier time finding Debian patches,
+>>for example, since http://snapshot.debian.net/ exists.  Ubuntu is a
+>>bit less patch-hunter-friendly in that regard, but we try to alway keep
+>>patches external to from the source tree, so they're easy to locate from
+>>change logs.  Doing this with src.rpms follows a similar convention,
+>>but can sometimes get tricky too.  Finding them can sometimes be a chore
+>>-- I always bang my head when looking for RHEL src.rpms.  :)
 
-Hello
+[...]
 
-> There is a buffer overflow in the tmsnc UBX handling code.
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=487222
+> And I'd *love* to see what the Gentoo folks will link to.. =)  They have
+> to be the biggest head-scratcher for me.
 >
 
-I'm not sure if msn protocol allows longer than 512 bytes of data. If it 
-doesn't support, there seems no security issue in UBX handling code. 
+It's true that we currently don't have a centralized place for patches,
+maybe we should work something out. For now, I'd say that the best option
+is to use:
 
-Does anyone know what's the longest value of personal message?
+http://sources.gentoo.org/viewcvs.py/gentoo-x86/<category>/<pkg>/
+Then all patches should be in the "files" directory.
+
+e.g. you want the last patch for an integer overflow in tcpdump, you'll
+find it in:
+http://sources.gentoo.org/viewcvs.py/gentoo-x86/net-analyzer/tcpdump/files/
+
+But FYI, we generally use the patches from Debian :)
+
+-- 
+Pierre-Yves Rofes
+Gentoo Linux Security Team
+
