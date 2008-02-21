@@ -1,61 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/10/7
-Message-ID: <20080710185546.5289902b@redhat.com>
-Date: Thu, 10 Jul 2008 18:55:46 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com, Jonathan Smith <smithj@...ethemallocs.com>
-Cc: coley@...us.mitre.org, Bram Moolenaar <Bram@...lenaar.net>, "Charles E Campbell, Jr" <drchip@...pbellfamily.biz>, Jan Minar <rdancer@...ncer.org>
-Subject: Re: Re: More arbitrary code executions in Netrw version 125, Vim 7.2a.10
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/21/5
+Message-ID: <20080221162611.GA864@suse.de>
+Date: Thu, 21 Feb 2008 17:26:12 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: oss-security@...ts.openwall.com, coley@...us.mitre.org
+Subject: Acrobat Reader 8.1.2 tmp racy wrapper script
 Content-Type: text/plain; charset=utf-8
 
-Hi Jonathan!
+Hi,
 
-On Tue, 8 Jul 2008 13:53:48 -0400 (EDT) "Steven M. Christey"
-<coley@...us.mitre.org> wrote:
+I wonder if we will ever get rid of tmpraces, but /usr/bin/acroread from
+Acrobat Reader 8.1.2 has this gem that shows someone is forgetting the
+past again:
 
-> On Mon, 7 Jul 2008, Jonathan Smith wrote:
-> 
-> > Steve, could we get CVEs assigned, please? I'd imagine we'd need
-> > three; one for the tarplugin issue, one for the zipplugin, and one
-> > for the netrw issues (which are similar enough to probably justify
-> > lumping them together).
-> 
-> CVE-2008-3074 - tarplugin
-> CVE-2008-3075 - zipplugin
-> CVE-2008-3076 - netrw issues
-> 
-> These will be filled in later.
+	MkTemp()
+	{
+	    if [ "${mktemp_count+set}" != "set" ]; then
+		mktemp_count="0"
+	    fi
 
-Are you sure 3 new CVEs are needed for this second rdancer advisory?
-Advisory text itself only speaks of netrw issues and it's not quite
-obvious to me why zip and tar tests are included in the test suite.
-Maybe just to point out that those issues are still unfixed.
+	    mktemp_file="/tmp/acrobat.$$.${mktemp_count}"
 
-Moreover, if you diff zipplugin directories in vulnerablevim.tar.bz2
-and vulnerablevim-netrw.tar.bz2, you will see this test did not change
-at all between the two test suites.  So CVE-2008-3075 should already
-be covered by previous CVE-2008-2712.
+	    while /usr/bin/test -e "$mktemp_file"
+	    do
+		mktemp_count="`expr $mktemp_count + 1`"
+		mktemp_file="/tmp/adobe.$$.${mktemp_count}"
+	    done
 
-tarplugin test was updated since the first test suite to use different
-payload.  I'm not really sure if it is the same issue or not, but the
-new exploit is blocked by the previously proposed Jan's patch.  So it
-may be the same issue as described in the first advisory.  Btw,
-CVE-2008-2712 description does not mention tar.vim issue.  It is
-described in 3.4.2.3, but its test does not seem to be run when doing
-make test for the top-most Makefile in the first test suite.
+	    touch "$mktemp_file" && chmod 644 "$mktemp_file" && echo "$mktemp_file"
+	}
 
-Jonathan, did new netrw tests work for you?  With which vim version?
-They all failed for me with vim 7.1.245 / netrw 109.
+called by:
 
-Adding also Jan to CC, in case he is interested in tossing in some
-comments.  For some context for discussion, you can see:
+	LOGFILE="`MkTemp /tmp/ssl_logXXXXXX`"
+	CERTNAME="`MkTemp /tmp/certi.cerXXXXXX`"
+	CERTDATA="`MkTemp /tmp/certDataXXXXXX`"
 
-  http://marc.info/?t=121541947300001&r=1&w=4
 
-Jan, feel free to ignore this discussion if you are not interested,
-though your comments are welcome.
+They seem to have replaced perfectly fine "mktemp" calls by their own unsecure
+wrapper again. Just replace it back by "mktemp" and it will work.
 
-Thanks!
+No CVE allocated yet. I also have mailed PSIRT @ youknowhere.
 
+Since this code is only run if you start acroread with special options, it is not
+that problematic.
+
+Ciao, Marcus
 -- 
-Tomas Hoger
+Working, but not speaking, for the following german company:
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
