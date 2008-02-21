@@ -1,38 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/06/2
-Message-ID: <49131C7E.8050105@op5.se>
-Date: Thu, 06 Nov 2008 17:34:06 +0100
-From: Andreas Ericsson <ae@....se>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/21/8
+Message-ID: <20080221185234.GC20336@openwall.com>
+Date: Thu, 21 Feb 2008 21:52:34 +0300
+From: "(GalaxyMaster)" <galaxy@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Johannes Dagemark <jd@....se>, Ethan Galstad <egalstad@...ios.org>,  "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: Nagios (two issues)
+Subject: Re: extracting patches from SRPMs (Was: code review CVS)
 Content-Type: text/plain; charset=utf-8
 
-We need two CVE id's for the Nagios project.
+Hi,
 
-******
+On Thu, Feb 21, 2008 at 08:49:52AM +0000, Mark J Cox wrote:
 
-1.
-Low-privileged users can create a custom form (or use a browser
-addon) to bypass authorization and submit commands to the nagios
-process that causes other programs to be run with the privileges
-of the Nagios process.
-Fixed in Nagios 3.0.5.
+> Once you get a rpm then unpacking it without installing it is easy:
+> rpm2cpio fn.rpm | cpio --make-directories --extract
 
-******
+I think that it's good to preserve original timestamps of patches
+extracted from SRPMs (at least this is what our, Openwall's, conventions
+require and what we do when borrowing patches from other distros):
 
-2.
-Cross-Site Request Forgery allows remote attackers to submit
-commands to the nagios process, thereby causing programs to run
-on the Nagios server with the privileges of the Nagios process.
-Patch available at
-http://git.op5.org/git/?p=nagios.git;a=commit;h=814d8d4d1a73f7151eeed187c0667585d79fea18
+rpm2cpio fn.rpm | cpio --make-directories --extract --preserve-modification-time
 
-******
-
-TIA.
+Just my $0.02.
 
 -- 
-Andreas Ericsson                   andreas.ericsson@....se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+(GM)
+
