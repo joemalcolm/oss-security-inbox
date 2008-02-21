@@ -1,38 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/15/4
-Message-ID: <20081015141447.GA20064@suse.de>
-Date: Wed, 15 Oct 2008 16:14:47 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com, coley@...re.org
-Subject: Re: CVE request: kernel: sctp: Fix oops when INIT-ACK indicates that peer doesn't support AUTH
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/21/9
+Message-ID: <Pine.GSO.4.51.0802211403420.27720@faron.mitre.org>
+Date: Thu, 21 Feb 2008 14:05:22 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Marcus Meissner <meissner@...e.de>
+cc: oss-security@...ts.openwall.com, coley@...us.mitre.org
+Subject: Re: Acrobat Reader 8.1.2 tmp racy wrapper script
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Oct 08, 2008 at 11:53:10AM +0800, Eugene Teo wrote:
-> This was committed in upstream kernel recently.
-> 
-> "[PATCH] sctp: Fix oops when INIT-ACK indicates that peer doesn't
-> support AUTH
-> 
-> If INIT-ACK is received with SupportedExtensions parameter which
-> indicates that the peer does not support AUTH, the packet will be
-> silently ignore, and sctp_process_init() do cleanup all of the
-> transports in the association. When T1-Init timer is expires, OOPS
-> happen while we try to choose a different init transport.
-> 
-> The solution is to only clean up the non-active transports, i.e
-> the ones that the peer added.  However, that introduces a problem
-> with sctp_connectx(), because we don't mark the proper state for
-> the transports provided by the user.  So, we'll simply mark
-> user-provided transports as ACTIVE.  That will allow INIT
-> retransmissions to work properly in the sctp_connectx() context
-> and prevent the crash."
-> 
-> Upstream commit: add52379dde2e5300e2d574b172e62c6cf43b3d3
-> 
-> This can be triggered if the SCTP connection between both ends have
-> mis-matched settings, i.e. one end with AUTH extensions enabled, and the
-> other end with AUTH extension disabled. This requires a CVE name.
 
-Has this got a CVE id?
+Marcus,
 
-Ciao, Marcus
+Regarding symlink issues in general, I have one word: LinkGuard.  (OK so
+that's 2 words and it probably wouldn't ever work but it's fun to think
+of).
+
+Use CVE-2008-0883
+
+- Steve
