@@ -1,21 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/05/6
-Message-ID: <20080405091415.GI26507@openwall.com>
-Date: Sat, 5 Apr 2008 13:14:15 +0400
-From: "(GalaxyMaster)" <galaxy@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/21/7
+Message-id: <1203619493.27378.TMDA@linsec.ca>
+Date: Thu, 21 Feb 2008 11:43:17 -0700
+From: Vincent Danen <vdanen@...sec.ca>
 To: oss-security@...ts.openwall.com
-Subject: Re: wiki: vendor info
+Subject: Re: code review CVS
 Content-Type: text/plain; charset=utf-8
 
-I'd like to point out that email addresses aren't obfuscated on
-osvdb.org.  Perhaps this is something to fix?  Meanwhile I updated
-Openwall info there and provided our security e-mail in the obfuscated
-form.
+* [2008-02-21 08:49:52 +0000] Mark J Cox wrote:
 
-On Fri, Apr 04, 2008 at 10:31:11PM +0000, security curmudgeon wrote:
+>> hahah... as Mark can attest, you're not the only one.  I've had to email
+>> him a few times looking for some obscure src.rpm.
+>
+> We give the full path in our emailed advisories (except for the cases where 
+> we are shipping something not open source like java/acroread) but the paths 
+> are not in the web based versions.  So 
+> http://www.redhat.com/archives/rhsa-announce/ since Nov 2007, or for older 
+> stuff http://www.redhat.com/archives/enterprise-watch-list/
+>
+> Once you get a rpm then unpacking it without installing it is easy:
+> rpm2cpio fn.rpm | cpio --make-directories --extract
+>
+> And we nearly always ship the pristine upstream tarball along with each 
+> patch separately (exception being things like OpenSSL).
+>
+> This is definately material for a 'how to find out how the vendor fixed 
+> this' page.
 
-> 	http://osvdb.org/vendors
+Looks like Kees beat me to it:
+
+http://oss-security.openwall.org/wiki/distro-patches
+
+I've added Red Hat to this list based on the above info.
 
 -- 
-(GM)
+Vincent Danen @ http://linsec.ca/
 
+Content of type "application/pgp-signature" skipped
