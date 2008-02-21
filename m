@@ -1,73 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/12/3
-Message-ID: <20080612105024.GA23449@suse.de>
-Date: Thu, 12 Jun 2008 12:50:24 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/21/6
+Message-ID: <20080221184143.GD18547@outflux.net>
+Date: Thu, 21 Feb 2008 10:41:43 -0800
+From: Kees Cook <kees@...flux.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: nasm off-by-one
+Subject: Re: code review CVS
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jun 11, 2008 at 08:40:53PM +0300, Eren Türkay wrote:
-> On 11 Jun 2008 Wed 18:48:14 Nico Golde wrote:
-> > There is an off-by-one in the ppscan() function which is
-> > used to preprocess files.
-> >
-> > Details:
-> > https://sourceforge.net/tracker/?func=detail&atid=106208&aid=1942146&group_
-> >id=6208
-> >
-> > Can I get a CVE id for this one?
-> 
-> Secunia [0] implies that this security flaw also ocurrs in 0.x. I looked at 
-> the code in 0.98.39 [1] tarball to backport vendor-supported patch but it 
-> seems that 0.x is not vulnerable.
-> 
-> The control of TOKEN_ID in 2.03 [2] is blow;
-> 
->     if (tline->type == TOK_ID) {
->         p = tokval->t_charptr = tline->text;
->         if (p[0] == '$') {
->             tokval->t_charptr++;
->             return tokval->t_type = TOKEN_ID;
->         }
-> 
->         for (r = p, s = ourcopy; *r; r++) {
->             if (r >= p+MAX_KEYWORD)
->                 return tokval->t_type = TOKEN_ID; /* Not a keyword */
->             *s++ = tolower(*r);
->         }
->         *s = '\0';
->         return nasm_token_hash(ourcopy, tokval);
->     }
-> 
-> While 0.98.39 has;
-> 
->     if (tline->type == TOK_ID) {
->         tokval->t_charptr = tline->text;
->         if (tline->text[0] == '$') {
->             tokval->t_charptr++;
->             return tokval->t_type = TOKEN_ID;
->         }
-> 
->         if (!nasm_stricmp(tline->text, "seg"))
->             return tokval->t_type = TOKEN_SEG;
-> 
->         return tokval->t_type = TOKEN_ID;
->     }
-> 
-> There is only control for "seq" value, and after it, it just returns TOKEN_ID. 
-> Could someone shed light on this issue, I'm not completely sure whether this 
-> occurs in 0.x, too.
-> 
-> [0] http://secunia.com/advisories/30594/
-> [1] http://ovh.dl.sourceforge.net/sourceforge/nasm/nasm-0.98.39.tar.bz2
-> [2] ftp://ftp.zytor.com/pub/nasm/releasebuilds/2.03/nasm-2.03.tar.bz2
+On Thu, Feb 21, 2008 at 08:49:52AM +0000, Mark J Cox wrote:
+> This is definately material for a 'how to find out how the vendor fixed  
+> this' page.
 
-I would say that this is the usual badly researched list of versions we see
-from the security resellers.
+I've created http://oss-security.openwall.org/wiki/distro-patches for
+this information, and added details for Debian and Ubuntu as well as
+some of the links (and workflows) that were sent to the mailing list.
+Please fill this in more!  :)
 
-And yes, only the the second snippet has the problem.
+-Kees
 
-Btw, we just fixed this as regular bug (the original report was from us).
-
-Ciao, Marcus
+-- 
+Kees Cook                                            @outflux.net
