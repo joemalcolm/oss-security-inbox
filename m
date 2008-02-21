@@ -1,60 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/08/7
-Message-Id: <1228738905.3834.35.camel@dhcp-lab-164.englab.brq.redhat.com>
-Date: Mon, 08 Dec 2008 13:21:45 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/21/4
+Message-ID: <0802210843160.17898@mjc.redhat.com>
+Date: Thu, 21 Feb 2008 08:49:52 +0000 (GMT)
+From: Mark J Cox <mjc@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: Re: CVE Request (nagios)
+Subject: Re: code review CVS
 Content-Type: text/plain; charset=utf-8
 
-Hello Andreas, Eygene,
+> hahah... as Mark can attest, you're not the only one.  I've had to email
+> him a few times looking for some obscure src.rpm.
 
-  diffing your version (3.0.5p1) and the latest upstream one (3.0.6)
-returns the following (this commit was posted on 2008-11-30):
+We give the full path in our emailed advisories (except for the cases 
+where we are shipping something not open source like java/acroread) but 
+the paths are not in the web based versions.  So 
+http://www.redhat.com/archives/rhsa-announce/ since Nov 2007, or for older 
+stuff http://www.redhat.com/archives/enterprise-watch-list/
 
-diff
--r /tmp/3.0.5p1/nagios-3.0.5p1/base/commands.c /tmp/nagios_latest/nagios-3.0.6/base/commands.c
-5,6c5,6
-<  * Copyright (c) 1999-2008 Ethan Galstad (nagios@...ios.org)
-<  * Last Modified:   10-15-2008
----
->  * Copyright (c) 1999-2008 Ethan Galstad (egalstad@...ios.org)
->  * Last Modified:   11-30-2008
-1188a1189
->               break;
-1191a1193
->               break;
-2893a2896,2908
-> 
->       /* SECURITY PATCH - disable these for the time being */
->       switch(cmd){
->       case CMD_CHANGE_GLOBAL_HOST_EVENT_HANDLER:
->       case CMD_CHANGE_GLOBAL_SVC_EVENT_HANDLER:
->       case CMD_CHANGE_HOST_EVENT_HANDLER:
->       case CMD_CHANGE_SVC_EVENT_HANDLER:
->       case CMD_CHANGE_HOST_CHECK_COMMAND:
->       case CMD_CHANGE_SVC_CHECK_COMMAND:
->               return ERROR;
->               }
-> 
-> 
+Once you get a rpm then unpacking it without installing it is easy:
+rpm2cpio fn.rpm | cpio --make-directories --extract
 
-The relevant upstream commit is here:
-http://nagios.cvs.sourceforge.net/viewvc/nagios/nagios/base/commands.c?r1=1.109&r2=1.110&pathrev=MAIN
+And we nearly always ship the pristine upstream tarball along with each 
+patch separately (exception being things like OpenSSL).
 
-And other vulnerability reports:
-http://www.nagios.org/news/#88
-http://secunia.com/Advisories/32909/
+This is definately material for a 'how to find out how the vendor fixed 
+this' page.
 
-Andreas, could you please confirm/disprove this patch was part of recent
-CVE-2008-{5027, 5028}? 
-
-Seems it wasn't, but can be wrong.
-
-Thanks, Jan.
+Thanks, Mark
 --
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-
-
+Mark J Cox / Red Hat Security Response Team
