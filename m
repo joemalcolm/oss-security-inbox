@@ -1,149 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/10/6
-Message-ID: <493FED74.8090105@op5.se>
-Date: Wed, 10 Dec 2008 17:25:24 +0100
-From: Andreas Ericsson <ae@....se>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/21/11
+Message-ID: <47BDF3F4.90903@freethemallocs.com>
+Date: Thu, 21 Feb 2008 12:58:12 -0900
+From: Jonathan Smith <smithj@...ethemallocs.com>
 To: oss-security@...ts.openwall.com
-CC: jlieskov@...hat.com, coley@...re.org
-Subject: Re: CVE Request (nagios)
+CC: jamie@...onical.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request for mysql bug #22413
 Content-Type: text/plain; charset=utf-8
 
-Eygene Ryabinkin wrote:
-> Andreas, thanks for answering.
-> 
-> Wed, Dec 10, 2008 at 03:53:47PM +0100, Andreas Ericsson wrote:
->>>> So
->>>>   http://nagios.cvs.sourceforge.net/viewvc/nagios/nagios/base/commands.c?r1=1.109&r2=1.110&view=patch
->>>> just completely closes the processing of these commands from the
->>>> Nagios side.  May be this was the fix for the case when the evil
->>>> contents from the command file were still floating around but the
->>>> upgraded Nagios won't process them because they could go from the
->>>> previous successful attack but are lying unprocessed?
->>> Do you think it is really so?
->>>
->> Umm... I can't parse the above paragraph.
-> 
-> I mean that in 3.0.6 even Nagios server won't execute CHANGE_
-> commands, because the diff in the above reference stops them from
-> being executed.
-> 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Right.
+Jamie Strandboge wrote:
+| We have a bug report open to fix http://bugs.mysql.com/bug.php?id=22413.
+| This is a DoS via a 'EXPLAIN SELECT FROM view with ORDER BY' statement
+| and is fixed in 5.0.32. Can a CVE be assigned for this?
 
->> In short though, the removed
->> commands are removed *from the cgi's* because it's far too dangerous
->> to allow such things over the web.
-> 
-> Comment in cgi.c says:
-> ----- function cmd_submitf
->         /*
->          * We disallow sending 'CHANGE' commands from the cgi's
->          * until we do proper session handling to prevent cross-site
->          * request forgery
->          */
->         if (!command || (strlen(command) > 6 && !memcmp("CHANGE", command, 6)))
->                 return ERROR;
-> -----
-> So I presume that the danger comes from the CSRF.  This code was
-> introduced in 3.0.5.
-> 
+You'll probably want to CC Steve on such emails... I don't think he's
+actually subscribed to the list (Steve, feel free to correct me if I'm
+wrong here... I assumed it would be the same as vendor-sec).
 
-Well... yes and no. The cgi's have never supported willingly sending CHANGE
-commands, but prior to the security bug fixes in 3.0.5 (this is not one of
-them), someone could send a CHANGE command and thereby execute arbitrary
-programs on the nagios server with the privileges of the Nagios user.
+	smithj
 
-This is just a belts-and-suspenders fix, preventing other flaws from
-allowing CHANGE commands through the CGI's.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.8 (GNU/Linux)
 
->> Nagios will still process them if
->> they are submitted to the command-pipe, but the CGI's can no longer
->> write such commands to said pipe.
-> 
-> Not in 3.0.6, see below and above.
-> 
-
-Ah, right. I hadn't noticed that Ethan had added that to the core as
-well.
-
->>> CVE-2008-5028 really speaks about 3.0.5 as about vulnerable to CSRF.  At
->>> least CHANGE_ commands were closed in 3.0.5 and were (presumably)
->>> additionally closed at the Nagios server side in 3.0.6.  So either 3.0.6
->>> is vulnerable too, 3.0.5 is not vulnerable to CSRF or I am missing
->>> something.  What to choose?
->>>
->> 3.0.5 is vulnerable to CSRF. 3.0.6 (which adds in-form session tokens to
->> cmd.cgi, which processes all commands from the web-forms), is not vulnerable
->> to CSRF.
-> 
-> If you're talking about the commit based on
->   http://git.op5.org/git/?p=nagios.git;a=commitdiff;h=9c2a418ab4f6e4ef3a53ddcde402fe4781caa764
-> then I afraid that this code isn't in the 3.0.6.
-
-Oh, damn, you're right. I was told Ethan would add it but it
-appears as though he hasn't.
-
->  Diffing 3.0.5 and
-> 3.0.6 yeilds some improvements, the hunk that Jan mentioned (it closes
-> CHANGE_ commands processing by the Nagios server itself):
-
-That's not necessarily an improvement though, just blocking a feature.
-
-> -----
-> --- nagios-3.0.5/base/commands.c        2008-11-02 21:51:29.000000000 +0300
-> +++ nagios-3.0.6/base/commands.c        2008-11-30 20:22:58.000000000 +0300
-> @@ -2891,6 +2893,19 @@
->         unsigned long hattr=MODATTR_NONE;
->         unsigned long sattr=MODATTR_NONE;
-> 
-> +
-> +       /* SECURITY PATCH - disable these for the time being */
-> +       switch(cmd){
-> +       case CMD_CHANGE_GLOBAL_HOST_EVENT_HANDLER:
-> +       case CMD_CHANGE_GLOBAL_SVC_EVENT_HANDLER:
-> +       case CMD_CHANGE_HOST_EVENT_HANDLER:
-> +       case CMD_CHANGE_SVC_EVENT_HANDLER:
-> +       case CMD_CHANGE_HOST_CHECK_COMMAND:
-> +       case CMD_CHANGE_SVC_CHECK_COMMAND:
-> +               return ERROR;
-> +               }
-> +
-> +
->         /* get the command arguments */
->         switch(cmd){
-> -----
-> 
->> 3.0.5 fixes the authorization bypass discussed in CVE-2008-5027, where an
->> authenticated user can submit commands he/she was not supposed to be able
->> to submit.
-> 
-> Yes, newlines in the comments and other places.  This is really fixed
-> in 3.0.5.
-> 
->> However, by blocking the CHANGE_ set of commands, the worst-case
->> impact of the CSRF was drastically reduced, and the change to blocking those
->> commands was also a part of 3.0.5.
-> 
-> Yes, I meant precisely this.  But again, no real CSRF fixes are present
-> in 3.0.6.
-> 
-
-Right. I had missed the fact that Ethan didn't take the CSRF patches I
-sent him, even though he told me he would. Sorry for the confusion. :-/
-
->> I'm afraid Ethan (the Nagios maintainer) got it wrong in the changelog,
->> which is why, I presume, there's so much confusion right now.
->>
->> I wrote the patches for it though, so I think it's safe to say I know what
->> patch (and version) fixed what.
-> 
-> I understand this.  But I feel that you think of your session tokens
-> work as of being committed to 3.0.6.  This seems to be wrong.
-> 
-
-Indeed.
-
--- 
-Andreas Ericsson                   andreas.ericsson@....se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+iEYEARECAAYFAke98/QACgkQCG91qXPaRenoGACfZ4TgQfKSlucFbhhXXlT9VXed
+htkAoILmvZ9mIIPg+OCoJ6qsuJahJfWq
+=zGvc
+-----END PGP SIGNATURE-----
