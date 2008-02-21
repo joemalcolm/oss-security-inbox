@@ -1,21 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/19/2
-Message-ID: <60982.217.128.171.81.1221824046.squirrel@mail.rofes.fr>
-Date: Fri, 19 Sep 2008 13:34:06 +0200 (CEST)
-From: "Pierre-Yves Rofes" <py@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/21/10
+Message-ID: <20080221205142.GF8804@severus.strandboge.com>
+Date: Thu, 21 Feb 2008 15:51:42 -0500
+From: Jamie Strandboge <jamie@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Opera < 9.52 multiple vulnerabilities
+Subject: CVE request for mysql bug #22413
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
-Could we please get CVE ids for the following:
-http://www.opera.com/docs/changelogs/linux/952/
-https://bugs.gentoo.org/show_bug.cgi?id=235298
+We have a bug report open to fix http://bugs.mysql.com/bug.php?id=22413.
+This is a DoS via a 'EXPLAIN SELECT FROM view with ORDER BY' statement
+and is fixed in 5.0.32. Can a CVE be assigned for this?
 
 Thanks,
 
--- 
-Pierre-Yves Rofes
-Gentoo Linux Security Team
+Jamie
 
+--
+Email: jamie@...onical.com
+IRC:   jdstrand
+
+Download attachment "signature.asc" of type "application/pgp-signature" (190 bytes)
