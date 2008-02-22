@@ -1,19 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/09/1
-Message-Id: <200809091043.32679.hanno@hboeck.de>
-Date: Tue, 9 Sep 2008 10:43:32 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/22/4
+Message-id: <1203647455.3811.TMDA@linsec.ca>
+Date: Thu, 21 Feb 2008 19:29:17 -0700
+From: Vincent Danen <vdanen@...sec.ca>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: CVE request: mybb < 1.4.1
+Subject: CVE-2008-0416 for mozilla-firefox; details request
 Content-Type: text/plain; charset=utf-8
 
-http://community.mybboard.net/showthread.php?tid=36022
+The CVE entry for this one is horribly obscure, and only Ubuntu has
+noted it.  I don't even see it referenced in an MFSA on mozilla's site.
 
-Hmm, they mention vulns, but they don't give any info about...
+Kees, is this specific to 1.5.x, do you know?  Or anyone else for that
+matter?  The CVE entry reads:
+
+Multiple unspecified vulnerabilities in Mozilla Firefox, as used in
+Ubuntu 6.06 through 7.10 and possibly other distributions, allow remote
+attackers to conduct cross-site scripting (XSS) attacks via unknown
+vectors related to character encoding.
+
+Doesn't indicate a version, but Ubuntu's advisory is providing a
+1.5.0.15 (pre-patch?), so I'd like to know if this affects 2.0.0.11 (and
+is fixed in 2.0.0.12?), or if this is still unresolved in upstream 2.0.x
+(or doesn't affect it all).
+
+More details would be fabulous.  Thanks.
 
 -- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+Vincent Danen @ http://linsec.ca/
 
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+Content of type "application/pgp-signature" skipped
