@@ -1,32 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/20/1
-Message-ID: <Pine.GSO.4.51.0808201200440.28950@faron.mitre.org>
-Date: Wed, 20 Aug 2008 12:04:28 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/22/3
+Message-id: <1203647259.3732.TMDA@linsec.ca>
+Date: Thu, 21 Feb 2008 19:26:01 -0700
+From: Vincent Danen <vdanen@...sec.ca>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...re.org>
-Subject: Re: CVE request: drupal 5.10/6.4
+Subject: Re: first spam message on the list
 Content-Type: text/plain; charset=utf-8
 
+* [2008-02-22 04:30:14 +0300] Solar Designer wrote:
 
-On Fri, 15 Aug 2008, Hanno [utf-8] Böck wrote:
+>This was unusually quick.  S - thank you for posting the list address on
+>a blog non-obfuscated. :-(
+>
+>http://c-skills.blogspot.com/2008/02/open-source-software-security-wiki.html
 
-> http://drupal.org/node/295053
+Who the... ohhhh... tsk tsk tsk.
 
-Use the following, to be filled in later:
+>I've just enabled a simple spam filter for the list address (it will
+>drop HTML-only messages - and more).  I will also be turning on message
+>pre-moderation.  It's a pity that we have to do this so early.
+>
+>Anyone would like to be a moderator (and receive the undetected spam)?
 
-CVE-2008-3740 - first XSS
+I can do moderation as well.
 
-CVE-2008-3741 - second XSS.  This has a different root cause so is SPLIT.
+>Meanwhile, (GalaxyMaster) has patched the Wiki to obfuscate e-mail
+>addresses in more cases.  Nothing should be reported non-obfuscated now,
+>not even via the RSS feed or diffs view.  In fact, we'll probably relax
+>the current fix a bit to not mangle the Openwall anoncvs access shell
+>command. ;-)
 
-CVE-2008-3742 - BlogAPI file uploads
+Good stuff.  Thanks, Solar.  Too bad, like you said, we had to do it so
+soon.
 
-CVE-2008-3743 - first CSRF, for 6.x only
+I'll hit a certain somone with a clue-bat later.  =)
 
-CVE-2008-3744 - second CSRF, for 6.x/5.x (different affected versions so
-                SPLIT)
+-- 
+Vincent Danen @ http://linsec.ca/
 
-CVE-2008-3745 - Upload module priv escalation
-
-
-- Steve
+Content of type "application/pgp-signature" skipped
