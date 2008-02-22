@@ -1,27 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/17/6
-Message-ID: <20080417163120.GA12716@ngolde.de>
-Date: Thu, 17 Apr 2008 18:31:20 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/22/6
+Message-ID: <47BE5219.4060300@freethemallocs.com>
+Date: Thu, 21 Feb 2008 19:39:53 -0900
+From: Jonathan Smith <smithj@...ethemallocs.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: tss <= 0.8.1-3: arbitary file reading
+CC: Solar Designer <solar@...nwall.com>
+Subject: Re: moderation
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Steve Kemp <steve@...ve.org.uk> [2008-04-12 21:39]:
->   Due to a lack of permissions checking, or privilege reduction
->  the setuid(0) binary tss allows local users to read arbitrary files
->  upon the local system.
-> 
->   Sample "exploit" is:
-> 
->               skx@...d:~$ tss -a /etc/shadow
-[...] 
-Steve (the mitre one :) did you miss that?
-Kind regards
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Content of type "application/pgp-signature" skipped
+Josh Bressers wrote:
+| I can do this.  It's a horrible thankless job, but the more we have, the
+| better things will be.  Getting some folks scattered around the world
+would
+| be helpful.
+
+I'll help out as well.
+
+	smithj
+
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.8 (GNU/Linux)
+
+iEYEARECAAYFAke+UhkACgkQCG91qXPaRekFigCeLau7+NxWrWHZPryDTdVZZV1D
+IRoAoKlD3Ydkggu2PA1hgY45lr921dWz
+=qyGF
+-----END PGP SIGNATURE-----
