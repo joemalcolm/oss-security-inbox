@@ -1,24 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/18/11
-Message-ID: <15895.1203366636@devserv.devel.redhat.com>
-Date: Mon, 18 Feb 2008 15:30:36 -0500
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/22/1
+Message-ID: <20080222013014.GA12966@openwall.com>
+Date: Fri, 22 Feb 2008 04:30:14 +0300
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: wiki
+Subject: first spam message on the list
 Content-Type: text/plain; charset=utf-8
 
-> 
-> > Feel free to start adding content.  I think the structure is ok enough
-> > to start with, we'll see how it goes from there.  It's pretty
-> > straight-forward and should be easy enough to add to (I just added a few
-> > links, some pages, etc. but every vendor should be adding their own info
-> > there), and others can add content, etc.
-> 
-> Yes.  I think that some of the content to add would be list charter for
-> oss-security (Josh?)
+This was unusually quick.  S - thank you for posting the list address on
+a blog non-obfuscated. :-(
 
-I just added my current working draft charter:
-http://oss-security.openwall.org/wiki/mailinglists/oss-security/charter
+http://c-skills.blogspot.com/2008/02/open-source-software-security-wiki.html
 
--- 
-    JB
+I've just enabled a simple spam filter for the list address (it will
+drop HTML-only messages - and more).  I will also be turning on message
+pre-moderation.  It's a pity that we have to do this so early.
+
+Anyone would like to be a moderator (and receive the undetected spam)?
+
+Meanwhile, (GalaxyMaster) has patched the Wiki to obfuscate e-mail
+addresses in more cases.  Nothing should be reported non-obfuscated now,
+not even via the RSS feed or diffs view.  In fact, we'll probably relax
+the current fix a bit to not mangle the Openwall anoncvs access shell
+command. ;-)
+
+Alexander
