@@ -1,33 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/10/10
-Message-ID: <Pine.GSO.4.51.0811101305110.6724@faron.mitre.org>
-Date: Mon, 10 Nov 2008 13:05:23 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: vlc
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/22/2
+Message-ID: <8364.1203646999@devserv.devel.redhat.com>
+Date: Thu, 21 Feb 2008 21:23:19 -0500
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
+Subject: Re: first spam message on the list
 Content-Type: text/plain; charset=utf-8
 
+> This was unusually quick.  S - thank you for posting the list address on
+> a blog non-obfuscated. :-(
+> 
+> http://c-skills.blogspot.com/2008/02/open-source-software-security-wiki.html
 
+Well, while this is lame, it was bound to happen eventually anyhow.
 
-======================================================
-Name: CVE-2008-5032
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5032
-Reference: MLIST:[oss-security] 20081105 CVE id request: vlc
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/05/5
-Reference: MLIST:[oss-security] 20081105 VideoLAN security advisory 0810
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/05/4
-Reference: MISC:http://www.trapkit.de/advisories/TKADV2008-011.txt
-Reference: MISC:http://www.trapkit.de/advisories/TKADV2008-012.txt
-Reference: CONFIRM:http://git.videolan.org/?p=vlc.git;a=commitdiff;h=5f63f1562d43f32331006c2c1a61742de031b84d
-Reference: CONFIRM:http://git.videolan.org/?p=vlc.git;a=commitdiff;h=e3cef651125701a2e33a8d75b815b3e39681a447
-Reference: CONFIRM:http://www.videolan.org/security/sa0810.html
+> 
+> I've just enabled a simple spam filter for the list address (it will
+> drop HTML-only messages - and more).  I will also be turning on message
+> pre-moderation.  It's a pity that we have to do this so early.
 
-Multiple stack-based buffer overflows in VideoLAN VLC media player
-0.5.0 through 0.9.5 allow user-assisted attackers to execute arbitrary
-code via (1) the header of an invalid CUE image file, related to
-modules/access/vcd/cdrom.c; or (2) an invalid RealText (rt) subtitle
-file, related to the ParseRealText function in
-modules/demux/subtitle.c.
+What is message pre-moderation?  Can you expand on what that means?  Will
+it let subscribers still post unmoderated?
 
+> 
+> Anyone would like to be a moderator (and receive the undetected spam)?
+> 
 
+I can do this.  It's a horrible thankless job, but the more we have, the
+better things will be.  Getting some folks scattered around the world would
+be helpful.
+
+-- 
+    JB
