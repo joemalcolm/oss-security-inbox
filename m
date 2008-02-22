@@ -1,32 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/28/1
-Message-ID: <Pine.GSO.4.51.0810272007310.1641@faron.mitre.org>
-Date: Mon, 27 Oct 2008 20:08:03 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/22/7
+Message-ID: <20080222044952.GB13911@openwall.com>
+Date: Fri, 22 Feb 2008 07:49:52 +0300
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: Re: XSS in HTML Tidy plugin used in WYSIWYG HTML editors
+Subject: Re: moderation
 Content-Type: text/plain; charset=utf-8
 
+On Thu, Feb 21, 2008 at 09:23:19PM -0500, Josh Bressers wrote:
+> What is message pre-moderation?  Can you expand on what that means?  Will
+> it let subscribers still post unmoderated?
 
-======================================================
-Name: CVE-2008-4761
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4761
-Reference: MLIST:[oss-security] 20081027 XSS in HTML Tidy plugin used in WYSIWYG HTML editors
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/10/27/6
-Reference: MISC:http://downloads.securityfocus.com/vulnerabilities/exploits/31908.html
-Reference: BID:31908
-Reference: URL:http://www.securityfocus.com/bid/31908
-Reference: XF:esupport-htmltidylogic-xss(46097)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/46097
+Yes - the way I have enabled it now, subscribers can still post
+unmoderated, as long as they post from their subscribed envelope-from
+addresses.
 
-Cross-site scripting (XSS) vulnerability in
-includes/htmlArea/plugins/HtmlTidy/html-tidy-logic.php in Kayako
-eSupport 3.20.2 allows remote attackers to inject arbitrary web script
-or HTML via the jsMakeSrc parameter.  NOTE: the provenance of this
-information is unknown; the details are obtained solely from third
-party information.  NOTE: this issue is probably in the HTMLArea
-HTMLTidy (HTML Tidy) plugin, not eSupport.
+Josh and Vincent are now list moderators (thank you!), along with me.
+You will receive moderation requests whenever a message arrives to the
+list address from a non-subscribed address (that is also not on the
+"allow" list).  Please approve messages that are desirable for this
+list, according to the charter and common sense.  In other cases, you
+can either reject a message (if posted by a human being), optionally
+with a comment (reject reason), or do nothing (there's no need to bother
+rejecting spam - it will expire on its own - in fact, it is better to
+not reject spam for a couple of reasons).
 
+There's no need to see if a message has possibly been approved by
+another moderator - duplicate approvals don't result in duplicate
+postings.
 
+Jonathan - thank you for offering to help as well.  I had already added
+Josh and Vincent as moderators when your message arrived, and I thought
+that three moderators (including me) should be enough.  However, if you
+really want to be receiving some more spam - please let me know! ;-)
+
+Thanks,
+
+Alexander
