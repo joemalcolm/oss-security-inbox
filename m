@@ -1,37 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/29/1
-Message-ID: <ggpudm$nqr$1@ger.gmane.org>
-Date: Fri, 28 Nov 2008 17:20:54 -0600
-From: Raphael Geissert <atomo64+debian@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/22/9
+Message-ID: <20080222150543.6142dec9@redhat.com>
+Date: Fri, 22 Feb 2008 15:05:43 +0100
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request/update: mailscanner: many scripts allow local users to overwrite arbitrary files via symlink attacks
+Subject: Re: code review CVS
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi Kees!
 
-Hello,
+On Thu, 21 Feb 2008 10:41:43 -0800 Kees Cook <kees@...flux.net> wrote:
 
-A week ago I reported some more issues in mailscanner other than those mentioned
-in CVE-2008-5140 at [1], but it looks like the mail copy sent to bugtraq was
-never really delivered or got rejected.
+> I've created http://oss-security.openwall.org/wiki/distro-patches for
+> this information, and added details for Debian and Ubuntu as well as
+> some of the links (and workflows) that were sent to the mailing list.
+> Please fill this in more!  :)
 
-Could the current CVE id be updated or a new one assigned please?
+Any particular reason for not mentioning packages.(u.c|d.o) there?  I
+always considered them very useful.
 
-Thanks in advance.
-
-[1] http://bugs.debian.org/506353
-
-Regards,
-- -- 
-Raphael Geissert - Debian Maintainer
-www.debian.org - get.debian.net
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkkwfNYACgkQYy49rUbZzlpLBwCfVo+ghoxKPzjYI7OCcdDhxrBt
-MHUAn1wyGHJR28rpa+TXeWIqIy2HTpdN
-=jcCS
------END PGP SIGNATURE-----
-
+-- 
+Tomas Hoger
