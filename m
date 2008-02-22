@@ -1,46 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/26/5
-Message-ID: <Pine.GSO.4.51.0808261015310.18466@faron.mitre.org>
-Date: Tue, 26 Aug 2008 10:19:17 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/22/8
+Message-ID: <20080222131300.GF17228@suse.de>
+Date: Fri, 22 Feb 2008 14:13:00 +0100
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: Re: CVE Request (gpicview)
+Subject: Re: first spam message on the list
 Content-Type: text/plain; charset=utf-8
 
+On Thu, Feb 21, 2008 at 09:23:19PM -0500, Josh Bressers wrote:
+> > This was unusually quick.  S - thank you for posting the list address on
+> > a blog non-obfuscated. :-(
+> > 
+> > http://c-skills.blogspot.com/2008/02/open-source-software-security-wiki.html
+> 
+> Well, while this is lame, it was bound to happen eventually anyhow.
 
-Jan,
+Please don't overreact.
+Spam emails will not be stopped by obfuscating email addresses in a static
+manner or by suppressing information in other ways.
 
-Are there common usage scenarios under which gpicview would receive the
-filename to create from some external source, say, as a web browser
-plugin?
+This is not a closed-source obscurity list.
 
-I'm asking because the missing "ask_before_save" issues only seem like
-non-security bugs - the user messing him/herself up - unless the target
-file can be influenced by an external attacker.
 
-> http://sourceforge.net/tracker/index.php?func=detail&aid=2019481&group_id=180858&atid=894869
->
-> Possible symlink attack via the temporary created "/tmp/rot.jpg"
-> file used for image rotation.
-
-Use CVE-2008-3791
-
-> 2,
->
-> http://sourceforge.net/tracker/index.php?func=detail&aid=2019485&group_id=180858&atid=894869
->
-> By presence of the LIBJPEG library we could without confirmation rewrite
-> the by the symlink targeted JPEG filesystem file.
->
-> 3,
->
-> http://sourceforge.net/tracker/index.php?func=detail&aid=2019492&group_id=180858&atid=894869
->
-> Consequences: Bad enough, just think about them in context of the two
-> previously mentioned issues.
-
-These two might need a second CVE depending on the influence over the file
-that "ask_before_save" would ask about.
-
-- Steve
+-- 
+Bye,
+     Thomas
+-- 
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+-- 
+           Hamming's Motto:
+           The purpose of computing is insight, not numbers.
+                                -- Richard W. Hamming
