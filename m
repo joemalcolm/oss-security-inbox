@@ -1,19 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/01/8
-Message-ID: <20081201164608.GA14578@suse.de>
-Date: Mon, 1 Dec 2008 17:46:08 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com, coley@...us.mitre.org
-Subject: CVE request: clamav 0.94.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/23/2
+Message-ID: <47BFBE20.90208@freethemallocs.com>
+Date: Fri, 22 Feb 2008 21:33:04 -0900
+From: Jonathan Smith <smithj@...ethemallocs.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: lighttpd
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-the Clamav folks released 0.94.2 and it seems to contain one security
-relevant bugfix "recursive stack overflow in jpeg parsing code":
 
-https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1266
 
-So this probably needs a CVE, Steven?
+- -------- Original Message --------
+Subject: [SA29066] lighttpd File Descriptor Array Denial of Service
+Vulnerability
+Date: 23 Feb 2008 03:19:30 -0000
+From: Secunia Security Advisories <sec-adv@...unia.com>
+To: smithj@...ethemallocs.com
 
-Ciao, Marcus
+[snip]
+
+TITLE:
+lighttpd File Descriptor Array Denial of Service Vulnerability
+
+SECUNIA ADVISORY ID:
+SA29066
+
+VERIFY ADVISORY:
+http://secunia.com/advisories/29066/
+
+CRITICAL:
+Moderately critical
+
+IMPACT:
+DoS
+
+WHERE:
+~From remote
+
+SOFTWARE:
+lighttpd 1.x
+http://secunia.com/product/4661/
+
+DESCRIPTION:
+A vulnerability has been reported in lighttpd, which can be exploited
+by malicious people to cause a DoS (Denial of Service).
+
+The vulnerability is caused due to a calculation error when
+allocating the global file descriptor array and can be exploited to
+crash an affected server.
+
+The vulnerability is reported in version 1.4.18. Other versions may
+also be affected.
+
+SOLUTION:
+A temporary patch is available.
+http://trac.lighttpd.net/trac/attachment/ticket/1562/Fix-372-and-1562.patch
+
+Restrict network access to the service.
+
+PROVIDED AND/OR DISCOVERED BY:
+fdeletang
+
+ORIGINAL ADVISORY:
+http://trac.lighttpd.net/trac/ticket/1562
+
+[snip]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.8 (GNU/Linux)
+
+iEYEARECAAYFAke/vh8ACgkQCG91qXPaRemUfACfX8i8etCHjt1USUVkzUiA4yzz
+CM8AnihaPOMcHfbCrg/A3d46ygIu2E5F
+=hz8R
+-----END PGP SIGNATURE-----
