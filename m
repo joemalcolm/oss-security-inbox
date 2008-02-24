@@ -1,31 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/01/2
-Message-Id: <200812011329.45464.hanno@hboeck.de>
-Date: Mon, 1 Dec 2008 13:29:45 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: tikiwiki < 2.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/24/2
+Message-ID: <20080224222600.GA22001@openwall.com>
+Date: Mon, 25 Feb 2008 01:26:00 +0300
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: charter - advisories
 Content-Type: text/plain; charset=utf-8
 
-http://info.tikiwiki.org/tiki-read_article.php?articleId=41
+On Wed, Feb 20, 2008 at 12:26:21PM -0700, Vincent Danen wrote:
+> Hmmm... maybe we should clarify the advisories we don't want to see.  I
+> guess advisories from, say, iDefense, would be valuable.  But advisories
+> from Mandriva or SUSE not so much.
+> 
+> Maybe we should indicate no *vendor* advisories,
 
-"
-Updating to version 2.2 is highly recommended. In addition to several minor 
-fixes and enhancements, the update provides two undisclosed security fixes.
+I think this is pretty much what we did already.  From the charter:
 
-Special thanks to Emanuele Gentili for reporting one of the security issues.
-"
+Security advisories aimed at end-users only are not welcome (e.g., those
+from a distribution vendor announcing new pre-built packages).  There has
+to be desirable information for others in the Open Source community
+(e.g., an upstream maintainer may announce a new version of their
+software with security fixes to be picked up by distributors).
 
-Further information is not easy to get, the changelog lists a vast number of 
-[sec]-marked fixes, though it's not easy to see if they are "just" 
-improvements to prevent potential issues or real security issues.
+If you can word this better, please go ahead and edit it on the wiki.
 
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+> and make a second list specifically for that?
 
-http://waldbesetzung.blogsport.de/ Waldbesetzung gegen Flughafenausbau 
-Frankfurt, 28. - 30.11.
-http://www.jukss.de/ Jugemdumweltkongress, 27.12.-4.1.
+I'd be happy to make such a list if there's demand - is there?  Let me
+address this question to those vendors (represented in here) who
+currently copy their advisories to Bugtraq - will you start sending them
+to this new special-purpose list?  If so, will you discontinue sending
+them to Bugtraq, suggesting that whoever wants to receive all-vendor
+advisories should subscribe the new special-purpose list?  I think this
+could help us reclaim Bugtraq as a general security discussion list.
 
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+Note that Bugtraq will remain quite different from oss-security even if
+reclaimed as a discussion list.  oss-security is for people involved
+with OSS projects (although others are welcome to listen to our
+conversations) and for detailed discussions of source code patches, etc.
+when that is needed.  Bugtraq is for everyone, including end-users and
+closed-source folks - and it is large-scale, meaning that discussions of
+individual issues should not run for too long and get into minor detail.
+
+Also, a question to those vendors (represented in here) who don't copy
+their advisories to Bugtraq currently (too shy or polite) - will you
+start sending them to this new special-purpose list?
+
+Thanks,
+
+Alexander
