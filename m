@@ -1,77 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/16/1
-Message-ID: <20080816140528.GB12604@ngolde.de>
-Date: Sat, 16 Aug 2008 16:05:28 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/24/4
+Message-ID: <20080224235237.GA22466@openwall.com>
+Date: Mon, 25 Feb 2008 02:52:37 +0300
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: horde webmail edition < 1.1.1
+Subject: Re: code review CVS
 Content-Type: text/plain; charset=utf-8
 
-Hi Steven,
-* Steven M. Christey <coley@...us.mitre.org> [2008-08-15 01:23]:
-> On Wed, 13 Aug 2008, Tomas Hoger wrote:
-> > On Wed, 13 Aug 2008 14:00:03 +0200 Nico Golde
-> > <oss-security+ml@...lde.de> wrote:
-> > > > > This should be a duplicate of CVE-2008-3330.
-> > > >
-> > > > Actually, (1) is covered by CVE-2008-3330, (2) probably never got an
-> > > > id.  Bit more info on (2) here:
-> > > >
-> > > >   https://bugzilla.redhat.com/show_bug.cgi?id=452549
-> > > >
-> > > > Steven, can you please correct CVE description.  Thanks!
-> > >
-> > > Hmm, actually I thought this would have been added after my
-> > > post on:
-> > > http://www.openwall.com/lists/oss-security/2008/07/28/3
-> > > which already mentions this.
-> >
-> > Ah, so actually both issue were previously mentioned here... I forgot.
-> > It seems that after you pointed out (2), no more CVE id was allocated
-> > in that thread.
-> 
-> OK, some followups:
-> 
-> 1) CVE-2008-3330.2, for Turba, affects contact.php, which only exists in
->    Turba 2.2.
+On Mon, Feb 18, 2008 at 10:28:36AM +0100, Sebastian Krahmer wrote:
+> From my view it would be helpful to have some forum/CVS or whatever
+> where code reviewers can submit the code they already audited along
+> with remarks/exploits/patches etc.
 
-Yes
+We don't yet have such a CVS (or similar) repository - and it is not
+obvious whether one is needed - but maybe you (and others) could start
+by using a namespace on the wiki for this?  The wiki includes support
+for file uploads - it's the "Add Images and other files" icon (picture
+in a frame) on top of the page edit area.  We have not yet tested this
+functionality, though (might need to add a chmod as we're running the
+wiki scripts under a dedicated UID and with umask 077).
 
-> 2) The Debian bug report seems to have found contact issues in Turba 2.1,
->    in browse.php:
->    http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=492578#40
+Obviously, you shouldn't upload entire source trees (tarballs?) in this
+way, but remarks, patches, and testcases may be uploaded.  Actually,
+the remarks are better edited on the wiki, which provides a structure
+(namespaces) and revision control.
 
-Yes, the one mentioned in 
-http://www.openwall.com/lists/oss-security/2008/07/28/3.
+That way, we'll see if anyone actually contributes their audit results
+in this way.  Then, if there's specific demand for a CVS repository or
+whatever, that can be added as well.
 
-> 3) The code from Turba 2.1 looks quite different than the contact.php code
->    as quoted by Nico here:
-> 
->     http://www.openwall.com/lists/oss-security/2008/07/28/3
+Thanks,
 
-That's because Turba 2.1 is not affected, 2.2 is. The file and the 
-vulnerable code doesn't exist.
- 
-> 4) I haven't seen any mention of contact issues in Horde itself, is this
->    correct?
-
-Not really. Well, the issue is the same except that it's 
-present in different source files. So there is no contact 
-handling and the obrowser thing in horde, it's one piece of 
-code to manage contacts in obrowser.
-
-> 5) CVE-2008-3650, the "unspecified" issues based on a vague Horde
->    Groupware advisory, appears to line up closely with both
->    CVE-2008-3330.1 (obrowser) and CVE-2008-3330.2 (Turba contacts).  Is
->    this sufficiently confirmed?
-
-Yes, I already had contact to upstream and our maintainer 
-before asking for a CVE id.
-
-Kind regards
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+Alexander
