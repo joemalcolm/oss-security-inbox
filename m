@@ -1,82 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/27/3
-Message-ID: <20080527154435.GA16462@openwall.com>
-Date: Tue, 27 May 2008 19:44:35 +0400
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/24/1
+Message-ID: <20080224220132.GA21870@openwall.com>
+Date: Mon, 25 Feb 2008 01:01:32 +0300
 From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSH key blacklisting
+Subject: Re: list archive
 Content-Type: text/plain; charset=utf-8
 
-On Sat, May 17, 2008 at 04:46:30PM +0200, Robert Buchholz wrote:
-> Do you have a patch to propose, implementing your idea?
+On the 19th, I wrote:
+> >This list should definitely be submitted to Gmane and MARC, maybe to
+> >some others as well.  I am just not sure whether it's time to do that.
+...
+> >I think I am the one to do it since I will need to provide the mbox
+> >with past messages - and I am willing to do it if/when the most active
+> >list members (including you) request that.  Just have in mind that this
+> >might result in us having to turn on subscription and/or message
+> >moderation and disallow wiki editing by new users a bit earlier.
 
-Dmitry V. Levin and I have completed design of the encoding scheme, and
-Dmitry implemented it.  Now we have:
+On Tue, Feb 19, 2008 at 10:12:38AM -0700, Vincent Danen wrote:
+> Ok.  So leave things open for the time being so we don't hassle the
+> folks that should be here from the get-go, then clamp down on things
+> later (in a few weeks?) and send in the requests?
 
-blacklist-encode.c - the encoder program;
-blacklist-check.c - the "checker" program, used for testing only;
-openssh-3.6.1p2-owl-blacklist.diff - the patch to sshd.
+That was my intent, but apparently things just don't work that way -
+someone has just submitted oss-security and xvendor to Gmane.  I wish
+that person asked me to do it instead - and I would have done it now.
+Anyway, I've just exchanged some e-mails with Lars of Gmane, requesting
+changes to the way those lists were submitted, and I've provided the
+archives of past messages.  I've also re-configured oss-security to no
+longer set the X-No-Archive header (xvendor was already configured that
+way).  The Gmane archive is now available at:
 
-The patch is against an older version that we still have in Owl (with
-lots of other patches), but it is trivial to forward-port.  In fact, I
-expect that Dmitry will port it to the newer version in ALT Linux's
-distributions very soon (if not already).  Dmitry - please announce your
-forward-port in here when you have it.
+	http://dir.gmane.org/gmane.comp.security.oss.general
 
-Dmitry has done fairly extensive testing, but we would not mind others
-in the community doing more tests and reporting back in here.
+and I've added this URL to the wiki, although some changes are still
+pending.  Since I am posting this anyway, the xvendor archive is here:
 
-We also have openssh-blacklist-0.3-1.bin.bz2, which is used as a
-"source" in our OpenSSH package.  It was generated from
-ftp://ftp.debian.org/debian/pool/main/o/openssh-blacklist/openssh-blacklist_0.3.tar.gz
-with:
+	http://dir.gmane.org/gmane.comp.misc.xvendor
 
-	cat [DR]SA-{1024,2048}.[bl]e{32,64} | ./blacklist-encode 6 > openssh-blacklist-0.3-1.bin
-	bzip2 !$
+MARC will likely be next - and please let me properly submit the lists,
+including archived messages.
 
-That is, it contains 48-bit partial fingerprints for 1024-bit and
-2048-bit RSA and 1024-bit DSA keys for PID range 1 to 32767 (a total of
-almost 300k keys).  The installed file size is just 1.3 MB, which
-corresponds to less than 4.5 bytes per fingerprint, and the .bz2 (and
-.rpm) is just 1.2 MB.  Lookups are very quick, and only three small
-portions of the file are read per lookup, for a total of under 100
-bytes of data to read (as far as sshd is concerned).
-
-Neither the code nor the file format is specific to 48-bit partial
-fingerprints; it is possible to use larger ones by supplying something
-other than "6" (the size in bytes) on blacklist-encode's command-line.
-There is a safety check against even smaller values in
-blacklist-encode.c's main(), although if you really know what you're
-doing, you can go for 40-bit as well, bringing file size for the same
-keys to under 1 MB.
-
-Our latest source code may be found here:
-
-	http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/openssh/
-
-(along with lots of other patches to OpenSSH).
-
-The pre-encoded blacklist file may be found here:
-
-	ftp://ftp.ru.openwall.com/pub/Owl/pool/sources/openssh/
-
-(and on other mirrors).
-
-I've attached current revisions of the source files and patch mentioned
-above.  This is to encourage community review and comments, and to
-enable easy quoting of relevant context (please do not overquote).
-
-Please note that this effort was/is supported by CivicActions.  It will
-enable us to receive funding for and get involved in more community
-activities in the future if you give due credit to both Openwall and
-CivicActions (especially with website links) when you reuse this stuff.
-
-Thanks in advance for any feedback.
+Thanks,
 
 Alexander
-
-View attachment "blacklist-encode.c" of type "text/plain" (6532 bytes)
-
-View attachment "blacklist-check.c" of type "text/plain" (5902 bytes)
-
-View attachment "openssh-3.6.1p2-owl-blacklist.diff" of type "text/plain" (18092 bytes)
