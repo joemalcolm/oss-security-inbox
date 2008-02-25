@@ -1,25 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/17/3
-Message-ID: <20080417105446.496416ce@redhat.com>
-Date: Thu, 17 Apr 2008 10:54:46 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: hanno@...eck.de
-Cc: oss-security@...ts.openwall.com, coley@...re.org
-Subject: Re: CVE request: firefox 2.0.14 ( Crash in JavaScript garbage collector)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/25/2
+Message-id: <1203919907.26938.TMDA@linsec.ca>
+Date: Sun, 24 Feb 2008 23:09:46 -0700
+From: Vincent Danen <vdanen@...sec.ca>
+To: oss-security@...ts.openwall.com
+Subject: Re: list archive
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 17 Apr 2008 10:45:49 +0200 Hanno Böck <hanno@...eck.de> wrote:
+* [2008-02-25 03:18:21 +0300] Solar Designer wrote:
 
-> http://www.mozilla.org/security/announce/2008/mfsa2008-20.html
+>Earlier today, I wrote:
+>
+>> MARC will likely be next - and please let me properly submit the lists,
+>> including archived messages.
+>
+>This is now done:
+>
+>	http://marc.info/?l=oss-security
+>	http://marc.info/?l=xvendor
+>
+>I've added the Gmane and MARC links for oss-security to the wiki.
 
-Advisory contains:
-
-References
-
-    * https://bugzilla.mozilla.org/show_bug.cgi?id=425576
-    * CVE-2008-1380
-
-HTH
+Thanks for letting us know.  As much as I wanted the archives up, it
+wasn't me that did it.  =)  But it's nice that there up now.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Vincent Danen @ http://linsec.ca/
+
+Content of type "application/pgp-signature" skipped
