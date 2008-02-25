@@ -1,21 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/28/6
-Message-ID: <Pine.GSO.4.51.0807281629200.23713@faron.mitre.org>
-Date: Mon, 28 Jul 2008 16:30:48 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Tomas Hoger <thoger@...hat.com>
-cc: oss-security@...ts.openwall.com, coley@...us.mitre.org
-Subject: Re: CVE id request: horde3/turba2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/25/3
+Message-id: <1203920130.27022.TMDA@linsec.ca>
+Date: Sun, 24 Feb 2008 23:13:29 -0700
+From: Vincent Danen <vdanen@...sec.ca>
+To: oss-security@...ts.openwall.com
+Subject: Re: code review CVS
 Content-Type: text/plain; charset=utf-8
 
+* [2008-02-25 02:52:37 +0300] Solar Designer wrote:
 
-On Mon, 28 Jul 2008, Tomas Hoger wrote:
+>On Mon, Feb 18, 2008 at 10:28:36AM +0100, Sebastian Krahmer wrote:
+>> From my view it would be helpful to have some forum/CVS or whatever
+>> where code reviewers can submit the code they already audited along
+>> with remarks/exploits/patches etc.
+>
+>We don't yet have such a CVS (or similar) repository - and it is not
+>obvious whether one is needed - but maybe you (and others) could start
+>by using a namespace on the wiki for this?  The wiki includes support
+>for file uploads - it's the "Add Images and other files" icon (picture
+>in a frame) on top of the page edit area.  We have not yet tested this
+>functionality, though (might need to add a chmod as we're running the
+>wiki scripts under a dedicated UID and with umask 077).
+>
+>Obviously, you shouldn't upload entire source trees (tarballs?) in this
+>way, but remarks, patches, and testcases may be uploaded.  Actually,
+>the remarks are better edited on the wiki, which provides a structure
+>(namespaces) and revision control.
+>
+>That way, we'll see if anyone actually contributes their audit results
+>in this way.  Then, if there's specific demand for a CVS repository or
+>whatever, that can be added as well.
 
-> Why does this mention Turba?  Affected script does not seem to be part
-> of Turba, at least not part of Fedora packages.
+I like this idea.  It definitely would be nice to know if the effort in
+setting up cvs or svn or whatever would be worthwhile; i.e. if enough
+people would use it to make it worth the possible effort/complexity to
+maintain it.
 
-Turba was mentioned in a comment in the Debian bug report:
+To start off, I think the wiki would work quite well.  It probably
+wouldn't scale well if it got wildly popular, but if there are only a
+few people doing it, then maybe the wiki is all we need.
 
-  "upstream said only Horde 3.2 and Turba 2.2 are affected"
+-- 
+Vincent Danen @ http://linsec.ca/
 
-- Steve
+Content of type "application/pgp-signature" skipped
