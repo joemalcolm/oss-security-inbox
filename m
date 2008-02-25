@@ -1,57 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/11/3
-Message-Id: <1218483469.8327.12.camel@dhcp-lab-164.englab.brq.redhat.com>
-Date: Mon, 11 Aug 2008 21:37:49 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: coley@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: Multiple CVE Request (ruby)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/25/8
+Message-ID: <20080225140858.GG20336@openwall.com>
+Date: Mon, 25 Feb 2008 17:08:58 +0300
+From: "(GalaxyMaster)" <galaxy@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: wiki page/namespace names, wiki feature requests, etc.
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve,
+On Mon, Feb 25, 2008 at 08:50:18AM -0500, Josh Bressers wrote:
 
-  Ruby upstream has announced multiple vulnerabilities 
-present in Ruby code (even with testcases).
+> could be useful to have a namespace called terms, or definitions, or
+> something similar, where we could provide some definitions of the various
+> security related terminology (things like buffer overflow, and double free
+> mean very little to most people).
 
-All of these issues responsibly reported at the following
-URL:
+Moreover, I can make some tweaks and such a page could be automatically
+referenced from other pages.  For instance, if we maintain a page with
+common abbreviations then any other page which mention a defined
+abbreviation would have an on-hover event with a description of the
+abbreviation.  Just an idea.
 
-http://www.ruby-lang.org/en/news/2008/08/08/multiple-vulnerabilities-in-ruby/
+> The problem I see though, is keeping track of all these terms.  Is there a
+> way I could create a page called "terms:buffer_overflow", that would then
+> be magically added to an index at "terms"?
 
+I can install the auto-index plugin that does this.  Currently, we are running
+a bare installation of DokuWiki with the minimal set of plugins.
 
-Could you please allocate a CVE id for each of the following:
+One more topic to discuss is where all these Wiki enhancements should be
+discussed.  I feel that oss-security is the wrong place since this
+mailing list's goal is to discuss security and not the Wiki itself.
+Perhaps, all Wiki-related discussions should go to to a namespace that
+is describing the Wiki itself, and once some functionality is discussed
+there - a short request for approval/disapproval should be posted here.
+My concern is that if we move the whole Wiki-enhancement topic off this
+list we might lose a connection between people on this list (who are
+populating the Wiki) and a team who is maintaining the Wiki (currently,
+it's me and Solar).
 
-* untrace_var is permitted at safe level 4.
-
-* $PROGRAM_NAME may be modified at safe level 4.
-
-* Insecure methods may be called at safe level 1-3.
-
-* Syslog operations are permitted at safe level 4.
-
-* DoS vulnerability in WEBrick
-
-* Lack of taintness check in dl
-
-* DNS spoofing vulnerability in resolv.rb -- already seems to
-  have assigned CVE-2008-1447. 
-
-All of these issues exploitable by a normal unprivileged
-user (slightly testcases / exploits modification is needed
-in some cases). 
-
-For further reference about the features allowed at different
-$SAVE levels in Ruby, please have a look at:
-
-http://www.rubycentral.com/book/taint.html (part "Definition of the safe
-levels")
-
-Please do not hesitate to ask for any further information related
-with each of these issues and / or their test cases.
-
-Thank you in advance.
-
-Kind regards
-Jan iankko Lieskovsky
-RH Security Response Team
+-- 
+(GM)
 
