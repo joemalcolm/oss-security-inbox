@@ -1,50 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/01/7
-Message-ID: <Pine.GSO.4.51.0807011735020.19497@faron.mitre.org>
-Date: Tue, 1 Jul 2008 17:46:02 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Christian Hoffmann <hoffie@...too.org>
-cc: oss-security@...ts.openwall.com, coley@...us.mitre.org
-Subject: Re: CVE request: php 5.2.6 ext/imap buffer overflows
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/25/6
+Message-ID: <20080225133640.GE20336@openwall.com>
+Date: Mon, 25 Feb 2008 16:36:40 +0300
+From: "(GalaxyMaster)" <galaxy@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: wiki page/namespace names
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
+I've just spotted a new page named 'code_reviews' (the welcome page uses
+'Code Reviews' as an internal link to that page, DokuWiki replaces any
+spaces with '_').  There is also the 'distro-patches' page.  Perhaps we
+should follow some naming convention on namespace/page names?  Moreover,
+I suggest to create a namespace dedicated to Wiki editing (best
+practices, conventions, etc) where new wiki authors could read some
+hints how to create proper consistent with others pages for OSS Security
+Wiki.
 
-On Tue, 24 Jun 2008, Christian Hoffmann wrote:
+I'd like to create (and maintain) a subsection of this proposed
+namespace where I will describe the current list of installed syntax
+(and possibly other) plugins with short usage samples.
 
-> On 2008-06-23 21:20, Steven M. Christey wrote:
-> > ======================================================
-> > Name: CVE-2008-2829
-> > Status: Candidate
-> >
-> > ...
-> > ...
->
-> So, according to the information from the bug, this issue might not only
-> allow for DoS but possibly for code execution as well, at least this is
-> what it looks like to me.
+-- 
+(GM)
 
-Changed the description to account for this possibility.
-
-> Also, I'm not quote sure why you are explicitily mentioning 5.2.5. To me
-> it looks like all versions of php are affected, so in my opinion this
-> looks a bit confusing. Only a cosmetic thing though.
-
-5.2.5 was mentioned since http://bugs.php.net/bug.php?id=42862 supplied a
-patch against 5.2.5.  We don't always provide exhaustive lists of versions
-in CVE descriptions, but we do include those that seem to be most likely
-reported by others.  These serve as "correlators" across distinct sources.
-
-For example, a milw0rm post might say "1.6 is affected" and the vendor
-might later say "1.4 through 1.9."  If we exclude the version as reported
-in the milw0rm post, then it produces more work for people who have to
-figure out whether the milw0rm post and vendor announcement are really the
-same issue or not.  This is a very subtle point and one that most
-consumers probably don't care about, but we try to do this in CVE as much
-as we can, since we have to deal with multiple audiences.
-
-In this particular case, including 5.2.5 was probably not essential and
-potentially confusing to some, but it was a natural consequence of the
-mindset that we have when we write descriptions.
-
-- Steve
