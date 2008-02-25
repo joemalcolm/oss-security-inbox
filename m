@@ -1,35 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/08/4
-Message-ID: <489C5E69.5010804@gentoo.org>
-Date: Fri, 08 Aug 2008 16:55:37 +0200
-From: Christian Hoffmann <hoffie@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/25/9
+Message-ID: <26712.1203949348@devserv.devel.redhat.com>
+Date: Mon, 25 Feb 2008 09:22:28 -0500
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: jorton@...hat.com
-Subject: Re: CVE request: php-5.2.6 overflow issues
+Subject: Re: wiki page/namespace names, wiki feature requests, etc.
 Content-Type: text/plain; charset=utf-8
 
-On 2008-08-08 16:01, Joe Orton wrote:
-> The explode() bug could only be triggered if a script passed a delimiter 
-> from untrusted script input without sanitizing/checking it first, which 
-> is fairly pathological behaviour.  I would call that a script bug, not 
-> an issue in the PHP interpreter.
-Ok, sounds reasonable.
+> 
+> > The problem I see though, is keeping track of all these terms.  Is there a
+> > way I could create a page called "terms:buffer_overflow", that would then
+> > be magically added to an index at "terms"?
+> 
+> I can install the auto-index plugin that does this.  Currently, we are running
+> a bare installation of DokuWiki with the minimal set of plugins.
+> 
+> One more topic to discuss is where all these Wiki enhancements should be
+> discussed.  I feel that oss-security is the wrong place since this
+> mailing list's goal is to discuss security and not the Wiki itself.
+> Perhaps, all Wiki-related discussions should go to to a namespace that
+> is describing the Wiki itself, and once some functionality is discussed
+> there - a short request for approval/disapproval should be posted here.
+> My concern is that if we move the whole Wiki-enhancement topic off this
+> list we might lose a connection between people on this list (who are
+> populating the Wiki) and a team who is maintaining the Wiki (currently,
+> it's me and Solar).
+> 
 
-No idea whether a CVE should be assigned anyway -- if it does indeed 
-allow for (local) code execution, that'd effectively mean bypass of 
-safe_mode/open_basedir. Such issues already got CVEs assigned in the 
-pass, so I guess this one should as well.
-
-Local DoS only could be caused by several other means as well (infinite 
-recursion, ...), so if somebody could prove it that it only allows for 
-DoS, then there is probably no need for a CVE.
-
-
-Thanks for your reply!
+I think you're getting a little too technical here. While in theory we
+could have a separate list for infrastructure discussions, it's probably
+too premature for that. If in the future, we find it's generating too much
+noise, we can do this. For now though, if someone doesn't care about the
+wiki, they can just not read those messages. I think discussing issues
+pertinent to the oss-security concept as a whole on this list is relevant
+and wise. As you say, if we move off-list, we will lose a lot of eyeballs.
 
 -- 
-Christian Hoffmann
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (261 bytes)
+    JB
