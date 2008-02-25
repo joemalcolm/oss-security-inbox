@@ -1,30 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/25/2
-Message-id: <1203919907.26938.TMDA@linsec.ca>
-Date: Sun, 24 Feb 2008 23:09:46 -0700
-From: Vincent Danen <vdanen@...sec.ca>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/25/10
+Message-ID: <20080225143507.GH20336@openwall.com>
+Date: Mon, 25 Feb 2008 17:35:07 +0300
+From: "(GalaxyMaster)" <galaxy@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: list archive
+Subject: Re: wiki page/namespace names, wiki feature requests, etc.
 Content-Type: text/plain; charset=utf-8
 
-* [2008-02-25 03:18:21 +0300] Solar Designer wrote:
+On Mon, Feb 25, 2008 at 09:22:28AM -0500, Josh Bressers wrote:
 
->Earlier today, I wrote:
->
->> MARC will likely be next - and please let me properly submit the lists,
->> including archived messages.
->
->This is now done:
->
->	http://marc.info/?l=oss-security
->	http://marc.info/?l=xvendor
->
->I've added the Gmane and MARC links for oss-security to the wiki.
+> wiki, they can just not read those messages. I think discussing issues
+> pertinent to the oss-security concept as a whole on this list is relevant
+> and wise. As you say, if we move off-list, we will lose a lot of eyeballs.
 
-Thanks for letting us know.  As much as I wanted the archives up, it
-wasn't me that did it.  =)  But it's nice that there up now.
+Agreed.  Then I propose to prefix any Wiki-related messages with the
+'wiki:' prefix, so those who aren't interested can easily distinguish
+such messages and skip them.
+
+Now re: modules (like auto-index).  We need some way to determine when
+a request for a new Wiki functionality should be fulfilled and when it
+should be denied.  Although, I'm glad to invest my spare time into this
+project (as a sysadmin, a wiki maintainer, etc.) I think it's unwise to
+install any requested plugin (or implement some feature from scratch)
+per initial request.  How about votes from 3-4 subscribers to get
+a green light to a request?  Or we can define a list of people who are
+eligible to approve such changes.
 
 -- 
-Vincent Danen @ http://linsec.ca/
+(GM)
 
-Content of type "application/pgp-signature" skipped
