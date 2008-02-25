@@ -1,31 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/04/12
-Message-ID: <Pine.GSO.4.51.0808041449060.23930@faron.mitre.org>
-Date: Mon, 4 Aug 2008 14:49:11 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/25/5
+Message-ID: <0802250834490.19076@mjc.redhat.com>
+Date: Mon, 25 Feb 2008 08:41:22 +0000 (GMT)
+From: Mark J Cox <mjc@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: vtigercrm < 5.0.4
+Subject: Re: charter - advisories
 Content-Type: text/plain; charset=utf-8
 
+On Mon, 25 Feb 2008, Solar Designer wrote:
+> Also, a question to those vendors (represented in here) who don't copy
+> their advisories to Bugtraq currently (too shy or polite) - will you
+> start sending them to this new special-purpose list?
 
-======================================================
-Name: CVE-2008-3458
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3458
-Reference: MISC:http://trac.vtiger.com/cgi-bin/trac.cgi/changeset/11811
-Reference: CONFIRM:http://sourceforge.net/project/shownotes.php?release_id=567189
-Reference: CONFIRM:http://trac.vtiger.com/cgi-bin/trac.cgi/ticket/2107
-Reference: CONFIRM:http://wiki.vtiger.com/index.php/Vtiger_CRM_5.0.4_-_Release_Notes
-Reference: BID:27228
-Reference: URL:http://www.securityfocus.com/bid/27228
-Reference: OSVDB:40218
-Reference: URL:http://www.osvdb.org/40218
-Reference: SECUNIA:28370
-Reference: URL:http://secunia.com/advisories/28370
+For Red Hat products since we stopped supporting Red Hat Linux 9 we don't 
+send to public mailing lists; customers using our products would be signed 
+up to Red Hat Network which gives them customised alerts based on what 
+they've got installed, and other interested folks who are not customers 
+can subscribe to our announcement mailing list.
 
-Vtiger CRM before 5.0.4 stores sensitive information under the web
-root with insufficient access control, which allows remote attackers
-to read mail merge templates via a direct request to the
-wordtemplatedownload directory.
+LWN already capture advisories from all vendors and try to collate it 
+(with moderate degrees of sucess): http://lwn.net/Alerts/   so I'm not 
+convinced of the value of another list.
 
-
+Thanks, Mark
+--
+Mark J Cox / Red Hat Security Response Team
