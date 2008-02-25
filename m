@@ -1,65 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/22/1
-Message-ID: <Pine.GSO.4.51.0810221254090.25959@faron.mitre.org>
-Date: Wed, 22 Oct 2008 12:55:39 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/25/4
+Message-id: <1203920413.27106.TMDA@linsec.ca>
+Date: Sun, 24 Feb 2008 23:18:13 -0700
+From: Vincent Danen <vdanen@...sec.ca>
 To: oss-security@...ts.openwall.com
-cc: hoffie@...too.org, coley@...re.org
-Subject: Re: CVE request: mantisbt < 1.1.4: RCE
+Subject: Re: charter - advisories
 Content-Type: text/plain; charset=utf-8
 
+* [2008-02-25 01:26:00 +0300] Solar Designer wrote:
 
-Here are 3 CVE's.  The cookie logout issue was a bit of a tossup.
+>On Wed, Feb 20, 2008 at 12:26:21PM -0700, Vincent Danen wrote:
+>> Hmmm... maybe we should clarify the advisories we don't want to see.  I
+>> guess advisories from, say, iDefense, would be valuable.  But advisories
+>> from Mandriva or SUSE not so much.
+>> 
+>> Maybe we should indicate no *vendor* advisories,
+>
+>I think this is pretty much what we did already.  From the charter:
+>
+>Security advisories aimed at end-users only are not welcome (e.g., those
+>from a distribution vendor announcing new pre-built packages).  There has
+>to be desirable information for others in the Open Source community
+>(e.g., an upstream maintainer may announce a new version of their
+>software with security fixes to be picked up by distributors).
+>
+>If you can word this better, please go ahead and edit it on the wiki.
 
-- Steve
+No, that sounds fine to me, but I don't think it was there when I
+initially replied (or at least, not when I had looked at it last prior
+to that reply).
 
+>> and make a second list specifically for that?
+>
+>I'd be happy to make such a list if there's demand - is there?  Let me
+>address this question to those vendors (represented in here) who
+>currently copy their advisories to Bugtraq - will you start sending them
+>to this new special-purpose list?  If so, will you discontinue sending
+>them to Bugtraq, suggesting that whoever wants to receive all-vendor
+>advisories should subscribe the new special-purpose list?  I think this
+>could help us reclaim Bugtraq as a general security discussion list.
 
-======================================================
-Name: CVE-2008-4687
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4687
-Reference: MILW0RM:6768
-Reference: URL:http://www.milw0rm.com/exploits/6768
-Reference: MLIST:[oss-security] 20081019 CVE request: mantisbt < 1.1.4: RCE
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/10/19/1
-Reference: CONFIRM:http://mantisbt.svn.sourceforge.net/viewvc/mantisbt/branches/BRANCH_1_1_0/mantisbt/core/utility_api.php?r1=5679&r2=5678&pathrev=5679
-Reference: CONFIRM:http://www.mantisbt.org/bugs/changelog_page.php
-Reference: CONFIRM:http://www.mantisbt.org/bugs/view.php?id=0009704
-Reference: CONFIRM:https://bugs.gentoo.org/show_bug.cgi?id=242722
+For Mandriva, I can say yes.  We currently send to bugtraq, FD, our own
+announcements list (which includes the bugfix advisories, and would
+likely remain the only source of bugfix/enhancement advisory
+notification), and I believe to CERT.  We would drop the sending to
+bugtraq and FD if such a list existed.
 
-manage_proj_page.php in Mantis before 1.1.4 allows remote
-authenticated users to execute arbitrary code via a sort parameter
-containing PHP sequences, which are processed by create_function
-within the multi_sort function in core/utility_api.php.
+>Note that Bugtraq will remain quite different from oss-security even if
+>reclaimed as a discussion list.  oss-security is for people involved
+>with OSS projects (although others are welcome to listen to our
+>conversations) and for detailed discussions of source code patches, etc.
+>when that is needed.  Bugtraq is for everyone, including end-users and
+>closed-source folks - and it is large-scale, meaning that discussions of
+>individual issues should not run for too long and get into minor detail.
 
+I don't think there is currently anything with the same goals/content as
+what we'll be seeing on oss-security.
 
-======================================================
-Name: CVE-2008-4688
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4688
-Reference: MLIST:[oss-security] 20081020 Re: CVE request: mantisbt < 1.1.4: RCE
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/10/20/1
-Reference: CONFIRM:http://mantisbt.svn.sourceforge.net/viewvc/mantisbt/branches/BRANCH_1_1_0/mantisbt/core/string_api.php?r1=5285&r2=5384&pathrev=5384
-Reference: CONFIRM:http://www.mantisbt.org/bugs/changelog_page.php
-Reference: CONFIRM:http://www.mantisbt.org/bugs/view.php?id=9321
+>Also, a question to those vendors (represented in here) who don't copy
+>their advisories to Bugtraq currently (too shy or polite) - will you
+>start sending them to this new special-purpose list?
 
-core/string_api.php in Mantis before 1.1.3 does not check the
-privileges of the viewer before composing a link with issue data in
-the source anchor, which allows remote attackers to discover an
-issue's title and status via a request with a modified issue number.
+With my Annvix vendor hat on, I'd say no, but it's largely due to the
+small userbase and my not wanting to expend needless energy on writing
+advisories (for the Annvix userbase, the changelogs are sufficient).
 
+-- 
+Vincent Danen @ http://linsec.ca/
 
-======================================================
-Name: CVE-2008-4689
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4689
-Reference: MLIST:[oss-security] 20081020 Re: CVE request: mantisbt < 1.1.4: RCE
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/10/20/1
-Reference: CONFIRM:http://www.mantisbt.org/bugs/changelog_page.php
-Reference: CONFIRM:http://www.mantisbt.org/bugs/file_download.php?file_id=1988&type=bug
-Reference: CONFIRM:http://www.mantisbt.org/bugs/view.php?id=9664
-
-Mantis before 1.1.3 does not unset the session cookie during logout,
-which makes it easier for remote attackers to hijack sessions.
-
-
+Content of type "application/pgp-signature" skipped
