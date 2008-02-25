@@ -1,26 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/12/3
-Message-Id: <200805121849.48599.rbu@gentoo.org>
-Date: Mon, 12 May 2008 18:49:48 +0200
-From: Robert Buchholz <rbu@...too.org>
-To: oss-security@...ts.openwall.com
-Cc: Nico Golde <oss-security+ml@...lde.de>
-Subject: Re: CVE request: Emacs 21 fast-lock-mode arbitrary lips code execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/25/11
+Message-ID: <Pine.GSO.4.51.0802251052120.8463@faron.mitre.org>
+Date: Mon, 25 Feb 2008 10:56:12 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Josh Bressers <bressers@...hat.com>
+cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Help (CVE request for mysql bug #22413)
 Content-Type: text/plain; charset=utf-8
 
-On Monday, 12. May 2008, Nico Golde wrote:
-> Hi,
->
-> * Robert Buchholz <rbu@...too.org> [2008-05-10 15:01]:
-> > Emacs 21 and Xemacs will execute any lisp code present in a .flc file
-> > that accompanies the file the user opens.
->
-> The same applies to emacs22.
 
-Our emacs maintainer said version 22 would warn you that lisp code from the 
-file would be executed. Could you confirm otherwise?
-
-Robert
+FYI, I'm not on oss-security or vendor-sec.  I don't necessarily see a
+need to be subscribed to them either, although it would be convenient.
 
 
-Download attachment "signature.asc " of type "application/pgp-signature" (190 bytes)
+On Thu, 21 Feb 2008, Josh Bressers wrote:
+
+> I think this is a good opportunity to ask you how we can use this list to
+> make your life easier.  Perhaps it's worth thinking about ways some of the
+> subscribed CNAs can dish out CVE ids to reduce your load a little bit for
+> these public issues that obviously lack a proper id.
+
+I'd think that if it's a technically-public issue that probably hasn't
+made it into the "mainstream" yet, then some CNA who gets our "CVENEW"
+notifications could possibly assign ID's.  I'm thinking things like
+updates to upstream packages that aren't in a lot of distros, or a bug ID
+that isn't marked clearly as having security implications.  However, we
+would also need to be notified if a CVE was assigned, to further reduce
+the risk of duplication.
+
+- Steve
