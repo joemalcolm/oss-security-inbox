@@ -1,41 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/24/6
-Message-ID: <48B1548D.2040207@pardus.org.tr>
-Date: Sun, 24 Aug 2008 15:31:09 +0300
-From: Pınar Yanardağ <pinar@...dus.org.tr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/26/5
+Message-ID: <20080226195006.GA30763@ngolde.de>
+Date: Tue, 26 Feb 2008 20:50:07 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: vlc
+Subject: Re: CVE request: vlc
 Content-Type: text/plain; charset=utf-8
 
-Nico Golde wrote On 24-08-2008 13:10:
-> Hi,
-> * Pinar Yanarda<pinar@...dus.org.tr>  [2008-08-24 11:23]:
->    
->> Nico Golde wrote On 24-08-2008 03:13:
->>      
->>> Hi,
->>> there seems to be a buffer overflow in videolans mms
->>> handling:
->>> http://www.orange-bat.com/adv/2008/adv.08.24.txt
->>>
->>>        
->> Btw, a vendor patch has been released:
->> http://mailman.videolan.org/pipermail/vlc-devel/2008-August/048488.html
->>      
->
-> Wow that was fast, 4 hours after I notified them of the
-> problem.
-> Looks correct to me. Anyone else had a look at the patch?
->    
+Hi Steven,
+* Steven M. Christey <coley@...us.mitre.org> [2008-02-26 20:02]:
+> The tone of the VLC advisory suggests it's not ready for public release,
+> but given the public nature of this list, I'm filling in the CVE
+> description anyway.
 
-I was having some trouble to apply this patch but they updated it a 
-couple of hours ago, which works fine now.
+Do you think it's not ready for public usage because of:
+"Pending
+VLC 0.8.6e bugfix release
+Public disclosure"?
 
-http://mailman.videolan.org/pipermail/vlc-devel/2008-August/048504.html
+This came through our BTS so it seems to be public enough :)
+Thanks for the id!
 
-Cheers,
-
+Cheers
+Nico
 -- 
-Pınar Yanardağ
-http://pinguar.org
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
+Content of type "application/pgp-signature" skipped
