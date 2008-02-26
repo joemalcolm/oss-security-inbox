@@ -1,50 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/08/16
-Message-ID: <Pine.GSO.4.51.0807081832430.16947@faron.mitre.org>
-Date: Tue, 8 Jul 2008 18:43:16 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/26/2
+Message-ID: <Pine.GSO.4.51.0802261303360.2856@faron.mitre.org>
+Date: Tue, 26 Feb 2008 13:04:06 -0500 (EST)
 From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Major DNS vulnerability announced  [CVE Question]
+Subject: Re: CVE request: lighttpd
 Content-Type: text/plain; charset=utf-8
 
 
-On Tue, 8 Jul 2008, security curmudgeon wrote:
+======================================================
+Name: CVE-2008-0983
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0983
+Reference: CONFIRM:http://trac.lighttpd.net/trac/ticket/1562
+Reference: BID:27943
+Reference: URL:http://www.securityfocus.com/bid/27943
+Reference: FRSIRT:ADV-2008-0659
+Reference: URL:http://www.frsirt.com/english/advisories/2008/0659/references
+Reference: SECUNIA:29066
+Reference: URL:http://secunia.com/advisories/29066
 
-> Microsoft has:
-> DNS Insufficient Socket Entropy Vulnerability - CVE-2008-1447
-> DNS Cache Poisoning Vulnerability - CVE-2008-1454
->
-> Cisco has:
-> CVE-2008-1447
->
-> Question: Is CVE going to keep those two identifiers for the fundamental
-> issues, and load them up with affected vendors?
+lighttpd 1.4.18, and possibly other versions before 1.5.0, does not
+properly calculate the size of a file descriptor array, which allows
+remote attackers to cause a denial of service (crash) via a large
+number of connections, which triggers an out-of-bounds access.
 
-Based on my current read of things (perhaps faulty, and definitely without
-all the relevant details), CVE-2008-1447 is for a fundamental design
-problem with DNS itself, so it applies to all implementations (or "most,"
-according to CERT... I'm afraid to ask the followup question).
 
-CVE runs into this kind of challenge a couple times a year.  Usually it's
-for PROTOS-style analyses that find tons of issues in tons of
-implementations, where there are so many complications (and often
-insufficient details) that only a couple CVE's are used to identify them
-all.  However, when it comes to protocol design issues, it's not always
-clear what to do.
-
-In this case, there's also the practical implication that the same CVE is
-already being used for BIND, MS, and Cisco.  So even if we realize that
-splitting into separate ID's would be technically correct, doing so would
-probably cause more headaches than it solves.  (Although as Mark Cox
-mentioned to me, CVSS scoring might be more problematic since we have
-multiple products with the same CVE.)
-
-Unfortunately, these are limitations of CVE, especially early in the
-disclosure process.
-
-By the way, I'm treating Microsoft's "DNS Cache Poisoning Vulnerability"
-(CVE-2008-1454) as something that's Microsoft-specific, pending any
-further public details.  The bulletin doesn't seem to say anything about
-it being a general design problem.
-
-- Steve
