@@ -1,30 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/08/2
-Message-Id: <200803081818.48668.rbu@gentoo.org>
-Date: Sat, 8 Mar 2008 18:18:48 +0100
-From: Robert Buchholz <rbu@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/26/3
+Message-ID: <20080226183230.GA24290@ngolde.de>
+Date: Tue, 26 Feb 2008 19:32:30 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Cc: Florian Weimer <fw@...eb.enyo.de>, "Steven M. Christey" <coley@...us.mitre.org>, tss@....fi
-Subject: Re: CVE? CCE? dovecot setting is often used incorrectly
+Subject: CVE request: vlc
 Content-Type: text/plain; charset=utf-8
 
-On Saturday 08 March 2008, Florian Weimer wrote:
-> * Jonathan Smith:
-> > I've been trying to figure out what to do with this one. I'm not
-> > inclined to believe it deserves a CVE given that it is
-> > configuration (either dovecot config or filesystem permissions
-> > configuration). I read once on mitre.org about "Common
-> > Configuration Enumeration" aka "CCE" issues, but I've never seen
-> > them actually used. Maybe this is a good candidate?
->
-> Debian will release a security update with a patch, so we need a CVE
-> anyway.  We might use one from our pool (after all, it's an interplay
-> between our default MTA and Dovecot, and may not be very widespread),
-> or we might reference a generic one.  I don't know which one is
-> better.
+Hi Steve,
+can I get a CVE id for vlc because of the following issue?
 
-For the generic issue you can use CVE-2008-1199.
+The mp4 demuxer of vlc is missing validation of array 
+boundaries and thus allows overwriting arbitrary memory.
 
-Robert
+For more details see:
+http://www.videolan.org/security/sa0802.html
 
-Download attachment "signature.asc " of type "application/pgp-signature" (190 bytes)
+Patch:
+http://www.videolan.org/patches/vlc-0.8.6-CORE-2008-0130.patch
+
+Cheers
+Nico
+
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
