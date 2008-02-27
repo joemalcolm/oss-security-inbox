@@ -1,23 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/06/3
-Message-ID: <20080506194127.GH573@linsec.ca>
-Date: Tue, 6 May 2008 13:41:27 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/27/2
+Message-id: <1204077446.32278.TMDA@linsec.ca>
+Date: Tue, 26 Feb 2008 18:55:13 -0700
 From: Vincent Danen <vdanen@...sec.ca>
 To: oss-security@...ts.openwall.com
-Subject: openssh CVE-2008-1657 question
+Subject: Re: wiki page/namespace names, wiki feature	requests, etc.
 Content-Type: text/plain; charset=utf-8
 
-Out of curiousity, CVE-2008-1657 should only affect 4.4-4.9, correct?
-The ForceCommand functionality was introduced in 4.4.
+* [2008-02-25 17:35:07 +0300] (GalaxyMaster) wrote:
 
-It would be nice if the CVE entry made note of this.
+>> wiki, they can just not read those messages. I think discussing issues
+>> pertinent to the oss-security concept as a whole on this list is relevant
+>> and wise. As you say, if we move off-list, we will lose a lot of eyeballs.
+>
+>Agreed.  Then I propose to prefix any Wiki-related messages with the
+>'wiki:' prefix, so those who aren't interested can easily distinguish
+>such messages and skip them.
+>
+>Now re: modules (like auto-index).  We need some way to determine when
+>a request for a new Wiki functionality should be fulfilled and when it
+>should be denied.  Although, I'm glad to invest my spare time into this
+>project (as a sysadmin, a wiki maintainer, etc.) I think it's unwise to
+>install any requested plugin (or implement some feature from scratch)
+>per initial request.  How about votes from 3-4 subscribers to get
+>a green light to a request?  Or we can define a list of people who are
+>eligible to approve such changes.
 
-Would be even nicer if the boneheads over at SecurityFocus wouldn't go
-around assuming that <4.9 means everything, including 3.0, without
-actually doing some checking.  Oh, wait, yeah, they go back as far as
-1.0.
+I'm ok with a vote.  Actually, I would say that most people probably
+don't care, so I'd say if you get 3-4 votes *against* something, then
+don't implement it.  Most people who don't care one way or the other
+will say nothing, while those against something are more likely to speak
+up.
 
-Somehow I don't think that's accurate.
+Of course, a valid reason as to why they are against something should be
+a prerequisite.
 
 -- 
 Vincent Danen @ http://linsec.ca/
