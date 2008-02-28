@@ -1,23 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/14/2
-Message-Id: <200807141727.39382.hanno@hboeck.de>
-Date: Mon, 14 Jul 2008 17:27:36 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: dotclear < 1.2.8
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/28/1
+Message-ID: <20080228143139.GA26333@suse.de>
+Date: Thu, 28 Feb 2008 15:31:39 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: oss-security@...ts.openwall.com, coley@...re.org
+Subject: CVE ids for Opera 9.26 security update?
 Content-Type: text/plain; charset=utf-8
 
-http://www.dotclear.net/blog/post/2008/04/18/Dotclear-128
-(in french)
+Hi,
 
-From CHANGELOG:
-== 1.2.8 ==================================================
-- Images upload vulnerability fix
+Has someone assigned CVE ids for the current Opera 9.26 update?
 
+Top URL: http://www.opera.com/docs/changelogs/linux/926/
 
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+And seperate advisory URLs:
+http://www.opera.com/support/search/view/877/
+http://www.opera.com/support/search/view/879/
+http://www.opera.com/support/search/view/880/
 
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+Ciao, Marcus
