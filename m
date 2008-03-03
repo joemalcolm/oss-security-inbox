@@ -1,24 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/14/3
-Message-ID: <Pine.GSO.4.51.0808141701471.17005@faron.mitre.org>
-Date: Thu, 14 Aug 2008 17:01:57 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/03/2
+Message-ID: <Pine.GSO.4.51.0803022346450.27505@faron.mitre.org>
+Date: Sun, 2 Mar 2008 23:47:17 -0500 (EST)
 From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: HAVP 0.89 fixes a crash
+To: Robert Buchholz <rbu@...too.org>
+cc: oss-security@...ts.openwall.com, coley@...re.org
+Subject: Re: CVE request: lighttpd mod_cgi script source disclosure
 Content-Type: text/plain; charset=utf-8
 
 
-======================================================
-Name: CVE-2008-3688
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3688
-Reference: MLIST:[havp-devel] 20080715 Infinite loop which causes havp to block completely
-Reference: URL:https://sourceforge.net/mailarchive/message.php?msg_name=487CDF51.5060201%40endian.com
-Reference: CONFIRM:http://www.server-side.de/index.htm
+On Mon, 3 Mar 2008, Robert Buchholz wrote:
 
-sockethandler.cpp in HTTP Antivirus Proxy (HAVP) 0.88 allows remote
-attackers to cause a denial of service (hang) by connecting to a
-non-responsive server, which triggers an infinite loop due to an
-uninitialized variable.
+> mod_cgi in lighttpd 1.4.18 (and earlier?) will send the source of a cgi
+> script if it fails to fork the cgi handler, instead of an HTTP 500.
+> mod_cgi is disabled by default.
+>
+> See for a patch:
+>   http://trac.lighttpd.net/trac/changeset/2107
+>   https://bugs.gentoo.org/show_bug.cgi?id=211956
 
 
+Use CVE-2008-1111 - this will be public (in CVE) sometime on Monday.
+
+- Steve
