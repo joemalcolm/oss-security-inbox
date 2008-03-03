@@ -1,31 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/21/7
-Message-ID: <20080521130222.GA14109@suse.de>
-Date: Wed, 21 May 2008 15:02:22 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Root name server changes -> bind
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/03/1
+Message-Id: <200803030110.24885.rbu@gentoo.org>
+Date: Mon, 3 Mar 2008 01:10:24 +0100
+From: Robert Buchholz <rbu@...too.org>
+To: oss-security@...ts.openwall.com, coley@...re.org
+Subject: CVE request: lighttpd mod_cgi script source disclosure
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hey all,
 
-We received this customer report regarding the IP number change of the "L" root
-nameserver and sync with bind:
+mod_cgi in lighttpd 1.4.18 (and earlier?) will send the source of a cgi 
+script if it fails to fork the cgi handler, instead of an HTTP 500. 
+mod_cgi is disabled by default.
 
-	ICANN moved one of its DNS root servers, l.root-servers.net to another IP
-	address, see http://blog.icann.org/?p=227. As reported on the blog
-	http://www.renesys.com/blog/2008/05/identity_theft_hits_the_root_n_1.shtml,
-	independent DNS servers popped up on the old root server address -- actually
-	several of them.
+See for a patch:
+  http://trac.lighttpd.net/trac/changeset/2107
+  https://bugs.gentoo.org/show_bug.cgi?id=211956
 
-	The security consequences of obscure DNS root server usage are obvious, IMHO.
-	You might want to consider security updates to the bind package with an updated
-	root.hint file. (Since the story is on Slashdot, it is as public as it can get;
-	thus I use the regular channel for this request.)
+Please assign a CVE id.
 
-Not sure if this warrants a CVE id.
 
-Ciao, Marcus
--- 
-Working, but not speaking, for the following german company:
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+Thanks, Robert
+
+Download attachment "signature.asc " of type "application/pgp-signature" (190 bytes)
