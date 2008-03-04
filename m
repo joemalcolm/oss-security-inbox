@@ -1,35 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/07/2
-Message-ID: <4821F827.8010305@gentoo.org>
-Date: Wed, 07 May 2008 20:42:47 +0200
-From: Christian Hoffmann <hoffie@...too.org>
-To: coley@...re.org
-CC: oss-security@...ts.openwall.com
-Subject: CVE request: Bugzilla (Unauthorized Bug Change, XSS, Account Impersonation)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/04/2
+Message-ID: <Pine.GSO.4.51.0803041650310.5494@faron.mitre.org>
+Date: Tue, 4 Mar 2008 16:51:42 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: request CVE id: insecure handling of DISPLAY in rxvt
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-can we please get CVE ids assigned for the three issues mentioned in the 
-release announcement [1] of the new bugzilla versions?
+On Tue, 4 Mar 2008, Nico Golde wrote:
 
-"""
-* Users without the "canconfirm" privilege could enter a bug as
-   NEW or ASSIGNED by using the XML-RPC interface.
+> "If the DISPLAY environment is not set, rxvt opens an xterm
+> on :0, which on some headless login-server means anyone can setup
+> an fake X server waiting for someone loggin in without X
+> forwarding to start rxvt by some mistake or by some program (thus
+> without even noticing) and getting full shell access to that other
+> account."
+>
+> This is Debian bug 469296[0].
 
-* When viewing several bugs at once, there was a Cross-Site
-   Scripting hole.
+Use CVE-2008-1142
 
-* The inbound email interface allowed you to set the Reporter via
-   the text of the email, instead of just using the From header.
-"""
+I'm not going to pretend to understand this issue, plus Lubomir's bug
+comment raises the question of dependency on user error (though it's
+probably a relatively common error, I'd think).  So, I'll fill in the CVE
+later once this has been fleshed out.
 
-[1] http://www.bugzilla.org/security/2.20.5/
-
-
-Thanks,
--- 
-Christian Hoffmann
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (261 bytes)
+- Steve
