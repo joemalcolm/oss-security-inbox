@@ -1,22 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/23/4
-Message-ID: <Pine.GSO.4.51.0806231427400.1760@faron.mitre.org>
-Date: Mon, 23 Jun 2008 14:27:51 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/04/1
+Message-ID: <20080304151001.GC18638@ngolde.de>
+Date: Tue, 4 Mar 2008 16:10:02 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: tmsnc
+Subject: request CVE id: insecure handling of DISPLAY in rxvt
 Content-Type: text/plain; charset=utf-8
 
+Hi all,
+Steve, can I get a CVE id for the following issue in rxvt?
 
-======================================================
-Name: CVE-2008-2828
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2828
-Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=487222
+"If the DISPLAY environment is not set, rxvt opens an xterm 
+on :0, which on some headless login-server means anyone can setup 
+an fake X server waiting for someone loggin in without X 
+forwarding to start rxvt by some mistake or by some program (thus 
+without even noticing) and getting full shell access to that other 
+account."
 
-Stack-based buffer overflow in tmsnc allows remote attackers to cause
-a denial of service (crash) and possibly execute arbitrary code via an
-MSN packet with a UBX commands containing a large UBX payload length
-field.
+This is Debian bug 469296[0].
 
+It should be a good idea to check other terminal emulators 
+as well.
 
+[0] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=469296
+
+Cheers
+Nico
+
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
