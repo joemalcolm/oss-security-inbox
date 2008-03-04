@@ -1,61 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/17/4
-Message-ID: <Pine.GSO.4.51.0812162050070.5724@faron.mitre.org>
-Date: Tue, 16 Dec 2008 20:52:42 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/04/3
+Message-ID: <20080304223410.GB20956@steve.org.uk>
+Date: Tue, 4 Mar 2008 22:34:10 +0000
+From: Steve Kemp <steve@...ve.org.uk>
 To: oss-security@...ts.openwall.com
-cc: Steven Christey <coley@...us.mitre.org>
-Subject: Re: CVE request: phpMyAdmin < 3.1.1.0 (SQL injection through XSRF on several pages )
+Subject: Re: request CVE id: insecure handling of DISPLAY in rxvt
 Content-Type: text/plain; charset=utf-8
 
+On Tue Mar 04, 2008 at 16:51:42 -0500, Steven M. Christey wrote:
 
-Two separate CVE's are assigned, one for the original milw0rm exploit and
-the other for the unspecified vectors implied by the implied "XSRF on
-several pages" in the PMASA-2008-10 advisory.
+> > "If the DISPLAY environment is not set, rxvt opens an xterm
+> > on :0, which on some headless login-server means anyone can setup
+> > an fake X server waiting for someone loggin in without X
+> > forwarding to start rxvt by some mistake or by some program (thus
+> > without even noticing) and getting full shell access to that other
+> > account."
+> >
+> > This is Debian bug 469296[0].
+> 
+> Use CVE-2008-1142
+> 
+> I'm not going to pretend to understand this issue, plus Lubomir's bug
+> comment raises the question of dependency on user error (though it's
+> probably a relatively common error, I'd think).  So, I'll fill in the CVE
+> later once this has been fleshed out.
 
-- Steve
+  It seems like an issue which I'd almost be tempted to say isn't
+ a security one.
 
-======================================================
-Name: CVE-2008-5621
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5621
-Reference: MILW0RM:7382
-Reference: URL:http://www.milw0rm.com/exploits/7382
-Reference: CONFIRM:http://www.phpmyadmin.net/home_page/security/PMASA-2008-10.php
-Reference: FEDORA:FEDORA-2008-11221
-Reference: URL:https://www.redhat.com/archives/fedora-package-announce/2008-December/msg00784.html
-Reference: FEDORA:FEDORA-2008-11221
-Reference: URL:https://www.redhat.com/archives/fedora-package-announce/2008-December/msg00784.html
-Reference: BID:32720
-Reference: URL:http://www.securityfocus.com/bid/32720
-Reference: SECUNIA:33076
-Reference: URL:http://secunia.com/advisories/33076
-Reference: SECUNIA:33146
-Reference: URL:http://secunia.com/advisories/33146
+  The idea is that if you typically connect to a host with display
+ forwarding you'll be used to running rxvt and having the resulting
+ application display locally.
 
-Cross-site request forgery (CSRF) vulnerability in phpMyAdmin 2.11.x
-before 2.11.9.4 and 3.x before 3.1.1.0 allows remote attackers to
-perform unauthorized actions as the administrator via a link or IMG
-tag to tbl_structure.php with a modified table parameter.  NOTE: this
-can be leveraged to conduct SQL injection attacks and execute
-arbitrary code.
+  However if you forget to enable display forwarding then run
+ RXVT it will connect to :1, rather than complain there is no
+ DISPLAY set and abort.  That *could* allow a malicious local
+ server to steal keyboard, & etc.
 
+  However I have a hard time seeing this in practise.  It would
+ mean that locally you couldn't trust root - since it would take
+ a local root user to setup the fake X11 server on :1..
 
-======================================================
-Name: CVE-2008-5622
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5622
-Reference: CONFIRM:http://www.phpmyadmin.net/home_page/security/PMASA-2008-10.php
-Reference: FEDORA:FEDORA-2008-11221
-Reference: URL:https://www.redhat.com/archives/fedora-package-announce/2008-December/msg00784.html
-Reference: FEDORA:FEDORA-2008-11221
-Reference: URL:https://www.redhat.com/archives/fedora-package-announce/2008-December/msg00784.html
-Reference: SECUNIA:33146
-Reference: URL:http://secunia.com/advisories/33146
+  This attack is like saying that if you forget to open your
+ eyes you might accidentally walk into the wrong house and
+ have people see what you're doing..
 
-Multiple cross-site request forgery (CSRF) vulnerabilities in
-phpMyAdmin 2.11.x before 2.11.9.4 and 3.x before 3.1.1.0 allow remote
-attackers to conduct SQL injection attacks via unknown vectors related
-to the table parameter, a different vector than CVE-2008-5621.
-
-
+Steve
+-- 
+http://www.steve.org.uk/
