@@ -1,32 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/05/1
-Message-Id: <200806051010.57849.rbu@gentoo.org>
-Date: Thu, 5 Jun 2008 10:10:55 +0200
-From: Robert Buchholz <rbu@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/05/1
+Message-ID: <47CE5D13.1020703@laas.fr>
+Date: Wed, 05 Mar 2008 09:42:59 +0100
+From: Matthieu Herrb <matthieu.herrb@...s.fr>
 To: oss-security@...ts.openwall.com
-Cc: Ned Ludd <solar@...too.org>
-Subject: Re: Python Unsafe Module Loading
+Subject: Re: request CVE id: insecure handling of DISPLAY in rxvt
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday 04 June 2008, Ned Ludd wrote:
-> So for nearly every python based program you can simply dump  *.so
-> *.py *.pyc files just about anywhere on the file system where an
-> admin might invoke python.
+Nico Golde wrote:
+> Hi all,
+> Steve, can I get a CVE id for the following issue in rxvt?
+> 
+> "If the DISPLAY environment is not set, rxvt opens an xterm 
+> on :0, which on some headless login-server means anyone can setup 
+> an fake X server waiting for someone loggin in without X 
+> forwarding to start rxvt by some mistake or by some program (thus 
+> without even noticing) and getting full shell access to that other 
+> account."
+> 
+> This is Debian bug 469296[0].
+> 
+> It should be a good idea to check other terminal emulators 
+> as well.
+> 
+> [0] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=469296
+> 
 
-As I also pointed out in our bug [1], this only happens in two cases:
-(1) The interactive shell is used to run python code.
-(2) A python script resides inside an untrusted directory.
+I don't understand how that's an issue with rxvt. If you "fix" the 
+terminal emulator not to that, yo can still run rxvt -display :0 or env 
+DISPLAY=:0 rxvt.
 
-What I expect to be the most common use case, running python code 
-from /usr, or /home, is safe. Since all out-of-the-box software would 
-be installed in directories that are not world-writable, I am tempted 
-call (2) an error on the user side. Changing the behaviour of python in 
-this manner would also break existing programs.
+But then  I also don't understant what you mean by "setup an fake X 
+server waiting for someone loggin in..."
 
+Could you describe the attack scenario in  a bit more details?
+-- 
+Matthieu Herrb
 
-Robert
-
-[1] https://bugs.gentoo.org/show_bug.cgi?id=224925
-
-
-Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
+Download attachment "smime.p7s" of type "application/x-pkcs7-signature" (4033 bytes)
