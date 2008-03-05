@@ -1,38 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/09/4
-Message-Id: <200809091418.43187.rbu@gentoo.org>
-Date: Tue, 9 Sep 2008 14:18:40 +0200
-From: Robert Buchholz <rbu@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/05/8
+Message-ID: <20080305125836.GA21650@ngolde.de>
+Date: Wed, 5 Mar 2008 13:58:36 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: MySQL empty bit-string literal server crash
+Subject: Re: request CVE id: insecure handling of DISPLAY in rxvt
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi Tomas,
+* Tomas Hoger <thoger@...hat.com> [2008-03-05 12:54]:
+> On Tue, 4 Mar 2008 22:34:10 +0000 Steve Kemp <steve@...ve.org.uk> wrote:
+> >   The idea is that if you typically connect to a host with display
+> >  forwarding you'll be used to running rxvt and having the resulting
+> >  application display locally.
+> > 
+> >   However if you forget to enable display forwarding then run
+> >  RXVT it will connect to :1, rather than complain there is no
+> >  DISPLAY set and abort.  That *could* allow a malicious local
+> >  server to steal keyboard, & etc.
+> > 
+> >   However I have a hard time seeing this in practise.  It would
+> >  mean that locally you couldn't trust root - since it would take
+> >  a local root user to setup the fake X11 server on :1..
+> 
+> I don't think you need root privileges to take advantage of this...
+> 
+> Let's assume shared box where users ssh -X and run some X programs,
+> e.g. rxvt.  Let's assume unprivileged user can start local X session
+> which will be DISPLAY=:0 and do xhost + to allow connections from other
+> users to her display (maybe Xvnc can be used instead of local X session
+> too).  Now she just have to wait for some other user to ssh without X
+> forwarding and start rxvt on her display.
 
-we consider the following bug a security issue. I'm not sure whether 
-MySQL upstream feels so as well. Quoting the ChangeLog:
+That was the scenario I thought of. Sure this is still not a 
+big issue and I doubt this gets "exploited" in practise 
+but...
 
-  An empty bit-string literal (b'') caused a server crash. Now the value  
-  is parsed as an empty bit value (which is treated as an empty string
-  in string context or 0 in numeric context). (Bug#35658)
+> Yes, many assumptions and ifs, but still silently assuming DISPLAY=:0
+> when no DISPLAY is set does not sound like a safe default.
 
+... I also see no reason in supporting a user "mistake" by 
+setting it to some default.
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-Bug:
-  http://bugs.mysql.com/bug.php?id=35658
-
-ChangeLogs:
-* 5.0.66
-  http://dev.mysql.com/doc/refman/5.0/en/releasenotes-es-5-0-66.html
-* 5.1.26
-  http://dev.mysql.com/doc/refman/5.1/en/news-5-1-26.html
-* 6.0.6
-  http://dev.mysql.com/doc/refman/6.0/en/news-6-0-6.html
-
-
-Gentoo handles this as bug 237166 [ https://bugs.gentoo.org/237166 ].
-
-
-Thanks,
-Robert
-
-Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
+Content of type "application/pgp-signature" skipped
