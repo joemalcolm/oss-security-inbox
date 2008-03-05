@@ -1,29 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/16/3
-Message-ID: <Pine.GSO.4.51.0809152052550.6953@faron.mitre.org>
-Date: Mon, 15 Sep 2008 20:53:40 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Tomas Hoger <thoger@...hat.com>
-cc: oss-security@...ts.openwall.com, coley@...re.org
-Subject: Re: CVE request: MySQL incomplete fix for CVE-2008-2079
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/05/3
+Message-ID: <20080305092432.GA10542@steve.org.uk>
+Date: Wed, 5 Mar 2008 09:24:32 +0000
+From: Steve Kemp <steve@...ve.org.uk>
+To: oss-security@...ts.openwall.com
+Subject: Re: request CVE id: insecure handling of DISPLAY in rxvt
 Content-Type: text/plain; charset=utf-8
 
+On Wed Mar 05, 2008 at 10:19:09 +0100, Tomas Hoger wrote:
 
-On Tue, 9 Sep 2008, Tomas Hoger wrote:
+> Yes, many assumptions and ifs, but still silently assuming DISPLAY=:0
+> when no DISPLAY is set does not sound like a safe default.
 
-> Devin Carraway of Debian noticed, that the upstream fix can be defeated
-> by local users via directory symlinks:
->
->   http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=480292#25
+  Agreed.
 
-Use CVE-2008-4097
+> But then  I also don't understant what you mean by "setup an fake X  
+> server waiting for someone loggin in..."
 
-> Which is also possible to defeat, as described by Devin in the upstream
-> bug report related to the original issue:
->
->   http://bugs.mysql.com/bug.php?id=32167
->   comment dated with "[18 Jul 9:43]"
+  This should be a matter of running 'startx' appropriately.  I was
+ under the misapprehension that only root could startup X, but that
+ seems not to be the case.
 
-Use CVE-2008-4098
+  Providing the host wasn't already running X then it might be possible
+ for local users to launch a copy they control.
 
-- Steve
+> Could you describe the attack scenario in  a bit more details?
+
+  I'd look forward to that too.
+
+
+Steve
+-- 
+# The Debian Security Audit Project.
+http://www.debian.org/security/audit
+
