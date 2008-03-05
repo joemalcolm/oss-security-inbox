@@ -1,35 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/13/1
-Message-Id: <200809131955.55815.rbu@gentoo.org>
-Date: Sat, 13 Sep 2008 19:55:52 +0200
-From: Robert Buchholz <rbu@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/05/4
+Message-ID: <20080305102227.GA32121@openwall.com>
+Date: Wed, 5 Mar 2008 13:22:27 +0300
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request (gpicview)
+Subject: wiki: Debian, auditing tools, vendor-sec
 Content-Type: text/plain; charset=utf-8
 
-On Tuesday 26 August 2008, Steven M. Christey wrote:
-> > http://sourceforge.net/tracker/index.php?func=detail&aid=2019481&gr
-> >oup_id=180858&atid=894869
-> >
-> > Possible symlink attack via the temporary created "/tmp/rot.jpg"
-> > file used for image rotation.
->
-> Use CVE-2008-3791
+On Wed, Mar 05, 2008 at 09:24:32AM +0000, Steve Kemp wrote:
+...
+> # The Debian Security Audit Project.
+> http://www.debian.org/security/audit
 
-This issue (and CVE-2008-3904) have been resolved by r845, and released 
-as 0.1.10:
-http://lxde.svn.sourceforge.net/viewvc/lxde?view=rev&sortby=date&revision=845
+Steve,
 
-Interestingly, upstream also fixed a bug in the open_url() function 
-where invoking the browser would allow for code execution via shell 
-metacharacters in the URL. However, from what I see the function is 
-only called with URLs in the "about" box. Unfortunately, upstream calls 
-this non-issue CVE-2008-3904. Patch here:
-http://lxde.svn.sourceforge.net/viewvc/lxde?view=rev&sortby=date&revision=847
+Some of the info you have on those pages is also useful for our wiki.
+I've just added links to your Security Auditing Tools and Automated
+Audit Examples pages to:
 
+	http://oss-security.openwall.org/wiki/tools
+	http://oss-security.openwall.org/wiki/links
 
-Regards,
-Robert
+Perhaps brief info on the tools should also be added to our tools page
+directly - maybe you could do that?
 
-Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
+Also, I notice that Debian is still not on our vendors page - would you
+add it, please? -
+
+	http://oss-security.openwall.org/wiki/vendors
+
+Debian is already on the distro-patches page, though. :-)
+
+Finally, are you still planning on creating an oss-security wiki page on
+vendor-sec, under the mailinglists namespace?  It could be as simple as
+copying your existing Wikipedia content onto our wiki.  It's just that I
+think it'd be most appropriate for you to do it.  Then others will be
+able to work on that page further, and the Wikipedia page could be based
+on ours.
+
+Thanks,
+
+-- 
+Alexander Peslyak <solar at openwall.com>
+GPG key ID: 5B341F15  fp: B3FB 63F4 D7A3 BCCC 6F6E  FC55 A2FC 027C 5B34 1F15
+http://www.openwall.com - bringing security into open computing environments
