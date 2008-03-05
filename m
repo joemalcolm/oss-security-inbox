@@ -1,18 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/28/5
-Message-ID: <87lk1u4g1d.fsf@mid.deneb.enyo.de>
-Date: Wed, 28 May 2008 17:14:22 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/05/9
+Message-ID: <20080305130408.GB21650@ngolde.de>
+Date: Wed, 5 Mar 2008 14:04:08 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSH key blacklisting
+Subject: Re: request CVE id: insecure handling of DISPLAY in rxvt
 Content-Type: text/plain; charset=utf-8
 
-* Tim Brown:
+Hi Matthieu,
+* Matthieu Herrb <matthieu.herrb@...s.fr> [2008-03-05 12:54]:
+> Nico Golde wrote:
+> >Steve, can I get a CVE id for the following issue in rxvt?
+> >"If the DISPLAY environment is not set, rxvt opens an xterm on :0, which on 
+> >some headless login-server means anyone can setup an fake X server waiting for 
+> >someone loggin in without X forwarding to start rxvt by some mistake or by 
+> >some program (thus without even noticing) and getting full shell access to 
+> >that other account."
+> >This is Debian bug 469296[0].
+> >It should be a good idea to check other terminal emulators as well.
+> >[0] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=469296
+> 
+> I don't understand how that's an issue with rxvt. If you "fix" the terminal 
+> emulator not to that, yo can still run rxvt -display :0 or env DISPLAY=:0 rxvt.
 
-> Maybe I've missed something, in which case, shoot me down, but why
-> unlike other services that make use of public key cryptography, does
-> OpenSSH not have use a model which supports proper authorisation and
-> revocation mechanisms?
+Sure but what's your point? It still looks different to me 
+if the user is forced to enable that or if it's done in the 
+background without him noticing it.
 
-I haven't seen a working revocation mechanism implemented elsewhere.
-It's a very difficult problem.
+> But then  I also don't understant what you mean by "setup an fake X server 
+> waiting for someone loggin in..."
+
+He basically meant starting an X server on :0.
+
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
