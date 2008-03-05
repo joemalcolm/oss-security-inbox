@@ -1,33 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/28/7
-Message-ID: <20080328005243.GA26946@openwall.com>
-Date: Fri, 28 Mar 2008 03:52:43 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/05/7
+Message-ID: <20080305111338.GA28871@steve.org.uk>
+Date: Wed, 5 Mar 2008 11:13:38 +0000
+From: Steve Kemp <steve@...ve.org.uk>
 To: oss-security@...ts.openwall.com
-Subject: wiki: links from list archive (was: using oss-security references in CVE)
+Subject: Re: wiki: Debian, auditing tools, vendor-sec
 Content-Type: text/plain; charset=utf-8
 
-I suggested:
-> > By the way, maybe we should also add a link to the oss-security wiki to
-> > page footers on that archive?  Or even to message trailers (such that
-> > the wiki link will be seen on third-party archives as well)?
+On Wed Mar 05, 2008 at 13:22:27 +0300, Solar Designer wrote:
 
-On Thu, Mar 27, 2008 at 08:29:22PM -0400, Josh Bressers wrote:
-> I like this idea.
+> Some of the info you have on those pages is also useful for our wiki.
+> I've just added links to your Security Auditing Tools and Automated
+> Audit Examples pages to:
+> 
+> 	http://oss-security.openwall.org/wiki/tools
+> 	http://oss-security.openwall.org/wiki/links
 
-Which of the two?
+  THanks.
 
-Anyway, I went ahead and added a link to oss-security archive page
-footers on http://www.openwall.com/lists/oss-security/
+> Perhaps brief info on the tools should also be added to our tools page
+> directly - maybe you could do that?
+> Also, I notice that Debian is still not on our vendors page - would you
+> add it, please? -
 
-> It will help drive eyeballs to the wiki, which in turn
-> should improve the wiki (or at least help educate the viewer).
+  Yes I'll do that.
 
-Right.
+> Finally, are you still planning on creating an oss-security wiki page on
+> vendor-sec, under the mailinglists namespace?  
 
-> I added some minimal content:
-> http://oss-security.openwall.org/wiki/disclosure/cve
+  Certainly.  It had slipped my todo list, I'll make sure it is done
+ by Saturday if not before.
 
-Thank you!
+Steve
+-- 
+# Commercial Debian GNU/Linux Support
+http://www.linux-administration.org/
 
-Alexander
