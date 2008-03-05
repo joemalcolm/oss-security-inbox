@@ -1,20 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/09/1
-Message-Id: <200810090300.54256.hanno@hboeck.de>
-Date: Thu, 9 Oct 2008 03:00:54 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/05/6
+Message-ID: <20080305110829.GA32473@openwall.com>
+Date: Wed, 5 Mar 2008 14:08:29 +0300
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: xss in phpmyid 0.9
+Subject: Re: list archive
 Content-Type: text/plain; charset=utf-8
 
-http://seclists.org/bugtraq/2008/Oct/0009.html
+On Sunday 24 February 2008, Solar Designer wrote:
+> > ... I've also re-configured
+> > oss-security to no longer set the X-No-Archive header (xvendor was
+> > already configured that way).  The Gmane archive is now available at:
+> >
+> > 	http://dir.gmane.org/gmane.comp.security.oss.general
 
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+On Wed, Mar 05, 2008 at 11:53:16AM +0100, Robert Buchholz wrote:
+> Unfortunately, all messages prior to this change of setting will expire 
+> and be removed from Gmane on March 9, because they have been added on
+> February 24. Can you please contact the Gmane folks to remove the 
+> X-No-Archive from the mails or just ignore it list-wide,
 
-http://freiheitstattangst.de/ - 11.10. Berlin gegen Überwachung
-http://x1000malquer.de/ - ab 8.11. Atomtransporte stoppen
+I've already done that twice, including on the same day those messages
+were imported.  The first time I was told that this was taken care of,
+but it seems not.  I guess let's wait and see what happens, then I'll
+contact Lars again if needed.
 
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+> or is that intentional?
+
+No.
+
+Thank you!
+
+Alexander
