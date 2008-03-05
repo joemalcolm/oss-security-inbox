@@ -1,30 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/22/3
-Message-ID: <87k5ipmwv3.fsf@lillypad.riseup.net>
-Date: Tue, 22 Apr 2008 16:57:04 -0400
-From: Micah Anderson <micah@...eup.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/05/2
+Message-ID: <20080305101909.26941756@redhat.com>
+Date: Wed, 5 Mar 2008 10:19:09 +0100
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: inspircd
+Subject: Re: request CVE id: insecure handling of DISPLAY in rxvt
 Content-Type: text/plain; charset=utf-8
 
+On Tue, 4 Mar 2008 22:34:10 +0000 Steve Kemp <steve@...ve.org.uk> wrote:
 
-Versions prior to 1.1.17 of InspIRCd are vulnerable to a remotely
-triggerable buffer overflow which can lead to a Denial of Service
-(daemon crash) when the namesx and uhnames modules are loaded. 
+>   The idea is that if you typically connect to a host with display
+>  forwarding you'll be used to running rxvt and having the resulting
+>  application display locally.
+> 
+>   However if you forget to enable display forwarding then run
+>  RXVT it will connect to :1, rather than complain there is no
+>  DISPLAY set and abort.  That *could* allow a malicious local
+>  server to steal keyboard, & etc.
+> 
+>   However I have a hard time seeing this in practise.  It would
+>  mean that locally you couldn't trust root - since it would take
+>  a local root user to setup the fake X11 server on :1..
 
-InspIRCd is a modular C++ IRCd (IRC daemon) for Linux, BSD, Windows and
-Apple OS X systems created to provide a stable, modern, and lightweight
-IRCd written from scratch.
+I don't think you need root privileges to take advantage of this...
 
-Reference: http://inspircd.org/forum/showthread.php?t=2945
+Let's assume shared box where users ssh -X and run some X programs,
+e.g. rxvt.  Let's assume unprivileged user can start local X session
+which will be DISPLAY=:0 and do xhost + to allow connections from other
+users to her display (maybe Xvnc can be used instead of local X session
+too).  Now she just have to wait for some other user to ssh without X
+forwarding and start rxvt on her display.
 
-How the issue can be triggered:
+Yes, many assumptions and ifs, but still silently assuming DISPLAY=:0
+when no DISPLAY is set does not sound like a safe default.
 
-if you load both the namesx and uhnames modules, then set your nicklen
-to 31 characters and your ident len is 12 and and your channel len is
-64, then you can crash the ircd by joining a lot of users to a channel
-with 31 char nicks, 12 char idents and very long hostnames, and then
-joining a single final user to the channel who has uhnames
+Just my 2c.
 
-workaround: unload uhnames or upgrade to 1.1.17
-
+-- 
+Tomas Hoger
+Red Hat Security Response Team
