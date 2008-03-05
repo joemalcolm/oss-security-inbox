@@ -1,27 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/26/5
-Message-ID: <47EA7953.7000508@gentoo.org>
-Date: Wed, 26 Mar 2008 17:26:59 +0100
-From: Christian Hoffmann <hoffie@...too.org>
-To: coley@...re.org
-CC: oss-security@...ts.openwall.com
-Subject: CVE request: lighttpd DoS: forcefully closing of foreign SSL connections
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/05/5
+Message-Id: <200803051153.17067.rbu@gentoo.org>
+Date: Wed, 5 Mar 2008 11:53:16 +0100
+From: Robert Buchholz <rbu@...too.org>
+To: oss-security@...ts.openwall.com
+Cc: Solar Designer <solar@...nwall.com>
+Subject: Re: list archive
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Sunday 24 February 2008, Solar Designer wrote:
+> That was my intent, but apparently things just don't work that way -
+> someone has just submitted oss-security and xvendor to Gmane.  I wish
+> that person asked me to do it instead - and I would have done it now.
+> Anyway, I've just exchanged some e-mails with Lars of Gmane,
+> requesting changes to the way those lists were submitted, and I've
+> provided the archives of past messages.  I've also re-configured
+> oss-security to no longer set the X-No-Archive header (xvendor was
+> already configured that way).  The Gmane archive is now available at:
+>
+> 	http://dir.gmane.org/gmane.comp.security.oss.general
 
-can we please get a CVE id for the following issue?
-https://bugs.gentoo.org/show_bug.cgi?id=214892
-http://trac.lighttpd.net/trac/ticket/285#comment:18
-http://trac.lighttpd.net/trac/changeset/2136
-
-Impact is rather low, but I think it still qualifies for DoS.
+Unfortunately, all messages prior to this change of setting will expire 
+and be removed from Gmane on March 9, because they have been added on
+February 24. Can you please contact the Gmane folks to remove the 
+X-No-Archive from the mails or just ignore it list-wide, or is that 
+intentional?
 
 Thanks,
--- 
-Christian Hoffmann
+Robert
 
 
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (253 bytes)
+Download attachment "signature.asc " of type "application/pgp-signature" (190 bytes)
