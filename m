@@ -1,41 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/11/6
-Message-ID: <20081111083029.GC29534@suse.de>
-Date: Tue, 11 Nov 2008 09:30:29 +0100
-From: Thomas Biege <thomas@...e.de>
-To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: Re: CVE request: libcdaudio
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/06/2
+Message-ID: <Pine.GSO.4.51.0803061453080.23642@faron.mitre.org>
+Date: Thu, 6 Mar 2008 14:53:13 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Josh Bressers <bressers@...hat.com>
+cc: coley@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Nov 11, 2008 at 09:22:16AM +0100, Tomas Hoger wrote:
-> On Mon, 10 Nov 2008 10:20:41 -0500 (EST) "Steven M. Christey"
-> <coley@...us.mitre.org> wrote:
-> 
-> > > we need a CVE-ID for a buffer overflow in libcdaudio.
-> > > It is a remotely exploitable heap-based buffer overflow.
-> > 
-> > Out of curiosity, what makes it remote?
-> > 
-> > Use CVE-2008-5030
-> 
-> I guess this wording was used by Thomas as the affected code is used to
-> talk to remote CDDB servers, from which you obtain list of tracks for
-> your audio CD.  If remote CDDB server is untrusted / compromised, it
-> can send you a crafted reply that can exploit libcdaudio flaw on your
-> system.
 
-Yes, everybody can add CDDB entries to servers like freedb.org (honestly
-I didn't test it) or intercept the HTTP connection to a CDDB server.
+======================================================
+Name: CVE-2008-1198
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1198
+Reference: MISC:http://www.ernw.de/download/pskattack.pdf
+Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=435274
+
+The default IPSec ifup script in Red Hat Enterprise Linux 3 through 5
+configures racoon to use aggressive IKE mode instead of main IKE mode,
+which makes it easier for remote attackers to conduct brute force
+attacks by sniffing an unencrypted preshared key (PSK) hash.
 
 
--- 
-Bye,
-     Thomas
--- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
--- 
-           Hamming's Motto:
-           The purpose of computing is insight, not numbers.
-                                -- Richard W. Hamming
