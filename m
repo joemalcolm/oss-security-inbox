@@ -1,26 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/10/3
-Message-ID: <Pine.GSO.4.51.0811100945580.609@faron.mitre.org>
-Date: Mon, 10 Nov 2008 09:47:50 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/08/2
+Message-Id: <200803081818.48668.rbu@gentoo.org>
+Date: Sat, 8 Mar 2008 18:18:48 +0100
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>, Greg KH <greg@...ah.com>
-Subject: Re: CVE requests: kernel: hfsplus-related bugs
+Cc: Florian Weimer <fw@...eb.enyo.de>, "Steven M. Christey" <coley@...us.mitre.org>, tss@....fi
+Subject: Re: CVE? CCE? dovecot setting is often used incorrectly
 Content-Type: text/plain; charset=utf-8
 
+On Saturday 08 March 2008, Florian Weimer wrote:
+> * Jonathan Smith:
+> > I've been trying to figure out what to do with this one. I'm not
+> > inclined to believe it deserves a CVE given that it is
+> > configuration (either dovecot config or filesystem permissions
+> > configuration). I read once on mitre.org about "Common
+> > Configuration Enumeration" aka "CCE" issues, but I've never seen
+> > them actually used. Maybe this is a good candidate?
+>
+> Debian will release a security update with a patch, so we need a CVE
+> anyway.  We might use one from our pool (after all, it's an interplay
+> between our default MTA and Dovecot, and may not be very widespread),
+> or we might reference a generic one.  I don't know which one is
+> better.
 
-On Mon, 10 Nov 2008, Eugene Teo wrote:
+For the generic issue you can use CVE-2008-1199.
 
-> > 1) hfsplus: fix Buffer overflow with a corrupted image
-> > Upstream commit: efc7ffcb4237f8cb9938909041c4ed38f6e1bf40
-> ...
-> There's an equivalent bug for hfs. The upstream commit is d38b7aa. We
-> will need a CVE name for this too.
+Robert
 
-Use CVE-2008-5025
-
-Is the bug exactly equivalent?  Could you be more specific about existing
-references?  "d38b7aa" doesn't look like a typical commit ID so the CVE is
-currently marked as reserved.
-
-- Steve
+Download attachment "signature.asc " of type "application/pgp-signature" (190 bytes)
