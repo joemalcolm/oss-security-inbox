@@ -1,48 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/28/10
-Message-Id: <200811290048.47309.steffen.joeris@skolelinux.de>
-Date: Sat, 29 Nov 2008 00:48:47 +0100
-From: Steffen Joeris <steffen.joeris@...lelinux.de>
-To: Jeremias Reith <jr@...ss.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE requset: WordPress XSS vulnerability in RSS Feed Generator
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/08/1
+Message-ID: <877igd5jxs.fsf@mid.deneb.enyo.de>
+Date: Sat, 08 Mar 2008 16:12:15 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>,  tss@....fi
+Subject: Re: CVE? CCE? dovecot setting is often used incorrectly
 Content-Type: text/plain; charset=utf-8
 
-Hi Jeremias
+* Jonathan Smith:
 
-On Fri, 28 Nov 2008 11:31:05 pm Jeremias Reith wrote:
-> On Nov 28, 2008, at 22:39 , Steffen Joeris wrote:
-> > Hi
-> >
-> >> a XSS vulnerability has been discovered in WordPress.
-> >>
-> >> Vendor info:
-> >> http://wordpress.org/development/2008/11/wordpress-265/
-> >>
-> >> Detailed information:
-> >> http://www.securityfocus.com/archive/1/498652 (Note: It should be
-> >> "prior to 2.6.5" in the summary)
-> >
-> > I might be off here, but doesn't the patch[0] create another XSS by
-> > removing
-> > wp_specialchars?
-> >
-> > Cheers
-> > Steffen
-> >
-> > [0]:
-> > http://trac.wordpress.org/changeset?old_path=tags%2F2.6.3&old=&new_path=t
-> >ags%2F2.6.5&new=
->
-> Looks fine to me.
->
-> You probably missed that the added clean_url() is applied on the
-> entire URL instead of wp_specialchars() to REQUSET_URI.
-Yeah you're right and it appears that clean_url takes care of all the bad 
-characters. However, I am still wondering why upstream doesn't use 
-htmlspecialchars(). :)
+> I've been trying to figure out what to do with this one. I'm not
+> inclined to believe it deserves a CVE given that it is configuration
+> (either dovecot config or filesystem permissions configuration). I read
+> once on mitre.org about "Common Configuration Enumeration" aka "CCE"
+> issues, but I've never seen them actually used. Maybe this is a good
+> candidate?
 
-Cheers
-Steffen
-
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+Debian will release a security update with a patch, so we need a CVE
+anyway.  We might use one from our pool (after all, it's an interplay
+between our default MTA and Dovecot, and may not be very widespread), or
+we might reference a generic one.  I don't know which one is better.
