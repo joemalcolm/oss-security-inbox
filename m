@@ -1,28 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/12/1
-Message-ID: <87d4q05eeb.fsf@mid.deneb.enyo.de>
-Date: Wed, 12 Mar 2008 13:13:16 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/09/2
+Message-ID: <20080309161236.GA15640@openwall.com>
+Date: Sun, 9 Mar 2008 19:12:36 +0300
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: setrlimit can be avoided (Linux less than 2.6.22)
+Subject: Re: list archive
 Content-Type: text/plain; charset=utf-8
 
-* Kees Cook:
+On Sunday 24 February 2008, Solar Designer wrote:
+> > ... I've also re-configured
+> > oss-security to no longer set the X-No-Archive header (xvendor was
+> > already configured that way).  The Gmane archive is now available at:
+> >
+> > 	http://dir.gmane.org/gmane.comp.security.oss.general
 
-> This rlimit-avoiding bug probably needs a CVE associated with it.  Users
-> could avoid RLIMIT_CPU by setting it to "0".  The fixes in 2.6.17 did
-> not actually fix the problem.
->
->
-> Bugs:
->   https://launchpad.net/bugs/107209
->   http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=419706
->
-> Fixed in 2.6.22:
->   http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=9926e4c74300c4b31dee007298c6475d33369df0
+On Wed, Mar 05, 2008 at 11:53:16AM +0100, Robert Buchholz wrote:
+> Unfortunately, all messages prior to this change of setting will expire 
+> and be removed from Gmane on March 9 ...
 
-I doubt it's fixed completely.  I've seen spinning Java processes on
-later kernel versions which drove up the load average, but were reported
-as 0% CPU most of the time.
+Lars (of Gmane) has just informed me that the "Expires:" message is
+wrong, and those messages won't expire.  This is a bit confusing, but I
+guess we can live with it.
 
-Or does RLIMIT_CPU use separate counters?
+Alexander
