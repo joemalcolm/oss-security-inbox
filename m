@@ -1,19 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/07/1
-Message-ID: <20081207100426.GA8598@galadriel.inutil.org>
-Date: Sun, 7 Dec 2008 11:04:26 +0100
-From: Moritz Muehlenhoff <jmm@...til.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE requests: Typo3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/09/3
+Message-ID: <Pine.GSO.4.51.0803091949130.22863@faron.mitre.org>
+Date: Sun, 9 Mar 2008 19:51:28 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Jonathan Smith <smithj@...ethemallocs.com>
+cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>, tss@....fi
+Subject: Re: CVE? CCE? dovecot setting is often used incorrectly
 Content-Type: text/plain; charset=utf-8
 
-There seem to be no CVE IDs assigned for these two Typo3 issues:
 
-Cross-Site Scripting vulnerability in TYPO3 Core:
-http://typo3.org/teams/security/security-bulletins/typo3-20081113-1/
+On Tue, 4 Mar 2008, Jonathan Smith wrote:
 
-Cross-Site Scripting vulnerability in TYPO3 Core:
-http://typo3.org/teams/security/security-bulletins/typo3-20081113-2/
+> I've been trying to figure out what to do with this one. I'm not
+> inclined to believe it deserves a CVE given that it is configuration
+> (either dovecot config or filesystem permissions configuration). I read
+> once on mitre.org about "Common Configuration Enumeration" aka "CCE"
+> issues, but I've never seen them actually used. Maybe this is a good
+> candidate?
+>
+> Steve, any ideas?
 
-Cheers,
-        Moritz
+Sorry for the delayed response - had some computer problems just as I was
+about to press "send" and forgot about this.
+
+CCE is gaining a lot of ground these days as part of the US government's
+SCAP program for enterprise-level security information management
+(summarizing SCAP approximately at best).
+
+We've identified some areas of potential overlap where both CCE and CVE
+could apply.  At this stage though, CCE is mostly about
+configuration/hardening at the OS layer, including major OS applications -
+that said, conceptually it could apply to any application.
+
+Especially in cases where a "non-OS-level" application has a default
+configuration, or where a bug introduces a configuration issue, CVE
+continues to assign identifiers.  We'll also assign an identifier for a
+common misconfiguration, even if it's not the default.
+
+So - use CVE-2008-1199 for this issue.
+
+- Steve
