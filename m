@@ -1,23 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/29/1
-Message-ID: <48B75683.9020800@redhat.com>
-Date: Fri, 29 Aug 2008 09:53:07 +0800
-From: Eugene Teo <eteo@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2008-3526 Linux kernel sctp_setsockopt_auth_key() integer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/10/3
+Message-ID: <20080310083512.3e5a9cc6@redhat.com>
+Date: Mon, 10 Mar 2008 08:35:12 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com, smithj@...ethemallocs.com
+Cc: "Steven M. Christey" <coley@...re.org>
+Subject: Re: CVE request: ruby information disclosure
 Content-Type: text/plain; charset=utf-8
 
-Eugene Teo wrote:
-> An integer overflow flaw was found in the Linux kernel
-> sctp_setsockopt_auth_key() function. The structure used for
-> SCTP_AUTH_KEY option contains a length that needs to be verified to
-> prevent integer overflow conditions.
+On Sun, 09 Mar 2008 17:18:04 -0800 Jonathan Smith
+<smithj@...ethemallocs.com> wrote:
+
+> Gentoo has an open bug [1] indicating a minor information disclosure
+> issue in ruby. They also sortof indicate that there has been a CVE
+> request, but I can't find it anywhere. So either consider this a
+> request or a ping on an existing request :)
 > 
-> This affects kernel versions since 2.6.24-rc1. The proposed upstream
-> commit is: 30c2235cbc477d4629983d440cdc4f496fec9246. Note that the
+> rPath also has an issue [2] if you need references.
+> 
+> [1]: https://bugs.gentoo.org/show_bug.cgi?id=212264
+> [2]: https://issues.rpath.com/browse/RPL-2338
 
-Take note. It needs 328fc47ea0bcc27d9afa69c3ad6e52431cadd76c too.
+CVE-2008-1145
 
-Thanks, Eugene
+http://www.ruby-lang.org/en/news/2008/03/03/webrick-file-access-vulnerability/
+for better reference.
+
+Check NVD site [1], as CVE descriptions frequently appear there hours to
+days earlier than on CVE site.
+
+[1] http://nvd.nist.gov/nvd.cfm?cvename=CVE-2008-1145
+
 -- 
-Eugene Teo / Red Hat Security Response Team
+Tomas Hoger
+Red Hat Security Response Team
