@@ -1,32 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/04/9
-Message-ID: <Pine.GSO.4.51.0809041158300.29613@faron.mitre.org>
-Date: Thu, 4 Sep 2008 12:01:04 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/10/1
+Message-ID: <Pine.GSO.4.51.0803092012570.22863@faron.mitre.org>
+Date: Sun, 9 Mar 2008 20:13:45 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com, oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: Re: CVE Request (ruby -- DNS spoofing vulnerability in resolv.rb)
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: dovecot unauthorized login
 Content-Type: text/plain; charset=utf-8
 
 
-On Wed, 3 Sep 2008, Jan Lieskovsky wrote:
 
->   could you please allocate an another CVE id
-> for the DNS spoofing vulnerability in Ruby resolv.rb code.
+> Subject: [Dovecot-news] Security hole #6: Some passdbs allowed users
+> to log	in without a	valid password
+> Date: Sun, 09 Mar 2008 13:09:44 +0200
+> From: Timo Sirainen <tss@....fi>
+> Reply-To: dovecot@...ecot.org
+> To: Dovecot News List <dovecot-news@...ecot.org>
+> CC: Dovecot Mailing List <dovecot@...ecot.org>
 >
-> http://www.ruby-lang.org/en/news/2008/08/08/multiple-vulnerabilities-in-ruby/
-> (part DNS spoofing vulnerability in resolv.rb)
+> ...
 >
->...
->
+> The main problem is that Dovecot's internal protocols use TAB character
+> as a delimiter, but passwords were sent unescaped through them. So
+> passwords containing TAB characters allowed to add new internal fields.
+> The main problem here is a new "skip_password_check" field added in
+> v1.0.11 to fix problems with master user logins. Specifying this field
+> allowed the user to skip the password check, as the name implies.
 
-> The transaction IDs are assigned in sequential (n+1 order) and the
-> source ports are always the same.
-
-Use CVE-2008-3905, to be filled in soon.
-
-We're treating this as a distinct issue because this is *REALLY* bad
-randomness within a particular implementation, besides the inherent
-limitation of DNS when source ports are fixed.
+Use CVE-2008-1218
 
 - Steve
