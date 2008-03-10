@@ -1,31 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/21/11
-Message-ID: <47BDF3F4.90903@freethemallocs.com>
-Date: Thu, 21 Feb 2008 12:58:12 -0900
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/10/4
+Message-ID: <47D53457.4090004@freethemallocs.com>
+Date: Mon, 10 Mar 2008 05:15:03 -0800
 From: Jonathan Smith <smithj@...ethemallocs.com>
-To: oss-security@...ts.openwall.com
-CC: jamie@...onical.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request for mysql bug #22413
+To: oss-security@...ts.openwall.com,  "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: yet another lighttpd issue
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-Jamie Strandboge wrote:
-| We have a bug report open to fix http://bugs.mysql.com/bug.php?id=22413.
-| This is a DoS via a 'EXPLAIN SELECT FROM view with ORDER BY' statement
-| and is fixed in 5.0.32. Can a CVE be assigned for this?
+This is another one of those only-with-strange-configuration issues. If
+you enable mod_userdir and don't set userdir.path, it defaults to $HOME.
+This can be undesirable, but especially so when you browse to a user
+such as nobody, who has a homedir of /. Thus, folks can read any file on
+the system.
 
-You'll probably want to CC Steve on such emails... I don't think he's
-actually subscribed to the list (Steve, feel free to correct me if I'm
-wrong here... I assumed it would be the same as vendor-sec).
+Upstream ticket: http://trac.lighttpd.net/trac/ticket/1587
+Fix (require that userdir.path be set):
+http://trac.lighttpd.net/trac/changeset/2120?format=diff&new=2120
+rPath issue: https://issues.rpath.com/browse/RPL-2344#action_51691
+Gentoo bug: https://bugs.gentoo.org/show_bug.cgi?id=212930
 
 	smithj
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.0.8 (GNU/Linux)
 
-iEYEARECAAYFAke98/QACgkQCG91qXPaRenoGACfZ4TgQfKSlucFbhhXXlT9VXed
-htkAoILmvZ9mIIPg+OCoJ6qsuJahJfWq
-=zGvc
+iEYEARECAAYFAkfVNFcACgkQCG91qXPaRelLGQCfUGob1qal/OLZsmKterBepfuN
+OPkAoK0XBj92rLKEURDaLTebgChD6IK5
+=rzz7
 -----END PGP SIGNATURE-----
