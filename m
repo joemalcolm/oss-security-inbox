@@ -1,40 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/17/13
-Message-ID: <Pine.GSO.4.51.0804171728230.3756@faron.mitre.org>
-Date: Thu, 17 Apr 2008 17:29:01 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/10/5
+Message-ID: <Pine.GSO.4.51.0803101644450.18792@faron.mitre.org>
+Date: Mon, 10 Mar 2008 16:44:50 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Hanno Böck <hanno@...eck.de>
+To: Jonathan Smith <smithj@...ethemallocs.com>
 cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: firefox 2.0.14 ( Crash in JavaScript garbage collector)
+Subject: Re: CVE request: yet another lighttpd issue
 Content-Type: text/plain; charset=utf-8
 
 
-On Thu, 17 Apr 2008, Hanno [utf-8] Böck wrote:
-
-> Ok, then please include this one:
-> http://www.securityfocus.com/bid/27243
-> http://hboeck.de/archives/578-How-long-does-it-take-to-fix-a-crash-bug.html
-> http://sam.zoy.org/blog/2007-01-16-exposing-file-parsing-vulnerabilities
-
-See below.
-
-Do you have a specific Firefox/Gentoo/Debian version?
-
-- Steve
-
-
 ======================================================
-Name: CVE-2007-6715
+Name: CVE-2008-1270
 Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6715
-Reference: MISC:http://hboeck.de/archives/578-How-long-does-it-take-to-fix-a-crash-bug.html
-Reference: MISC:http://sam.zoy.org/blog/2007-01-16-exposing-file-parsing-vulnerabilities
-Reference: MISC:http://sam.zoy.org/zzuf/
-Reference: BID:27243
-Reference: URL:http://www.securityfocus.com/bid/27243
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1270
+Reference: CONFIRM:http://trac.lighttpd.net/trac/ticket/1587
+Reference: CONFIRM:https://bugs.gentoo.org/show_bug.cgi?id=212930
+Reference: CONFIRM:https://issues.rpath.com/browse/RPL-2344
 
-Mozilla Firefox allows remote attackers to cause a denial of service
-(crash) via crafted image, as demonstrated by the zzuf lol-firefox.gif
-test case.
+mod_userdir in lighttpd 1.4.18 and earlier, when userdir.path is not
+set, uses a default of $HOME, which might allow remote attackers to
+read arbitrary files, as demonstrated by accessing the ~nobody
+directory.
 
 
