@@ -1,51 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/08/8
-Message-ID: <20080708163725.GF7051@severus.strandboge.com>
-Date: Tue, 8 Jul 2008 12:37:25 -0400
-From: Jamie Strandboge <jamie@...onical.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request for dnsmasq DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/10/6
+Message-ID: <Pine.GSO.4.51.0803101652470.18792@faron.mitre.org>
+Date: Mon, 10 Mar 2008 16:53:59 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+cc: "Steven M. Christey" <coley@...re.org>
+Subject: Re: CVE request: dovecot unauthorized login
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 03 Jul 2008, Jamie Strandboge wrote:
-> On Tue, 01 Jul 2008, Steven M. Christey wrote:
-> > On Mon, 30 Jun 2008, Jamie Strandboge wrote:
-> > 
-> > > There is a remote DoS in dnsmasq 2.25 (and presumably earlier) that is
-> > > fixed in 2.26. Details can be found at [1]. Can we get a CVE assigned
-> > > for this?
-> > 
-> > I'm not sure I fully understand Thierry Carrez' comment about the security
-> > implications of this issue.  It seems like an exploit would require a
-> > malicious DHCP server, in which case isn't DHCP service already
-> > compromised?  If so, then a crash of dnsmasq (null dereference?) doesn't
-> > seem to be any worse than the loss of DHCP itself.
-> > 
-> I haven't had time to develop a PoC, but from the dnsmasq 2.26 announce
-> page at [1], a client need only send a crafted renewal request to crash
-> the server. Thierry's comments were only for trying to reproduce the
-> problem and test the patch.
-> 
 
-I finally had time to develop a PoC and confirm this on my own. A client
-need only send a DHCPREQUEST for an IP address not on the same network
-as dnsmasq. Eg:
+I wrote this up as 1.0.x instead of 1.0.11 (skip_password_check's
+introduction) since (perhaps) other fields could be inserted to do
+something bad.
 
-1. dnsmasq listening on and giving IP addresses for 192.168.122.0/24
-2. client requests IP address on another network, such as 192.168.0.1
-3. dnsmasq 2.25 (and presumably earlier) crashes
+======================================================
+Name: CVE-2008-1271
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1271
+Reference: MLIST:[Dovecot-news] 20080309 v1.0.13 and v1.1.rc3 released
+Reference: URL:http://www.dovecot.org/list/dovecot-news/2008-March/000065.html
+Reference: MLIST:[Dovecot-news] 20080309 Security hole #6: Some passdbs allowed users to log in without a valid password
+Reference: URL:http://www.dovecot.org/list/dovecot-news/2008-March/000064.html
 
-This can happen in normal operation with roaming users, but can also
-happen with a malicious request. Attached is a script to easily test for
-this (requires python scapy).
+Argument injection vulnerability in Dovecot 1.0.x before 1.0.13, and
+1.1.x before 1.1.rc3, when using blocking passdbs, allows remote
+attackers to bypass the password check via a password containing TAB
+characters, which are treated as argument delimiters that enable the
+skip_password_check field to be specified.
 
-Jamie
 
--- 
-Ubuntu Security Engineer     | http://www.ubuntu.com/
-Canonical Ltd.               | http://www.canonical.com/
-
-View attachment "dhcp_request.py" of type "text/x-python" (1928 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (190 bytes)
