@@ -1,39 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/04/1
-Message-ID: <Pine.GSO.4.51.0811031945580.5219@faron.mitre.org>
-Date: Mon, 3 Nov 2008 19:46:54 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security <oss-security@...ts.openwall.com>
-cc: coley@...re.org
-Subject: Re: CVE-2008-4796: snoopy triage
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/10/7
+Message-ID: <47D5BAAD.4040702@freethemallocs.com>
+Date: Mon, 10 Mar 2008 14:48:13 -0800
+From: Jonathan Smith <smithj@...ethemallocs.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...re.org>
+Subject: Re: CVE request: dovecot unauthorized login
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Updated, original oss-security post will be added later.  Note that we
-don't track every single product (imagine how many pages a zlib issue
-would take up!)
+Steven M. Christey wrote:
+| I wrote this up as 1.0.x instead of 1.0.11 (skip_password_check's
+| introduction) since (perhaps) other fields could be inserted to do
+| something bad.
+|
+| ======================================================
+| Name: CVE-2008-1271
+| Status: Candidate
+| URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1271
+| Reference: MLIST:[Dovecot-news] 20080309 v1.0.13 and v1.1.rc3 released
+| Reference:
+URL:http://www.dovecot.org/list/dovecot-news/2008-March/000065.html
+| Reference: MLIST:[Dovecot-news] 20080309 Security hole #6: Some
+passdbs allowed users to log in without a valid password
+| Reference:
+URL:http://www.dovecot.org/list/dovecot-news/2008-March/000064.html
+|
+| Argument injection vulnerability in Dovecot 1.0.x before 1.0.13, and
+| 1.1.x before 1.1.rc3, when using blocking passdbs, allows remote
+| attackers to bypass the password check via a password containing TAB
+| characters, which are treated as argument delimiters that enable the
+| skip_password_check field to be specified.
 
-- Steve
+So, we shouldn't be using CVE-2008-1218 for this (as you indicated
+yesterday)?
 
+	smithj
 
-======================================================
-Name: CVE-2008-4796
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4796
-Reference: CONFIRM:http://sourceforge.net/forum/forum.php?forum_id=879959
-Reference: JVN:JVN#20502807
-Reference: URL:http://jvn.jp/en/jp/JVN20502807/index.html
-Reference: JVNDB:JVNDB-2008-000074
-Reference: URL:http://jvndb.jvn.jp/ja/contents/2008/JVNDB-2008-000074.html
-Reference: FRSIRT:ADV-2008-2901
-Reference: URL:http://www.frsirt.com/english/advisories/2008/2901
-Reference: SECUNIA:32361
-Reference: URL:http://secunia.com/advisories/32361
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.8 (GNU/Linux)
 
-The _httpsrequest function (Snoopy/Snoopy.class.php) in Snoopy 1.2.3
-and earlier, as used in (1) ampache, (2) libphp-snoopy, (3) mahara,
-(4) mediamate, (5) opendb, (6) pixelpost, and possibly other products,
-allows remote attackers to execute arbitrary commands via shell
-metacharacters in https URLs.
-
-
+iEYEARECAAYFAkfVuq0ACgkQCG91qXPaRemotgCgjfcW95noV7SulDu5UJHV0God
+xc4An2Z0lNVzyqZseVrQcO0ShNfsdiNw
+=KogG
+-----END PGP SIGNATURE-----
