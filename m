@@ -1,38 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/05/7
-Message-ID: <20080305111338.GA28871@steve.org.uk>
-Date: Wed, 5 Mar 2008 11:13:38 +0000
-From: Steve Kemp <steve@...ve.org.uk>
-To: oss-security@...ts.openwall.com
-Subject: Re: wiki: Debian, auditing tools, vendor-sec
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/10/2
+Message-ID: <47D48C4C.5000500@freethemallocs.com>
+Date: Sun, 09 Mar 2008 17:18:04 -0800
+From: Jonathan Smith <smithj@...ethemallocs.com>
+To: oss-security@...ts.openwall.com,  "Steven M. Christey" <coley@...re.org>
+Subject: CVE request: ruby information disclosure
 Content-Type: text/plain; charset=utf-8
 
-On Wed Mar 05, 2008 at 13:22:27 +0300, Solar Designer wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> Some of the info you have on those pages is also useful for our wiki.
-> I've just added links to your Security Auditing Tools and Automated
-> Audit Examples pages to:
-> 
-> 	http://oss-security.openwall.org/wiki/tools
-> 	http://oss-security.openwall.org/wiki/links
+Gentoo has an open bug [1] indicating a minor information disclosure
+issue in ruby. They also sortof indicate that there has been a CVE
+request, but I can't find it anywhere. So either consider this a request
+or a ping on an existing request :)
 
-  THanks.
+rPath also has an issue [2] if you need references.
 
-> Perhaps brief info on the tools should also be added to our tools page
-> directly - maybe you could do that?
-> Also, I notice that Debian is still not on our vendors page - would you
-> add it, please? -
+[1]: https://bugs.gentoo.org/show_bug.cgi?id=212264
+[2]: https://issues.rpath.com/browse/RPL-2338
 
-  Yes I'll do that.
+	smithj
 
-> Finally, are you still planning on creating an oss-security wiki page on
-> vendor-sec, under the mailinglists namespace?  
+PS: should we use coley@...re.org or coley@...us.mitre.org?
 
-  Certainly.  It had slipped my todo list, I'll make sure it is done
- by Saturday if not before.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.8 (GNU/Linux)
 
-Steve
--- 
-# Commercial Debian GNU/Linux Support
-http://www.linux-administration.org/
-
+iEYEARECAAYFAkfUjEwACgkQCG91qXPaRenIXQCfWN+RLznwWCyHscafOyiC6syv
+fV4An3yogT7YIWH2x7IOpKw30F2y94T4
+=66fA
+-----END PGP SIGNATURE-----
