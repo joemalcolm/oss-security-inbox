@@ -1,26 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/10/1
-Message-ID: <28fa9c5e0812092232m11792d2cmf5681387a41bb3db@mail.gmail.com>
-Date: Wed, 10 Dec 2008 14:32:28 +0800
-From: "Eugene Teo" <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/11/2
+Message-ID: <20080311223029.GE30071@ngolde.de>
+Date: Tue, 11 Mar 2008 23:30:29 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: applicom: fix an unchecked user ioctl range
+Subject: CVE request: insecure X11 handling in ltsp
 Content-Type: text/plain; charset=utf-8
 
-Steve, can you please assign a CVE name. Thanks.
+Hi,
+Due to passing the -ac option to the X server in ltsp it is possible for any
+attacker knowing the victims ip address and the display number to read keystrokes
+on the client and display client windows.
 
-http://bugzilla.kernel.org/show_bug.cgi?id=11408
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=a7be18d
+Can I get a CVE id for this?
+Details on: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=469462
 
----
->From a7be18d436f0c7007794965e5af29fa1ffff1e05 Mon Sep 17 00:00:00 2001
-From: Alan Cox <alan@...hat.com>
-Date: Mon, 13 Oct 2008 10:45:17 +0100
-Subject: [PATCH] applicom: Fix an unchecked user ioctl range and an error return
+Cheers
+Nico
 
-Closes bug #11408 by checking the card index range for command 0
-Fixes the ioctl to return ENOTTY which is correct for unknown ioctls
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-Signed-off-by: Alan Cox <alan@...hat.com>
-Signed-off-by: Linus Torvalds <torvalds@...ux-foundation.org>
+Content of type "application/pgp-signature" skipped
