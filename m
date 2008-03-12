@@ -1,32 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/20/4
-Message-ID: <31399.1203514651@devserv.devel.redhat.com>
-Date: Wed, 20 Feb 2008 08:37:31 -0500
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
-Subject: Re: FAQ for upstream maintainers
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/12/2
+Message-ID: <Pine.GSO.4.51.0803121213040.7262@faron.mitre.org>
+Date: Wed, 12 Mar 2008 12:14:46 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: multiple issues in ViewVC
 Content-Type: text/plain; charset=utf-8
 
-> 
-> We could also want to rename this web page to something containing the
-> likely search keywords - and possibly move it to a namespace, which
-> would give a keyword too, once we have a suitable one.  "whattodo" is
-> not a likely keyword (or not a closely relevant one).
-> 
 
-I just created the namespace "disclosure" and added an outline I have to
-them.  I also added a note that the things in "whattodo" should be merged
-into the namespace.
+On Wed, 12 Mar 2008, Pierre-Yves Rofes wrote:
 
-For the moment it's just my outlines, I've not gotten around to filling it
-out yet.  I did this, as I think it's important we have some amount of
-organized information up, as this:
-http://linsec.ca/blog/2008/02/17/new-informal-security-organization-oss-security/
+>  multiple security issues were fixed in the latest ViewVC release,
+> apparently no CVE ids were assigned yet. Could we get some?
+>
+> Secunia advisory: http://secunia.com/advisories/29176/
+> Gentoo Bug: https://bugs.gentoo.org/show_bug.cgi?id=212288
 
-Was just picked up by linuxsecurity.com
+This was one of those complex issues where, if you looked at the original
+changelog, you couldn't tell how many CVEs to assign.  Thus the delay,
+though the bug report definitely helps.
 
-We will only get one look from a lot of people, and if they don't see
-anything of value, they will likely never look again.
+CVEs will be filled in later today.
 
--- 
-    JB
+
+CVE-2008-1290 - list CVS or SVN commits on "all-forbidden"
+files
+
+CVE-2008-1291 - directly access hidden CVSROOT folders
+
+CVE-2008-1292 - expose restricted content via the revision
+view, the log history, or the diff view
+
+
+- Steve
