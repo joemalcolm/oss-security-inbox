@@ -1,43 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/13/1
-Message-ID: <ghv43k$aqq$1@ger.gmane.org>
-Date: Fri, 12 Dec 2008 19:45:17 -0600
-From: Raphael Geissert <atomo64+debian@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/12/1
+Message-ID: <87d4q05eeb.fsf@mid.deneb.enyo.de>
+Date: Wed, 12 Mar 2008 13:13:16 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request - roundcubemail
+Subject: Re: CVE request: setrlimit can be avoided (Linux less than 2.6.22)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+* Kees Cook:
 
-Hi,
+> This rlimit-avoiding bug probably needs a CVE associated with it.  Users
+> could avoid RLIMIT_CPU by setting it to "0".  The fixes in 2.6.17 did
+> not actually fix the problem.
+>
+>
+> Bugs:
+>   https://launchpad.net/bugs/107209
+>   http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=419706
+>
+> Fixed in 2.6.22:
+>   http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=9926e4c74300c4b31dee007298c6475d33369df0
 
-Jan Lieskovsky wrote:
+I doubt it's fixed completely.  I've seen spinning Java processes on
+later kernel versions which drove up the load average, but were reported
+as 0% CPU most of the time.
 
-> Hello Steve,
-> 
->   this will need a new CVE identifier:
-> http://trac.roundcube.net/ticket/1485618
-> http://trac.roundcube.net/changeset/2148
-> 
-
-I became aware of some sort of code execution vulnerability one day before that
-ticket was reported. After reviewing the file I determined that it isn't a
-vulnerability in roundcube, but in PHP itself; but I'm open to be proved wrong.
-
-Note that I have not yet determined how exactly the vulnerability is being
-exploited, but am working on it.
-
-Cheers,
-- -- 
-Raphael Geissert - Debian Maintainer
-www.debian.org - get.debian.net
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAklDE64ACgkQYy49rUbZzlpO+QCfWpIGeSzor9+Su4bKGB640jq/
-mp8AoJ/7u4opntkHMBIUt8KomFXSW9Ts
-=gYTB
------END PGP SIGNATURE-----
-
+Or does RLIMIT_CPU use separate counters?
