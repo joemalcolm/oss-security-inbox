@@ -1,26 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/23/6
-Message-ID: <Pine.GSO.4.51.0806231519560.1760@faron.mitre.org>
-Date: Mon, 23 Jun 2008 15:20:02 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/12/3
+Message-ID: <Pine.GSO.4.51.0803121215050.7262@faron.mitre.org>
+Date: Wed, 12 Mar 2008 12:15:33 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: Re: CVE request: php 5.2.6 ext/imap buffer overflows
+Subject: Re: CVE request: insecure X11 handling in ltsp
 Content-Type: text/plain; charset=utf-8
 
 
-======================================================
-Name: CVE-2008-2829
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2829
-Reference: MISC:http://bugs.php.net/bug.php?id=42862
-Reference: CONFIRM:https://bugs.gentoo.org/show_bug.cgi?id=221969
-Reference: MLIST:[oss-security] 20080619 CVE request: php 5.2.6 ext/imap buffer overflows
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/06/19/6
+On Tue, 11 Mar 2008, Nico Golde wrote:
 
-php_imap.c in PHP 5.2.5, 5.2.6, 4.x, and other versions, uses obsolete
-API calls that allow context-dependent attackers to cause a denial of
-service (crash) via a long IMAP request, which triggers an "rfc822.c
-legacy routine buffer overflow" error message.
+> Due to passing the -ac option to the X server in ltsp it is possible for
+> any attacker knowing the victims ip address and the display number to
+> read keystrokes on the client and display client windows.
 
+CVE will be filled in later.
 
+Use CVE-2008-1293
+
+- Steve
