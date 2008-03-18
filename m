@@ -1,38 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/24/3
-Message-ID: <20081124152317.GH26593@suse.de>
-Date: Mon, 24 Nov 2008 16:23:17 +0100
-From: Matthias Hopf <mhopf@...e.de>
-To: oss-security@...ts.openwall.com
-Cc: 498243@...s.debian.org, xine-user@...ts.sourceforge.net, redpig@...rt.org
-Subject: Re: xine-lib and ocert-2008-008
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/18/4
+Message-ID: <Pine.GSO.4.51.0803181655070.5905@faron.mitre.org>
+Date: Tue, 18 Mar 2008 16:55:16 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Josh Bressers <bressers@...hat.com>
+cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: bzip2 CERT-FI: 20469
 Content-Type: text/plain; charset=utf-8
 
-On Nov 22, 08 17:49:40 +0100, Thomas Viehmann wrote:
-> I am not quite sure whether I can agree with Will Drewry's analysis[1]
-> accompanying ocert advisory 2008-008[1]. Looking at item 1A, which Will
-> says is fixed in 1.1.5, attached .mov seems to fit the case description
-> and will still corrupt the memory when viewed e.g. in gxine. xine-lib
-> with the attached patch seems to be more successful in preventing the
-> attach (note that the file is more tuned to be small than to be a valid
-> .mov, but the same works by including the bad meta in an otherwise good
-> file). Note that xine_xmalloc is specifically designed to allocate
-> memory when passed size 0. Upstream seems to move away from it, but...
-> As Will notices, demux-qt.c has loads of unfixed problems.
-> 
-> If anyone cares to go over the xine-lib issues (primarily the unfixed
-> ones from Will's section 3), I'd much appreciate a CC. In order to make
-> the analysis and verification more, I would also be interested in the
-> test cases mentioned in the advisory.
 
-I have fixed all of them (at least I believe so, but I have to verify
-your test case), and we're waiting for new ocert numbers. Given that
-this takes so long, and the issues are public anyway, I will probably
-upstream the fixes soon. If you would verify them it would be awesome.
 
-Matthias
+======================================================
+Name: CVE-2008-1372
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1372
+Reference: MISC:http://www.cert.fi/haavoittuvuudet/joint-advisory-archive-formats.html
+Reference: CONFIRM:http://bzip.org/
+Reference: CONFIRM:https://bugs.gentoo.org/attachment.cgi?id=146488&action=view
+Reference: CERT-VN:VU#813451
+Reference: URL:http://www.kb.cert.org/vuls/id/813451
+Reference: BID:28286
+Reference: URL:http://www.securityfocus.com/bid/28286
+Reference: FRSIRT:ADV-2008-0915
+Reference: URL:http://www.frsirt.com/english/advisories/2008/0915
 
--- 
-Matthias Hopf <mhopf@...e.de>      __        __   __
-Maxfeldstr. 5 / 90409 Nuernberg   (_   | |  (_   |__          mat@...opf.de
-Phone +49-911-74053-715           __)  |_|  __)  |__  R & D   www.mshopf.de
+bzlib.c in bzip2 before 1.0.5 allows user-assisted remote attackers to
+cause a denial of service (crash) via a crafted file that triggers a
+buffer over-read, as demonstrated by the PROTOS GENOME test suite.
+
+
