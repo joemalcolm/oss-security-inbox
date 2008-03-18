@@ -1,25 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/22/7
-Message-ID: <2132621954.2487531224698834793.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 22 Oct 2008 14:07:14 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: coley <coley@...re.org>
-Subject: CVE Request (netpbm)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/18/1
+Message-ID: <20080318134131.GA28124@suse.de>
+Date: Tue, 18 Mar 2008 14:41:31 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: new archive file format research by Oulo university
 Content-Type: text/plain; charset=utf-8
 
-I've not seen this assigned yet, it is a bit old, sorry for the delay.
+Hi,
 
-We noticed this via a Fedora update:
-https://admin.fedoraproject.org/updates/F9/FEDORA-2008-6999
+The university of Oulo and CERT-FI seems to have released yesterday
+a new suite of archiver tests / problems:
 
-    update to 10.35.48, fixes buffer overrun in pamperspective and pngtopnm output
-    format
+http://www.securityfocus.com/bid/28286
 
-The patch is here:
-http://netpbm.svn.sourceforge.net/viewvc/netpbm/trunk/editor/pamperspective.c?r1=492&r2=683
+and:
+http://www.ee.oulu.fi/research/ouspg/protos/testing/c10/archive/
 
-Thanks.
-
--- 
-    JB
+Ciao, Marcus
