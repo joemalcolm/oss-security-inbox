@@ -1,71 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/25/4
-Message-id: <1203920413.27106.TMDA@linsec.ca>
-Date: Sun, 24 Feb 2008 23:18:13 -0700
-From: Vincent Danen <vdanen@...sec.ca>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/18/2
+Message-Id: <200803181534.03725.rbu@gentoo.org>
+Date: Tue, 18 Mar 2008 15:34:03 +0100
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: charter - advisories
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: bzip2 CERT-FI: 20469
 Content-Type: text/plain; charset=utf-8
 
-* [2008-02-25 01:26:00 +0300] Solar Designer wrote:
+Hey,
 
->On Wed, Feb 20, 2008 at 12:26:21PM -0700, Vincent Danen wrote:
->> Hmmm... maybe we should clarify the advisories we don't want to see.  I
->> guess advisories from, say, iDefense, would be valuable.  But advisories
->> from Mandriva or SUSE not so much.
->> 
->> Maybe we should indicate no *vendor* advisories,
->
->I think this is pretty much what we did already.  From the charter:
->
->Security advisories aimed at end-users only are not welcome (e.g., those
->from a distribution vendor announcing new pre-built packages).  There has
->to be desirable information for others in the Open Source community
->(e.g., an upstream maintainer may announce a new version of their
->software with security fixes to be picked up by distributors).
->
->If you can word this better, please go ahead and edit it on the wiki.
+CERT-FI: 20469 [1] was released yesterday, and with it a new bzip2 
+release, quoting their CHANGES:
 
-No, that sounds fine to me, but I don't think it was there when I
-initially replied (or at least, not when I had looked at it last prior
-to that reply).
+1.0.5 (10 Dec 07)
+~~~~~~~~~~~~~~~~~
+Security fix only.  Fixes CERT-FI 20469 as it applies to bzip2.
 
->> and make a second list specifically for that?
->
->I'd be happy to make such a list if there's demand - is there?  Let me
->address this question to those vendors (represented in here) who
->currently copy their advisories to Bugtraq - will you start sending them
->to this new special-purpose list?  If so, will you discontinue sending
->them to Bugtraq, suggesting that whoever wants to receive all-vendor
->advisories should subscribe the new special-purpose list?  I think this
->could help us reclaim Bugtraq as a general security discussion list.
 
-For Mandriva, I can say yes.  We currently send to bugtraq, FD, our own
-announcements list (which includes the bugfix advisories, and would
-likely remain the only source of bugfix/enhancement advisory
-notification), and I believe to CERT.  We would drop the sending to
-bugtraq and FD if such a list existed.
+Reading the patch [2], it's missing a boundary check that can lead to an 
+over-read on the tt/ll heap-buffer. I'd call this a DoS, did anyone 
+else review?
 
->Note that Bugtraq will remain quite different from oss-security even if
->reclaimed as a discussion list.  oss-security is for people involved
->with OSS projects (although others are welcome to listen to our
->conversations) and for detailed discussions of source code patches, etc.
->when that is needed.  Bugtraq is for everyone, including end-users and
->closed-source folks - and it is large-scale, meaning that discussions of
->individual issues should not run for too long and get into minor detail.
+Thanks,
+Robert
 
-I don't think there is currently anything with the same goals/content as
-what we'll be seeing on oss-security.
 
->Also, a question to those vendors (represented in here) who don't copy
->their advisories to Bugtraq currently (too shy or polite) - will you
->start sending them to this new special-purpose list?
+[1] 
+https://www.cert.fi/haavoittuvuudet/joint-advisory-archive-formats.html
+[2] https://bugs.gentoo.org/attachment.cgi?id=146488&action=view
 
-With my Annvix vendor hat on, I'd say no, but it's largely due to the
-small userbase and my not wanting to expend needless energy on writing
-advisories (for the Annvix userbase, the changelogs are sufficient).
 
--- 
-Vincent Danen @ http://linsec.ca/
-
-Content of type "application/pgp-signature" skipped
+Download attachment "signature.asc " of type "application/pgp-signature" (190 bytes)
