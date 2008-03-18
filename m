@@ -1,23 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/28/9
-Message-ID: <20080328020841.GA27369@openwall.com>
-Date: Fri, 28 Mar 2008 05:08:41 +0300
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: change subscription address
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/18/3
+Message-ID: <12878.1205851560@devserv.devel.redhat.com>
+Date: Tue, 18 Mar 2008 10:46:00 -0400
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com, Robert Buchholz <rbu@...too.org>
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: bzip2 CERT-FI: 20469
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Mar 28, 2008 at 12:57:00PM +1100, Zenaan Harkness wrote:
-> Hi, if you can change my subscription address from zen@...edbms.net to
-> zenaan.harkness@...il.com, that would be appreciated.
+> 
+> Hey,
+> 
+> CERT-FI: 20469 [1] was released yesterday, and with it a new bzip2=20
+> release, quoting their CHANGES:
+> 
+> 1.0.5 (10 Dec 07)
+> ~~~~~~~~~~~~~~~~~
+> Security fix only.  Fixes CERT-FI 20469 as it applies to bzip2.
+> 
+> 
+> Reading the patch [2], it's missing a boundary check that can lead to an
+> over-read on the tt/ll heap-buffer. I'd call this a DoS, did anyone
+> else review?
+> 
 
-I've taken care of this.  Next time, please look at the message headers
-for the mailing list manager's unsubscribe/subscribe/help addresses.
+I'm running version 1.0.4 through the bzip2 files now (it takes a long time
+to run, there are a lot of files).  If I find the reproducer, I'll let you
+know.
 
-In case this sort of requests become common, we'll have to add message
-trailers with instructions in them and/or pre-moderate the list even for
-postings from subscribers.  The john-users mailing list that we run on
-this same server currently has both of these things, so it's a matter of
-changing the settings.
+I saw no crashes when I ran the CERT-FI suite over bzip2 versions 1.0.1,
+1.0.2, and 1.0.3.
 
-Alexander
+-- 
+    JB
