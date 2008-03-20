@@ -1,50 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/05/1
-Message-ID: <20080705115559.GE29607@ngolde.de>
-Date: Sat, 5 Jul 2008 13:56:00 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/20/1
+Message-ID: <23284.1205974455@devserv.devel.redhat.com>
+Date: Wed, 19 Mar 2008 20:54:15 -0400
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE Request (pidgin)
+cc: Robert Buchholz <rbu@...too.org>
+Subject: Re: CVE request: bzip2 CERT-FI: 20469
 Content-Type: text/plain; charset=utf-8
 
-Hi Vincent,
-* Vincent Danen <vdanen@...sec.ca> [2008-07-03 21:42]:
-> * [2008-07-01 17:25:40 -0400] Steven M. Christey wrote:
-> >Name: CVE-2008-2957
-> >Status: Candidate
-> >URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2957
-> >Reference: MISC:http://crisp.cs.du.edu/?q=ca2007-1
-> >Reference: MLIST:[oss-security] 20080627 CVE Request (pidgin)
-> >Reference: URL:http://www.openwall.com/lists/oss-security/2008/06/27/3
-> >
-> >The UPnP functionality in Pidgin 2.0.0, and possibly other versions,
-> >allows remote attackers to trigger the download of arbitrary files and
-> >cause a denial of service (memory or disk consumption) via a UDP
-> >packet that specifies an arbitrary URL.
 > 
-> There are patches with the original advisory for these two.  Has anyone
-> had a chance to look at them to make sure they're ok?  I don't see any
-> references to any of these issues on the pidgin website and no vendors
-> have issued pidgin updates for these that I can see, so I'm wondering if
-> anyone has looked at these patches (be it vendors or upstream) to
-> determine whether or not they're sufficient and/or suitable to apply to
-> a security update.
+> I'm running version 1.0.4 through the bzip2 files now (it takes a long time
+> to run, there are a lot of files).  If I find the reproducer, I'll let you
+> know.
+> 
+> I saw no crashes when I ran the CERT-FI suite over bzip2 versions 1.0.1,
+> 1.0.2, and 1.0.3.
+> 
 
-I just had a look at http://crisp.cs.du.edu/crisp-files/pidgin-2.0.0-upnp-limit-download.diff 
-to fix CVE-2008-2957. I think the patch itself is fine 
-however I am not sure if this is the right way to fix the 
-issue cause I basically just workarounds the problem by 
-limiting the downloads triggered by UPnP (128k) without 
-giving any way to reconfigure this value or to switch it off 
-completely. This may be the reason why there isn't yet an 
-official patch by the pidgin people.
+I mailed upstream, the file we want is 1203ea663ea8545c9b66ad3ef46425d0.bz2
 
-If you want to go with that simple workaround the patch is 
-just fine.
-Cheers
-Nico
+The problem I had with my testrunner is that the bunzip2 has a segfault
+handler.  Rather that properly segfaulting, it's doing an exit(2).  I'm
+going to rerun the suite with this new knowledge now to see what's affected
+and how.
+
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+    JB
