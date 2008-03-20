@@ -1,34 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/21/11
-Message-ID: <48347C9E.4050404@freethemallocs.com>
-Date: Wed, 21 May 2008 11:48:46 -0800
-From: Jonathan Smith <smithj@...ethemallocs.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Root name server changes -> bind
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/20/2
+Message-Id: <200803201424.27773.hanno@hboeck.de>
+Date: Thu, 20 Mar 2008 14:24:27 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com
+Subject: webapp vulns with no cve
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-Marcus Meissner wrote:
-| 	The security consequences of obscure DNS root server usage are
-obvious, IMHO.
-| 	You might want to consider security updates to the bind package with
-an updated
-| 	root.hint file. (Since the story is on Slashdot, it is as public as
-it can get;
-| 	thus I use the regular channel for this request.)
+I sent you this a while back, but seems it got lost (?).
 
-Why did ICANN allow the old IP address to be taken by an untrusted
-party? It would seem that IPs formerly used by root DNS servers should
-be permanently retired to prevent just this sort of thing.
+I found a couple of web applications with vulnerabilities without a CVE-ID:
 
-	smithj
+punbb:
+http://sektioneins.de/advisories/SE-2008-01.txt
+http://punbb.org/forums/viewtopic.php?id=18460
+http://www.milw0rm.com/exploits/5165
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
 
-iEYEARECAAYFAkg0fJ4ACgkQCG91qXPaRenl1QCfWEVV3nZ7s2J1AKVO23F7CQ2l
-uxcAoKp9TR5X4e/hcc5sz1o+bpNVoAla
-=ZYQf
------END PGP SIGNATURE-----
+Phorum sql injection:
+http://www.phorum.org/phorum5/read.php?64,126815,126815
+
+freewebshop (fix in 2.2.7)
+http://www.freewebshop.org/?Downloads:Fixes
+
+linpha 1.3.3 fixes xss:
+http://linpha.sourceforge.net/wiki/index.php/Release_Notes#Version_1.3.3
+
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+
+Download attachment "signature.asc " of type "application/pgp-signature" (190 bytes)
