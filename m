@@ -1,35 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/03/7
-Message-ID: <20081003175000.GA7567@ngolde.de>
-Date: Fri, 3 Oct 2008 19:50:00 +0200
-From: Nico Golde <nico@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/22/1
+Message-ID: <87myore55f.fsf@pond.riseup.net>
+Date: Sat, 22 Mar 2008 00:47:40 -0400
+From: Micah Anderson <micah@...eup.net>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: regarding CVE-2008-4382 & CVE-2008-4381
+Subject: CVE Request: openssh local users may hijack forwarded X connections
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-I just had a look at CVE-2008-4382 which is the same issue 
-as CVE-2008-4381 but just for conqueror should not get its 
-own CVE id in my opinion.
 
-We at Debian don't handle browser 
-issues like this as security issues anyway but in this case 
-looking at the PoC this would work in every browser 
-supporting JavaScript as this is just a trivial memory 
-consumption issue by passing a very large string too the 
-alert function and thus eating memory, a simple 
-while(true){} would be equally effective for eating cpu 
-cycles which I wouldn't consider as a vulnerability 
-either...
+This has been forwared to OpenBSD upstream:
 
-I verified this at least with firefox and opera.
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=463011
 
-Cheers
-Nico
+Thanks,
+Micah
 
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
