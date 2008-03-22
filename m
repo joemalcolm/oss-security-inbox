@@ -1,21 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/04/24
-Message-ID: <87zlmnabeo.fsf@mid.deneb.enyo.de>
-Date: Thu, 04 Sep 2008 22:44:47 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/22/2
+Message-ID: <87iqzee57i.fsf@pond.riseup.net>
+Date: Sat, 22 Mar 2008 18:58:41 -0400
+From: Micah Anderson <micah@...eup.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: GNU ed heap overflow
+Subject: CVE Request: PHP PECL module APC vulnerable to stack-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-* Steven M. Christey:
 
-> On Mon, 1 Sep 2008, Florian Weimer wrote:
->
->> Interesting.  But this type of command execution is not possible with
->> "red", which suffers from the same overflow.
->
-> Does red share the same codebase as ed?  Or is a separate CVE necessary?
+As this ticket demonstrates, the popular PHP PECL extension APC
+(Alternative PHP Cache: http://pecl.php.net/package/APC), which is
+slated for inclusion in PHP core in PHP6, is vulnerable to a stack-based
+buffer overflow attack due to no bounds checking, which can lead to a
+privilege escalation.
 
-lrwxrwxrwx 1 root root 7 2008-08-31 11:36 /usr/bin/red -> /bin/ed
+http://pecl.php.net/bugs/bug.php?id=13415
 
-It's "restricted ed" in the sense of "restriced bash" etc.
+The vulnerable code appeared in the APC CVS on June 30th, so APC 3.0.11
+and newer are vulnerable.
+
+Thanks,
+Micah
+
+
