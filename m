@@ -1,89 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/17/3
-Message-ID: <20080216231725.GB25188@openwall.com>
-Date: Sun, 17 Feb 2008 02:17:25 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/24/4
+Message-ID: <Pine.GSO.4.51.0803241758400.27382@faron.mitre.org>
+Date: Mon, 24 Mar 2008 18:08:10 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: welcome
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request: xine-lib multiple buffer overflows
 Content-Type: text/plain; charset=utf-8
 
-Hi Jonathan,
 
-Thank you for sharing your thoughts with the rest of us.
+======================================================
+Name: CVE-2008-1482
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1482
+Reference: BUGTRAQ:20080320 Multiple heap overflows in xine-lib 1.1.11
+Reference: URL:http://www.securityfocus.com/archive/1/archive/1/489894/100/0/threaded
+Reference: MISC:http://aluigi.altervista.org/adv/xinehof-adv.txt
+Reference: MISC:http://aluigi.org/poc/xinehof.zip
+Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=438663
+Reference: BID:28370
+Reference: URL:http://www.securityfocus.com/bid/28370
 
-On Fri, Feb 15, 2008 at 09:10:16PM -0900, Jonathan Smith wrote:
-> One nitpick before we get too established... would it be possible to
-> turn off reply-to-list? That is what "reply to all" is for in mail
-> clients :-)
+Multiple integer overflows in xine-lib 1.1.11 and earlier allow remote
+attackers to trigger heap-based buffer overflows and possibly execute
+arbitrary code via (1) a crafted .FLV file, which triggers an overflow
+in demuxers/demux_flv.c; (2) a crafted .MOV file, which triggers an
+overflow in demuxers/demux_qt.c; (3) a crafted .RM file, which
+triggers an overflow in demuxers/demux_real.c; (4) a crafted .MVE
+file, which triggers an overflow in demuxers/demux_wc3movie.c; (5) a
+crafted .MKV file, which triggers an overflow in demuxers/ebml.c; or
+(6) a crafted .CAK file, which triggers an overflow in
+demuxers/demux_film.c.
 
-Yes, I can easily change this setting, but I like it the way it is now -
-and I suspect that many (most?) other list members do as well.  I find
-that having Reply-To on discussion lists pointing to the list address
-helps ensure that discussions don't unnecessarily go off-list and that
-list members are not unnecessarily CC'ed on responses.  (I realize that
-some actually prefer to be CC'ed because of the way their mail readers
-are configured.)  If/when we start getting a lot of desirable postings
-from non-members, we may change this setting to make it easier to CC
-such non-members on responses.
 
-If anyone else has an opinion on this matter (regarding this specific
-list indeed), please speak up.
-
-> I'm not sure if this is possible, but I'd like to see read-only
-> subscriptions. That is, folks can "subscribe" and get the list via email
-> without having to be approved to post to the list. See below for more
-> discussion on this isssue.
-
-The easiest way to achieve this, without patching the code, is to create
-a second ezmlm-idx list with announcement-only settings and subscribe it
-to this list.
-
-But I am not sure if having a completely read-only list is any better
-than having message pre-moderation.  The difference is in what happens
-to posting attempts from non-pre-approved addresses.  Do we want such
-messages bounced or submitted to a moderator?
-
-> My hope is that we can get "upstream" maintainers involved at least to
-> some extent in this project. That is, when some {f{,l}}oss (I guess for
-> this list we're going with "oss") project encounters a security issue,
-> they'll come to either oss-security or vendor-sec and communicate with
-> the folks who consume their work. I hope this to be true whether or not
-> they are actually on the list.
-
-Right.  So perhaps postings by non-members need to be pre-moderated
-rather than rejected right away.  If we do that, then it is illogical to
-reject posting attempts by read-only members right away.
-
-> So, what we'll really have are three classes of users. One is the folks
-> who read the list and don't have the ability to post. Joining this group
-> should require no administrative action, and it should be open to the
-> public. The second is folks who can post but aren't members. I'd add
-> upstream authors to this list on a case-by-case basis. The third is
-> folks who read it and can post, such as (I'd imagine) many current
-> vendor-sec members. These folks need to be vetted on a case-by-case
-> basis as well.
-
-Oh, so you'd like some non-member addresses being permitted to post
-without pre-moderation (and the associated delay)?  Yes, this is supported.
-
-> Can the software currently being used to host the list be
-> configured for the above?
-
-Yes, it can - with the caveat that the read-only access will be via a
-second list.
-
-If we choose to allow the "read-only" members right onto this list, but
-have message moderation turned on even for list members, then there's an
-implementation issue to be dealt with: in my experience, ezmlm-idx fails
-to honor its "allow" list (addresses that can post bypassing moderation)
-once message moderation is enabled even for list members.
-
-Anyway, I think it's too early to discuss this in that much detail.  If
-we get to the point where undesirable postings are a real issue, we will
-hopefully have enough desirable postings as well to justify the effort
-on re-configuring the list or even fixing the ezmlm-idx issue I've
-mentioned above.
-
-Thanks again,
-
-Alexander
