@@ -1,27 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/04/4
-Message-ID: <20081104174433.GC5796@ngolde.de>
-Date: Tue, 4 Nov 2008 18:44:33 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request (dovecot)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/24/3
+Message-Id: <1206354981.30020.17.camel@localhost.localdomain>
+Date: Mon, 24 Mar 2008 11:36:21 +0100
+From: Lubomir Kundrak <lkundrak@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com
+Subject: CVE Request: namazu UTF-7 XSS
 Content-Type: text/plain; charset=utf-8
 
 Hi,
-* Josh Bressers <bressers@...hat.com> [2008-10-29 19:55]:
-> I'm not sure if this is a Red Hat specific issue, but I figured I'd mention it here:
-> It seems dovecot can have an SSL key file password disclosure issue:
-> https://bugzilla.redhat.com/show_bug.cgi?id=436287
-> 
-> Basically, if your dovecot.conf file is world readable and you have your SSL key
-> password in it, anyone can see it.
 
-Looks like this is CVE-2008-4870.
+Please assign a CVE name to the following:
 
-Cheers
-Nico
+http://jvn.jp/jp/JVN%2300892830/index.html
+http://bugs.gentoo.org/show_bug.cgi?id=214266
+https://bugzilla.redhat.com/show_bug.cgi?id=438664
+
+Thanks,
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+Lubomir Kundrak (Red Hat Security Response Team)
 
-Content of type "application/pgp-signature" skipped
