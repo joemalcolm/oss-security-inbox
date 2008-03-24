@@ -1,21 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/28/4
-Message-Id: <200807281956.12714.hanno@hboeck.de>
-Date: Mon, 28 Jul 2008 19:56:09 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/24/6
+Message-ID: <Pine.GSO.4.51.0803241818050.27382@faron.mitre.org>
+Date: Mon, 24 Mar 2008 18:18:13 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: CVE request: phpmyadmin < 2.11.8
+Subject: Re:  CVE Request: openssh local users may hijack forwarded X connections
 Content-Type: text/plain; charset=utf-8
 
-From release notes:
-- [security] protection against cross-frame scripting and
-  new directive AllowThirdPartyFraming
-- [security] possible XSS during setup
+
+======================================================
+Name: CVE-2008-1483
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1483
+Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=463011
+
+OpenSSH 4.3p2, and probably other versions, allows local users to
+hijack forwarded X connections by causing ssh to set DISPLAY to :10,
+even when another process is listening on the associated port, as
+demonstrated by opening TCP port 6010 (IPv4) and sniffing a cookie
+sent by Emacs.
 
 
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
