@@ -1,33 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/20/1
-Message-Id: <200809201206.32700.rbu@gentoo.org>
-Date: Sat, 20 Sep 2008 12:06:28 +0200
-From: Robert Buchholz <rbu@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: viewvc security flaw?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/24/7
+Message-ID: <Pine.GSO.4.51.0803241851550.27382@faron.mitre.org>
+Date: Mon, 24 Mar 2008 18:52:08 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Hanno Böck <hanno@...eck.de>
+cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com
+Subject: Re: webapp vulns with no cve
 Content-Type: text/plain; charset=utf-8
 
-On Friday, 19. September 2008, Josh Bressers wrote:
-> I'm not sure about this one, I'm wondering if someone else has an
-> opinion: http://viewvc.tigris.org/issues/show_bug.cgi?id=354
->
-> It was submitted as a Fedora security update, which I'm letting through
-> for now, as better safe than sorry.
->
-> To sum it up, it looks like the mime type used to display a given file
-> in viewvc can be set via the URL.  Obviously this means that an attacker
-> could force an arbitrary mime type on any file in a viewvc repository.
->
-> It strikes me as not crossing a trust boundary though, as I suspect
-> you'd need something malicious in the repo in order for this to really
-> be useful.  If the bad guys can already add arbitrary content, you have
-> bigger problems.
 
-We also just received this report as upstream announced it as a security 
-issue. Nevertheless, I would follow your argument. A crafted link could at 
-worst case crash the browser. But as far as I can imagine nothing inside 
-the repository can be exploited by changing its mime-type at delivery.
+Sorry about the big delay, Hanno.
 
-Robert
+- Steve
 
-Download attachment "signature.asc " of type "application/pgp-signature" (828 bytes)
+
+======================================================
+Name: CVE-2007-6711
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6711
+Reference: CONFIRM:http://www.freewebshop.org/?Downloads:Fixes
+Reference: CONFIRM:http://www.freewebshop.org/?News
+
+Unspecified vulnerability in customer.php in FreeWebshop.org 2.2.5,
+2.2.6 and 2.2.7WIP1/2 allows remote attackers to gain administrator
+privileges via unknown vectors.
+
+
+======================================================
+Name: CVE-2008-1484
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1484
+Reference: MISC:http://sektioneins.de/advisories/SE-2008-01.txt
+Reference: MILW0RM:5165
+Reference: URL:http://www.milw0rm.com/exploits/5165
+Reference: CONFIRM:http://punbb.org/download/changelogs/1.2.16_to_1.2.17.txt
+Reference: CONFIRM:http://punbb.org/forums/viewtopic.php?id=18460
+Reference: BID:27908
+Reference: URL:http://www.securityfocus.com/bid/27908
+Reference: SECUNIA:29043
+Reference: URL:http://secunia.com/advisories/29043
+
+The password reset feature in PunBB 1.2.16 and earlier uses
+predictable random numbers based on the system time, which allows
+remote authenticated users to determine the new password via a brute
+force attack on a seed that is based on the approximate creation time
+of the targeted account.  NOTE: this issue might be related to
+CVE-2006-5737.
+
+
+======================================================
+Name: CVE-2008-1485
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1485
+Reference: CONFIRM:http://punbb.org/download/changelogs/1.2.16_to_1.2.17.txt
+Reference: SECUNIA:29043
+Reference: URL:http://secunia.com/advisories/29043
+
+Cross-site scripting (XSS) vulnerability in PunBB 1.2.16 and earlier
+allows remote attackers to inject arbitrary web script or HTML via the
+get_host parameter to moderate.php.
+
+
+======================================================
+Name: CVE-2008-1486
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1486
+Reference: CONFIRM:http://www.phorum.org/phorum5/read.php?64,126815,126815
+
+SQL injection vulnerability in Phorum before 5.2.6 , when mysql_use_ft
+is disabled, allows remote attackers to execute arbitrary SQL commands
+via the non-fulltext search.
+
+
+======================================================
+Name: CVE-2008-1487
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1487
+Reference: CONFIRM:http://linpha.cvs.sourceforge.net/linpha/linpha/ChangeLog?view=markup
+Reference: CONFIRM:http://linpha.sourceforge.net/wiki/index.php/Release_Notes#Version_1.3.3
+
+Multiple cross-site scripting (XSS) vulnerabilities in LinPHA before
+1.3.3 allow remote attackers to inject arbitrary web script or HTML
+via (1) ftp/index.php, (2) viewer.php, (3) functions/other.php, (4)
+include/left_menu.class.php, and (5) plugins/stats/stats_view.php.
+
+
