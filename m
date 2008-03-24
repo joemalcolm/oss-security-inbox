@@ -1,22 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/21/6
-Message-ID: <20080221184143.GD18547@outflux.net>
-Date: Thu, 21 Feb 2008 10:41:43 -0800
-From: Kees Cook <kees@...flux.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: code review CVS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/24/2
+Message-Id: <1206354874.30020.13.camel@localhost.localdomain>
+Date: Mon, 24 Mar 2008 11:34:34 +0100
+From: Lubomir Kundrak <lkundrak@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com
+Subject: CVE Request: xine-lib multiple buffer overflows
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Feb 21, 2008 at 08:49:52AM +0000, Mark J Cox wrote:
-> This is definately material for a 'how to find out how the vendor fixed  
-> this' page.
+Hi,
 
-I've created http://oss-security.openwall.org/wiki/distro-patches for
-this information, and added details for Debian and Ubuntu as well as
-some of the links (and workflows) that were sent to the mailing list.
-Please fill this in more!  :)
+Please assign a CVE name to the following:
 
--Kees
+http://bugs.gentoo.org/show_bug.cgi?id=214270
+https://bugzilla.redhat.com/show_bug.cgi?id=438663
+http://aluigi.altervista.org/adv/xinehof-adv.txt
 
+Thanks,
 -- 
-Kees Cook                                            @outflux.net
+Lubomir Kundrak (Red Hat Security Response Team)
+
