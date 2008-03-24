@@ -1,35 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/23/1
-Message-ID: <4950AE79.7020400@redhat.com>
-Date: Tue, 23 Dec 2008 17:25:13 +0800
-From: Eugene Teo <eteo@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/24/8
+Message-ID: <Pine.GSO.4.51.0803241856530.27382@faron.mitre.org>
+Date: Mon, 24 Mar 2008 18:56:57 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: soft lockup occurs when network load is very high
+Subject: Re:  CVE Request: PHP PECL module APC vulnerable to stack-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Steve, can you please assign a CVE name for the following issue:
 
-"[NET]: Add preemption point in qdisc_run
+======================================================
+Name: CVE-2008-1488
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1488
+Reference: MISC:http://papasian.org/~dannyp/apcsmash.php.txt
+Reference: CONFIRM:http://pecl.php.net/bugs/bug.php?id=13415
 
-The qdisc_run loop is currently unbounded and runs entirely in a
-softirq.  This is bad as it may create an unbounded softirq run.
+Stack-based buffer overflow in apc.c in Alternative PHP Cache (APC)
+3.0.11 through 3.0.16 allows remote attackers to execute arbitrary
+code via a long filename.
 
-This patch fixes this by calling need_resched and breaking out if
-necessary.
 
-It also adds a break out if the jiffies value changes since that would
-indicate we've been transmitting for too long which starves other
-softirqs."
-
-Problem is fixed upstream since 2ba2506ca7ca62c56edaa334b0fe61eb5eab6ab0
-
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=477744
-
-Reproducer:
-https://bugzilla.redhat.com/attachment.cgi?id=327745
-
-This can be triggered by an unprivileged user.
-
-Thanks, Eugene
