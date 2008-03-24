@@ -1,30 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/22/10
-Message-ID: <20080222190406.GP18547@outflux.net>
-Date: Fri, 22 Feb 2008 11:04:06 -0800
-From: Kees Cook <kees@...flux.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: code review CVS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/24/5
+Message-ID: <Pine.GSO.4.51.0803241808300.27382@faron.mitre.org>
+Date: Mon, 24 Mar 2008 18:08:34 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Lubomir Kundrak <lkundrak@...hat.com>
+cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: namazu UTF-7 XSS
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Feb 22, 2008 at 03:05:43PM +0100, Tomas Hoger wrote:
-> On Thu, 21 Feb 2008 10:41:43 -0800 Kees Cook <kees@...flux.net> wrote:
-> 
-> > I've created http://oss-security.openwall.org/wiki/distro-patches for
-> > this information, and added details for Debian and Ubuntu as well as
-> > some of the links (and workflows) that were sent to the mailing list.
-> > Please fill this in more!  :)
-> 
-> Any particular reason for not mentioning packages.(u.c|d.o) there?  I
-> always considered them very useful.
 
-Yeah, those are really good for finding package names, too.  I forgot
-at the time, please feel free to add anything you find for additional
-resources.  I've updated the Debian and Ubuntu entries to include it now.
+======================================================
+Name: CVE-2008-1468
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1468
+Reference: MISC:http://jvn.jp/jp/JVN%2300892830/index.html
+Reference: CONFIRM:http://www.namazu.org/security.html.en
+Reference: SECUNIA:29386
+Reference: URL:http://secunia.com/advisories/29386
 
-Thanks!
+Cross-site scripting (XSS) vulnerability in namazu.cgi in Namazu
+before 2.0.18 allows remote attackers to inject arbitrary web script
+or HTML via UTF-7 encoded input, related to failure to set the
+charset, a different vector than CVE-2004-1318 and CVE-2001-1350.
+NOTE: some of these details are obtained from third party information.
 
--Kees
 
--- 
-Kees Cook                                            @outflux.net
