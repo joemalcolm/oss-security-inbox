@@ -1,36 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/16/6
-Message-ID: <20080716135824.GD11937@ngolde.de>
-Date: Wed, 16 Jul 2008 15:58:24 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Wordpress XSS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/24/1
+Message-Id: <1206353623.30020.10.camel@localhost.localdomain>
+Date: Mon, 24 Mar 2008 11:13:43 +0100
+From: Lubomir Kundrak <lkundrak@...hat.com>
+To: Secunia Research <vuln@...unia.com>
+Cc: oss-security@...ts.openwall.com
+Subject: SA29489 CenterIM URL handling flaw
 Content-Type: text/plain; charset=utf-8
 
-Hi Tomas,
-* Tomas Hoger <thoger@...hat.com> [2008-07-16 14:01]:
-> On Tue, 15 Jul 2008 19:22:47 +0200 Hanno Böck <hanno@...eck.de> wrote:
-> > http://trac.wordpress.org/ticket/7220
-> > 
-> > Fixed in 2.6.
-> 
-> According to
-> 
->   http://wordpress.org/development/2008/07/wordpress-26-tyner/
-> 
-> affected Press This! feature is one of the "hot" news in wordpress
-> 2.6.  Affected wp-admin/press-this.php does not seem to exist in
-> previous stable version 2.5.1.  This is just based on the very quick
-> look, but it seems this issue may only affect some development SVN
-> snapshots, but no released version.  Please correct me if I'm wrong.
+Hi,
 
-I just confirmed this. This vulnerability was never present 
-in any released wordpress version.
+Ad SA29489 [1] "CenterIM URL Parsing Command Execution Vulnerability"
 
-Kind regards
-Nico
+CenterIM does completely nothing with received URLs. Maybe the
+unfortuate "exploit writer" was using XFCE Terminal [2], or a terminal
+emulator with a similar problem.
+
+[1] http://secunia.com/advisories/29489/
+[2] http://bugzilla.xfce.org/show_bug.cgi?id=3383
+
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+Lubomir Kundrak (Red Hat Security Response Team)
 
-Content of type "application/pgp-signature" skipped
