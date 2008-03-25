@@ -1,24 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/08/4
-Message-ID: <48734FBA.1050507@redhat.com>
-Date: Tue, 08 Jul 2008 19:30:02 +0800
-From: Eugene Teo <eteo@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2008-2931 kernel: missing check before setting mount propagation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/25/4
+Message-ID: <57833.82.67.177.178.1206453867.squirrel@mail.rofes.fr>
+Date: Tue, 25 Mar 2008 15:04:27 +0100 (CET)
+From: "Pierre-Yves Rofes" <py@...too.org>
+To: "Nico Golde" <oss-security+ml@...lde.de>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Need CVEs for joomla, egroupware
 Content-Type: text/plain; charset=utf-8
 
-Eugene Teo wrote:
-> The do_change_type routine in the Linux kernel has a missing check for
-> capable(CAP_SYS_ADMIN). Even though the mount command restricts the
-> changing of mountpoint type to only root users, it is possible for local
-> unprivileged users to bypass and abuse this problem. More details can be
-> found at: https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2008-2931
-> 
-> This affects kernel versions from 2.6.15-rc1 up to 2.6.22-rc1. The
+On Tue, March 25, 2008 2:17 pm, Nico Golde wrote:
+> * Nico Golde <oss-security+ml@...lde.de> [2008-03-25 14:16]:
+>> * Hanno Böck <hanno@...eck.de> [2008-03-25 14:03]:
+>> > egroupware: www.egroupware.org states this:
+>> > eGroupWare 1.4.003 Security- and bugfix-release
+>> > * fixed security problem reported by lukasz.pilorz@...egro.pl
+>>
+>> Already requested CVE ids for this one.
+>
+> I have to add that I didn't post to this list because I
+> included the details for this vulnerability which seem to be
+> under embargo :/
 
-Correction: It should be up to 2.6.21.
+Not anymore, according to http://secunia.com/advisories/29491/
 
-Thanks,
-Eugene
 -- 
-Eugene Teo / Red Hat Security Response Team
+Pierre-Yves Rofes
+Gentoo Linux Security Team
+
