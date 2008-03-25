@@ -1,28 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/23/2
-Message-ID: <1891015626.2906441224784905538.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 23 Oct 2008 14:01:45 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/25/5
+Message-ID: <20080325142214.GI30264@ngolde.de>
+Date: Tue, 25 Mar 2008 15:22:14 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request (netpbm)
+Subject: Re: Need CVEs for joomla, egroupware
 Content-Type: text/plain; charset=utf-8
 
------ "Josh Bressers" <bressers@...hat.com> wrote:
-> I've not seen this assigned yet, it is a bit old, sorry for the
-> delay.
+Hi Pierre,
+* Pierre-Yves Rofes <py@...too.org> [2008-03-25 15:07]:
+> On Tue, March 25, 2008 2:17 pm, Nico Golde wrote:
+> > * Nico Golde <oss-security+ml@...lde.de> [2008-03-25 14:16]:
+> >> * Hanno Böck <hanno@...eck.de> [2008-03-25 14:03]:
+> >> > egroupware: www.egroupware.org states this:
+> >> > eGroupWare 1.4.003 Security- and bugfix-release
+> >> > * fixed security problem reported by lukasz.pilorz@...egro.pl
+> >>
+> >> Already requested CVE ids for this one.
+> >
+> > I have to add that I didn't post to this list because I
+> > included the details for this vulnerability which seem to be
+> > under embargo :/
 > 
-> We noticed this via a Fedora update:
-> https://admin.fedoraproject.org/updates/F9/FEDORA-2008-6999
-> 
->     update to 10.35.48, fixes buffer overrun in pamperspective and
-> pngtopnm output
->     format
-> 
+> Not anymore, according to http://secunia.com/advisories/29491/
 
-OK, I spent some time trying to figure this one out, and mailed upstream about it.  That message from Fedora is misleading and wrong.  The commit in question fixes an OOB memory read, which we won't consider a security flaw.
-
-Sorry for sending this request before I'd done a proper investigation.
-
+This report doesn't cover all vulnerabilities in this 
+function.
+Kind regards
+Nico
 -- 
-    JB
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
