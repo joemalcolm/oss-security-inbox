@@ -1,23 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/18/2
-Message-ID: <20080818113643.GC27231@ngolde.de>
-Date: Mon, 18 Aug 2008 13:36:43 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/25/6
+Message-ID: <20080325151545.GK30264@ngolde.de>
+Date: Tue, 25 Mar 2008 16:15:45 +0100
 From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: mktemp
+Subject: was: SA29489 CenterIM URL handling flaw
 Content-Type: text/plain; charset=utf-8
 
-Hi Sebastian,
-* Sebastian Krahmer <krahmer@...e.de> [2008-08-18 13:25]:
-> BTW, mktemp(1) is using O_EXCL anyway, so I dont see
-> an issue. Additionally all of our scripts use
-> more than 6 X' as also shown in the
-> example section of the manpage. We are not going to
-> release updates for this non-issue.
+Hi,
+* Lubomir Kundrak <lkundrak@...hat.com> [2008-03-24 15:08]:
+> Ad SA29489 [1] "CenterIM URL Parsing Command Execution Vulnerability"
+> 
+> CenterIM does completely nothing with received URLs. Maybe the
+> unfortuate "exploit writer" was using XFCE Terminal [2], or a terminal
+> emulator with a similar problem.
 
-This is known but as I wrote in the bug report:
-"the file is safely created with O_EXCL and 0600, still 
-unsafe if used with -u"
+That's partly true. While centerim has no special URL 
+handler to handle incoming urls it does provide the ability 
+to list urls in a message by pressing F2. If you press enter 
+on one of these urls it tries to open it in an external 
+browser and executes the other commands as well.
+
+You see the commands in the URL however so I think the 
+impact of this is like sending someone a message with 
+"please type rm -rf ~ in your shell" so the secunia rating 
+is a bit beyond the actual impact.
 
 Kind regards
 Nico
