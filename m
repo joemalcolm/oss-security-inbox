@@ -1,93 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/18/1
-Message-ID: <49227D7C.5050601@op5.se>
-Date: Tue, 18 Nov 2008 09:31:56 +0100
-From: Andreas Ericsson <ae@....se>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/25/7
+Message-ID: <20080325152650.GL30264@ngolde.de>
+Date: Tue, 25 Mar 2008 16:26:50 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request (syslog-ng)
+Subject: Re: was: SA29489 CenterIM URL handling flaw
 Content-Type: text/plain; charset=utf-8
 
-Solar Designer wrote:
-> On Mon, Nov 17, 2008 at 11:06:53PM +0100, Andreas Ericsson wrote:
->> The correct sequence is:
->> chdir(jail_path);
->> chroot(".");
+Hi,
+* Nico Golde <oss-security+ml@...lde.de> [2008-03-25 16:25]:
+> * Lubomir Kundrak <lkundrak@...hat.com> [2008-03-24 15:08]:
+> > Ad SA29489 [1] "CenterIM URL Parsing Command Execution Vulnerability"
+> > 
+> > CenterIM does completely nothing with received URLs. Maybe the
+> > unfortuate "exploit writer" was using XFCE Terminal [2], or a terminal
+> > emulator with a similar problem.
 > 
-> That's a correct sequence, but not the only correct one.
+> That's partly true. While centerim has no special URL 
+> handler to handle incoming urls it does provide the ability 
+> to list urls in a message by pressing F2. If you press enter 
+> on one of these urls it tries to open it in an external 
+> browser and executes the other commands as well.
 > 
+> You see the commands in the URL however so I think the 
+> impact of this is like sending someone a message with 
+> "please type rm -rf ~ in your shell" so the secunia rating 
+> is a bit beyond the actual impact.
 
-Well, "chroot(jail_path); chdir("/");" does effectively the same
-thing (ie, avoid re-using jail_path), so they're equally race-
-resistant, ofcourse.
+upstream patch:
+http://repo.or.cz/w/centerim.git?a=blobdiff_plain;f=src/icqconf.cc;fp=src/icqconf.cc;hb=b28c6deaef58eb685a2d747b28b6a572122730d4;hpb=ad6ad53ebf791f97cb7337dc79ab2ce8ccb1246f
 
->> The chroot() call will fail if the directory no longer exists,
-> 
-> No.  I'm not sure if this is required by any standard, by the behavior
-> I'm used to seeing is that the current directory for a process will sort
-> of continue to exist for that process despite of being removed.
-
-This doesn't hold true on VMS and some Irix releases. Now that you
-say it, I haven't run into it on more recent systems, but I remember
-it happening on those about two years back at a customers site.
-
-HP dev-center used to have an (Open)VMS system, but I can't seem to
-find it now, or I would verify it there.
-
->> Paranoid programs only accept absolute non-symlink paths to the jail
->> and issue getcwd() after having entered it to make sure they ended up
->> in the proper directory.
-> 
-> I find this ridiculous - a program can't possibly defend itself against
-> every kind of unsafe use by the sysadmin.  If a program chooses to do
-> any sanity checking on the provided pathname, then a sane check would be
-> to ensure that all directories in the path are only writable by root.
-
-
-That would fail with Owl's setup of per-user /tmp/.private/$USER dirs,
-even if those are absolutely safe for chroot-jail usage otherwise.
-
-Assuming no symlinks, it's enough to ensure that "." and ".." are root-
-owned and 0700 once the directory has been entered, and quite a lot
-simpler. This has been verified by at least eight separate security
-researchers in severely paranoid industries (weapons research among
-others).
-
-> 
-> Besides the missing chdir(), another very common issue with "privilege
-> dropping" programs is forgetting to drop or re-initialize supplementary
-> groups.  Not checking return values from any of the functions involved
-> is about as common...  (I have not checked syslog-ng for any of this.)
-> 
-
-It's not stellar in that respect. Here's the effective code, printable
-with "sed -n 275,297p src/main.c" from the latest syslog-ng snapshot.
---8<--8<--8<--
-int
-setup_creds(void)
-{
-  if (chroot_dir)
-    {
-      if (chroot(chroot_dir) < 0)
-    {
-      msg_error("Error during chroot()",
-                evt_tag_errno(EVT_TAG_OSERROR, errno),
-                NULL);
-      return 0;
-    }
-    }
-
-  if (uid || gid || run_as_user)
-    {
-      setgid(gid);
-      if (run_as_user)
-        initgroups(run_as_user, gid);
-      setuid(uid);
-    }
-  return 1;
-}
---8<--8<--8<--
-
+Cheers
+Nico
 -- 
-Andreas Ericsson                   andreas.ericsson@....se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
