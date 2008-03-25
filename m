@@ -1,28 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/07/7
-Message-ID: <Pine.GSO.4.51.0804071216410.15662@faron.mitre.org>
-Date: Mon, 7 Apr 2008 12:17:09 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: gcc 4.2 optimizations and integer overflow checks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/25/1
+Message-Id: <200803251305.16278.hanno@hboeck.de>
+Date: Tue, 25 Mar 2008 13:05:15 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Need CVEs for joomla, egroupware
 Content-Type: text/plain; charset=utf-8
 
-
-While an unusual bug, we decided to assign a CVE for it.
-
-- Steve
-
-======================================================
-Name: CVE-2008-1685
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1685
-Reference: CERT-VN:VU#162289
-Reference: URL:http://www.kb.cert.org/vuls/id/162289
-
-gcc 4.2.0 through 4.3.0 in GNU Compiler Collection, when casts are not
-used, considers the sum of a pointer and an int to be greater than or
-equal to the pointer, which might remove length testing code that was
-intended as a protection mechanism against integer overflow and buffer
-overflow attacks.
+I think this one (reason for joomla 1.5.1 release) has no cve yet? At least I 
+haven't found one.
+http://secunia.com/advisories/28861/
+http://www.securityfocus.com/bid/27719
+http://www.joomla.org/content/view/4560/1/
 
 
+egroupware: www.egroupware.org states this:
+eGroupWare 1.4.003 Security- and bugfix-release
+* fixed security problem reported by lukasz.pilorz@...egro.pl
+
+
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+
+Download attachment "signature.asc " of type "application/pgp-signature" (190 bytes)
