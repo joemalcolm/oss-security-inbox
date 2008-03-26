@@ -1,38 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/11/1
-Message-Id: <1229008955.3477.43.camel@dhcp-lab-164.englab.brq.redhat.com>
-Date: Thu, 11 Dec 2008 16:22:35 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: Andreas Ericsson <ae@....se>, Eygene Ryabinkin <rea-sec@...elabs.ru>
-Cc: oss-security@...ts.openwall.com, coley@...re.org
-Subject: Re: CVE Request (nagios)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/26/4
+Message-Id: <1206516110.4858.25.camel@localhost.localdomain>
+Date: Wed, 26 Mar 2008 08:21:49 +0100
+From: Lubomir Kundrak <lkundrak@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: was: SA29489 CenterIM URL handling flaw
 Content-Type: text/plain; charset=utf-8
 
-Hello guys,
 
-  I can't follow this. Nagios 3.0.5 should fix two issues: 
+On Tue, 2008-03-25 at 16:26 +0100, Nico Golde wrote:
+> Hi,
+> * Nico Golde <oss-security+ml@...lde.de> [2008-03-25 16:25]:
+> > * Lubomir Kundrak <lkundrak@...hat.com> [2008-03-24 15:08]:
+> > > Ad SA29489 [1] "CenterIM URL Parsing Command Execution Vulnerability"
+> > > 
+> > > CenterIM does completely nothing with received URLs. Maybe the
+> > > unfortuate "exploit writer" was using XFCE Terminal [2], or a terminal
+> > > emulator with a similar problem.
+> > 
+> > That's partly true. While centerim has no special URL 
+> > handler to handle incoming urls it does provide the ability 
+> > to list urls in a message by pressing F2. If you press enter 
+> > on one of these urls it tries to open it in an external 
+> > browser and executes the other commands as well.
+> > 
+> > You see the commands in the URL however so I think the 
+> > impact of this is like sending someone a message with 
+> > "please type rm -rf ~ in your shell" so the secunia rating 
+> > is a bit beyond the actual impact.
+> 
+> upstream patch:
+> http://repo.or.cz/w/centerim.git?a=blobdiff_plain;f=src/icqconf.cc;fp=src/icqconf.cc;hb=b28c6deaef58eb685a2d747b28b6a572122730d4;hpb=ad6ad53ebf791f97cb7337dc79ab2ce8ccb1246f
 
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5027
-Patch: ?
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5028
-Patch: http://git.op5.org/git/?p=nagios.git;a=commit;h=9c2a418ab4f6e4ef3a53ddcde402fe4781caa764
+The patch doesn't apply by itself, without the previous one, and is not
+quite correct. If the user created a vulnerable actions file (by
+launching centerim before), that one won't be overwritten without manual
+action taken by the user.
 
-So Nagios 3.0.6 Changelog: http://www.nagios.org/development/history/nagios-3x.php
-"Fix for CGI submission of external commands (writing newlines and submitting service comments)"
-is only part of CVE-2008-5027, which hasn't been committed to Nagios 3.0.5?
+Also, the script is not technically correct (overriding DISPLAY
+variable), and is completely useless bloat. Upstream is aware of this
+and concentrates on making CIM5 better :)
 
-And patch for:
-"Disabled adaptive check and eventhandler commands for security reasons" (also from 3.0.6 Changelog)
-is: http://nagios.cvs.sourceforge.net/viewvc/nagios/nagios/base/commands.c?r1=1.109&amp;r2=1.110&amp;pathrev=MAIN
+Fedora will use this patch [1], that removes configurable actions
+completely.
 
-Is this also part of "incomplete" fix for CVE-2008-5027 in 3.0.5?
-i.e. nothing security related was fixed in 3.0.6 and all the
-changes committed are only due late upstream committing of patches
-for CVE-2008-502{7,8}?
+[1] http://cvs.fedora.redhat.com/viewcvs/rpms/centerim/devel/centerim-4.22.3-url-escape-fedora.patch?rev=1.1&view=markup
 
-Thanks!, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Note that current Yahoo IM implementation will not work after April 2nd,
+and new one is not yet complete. It might make sense to delay the update
+a few days and grab the YIM patches from mob branch then.
 
-
+Regards,
+-- 
+Lubomir Kundrak (Red Hat Security Response Team)
 
