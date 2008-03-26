@@ -1,52 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/19/6
-Message-ID: <20080219143022.GA1979@openwall.com>
-Date: Tue, 19 Feb 2008 17:30:22 +0300
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: wiki - e-mail address obfuscation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/26/2
+Message-ID: <3471.1206491730@devserv.devel.redhat.com>
+Date: Tue, 25 Mar 2008 20:35:30 -0400
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com, Jonathan Smith <smithj@...ethemallocs.com>
+Subject: Re: firefox 2.0.0.13
 Content-Type: text/plain; charset=utf-8
 
-I wrote:
-> ... it only
-> obfuscates e-mail addresses it recognizes - not anything with an @-sign.
-> So we need to be very careful about this - e-mail addresses must be
-> entered as <user@...mple.org> - with the angle brackets.
-
-Of course, folks will often be entering e-mail addresses without
-the angle brackets, at least initially - and that's enough for the
-spammers because old revisions of wiki pages are available.  I've
-fixed a few of these right in the underlying files (for the old
-revisions), but I'm afraid I'll give up now.
-
-> I just found another issue: it is possible to "show differences to
-> current version" without being logged in - and, of course, original
-> (non-obfuscated) e-mail addresses are seen in these source diffs.
 > 
-> Unless we come up with a way to address that (e.g., somehow disable this
-> feature for anonymous visitors), I'm afraid that we'll have to obfuscate
-> addresses manually prior to entering them into the wiki...
+> The release notes indicate .13 has security implications, but I can't
+> find them on the known vulnerabilities page. Does anyone know what they
+> are or what impact they may have, if they exist?
+> 
+> Thanks in advance,
+> 
 
-With many contributors to the wiki (which is great!), I'm afraid that we
-won't be able to "enforce manual obfuscation" either.
+The advisories should be posted soon.  It is a security update comparable
+to past ones.
 
-So I think that we need to enhance DokuWiki ourselves or request the
-enhancement from upstream - and do it urgently.  Specifically, we need
-two things:
-
-1. DokuWiki should optionally detect e-mail addresses that are not in
-angle brackets, and obfuscate those as well.  Alternatively, it should
-replace all @-signs.
-
-2. DokuWiki should optionally restrict the "show differences to current
-version" feature to logged in users (or even to certain groups).
-Alternatively, it should obfuscate e-mail addresses (or replace @-signs)
-even in the diffs.
-
-Dmitry (Galaxy) - will you be able to take care of discussing this with
-upstream - and maybe developing, contributing, and applying a patch (to
-our install)?  Any other volunteers?
-
-Thanks in advance,
-
-Alexander
+-- 
+    JB
