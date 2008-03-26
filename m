@@ -1,21 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/10/7
-Message-ID: <Pine.GSO.4.51.0811101257080.6724@faron.mitre.org>
-Date: Mon, 10 Nov 2008 12:57:44 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/26/3
+Message-id: <20080326052720.GG12339@linsec.ca>
+Date: Tue, 25 Mar 2008 23:27:20 -0600
+From: Vincent Danen <vdanen@...sec.ca>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>, Greg KH <greg@...ah.com>
-Subject: Re: CVE requests: kernel: hfsplus-related bugs
+Subject: Re: firefox 2.0.0.13
 Content-Type: text/plain; charset=utf-8
 
+* [2008-03-25 20:35:30 -0400] Josh Bressers wrote:
 
-On Mon, 10 Nov 2008, Eugene Teo wrote:
+>> The release notes indicate .13 has security implications, but I can't
+>> find them on the known vulnerabilities page. Does anyone know what they
+>> are or what impact they may have, if they exist?
+>> 
+>> Thanks in advance,
+>> 
+>
+>The advisories should be posted soon.  It is a security update comparable
+>to past ones.
 
-> Both patches validate the catalog name length.
+They're on there now at least:
 
-Thanks for the clarification.
+http://www.mozilla.org/projects/security/known-vulnerabilities.html#firefox2.0.0.13
 
-Is there any reference for this issue (say, a bug ID) besides your post to
-oss-security?
+-- 
+Vincent Danen @ http://linsec.ca/
 
-- Steve
+Content of type "application/pgp-signature" skipped
