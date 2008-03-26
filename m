@@ -1,62 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/08/9
-Message-ID: <Pine.GSO.4.51.0807081317020.16947@faron.mitre.org>
-Date: Tue, 8 Jul 2008 13:18:37 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: Re: CVE request: mybb
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/26/6
+Message-Id: <1206560607.4858.31.camel@localhost.localdomain>
+Date: Wed, 26 Mar 2008 20:43:27 +0100
+From: Lubomir Kundrak <lkundrak@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request: Perlbal DoS
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-On Sun, 6 Jul 2008, Hanno [utf-8] Böck wrote:
+Please assign a CVE name to the following:
 
-> MyBB 1.2.13 release announcement:
-> "MyBB 1.2.13 is a security update to the MyBB 1.2 series. It fixes 1 HIGH risk
-> and 1 Medium risk security vulnerability."
->
-> http://community.mybboard.net/showthread.php?tid=31666
->
-> No further details though...
+http://bugs.gentoo.org/show_bug.cgi?id=214784
+http://search.cpan.org/src/BRADFITZ/Perlbal-1.70/CHANGES
+https://bugzilla.redhat.com/show_bug.cgi?id=439054
 
-
-The forum post linked to a security-only patch that provides some pretty
-good hints.
-
-======================================================
-Name: CVE-2008-3069
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3069
-Reference: CONFIRM:http://community.mybboard.net/attachment.php?aid=9272
-Reference: CONFIRM:http://community.mybboard.net/showthread.php?tid=31666
-
-Multiple cross-site scripting (XSS) vulnerabilities in MyBB before
-1.2.13 allow remote attackers to inject arbitrary web script or HTML
-via unspecified parameters to (1) portal.php and (2)
-inc/functions_post.php.
-
-
-======================================================
-Name: CVE-2008-3070
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3070
-Reference: CONFIRM:http://community.mybboard.net/attachment.php?aid=9272
-Reference: CONFIRM:http://community.mybboard.net/showthread.php?tid=31666
-
-Unspecified vulnerability in inc/datahandler/user.php in MyBB before
-1.2.13 has unknown impact and attack vectors related to the
-$user['language'] variable, probably related to SQL injection.
-
-
-======================================================
-Name: CVE-2008-3071
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3071
-Reference: CONFIRM:http://community.mybboard.net/attachment.php?aid=9272
-Reference: CONFIRM:http://community.mybboard.net/showthread.php?tid=31666
-
-Directory traversal vulnerability in inc/class_language.php in MyBB
-before 1.2.13 has unknown impact and attack vectors related to the
-$language variable.
-
+Thanks,
+-- 
+Lubomir Kundrak (Red Hat Security Response Team)
 
