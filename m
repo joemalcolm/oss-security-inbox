@@ -1,56 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/24/4
-Message-ID: <Pine.GSO.4.51.0812241251510.12707@faron.mitre.org>
-Date: Wed, 24 Dec 2008 12:53:38 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: watchdog: ib700wdt.c - buffer_underflow bug
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/26/5
+Message-ID: <47EA7953.7000508@gentoo.org>
+Date: Wed, 26 Mar 2008 17:26:59 +0100
+From: Christian Hoffmann <hoffie@...too.org>
+To: coley@...re.org
+CC: oss-security@...ts.openwall.com
+Subject: CVE request: lighttpd DoS: forcefully closing of foreign SSL connections
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-On Mon, 22 Dec 2008, Eugene Teo wrote:
+can we please get a CVE id for the following issue?
+https://bugs.gentoo.org/show_bug.cgi?id=214892
+http://trac.lighttpd.net/trac/ticket/285#comment:18
+http://trac.lighttpd.net/trac/changeset/2136
 
-> I discussed this with Wim, and it depends on the permissions for the
-> miscdev device, /dev/watchdog. On Fedora, it's accessible by root user
-> only.
+Impact is rather low, but I think it still qualifies for DoS.
 
-One of our CVE analysts found a concrete case; how common it is, is
-another question:
-
-  www.stlinux.com/docs/manual/distribution/distribution_guide17.php shows
-  an example of "crw-rw-rw-" permissions for /dev/watchdog. Thus, it is
-  plausible that the IOCTL call is available to unprivileged users in some
-  or all Linux distributions. Even if these permissions are not the
-  default, users might reasonably decide to manually set these permissions
-  if they happen to do a web search for "/dev/watchdog permissions" and
-  find this stlinux.com page.
-
-Use CVE-2008-5702
-
-- Steve
-
-======================================================
-Name: CVE-2008-5702
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5702
-Reference: MLIST:[linux-kernel] 20081005 [PATCH 04/19] ib700wdt: Fix off by one
-Reference: URL:http://lkml.org/lkml/2008/10/5/173
-Reference: MLIST:[oss-security] 20081210 CVE request: kernel: watchdog: ib700wdt.c - buffer_underflow bug
-Reference: URL:http://openwall.com/lists/oss-security/2008/12/10/2
-Reference: MLIST:[oss-security] 20081216 Re: CVE request: kernel: watchdog: ib700wdt.c - buffer_underflow bug
-Reference: URL:http://openwall.com/lists/oss-security/2008/12/17/6
-Reference: MLIST:[oss-security] 20081217 Re: CVE request: kernel: watchdog: ib700wdt.c - buffer_underflow bug
-Reference: URL:http://openwall.com/lists/oss-security/2008/12/17/9
-Reference: MLIST:[oss-security] 20081217 Re: CVE request: kernel: watchdog: ib700wdt.c - buffer_underflow bug
-Reference: URL:http://openwall.com/lists/oss-security/2008/12/17/20
-Reference: CONFIRM:http://bugzilla.kernel.org/show_bug.cgi?id=11399
-Reference: CONFIRM:http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.27.y.git;a=commit;h=7c2500f17d65092d93345f3996cf82ebca17e9ff
-Reference: CONFIRM:http://www.kernel.org/pub/linux/kernel/v2.6/testing/ChangeLog-2.6.28-rc1
-
-Buffer underflow in the ibwdt_ioctl function in
-drivers/watchdog/ib700wdt.c in the Linux kernel before 2.6.28-rc1
-might allow local users to have an unknown impact via a certain
-/dev/watchdog WDIOC_SETTIMEOUT IOCTL call.
+Thanks,
+-- 
+Christian Hoffmann
 
 
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (253 bytes)
