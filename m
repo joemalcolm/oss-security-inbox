@@ -1,24 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/13/3
-Message-ID: <Pine.GSO.4.51.0808122030550.26550@faron.mitre.org>
-Date: Tue, 12 Aug 2008 20:31:05 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/28/1
+Message-ID: <20080327235843.GA26542@openwall.com>
+Date: Fri, 28 Mar 2008 02:58:43 +0300
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...re.org>
-Subject: Re: horde webmail edition < 1.1.1
+Subject: Re: using oss-security references in CVE
 Content-Type: text/plain; charset=utf-8
 
+Steve,
 
-======================================================
-Name: CVE-2008-3650
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3650
-Reference: MLIST:[horde-announce] 20080614 [announce] Horde Groupware Webmail Edition 1.1.1 (final)
-Reference: URL:http://lists.horde.org/archives/announce/2008/000420.html
+On Thu, Mar 27, 2008 at 06:59:27PM -0400, Steven M. Christey wrote:
+> In CVE, we try to provide "provenance" for every detail that makes its way
+> into the description.  Issues like rxvt and CenterIM have some details
+> that are only publicly documented in oss-security, and I would like to add
+> these as references.
 
-Multiple unspecified vulnerabilities in Horde Groupware Webmail before
-Edition 1.1.1 (final) have unknown impact and attack vectors related
-to "unescaped output," possibly cross-site scripting (XSS), in the (1)
-object browser and (2) contact view.
+That would be great.
 
+> However, I haven't done so yet.  If I start to add oss-security references
+> to CVEs when needed, this will be noticed by the other vuln DBs and added
+> to their watch lists.  As their response is sometimes faster than CVE's,
+> this means that new vuln reports will start showing up publicly much more
+> quickly.
 
+Isn't that actually desirable?  I mean, stuff being posted to
+oss-security is supposed to be either already public or intended to be
+made public right away.
+
+> Are people OK with that?
+
+Please go for it!
+
+If you can, please use the official archive URLs, currently at:
+
+	http://www.openwall.com/lists/oss-security/
+
+In case this is moved - e.g., to the oss-security website - we'll make
+sure to put proper redirects in place, such that every message's URL
+remains valid.  While the software powering this archive is currently
+quite spartan, I think it suffices this purpose (CVE refs) well - and
+its further development was just revitalized.
+
+By the way, maybe we should also add a link to the oss-security wiki to
+page footers on that archive?  Or even to message trailers (such that
+the wiki link will be seen on third-party archives as well)?
+
+Oh, and someone should write a wiki page about getting CVE IDs.  This is
+currently mentioned as a FIXME here:
+
+	http://oss-security.openwall.org/wiki/disclosure/researcher
+
+Thanks,
+
+Alexander
