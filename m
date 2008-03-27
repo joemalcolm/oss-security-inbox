@@ -1,37 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/29/4
-Message-ID: <20081029120525.5ff1e016@redhat.com>
-Date: Wed, 29 Oct 2008 12:05:25 +0100
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/27/13
+Message-id: <20080327233422.GT12339@linsec.ca>
+Date: Thu, 27 Mar 2008 17:34:22 -0600
+From: Vincent Danen <vdanen@...sec.ca>
 To: oss-security@...ts.openwall.com
-Cc: jamie@...onical.com, coley <coley@...re.org>
-Subject: Re: CVE request for ecryptfs
+Subject: Re: using oss-security references in CVE
 Content-Type: text/plain; charset=utf-8
 
-Hi Jamie!
+* [2008-03-28 00:09:46 +0100] Lubomir Kundrak wrote:
 
-On Thu, 23 Oct 2008 16:16:28 -0500 Jamie Strandboge
-<jamie@...onical.com> wrote:
+>On Thu, 2008-03-27 at 18:59 -0400, Steven M. Christey wrote:
+>> All,
+>> 
+>> In CVE, we try to provide "provenance" for every detail that makes its way
+>> into the description.  Issues like rxvt and CenterIM have some details
+>> that are only publicly documented in oss-security, and I would like to add
+>> these as references.
+>
+>I agree. There shouldn't really be things like more public and less
+>public places to share security-related information.
 
-> While reviewing ecryptfs, I discovered an information disclosure
-> vulnerability in ecryptfs-setup-private and notified upstream. This
-> helper script was known as ecryptfs-setup-confidential in earlier
-> releases.
-> 
-> The problem arises when ecryptfs-setup-private invokes
-> ecryptfs-wrap-passphrase and ecryptfs-add-passphrase with command line
-> arguments that include the user's existing login password as well as
-> the newly created mount password. As a result, these passwords can be
-> snooped in the process table.
+I think this list is pretty public, and is intentionally so.  There
+should be no reason to hold back referring to oss-security messages as
+references for CVE names or any other vuln DB... in fact, this may even
+help the list to grow (which is ultimately what we want... within
+reason, of course).
 
-Well the question is whether this should be worded as
-ecryptfs-setup-{private,confidential} issue, or more generic issue
-affecting various ecryptfs-* command line utilities, that only accept
-passwords as command line arguments (i.e. no interactive prompt).  So
-even though there's not ecryptfs-setup-* script to fix in older
-versions, steps done by ecryptfs-setup-* are likely to be performed by
-the user manually, resulting in the same risk of leak as with helper
-script.  Or do I miss anything?
+I see no problem with this.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Vincent Danen @ http://linsec.ca/
+
+Content of type "application/pgp-signature" skipped
