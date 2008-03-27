@@ -1,25 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/03/14
-Message-ID: <Pine.GSO.4.51.0810031744410.9068@faron.mitre.org>
-Date: Fri, 3 Oct 2008 17:44:47 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/27/2
+Message-Id: <200803270303.22209.rbu@gentoo.org>
+Date: Thu, 27 Mar 2008 03:03:22 +0100
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: XSS in mediawiki 1.13.1 and 1.12.0
+Subject: Re: request CVE id: insecure handling of DISPLAY in rxvt
 Content-Type: text/plain; charset=utf-8
 
+On Tuesday 04 March 2008, Nico Golde wrote:
+> It should be a good idea to check other terminal emulators
+> as well.
 
-======================================================
-Name: CVE-2008-4408
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4408
-Reference: MLIST:[oss-security] 20081002 CVE request: XSS in mediawiki 1.13.1 and 1.12.0
-Reference: URL:http://openwall.com/lists/oss-security/2008/10/02/3
-Reference: CONFIRM:http://svn.wikimedia.org/svnroot/mediawiki/tags/REL1_13_2/phase3/RELEASE-NOTES
+The same issue also exists in:
+aterm, tested 1.0.1
+eterm, tested 0.9.4
+mrxvt, tested 0.5.3
+multi-aterm, tested 0.2.1
+rxvt-unicode, tested 8.3 and 8.9
+wterm, tested with 6.2.9
 
-Cross-site scripting (XSS) vulnerability in MediaWiki 1.13.1, 1.12.0,
-and possibly other versions before 1.13.2 allows remote attackers to
-inject arbitrary web script or HTML via the useskin parameter to an
-unspecified component.
+This is almost half of the terminal emulators I tried. There are 
+probably tons of other X applications doing this, not all with the 
+impact of a shell, but many allow starting other programs one way or 
+another.
+
+Reading the attack vector, I would consider it a vulnerability, but 
+looking at the amount of programs that fall into this category, I'm 
+worried how many programs do this and if the low impact is really worth 
+fixing all of them.
 
 
+Robert
+
+Download attachment "signature.asc " of type "application/pgp-signature" (190 bytes)
