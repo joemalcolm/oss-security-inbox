@@ -1,29 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/26/3
-Message-id: <20080326052720.GG12339@linsec.ca>
-Date: Tue, 25 Mar 2008 23:27:20 -0600
-From: Vincent Danen <vdanen@...sec.ca>
-To: oss-security@...ts.openwall.com
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/27/4
+Message-ID: <6533.1206616335@devserv.devel.redhat.com>
+Date: Thu, 27 Mar 2008 07:12:15 -0400
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+cc: Jonathan Smith <smithj@...ethemallocs.com>
 Subject: Re: firefox 2.0.0.13
 Content-Type: text/plain; charset=utf-8
 
-* [2008-03-25 20:35:30 -0400] Josh Bressers wrote:
+> 
+> > The advisories should be posted soon.  It is a security update comparable
+> > to past ones.
+> 
+> Josh,
+> 
+> Any idea on what Mozilla means by using CVE-2008-1240 in MFSA 2008-18?
+> They already list CVE-2008-1195, which is associated with the Sun
+> advisory, and that seems like the only issue they're really trying to
+> address.
+> 
 
->> The release notes indicate .13 has security implications, but I can't
->> find them on the known vulnerabilities page. Does anyone know what they
->> are or what impact they may have, if they exist?
->> 
->> Thanks in advance,
->> 
->
->The advisories should be posted soon.  It is a security update comparable
->to past ones.
+Hi Steve,
 
-They're on there now at least:
+That's the one I mailed you about back when I was assigning the CVE ids ;)
 
-http://www.mozilla.org/projects/security/known-vulnerabilities.html#firefox2.0.0.13
+The Mozilla advisory doesn't clarify that CVE-2008-1195 is the Sun CVE id
+for their java advisory:
+http://sunsolve.sun.com/search/document.do?assetkey=1-66-233326-1
+
+This flaw is now fixed in both Java and Firefox (it's debatable who is at
+fault here, both the browser and the JRE were doing silly things).
+
+As you gave me the advice that since the codebases are different, they
+should get separate ids.  We can always yank CVE-2008-1240 if you wish and
+I'll see about getting upstream to remove it from the advisory.
+
+If we're keeping CVE-2008-1240, it would probably be wise of Mozilla to
+clarify CVE-2008-1195 is for the JVM.
+
+Thanks.
 
 -- 
-Vincent Danen @ http://linsec.ca/
-
-Content of type "application/pgp-signature" skipped
+    JB
