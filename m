@@ -1,24 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/02/4
-Message-Id: <200810021841.31504.rbu@gentoo.org>
-Date: Thu, 2 Oct 2008 18:41:18 +0200
-From: Robert Buchholz <rbu@...too.org>
-To: oss-security@...ts.openwall.com
-Cc: veillard@...hat.com
-Subject: libxml2 "ampproblem" DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/27/6
+Message-ID: <Pine.GSO.4.51.0803271838420.14208@faron.mitre.org>
+Date: Thu, 27 Mar 2008 18:39:16 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Robert Buchholz <rbu@...too.org>
+cc: coley@...re.org, lcars@...rt.org, oss-security@...ts.openwall.com, wk@...pg.org
+Subject: Re: CVE request: GnuPG Import Key Memory Corruption
 Content-Type: text/plain; charset=utf-8
 
-Hey,
 
-I did not look into this issue closely yet, but I can reproduce an OOM 
-situation on libxml2 2.7.1, but not on 2.6.32.
+======================================================
+Name: CVE-2008-1530
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1530
+Reference: MISC:http://www.ocert.org/advisories/ocert-2008-1.html
+Reference: CONFIRM:https://bugs.g10code.com/gnupg/issue894
+Reference: CONFIRM:https://bugs.gentoo.org/show_bug.cgi?id=214990
 
-The malicious XML file can be found on
-http://bugzilla.gnome.org/show_bug.cgi?id=554660
+GnuPG (gpg) 1.4.8 and 2.0.8 allows remote attackers to cause a denial
+of service (crash) and possibly execute arbitrary code via crafted
+duplicate keys that are imported from key servers, which triggers
+"memory corruption around deduplication of user IDs."
 
-I'm not sure if and how this is related to CVE-2008-3281.
 
-
-Robert
-
-Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
