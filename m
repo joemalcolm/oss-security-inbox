@@ -1,35 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/07/1
-Message-Id: <200810071250.42339.hanno@hboeck.de>
-Date: Tue, 7 Oct 2008 12:50:41 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: "oss-security" <oss-security@...ts.openwall.com>
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: crashers / potential security risks in mplayer
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/27/11
+Message-Id: <1206659386.4858.92.camel@localhost.localdomain>
+Date: Fri, 28 Mar 2008 00:09:46 +0100
+From: Lubomir Kundrak <lkundrak@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: using oss-security references in CVE
 Content-Type: text/plain; charset=utf-8
 
-Seems we're still not done with the zzuf stuff Sam Hocevar released ages ago.
-Original source:
-http://sam.zoy.org/blog/2007-01-16-exposing-file-parsing-vulnerabilities
 
-Please assign some CVEs for mplayer:
+On Thu, 2008-03-27 at 18:59 -0400, Steven M. Christey wrote:
+> All,
+> 
+> In CVE, we try to provide "provenance" for every detail that makes its way
+> into the description.  Issues like rxvt and CenterIM have some details
+> that are only publicly documented in oss-security, and I would like to add
+> these as references.
 
-Crasher in aac parser, samples:
-http://sam.zoy.org/zzuf/lol-mplayer.aac
-http://sam.zoy.org/zzuf/lol-vlc.aac
-http://sam.zoy.org/zzuf/lol-mplayer.aac
-
-Crasher in ogg parser, samples:
-http://sam.zoy.org/zzuf/lol-mplayer.ogm
-http://sam.zoy.org/zzuf/lol-ffplay.ogm
-
-
+I agree. There shouldn't really be things like more public and less
+public places to share security-related information.
 
 -- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+Lubomir Kundrak (Red Hat Security Response Team)
 
-http://freiheitstattangst.de/ - 11.10. Berlin gegen Überwachung
-http://x1000malquer.de/ - ab 8.11. Atomtransporte stoppen
-
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
