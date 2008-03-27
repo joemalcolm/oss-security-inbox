@@ -1,37 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/05/9
-Message-ID: <20080405121458.GC25641@openwall.com>
-Date: Sat, 5 Apr 2008 16:14:58 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/27/7
+Message-ID: <Pine.GSO.4.51.0803271849410.14208@faron.mitre.org>
+Date: Thu, 27 Mar 2008 18:54:07 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: wiki: vendor info & osvdb.org/vendors
+Subject: Re: was: SA29489 CenterIM URL handling flaw
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Apr 04, 2008 at 07:06:36PM -0400, Josh Bressers wrote:
-> > 	http://osvdb.org/vendors
-> 
-> Holy Smokes that's impressive!
-> 
-> I don't think there's anything to consolidate, I think we just need to
-> ensure everything on the oss-security wiki page is in your data (I would be
-> surprised if it's not), then we just point at that.  The page about easily
-> finding patches is probably still relevant, but there's no sense in
-> duplicating information, especially when there is such an extensive source
-> as this.
 
-I am not so sure.  On our wiki, we have a separation between distro
-vendors and individual Open Source projects - and I like it.  I haven't
-found a way to extract a list of distro vendors only from osvdb.org.
+On Tue, 25 Mar 2008, Nico Golde wrote:
 
-Also, some vendors and projects may have relevant info that just does
-not fit into pre-defined fields on osvdb.org - yet it may be specified
-in entries on the wiki.
+> Hi,
+> * Nico Golde <oss-security+ml@...lde.de> [2008-03-25 16:25]:
+> > * Lubomir Kundrak <lkundrak@...hat.com> [2008-03-24 15:08]:
+> > > Ad SA29489 [1] "CenterIM URL Parsing Command Execution Vulnerability"
+> > >
+> > > CenterIM does completely nothing with received URLs. Maybe the
+> > > unfortuate "exploit writer" was using XFCE Terminal [2], or a terminal
+> > > emulator with a similar problem.
+> >
+> > That's partly true. While centerim has no special URL
+> > handler to handle incoming urls it does provide the ability
+> > to list urls in a message by pressing F2. If you press enter
+> > on one of these urls it tries to open it in an external
+> > browser and executes the other commands as well.
 
-It is a good idea to update the info at osvdb.org with whatever we have.
-For example, I was not able to find rPath in the osvdb.org database.
-Then the vendors/projects themselves would need to remember to keep
-those entries up to date as well...
+This is the kind of situation that CVE adopted the "user-assisted" term
+for: the user assists the attacker in his/her own demise.
 
-Also, we should definitely link to osvdb.org.
+> > You see the commands in the URL however so I think the
+> > impact of this is like sending someone a message with
+> > "please type rm -rf ~ in your shell" so the secunia rating
+> > is a bit beyond the actual impact.
 
-Alexander
+Is the URL still encoded at the time it is viewed?  if so, then I don't
+expect a typical user to notice this equivalent of "rm -rf *":
+
+  %72%6D%20%2D%72%66%20%2A
+
+and that's part of the "smell test" for user-assisted issues.
+
+Current CVE desc below.
+
+- Steve
+
+
+======================================================
+Name: CVE-2008-1467
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1467
+Reference: MILW0RM:5283
+Reference: URL:http://www.milw0rm.com/exploits/5283
+Reference: BID:28362
+Reference: URL:http://www.securityfocus.com/bid/28362
+Reference: FRSIRT:ADV-2008-0956
+Reference: URL:http://www.frsirt.com/english/advisories/2008/0956/references
+Reference: SECUNIA:29489
+Reference: URL:http://secunia.com/advisories/29489
+
+** DISPUTED **
+
+CenterIM 4.22.3 and earlier allows user-assisted remote attackers to
+execute arbitrary commands via shell metacharacters in a URI, related
+to "received URLs in the message window."  NOTE: this issue has been
+disputed due to the user-assisted nature, since the URL must be
+selected and launched by the victim.
+
+
