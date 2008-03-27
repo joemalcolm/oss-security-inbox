@@ -1,46 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/14/1
-Message-Id: <200805140239.36281.rbu@gentoo.org>
-Date: Wed, 14 May 2008 02:39:36 +0200
-From: Robert Buchholz <rbu@...too.org>
-To: oss-security@...ts.openwall.com
-Cc: Ulrich Mueller <ulm@...too.org>
-Subject: Re: CVE request: Emacs 21 fast-lock-mode arbitrary lips code execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/27/9
+Message-ID: <Pine.GSO.4.51.0803271906020.14208@faron.mitre.org>
+Date: Thu, 27 Mar 2008 19:06:08 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Lubomir Kundrak <lkundrak@...hat.com>
+cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: Perlbal DoS
 Content-Type: text/plain; charset=utf-8
 
-Hey Nico,
 
-On Monday, 12. May 2008, Nico Golde wrote:
-> * Robert Buchholz <rbu@...too.org> [2008-05-12 19:05]:
-> > On Monday, 12. May 2008, Nico Golde wrote:
-> > > * Robert Buchholz <rbu@...too.org> [2008-05-10 15:01]:
-> > > > Emacs 21 and Xemacs will execute any lisp code present in a .flc
-> > > > file that accompanies the file the user opens.
-> > >
-> > > The same applies to emacs22.
-> >
-> > Our emacs maintainer said version 22 would warn you that lisp code
-> > from the file would be executed. Could you confirm otherwise?
->
-> At least not with the emacs22 installation I tried this with (22.2).
-> As this is a rather old version, this may depend on the
-> version used?
+======================================================
+Name: CVE-2008-1532
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1532
+Reference: CONFIRM:http://search.cpan.org/src/BRADFITZ/Perlbal-1.70/CHANGES
+Reference: CONFIRM:http://bugs.gentoo.org/show_bug.cgi?id=214784
+Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=439054
 
-The 22.2 is only a few weeks old, is it not?
-
-Anyway, Ulrich Mueller (who is in CC) clarified the behaviour, I quote:
-
-> the issue may still occur in Emacs 22, if both of the following
-> conditions are fulfilled:
-> - the user sets fast-lock-mode as support mode for font-lock (which is
->   not the default),
-> - the user explicitely loads fast-lock, ignoring the warning ("Package
->   fast-lock is obsolete").
-
-I could not reproduce the issue in Emacs 22.2 with only the changed 
-configuration either, but maybe I just used Emacs the wrong way.
+Perlbal before 1.70, when buffered upload is enabled, allows remote
+attackers to cause a denial of service (crash) via a zero-byte chunked
+upload.
 
 
-Robert
-
-Download attachment "signature.asc " of type "application/pgp-signature" (190 bytes)
