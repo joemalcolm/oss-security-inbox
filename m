@@ -1,41 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/01/7
-Message-ID: <20080401113733.GC400@ngolde.de>
-Date: Tue, 1 Apr 2008 13:37:33 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/27/8
+Message-ID: <Pine.GSO.4.51.0803271854080.14208@faron.mitre.org>
+Date: Thu, 27 Mar 2008 18:59:27 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: comix
+Subject: using oss-security references in CVE
 Content-Type: text/plain; charset=utf-8
 
-Hi Tomas,
-* Tomas Hoger <thoger@...hat.com> [2008-04-01 13:21]:
-> On Mon, 31 Mar 2008 15:40:37 +0200 Nico Golde
-> <oss-security+ml@...lde.de> wrote:
-> > comix is vulnerable to arbitrary code execution via crafted 
-> > file names.
-> > 
-> > http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=462840
-> > 
-> > I confirmed this using comix\"\;echo\ owned\>bla\;ls\ \"
-> > as a simple reroducer.
-> 
-> According to the feedback Fedora maintainer got from new upstream,
-> comix 3.x is mostly dead and upstream is focused on re-written version
-> 4.  See https://bugzilla.redhat.com/show_bug.cgi?id=430635#c1 for
-> upstream reply.
 
-Ok.
+All,
 
-> That BZ also has some comments on the insecure temporary file usage
-> reported to Debian BTS.  And also notes that comix is likely an app
-> where unfixed tarfile python module may bite back.
+In CVE, we try to provide "provenance" for every detail that makes its way
+into the description.  Issues like rxvt and CenterIM have some details
+that are only publicly documented in oss-security, and I would like to add
+these as references.
 
-The insecure temporary file usage is not valid in my 
-opinion, see my comment to the bug report.
-Kind regards
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+However, I haven't done so yet.  If I start to add oss-security references
+to CVEs when needed, this will be noticed by the other vuln DBs and added
+to their watch lists.  As their response is sometimes faster than CVE's,
+this means that new vuln reports will start showing up publicly much more
+quickly.
 
-Content of type "application/pgp-signature" skipped
+While the monitoring of oss-security will happen regardless of whether
+it's mentioned in CVE or not, including an oss-security reference in CVE
+will definitely accelerate this.
+
+Are people OK with that?
+
+- Steve
