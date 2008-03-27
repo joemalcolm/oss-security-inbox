@@ -1,32 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/24/5
-Message-ID: <48DA17E0.8050607@redhat.com>
-Date: Wed, 24 Sep 2008 18:35:12 +0800
-From: Eugene Teo <eteo@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/27/3
+Message-ID: <Pine.GSO.4.51.0803262203490.22958@faron.mitre.org>
+Date: Wed, 26 Mar 2008 22:05:40 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-CC: coley@...re.org
-Subject: CVE request: kernel: open() call allows setgid bit when user is not in new file's group
+cc: Jonathan Smith <smithj@...ethemallocs.com>
+Subject: Re: firefox 2.0.0.13
 Content-Type: text/plain; charset=utf-8
 
-This was committed in upstream kernel; Reported by David Watson.
 
-"When creating a file, open()/creat() allows the setgid bit to be set
-via the mode argument even when, due to the bsdgroups mount option or
-the file being created in a setgid directory, the new file's group is
-one which the user is not a member of.  The user can then use
-ftruncate() and memory-mapped I/O to turn the new file into an arbitrary
-binary and thus gain the privileges of this group, since these
-operations do not clear the setgid bit."
+On Tue, 25 Mar 2008, Josh Bressers wrote:
 
-This bug could lead to a possible privileged information disclosure.
+> The advisories should be posted soon.  It is a security update comparable
+> to past ones.
 
-Upstream commit:
-7b82dc0e64e93f430182f36b46b79fcee87d3532
+Josh,
 
-References:
-http://bugzilla.kernel.org/show_bug.cgi?id=8420
-https://bugzilla.redhat.com/show_bug.cgi?id=463661
+Any idea on what Mozilla means by using CVE-2008-1240 in MFSA 2008-18?
+They already list CVE-2008-1195, which is associated with the Sun
+advisory, and that seems like the only issue they're really trying to
+address.
 
-Thanks, Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
+Thanks,
+Steve
