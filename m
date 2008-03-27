@@ -1,42 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/22/2
-Message-ID: <14320.1208869480@devserv.devel.redhat.com>
-Date: Tue, 22 Apr 2008 09:04:40 -0400
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: list: members vs. read-only subscribers
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/27/10
+Message-Id: <200803280007.22930.hanno@hboeck.de>
+Date: Fri, 28 Mar 2008 00:07:22 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com
+Subject: CVEs for zzuf crashers?
 Content-Type: text/plain; charset=utf-8
 
-On 8 April 2008, Solar Designer wrote:
-> > 
-> > * The current member list can post unmoderated
-> > * New subscribers (anyone can subscribe) will be moderated by default, but
-> >   can have the moderation flag lifted when the prove to be useful
-> >   contributors (we need to define what a useful contributor is)
-> > * Non members can post, but will be moderated (if spam is an issue, we
-> >   could consider just throwing this stuff out, but I'd really like to avoid
-> >   it if possible)
-> > 
+Hi,
 
-...
+Sam Hovecar has created zzuf more than a year ago and posted a bunch of 
+samples crashing various multimedia and other apps:
+http://sam.zoy.org/blog/2007-01-16-exposing-file-parsing-vulnerabilities
 
-> 
-> I am OK with your proposal, although I think that we could simply do
-> message moderation for all instead, with a few moderators.
+I've done some re-testing about a year later:
+http://hboeck.de/archives/578-How-long-does-it-take-to-fix-a-crash-bug.html
 
-I'm pretty sure this is going to get old real fast, and is going to
-needlessly slow down communication.  I presume this is only being kicked
-around as an idea because of missing features in the list backend?
+Some are still unfixed, I recently opened some upstream bug reports:
+https://bugzilla.mozilla.org/show_bug.cgi?id=424333
+also mentioned on http://www.securityfocus.com/bid/27243
+http://bugs.xine-project.org/show_bug.cgi?id=74
+http://bugzilla.mplayerhq.hu/show_bug.cgi?id=1043
+(gstreamer not done yet, waiting for 0.10.18 to land in gentoo)
 
-> 
-> Anyway, should we (Openwall) interpret the above as a request to go
-> ahead and apply the changes?
-> 
-
-Have the gears started turning that will make this happen yet?  I'm not in
-a big rush, I just don't want this conversation to be forgotten.
-
-Thanks.
+At least the firefox issue and the still open mediaplayer crashers could have 
+their own CVE (if there aren't already ones for it).
 
 -- 
-    JB
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
