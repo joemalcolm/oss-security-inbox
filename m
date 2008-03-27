@@ -1,36 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/14/2
-Message-Id: <1226677707.3540.60.camel@dhcp-lab-164.englab.brq.redhat.com>
-Date: Fri, 14 Nov 2008 16:48:27 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: htop
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/27/1
+Message-Id: <200803270158.41105.rbu@gentoo.org>
+Date: Thu, 27 Mar 2008 01:58:40 +0100
+From: Robert Buchholz <rbu@...too.org>
+To: coley@...re.org
+Cc: lcars@...rt.org, oss-security@...ts.openwall.com, wk@...pg.org
+Subject: CVE request: GnuPG Import Key Memory Corruption
 Content-Type: text/plain; charset=utf-8
 
-Hello Nico,
+Hi,
 
-  any success when receiving the CVE id for this one?
+there's a memory corruption triggered when importing malformed keys 
+using GnuPG 1.4.8 and 2.0.8. Prior and later versions are not affected. 
+Exploitability to execute code is unknown.
 
-What about the reproducer? Not meaning Debian report
-based one (successfully reproduced), but rather that one issuing
-malicious escape sequences to the terminal used for displaying.
-
-Thanks, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+References:
+http://www.ocert.org/advisories/ocert-2008-1.html
+https://bugs.g10code.com/gnupg/issue894
+https://bugs.gentoo.org/show_bug.cgi?id=214990
 
 
-On Sun, 2008-11-02 at 13:06 +0100, Nico Golde wrote:
-> Hi,
-> htop doesn't filter non printable characters in process 
-> names which enables processes doing evil things with the 
-> display using escape sequences.
-> 
-> http://bugs.debian.org/504144
-> 
-> Steve, can you assign a CVE id to this?
-> 
-> Cheers
-> Nico
-> 
+Thanks,
+Robert
 
+
+Download attachment "signature.asc " of type "application/pgp-signature" (190 bytes)
