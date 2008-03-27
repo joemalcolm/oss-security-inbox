@@ -1,82 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/31/3
-Message-Id: <200807311715.22777.aj@dungeon.inka.de>
-Date: Thu, 31 Jul 2008 17:15:22 +0200
-From: Andreas Jellinghaus <aj@...geon.inka.de>
-To: vendor-sec@....de
-Cc: oss-security@...ts.openwall.com
-Subject: OpenSC Security Advisory
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/27/12
+Message-ID: <Pine.GSO.4.51.0803271921500.14208@faron.mitre.org>
+Date: Thu, 27 Mar 2008 19:22:35 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Hanno Böck <hanno@...eck.de>
+cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com
+Subject: Re: Need CVEs for joomla, egroupware
 Content-Type: text/plain; charset=utf-8
 
-OpenSC Security Advisory [31-Jul-2008]
 
-OpenSC initializes CardOS cards with improper access rights
------------------------------------------------------------
-
-Chaskiel M Grundman found a security vulnerability in OpenSC.
-The vulnerability has been fixed in OpenSC 0.11.5.
-In Mitre's CVE dictionary this issue is filed under CVE-2008-2235.
-Users will need to run "pkcs15-tool -T -U" to test (-T) and 
-update (-U) the security settings on their card.
-
-All versions of OpenSC prior to 0.11.5 initialized smart cards
-with Siemens CardOS M4 card operating system without proper
-access right: the ADMIN file control information in the 5015
-directory on the smart card was left to 00 (all access allowed).
-
-With this bug anyone can change a user PIN without having the PIN
-or PUK or the superusers PIN or PUK. However it can not be used
-to figure out the PIN. Thus if the PIN on your card is still the
-same you always had, then you can be sure, that noone exploited
-this vulnerability.
-
-This vulnerability affects only smart cards and usb crypto tokens
-based on Siemens CardOS M4, and within that group only those that
-were initialized with OpenSC.
-
-Users of other smart cards and usb crypto tokens are not affected.
-Users of Siemens CardOS M4 based smart cards and crypto tokens are
-not affected, if the card was initialized with some software other
-than OpenSC.
-
-The new version of OpenSC implements a simple way to verify if a
-card is affected or not:
-	pkcs15-tool has now two new options:
-  --test-update, -T             Test if the card needs a security update
-  --update, -U                  Update the card with a security update
-
-Running
-	pkcs15-tool -T
-will either show
-	fci is up-to-date, card is fine
-or 
-	fci is out-off-date, card is vulnerable
-
-If the card is vulnerable, please update the security setting using:
-	pkcs15-tool -T -U
-this will show:
-	fci is out-off-date, card is vulnerable
-	security update applied with success.
+Note all: these CVE's only cover the publicly disclosed issues.  The
+non-public ones that Nico requested will be handled separately in the
+normal CVE reservation process.
 
 
-Our Mac OS X Installer Package "SCA" is also affected by this vulnerability:
-Version 0.2.2 and earleir are vulnerable. A new version 0.2.3 including this
-fix will soon be available at
-		http://www.opensc-project.org/
+======================================================
+Name: CVE-2008-1502
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1502
+Reference: MISC:http://www.egroupware.org/viewvc/branches/1.4/phpgwapi/inc/class.kses.inc.php?r1=23625&r2=25110&pathrev=25110
+Reference: CONFIRM:http://www.egroupware.org/changelog
+Reference: SECUNIA:29491
+Reference: URL:http://secunia.com/advisories/29491
 
-Our Windows Installer Package "SCB" is also affected by this vulnerability:
-All versions are affected. We don't have any windows developer left, so right
-now noone can update this package. But new windows binaries build using mingw
-will be soon available at
-		http://www.opensc-project.org/files/build/
+The _bad_protocol_once function in phpgwapi/inc/class.kses.inc.php in
+eGroupWare before 1.4.003 allows remote attackers to bypass HTML
+filtering and conduct cross-site scripting (XSS) attacks via a string
+containing crafted URL protocols.
 
---cut--
 
-attached is a patch distributions can apply instead of updating to the new 
-version. still users will need to run "pkcs15-tool -T -U" for all their smart 
-cards and usb crypto tokens (only those based on "Siemens CardOS M4" and 
-initialized with OpenSC), please let them know.
+======================================================
+Name: CVE-2008-1533
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1533
+Reference: CONFIRM:http://www.joomla.org/content/view/4560/1/
+Reference: SECUNIA:28861
+Reference: URL:http://secunia.com/advisories/28861
 
-Regards, Andreas
+Unspecified vulnerability in the XML-RPC Blogger API plugin in Joomla!
+1.5 allows remote attackers to perform unauthorized article operations
+on articles via unknown vectors.
 
-View attachment "advisory.diff" of type "text/x-diff" (8539 bytes)
+
