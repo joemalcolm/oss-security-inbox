@@ -1,41 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/05/9
-Message-ID: <20080305130408.GB21650@ngolde.de>
-Date: Wed, 5 Mar 2008 14:04:08 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/27/5
+Message-ID: <Pine.GSO.4.51.0803271831470.14208@faron.mitre.org>
+Date: Thu, 27 Mar 2008 18:34:02 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: request CVE id: insecure handling of DISPLAY in rxvt
+cc: "Steven M. Christey" <coley@...us.mitre.org>, Jonathan Smith <smithj@...ethemallocs.com>
+Subject: Re: firefox 2.0.0.13
 Content-Type: text/plain; charset=utf-8
 
-Hi Matthieu,
-* Matthieu Herrb <matthieu.herrb@...s.fr> [2008-03-05 12:54]:
-> Nico Golde wrote:
-> >Steve, can I get a CVE id for the following issue in rxvt?
-> >"If the DISPLAY environment is not set, rxvt opens an xterm on :0, which on 
-> >some headless login-server means anyone can setup an fake X server waiting for 
-> >someone loggin in without X forwarding to start rxvt by some mistake or by 
-> >some program (thus without even noticing) and getting full shell access to 
-> >that other account."
-> >This is Debian bug 469296[0].
-> >It should be a good idea to check other terminal emulators as well.
-> >[0] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=469296
-> 
-> I don't understand how that's an issue with rxvt. If you "fix" the terminal 
-> emulator not to that, yo can still run rxvt -display :0 or env DISPLAY=:0 rxvt.
 
-Sure but what's your point? It still looks different to me 
-if the user is forced to enable that or if it's done in the 
-background without him noticing it.
+On Thu, 27 Mar 2008, Josh Bressers wrote:
 
-> But then  I also don't understant what you mean by "setup an fake X server 
-> waiting for someone loggin in..."
+> > Any idea on what Mozilla means by using CVE-2008-1240 in MFSA 2008-18?
+> > They already list CVE-2008-1195, which is associated with the Sun
+> > advisory, and that seems like the only issue they're really trying to
+> > address.
+> >
+>
+> That's the one I mailed you about back when I was assigning the CVE ids ;)
 
-He basically meant starting an X server on :0.
+Oh, that was like 300 CVE's ago ;-)
 
-Cheers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+> The Mozilla advisory doesn't clarify that CVE-2008-1195 is the Sun CVE id
+> for their java advisory:
+> http://sunsolve.sun.com/search/document.do?assetkey=1-66-233326-1
 
-Content of type "application/pgp-signature" skipped
+The CVE itself clarifies this, so I guess that's kind of OK.
+
+> This flaw is now fixed in both Java and Firefox (it's debatable who is at
+> fault here, both the browser and the JRE were doing silly things).
+>
+>
+> As you gave me the advice that since the codebases are different, they
+> should get separate ids.  We can always yank CVE-2008-1240 if you wish and
+> I'll see about getting upstream to remove it from the advisory.
+
+No, I'll keep them split, given the rationale that it's arguably both
+their fault.  I'll try to clarify that in the description for
+CVE-2008-1240.
+
+- Steve
