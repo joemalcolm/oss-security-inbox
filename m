@@ -1,17 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/08/5
-Message-Id: <200805082011.41449.rbu@gentoo.org>
-Date: Thu, 8 May 2008 20:11:41 +0200
-From: Robert Buchholz <rbu@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/28/14
+Message-ID: <47ED0427.1060609@gentoo.org>
+Date: Fri, 28 Mar 2008 15:43:51 +0100
+From: Christian Hoffmann <hoffie@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE Request (PHP)
+Subject: Re: CVE request: lighttpd DoS: forcefully closing of foreign SSL connections
 Content-Type: text/plain; charset=utf-8
 
-On Tuesday 06 May 2008, Robert Buchholz wrote:
-> Also, we could need a CVE for the "GENERATE_SEED() Weak Random Number
-> Seed Vulnerability":
-> http://www.sektioneins.de/advisories/SE-2008-02.txt
+On 2008-03-26 17:26, Christian Hoffmann wrote:
+> can we please get a CVE id for the following issue?
+> https://bugs.gentoo.org/show_bug.cgi?id=214892
+> http://trac.lighttpd.net/trac/ticket/285#comment:18
+> http://trac.lighttpd.net/trac/changeset/2136
+> 
+> Impact is rather low, but I think it still qualifies for DoS.
+Just for reference, apparently CVE-2008-1531 has been assigned to this 
+issue, thanks to whoever did it. :)
 
-... and its twin, CVE-2008-2108 (sorry for the spam).
+-- 
+Christian Hoffmann
 
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (261 bytes)
