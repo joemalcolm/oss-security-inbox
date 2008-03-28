@@ -1,72 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/03/7
-Message-ID: <20081203182818.GD21497@ngolde.de>
-Date: Wed, 3 Dec 2008 19:28:18 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Cc: redpig@...rt.org, coley@...re.org
-Subject: Re: xine-lib and ocert-2008-008
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/28/6
+Message-ID: <13538.1206664162@devserv.devel.redhat.com>
+Date: Thu, 27 Mar 2008 20:29:22 -0400
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
+Subject: Re: using oss-security references in CVE
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Steven M. Christey <coley@...us.mitre.org> [2008-11-26 09:27]:
-> ======================================================
-> Name: CVE-2008-5235
-> Status: Candidate
-> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5235
-> Reference: CONFIRM:http://sourceforge.net/project/shownotes.php?release_id=619869
-> Reference: FRSIRT:ADV-2008-2382
-> Reference: URL:http://www.frsirt.com/english/advisories/2008/2382
-> Reference: SECTRACK:1020703
-> Reference: URL:http://securitytracker.com/id?1020703
-> Reference: SECUNIA:31502
-> Reference: URL:http://secunia.com/advisories/31502
 > 
-> Heap-based buffer overflow in the demux_real_send_chunk function in
-> src/demuxers/demux_real.c in xine-lib before 1.1.15 allows remote
-> attackers to execute arbitrary code via a crafted Real Media file.
-> NOTE: some of these details are obtained from third party information.
-> 
-> 
-> ======================================================
-> Name: CVE-2008-5236
-> Status: Candidate
-> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5236
-> Reference: BUGTRAQ:20080822 [oCERT-2008-008] multiple heap overflows in xine-lib
-> Reference: URL:http://www.securityfocus.com/archive/1/archive/1/495674/100/0/threaded
-> Reference: MISC:http://sourceforge.net/project/shownotes.php?release_id=619869
-> Reference: MISC:http://www.ocert.org/analysis/2008-008/analysis.txt
-> Reference: BID:30797
-> Reference: URL:http://www.securityfocus.com/bid/30797
-> Reference: FRSIRT:ADV-2008-2382
-> Reference: URL:http://www.frsirt.com/english/advisories/2008/2382
-> Reference: FRSIRT:ADV-2008-2427
-> Reference: URL:http://www.frsirt.com/english/advisories/2008/2427
-> Reference: SECUNIA:31502
-> Reference: URL:http://secunia.com/advisories/31502
-> Reference: SECUNIA:31567
-> Reference: URL:http://secunia.com/advisories/31567
-> 
-> Multiple heap-based buffer overflows in xine-lib 1.1.12, and other
-> 1.1.15 and earlier versions, allow remote attackers to execute
-> arbitrary code via vectors related to (1) a crafted EBML element
-> length processed by the parse_block_group function in
-> demux_matroska.c; (2) a certain combination of sps, w, and h values
-> processed by the real_parse_audio_specific_data and
-> demux_real_send_chunk functions in demux_real.c; and (3) an
-> unspecified combination of three values processed by the open_ra_file
-> function in demux_realaudio.c.  NOTE: vector 2 reportedly exists
-> because of an incomplete fix in 1.1.15.
+> By the way, maybe we should also add a link to the oss-security wiki to
+> page footers on that archive?  Or even to message trailers (such that
+> the wiki link will be seen on third-party archives as well)?
 
-Please reject either CVE-2008-5235 or remove the part about 
-demux_real_send_chunk from CVE-2008-5236. I digged in the 
-code for quite some time now and also talked to upstream now 
-cause I couldn't see a difference. This is the same issue.
+I like this idea.  It will help drive eyeballs to the wiki, which in turn
+should improve the wiki (or at least help educate the viewer).
 
-Cheers
-Nico
+> 
+> Oh, and someone should write a wiki page about getting CVE IDs.  This is
+> currently mentioned as a FIXME here:
+> 
+> 	http://oss-security.openwall.org/wiki/disclosure/researcher
+
+I added some minimal content:
+http://oss-security.openwall.org/wiki/disclosure/cve
+
+Thanks.
+
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+    JB
