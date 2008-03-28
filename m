@@ -1,59 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/28/3
-Message-ID: <20081128171240.02a1c350@redhat.com>
-Date: Fri, 28 Nov 2008 17:12:40 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: OSS Security <oss-security@...ts.openwall.com>
-Cc: coley@...re.org
-Subject: CVE request: lcms (old issues)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/28/3
+Message-ID: <20080328001622.GE19773@ngolde.de>
+Date: Fri, 28 Mar 2008 01:16:23 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVEs for zzuf crashers?
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+Hi Hanno,
+* Hanno Böck <hanno@...eck.de> [2008-03-28 00:26]:
+> Sam Hovecar has created zzuf more than a year ago and posted a bunch of 
+> samples crashing various multimedia and other apps:
+> http://sam.zoy.org/blog/2007-01-16-exposing-file-parsing-vulnerabilities
+> 
+> I've done some re-testing about a year later:
+> http://hboeck.de/archives/578-How-long-does-it-take-to-fix-a-crash-bug.html
+> 
+> Some are still unfixed, I recently opened some upstream bug reports:
+[...] 
+Since a crash itself in a non-service appliction is not necessary
+a security issue I think we should check them in detail 
+before assigning CVE ids for them (does not mean they are 
+non-issues though).
 
-While digging around CVE-2007-2741, I found out that there are 2 other
-issues that were quite silently fixed in the Little CMS updates tagged
-as fixing CVE-2007-2741 as done by various vendors.
-
-The issues are:
-
-The ReadEmbeddedTextTag in src/cmsio1.c did not properly check amount
-of data read from the input file to the buffer provided as one of it's
-arguments.  Value read from the file was used as an upper bound without
-any validation.
-
-This issue was fixed upstream in 1.16.  Attached is the patch against
-1.15 lcms packages as was used in SuSE security updates (original name
-of the patch as used in SuSE and Mandriva SRPMS is
-lcms-CVE-2007-2741.patch, but it is not a fix for CVE-2007-2741,
-CVE-2007-2741 was fixed upstream in 1.15 and the correct patch for it
-is named named liblcms-<version>-icc.diff in pre-1.15 SuSE / Mandriva
-SRPMS).
-
-Upstream CVS commit:
-http://lcms.cvs.sourceforge.net/viewvc/lcms/lcms/src/cmsio1.c?r1=1.33&r2=1.34
-
-
-Another issue is unsigned -> signed integer cast issue in cmsAllocGamma
-in src/cmsgamma.c.  The argument to this function - nEntries - may be
-read from the file and not validated before cmsAllocGamma is called.
-As nEntries in cmsAllocGamma is signed integer, it's value may possibly
-be negative and can result in an insufficient memory allocation.
-
-This issue was fixed upstream in 1.17.  Again, attached is the patch
-extracted from SuSE security updates for 1.15.  Original name was
-lcms-gamma-overflow.patch.
-
-Upstream CVS commit:
-http://lcms.cvs.sourceforge.net/viewvc/lcms/lcms/src/cmsgamma.c?view=diff&r1=1.16&r2=1.17
-
-
-As both of these fixes date back to 2007, and were used in the security
-advisory in 2007, they may need 2007 CVE id.  Steven, can you get us
-some?  Thank you!
-
+Kind regards
+Nico
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-View attachment "lcms-1.15-ReadEmbeddedTextTag-sizechecks.diff" of type "text/x-patch" (5529 bytes)
-
-View attachment "lcms-1.15-cmsAllocGamma-overflow.diff" of type "text/x-patch" (563 bytes)
+Content of type "application/pgp-signature" skipped
