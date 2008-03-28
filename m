@@ -1,29 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/20/3
-Message-ID: <20080620121216.GI9978@ngolde.de>
-Date: Fri, 20 Jun 2008 14:12:16 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/28/15
+Message-ID: <20080328170933.GU3582@fuse.inversepath.com>
+Date: Fri, 28 Mar 2008 17:09:33 +0000
+From: Andrea Barisani <lcars@...rt.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: tmsnc
+Subject: project announcement - oCERT - Open Source CERT
 Content-Type: text/plain; charset=utf-8
 
-Hi Eren,
-* Eren Türkay <turkay.eren@...il.com> [2008-06-20 14:02]:
-> On 20 Jun 2008 Fri 14:12:42 Nico Golde wrote:
-> > There is a buffer overflow in the tmsnc UBX handling code.
-> > http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=487222
-> >
-> 
-> I'm not sure if msn protocol allows longer than 512 bytes of data. If it 
-> doesn't support, there seems no security issue in UBX handling code. 
-> 
-> Does anyone know what's the longest value of personal message?
 
-Looking at http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=487046
-it does.
+Hi everyone,
 
-Cheers
-Nico
+we are pleased to announce a new project called oCERT, the Open Source
+Computer Emergency Response Team.
+
+The oCERT project is a public effort providing security handling support to
+Open Source projects affected by security incidents or vulnerabilities, just
+like national CERTs offer services for their respective countries.
+
+If you are a small project lacking security handling resources we can aid you
+in tracking down the extent and nature of potential compromises and security
+vulnerabilities and co-ordinate with all affected parties (like projects that
+ship your code).
+
+If you are a big project and/or Open Source vendor we can promptly communicate
+with you reports and vulnerabilities that might affect your codebase and
+infrastructure and help you out with your security requirements.
+
+You can read all about the project at http://www.ocert.org.
+
+Any feedback is appreciated.
+
+Cheers!
+
+The oCERT Team
+<team@...rt.org>
+
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | Open Source Computer Emergency Response Team
+
+<lcars@...rt.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
