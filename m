@@ -1,20 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/09/12
-Message-ID: <Pine.GSO.4.51.0809091040100.6699@faron.mitre.org>
-Date: Tue, 9 Sep 2008 10:41:02 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/28/5
+Message-Id: <200803280127.56548.rbu@gentoo.org>
+Date: Fri, 28 Mar 2008 01:27:56 +0100
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: Re: CVE request: pam_mount < 0.47 missing security checks
+Cc: Thijs Kinkhorst <thijs@...ian.org>, Andrej Kacian <ticho@...too.org>, chris@...ishowells.co.uk
+Subject: CVE request: policyd-weight insecure temporary file creation
 Content-Type: text/plain; charset=utf-8
 
+Hey all,
 
-On Sat, 6 Sep 2008, Hanno [utf-8] Böck wrote:
+quoting DSA-1531-1:
+Chris Howells discovered that policyd-weight, a policy daemon for the 
+Postfix mail transport agent, created its socket in an insecure way, 
+which may be exploited to overwrite or remove arbitary files from the 
+local system.
 
-> During code refactoring approximately 3 years ago, are affected), some
-> sanity/security checks for user-defined volumes were, probably
-> accidentally, removed.
+References:
+http://www.us.debian.org/security/2008/dsa-1531
+https://bugs.gentoo.org/show_bug.cgi?id=214403
+http://www.policyd-weight.org/
 
-Use CVE-2008-3970 for this meta-fix.
+Please note that the 0.1.14.15 release and the patch introduced in the 
+Debian package do not properly fix this vulnerability, it still 
+contains a race condition. See the Gentoo bug for details.
 
-- Steve
+
+Download attachment "signature.asc " of type "application/pgp-signature" (190 bytes)
