@@ -1,111 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/15/10
-Message-ID: <Pine.GSO.4.51.0810151507480.15058@faron.mitre.org>
-Date: Wed, 15 Oct 2008 15:09:29 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security <oss-security@...ts.openwall.com>
-cc: coley@...re.org
-Subject: Re: CVE Request
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/28/2
+Message-ID: <20080328000940.GD19773@ngolde.de>
+Date: Fri, 28 Mar 2008 01:09:40 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: using oss-security references in CVE
 Content-Type: text/plain; charset=utf-8
 
+Hi Vincent,
+* Vincent Danen <vdanen@...sec.ca> [2008-03-28 00:51]:
+> * [2008-03-28 00:09:46 +0100] Lubomir Kundrak wrote:
+> >On Thu, 2008-03-27 at 18:59 -0400, Steven M. Christey wrote:
+> >>In CVE, we try to provide "provenance" for every detail that makes its way
+> >>into the description.  Issues like rxvt and CenterIM have some details
+> >>that are only publicly documented in oss-security, and I would like to add
+> >>these as references.
+> >
+> >I agree. There shouldn't really be things like more public and less
+> >public places to share security-related information.
+> 
+> I think this list is pretty public, and is intentionally so.  There
+> should be no reason to hold back referring to oss-security messages as
+> references for CVE names or any other vuln DB... in fact, this may even
+> help the list to grow (which is ultimately what we want... within
+> reason, of course).
+> 
+> I see no problem with this.
 
-On Fri, 10 Oct 2008, Josh Bressers wrote:
+Just that it doesn't look like two single opinions: ACK :)
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-> dovecot: http://bugs.gentoo.org/show_bug.cgi?id=240409
-
-CVE-2008-4577 and CVE-2008-4578, see below.
-
-> graphviz: http://bugs.gentoo.org/show_bug.cgi?id=240636
-
-CVE-2008-4555 (I assigned it but forgot to answer oss-security)
-
-> fence: http://bugs.gentoo.org/show_bug.cgi?id=240576
-
-CVE-2008-4579 for this bug, CVE-2008-4580 for Tomas' followup, see below.
-
-- Steve
-
-
-======================================================
-Name: CVE-2008-4555
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4555
-Reference: BUGTRAQ:20081008 Advisory: Graphviz Buffer Overflow Code Execution
-Reference: URL:http://www.securityfocus.com/archive/1/archive/1/497150/100/0/threaded
-Reference: MISC:http://roeehay.blogspot.com/2008/10/graphviz-buffer-overflow-code-execution.html
-Reference: CONFIRM:http://bugs.gentoo.org/show_bug.cgi?id=240636
-Reference: BID:31648
-Reference: URL:http://www.securityfocus.com/bid/31648
-Reference: SECUNIA:32186
-Reference: URL:http://secunia.com/advisories/32186
-
-Stack-based buffer overflow in the push_subg function in parser.y
-(lib/graph/parser.c) in Graphviz 2.20.2, and possibly earlier
-versions, allows user-assisted remote attackers to cause a denial of
-service (memory corruption) or execute arbitrary code via a DOT file
-with a large number of Agraph_t elements.
-
-
-======================================================
-Name: CVE-2008-4577
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4577
-Reference: MLIST:[Dovecot-news] 20081005 v1.1.4 released
-Reference: URL:http://www.dovecot.org/list/dovecot-news/2008-October/000085.html
-Reference: CONFIRM:http://bugs.gentoo.org/show_bug.cgi?id=240409
-Reference: BID:31587
-Reference: URL:http://www.securityfocus.com/bid/31587
-Reference: FRSIRT:ADV-2008-2745
-Reference: URL:http://www.frsirt.com/english/advisories/2008/2745
-Reference: SECUNIA:32164
-Reference: URL:http://secunia.com/advisories/32164
-
-The ACL plugin in Dovecot before 1.1.4 treats negative access rights
-as if they are positive access rights, which allows attackers to
-bypass intended access restrictions.
-
-
-======================================================
-Name: CVE-2008-4578
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4578
-Reference: MLIST:[Dovecot-news] 20081005 v1.1.4 released
-Reference: URL:http://www.dovecot.org/list/dovecot-news/2008-October/000085.html
-Reference: CONFIRM:http://bugs.gentoo.org/show_bug.cgi?id=240409
-Reference: BID:31587
-Reference: URL:http://www.securityfocus.com/bid/31587
-Reference: FRSIRT:ADV-2008-2745
-Reference: URL:http://www.frsirt.com/english/advisories/2008/2745
-Reference: SECUNIA:32164
-Reference: URL:http://secunia.com/advisories/32164
-
-The ACL plugin in Dovecot before 1.1.4 allows attackers to bypass
-intended access restrictions by using the "k" right to create
-unauthorized "parent/child/child" mailboxes.
-
-
-======================================================
-Name: CVE-2008-4579
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4579
-Reference: MISC:http://bugs.gentoo.org/show_bug.cgi?id=240576
-Reference: MLIST:[oss-security] 20081013 Re: CVE Request
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/10/13/3
-
-The (1) fence_apc and (2) fence_apc_snmp programs, as used in (a)
-fence 2.02.00-r1 and possibly (b) cman, when running in verbose mode,
-allows local users to append to arbitrary files via a symlink attack
-on the apclog temporary file.
-
-
-======================================================
-Name: CVE-2008-4580
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4580
-Reference: MLIST:[oss-security] 20081013 Re: CVE Request
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/10/13/3
-
-fence_manual in fence allows local users to modify arbitrary files via
-a symlink attack on the fence_manual.fifo temporary file.
-
-
+Content of type "application/pgp-signature" skipped
