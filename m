@@ -1,60 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/08/10
-Message-Id: <1228748026.3834.72.camel@dhcp-lab-164.englab.brq.redhat.com>
-Date: Mon, 08 Dec 2008 15:53:46 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: coley@...re.org
-Cc: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request - rsyslog
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/28/4
+Message-ID: <20080328002233.GF19773@ngolde.de>
+Date: Fri, 28 Mar 2008 01:22:33 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: was: SA29489 CenterIM URL handling flaw
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve,
+Hi Steven,
+* Steven M. Christey <coley@...us.mitre.org> [2008-03-28 00:01]:
+> On Tue, 25 Mar 2008, Nico Golde wrote:
+> > * Nico Golde <oss-security+ml@...lde.de> [2008-03-25 16:25]:
+> > > * Lubomir Kundrak <lkundrak@...hat.com> [2008-03-24 15:08]:
+[...] 
+> > > That's partly true. While centerim has no special URL
+> > > handler to handle incoming urls it does provide the ability
+> > > to list urls in a message by pressing F2. If you press enter
+> > > on one of these urls it tries to open it in an external
+> > > browser and executes the other commands as well.
+> 
+> This is the kind of situation that CVE adopted the "user-assisted" term
+> for: the user assists the attacker in his/her own demise.
 
-  the following vulnerability has been recently reported
-in rsyslog:
+makes sense.
 
-http://www.rsyslog.com/Article322.phtml
+> > > You see the commands in the URL however so I think the
+> > > impact of this is like sending someone a message with
+> > > "please type rm -rf ~ in your shell" so the secunia rating
+> > > is a bit beyond the actual impact.
+> 
+> Is the URL still encoded at the time it is viewed?  if so, then I don't
+> expect a typical user to notice this equivalent of "rm -rf *":
+> 
+>   %72%6D%20%2D%72%66%20%2A
+> 
+> and that's part of the "smell test" for user-assisted issues.
 
-References:
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=508027
-http://secunia.com/Advisories/32857/
+Nope it won't be encoded. Otherwise I would agree that a 
+decoding hex is too much for a user :)
 
-Upstream patch:
-http://git.adiscon.com/?p=rsyslog.git;a=commitdiff;h=f0ddbed44c332391ae6d9bbf6b07e2f06c4dd676
+Kind regards
+Nico
 
-The reporter mentions:
-"The versions affected are rsyslog 3.12.1 to 3.20.0, 4.1.0 and 4.1.1.    
- The v2-stable branch is not affected."
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-Although the v2-stable part is missing the plugins/imgssapi,imtcp,imudp
-part of the patch, the affected 'clearAllowedSenders' function can be
-found in syslogd.c 
-
- 740 static void clearAllowedSenders (struct AllowedSenders *pAllow) {
-
-and 'isAllowedSender' function from syslogd.c also lacks the check added
-by the patch:
- 
-   1049 /* check if  a sender is allowed. The root of the the allowed sender.
-   1050  * list must be proveded by the caller. As such, this function can be
-   1051  * used to check both UDP and TCP allowed sender lists.
-   1052  * returns 1, if the sender is allowed, 0 otherwise.
-   1053  * rgerhards, 2005-09-26
-   1054  */
-   1055 int isAllowedSender(struct AllowedSenders *pAllowRoot, struct sockaddr *pFrom, const char *pszFromHost)
-   1056 {
-   1057         struct AllowedSenders *pAllow;
-   1058 
-   1059         assert(pFrom != NULL);
-   1060                                   <- no "if(setAllowRoot(&pAllowRoot, pszType) != RS_RET_OK)" from the patch
-   1061         if(pAllowRoot == NULL)
-   1062                 return 1; /* checking disabled, everything is valid! */
-
-so it is highly probable, rsyslog-2.0 is also affected by this issue (checking with the developers yet).
-
-Could you please allocate a new CVE id for this issue?
-
-Thanks, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
+Content of type "application/pgp-signature" skipped
