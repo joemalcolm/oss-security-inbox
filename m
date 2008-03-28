@@ -1,40 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/07/8
-Message-ID: <20080407162956.GA1025@suse.de>
-Date: Mon, 7 Apr 2008 18:29:56 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/28/8
+Message-ID: <20080328015700.GA12962@freedbms.net>
+Date: Fri, 28 Mar 2008 12:57:00 +1100
+From: Zenaan Harkness <zen@...edbms.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: gcc 4.2 optimizations and integer overflow checks
+Subject: change subscription address
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 07, 2008 at 12:12:34PM -0400, Josh Bressers wrote:
-> Has anyone started to look at this yet:
-> http://www.kb.cert.org/vuls/id/162289
-> 
-> I suspect this isn't going to be trivial to detect.  Ideas are welcome.
-> 
-> Thanks.
+Hi, if you can change my subscription address from zen@...edbms.net to
+zenaan.harkness@...il.com, that would be appreciated.
 
-Please note this section:
-
-"Note: this issue does not strictly constitute a vulnerability in gcc
- itself. The behavior that gcc exhibits in this case is permitted by the
- ISO/IEC 9899:1999 C specification (§6.5.6p8). "
-
-The gcc folks have discussed this to death already and in the discussion
-the code received a -Wstrict-overflow option.
+Thanks for the list!
+Zen
 
 
-	> cat xx.c
-	int f(int a, int b) {
-		return a < a+b;
-	}
-
-	int g(int a) {
-		return f(a,1<<30);
-	}
-	> LANG=C projects/gcc/BIN/bin/gcc -O2 -c xx.c -Wstrict-overflow -Wall 
-	xx.c: In function 'g':
-	xx.c:2: warning: assuming signed overflow does not occur when assuming that (X + c) >= X is always true
-
-Ciao, Marcus
+Download attachment "signature.asc" of type "application/pgp-signature" (190 bytes)
