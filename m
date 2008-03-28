@@ -1,26 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/16/8
-Message-ID: <Pine.GSO.4.51.0806161654000.16840@faron.mitre.org>
-Date: Mon, 16 Jun 2008 16:54:08 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: Clamav
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/28/11
+Message-Id: <200803281336.54934.ludwig.nussel@suse.de>
+Date: Fri, 28 Mar 2008 13:36:54 +0100
+From: Ludwig Nussel <ludwig.nussel@...e.de>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE request: silc
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-======================================================
-Name: CVE-2008-2713
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2713
-Reference: MLIST:[oss-security] 20080615 CVE id request: Clamav
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/06/15/2
-Reference: CONFIRM:http://svn.clamav.net/websvn/diff.php?repname=clamav-devel&path=/branches/0.93/libclamav/petite.c&rev=3886
-Reference: CONFIRM:https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1000
-Reference: BID:29750
-Reference: URL:http://www.securityfocus.com/bid/29750
+This report about a buffer overflow in SILC was posted to bugtraq
+recently and doesn't seem to have a CVE number yet:
+http://www.coresecurity.com/?action=item&id=2206
 
-libclamav/petite.c in ClamAV before 0.93.1 allows remote attackers to
-cause a denial of service via a crafted Petite file that triggers an
-out-of-bounds read.
+cu
+Ludwig
 
+-- 
+ (o_   Ludwig Nussel
+ //\   
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
 
