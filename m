@@ -1,21 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/12/3
-Message-ID: <Pine.GSO.4.51.0803121215050.7262@faron.mitre.org>
-Date: Wed, 12 Mar 2008 12:15:33 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/28/9
+Message-ID: <20080328020841.GA27369@openwall.com>
+Date: Fri, 28 Mar 2008 05:08:41 +0300
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: insecure X11 handling in ltsp
+Subject: Re: change subscription address
 Content-Type: text/plain; charset=utf-8
 
+On Fri, Mar 28, 2008 at 12:57:00PM +1100, Zenaan Harkness wrote:
+> Hi, if you can change my subscription address from zen@...edbms.net to
+> zenaan.harkness@...il.com, that would be appreciated.
 
-On Tue, 11 Mar 2008, Nico Golde wrote:
+I've taken care of this.  Next time, please look at the message headers
+for the mailing list manager's unsubscribe/subscribe/help addresses.
 
-> Due to passing the -ac option to the X server in ltsp it is possible for
-> any attacker knowing the victims ip address and the display number to
-> read keystrokes on the client and display client windows.
+In case this sort of requests become common, we'll have to add message
+trailers with instructions in them and/or pre-moderate the list even for
+postings from subscribers.  The john-users mailing list that we run on
+this same server currently has both of these things, so it's a matter of
+changing the settings.
 
-CVE will be filled in later.
-
-Use CVE-2008-1293
-
-- Steve
+Alexander
