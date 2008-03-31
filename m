@@ -1,33 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/26/4
-Message-ID: <Pine.GSO.4.51.0807261642140.23860@faron.mitre.org>
-Date: Sat, 26 Jul 2008 16:44:16 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/31/4
+Message-ID: <Pine.GSO.4.51.0803311740270.16237@faron.mitre.org>
+Date: Mon, 31 Mar 2008 17:40:31 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: drupal issue in < 5.9
+To: Hanno Böck <hanno@...eck.de>
+cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: phpmyadmin (PMASA-2008-2)
 Content-Type: text/plain; charset=utf-8
 
 
-On Sat, 26 Jul 2008, Miklos Vajna wrote:
+======================================================
+Name: CVE-2008-1567
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1567
+Reference: MISC:http://sourceforge.net/tracker/index.php?func=detail&aid=1909711&group_id=23067&atid=377408
+Reference: CONFIRM:http://www.phpmyadmin.net/home_page/security.php?issue=PMASA-2008-2
+Reference: FRSIRT:ADV-2008-1037
+Reference: URL:http://www.frsirt.com/english/advisories/2008/1037/references
+Reference: SECUNIA:29613
+Reference: URL:http://secunia.com/advisories/29613
 
-> On Sat, Jul 26, 2008 at 09:27:33PM +0200, Nico Golde <oss-security+ml@...lde.de> wrote:
-> >
-> > This is CVE-2008-3222.
->
-> Isn't this different?
->
-> It refers to http://www.openwall.com/lists/oss-security/2008/07/10/3
-> which is a bug fixed in 5.8.
->
-> The issue I'm talking about is _not_ fixed in 5.8.
+phpMyAdmin before 2.11.5.1 stores the (1) MySQL username, (2)
+password, and the (2) Blowfish secret key in plaintext in the /tmp
+Session file, which allows local users to obtain sensitive
+information.
 
-My interpretation of this new advisory is that they meant to fix the
-session fixation in 5.8, but they didn't.  The original advisory covered
-multiple other issues as well.  So this new advisory might better be
-considered a clarification of versions for the session fixation, rather
-than a regression error or incomplete fix (which would require a new CVE).
 
-Granted, the lack of specifics from Drupal makes it difficult to be
-certain about what happened.
-
-- Steve
