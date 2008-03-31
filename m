@@ -1,26 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/16/3
-Message-ID: <20080616164127.3e55511c@redhat.com>
-Date: Mon, 16 Jun 2008 16:41:27 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/31/6
+Message-ID: <Pine.GSO.4.51.0803311759500.16237@faron.mitre.org>
+Date: Mon, 31 Mar 2008 18:00:16 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: steffen.joeris@...lelinux.de
-Subject: Re: CVE id request: Clamav
+cc: Thijs Kinkhorst <thijs@...ian.org>, Andrej Kacian <ticho@...too.org>, chris@...ishowells.co.uk
+Subject: Re: CVE request: policyd-weight insecure temporary file creation
 Content-Type: text/plain; charset=utf-8
 
-On Sun, 15 Jun 2008 21:21:30 +1000 Steffen Joeris
-<steffen.joeris@...lelinux.de> wrote:
 
-> The upstream changelog says:
-> * libclamav/petite.c: fix possible invalid memory access (bb#1000)
-> 				Reported by Damian Put
+Two separate CVEs - one for the original problem, one for the insufficient
+patch.
 
-For the sake of CVE description completeness, I'm adding that it's from
-the clamav 0.93.1 changelog.
+- Steve
 
-Applied patch:
 
-http://svn.clamav.net/websvn/diff.php?repname=clamav-devel&path=/branches/0.93/libclamav/petite.c&rev=3886
+======================================================
+Name: CVE-2008-1569
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1569
+Reference: CONFIRM:http://www.policyd-weight.org/
+Reference: CONFIRM:https://bugs.gentoo.org/show_bug.cgi?id=214403
+Reference: DEBIAN:DSA-1531
+Reference: URL:http://www.debian.org/security/2008/dsa-1531
+Reference: BID:28480
+Reference: URL:http://www.securityfocus.com/bid/28480
+Reference: SECUNIA:29553
+Reference: URL:http://secunia.com/advisories/29553
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+policyd-weight before 0.1.14 beta-16 allows local users to modify or
+delete arbitrary files via a symlink attack on temporary files that
+are used when creating a socket.
+
+
+======================================================
+Name: CVE-2008-1570
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1570
+Reference: CONFIRM:https://bugs.gentoo.org/show_bug.cgi?id=214403
+
+Race condition in the create_lockpath function in policyd-weight
+0.1.14 beta-16 allows local users to modify or delete arbitrary files
+by creating the LOCKPATH directory, then modifying it after the
+symbolic link check occurs.  NOTE: this is due to an incomplete fix
+for CVE-2008-1569.
+
+
