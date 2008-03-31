@@ -1,28 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/19/1
-Message-ID: <49238C58.4030604@redhat.com>
-Date: Wed, 19 Nov 2008 11:47:36 +0800
-From: Eugene Teo <eteo@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/31/5
+Message-ID: <Pine.GSO.4.51.0803311743450.16237@faron.mitre.org>
+Date: Mon, 31 Mar 2008 17:44:40 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: V4L/DVB (9621): Avoid writing outside shadow.bytes[] array
+Subject: Re: CVE id request: comix
 Content-Type: text/plain; charset=utf-8
 
-Eugene Teo wrote:
-> This was fixed in upstream by the maintainer, Mauro Carvalho Chehab.
-> 
-> "[PATCH] V4L/DVB (9621): Avoid writing outside shadow.bytes[] array
-> 
-> There were no check about the limits of shadow.bytes array. This offers
-> a risk of writing values outside the limits, overriding other data
-> areas."
-> 
-> Upstream commit: 494264379d186bf806613d27aafb7d88d42f4212
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=471835
 
-If the write operation fails, the device won't be able to decode audio
-signals properly, so on further analysis, we probably don't need a CVE
-name for this. Take note.
+On Mon, 31 Mar 2008, Nico Golde wrote:
 
-Thanks, Eugene
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=462840
+>
+> I confirmed this using comix\"\;echo\ owned\>bla\;ls\ \"
+> as a simple reroducer.
+
+Use CVE-2008-1568
+
+What about the comicthumb in Message #10 - if that's part of comix, I'd
+MERGE with CVE-2008-1568.
+
+- Steve
+
+======================================================
+Name: CVE-2008-1568
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1568
+Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=462840
+
+comix 3.6.4 allows attackers to execute arbitrary commands via a
+filename containing shell metacharacters that are not properly
+sanitized when executing the rar, unrar, or jpegtran programs.
+
+
