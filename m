@@ -1,34 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/01/8
-Message-ID: <Pine.GSO.4.51.0804011212250.17012@faron.mitre.org>
-Date: Tue, 1 Apr 2008 12:13:22 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Tomas Hoger <thoger@...hat.com>
-cc: "Steven M. Christey" <coley@...re.org>, oss-security <oss-security@...ts.openwall.com>
-Subject: Re: CVE id request: squid
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/01/6
+Message-Id: <200804011127.29351.ludwig.nussel@suse.de>
+Date: Tue, 1 Apr 2008 11:27:28 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: otrs authentication bypass
 Content-Type: text/plain; charset=utf-8
 
+Tomas Hoger wrote:
+> On Tue, 1 Apr 2008 09:20:52 +0200 Ludwig Nussel <ludwig.nussel@...e.de>
+> wrote:
+> 
+> > OTRS has released a new version that fixes an authentication bypass:
+> > http://otrs.org/advisory/OSA-2008-01-en/
+> 
+> I see:
+> 
+>   CVE:          CVE-2008-1515
+> 
+> in the advisory...
 
-Notice the reference to oss-security :)
+D'oh! :-)
 
-- Steve
+thx,
+Ludwig
 
+-- 
+ (o_   Ludwig Nussel
+ //\   
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
 
-======================================================
-Name: CVE-2008-1612
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1612
-Reference: MISC:http://www.squid-cache.org/Versions/v2/2.6/changesets/11882.patch
-Reference: CONFIRM:http://www.squid-cache.org/Advisories/SQUID-2007_2.txt
-Reference: MLIST:[oss-security] 20080401 CVE id request: squid
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/04/01/5
-Reference: MLIST:[squid-announce[ 20080322 Advisory Squid-2007:2 updated
-Reference: URL:http://marc.info/?l=squid-announce&m=120614453813157&w=2
-
-The arrayShrink function (lib/Array.c) in Squid 2.6.STABLE17 allows
-attackers to cause a denial of service (process exit) via unknown
-vectors that cause an array to shrink to 0 entries, which triggers an
-assert error.  NOTE: this issue is due to an incorrect fix for
-CVE-2007-6239.
 
 
