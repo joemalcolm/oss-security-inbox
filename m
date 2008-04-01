@@ -1,30 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/16/6
-Message-ID: <20080516201043.GF16945@mandriva.com>
-Date: Fri, 16 May 2008 17:10:43 -0300
-From: "Gustavo De Nardin (spuk)" <gustavodn@...driva.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/01/7
+Message-ID: <20080401113733.GC400@ngolde.de>
+Date: Tue, 1 Apr 2008 13:37:33 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSH key blacklisting
+Subject: Re: CVE id request: comix
 Content-Type: text/plain; charset=utf-8
 
-* Solar Designer <solar@...nwall.com> [2008-05-16 21:18 +0400]:
-> Hi,
+Hi Tomas,
+* Tomas Hoger <thoger@...hat.com> [2008-04-01 13:21]:
+> On Mon, 31 Mar 2008 15:40:37 +0200 Nico Golde
+> <oss-security+ml@...lde.de> wrote:
+> > comix is vulnerable to arbitrary code execution via crafted 
+> > file names.
+> > 
+> > http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=462840
+> > 
+> > I confirmed this using comix\"\;echo\ owned\>bla\;ls\ \"
+> > as a simple reroducer.
 > 
-> Are any other distros, besides Debian, Ubuntu, and derived ones, going
-> to implement key blacklisting in OpenSSH - or are considering it?
-> 
-> We are considering it for Openwall GNU/*/Linux, and if our effort would
-> be reused by others, or if others join us in developing and/or testing
-> the patch, this would be a reason for us to go for it.
-> 
-> I don't think we'll take the Debian/Ubuntu patch as-is.  Rather, we are
-> likely to use a trivial binary encoding/compression method for the
-> partial fingerprints.  We'd also use smaller partial fingerprints.  With
-> the approach I have in mind, it'd take around 4.55 bytes per key to
-> store 48-bit partial fingerprints, bringing the installed file size for
-> 3 arch types and 2 key types/sizes in under 1 MB (or just over 1 MB for
-> 3 key types/sizes).
+> According to the feedback Fedora maintainer got from new upstream,
+> comix 3.x is mostly dead and upstream is focused on re-written version
+> 4.  See https://bugzilla.redhat.com/show_bug.cgi?id=430635#c1 for
+> upstream reply.
 
-If this is going to be accepted as a more general solution, it'd be good to
-allow also for local, admin-maintened, blacklists, not just upstream
-maintened (and automatically updated).
+Ok.
+
+> That BZ also has some comments on the insecure temporary file usage
+> reported to Debian BTS.  And also notes that comix is likely an app
+> where unfixed tarfile python module may bite back.
+
+The insecure temporary file usage is not valid in my 
+opinion, see my comment to the bug report.
+Kind regards
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
