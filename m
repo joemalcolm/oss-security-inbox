@@ -1,47 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/16/11
-Message-ID: <Pine.GSO.4.51.0807161350420.3856@faron.mitre.org>
-Date: Wed, 16 Jul 2008 13:57:34 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/01/8
+Message-ID: <Pine.GSO.4.51.0804011212250.17012@faron.mitre.org>
+Date: Tue, 1 Apr 2008 12:13:22 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: Re: CVE request: phpmyadmin < 2.11.7.1
+To: Tomas Hoger <thoger@...hat.com>
+cc: "Steven M. Christey" <coley@...re.org>, oss-security <oss-security@...ts.openwall.com>
+Subject: Re: CVE id request: squid
 Content-Type: text/plain; charset=utf-8
 
 
-On Tue, 15 Jul 2008, Thijs Kinkhorst wrote:
-
-> On Tuesday 15 July 2008 21:00, Hanno Böck wrote:
-> > From Changelog:
-> > - protection against XSS when register_globals is on and .htaccess
-> >   has no effect, thanks to Tim Starling
->
-> Note: this has already been assigned CVE-2008-2960 following a previous
-> request from you.
-
-PMASA-2008-4, which is CVE-2008-2960, credits Tim Starling, so I'd suspect
-they are the same.
-
->
-> > - (2.11.7.1)  [security] XSRF/CSRF by manipulating the db,
-> >   convcharset and collation_connection parameters,
-> >   thanks to YGN Ethical Hacker Group
->
-> This still needs one.
-
-======================================================
-Name: CVE-2008-3197
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3197
-Reference: CONFIRM:http://www.phpmyadmin.net/home_page/security.php?issue=PMASA-2008-5
-Reference: MISC:http://yehg.net/lab/pr0js/advisories/XSRF_CreateDB_inPhpMyAdmin2.11.7.pdf
-
-Cross-site request forgery (CSRF) vulnerability in phpMyAdmin before
-2.11.7.1 allows remote attackers to perform unauthorized actions via a
-link or IMG tag to (1) the "Creating a Database" functionality
-(db_create.php) and (2) unspecified vectors that modify the connection
-character set.
-
-
+Notice the reference to oss-security :)
 
 - Steve
+
+
+======================================================
+Name: CVE-2008-1612
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1612
+Reference: MISC:http://www.squid-cache.org/Versions/v2/2.6/changesets/11882.patch
+Reference: CONFIRM:http://www.squid-cache.org/Advisories/SQUID-2007_2.txt
+Reference: MLIST:[oss-security] 20080401 CVE id request: squid
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/04/01/5
+Reference: MLIST:[squid-announce[ 20080322 Advisory Squid-2007:2 updated
+Reference: URL:http://marc.info/?l=squid-announce&m=120614453813157&w=2
+
+The arrayShrink function (lib/Array.c) in Squid 2.6.STABLE17 allows
+attackers to cause a denial of service (process exit) via unknown
+vectors that cause an array to shrink to 0 entries, which triggers an
+assert error.  NOTE: this issue is due to an incorrect fix for
+CVE-2007-6239.
+
+
