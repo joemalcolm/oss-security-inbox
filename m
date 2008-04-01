@@ -1,35 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/31/3
-Message-ID: <Pine.GSO.4.51.0803311708340.16237@faron.mitre.org>
-Date: Mon, 31 Mar 2008 17:10:06 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: lighttpd DoS: forcefully closing of foreign SSL connections
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/01/3
+Message-Id: <200804010920.53008.ludwig.nussel@suse.de>
+Date: Tue, 1 Apr 2008 09:20:52 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
+To: oss-security <oss-security@...ts.openwall.com>, "Steven M. Christey" <coley@...re.org>
+Subject: CVE Request: otrs authentication bypass
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-On Fri, 28 Mar 2008, Christian Hoffmann wrote:
+OTRS has released a new version that fixes an authentication bypass:
+http://otrs.org/advisory/OSA-2008-01-en/
 
-> Just for reference, apparently CVE-2008-1531 has been assigned to this
-> issue, thanks to whoever did it. :)
+cu
+Ludwig
 
-You requested it, guess I forgot to respond to the list once I took care
-of it?
-
-- Steve
-
-
-======================================================
-Name: CVE-2008-1531
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1531
-Reference: CONFIRM:http://trac.lighttpd.net/trac/ticket/285#comment:18
-Reference: CONFIRM:http://trac.lighttpd.net/trac/changeset/2136
-Reference: CONFIRM:https://bugs.gentoo.org/show_bug.cgi?id=214892
-
-lighttpd 1.4.19 and earlier allows remote attackers to cause a denial
-of service (active SSL connection loss) by triggering an SSL error,
-such as disconnecting before a download has finished, which causes all
-active SSL connections to be lost.
-
+-- 
+ (o_   Ludwig Nussel
+ //\   
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
 
