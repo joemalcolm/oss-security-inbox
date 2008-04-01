@@ -1,20 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/06/7
-Message-ID: <1976330789.674121223313406140.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 6 Oct 2008 13:16:46 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: coley@...re.org
-Subject: dbus DoS (CVE-2008-3834)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/01/4
+Message-ID: <20080401110847.43ec1e36@redhat.com>
+Date: Tue, 1 Apr 2008 11:08:47 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: ludwig.nussel@...e.de
+Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...re.org>
+Subject: Re: CVE Request: otrs authentication bypass
 Content-Type: text/plain; charset=utf-8
 
-Hello everyone,
+On Tue, 1 Apr 2008 09:20:52 +0200 Ludwig Nussel <ludwig.nussel@...e.de>
+wrote:
 
-Just a heads up about a Dbus DoS:
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2008-3834
-https://bugs.freedesktop.org/show_bug.cgi?id=17803
+> OTRS has released a new version that fixes an authentication bypass:
+> http://otrs.org/advisory/OSA-2008-01-en/
 
-Given it hasn't been well announced, I used CVE-2008-3834 out of Red Hat's pool.
+I see:
+
+  CVE:          CVE-2008-1515
+
+in the advisory...
+
+HTH
 
 -- 
-    JB
+Tomas Hoger / Red Hat Security Response Team
