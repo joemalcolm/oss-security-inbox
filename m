@@ -1,58 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/28/3
-Message-ID: <20080728175344.GA896@ngolde.de>
-Date: Mon, 28 Jul 2008 19:53:44 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: horde3/turba2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/01/5
+Message-ID: <20080401111712.18b6fca3@redhat.com>
+Date: Tue, 1 Apr 2008 11:17:12 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: "Steven M. Christey" <coley@...re.org>
+Cc: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE id request: squid
 Content-Type: text/plain; charset=utf-8
 
-Hi Tomas,
-* Tomas Hoger <thoger@...hat.com> [2008-07-28 10:53]:
-> On Sun, 27 Jul 2008 17:57:05 -0400 (EDT) "Steven M. Christey"
-> <coley@...us.mitre.org> wrote:
-> > Name: CVE-2008-3330
-> > Cross-site scripting (XSS) vulnerability in
-> > services/obrowser/index.php in Horde 3.2 and Turba 2.2 allows remote
-> > attackers to inject arbitrary web script or HTML via the contact name.
-> 
-> Why does this mention Turba?  Affected script does not seem to be part
-> of Turba, at least not part of Fedora packages.
+Hi!
 
-In turba the affected file is src/contact.php:
-Index: turba/contact.php
-===================================================================
-RCS file: /repository/turba/contact.php,v
-retrieving revision 1.11
-diff -u -r1.11 contact.php
---- turba/contact.php   5 May 2008 05:14:12 -0000       1.11
-+++ turba/contact.php   13 Jun 2008 21:37:43 -0000
-@@ -103,7 +103,7 @@
- if (!$print_view) {
-     echo $tabs->render($viewName);
- }
--echo '<h1 class="header">' . ($contact->getValue('name') ? $contact->getValue('name') : '<em>' . _("Blank name") . '</em>') . '</h1>';
-+echo '<h1 class="header">' . ($contact->getValue('name') ? htmlspecialchars($contact->getValue('name')) : '<em>' . _("Blank name") . '</em>') . '</h1>';
- $view->html();
- echo '</div>';
- require $registry->get('templates', 'horde') . '/common-footer.inc';
+Squid developers recently updated their Squid security advisory
+SQUID-2007_2 released few months back.  It was modified to list another
+patch that fixes a problem introduced in previous patch.
 
-Turba 2.1 was not affected, this file is new in 2.2
-and the old code did escape the title.
+An attacker can cause squid to hit assert in the child process, causing
+it to exit.  This is a temporary DoS, breaking existing connections and
+making squid unavailable for a while.  New child is spawned by squid
+parent process.  Easy to perform if attacker has control over the
+server, but I guess it may be possible in reverse proxy setups as well.
 
-> Btw, this seems to be an issue fixed by upstream mid-June in horde
-> 3.1.8 and 3.2.1 (and other Horde suites that include Horde Framework +
-> some other components in all-in-one suite), see following bug for
-> further references:
-> 
->   https://bugzilla.redhat.com/show_bug.cgi?id=452539
+http://marc.info/?l=squid-announce&m=120614453813157&w=2
+http://www.squid-cache.org/Advisories/SQUID-2007_2.txt
+http://www.squid-cache.org/Versions/v2/2.6/changesets/11882.patch
 
-Yes this information seems to be correct to me.
-
-Cheers
-Nico
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+Tomas Hoger / Red Hat Security Response Team
