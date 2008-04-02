@@ -1,24 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/07/1
-Message-ID: <20080507002810.GI573@linsec.ca>
-Date: Tue, 6 May 2008 18:28:10 -0600
-From: Vincent Danen <vdanen@...sec.ca>
-To: oss-security@...ts.openwall.com
-Subject: Re: openssh CVE-2008-1657 question
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/02/2
+Message-ID: <47F3B931.7020609@freethemallocs.com>
+Date: Wed, 02 Apr 2008 08:49:53 -0800
+From: Jonathan Smith <smithj@...ethemallocs.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com
+Subject: CVE request: openssh "ForceCommand" improperly implemented
 Content-Type: text/plain; charset=utf-8
 
-* [2008-05-06 22:42:30 +0200] Nico Golde wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
->Hi Vincent,
->* Vincent Danen <vdanen@...sec.ca> [2008-05-06 21:52]:
->> Out of curiousity, CVE-2008-1657 should only affect 4.4-4.9, correct?
->> The ForceCommand functionality was introduced in 4.4.
->
->Yep that's correct.
+http://secunia.com/advisories/29602/
 
-Thanks for the confirmation, Nico.
+https://bugs.gentoo.org/show_bug.cgi?id=215702
+https://issues.rpath.com/browse/RPL-2419
 
--- 
-Vincent Danen @ http://linsec.ca/
+It looks to be a rather minor issue since ~/.ssh/rc is usually 0600 and
+~/.ssh is usually 0700.
 
-Content of type "application/pgp-signature" skipped
+	smithj
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.8 (GNU/Linux)
+
+iEYEARECAAYFAkfzuTEACgkQCG91qXPaRekKzwCdEnSwrkEVCXR8NzZEXCBkpXe/
+2O4Ani9EzXE2CUGpYEJj8+P8O06UarYO
+=wKkZ
+-----END PGP SIGNATURE-----
