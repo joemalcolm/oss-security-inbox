@@ -1,74 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/27/1
-Message-ID: <48DD9876.8020508@redhat.com>
-Date: Sat, 27 Sep 2008 10:20:38 +0800
-From: Eugene Teo <eteo@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: coley@...re.org
-Subject: Re: CVE-2008-4113 update: kernel: sctp: fix random memory dereference with SCTP_HMAC_IDENT option
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/02/3
+Message-ID: <Pine.GSO.4.51.0804021339330.23425@faron.mitre.org>
+Date: Wed, 2 Apr 2008 13:39:37 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Jonathan Smith <smithj@...ethemallocs.com>
+cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com
+Subject: Re: CVE request: openssh "ForceCommand" improperly implemented
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
 
-Steven M. Christey wrote:
-> On Thu, 25 Sep 2008, Eugene Teo wrote:
->> The first three references to CVE-2008-4113[1] are incorrect. Please
->> update the CVE with the following references:
->>
->> http://marc.info/?l=linux-sctp&m=121986743009093&w=2
->> http://marc.info/?l=linux-sctp&m=121986743209110&w=2
->>
->> [1] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4113
-> 
-> This was in reference to the TKADV2008-007 advisory.
-> 
-> I guess the question becomes - TKADV2008-007 talks about separate issues,
-> one involving crashes by calling the API functions when SCTP-AUTH is
-> disabled (CVE-2008-3792), and another involving SCTP_HMAC_IDENT and a
-> length value for sctp_getsockopt_hmac_ident.
+======================================================
+Name: CVE-2008-1657
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1657
+Reference: CONFIRM:http://www.openssh.com/txt/release-4.9
+Reference: CONFIRM:https://issues.rpath.com/browse/RPL-2419
+Reference: OPENBSD:[4.3] 001: SECURITY FIX: March 30, 2008
+Reference: URL:http://www.openbsd.org/errata43.html#001_openssh
+Reference: BID:28531
+Reference: URL:http://www.securityfocus.com/bid/28531
+Reference: FRSIRT:ADV-2008-1035
+Reference: URL:http://www.frsirt.com/english/advisories/2008/1035/references
+Reference: SECTRACK:1019733
+Reference: URL:http://www.securitytracker.com/id?1019733
+Reference: SECUNIA:29602
+Reference: URL:http://secunia.com/advisories/29602
+Reference: SECUNIA:29609
+Reference: URL:http://secunia.com/advisories/29609
+Reference: XF:openssh-forcecommand-command-execution(41549)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/41549
 
-I see what the confusion is now.
+OpenSSH before 4.9 allows remote authenticated users to bypass the
+sshd_config ForceCommand directive by modifying the .ssh/rc session
+file.
 
-TKADV2008-007[1] mentioned two separate, but related issues. The second
-issue that the advisory mentioned is an example of a function that may
-have two possible consequences, and it all depends on whether SCTP
-authentication is enabled or not.
 
-The patch[2] that addressed these issues mentioned only one of them in
-the changelog description, even though it appears to be fixing possibly
-more than two issues.
-
-Should this be assigned with just one CVE name instead of two?
-
-[1] http://www.trapkit.de/advisories/TKADV2008-007.txt
-[2] http://tinyurl.com/be9467bd75b522a3db0369c12db739
-
-The sctp_setsockopt_hmac_ident() bug I found was reported around the
-same time as Tobias. More on this below.
-
-> which seems different from this one:
-> 
->   http://marc.info/?l=linux-sctp&m=121986743209110&w=2
-[...]
-> and this one:
-> 
->   http://marc.info/?l=linux-sctp&m=121988176932559&w=2
-[...]
-> So Eugene, it sounds like the issues that you found were variants of the
-> issue reported for the sctp_getsockopt_hmac_ident (a different function)
-> by TKADV2008-007 for CVE-2008-4113.
-
-The sctp_setsockopt_hmac_ident() bug I found has a user-controllable
-hmacs->shmac_num_idents. There is no sanity check for id in
-sctp_auth_ep_set_hmacs(), and the check for has_sha1 can be bypassed, so
-it is possible that memcpy copies a little more than it should. It
-depends on sctp_getsockopt_hmac_ident() to read the data structure back
-to the user-space. When I reported this, sctp_getsockopt_hmac_ident()
-problem as reported in TKADV2008-007 was not fixed yet. We probably need
-a CVE name for this.
-
-Thanks for clearing up the confusion.
-
-Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
