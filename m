@@ -1,30 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/09/1
-Message-ID: <28fa9c5e0812081844y27996700wa1c76d35663fc875@mail.gmail.com>
-Date: Tue, 9 Dec 2008 10:44:54 +0800
-From: "Eugene Teo" <eugeneteo@...nel.sg>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: MIPS: Fix potential DOS by untrusted user app
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/02/1
+Message-ID: <Pine.GSO.4.51.0804021102590.23425@faron.mitre.org>
+Date: Wed, 2 Apr 2008 11:04:38 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Tomas Hoger <thoger@...hat.com>
+cc: coley@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE id request: mod_suphp
 Content-Type: text/plain; charset=utf-8
 
-Steve, can you please assign a CVE name. Thanks.
 
----
-commit e807f9574e37a3f202e677feaaad1b7c5d2c0db8
-Author: Vlad Malov <Vlad.Malov@...iumnetworks.com>
-Date:   Tue Nov 18 15:05:46 2008 -0800
+======================================================
+Name: CVE-2008-1614
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1614
+Reference: MLIST:[suPHP] 20080330 SECURITY ISSUE: Immediate update advised
+Reference: URL:http://lists.marsching.biz/pipermail/suphp/2008-March/001750.html
 
-    MIPS: Fix potential DOS by untrusted user app.
+suPHP before 0.6.3 allows local users to gain privileges via (1) a
+race condition that involves multiple symlink changes to point a file
+owned by a different user, or (2) a symlink to the directory of a
+different user, which is used to determine privileges.
 
-    On a 64 bit kernel if an o32 syscall was made with a syscall number less
-    than 4000, we would read the function from outside of the bounds of the
-    syscall table.  This led to non-deterministic behavior including system
-    crashes.
-
-    While we were at it we reworked the 32 bit version as well to use fewer
-    instructions.  Both 32 and 64 bit versions are use the same code now.
-
-    Signed-off-by: Vlad Malov <Vlad.Malov@...iumnetworks.com>
-    Signed-off-by: David Daney <ddaney@...iumnetworks.com>
-    Signed-off-by: Ralf Baechle <ralf@...ux-mips.org>
