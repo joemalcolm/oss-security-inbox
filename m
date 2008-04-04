@@ -1,29 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/13/12
-Message-ID: <20080813133740.3f2b61ea@redhat.com>
-Date: Wed, 13 Aug 2008 13:37:40 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: oss-security+ml@...lde.de
-Subject: Re: horde webmail edition < 1.1.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/04/1
+Message-ID: <47F68AA7.30704@freethemallocs.com>
+Date: Fri, 04 Apr 2008 12:08:07 -0800
+From: Jonathan Smith <smithj@...ethemallocs.com>
+To: Vincent Danen <vdanen@...sec.ca>
+CC: Josh Bressers <bressers@...hat.com>,  Solar Designer <solar@...nwall.com>, Andrea Barisani <andrea@...ersepath.com>,  oss-security@...ts.openwall.com
+Subject: Re: announcing oCERT & oss-security to Bugtraq & f-d
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 13 Aug 2008 12:31:03 +0200 Nico Golde
-<oss-security+ml@...lde.de> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> > Multiple unspecified vulnerabilities in Horde Groupware Webmail
-> > before Edition 1.1.1 (final) have unknown impact and attack vectors
-> > related to "unescaped output," possibly cross-site scripting (XSS),
-> > in the (1) object browser and (2) contact view.
-> 
-> This should be a duplicate of CVE-2008-3330.
+Vincent Danen wrote:
+| * [2008-04-04 15:35:53 -0400] Josh Bressers wrote:
+|>> Andrea Barisani wrote:
+|>> >
+|>> > Do you think you could make that announcement soon? Press is
+|>> already covering
+|>> > oCERT, so it makes little sense delaying f-d + bugtraq that much,
+|>> if you
+|>> > think it's going to be delayed by days then maybe we can announce
+|>> separate.
+|>>
+|>> I think that it's best to not delay our joint announcement.
+|>>
+|>> Josh, Vincent, Jonathan - what do you think?
+|>>
+|>
+|> I'm not comfortable with the current timeline for this.  One day is not
+|> enough time to draft a proper announcement.
+|>
+|> Again though, this question belongs on the list, not here.
+|
+| [snip]
+|
+| I don't have a problem with it being announced at the same time, but I
+| do think that one day is pretty short notice to draft a decent
+| announcement (i.e. something that won't result in a "why do we need
+| another ml like fd or bugtraq" barrage of postings), because we need to
+| figure out the best way to do this so we don't get people like "n3td3v"
+| coming to the list.
 
-Actually, (1) is covered by CVE-2008-3330, (2) probably never got an
-id.  Bit more info on (2) here:
+I've got to agree with Vincent here. We didn't have much heads-up about
+this. Having folks on-list who shouldn't be was my main concern with
+oss-security to begin with, and posting the list to the masses (at this
+point in time) isn't going to make that easier.
 
-  https://bugzilla.redhat.com/show_bug.cgi?id=452549
+That being said, we need to figure that out before oss-security can be
+useful to a broader range of people and projects.
 
-Steven, can you please correct CVE description.  Thanks!
+|> I'm also quite happy with the rather slow growth we're currently
+|> seeing on
+|> the mailing list.  We need a solid base before we can handle what will be
+|> explosive list growth from a big public announcement.
+|
+| I think we should activate membership moderation before we make a big
+| public announcement for exactly this reason.  Which is why we need more
+| than one day... this needs to be discussed amongst members and needs to
+| be noted in the announcement (to keep the idiots from trying to
+| subscribe and then us having to punt a bunch of them after the fact).
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+Yep. But, I still think we should allow read-only memberships without
+moderation. Having to read oss-security through rss or a web interface
+would be frustrating.
+
+|> Additionally, this discussion belongs on the oss-security list, not
+|> between
+|> the current CC list.  It's a public group run by the members.
+|
+| This I do agree with.
+
+Indeed. I'm CCing oss-security with this email.
+
+	smithj
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEARECAAYFAkf2iqYACgkQCG91qXPaRembWQCgqOLVlp621ycKIApI5t9CSLPT
+43EAoKaXEQuQvtVb0LCc1T6fzPSe6CT5
+=CYpo
+-----END PGP SIGNATURE-----
