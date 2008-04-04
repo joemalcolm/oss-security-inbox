@@ -1,51 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/15/1
-Message-ID: <20080715092140.3634636f@redhat.com>
-Date: Tue, 15 Jul 2008 09:21:40 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/04/2
+Message-ID: <20080404210858.GA23765@openwall.com>
+Date: Sat, 5 Apr 2008 01:08:58 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: steffen.joeris@...lelinux.de, coley@...re.org
-Subject: Re: CVE id request: Clamav
+Cc: Andrea Barisani <andrea@...ersepath.com>
+Subject: Re: announcing oCERT & oss-security to Bugtraq & f-d
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 8 Jul 2008 15:42:33 +0200 Tomas Hoger <thoger@...hat.com> wrote:
+Josh, Vincent, Jonathan - thank you for commenting on this so promptly!
 
-> > > The upstream changelog says:
-> > > * libclamav/petite.c: fix possible invalid memory access (bb#1000)
-> > > 				Reported by Damian Put
-> > 
-> > For the sake of CVE description completeness, I'm adding that it's
-> > from the clamav 0.93.1 changelog.
+Andrea - it appears that the oCERT announcement should be separate, then.
+Please go ahead with it, and feel free to mention oss-security in passing
+as a group that oCERT intends to work with, as Vincent suggested.  I'm
+not sure if it's appropriate to include a link to the oss-security wiki;
+I would do it, but Vincent suggested that we make "the intelligent" use
+Google instead (and not invite the rest to our wiki just yet).
 
-[ ... ]
+> Vincent Danen wrote:
+> | I don't have a problem with it being announced at the same time, but I
+> | do think that one day is pretty short notice to draft a decent
+> | announcement (i.e. something that won't result in a "why do we need
+> | another ml like fd or bugtraq" barrage of postings),
 
-> Btw, following is mentioned in the 0.93.2 changelog:
+Good point, and I am sorry for the short notice.  To me, this was
+expected, but I failed to notify the oss-security group of this
+possibility earlier.  I did not expect that the press would pick oCERT
+up before the Bugtraq & f-d announcement, though - and this is now a
+reason for not delaying the announcement anymore.
+
+> | because we need to
+> | figure out the best way to do this so we don't get people like "n3td3v"
+> | coming to the list.
+
+Maybe it's OK if they come to the list, but are unable to post - or get
+kicked out.
+
+On Fri, Apr 04, 2008 at 12:08:07PM -0800, Jonathan Smith wrote:
+> I've got to agree with Vincent here. We didn't have much heads-up about
+> this. Having folks on-list who shouldn't be was my main concern with
+> oss-security to begin with, and posting the list to the masses (at this
+> point in time) isn't going to make that easier.
 > 
-> Thu Jul  3 16:15:23 CEST 2008
-> -----------------------------
->   * libclamav/petite.c: fix another out of bounds memory read
-> (bb#1000) Reported by Secunia (CVE-2008-2713)
+> That being said, we need to figure that out before oss-security can be
+> useful to a broader range of people and projects.
+
+OK, can we please start figuring this out, then?  Once there's consensus
+or an obviously prevailing opinion in this group, Openwall is going to
+re-configure the list as it will be agreed upon, and everyone can edit
+the wiki to reflect that.  Then we'll be ready for a "big announcement",
+right?  Or do we want to work on the wiki content more first?  Or maybe
+tighten up the wiki settings?
+
+Let's just not leave things undefined and non-announced forever.  If
+oss-security is successful, and it appears that it is, it will become
+known anyway - but possibly with more confusion around it if we don't
+announce it ourselves.
+
+> | I think we should activate membership moderation before we make a big
+> | public announcement for exactly this reason.  Which is why we need more
+> | than one day... this needs to be discussed amongst members and needs to
+> | be noted in the announcement (to keep the idiots from trying to
+> | subscribe and then us having to punt a bunch of them after the fact).
 > 
-> Referring to the same bug as before, which is now restricted (was it
-> publicly accessible before?).
+> Yep. But, I still think we should allow read-only memberships without
+> moderation. Having to read oss-security through rss or a web interface
+> would be frustrating.
 
-Upstream bug report is no longer restricted and mentions original fix
-was incomplete:
+I agree with Jonathan on this.
 
-https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1000#c4
+As to whether to enable message pre-moderation for list members before
+the announcement or only when we really have to, I am not sure.  I'll
+let others decide.
 
-Steven, this seems to deserve a CVE id as an incomplete fix for
-CVE-2008-2713.
+Thanks again,
 
-[ ... ]
-
-> The fix does not even seem to be committed in the public clamav SVN
-> (either trunk or 0.93 branch).
-
-Change now committed as:
-
-http://svn.clamav.net/websvn/diff.php?repname=clamav-devel&path=/branches/0.93/libclamav/
-petite.c&rev=3920
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+Alexander
