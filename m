@@ -1,38 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/27/1
-Message-ID: <20080427115945.GL24538@console-pimps.org>
-Date: Sun, 27 Apr 2008 12:59:45 +0100
-From: Matt Fleming <mattjfleming@...glemail.com>
-To: coley@...us.mitre.org
-Cc: oss-security@...ts.openwall.com
-Subject: CVE request: horde-kronolith-2.1.7 XSS in addevent.php
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/04/13
+Message-ID: <15434.1207350396@devserv.devel.redhat.com>
+Date: Fri, 04 Apr 2008 19:06:36 -0400
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com, security curmudgeon <jericho@...rition.org>
+Subject: Re: wiki: vendor info
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+> 
+> : > I might also take the chance to expand vendor information with the additional
+> : > vendors I contacted but that are not present in that page.
+> : 
+> : Good idea.  Also, maybe you could invite them to join this mailing list? 
+> : (Perhaps ask me first to confirm that they are not already on the list.)
+> : 
+> : BTW, we currently have two pages with vendor info: one is with security 
+> : contacts and advisory links, and the other is with "patch-finding" info. 
+> : Perhaps you should update both whenever you can obtain the necessary 
+> : info.  Or maybe we should combine them into one page - this needs to be 
+> : discussed in here first.
+> 
+> Just a reminder that the OSVDB Vendor Dictionary aims to capture this 
+> information as well. At some point the two groups should probably 
+> consolidate their information.
+> 
+> 	http://osvdb.org/vendors
 
-Hi guys,
+Holy Smokes that's impressive!
 
-kronolith-2.1.7 is vulnerale to a cross-site scripting attack because
-input passed to the "url" parameter in the file addevent.php is not 
-properly sanitized. 
+I don't think there's anything to consolidate, I think we just need to
+ensure everything on the oss-security wiki page is in your data (I would be
+surprised if it's not), then we just point at that.  The page about easily
+finding patches is probably still relevant, but there's no sense in
+duplicating information, especially when there is such an extensive source
+as this.
 
-Can you please assign a CVE id?
+Thanks!
 
-http://forum.aria-security.com/showthread.php?t=49
-https://bugs.gentoo.org/show_bug.cgi?id=219304
-http://secunia.com/advisories/29920/
-
-Thanks,
-Matt
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.8 (NetBSD)
-
-iQEcBAEBAgAGBQJIFGqxAAoJEK3y1f69VxYbv/kH/3Phg+1xuv3pLc7ZnrS48J2e
-k8PRTzpdkgS/3bE1jtjfGWICoHOKu6/N9Gv2RYmWpWl2ATjJ9r/JVsjOpYdhS9Qm
-+tRM8O5vWHnIAuhuSMNx+BOVrUJtwcNg27dlhlC1KJyGjgaPAO892uUJfXAti4fW
-vQuCueNgnQlF4BI1oagHk9cZ8y2BpbSPa4TknrQV5NdrsN/46fk6Lm9v6aVLUtQv
-hZB+HwlWqT2/1Nhb2JAHnYcE4ZlntlFDVQJnLkhZnXPuRyOIYVHNoKm9OZ1kXdBE
-5IY0sJ3yeJnXTL49IcHf+vMbyTIcK8e6JZq0ipfMSDbOH13pc12XXbhkXtjTznU=
-=xezF
------END PGP SIGNATURE-----
+-- 
+    JB
