@@ -1,16 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/11/1
-Message-Id: <200804110302.55219.rbu@gentoo.org>
-Date: Fri, 11 Apr 2008 03:02:55 +0200
-From: Robert Buchholz <rbu@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: Swfdec <0.6.4 remote file disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/04/7
+Message-ID: <20080404220718.GU23804@fuse.inversepath.com>
+Date: Fri, 4 Apr 2008 22:07:18 +0000
+From: Andrea Barisani <andrea@...ersepath.com>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: announcing oCERT & oss-security to Bugtraq & f-d
 Content-Type: text/plain; charset=utf-8
 
-Swfdec before 0.6.4 allowed flash movies to read arbitrary local files.
+On Sat, Apr 05, 2008 at 01:08:58AM +0400, Solar Designer wrote:
+> Josh, Vincent, Jonathan - thank you for commenting on this so promptly!
+> 
+> Andrea - it appears that the oCERT announcement should be separate, then.
+> Please go ahead with it, and feel free to mention oss-security in passing
+> as a group that oCERT intends to work with, as Vincent suggested.  I'm
+> not sure if it's appropriate to include a link to the oss-security wiki;
+> I would do it, but Vincent suggested that we make "the intelligent" use
+> Google instead (and not invite the rest to our wiki just yet).
+> 
 
-References:
-http://lists.freedesktop.org/archives/swfdec/2008-April/001321.html
-http://gitweb.freedesktop.org/?p=swfdec/swfdec.git;a=commit;h=326ee4ff631ecc11605f1251e1923a94561a3823
+Ok, but if the only issue is time I'd be happy to delay until monday,
+(announcements on weekends are bad anyway). 
 
-Download attachment "signature.asc " of type "application/pgp-signature" (190 bytes)
+> > Vincent Danen wrote:
+> > | I don't have a problem with it being announced at the same time, but I
+> > | do think that one day is pretty short notice to draft a decent
+> > | announcement (i.e. something that won't result in a "why do we need
+> > | another ml like fd or bugtraq" barrage of postings),
+> 
+> Good point, and I am sorry for the short notice.  To me, this was
+> expected, but I failed to notify the oss-security group of this
+> possibility earlier.  I did not expect that the press would pick oCERT
+> up before the Bugtraq & f-d announcement, though - and this is now a
+> reason for not delaying the announcement anymore.
+> 
+
+Yep, didn't expect much press either, it wasn't my intention to rush things.
+
+> 
+> Let's just not leave things undefined and non-announced forever.  If
+> oss-security is successful, and it appears that it is, it will become
+> known anyway - but possibly with more confusion around it if we don't
+> announce it ourselves.
+>
+
+I agree to this.
+
+Cheers!
+
+-- 
+Andrea Barisani                             Inverse Path Ltd
+Chief Security Engineer                     -----> <--------
+
+<andrea@...ersepath.com>          http://www.inversepath.com
+0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+       "Pluralitas non est ponenda sine necessitate"
