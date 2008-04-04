@@ -1,54 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/17/17
-Message-ID: <gi9r4o$vo2$3@ger.gmane.org>
-Date: Tue, 16 Dec 2008 21:19:45 -0600
-From: Raphael Geissert <atomo64+debian@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/04/14
+Message-ID: <Pine.LNX.4.64.0804042314580.25602@forced.attrition.org>
+Date: Fri, 4 Apr 2008 23:17:44 +0000 (UTC)
+From: lyger <lyger@...rition.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE Request - roundcubemail
+Subject: Re: wiki: vendor info
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-Christian Hoffmann wrote:
 
-> On 2008-12-15 11:32, Florian Weimer wrote:
->> Nowhere in the documentation it says that "" quotes are unsafe when
->> combined with a sufficiently general capture pattern.
-> Well yes, it would probably be better to have a big warning at this
-> place, because this flag is very dangerous unless used properly and all
-> use cases should be expressable through preg_replace_callback as well,
-> which is hard to use improperly from a syntax point of view, as no
-> evaluation of user-supplied data is ever going to happen. :)
-> But I would not say that PHP or its docs are wrong because of this.
+On Fri, 4 Apr 2008, Josh Bressers wrote:
 
-IMHO the docs are lacking a very important bit of information. 
+": " > 	http://osvdb.org/vendors
+": " 
+": " Holy Smokes that's impressive!
+": " 
+": " I don't think there's anything to consolidate, I think we just need to
+": " ensure everything on the oss-security wiki page is in your data (I would be
+": " surprised if it's not), then we just point at that.  The page about easily
+": " finding patches is probably still relevant, but there's no sense in
+": " duplicating information, especially when there is such an extensive source
+": " as this.
 
-> I cannot think of a case where single quotes could be easily
-> circumvented somehow, but I'd never claim to be perfectly right here.
-> Upstream added a perfectly fine fix, they replaced the /e usage by
-> preg_replace_callback, so I don't see a reason why you would want to
-> apply a different fix.
-> 
-
-Of course, no different fix was planned (on roundcube).
-We were actually looking for something in PHP itself that could be treated as
-the origin of all those security issues. We have been thinking about disabling
-support for the e modifier, but that requires collaboration with upstreams (PHP
-and script writers) and looking for incompatibilities in existing software.
-Maybe it could be dropped from PHP6, now that register_globals, safe_mode,
-magic_quotes_gpc, and friends are being dropped as well.
-
-Cheers,
-- -- 
-Raphael Geissert - Debian Maintainer
-www.debian.org - get.debian.net
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAklIb9EACgkQYy49rUbZzlp8oQCfQ8LLlThh+b018U2yENSZUqaY
-v6IAnRDzTKs0YZofI1KhsuDGe7u27VzE
-=wbnP
------END PGP SIGNATURE-----
-
+One thing to note is that anonymous edits to OSVDB's vendor dictionary are 
+allowed and will be added to the list pending moderator approval.
