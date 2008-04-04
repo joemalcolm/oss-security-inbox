@@ -1,112 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/03/3
-Message-ID: <20080603175335.GA30768@openwall.com>
-Date: Tue, 3 Jun 2008 21:53:35 +0400
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/04/3
+Message-ID: <20080404212858.GA23929@openwall.com>
+Date: Sat, 5 Apr 2008 01:28:58 +0400
 From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: tool announcements (was: ARP handler Inspection tool released)
+Cc: Andrea Barisani <andrea@...ersepath.com>
+Subject: announcing oss-security to Bugtraq & f-d
 Content-Type: text/plain; charset=utf-8
 
-Nico, Jonathan -
+On Fri, Apr 04, 2008 at 03:35:53PM -0400, Josh Bressers wrote:
+> My initial thought here is why?  I still see oss-security as a group in its
+> inception.  I'm personally not entirely happy with the content on the wiki
+> yet (it has far too many holes).  Sadly other things have been preventing
+> me from working on it lately.
 
-> Nico Golde wrote:
-> | I don't think that the nth
-> | cross-post of software announces belong to this list.
+Indeed.  My thought was that maybe some of those Bugtraqers would
+actually help us in working on the wiki content.  Of course, we may also
+get inappropriate edits, which we'll have to deal with, but that's life.
+Wikipedia is very well known and popular - yet they manage to keep the
+wiki wide open and with reasonable content.
 
-OK, maybe not (although I am not sure) - but how are the list moderators
-supposed to detect cross-posting (if we decide that it should be
-relevant to approval of a message)?  We receive moderation requests
-almost instantly - before the message has a chance to arrive via
-full-disclosure (large list) or Bugtraq (extra-large list with long
-moderation delays).  Are we supposed to delay decision just to see if a
-message is possibly a cross-post?  Also, I am not on full-disclosure -
-should this prevent me from being a moderator for oss-security, or do I
-have to subscribe to full-disclosure?  Of course, in some cases
-cross-posting is obvious from the headers, but in many cases it is not.
+Also, many of our wiki pages are intended for a wider audience than the
+current oss-security membership.  Keeping the intended audience unaware
+of our wiki is counter-productive.
 
-On Mon, Jun 02, 2008 at 02:41:48PM -0800, Jonathan Smith wrote:
-> I wholeheartedly agree.
+Finally, there's PageRank.  We can't make it easy to find our wiki
+content when our wiki is not linked to from lots of sites.
 
-Thank you for commenting on this.  Your opinion is appreciated and may
-affect our moderation policy.  At this point, I am not sure if it is the
-prevailing opinion of this group, though.
+> I'm also quite happy with the rather slow growth we're currently seeing on
+> the mailing list.  We need a solid base before we can handle what will be
+> explosive list growth from a big public announcement.
 
-> Announcements of this kind belong on bugtraq/FD
+Understood and agreed.  I thought that we kind of already had a
+sufficiently solid base for this, and I also noticed that we became
+inactive at populating the wiki lately - which means that delaying the
+announcement by another month might not result in us having much more
+and/or better wiki content by then.
 
-Maybe.  However, many topics are valid on Bugtraq - not only Open Source
-ones.  I imagine that someone could be interested in security tool
-announcements relevant to Open Source software only.  Also, Bugtraq is
-so large that few of us would dare to bother its readers with
-announcements of new versions of a tool, even fairly major ones.
+> > Also, Josh, are you OK with mentioning oCERT here? -
+> > 
+> > http://oss-security.openwall.org/wiki/disclosure/researcher
+> 
+> We really need a page dedicated to embargoed issue handling organizations.
+> For now though, that would be appropriate given it already lists a few
+> organizations.
 
-As to full-disclosure, we all know that there's a lot of noise on that
-list.  I'd rather not join it, although I like to receive occasional
-announcements of security tools.
-
-Maybe we need to setup a new oss-sectools list, but I'd rather not go
-for it until we start to receive a substantial number of security tool
-announcements in here.  This implies that we let those announcements
-through moderation - or people will stop sending them.  At a later time,
-I'd start rejecting them with requests to repost to oss-sectools - but
-this is not an option yet.
-
-> or per-software announce lists like nmap-announce.
-
-Indeed, but that does not eliminate the need for a shared list.
-
-> I think this list is,
-> or should be, for discussion only. If the post isn't designed to spark
-> discussion (other than "does this belong here" discussion :-) it should
-> be somewhere else.
-
-I mostly agree, but please see above re: "something else".
-
-As to "sparking discussion", it is impossible to know that in advance.
-Yes, you wrote "designed to ..." - does ending a post with "comments,
-please?" qualify?  If so, that could be used on any announcement - even
-on a mostly-PR one.
-
-Also, what about those CVE requests - is a single response, assigning
-the CVE number, "discussion"?  OK, in some cases people actually have
-comments.
-
-> Announcements are intended either for existing end-users or as a PR
-> ploy. Existing users are probably subscribed to the project-specific
-> list (or don't care) and this isn't the place for PR.
-
-Of the existing lists, Bugtraq is probably the place for PR.
-
-However, some tools could be of specific relevance to oss-security
-members - e.g., source code analysis tools and fuzzers.  Do you agree?
-Is a moderator supposed to decide whether or not this is the case?
-
-> So, was this message, and "SQL_injection detection tool released" held
-> for moderation?
-
-Yes, they were.
-
-> If so, why were they approved? Presumably whoever did so
-> has some reason not-yet-mentioned, since the SQL_injection one didn't
-> contain a query about testing and code review.
-
-I was the one to approve both messages.  So far, the only messages that
-were not approved were spam.
-
-I don't regret approving these messages - I think that we're having
-useful discussion as a result, and I think that it was important for
-this group's members to be aware of what was coming to the list (except
-for spam).  Let's say that these two messages are "samples" of content
-that we might or might not want in here.
-
-My opinion is that moderators are not supposed to define the list's
-policy on their own - and we did not (and still do not) have this bit of
-policy fully defined.  So let's try to take care of that now, or I would
-not know what to do if more messages like these two arrive to the list.
-
-> If they were not held for moderation, why not? I thought everything not
-> coming from a limited whitelist of people was held...
-
-They were held for moderation, and your understanding was/is correct.
+Andrea - maybe you'd like to join us in populating the wiki with content -
+e.g., you could start by adding a mention of oCERT to the above page,
+then proceed to create a new page (also in the disclosure namespace?) on
+CERT-like organizations (with more detailed information than that
+already available on the links page).
 
 Thanks,
 
