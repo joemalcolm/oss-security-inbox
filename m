@@ -1,21 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/04/1
-Message-Id: <200810041830.42044.steffen.joeris@skolelinux.de>
-Date: Sat, 4 Oct 2008 18:30:37 +1000
-From: Steffen Joeris <steffen.joeris@...lelinux.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/04/9
+Message-ID: <20080404221643.GA24481@openwall.com>
+Date: Sat, 5 Apr 2008 02:16:43 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: duplicates: CVE-2008-4406 and CVE-2008-4407 [sabre insecure temp file]
+Subject: Re: announcing oCERT & oss-security to Bugtraq & f-d
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Andrea,
 
-The CVE ids issued for sabre regarding the insecure use of the tmp file are 
-the same. The issue was introduced by a debian patch, but other vendors might 
-have possibly patched it the same way. I suggest to mark one of them as a 
-duplicate though, because it might be confusing.
+On Fri, Apr 04, 2008 at 10:07:18PM +0000, Andrea Barisani wrote:
+> Ok, but if the only issue is time I'd be happy to delay until monday,
+> (announcements on weekends are bad anyway).
 
-Cheers
-Steffen
+I'll let others in this group discuss this with you and make a
+determination - as well as work on the announcement text.  My opinion
+does not matter all that much, nor do I have time for this right now.
 
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+Thanks,
+
+Alexander
