@@ -1,39 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/22/7
-Message-ID: <20080222044952.GB13911@openwall.com>
-Date: Fri, 22 Feb 2008 07:49:52 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/04/8
+Message-ID: <20080404221135.GV23804@fuse.inversepath.com>
+Date: Fri, 4 Apr 2008 22:11:35 +0000
+From: Andrea Barisani <andrea@...ersepath.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: moderation
+Subject: Re: announcing oss-security to Bugtraq & f-d
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Feb 21, 2008 at 09:23:19PM -0500, Josh Bressers wrote:
-> What is message pre-moderation?  Can you expand on what that means?  Will
-> it let subscribers still post unmoderated?
+On Sat, Apr 05, 2008 at 01:28:58AM +0400, Solar Designer wrote:
+> 
+> > > Also, Josh, are you OK with mentioning oCERT here? -
+> > > 
+> > > http://oss-security.openwall.org/wiki/disclosure/researcher
+> > 
+> > We really need a page dedicated to embargoed issue handling organizations.
+> > For now though, that would be appropriate given it already lists a few
+> > organizations.
+> 
+> Andrea - maybe you'd like to join us in populating the wiki with content -
+> e.g., you could start by adding a mention of oCERT to the above page,
+> then proceed to create a new page (also in the disclosure namespace?) on
+> CERT-like organizations (with more detailed information than that
+> already available on the links page).
+> 
 
-Yes - the way I have enabled it now, subscribers can still post
-unmoderated, as long as they post from their subscribed envelope-from
-addresses.
+Yep, I'll be happy to do that.
 
-Josh and Vincent are now list moderators (thank you!), along with me.
-You will receive moderation requests whenever a message arrives to the
-list address from a non-subscribed address (that is also not on the
-"allow" list).  Please approve messages that are desirable for this
-list, according to the charter and common sense.  In other cases, you
-can either reject a message (if posted by a human being), optionally
-with a comment (reject reason), or do nothing (there's no need to bother
-rejecting spam - it will expire on its own - in fact, it is better to
-not reject spam for a couple of reasons).
 
-There's no need to see if a message has possibly been approved by
-another moderator - duplicate approvals don't result in duplicate
-postings.
+I might also take the chance to expand vendor information with the additional
+vendors I contacted but that are not present in that page.
 
-Jonathan - thank you for offering to help as well.  I had already added
-Josh and Vincent as moderators when your message arrived, and I thought
-that three moderators (including me) should be enough.  However, if you
-really want to be receiving some more spam - please let me know! ;-)
+Cheers!
 
-Thanks,
+-- 
+Andrea Barisani                             Inverse Path Ltd
+Chief Security Engineer                     -----> <--------
 
-Alexander
+<andrea@...ersepath.com>          http://www.inversepath.com
+0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+       "Pluralitas non est ponenda sine necessitate"
