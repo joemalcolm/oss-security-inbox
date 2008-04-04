@@ -1,37 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/13/7
-Message-ID: <Pine.GSO.4.51.0808122036040.26550@faron.mitre.org>
-Date: Tue, 12 Aug 2008 20:37:36 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/04/10
+Message-ID: <20080404222204.GB24481@openwall.com>
+Date: Sat, 5 Apr 2008 02:22:04 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...re.org>
-Subject: Re: CVE request: tikiwiki < 2.0
+Subject: wiki: vendor info
 Content-Type: text/plain; charset=utf-8
 
+On Fri, Apr 04, 2008 at 10:11:35PM +0000, Andrea Barisani wrote:
+> Yep, I'll be happy to do that.
 
-These were SPLIT since CVE-2008-3654, while unspecified, has more specific
-consequences that suggest certain bug types (e.g. an accessible
-phpinfo()), whereas the others convey no information whatsoever.
+Please register for a wiki account and start editing.
 
+> I might also take the chance to expand vendor information with the additional
+> vendors I contacted but that are not present in that page.
 
-======================================================
-Name: CVE-2008-3653
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3653
-Reference: CONFIRM:http://info.tikiwiki.org/tiki-read_article.php?articleId=35
+Good idea.  Also, maybe you could invite them to join this mailing list?
+(Perhaps ask me first to confirm that they are not already on the list.)
 
-Multiple unspecified vulnerabilities in TikiWiki CMS/Groupware before
-2.0 have unknown impact and attack vectors.
+BTW, we currently have two pages with vendor info: one is with security
+contacts and advisory links, and the other is with "patch-finding" info.
+Perhaps you should update both whenever you can obtain the necessary
+info.  Or maybe we should combine them into one page - this needs to be
+discussed in here first.
 
+Thanks,
 
-======================================================
-Name: CVE-2008-3654
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3654
-Reference: CONFIRM:http://info.tikiwiki.org/tiki-read_article.php?articleId=35
-Reference: CONFIRM:http://tikiwiki.org/ReleaseNotes20
-
-Unspecified vulnerability in TikiWiki CMS/Groupware before 2.0 allows
-attackers to obtain "path and PHP configuration" via unknown vectors.
-
-
+Alexander
