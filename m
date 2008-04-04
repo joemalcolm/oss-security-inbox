@@ -1,41 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/14/9
-Message-ID: <87abisj2lj.fsf@gmx.de>
-Date: Wed, 14 May 2008 18:02:32 +0200
-From: Sven Joachim <svenjoac@....de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/04/5
+Message-ID: <Pine.LNX.4.64.0804042141200.15329@forced.attrition.org>
+Date: Fri, 4 Apr 2008 21:42:35 +0000 (UTC)
+From: security curmudgeon <jericho@...rition.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Emacs 21 fast-lock-mode arbitrary lips code execution
+Subject: Re: "who shouldn't be on-list"
 Content-Type: text/plain; charset=utf-8
 
-On 2008-05-14 16:43 +0200, Nico Golde wrote:
 
-> Hi Sven,
-> * Sven Joachim <svenjoac-Mmb7MZpHnFY@...lic.gmane.org> [2008-05-14 16:12]:
->> On 2008-05-14 15:27 +0200, Nico Golde wrote:
->> > As I am a vim user I might have done something wrong too, 
->> > not sure. What I did after installing emacs:
->> > cat >> ~/.emacs << EOF
->> > (global-font-lock-mode t)
->> > (seq font-lock-support-mode 'fast-lock-mode)
->> > EOF
->> 
->> Should read setq, not seq.  You will also need to load fast-lock
->> explicitly before that, since it's obsolete and not automatically
->> loaded anymore:
->
-> Where is the difference? seq was from:
-> http://lists.gnu.org/archive/html/emacs-devel/2008-05/msg00645.html
+Changing subjects briefly:
 
-That was a typo.  AFAIK, there is no seq function in Emacs.
+On Fri, 4 Apr 2008, Jonathan Smith wrote:
 
->> (message "Surprise, surprise!")
->
-> Thanks, missed the (message...)
->
->> This string will be put in the echo area when you visit foobar.c.
->
-> Confirmed, works now as expected, not confirmation dialog though.
+: I've got to agree with Vincent here. We didn't have much heads-up about 
+: this. Having folks on-list who shouldn't be was my main concern with 
+: oss-security to begin with, and posting the list to the masses (at this 
+: point in time) isn't going to make that easier.
 
-I don't see a confirmation dialog either.
+As a new subscriber who did not see specific mention of the desired list 
+population, could you clarify who you feel the list is for, or who should 
+not be on it?
 
-Sven
