@@ -1,40 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/05/1
-Message-ID: <47CE5D13.1020703@laas.fr>
-Date: Wed, 05 Mar 2008 09:42:59 +0100
-From: Matthieu Herrb <matthieu.herrb@...s.fr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/04/11
+Message-ID: <Pine.LNX.4.64.0804042230210.15329@forced.attrition.org>
+Date: Fri, 4 Apr 2008 22:31:11 +0000 (UTC)
+From: security curmudgeon <jericho@...rition.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: request CVE id: insecure handling of DISPLAY in rxvt
+Subject: Re: wiki: vendor info
 Content-Type: text/plain; charset=utf-8
 
-Nico Golde wrote:
-> Hi all,
-> Steve, can I get a CVE id for the following issue in rxvt?
-> 
-> "If the DISPLAY environment is not set, rxvt opens an xterm 
-> on :0, which on some headless login-server means anyone can setup 
-> an fake X server waiting for someone loggin in without X 
-> forwarding to start rxvt by some mistake or by some program (thus 
-> without even noticing) and getting full shell access to that other 
-> account."
-> 
-> This is Debian bug 469296[0].
-> 
-> It should be a good idea to check other terminal emulators 
-> as well.
-> 
-> [0] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=469296
-> 
 
-I don't understand how that's an issue with rxvt. If you "fix" the 
-terminal emulator not to that, yo can still run rxvt -display :0 or env 
-DISPLAY=:0 rxvt.
+: > I might also take the chance to expand vendor information with the additional
+: > vendors I contacted but that are not present in that page.
+: 
+: Good idea.  Also, maybe you could invite them to join this mailing list? 
+: (Perhaps ask me first to confirm that they are not already on the list.)
+: 
+: BTW, we currently have two pages with vendor info: one is with security 
+: contacts and advisory links, and the other is with "patch-finding" info. 
+: Perhaps you should update both whenever you can obtain the necessary 
+: info.  Or maybe we should combine them into one page - this needs to be 
+: discussed in here first.
 
-But then  I also don't understant what you mean by "setup an fake X 
-server waiting for someone loggin in..."
+Just a reminder that the OSVDB Vendor Dictionary aims to capture this 
+information as well. At some point the two groups should probably 
+consolidate their information.
 
-Could you describe the attack scenario in  a bit more details?
--- 
-Matthieu Herrb
-
-Download attachment "smime.p7s" of type "application/x-pkcs7-signature" (4033 bytes)
+	http://osvdb.org/vendors
