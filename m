@@ -1,30 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/04/13
-Message-ID: <Pine.GSO.4.51.0809041240570.29613@faron.mitre.org>
-Date: Thu, 4 Sep 2008 12:44:44 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: request for CVE: clamav 0.94 release
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/04/4
+Message-ID: <20080404213938.GL45590@linsec.ca>
+Date: Fri, 4 Apr 2008 15:39:38 -0600
+From: Vincent Danen <vdanen@...sec.ca>
+To: Jonathan Smith <smithj@...ethemallocs.com>
+Cc: Josh Bressers <bressers@...hat.com>, Solar Designer <solar@...nwall.com>, Andrea Barisani <andrea@...ersepath.com>, oss-security@...ts.openwall.com
+Subject: Re: announcing oCERT & oss-security to Bugtraq & f-d
 Content-Type: text/plain; charset=utf-8
 
+* [2008-04-04 12:08:07 -0800] Jonathan Smith wrote:
 
-On Wed, 3 Sep 2008, Marcus Meissner wrote:
+> |> I'm not comfortable with the current timeline for this.  One day is not
+> |> enough time to draft a proper announcement.
+> |>
+> |> Again though, this question belongs on the list, not here.
+> |
+> | [snip]
+> |
+> | I don't have a problem with it being announced at the same time, but I
+> | do think that one day is pretty short notice to draft a decent
+> | announcement (i.e. something that won't result in a "why do we need
+> | another ml like fd or bugtraq" barrage of postings), because we need to
+> | figure out the best way to do this so we don't get people like "n3td3v"
+> | coming to the list.
+>
+> I've got to agree with Vincent here. We didn't have much heads-up about
+> this. Having folks on-list who shouldn't be was my main concern with
+> oss-security to begin with, and posting the list to the masses (at this
+> point in time) isn't going to make that easier.
+>
+> That being said, we need to figure that out before oss-security can be
+> useful to a broader range of people and projects.
 
-> The full changelog has those apparent security related entries:
->  * fix out-of-memory null dereferenc (bb#1141)
+I'm ok with un-moderated read-only access.  I think that's a fine idea.
+I do think, to keep the signal-to-noise-ratio (not to mention the BS
+that plagues other lists like FD) down.
 
-Use CVE-2008-3912, to be filled in later.  I have mixed opinions on
-out-of-memory null dereferences, though in security software it seems
-reasonable to flag it.
+> |> I'm also quite happy with the rather slow growth we're currently
+> |> seeing on
+> |> the mailing list.  We need a solid base before we can handle what will be
+> |> explosive list growth from a big public announcement.
+> |
+> | I think we should activate membership moderation before we make a big
+> | public announcement for exactly this reason.  Which is why we need more
+> | than one day... this needs to be discussed amongst members and needs to
+> | be noted in the announcement (to keep the idiots from trying to
+> | subscribe and then us having to punt a bunch of them after the fact).
+>
+> Yep. But, I still think we should allow read-only memberships without
+> moderation. Having to read oss-security through rss or a web interface
+> would be frustrating.
 
->  * fix possible invalid memory access (bb#1089)
+I have no problem with this, and I think ezmlm should be able to do this
+easily enough.  Solar, correct me if I'm wrong.
 
-CVE-2008-1389 as mentioned by Hanno.
+> |> Additionally, this discussion belongs on the oss-security list, not
+> |> between
+> |> the current CC list.  It's a public group run by the members.
+> |
+> | This I do agree with.
+>
+> Indeed. I'm CCing oss-security with this email.
 
->  * fix error path memleaks and fd leaks (bb#1141)
+Good idea.
 
-Use CVE-2008-3913 for the memory leak.
+-- 
+Vincent Danen @ http://linsec.ca/
 
-Use CVE-2008-3914 for the fd leak.
-
-- Steve
+Content of type "application/pgp-signature" skipped
