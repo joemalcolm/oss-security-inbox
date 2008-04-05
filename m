@@ -1,29 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/01/3
-Message-ID: <Pine.GSO.4.51.0812010925310.843@faron.mitre.org>
-Date: Mon, 1 Dec 2008 09:25:36 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/05/3
+Message-ID: <20080405051233.GV45590@linsec.ca>
+Date: Fri, 4 Apr 2008 23:12:33 -0600
+From: Vincent Danen <vdanen@...sec.ca>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re:  (sort of urgent) CVE Request -- cups (repost)
+Subject: Re: Re: "who shouldn't be on-list"
 Content-Type: text/plain; charset=utf-8
 
+* [2008-04-04 13:46:11 -0800] Jonathan Smith wrote:
 
+> security curmudgeon wrote:
+> | As a new subscriber who did not see specific mention of the desired list
+> | population, could you clarify who you feel the list is for, or who should
+> | not be on it?
+>
+> As I see it, the list is for members of the open-source community. Thus,
+> to be admitted to the list, you either have to demonstrate that you're a
+> developer of a (at least marginally notable) open source project, that
+> you're a vendor who redistributes oss, or that you're a security
+> researcher who audits or otherwise interacts with oss.
+>
+> This is, of course, only my opinion and may not reflect the rest of the
+> group's ideas.
 
-======================================================
-Name: CVE-2008-5286
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5286
-Reference: CONFIRM:http://svn.easysw.com/public/cups/trunk/CHANGES-1.3.txt
-Reference: CONFIRM:http://www.cups.org/str.php?L2974
-Reference: MLIST:[oss-security] 20081201 (sort of urgent) CVE Request -- cups (repost)
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/12/01/1
-Reference: BID:32518
-Reference: URL:http://www.securityfocus.com/bid/32518
+I think this is a good definition.
 
-Integer overflow in the _cupsImageReadPNG function in CUPS 1.1.17
-through 1.3.9 allows remote attackers to execute arbitrary code via a
-PNG image with a large height value, which bypasses a validation check
-and triggers a buffer overflow.
+Bottom-line would be that this isn't a list for end-users.  End-users or
+sysadmins, whatever, could be read-only subscribers... heck, that's no
+different than reading web archives.
 
+But to be a "member" of the list, with posting priveleges, I think you
+need to be someone who can demonstrate an active role with some OSS --
+this does not mean you need to be on a vendor security team, or the
+apache/samba/whatever security contact.  You could be a grunt developer
+who has an interest in security-related stuff (perhaps good programming
+techniques, etc.) and as long as you're a member or developer of some
+OSS with a reasonable exposure, then I think you can have a voice on the
+list if you like.
 
+Honestly, I think a lot of people will be lurkers... so for them they
+never need to progress beyond read-only subscriber.  It's the people who
+are interested in security (be it re-active or pro-active) that will
+want to be "members" of the list.
+
+Now, having said that, I think the ml subscription can be a lot more
+open than wiki editing rights (which is a whole different ball of wax).
+
+-- 
+Vincent Danen @ http://linsec.ca/
+
+Content of type "application/pgp-signature" skipped
