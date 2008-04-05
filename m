@@ -1,31 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/21/12
-Message-ID: <Pine.GSO.4.51.0811202116470.20524@faron.mitre.org>
-Date: Thu, 20 Nov 2008 21:16:54 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Jan Lieskovsky <jlieskov@...hat.com>
-cc: "Steven M. Christey" <coley@...re.org>, oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- OptiPNG
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/05/4
+Message-ID: <20080405051658.GW45590@linsec.ca>
+Date: Fri, 4 Apr 2008 23:16:58 -0600
+From: Vincent Danen <vdanen@...sec.ca>
+To: oss-security@...ts.openwall.com
+Subject: Re: wiki: vendor info
 Content-Type: text/plain; charset=utf-8
 
+* [2008-04-04 23:17:44 +0000] lyger wrote:
 
-======================================================
-Name: CVE-2008-5101
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5101
-Reference: MLIST:[oss-security] 20081112 CVE Request -- OptiPNG
-Reference: URL:http://openwall.com/lists/oss-security/2008/11/12/1
-Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=505399
-Reference: CONFIRM:http://optipng.sourceforge.net/
-Reference: CONFIRM:http://prdownloads.sourceforge.net/optipng/optipng-0.6.1.1.diff?download
-Reference: CONFIRM:http://sourceforge.net/project/shownotes.php?release_id=639631&group_id=151404
-Reference: FRSIRT:ADV-2008-3108
-Reference: URL:http://www.frsirt.com/english/advisories/2008/3108
-Reference: SECUNIA:32651
-Reference: URL:http://secunia.com/advisories/32651
+>": " > 	http://osvdb.org/vendors
+>": " 
+>": " Holy Smokes that's impressive!
+>": " 
+>": " I don't think there's anything to consolidate, I think we just need to
+>": " ensure everything on the oss-security wiki page is in your data (I would be
+>": " surprised if it's not), then we just point at that.  The page about easily
+>": " finding patches is probably still relevant, but there's no sense in
+>": " duplicating information, especially when there is such an extensive source
+>": " as this.
+>
+>One thing to note is that anonymous edits to OSVDB's vendor dictionary are 
+>allowed and will be added to the list pending moderator approval.
 
-Buffer overflow in the BMP reader in OptiPNG 0.6 and 0.6.1 allows
-user-assisted attackers to execute arbitrary code via a crafted BMP
-image, related to an "array overflow."
+Wow, that is impressive.  Very well done.
 
+Definitely need to link to that.  =)  And no, like Josh said, there's no
+point in duplicating this.  I was not even aware of this resource at
+all.
 
+/me goes off to get an account and update Mandriva's info
+
+-- 
+Vincent Danen @ http://linsec.ca/
+
+Content of type "application/pgp-signature" skipped
