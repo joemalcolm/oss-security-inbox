@@ -1,24 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/15/4
-Message-ID: <20080415224004.GA21568@ngolde.de>
-Date: Wed, 16 Apr 2008 00:40:05 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/05/9
+Message-ID: <20080405121458.GC25641@openwall.com>
+Date: Sat, 5 Apr 2008 16:14:58 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: xine-lib insufficient boundary check in speex decoder
+Subject: Re: wiki: vendor info & osvdb.org/vendors
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-can I get a CVE id for:
-http://sourceforge.net/project/shownotes.php?release_id=592185&group_id=9655 
-or could you add xine-lib to CVE-2008-1686?
+On Fri, Apr 04, 2008 at 07:06:36PM -0400, Josh Bressers wrote:
+> > 	http://osvdb.org/vendors
+> 
+> Holy Smokes that's impressive!
+> 
+> I don't think there's anything to consolidate, I think we just need to
+> ensure everything on the oss-security wiki page is in your data (I would be
+> surprised if it's not), then we just point at that.  The page about easily
+> finding patches is probably still relevant, but there's no sense in
+> duplicating information, especially when there is such an extensive source
+> as this.
 
-The speex issue also seems to affect xine-lib.
+I am not so sure.  On our wiki, we have a separation between distro
+vendors and individual Open Source projects - and I like it.  I haven't
+found a way to extract a list of distro vendors only from osvdb.org.
 
-Kind regards
-Nico
+Also, some vendors and projects may have relevant info that just does
+not fit into pre-defined fields on osvdb.org - yet it may be specified
+in entries on the wiki.
 
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+It is a good idea to update the info at osvdb.org with whatever we have.
+For example, I was not able to find rPath in the osvdb.org database.
+Then the vendors/projects themselves would need to remember to keep
+those entries up to date as well...
 
-Content of type "application/pgp-signature" skipped
+Also, we should definitely link to osvdb.org.
+
+Alexander
