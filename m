@@ -1,42 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/16/7
-Message-ID: <20080516215000.GA3801@openwall.com>
-Date: Sat, 17 May 2008 01:50:00 +0400
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/05/8
+Message-ID: <20080405115937.GA25641@openwall.com>
+Date: Sat, 5 Apr 2008 15:59:37 +0400
 From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSH key blacklisting
+Subject: list: members vs. read-only subscribers
 Content-Type: text/plain; charset=utf-8
 
-On Fri, May 16, 2008 at 09:36:06PM +0200, Robert Buchholz wrote:
-> Gentoo is discussing the feature in bug #221759 [1]. Until now, I have 
-> not heard a reaction to the patch from our OpenSSH maintainers, so I 
-> cannot judge on the technical side of the inclusion.
+On Fri, Apr 04, 2008 at 08:27:31PM -0400, Josh Bressers wrote:
+> I think the way to go for this is going to be let the current members post
+> without moderation, and once there is an announcement, moderate new
+> members, with the option to remove the moderation flag is they prove to be
+> helpful.  A semi moderated list is going to be the way to go I suspect.
 
-Thanks for the "bug" reference.  FWIW, the shell script in this comment
-is vulnerable itself, in more than one way:
+On Fri, Apr 04, 2008 at 11:06:41PM -0600, Vincent Danen wrote:
+> ... I don't think we need to moderate member postings.  I think we
+> should do it this way:
+>
+> - members can post at will
+> - subscribers are read-only [1]
+> - non-members have posts moderated
+> - membership is moderated
+>
+> [1] the distinction between member and subscriber is a member being
+> someone who can post, and a subscriber is someone who gets it read-only
 
-	http://bugs.gentoo.org/show_bug.cgi?id=221759#c9
+It appears that Josh and Vincent have expressed the same opinion in the
+quotes above.  Unfortunately, ezmlm-idx does not have a notion of having
+different types of subscribers to a list - "members who can post" vs.
+"read-only subscribers".  Yet, if this is really what we want (any other
+opinions?), we may be able to achieve it in one of two ways:
 
-For example, it lets a user have any other user's or root's
-authorized_keys removed, by replacing .ssh with a symlink to someone
-else's .ssh directory.  It's just bad practice to access users' files as
-root (or as another user); this is difficult to do safely.
+1. Use the "allow" list feature to specify the addresses of "full
+members".  Unfortunately, in my experience the "allow" list is used for
+lists that are moderated for non-subscribers only (to allow some
+non-subscribers or alternate addresses of subscribers to post without
+moderation), not for those that are also moderated for subscribers.
+I have not looked into whether this would be easy to fix or not - but I
+or someone else at Openwall can look into it if needed.  It might turn
+out that the fix is trivial.
 
-Also, it misses authorized_keys2.
+2. Setup a second list for the read-only subscribers, and subscribe that
+list to the main one.
 
-> I assume whichever version has the acceptance of the OpenSSH upstream is 
-> what most of us would be willing to go with. Did you discuss either 
-> blacklist format with them already?
+However, Vincent also wrote:
 
-Yes, very briefly.  They don't intend to implement key blacklisting.
+> I think maybe a moderated subscription, and unmoderated postings (for
+> members, moderated non-subscriber postings mandatory) would be a good
+> way to do it.
 
-I suspect that a worm might change this, though. ;-)
+which confuses me.  Why moderate mere subscriptions if they're to be
+made read-only by default?
 
-> Personally, I would like to see the feature ported to our distribution 
-> sooner than later, but neither at the cost of maintaining patchsets for 
-> the rest of existance, nor with high transition cost once upstream 
-> accepts another format.
+I think that our choice is between the setup described above (with full
+members and read-only subscribers) and the more common and tested setup
+with full moderation (and perhaps multiple moderators to minimize delays).
 
-Well, this is difficult to predict correctly.
+With the latter, the moderators themselves will be able to post with
+almost no delay by approving their own postings.  In fact, I think that
+when a moderator posts, ezmlm-idx only notifies the specific moderator -
+not all moderators.  So if we "promote" the most active list members to
+moderators, their postings should cause no moderation requests being
+sent to anyone other than themselves.
+
+On Fri, Apr 04, 2008 at 11:12:33PM -0600, Vincent Danen wrote:
+> ... I think the ml subscription can be a lot more open than wiki
+> editing rights (which is a whole different ball of wax).
+
+This is not so obvious to me.  An undesirable posting to the list will
+just stay on the archives (I don't think we want to spend time on
+getting such postings removed from archives, especially not from
+third-party ones).  On the contrary, any damage to the wiki content is
+easily and promptly undone - as you know, a few of us are receiving
+e-mails on any wiki edits.
+
+If by "ml subscription" you meant the read-only and/or message-moderated
+subscriptions, then I agree - those should be open to anyone.  In fact,
+non-subscribers should also be able to post, subject to moderation - at
+least because it is common for subscribers to post from other addresses
+occasionally.
 
 Alexander
