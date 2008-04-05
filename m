@@ -1,37 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/11/3
-Message-ID: <23859.1207937997@devserv.devel.redhat.com>
-Date: Fri, 11 Apr 2008 14:19:57 -0400
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-cc: coley@...re.org
-Subject: Re: Security fixes in m4-1.4.11
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/05/7
+Message-ID: <Pine.LNX.4.64.0804050917450.15329@forced.attrition.org>
+Date: Sat, 5 Apr 2008 09:18:33 +0000 (UTC)
+From: security curmudgeon <jericho@...rition.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: wiki: vendor info
 Content-Type: text/plain; charset=utf-8
 
-> 
-> On Sun, 6 Apr 2008, Patrick J. Volkerding wrote:
-> 
-> > Minor security fix: Quote output of mkstemp.
-> 
-> Use CVE-2008-1687
-> 
-> > Security fix: avoid arbitrary code execution with 'm4 -F'.
-> 
-> Use CVE-2008-1688
-> 
-> Note - these CVE's will not be live until Monday.
-> 
 
-So I took a look at these today, I don't think either is really a security
-issue.
+: I'd like to point out that email addresses aren't obfuscated on 
+: osvdb.org.  Perhaps this is something to fix?  Meanwhile I updated 
+: Openwall info there and provided our security e-mail in the obfuscated 
+: form.
 
-Both issues are certainly bugs, but given each situation, it would be just
-as easy to get a victim to run something blatantly malicious that doesn't
-need to leverage obscure flaws in the language.
+I'll talk to our dev. On 1.0, they were obfuscated to prevent harvesting. 
+A few months ago we launched 2.0, which was a full re-write in RoR. That 
+little feature must have been overlooked. I will open a ticket and 
+prioritive it.
 
-Has anyone else had a look?
-
-Thanks.
-
--- 
-    JB
+Brian
