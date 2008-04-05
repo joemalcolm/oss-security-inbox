@@ -1,49 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/21/10
-Message-ID: <Pine.GSO.4.51.0811202112350.20524@faron.mitre.org>
-Date: Thu, 20 Nov 2008 21:12:42 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security <oss-security@...ts.openwall.com>
-cc: coley@...re.org
-Subject: Re: CVE Request (ssh)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/05/6
+Message-ID: <20080405091415.GI26507@openwall.com>
+Date: Sat, 5 Apr 2008 13:14:15 +0400
+From: "(GalaxyMaster)" <galaxy@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: wiki: vendor info
 Content-Type: text/plain; charset=utf-8
 
+I'd like to point out that email addresses aren't obfuscated on
+osvdb.org.  Perhaps this is something to fix?  Meanwhile I updated
+Openwall info there and provided our security e-mail in the obfuscated
+form.
 
-======================================================
-Name: CVE-2008-5161
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5161
-Reference: MISC:http://isc.sans.org/diary.html?storyid=5366
-Reference: MISC:http://www.cpni.gov.uk/Docs/Vulnerability_Advisory_SSH.txt
-Reference: CONFIRM:http://www.ssh.com/company/news/article/953/
-Reference: BID:32319
-Reference: URL:http://www.securityfocus.com/bid/32319
-Reference: FRSIRT:ADV-2008-3172
-Reference: URL:http://www.frsirt.com/english/advisories/2008/3172
-Reference: FRSIRT:ADV-2008-3173
-Reference: URL:http://www.frsirt.com/english/advisories/2008/3173
-Reference: OSVDB:49872
-Reference: URL:http://osvdb.org/49872
-Reference: SECTRACK:1021235
-Reference: URL:http://www.securitytracker.com/id?1021235
-Reference: SECTRACK:1021236
-Reference: URL:http://www.securitytracker.com/id?1021236
-Reference: SECUNIA:32740
-Reference: URL:http://secunia.com/advisories/32740
-Reference: SECUNIA:32760
-Reference: URL:http://secunia.com/advisories/32760
-Reference: XF:openssh-sshtectia-cbc-info-disclosure(46620)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/46620
+On Fri, Apr 04, 2008 at 10:31:11PM +0000, security curmudgeon wrote:
 
-Error handling in the SSH protocol in (1) SSH Tectia Client and Server
-and Connector 4.0 through 4.4.11, 5.0 through 5.2.4, and 5.3 through
-5.3.8; Client and Server and ConnectSecure 6.0 through 6.0.4; Server
-for Linux on IBM System z 6.0.4; Server for IBM z/OS 5.5.1 and
-earlier, 6.0.0, and 6.0.1; and Client 4.0-J through 4.3.3-J and 4.0-K
-through 4.3.10-K; and (2) OpenSSH 4.7p1 and possibly other versions,
-when using a block cipher algorithm in Cipher Block Chaining (CBC)
-mode, makes it easier for remote attackers to recover certain
-plaintext data from an arbitrary block of ciphertext in an SSH session
-via unknown vectors.
+> 	http://osvdb.org/vendors
 
+-- 
+(GM)
 
