@@ -1,34 +1,110 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/24/1
-Message-ID: <Pine.GSO.4.51.0812241157590.12707@faron.mitre.org>
-Date: Wed, 24 Dec 2008 11:58:12 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/05/2
+Message-ID: <20080405050641.GU45590@linsec.ca>
+Date: Fri, 4 Apr 2008 23:06:41 -0600
+From: Vincent Danen <vdanen@...sec.ca>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...re.org>
-Subject: Re: CVE Request -- Xen (Upstream patch for CVE-2008-4405 is incomplete)
+Subject: Re: announcing oCERT & oss-security to Bugtraq & f-d
 Content-Type: text/plain; charset=utf-8
 
+* [2008-04-05 01:08:58 +0400] Solar Designer wrote:
 
-======================================================
-Name: CVE-2008-5716
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5716
-Reference: MLIST:[oss-security] 20081219 CVE Request -- Xen (Upstream patch for CVE-2008-4405 is incomplete)
-Reference: URL:http://openwall.com/lists/oss-security/2008/12/19/1
-Reference: MLIST:[xen-devel] 20081218 PATCH: Actually make /local/domain/$DOMID readonly to the guest
-Reference: URL:http://lists.xensource.com/archives/html/xen-devel/2008-12/msg00842.html
-Reference: MLIST:[xen-devel] 20081218 Re: PATCH: Actually make /local/domain/$DOMID readonly to the guest
-Reference: URL:http://lists.xensource.com/archives/html/xen-devel/2008-12/msg00845.html
-Reference: MLIST:[xen-devel] 20081218 Re: PATCH: Actually make /local/domain/$DOMID readonly to the guest
-Reference: URL:http://lists.xensource.com/archives/html/xen-devel/2008-12/msg00846.html
-Reference: MLIST:[xen-devel] 20081218 Re: PATCH: Actually make /local/domain/$DOMID readonly to the guest
-Reference: URL:http://lists.xensource.com/archives/html/xen-devel/2008-12/msg00847.html
+>Josh, Vincent, Jonathan - thank you for commenting on this so promptly!
+>
+>Andrea - it appears that the oCERT announcement should be separate, then.
+>Please go ahead with it, and feel free to mention oss-security in passing
+>as a group that oCERT intends to work with, as Vincent suggested.  I'm
+>not sure if it's appropriate to include a link to the oss-security wiki;
+>I would do it, but Vincent suggested that we make "the intelligent" use
+>Google instead (and not invite the rest to our wiki just yet).
 
-xend in Xen 3.3.0 does not properly restrict a guest VM's write access
-within the /local/domain xenstore directory tree, which allows guest
-OS users to cause a denial of service and possibly have unspecified
-other impact by writing to (1) console/tty, (2) console/limit, or (3)
-image/device-model-pid.  NOTE: this issue exists because of erroneous
-set_permissions calls in the fix for CVE-2008-4405.
+I think at this point, just mentioning it should suffice until we figure
+out the basics (unless Andrea waits until next week and we have a
+consensus in place).
 
+>> Vincent Danen wrote:
+>> | I don't have a problem with it being announced at the same time, but I
+>> | do think that one day is pretty short notice to draft a decent
+>> | announcement (i.e. something that won't result in a "why do we need
+>> | another ml like fd or bugtraq" barrage of postings),
+>
+>Good point, and I am sorry for the short notice.  To me, this was
+>expected, but I failed to notify the oss-security group of this
+>possibility earlier.  I did not expect that the press would pick oCERT
+>up before the Bugtraq & f-d announcement, though - and this is now a
+>reason for not delaying the announcement anymore.
 
+No, not for oCERT, for sure.  But I think I'd like to see some of the
+ground-rules laid out first, now, before we have to re-think or change
+things later (in terms of basics), and end up ticking people off.
+
+>> | because we need to
+>> | figure out the best way to do this so we don't get people like "n3td3v"
+>> | coming to the list.
+>
+>Maybe it's OK if they come to the list, but are unable to post - or get
+>kicked out.
+
+I think maybe a moderated subscription, and unmoderated postings (for
+members, moderated non-subscriber postings mandatory) would be a good
+way to do it.
+
+>On Fri, Apr 04, 2008 at 12:08:07PM -0800, Jonathan Smith wrote:
+>> I've got to agree with Vincent here. We didn't have much heads-up about
+>> this. Having folks on-list who shouldn't be was my main concern with
+>> oss-security to begin with, and posting the list to the masses (at this
+>> point in time) isn't going to make that easier.
+>> 
+>> That being said, we need to figure that out before oss-security can be
+>> useful to a broader range of people and projects.
+>
+>OK, can we please start figuring this out, then?  Once there's consensus
+>or an obviously prevailing opinion in this group, Openwall is going to
+>re-configure the list as it will be agreed upon, and everyone can edit
+>the wiki to reflect that.  Then we'll be ready for a "big announcement",
+>right?  Or do we want to work on the wiki content more first?  Or maybe
+>tighten up the wiki settings?
+
+I think the wiki content is ok... we could delay this for months just
+getting the wiki content straightened out and flushed out.  I don't
+think we want to do that.  Tightening up who can edit the wiki is a good
+idea tho.
+
+>Let's just not leave things undefined and non-announced forever.  If
+>oss-security is successful, and it appears that it is, it will become
+>known anyway - but possibly with more confusion around it if we don't
+>announce it ourselves.
+
+I agree.
+
+>> | I think we should activate membership moderation before we make a big
+>> | public announcement for exactly this reason.  Which is why we need more
+>> | than one day... this needs to be discussed amongst members and needs to
+>> | be noted in the announcement (to keep the idiots from trying to
+>> | subscribe and then us having to punt a bunch of them after the fact).
+>> 
+>> Yep. But, I still think we should allow read-only memberships without
+>> moderation. Having to read oss-security through rss or a web interface
+>> would be frustrating.
+>
+>I agree with Jonathan on this.
+>
+>As to whether to enable message pre-moderation for list members before
+>the announcement or only when we really have to, I am not sure.  I'll
+>let others decide.
+
+No, I don't think we need to moderate member postings.  I think we
+should do it this way:
+
+- members can post at will
+- subscribers are read-only [1]
+- non-members have posts moderated
+- membership is moderated
+
+[1] the distinction between member and subscriber is a member being
+someone who can post, and a subscriber is someone who gets it read-only
+
+-- 
+Vincent Danen @ http://linsec.ca/
+
+Content of type "application/pgp-signature" skipped
