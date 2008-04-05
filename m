@@ -1,35 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/11/6
-Message-Id: <200809111920.10413.hanno@hboeck.de>
-Date: Thu, 11 Sep 2008 19:20:08 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/05/1
+Message-ID: <17600.1207355251@devserv.devel.redhat.com>
+Date: Fri, 04 Apr 2008 20:27:31 -0400
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: CVE request: wordpress < 2.6.2
+Subject: Re: announcing oCERT & oss-security to Bugtraq & f-d
 Content-Type: text/plain; charset=utf-8
 
-http://wordpress.org/development/2008/09/wordpress-262/
+> 
+> Andrea - it appears that the oCERT announcement should be separate, then.
+> Please go ahead with it, and feel free to mention oss-security in passing
+> as a group that oCERT intends to work with, as Vincent suggested.  I'm
+> not sure if it's appropriate to include a link to the oss-security wiki;
+> I would do it, but Vincent suggested that we make "the intelligent" use
+> Google instead (and not invite the rest to our wiki just yet).
 
-cite:
+Yes, I think that's best.  No sense in adding a link to a project nobody
+really knows about (which is by design).
 
+> 
+> OK, can we please start figuring this out, then?  Once there's consensus
+> or an obviously prevailing opinion in this group, Openwall is going to
+> re-configure the list as it will be agreed upon, and everyone can edit
+> the wiki to reflect that.  Then we'll be ready for a "big announcement",
+> right?  Or do we want to work on the wiki content more first?  Or maybe
+> tighten up the wiki settings?
 
+I'd like to see us work on the wiki content a bit more.  Perhaps a todo
+page where we can list new content needed, and point at content that needs
+some help.  Is there an easy way we can create an index of content that has
+the FIXME wiki tag?
 
-Stefan Esser recently warned developers of the dangers of SQL Column 
-Truncation and the weakness of mt_rand().  With his help we worked around 
-these problems and are now releasing WordPress 2.6.2.  If you allow open 
-registration on your blog, you should definitely upgrade.  With open 
-registration enabled, it is possible in WordPress versions 2.6.1 and earlier 
-to craft a username such that it will allow resetting another user’s password 
-to a randomly generated password.  The randomly generated password is not 
-disclosed to the attacker, so this problem by itself is annoying but not a 
-security exploit.  However, this attack coupled with a weakness in the random 
-number seeding in mt_rand() could be used to predict the randomly generated 
-password.  Stefan Esser will release details of the complete attack shortly.  
-The attack is difficult to accomplish,  but its mere possibility means we 
-recommend upgrading to 2.6.2.
+> 
+> Let's just not leave things undefined and non-announced forever.  If
+> oss-security is successful, and it appears that it is, it will become
+> known anyway - but possibly with more confusion around it if we don't
+> announce it ourselves.
+
+I don't think anyone wants this, but just as never making ourselves known
+is bad, a premature announcement isn't much good either.  I think we're
+close, but not quite there yet.  We do however need to be mindful of the
+old quote "perfect is the enemy of the good".
+
+> > 
+> > Yep. But, I still think we should allow read-only memberships without
+> > moderation. Having to read oss-security through rss or a web interface
+> > would be frustrating.
+> 
+> I agree with Jonathan on this.
+> 
+> As to whether to enable message pre-moderation for list members before
+> the announcement or only when we really have to, I am not sure.  I'll
+> let others decide.
+> 
+
+I think the way to go for this is going to be let the current members post
+without moderation, and once there is an announcement, moderate new
+members, with the option to remove the moderation flag is they prove to be
+helpful.  A semi moderated list is going to be the way to go I suspect.
+
+Thanks.
 
 -- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+    JB
