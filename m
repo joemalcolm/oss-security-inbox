@@ -1,56 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/11/3
-Message-ID: <b3ad7ddd3dd47f85989a54dfe03c8aac@chewa.net>
-Date: Tue, 11 Nov 2008 09:13:33 +0100
-From: Rémi Denis-Courmont <rem@...eolan.org>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: Nico Golde <oss-security+ml@...lde.de>, oss-security@...ts.openwall.com,  coley@...re.org
-Subject: Re: CVE id request: vlc
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/06/1
+Message-ID: <20080406102643.GI4969@fuse.inversepath.com>
+Date: Sun, 6 Apr 2008 10:26:43 +0000
+From: Andrea Barisani <lcars@...rt.org>
+To: oss-security@...ts.openwall.com
+Subject: [oCERT 2008-02] libfishsound insufficient boundary checks
 Content-Type: text/plain; charset=utf-8
 
 
-   Hello,
+2008/04/06 #2008-02 libfishsound insufficient boundary checks
 
-On Mon, 10 Nov 2008 16:27:00 -0500 (EST), "Steven M. Christey"
-<coley@...us.mitre.org> wrote:
-> The information we had available at the time of request didn't suggest
-> different versions being affected.  For example, the upstream advisory
-> doesn't mention anything about different versions, and both Tobias Klein
-> advisories say "VLC media player < 0.9.6".
+Description:
 
-CUE: 0.5.0 - 0.9.5 (as per http://www.videolan.org/security/sa0810.html)
-RealText: 0.9.0 - 0.9.5
+The libfishsound decoder library incorrectly implements the reference speex
+decoder from the Speex library, performing insufficient boundary checks on a
+header structure read from user input.
 
-0.9.* is the only supported version from videolan.org anyway.
+A user controlled field in the header structure is used to build a function
+pointer. The libfishsound implementation does not check for negative values for
+the field, allowing the function pointer to be pointed at an arbitary position
+in memory. This allows remote code execution.
 
-> So at the time of assignment, Best Available Information (the cornerstone
-> of CVE analysis) was that they were the same type of issue affecting the
-> same versions.
+A patch has been committed to the libfishsound public repository.
 
-> This is becoming a big problem for us in CVE - requests to oss-security
-> are coming in without the kind of information that we rely on heavily to
-> decide when we have one CVE or multiple CVE's.  Compared to last year,
-the
-> requests are coming in when the information's less mature, *and* public.
+Affected version: <= 0.9.0
 
-CVE.mitre.org says nothing about vendor obtaining a CVE number, only
-researchers. And typically, these guys don't do it, when dealing with
-videolan.org anyway.
+Fixed version: current svn tree
 
-Also consider our project structure: We have a large code base with lots of
-legacy, so lots of bugs. We have a large user base, so we're an attractive
-target. We have had very few security analysis until recently, so there is
-a lot more CVEs to come by any chance. We're almost entirely run by loosely
-coordinated volunteers (including myself) so you cannot expect much more
-dedication. And we are hardly supported by distributions (basically only
-Debian and Gentoo), such that almost nobody will care on vendor-sec.
+Additional affected packages:
 
-Now I am happy to adapt our security handling process a bit, if MITRE,
-Debian or whatever other involved party wants. But I am still waiting for
-clear guidelines.
+Illuminable DirectShow Filters for Ogg Vorbis, which statically include the
+libfishsound library.
 
-N.B.: I am not subscribed to this mailing list
+Credit: reporter wishes to remain anonymous
+
+CVE: N/A
+
+Timeline:
+
+2008-04-05: vulnerability report received
+2008-04-05: contacted libfishsound maintainers
+2008-04-06: upstream maintainer publicly releases patch
+2008-04-06: advisory release
+
+References:
+http://trac.annodex.net/changeset/3535
+http://trac.annodex.net/changeset/3536
+http://www.annodex.net/software/libfishsound
+
+Permalink:
+http://www.ocert.org/advisories/ocert-2008-2.html
 
 -- 
-Rémi Denis-Courmont
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | Open Source Computer Emergency Response Team
 
+<lcars@...rt.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
