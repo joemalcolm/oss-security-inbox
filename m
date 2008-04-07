@@ -1,46 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/25/2
-Message-Id: <200808251159.57055.rbu@gentoo.org>
-Date: Mon, 25 Aug 2008 11:59:49 +0200
-From: Robert Buchholz <rbu@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/07/7
+Message-ID: <Pine.GSO.4.51.0804071216410.15662@faron.mitre.org>
+Date: Mon, 7 Apr 2008 12:17:09 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: Pınar Yanardağ <pinar@...dus.org.tr>
-Subject: Pardus Bugs / Patches, Was: Re: CVE id request: vlc
+Subject: Re: gcc 4.2 optimizations and integer overflow checks
 Content-Type: text/plain; charset=utf-8
 
-On Sunday 24 August 2008, Pınar Yanardağ wrote:
-> Nico Golde wrote On 24-08-2008 13:10:
-> > Hi,
-> >
-> > * Pinar Yanarda<pinar@...dus.org.tr>  [2008-08-24 11:23]:
-> >> Nico Golde wrote On 24-08-2008 03:13:
-> >>> Hi,
-> >>> there seems to be a buffer overflow in videolans mms
-> >>> handling:
-> >>> http://www.orange-bat.com/adv/2008/adv.08.24.txt
-> >>
-> >> Btw, a vendor patch has been released:
-> >> http://mailman.videolan.org/pipermail/vlc-devel/2008-August/048488
-> >>.html
-> >
-> > Wow that was fast, 4 hours after I notified them of the
-> > problem.
-> > Looks correct to me. Anyone else had a look at the patch?
->
-> I was having some trouble to apply this patch but they updated it a
-> couple of hours ago, which works fine now.
 
-Hey Pınar,
+While an unusual bug, we decided to assign a CVE for it.
 
-I noticed Pardus is not yet listed on the 'How to steal hard work and 
-patches from others' page, aka:
-  http://oss-security.openwall.org/wiki/distro-patches
+- Steve
 
-If you host your patches somewhere, please add a pointer there.
-Also, are you managing security bugs with Bugzilla, or somewhere else 
-where one can look up the status of an issue?
+======================================================
+Name: CVE-2008-1685
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1685
+Reference: CERT-VN:VU#162289
+Reference: URL:http://www.kb.cert.org/vuls/id/162289
 
-Thanks,
-Robert
+gcc 4.2.0 through 4.3.0 in GNU Compiler Collection, when casts are not
+used, considers the sum of a pointer and an int to be greater than or
+equal to the pointer, which might remove length testing code that was
+intended as a protection mechanism against integer overflow and buffer
+overflow attacks.
 
-Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
+
