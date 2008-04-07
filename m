@@ -1,48 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/04/12
-Message-ID: <Pine.GSO.4.51.0809041222130.29613@faron.mitre.org>
-Date: Thu, 4 Sep 2008 12:24:22 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/07/8
+Message-ID: <20080407162956.GA1025@suse.de>
+Date: Mon, 7 Apr 2008 18:29:56 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: Re: [oCERT-2008-014] WordNet stack and heap overflows
+Subject: Re: gcc 4.2 optimizations and integer overflow checks
 Content-Type: text/plain; charset=utf-8
 
+On Mon, Apr 07, 2008 at 12:12:34PM -0400, Josh Bressers wrote:
+> Has anyone started to look at this yet:
+> http://www.kb.cert.org/vuls/id/162289
+> 
+> I suspect this isn't going to be trivial to detect.  Ideas are welcome.
+> 
+> Thanks.
 
-Notice how CVE treats these as all the same core type of issue, even
-though the types of attack vectors are different (command line vs. env
-variable) and the types of buffers are different (heap vs. stack).  The
-basic programming error was the same regardless of where it occurred or
-what it affected.
+Please note this section:
 
-- Steve
+"Note: this issue does not strictly constitute a vulnerability in gcc
+ itself. The behavior that gcc exhibits in this case is permitted by the
+ ISO/IEC 9899:1999 C specification (§6.5.6p8). "
 
-======================================================
-Name: CVE-2008-3908
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3908
-Reference: BUGTRAQ:20080901 [oCERT-2008-014] WordNet stack and heap overflows
-Reference: URL:http://www.securityfocus.com/archive/1/archive/1/495883/100/0/threaded
-Reference: MISC:http://http://www.ocert.org/analysis/2008-014/analysis.txt
-Reference: MISC:http://www.ocert.org/advisories/ocert-2008-014.html
-Reference: MISC:http://www.ocert.org/analysis/2008-014/wordnet.patch
-Reference: BID:30958
-Reference: URL:http://www.securityfocus.com/bid/30958
-Reference: XF:wordnet-binsrch-search-bo(44851)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/44851
-Reference: XF:wordnet-morph-search-bo(44848)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/44848
-Reference: XF:wordnet-morphinit-bo(44849)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/44849
-Reference: XF:wordnet-wninit-bo(44850)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/44850
-
-Multiple buffer overflows in Princeton WordNet (wn) 3.0 allow
-context-dependent attackers to execute arbitrary code via (1) a long
-argument on the command line; a long (2) WNSEARCHDIR, (3) WNHOME, or
-(4) WNDBVERSION environment variable; or (5) a user-supplied
-dictionary (aka data file).  NOTE: since WordNet itself does not run
-with special privileges, this issue only crosses privilege boundaries
-in cases such as when WordNet is invoked as a third party component.
+The gcc folks have discussed this to death already and in the discussion
+the code received a -Wstrict-overflow option.
 
 
+	> cat xx.c
+	int f(int a, int b) {
+		return a < a+b;
+	}
+
+	int g(int a) {
+		return f(a,1<<30);
+	}
+	> LANG=C projects/gcc/BIN/bin/gcc -O2 -c xx.c -Wstrict-overflow -Wall 
+	xx.c: In function 'g':
+	xx.c:2: warning: assuming signed overflow does not occur when assuming that (X + c) >= X is always true
+
+Ciao, Marcus
