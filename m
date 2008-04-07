@@ -1,41 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/15/1
-Message-ID: <20081115133407.GA12851@ngolde.de>
-Date: Sat, 15 Nov 2008 14:34:07 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/07/6
+Message-ID: <16701.1207584754@devserv.devel.redhat.com>
+Date: Mon, 07 Apr 2008 12:12:34 -0400
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: htop
+Subject: gcc 4.2 optimizations and integer overflow checks
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Steven M. Christey <coley@...us.mitre.org> [2008-11-14 19:40]:
-> Sorry Jan and Nico, I didn't follow up with you on this.  There were some
-> questions about whether this deserved a CVE, since THOUSANDS of programs
-> dump output without considering whether they're writing to a terminal...
-> or what they're writing to a terminal.
+Has anyone started to look at this yet:
+http://www.kb.cert.org/vuls/id/162289
 
-Yes true.
+I suspect this isn't going to be trivial to detect.  Ideas are welcome.
 
-> For example, should the "cat" program become more terminal-aware and avoid
-> sending dangerous sequences?  Which of dozens of different terminal types
-> should it avoid sending these sequences to?  Should it get a new CVE every
-> time it forgets about some other terminal?
-> 
-> Not to mention "more" and "ls" and "grep" and many others.
-> 
-> We were forced to flag Apache a number of years ago because it didn't
-> filter certain dangerous characters from its logs.  I always felt a bit
-> funny about that one.
+Thanks.
 
-This is really a cornercase for me too, we decided to treat 
-this as a vulnerability but with "unimportant" impact.
-Thanks for the id anyway.
-
-Cheers
-Nico
-ps. Jan, I am not aware of any poc here
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+    JB
