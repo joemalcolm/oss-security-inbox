@@ -1,19 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/09/3
-Message-ID: <alpine.LNX.1.10.0805091705380.13078@transport>
-Date: Fri, 9 May 2008 17:10:07 -0400 (EDT)
-From: Ben Haskell <ben@...rity.princeton.edu>
-To: Pierre-Yves Rofes <py@...too.org>
-cc: oss-security@...ts.openwall.com, WordNet <wordnet@...nceton.edu>
-Subject: Re: Multiples vulnerabilities in wordnet
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/07/11
+Message-ID: <20080407190036.GA2514@openwall.com>
+Date: Mon, 7 Apr 2008 23:00:36 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: gcc 4.2 optimizations and integer overflow checks
 Content-Type: text/plain; charset=utf-8
 
-> Don't know how to proceed from here, but in any case we don't have 
-> enough manpower to do upstream's job and perform a code audit / write a 
-> patch.
+On Mon, Apr 07, 2008 at 06:39:33PM +0200, Nico Golde wrote:
+> * Steven M. Christey <coley@...us.mitre.org> [2008-04-07 18:24]:
+> > While an unusual bug, we decided to assign a CVE for it.
+...
+> > URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1685
+> > Reference: CERT-VN:VU#162289
+> > Reference: URL:http://www.kb.cert.org/vuls/id/162289
+> [...]
+> Please add http://gcc.gnu.org/bugzilla/show_bug.cgi?id=26763
+> to the references.
 
-Nor does "upstream" have that manpower right now. (I thought I'd responded 
-to that first email stating as much, but it must have slipped through the 
-cracks.)
+FWIW, there are also actual gcc bugs that cause miscompiles - and they
+may potentially result in security vulnerabilities - yet I am not sure
+if "proactively" treating the gcc bugs themselves as security issues is
+appropriate.  This is interesting - here we have a gcc non-bug that
+deserves a CERT Vulnerability Note and a CVE number (which I agree
+with), yet actual bugs might not deserve such treatment.
 
--- Ben Haskell
+Here's an example of an actual bug -
+http://gcc.gnu.org/bugzilla/show_bug.cgi?id=26587 - this one caused my
+Blowfish implementation to be miscompiled, possibly making the cipher
+weaker (in case the misbehavior went unnoticed).  By the way, I was
+surprised by how quickly this one was confirmed (16 minutes) and fixed
+(less than a day).
+
+Alexander
