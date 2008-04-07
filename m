@@ -1,44 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/25/1
-Message-ID: <492BBB01.1010200@pardus.org.tr>
-Date: Tue, 25 Nov 2008 10:44:49 +0200
-From: Pinar Yanardag <pinar@...dus.org.tr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/07/12
+Message-ID: <87iqytlam6.fsf@mid.deneb.enyo.de>
+Date: Mon, 07 Apr 2008 21:37:37 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- wireshark
+Cc: coley@...re.org
+Subject: Re: Security fixes in m4-1.4.11
 Content-Type: text/plain; charset=utf-8
 
-On 11/24/2008 11:46 AM Jan Lieskovsky wrote:
-> Hello Steve,
+* Lubomir Kundrak:
+
+> On Sun, 2008-04-06 at 20:42 -0400, Steven M. Christey wrote:
+>> On Sun, 6 Apr 2008, Patrick J. Volkerding wrote:
+>> 
+>> > Minor security fix: Quote output of mkstemp.
+>> 
+>> Use CVE-2008-1687
 >
->   the following remotely exploitable vulnerability in Wireshark's
-> SMTP dissector has been reported:
->
-> References:
-> http://packetstormsecurity.org/0811-advisories/wireshark104-dos.txt
-> http://bugs.gentoo.org/show_bug.cgi?id=248425
-> https://bugzilla.redhat.com/show_bug.cgi?id=472737
-> http://www.nabble.com/-SVRT-04-08--Vulnerability-in-WireShark-1.0.4-for-DoS-Attack-td20640164.html
-> http://www.derkeiler.com/Mailing-Lists/securityfocus/bugtraq/2008-11/msg00166.html
->
-> Proposed upstream patches:
-> http://anonsvn.wireshark.org/viewvc/trunk/epan/dissectors/packet-smtp.c?r1=24989&r2=24988&pathrev=24989&view=patch
-> http://anonsvn.wireshark.org/viewvc/trunk/epan/dissectors/packet-smtp.c?r1=24994&r2=24993&pathrev=24994&view=patch
->   
+> This does not sound like a security problem. Mkstemp would never output
+> any shell metacharacters.
 
-They also updated the fix in the prerelease [1] Wireshark 1.0.5 [2].
-
-[1]: http://www.wireshark.org/download/prerelease
-[2]: 
-http://www.wireshark.org/download/prerelease/wireshark-1.0.5pre1-26829.tar.gz
-
-Cheers,
-
--- 
-Pinar Yanardag (a.k.a PINguAR)
-http://pinguar.org
-_____________________________
-
-Pardus Security Team
-http://security.pardus.org.tr
-
-
+M4 performs macro expansion without any special characters present,
+IIRC.  However, it's still unlikely that an mkstemp()-returned string
+matches a macro, I think.
