@@ -1,19 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/12/4
-Message-ID: <Pine.GSO.4.51.0803121216000.7262@faron.mitre.org>
-Date: Wed, 12 Mar 2008 12:16:20 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/07/2
+Message-ID: <Pine.GSO.4.51.0804062039370.16600@faron.mitre.org>
+Date: Sun, 6 Apr 2008 20:40:00 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: setrlimit can be avoided (Linux less than 2.6.22)
+Subject: Re: [oCERT 2008-02] libfishsound insufficient boundary checks
 Content-Type: text/plain; charset=utf-8
 
 
-On Tue, 11 Mar 2008, Kees Cook wrote:
+On Sun, 6 Apr 2008, Andrea Barisani wrote:
 
-> This rlimit-avoiding bug probably needs a CVE associated with it.  Users
-> could avoid RLIMIT_CPU by setting it to "0".  The fixes in 2.6.17 did
-> not actually fix the problem.
+>
+> 2008/04/06 #2008-02 libfishsound insufficient boundary checks
 
-Use CVE-2008-1294 - will be filled in later.
+Use CVE-2008-1686
+
+This CVE will not be live until Monday.
 
 - Steve
