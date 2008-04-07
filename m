@@ -1,48 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/17/14
-Message-ID: <Pine.GSO.4.51.0812162131200.5724@faron.mitre.org>
-Date: Tue, 16 Dec 2008 21:31:38 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security <oss-security@...ts.openwall.com>
-cc: coley@...re.org
-Subject: Re: CVE Request - tor
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/07/10
+Message-ID: <20306.1207589753@devserv.devel.redhat.com>
+Date: Mon, 07 Apr 2008 13:35:53 -0400
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
+Subject: Re: list: members vs. read-only subscribers
 Content-Type: text/plain; charset=utf-8
 
+> 
+> It appears that Josh and Vincent have expressed the same opinion in the
+> quotes above.  Unfortunately, ezmlm-idx does not have a notion of having
+> different types of subscribers to a list - "members who can post" vs.
+> "read-only subscribers".  Yet, if this is really what we want (any other
+> opinions?), we may be able to achieve it in one of two ways:
+> 
+> 1. Use the "allow" list feature to specify the addresses of "full
+> members".  Unfortunately, in my experience the "allow" list is used for
+> lists that are moderated for non-subscribers only (to allow some
+> non-subscribers or alternate addresses of subscribers to post without
+> moderation), not for those that are also moderated for subscribers.
+> I have not looked into whether this would be easy to fix or not - but I
+> or someone else at Openwall can look into it if needed.  It might turn
+> out that the fix is trivial.
+> 
+> 2. Setup a second list for the read-only subscribers, and subscribe that
+> list to the main one.
+> 
 
-======================================================
-Name: CVE-2008-5397
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5397
-Reference: CONFIRM:http://blog.torproject.org/blog/tor-0.2.0.32-released
-Reference: BID:32648
-Reference: URL:http://www.securityfocus.com/bid/32648
-Reference: SECUNIA:33025
-Reference: URL:http://secunia.com/advisories/33025
-Reference: XF:tor-user-privilege-escalation(47101)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/47101
+Here is my proposal, technical issues aside (we are smart people, we'll
+figure something out).
 
-Tor before 0.2.0.32 does not properly process the (1) User and (2)
-Group configuration options, which might allow local users to gain
-privileges by leveraging unintended supplementary group memberships of
-the Tor process.
+* The current member list can post unmoderated
+* New subscribers (anyone can subscribe) will be moderated by default, but
+  can have the moderation flag lifted when the prove to be useful
+  contributors (we need to define what a useful contributor is)
+* Non members can post, but will be moderated (if spam is an issue, we
+  could consider just throwing this stuff out, but I'd really like to avoid
+  it if possible)
 
-
-======================================================
-Name: CVE-2008-5398
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5398
-Reference: CONFIRM:http://blog.torproject.org/blog/tor-0.2.0.32-released
-Reference: BID:32648
-Reference: URL:http://www.securityfocus.com/bid/32648
-Reference: SECUNIA:33025
-Reference: URL:http://secunia.com/advisories/33025
-Reference: XF:tor-clientdnsreject-security-bypass(47102)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/47102
-
-Tor before 0.2.0.32 does not properly process the
-ClientDNSRejectInternalAddresses configuration option in situations
-where an exit relay issues a policy-based refusal of a stream, which
-allows remote exit relays to have an unknown impact by mapping an
-internal IP address to the destination hostname of a refused stream.
+I think that this should appear as one list to the end user.  If we end up
+using some bizarre solution with multiple lists to work around the
+ezmlm-idx shortcomings, we need to ensure that this is not obvious to the
+end users.  Users should be able to hit reply and the right thing just
+happens.
 
 
+For the wiki, I'd say just make it a free for all.  If they take the time
+to create an account, let them make changes, we'll keep an eye on what gets
+modified.  We can deal with spam if it becomes a problem.
+
+If you don't like this, speak up now, otherwise, I think it would make
+sense to find a solution that fits this model.
+
+-- 
+    JB
