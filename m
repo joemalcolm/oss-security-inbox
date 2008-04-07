@@ -1,23 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/09/1
-Message-ID: <20080409122721.GC28008@ngolde.de>
-Date: Wed, 9 Apr 2008 14:27:21 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/07/3
+Message-ID: <Pine.GSO.4.51.0804062041200.16600@faron.mitre.org>
+Date: Sun, 6 Apr 2008 20:42:07 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: gcc 4.2 optimizations and integer overflow checks
+cc: coley@...re.org
+Subject: Re: Security fixes in m4-1.4.11
 Content-Type: text/plain; charset=utf-8
 
-Hi Steven,
-* Steven M. Christey <coley@...us.mitre.org> [2008-04-07 18:24]:
-> While an unusual bug, we decided to assign a CVE for it.
-[...] 
-Just stumbled upon CVE-2006-1902, look spretty much the same 
-to me, is this a dup?
 
-Kind regards
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+On Sun, 6 Apr 2008, Patrick J. Volkerding wrote:
 
-Content of type "application/pgp-signature" skipped
+> Minor security fix: Quote output of mkstemp.
+
+Use CVE-2008-1687
+
+> Security fix: avoid arbitrary code execution with 'm4 -F'.
+
+Use CVE-2008-1688
+
+Note - these CVE's will not be live until Monday.
+
+- Steve
