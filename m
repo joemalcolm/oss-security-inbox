@@ -1,40 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/25/10
-Message-ID: <20080825183546.GE451@linsec.ca>
-Date: Mon, 25 Aug 2008 12:35:46 -0600
-From: Vincent Danen <vdanen@...sec.ca>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/07/5
+Message-ID: <20080407130159.GO21367@fuse.inversepath.com>
+Date: Mon, 7 Apr 2008 13:01:59 +0000
+From: Andrea Barisani <lcars@...rt.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: [vendor-sec] Re: Re: libxml2 denial of service flaw (CVE-2008-3281)
+Subject: Re: [oCERT 2008-02] libfishsound insufficient boundary
 Content-Type: text/plain; charset=utf-8
 
-* [2008-08-25 20:13:03 +0200] Florian Weimer wrote:
 
->* Vincent Danen:
->
->> Does anyone know if this affects anything other than librsvg?
->
->It's unclear if struct xmlEntity (especially its external allocation) is
->part of the public API or not.
->
->liferea 1.4.16b has this:
->
->  src/xml.c:                    entity = (xmlEntityPtr)g_new0 (xmlEntity, 1);
->
->PHP 5.2.6 has this:
->
->  ext/dom/dom_iterators.c:61:      ret = (xmlEntityPtr) xmlMalloc(sizeof(xmlEntity));
->  ext/dom/dom_iterators.c:62:      memset(ret, 0, sizeof(xmlEntity));
->
->QT 4.4.0 has this (with an instructive comment in front of it):
->
->  src/3rdparty/webkit/WebCore/dom/XMLTokenizer.cpp:static xmlEntity sharedXHTMLEntity = {
->
->(This is not the result of an exhaustive search.)
+Hi,
 
-Thanks, Florian.  Looks like just recompiling librsvg may not be a good
-idea.
+it turned out that Speex shares the same code that affects libfishsound, so
+versions <= 1.1.12 are vulnerable. Speex 1.2beta contains the fix.
+
+The advisory at http://www.ocert.org/advisories/ocert-2008-2.html has been
+updated.
+
+Cheers!
 
 -- 
-Vincent Danen @ http://linsec.ca/
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | Open Source Computer Emergency Response Team
 
-Content of type "application/pgp-signature" skipped
+<lcars@...rt.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
