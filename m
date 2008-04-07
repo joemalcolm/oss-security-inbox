@@ -1,24 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/04/5
-Message-Id: <200806050259.27141.steffen.joeris@skolelinux.de>
-Date: Thu, 5 Jun 2008 02:59:26 +1000
-From: Steffen Joeris <steffen.joeris@...lelinux.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/07/1
+Message-ID: <47F969B9.5070809@slackware.com>
+Date: Sun, 06 Apr 2008 19:24:25 -0500
+From: "Patrick J. Volkerding" <security@...ckware.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: slash
+Subject: Security fixes in m4-1.4.11
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Hello all,
 
-> The Slashdote (also just known as Slash) vulnerability was an SQL
-> injection. Its effect was to allow a user with no special authorization to
-> read any information from any table the Slash site's mysql user was
-> authorized to read (which may include other databases, including
-> information_schema).
-<snip>
+GNU m4-1.4.11 was released on 2008-04-02.  While browsing the ChangeLog 
+(and then NEWS) I noticed these security related items.  I'm not sure 
+how severe the impact is of these issues, but since I have not seen them 
+mentioned on any security lists yet a heads-up seemed to be in order.
 
-CVE-2008-2231 from the debian pool was allocated to this as a reference.
+ From the ChangeLog:
 
-Cheers
-Steffen
+Minor security fix: Quote output of mkstemp.
+* src/builtin.c (mkstemp_helper): Produce quoted output.
+* doc/m4.texinfo (Mkstemp): Update the documentation and tests.
+* NEWS: Document this change.
 
-Download attachment "signature.asc " of type "application/pgp-signature" (190 bytes)
+Security fix: avoid arbitrary code execution with 'm4 -F'.
+* src/freeze.c (produce_frozen_state): Never pass raw file name
+as printf format.
+* NEWS: Document this fix.
+
+ From the NEWS file:
+
+** Security fixes for the -F option, for bugs present since -F was 
+introduced in 1.3: Avoid core dump with 'm4 -F file -t undefined', and 
+avoid arbitrary code execution with certain file names.
+
+** The output of the `maketemp' and `mkstemp' builtins is now quoted if
+a file was created. This is a minor security fix, because it was 
+possible (although rather unlikely) that an unquoted string could match 
+an existing macro name, such that use of the `mkstemp' output would 
+trigger inadvertent macro expansion and operate on the wrong file name.
+
+
+Cheers,
+
+Pat
