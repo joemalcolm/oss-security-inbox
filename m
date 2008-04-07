@@ -1,81 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/20/10
-Message-ID: <47BC9355.6020809@freethemallocs.com>
-Date: Wed, 20 Feb 2008 11:53:41 -0900
-From: Jonathan Smith <smithj@...ethemallocs.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/07/4
+Message-Id: <1207552271.18618.13.camel@localhost.localdomain>
+Date: Mon, 07 Apr 2008 09:11:11 +0200
+From: Lubomir Kundrak <lkundrak@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: cups
+Cc: coley@...re.org
+Subject: Re: Security fixes in m4-1.4.11
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-OK, lets start actually using this list... below is an advisory from
-secunia detailing a cups DoS.
+On Sun, 2008-04-06 at 20:42 -0400, Steven M. Christey wrote:
+> On Sun, 6 Apr 2008, Patrick J. Volkerding wrote:
+> 
+> > Minor security fix: Quote output of mkstemp.
+> 
+> Use CVE-2008-1687
 
-Steve, could we get a CVE assigned?
+This does not sound like a security problem. Mkstemp would never output
+any shell metacharacters.
 
-Attached is the patch upstream used to fix it (against 1.1.23, but it is
-the same for other versions, just with a different offset).
+> > Security fix: avoid arbitrary code execution with 'm4 -F'.
+> 
+> Use CVE-2008-1688
+> 
+> Note - these CVE's will not be live until Monday.
+> 
+> - Steve
+-- 
+Lubomir Kundrak (Red Hat Security Response Team)
 
-	smithj
-
-Secunia Security Advisories wrote:
-| TITLE:
-| CUPS "process_browse_data()" Double Free Vulnerability
-|
-| SECUNIA ADVISORY ID:
-| SA28994
-|
-| VERIFY ADVISORY:
-| http://secunia.com/advisories/28994/
-|
-| CRITICAL:
-| Moderately critical
-|
-| IMPACT:
-| DoS, System access
-|
-| WHERE:
-| From local network
-|
-| SOFTWARE:
-| CUPS 1.x
-| http://secunia.com/product/921/
-|
-| DESCRIPTION:
-| A vulnerability has been discovered in CUPS, which can be exploited
-| by malicious people to cause a DoS (Denial of Service) or to
-| potentially compromise a vulnerable system.
-|
-| The vulnerability is caused due to an error within the
-| "process_browse_data()" function when adding printers and classes.
-| This can be exploited to free the same buffer twice by sending
-| specially crafted browser packets to the UDP port on which cupsd is
-| listening (by default port 631/UDP).
-|
-| Successful exploitation may allow execution of arbitrary code.
-|
-| The vulnerability is confirmed in version 1.3.5. Prior versions may
-| also be affected.
-|
-| SOLUTION:
-| Update to version 1.3.6.
-|
-| PROVIDED AND/OR DISCOVERED BY:
-| Reported as a CUPS bug by h.blischke.
-|
-| ORIGINAL ADVISORY:
-| http://www.cups.org/str.php?L2656
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.8 (GNU/Linux)
-
-iEYEARECAAYFAke8k1UACgkQCG91qXPaRemo6ACgkzBRHnntL1EFvNm7vEjLVAna
-Ym0An2Ptrg2M20FJL7WX+XYVJCDENJO4
-=iA0l
------END PGP SIGNATURE-----
-
-View attachment "cups-double-free.patch" of type "text/x-patch" (472 bytes)
-
-Download attachment "cups-double-free.patch.sig" of type "application/pgp-signature" (72 bytes)
