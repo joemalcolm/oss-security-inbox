@@ -1,22 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/09/17
-Message-ID: <Pine.GSO.4.51.0809091058560.6699@faron.mitre.org>
-Date: Tue, 9 Sep 2008 11:01:26 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Eugene Teo <eteo@...hat.com>
-cc: oss-security@...ts.openwall.com, coley@...re.org
-Subject: Re: CVE request: kernel: local keyboard DoS through LED switching
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/08/1
+Message-ID: <20080408144516.GA5280@openwall.com>
+Date: Tue, 8 Apr 2008 18:45:16 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: announcing oCERT & oss-security to Bugtraq & f-d
 Content-Type: text/plain; charset=utf-8
 
+Josh,
 
-On Tue, 9 Sep 2008, Eugene Teo wrote:
+Would you be able and willing to start working on the announcement text
+for oss-security now?  We'll be able to combine it with one for oCERT
+later if needed (that is, if it's not too late) - or you can work on it
+with Andrea right away (on this list).  I think I'd announce both
+projects at once at least to the Openwall announcements list.
 
-> > Can this be exploited by anyone except the person sitting at the keyboard?
->
-> I don't think so. It requires physical access to the console.
+FYI, here are a couple of relevant news items that are currently up on
+the Openwall website:
 
-Then perhaps they can use the unplug exploit to DoS the whole system ;-)
+March 1, 2008
+A couple of weeks ago, we have setup the Open Source Software Security
+(oss-security) Wiki, which is the counterpart to the oss-security
+mailing list, and we have the initial content in place by now.  Both the
+wiki and the mailing list are a product of cooperation amongst various
+Open Source software vendors, projects, and researchers.  The purpose of
+the oss-security group is to encourage public discussion of security
+flaws, concepts, and practices in the Open Source community.
 
-Do you have an alternate interpretation of the issue?
+February 17, 2008
+...
+oss-security is a new discussion and collaboration mailing list for
+people involved with Open Source projects who care about security.
 
-- Steve
+Thanks,
+
+Alexander
