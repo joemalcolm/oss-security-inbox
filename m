@@ -1,49 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/26/10
-Message-Id: <1219769601.9043.6.camel@dhcp-lab-164.englab.brq.redhat.com>
-Date: Tue, 26 Aug 2008 18:53:21 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: coley@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE Request (gpicview)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/08/2
+Message-ID: <20080408145845.GJ27160@fuse.inversepath.com>
+Date: Tue, 8 Apr 2008 14:58:45 +0000
+From: Andrea Barisani <lcars@...rt.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: announcing oCERT & oss-security to Bugtraq & f-d
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve,
-
-  On Tue, 2008-08-26 at 10:19 -0400, Steven M. Christey wrote:
-> Jan,
+On Tue, Apr 08, 2008 at 06:45:16PM +0400, Solar Designer wrote:
+> Josh,
 > 
-> Are there common usage scenarios under which gpicview would receive the
-> filename to create from some external source, say, as a web browser
-> plugin?
+> Would you be able and willing to start working on the announcement text
+> for oss-security now?  We'll be able to combine it with one for oCERT
+> later if needed (that is, if it's not too late) - or you can work on it
+> with Andrea right away (on this list).  I think I'd announce both
+> projects at once at least to the Openwall announcements list.
+>
+
+I announced yesterday on f-d, bugtraq still has to moderate it.
+
+Despite that, a minor mention of oCERT in oss-security announcement would
+still be appreciated if there's room for it.
+
+Cheers!
+
+> FYI, here are a couple of relevant news items that are currently up on
+> the Openwall website:
 > 
-> I'm asking because the missing "ask_before_save" issues only seem like
-> non-security bugs - the user messing him/herself up - unless the target
-> file can be influenced by an external attacker.
-
-I can't see any possibility, how the last two issues could be used by
-an external attacker to destroy the targeted user image files 
-(when not considering the attack possible via CVE-2008-3791).
-
+> March 1, 2008
+> A couple of weeks ago, we have setup the Open Source Software Security
+> (oss-security) Wiki, which is the counterpart to the oss-security
+> mailing list, and we have the initial content in place by now.  Both the
+> wiki and the mailing list are a product of cooperation amongst various
+> Open Source software vendors, projects, and researchers.  The purpose of
+> the oss-security group is to encourage public discussion of security
+> flaws, concepts, and practices in the Open Source community.
 > 
-> > http://sourceforge.net/tracker/index.php?func=detail&aid=2019481&group_id=180858&atid=894869
-> >
-> > Possible symlink attack via the temporary created "/tmp/rot.jpg"
-> > file used for image rotation.
+> February 17, 2008
+> ...
+> oss-security is a new discussion and collaboration mailing list for
+> people involved with Open Source projects who care about security.
 > 
-> Use CVE-2008-3791
+> Thanks,
 > 
-> > 2, http://sourceforge.net/tracker/index.php?func=detail&aid=2019485&group_id=180858&atid=894869
-> > 3, > http://sourceforge.net/tracker/index.php?func=detail&aid=2019492&group_id=180858&atid=894869
+> Alexander
 
-> These two might need a second CVE depending on the influence over the file
-> that "ask_before_save" would ask about.
+-- 
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | Open Source Computer Emergency Response Team
 
-These two rather normal bugs, than a security issues. 
-
-Thank you for checking!
-
-Regards
-Jan iankko Lieskovsky
-RH Security Response Team
-
+<lcars@...rt.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
