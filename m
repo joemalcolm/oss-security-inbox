@@ -1,66 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/28/5
-Message-ID: <20081028103843.1be41af1@redhat.com>
-Date: Tue, 28 Oct 2008 10:38:43 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: taviso@....lonestar.org
-Cc: oss-security@...ts.openwall.com, coley@...re.org
-Subject: Re: CVE request: lynx (old) .mailcap handling flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/08/8
+Message-ID: <20080408203517.GU9264@openwall.com>
+Date: Wed, 9 Apr 2008 00:35:17 +0400
+From: "(GalaxyMaster)" <galaxy@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: wiki: pagemove, reconfiguration of default word separator for page names
 Content-Type: text/plain; charset=utf-8
 
-Hi Tavis!
+Hello,
 
-On Mon, 27 Oct 2008 18:38:19 +0000 Tavis Ormandy
-<taviso@....lonestar.org> wrote:
+This is an update re: the recent changes in the Wiki configuration.
 
-> On Sat, Oct 25, 2008 at 08:27:51PM +0200, Tomas Hoger wrote:
-> > There's one old lynx issue that seem to need a 2006 CVE id.  lynx
-> > browser prior to 2.8.6rel.4 tries to open mailcap and mime type
-> > definition files form the current directory.  If user can be
-> > convinced to run lynx in a specially crafted directory, an attacker
-> > controlling the directory may be able to run arbitrary code as the
-> > victim running lynx.
-> 
-> That reminds me, I recently noticed valgrind also does this.
-> 
-> $ printf -- "--db-command=/usr/bin/id\n--db-attach=yes\n"
-> > /tmp/.valgrindrc
+Josh had correctly pointed out that the requested pagemove functionality
+didn't work as expected, I investigated this and found out that the
+pagemove plugin was enabled to the admin group only.  I have fixed the
+issue by adding an additional ACL check for managers (those who are
+members of the editor group).
 
-Well, I'd say the situation with valgrind is slightly different.  For
-lynx, there seem to be 2 obvious attack vectors:
+Those of you who see the Admin button at the bottom of the Wiki can use
+the pagemove plugin from now on.  I've briefly described how to
+move/rename a page at the following URL:
 
-1) User downloads tarball with bunch of htmls, with bundled
-malicious .mailcap file.  When user cds to the directory and runs lynx,
-he's owned.
+http://oss-security.openwall.org/wiki/wiki/plugins/hints/editor
 
-2) Local social engineering attack - local attacker convinces victim to
-run lynx in some specially crafted local directory.
-
-For valgrind, 1) does not seem to make much sense (or is lot less
-likely), as if you valgrind random binary downloaded form the net,
-you're already running attacker's code.
-
-Few other differences:
-- valgrind behavior is known and well documented
-http://valgrind.org/docs/manual/manual-core.html#manual-core.defopts
-(lynx.cfg file comments suggested, that mailcap file is read from
-user's home directory, no mention of CWD)
-
-- valgrind's behavior seems more useful and used in the wild, so not
-easily changeable
-
-- you can suppress reading .valgrindrc files using
---command-line-only=yes , but this option does not seem to be very well
-documented in commonly shipped man pages or --help output.
-There seem to be some man page versions that mention this option:
-http://linuxcommand.org/man_pages/valgrind1.html
-
-Actually, gdb may be another target with its handling of .gdbinit:
-
-   echo 'shell /usr/bin/id' > .gdbinit ; gdb
-
-(gdb seems to have some checks in place though and refuses to open files
-that world-writable or not owned by the user)
+Another important change is that I re-configured the Wiki to use '-'
+(dash) instead of '_' (underscore) as a word separator for page names.
+This was done per previous (unfortunately) private discussion to make
+all pages look consistent.  This change has affected one Wiki page.
+it's code-reviews.  Since that page contains a stub I thought that it's
+OK that I've simply renamed the page without placing a proper redirect
+back.  Please let me know if I was wrong and I'll put a redirection
+there.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+(GM)
+
