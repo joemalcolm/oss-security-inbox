@@ -1,25 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/17/11
-Message-ID: <Pine.GSO.4.51.0804171706480.3756@faron.mitre.org>
-Date: Thu, 17 Apr 2008 17:06:52 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Matthias Geerdsen <vorlon@...too.org>
-cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: DBMail <2.2.9
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/08/6
+Message-ID: <30724.1207667798@devserv.devel.redhat.com>
+Date: Tue, 08 Apr 2008 11:16:38 -0400
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: list: members vs. read-only subscribers
 Content-Type: text/plain; charset=utf-8
 
+> > 
+> > * The current member list can post unmoderated
+> > * New subscribers (anyone can subscribe) will be moderated by default, but
+> >   can have the moderation flag lifted when the prove to be useful
+> >   contributors (we need to define what a useful contributor is)
+> > * Non members can post, but will be moderated (if spam is an issue, we
+> >   could consider just throwing this stuff out, but I'd really like to avoid
+> >   it if possible)
+> > 
+> 
+> I am OK with your proposal, although I think that we could simply do
+> message moderation for all instead, with a few moderators.
 
-======================================================
-Name: CVE-2007-6714
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6714
-Reference: MLIST:[Dbmail-dev] 20071216 [DBMail 0000662]: Ability to bypass authentication.
-Reference: URL:http://www.mail-archive.com/dbmail-dev@dbmail.org/msg09942.html
-Reference: CONFIRM:http://dbmail.org/index.php?page=news&id=44
+I'm not terribly keen on this I admit.  Involving humans creates problems
+in any process.  If we are going to moderate things, we will need to ensure
+we have near 24 hour moderator coverage.  Tools should enhance process, not
+define it.
 
-DBMail before 2.2.9, when using authldap with an LDAP server that
-supports anonymous login such as Active Directory, allows remote
-attackers to bypass authentication via an empty password, which causes
-the LDAP bind to indicate success based on anonymous authentication.
+> 
+> Anyway, should we (Openwall) interpret the above as a request to go
+> ahead and apply the changes?
+> 
 
+Let's say unless someone complains before tomorrow, we go ahead with this
+plan.
 
+Thanks.
+
+-- 
+    JB
