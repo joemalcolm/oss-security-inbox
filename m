@@ -1,38 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/01/5
-Message-ID: <Pine.GSO.4.51.0812010958470.843@faron.mitre.org>
-Date: Mon, 1 Dec 2008 09:59:38 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/08/7
+Message-ID: <20080408151456.GA5449@openwall.com>
+Date: Tue, 8 Apr 2008 19:14:56 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re:  CVE id request: chm2pdf insecure temporary files usage
+Subject: Re: announcing oCERT & oss-security to Bugtraq & f-d
 Content-Type: text/plain; charset=utf-8
 
+Josh,
 
-The symlink attack and the static directory names were given separate CVE
-IDs, although arguably they both fall under "incomplete control of
-temporary files."
+Thank you for the prompt response.
 
-- Steve
+On Tue, Apr 08, 2008 at 10:58:57AM -0400, Josh Bressers wrote:
+> Probably not this week.  I have quite a few more pressing matters to attend
+> to, and for the limited oss-security time I have, I plan to clean up the
+> wiki a bit in preparation for a public announcement.
 
-======================================================
-Name: CVE-2008-5298
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5298
-Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=501959
+OK, that's up to you indeed, and I appreciate your work on the wiki a
+lot.  I just thought that we could proceed with these tasks in parallel
+to have something ready sooner rather than later.  And it does not have
+to be a "big" public announcement right away - but having some
+announcement text that this group is comfortable with would be helpful.
 
-chm2pdf 0.9 uses temporary files in directories with fixed names,
-which allows local users to cause a denial of service (chm2pdf
-failure) of other users by creating those directories ahead of time.
+> I'm not pleased with this unneeded pressure being placed on this group
+> because of the desire of oCERT.
 
+That's not how I see it.  We had an opportunity here, which we could use
+if we wanted to - but we chose not to.  That's all.
 
-======================================================
-Name: CVE-2008-5299
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5299
-Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=501959
+> We also need to sort out the mailing list situation before we can
+> reasonably expect what will be a spike of interest.
 
-chm2pdf 0.9 allows user-assisted local users to delete arbitrary files
-via a symlink attack on .chm files in the (1) /tmp/chm2pdf/work or (2)
-/tmp/chm2pdf/orig temporary directories.
+We can trivially turn message moderation on for everyone - which is what
+I will do as soon as we start getting undesirable postings.  So I am not
+afraid of this list being announced on Bugtraq & f-d right now.
 
+We can also implement your desired setup, but possibly not right away.
 
+> Did anyone disagree with my proposal yesterday?
+
+It looks like everyone is fine with it, and I have just responded to
+that message.
+
+Thanks again,
+
+Alexander
