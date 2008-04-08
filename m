@@ -1,67 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/14/3
-Message-ID: <20080514132705.GC28202@ngolde.de>
-Date: Wed, 14 May 2008 15:27:05 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/08/3
+Message-ID: <20080408145604.GA5389@openwall.com>
+Date: Tue, 8 Apr 2008 18:56:04 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Emacs 21 fast-lock-mode arbitrary lips code execution
+Subject: Re: list: members vs. read-only subscribers
 Content-Type: text/plain; charset=utf-8
 
-Hi Robert,
-* Robert Buchholz <rbu@...too.org> [2008-05-14 02:50]:
-> On Monday, 12. May 2008, Nico Golde wrote:
-> > * Robert Buchholz <rbu@...too.org> [2008-05-12 19:05]:
-> > > On Monday, 12. May 2008, Nico Golde wrote:
-[...] 
-> > > > The same applies to emacs22.
-> > >
-> > > Our emacs maintainer said version 22 would warn you that lisp code
-> > > from the file would be executed. Could you confirm otherwise?
-> >
-> > At least not with the emacs22 installation I tried this with (22.2).
-> > As this is a rather old version, this may depend on the
-> > version used?
+On Mon, Apr 07, 2008 at 01:35:53PM -0400, Josh Bressers wrote:
+> Here is my proposal, technical issues aside (we are smart people, we'll
+> figure something out).
 > 
-> The 22.2 is only a few weeks old, is it not?
-
-Ups sorry, my bad.
-
-> Anyway, Ulrich Mueller (who is in CC) clarified the behaviour, I quote:
+> * The current member list can post unmoderated
+> * New subscribers (anyone can subscribe) will be moderated by default, but
+>   can have the moderation flag lifted when the prove to be useful
+>   contributors (we need to define what a useful contributor is)
+> * Non members can post, but will be moderated (if spam is an issue, we
+>   could consider just throwing this stuff out, but I'd really like to avoid
+>   it if possible)
 > 
-> > the issue may still occur in Emacs 22, if both of the following
-> > conditions are fulfilled:
-> > - the user sets fast-lock-mode as support mode for font-lock (which is
-> >   not the default),
-> > - the user explicitely loads fast-lock, ignoring the warning ("Package
-> >   fast-lock is obsolete").
+> I think that this should appear as one list to the end user.
+...
+> For the wiki, I'd say just make it a free for all.  If they take the time
+> to create an account, let them make changes, we'll keep an eye on what gets
+> modified.  We can deal with spam if it becomes a problem.
 > 
-> I could not reproduce the issue in Emacs 22.2 with only the changed 
-> configuration either, but maybe I just used Emacs the wrong way.
+> If you don't like this, speak up now, otherwise, I think it would make
+> sense to find a solution that fits this model.
 
-As I am a vim user I might have done something wrong too, 
-not sure. What I did after installing emacs:
-cat >> ~/.emacs << EOF
-(global-font-lock-mode t)
-(seq font-lock-support-mode 'fast-lock-mode)
-EOF
+I am OK with your proposal, although I think that we could simply do
+message moderation for all instead, with a few moderators.
 
-cat >> foobar.c << EOF
-/* no comment */
-EOF
+Anyway, should we (Openwall) interpret the above as a request to go
+ahead and apply the changes?
 
-cat >> foobar.c.flc << EOF
-" foobar "
-EOF
-
-starting emacs22, open foobar.c => no warning.
-
-Could someone on the list who is an emacs user try this as 
-well?
-
-Cheers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+Alexander
