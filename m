@@ -1,53 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/24/3
-Message-ID: <20080224230335.GA22290@openwall.com>
-Date: Mon, 25 Feb 2008 02:03:35 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/08/9
+Message-ID: <16842.1207688057@devserv.devel.redhat.com>
+Date: Tue, 08 Apr 2008 16:54:17 -0400
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: flaw disclosure (was: FAQ for upstream maintainers)
+cc: coley@...re.org
+Subject: CVE Request (rsync)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Feb 20, 2008 at 08:37:31AM -0500, Josh Bressers wrote:
-> I just created the namespace "disclosure" and added an outline I have to
-> them.  I also added a note that the things in "whattodo" should be merged
-> into the namespace.
+Hi Steve,
 
-I like the way you have approached this, and the initial content.  Now
-we need to work on it more.
+Can you assign a CVE id for this:
+http://samba.anu.edu.au/rsync/security.html#s3_0_2
 
-Also, while I like the Researcher vs. Project distinction, we need to
-provide guidelines for the case when both a Researcher discloses a flaw
-to a Project, and a Project discloses the flaw to distributors.  In this
-case, which is quite typical, it may be the Project's responsibility to
-communicate things such as embargo dates and credit "requirements" - or
-the Project may get the Researcher in touch with the distributors (e.g.,
-vendor-sec) directly.
+Thanks.
 
-> For the moment it's just my outlines, I've not gotten around to filling it
-> out yet.  I did this, as I think it's important we have some amount of
-> organized information up, as this:
-> http://linsec.ca/blog/2008/02/17/new-informal-security-organization-oss-security/
-> 
-> Was just picked up by linuxsecurity.com
-
-Apparently, linuxsecurity.com is not that popular, and there was no
-direct link to our wiki from the linuxsecurity.com news item (the only
-link was via Vincent's blog).  So we only got around 50 unique visitors
-per day for a while, and now we're down to 25 or so.  Many of the
-visitors are actually exploring the wiki pages, though, so the number of
-page hits is 450 to 3500 per day - but much of that traffic could be
-from us, the list members.  BTW, there are around 70 subscribers on this
-list now.
-
-Obviously, I expect a lot more visitors to the wiki and quite some more
-list members once we start to "advertise" this resource.
-
-> We will only get one look from a lot of people, and if they don't see
-> anything of value, they will likely never look again.
-
-This is probably true, but we have yet to get that first look from most
-people who might potentially be interested.
-
-Thanks,
-
-Alexander
+-- 
+    JB
