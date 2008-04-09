@@ -1,26 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/16/4
-Message-ID: <Pine.GSO.4.51.0809152058040.6953@faron.mitre.org>
-Date: Mon, 15 Sep 2008 20:59:40 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/09/1
+Message-ID: <20080409122721.GC28008@ngolde.de>
+Date: Wed, 9 Apr 2008 14:27:21 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-cc: coley@...us.mitre.org
-Subject: Re: CVE Request (ruby -- DNS spoofing vulnerability in resolv.rb)
+Subject: Re: gcc 4.2 optimizations and integer overflow checks
 Content-Type: text/plain; charset=utf-8
 
+Hi Steven,
+* Steven M. Christey <coley@...us.mitre.org> [2008-04-07 18:24]:
+> While an unusual bug, we decided to assign a CVE for it.
+[...] 
+Just stumbled upon CVE-2006-1902, look spretty much the same 
+to me, is this a dup?
 
-On Thu, 11 Sep 2008, Tomas Hoger wrote:
+Kind regards
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-> > We're treating this as a distinct issue because this is *REALLY* bad
-> > randomness within a particular implementation, besides the inherent
-> > limitation of DNS when source ports are fixed.
->
-> Applying this rule, separate id should probably be used for PyDNS [1]
-> [2] and adns [3] as well, at they both suffer from the similar flaws -
-> use predictable transactions ids and source port.
-
-CVE-2008-4099 - PyDNS
-
-CVE-2008-4100 - adns
-
-- Steve
+Content of type "application/pgp-signature" skipped
