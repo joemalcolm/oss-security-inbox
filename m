@@ -1,36 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/10/1
-Message-ID: <48759BD2.8070802@redhat.com>
-Date: Thu, 10 Jul 2008 13:19:14 +0800
-From: Eugene Teo <eteo@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/10/4
+Message-ID: <Pine.GSO.4.51.0804101429380.18291@faron.mitre.org>
+Date: Thu, 10 Apr 2008 14:31:13 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: DNS vulnerability: other relevant software
+Subject: Re: gcc 4.2 optimizations and integer overflow checks
 Content-Type: text/plain; charset=utf-8
 
-Mark J Cox wrote:
->> Additionally, Debian has noted (DSA 1605-1) that the GNU libc stub
->> resolver could benefit from random query source ports as well, but
->> no patches are currently available to implement this:
-> 
-> Note that GNU libc stub resolver when used with a recent kernel
-> (2.6.24+) will give you random UDP source ports on each request because
-> of this Linux commit:
-> 
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=32c1da70810017a98aa6c431a5494a302b6b9a30
-> 
-> 
-> Vendors may with to consider backporting that kernel patch as an
-> effective mitigation without requiring glibc changes (and with the
-> advantage of being able to be have a customized range using
-> ip_local_port_range etc)
 
-I have backported the kernel patch to apply cleanly to various versions
-of Red Hat Enterprise Linux kernels. Vendors interested in the patch can
-find it at:
+On Wed, 9 Apr 2008, Nico Golde wrote:
 
-https://bugzilla.redhat.com/show_bug.cgi?id=454566
+> Hi Steven,
+> * Steven M. Christey <coley@...us.mitre.org> [2008-04-07 18:24]:
+> > While an unusual bug, we decided to assign a CVE for it.
+> [...]
+> Just stumbled upon CVE-2006-1902, look spretty much the same
+> to me, is this a dup?
 
-Thanks, Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
+Nice find!
 
+My immediate suspicion is that they're not the same, based solely on
+affected versions - CVE-2008-1685 has a specific affected version range
+because it changed behaviors in 4.2.0.  Maybe that change came out of
+followup analysis stemming from CVE-2006-1902.
+
+But, I'm not completely sure.  Solar?
+
+- Steve
