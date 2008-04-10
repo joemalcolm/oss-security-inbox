@@ -1,33 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/29/1
-Message-Id: <200809292022.17748.steffen.joeris@skolelinux.de>
-Date: Mon, 29 Sep 2008 20:22:16 +1000
-From: Steffen Joeris <steffen.joeris@...lelinux.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/10/7
+Message-Id: <200804110144.53058.rbu@gentoo.org>
+Date: Fri, 11 Apr 2008 01:44:52 +0200
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: ftpd
+Subject: CVE request: openfire <3.5.0 Denial of Service
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Please assign a CVE identifier:
 
-There seems to be a Cross-site request forgery[0] in ftpd.
-Upstream used these patches[1][2] to address the issue. There are also two 
-Debian Bugreports[3][4] for this issue.
-Could I please get a CVE id for this?
+Openfire (formerly wildfire) before 3.5.0 is prone to a Denial of 
+Service vulnerability. It cannot handle clients that fail to read 
+messages, and has no limit on their session's send buffer.
 
-Cheers
-Steffen
+Secunia:
+  http://secunia.com/advisories/29751/
+Upstream bug:
+  http://www.igniterealtime.org/issues/browse/JM-1289
+Commit:
+  http://www.igniterealtime.org/fisheye/changelog/svn-org?cs=10031
 
-[0]: 
-http://lists.grok.org.uk/pipermail/full-disclosure/2008-September/064697.html
 
-[1]: 
-http://www.openbsd.org/cgi-bin/cvsweb/src/libexec/ftpd/ftpcmd.y.diff?r1=1.50&r2=1.51&f=h
-
-[2]: 
-http://www.openbsd.org/cgi-bin/cvsweb/src/libexec/ftpd/ftpcmd.y.diff?r1=1.51&r2=1.52&f=h
-
-[3]: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=500518
-
-[4]: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=500278
-
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+Download attachment "signature.asc " of type "application/pgp-signature" (190 bytes)
