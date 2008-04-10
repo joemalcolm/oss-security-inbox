@@ -1,24 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/28/4
-Message-ID: <Pine.GSO.4.51.0811281358120.25518@faron.mitre.org>
-Date: Fri, 28 Nov 2008 13:58:16 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/10/3
+Message-ID: <Pine.GSO.4.51.0804101428290.18291@faron.mitre.org>
+Date: Thu, 10 Apr 2008 14:28:33 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE requset: WordPress XSS vulnerability in RSS Feed Generator
+To: Josh Bressers <bressers@...hat.com>
+cc: oss-security@...ts.openwall.com, coley@...re.org
+Subject: Re: CVE Request (rsync)
 Content-Type: text/plain; charset=utf-8
 
 
 ======================================================
-Name: CVE-2008-5278
+Name: CVE-2008-1720
 Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5278
-Reference: BUGTRAQ:20081125 WordPress XSS vulnerability in RSS Feed Generator
-Reference: URL:http://www.securityfocus.com/archive/1/498652
-Reference: CONFIRM:http://wordpress.org/development/2008/11/wordpress-265/
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1720
+Reference: CONFIRM:http://rsync.samba.org/ftp/rsync/security/rsync-3.0.1-xattr-alloc.diff
+Reference: CONFIRM:http://samba.anu.edu.au/rsync/security.html#s3_0_2
 
-Cross-site scripting (XSS) vulnerability in the self_link function in
-in the RSS Feed Generator (wp-includes/feed.php) for WordPress before
-2.6.5 allows remote attackers to inject arbitrary web script or HTML
-via the Host header (HTTP_HOST variable).
+Buffer overflow in rsync 2.6.9 to 3.0.1, with extended attribute
+(xattr) support enabled, might allow remote attackers to execute
+arbitrary code via unknown vectors.
 
 
