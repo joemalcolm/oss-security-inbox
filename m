@@ -1,17 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/28/8
-Message-ID: <20080328015700.GA12962@freedbms.net>
-Date: Fri, 28 Mar 2008 12:57:00 +1100
-From: Zenaan Harkness <zen@...edbms.net>
-To: oss-security@...ts.openwall.com
-Subject: change subscription address
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/11/3
+Message-ID: <23859.1207937997@devserv.devel.redhat.com>
+Date: Fri, 11 Apr 2008 14:19:57 -0400
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+cc: coley@...re.org
+Subject: Re: Security fixes in m4-1.4.11
 Content-Type: text/plain; charset=utf-8
 
-Hi, if you can change my subscription address from zen@...edbms.net to
-zenaan.harkness@...il.com, that would be appreciated.
+> 
+> On Sun, 6 Apr 2008, Patrick J. Volkerding wrote:
+> 
+> > Minor security fix: Quote output of mkstemp.
+> 
+> Use CVE-2008-1687
+> 
+> > Security fix: avoid arbitrary code execution with 'm4 -F'.
+> 
+> Use CVE-2008-1688
+> 
+> Note - these CVE's will not be live until Monday.
+> 
 
-Thanks for the list!
-Zen
+So I took a look at these today, I don't think either is really a security
+issue.
 
+Both issues are certainly bugs, but given each situation, it would be just
+as easy to get a victim to run something blatantly malicious that doesn't
+need to leverage obscure flaws in the language.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (190 bytes)
+Has anyone else had a look?
+
+Thanks.
+
+-- 
+    JB
