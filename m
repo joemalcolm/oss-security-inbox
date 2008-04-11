@@ -1,42 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/04/1
-Message-ID: <82abd3a70806040451w75a568b7n18d08595e7480bd6@mail.gmail.com>
-Date: Wed, 4 Jun 2008 12:51:45 +0100
-From: "Michael Simpson" <mikie.simpson@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/11/1
+Message-Id: <200804110302.55219.rbu@gentoo.org>
+Date: Fri, 11 Apr 2008 03:02:55 +0200
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: tool announcements (was: ARP handler Inspection tool released)
+Subject: CVE request: Swfdec <0.6.4 remote file disclosure
 Content-Type: text/plain; charset=utf-8
 
-> On Mon, Jun 02, 2008 at 02:41:48PM -0800, Jonathan Smith wrote:
-> > I wholeheartedly agree.
->
-> Thank you for commenting on this.  Your opinion is appreciated and may
-> affect our moderation policy.  At this point, I am not sure if it is the
-> prevailing opinion of this group, though.
->
-> > Announcements of this kind belong on bugtraq/FD
->
-> Maybe.  However, many topics are valid on Bugtraq - not only Open Source
-> ones.  I imagine that someone could be interested in security tool
-> announcements relevant to Open Source software only.  Also, Bugtraq is
-> so large that few of us would dare to bother its readers with
-> announcements of new versions of a tool, even fairly major ones.
->
-> As to full-disclosure, we all know that there's a lot of noise on that
-> list.  I'd rather not join it, although I like to receive occasional
-> announcements of security tools.
+Swfdec before 0.6.4 allowed flash movies to read arbitrary local files.
 
-I agree
-FD's signal to noise ratio has plummeted in the last few years and is
-only really useful as entertainment.
+References:
+http://lists.freedesktop.org/archives/swfdec/2008-April/001321.html
+http://gitweb.freedesktop.org/?p=swfdec/swfdec.git;a=commit;h=326ee4ff631ecc11605f1251e1923a94561a3823
 
-There was a secfocus mailing list for beta-announces
-<betaannounce@...urityfocus.com>
-which seems to have died a death
-
-Having just gone into production with an OSS webapp i would really
-appreciate an oss-sectools list.
-
-best wishes
-
-mike
+Download attachment "signature.asc " of type "application/pgp-signature" (190 bytes)
