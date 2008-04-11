@@ -1,42 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/15/9
-Message-ID: <Pine.GSO.4.51.0810151506390.15058@faron.mitre.org>
-Date: Wed, 15 Oct 2008 15:07:40 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/11/2
+Message-Id: <200804110311.32750.rbu@gentoo.org>
+Date: Fri, 11 Apr 2008 03:11:32 +0200
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: Re: CVE Request
+Subject: CVE request: Opera <9.27 Multiple issues
 Content-Type: text/plain; charset=utf-8
 
+These are more than a week old, but I haven't see CVEs popping up yet. 
+So here's a formal request ;-)
 
+To quote the ChangeLog:
+                 --------------
+    * Fixed an issue where newsfeed prompts could cause Opera to execute 
+arbitrary code, as reported by Michal Zalewski. See our advisory.
+    * Solved an issue where resized canvas patterns could cause Opera to 
+execute arbitrary code, as reported by Michal Zalewski. See our 
+advisory.
+    * Improved keyboard handling of password inputs, as reported by 
+Trystan S. 
+                --------------
 
-For the fence issues.
+I have no idea what the third vulnerability actually means.
 
-Which packages does the fence_manual issue affect?
+References:
+http://www.opera.com/docs/changelogs/windows/927/
+http://www.opera.com/support/search/view/881/     (1)
+http://www.opera.com/support/search/view/882/     (2)
+http://secunia.com/advisories/29662/
 
-
-======================================================
-Name: CVE-2008-4579
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4579
-Reference: MISC:http://bugs.gentoo.org/show_bug.cgi?id=240576
-Reference: MLIST:[oss-security] 20081013 Re: CVE Request
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/10/13/3
-
-The (1) fence_apc and (2) fence_apc_snmp programs, as used in (a)
-fence 2.02.00-r1 and possibly (b) cman, when running in verbose mode,
-allows local users to append to arbitrary files via a symlink attack
-on the apclog temporary file.
-
-
-======================================================
-Name: CVE-2008-4580
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4580
-Reference: MLIST:[oss-security] 20081013 Re: CVE Request
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/10/13/3
-
-fence_manual in fence allows local users to modify arbitrary files via
-a symlink attack on the fence_manual.fifo temporary file.
-
-
+Download attachment "signature.asc " of type "application/pgp-signature" (190 bytes)
