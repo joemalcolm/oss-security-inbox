@@ -1,61 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/25/2
-Message-Id: <1227613140.3602.22.camel@dhcp-lab-164.englab.brq.redhat.com>
-Date: Tue, 25 Nov 2008 12:39:00 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...re.org>
-Cc: Eygene Ryabinkin <rea-sec@...elabs.ru>, Michael Sweet <mike@...ysw.com>, oss-security@...ts.openwall.com
-Subject: Re: CVE request: cups - potential integer overflow in PNG image reader [was: CUPS DoS via RSS subscriptions]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/11/4
+Message-ID: <87myo0xjvl.fsf@mid.deneb.enyo.de>
+Date: Fri, 11 Apr 2008 21:38:06 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: gcc 4.2 optimizations and integer overflow checks
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve and Eygene,
+* Steven M. Christey:
 
-On Fri, 2008-11-21 at 07:23 -0800, Michael Sweet wrote:
-> Eygene Ryabinkin wrote:
-> > Steve, good day.
-> > 
-> > Thu, Nov 20, 2008 at 07:41:06PM -0500, Steven M. Christey wrote:
-> >> I treated this as two CVEs, one for the CSRF-simplifying attack, and a
-> >> separate one for the CUPS server crash (assuming that cupsd should not be
-> >> crashable by non-root authenticated users).
-> > 
-> > Please note that as it was discuissed in thread started with
-> >   http://www.openwall.com/lists/oss-security/2008/11/19/4
-> > even 1.3.9 is crashable by non-root authenticated users by adding
-> > a big number of subscriptions (don't know about RSS ones, though
-> > subscription for mailing upon job completion does its job).  But
-> > I imagine that CVE-2008-5184 can't be used for 1.3.9, so remote
-> > attack is not feasible.
-> > 
-> > I expect that the fix will go into 1.3.10:
-> >   http://svn.easysw.com/public/cups/trunk/CHANGES-1.3.txt
-> > 
+> gcc 4.2.0 through 4.3.0 in GNU Compiler Collection, when casts are not
+> used, considers the sum of a pointer and an int to be greater than or
+> equal to the pointer, which might remove length testing code that was
+> intended as a protection mechanism against integer overflow and buffer
+> overflow attacks.
 
-Eygene - Thanks for the post! Btw. this CHANGES-1.3.txt files also
-mentions another security flaw, i.e incomplete fix for CVE-2008-1722:
+Some remarks are in order, I think.
 
-<cite>
+The version range is a bit misleading.  The bug Nico unearthed affects
+additional versions, and the issue is the same from a purely
+phenomenological point of view.  The issue is not GCC-specific, either.
 
-- SECURITY: The PNG image reading code did not validate the
-	  image size properly, leading to a potential buffer overflow
-	  (STR #2974)
+I'm also a bit at odds with the description of this issue.
 
-</cite>
+C defines pointer arithmetic to be valid only for pointer values that
+point within an allocated array, or one element past the last element of
+that array.  Invalid pointers result in undefined behavior immediately,
+not just when they are dereferenced.  Since behavior is undefined, a C
+implementation can essentially infer that this can never occur (even if
+the generated code is "wrong" in that case, behavior is undefined anway,
+so that it doesn't matter what the code does), and use this knowledge in
+optimizers.
 
-The relevant upstream cups BTS post together with patch attached is
-here:
+The shortest summary I can come up with is this:
 
-Advisory: http://www.cups.org/str.php?L2974
-Patch: http://www.cups.org/strfiles/2974/str2974.patch
+| The C standard permits certain optimizations that break code written
+| in a way that assumes pointers behave like machine addresses,
+| rendering certain forms of buffer overflow checks ineffective.
 
-This issue seems to be introduced by the fix for CVE-2008-1722, i.e:
-Advisory: http://www.cups.org/str.php?L2790
-Patch: http://www.cups.org/strfiles/2790/str2790.patch
+I also have a hard time believing that this affects real-world code
+which has a reasonable claim to being correct with non-optimizing
+compilers (or some hypothetical conservative C variant from the K&R
+days).  The code might as well break when moved to a different
+architecture, with different pointer layout and comparison instructions
+used for pointers.
 
-Steve, could you please allocate a new CVE identifier for this one?
+There's another issue involving the undefinedness of integer overflow,
+but this is nothing new and has been documented publicly for years, and
+has been the subject of fierce discussion on the GCC mailing list
+before.
 
-Thanks, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-
+A somewhat related issue is the operator new[] problem (multiplication
+to get the array size is truncated, leading to an allocation which is
+too small; comparable to the calloc bugs), which is something I think
+should be fixed.  However, it seems that the C++ standard requires
+implementations to have that issue, at least for custom allocators.
+Yuck.
