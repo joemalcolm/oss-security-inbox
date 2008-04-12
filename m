@@ -1,32 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/24/3
-Message-ID: <20080824101032.GA24876@ngolde.de>
-Date: Sun, 24 Aug 2008 12:10:32 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/12/5
+Message-Id: <200804130144.29608.rbu@gentoo.org>
+Date: Sun, 13 Apr 2008 01:44:29 +0200
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: vlc
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: Opera <9.27 Multiple issues
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Pinar Yanarda <pinar@...dus.org.tr> [2008-08-24 11:23]:
-> Nico Golde wrote On 24-08-2008 03:13:
-> >Hi,
-> >there seems to be a buffer overflow in videolans mms
-> >handling:
-> >http://www.orange-bat.com/adv/2008/adv.08.24.txt
-> >   
-> 
-> Btw, a vendor patch has been released:
-> http://mailman.videolan.org/pipermail/vlc-devel/2008-August/048488.html
+On Saturday 12 April 2008, Steven M. Christey wrote:
+> On Fri, 11 Apr 2008, Robert Buchholz wrote:
+> >     * Improved keyboard handling of password inputs, as reported by
+> > Trystan S.
+> >                 --------------
+> > I have no idea what the third vulnerability actually means.
+>
+> Me neither...
 
-Wow that was fast, 4 hours after I notified them of the 
-problem.
-Looks correct to me. Anyone else had a look at the patch?
+<snip>
 
-Kind regards
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+> ======================================================
+> Name: CVE-2008-1764
+> Status: Candidate
+> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1764
+> Reference: CONFIRM:http://www.opera.com/docs/changelogs/windows/927/
+>
+> Unspecified vulnerability in Opera for Windows before 9.27 has
+> unknown impact and attack vectors related to "keyboard handling of
+> password inputs."
 
-Content of type "application/pgp-signature" skipped
+
+It is listed in the Linux ChangeLog, too:
+http://www.opera.com/docs/changelogs/linux/927/
+
+Robert
+
+Download attachment "signature.asc " of type "application/pgp-signature" (190 bytes)
