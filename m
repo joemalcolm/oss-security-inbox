@@ -1,29 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/06/2
-Message-Id: <200807061831.41014.hanno@hboeck.de>
-Date: Sun, 6 Jul 2008 18:31:40 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/12/3
+Message-ID: <20080412193236.GA14019@steve.org.uk>
+Date: Sat, 12 Apr 2008 20:32:36 +0100
+From: Steve Kemp <steve@...ve.org.uk>
 To: oss-security@...ts.openwall.com
 Cc: coley@...re.org
-Subject: CVE request: simple machines forum
+Subject: CVE request: tss <= 0.8.1-3: arbitary file reading
 Content-Type: text/plain; charset=utf-8
 
-http://www.simplemachines.org/community/index.php?P=c3696c2022b54fa50c5f341bf5710aa3&topic=236816.0
+  Due to a lack of permissions checking, or privilege reduction
+ the setuid(0) binary tss allows local users to read arbitrary files
+ upon the local system.
 
+  Sample "exploit" is:
 
-"This version addresses a few security issues and fixes some small bugs."
+              skx@...d:~$ tss -a /etc/shadow
 
-These sound like security issues:
-* Sanitation of $topic wasn't always done right.
-* Fixed a vulnerability with the use of the html-tag - issue reported by 
-Jessica Hope.
+  This opens up a console-based screen-saver displaying the animated
+ contents of the shadow-file.
 
-Though they don't list which issues are security relevant.
+  Reference: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=475747
 
-They also don't mention if CVE-2007-5943 is fixed.
-
+Steve
 -- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+Debian GNU/Linux System Administration
+http://www.debian-administration.org/
 
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
