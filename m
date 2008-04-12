@@ -1,22 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/27/7
-Message-ID: <20080727182225.GB32057@genesis.frugalware.org>
-Date: Sun, 27 Jul 2008 20:22:25 +0200
-From: Miklos Vajna <vmiklos@...galware.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: drupal issue in < 5.9
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/12/4
+Message-ID: <Pine.GSO.4.51.0804121544270.20756@faron.mitre.org>
+Date: Sat, 12 Apr 2008 15:44:31 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Hanno Böck <hanno@...eck.de>
+cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com
+Subject: Re: CVE requests: drupal and phpbb
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Jul 27, 2008 at 07:17:08PM +0200, Nico Golde <oss-security+ml@...lde.de> wrote:
-> from http://drupal.org/files/sa-2008-044/SA-2008-044-5.7.patch looks pretty much
-> the same. So I guess they did not include their own patch in 5.8.
 
-Aah, OK.
+======================================================
+Name: CVE-2008-1729
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1729
+Reference: CONFIRM:http://drupal.org/node/244637
+Reference: BID:28714
+Reference: URL:http://www.securityfocus.com/bid/28714
+Reference: SECUNIA:29762
+Reference: URL:http://secunia.com/advisories/29762
 
-Thanks, I should have noticed that there are no more differences in the
-patch.
+The menu system in Drupal 6 before 6.2 has incorrect menu settings,
+which allows remote attackers to (1) edit the profile pages of
+arbitrary users, and obtain sensitive information from (2) tracker and
+(3) blog pages, related to a missing check for the "access content"
+permission; and (4) allows remote authenticated users, with
+administration page view access, to edit content types.
 
-Sorry for the noise,
-Miklos
 
-Content of type "application/pgp-signature" skipped
+======================================================
+Name: CVE-2008-1766
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1766
+
+Multiple unspecified vulnerabilities in phpBB before 3.0.1 have
+unknown impact and attack vectors, related to "two minor
+security-related bugs."
+
+
