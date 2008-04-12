@@ -1,38 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/21/3
-Message-ID: <6edf76c20807210457i1254aab6q333c223c01f2ce17@mail.gmail.com>
-Date: Mon, 21 Jul 2008 12:57:48 +0100
-From: "Jan Minář" <rdancer@...ncer.org>
-To: "Jonathan Smith" <smithj@...ethemallocs.com>
-Cc: "Tomas Hoger" <thoger@...hat.com>, oss-security@...ts.openwall.com,  coley@...us.mitre.org, "Bram Moolenaar" <Bram@...lenaar.net>,  "Charles E Campbell, Jr" <drchip@...pbellfamily.biz>
-Subject: Re: Re: More arbitrary code executions in Netrw version 125, Vim 7.2a.10
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/12/1
+Message-ID: <Pine.GSO.4.51.0804121515340.20756@faron.mitre.org>
+Date: Sat, 12 Apr 2008 15:15:59 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: Opera <9.27 Multiple issues
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Jul 20, 2008 at 8:12 PM, Jonathan Smith
-<smithj@...ethemallocs.com> wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
->
-> Sorry it took so long to get back; I've been rather busy lately.
->
-> Tomas Hoger wrote:
->> Jonathan, did new netrw tests work for you?  With which vim version?
->> They all failed for me with vim 7.1.245 / netrw 109.
->
-> No vulnerability was found for me for vim 7.1.213 with netrw 109, as
-> compiled for rPath Linux.
 
-Version 109 is probably too old.  There has been a lot of
-functionality added since, and I presume a lot of refactoring done
-too.  According to the [0]Netrw version history, marking files (used
-by netrw.v2 & netrw.v3) was introduced in version 111.
+On Fri, 11 Apr 2008, Robert Buchholz wrote:
 
-On the other hand, these vulnerabilities should not depend on the Vim
-version; the TIOCSTI method used in netrw.v4 ``test'' target may not
-be very portable outside Un*x though.
+>     * Improved keyboard handling of password inputs, as reported by
+> Trystan S.
+>                 --------------
+> I have no idea what the third vulnerability actually means.
 
-[0] http://www.vim.org/scripts/script.php?script_id=1075
+Me neither...
 
-Hope that helps.
 
-Jan.
+======================================================
+Name: CVE-2008-1761
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1761
+Reference: CONFIRM:http://www.opera.com/support/search/view/881/
+Reference: BID:28585
+Reference: URL:http://www.securityfocus.com/bid/28585
+Reference: FRSIRT:ADV-2008-1084
+Reference: URL:http://www.frsirt.com/english/advisories/2008/1084/references
+Reference: SECUNIA:29662
+Reference: URL:http://secunia.com/advisories/29662
+Reference: XF:opera-newsfeed-code-execution(41625)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/41625
+
+Opera before 9.27 allows remote attackers to cause a denial of service
+(crash) and possibly execute arbitrary code via a crafted newsfeed
+source, which triggers an invalid memory access.
+
+
+======================================================
+Name: CVE-2008-1762
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1762
+Reference: CONFIRM:http://www.opera.com/support/search/view/882/
+Reference: BID:28585
+Reference: URL:http://www.securityfocus.com/bid/28585
+Reference: FRSIRT:ADV-2008-1084
+Reference: URL:http://www.frsirt.com/english/advisories/2008/1084/references
+Reference: SECUNIA:29662
+Reference: URL:http://secunia.com/advisories/29662
+Reference: XF:opera-htmlcanvas-code-execution(41627)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/41627
+
+Opera before 9.27 allows remote attackers to cause a denial of service
+(crash) and possibly execute arbitrary code via a crafted scaled image
+pattern in an HTML CANVAS element, which triggers a memory corruption.
+
+
+======================================================
+Name: CVE-2008-1764
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1764
+Reference: CONFIRM:http://www.opera.com/docs/changelogs/windows/927/
+
+Unspecified vulnerability in Opera for Windows before 9.27 has unknown
+impact and attack vectors related to "keyboard handling of password
+inputs."
+
+
