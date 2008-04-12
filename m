@@ -1,28 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/31/4
-Message-ID: <Pine.GSO.4.51.0807311630480.13418@faron.mitre.org>
-Date: Thu, 31 Jul 2008 16:30:52 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/12/2
+Message-ID: <Pine.GSO.4.51.0804121520500.20756@faron.mitre.org>
+Date: Sat, 12 Apr 2008 15:20:57 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: Re: Mono ASP.net cross site scripting issue
+Subject: Re: CVE request: openfire <3.5.0 Denial of Service
 Content-Type: text/plain; charset=utf-8
 
 
 ======================================================
-Name: CVE-2008-3422
+Name: CVE-2008-1728
 Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3422
-Reference: MLIST:[Mono-dev] 20080726 [PATCH] HTML encode attributes that might need encoding
-Reference: URL:http://lists.ximian.com/pipermail/mono-devel-list/2008-July/028633.html
-Reference: CONFIRM:https://bugzilla.novell.com/show_bug.cgi?id=413534
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1728
+Reference: MISC:http://www.igniterealtime.org/fisheye/changelog/svn-org?cs=10031
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/04/10/7
+Reference: CONFIRM:http://www.igniterealtime.org/issues/browse/JM-1289
+Reference: MLIST:[oss-security] 20080411 CVE request: openfire <3.5.0
+Reference: SECUNIA:29751
+Reference: URL:http://secunia.com/advisories/29751
 
-Multiple cross-site scripting (XSS) vulnerabilities in the ASP.net
-class libraries in Mono 2.0 and earlier allow remote attackers to
-inject arbitrary web script or HTML via crafted attributes related to
-(1) HtmlControl.cs (PreProcessRelativeReference), (2) HtmlForm.cs
-(RenderAttributes), (3) HtmlInputButton (RenderAttributes), (4)
-HtmlInputRadioButton (RenderAttributes), and (5) HtmlSelect
-(RenderChildren).
+ConnectionManagerImpl.java in Ignite Realtime Openfire 3.4.5 allows
+remote attackers to cause a denial of service (daemon outage) by
+triggering large outgoing queues without reading messages.
 
 
