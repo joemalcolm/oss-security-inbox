@@ -1,36 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/21/16
-Message-ID: <gg5a6c$gs5$4@ger.gmane.org>
-Date: Thu, 20 Nov 2008 21:32:53 -0600
-From: Raphael Geissert <atomo64+debian@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE id request: chm2pdf insecure temporary files usage
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/14/1
+Message-ID: <20080414062047.GY10078@fuse.inversepath.com>
+Date: Mon, 14 Apr 2008 06:20:47 +0000
+From: Andrea Barisani <lcars@...rt.org>
+To: ocert-announce@...ts.ocert.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: [oCERT-2008-003] libpng zero-length chunks incorrect handling
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-Hello,
+2008/04/12 #2008-003 libpng zero-length chunks incorrect handling
 
-Versions 0.9 and 0.9.1 of chm2pdf allow local users to overwrite arbitrary files
-via a symlink attacks on /tmp/chm2pdf
+Description:
 
-More information at http://bugs.debian.org/501959
+Applications using libpng that install unknown chunk handlers, or copy
+unknown chunks, may be vulnerable to a security issue which may result in
+incorrect output, information leaks, crashes, or arbitrary code execution.
 
-Could a CVE id be assigned please?
+The issue involves libpng incorrectly handling zero length chunks which
+results in uninitialized memory affecting the control flow of the
+application.
 
-Thanks in advance.
+Affected version:
 
-Cheers,
-- -- 
-Raphael Geissert - Debian Maintainer
-www.debian.org - get.debian.net
+The libpng project indicates libpng-1.0.6 through 1.0.32, libpng-1.2.0
+through 1.2.26, and libpng-1.4.0beta01 through libpng-1.4.0beta19 built with
+PNG_READ_UNKNOWN_CHUNKS_SUPPORTED or PNG_READ_USER_CHUNKS_SUPPORTED (default
+configuration) are affected.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+Fixed version:
 
-iEYEARECAAYFAkkmK+YACgkQYy49rUbZzlrDlgCeOsa92d/XCpTjT0b9EikJwme0
-C6oAoJhWLgQjNn0U/8BgI3dy/s5Q1Eom
-=w0+u
------END PGP SIGNATURE-----
+libpng version 1.2.27 and 1.0.33 are in beta and will be released on or about
+April 26, 2008 according to libpng maintainer
 
+libpng-1.2.27beta01
+
+Credit: Tavis Ormandy, oCERT Team | Google Security Team
+
+CVE: CVE-2008-1382
+
+Timeline:
+
+2008-04-05: contacted libpng maintainers
+2008-04-05: vendor confirms
+2008-04-05: verification of vendor suggested patch
+2008-04-12: libpng-1.2.27beta01 released
+2008-04-12: libpng project advisory released
+2008-04-12: advisory release
+
+References:
+http://libpng.sourceforge.net/Advisory-1.2.26.txt
+
+Links:
+http://www.libpng.org/pub/png/libpng.html
+
+Permalink:
+http://www.ocert.org/advisories/ocert-2008-003.html
+
+-- 
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | Open Source Computer Emergency Response Team
+
+<lcars@...rt.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
