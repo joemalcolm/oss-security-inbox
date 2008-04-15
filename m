@@ -1,29 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/01/1
-Message-Id: <1228134319.3537.17.camel@dhcp-lab-164.englab.brq.redhat.com>
-Date: Mon, 01 Dec 2008 13:25:19 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com
-Subject: (sort of urgent) CVE Request -- cups (repost)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/15/3
+Message-ID: <20080415222411.GB2549@ngolde.de>
+Date: Wed, 16 Apr 2008 00:24:11 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE id request: cecilia insecure temporary file usage
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve,
+Hi,
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=476321
+cecilia[0] writes data into a predictable temporary file not 
+opening with O_EXCL and opens this up for a symlink attack.
 
-  could you please allocate a new CVE id for the following vulnerability
-(we need to have the patch backported till December the 3-rd due some
- internal policies).
+Can I get a CVE id please for this one?
 
-cups  -- buffer overflow in the PNG image read
-      -- incomplete fix for CVE-2008-1722
-(http://www.cups.org/strfiles/2790/str2790.patch)
-      -- advisory: http://www.cups.org/str.php?L2974
-      -- patch: http://www.cups.org/strfiles/2974/str2974.patch
-      -- affects: cups-1.1.17 <= x <= cups-1.3.9
-      -- references: http://www.cups.org/str.php?L2974
-                     http://svn.easysw.com/public/cups/trunk/CHANGES-1.3.txt (Part "- SECURITY:")
+[0] http://cecilia.sourceforge.net/
 
-Many thanks!
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Kind regards
+Nico
 
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
