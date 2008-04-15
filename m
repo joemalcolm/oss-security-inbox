@@ -1,25 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/09/5
-Message-ID: <8763rfns1q.fsf@mid.deneb.enyo.de>
-Date: Wed, 09 Jul 2008 14:46:57 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Major DNS vulnerability announced  [CVE Question]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/15/1
+Message-ID: <20080415103704.1acb9dec@redhat.com>
+Date: Tue, 15 Apr 2008 10:37:04 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com, coley@...re.org
+Subject: CVE id request - clamav
 Content-Type: text/plain; charset=utf-8
 
-* Steven M. Christey:
+Hi!
 
-> Based on my current read of things (perhaps faulty, and definitely without
-> all the relevant details), CVE-2008-1447 is for a fundamental design
-> problem with DNS itself, so it applies to all implementations (or "most,"
-> according to CERT... I'm afraid to ask the followup question).
+Clamav 0.93 was released yesterday.  According to the ChangeLog, couple
+of security-related issue were fixed (some references in between):
 
-I guess you should label this as the "workaround for the Kaminsky DNS
-thing" for now.  Source port randomization does not actually fix
-anything.  It just shifts the statistics a bit (enough to be comfortable
-with for the coming months/weeks, but surely not in the long term).
+http://svn.clamav.net/svn/clamav-devel/trunk/ChangeLog
 
-When the actual attack vectors become public knowledge, it might make
-sense to split the CVE along them because some of them can be addressed
-by code changes, and some are a bit more difficult to protect against.
-In short, this has "DNSSEC" written all over it.
+Mon Apr 14 21:35:11 CEST 2008 (tk)
+----------------------------------
+  * Check in 0.93 patches:
+    - libclamunrar: bb#541 (RAR - Version required to extract - Evasion)
+https://wwws.clamav.net/bugzilla/show_bug.cgi?id=541
+
+    - libclamav/spin.c: bb#876 (PeSpin Heap Overflow Vulnerability)
+https://wwws.clamav.net/bugzilla/show_bug.cgi?id=876
+(This may already have CVE id, as it seems to be some (not yet
+published?) iDefense advisory - IDEF2957)
+
+    - libclamav/pe.c: bb#878 (Upack Buffer Overflow Vulnerability)
+https://wwws.clamav.net/bugzilla/show_bug.cgi?id=878
+http://secunia.com/advisories/29000/
+CVE-2008-1100
+
+    - libclamav/message.c: bb#881 (message.c: read beyond allocated
+region)
+https://wwws.clamav.net/bugzilla/show_bug.cgi?id=881
+
+    - libclamav/unarj.c: bb#897 (ARJ: Sample from CERT-FI hangs clamav)
+https://wwws.clamav.net/bugzilla/show_bug.cgi?id=897
+bug mentions CVE-2008-1387
+
+    - libclamunrar: bb#898 (RAR crashes on some fuzzed files from
+CERT-FI)
+https://wwws.clamav.net/bugzilla/show_bug.cgi?id=898
+
+
+And even some fixes not mentioned in the changelog:
+
+https://wwws.clamav.net/bugzilla/show_bug.cgi?id=877
+IDEF3001
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
