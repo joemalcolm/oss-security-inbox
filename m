@@ -1,41 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/21/21
-Message-ID: <4926D26C.50502@easysw.com>
-Date: Fri, 21 Nov 2008 07:23:24 -0800
-From: Michael Sweet <mike@...ysw.com>
-To: Eygene Ryabinkin <rea-sec@...elabs.ru>
-CC: oss-security@...ts.openwall.com,  "Steven M. Christey" <coley@...re.org>
-Subject: Re: CVE request: CUPS DoS via RSS subscriptions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/15/2
+Message-Id: <200804151207.46257.hanno@hboeck.de>
+Date: Tue, 15 Apr 2008 12:07:43 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com, coley@...re.org
+Cc: bugtraq@...urityfocus.com, full-disclosure@...ts.grok.org.uk
+Subject: clamav: Endless loop / hang with crafter arj, CVE-2008-1387
 Content-Type: text/plain; charset=utf-8
 
-Eygene Ryabinkin wrote:
-> Steve, good day.
-> 
-> Thu, Nov 20, 2008 at 07:41:06PM -0500, Steven M. Christey wrote:
->> I treated this as two CVEs, one for the CSRF-simplifying attack, and a
->> separate one for the CUPS server crash (assuming that cupsd should not be
->> crashable by non-root authenticated users).
-> 
-> Please note that as it was discuissed in thread started with
->   http://www.openwall.com/lists/oss-security/2008/11/19/4
-> even 1.3.9 is crashable by non-root authenticated users by adding
-> a big number of subscriptions (don't know about RSS ones, though
-> subscription for mailing upon job completion does its job).  But
-> I imagine that CVE-2008-5184 can't be used for 1.3.9, so remote
-> attack is not feasible.
-> 
-> I expect that the fix will go into 1.3.10:
->   http://svn.easysw.com/public/cups/trunk/CHANGES-1.3.txt
-> 
-> Adding Michael Sweet to the CC, since he can shed a bit more light on
-> this matter.  Perhaps CVE-2008-5183 should be extended or another CVE
-> can be created.
+Advisory published at:
+http://int21.de/cve/CVE-2008-1387-clamav.html
 
-While they are related, since half of the issue has already been
-addressed it would probably be less confusing (for tracking purposes)
-to create another CVE for the too-many-subscriptions issue (which is
-what my patch addresses...)
+clamav: Endless loop / hang with crafter arj, CVE-2008-1387
 
+References
+
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1387
+http://svn.clamav.net/svn/clamav-devel/trunk/ChangeLog
+http://www.cert.fi/haavoittuvuudet/joint-advisory-archive-formats.html
+
+Description
+
+CERT-FI published an advisory with a large number of samples of crafted 
+archives.
+The file with the md5sum b6046d890e6bd304e3756c88b989559a (named 
+b6046d890e6bd304e3756c88b989559a.arj) hangs clamav with high load.
+
+If you're running clamav on a mailserver, an attacker can DoS your Server 
+remotely by sending some mails with the archive attached.
+
+Workaround/Fix
+
+clamav 0.93 fixes this issue beside other security issues, if you're running 
+clamav you should upgrade as soon as possible.
+
+Disclosure Timeline
+
+2008-03-17 CERT-FI publishes advisory
+2008-03-26 Vendor contacted
+2008-03-27 Vendor approves issue
+2008-04-14 Vendor releases 0.93
+2008-04-16 Advisory published
+
+CVE Information
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name 
+CVE-2008-1387 to this issue. This is a candidate for inclusion in the CVE 
+list (http://cve.mitre.org/), which standardizes names for security problems.
+
+Credits and copyright
+
+This vulnerability was discovered by Hanno Boeck of schokokeks.org webhosting. 
+It's licensed under the creative commons attribution license.
+
+Hanno Boeck, 2008-04-16, http://www.hboeck.de
 -- 
-______________________________________________________________________
-Michael Sweet, Easy Software Products           mike at easysw dot com
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
