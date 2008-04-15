@@ -1,36 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/03/1
-Message-ID: <20081103090221.2cbab285@redhat.com>
-Date: Mon, 3 Nov 2008 09:02:21 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: coley@...us.mitre.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2008-4619 / milw0rm6775
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/15/4
+Message-ID: <20080415224004.GA21568@ngolde.de>
+Date: Wed, 16 Apr 2008 00:40:05 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE id request: xine-lib insufficient boundary check in speex decoder
 Content-Type: text/plain; charset=utf-8
 
-Hi Steven!
+Hi,
+can I get a CVE id for:
+http://sourceforge.net/project/shownotes.php?release_id=592185&group_id=9655 
+or could you add xine-lib to CVE-2008-1686?
 
-On Fri, 31 Oct 2008 16:18:36 -0400 (EDT) "Steven M. Christey"
-<coley@...us.mitre.org> wrote:
+The speex issue also seems to affect xine-lib.
 
-> > Looks like this is a dupe of CVE-2007-0165 after all...
-> >
-> >   http://www.securityfocus.com/bid/21964/
-> >   http://secunia.com/advisories/23700/
-> >   http://secunia.com/advisories/32403/
-> 
-> Nothing against these sources but in general CVE wants a solid "logic
-> chain" between 2 descriptions before declaring a dupe.  In this case
-> CVE-2007-0165 is anchored on a very vague description from Sun about
-> something in libnsl.  CVE-2008-4619 is quite specific.  Just because
-> it's the same rpcbind service is insufficient as we all know that the
-> same package can contain multiple security bugs.
-
-Sorry for not choosing word properly here.  I probably should have used
-"looks like this *may* be a dupe of...".  My reasoning for calling it
-dupe was that CVE-2007-0165 links BID-21964, which has the same exploit
-attached as is available on milw0rm as 6775.  It's not clear when
-exploit code was added to the BID, though.
+Kind regards
+Nico
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
