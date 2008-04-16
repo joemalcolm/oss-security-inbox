@@ -1,39 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/04/21
-Message-ID: <Pine.GSO.4.51.0809041303200.29613@faron.mitre.org>
-Date: Thu, 4 Sep 2008 13:07:08 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/16/1
+Message-ID: <Pine.GSO.4.51.0804152024160.14537@faron.mitre.org>
+Date: Tue, 15 Apr 2008 20:24:52 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: GNU ed heap overflow
+Subject: Re: CVE id request: xine-lib insufficient boundary check in speex decoder
 Content-Type: text/plain; charset=utf-8
 
 
-Use CVE-2008-3916... with caveat.
+On Wed, 16 Apr 2008, Nico Golde wrote:
 
-While everything's inter-connected these days and maye ed can be invoked
-from some URI handler, or behind some application that passes user input
-to ed, I'm generally uncomfortable assigning a CVE for this type of "local
-issue" unless there's a reasonable usage scenario under which the
-application is reachable (WordNet has reasonable usage scenarios as a back
-end, for example).
-
-
-======================================================
-Name: CVE-2008-3916
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3916
-Reference: MLIST:[bug-ed] 20080821 Version 1.0 of GNU ed released
-Reference: URL:http://lists.gnu.org/archive/html/bug-ed/2008-08/msg00000.html
-Reference: SECTRACK:1020734
-Reference: URL:http://www.securitytracker.com/id?1020734
-Reference: XF:gnued-stripescapes-bo(44643)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/44643
-
-Heap-based buffer overflow in the strip_escapes function in signal.c
-in GNU ed before 1.0 allows context-dependent or user-assisted
-attackers to execute arbitrary code via a long filename.  NOTE: since
-ed itself does not typically run with special privileges, this issue
-only crosses privilege boundaries when ed is invoked as a third-party
-component.
+> Hi,
+> can I get a CVE id for:
+> http://sourceforge.net/project/shownotes.php?release_id=592185&group_id=9655
+> or could you add xine-lib to CVE-2008-1686?
+>
+> The speex issue also seems to affect xine-lib.
 
 
+With shared codebases, we use the same CVE.  I've updated it to mention
+xine-lib.
+
+- Steve
