@@ -1,22 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/20/1
-Message-ID: <20080220002112.GM32357@outflux.net>
-Date: Tue, 19 Feb 2008 16:21:12 -0800
-From: Kees Cook <kees@...flux.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/16/3
+Message-ID: <Pine.GSO.4.51.0804161108540.22069@faron.mitre.org>
+Date: Wed, 16 Apr 2008 11:09:02 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: subscription-request procedure?
+Subject: Re: CVE request: Swfdec <0.6.4 remote file disclosure
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Feb 19, 2008 at 11:54:24PM +0300, Solar Designer wrote:
-> Perhaps we should setup a third page for OSS-relevant infrastructure
-> security contacts?  Would you do it?
 
-Sure, I've created:
-http://oss-security.openwall.org/wiki/infrastructure
+======================================================
+Name: CVE-2008-1834
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1834
+Reference: MLIST:[Swfdec] 20080409 Swfdec 0.6.4 released
+Reference: URL:http://lists.freedesktop.org/archives/swfdec/2008-April/001321.html
+Reference: CONFIRM:http://gitweb.freedesktop.org/?p=swfdec/swfdec.git;a=commit;h=326ee4ff631ecc11605f1251e1923a94561a3823
 
-I'll see if I can get the OSUOSL folks to add themselves as well.
+swfdec_load_object.c in Swfdec before 0.6.4 does not properly restrict
+local file access from untrusted sandboxes, which allows remote
+attackers to read arbitrary files via a crafted Flash file.
 
--Kees
 
--- 
-Kees Cook                                            @outflux.net
