@@ -1,31 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/13/9
-Message-ID: <20080813103103.GF5666@ngolde.de>
-Date: Wed, 13 Aug 2008 12:31:03 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/16/2
+Message-ID: <Pine.GSO.4.51.0804161035440.22069@faron.mitre.org>
+Date: Wed, 16 Apr 2008 10:35:49 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: horde webmail edition < 1.1.1
+Subject: Re: CVE id request: cecilia insecure temporary file usage
 Content-Type: text/plain; charset=utf-8
 
-Hi Steven,
-* Steven M. Christey <coley@...us.mitre.org> [2008-08-13 11:04]:
-> ======================================================
-> Name: CVE-2008-3650
-> Status: Candidate
-> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3650
-> Reference: MLIST:[horde-announce] 20080614 [announce] Horde Groupware Webmail Edition 1.1.1 (final)
-> Reference: URL:http://lists.horde.org/archives/announce/2008/000420.html
-> 
-> Multiple unspecified vulnerabilities in Horde Groupware Webmail before
-> Edition 1.1.1 (final) have unknown impact and attack vectors related
-> to "unescaped output," possibly cross-site scripting (XSS), in the (1)
-> object browser and (2) contact view.
 
-This should be a duplicate of CVE-2008-3330.
-Cheers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+======================================================
+Name: CVE-2008-1832
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1832
+Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=476321
 
-Content of type "application/pgp-signature" skipped
+lib/prefs.tcl in Cecilia  2.0.5 allows local users to overwrite
+arbitrary files via a symlink attack on the csvers temporary file.
+
+
