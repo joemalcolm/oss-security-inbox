@@ -1,23 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/30/2
-Message-ID: <Pine.GSO.4.51.0804301018210.868@faron.mitre.org>
-Date: Wed, 30 Apr 2008 10:21:18 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: security@...nel.org
-Subject: Re: security problem in ESP fragment handling?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/17/3
+Message-ID: <20080417105446.496416ce@redhat.com>
+Date: Thu, 17 Apr 2008 10:54:46 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: hanno@...eck.de
+Cc: oss-security@...ts.openwall.com, coley@...re.org
+Subject: Re: CVE request: firefox 2.0.14 ( Crash in JavaScript garbage collector)
 Content-Type: text/plain; charset=utf-8
 
+On Thu, 17 Apr 2008 10:45:49 +0200 Hanno Böck <hanno@...eck.de> wrote:
 
-On Wed, 30 Apr 2008, Marcus Meissner wrote:
+> http://www.mozilla.org/security/announce/2008/mfsa2008-20.html
 
-> According to Karsten Keil just ESP fragment packets need to be accepted
-> by the kernel to trigger the condition.
-> We think this might be true for all 2.6 kernels (ever since esp.c got added)
+Advisory contains:
 
-Any idea what the starting version might be?
+References
 
-Also, you mentioned a hang, but the commit says a BUG() is generated.  is
-this just based on different inputs?
+    * https://bugzilla.mozilla.org/show_bug.cgi?id=425576
+    * CVE-2008-1380
 
-- Steve
+HTH
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
