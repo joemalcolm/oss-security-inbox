@@ -1,27 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/12/2
-Message-Id: <200807121403.52928.hanno@hboeck.de>
-Date: Sat, 12 Jul 2008 14:03:52 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com, coley@...re.org
-Subject: CVE requests: joomla <1.5.4
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/17/7
+Message-ID: <Pine.GSO.4.51.0804171230040.3756@faron.mitre.org>
+Date: Thu, 17 Apr 2008 12:34:26 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+cc: coley@...re.org
+Subject: Re: CVE request: firefox 2.0.14 ( Crash in JavaScript garbage collector)
 Content-Type: text/plain; charset=utf-8
 
-http://www.joomla.org/content/view/5180/1/
 
-Cite:
+On Thu, 17 Apr 2008, Hanno [utf-8] Böck wrote:
 
-Security Fixes: 
+> And again, are pure browser crashers considered security relevant?
 
-    * LDAP security fix to prevent unauthorized access to administration
-    * Added security to file caching to prevent unauthorized access to cached 
-pages
-    * User Redirect Spam fix
-    * htaccess global variable security fix when SEF is enabled (See .htaccess 
-Security Fix)
+CVE chooses to include them because:
 
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+1) In some cases, the crash is evidence of a more serious issue - but we
+do not have the resources to perform a deep investigation every time, and
+often, there are insufficient details.
 
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+2) While many users don't think it's important, some do.  Since a typical
+browser/client is carrying multiple sessions at once, an attacker can
+cause a loss of data or loss of connectivity to unrelated sessions.
+While perhaps minor, it is technically a security problem because an
+attacker should only be able to impact the attacker's own session.
+
+3) when even NULL pointer dereferences are sometimes exploitable, it seems
+safer to include them.
+
+CVE leaves it up to vendors to decide if a crasher is important enough for
+them to post an advisory.
+
+- Steve
