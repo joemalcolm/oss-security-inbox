@@ -1,34 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/04/2
-Message-Id: <200806042250.57491.steffen.joeris@skolelinux.de>
-Date: Wed, 4 Jun 2008 22:50:52 +1000
-From: Steffen Joeris <steffen.joeris@...lelinux.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/17/9
+Message-ID: <Pine.GSO.4.51.0804171307380.3756@faron.mitre.org>
+Date: Thu, 17 Apr 2008 13:07:53 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: slash
+Subject: Re: CVE request: tss <= 0.8.1-3: arbitary file reading
 Content-Type: text/plain; charset=utf-8
 
-Hi
 
-I am not sure, if anyone asked for a CVE id for slash yet, if so please point 
-to it and disregard this request.
+On Thu, 17 Apr 2008, Nico Golde wrote:
 
-The Slashdote (also just known as Slash) vulnerability was an SQL injection. 
-Its effect was to allow a user with no special authorization to read any 
-information from any table the Slash site's mysql user was authorized to read 
-(which may include other databases, including information_schema).
+> Steve (the mitre one :) did you miss that?
 
-Upstream announcement:
-http://www.slashcode.com/article.pl?sid=08/01/07/2314232
+yes, but I didn't miss this anyway :)
 
-Upstream patch:
-http://slashcode.cvs.sourceforge.net/slashcode/slash/Slash/Utility/Environment/Environment.pm?r1=1.223&r2=1.225
+======================================================
+Name: CVE-2008-1877
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1877
+Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=475747
 
-Debian Bug report:
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=484499
+tss 0.8.1 allows local users to read arbitrary files via the -a
+parameter, which is processed while tss is running with privileges.
 
 
-
-Cheers
-Steffen
-
-Download attachment "signature.asc " of type "application/pgp-signature" (190 bytes)
