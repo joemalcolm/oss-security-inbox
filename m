@@ -1,79 +1,95 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/24/2
-Message-ID: <Pine.GSO.4.51.0809232132530.10422@faron.mitre.org>
-Date: Tue, 23 Sep 2008 21:51:44 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com, oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: Re: CVE Request (openswan, emacspeak, cman)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/17/1
+Message-ID: <20080417073255.GR10078@fuse.inversepath.com>
+Date: Thu, 17 Apr 2008 07:32:55 +0000
+From: Andrea Barisani <lcars@...rt.org>
+To: ocert-announce@...ts.ocert.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: [oCERT-2008-004] multiple speex implementations insufficient boundary checks
 Content-Type: text/plain; charset=utf-8
 
 
-On Thu, 18 Sep 2008, Jan Lieskovsky wrote:
+2008/04/17 #2008-004 multiple speex implementations insufficient boundary
+checks
 
-> a, openswan: Insecure auxiliary /tmp file usage (symlink attack possible)
->    Affected file: /usr/libexec/ipsec/livetest
->    References: https://bugzilla.redhat.com/show_bug.cgi?id=460425
->                http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=496374
+Description:
 
-Use CVE-2008-4190.
+The reference speex decoder from the Speex library performs insufficient
+boundary checks on a header structure read from user input, this has been
+reported in oCERT-2008-002 advisory.
 
-There's probably also a second-order symlink vulnerability in the call to
-wget using ipsec.olts.remote.log as an output file.  Has that been
-addressed/investigated?
+Further investigation showed that several packages include similar code and
+are therefore vulnerable.
 
-Note to source auditors - pay close attention to second-order symlinks, I
-bet they're hidden in a lot of places.
+In order to prevent the usage of incorrect header processing reference code,
+the speex_packet_to_header() function has been modified to bound the returned
+mode values in Speex >= 1.2beta3.2. This change automatically fixes
+applications that use the Speex library dynamically.
 
-> b, emacspeak: Insecure auxiliary /tmp file usage (symlink attack possible)
->    Affected file: /usr/share/emacs/site-lisp/emacspeak/etc/extract-table.pl
->    References: https://bugzilla.redhat.com/show_bug.cgi?id=460435
->                http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=496431
+Affected version:
 
-Use CVE-2008-4191.
+gstreamer-plugins-good <= 0.10.8
+SDL_sound <= 1.0.1
+Speex <= 1.1.12 (speexdec)
+Sweep <= 0.9.2
+vorbis-tools <= 1.2.0
+VLC Media Player <= 0.8.6f
+xine-lib <= 1.1.11.1
+XMMS speex plugin
 
-> c, cman: Insecure auxiliary /tmp file usage (symlink attack possible)
->    Affected file: /sbin/fence_egenera
->    References: https://bugzilla.redhat.com/show_bug.cgi?id=460476
->                http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=496410
+Fixed version:
 
-Use CVE-2008-4192, to be filled in later.
+gstreamer-plugins-good, >= 0.10.8 (patched in CVS)
+SDL_sound, patched in CVS
+Speex >= 1.2beta3.2 (patched in CVS)
+Sweep >= 0.9.3
+vorbis-tools, patched in CVS
+VLC Media Player, N/A
+xine-lib >= 1.1.12
+XMMS speex plugin, N/A
 
-- Steve
+Credit: see oCERT-2008-002, additionally we would like to thank Tomas Hoger
+from the Red Hat Security Response Team for his help in investigating the
+issue.
 
+CVE: CVE-2008-1686
 
-======================================================
-Name: CVE-2008-4190
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4190
-Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=496374
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=460425
-Reference: BID:31243
-Reference: URL:http://www.securityfocus.com/bid/31243
-Reference: XF:openswan-livetest-symlink(45250)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/45250
+Timeline:
+2008-04-10: investigation of oCERT-2008-002 leads to discovery of more affected packages
+2008-04-10: Speex header processing code fixed in CVS
+2008-04-11: contacted upstream maintainers and affected vendors
+2008-04-11: gstreamer-plugins-good patched in CVS
+2008-04-11: sweep 0.9.3 released
+2008-04-11: SDL_sound patched in CVS
+2008-04-14: vorbis-tools patched in CVS
+2008-04-14: xine-lib 1.1.12 released
+2008-04-17: advisory release
 
-The IPSEC livetest tool in Openswan 2.4.4 and earlier allows local
-users to overwrite arbitrary files and execute arbitrary code via a
-symlink attack on the (1) ipseclive.conn and (2) ipsec.olts.remote.log
-temporary files.
+References:
+http://www.ocert.org/advisories/ocert-2008-2.html
+http://trac.xiph.org/changeset/14701
+http://webcvs.freedesktop.org/gstreamer/gst-plugins-good/ext/speex/gstspeexdec.c?r1=1.40&r2=1.41
+http://trac.metadecks.org/changeset/554
+http://svn.icculus.org/SDL_sound?view=rev&revision=537
+http://svn.icculus.org/SDL_sound?view=rev&revision=538
+http://trac.xiph.org/changeset/14728
+http://hg.debian.org/hg/xine-lib/xine-lib?cmd=changeset;node=66e1654718fb;style=gitweb
 
+Links:
+http://gstreamer.freedesktop.org/modules/gst-plugins-good.html
+http://icculus.org/SDL_sound
+http://www.speex.org
+http://www.metadecks.org/software/sweep/
+http://xiph.org
+http://www.videolan.org/vlc
+http://xinehq.de
 
-======================================================
-Name: CVE-2008-4191
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4191
-Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=496431
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=460435
-Reference: BID:31241
-Reference: URL:http://www.securityfocus.com/bid/31241
-Reference: SECUNIA:31880
-Reference: URL:http://secunia.com/advisories/31880
-Reference: XF:emacspeak-extracttable-symlink(45237)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/45237
+Permalink:
+http://www.ocert.org/advisories/ocert-2008-004.html
 
-extract-table.pl in Emacspeak 26 and 28 allows local users to
-overwrite arbitrary files via a symlink attack on the
-extract-table.csv temporary file.
+-- 
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | Open Source Computer Emergency Response Team
 
-
+<lcars@...rt.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
