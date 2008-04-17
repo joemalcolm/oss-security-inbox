@@ -1,25 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/09/2
-Message-ID: <20080309161236.GA15640@openwall.com>
-Date: Sun, 9 Mar 2008 19:12:36 +0300
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: list archive
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/17/2
+Message-Id: <200804171045.49953.hanno@hboeck.de>
+Date: Thu, 17 Apr 2008 10:45:49 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: coley@...re.org, oss-security@...ts.openwall.com
+Subject: CVE request: firefox 2.0.14 ( Crash in JavaScript garbage collector)
 Content-Type: text/plain; charset=utf-8
 
-On Sunday 24 February 2008, Solar Designer wrote:
-> > ... I've also re-configured
-> > oss-security to no longer set the X-No-Archive header (xvendor was
-> > already configured that way).  The Gmane archive is now available at:
-> >
-> > 	http://dir.gmane.org/gmane.comp.security.oss.general
+Please assign a cve for 
+http://www.mozilla.org/projects/security/known-vulnerabilities.html#firefox2.0.0.14
+http://www.mozilla.org/security/announce/2008/mfsa2008-20.html
 
-On Wed, Mar 05, 2008 at 11:53:16AM +0100, Robert Buchholz wrote:
-> Unfortunately, all messages prior to this change of setting will expire 
-> and be removed from Gmane on March 9 ...
+And again, are pure browser crashers considered security relevant? I'd do so, 
+as e.g. placing a crashing gif on e.g. some popular wiki could cause much 
+trouble:
+http://www.securityfocus.com/bid/27243
+(I think it's still unfixed)
 
-Lars (of Gmane) has just informed me that the "Expires:" message is
-wrong, and those messages won't expire.  This is a bit confusing, but I
-guess we can live with it.
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
-Alexander
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
