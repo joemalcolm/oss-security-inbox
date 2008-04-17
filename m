@@ -1,26 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/11/2
-Message-ID: <28fa9c5e0811102119u3e7fe66cv131fc2f3cfbefefb@mail.gmail.com>
-Date: Tue, 11 Nov 2008 13:19:52 +0800
-From: "Eugene Teo" <eugeneteo@...nel.sg>
-To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: CVE request: kernel: libertas: fix buffer overrun
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/17/8
+Message-Id: <200804171900.40248.hanno@hboeck.de>
+Date: Thu, 17 Apr 2008 19:00:37 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: firefox 2.0.14 ( Crash in JavaScript garbage collector)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Am Donnerstag 17 April 2008 schrieb Steven M. Christey:
+> On Thu, 17 Apr 2008, Hanno [utf-8] BÃ¶ck wrote:
+> > And again, are pure browser crashers considered security relevant?
+>
+> CVE chooses to include them because:
 
-We need a CVE name for this issue. This was committed in upstream
-kernel recently.
+Ok, then please include this one:
+http://www.securityfocus.com/bid/27243
+http://hboeck.de/archives/578-How-long-does-it-take-to-fix-a-crash-bug.html
+http://sam.zoy.org/blog/2007-01-16-exposing-file-parsing-vulnerabilities
 
-"If somebody sends an invalid beacon/probe response, that can trash
-the whole BSS descriptor. The descriptor is, luckily, large enough so
-that it cannot scribble past the end of it; it's well above 400 bytes
-long.
+for firefox (lol-firefox.gif crash).
 
-Upstream commit: 48735d8d8bd701b1e0cd3d49c21e5e385ddcb077
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
-https://bugzilla.redhat.com/show_bug.cgi?id=470761
-http://article.gmane.org/gmane.linux.kernel.wireless.general/23049
-
-Thanks, Eugene
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
