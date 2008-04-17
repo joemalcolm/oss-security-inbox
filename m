@@ -1,31 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/27/1
-Message-Id: <200810271758.03646.steffen.joeris@skolelinux.de>
-Date: Mon, 27 Oct 2008 17:57:58 +1100
-From: Steffen Joeris <steffen.joeris@...lelinux.de>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: coley@...re.org
-Subject: CVE id request: blender
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/17/5
+Message-Id: <200804171605.52834.hanno@hboeck.de>
+Date: Thu, 17 Apr 2008 16:05:49 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com, coley@...re.org
+Subject: CVE id request: xine-lib <= 1.1.12 nsf handling
 Content-Type: text/plain; charset=utf-8
 
-Hi
+See
+http://milw0rm.com/exploits/5458
 
-There is a programming error in blender that can lead to arbitrary code 
-execution.
-
-Description:
-Blender's BPY_interface calls PySys_SetArgv such that Python prepends
-sys.path with an empty string.  This allows the possibility to run
-arbitrary code on the user's system if there is a python file in
-Blender's working directory named the same as one that Blender's python
-scripts try to import.
-
-Debian Bug report:
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=503632
-
-Could I please get a CVE id for this?
-
-Cheers
-Steffen
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
 Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
