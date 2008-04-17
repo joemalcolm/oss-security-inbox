@@ -1,46 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/03/1
-Message-ID: <20081202154345.42e114ec@redhat.com>
-Date: Tue, 2 Dec 2008 15:43:45 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: Michael Sweet <mike@...ysw.com>
-Cc: Eygene Ryabinkin <rea-sec@...elabs.ru>, oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...re.org>
-Subject: Re: CVE request: cups - potential integer overflow in PNG image reader [was: CUPS DoS via RSS subscriptions]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/17/11
+Message-ID: <Pine.GSO.4.51.0804171706480.3756@faron.mitre.org>
+Date: Thu, 17 Apr 2008 17:06:52 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Matthias Geerdsen <vorlon@...too.org>
+cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: DBMail <2.2.9
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 26 Nov 2008 14:20:11 -0800 Michael Sweet <mike@...ysw.com>
-wrote:
 
-> >> The range of values allowed for xsize is smaller than ysize.
-> > 
-> > OK, thanks for the clarification!  But then the first hunk is just
-> > a no-op, or I am still missing something?  And I am just curious:
-> > will it be legitimate to rewrite the second check as
-> >   (bufsize / img->xsize) / 3 != img->ysize
-> > or it is still unsafe due to the possible compiler optimizations?
-> 
-> That should be just fine, although I'd still use an extra set
-> of parenthesis to ensure the intended order of operations.
+======================================================
+Name: CVE-2007-6714
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6714
+Reference: MLIST:[Dbmail-dev] 20071216 [DBMail 0000662]: Ability to bypass authentication.
+Reference: URL:http://www.mail-archive.com/dbmail-dev@dbmail.org/msg09942.html
+Reference: CONFIRM:http://dbmail.org/index.php?page=news&id=44
 
-Btw, this issue should not affect any system with recent libpng (in
-this case, recent seems to be at least 1.2.6rc1 from Aug 2004), as that
-versions adds (quoting CHANGES file):
+DBMail before 2.2.9, when using authldap with an LDAP server that
+supports anonymous login such as Active Directory, allows remote
+attackers to bypass authentication via an empty password, which causes
+the LDAP bind to indicate success based on anonymous authentication.
 
-  Imposed default one million column, one-million row limits on the image 
-    dimensions, and added png_set_user_limits() function to override them.
 
-So if you have recent libpng with those limits unchanged and image with
-width or height over 1 million (still quite far from what you need for
-integer overflow when multiplied by 3), you will get:
-
-  libpng error: image size exceeds user limits in IHDR
-
-and libpng calls abort().  That happens before the problematic check
-is reached (_cupsImageReadPNG() in cups/filter/image-png.c calls
-png_read_info() in libpng/pngread.c and later png_handle_IHDR() and
-png_set_IHDR() get called).
-
-HTH
-
--- 
-Tomas Hoger / Red Hat Security Response Team
