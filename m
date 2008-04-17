@@ -1,27 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/21/1
-Message-Id: <200806211325.40802.steffen.joeris@skolelinux.de>
-Date: Sat, 21 Jun 2008 13:25:36 +0200
-From: Steffen Joeris <steffen.joeris@...lelinux.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/17/6
+Message-ID: <20080417163120.GA12716@ngolde.de>
+Date: Thu, 17 Apr 2008 18:31:20 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: perl
+Subject: Re: CVE request: tss <= 0.8.1-3: arbitary file reading
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Hi,
+* Steve Kemp <steve@...ve.org.uk> [2008-04-12 21:39]:
+>   Due to a lack of permissions checking, or privilege reduction
+>  the setuid(0) binary tss allows local users to read arbitrary files
+>  upon the local system.
+> 
+>   Sample "exploit" is:
+> 
+>               skx@...d:~$ tss -a /etc/shadow
+[...] 
+Steve (the mitre one :) did you miss that?
+Kind regards
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-rmtree() when used with symlinks changes permissions of the link target to the
-link, which allows symlinks attacks.
-
-Upstream Bug:
-http://rt.cpan.org/Public/Bug/Display.html?id=36982
-
-Debian Bug (with proposed patch):
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=487319
-
-
-Could I please have a CVE id for this?
-
-Cheers
-Steffen
-
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+Content of type "application/pgp-signature" skipped
