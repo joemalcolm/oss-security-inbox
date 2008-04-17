@@ -1,32 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/19/1
-Message-ID: <871w3yqcb1.fsf@mid.deneb.enyo.de>
-Date: Mon, 19 May 2008 22:16:50 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/17/10
+Message-ID: <4807B079.8060301@gentoo.org>
+Date: Thu, 17 Apr 2008 22:18:01 +0200
+From: Matthias Geerdsen <vorlon@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE ID request: GNUTLS
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: DBMail <2.2.9
 Content-Type: text/plain; charset=utf-8
 
-Several issues have been announced in GNUTLS-SA-2008-1:
+Hi,
 
-*** [GNUTLS-SA-2008-1-1]
-*** libgnutls: Fix crash when sending invalid server name.
-The crash can be triggered remotely before authentication, which can
-lead to a Daniel of Service attack to disable the server.  The bug
-cause gnutls to store more session resumption data than what was
-allocated for, thus overwriting unallocated memory.
+could we get a CVE for the following issue?
 
-*** [GNUTLS-SA-2008-1-2]
-*** libgnutls: Fix crash when sending repeated client hellos.
-The crash can be triggered remotely before authentication, which can
-lead to a Daniel of Service attack to disable the server.  The bug
-triggers a null-pointer dereference.
+ From the dbmail changelog <http://dbmail.org/index.php?page=news&id=44>:
+Bugs fixed since 2.2.8:
+[...]
+0000662: [Authentication layer] Ability to bypass authentication on 
+Active Directory
+[...]
 
-*** [GNUTLS-SA-2008-1-3]
-*** libgnutls: Fix crash in cipher padding decoding for invalid record
-*** lengths.
-The crash can be triggered remotely before authentication, which can
-lead to a Daniel of Service attack to disable the server.  The bug
-cause gnutls to read memory beyond the end of the received record.
 
-AFAIK, no CVE IDs have bee assigned yet.
+bug report: 
+<http://www.mail-archive.com/dbmail-dev@dbmail.org/msg09942.html>
+
+patch:
+<http://git.dbmail.eu/?p=paul/dbmail;a=commitdiff;h=5a4458b9f4b1a1453e35a1c5674c2253b9d00138>
+
+
+-- 
+Matthias Geerdsen
+vorlon@...too.org
+
+Gentoo Linux Security Team
+http://security.gentoo.org
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (190 bytes)
