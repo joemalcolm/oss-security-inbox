@@ -1,43 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/24/5
-Message-ID: <20080824151655.GB16647@ngolde.de>
-Date: Sun, 24 Aug 2008 17:16:55 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com, vendor-sec@....de
-Subject: Re: Re: libxml2 denial of service flaw (CVE-2008-3281)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/17/12
+Message-ID: <Pine.GSO.4.51.0804171720360.3756@faron.mitre.org>
+Date: Thu, 17 Apr 2008 17:20:40 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Hanno Böck <hanno@...eck.de>
+cc: oss-security@...ts.openwall.com, coley@...re.org
+Subject: Re: CVE id request: xine-lib <= 1.1.12 nsf handling
 Content-Type: text/plain; charset=utf-8
 
-Hi again,
-* Nico Golde <oss-security+ml@...lde.de> [2008-08-24 17:07]:
-> * Robert Buchholz <rbu@...too.org> [2008-08-23 18:06]:
-> > On Wednesday 20 August 2008, Daniel Veillard wrote:
-> > > On Wed, Aug 20, 2008 at 12:42:29PM -0400, Josh Bressers wrote:
-[...] 
-> > Our gnome maintainers pointed out that the patch (which was also pushed 
-> > upstream) breaks GDM in GNOME 2.22, as can be seen in Gentoo and 
-> > Mandriva:
-> >   https://bugs.gentoo.org/show_bug.cgi?id=235529
-> >   https://qa.mandriva.com/show_bug.cgi?id=43094
-> > 
-> > upstream bug:
-> >   http://bugzilla.gnome.org/show_bug.cgi?id=549087
-> > 
-> > Those who did not push updates yet might want to delay this, we have 
-> > been reverting the patch for now.
-> > I am CC'ing oss-security, please send follow-ups to that list.
-> 
-> Looks like rebuilding librsvg against libxml2 does solve the 
-> problem referring to our bug report:
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=496125#79
 
-YFYI there is a new patch which is not extending the 
-xmlEntity struct but abusing an already existing field.
-See https://bugzilla.redhat.com/show_bug.cgi?id=459830
+======================================================
+Name: CVE-2008-1878
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1878
+Reference: BID:28816
+Reference: FRSIRT:ADV-2008-1247
+Reference: URL:http://www.frsirt.com/english/advisories/2008/1247/references
+Reference: MILW0RM:5458
+Reference: URL:http://www.milw0rm.com/exploits/5458
+Reference: SECUNIA:29850
+Reference: URL:http://secunia.com/advisories/29850
 
-Cheers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+Stack-based buffer overflow in the demux_nsf_send_chunk function in
+src/demuxers/demux_nsf.c in xine-lib 1.1.12 and earlier allows remote
+attackers to cause a denial of service (crash) and possibly execute
+arbitrary code via a long NSF title.
 
-Content of type "application/pgp-signature" skipped
+
