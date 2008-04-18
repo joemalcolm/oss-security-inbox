@@ -1,20 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/23/1
-Message-Id: <200810231305.28553.hanno@hboeck.de>
-Date: Thu, 23 Oct 2008 13:05:28 +0300
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/18/1
+Message-Id: <200804181300.31541.hanno@hboeck.de>
+Date: Fri, 18 Apr 2008 13:00:30 +0200
 From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com, coley@...re.org
-Subject: CVE req: another drupal one (<5.12/6.6)
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: firefox 2.0.14 ( Crash in JavaScript garbage collector)
 Content-Type: text/plain; charset=utf-8
 
-http://drupal.org/node/324824
+Am Donnerstag 17 April 2008 schrieb Steven M. Christey:
+> See below.
+>
+> Do you have a specific Firefox/Gentoo/Debian version?
 
-File inclusion and cross site scripting
+Happened with different versions in gentoo. Atm I'm running 2.0.0.14, but as 
+the original discovery is by sam hocevar (debian developer), it probably 
+happens under debian as well.
+Do you have problems to reproduce it?
+
+You can also add this as a reference:
+https://bugzilla.mozilla.org/show_bug.cgi?id=424333
 
 -- 
 Hanno Böck		Blog:		http://www.hboeck.de/
 GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-
-http://x1000malquer.de/ - ab 8.11. Atomtransporte stoppen
 
 Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
