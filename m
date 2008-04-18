@@ -1,71 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/19/8
-Message-ID: <Pine.GSO.4.51.0806191602500.14175@faron.mitre.org>
-Date: Thu, 19 Jun 2008 16:07:30 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/18/2
+Message-ID: <20080418111832.GB11740@suse.de>
+Date: Fri, 18 Apr 2008 13:18:32 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Critical vuln in Firefox 3.0
+Subject: Re: gcc 4.2 optimizations and integer overflow checks
 Content-Type: text/plain; charset=utf-8
 
+On Thu, Apr 10, 2008 at 02:31:13PM -0400, Steven M. Christey wrote:
+> 
+> On Wed, 9 Apr 2008, Nico Golde wrote:
+> 
+> > Hi Steven,
+> > * Steven M. Christey <coley@...us.mitre.org> [2008-04-07 18:24]:
+> > > While an unusual bug, we decided to assign a CVE for it.
+> > [...]
+> > Just stumbled upon CVE-2006-1902, look spretty much the same
+> > to me, is this a dup?
+> 
+> Nice find!
+> 
+> My immediate suspicion is that they're not the same, based solely on
+> affected versions - CVE-2008-1685 has a specific affected version range
+> because it changed behaviors in 4.2.0.  Maybe that change came out of
+> followup analysis stemming from CVE-2006-1902.
+> 
+> But, I'm not completely sure.  Solar?
 
-On Thu, 19 Jun 2008, Nico Golde wrote:
+They are mostly unrelated, one is about signed integers, while the
+new one is "pointer + offset" related.
 
-> Let's wait until they publish their advisory, having a CVE
-> id without any useful description now doesn't help anyone.
-
-At this stage, I believe that a CVE identifier is important.  Here, it
-serves two roles:
-
-1) being absolutely sure we know which Firefox 3.0 issue is being
-discussed - which can be done if a CVE description is anchored on a
-particular reference or source.
-
-2) Tracking, then eventually resolving, confusion between multiple
-disclosures.  Granted we don't always succeed at this, but it's a goal.
-
-So, I've assigned CVE-2008-2785 for the unspecified issue being claimed by
-Tipping Point.
-
-But, I've also assigned a separate CVE-2008-2786 for a Full-Disclosure
-post talking about a buffer overflow.  Typically I try to avoid creating
-CVEs for these - anyone could claim "I found BUG-TYPE X in product Z" and
-there's no way of proving things - but here, there's likely some confusion
-about whether the FD post is the same as ZDI's or not.  And ZDI is
-specifically not saying anything about that.
-
-- Steve
-
-
-======================================================
-Name: CVE-2008-2785
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2785
-Reference: MISC:http://dvlabs.tippingpoint.com/blog/2008/06/18/vulnerability-in-mozilla-firefox-30
-Reference: BID:29802
-Reference: URL:http://www.securityfocus.com/bid/29802
-Reference: FRSIRT:ADV-2008-1873
-Reference: URL:http://www.frsirt.com/english/advisories/2008/1873
-Reference: SECUNIA:30761
-Reference: URL:http://secunia.com/advisories/30761
-Reference: XF:firefox-unspecified-code-execution(43167)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/43167
-
-Unspecified vulnerability in Firefox 3.0 and 2.0.x has unknown impact
-and remote attack vectors, aka ZDI-CAN-349.
-
-
-======================================================
-Name: CVE-2008-2786
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2786
-Reference: FULLDISC:20080618 Coming soon : Firefox 3 Release overflow
-Reference: URL:http://lists.grok.org.uk/pipermail/full-disclosure/2008-June/062832.html
-Reference: BID:29794
-Reference: URL:http://www.securityfocus.com/bid/29794
-
-Buffer overflow in Firefox 3.0 and 2.0.x has unknown impact and attack
-vectors.  NOTE: due to lack of details as of 20080619, it is not clear
-whether this is the same issue as CVE-2008-2785.  A CVE identifier has
-been assigned for tracking purposes.
-
-
+Ciao, Marcus
