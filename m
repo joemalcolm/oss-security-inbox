@@ -1,25 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/30/3
-Message-ID: <Pine.GSO.4.51.0809301424500.3627@faron.mitre.org>
-Date: Tue, 30 Sep 2008 14:25:56 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: coley@...re.org, vendor-sec@....de, darix@...nsu.se, stbuehler@....de
-Subject: Re: Re: CVE request: lighttpd issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/18/3
+Message-ID: <87wsmvoxuo.fsf@mid.deneb.enyo.de>
+Date: Fri, 18 Apr 2008 19:51:27 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
+To: coley@...us.mitre.org, oss-security@...ts.openwall.com
+Subject: CSRF vulnerability in ikiwiki
 Content-Type: text/plain; charset=utf-8
 
+This is:
 
-On Tue, 30 Sep 2008, Christian Hoffmann wrote:
+<http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=475445>
 
-> >>   * Unexpected behavior of url.redirect / url.rewrite config options
+Steven, could we get a CVE, please?  Full description follows (version
+1.33.5 has not yet been released, but will follow once I've got a CVE 8-).
 
-Use CVE-2008-4359, to be filled in later.
+## Cross Site Request Forging
 
-This is a border case in my book.
+Cross Site Request Forging could be used to constuct a link that would
+change a logged-in user's password or other preferences if they clicked on
+the link. It could also be used to construct a link that would cause a wiki
+page to be modified by a logged-in user.
 
-> >>   * Information disclosure w/ mod_userdir on case-insensitive file
-> >>     systems
-
-Use CVE-2008-4360, to be filled in later.
-
-- Steve
+These holes were discovered on 10 April 2008 and fixed the same day with
+the release of ikiwiki 2.42. A fix was also backported to Debian etch, as
+version 1.33.5. I recommend upgrading to one of these versions.
