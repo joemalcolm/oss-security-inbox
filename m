@@ -1,32 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/12/4
-Message-ID: <20080512172429.GC25634@ngolde.de>
-Date: Mon, 12 May 2008 19:24:29 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Emacs 21 fast-lock-mode arbitrary lips code execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/20/2
+Message-ID: <Pine.GSO.4.51.0804201313220.25074@faron.mitre.org>
+Date: Sun, 20 Apr 2008 13:13:43 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Florian Weimer <fw@...eb.enyo.de>
+cc: oss-security@...ts.openwall.com, coley@...us.mitre.org
+Subject: Re: CSRF vulnerability in ikiwiki
 Content-Type: text/plain; charset=utf-8
 
-Hi Robert,
-* Robert Buchholz <rbu@...too.org> [2008-05-12 19:05]:
-> On Monday, 12. May 2008, Nico Golde wrote:
-> > * Robert Buchholz <rbu@...too.org> [2008-05-10 15:01]:
-> > > Emacs 21 and Xemacs will execute any lisp code present in a .flc file
-> > > that accompanies the file the user opens.
-> >
-> > The same applies to emacs22.
-> 
-> Our emacs maintainer said version 22 would warn you that lisp code from the 
-> file would be executed. Could you confirm otherwise?
 
-At least not with the emacs22 installation I tried this with (22.2).
-As this is a rather old version, this may depend on the 
-version used?
+On Sun, 20 Apr 2008, Florian Weimer wrote:
 
-Cheers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+> Nevermind, I got CVE-2008-0165 from Debian's pool.
 
-Content of type "application/pgp-signature" skipped
+updated.
+
+- Steve
+
+
+======================================================
+Name: CVE-2008-0165
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0165
+Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=475445
+
+Cross-site request forgery (CSRF) vulnerability in ikiwiki 2.42 and
+earlier allows remote attackers to modify user preferences, including
+passwords, via the (1) preferences and (2) edit forms.
+
+
