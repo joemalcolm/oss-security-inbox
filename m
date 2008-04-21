@@ -1,33 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/31/2
-Message-ID: <Pine.GSO.4.51.0810311613570.8062@faron.mitre.org>
-Date: Fri, 31 Oct 2008 16:18:36 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2008-4619 / milw0rm6775
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/21/1
+Message-ID: <480BF149.8000406@freethemallocs.com>
+Date: Sun, 20 Apr 2008 17:43:37 -0800
+From: Jonathan Smith <smithj@...ethemallocs.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: Florian Weimer <fw@...eb.enyo.de>, vendor-sec@....de,  oss-security@...ts.openwall.com
+Subject: CVE request:Perl bug #48156
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Wed, 29 Oct 2008, Tomas Hoger wrote:
+Florian Weimer wrote:
+| Debian will release a security update for Perl bug #48156.  This looks a
+| bit like a heap overflow in valgrind.  I consider the DoS vector
+| important enough (which manifest on i386), so I haven't checked if it is
+| exploitable beyond that.
+|
+| This is just a heads-up, in case someone else wants to release an
+| update.  The issue itself is already public (also via Debian bug
+| #454792).
 
-> Looks like this is a dupe of CVE-2007-0165 after all...
->
->   http://www.securityfocus.com/bid/21964/
->   http://secunia.com/advisories/23700/
->   http://secunia.com/advisories/32403/
+Thanks for the info. Since this is already public, I'm CCing oss-security.
 
-Nothing against these sources but in general CVE wants a solid "logic
-chain" between 2 descriptions before declaring a dupe.  In this case
-CVE-2007-0165 is anchored on a very vague description from Sun about
-something in libnsl.  CVE-2008-4619 is quite specific.  Just because it's
-the same rpcbind service is insufficient as we all know that the same
-package can contain multiple security bugs.
+I've reproduced the crash on rPath Linux 2, with perl 5.8.8. On rPL 1,
+perl 5.8.7 does not crash, but valgrind shows overflows.
 
-The most solid connection here, though, is SUNALERT:102713 (which
-CVE-2007-0165 is anchored on) has now been renamed to SUNALERT:200412,
-which directly references CVE-2008-4619.
+So, we'll probably need a CVE. Steve?
 
-I'll send a quick-check email to Sun but these do appear to be dupes.  So
-then the question is which CVE to reject, and I'm not sure at this moment.
+	smithj
 
-- Steve
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEARECAAYFAkgL8UkACgkQCG91qXPaRek4EQCfQfem29oadZ+DVJoSK/Ti0weA
+//0AnRICT5rf/KGfvOfJ+bxDg69k6bDj
+=bTwa
+-----END PGP SIGNATURE-----
