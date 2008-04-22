@@ -1,26 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/09/6
-Message-ID: <20080709125354.GF23625@yuggoth.org>
-Date: Wed, 9 Jul 2008 12:53:55 +0000
-From: The Fungi <fungi@...goth.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/22/3
+Message-ID: <87k5ipmwv3.fsf@lillypad.riseup.net>
+Date: Tue, 22 Apr 2008 16:57:04 -0400
+From: Micah Anderson <micah@...eup.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: DNS vulnerability: other relevant software
+Subject: CVE Request: inspircd
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jul 09, 2008 at 02:07:01PM +0200, Matthias Geerdsen wrote:
-> looking at some of the DNS related software in our tree, I thought
-> it might be nice to keep track of any findings of affected and
-> unaffected packages...
-[...]
 
-Additionally, Debian has noted (DSA 1605-1) that the GNU libc stub
-resolver could benefit from random query source ports as well, but
-no patches are currently available to implement this:
+Versions prior to 1.1.17 of InspIRCd are vulnerable to a remotely
+triggerable buffer overflow which can lead to a Denial of Service
+(daemon crash) when the namesx and uhnames modules are loaded. 
 
-http://www.debian.org/security/2008/dsa-1605
+InspIRCd is a modular C++ IRCd (IRC daemon) for Linux, BSD, Windows and
+Apple OS X systems created to provide a stable, modern, and lightweight
+IRCd written from scratch.
 
--- 
-{ IRL(Jeremy_Stanley); PGP(9E8DFF2E4F5995F8FEADDC5829ABF7441FB84657);
-SMTP(fungi@...goth.org); IRC(fungi@....yuggoth.org#ccl); ICQ(114362511);
-AIM(dreadazathoth); YAHOO(crawlingchaoslabs); FINGER(fungi@...goth.org);
-MUD(fungi@...arsis.mudpy.org:6669); WWW(http://fungi.yuggoth.org/); }
+Reference: http://inspircd.org/forum/showthread.php?t=2945
+
+How the issue can be triggered:
+
+if you load both the namesx and uhnames modules, then set your nicklen
+to 31 characters and your ident len is 12 and and your channel len is
+64, then you can crash the ircd by joining a lot of users to a channel
+with 31 char nicks, 12 char idents and very long hostnames, and then
+joining a single final user to the channel who has uhnames
+
+workaround: unload uhnames or upgrade to 1.1.17
+
