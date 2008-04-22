@@ -1,31 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/03/3
-Message-ID: <48E5DE19.8090606@redhat.com>
-Date: Fri, 03 Oct 2008 16:55:53 +0800
-From: Eugene Teo <eteo@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/22/2
+Message-ID: <14320.1208869480@devserv.devel.redhat.com>
+Date: Tue, 22 Apr 2008 09:04:40 -0400
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel: x86: Fix broken LDT access in VMI
+Subject: Re: list: members vs. read-only subscribers
 Content-Type: text/plain; charset=utf-8
 
-This was committed in upstream kernel recently.
+On 8 April 2008, Solar Designer wrote:
+> > 
+> > * The current member list can post unmoderated
+> > * New subscribers (anyone can subscribe) will be moderated by default, but
+> >   can have the moderation flag lifted when the prove to be useful
+> >   contributors (we need to define what a useful contributor is)
+> > * Non members can post, but will be moderated (if spam is an issue, we
+> >   could consider just throwing this stuff out, but I'd really like to avoid
+> >   it if possible)
+> > 
 
-"[PATCH] x86: Fix broken LDT access in VMI
+...
 
-After investigating a JRE failure, I found this bug was introduced a
-long time ago, and had already managed to survive another bugfix which
-occurred on the same line.  The result is a total failure of the JRE due
-to LDT selectors not working properly.
+> 
+> I am OK with your proposal, although I think that we could simply do
+> message moderation for all instead, with a few moderators.
 
-This one took a long time to rear up because LDT usage is not very
-common, but the bug is quite serious.  It got introduced along with
-another bug, already fixed, by 75b8bb3e56ca09a467fbbe5229bc68627f7445be"
+I'm pretty sure this is going to get old real fast, and is going to
+needlessly slow down communication.  I presume this is only being kicked
+around as an idea because of missing features in the list backend?
 
-This requires a CVE name. In a guest, an unprivileged user can trash the
-box's interrupts by calling vmi_write_ldt_entry(), which in turn, writes
-to idt_entry (interrupt) instead of ldt_entry (local). Take note that
-sys_modify_ldt() does not check for privileges.
+> 
+> Anyway, should we (Openwall) interpret the above as a request to go
+> ahead and apply the changes?
+> 
 
-Upstream commit: de59985e3a623d4d5d6207f1777398ca0606ab1c
-Introduced by: 75b8bb3e56ca09a467fbbe5229bc68627f7445be
+Have the gears started turning that will make this happen yet?  I'm not in
+a big rush, I just don't want this conversation to be forgotten.
 
-Thanks, Eugene
+Thanks.
+
+-- 
+    JB
