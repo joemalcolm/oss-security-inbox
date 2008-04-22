@@ -1,30 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/13/3
-Message-ID: <20081013161716.5335a68b@redhat.com>
-Date: Mon, 13 Oct 2008 16:17:16 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/22/1
+Message-ID: <22959.1208823800@devserv.devel.redhat.com>
+Date: Mon, 21 Apr 2008 20:23:20 -0400
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: Re: CVE Request
+Cc: Karel Zak <kzak@...hat.com>, Steve Grubb <sgrubb@...hat.com>, Miloslav Trmac <mitr@...hat.com>, coley@...re.org
+Subject: audit log injection attack via login
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 10 Oct 2008 14:06:38 -0400 (EDT) Josh Bressers
-<bressers@...hat.com> wrote:
+Steve Grubb just let us know about an audit log injection flaw in login.
+It's already public via a checkin:
+http://git.kernel.org/?p=utils/util-linux-ng/util-linux-ng.git;a=commit;h=8ccf0b253ac0f4f58d64bc9674de18bff5a88782
 
-> fence: http://bugs.gentoo.org/show_bug.cgi?id=240576
+I'm under the impression this should probably get a new CVE id (added Steve
+Christey to the CC list for this).
 
-Please mention both fence_apc and fence_apc_snmp in the CVE
-description, as both agents do the same kind of logging.  Description
-may also mention cman package, as those fencing agents may be bundled
-in fence or cman package, based on the version used.
+Steve Grubb is also pretty sure there are other things that have this
+problem, he's investigating.
 
-Note: CVE-2008-4192 was recently assigned to fence_egenera having
-similar flaw.
-
-Additionally, fence_manual / fence_ack_manual communicate via FIFO
-socket created in /tmp.  fence_manual creates
-fifo /tmp/fence_manual.fifo and waits for fence_ack_manual to write to
-it.  This can possibly result in the overwrite of arbitrary file.
+Thanks.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+    JB
