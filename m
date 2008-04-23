@@ -1,48 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/04/7
-Message-ID: <4846E3CB.4040004@hoyletech.com>
-Date: Wed, 04 Jun 2008 14:49:47 -0400
-From: Nathanael Hoyle <nhoyle@...letech.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/23/8
+Message-ID: <Pine.GSO.4.51.0804231206191.10164@faron.mitre.org>
+Date: Wed, 23 Apr 2008 12:12:08 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSH key blacklisting
+Subject: Re:  CVE Request: inspircd
 Content-Type: text/plain; charset=utf-8
 
-The Fungi wrote:
-> On Wed, Jun 04, 2008 at 11:14:12AM -0400, Nathanael Hoyle wrote:
-> [...]
->> However, the reason debian got into the mess they did in the first
->> place with this was specifically because they were trying to
->> remove responsibility from the can't-be-bothered users for
->> configuration. At one point, nearly all ssh key generation systems
->> required the user the type keys 'at random' on the keyboard,
->> and/or to move the mouse to generate an entropy pool for a seed
->> value for key generation. Because debian performs key-generation
->> on first boot in most cases, that early in the startup there might
->> not be sufficient entropy in the network traffic for utility. I
->> guess they found that users were either incapable of or
->> disinclined to participate in the key generation process.
-> [...]
-> 
-> Not to be argumentative, but have you installed OpenBSD lately
-> (effectively the reference platform for OpenSSH development)? For
-> years, its base install has run sshd by default, generated host keys
-> at first boot, and not prompted at the console for human interaction
-> to augment entropy for this process. I find it hard to blame this
-> *particular* behavior on Debian (unless you're suggesting that they
-> strong-armed OpenSSH upstream to integrate these changes on their
-> behalf?).
 
-It's been about two years since I have installed OpenBSD.  I do not know
-what entropy pool source OpenBSD uses for initial key generation.  It
-was my understanding that the recently disclosed/discussed issue
-involved a Debian-specific (and their downstreams, like Ubuntu) decision
-to utilize the PID of the keygen process to seed the key generation,
-severely limiting the effective keyspace.  If I completely misunderstood
-this, my apologies to Debian.  It was not so much that I was saying that
-eliminating user interaction was a bad thing (as I think most users
-can't be bothered to set up a secure system), but that requiring user
-interaction to set up validation may be a poor choice (as in the case of
-requiring them to set key authority/revocation servers as the other
-poster suggested).
+On Tue, 22 Apr 2008, Micah Anderson wrote:
 
--Nathanael
+>
+> Versions prior to 1.1.17 of InspIRCd are vulnerable to a remotely
+> triggerable buffer overflow which can lead to a Denial of Service
+> (daemon crash) when the namesx and uhnames modules are loaded.
+
+The reference you pointed to is for a fix in 1.1.18, which suggests that
+1.1.17 is vulnerable.
+
+Thanks for the clarification of the issue - the vendor's post only alluded
+to "security" with no additional details, which left a lot of vuln DBs
+guessing.
+
+- Steve
+
+======================================================
+Name: CVE-2008-1925
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1925
+Reference: MISC:http://www.inspircd.org/bugtrack/view_bug.php?bug_id=438
+Reference: CONFIRM:http://www.inspircd.org/forum/showthread.php?t=2945
+Reference: MLIST:[oss-security] 20080422 CVE Request: inspircd
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/04/22/3
+Reference: FRSIRT:ADV-2008-1041
+Reference: URL:http://www.frsirt.com/english/advisories/2008/1041/references
+Reference: SECUNIA:29610
+Reference: URL:http://secunia.com/advisories/29610
+
+Buffer overflow in InspIRCd before 1.1.18, when using the namesx and
+uhnames modules, allows remote attackers to cause a denial of service
+(daemon crash) via a large number of channel users with crafted
+nicknames, idents, and long hostnames.
+
+
