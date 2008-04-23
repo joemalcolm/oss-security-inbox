@@ -1,30 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/23/1
-Message-ID: <20080423022511.GA30457@openwall.com>
-Date: Wed, 23 Apr 2008 06:25:11 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/23/11
+Message-ID: <480F6E73.7040804@freethemallocs.com>
+Date: Wed, 23 Apr 2008 09:14:27 -0800
+From: Jonathan Smith <smithj@...ethemallocs.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: list: members vs. read-only subscribers
+Subject: Re: web archives
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Apr 22, 2008 at 09:04:40AM -0400, Josh Bressers wrote:
-> Have the gears started turning that will make this happen yet?  I'm not in
-> a big rush, I just don't want this conversation to be forgotten.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Thank you for pinging me, although the request was not forgotten -
-rather, it was queued.
+Steven M. Christey wrote:
+| The archives as stored at
+| http://www.openwall.com/lists/oss-security/2008/04/ etc. only list posts
+| using sequence numbers.  Would it be easy to list these by subject line,
+| author, and/or in a threaded basis?  I find it hard to navigate when I'm
+| looking for a particular post.
 
-Well, this turned out to be a trivial change to the ezmlm-gate line in
-the editor file; it's just that it was beyond the capabilities of
-ezmlm-make (so we'll need to remember to not lose this custom change
-when re-configuring the list later).
+I find this annoying as well, but GMANE also mirrors the list. Reference
+http://blog.gmane.org/gmane.comp.security.oss.general.
 
-The list should now be message-moderated for everyone except for people
-(or rather, for their envelope-from addresses) who have subscribed or
-posted desirable messages until today.  As more people (or addresses)
-make desirable postings, we may be adding those to the "allow" list as
-well (or maybe not - this is up to us).
+Personally, I'm a fan of the seclists.org interface. I'll shoot fyodor
+an email and ask him to mirror us.
 
-Let's see how this works in practice.
+	smithj
 
-Alexander
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEARECAAYFAkgPbnMACgkQCG91qXPaRelq6QCfRUx7Sk/1VzqxzXlVOxprOnhb
+8RUAoIInx2L26Rtz5Uo5g5mrhBFF8fDk
+=n+vu
+-----END PGP SIGNATURE-----
