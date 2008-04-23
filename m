@@ -1,95 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/17/1
-Message-ID: <20080417073255.GR10078@fuse.inversepath.com>
-Date: Thu, 17 Apr 2008 07:32:55 +0000
-From: Andrea Barisani <lcars@...rt.org>
-To: ocert-announce@...ts.ocert.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: [oCERT-2008-004] multiple speex implementations insufficient boundary checks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/23/1
+Message-ID: <20080423022511.GA30457@openwall.com>
+Date: Wed, 23 Apr 2008 06:25:11 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: list: members vs. read-only subscribers
 Content-Type: text/plain; charset=utf-8
 
+On Tue, Apr 22, 2008 at 09:04:40AM -0400, Josh Bressers wrote:
+> Have the gears started turning that will make this happen yet?  I'm not in
+> a big rush, I just don't want this conversation to be forgotten.
 
-2008/04/17 #2008-004 multiple speex implementations insufficient boundary
-checks
+Thank you for pinging me, although the request was not forgotten -
+rather, it was queued.
 
-Description:
+Well, this turned out to be a trivial change to the ezmlm-gate line in
+the editor file; it's just that it was beyond the capabilities of
+ezmlm-make (so we'll need to remember to not lose this custom change
+when re-configuring the list later).
 
-The reference speex decoder from the Speex library performs insufficient
-boundary checks on a header structure read from user input, this has been
-reported in oCERT-2008-002 advisory.
+The list should now be message-moderated for everyone except for people
+(or rather, for their envelope-from addresses) who have subscribed or
+posted desirable messages until today.  As more people (or addresses)
+make desirable postings, we may be adding those to the "allow" list as
+well (or maybe not - this is up to us).
 
-Further investigation showed that several packages include similar code and
-are therefore vulnerable.
+Let's see how this works in practice.
 
-In order to prevent the usage of incorrect header processing reference code,
-the speex_packet_to_header() function has been modified to bound the returned
-mode values in Speex >= 1.2beta3.2. This change automatically fixes
-applications that use the Speex library dynamically.
-
-Affected version:
-
-gstreamer-plugins-good <= 0.10.8
-SDL_sound <= 1.0.1
-Speex <= 1.1.12 (speexdec)
-Sweep <= 0.9.2
-vorbis-tools <= 1.2.0
-VLC Media Player <= 0.8.6f
-xine-lib <= 1.1.11.1
-XMMS speex plugin
-
-Fixed version:
-
-gstreamer-plugins-good, >= 0.10.8 (patched in CVS)
-SDL_sound, patched in CVS
-Speex >= 1.2beta3.2 (patched in CVS)
-Sweep >= 0.9.3
-vorbis-tools, patched in CVS
-VLC Media Player, N/A
-xine-lib >= 1.1.12
-XMMS speex plugin, N/A
-
-Credit: see oCERT-2008-002, additionally we would like to thank Tomas Hoger
-from the Red Hat Security Response Team for his help in investigating the
-issue.
-
-CVE: CVE-2008-1686
-
-Timeline:
-2008-04-10: investigation of oCERT-2008-002 leads to discovery of more affected packages
-2008-04-10: Speex header processing code fixed in CVS
-2008-04-11: contacted upstream maintainers and affected vendors
-2008-04-11: gstreamer-plugins-good patched in CVS
-2008-04-11: sweep 0.9.3 released
-2008-04-11: SDL_sound patched in CVS
-2008-04-14: vorbis-tools patched in CVS
-2008-04-14: xine-lib 1.1.12 released
-2008-04-17: advisory release
-
-References:
-http://www.ocert.org/advisories/ocert-2008-2.html
-http://trac.xiph.org/changeset/14701
-http://webcvs.freedesktop.org/gstreamer/gst-plugins-good/ext/speex/gstspeexdec.c?r1=1.40&r2=1.41
-http://trac.metadecks.org/changeset/554
-http://svn.icculus.org/SDL_sound?view=rev&revision=537
-http://svn.icculus.org/SDL_sound?view=rev&revision=538
-http://trac.xiph.org/changeset/14728
-http://hg.debian.org/hg/xine-lib/xine-lib?cmd=changeset;node=66e1654718fb;style=gitweb
-
-Links:
-http://gstreamer.freedesktop.org/modules/gst-plugins-good.html
-http://icculus.org/SDL_sound
-http://www.speex.org
-http://www.metadecks.org/software/sweep/
-http://xiph.org
-http://www.videolan.org/vlc
-http://xinehq.de
-
-Permalink:
-http://www.ocert.org/advisories/ocert-2008-004.html
-
--- 
-Andrea Barisani |                Founder & Project Coordinator
-          oCERT | Open Source Computer Emergency Response Team
-
-<lcars@...rt.org>                         http://www.ocert.org
- 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
-        "Pluralitas non est ponenda sine necessitate"
+Alexander
