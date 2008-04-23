@@ -1,51 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/27/13
-Message-ID: <Pine.GSO.4.51.0807271839050.20336@faron.mitre.org>
-Date: Sun, 27 Jul 2008 18:39:48 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/23/10
+Message-ID: <Pine.GSO.4.51.0804231228270.10164@faron.mitre.org>
+Date: Wed, 23 Apr 2008 12:29:20 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: Re: CVE request: punbb < 1.2.19
+To: Jonathan Smith <smithj@...ethemallocs.com>
+cc: "Steven M. Christey" <coley@...us.mitre.org>, Florian Weimer <fw@...eb.enyo.de>, oss-security@...ts.openwall.com
+Subject: Re: CVE request:Perl bug #48156
 Content-Type: text/plain; charset=utf-8
 
 
-On Mon, 21 Jul 2008, Hanno [utf-8] Böck wrote:
-
->     *  Fixed an SMTP command injection vulnerability, discovered by Stefan
-> Esser.
-
-CVE-2008-3335
-
->     * Fixed an XSS issue in include/parser.php, discovered by Dan Crowley.
->     * Fixed several potential XSS vectors in moderate.php.
-
-Combined, these are CVE-2008-3336
-
->     * Fixed issue with database returning the same user on multiple pages of
-> the userlist, noticed by hcgtv.
-
-This sounds like a usability issue, not a security issue.
-
-- Steve
+removing vendor-sec just in case, since oss-security is archived.
 
 ======================================================
-Name: CVE-2008-3335
+Name: CVE-2008-1927
 Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3335
-Reference: CONFIRM:http://punbb.informer.com/
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1927
+Reference: MISC:http://rt.perl.org/rt3/Public/Bug/Display.html?id=48156
+Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=454792
 
-Unspecified vulnerability in PunBB before 1.2.19 allows remote
-attackers to inject arbitrary SMTP commands via unknown vectors.
-
-
-======================================================
-Name: CVE-2008-3336
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3336
-Reference: CONFIRM:http://punbb.informer.com/
-
-Multiple cross-site scripting (XSS) vulnerabilities in PunBB before
-1.2.19 allow remote attackers to inject arbitrary web script or HTML
-via (1) include/parser.php and (2) moderate.php.
+Double free vulnerability in Perl 5.8.8 allows context-dependent
+attackers to cause a denial of service (memory corruption and crash)
+via a crafted regular expression containing UTF8 characters.  NOTE:
+this issue might only be present on certain operating systems.
 
 
