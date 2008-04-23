@@ -1,51 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/04/9
-Message-ID: <Pine.GSO.4.51.0808041421020.23930@faron.mitre.org>
-Date: Mon, 4 Aug 2008 14:30:19 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/23/18
+Message-ID: <Pine.LNX.4.64.0804232213280.24155@forced.attrition.org>
+Date: Wed, 23 Apr 2008 22:15:46 +0000 (UTC)
+From: security curmudgeon <jericho@...rition.org>
 To: oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: Re: CVE request: Contenido < 4.8.7, < 4.6.24
+Subject: Re: web archives
 Content-Type: text/plain; charset=utf-8
 
 
-On Sat, 2 Aug 2008, Hanno [utf-8] Böck wrote:
+: Do I understand it correctly that your request is to not only list the 
+: subjects and authors on index pages, but also to provide versions of the 
+: index pages with different message grouping - by subject, author, and/or 
+: by thread?  Any suggestions on the URLs to use for these versions?
 
-> Changelog in 4.8 is missing, changelog in 4.6.24 states:
-> "- Bugfixes / Hotfixes zu u.a. CON-148, CON-150, CON-152
-> - diverse Hotfixes fuer potentielle Luecken"
-> (bugfixes/hotfixes for CON-148, CON-150, CON-152 and others, several hotfixes
-> for potential vulnerabilities)
->
-> I think CON-xxx is some kind of internal advisory numbering, but I found
-> nowhere what CON-xxx is.
+Message threading is very helpful to Steve/CVE and other VDBs. I'll let 
+him speak to his wishes obviously.
 
-I downloaded 4.8.7 and looked at the changelog, which says:
+>From the OSVDB side, if the URLs would use a year/month scheme at the 
+least, that would be ideal. We do not reference mail list archives like 
+SecurityFocus or MARC unless we have to, as their URLs aren't very 
+informative by themselves. 
+ 
+: Jonathan, jericho, and everyone else -
+: 
+: As to submitting this list to more third-party archives, while I 
+: appreciate this being done, I'd like to be given a chance to provide the 
+: archive with past messages.  It often takes more time to get those 
+: messages imported when the list is already submitted.  I've e-mailed 
+: Fyodor and the Neohapsis folks now.
 
-  [CON-XXX] - Some XSS/RFI Bugfixes
+It's no issue with Neohapsis. I've had them backfill archives in the 
+past, and they can do it trivially with the messages in several formats. 
+I had this in mind when I contacted them.
 
-The XSS and RFI lines up with a MILW0RM:5810 post on June 14, which
-produced CVE-2008-2912 for the RFI and CVE-2008-2911 for the XSS.
-
-HOWEVER, that might be just a coincidence.  Contenido 4.8.6 says
-"[CON-XXX] - Additional hot- and bugfixes added" and SECUNIA:30683 (which
-is associated with those two CVEs) says "upgrade to 4.8.6" - so according
-to Secunia, those two CVEs were fixed in 4.8.6, *NOT* 4.8.7.
-
-Then, release 4.8.5 says "[CON-152] - Security fixes in cronjobs" and
-"[CON-150] - Security fixes".  CVE-2008-2912 covers a lot of RFI issues in
-cronjobs, but it also covers some others.
-
-Release 4.8.5 also alludes to deprecating some tool scripts because they
-are "evil in productive environments" which sounds like security but
-doesn't even actually say so.
-
-There are also older Contenido CVE's that we haven't recorded vendor fixes
-for, so maybe Contenido is catching up... or maybe they're getting
-proactive and fixing new things.
-
-Any thoughts?  Typical CVE practice would be to split all these up based
-on affected version and allude to potential fixes for the existing CVEs,
-but that doesn't quite seem appropriate here.
-
-- Steve
+Brian
