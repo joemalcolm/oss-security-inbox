@@ -1,31 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/09/5
-Message-Id: <200809091443.53823.rbu@gentoo.org>
-Date: Tue, 9 Sep 2008 14:43:51 +0200
-From: Robert Buchholz <rbu@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/24/1
+Message-ID: <87k5iokud8.fsf@lillypad.riseup.net>
+Date: Wed, 23 Apr 2008 19:46:11 -0400
+From: Micah Anderson <micah@...eup.net>
 To: oss-security@...ts.openwall.com
-Subject: ssmtp =2.62 unitialized memory disclosure
+Subject: Re: CVE Request: inspircd
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+"Steven M. Christey" <coley@...us.mitre.org>
+writes:
 
-Maurice van der Pot of Gentoo reported a bug in ssmtp 2.62:
-The from_format() function in ssmtp.c will call strdup() on an 
-unitialized memory if the user's gecos is unset and "FromLineOverride" 
-is disabled in the configuration. This might disclose memory contents 
-by sending them off in the the "From:" field of an email or cause a 
-(client) crash.
+> On Tue, 22 Apr 2008, Micah Anderson wrote:
+>
+>>
+>> Versions prior to 1.1.17 of InspIRCd are vulnerable to a remotely
+>> triggerable buffer overflow which can lead to a Denial of Service
+>> (daemon crash) when the namesx and uhnames modules are loaded.
+>
+> The reference you pointed to is for a fix in 1.1.18, which suggests that
+> 1.1.17 is vulnerable.
 
-We're handling this as bug 234391 [ https://bugs.gentoo.org/234391 ].
-Patch: https://bugs.gentoo.org/attachment.cgi?id=165005
+Sorry for the confusion, that was my mistake.
 
-ssmtp 2.61 is not affected.
+> Thanks for the clarification of the issue - the vendor's post only alluded
+> to "security" with no additional details, which left a lot of vuln DBs
+> guessing.
 
-If anyone needs a CVE identifier, please speak up. We will handle this 
-low-impact issue without a GLSA.
+I was also guessing, thats why I sought clarification :)
 
+Micah
 
-Thanks,
-Robert
-
-Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
