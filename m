@@ -1,28 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/20/5
-Message-ID: <48335972.2010002@freethemallocs.com>
-Date: Tue, 20 May 2008 15:06:26 -0800
-From: Jonathan Smith <smithj@...ethemallocs.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com
-Subject: CVE request: mtr
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/23/17
+Message-ID: <20080423211032.GA1033@openwall.com>
+Date: Thu, 24 Apr 2008 01:10:32 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: list archive at Gmane
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+> On Sunday 24 February 2008, Solar Designer wrote:
+> > > ... I've also re-configured
+> > > oss-security to no longer set the X-No-Archive header (xvendor was
+> > > already configured that way).  The Gmane archive is now available at:
+> > >
+> > > 	http://dir.gmane.org/gmane.comp.security.oss.general
+> 
+> On Wed, Mar 05, 2008 at 11:53:16AM +0100, Robert Buchholz wrote:
+> > Unfortunately, all messages prior to this change of setting will expire 
+> > and be removed from Gmane on March 9 ...
 
-http://seclists.org/fulldisclosure/2008/May/0488.html has all the details.
+On Sun, Mar 09, 2008 at 07:12:36PM +0300, Solar Designer wrote:
+> Lars (of Gmane) has just informed me that the "Expires:" message is
+> wrong, and those messages won't expire.  This is a bit confusing, but I
+> guess we can live with it.
 
-https://issues.rpath.com/browse/RPL-2558 is the rpath issue.
+Well, it turns out that Lars was wrong (and he already confirmed it) -
+the messages have expired.  Unfortunately, according to Lars, to get the
+messages re-imported I'd have to mangle their Message-IDs.  I'm afraid
+that there's no way to do this correctly - even if I identify just the
+missing messages, change Message-IDs on them, and change In-Reply-To and
+References on messages in my local archive accordingly, that won't help
+to get the missing messages properly threaded with those that are still
+seen at Gmane (and are not to be re-imported).  Perhaps the only
+solution would be to drop and re-import the entire list into Gmane.
 
-Thanks in advance.
+I don't think we care about those missing messages from February that
+much (and they're seen just fine on other archives of the list), so I am
+not going to do anything about this (and bother Lars with it again).
 
-	smithj
+Sorry about that.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEARECAAYFAkgzWXIACgkQCG91qXPaRelxLQCeJbiX9xTsWm7FkgHV63cu1ckS
-v/sAniIDJ2ZZ09zGqtHgCnzkaJEexrJF
-=2CQe
------END PGP SIGNATURE-----
+Alexander
