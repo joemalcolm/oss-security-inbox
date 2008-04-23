@@ -1,41 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/27/1
-Message-ID: <etHD3Mp/czHxiLYRaZZvRBspVj0@DnrfhFPe1KmBT9SMnrHVxzpiU9A>
-Date: Sun, 28 Dec 2008 00:02:51 +0300
-From: Eygene Ryabinkin <rea-sec@...elabs.ru>
-To: oss-security@...ts.openwall.com
-Cc: atomo64+debian@...il.com
-Subject: Re:  CVE id request: verlihub
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/23/12
+Message-ID: <480F70FD.1050008@freethemallocs.com>
+Date: Wed, 23 Apr 2008 09:25:17 -0800
+From: Jonathan Smith <smithj@...ethemallocs.com>
+To: fyodor@...ecure.org
+CC: oss-security@...ts.openwall.com
+Subject: seclists.org archive request: oss-security
 Content-Type: text/plain; charset=utf-8
 
-Steven, good day.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Wed, Dec 24, 2008 at 12:54:14PM -0500, Steven M. Christey wrote:
-> ======================================================
-> Name: CVE-2008-5706
-> Status: Candidate
-> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5706
-> Reference: MILW0RM:7183
-> Reference: URL:http://www.milw0rm.com/exploits/7183
-> Reference: MLIST:[oss-security] 20081216 CVE id request: verlihub
-> Reference: URL:http://openwall.com/lists/oss-security/2008/12/17/16
-> Reference: MISC:http://bugs.debian.org/506530
-> 
-> The cTrigger::DoIt function in src/ctrigger.cpp in the trigger
-> mechanism in the daemon in Verlihub 0.9.8d-RC2 and earlier allows
-> local users to overwrite arbitrary files via a symlink attack on the
-> /tmp/trigger.tmp temporary file.
+oss-security is a relatively new mailing list dedicated to... open
+source software security. It was the offspring of vendor-sec, and is
+intended only for public information. We would appreciate being
+archived/mirrored/whatever on seclists.org.
 
-What about remote command execution via unsanitized user input?  It
-will work only if the server had executable triggers and 'allow_exec'
-is set to 1.  By the way, CVE-2008-5706 will be triggered ;)) only for
-this case too.
+List charter, including subscription information:
+http://oss-security.openwall.org/wiki/mailinglists/oss-security-charter
 
-If anyone is interested, I had reworked the original patch at MilW0rm.
-Original patch was mangling results of std::string.c_str() and
-sanitizing not only user-supplied part, but the whole command.  The
-result is attached and comments are very welcome.
--- 
-Eygene
+Archive: http://www.openwall.com/lists/oss-security/
 
-View attachment "patch-CVE-2008-5706" of type "text/plain" (2388 bytes)
+	smithj
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEARECAAYFAkgPcP0ACgkQCG91qXPaRelWlQCffC0Pnd2tp2yOMTQNWa+Wz6VT
+DuIAoITDtihSMUtij7EtBJLN54VjlLqu
+=gjuP
+-----END PGP SIGNATURE-----
