@@ -1,19 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/22/3
-Message-ID: <Pine.GSO.4.51.0805220159510.15003@faron.mitre.org>
-Date: Thu, 22 May 2008 02:01:05 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: Jonathan Smith <smithj@...ethemallocs.com>, chris@...ry.beasts.org
-Subject: Re: vsftpd CVE-2007-5962 (Red Hat / Fedora specific)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/23/2
+Message-ID: <480EAFDC.5070909@freethemallocs.com>
+Date: Tue, 22 Apr 2008 19:41:16 -0800
+From: Jonathan Smith <smithj@...ethemallocs.com>
+To: Solar Designer <solar@...nwall.com>
+CC: oss-security@...ts.openwall.com
+Subject: Re: list: members vs. read-only subscribers
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Wed, 21 May 2008, Josh Bressers wrote:
+Solar Designer wrote:
+| The list should now be message-moderated for everyone except for people
+| (or rather, for their envelope-from addresses) who have subscribed or
+| posted desirable messages until today.  As more people (or addresses)
+| make desirable postings, we may be adding those to the "allow" list as
+| well (or maybe not - this is up to us).
+|
+| Let's see how this works in practice.
 
-> The leak is CVE-2007-5962.  deny_hosts not working did not get a CVE id.
+Spiffy. Thanks for taking the time to set this up.
 
-Should it?  If an admin configures deny_hosts in some fashion that vsftpd
-doesn't implement correctly, that might be worthy of a CVE.
+So, this means that anyone from this point on who subscribes to the list
+does so effectively as read-only, and messages they send will be held
+for moderation. Similarly, folks who aren't subscribed at all will be
+held for moderation, but not rejected automatically. Folks in the white
+list (whether or not they are subscribed) can post with no delay, and
+everyone who has posted a message prior to today is in the white list.
+Right?
 
-- Steve
+	smithj
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEARECAAYFAkgOr9wACgkQCG91qXPaRekkGACdFGEJR+jLmgY2cbPyAb/9l/FC
+GBkAnjl8Kc7SDz8FDIRin0/S9flE1sv0
+=1NLA
+-----END PGP SIGNATURE-----
