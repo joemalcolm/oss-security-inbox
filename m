@@ -1,68 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/05/3
-Message-ID: <72daeffd0811051127h3e8d80b2vd046add3768879a4@mail.gmail.com>
-Date: Wed, 5 Nov 2008 11:27:16 -0800
-From: "Chris Evans" <scarybeasts@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/23/9
+Message-ID: <Pine.GSO.4.51.0804231218580.10164@faron.mitre.org>
+Date: Wed, 23 Apr 2008 12:19:06 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...re.org>, "Will Drewry" <redpig@...rt.org>
-Subject: Re: CVE Request - Python string expandtabs
+cc: Karel Zak <kzak@...hat.com>, Steve Grubb <sgrubb@...hat.com>, Miloslav Trmac <mitr@...hat.com>, coley@...re.org
+Subject: Re: audit log injection attack via login
 Content-Type: text/plain; charset=utf-8
 
-Adding in Will....
 
-... yes, this sounds accurate. Searching through my mail, my colleague
-Will found that the original expandtabs() fix was insufficient (thanks
-for the catch Will!).
+======================================================
+Name: CVE-2008-1926
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1926
+Reference: MISC:http://git.kernel.org/?p=utils/util-linux-ng/util-linux-ng.git;a=blobdiff;f=login-utils/login.c;h=230121316d953c59e7842c1325f6e9f326a37608;hp=aad27794327c60391b5148b367d2c79338fc6ee4;hb=8ccf0b253ac0f4f58d64bc9674de18bff5a88782;hpb=3a4a13b12a8065b0b5354686d2807cce421a9973
+Reference: CONFIRM:http://git.kernel.org/?p=utils/util-linux-ng/util-linux-ng.git;a=commit;h=8ccf0b253ac0f4f58d64bc9674de18bff5a88782
 
-On Wed, Nov 5, 2008 at 3:10 AM, Jan Lieskovsky <jlieskov@...hat.com> wrote:
-> Hello!
->
->  yesterday looked yet at the Python issues reported
-> by Chris Evans at:
->
-> http://scary.beasts.org/security/CESA-2008-008.html
->
-> and found out, the issue:
->
-> * Integer overflow in string expandtabs operation
->
-> *  PoC: s = 't\tt\t'
->        str.expandtabs(s, 2147483647)
->
->  still lacks its own separate CVE identifier.
->
->  Different issue than CVE-2008-2315.
->
->  Reasoning:
->  =========
->
->  Integer overflows in stringobject.c and unicodeobject.c
->  in Python 2.5.2 are part of CVE-2008-2315, but
->  part of CVE-2008-2315 is also mention about patch:
->
->  http://bugs.gentoo.org/attachment.cgi?id=159418&action=view
->
->  which by itself is not sufficient to resolve this flaw.
->
->  Upstream has applied the following patch:
->  =========================================
->
->  http://svn.python.org/view?rev=61350&view=rev
->
->  Have checked by above PoC that applying this patch
->  solves this vulnerability.
->
->  Affected Python versions: 2.2.3 <= x <= 2.5.1
->  =========================
->
-> Chris, can you confirm my investigation?
->
-> Steve, could you allocate a new CVE id?
->
-> Thanks, Jan.
->
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
->
->
->
+Argument injection vulnerability in login (login-utils/login.c) in
+util-linux-ng 2.14 and earlier makes it easier for remote attackers to
+hide activities by modifying portions of log events, as demonstrated
+by appending an "addr=" statement to the login name, aka "audit log
+injection."
+
+
