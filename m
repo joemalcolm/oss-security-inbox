@@ -1,36 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/12/9
-Message-ID: <Pine.GSO.4.51.0805121610050.12683@faron.mitre.org>
-Date: Mon, 12 May 2008 16:14:19 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/23/14
+Message-ID: <Pine.LNX.4.64.0804231839080.4890@forced.attrition.org>
+Date: Wed, 23 Apr 2008 18:39:30 +0000 (UTC)
+From: security curmudgeon <jericho@...rition.org>
 To: oss-security@...ts.openwall.com
-cc: wordnet@...nceton.edu
-Subject: Re: Multiples vulnerabilities in wordnet
+Subject: Re: seclists.org archive request: oss-security
 Content-Type: text/plain; charset=utf-8
 
 
-I've assigned CVE-2008-2149 to just deal with the "overflow in a long
-command line" as reported for the searchwn function.  This is based on the
-comment in the Gentoo bug report that "I have seen that Wordnet is
-sometimes used as a backend in e.g. web applications," otherwise might
-have dismissed it as just a regular command-line overflow.  (Increasing
-application connectivity is making this distinction harder, though.)
-
-If additional detailed research is performed, then other CVEs could be
-assigned accordingly.
-
-- Steve
-
-======================================================
-Name: CVE-2008-2149
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2149
-Reference: CONFIRM:https://bugs.gentoo.org/show_bug.cgi?id=211491
-
-Stack-based buffer overflow in the searchwn function in Wordnet 2.0,
-2.1, and 3.0 might allow context-dependent attackers to execute
-arbitrary code via a long command line option.  NOTE: this issue
-probably does not cross privilege boundaries except in cases in which
-Wordnet is used as a back end.
+I made the same request to http://archives.neohapsis.com/ today.
 
 
+On Wed, 23 Apr 2008, Jonathan Smith wrote:
+
+: -----BEGIN PGP SIGNED MESSAGE-----
+: Hash: SHA1
+: 
+: oss-security is a relatively new mailing list dedicated to... open
+: source software security. It was the offspring of vendor-sec, and is
+: intended only for public information. We would appreciate being
+: archived/mirrored/whatever on seclists.org.
+: 
+: List charter, including subscription information:
+: http://oss-security.openwall.org/wiki/mailinglists/oss-security-charter
+: 
+: Archive: http://www.openwall.com/lists/oss-security/
+: 
+: 	smithj
+: 
+: 
+: -----BEGIN PGP SIGNATURE-----
+: Version: GnuPG v2.0.9 (GNU/Linux)
+: 
+: iEYEARECAAYFAkgPcP0ACgkQCG91qXPaRelWlQCffC0Pnd2tp2yOMTQNWa+Wz6VT
+: DuIAoITDtihSMUtij7EtBJLN54VjlLqu
+: =gjuP
+: -----END PGP SIGNATURE-----
+: 
