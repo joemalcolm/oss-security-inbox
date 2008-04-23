@@ -1,21 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/20/1
-Message-ID: <87prskrffl.fsf@mid.deneb.enyo.de>
-Date: Sun, 20 Apr 2008 12:25:34 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/23/5
+Message-ID: <32428.1208949174@devserv.devel.redhat.com>
+Date: Wed, 23 Apr 2008 07:12:54 -0400
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: Re: CSRF vulnerability in ikiwiki
+Subject: Re: list: members vs. read-only subscribers
 Content-Type: text/plain; charset=utf-8
 
-* Florian Weimer:
+On 23 April 2008, Solar Designer wrote:
+> On Tue, Apr 22, 2008 at 09:04:40AM -0400, Josh Bressers wrote:
+> > Have the gears started turning that will make this happen yet?  I'm not in
+> > a big rush, I just don't want this conversation to be forgotten.
+> 
+> Thank you for pinging me, although the request was not forgotten -
+> rather, it was queued.
+> 
+> Well, this turned out to be a trivial change to the ezmlm-gate line in
+> the editor file; it's just that it was beyond the capabilities of
+> ezmlm-make (so we'll need to remember to not lose this custom change
+> when re-configuring the list later).
+> 
+> The list should now be message-moderated for everyone except for people
+> (or rather, for their envelope-from addresses) who have subscribed or
+> posted desirable messages until today.  As more people (or addresses)
+> make desirable postings, we may be adding those to the "allow" list as
+> well (or maybe not - this is up to us).
+> 
+> Let's see how this works in practice.
+> 
 
-> This is:
->
-> <http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=475445>
->
-> Steven, could we get a CVE, please?  Full description follows (version
-> 1.33.5 has not yet been released, but will follow once I've got a CVE
-> 8-).
+This is wonderful, thank you.  I shall try to update the wiki later today.
 
-Nevermind, I got CVE-2008-0165 from Debian's pool.
+-- 
+    JB
