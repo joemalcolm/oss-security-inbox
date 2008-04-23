@@ -1,27 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/12/1
-Message-ID: <48C9929C.5040205@ubuntu.com>
-Date: Thu, 11 Sep 2008 23:50:20 +0200
-From: Emanuele Gentili <emgent@...ntu.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/23/13
+Message-ID: <Pine.LNX.4.64.0804231825090.4890@forced.attrition.org>
+Date: Wed, 23 Apr 2008 18:28:00 +0000 (UTC)
+From: security curmudgeon <jericho@...rition.org>
 To: oss-security@...ts.openwall.com
-CC: coley@...re.org
-Subject: CVE request for Joomla multiple vuln.
+Subject: Re:  CVE Request: inspircd
 Content-Type: text/plain; charset=utf-8
 
-http://developer.joomla.org/security/news/271-20080901-core-jrequest-variable-injection.html
-http://developer.joomla.org/security/news/272-20080902-core-random-number-generation-flaw.html
-http://developer.joomla.org/security/news/273-20080903-core-commailto-spam.html
-http://developer.joomla.org/security/news/274-20080904-core-redirect-spam.html
 
-E.
+: > Versions prior to 1.1.17 of InspIRCd are vulnerable to a remotely
+: > triggerable buffer overflow which can lead to a Denial of Service
+: > (daemon crash) when the namesx and uhnames modules are loaded.
+: 
+: The reference you pointed to is for a fix in 1.1.18, which suggests that 
+: 1.1.17 is vulnerable.
+: 
+: Thanks for the clarification of the issue - the vendor's post only 
+: alluded to "security" with no additional details, which left a lot of 
+: vuln DBs guessing.
 
--- 
-Emanuele Gentili                      | http://launchpad.net/~emgent
-emgent@...ntu.com                     | Ubuntu Security Developer
-emgent@...dowmaker.info               | Window Maker Developer
-emgent@...ache.org                    | Rapache Developer
-emanuele.gentili@...munity.joomla.org | Joomla! Security Developer
+: Name: CVE-2008-1925
 
-Key fingerprint: F4B7 0793 069A 217E BB9F 8925 E0AC 34C2 2201 1E9A
-gpg --keyserver keyserver.ubuntu.com --recv-keys 22011E9A
+This is OSVDB 43926.
 
+A few weeks back, I dug into their changelogs and found a considerable 
+amount of other vulnerabilities. Not sure how retro you want to go but the 
+following may need CVEs at some point:
+
+43977	2007-07-30		InspIRCd w/o m_safelist Secret Channel Disclosure 
+
+43976	2007-07-21		InspIRCd MAXBUF Unspecified Overflow 
+
+43975	2007-07-21		InspIRCd Stripcolor Unspecified Security Issue 
+
+43948	2007-03-13		InspIRCd Server-to-server Malformed NICK Remote DoS 
+
+43947	2007-01-20		InspIRCd Unspecified Temp File Symlink Issue 
+
+43946	2006-11-12		InspIRCd Multiple Unspecified Overflows 
+
+43945	2006-07-29		InspIRCd m_timedbans.so Unspecified Issue 
+
+43942	2006-07-04		InspIRCd IP Packet Handling Oper Flood Remote DoS 
+
+43943	2006-07-04		InspIRCd Multiple Unspecified TCP Binding Handling Issues 
+
+43939	2006-02-19		InspIRCd cmd_modules Unspecified Overflow 
+
+43938	2005-05-27		InspIRCd Installation Binary Permission Weakness 
+
+43936	2005-04-09		InspIRCd MODE / TOPIC Commands Unspecified Issue 
+
+43937	2005-04-09		InspIRCd Linking Server Password Validation Failure
