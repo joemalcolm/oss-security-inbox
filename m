@@ -1,35 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/30/1
-Message-ID: <0807300958030.19809@mjc.redhat.com>
-Date: Wed, 30 Jul 2008 10:01:00 +0100 (BST)
-From: Mark J Cox <mjc@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/23/16
+Message-ID: <20080423205526.GA866@openwall.com>
+Date: Thu, 24 Apr 2008 00:55:26 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: condor < 7.0.4
+Subject: Re: web archives
 Content-Type: text/plain; charset=utf-8
 
-Needs CVE name
+On Wed, Apr 23, 2008 at 12:01:32PM -0400, Steven M. Christey wrote:
+> The archives as stored at
+> http://www.openwall.com/lists/oss-security/2008/04/ etc. only list posts
+> using sequence numbers.  Would it be easy to list these by subject line,
+> author, and/or in a threaded basis?  I find it hard to navigate when I'm
+> looking for a particular post.
 
-https://lists.cs.wisc.edu/archive/condor-world/2008q2/msg00003.shtml
-leading to:
-http://www.cs.wisc.edu/condor/manual/v7.0/8_3Stable_Release.html
+There's a to-do item for the blists software that powers these archives
+to store message Subjects and Froms in the index file and to display
+them on index pages as well as on prev/next links.  There are some
+subtle issues with implementing this, but it should be done - and your
+request may speed this up.
 
- 	This release fixes a problem causing possible incorrect handling of wild
- 	cards in authorization lists. Examples of the configuration variables that
- 	specify authorization lists are
+In case anyone is curious (or would like to join the project?), the
+source code for blists is now public at:
 
- 	  ALLOW_WRITE
- 	  DENY_WRITE
- 	  HOSTALLOW_WRITE
- 	  HOSTDENY_WRITE
+	http://cvsweb.openwall.com/blists
 
- 	If a configuration variable uses the asterisk character (*) in
- 	configuration variables that specify the authorization policy, it is
- 	advisable to upgrade. This is especially true for the use of wild cards in
- 	any DENY list, since this problem could result in access being allowed,
- 	when it should have been denied. This issue affects all previous versions
- 	of Condor.
+Do I understand it correctly that your request is to not only list the
+subjects and authors on index pages, but also to provide versions of the
+index pages with different message grouping - by subject, author, and/or
+by thread?  Any suggestions on the URLs to use for these versions?
 
-Thanks, Mark
---
-Mark J Cox / Red Hat Security Response Team
+BTW, as to grouping by thread, there are already thread-prev and/or
+thread-next links on messages that are detected as being part of a
+thread, and the detection is based on Message-ID, In-Reply-To, and
+References headers.
+
+Jonathan, jericho, and everyone else -
+
+As to submitting this list to more third-party archives, while I
+appreciate this being done, I'd like to be given a chance to provide the
+archive with past messages.  It often takes more time to get those
+messages imported when the list is already submitted.  I've e-mailed
+Fyodor and the Neohapsis folks now.
+
+Thanks,
+
+Alexander
