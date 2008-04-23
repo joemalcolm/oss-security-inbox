@@ -1,42 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/03/1
-Message-ID: <20080603061530.GA6145@suse.de>
-Date: Tue, 3 Jun 2008 08:15:30 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/23/7
+Message-ID: <Pine.GSO.4.51.0804231158190.10164@faron.mitre.org>
+Date: Wed, 23 Apr 2008 12:01:32 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSH key blacklisting
+Subject: web archives
 Content-Type: text/plain; charset=utf-8
 
 
-Hi,
+The archives as stored at
+http://www.openwall.com/lists/oss-security/2008/04/ etc. only list posts
+using sequence numbers.  Would it be easy to list these by subject line,
+author, and/or in a threaded basis?  I find it hard to navigate when I'm
+looking for a particular post.
 
-On Tue, Jun 03, 2008 at 12:37:59AM +0100, Tim Brown wrote:
-
-> AFAIK, SSH wasn't born of RFCs but rather the RFCs were born from an 
-> implementation.  That being said, I don't consider an open source 
-One needs to dig in history but I think thats not quite true
-for SSH2. At least the SSH clients/servers today are written
-to implement the RFC.
-
-> implementation (of a new standard) to be proprietry but rather a reference 
-> implementation which others can choose to follow (or not).  Others may beg to 
-When I said "should not implement proprietary stuff" it was not meant
-that they are actually doing it today. Rather I acknowledged that
-it indeed meets the RFC quite well.
-
-Blacklisting certain keys is probably not against the RFC,
-but it would be better to specify such additional security
-measurement in the RFC as well. Especially the point in time when it has
-to happen. I'd prefer blacklisting before the key
-is checked against the authorized_hosts file. (as it happens
-with the blacklist patch in SSH2 pubkey authentication)
-
-Sebastian
-
--- 
-~
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-~ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
-
+Thanks for the consideration,
+Steve
