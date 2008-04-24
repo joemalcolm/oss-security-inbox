@@ -1,39 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/26/4
-Message-Id: <200811270022.08443.rbu@gentoo.org>
-Date: Thu, 27 Nov 2008 00:21:54 +0100
-From: Robert Buchholz <rbu@...too.org>
-To: oss-security@...ts.openwall.com
-Cc: Jamie Strandboge <jamie@...onical.com>
-Subject: Re: CVE request: jhead
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/24/2
+Message-ID: <87skxbghs6.fsf@mid.deneb.enyo.de>
+Date: Thu, 24 Apr 2008 21:43:53 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: Jonathan Smith <smithj@...ethemallocs.com>,  oss-security@...ts.openwall.com
+Subject: Re: CVE request:Perl bug #48156
 Content-Type: text/plain; charset=utf-8
 
+* Steven M. Christey:
 
-On Wednesday 22 October 2008, Steven M. Christey wrote:
+> removing vendor-sec just in case, since oss-security is archived.
+>
 > ======================================================
-> Name: CVE-2008-4640
-...
-> The DoCommand function in jhead.c in Matthias Wandel jhead 2.84 and
-> earlier allows local users to delete arbitrary files via vectors
-> involving a modified input filename in which (1) a final "z"
-> character is replaced by a "t" character or (2) a final "t" character
-> is replaced by a "z" character.
-...
-> Name: CVE-2008-4641
-...
-> The DoCommand function in jhead.c in Matthias Wandel jhead 2.84 and
-> earlier allows attackers to execute arbitrary commands via shell
-> metacharacters in unspecified input.
+> Name: CVE-2008-1927
+> Status: Candidate
+> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1927
+> Reference: MISC:http://rt.perl.org/rt3/Public/Bug/Display.html?id=48156
+> Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=454792
+>
+> Double free vulnerability in Perl 5.8.8 allows context-dependent
+> attackers to cause a denial of service (memory corruption and crash)
+> via a crafted regular expression containing UTF8 characters.  NOTE:
+> this issue might only be present on certain operating systems.
 
-
-These two issues have been resolved in the current "jhead-latest.tar.gz" 
-distributed on the upstream site. Both Ubuntu and Debian have renamed 
-one version of this file to be "2.85" whereas upstream has not yet 
-released any 2.85 version. Upstream stated that they will release a 
-2.85 not before next year, so anyone who has this issue open can either 
-extract patches, package the snapshot or wait.
-
-
-Robert
-
-Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
+Oops, I think this is a heap overflow, not a double-free vulnerability.
+The GNU libc error message which is triggered by the heap corruption can
+be a bit misleading.
