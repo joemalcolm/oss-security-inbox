@@ -1,24 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/18/1
-Message-ID: <969559020.1179271221698303548.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 17 Sep 2008 20:38:23 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/25/2
+Message-ID: <31249.1209148771@devserv.devel.redhat.com>
+Date: Fri, 25 Apr 2008 14:39:31 -0400
 From: Josh Bressers <bressers@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: coley@...re.org
-Subject: CVE Request (mercurial)
+To: oss-security@...ts.openwall.com
+Subject: Re: list: members vs. read-only subscribers
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
+On 23 April 2008, Solar Designer wrote:
+> 
+> Josh - now that the list setup has been restricted like you wanted, are
+> you going to work on an announcement suitable for posting to Bugtraq?
+> 
 
-Looks like there's one more flaw in Mercurial we missed:
-http://www.selenic.com/mercurial/wiki/index.cgi/WhatsNew#head-905b8adb3420a77d92617e06590055bd8952e02b
+Just so nobody thinks I missed this,
 
-* hgweb: fix "allowpull" permission being ignored when pulling from hgweb
+It's been a very busy week for me, so I've not started on this yet.  I'll
+try to draft something up this weekend or early next week.  I have some
+ideas.
 
-I admit I don't completely understand it.  rPath seems to have a little more info:
-https://issues.rpath.com/browse/RPL-2753
-
-Thanks
+Thanks.
 
 -- 
     JB
