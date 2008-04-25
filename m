@@ -1,52 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/30/9
-Message-ID: <20080630215449.GJ11562@severus.strandboge.com>
-Date: Mon, 30 Jun 2008 17:54:49 -0400
-From: Jamie Strandboge <jamie@...onical.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: patch sets for recent ruby vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/25/1
+Message-ID: <20080425130449.GA14320@suse.de>
+Date: Fri, 25 Apr 2008 15:04:49 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: oss-security@...ts.openwall.com, coley@...re.org
+Subject: CVE request: licq denial of service
 Content-Type: text/plain; charset=utf-8
 
------ Forwarded message from Shugo Maeda <security@...y-lang.org> -----
+Hi Stephen, folks,
 
-Date: Thu, 26 Jun 2008 12:16:52 +0900
-From: Shugo Maeda <security@...y-lang.org>
-To: Jamie Strandboge <jamie@...onical.com>
-Cc: security@...ntu.com
-Subject: Re: patch sets for recent ruby vulnerabilities
+licq can be made to crash with more than 1024 connections,
+please assign a CVE id...
 
-Hello,
+http://seclists.org/bugtraq/2008/Apr/0100.html
+http://www.securityfocus.com/bid/28679
 
-2008/6/25 Jamie Strandboge <jamie@...onical.com>:
->> ------------------------------------------------------------------------
->> r17530 | nobu | 2008-06-22 07:16:45 +0900 (Sun, 22 Jun 2008) | 2 lines
->> Changed paths:
->>    M /branches/ruby_1_8/ChangeLog
->>    M /branches/ruby_1_8/string.c
->>
->> * string.c (str_buf_cat): check for self concatenation.
->>
-> Without having dived into the code yet, is this the fix for the
-> regressions with rails and others?
+Was confirmend and fixed by licq team:
+http://www.licq.org/ticket/1623
+http://www.licq.org/changeset/6146
 
-No, it's not.
-The following commit may be the cause of the problems with Rails.
-
-------------------------------------------------------------------------
-r15856 | matz | 2008-03-30 00:47:54 +0900 (Sun, 30 Mar 2008) | 2 lines
-Changed paths:
-   M /branches/ruby_1_8/ChangeLog
-   M /branches/ruby_1_8/class.c
-
-* class.c (clone_method): should copy cref as well.
-  [ruby-core:15833]
-
+Ciao, Marcus
 -- 
-Shugo Maeda
-
------ End forwarded message -----
--- 
-Ubuntu Security Engineer     | http://www.ubuntu.com/
-Canonical Ltd.               | http://www.canonical.com/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (190 bytes)
+Working, but not speaking, for the following german company:
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
