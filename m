@@ -1,18 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/08/2
-Message-ID: <0805081024450.11471@mjc.redhat.com>
-Date: Thu, 8 May 2008 10:28:12 +0100 (BST)
-From: Mark J Cox <mjc@...hat.com>
-To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE-2008-0352 is a dup of CVE-2007-4567
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/27/1
+Message-ID: <20080427115945.GL24538@console-pimps.org>
+Date: Sun, 27 Apr 2008 12:59:45 +0100
+From: Matt Fleming <mattjfleming@...glemail.com>
+To: coley@...us.mitre.org
+Cc: oss-security@...ts.openwall.com
+Subject: CVE request: horde-kronolith-2.1.7 XSS in addevent.php
 Content-Type: text/plain; charset=utf-8
 
-> I believe CVE-2008-0352 is an accidental dup of CVE-2007-4567.  The
-> referenced 2.6.21.2 commit[1] matches the commit used to originally
-> address CVE-2007-4567 in Ubuntu's 2.6.20-based kernel[2].
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Agreed.  Steve mentioned this to a few vendors back in Feb and we agreed 
-that they were duplicates for the same issue.
+Hi guys,
 
-Mark
+kronolith-2.1.7 is vulnerale to a cross-site scripting attack because
+input passed to the "url" parameter in the file addevent.php is not 
+properly sanitized. 
+
+Can you please assign a CVE id?
+
+http://forum.aria-security.com/showthread.php?t=49
+https://bugs.gentoo.org/show_bug.cgi?id=219304
+http://secunia.com/advisories/29920/
+
+Thanks,
+Matt
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.8 (NetBSD)
+
+iQEcBAEBAgAGBQJIFGqxAAoJEK3y1f69VxYbv/kH/3Phg+1xuv3pLc7ZnrS48J2e
+k8PRTzpdkgS/3bE1jtjfGWICoHOKu6/N9Gv2RYmWpWl2ATjJ9r/JVsjOpYdhS9Qm
++tRM8O5vWHnIAuhuSMNx+BOVrUJtwcNg27dlhlC1KJyGjgaPAO892uUJfXAti4fW
+vQuCueNgnQlF4BI1oagHk9cZ8y2BpbSPa4TknrQV5NdrsN/46fk6Lm9v6aVLUtQv
+hZB+HwlWqT2/1Nhb2JAHnYcE4ZlntlFDVQJnLkhZnXPuRyOIYVHNoKm9OZ1kXdBE
+5IY0sJ3yeJnXTL49IcHf+vMbyTIcK8e6JZq0ipfMSDbOH13pc12XXbhkXtjTznU=
+=xezF
+-----END PGP SIGNATURE-----
