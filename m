@@ -1,33 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/17/1
-Message-ID: <20080717211052.GA14420@shadow.in.ua>
-Date: Fri, 18 Jul 2008 00:10:52 +0300
-From: Michail Litvak <mci@....openwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/28/1
+Message-ID: <20080428103553.GF5671@ngolde.de>
+Date: Mon, 28 Apr 2008 12:35:53 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Cc: chris@...ry.beasts.org
-Subject: Re: vsftpd CVE-2007-5962 (Red Hat / Fedora specific)
+Subject: Re: CVE request: insecure X11 handling in ltsp
 Content-Type: text/plain; charset=utf-8
 
-Hello Jonathan Smith! 
-
- Wed, May 21, 2008 at 11:34:42AM -0800, smithj wrote about "Re: [oss-security] vsftpd CVE-2007-5962 (Red Hat / Fedora specific)": 
-
-> Tomas Hoger wrote:
-> | This is just a heads-up.  We are releasing updated vsftpd packages
-> | containing a fix for a minor memory leak identified by CVE-2007-5962.
+Hi Steve,
+* Steven M. Christey <coley@...us.mitre.org> [2008-03-12 21:57]:
+> On Tue, 11 Mar 2008, Nico Golde wrote:
+> > Due to passing the -ac option to the X server in ltsp it is possible for
+> > any attacker knowing the victims ip address and the display number to
+> > read keystrokes on the client and display client windows.
 > 
-> The memory leak itself is CVE-2007-5962? Or is the CVE for the original
-> issue where deny_hosts didn't work as expected? It doesn't seem to be
-> public.
+> CVE will be filled in later.
+> 
+> Use CVE-2008-1293
 
-As I understand RH released patch to fix problem with deny_file
-statement (not hosts) -- https://bugzilla.redhat.com/show_bug.cgi?id=174764
-
-But introduce memory leak (CVE-2007-5962) and release package with
-fixed version of their patch.
-
-Please correct me if I make mistake, but seems this is a typo and
-You mean deny_file, not deny_hosts.
-
+This item is still on status RESERVED, is that on purpose?
+Kind regards
+Nico
 -- 
-//ShaD0w
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
