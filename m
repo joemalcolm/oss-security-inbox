@@ -1,18 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/03/4
-Message-ID: <20080903144913.GR31241@linsec.ca>
-Date: Wed, 3 Sep 2008 08:49:13 -0600
-From: Vincent Danen <vdanen@...sec.ca>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/29/1
+Message-ID: <20080429212419.GG25892@ngolde.de>
+Date: Tue, 29 Apr 2008 23:24:19 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: django CSRF vuln
+Subject: CVE id request: wordpress
 Content-Type: text/plain; charset=utf-8
 
-I think this one needs a CVE name:
+Hi,
+Can I get a CVE id for a privilege escalation in wordpress:
+http://trac.wordpress.org/ticket/4748
 
-http://www.djangoproject.com/weblog/2008/sep/02/security/
+Fix: http://trac.wordpress.org/changeset/6029
+
+The fix is included in the 2.2.3 release:
+http://trac.wordpress.org/changeset?old_path=tags%2F2.2.2&old=6063&new_path=tags%2F2.2.3&new=6063#file10
+
+Cheers
+Nico
 
 -- 
-Vincent Danen @ http://linsec.ca/
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
 Content of type "application/pgp-signature" skipped
