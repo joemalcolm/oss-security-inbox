@@ -1,24 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/05/5
-Message-ID: <20080405085702.GH26507@openwall.com>
-Date: Sat, 5 Apr 2008 12:57:02 +0400
-From: "(GalaxyMaster)" <galaxy@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/29/2
+Message-Id: <200804300046.49698.hanno@hboeck.de>
+Date: Wed, 30 Apr 2008 00:46:46 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: wiki: search for FIXME tags (Was: announcing oCERT & oss-security to Bugtraq & f-d)
+Cc: coley@...re.org
+Subject: CVE request: egroupware
 Content-Type: text/plain; charset=utf-8
 
-Josh,
+http://www.egroupware.org/
 
-On Fri, Apr 04, 2008 at 08:27:31PM -0400, Josh Bressers wrote:
+eGroupWare 1.4.004 FCKeditor update & security release
+Eingetragen von Ralf Becker am 2008/04/15 - 17:46
 
-> I'd like to see us work on the wiki content a bit more.  Perhaps a todo
-> page where we can list new content needed, and point at content that needs
-> some help.  Is there an easy way we can create an index of content that has
-> the FIXME wiki tag?
+UPDATE: the first 1.4.004 packages contained two bugs:
+- felamimail gave an error "no egw_simple toolbar set"
+- the spellchecker / aspell did not work (it need to be configured and enabled 
+in Admin >> Site configuration)
 
-Sure, just type FIXME into the search field (in the upper right corner
-of any Wiki page) and click on Search, you will get a list of all pages
-containing this tag.
+The 1.4.004-2 tar.bz2, tar.gz and zip packages and the 1.4.005-15 rpm packages 
+are fixing the above errors.
+
+==> WE RECOMMEND EVERYONE UPDATES AS SOON AS POSSIBLE!
+
+The update includes all previous 1.4 updates and requires no schema update (if 
+you upgrade within the 1.4 release).
+
+The fixed security problems are grave, if you have directories writable by the 
+webserver in you docroot (in most windows server the complete docroot 
+writable by default, but many linux servers are also set up that way). 
+
 
 -- 
-Dmitry
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
