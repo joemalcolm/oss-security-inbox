@@ -1,42 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/12/3
-Message-ID: <Pine.GSO.4.51.0811121833010.2022@faron.mitre.org>
-Date: Wed, 12 Nov 2008 18:37:25 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Andreas Ericsson <ae@....se>
-cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com, Johannes Dagemark <jd@....se>, Ethan Galstad <egalstad@...ios.org>, Marc Schoenefeld <mschoene@...hat.com>
-Subject: Re: CVE request: Nagios (two issues)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/30/5
+Message-ID: <20080430145844.GA23611@suse.de>
+Date: Wed, 30 Apr 2008 16:58:44 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: oss-security@...ts.openwall.com
+Cc: security@...nel.org, Karsten Keil <kkeil@...e.de>
+Subject: Re: security problem in ESP fragment handling?
 Content-Type: text/plain; charset=utf-8
 
+On Wed, Apr 30, 2008 at 10:21:18AM -0400, Steven M. Christey wrote:
+> 
+> On Wed, 30 Apr 2008, Marcus Meissner wrote:
+> 
+> > According to Karsten Keil just ESP fragment packets need to be accepted
+> > by the kernel to trigger the condition.
+> > We think this might be true for all 2.6 kernels (ever since esp.c got added)
+> 
+> Any idea what the starting version might be?
 
-On Tue, 11 Nov 2008, Andreas Ericsson wrote:
+2.6.0 (introduced during 2.5 development).
+ 
+> Also, you mentioned a hang, but the commit says a BUG() is generated.  is
+> this just based on different inputs?
 
-> > Name: CVE-2008-5028
-> > Status: Candidate
-> > URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5028
-> >
-> > Cross-site request forgery (CSRF) vulnerability in cmd.cgi in (1)
-> > Nagios 3.0.5 and (2) op5 Monitor before 4.0.1 allows remote attackers
-> > to send commands to the Nagios process, and trigger execution of
-> > arbitrary programs by this process, via unspecified HTTP requests.
-> >
-> >
->
-> Actually, the CSRF issue is still in Nagios 3.0.5, but can no longer
-> trigger execution of arbitrary programs by the Nagios process. Its
-> impact is thereby reduced to disabling monitoring of the network and
-> similar actions that can validly be requested from the Nagios process
-> through the GUI.
+I think the BUG() will kill the network event handler thread, but I let
+the experts comment here.
 
-What is the relationship between this CSRF issue and the one documented
-here:
-
-  http://www.nagios.org/development/history/nagios-3x.php
-
-  "Security fix for Cross Site Request Forgery (CSRF) bug reported by Tim
-   Starling."
-
-Are these the same CSRF issue, or are we talking about a separate problem
-that would need a separate new CVE?
-
-- Steve
+Ciao, Marcus
