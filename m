@@ -1,30 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/22/5
-Message-ID: <0805220805320.31721@mjc.redhat.com>
-Date: Thu, 22 May 2008 08:15:45 +0100 (BST)
-From: Mark J Cox <mjc@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/30/3
+Message-ID: <Pine.GSO.4.51.0804301022100.868@faron.mitre.org>
+Date: Wed, 30 Apr 2008 10:22:41 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Root name server changes -> bind
+Subject: Re: CVE request: insecure X11 handling in ltsp
 Content-Type: text/plain; charset=utf-8
 
-> #3: Second solution, and the better one that is harder to implement I
-> imagine, is to care a lot less about where it is contacting and care a lot
-> more about the information it is receiving. Digital signatures, MD5 hashes
-> (where would it get those from though) or some other form of validation of
-> the content it receives would help reduce risk significantly.
 
-This is what I bet most of the vendors represented here do; for example 
-the Red Hat Network client 1) contacts the server at Red Hat over SSL, 2) 
-verifies that the certificate of the site it's connecting to was issued by 
-a CA hardcoded into the distro, 3) will only install packages without 
-prompting that are digitally signed by a previously-imported public key.
+On Mon, 28 Apr 2008, Nico Golde wrote:
 
-If any one of those mechanisms failed I would expect it to generate a CVE 
-(even though the security of the system as a whole isn't broken unless all
-of them break together).
+> > Use CVE-2008-1293
+>
+> This item is still on status RESERVED, is that on purpose?
 
-This sort of update mechanism isn't that difficult to implement.  So 
-should you give a CVE to an update mechanism that fails to implement a 
-secure update process?  absolutely.
+No, it didn't get filled in.  It will be part of the next site update,
+later today.
 
-Mark
+- Steve
