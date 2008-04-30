@@ -1,59 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/08/8
-Message-ID: <qTqdb/DhtqaUyAElWqW12r9XT/k@DnrfhFPe1KmBT9SMnrHVxzpiU9A>
-Date: Mon, 8 Dec 2008 15:57:46 +0300
-From: Eygene Ryabinkin <rea-sec@...elabs.ru>
-To: oss-security@...ts.openwall.com, jlieskov@...hat.com
-Cc: coley@...re.org
-Subject: Re: CVE Request (nagios)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/30/2
+Message-ID: <Pine.GSO.4.51.0804301018210.868@faron.mitre.org>
+Date: Wed, 30 Apr 2008 10:21:18 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+cc: security@...nel.org
+Subject: Re: security problem in ESP fragment handling?
 Content-Type: text/plain; charset=utf-8
 
-Jan, good day.
 
-Mon, Dec 08, 2008 at 01:21:45PM +0100, Jan Lieskovsky wrote:
->   diffing your version (3.0.5p1) and the latest upstream one (3.0.6)
-> returns the following (this commit was posted on 2008-11-30):
-> 
-> diff
-> -r /tmp/3.0.5p1/nagios-3.0.5p1/base/commands.c /tmp/nagios_latest/nagios-3.0.6/base/commands.c
-[...]
-> 2893a2896,2908
-> > 
-> >       /* SECURITY PATCH - disable these for the time being */
-> >       switch(cmd){
-> >       case CMD_CHANGE_GLOBAL_HOST_EVENT_HANDLER:
-> >       case CMD_CHANGE_GLOBAL_SVC_EVENT_HANDLER:
-> >       case CMD_CHANGE_HOST_EVENT_HANDLER:
-> >       case CMD_CHANGE_SVC_EVENT_HANDLER:
-> >       case CMD_CHANGE_HOST_CHECK_COMMAND:
-> >       case CMD_CHANGE_SVC_CHECK_COMMAND:
-> >               return ERROR;
-> >               }
->
-> And other vulnerability reports:
-> http://www.nagios.org/news/#88
-> http://secunia.com/Advisories/32909/
-> 
-> Andreas, could you please confirm/disprove this patch was part of recent
-> CVE-2008-{5027, 5028}? 
-> 
-> Seems it wasn't, but can be wrong.
+On Wed, 30 Apr 2008, Marcus Meissner wrote:
 
-Hmm, this seems to be unrelated to CVE-2008-5027, but it may be the
-upstream fix for CSRF: judging by the contents of
-  http://git.op5.org/git/?p=nagios.git;a=commitdiff;h=9c2a418ab4f6e4ef3a53ddcde402fe4781caa764
-the original patch from Tim Starling should introduce at least 'csrf' word
-into cgi/cmd.c.  And I am failing to find one in the latest version,
-  http://nagios.cvs.sourceforge.net/viewvc/nagios/nagios/cgi/cmd.c?revision=1.47&view=markup
+> According to Karsten Keil just ESP fragment packets need to be accepted
+> by the kernel to trigger the condition.
+> We think this might be true for all 2.6 kernels (ever since esp.c got added)
 
-So either it was fixed in the completely different way or it is the
-quick fix to prevent CSRFs for the eventhandler mangling commands.  It
-is a bit strange that it was done after 3.0.5 (CSRF was documented in
-3.0.5 release notes), but...  By the way, entry for CVE-2008-5028 speaks
-about 3.0.5 as about the vulnerable to the CSRF and it is inconsistent
-with the release notes at
-  http://www.nagios.org/development/history/nagios-3x.php.
+Any idea what the starting version might be?
 
-Clarifications are desperately needed ;))
--- 
-Eygene
+Also, you mentioned a hang, but the commit says a BUG() is generated.  is
+this just based on different inputs?
+
+- Steve
