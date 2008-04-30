@@ -1,31 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/13/2
-Message-ID: <20080513140632.147eeef0@redhat.com>
-Date: Tue, 13 May 2008 14:06:32 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/30/8
+Message-ID: <20080430174641.GB4335@galadriel.inutil.org>
+Date: Wed, 30 Apr 2008 19:46:41 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: hanno@...eck.de, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: Re: CVE request: Bugzilla (Unauthorized Bug Change, XSS, Account Impersonation)
+Cc: coley@...us.mitre.org
+Subject: asterisk dupe?
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 13 May 2008 13:07:11 +0200 Hanno Böck <hanno@...eck.de> wrote:
+Hi,
+I think there's been a dupe in a recent CVE assignment for
+asterisk. CVE-2008-1923 appears to be a duplicate of
+CVE-2007-4103.
 
-> > The WebService in Bugzilla before 3.1.3 allows remote authenticated
-> > users without canconfirm privileges to create NEW or ASSIGNED bug
-> > entries via a request to the XML-RPC interface, which bypasses the
-> > canconfirm check.
-> 
-> I think this should be "3.1.3 and before" ?
-> As 3.1.3 is also affected according to the upstream advisory.
-
-Probably "in Bugzilla 3.1.3":
-
-https://bugzilla.mozilla.org/show_bug.cgi?id=415471#c5
-
-  Frédéric Buclin   2008-05-04 14:58:19 PDT
-  This regression was introduced by bug 402791 in Bugzilla 3.1.3.
-
-?
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+Cheers,
+        Moritz
