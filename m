@@ -1,19 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/05/3
-Message-ID: <12543.1217967521@devserv.devel.redhat.com>
-Date: Tue, 05 Aug 2008 16:18:41 -0400
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/30/6
+Message-ID: <0804301616560.12447@mjc.redhat.com>
+Date: Wed, 30 Apr 2008 16:18:11 +0100 (BST)
+From: Mark J Cox <mjc@...hat.com>
 To: oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: CVE Request (pidgin)
+Subject: Re: security problem in ESP fragment handling?
 Content-Type: text/plain; charset=utf-8
 
-We ran across this pidgin flaw:
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=920fc941a9617f95ccb283037fe6f8a38d95bb69
+>
+> This will at least hang the networking of the system if triggered.
+>
+>
+> According to Karsten Keil just ESP fragment packets need to be accepted
+> by the kernel to trigger the condition.
+> We think this might be true for all 2.6 kernels (ever since esp.c got added).
 
-http://developer.pidgin.im/ticket/6500
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=492434
+Quick response (burried today) but I think this is already allocated 
+CVE-2007-6282
 
-Thanks.
+http://64.233.183.104/search?q=cache:NNop-SbiE4EJ:www.mail-archive.com/netdev%40vger.kernel.org/msg62480.html+CVE-2007-6282&hl=en&ct=clnk&cd=1
 
--- 
-    JB
+Mark
