@@ -1,59 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/02/3
-Message-ID: <20080702095318.37f8c23b@redhat.com>
-Date: Wed, 2 Jul 2008 09:53:18 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/02/4
+Message-ID: <1218.1209756386@devserv.devel.redhat.com>
+Date: Fri, 02 May 2008 15:26:26 -0400
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: More ruby integer overflows (rb_ary_fill / Array#fill)
+Subject: Re: group announcement (was: list: members vs. read-only subscribers)
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+On 25 April 2008, Josh Bressers wrote:
+> On 23 April 2008, Solar Designer wrote:
+> > 
+> > Josh - now that the list setup has been restricted like you wanted, are
+> > you going to work on an announcement suitable for posting to Bugtraq?
+> > 
+> 
+> Just so nobody thinks I missed this,
+> 
+> It's been a very busy week for me, so I've not started on this yet.  I'll
+> try to draft something up this weekend or early next week.  I have some
+> ideas.
+> 
 
-During the work on ruby updates, our ruby maintainer (Akira Tagoh) came
-across some commits in the ruby SVN, that fix (or attempt to fix)
-integer overflows in rb_ary_fill() - Array#fill method.
+OK, sorry for the delay, there was a reason though.
 
-This problem is probably less severe than recent Drew Yao's issues, as
-it's probably less likely this is exposed to an untrusted input in some
-random ruby application.
+I have a first draft writeup, that I'm sticking at the end of this message,
+and I plan to run this past the Red Hat Corporate Communications people
+(which is where the delay came from, they are busy people).  They have
+offered to add this announcement (presuming it conforms to their standards)
+to the Red Hat press blog, which is well read by various people in the
+computing press world.  This should help get a lot more attention than just
+sending this out to a few mailing lists.  I did however explain that
+whatever goes on the press blog needs to be cleared with this group first,
+and they completely understand.
 
-First, ~9 months ago following change was added:
-http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=rev&revision=13397
+So here is my plan.  If everyone could take a look at this writeup and add
+comments, then around mid next week, I'll send our changes to the Red Hat
+folks, then hopefully by weeks end we'll all be synced up, with something
+ready to go the week after.
 
-The idea of this fix was to prevent "end = beg + len;" to overflow and
-end ending up being negative, causing a bypass of the memory
-reallocation below.
+Thanks.
 
-This was insufficient, as end is array length, but size of each array
-element is more than 1byte.  So you can only have arrays up to
-ARY_MAX_SIZE elements (added in the fixes for recent integer
-overflows reported by Drew Yao).  So you could still get an overflow
-during the array fill below or cause integer overflow in REALLOC_N.
+-------------------- snip ----------------------------
 
-This was further addressed in:
-http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=rev&revision=17688
+Security, Open Source Style
+-----------------------------
+Today we announce the Open Source Software Security community
+(oss-security) an ongoing effort to manage security information in Open
+Source software by building on the very collaborative foundation of the
+Open Source model.
 
-However, even with that fix, it was still possible to trigger overflow
-by specifying a beg index greater than ARY_MAX_SIZE.  Following check
-"if (len > ARY_MAX_SIZE - beg)" gets evaluated as unsigned (search for
-unsigned sizeof(VALUE) in ARY_MAX_SIZE definition) and you could get
-negative end again.
+This community was initially founded by individuals from Foresight Linux,
+Mandriva, Openwall, and Red Hat.  The community has since grown to include
+contributions from many other projects and individuals.  The computing
+resources are currently graciously donated by the Openwall Project.
+<maybe some URLs here?>
 
-This problem was fixed quickly after being reported upstream in:
-http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=rev&revision=17756
+The purpose of oss-security is to encourage public discussion of security
+flaws, concepts, and practices in the Open Source community.  We don't want
+to simply be an information clearinghouse, but to encourage active
+participation of those interested in the ideas and practices behind keeping
+modern software secure.  This includes activities such as flaw discovery,
+understanding, reporting, and overall best practices.
 
-We have assigned CVE-2008-2376 to this issue.  If you want to claim
-you have fixed CVE-2008-2376, please make sure you have all fixes up to
-r17756.
+If you have an interest in the Open Source security space, you are
+encouraged to participate in the oss-security community by adding content
+to the wiki, contributing to mailing list discussions, or joining us on IRC.
 
-Note: I've quickly reviewed other uses of ARY_MAX_SIZE in 1.8.6-p230.
-There is only one case when value is subtracted from ARY_MAX_SIZE
-without being explicitly checked not to be greater than ARY_MAX_SIZE:
+More information can be found on the group's wiki page here:
+http://oss-security.openwall.org
 
-  if (beg > ARY_MAX_SIZE - rlen) {
+Thanks You.
+-------------------- snip ----------------------------
 
-However, rlen is the length of some existing array, hence can not be
-more than ARY_MAX_SIZE.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+    JB
