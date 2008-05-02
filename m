@@ -1,51 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/23/4
-Message-ID: <20080823162156.GA11010@ngolde.de>
-Date: Sat, 23 Aug 2008 18:21:57 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/02/9
+Message-ID: <481B7FCC.2010505@freethemallocs.com>
+Date: Fri, 02 May 2008 12:55:40 -0800
+From: Jonathan Smith <smithj@...ethemallocs.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: swfdec 0.6.8 stable update
+Subject: Re: group announcement
 Content-Type: text/plain; charset=utf-8
 
-Hi Marcus,
-* Marcus Meissner <meissner@...e.de> [2008-08-23 18:05]:
-> On Tue, Aug 19, 2008 at 06:22:57PM +0200, Nico Golde wrote:
-> > * Marcus Meissner <meissner@...e.de> [2008-08-19 16:48]:
-> > > Wonder if we should track updates for swfdec. The 0.6.8 announcement
-> > > looks like it at least fixes several Denial of Service problems:
-> > [...] 
-> > I have problems to understand why this would be a Denial of 
-> > Service. While I don't share the opinion about browser 
-> > crashes I think there are at least good arguments for both 
-> > sides.
-> 
-> If it can be triggered by a SWF on the website, I would perhaps
-> call it a security issue.
-> 
-> If it crashes the SWF mozilla plugin and so the browser, it is
-> a denial of service in my eyes.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I'm not sure how firefox handles this, at least opera does 
-not crash if the flash plugin crashes.
+Josh Bressers wrote:
+| The purpose of oss-security is to encourage public discussion of security
+| flaws, concepts, and practices in the Open Source community.  We don't
+want
+| to simply be an information clearinghouse, but to encourage active
+| participation of those interested in the ideas and practices behind
+keeping
+| modern software secure.  This includes activities such as flaw discovery,
+| understanding, reporting, and overall best practices.
 
-> More importantly if code execution is possible.
+Now that I think about it, you should probably mention that vendor-sec
+is the place to mention non-public issues. Or, at least, say that
+oss-security *isn't* the place.
 
-That should be self-evident.
+	smithj
 
-[...] 
-> > It would be interesting what is causing this crash and if 
-> > there is underlying a more serious issue.
-> 
-> Not really investigated and no time :/ Since swfdec is beta and not yet
-> wildy iin use we could let it rest.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
 
-Yeah same here, maybe we can get comments about this by the 
-upstream people.
-
-Cheers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+iEYEARECAAYFAkgbf8sACgkQCG91qXPaRekXJwCgiXtoz/YjrzS87WRrh+ZQ7Rs3
++P8An2b1B3a8iwy7a0pCFg0B3r8FfdWU
+=IkSh
+-----END PGP SIGNATURE-----
