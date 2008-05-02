@@ -1,31 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/08/11
-Message-ID: <Pine.GSO.4.51.0807081339140.16947@faron.mitre.org>
-Date: Tue, 8 Jul 2008 13:42:21 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/02/6
+Message-ID: <481B6E13.3030504@freethemallocs.com>
+Date: Fri, 02 May 2008 11:40:03 -0800
+From: Jonathan Smith <smithj@...ethemallocs.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: moodle xss in < 1.8.5
+Subject: Re: group announcement
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Tue, 8 Jul 2008, Hanno [utf-8] Böck wrote:
+Josh Bressers wrote:
+| So here is my plan.  If everyone could take a look at this writeup and add
+| comments, then around mid next week, I'll send our changes to the Red Hat
+| folks, then hopefully by weeks end we'll all be synced up, with something
+| ready to go the week after.
 
-> Am Sonntag 06 Juli 2008 schrieb Nico Golde:
-> > Hi Hanno,
-> >
-> > * Hanno Böck <hanno@...eck.de> [2008-07-06 19:04]:
-> > > http://docs.moodle.org/en/Release_Notes#Moodle_1.8.5
-> > >     *  KSES related XSS security vulnerability fixed
-> >
-> > This should be CVE-2008-1502:
+I don't have much to say other than that it looks good. I also like the
+idea of getting RH HR (that acronym makes me giggle) to help promote the
+group.
 
-This looks like a shared codebase relationship, which would usually
-involve the same CVE.
+	smithj
 
-If the issue is really in KSES, then CVE-2008-1502 would need to be
-updated to reflect that it affects KSES as used in egroupWare, Moodle, and
-others.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
 
-Can anyone clarify?
-
-- Steve
+iEYEARECAAYFAkgbbhMACgkQCG91qXPaRenUZgCgoqXS1WKIy/3zZdl3qdX6KCXY
+opIAn0n5KkVNp8ZrQnp56TWSQ4Jx0qnL
+=kWZa
+-----END PGP SIGNATURE-----
