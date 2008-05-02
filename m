@@ -1,37 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/08/1
-Message-ID: <20080408144516.GA5280@openwall.com>
-Date: Tue, 8 Apr 2008 18:45:16 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/02/8
+Message-ID: <2791.1209759108@devserv.devel.redhat.com>
+Date: Fri, 02 May 2008 16:11:48 -0400
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: announcing oCERT & oss-security to Bugtraq & f-d
+Subject: Re: group announcement (was: list: members vs. read-only subscribers)
 Content-Type: text/plain; charset=utf-8
 
-Josh,
+On 2 May 2008, "Steven M. Christey" wrote:
+> 
+> Josh,
+> 
+> It's probably a minor point, but you might want to make an explicit
+> statement that this is not intended to replace lists such as Bugtraq and
+> Full-Disclosure, rather to complement them.
+> 
 
-Would you be able and willing to start working on the announcement text
-for oss-security now?  We'll be able to combine it with one for oCERT
-later if needed (that is, if it's not too late) - or you can work on it
-with Andrea right away (on this list).  I think I'd announce both
-projects at once at least to the Openwall announcements list.
+That's an excellent point.  We don't need to ruffle any feathers.
 
-FYI, here are a couple of relevant news items that are currently up on
-the Openwall website:
+Thanks Steve!
 
-March 1, 2008
-A couple of weeks ago, we have setup the Open Source Software Security
-(oss-security) Wiki, which is the counterpart to the oss-security
-mailing list, and we have the initial content in place by now.  Both the
-wiki and the mailing list are a product of cooperation amongst various
-Open Source software vendors, projects, and researchers.  The purpose of
-the oss-security group is to encourage public discussion of security
-flaws, concepts, and practices in the Open Source community.
-
-February 17, 2008
-...
-oss-security is a new discussion and collaboration mailing list for
-people involved with Open Source projects who care about security.
-
-Thanks,
-
-Alexander
+-- 
+    JB
