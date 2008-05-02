@@ -1,22 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/14/5
-Message-ID: <Pine.GSO.4.51.0810141450350.1682@faron.mitre.org>
-Date: Tue, 14 Oct 2008 14:51:16 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel: don't allow splice() to files opened with O_APPEND
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/02/2
+Message-ID: <22537.1209740522@devserv.devel.redhat.com>
+Date: Fri, 02 May 2008 11:02:02 -0400
+From: Josh Bressers <bressers@...hat.com>
+To: coley@...re.org
+cc: oss-security@...ts.openwall.com
+Subject: CVE Request (PHP)
 Content-Type: text/plain; charset=utf-8
 
+So as some may have noticed, PHP 5.2.6 is out.  Most of the flaws noted in
+the changelog have CVE ids, so here is the list:
 
-On Mon, 13 Oct 2008, Eugene Teo wrote:
+* Fixed possible stack buffer overflow in the FastCGI SAPI identified by Andrei Nigmatulin.
+    http://cvs.php.net/viewvc.cgi/php-src/sapi/cgi/fastcgi.c?r1=1.44&r2=1.45&diff_format=u
 
-> "[PATCH] Don't allow splice() to files opened with O_APPEND
->
-> But Miklos convinced me that we should at least give it some thought,
-> and that accepting writes at arbitrary offsets is wrong at least for
-> IS_APPEND() files (which always have O_APPEND set, even if the reverse
-> isn't true: you can obviously have O_APPEND set on a regular file).
+* Fixed integer overflow in printf() identified by Maksymilian Aciemowicz.
+  (CVE-2008-1384)
+    http://cvs.php.net/viewvc.cgi/php-src/ext/standard/formatted_print.c?r1=1.104&r2=1.105&diff_format=u
 
-Use CVE-2008-4554, to be filled in later.
+* Fixed security issue detailed in CVE-2008-0599 identified by Ryan Permeh.
+    http://cvs.php.net/viewvc.cgi/php-src/sapi/cgi/cgi_main.c?r1=1.267.2.15.2.50.2.12&r2=1.267.2.15.2.50.2.13&diff_format=u
 
-- Steve
+* Fixed a safe_mode bypass in cURL identified by Maksymilian Arciemowicz.
+  (CVE-2007-4850)
+
+* Properly address incomplete multibyte chars inside escapeshellcmd()
+  identified by Stefan Esser.
+    http://cvs.php.net/viewvc.cgi/php-src/ext/standard/exec.c?r1=1.113.2.3.2.1.2.3&r2=1.113.2.3.2.1.2.4&diff_format=u
+
+* Upgraded bundled PCRE to version 7.6 (fixes CVE-2008-0674)
+
+Only two seem to need CVE ids:
+
+* Fixed possible stack buffer overflow in the FastCGI SAPI identified by
+  Andrei Nigmatulin.
+
+* Properly address incomplete multibyte chars inside escapeshellcmd() 
+  identified by Stefan Esser.
+
+Steve, can you help out.
+
+Thanks.
+
+-- 
+    JB
