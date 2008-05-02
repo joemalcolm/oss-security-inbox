@@ -1,39 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/25/7
-Message-ID: <20080325152650.GL30264@ngolde.de>
-Date: Tue, 25 Mar 2008 16:26:50 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/02/1
+Message-ID: <20080502114716.74cde9e6@redhat.com>
+Date: Fri, 2 May 2008 11:47:16 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: was: SA29489 CenterIM URL handling flaw
+Cc: coley@...re.org
+Subject: CVE-2008-0553 / CVE-2006-4484 also affects tkimg
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Nico Golde <oss-security+ml@...lde.de> [2008-03-25 16:25]:
-> * Lubomir Kundrak <lkundrak@...hat.com> [2008-03-24 15:08]:
-> > Ad SA29489 [1] "CenterIM URL Parsing Command Execution Vulnerability"
-> > 
-> > CenterIM does completely nothing with received URLs. Maybe the
-> > unfortuate "exploit writer" was using XFCE Terminal [2], or a terminal
-> > emulator with a similar problem.
-> 
-> That's partly true. While centerim has no special URL 
-> handler to handle incoming urls it does provide the ability 
-> to list urls in a message by pressing F2. If you press enter 
-> on one of these urls it tries to open it in an external 
-> browser and executes the other commands as well.
-> 
-> You see the commands in the URL however so I think the 
-> impact of this is like sending someone a message with 
-> "please type rm -rf ~ in your shell" so the secunia rating 
-> is a bit beyond the actual impact.
+Hi!
 
-upstream patch:
-http://repo.or.cz/w/centerim.git?a=blobdiff_plain;f=src/icqconf.cc;fp=src/icqconf.cc;hb=b28c6deaef58eb685a2d747b28b6a572122730d4;hpb=ad6ad53ebf791f97cb7337dc79ab2ce8ccb1246f
+It was brought to our attention that tkimg uses / forks tk gif handling
+code and is affected by CVE-2008-0553 (as used for tk) / CVE-2006-4484
+(as used for gd).
 
-Cheers
-Nico
+http://tkimg.svn.sourceforge.net/viewvc/tkimg?view=rev&revision=135
+
+Tk fix:
+
+http://tktoolkit.cvs.sourceforge.net/tktoolkit/tk/generic/tkImgGIF.c?r1=1.40&r2=1.41
+
+tkimg changelog uses CVE-2006-4484 (as it's used in the tk commit
+message as well), but CVE-2008-0553 should probably be used here.
+
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+Tomas Hoger / Red Hat Security Response Team
