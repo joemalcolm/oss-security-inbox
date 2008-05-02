@@ -1,43 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/17/5
-Message-ID: <4921EAFD.6060108@op5.se>
-Date: Mon, 17 Nov 2008 23:06:53 +0100
-From: Andreas Ericsson <ae@....se>
-To: oss-security@...ts.openwall.com
-CC: coley@...re.org
-Subject: Re: CVE Request (syslog-ng)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/02/3
+Message-ID: <Pine.GSO.4.51.0805021149450.13518@faron.mitre.org>
+Date: Fri, 2 May 2008 11:50:48 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Josh Bressers <bressers@...hat.com>
+cc: coley@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request (PHP)
 Content-Type: text/plain; charset=utf-8
 
-Steven M. Christey wrote:
-> On Mon, 17 Nov 2008, Josh Bressers wrote:
-> 
->> syslog-ng doesn't call chdir() before calling chroot().
-> 
-> This falls under the notion of "protection mechanism works less securely
-> than advertised" so is a clear case for inclusion in CVE.  Use
-> CVE-2008-5110.
-> 
-> Also - is the chdir supposed to come BEFORE or AFTER?  The CERT secure
-> coding rules here:
-> 
-> https://www.securecoding.cert.org/confluence/display/cplusplus/FIO16-CPP.+Limit+access+to+files+by+creating+a+jail
-> 
-> suggest it might be safer AFTER, not before, due to some race condition
-> possibilities.
-> 
 
-The correct sequence is:
-chdir(jail_path);
-chroot(".");
 
-The chroot() call will fail if the directory no longer exists, but is
-otherwise safe from "racy jail" attacks.
+On Fri, 2 May 2008, Josh Bressers wrote:
 
-Paranoid programs only accept absolute non-symlink paths to the jail
-and issue getcwd() after having entered it to make sure they ended up
-in the proper directory.
+> * Fixed possible stack buffer overflow in the FastCGI SAPI identified by
+>   Andrei Nigmatulin.
 
--- 
-Andreas Ericsson                   andreas.ericsson@....se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Use CVE-2008-2050
+
+> * Properly address incomplete multibyte chars inside escapeshellcmd()
+>   identified by Stefan Esser.
+
+Use CVE-2008-2051
+
+These will beupdated later.
+
+- Steve
