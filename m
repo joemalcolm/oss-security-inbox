@@ -1,34 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/04/2
-Message-Id: <200811042313.06873.steffen.joeris@skolelinux.de>
-Date: Tue, 4 Nov 2008 23:13:02 +1100
-From: Steffen Joeris <steffen.joeris@...lelinux.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/02/5
+Message-ID: <20080502193949.GG17990@linsec.ca>
+Date: Fri, 2 May 2008 13:39:49 -0600
+From: Vincent Danen <vdanen@...sec.ca>
 To: oss-security@...ts.openwall.com
-Cc: vuln@...unia.com, coley@...re.org
-Subject: Re: Regarding SA32329 (Smarty "_expand_quoted_text()" Security Bypass)
+Subject: Re: group announcement (was: list: members vs. read-only subscribers)
 Content-Type: text/plain; charset=utf-8
 
-On Sun, 26 Oct 2008 12:20:54 am Robert Buchholz wrote:
-> Hi,
->
-> unfortunately, Secunia does not list any references for SA32329 [1].
-> Apparantly, they are refering to the last three commits to
-> libs/Smarty_Compiler.class.php, r2781:2797 [2].
->
-> However, this issue is not fixed in 2.6.20, and I could not find a
-> 2.6.20-1 release. I have no idea where this version information comes
-> from.
->
-> It might be worthwhile to check applications that bundle smarty, like
-> tikiwiki, gallery 2 or PEAR-PhpDocumentor.
-This issue has now been given CVE-2008-4810 and CVE-2008-4811. However, isn't 
-CVE-2008-4811 already covered by CVE-2008-4810 or could someone please 
-enlighten me?
-The latest patch I can see from upstream is an additional preg_replace() and 
-he kept the old one.
+* [2008-05-02 15:26:26 -0400] Josh Bressers wrote:
 
-Cheers
-Steffen
+>On 25 April 2008, Josh Bressers wrote:
+>> On 23 April 2008, Solar Designer wrote:
+>> > 
+>> > Josh - now that the list setup has been restricted like you wanted, are
+>> > you going to work on an announcement suitable for posting to Bugtraq?
+>> > 
+>> 
+>> Just so nobody thinks I missed this,
+>> 
+>> It's been a very busy week for me, so I've not started on this yet.  I'll
+>> try to draft something up this weekend or early next week.  I have some
+>> ideas.
+>> 
+>
+>OK, sorry for the delay, there was a reason though.
+>
+>I have a first draft writeup, that I'm sticking at the end of this message,
+>and I plan to run this past the Red Hat Corporate Communications people
+>(which is where the delay came from, they are busy people).  They have
+>offered to add this announcement (presuming it conforms to their standards)
+>to the Red Hat press blog, which is well read by various people in the
+>computing press world.  This should help get a lot more attention than just
+>sending this out to a few mailing lists.  I did however explain that
+>whatever goes on the press blog needs to be cleared with this group first,
+>and they completely understand.
+>
+>So here is my plan.  If everyone could take a look at this writeup and add
+>comments, then around mid next week, I'll send our changes to the Red Hat
+>folks, then hopefully by weeks end we'll all be synced up, with something
+>ready to go the week after.
+>
+>Thanks.
+>
+>-------------------- snip ----------------------------
 
+I have no problem with this at all.  I think it sounds great.
 
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+-- 
+Vincent Danen @ http://linsec.ca/
+
+Content of type "application/pgp-signature" skipped
