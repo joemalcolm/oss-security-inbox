@@ -1,40 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/31/2
-Message-ID: <Pine.GSO.4.51.0803311707460.16237@faron.mitre.org>
-Date: Mon, 31 Mar 2008 17:08:03 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/02/7
+Message-ID: <Pine.GSO.4.51.0805021605030.13518@faron.mitre.org>
+Date: Fri, 2 May 2008 16:06:28 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Ludwig Nussel <ludwig.nussel@...e.de>
-cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: silc
+To: oss-security@...ts.openwall.com
+Subject: Re: group announcement (was: list: members vs. read-only subscribers)
 Content-Type: text/plain; charset=utf-8
 
 
-======================================================
-Name: CVE-2008-1552
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1552
-Reference: BUGTRAQ:20080325 CORE-2007-1212: SILC pkcs_decode buffer overflow
-Reference: URL:http://www.securityfocus.com/archive/1/archive/1/490069/100/0/threaded
-Reference: MISC:http://www.coresecurity.com/?action=item&id=2206
-Reference: CONFIRM:http://silcnet.org/general/news/?item=client_20080320_1
-Reference: CONFIRM:http://silcnet.org/general/news/?item=server_20080320_1
-Reference: CONFIRM:http://silcnet.org/general/news/?item=toolkit_20080320_1
-Reference: BID:28373
-Reference: URL:http://www.securityfocus.com/bid/28373
-Reference: FRSIRT:ADV-2008-0974
-Reference: URL:http://www.frsirt.com/english/advisories/2008/0974/references
-Reference: SECTRACK:1019690
-Reference: URL:http://www.securitytracker.com/id?1019690
-Reference: SECUNIA:29463
-Reference: URL:http://secunia.com/advisories/29463
+Josh,
 
-The silc_pkcs1_decode function in the silccrypt library (silcpkcs1.c)
-in Secure Internet Live Conferencing (SILC) Toolkit before 1.1.7, SILC
-Client before 1.1.4, and SILC Server before 1.1.2 allows remote
-attackers to execute arbitrary code via a crafted PKCS#1 message,
-which triggers an integer underflow, signedness error, and a buffer
-overflow.  NOTE: the researcher describes this as an integer overflow,
-but CVE uses the "underflow" term in cases of wraparound from unsigned
-subtraction.
+It's probably a minor point, but you might want to make an explicit
+statement that this is not intended to replace lists such as Bugtraq and
+Full-Disclosure, rather to complement them.
 
-
+- Steve
