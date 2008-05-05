@@ -1,30 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/04/5
-Message-Id: <200808041858.10680.thijs@debian.org>
-Date: Mon, 4 Aug 2008 18:58:08 +0200
-From: Thijs Kinkhorst <thijs@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: source for CVE feed (was: Re: CVE request: httrack buffer overflow)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/05/4
+Message-ID: <Pine.GSO.4.51.0805051129470.17161@faron.mitre.org>
+Date: Mon, 5 May 2008 11:30:49 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Tomas Hoger <thoger@...hat.com>
+cc: oss-security@...ts.openwall.com, coley@...re.org
+Subject: Re: CVE id request - mysql
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
 
-On Monday 4 August 2008 18:37, Steven M. Christey wrote:
-> It's in NVD but not yet on the public CVE site, due to various process
-> oddities.  98% of the time, NVD will have the CVEs before the CVE web site
-> does.
+Interesting bug.
 
-Good to know. Here at Debian we currently import all CVEs into our own system, 
-and we use http://cve.mitre.org/data/downloads/allitems.html.gz as the source 
-for that.
+I agree that the overflow enhancement does not deserve a CVE when the only
+known attacks do not cross privilege boundaries.
 
-Considering your statement we would better be using one of the XML Data feeds 
-from http://nvd.nist.gov/download.cfm , right? Or would you recommend another 
-feed (e.g. the one where NVD gets its data from)?
+- Steve
 
 
-thanks,
-Thijs
+======================================================
+Name: CVE-2008-2079
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2079
+Reference: CONFIRM:http://bugs.mysql.com/bug.php?id=32167
+Reference: CONFIRM:http://dev.mysql.com/doc/refman/4.1/en/news-4-1-24.html
+Reference: CONFIRM:http://dev.mysql.com/doc/refman/5.0/en/releasenotes-es-5-0-60.html
+Reference: CONFIRM:http://dev.mysql.com/doc/refman/5.1/en/news-5-1-24.html
+Reference: CONFIRM:http://dev.mysql.com/doc/refman/6.0/en/news-6-0-5.html
 
-Content of type "application/pgp-signature" skipped
+MySQL 4.1.x before 4.1.24, 5.0.x before 5.0.60, 5.1.x before 5.1.24,
+and 6.0.x before 6.0.5 allows local users to bypass certain privilege
+checks by calling CREATE TABLE on a MyISAM table with modified (1)
+DATA DIRECTORY or (2) INDEX DIRECTORY arguments that are within the
+MySQL home data directory, which can point to tables that are created
+in the future.
+
+
