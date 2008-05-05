@@ -1,42 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/20/7
-Message-ID: <4925B026.9010606@easysw.com>
-Date: Thu, 20 Nov 2008 10:44:54 -0800
-From: Michael R Sweet <mike@...ysw.com>
-To: Eygene Ryabinkin <rea-sec@...elabs.ru>
-CC: oss-security@...ts.openwall.com,  "Steven M. Christey" <coley@...re.org>
-Subject: Re: CVE request: CUPS DoS via RSS subscriptions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/05/2
+Message-ID: <87ej8hhsaz.fsf@rho.meyering.net>
+Date: Mon, 05 May 2008 14:03:00 +0200
+From: Jim Meyering <jim@...ering.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: group announcement
 Content-Type: text/plain; charset=utf-8
 
-Eygene Ryabinkin wrote:
-> Michael, good day.
-> 
-> Wed, Nov 19, 2008 at 05:54:49PM -0800, Michael Sweet wrote:
->> Eygene Ryabinkin wrote:
->>> The attached patch fixes the things for me, but perhaps it needs
->>> some more polishing.  Will try to take a fresh look at this tomorrow.
->>>
->>> Mike, please, take a look at this!
->> You'll find a much more complete patch already in CUPS svn for both
->> 1.3.x and 1.4.x, along with a new subscription test for the
->> "make check" target.  I didn't withhold the patch since the browser
->> attack vector was closed in 1.3.8...
->>
->> I've attached my 1.3.x patch...
-> 
-> Thanks!  Just a quick question: the check in add_job_subscriptions() is
-> catching non-NULL result of cupsdAddSubscription, but for the failed
-> subscription is does not inform user about this.  The code in
-> create_subscription() returns error.  Is it intentional?  Client gets
-> nothing (at least 'lpr -m file.txt' outputs no error), but subscription
-> is silently dropped.
+Josh Bressers <bressers@...hat.com> wrote:
+...
+> Based on the feedback of Steve Christey, I've updated the third paragraph:
+...
+> The goal is to fill and existing vacuum by
 
-It's a side-effect of how job subscriptions are created with print
-jobs - the IPP notification spec doesn't address partial-success
-cases, so we opted to simply log the failure and allow the print job.
-(the other "correct" behavior would be to fail the print job...)
+Hi Josh, looks fine modulo a typo:
 
--- 
-______________________________________________________________________
-Michael Sweet, Easy Software Products           mike at easysw dot com
-Internet Printing and Document Software          http://www.easysw.com
+s/and/an/
+or s/and/the/
