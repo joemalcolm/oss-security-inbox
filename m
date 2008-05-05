@@ -1,38 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/12/2
-Message-Id: <1226504481.3536.40.camel@dhcp-lab-164.englab.brq.redhat.com>
-Date: Wed, 12 Nov 2008 16:41:21 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...re.org>
-Cc: oss-security@...ts.openwall.com
-Subject: CVE Request - Zope 2 - PythonScripts local DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/05/5
+Message-ID: <Pine.GSO.4.51.0805051249370.17161@faron.mitre.org>
+Date: Mon, 5 May 2008 12:51:28 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+cc: coley@...us.mitre.org
+Subject: Re: asterisk dupe?
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve,
 
-  could you please allocate a new CVE id for the following
-Zope 2 related issue:
+On Wed, 30 Apr 2008, Moritz Muehlenhoff wrote:
 
-"PythonScripts in Zope 2 can be misused for shutting down a complete   
- Zope 2 instance or misused for a local denial-of-service attack."    (from Hotfix-2008-08-12/README.txt)
+> I think there's been a dupe in a recent CVE assignment for
+> asterisk. CVE-2008-1923 appears to be a duplicate of
+> CVE-2007-4103.
 
-References:
-http://bugs.gentoo.org/show_bug.cgi?id=246411
-http://www.zope.org/Products/Zope/Hotfix-2008-08-12/README.txt
+These are most likely different based on different advisories from
+Asterisk, as well as different types of issue - CVE-2007-4103 is basically
+resource exhaustion via "malformed" handshakes, and CVE-2008-1923 involves
+Smurf-ish traffic amplification being sent to a spoofed address.
 
-The Hotfix-2008-08-12 is available at:
-http://www.zope.org/Products/Zope/Hotfix-2008-08-12/Hotfix_20080812-1.1.0.tar.gz
-
-Affected Zope versions: Zope 2.7.0 to Zope 2.11.2 (from Hotfix-2008-08-12/README.txt)
-
-Note: This issue affects also the Zope 2 Python scripts, as shipped within the
-      Conga project (Zope 2 shipped within the luci-* rpm package). 
-       
-      Affected Conga versions: - checked conga-0.9.1-8 (contains Zope2.7.5 RC2), conga-0.12.0-7.el5 (contains Zope-2.8.4),
-                               - but older,newer Conga versions can be also vulnerable to this issue (based on Zope 2 version).
-
-
-Thanks, Jan.
--- 
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
+- Steve
