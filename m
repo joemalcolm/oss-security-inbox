@@ -1,76 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/22/2
-Message-ID: <Pine.LNX.4.64.0805220542160.16716@forced.attrition.org>
-Date: Thu, 22 May 2008 05:51:55 +0000 (UTC)
-From: security curmudgeon <jericho@...rition.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Root name server changes -> bind
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/05/3
+Message-ID: <20080505171603.780816a7@redhat.com>
+Date: Mon, 5 May 2008 17:16:03 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com, coley@...re.org
+Subject: CVE id request - mysql
 Content-Type: text/plain; charset=utf-8
 
+Hi!
 
-: On Wed, 21 May 2008, Marcus Meissner wrote:
-: 
-: > Not sure if this warrants a CVE id.
-: 
-: Gut reaction here, but I would say that if a software package has 
-: hard-coded those IP addresses and doesn't check them e.g. through a 
-: reverse lookup, then the issue in that package would require a CVE.
-: 
-: I have a feeling I could regret that statement :-/
+MySQL 4.1.24, 5.0.60, 5.1.24, and 6.0.5 fixes an issue allowing an
+authenticated attacker to gain full access to tables that will be
+created by another database user in the future, if an attacker can
+predict name of such tables (and MyISAM storage engine is used).
 
-Oh hey great lead-in to a question plaguing OSVDB, partially courtesy of 
-... drumroll.. CVE! =)
+References:
+http://bugs.mysql.com/bug.php?id=32167
+http://dev.mysql.com/doc/refman/4.1/en/news-4-1-24.html
+http://dev.mysql.com/doc/refman/5.0/en/releasenotes-es-5-0-60.html
+http://dev.mysql.com/doc/refman/5.1/en/news-5-1-24.html
+http://dev.mysql.com/doc/refman/6.0/en/news-6-0-5.html
 
-In our NDM queue, i've been sitting on "dns cache poisoning (maybe)" for 
-some time, a collection of CVE's that represent this exact issue. It seems 
-pretty straight forward until you start looking for the solution, and then 
-it blurs and the line isn't so clear on where a VDB should stop tracking 
-it as a vulnerability.
-
-#1: SomeProgram uses a DNS name to contact home-base for updates in some 
-fashion. It relies on DNS resolution to contact update.vendor.com to 
-receive this information. If an attacker has control of the DNS, the 
-software contacts the attacker's server and receives malicious code. This 
-is pretty nasty and what you regret to think of as CVE-worthy because we 
-all know a *ton* of software does exactly this. It's hard to blame them 
-since networks change, companies move or get bought.
-
-#2: First solution is to use an IP address instead of DNS name. This will 
-prevent DNS spoofing as a form of attack and elevate the skill required to 
-subvert the update process. Problem is that networks change, companies 
-move, etc. So what happens when that old install contacts 1.2.3.4 to find 
-that it is now in the hands of badguys.us? This is relying on an untrusted 
-host to get the information, just like scenario #1 above. Is this worth 
-inclusion in VDBs?
-
-#3: Second solution, and the better one that is harder to implement I 
-imagine, is to care a lot less about where it is contacting and care a lot 
-more about the information it is receiving. Digital signatures, MD5 hashes 
-(where would it get those from though) or some other form of validation of 
-the content it receives would help reduce risk significantly. Reverse the 
-solution and this may be the real criteria for inclusion into VDBs. The 
-overall lack of a secure update process, be it DNS trust, hard coded IP or 
-the lack of a trust-worthy signature system.
-
-So which of these scenarios are vulnerabilities that a public VDB would 
-agree meets standards for inclusion? I've gone back and forth on this one 
-for just over two years and never found the time to make a decision as far 
-as OSVDB is concerned. I'd love to get feedback here or a discussion to 
-help make up our minds.
-
-And now, fuel for the fire:
-
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=2005-3899
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=2005-4582
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=2005-3725
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=2006-0375
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=2006-2324
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=2006-2479
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=2006-5901
+Steve, please assign CVE id.  Thanks!
 
 
-Brian
-OSVDB.org
+Release notes also mention following change:
+Security Enhancement: It was possible to force an error message of
+excessive length which could lead to a buffer overflow. This has been
+made no longer possible as a security precaution. (Bug#32707)
+http://bugs.mysql.com/bug.php?id=32707
 
+According to the upstream, there is currently no know exploitation
+vector for this issue.  Error messages are controlled by the server and
+it is believed that crafted messages can only by provided by modifying
+system files / binaries, which does not cross trust boundary.
 
-
+-- 
+Tomas Hoger / Red Hat Security Response Team
