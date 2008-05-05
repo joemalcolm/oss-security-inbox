@@ -1,77 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/16/2
-Message-ID: <6edf76c20807160335o266845b9x2f51a4dbeeecbbb2@mail.gmail.com>
-Date: Wed, 16 Jul 2008 11:35:01 +0100
-From: "Jan Minář" <rdancer@...ncer.org>
-To: "Tomas Hoger" <thoger@...hat.com>
-Cc: oss-security@...ts.openwall.com,  "Jonathan Smith" <smithj@...ethemallocs.com>, coley@...us.mitre.org,  "Bram Moolenaar" <Bram@...lenaar.net>,  "Charles E Campbell, Jr" <drchip@...pbellfamily.biz>
-Subject: Re: Re: More arbitrary code executions in Netrw version 125, Vim 7.2a.10
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/05/1
+Message-ID: <26282.1209949081@devserv.devel.redhat.com>
+Date: Sun, 04 May 2008 20:58:01 -0400
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: group announcement
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jul 15, 2008 at 4:43 PM, Tomas Hoger <thoger@...hat.com> wrote:
-> On Sun, 13 Jul 2008 01:35:42 +0100 "Jan Minář" <rdancer@...ncer.org>
-> wrote:
->
->> Thanks for CCing me.  Thomas's observations are right.
->
-> No problem.  Your inputs are really appreciated, as you obviously spent
-> a lot of time on researching those issues.
->
->> > CVE-2008-2712 description does not mention tar.vim issue.  It is
->> > described in 3.4.2.3, but its test does not seem to be run when
->> > doing make test for the top-most Makefile in the first test suite.
->>
->> That's correct, I omitted the test from the top-most Makefile by
->> mistake.
->
-> I believe this is already corrected in your updated test suite:
-> http://www.rdancer.org/vulnerablevim.2008-07-13.tar.bz2
->
-> On Thu, 10 Jul 2008 18:55:46 +0200 Tomas Hoger <thoger@...hat.com>
-> wrote:
->
->> Jonathan, did new netrw tests work for you?  With which vim version?
->> They all failed for me with vim 7.1.245 / netrw 109.
->
-> Regarding those new netrw issues:
->
-> - Issues 1 (netrw.v2) and 2 (netrw.v3) (for mz and mc commands) does not
-> seem to affect any stable version of vim.  Support for those commands
-> was only added after vim 7.1 and should only affect 7.2 alpha (and
-> possibly also beta, which was released this week iirc).
+On 2 May 2008, Jonathan Smith wrote:
+> 
+> Now that I think about it, you should probably mention that vendor-sec
+> is the place to mention non-public issues. Or, at least, say that
+> oss-security *isn't* the place.
+> 
 
-As has been pointed out elsewhere, the runtime (netrw.vim being part
-of it) updates are independently of the patches -- at the time of the
-release of the first advisory, the contemporary runtime had some of
-the vulnerabilities fixed, for example.  I'm not sure if the changes
-are kept track of outside of the point releases.  Since distributions
-generally pick whatever is current at the time of the release, is it
-meaningful to say x.y is vulnerable, and x.z isn't?  The runtime files
-are versioned and dated, so for example the first version of ftp.vim
-not vulnerable is version 21 of 2008-07-12.
+That's covered in the wiki, and as I wish to keep things as terse as
+possible, so I'm going to leave it out.
 
-> Steven, are you going to split / de-dupe CVE ids based on this
-> information and the information in my post in other thread:
->
-> http://www.openwall.com/lists/oss-security/2008/07/15/2 ?
+Based on the feedback of Steve Christey, I've updated the third paragraph:
 
-You people are obviously more versed in assigning CVEs, so let me
-submit very humbly:  The overall issue is that up until recently Vim
-script did not provide any means of quoting metacharacters.  At the
-time of the first advisory, there were close to a thousand ``execute''
-statements.   The particular vulnerabilities detailed in the
-advisories are examples of a more widespread tendency in the Vim code.
- Should there be a separate CVE for the overall issue, alongside CVEs
-for the particular vulnerabilities?
+The purpose of oss-security is to encourage public discussion of security
+flaws, concepts, and practices in the Open Source community.  We don't want
+to simply be an information clearinghouse, or to replace any of the current
+security lists and groups.  The goal is to fill and existing vacuum by
+encouraging active participation of those interested in the ideas and
+unique challenges in securing Open Source software.  This includes
+activities such as flaw discovery, understanding, reporting, and overall
+best practices.
 
-From what I could find on the web this morning, I'm not sure whether
-this is the way CVEs are supposed to work.  There will surely be more
-confirmed vulnerabilities, and it would be nice to be able to point to
-a CVE number and say: ``This is one of the vulnerabilities under
-CVE-2008-xxxx''?
+Unless someone complains, I'm going to send this text on Tuesday to the Red
+Hat Corporate Communications people, and setup a good date for this go
+public.
 
-I hope I've helped the discussion a bit.
+Thanks.
 
-Jan Minar.
-
-PS: The buffer overflow is interesting -- thanks!
+-- 
+    JB
