@@ -1,28 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/08/6
-Message-ID: <20080508181540.GE21110@ngolde.de>
-Date: Thu, 8 May 2008 20:15:40 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: wordpress
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/06/1
+Message-ID: <20080506171454.0c993710@redhat.com>
+Date: Tue, 6 May 2008 17:14:54 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com, coley@...re.org
+Subject: CVE id request - libid3tag
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Nico Golde <oss-security+ml@...lde.de> [2008-04-29 23:41]:
-> Can I get a CVE id for a privilege escalation in wordpress:
-> http://trac.wordpress.org/ticket/4748
-> 
-> Fix: http://trac.wordpress.org/changeset/6029
-> 
-> The fix is included in the 2.2.3 release:
-> http://trac.wordpress.org/changeset?old_path=tags%2F2.2.2&old=6063&new_path=tags%2F2.2.3&new=6063#file10
+Hi!
 
-ping :)
+There seems to be an infinite loop issue in libid3tag:
 
-Cheers
-Nico
+http://www.mars.org/mailman/public/mad-dev/2008-January/001366.html
+http://bugs.gentoo.org/show_bug.cgi?id=210564
+
+Steven, can you please assign CVE id?  Thanks!
+
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+Tomas Hoger / Red Hat Security Response Team
