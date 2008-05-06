@@ -1,25 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/19/2
-Message-Id: <200811191118.38232.ludwig.nussel@suse.de>
-Date: Wed, 19 Nov 2008 11:18:37 +0100
-From: Ludwig Nussel <ludwig.nussel@...e.de>
-To: "Steven M. Christey" <coley@...re.org>
-Cc: oss-security@...ts.openwall.com
-Subject: CVE Request: ruby on rails header injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/06/2
+Message-Id: <200805061846.05895.rbu@gentoo.org>
+Date: Tue, 6 May 2008 18:46:05 +0200
+From: Robert Buchholz <rbu@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE Request (PHP)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Friday 02 May 2008, Steven M. Christey wrote:
+> > * Properly address incomplete multibyte chars inside
+> > escapeshellcmd() identified by Stefan Esser.
+>
+> Use CVE-2008-2051
 
-A header injection bug in ruby on rails was fixed some time ago but
-doesn't seem to have CVE number yet:
-http://www.rorsecurity.info/journal/2008/10/20/header-injection-and-response-splitting.html
-http://weblog.rubyonrails.org/2008/10/19/rails-2-0-5-redirect_to-and-offset-limit-sanitizing
+Stefan Esser released a detailed advisory on this issue:
+http://www.sektioneins.de/advisories/SE-2008-03.txt
 
-cu
-Ludwig
+Also, we could need a CVE for the "GENERATE_SEED() Weak Random Number 
+Seed Vulnerability": 
+http://www.sektioneins.de/advisories/SE-2008-02.txt
 
--- 
- (o_   Ludwig Nussel
- //\   
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+Robert
+
+
+Download attachment "signature.asc " of type "application/pgp-signature" (190 bytes)
