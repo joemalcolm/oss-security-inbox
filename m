@@ -1,35 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/01/6
-Message-Id: <200804011127.29351.ludwig.nussel@suse.de>
-Date: Tue, 1 Apr 2008 11:27:28 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/06/3
+Message-ID: <20080506194127.GH573@linsec.ca>
+Date: Tue, 6 May 2008 13:41:27 -0600
+From: Vincent Danen <vdanen@...sec.ca>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: otrs authentication bypass
+Subject: openssh CVE-2008-1657 question
 Content-Type: text/plain; charset=utf-8
 
-Tomas Hoger wrote:
-> On Tue, 1 Apr 2008 09:20:52 +0200 Ludwig Nussel <ludwig.nussel@...e.de>
-> wrote:
-> 
-> > OTRS has released a new version that fixes an authentication bypass:
-> > http://otrs.org/advisory/OSA-2008-01-en/
-> 
-> I see:
-> 
->   CVE:          CVE-2008-1515
-> 
-> in the advisory...
+Out of curiousity, CVE-2008-1657 should only affect 4.4-4.9, correct?
+The ForceCommand functionality was introduced in 4.4.
 
-D'oh! :-)
+It would be nice if the CVE entry made note of this.
 
-thx,
-Ludwig
+Would be even nicer if the boneheads over at SecurityFocus wouldn't go
+around assuming that <4.9 means everything, including 3.0, without
+actually doing some checking.  Oh, wait, yeah, they go back as far as
+1.0.
+
+Somehow I don't think that's accurate.
 
 -- 
- (o_   Ludwig Nussel
- //\   
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+Vincent Danen @ http://linsec.ca/
 
-
-
+Content of type "application/pgp-signature" skipped
