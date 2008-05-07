@@ -1,30 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/13/11
-Message-ID: <48A2BD10.7050105@gentoo.org>
-Date: Wed, 13 Aug 2008 12:53:04 +0200
-From: Christian Hoffmann <hoffie@...too.org>
-To: oss-security@...ts.openwall.com
-CC: coley@...re.org
-Subject: Re: CVE request: php-5.2.6 overflow issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/07/3
+Message-ID: <20080507194238.GX12850@outflux.net>
+Date: Wed, 7 May 2008 12:42:38 -0700
+From: Kees Cook <kees@...ntu.com>
+To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE-2008-0352 is a dup of CVE-2007-4567
 Content-Type: text/plain; charset=utf-8
 
-On 2008-08-13 02:45, Steven M. Christey wrote:
-> On Fri, 8 Aug 2008, Christian Hoffmann wrote:
-> 
->> two security issues, which might possibly allow for arbitrary code
->> execution (afaik nobody has analyzed the details...), but at least DoS
->> (think of FastCGI setups), were silently fixed in PHP again:
->>
->>    * Overflow in ext/gd's imageloadfont() function [1] [2] [3]
-> 
-> Use CVE-2008-3658, to be filled in later - I'm assuming this is a distinct
-> component that doesn't just affect PHP.
-Pierre from php and libgd upstream just confirmed that the vulnerable 
-code is only present in php's copy (fork) of libgd. The independent 
-libgd library is not vulnerable to this problem.
+Hello,
+
+I believe CVE-2008-0352 is an accidental dup of CVE-2007-4567.  The
+referenced 2.6.21.2 commit[1] matches the commit used to originally
+address CVE-2007-4567 in Ubuntu's 2.6.20-based kernel[2].
+
+Thanks,
+
+-Kees
+
+[1] http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.21.y.git;a=commitdiff;h=08a6507044dd70c326de3ea484fd6d29b8101f17
+[2] http://kernel.ubuntu.com/git?p=ubuntu-security/ubuntu-feisty.git;a=commitdiff;h=158eeb50e460dd7f6e6bc13e2322989bd87dd804
 
 -- 
-Christian Hoffmann
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (261 bytes)
+Kees Cook
+Ubuntu Security Team
