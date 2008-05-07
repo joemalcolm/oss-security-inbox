@@ -1,24 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/06/4
-Message-ID: <20080706174732.GL23347@ngolde.de>
-Date: Sun, 6 Jul 2008 19:47:32 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: moodle xss in < 1.8.5
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/07/2
+Message-ID: <4821F827.8010305@gentoo.org>
+Date: Wed, 07 May 2008 20:42:47 +0200
+From: Christian Hoffmann <hoffie@...too.org>
+To: coley@...re.org
+CC: oss-security@...ts.openwall.com
+Subject: CVE request: Bugzilla (Unauthorized Bug Change, XSS, Account Impersonation)
 Content-Type: text/plain; charset=utf-8
 
-Hi Hanno,
-* Hanno Böck <hanno@...eck.de> [2008-07-06 19:04]:
-> http://docs.moodle.org/en/Release_Notes#Moodle_1.8.5
->     *  KSES related XSS security vulnerability fixed 
+Hi,
 
-This should be CVE-2008-1502:
-http://moodle.org/mod/forum/discuss.php?d=95031
+can we please get CVE ids assigned for the three issues mentioned in the 
+release announcement [1] of the new bugzilla versions?
 
-Cheers
-Nico
+"""
+* Users without the "canconfirm" privilege could enter a bug as
+   NEW or ASSIGNED by using the XML-RPC interface.
+
+* When viewing several bugs at once, there was a Cross-Site
+   Scripting hole.
+
+* The inbound email interface allowed you to set the Reporter via
+   the text of the email, instead of just using the From header.
+"""
+
+[1] http://www.bugzilla.org/security/2.20.5/
+
+
+Thanks,
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+Christian Hoffmann
 
-Content of type "application/pgp-signature" skipped
+
+Download attachment "signature.asc" of type "application/pgp-signature" (261 bytes)
