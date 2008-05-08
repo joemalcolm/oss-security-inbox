@@ -1,26 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/09/6
-Message-ID: <Pine.GSO.4.51.0809091022190.6699@faron.mitre.org>
-Date: Tue, 9 Sep 2008 10:29:38 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/08/6
+Message-ID: <20080508181540.GE21110@ngolde.de>
+Date: Thu, 8 May 2008 20:15:40 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: ssmtp =2.62 unitialized memory disclosure
+Subject: Re: CVE id request: wordpress
 Content-Type: text/plain; charset=utf-8
 
+Hi,
+* Nico Golde <oss-security+ml@...lde.de> [2008-04-29 23:41]:
+> Can I get a CVE id for a privilege escalation in wordpress:
+> http://trac.wordpress.org/ticket/4748
+> 
+> Fix: http://trac.wordpress.org/changeset/6029
+> 
+> The fix is included in the 2.2.3 release:
+> http://trac.wordpress.org/changeset?old_path=tags%2F2.2.2&old=6063&new_path=tags%2F2.2.3&new=6063#file10
 
-On Tue, 9 Sep 2008, Robert Buchholz wrote:
+ping :)
 
-> Maurice van der Pot of Gentoo reported a bug in ssmtp 2.62:
-> The from_format() function in ssmtp.c will call strdup() on an
-> unitialized memory if the user's gecos is unset and "FromLineOverride"
-> is disabled in the configuration. This might disclose memory contents
-> by sending them off in the the "From:" field of an email or cause a
-> (client) crash.
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-Wow, this is definitely an edge case.  Technically the memory disclosure
-is a security issue, at least for the couple emails that get sent before
-the user gives up in frustration.
-
-So, use CVE-2008-3962 (to be filled in later).
-
-- Steve
+Content of type "application/pgp-signature" skipped
