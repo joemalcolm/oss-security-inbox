@@ -1,30 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/26/4
-Message-ID: <Pine.GSO.4.51.0802261343560.2856@faron.mitre.org>
-Date: Tue, 26 Feb 2008 13:45:09 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/08/4
+Message-Id: <200805082005.23449.rbu@gentoo.org>
+Date: Thu, 8 May 2008 20:05:23 +0200
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: vlc
+Subject: Re: Re: CVE Request (PHP)
 Content-Type: text/plain; charset=utf-8
 
+On Tuesday 06 May 2008, Robert Buchholz wrote:
+> Also, we could need a CVE for the "GENERATE_SEED() Weak Random Number
+> Seed Vulnerability":
+> http://www.sektioneins.de/advisories/SE-2008-02.txt
 
-The tone of the VLC advisory suggests it's not ready for public release,
-but given the public nature of this list, I'm filling in the CVE
-description anyway.
+This is CVE-2008-2107.
 
-Use CVE-2008-0984
+-R.
 
-- Steve
-
-
-======================================================
-Name: CVE-2008-0984
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0984
-Reference: CONFIRM:http://www.videolan.org/security/sa0802.html
-
-The MP4 demuxer (mp4.c) for VLC media player 0.8.6d and earlier allows
-remote attackers to overwrite arbitrary memory and execute arbitrary
-code via a malformed MP4 file.
-
-
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
