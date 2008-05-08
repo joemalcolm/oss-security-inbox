@@ -1,21 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/28/1
-Message-ID: <20080228143139.GA26333@suse.de>
-Date: Thu, 28 Feb 2008 15:31:39 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com, coley@...re.org
-Subject: CVE ids for Opera 9.26 security update?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/08/2
+Message-ID: <0805081024450.11471@mjc.redhat.com>
+Date: Thu, 8 May 2008 10:28:12 +0100 (BST)
+From: Mark J Cox <mjc@...hat.com>
+To: oss-security@...ts.openwall.com
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE-2008-0352 is a dup of CVE-2007-4567
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+> I believe CVE-2008-0352 is an accidental dup of CVE-2007-4567.  The
+> referenced 2.6.21.2 commit[1] matches the commit used to originally
+> address CVE-2007-4567 in Ubuntu's 2.6.20-based kernel[2].
 
-Has someone assigned CVE ids for the current Opera 9.26 update?
+Agreed.  Steve mentioned this to a few vendors back in Feb and we agreed 
+that they were duplicates for the same issue.
 
-Top URL: http://www.opera.com/docs/changelogs/linux/926/
-
-And seperate advisory URLs:
-http://www.opera.com/support/search/view/877/
-http://www.opera.com/support/search/view/879/
-http://www.opera.com/support/search/view/880/
-
-Ciao, Marcus
+Mark
