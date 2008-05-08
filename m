@@ -1,30 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/21/1
-Message-ID: <48FD27FB.5050100@redhat.com>
-Date: Tue, 21 Oct 2008 08:53:15 +0800
-From: Eugene Teo <eteo@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/08/5
+Message-Id: <200805082011.41449.rbu@gentoo.org>
+Date: Thu, 8 May 2008 20:11:41 +0200
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2008-3528 Linux kernel ext[234] directory corruption DoS
+Subject: Re: Re: CVE Request (PHP)
 Content-Type: text/plain; charset=utf-8
 
-Eugene Teo wrote:
-> The ext[234] filesystem code fails to properly handle corrupted data
-> structures. With a mounted filesystem image or partition that have
-> corrupted dir->i_size and dir->i_blocks, a user performing either a read
-> or write operation on the mounted image or partition can lead to a
-> possible denial of service.
-> 
-> References:
-> https://bugzilla.redhat.com/show_bug.cgi?id=459577
-> http://lkml.org/lkml/2008/9/13/98
-> http://lkml.org/lkml/2008/9/13/99
-> http://lkml.org/lkml/2008/9/17/371
-> 
-> The issue is not fixed upstream yet, but the patch has been added to -mm
->  tree. I will update this email as soon as I know the commit hashes.
-> This issue has been allocated with CVE-2008-3528.
+On Tuesday 06 May 2008, Robert Buchholz wrote:
+> Also, we could need a CVE for the "GENERATE_SEED() Weak Random Number
+> Seed Vulnerability":
+> http://www.sektioneins.de/advisories/SE-2008-02.txt
 
-Upstream commits: cdbf6dba28e8e6268c8420857696309470009fd9 (ext3)
-		  bd39597cbd42a784105a04010100e27267481c67 (ext2)
+... and its twin, CVE-2008-2108 (sorry for the spam).
 
-Thanks, Eugene
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
