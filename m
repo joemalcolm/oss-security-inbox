@@ -1,36 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/23/1
-Message-ID: <20080523113149.GA16560@suse.de>
-Date: Fri, 23 May 2008 13:31:49 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: Thijs Kinkhorst <thijs@...ian.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Root name server changes -> bind
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/09/3
+Message-ID: <alpine.LNX.1.10.0805091705380.13078@transport>
+Date: Fri, 9 May 2008 17:10:07 -0400 (EDT)
+From: Ben Haskell <ben@...rity.princeton.edu>
+To: Pierre-Yves Rofes <py@...too.org>
+cc: oss-security@...ts.openwall.com, WordNet <wordnet@...nceton.edu>
+Subject: Re: Multiples vulnerabilities in wordnet
 Content-Type: text/plain; charset=utf-8
 
-On Thu, May 22, 2008 at 10:58:46AM +0200, Thijs Kinkhorst wrote:
-> On Wednesday 21 May 2008 15:02, Marcus Meissner wrote:
-> >         The security consequences of obscure DNS root server usage are
-> > obvious, IMHO. You might want to consider security updates to the bind
-> > package with an updated root.hint file. (Since the story is on Slashdot, it
-> > is as public as it can get; thus I use the regular channel for this
-> > request.)
-> >
-> > Not sure if this warrants a CVE id.
-> 
-> We've gotten similar requests at Debian, with people requesting it be fixed in 
-> a security update. Our position until now has been that we're not treating it 
-> as a security issue: it has been in that IP space for years and there are no 
-> concrete indications that the owner of that block has turned bad. The same 
-> could be said for many other IP's of the root servers, where the owner of the 
-> space, connectivity or housing is currently trusted but could go bad at some 
-> point. We'll probably fix it in a next point update.
-> 
-> However, if many other vendors are treating it as a security issue, we're 
-> interested in their reasons and may follow suit to prevent confusion.
+> Don't know how to proceed from here, but in any case we don't have 
+> enough manpower to do upstream's job and perform a code audit / write a 
+> patch.
 
-We will be releasing a bind update with the current root.hint file.
+Nor does "upstream" have that manpower right now. (I thought I'd responded 
+to that first email stating as much, but it must have slipped through the 
+cracks.)
 
-I am still undecided whether to label it security or not.
-
-Ciao, Marcus
+-- Ben Haskell
