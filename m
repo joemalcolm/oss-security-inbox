@@ -1,48 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/16/5
-Message-Id: <200805162136.06872.rbu@gentoo.org>
-Date: Fri, 16 May 2008 21:36:06 +0200
-From: Robert Buchholz <rbu@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/09/2
+Message-ID: <48246710.9030504@gentoo.org>
+Date: Fri, 09 May 2008 17:00:32 +0200
+From: Pierre-Yves Rofes <py@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSH key blacklisting
+CC: wordnet@...nceton.edu
+Subject: Multiples vulnerabilities in wordnet
 Content-Type: text/plain; charset=utf-8
 
-Thanks for bringing up the topic here.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Friday 16 May 2008, Solar Designer wrote:
-> Are any other distros, besides Debian, Ubuntu, and derived ones,
-> going to implement key blacklisting in OpenSSH - or are considering
-> it?
->
-> We are considering it for Openwall GNU/*/Linux, and if our effort
-> would be reused by others, or if others join us in developing and/or
-> testing the patch, this would be a reason for us to go for it.
+Hi,
 
-Gentoo is discussing the feature in bug #221759 [1]. Until now, I have 
-not heard a reaction to the patch from our OpenSSH maintainers, so I 
-cannot judge on the technical side of the inclusion.
+ one of our users reported a buffer overflow in Wordnet:
 
+https://bugs.gentoo.org/show_bug.cgi?id=211491
 
-> I don't think we'll take the Debian/Ubuntu patch as-is.  Rather, we
-> are likely to use a trivial binary encoding/compression method for
-> the partial fingerprints.  We'd also use smaller partial
-> fingerprints.  With the approach I have in mind, it'd take around
-> 4.55 bytes per key to store 48-bit partial fingerprints, bringing the
-> installed file size for 3 arch types and 2 key types/sizes in under 1
-> MB (or just over 1 MB for 3 key types/sizes).
-
-I assume whichever version has the acceptance of the OpenSSH upstream is 
-what most of us would be willing to go with. Did you discuss either 
-blacklist format with them already?
-
-Personally, I would like to see the feature ported to our distribution 
-sooner than later, but neither at the cost of maintaining patchsets for 
-the rest of existance, nor with high transition cost once upstream 
-accepts another format.
-
-Robert
+After further research it appears that there might be a lot more.
+I tried to contact upstream (in CC) but didn't get any response
+so far. It seems at least Debian is packaging it too, and probably
+others distros. Don't know how to proceed from here, but in any case
+we don't have enough manpower to do upstream's job and perform a code
+audit / write a patch.
 
 
-[1] https://bugs.gentoo.org/show_bug.cgi?id=221759
+- --
+Pierre-Yves Rofes
+Gentoo Linux Security Team
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.7 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
 
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+iD8DBQFIJGcQuhJ+ozIKI5gRAqtLAJ9FK3N99BTuey0H6tNU2nLIYWLuyACcDs9l
+m1r998k49ujhiqFYXJk9fqk=
+=Zkf2
+-----END PGP SIGNATURE-----
