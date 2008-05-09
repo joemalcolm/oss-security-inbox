@@ -1,38 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/12/5
-Message-Id: <200804130144.29608.rbu@gentoo.org>
-Date: Sun, 13 Apr 2008 01:44:29 +0200
-From: Robert Buchholz <rbu@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/09/1
+Message-ID: <20080509143056.GA6430@ngolde.de>
+Date: Fri, 9 May 2008 16:30:56 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: Opera <9.27 Multiple issues
+Subject: versions affected by CVE-2008-1675 - update
 Content-Type: text/plain; charset=utf-8
 
-On Saturday 12 April 2008, Steven M. Christey wrote:
-> On Fri, 11 Apr 2008, Robert Buchholz wrote:
-> >     * Improved keyboard handling of password inputs, as reported by
-> > Trystan S.
-> >                 --------------
-> > I have no idea what the third vulnerability actually means.
->
-> Me neither...
+Hi,
+the description of CVE-2008-1675 states that the linux 
+kernel versions before 2.6.25 are vulnerable. This is wrong, 
+this should be kernel versions before 2.6.25.1.
 
-<snip>
+See: http://www.kernel.org/pub/linux/kernel/v2.6/patch-2.6.25.1.bz2
 
-> ======================================================
-> Name: CVE-2008-1764
-> Status: Candidate
-> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1764
-> Reference: CONFIRM:http://www.opera.com/docs/changelogs/windows/927/
->
-> Unspecified vulnerability in Opera for Windows before 9.27 has
-> unknown impact and attack vectors related to "keyboard handling of
-> password inputs."
+Cheers
+Nico
 
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-It is listed in the Linux ChangeLog, too:
-http://www.opera.com/docs/changelogs/linux/927/
-
-Robert
-
-Download attachment "signature.asc " of type "application/pgp-signature" (190 bytes)
+Content of type "application/pgp-signature" skipped
