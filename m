@@ -1,20 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/16/2
-Message-ID: <Pine.GSO.4.51.0804161035440.22069@faron.mitre.org>
-Date: Wed, 16 Apr 2008 10:35:49 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/10/3
+Message-ID: <20080510233755.GB9690@ngolde.de>
+Date: Sun, 11 May 2008 01:37:55 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: cecilia insecure temporary file usage
+Subject: CVE id request: vlc local privilege escalation
 Content-Type: text/plain; charset=utf-8
 
+Hi,
+can I get a CVE id for vlc?
+https://trac.videolan.org/vlc/ticket/1578:
 
-======================================================
-Name: CVE-2008-1832
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1832
-Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=476321
+"At startup, VLC recursively scans the modules/ and plugins/ subdirectories
+from the current working directory, and tries to execute the vlc_entry__0_8_6
+(or another in other VLC versions) symbol from any file matching the
+"lib*_plugin.so" pattern."
 
-lib/prefs.tcl in Cecilia  2.0.5 allows local users to overwrite
-arbitrary files via a symlink attack on the csvers temporary file.
+Patch: http://git.videolan.org/?p=vlc.git;a=commit;h=c7cef4fdd8dd72ce0a45be3cda8ba98df5e83181
 
+Kind regards
+Nico
 
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
