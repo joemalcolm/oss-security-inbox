@@ -1,29 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/17/20
-Message-ID: <20081217153604.GB14541@suse.de>
-Date: Wed, 17 Dec 2008 16:36:04 +0100
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/10/2
+Message-Id: <200805101447.45081.rbu@gentoo.org>
+Date: Sat, 10 May 2008 14:47:44 +0200
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: watchdog: ib700wdt.c - buffer_underflow bug
+Subject: CVE request: Emacs 21 fast-lock-mode arbitrary lips code execution
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Dec 17, 2008 at 10:14:27AM +0800, Eugene Teo wrote:
-> On Wed, Dec 17, 2008 at 10:00 AM, Steven M. Christey
-> <coley@...us.mitre.org> wrote:
-> >
-> > On Wed, 10 Dec 2008, Eugene Teo wrote:
-> >
-> >> Steve, here's another one that needs a CVE name. Thanks!
-> >>
-> >> http://bugzilla.kernel.org/show_bug.cgi?id=11399
-> >
-> > Similar to the other issue, is this IOCTL reachable by anyone malicious?
-> 
-> From what I can see in ibwdt_ioctl(), it does not restrict access to
-> unprivileged users.
+Emacs 21 and Xemacs will execute any lisp code present in a .flc file that 
+accompanies the file the user opens.
 
-Again, depends on how the device node is created I think. Not sure
-what mode udev hands out for those.
+Details:
+http://thread.gmane.org/gmane.emacs.devel/96903
+https://bugs.gentoo.org/show_bug.cgi?id=221197
 
-Ciao, Marcus
+Download attachment "signature.asc " of type "application/pgp-signature" (190 bytes)
