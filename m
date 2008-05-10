@@ -1,24 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/17/2
-Message-ID: <28fa9c5e0811162205t43501216gd3e3ed7a40357144@mail.gmail.com>
-Date: Mon, 17 Nov 2008 14:05:04 +0800
-From: "Eugene Teo" <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/10/1
+Message-Id: <200805101441.21478.rbu@gentoo.org>
+Date: Sat, 10 May 2008 14:41:21 +0200
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel: V4L/DVB (9621): Avoid writing outside shadow.bytes[] array
+Subject: CVE request: Linux vfs: fix permission checking in sys_utimensat
 Content-Type: text/plain; charset=utf-8
 
-This was fixed in upstream by the maintainer, Mauro Carvalho Chehab.
+This patch has been released in Linux 2.6.25.3:
 
-"[PATCH] V4L/DVB (9621): Avoid writing outside shadow.bytes[] array
+http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.25.y.git;a=commit;h=f9dfda1ad0637a89a64d001cf81478bd8d9b6306
+> If utimensat() is called with both times set to UTIME_NOW or one of them 
+> to UTIME_NOW and the other to UTIME_OMIT, then it will update the file 
+> time without any permission checking.
+>
+> I don't think this can be used for anything other than a local DoS, but
+> could be quite bewildering at that (e.g.  "Why was that large source tree
+> rebuilt when I didn't modify anything???")
 
-There were no check about the limits of shadow.bytes array. This offers
-a risk of writing values outside the limits, overriding other data
-areas."
 
-Upstream commit: 494264379d186bf806613d27aafb7d88d42f4212
+Robert
 
-https://bugzilla.redhat.com/show_bug.cgi?id=471835
-
-Please assign a CVE name to this bug.
-
-Thanks, Eugene
+Download attachment "signature.asc " of type "application/pgp-signature" (190 bytes)
