@@ -1,21 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/04/5
-Message-Id: <200809041617.13378.tmb@65535.com>
-Date: Thu, 4 Sep 2008 16:17:13 +0100
-From: Tim Brown <tmb@...35.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/12/4
+Message-ID: <20080512172429.GC25634@ngolde.de>
+Date: Mon, 12 May 2008 19:24:29 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSH key blacklisting
+Subject: Re: CVE request: Emacs 21 fast-lock-mode arbitrary lips code execution
 Content-Type: text/plain; charset=utf-8
 
-As a quick follow up to my comments a couple of months ago about SSH and how 
-to better handle the requirement to revoke keys, it seems that some folk had 
-similar thoughts.  Behold http://monkeysphere.info which promises to "extend 
-OpenPGP's web of trust to new areas of the Internet to help us securely 
-identify each other while we work online".  Looking forward to taking it for 
-a spin.
+Hi Robert,
+* Robert Buchholz <rbu@...too.org> [2008-05-12 19:05]:
+> On Monday, 12. May 2008, Nico Golde wrote:
+> > * Robert Buchholz <rbu@...too.org> [2008-05-10 15:01]:
+> > > Emacs 21 and Xemacs will execute any lisp code present in a .flc file
+> > > that accompanies the file the user opens.
+> >
+> > The same applies to emacs22.
+> 
+> Our emacs maintainer said version 22 would warn you that lisp code from the 
+> file would be executed. Could you confirm otherwise?
 
-Cheers,
-Tim
+At least not with the emacs22 installation I tried this with (22.2).
+As this is a rather old version, this may depend on the 
+version used?
+
+Cheers
+Nico
 -- 
-Tim Brown
-<mailto:tmb@...35.com>
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
