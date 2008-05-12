@@ -1,38 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/09/2
-Message-ID: <48246710.9030504@gentoo.org>
-Date: Fri, 09 May 2008 17:00:32 +0200
-From: Pierre-Yves Rofes <py@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/12/9
+Message-ID: <Pine.GSO.4.51.0805121610050.12683@faron.mitre.org>
+Date: Mon, 12 May 2008 16:14:19 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-CC: wordnet@...nceton.edu
-Subject: Multiples vulnerabilities in wordnet
+cc: wordnet@...nceton.edu
+Subject: Re: Multiples vulnerabilities in wordnet
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-Hi,
+I've assigned CVE-2008-2149 to just deal with the "overflow in a long
+command line" as reported for the searchwn function.  This is based on the
+comment in the Gentoo bug report that "I have seen that Wordnet is
+sometimes used as a backend in e.g. web applications," otherwise might
+have dismissed it as just a regular command-line overflow.  (Increasing
+application connectivity is making this distinction harder, though.)
 
- one of our users reported a buffer overflow in Wordnet:
+If additional detailed research is performed, then other CVEs could be
+assigned accordingly.
 
-https://bugs.gentoo.org/show_bug.cgi?id=211491
+- Steve
 
-After further research it appears that there might be a lot more.
-I tried to contact upstream (in CC) but didn't get any response
-so far. It seems at least Debian is packaging it too, and probably
-others distros. Don't know how to proceed from here, but in any case
-we don't have enough manpower to do upstream's job and perform a code
-audit / write a patch.
+======================================================
+Name: CVE-2008-2149
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2149
+Reference: CONFIRM:https://bugs.gentoo.org/show_bug.cgi?id=211491
+
+Stack-based buffer overflow in the searchwn function in Wordnet 2.0,
+2.1, and 3.0 might allow context-dependent attackers to execute
+arbitrary code via a long command line option.  NOTE: this issue
+probably does not cross privilege boundaries except in cases in which
+Wordnet is used as a back end.
 
 
-- --
-Pierre-Yves Rofes
-Gentoo Linux Security Team
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.7 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
-
-iD8DBQFIJGcQuhJ+ozIKI5gRAqtLAJ9FK3N99BTuey0H6tNU2nLIYWLuyACcDs9l
-m1r998k49ujhiqFYXJk9fqk=
-=Zkf2
------END PGP SIGNATURE-----
