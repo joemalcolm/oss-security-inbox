@@ -1,24 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/30/7
-Message-ID: <20080630212319.GE11562@severus.strandboge.com>
-Date: Mon, 30 Jun 2008 17:23:19 -0400
-From: Jamie Strandboge <jamie@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/12/5
+Message-ID: <Pine.GSO.4.51.0805121410150.12683@faron.mitre.org>
+Date: Mon, 12 May 2008 14:10:55 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request for dnsmasq DoS
+Subject: Re: CVE request: Emacs 21 fast-lock-mode arbitrary lips code execution
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-There is a remote DoS in dnsmasq 2.25 (and presumably earlier) that is
-fixed in 2.26. Details can be found at [1]. Can we get a CVE assigned
-for this?
+======================================================
+Name: CVE-2008-2142
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2142
+Reference: MISC:http://thread.gmane.org/gmane.emacs.devel/96903
+Reference: MISC:http://tracker.xemacs.org/XEmacs/its/issue378
+Reference: CONFIRM:https://bugs.gentoo.org/show_bug.cgi?id=221197
 
-Jamie Strandboge
+Emacs 21 and XEmacs automatically load and execute .flc (fast lock) files
+that are associated with other files are edited within Emacs, which allows
+user-assisted attackers to execute arbitrary code.
 
-[1] https://bugs.launchpad.net/ubuntu/+source/dnsmasq/+bug/47438
 
--- 
-Ubuntu Security Engineer     | http://www.ubuntu.com/
-Canonical Ltd.               | http://www.canonical.com/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (190 bytes)
