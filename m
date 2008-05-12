@@ -1,24 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/15/6
-Message-Id: <200807152100.58988.hanno@hboeck.de>
-Date: Tue, 15 Jul 2008 21:00:55 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/12/3
+Message-Id: <200805121849.48599.rbu@gentoo.org>
+Date: Mon, 12 May 2008 18:49:48 +0200
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: CVE request: phpmyadmin < 2.11.7.1
+Cc: Nico Golde <oss-security+ml@...lde.de>
+Subject: Re: CVE request: Emacs 21 fast-lock-mode arbitrary lips code execution
 Content-Type: text/plain; charset=utf-8
 
-http://www.phpmyadmin.net/home_page/downloads.php?relnotes=0
+On Monday, 12. May 2008, Nico Golde wrote:
+> Hi,
+>
+> * Robert Buchholz <rbu@...too.org> [2008-05-10 15:01]:
+> > Emacs 21 and Xemacs will execute any lisp code present in a .flc file
+> > that accompanies the file the user opens.
+>
+> The same applies to emacs22.
 
-From Changelog:
-- protection against XSS when register_globals is on and .htaccess
-  has no effect, thanks to Tim Starling
-- (2.11.7.1)  [security] XSRF/CSRF by manipulating the db,
-  convcharset and collation_connection parameters,
-  thanks to YGN Ethical Hacker Group
+Our emacs maintainer said version 22 would warn you that lisp code from the 
+file would be executed. Could you confirm otherwise?
 
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+Robert
 
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+
+Download attachment "signature.asc " of type "application/pgp-signature" (190 bytes)
