@@ -1,31 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/19/1
-Message-Id: <200808191133.47157.hanno@hboeck.de>
-Date: Tue, 19 Aug 2008 11:33:46 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/12/8
+Message-ID: <Pine.GSO.4.51.0805121604210.12683@faron.mitre.org>
+Date: Mon, 12 May 2008 16:04:33 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: wordpress 2.6.1
+Subject: Re: CVE request: Linux vfs: fix permission checking in sys_utimensat
 Content-Type: text/plain; charset=utf-8
 
-Just had a look at the wp 2.6.1 changelog.
 
-Two security relevant bugs are listed as fixed.
+======================================================
+Name: CVE-2008-2148
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2148
+Reference: CONFIRM:http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.25.y.git;a=commit;h=f9dfda1ad0637a89a64d001cf81478bd8d9b6306
 
-http://trac.wordpress.org/ticket/7359
-I'd consider this worth a CVE. It's good that this ssl stuff got some 
-attention lately (I think this is a similar issue to the recently reported 
-cookie / secureflag issues, as it can undermine the sniffing-safety of 
-ssl-enabled pages).
-
-http://trac.wordpress.org/ticket/6871
-
-AFAICS this enables one to hide malicious plugins but is no real vuln. Not 
-sure if it deserves a CVE.
+The utimensat system call in Linux kernel 2.6.22 and other versions
+before 2.6.25.3 does not check file permissions when certain UTIME_NOW
+and UTIME_OMIT combinations are used, which allows local users to
+modify file times of arbitrary files, possibly leading to a denial of
+service.
 
 
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
