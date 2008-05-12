@@ -1,30 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/28/2
-Message-ID: <20080728105015.74e6fb48@redhat.com>
-Date: Mon, 28 Jul 2008 10:50:15 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/12/2
+Message-ID: <20080512150358.GB29079@ngolde.de>
+Date: Mon, 12 May 2008 17:03:58 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: Re: CVE id request: horde3/turba2
+Subject: Re: CVE request: Emacs 21 fast-lock-mode arbitrary lips code execution
 Content-Type: text/plain; charset=utf-8
 
-On Sun, 27 Jul 2008 17:57:05 -0400 (EDT) "Steven M. Christey"
-<coley@...us.mitre.org> wrote:
+Hi,
+* Robert Buchholz <rbu@...too.org> [2008-05-10 15:01]:
+> Emacs 21 and Xemacs will execute any lisp code present in a .flc file that 
+> accompanies the file the user opens.
 
-> Name: CVE-2008-3330
-> Cross-site scripting (XSS) vulnerability in
-> services/obrowser/index.php in Horde 3.2 and Turba 2.2 allows remote
-> attackers to inject arbitrary web script or HTML via the contact name.
-
-Why does this mention Turba?  Affected script does not seem to be part
-of Turba, at least not part of Fedora packages.
-
-Btw, this seems to be an issue fixed by upstream mid-June in horde
-3.1.8 and 3.2.1 (and other Horde suites that include Horde Framework +
-some other components in all-in-one suite), see following bug for
-further references:
-
-  https://bugzilla.redhat.com/show_bug.cgi?id=452539
-
+The same applies to emacs22.
+Cheers
+Nico
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
