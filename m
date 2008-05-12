@@ -1,24 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/17/5
-Message-ID: <48577C03.3050802@gmx.de>
-Date: Tue, 17 Jun 2008 10:55:31 +0200
-From: Matthias Andree <matthias.andree@....de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/12/6
+Message-ID: <Pine.GSO.4.51.0805121537211.12683@faron.mitre.org>
+Date: Mon, 12 May 2008 15:37:31 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Id Request: fetchmail <= 6.3.8 DoS when	logging long headers in -v -v mode
+Subject: Re: CVE id request: wordpress
 Content-Type: text/plain; charset=utf-8
 
-Jonathan Smith schrieb:
-> Matthias Andree wrote:
->> Impeding the 6.3.9 release, there are some nasty bugs that aren't
->> security relevant which are pending the fix, but are hard to debug.
-> 
-> Are these bugs regressions against 6.3.8? If so, it might make sense to
-> cherry-pick the security fixes from svn and cut a 6.3.8.1 release with
-> 6.3.8+patches. If not, why let non-regressions hold up 6.3.9?
 
-Release overhead; but you're right, I might just make that cut and let
-6.3.9 out (since the bugs are long-standing, rather than recent
-regressions) and postpone fixing of the other bugs to 6.3.10.
+======================================================
+Name: CVE-2008-2146
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2146
+Reference: CONFIRM:http://trac.wordpress.org/changeset/6029
+Reference: CONFIRM:http://trac.wordpress.org/changeset?old_path=tags%2F2.2.2&old=6063&new_path=tags%2F2.2.3&new=6063#file10
+Reference: CONFIRM:http://trac.wordpress.org/ticket/4748
 
--- 
-Matthias Andree
+wp-includes/vars.php in Wordpress before 2.2.3 does not properly
+extract the current pafe from the PATH_INFO ($PHP_SELF), which allows
+remote attackers to bypass intended access restrictions for certain
+pages.
+
+
+1
