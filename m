@@ -1,24 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/22/1
-Message-ID: <22959.1208823800@devserv.devel.redhat.com>
-Date: Mon, 21 Apr 2008 20:23:20 -0400
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/12/7
+Message-ID: <Pine.GSO.4.51.0805121557550.12683@faron.mitre.org>
+Date: Mon, 12 May 2008 15:58:05 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: Karel Zak <kzak@...hat.com>, Steve Grubb <sgrubb@...hat.com>, Miloslav Trmac <mitr@...hat.com>, coley@...re.org
-Subject: audit log injection attack via login
+Subject: Re: CVE id request: vlc local privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-Steve Grubb just let us know about an audit log injection flaw in login.
-It's already public via a checkin:
-http://git.kernel.org/?p=utils/util-linux-ng/util-linux-ng.git;a=commit;h=8ccf0b253ac0f4f58d64bc9674de18bff5a88782
 
-I'm under the impression this should probably get a new CVE id (added Steve
-Christey to the CC list for this).
+======================================================
+Name: CVE-2008-2147
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2147
+Reference: CONFIRM:http://git.videolan.org/?p=vlc.git;a=commit;h=c7cef4fdd8dd72ce0a45be3cda8ba98df5e83181
+Reference: CONFIRM:http://trac.videolan.org/vlc/ticket/1578
 
-Steve Grubb is also pretty sure there are other things that have this
-problem, he's investigating.
+Untrusted search path vulnerability in VideoLAN VLC before 0.9.0
+allows local users to execute arbitrary code via a malicious library
+under the modules/ or plugins/ subdirectories of the current working
+directory.
 
-Thanks.
 
--- 
-    JB
