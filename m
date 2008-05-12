@@ -1,63 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/17/3
-Message-ID: <Pine.GSO.4.51.0812162021110.5724@faron.mitre.org>
-Date: Tue, 16 Dec 2008 20:31:51 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/12/1
+Message-ID: <20080512134826.GA8103@openwall.com>
+Date: Mon, 12 May 2008 17:48:26 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: Re:  Re: CVE Request - roundcubemail
+Subject: Re: group announcement
 Content-Type: text/plain; charset=utf-8
 
+Josh and all,
 
-On Sat, 13 Dec 2008, Florian Weimer wrote:
+I am sorry for not commenting on this earlier.
 
-> * Ingrid wrote:
->
-> > Therefore, I agree with Raphael that the issue has not been found yet.
+On Fri, May 02, 2008 at 03:26:26PM -0400, Josh Bressers wrote:
+> I have a first draft writeup, that I'm sticking at the end of this message,
 
-The general issue of /e in preg_replace is covered by CWE-624 Executable
-Regular Expression Error (http://cwe.mitre.org/data/definitions/624.html)
-which has a couple other CVE examples.
+It looks good, and I fully agree with the update to the third paragraph
+based on Steve's feedback.
 
-I bet there's a chunk of these in various applications.  I believe Perl
-has similar functionality.
+> and I plan to run this past the Red Hat Corporate Communications people
+> (which is where the delay came from, they are busy people).  They have
+> offered to add this announcement (presuming it conforms to their standards)
+> to the Red Hat press blog, which is well read by various people in the
+> computing press world.  This should help get a lot more attention than just
+> sending this out to a few mailing lists.  I did however explain that
+> whatever goes on the press blog needs to be cleared with this group first,
+> and they completely understand.
 
-Use CVE-2008-5619 for the issue.
+This sounds great.  I think that we'll need to announce on mailing lists
+as well, though.
 
-Note there's a separate DoS issue, CVE-2008-5620.
+> Today we announce the Open Source Software Security community
+> (oss-security) an ongoing effort to manage security information in Open
+> Source software by building on the very collaborative foundation of the
+> Open Source model.
 
-- Steve
+Perhaps there should be a comma or a dash before "an ongoing ..."
 
-======================================================
-Name: CVE-2008-5619
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5619
-Reference: MISC:http://trac.roundcube.net/ticket/1485618
-Reference: CONFIRM:http://sourceforge.net/forum/forum.php?forum_id=898542
-Reference: CONFIRM:http://trac.roundcube.net/changeset/2148
-Reference: FEDORA:FEDORA-2008-11220
-Reference: URL:https://www.redhat.com/archives/fedora-package-announce/2008-December/msg00783.html
-Reference: FEDORA:FEDORA-2008-11234
-Reference: URL:https://www.redhat.com/archives/fedora-package-announce/2008-December/msg00802.html
-Reference: MLIST:[oss-security] 20081212 CVE Request - roundcubemail
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/12/12/1
-Reference: SECUNIA:33170
-Reference: URL:http://secunia.com/advisories/33170
+> This community was initially founded by individuals from Foresight Linux,
+> Mandriva, Openwall, and Red Hat.  The community has since grown to include
+> contributions from many other projects and individuals.  The computing
+> resources are currently graciously donated by the Openwall Project.
+> <maybe some URLs here?>
 
-html2text.php in RoundCube Webmail (roundcubemail) 0.2-1.alpha and
-0.2-3.beta allows remote attackers to execute arbitrary code via
-crafted input that is processed by the preg_replace function with the
-eval switch.
+I think that it'd be nice to make the company/project names into
+hyperlinks in an HTML (or similar) version of the announcement, if one
+is to be created - however, introducing those URLs into a text version,
+where the URLs would occupy visible space and distract from the actual
+announcement text, is probably undesirable.
 
+Similarly, it'd be nice to make "Open Source Software Security community
+(oss-security)" a hyperlink.
 
-======================================================
-Name: CVE-2008-5620
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5620
-Reference: CONFIRM:http://sourceforge.net/forum/forum.php?forum_id=898542
+> If you have an interest in the Open Source security space, you are
+> encouraged to participate in the oss-security community by adding content
+> to the wiki, contributing to mailing list discussions, or joining us on IRC.
 
-RoundCube Webmail (roundcubemail) before 0.2-beta allows remote
-attackers to cause a denial of service (memory consumption) via
-crafted size parameters that are used to create a large quota image.
+This could have hyperlinks, too - "wiki", "mailing list".
 
+> More information can be found on the group's wiki page here:
+> http://oss-security.openwall.org
 
+We could want to include this URL near the beginning of the announcement
+text as well - in the hyperlink I suggested or otherwise.
+
+Also, maybe we should put this announcement text somewhere on our own
+wiki, where others who might want to refer to oss-security later (e.g.,
+announce it to their local community) could pick it up?  BTW, we'll be
+able to have all of the hyperlinks in that version.
+
+Thanks,
+
+Alexander
