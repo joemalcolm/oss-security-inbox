@@ -1,39 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/06/1
-Message-ID: <48C1D1FF.7050704@redhat.com>
-Date: Sat, 06 Sep 2008 08:42:39 +0800
-From: Eugene Teo <eteo@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/13/2
+Message-ID: <20080513140632.147eeef0@redhat.com>
+Date: Tue, 13 May 2008 14:06:32 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Till Maas <opensource@...l.name>, fedora-security-list@...hat.com, coley@...re.org
-Subject: CVE request: pam_mount: conf: re-add luserconf security checks
+Cc: hanno@...eck.de, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: Re: CVE request: Bugzilla (Unauthorized Bug Change, XSS, Account Impersonation)
 Content-Type: text/plain; charset=utf-8
 
-Till Maas wrote:
-> On Fri September 5 2008, Till Maas wrote:
+On Tue, 13 May 2008 13:07:11 +0200 Hanno Böck <hanno@...eck.de> wrote:
+
+> > The WebService in Bugzilla before 3.1.3 allows remote authenticated
+> > users without canconfirm privileges to create NEW or ASSIGNED bug
+> > entries via a request to the XML-RPC interface, which bypasses the
+> > canconfirm check.
 > 
->> pam_mount just released an update that fixes a security vulnerability:
->> https://sourceforge.net/project/shownotes.php?release_id=624240
-> 
-> Will someone create the needed tracking bugs[1] for this and maybe request / 
-> assign a CVE number?
+> I think this should be "3.1.3 and before" ?
+> As 3.1.3 is also affected according to the upstream advisory.
 
-This email was posted in fedora-security-list@rc.
+Probably "in Bugzilla 3.1.3":
 
-v0.47 (September 04 2008)
-=========================
-This release incorporates a security fix (item 3 on the list).
-All administrators who have enabled <luserconf> in the configuration
-file should upgrade. A workaround is to comment out <luserconf>.
+https://bugzilla.mozilla.org/show_bug.cgi?id=415471#c5
 
-- mount.crypt: add missing null command to conform to sh syntax
-  (SF bug #2089446)
-- conf: fix printing of strings when luser volume options were not ok
-- conf: re-add luserconf security checks
-[...]
+  Frédéric Buclin   2008-05-04 14:58:19 PDT
+  This regression was introduced by bug 402791 in Bugzilla 3.1.3.
 
-https://sourceforge.net/project/shownotes.php?release_id=624240
-http://dev.medozas.de/gitweb.cgi?p=pam_mount;a=commitdiff;h=33b91d7659ae3aa78b1e94fd3f8e545ae5ff25db
+?
 
-Thanks, Eugene
 -- 
-Eugene Teo / Red Hat Security Response Team
+Tomas Hoger / Red Hat Security Response Team
