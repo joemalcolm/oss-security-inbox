@@ -1,29 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/25/6
-Message-ID: <20080825181136.6116bcf6@redhat.com>
-Date: Mon, 25 Aug 2008 18:11:36 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: vdanen@...sec.ca
-Cc: oss-security@...ts.openwall.com, vendor-sec@....de
-Subject: Re: Re: libxml2 denial of service flaw (CVE-2008-3281)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/13/1
+Message-Id: <200805131307.11637.hanno@hboeck.de>
+Date: Tue, 13 May 2008 13:07:11 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: Re: CVE request: Bugzilla (Unauthorized Bug Change, XSS, Account Impersonation)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 25 Aug 2008 09:58:38 -0600 Vincent Danen <vdanen@...sec.ca>
-wrote:
+Am Mittwoch 07 Mai 2008 schrieb Steven M. Christey:
+> ======================================================
+> Name: CVE-2008-2104
+> Status: Candidate
+> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2104
+> Reference: CONFIRM:http://www.bugzilla.org/security/2.20.5/
+> Reference: CONFIRM:https://bugzilla.mozilla.org/show_bug.cgi?id=415471
+> Reference: BID:29038
+> Reference: URL:http://www.securityfocus.com/bid/29038
+> Reference: FRSIRT:ADV-2008-1428
+> Reference:
+> URL:http://www.frsirt.com/english/advisories/2008/1428/references
+> Reference: SECTRACK:1019968
+> Reference: URL:http://www.securitytracker.com/id?1019968
+> Reference: SECUNIA:30064
+> Reference: URL:http://secunia.com/advisories/30064
+> Reference: XF:bugzilla-xmlrpc-security-bypass(42218)
+> Reference: URL:http://xforce.iss.net/xforce/xfdb/42218
+>
+> The WebService in Bugzilla before 3.1.3 allows remote authenticated
+> users without canconfirm privileges to create NEW or ASSIGNED bug
+> entries via a request to the XML-RPC interface, which bypasses the
+> canconfirm check.
 
-> Does anyone know if this affects anything other than librsvg?  If so,
-> the patch approach to fixing libxml2 would be better.  I've just
-> started looking into this today, so I'm not quite up to speed on
-> this, but it looks like there are problems with the gnome menus as
-> well.
-
-librsvg and strigi are known to be affected, according to the Debian
-bug.  Rebuild against new libxml2 should do the trick, if that's the
-way you can go.
-
-> Has anyone tried this new patch?
-
-Being tested now.
+I think this should be "3.1.3 and before" ?
+As 3.1.3 is also affected according to the upstream advisory.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
