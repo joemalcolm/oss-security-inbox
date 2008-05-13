@@ -1,35 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/05/2
-Message-Id: <200809051528.36357.ludwig.nussel@suse.de>
-Date: Fri, 5 Sep 2008 15:28:35 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/13/4
+Message-ID: <20080513193305.GD14783@ngolde.de>
+Date: Tue, 13 May 2008 21:33:05 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Cc: cve@...re.org
-Subject: Re: opensc 0.11.6 with fixed security update
+Subject: CVE id request: uudeview
 Content-Type: text/plain; charset=utf-8
 
-Andreas Jellinghaus wrote:
-> this is a copy of a new security announcement we had to make, already public.
-> our last security update with OpenSC 0.11.5 had a small glitch, so this 
-> version fixes that glitch. Please everyone update the opensc packages in your
-> distribution.
-> [...]
-> This is an update to our security advisory 31-Jul-2008. 
-> 
-> Chaskiel M Grundman found a security vulnerability in OpenSC. The 
-> vulnerability has been fixed in OpenSC 0.11.6. In Mitre's CVE dictionary this 
-> issue is filed under CVE-2008-2235. Users will need to 
-> run "pkcs15-tool -T -U" to test (-T) and update (-U) the security settings on 
-> their card. 
+Hi,
+can I get a CVE id for uudeview[0]?
 
-I guess this need a new CVE number then?
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=480972
 
-cu
-Ludwig
+It makes use of tempnam which is known to be insecure to 
+generate temporary files.
+
+[0] http://www.fpx.de/fp/Software/UUDeview/
+
+Cheers
+Nico
 
 -- 
- (o_   Ludwig Nussel
- //\   
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
+Content of type "application/pgp-signature" skipped
