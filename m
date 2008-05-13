@@ -1,33 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/18/13
-Message-ID: <47B9F137.4030007@freethemallocs.com>
-Date: Mon, 18 Feb 2008 11:57:27 -0900
-From: Jonathan Smith <smithj@...ethemallocs.com>
-To: oss-security@...ts.openwall.com
-Subject: FAQ for upstream maintainers
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/13/3
+Message-ID: <Pine.GSO.4.51.0805131156180.22220@faron.mitre.org>
+Date: Tue, 13 May 2008 11:56:31 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Hanno Böck <hanno@...eck.de>
+cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: Re: CVE request: Bugzilla (Unauthorized Bug Change, XSS, Account Impersonation)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-Since my main goal (I understand if your goals differ, but they
-certainly should not conflict) for this list is to provide a way for
-upstream to coordinate with the vendors, I'm going to start a FAQ or
-tutorial or whatever dedicated to what upstream should do when they get
-a report from a user about a security issue.
+On Tue, 13 May 2008, Hanno [utf-8] Böck wrote:
 
-Basic rough draft:
-http://oss-security.openwall.org/wiki/whattodo
+> I think this should be "3.1.3 and before" ?
+> As 3.1.3 is also affected according to the upstream advisory.
 
-I'm sure it can use some cleanup... Ideas, submissions, etc welcome!
-Also quite welcome would be someone with wiki-fu prettying up the page :-)
+Yes, fixed - thanks.
 
-	smithj
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.8 (GNU/Linux)
-
-iEYEARECAAYFAke58TcACgkQCG91qXPaRem2RACgh5bZX+OJ/luJGcXQRybsn1yS
-GHEAnj8tglycXD8SS+ta4asn1OdYCuyO
-=KMsb
------END PGP SIGNATURE-----
+- Steve
