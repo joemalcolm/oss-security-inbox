@@ -1,26 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/18/12
-Message-ID: <20080218204259.GA32264@openwall.com>
-Date: Mon, 18 Feb 2008 23:42:59 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/14/2
+Message-ID: <60255.82.67.177.178.1210758388.squirrel@mail.rofes.fr>
+Date: Wed, 14 May 2008 11:46:28 +0200 (CEST)
+From: "Pierre-Yves Rofes" <py@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: wiki - e-mail address obfuscation
+Subject: CVE id request: Django Cross-Site Scripting
 Content-Type: text/plain; charset=utf-8
 
-I wrote:
-> ... it only
-> obfuscates e-mail addresses it recognizes - not anything with an @-sign.
-> So we need to be very careful about this - e-mail addresses must be
-> entered as <user@...mple.org> - with the angle brackets.
-...
-> As to page source, I've disabled the view source / export raw feature.
+Hi Steve,
 
-I just found another issue: it is possible to "show differences to
-current version" without being logged in - and, of course, original
-(non-obfuscated) e-mail addresses are seen in these source diffs.
+please assign a CVE id for the following issue:
 
-Unless we come up with a way to address that (e.g., somehow disable this
-feature for anonymous visitors), I'm afraid that we'll have to obfuscate
-addresses manually prior to entering them into the wiki...
+http://www.djangoproject.com/weblog/2008/may/14/security/
+https://bugs.gentoo.org/show_bug.cgi?id=222029
 
-Alexander
+Thanks
+
+-- 
+Pierre-Yves Rofes
+Gentoo Linux Security Team
+
+
+
+
+
+
+
