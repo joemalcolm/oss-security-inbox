@@ -1,33 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/02/4
-Message-ID: <20080702092351.GE13234@ngolde.de>
-Date: Wed, 2 Jul 2008 11:23:51 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/14/4
+Message-ID: <87abitnft5.fsf@gmx.de>
+Date: Wed, 14 May 2008 16:03:34 +0200
+From: Sven Joachim <svenjoac@....de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request for dnsmasq DoS
+Subject: Re: CVE request: Emacs 21 fast-lock-mode arbitrary lips code execution
 Content-Type: text/plain; charset=utf-8
 
-Hi Steven,
-* Steven M. Christey <coley@...us.mitre.org> [2008-07-02 00:05]:
-> On Mon, 30 Jun 2008, Jamie Strandboge wrote:
-> > There is a remote DoS in dnsmasq 2.25 (and presumably earlier) that is
-> > fixed in 2.26. Details can be found at [1]. Can we get a CVE assigned
-> > for this?
-> 
-> I'm not sure I fully understand Thierry Carrez' comment about the security
-> implications of this issue.  It seems like an exploit would require a
-> malicious DHCP server, in which case isn't DHCP service already
-> compromised?  If so, then a crash of dnsmasq (null dereference?) doesn't
-> seem to be any worse than the loss of DHCP itself.
+On 2008-05-14 15:27 +0200, Nico Golde wrote:
 
-Why is a malicious DCHP server needed? As far as I 
-understood the bug a client that doesn't already have a 
-lease would just need to send a DHCPREQUEST to refresh its 
-non-existant lease.
-Cheers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+> As I am a vim user I might have done something wrong too, 
+> not sure. What I did after installing emacs:
+> cat >> ~/.emacs << EOF
+> (global-font-lock-mode t)
+> (seq font-lock-support-mode 'fast-lock-mode)
+> EOF
 
-Content of type "application/pgp-signature" skipped
+Should read setq, not seq.  You will also need to load fast-lock
+explicitly before that, since it's obsolete and not automatically
+loaded anymore:
+
+(load-library "fast-lock")
+
+> cat >> foobar.c << EOF
+> /* no comment */
+> EOF
+>
+> cat >> foobar.c.flc << EOF
+> " foobar "
+> EOF
+
+Instead of " foobar ", you can put in the following which actually does
+something visible:
+
+(message "Surprise, surprise!")
+
+This string will be put in the echo area when you visit foobar.c.
+
+Sven
