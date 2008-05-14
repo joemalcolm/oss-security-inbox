@@ -1,21 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/03/2
-Message-ID: <20080903090327.GA21117@suse.de>
-Date: Wed, 3 Sep 2008 11:03:27 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/14/5
+Message-ID: <20080514144325.GG28202@ngolde.de>
+Date: Wed, 14 May 2008 16:43:25 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: request for CVE: clamav 0.94 release
+Subject: Re: Re: CVE request: Emacs 21 fast-lock-mode arbitrary lips code execution
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi Sven,
+* Sven Joachim <svenjoac@....de> [2008-05-14 16:12]:
+> On 2008-05-14 15:27 +0200, Nico Golde wrote:
+> > As I am a vim user I might have done something wrong too, 
+> > not sure. What I did after installing emacs:
+> > cat >> ~/.emacs << EOF
+> > (global-font-lock-mode t)
+> > (seq font-lock-support-mode 'fast-lock-mode)
+> > EOF
+> 
+> Should read setq, not seq.  You will also need to load fast-lock
+> explicitly before that, since it's obsolete and not automatically
+> loaded anymore:
 
-Again released without fanfare, clamav 0.94.
+Where is the difference? seq was from:
+http://lists.gnu.org/archive/html/emacs-devel/2008-05/msg00645.html
 
-http://lurker.clamav.net/message/20080902.154137.289f280b.en.html
+> (load-library "fast-lock")
+> 
+> > cat >> foobar.c << EOF
+> > /* no comment */
+> > EOF
+> >
+> > cat >> foobar.c.flc << EOF
+> > " foobar "
+> > EOF
+> 
+> Instead of " foobar ", you can put in the following which actually does
+> something visible:
+> 
+> (message "Surprise, surprise!")
 
-The full changelog has those apparent security related entries:
- * fix out-of-memory null dereferenc (bb#1141)
- * fix possible invalid memory access (bb#1089)
- * fix error path memleaks and fd leaks (bb#1141)
+Thanks, missed the (message...)
 
-Ciao, Marcus
+> This string will be put in the echo area when you visit foobar.c.
+
+Confirmed, works now as expected, not confirmation dialog though.
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
