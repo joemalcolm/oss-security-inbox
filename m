@@ -1,25 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/19/4
-Message-ID: <1853374455.1626501221830548775.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 19 Sep 2008 09:22:28 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: viewvc security flaw?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/14/6
+Message-ID: <20080514144646.GB7902@sdf.lonestar.org>
+Date: Wed, 14 May 2008 14:46:47 +0000
+From: Tavis Ormandy <taviso@....lonestar.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE request: Emacs 21 fast-lock-mode arbitrary lips code execution
 Content-Type: text/plain; charset=utf-8
 
-I'm not sure about this one, I'm wondering if someone else has an opinion:
-http://viewvc.tigris.org/issues/show_bug.cgi?id=354
+On Wed, May 14, 2008 at 04:03:34PM +0200, Sven Joachim wrote:
+> On 2008-05-14 15:27 +0200, Nico Golde wrote:
+> 
+> > As I am a vim user I might have done something wrong too, 
+> > not sure. What I did after installing emacs:
 
-It was submitted as a Fedora security update, which I'm letting through for
-now, as better safe than sorry.
+Same here, so out of curiosity i ran strace -efile -o log vim, and
+edited a few files. I observed vim looking for a directory called
+$TMPDIR in the wd, and using it as you would expect. Obviously a bug,
+and perhaps some minor security implications, anyone want to
+investigate? :-)
 
-To sum it up, it looks like the mime type used to display a given file in
-viewvc can be set via the URL.  Obviously this means that an attacker could
-force an arbitrary mime type on any file in a viewvc repository.
+(e.g. enter :let foo=system("/bin/ls"))
 
-It strikes me as not crossing a trust boundary though, as I suspect you'd need
-something malicious in the repo in order for this to really be useful.  If the
-bad guys can already add arbitrary content, you have bigger problems.
+Thanks, Tavis.
 
 -- 
-    JB
+-------------------------------------
+taviso@....lonestar.org | finger me for my gpg key.
+-------------------------------------------------------
