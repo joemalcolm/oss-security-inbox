@@ -1,54 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/23/13
-Message-ID: <Pine.LNX.4.64.0804231825090.4890@forced.attrition.org>
-Date: Wed, 23 Apr 2008 18:28:00 +0000 (UTC)
-From: security curmudgeon <jericho@...rition.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/14/8
+Message-ID: <20080514154442.GD24737@mandriva.com>
+Date: Wed, 14 May 2008 12:44:42 -0300
+From: "Gustavo De Nardin (spuk)" <gustavodn@...driva.com>
 To: oss-security@...ts.openwall.com
-Subject: Re:  CVE Request: inspircd
+Subject: Re: Re: CVE request: Emacs 21 fast-lock-mode arbitrary lips code execution
 Content-Type: text/plain; charset=utf-8
 
+* Tavis Ormandy <taviso@....lonestar.org> [2008-05-14 14:46 +0000]:
+> On Wed, May 14, 2008 at 04:03:34PM +0200, Sven Joachim wrote:
+> > On 2008-05-14 15:27 +0200, Nico Golde wrote:
+> > 
+> > > As I am a vim user I might have done something wrong too, 
+> > > not sure. What I did after installing emacs:
+> 
+> Same here, so out of curiosity i ran strace -efile -o log vim, and
+> edited a few files. I observed vim looking for a directory called
+> $TMPDIR in the wd, and using it as you would expect. Obviously a bug,
+> and perhaps some minor security implications, anyone want to
+> investigate? :-)
 
-: > Versions prior to 1.1.17 of InspIRCd are vulnerable to a remotely
-: > triggerable buffer overflow which can lead to a Denial of Service
-: > (daemon crash) when the namesx and uhnames modules are loaded.
-: 
-: The reference you pointed to is for a fix in 1.1.18, which suggests that 
-: 1.1.17 is vulnerable.
-: 
-: Thanks for the clarification of the issue - the vendor's post only 
-: alluded to "security" with no additional details, which left a lot of 
-: vuln DBs guessing.
-
-: Name: CVE-2008-1925
-
-This is OSVDB 43926.
-
-A few weeks back, I dug into their changelogs and found a considerable 
-amount of other vulnerabilities. Not sure how retro you want to go but the 
-following may need CVEs at some point:
-
-43977	2007-07-30		InspIRCd w/o m_safelist Secret Channel Disclosure 
-
-43976	2007-07-21		InspIRCd MAXBUF Unspecified Overflow 
-
-43975	2007-07-21		InspIRCd Stripcolor Unspecified Security Issue 
-
-43948	2007-03-13		InspIRCd Server-to-server Malformed NICK Remote DoS 
-
-43947	2007-01-20		InspIRCd Unspecified Temp File Symlink Issue 
-
-43946	2006-11-12		InspIRCd Multiple Unspecified Overflows 
-
-43945	2006-07-29		InspIRCd m_timedbans.so Unspecified Issue 
-
-43942	2006-07-04		InspIRCd IP Packet Handling Oper Flood Remote DoS 
-
-43943	2006-07-04		InspIRCd Multiple Unspecified TCP Binding Handling Issues 
-
-43939	2006-02-19		InspIRCd cmd_modules Unspecified Overflow 
-
-43938	2005-05-27		InspIRCd Installation Binary Permission Weakness 
-
-43936	2005-04-09		InspIRCd MODE / TOPIC Commands Unspecified Issue 
-
-43937	2005-04-09		InspIRCd Linking Server Password Validation Failure
+Check if it is not a mere package build bug. Anyway, tried something like
+that and 'grep TMP /tmp/vim.strace' shows nothing to me.
