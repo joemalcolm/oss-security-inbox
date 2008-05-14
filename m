@@ -1,79 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/01/5
-Message-Id: <D62D1C1A-D4D9-4AAB-A256-C231D4EAF9EF@ocert.org>
-Date: Mon, 1 Sep 2008 13:37:24 +0100
-From: Rob Holland <rob@...rt.org>
-To: ocert-announce@...ts.ocert.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: [oCERT-2008-014] WordNet stack and heap overflows
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/14/10
+Message-ID: <20080514170558.GA19481@ngolde.de>
+Date: Wed, 14 May 2008 19:05:58 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE id request: uudeview
 Content-Type: text/plain; charset=utf-8
 
-2008/08/25 #2008-014 WordNet stack overflows
+Hi,
+* Nico Golde <oss-security+ml@...lde.de> [2008-05-13 21:39]:
+> can I get a CVE id for uudeview[0]?
+> 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=480972
+> 
+> It makes use of tempnam which is known to be insecure to 
+> generate temporary files.
 
-Description:
+Looks like CAN-2004-2265 was reintroduced, have a look at:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=320541
 
-The WordNet 3.0 Unix library and command-line interface suffer from a
-number of stack overflows due to their handling of command line  
-arguments,
-environment variables and data read from user supplied dictionaries.
+Same issue, rewritten code.
 
-The oCERT team was contacted by Moritz Muehlenhoff from the Debian
-project requesting an audit of the WordNet code base. These  
-vulnerabilities
-were the findings of the requested audit.
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-Stack overflows fed via the command line, environment variables or
-WordNet library calls can result in arbitrary code execution.
-
-Stack and heap overflows via modified WordNet dictionaries may allow  
-arbitrary
-code execution.
-
-It should be noted that despite the ease with which arbitrary code can
-be executed via these WordNet flaws, unless WordNet is being used by a  
-daemon or web
-service running as a user other than that of the attacker, this is  
-unlikely to
-result in privilege escalation or the ability to take any action not  
-already
-possible as the attacking user.
-
-The following patch fixes the issues:
-http://www.ocert.org/analysis/2008-014/wordnet.patch
-
-Affected version:
-
-WordNet = 3.0
-
-Fixed version:
-
-Princeton unfortunately lack the resources to produce a new release of  
-this
-code and will therefore not be releasing a new version as a result of  
-this
-audit.
-
-Credit: Rob Holland, oCERT Team | Inverse Path Ltd
-
-CVE: TBD
-
-Timeline:
-
-2008-06-02: audit requested
-2008-06-25: first phase audit completed
-2008-07-15: second phase audit completed
-2008-07-19: report and patch sent upstream and to audit requester
-2008-08-12: report and patch resent upstream due to lack of response
-2008-08-13: upstream acknowledge issues
-2008-09-01: advisory release
-
-References:
-http://www.ocert.org/analysis/2008-014/analysis.txt: oCERT  
-vulnerability analysis report
-
-Permalink:
-http://www.ocert.org/advisories/ocert-2008-014.html
-
---
-Rob Holland
-rob@...rt.org
-
+Content of type "application/pgp-signature" skipped
