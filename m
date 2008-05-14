@@ -1,27 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/24/5
-Message-ID: <Pine.GSO.4.51.0803241808300.27382@faron.mitre.org>
-Date: Mon, 24 Mar 2008 18:08:34 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Lubomir Kundrak <lkundrak@...hat.com>
-cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: namazu UTF-7 XSS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/14/3
+Message-ID: <20080514132705.GC28202@ngolde.de>
+Date: Wed, 14 May 2008 15:27:05 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: Emacs 21 fast-lock-mode arbitrary lips code execution
 Content-Type: text/plain; charset=utf-8
 
+Hi Robert,
+* Robert Buchholz <rbu@...too.org> [2008-05-14 02:50]:
+> On Monday, 12. May 2008, Nico Golde wrote:
+> > * Robert Buchholz <rbu@...too.org> [2008-05-12 19:05]:
+> > > On Monday, 12. May 2008, Nico Golde wrote:
+[...] 
+> > > > The same applies to emacs22.
+> > >
+> > > Our emacs maintainer said version 22 would warn you that lisp code
+> > > from the file would be executed. Could you confirm otherwise?
+> >
+> > At least not with the emacs22 installation I tried this with (22.2).
+> > As this is a rather old version, this may depend on the
+> > version used?
+> 
+> The 22.2 is only a few weeks old, is it not?
 
-======================================================
-Name: CVE-2008-1468
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1468
-Reference: MISC:http://jvn.jp/jp/JVN%2300892830/index.html
-Reference: CONFIRM:http://www.namazu.org/security.html.en
-Reference: SECUNIA:29386
-Reference: URL:http://secunia.com/advisories/29386
+Ups sorry, my bad.
 
-Cross-site scripting (XSS) vulnerability in namazu.cgi in Namazu
-before 2.0.18 allows remote attackers to inject arbitrary web script
-or HTML via UTF-7 encoded input, related to failure to set the
-charset, a different vector than CVE-2004-1318 and CVE-2001-1350.
-NOTE: some of these details are obtained from third party information.
+> Anyway, Ulrich Mueller (who is in CC) clarified the behaviour, I quote:
+> 
+> > the issue may still occur in Emacs 22, if both of the following
+> > conditions are fulfilled:
+> > - the user sets fast-lock-mode as support mode for font-lock (which is
+> >   not the default),
+> > - the user explicitely loads fast-lock, ignoring the warning ("Package
+> >   fast-lock is obsolete").
+> 
+> I could not reproduce the issue in Emacs 22.2 with only the changed 
+> configuration either, but maybe I just used Emacs the wrong way.
 
+As I am a vim user I might have done something wrong too, 
+not sure. What I did after installing emacs:
+cat >> ~/.emacs << EOF
+(global-font-lock-mode t)
+(seq font-lock-support-mode 'fast-lock-mode)
+EOF
 
+cat >> foobar.c << EOF
+/* no comment */
+EOF
+
+cat >> foobar.c.flc << EOF
+" foobar "
+EOF
+
+starting emacs22, open foobar.c => no warning.
+
+Could someone on the list who is an emacs user try this as 
+well?
+
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
