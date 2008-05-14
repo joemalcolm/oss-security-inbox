@@ -1,72 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/08/5
-Message-ID: <493D0C52.9060306@op5.se>
-Date: Mon, 08 Dec 2008 13:00:18 +0100
-From: Andreas Ericsson <ae@....se>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/14/9
+Message-ID: <87abisj2lj.fsf@gmx.de>
+Date: Wed, 14 May 2008 18:02:32 +0200
+From: Sven Joachim <svenjoac@....de>
 To: oss-security@...ts.openwall.com
-CC: coley@...re.org
-Subject: Re: CVE Request (nagios)
+Subject: Re: CVE request: Emacs 21 fast-lock-mode arbitrary lips code execution
 Content-Type: text/plain; charset=utf-8
 
-Eygene Ryabinkin wrote:
-> Andreas, good day.
-> 
-> Mon, Dec 08, 2008 at 10:37:41AM +0100, Andreas Ericsson wrote:
->>> I'm not seeing a CVE id for this.  It seems the Nagios 3.0.6 release fixes a flaw:
->>> http://www.nagios.org/development/history/nagios-3x.php
->>> http://bugs.gentoo.org/show_bug.cgi?id=249876
->>>
->>> Here is the patch:
->>> http://sourceforge.net/mailarchive/forum.php?thread_name=E1L6mat-0001sb-RN%40fdv4jf1.ch3.sourceforge.com&forum_name=nagios-checkins
->>>
->> CVE id 2008-5028 has been assigned to this.
-> 
-> No, CVE-2008-5028 is a different beast -- it is about cmd.cgi's command
-> injection via newlines.  Let me cite the commit Josh is referring to:
-> http://nagios.cvs.sourceforge.net/viewvc/nagios/nagios/cgi/cmd.c?r1=1.45&r2=1.46&view=patch
-> -----
-> @@ -2015,7 +2016,7 @@
->  		break;
->  
->  	case CMD_ADD_SVC_COMMENT:
-> -		result = cmd_submitf(cmd,"%s;%s;%d;%s;%s",current_time,host_name,service_desc,persistent_comment,comment_author,comment_data);
-> +		result = cmd_submitf(cmd,"%s;%s;%d;%s;%s",host_name,service_desc,persistent_comment,comment_author,comment_data);
->  		break;
->  
->  	case CMD_DEL_HOST_COMMENT:
-> @@ -2249,7 +2250,7 @@
->  	        }
->  
->  	/* write the command to file */
-> -	fputs(cmd,fp);
-> +	fprintf(fp, "%s\n", cmd);
-> -----
-> As you see, the wrong arguments were passed to the cmd_submitf for the
-> service comments -- argument 'service_desc' will be treated as integer
-> and argument 'presistent_comment' (that is essentially a boolean that is
-> simulated via 'int' type) will be treated as the pointer to a string.
-> SEGV is likely here.
-> 
+On 2008-05-14 16:43 +0200, Nico Golde wrote:
 
-Ah, right. Yes, that's true. however, it's not a vulnerability as it's
-doing read-only access, and it can't cause DoS as it's only the CGI
-that's affected.
+> Hi Sven,
+> * Sven Joachim <svenjoac-Mmb7MZpHnFY@...lic.gmane.org> [2008-05-14 16:12]:
+>> On 2008-05-14 15:27 +0200, Nico Golde wrote:
+>> > As I am a vim user I might have done something wrong too, 
+>> > not sure. What I did after installing emacs:
+>> > cat >> ~/.emacs << EOF
+>> > (global-font-lock-mode t)
+>> > (seq font-lock-support-mode 'fast-lock-mode)
+>> > EOF
+>> 
+>> Should read setq, not seq.  You will also need to load fast-lock
+>> explicitly before that, since it's obsolete and not automatically
+>> loaded anymore:
+>
+> Where is the difference? seq was from:
+> http://lists.gnu.org/archive/html/emacs-devel/2008-05/msg00645.html
 
-> And another issue is that newline seem to be missing from the resulting
-> command line that was written to the cmd file.  Can't comment on this
-> now, but I assume that a very long line instead of many shorter (and
-> proper) ones will be in the cmd file before this fix.
-> 
+That was a typo.  AFAIK, there is no seq function in Emacs.
 
-Yes, that's true. Most people didn't notice due to the fact that Nagios
-reads the command-pipe input when it finds anything there instead of
-waiting for a newline to appear in it. It was reported that user-commands
-that cause more than one command to be written to the pipe were broken,
-so it's not a huge issue.
+>> (message "Surprise, surprise!")
+>
+> Thanks, missed the (message...)
+>
+>> This string will be put in the echo area when you visit foobar.c.
+>
+> Confirmed, works now as expected, not confirmation dialog though.
 
-In short; I see no vulnerability here, and thus no need for a CVE.
+I don't see a confirmation dialog either.
 
--- 
-Andreas Ericsson                   andreas.ericsson@....se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Sven
