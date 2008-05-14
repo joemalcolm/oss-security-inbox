@@ -1,35 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/17/25
-Message-ID: <20081217171920.GE19388@ngolde.de>
-Date: Wed, 17 Dec 2008 18:19:20 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/14/1
+Message-Id: <200805140239.36281.rbu@gentoo.org>
+Date: Wed, 14 May 2008 02:39:36 +0200
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE id request: php-xajax
+Cc: Ulrich Mueller <ulm@...too.org>
+Subject: Re: CVE request: Emacs 21 fast-lock-mode arbitrary lips code execution
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Steven M. Christey <coley@...us.mitre.org> [2008-12-17 17:53]:
-> On Wed, 17 Dec 2008, Steffen Joeris wrote:
-> 
-> > The patch for CVE-2007-2739 seems incomplete as it doesn't escape "&".
-> > I recommend removing the replace call and using htmlspecialchars() instead.
-> 
-> This counts for a new CVE, so use CVE-2008-5623
-> 
-> Will there be more details available, or should I just write the
-> description up based on the oss-security post?  Which versions are
-> affected?
+Hey Nico,
 
-Please enlighten me why it is incomplete. As far as I know 
-you can't perform an XSS with & only (I'm not a webappsec 
-expert though). But the reason it behaves different from 
-htmlspecialchars should not make this patch incomplete.
+On Monday, 12. May 2008, Nico Golde wrote:
+> * Robert Buchholz <rbu@...too.org> [2008-05-12 19:05]:
+> > On Monday, 12. May 2008, Nico Golde wrote:
+> > > * Robert Buchholz <rbu@...too.org> [2008-05-10 15:01]:
+> > > > Emacs 21 and Xemacs will execute any lisp code present in a .flc
+> > > > file that accompanies the file the user opens.
+> > >
+> > > The same applies to emacs22.
+> >
+> > Our emacs maintainer said version 22 would warn you that lisp code
+> > from the file would be executed. Could you confirm otherwise?
+>
+> At least not with the emacs22 installation I tried this with (22.2).
+> As this is a rather old version, this may depend on the
+> version used?
 
-Cheers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+The 22.2 is only a few weeks old, is it not?
 
-Content of type "application/pgp-signature" skipped
+Anyway, Ulrich Mueller (who is in CC) clarified the behaviour, I quote:
+
+> the issue may still occur in Emacs 22, if both of the following
+> conditions are fulfilled:
+> - the user sets fast-lock-mode as support mode for font-lock (which is
+>   not the default),
+> - the user explicitely loads fast-lock, ignoring the warning ("Package
+>   fast-lock is obsolete").
+
+I could not reproduce the issue in Emacs 22.2 with only the changed 
+configuration either, but maybe I just used Emacs the wrong way.
+
+
+Robert
+
+Download attachment "signature.asc " of type "application/pgp-signature" (190 bytes)
