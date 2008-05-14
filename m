@@ -1,77 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/07/6
-Message-ID: <Pine.GSO.4.51.0810071707090.6161@faron.mitre.org>
-Date: Tue, 7 Oct 2008 17:10:39 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Robert Buchholz <rbu@...too.org>
-cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: amarok temp file vuln
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/14/7
+Message-ID: <20080514153812.GI28202@ngolde.de>
+Date: Wed, 14 May 2008 17:38:12 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com
+Subject: vim $TMPDIR directory stat (was: Re: CVE request: Emacs 21 fast-lock-mode arbitrary lips code execution)
 Content-Type: text/plain; charset=utf-8
 
+Hi Tavis,
+* Tavis Ormandy <taviso@....lonestar.org> [2008-05-14 17:03]:
+> On Wed, May 14, 2008 at 04:03:34PM +0200, Sven Joachim wrote:
+> > On 2008-05-14 15:27 +0200, Nico Golde wrote:
+> > 
+> > > As I am a vim user I might have done something wrong too, 
+> > > not sure. What I did after installing emacs:
+> 
+> Same here, so out of curiosity i ran strace -efile -o log vim, and
+> edited a few files. I observed vim looking for a directory called
+> $TMPDIR in the wd, and using it as you would expect. Obviously a bug,
+> and perhaps some minor security implications, anyone want to
+> investigate? :-)
 
-On Sat, 4 Oct 2008, Robert Buchholz wrote:
+The reason is:
+src/unix.h:
+#  define TEMPDIRNAMES  "$TMPDIR", "/tmp", ".", "$HOME"
 
-> On Friday 15 August 2008, Steven M. Christey wrote:
-> > ======================================================
-> > Name: CVE-2008-3699
-> >
-> > The MagnatuneBrowser::listDownloadComplete function in
-> > magnatunebrowser/magnatunebrowser.cpp in Amarok before 1.4.10 allows
-> > local users to overwrite arbitrary files via a symlink attack on the
-> > album_info.xml temporary file.
->
-> It seems CVE-2008-4430 is a duplicate for this?
+on startup vim then expands those paths and checks if the 
+directory exists (that's where the stat comes from I think). 
+If it exists it will use it as temporary directory to mkdir 
+the temporary directory for vim files, v<somenumber>.
 
-Yes, this was my error.  I was catching up on a backlog and didn't account
-for the duplicate.
-
-Keep CVE-2008-3699.
-
-- Steve
-
-======================================================
-Name: CVE-2008-3699
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3699
-Reference: MISC:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=494765
-Reference: CONFIRM:http://amarok.kde.org/en/releases/1/4/10
-Reference: CONFIRM:http://websvn.kde.org/?view=rev&revision=846626
-Reference: FEDORA:FEDORA-2008-7719
-Reference: URL:https://www.redhat.com/archives/fedora-package-announce/2008-September/msg00097.html
-Reference: FEDORA:FEDORA-2008-7739
-Reference: URL:https://www.redhat.com/archives/fedora-package-announce/2008-September/msg00057.html
-Reference: GENTOO:GLSA-200809-08
-Reference: URL:http://security.gentoo.org/glsa/glsa-200809-08.xml
-Reference: MANDRIVA:MDVSA-2008:172
-Reference: URL:http://www.mandriva.com/security/advisories?name=MDVSA-2008:172
-Reference: SLACKWARE:SSA:2008-241-01
-Reference: URL:http://slackware.com/security/viewer.php?l=slackware-security&y=2008&m=slackware-security.455790
-Reference: FRSIRT:ADV-2008-2338
-Reference: URL:http://www.frsirt.com/english/advisories/2008/2338
-Reference: SECUNIA:31418
-Reference: URL:http://secunia.com/advisories/31418
-Reference: SECUNIA:31663
-Reference: URL:http://secunia.com/advisories/31663
-Reference: SECUNIA:31839
-Reference: URL:http://secunia.com/advisories/31839
-
-The MagnatuneBrowser::listDownloadComplete function in
-magnatunebrowser/magnatunebrowser.cpp in Amarok before 1.4.10 allows
-local users to overwrite arbitrary files via a symlink attack on the
-album_info.xml temporary file.
+src/fileio.c:
+   6811         for (i = 0; i < sizeof(tempdirs) / sizeof(char *); ++i)
+   6812         {
+   6813             /* expand $TMP, leave room for "/v1100000/999999999" */
+   6814             expand_env((char_u *)tempdirs[i], itmp, TEMPNAMELEN - 20);
+   6815             printf("expanded %s to %s\n", tempdirs[i], itmp);
+   6816             if (mch_isdir(itmp))                /* directory exists */
+   ....
+   6843                     sprintf((char *)itmp + STRLEN(itmp), "v%ld", nr + off);
+   6844 # ifndef EEXIST
+   6845                     /* If mkdir() does not set errno to EEXIST, check for
+   6846                      * existing file here.  There is a race condition then,
+   6847                      * although it's fail-safe. */
+   6848                     if (mch_stat((char *)itmp, &st) >= 0)
+   6849                         continue;
+   6850 # endif
+   6851 #if defined(UNIX) || defined(VMS)
+   6852                     /* Make sure the umask doesn't remove the executable bit.
+   6853                      * "repl" has been reported to use "177". */
+   6854                     umask_save = umask(077);
+   6855 #endif
+   6856                     r = vim_mkdir(itmp, 0700);
 
 
-======================================================
-Name: CVE-2008-4430
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4430
+So it checks for $TMPDIR on your system because this 
+environment variable is not set and therefore can't be expanded?!
 
-** REJECT **
+You could redirect the temporary files of a user to a 
+location the attacker and the victim has access to but vim 
+still sets the correct permissions so this does not help the 
+attacker. After a quick check this doesn't look like a 
+security issue to me.
 
-DO NOT USE THIS CANDIDATE NUMBER.  ConsultIDs: CVE-2008-3699.  Reason:
-This candidate is a duplicate of CVE-2008-3699.  Notes: All CVE users
-should reference CVE-2008-3699 instead of this candidate.  All
-references and descriptions in this candidate have been removed to
-prevent accidental usage.
+Kind regards
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-
+Content of type "application/pgp-signature" skipped
