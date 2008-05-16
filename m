@@ -1,28 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/01/5
-Message-ID: <20080401111712.18b6fca3@redhat.com>
-Date: Tue, 1 Apr 2008 11:17:12 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: "Steven M. Christey" <coley@...re.org>
-Cc: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE id request: squid
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/16/1
+Message-ID: <20080516171854.GA2050@openwall.com>
+Date: Fri, 16 May 2008 21:18:54 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: OpenSSH key blacklisting
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+Hi,
 
-Squid developers recently updated their Squid security advisory
-SQUID-2007_2 released few months back.  It was modified to list another
-patch that fixes a problem introduced in previous patch.
+Are any other distros, besides Debian, Ubuntu, and derived ones, going
+to implement key blacklisting in OpenSSH - or are considering it?
 
-An attacker can cause squid to hit assert in the child process, causing
-it to exit.  This is a temporary DoS, breaking existing connections and
-making squid unavailable for a while.  New child is spawned by squid
-parent process.  Easy to perform if attacker has control over the
-server, but I guess it may be possible in reverse proxy setups as well.
+We are considering it for Openwall GNU/*/Linux, and if our effort would
+be reused by others, or if others join us in developing and/or testing
+the patch, this would be a reason for us to go for it.
 
-http://marc.info/?l=squid-announce&m=120614453813157&w=2
-http://www.squid-cache.org/Advisories/SQUID-2007_2.txt
-http://www.squid-cache.org/Versions/v2/2.6/changesets/11882.patch
+I don't think we'll take the Debian/Ubuntu patch as-is.  Rather, we are
+likely to use a trivial binary encoding/compression method for the
+partial fingerprints.  We'd also use smaller partial fingerprints.  With
+the approach I have in mind, it'd take around 4.55 bytes per key to
+store 48-bit partial fingerprints, bringing the installed file size for
+3 arch types and 2 key types/sizes in under 1 MB (or just over 1 MB for
+3 key types/sizes).
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+Please comment.
+
+Thanks,
+
+Alexander
