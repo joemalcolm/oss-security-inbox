@@ -1,26 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/01/6
-Message-ID: <Pine.GSO.4.51.0807011733370.19497@faron.mitre.org>
-Date: Tue, 1 Jul 2008 17:33:43 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/16/8
+Message-ID: <20080516215854.GB3801@openwall.com>
+Date: Sat, 17 May 2008 01:58:54 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: checkinstall
+Subject: Re: OpenSSH key blacklisting
 Content-Type: text/plain; charset=utf-8
 
+On Fri, May 16, 2008 at 05:10:43PM -0300, Gustavo De Nardin (spuk) wrote:
+> If this is going to be accepted as a more general solution, it'd be good to
+> allow also for local, admin-maintened, blacklists, not just upstream
+> maintened (and automatically updated).
 
-======================================================
-Name: CVE-2008-2958
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2958
-Reference: MISC:http://lists.alioth.debian.org/pipermail/secure-testing-team/2008-June/001672.html
-Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=488140
-Reference: SECUNIA:30873
-Reference: URL:http://secunia.com/advisories/30873
-Reference: XF:checkinstall-multiple-symlink(43440)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/43440
+I agree that this might be desirable functionality, but unfortunately it
+has a price - we'd have to maintain two file parsers and lookup
+algorithms (perhaps binary and indexed, and text and sequential) or an
+additional program to update the binary file.  (If we only create the
+binary file ourselves, then that program can be a quick hack - maybe
+even a Perl script.)
 
-Race condition in (1) checkinstall 1.6.1 and (2) installwatch allows
-local users to overwrite arbitrary files and have other impacts via
-symlink and possibly other attacks on temporary working directories.
+Has there been any demand for such blacklists, prior to the Debian issue
+coming up?  If not, then this additional feature is probably not worth
+implementing right away.
 
-
+Alexander
