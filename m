@@ -1,35 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/05/1
-Message-ID: <20081105080723.GA3188@suse.de>
-Date: Wed, 5 Nov 2008 09:07:23 +0100
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/16/5
+Message-Id: <200805162136.06872.rbu@gentoo.org>
+Date: Fri, 16 May 2008 21:36:06 +0200
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: libcdaudio
+Subject: Re: OpenSSH key blacklisting
 Content-Type: text/plain; charset=utf-8
 
-Hello,
-we need a CVE-ID for a buffer overflow in libcdaudio.
-It is a remotely exploitable heap-based buffer overflow.
+Thanks for bringing up the topic here.
 
---- src/cddb.c
-+++ src/cddb.c
-@@ -1679,7 +1679,7 @@ cddb_read_disc_data(int cd_desc, struct disc_data
-*outdata)
-       free(file);
+On Friday 16 May 2008, Solar Designer wrote:
+> Are any other distros, besides Debian, Ubuntu, and derived ones,
+> going to implement key blacklisting in OpenSSH - or are considering
+> it?
+>
+> We are considering it for Openwall GNU/*/Linux, and if our effort
+> would be reused by others, or if others join us in developing and/or
+> testing the patch, this would be a reason for us to go for it.
 
-       while(!feof(cddb_data)) {
--       fgets(inbuffer, 512, cddb_data);
-+       fgets(inbuffer, 256, cddb_data);
-        cddb_process_line(inbuffer, data);
-       }
+Gentoo is discussing the feature in bug #221759 [1]. Until now, I have 
+not heard a reaction to the patch from our OpenSSH maintainers, so I 
+cannot judge on the technical side of the inclusion.
 
--- 
-Bye,
-     Thomas
--- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
--- 
-           Hamming's Motto:
-           The purpose of computing is insight, not numbers.
-                                -- Richard W. Hamming
+
+> I don't think we'll take the Debian/Ubuntu patch as-is.  Rather, we
+> are likely to use a trivial binary encoding/compression method for
+> the partial fingerprints.  We'd also use smaller partial
+> fingerprints.  With the approach I have in mind, it'd take around
+> 4.55 bytes per key to store 48-bit partial fingerprints, bringing the
+> installed file size for 3 arch types and 2 key types/sizes in under 1
+> MB (or just over 1 MB for 3 key types/sizes).
+
+I assume whichever version has the acceptance of the OpenSSH upstream is 
+what most of us would be willing to go with. Did you discuss either 
+blacklist format with them already?
+
+Personally, I would like to see the feature ported to our distribution 
+sooner than later, but neither at the cost of maintaining patchsets for 
+the rest of existance, nor with high transition cost once upstream 
+accepts another format.
+
+Robert
+
+
+[1] https://bugs.gentoo.org/show_bug.cgi?id=221759
+
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
