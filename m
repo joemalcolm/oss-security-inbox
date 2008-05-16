@@ -1,26 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/13/3
-Message-ID: <87d4fw7xts.fsf@mid.deneb.enyo.de>
-Date: Sat, 13 Dec 2008 19:07:59 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/16/2
+Message-ID: <482DC363.4010506@chatspike.net>
+Date: Fri, 16 May 2008 18:24:51 +0100
+From: "Craig Edwards (Brain)" <brain@...tspike.net>
 To: oss-security@...ts.openwall.com
-Subject: Re:  Re: CVE Request - roundcubemail
+Subject: Re: OpenSSH key blacklisting
 Content-Type: text/plain; charset=utf-8
 
-* Florian Weimer:
+Hi,
 
-> * Raphael Geissert:
+I havent been following this debacle too closely as i dont have much to 
+do with debian, however, wouldnt such a system be vulnerable to false 
+positives if you are just going to hash partial fingerprints rather than 
+whole fingerprints?
+
+-- Brain
+
+Solar Designer wrote:
+> Hi,
 >
->> I became aware of some sort of code execution vulnerability one day
->> before that ticket was reported. After reviewing the file I
->> determined that it isn't a vulnerability in roundcube, but in PHP
->> itself; but I'm open to be proved wrong.
+> Are any other distros, besides Debian, Ubuntu, and derived ones, going
+> to implement key blacklisting in OpenSSH - or are considering it?
 >
-> I think this is a documented feature of preg_replace with the "e"
-> flag, comparable to what happens when you use string concatenation to
-> create SQL statements.
-
-Scratch that, I had an off-by-one error in matching search/replace
-terms. 8-(
-
-Therefore, I agree with Raphael that the issue has not been found yet.
+> We are considering it for Openwall GNU/*/Linux, and if our effort would
+> be reused by others, or if others join us in developing and/or testing
+> the patch, this would be a reason for us to go for it.
+>
+> I don't think we'll take the Debian/Ubuntu patch as-is.  Rather, we are
+> likely to use a trivial binary encoding/compression method for the
+> partial fingerprints.  We'd also use smaller partial fingerprints.  With
+> the approach I have in mind, it'd take around 4.55 bytes per key to
+> store 48-bit partial fingerprints, bringing the installed file size for
+> 3 arch types and 2 key types/sizes in under 1 MB (or just over 1 MB for
+> 3 key types/sizes).
+>
+> Please comment.
+>
+> Thanks,
+>
+> Alexander
+>   
