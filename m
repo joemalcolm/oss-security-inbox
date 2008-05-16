@@ -1,24 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/16/1
-Message-ID: <20081216152949.GA8236@steve.org.uk>
-Date: Tue, 16 Dec 2008 15:29:49 +0000
-From: Steve Kemp <steve@...ve.org.uk>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/16/7
+Message-ID: <20080516215000.GA3801@openwall.com>
+Date: Sat, 17 May 2008 01:50:00 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: Steven Christey <coley@...us.mitre.org>
-Subject: CVE request: mplayer
+Subject: Re: OpenSSH key blacklisting
 Content-Type: text/plain; charset=utf-8
 
+On Fri, May 16, 2008 at 09:36:06PM +0200, Robert Buchholz wrote:
+> Gentoo is discussing the feature in bug #221759 [1]. Until now, I have 
+> not heard a reaction to the patch from our OpenSSH maintainers, so I 
+> cannot judge on the technical side of the inclusion.
 
-  It looks like there's a stack overflow in the handling of
- twinvq files:
+Thanks for the "bug" reference.  FWIW, the shell script in this comment
+is vulnerable itself, in more than one way:
 
-    http://trapkit.de/advisories/TKADV2008-014.txt
+	http://bugs.gentoo.org/show_bug.cgi?id=221759#c9
 
-    Affected Software:      MPlayer 1.0rc2    < r28150 and 
-                            MPlayer SVN trunk < r28149
+For example, it lets a user have any other user's or root's
+authorized_keys removed, by replacing .ssh with a symlink to someone
+else's .ssh directory.  It's just bad practice to access users' files as
+root (or as another user); this is difficult to do safely.
 
-Steve
---
-Debian GNU/Linux System Administration
-http://www.debian-administration.org/
+Also, it misses authorized_keys2.
 
+> I assume whichever version has the acceptance of the OpenSSH upstream is 
+> what most of us would be willing to go with. Did you discuss either 
+> blacklist format with them already?
+
+Yes, very briefly.  They don't intend to implement key blacklisting.
+
+I suspect that a worm might change this, though. ;-)
+
+> Personally, I would like to see the feature ported to our distribution 
+> sooner than later, but neither at the cost of maintaining patchsets for 
+> the rest of existance, nor with high transition cost once upstream 
+> accepts another format.
+
+Well, this is difficult to predict correctly.
+
+Alexander
