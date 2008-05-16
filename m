@@ -1,20 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/10/3
-Message-Id: <200807100752.08925.hanno@hboeck.de>
-Date: Thu, 10 Jul 2008 07:52:08 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/16/9
+Message-ID: <20080516221056.GI16945@mandriva.com>
+Date: Fri, 16 May 2008 19:10:58 -0300
+From: "Gustavo De Nardin (spuk)" <gustavodn@...driva.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: multiple drupal issues in < 6.3,5.8
+Subject: Re: OpenSSH key blacklisting
 Content-Type: text/plain; charset=utf-8
 
-DRUPAL SA-2008-044
-http://drupal.org/node/280571
+* Solar Designer <solar@...nwall.com> [2008-05-17 01:58 +0400]:
+> On Fri, May 16, 2008 at 05:10:43PM -0300, Gustavo De Nardin (spuk) wrote:
+> > If this is going to be accepted as a more general solution, it'd be good to
+> > allow also for local, admin-maintened, blacklists, not just upstream
+> > maintened (and automatically updated).
+> 
+> I agree that this might be desirable functionality, but unfortunately it
+> has a price - we'd have to maintain two file parsers and lookup
+> algorithms (perhaps binary and indexed, and text and sequential) or an
+> additional program to update the binary file.  (If we only create the
+> binary file ourselves, then that program can be a quick hack - maybe
+> even a Perl script.)
+> 
+> Has there been any demand for such blacklists, prior to the Debian issue
+> coming up?  If not, then this additional feature is probably not worth
+> implementing right away.
 
-contains xss, csrf, session fixation and sql injection.
-
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+Not that I know of. I just imagined somewhere could have a policy like "all
+keys must have X bits" or ".. X or larger" X being a non-default size. So
+even if the database would be customized to have the extra keys,
+auto-upgrading it (which would be desirable) could be a problem. Not a big
+deal to me, personally.
