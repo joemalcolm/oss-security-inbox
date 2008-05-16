@@ -1,20 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/18/1
-Message-ID: <20080318134131.GA28124@suse.de>
-Date: Tue, 18 Mar 2008 14:41:31 +0100
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/16/3
+Message-ID: <20080516174344.GA2305@openwall.com>
+Date: Fri, 16 May 2008 21:43:44 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: new archive file format research by Oulo university
+Subject: Re: OpenSSH key blacklisting
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Fri, May 16, 2008 at 06:24:51PM +0100, Craig Edwards (Brain) wrote:
+> I havent been following this debacle too closely as i dont have much to 
+> do with debian, however, wouldnt such a system be vulnerable to false 
+> positives if you are just going to hash partial fingerprints rather than 
+> whole fingerprints?
 
-The university of Oulo and CERT-FI seems to have released yesterday
-a new suite of archiver tests / problems:
+Such a system would have a higher likelihood of false positives, yes.
+However, it would not exactly be "vulnerable" to them - or at least, the
+worst-case impact (depending on server settings) is a DoS for a given
+user's ability to login.  With 48-bit partial fingerprints, there may be
+like one such false positive in the entire world, or none.  If we go
+down to 40 bits, it's less than one in a million of different keys.
+(I am assuming a blacklist size of around 200,000 partial fingerprints.)
 
-http://www.securityfocus.com/bid/28286
+In fact, the Debian/Ubuntu patch already uses partial fingerprints based
+on my earlier suggestion, but I was more conservative at the time, so I
+suggested 80 bits.  Willy Tarreau has since convinced me that even as
+low as 40 bits is reasonable.
 
-and:
-http://www.ee.oulu.fi/research/ouspg/protos/testing/c10/archive/
+Oh, and we are not "hashing" fingerprints, we're merely matching them.
 
-Ciao, Marcus
+Alexander
