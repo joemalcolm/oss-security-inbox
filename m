@@ -1,23 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/12/5
-Message-ID: <Pine.GSO.4.51.0805121410150.12683@faron.mitre.org>
-Date: Mon, 12 May 2008 14:10:55 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/16/4
+Message-ID: <20080516175325.GB381@linsec.ca>
+Date: Fri, 16 May 2008 11:53:25 -0600
+From: Vincent Danen <vdanen@...sec.ca>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Emacs 21 fast-lock-mode arbitrary lips code execution
+Subject: Re: OpenSSH key blacklisting
 Content-Type: text/plain; charset=utf-8
 
+* [2008-05-16 21:18:54 +0400] Solar Designer wrote:
 
-======================================================
-Name: CVE-2008-2142
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2142
-Reference: MISC:http://thread.gmane.org/gmane.emacs.devel/96903
-Reference: MISC:http://tracker.xemacs.org/XEmacs/its/issue378
-Reference: CONFIRM:https://bugs.gentoo.org/show_bug.cgi?id=221197
+>Are any other distros, besides Debian, Ubuntu, and derived ones, going
+>to implement key blacklisting in OpenSSH - or are considering it?
+>
+>We are considering it for Openwall GNU/*/Linux, and if our effort would
+>be reused by others, or if others join us in developing and/or testing
+>the patch, this would be a reason for us to go for it.
+>
+>I don't think we'll take the Debian/Ubuntu patch as-is.  Rather, we are
+>likely to use a trivial binary encoding/compression method for the
+>partial fingerprints.  We'd also use smaller partial fingerprints.  With
+>the approach I have in mind, it'd take around 4.55 bytes per key to
+>store 48-bit partial fingerprints, bringing the installed file size for
+>3 arch types and 2 key types/sizes in under 1 MB (or just over 1 MB for
+>3 key types/sizes).
 
-Emacs 21 and XEmacs automatically load and execute .flc (fast lock) files
-that are associated with other files are edited within Emacs, which allows
-user-assisted attackers to execute arbitrary code.
+We (Mandriva) have kinda sat back to see what other vendors are going to
+do.  A few people have asked us to incorporate the Ubuntu patch, but the
+stance I've taken so far is that if upstream openssh is going to do it,
+then we will too.  Otherwise I don't think we will, unless a number of
+other vendors are going to do so.
 
+We did send an announcement with more info to our security-announce
+mailing list to give our users a head's up, but didn't think we needed
+to push this on our users since very few will likely be affected.
 
+-- 
+Vincent Danen @ http://linsec.ca/
+
+Content of type "application/pgp-signature" skipped
