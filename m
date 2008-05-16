@@ -1,41 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/02/2
-Message-ID: <4843E4D5.3040208@mare-system.de>
-Date: Mon, 02 Jun 2008 14:17:25 +0200
-From: MARE system Security <security@...e-system.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/16/6
+Message-ID: <20080516201043.GF16945@mandriva.com>
+Date: Fri, 16 May 2008 17:10:43 -0300
+From: "Gustavo De Nardin (spuk)" <gustavodn@...driva.com>
 To: oss-security@...ts.openwall.com
-Subject: SQL_injection detection tool released
+Subject: Re: OpenSSH key blacklisting
 Content-Type: text/plain; charset=utf-8
 
+* Solar Designer <solar@...nwall.com> [2008-05-16 21:18 +0400]:
+> Hi,
+> 
+> Are any other distros, besides Debian, Ubuntu, and derived ones, going
+> to implement key blacklisting in OpenSSH - or are considering it?
+> 
+> We are considering it for Openwall GNU/*/Linux, and if our effort would
+> be reused by others, or if others join us in developing and/or testing
+> the patch, this would be a reason for us to go for it.
+> 
+> I don't think we'll take the Debian/Ubuntu patch as-is.  Rather, we are
+> likely to use a trivial binary encoding/compression method for the
+> partial fingerprints.  We'd also use smaller partial fingerprints.  With
+> the approach I have in mind, it'd take around 4.55 bytes per key to
+> store 48-bit partial fingerprints, bringing the installed file size for
+> 3 arch types and 2 key types/sizes in under 1 MB (or just over 1 MB for
+> 3 key types/sizes).
 
-We just released a tool to check for (well known)
-sql_injections on a file-basis. 
-Due to the mass-hacks during the last months we just
-wanted to know if probably our webservers got
-hacked through sql_injections (although reports mostly 
-speak about MSSQL/ASP), so this check is based
-upon a regex for /[a-zA-Z0-9].js but might
-be extended via words-lists
-
-freshmeat: http://freshmeat.net/projects/check_websites/
-sourceforge: http://sourceforge.net/project/showfiles.php?group_id=193013&package_id=278354
-
-We'd like to discuss file-based scanning vs remote-scanning 
-via htdig or other web-crawlers, since we do that too with our
-websites. 
-
-
-
-from the README:
-
-check_websites is a program to basically
-check a webser_document_root, webserver_logfiles
-and sql_dumps against possible hackings. so it does not
-prevent you from creating safe code (see links), but if
-you are an administrator of a web/applicationserver 
-you might want to know if some of your customers
-have  already_hacked applications running, spreading
-virsues and exploits all over the planet. this suite will not
-protect your webserver but you might be able to check
-if you already have been attacked and hacked. 
-
+If this is going to be accepted as a more general solution, it'd be good to
+allow also for local, admin-maintened, blacklists, not just upstream
+maintened (and automatically updated).
