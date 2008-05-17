@@ -1,77 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/23/2
-Message-ID: <47BFBE20.90208@freethemallocs.com>
-Date: Fri, 22 Feb 2008 21:33:04 -0900
-From: Jonathan Smith <smithj@...ethemallocs.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/17/3
+Message-Id: <200805180121.01964.rbu@gentoo.org>
+Date: Sun, 18 May 2008 01:20:59 +0200
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: lighttpd
+Cc: Kees Cook <kees@...ntu.com>
+Subject: Re: OpenSSH key blacklisting
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Saturday, 17. May 2008, Solar Designer wrote:
+
+<snip>
+> It is just plain wrong to access users' files like that.
+>
+
+I won't judge the script any further, since personally I find one-time 
+checks unrealiable; let's focus on the blacklist:
 
 
+> > Do you have a patch to propose, implementing your idea?
+>
+> Not yet, but we (Openwall) are likely to have a patch within a few days,
 
-- -------- Original Message --------
-Subject: [SA29066] lighttpd File Descriptor Array Denial of Service
-Vulnerability
-Date: 23 Feb 2008 03:19:30 -0000
-From: Secunia Security Advisories <sec-adv@...unia.com>
-To: smithj@...ethemallocs.com
+Great.
 
-[snip]
+> Besides the patch, it is equally important to agree on what keys to have
+> blacklisted, and to have the blacklist ready.  I think we should have
+> "source" blacklists, which are per-{arch,key}-type and have 32 hex chars
+> per entry (no attempt at size reduction yet), so we'll be able to
+> (re)build the binary files from them.
+>
+> Right now, there doesn't appear to be a consensus on what key {type,
+> size} combinations to have in the blacklist yet.  So let's discuss this.
 
-TITLE:
-lighttpd File Descriptor Array Denial of Service Vulnerability
+I like the Debian/Ubuntu idea of being able to add/remove blacklists 
+easily. Personally, I generated an incomplete (due to lack of hardware) 
+set of keys for RSA 1024, 2048, 4096, and DSA 1024 keys, since that is 
+what I have seen in the wild.
+It might be argued that since Sep. 2006, few people generated 1024 bit RSA 
+keys, but I do not know exactly when "ssh-keygen"'s default was changed.
 
-SECUNIA ADVISORY ID:
-SA29066
+I'm putting Kees in CC since I hope he can help with the unshortened 
+fingerprint list (at least via private mail).
 
-VERIFY ADVISORY:
-http://secunia.com/advisories/29066/
+> As to arch types, I've been told that Debian only supports le32, le64,
+> and be32 userlands, so we can safely omit be64.
+>
+> The PID range can be 2 to 32767.  PID 1 is init.
+> /proc/sys/kernel/pid_max defaults to 32768, but the highest PID value
+> specified in there is skipped, at least by current 2.6 kernels (we may
+> want to double-check this on older kernels).  Of course, this does not
+> cover custom configs and patched kernels (e.g., some PID randomization
+> patch could alter the maximum PID value).
 
-CRITICAL:
-Moderately critical
+Whoever changed his pid_max to another value, and generated the key after 
+running some 33000 processes, would be both lucky (because his key is 
+unlikeley to be in the attacker's keychain), and unlucky (since the key is 
+not blacklisted). I see little point in supporting other than the default 
+PIDs.
 
-IMPACT:
-DoS
+Robert
 
-WHERE:
-~From remote
 
-SOFTWARE:
-lighttpd 1.x
-http://secunia.com/product/4661/
-
-DESCRIPTION:
-A vulnerability has been reported in lighttpd, which can be exploited
-by malicious people to cause a DoS (Denial of Service).
-
-The vulnerability is caused due to a calculation error when
-allocating the global file descriptor array and can be exploited to
-crash an affected server.
-
-The vulnerability is reported in version 1.4.18. Other versions may
-also be affected.
-
-SOLUTION:
-A temporary patch is available.
-http://trac.lighttpd.net/trac/attachment/ticket/1562/Fix-372-and-1562.patch
-
-Restrict network access to the service.
-
-PROVIDED AND/OR DISCOVERED BY:
-fdeletang
-
-ORIGINAL ADVISORY:
-http://trac.lighttpd.net/trac/ticket/1562
-
-[snip]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.8 (GNU/Linux)
-
-iEYEARECAAYFAke/vh8ACgkQCG91qXPaRemUfACfX8i8etCHjt1USUVkzUiA4yzz
-CM8AnihaPOMcHfbCrg/A3d46ygIu2E5F
-=hz8R
------END PGP SIGNATURE-----
+Download attachment "signature.asc " of type "application/pgp-signature" (828 bytes)
