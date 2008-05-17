@@ -1,35 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/24/1
-Message-Id: <1227519963.4431.6.camel@dhcp-lab-164.englab.brq.redhat.com>
-Date: Mon, 24 Nov 2008 10:46:03 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: coley@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: CVE Request -- wireshark
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/17/1
+Message-Id: <200805171646.37622.rbu@gentoo.org>
+Date: Sat, 17 May 2008 16:46:30 +0200
+From: Robert Buchholz <rbu@...too.org>
+To: oss-security@...ts.openwall.com
+Cc: Solar Designer <solar@...nwall.com>
+Subject: Re: OpenSSH key blacklisting
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve,
+On Friday 16 May 2008, Solar Designer wrote:
+> Thanks for the "bug" reference.  FWIW, the shell script in this
+> comment is vulnerable itself, in more than one way:
+>
+> 	http://bugs.gentoo.org/show_bug.cgi?id=221759#c9
+>
+> For example, it lets a user have any other user's or root's
+> authorized_keys removed, by replacing .ssh with a symlink to someone
+> else's .ssh directory.  
 
-  the following remotely exploitable vulnerability in Wireshark's
-SMTP dissector has been reported:
+Do you mean the race condition between finding and removing the key? 
+Otherwise, I cannot see how to have someone else's removed.
 
-References:
-http://packetstormsecurity.org/0811-advisories/wireshark104-dos.txt
-http://bugs.gentoo.org/show_bug.cgi?id=248425
-https://bugzilla.redhat.com/show_bug.cgi?id=472737
-http://www.nabble.com/-SVRT-04-08--Vulnerability-in-WireShark-1.0.4-for-DoS-Attack-td20640164.html
-http://www.derkeiler.com/Mailing-Lists/securityfocus/bugtraq/2008-11/msg00166.html
 
-Proposed upstream patches:
-http://anonsvn.wireshark.org/viewvc/trunk/epan/dissectors/packet-smtp.c?r1=24989&r2=24988&pathrev=24989&view=patch
-http://anonsvn.wireshark.org/viewvc/trunk/epan/dissectors/packet-smtp.c?r1=24994&r2=24993&pathrev=24994&view=patch
+> > I assume whichever version has the acceptance of the OpenSSH
+> > upstream is what most of us would be willing to go with. Did you
+> > discuss either blacklist format with them already?
+>
+> Yes, very briefly.  They don't intend to implement key blacklisting.
 
-Affected Wireshark's versions: SVRT-Bkis mentions 1.0.4 and all previous
-                               Checked 0.99.5 and the vulnerability is there.
+That's not too helpful for our case.
+Do you have a patch to propose, implementing your idea? There has been 
+approval of your idea inside Gentoo's hardened team.
 
-Could you please allocate a new CVE id for it?
 
-Thanks, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Robert
 
+
+Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
