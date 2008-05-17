@@ -1,25 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/14/2
-Message-ID: <20080614093645.GA2561@ngolde.de>
-Date: Sat, 14 Jun 2008 11:36:45 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/17/2
+Message-ID: <20080517165055.GA7055@openwall.com>
+Date: Sat, 17 May 2008 20:50:55 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Opera 9.50
+Subject: Re: OpenSSH key blacklisting
 Content-Type: text/plain; charset=utf-8
 
-Hi Marcus,
-* Marcus Meissner <meissner@...e.de> [2008-06-14 11:20]:
-> Opera 9.50 was released and has quite a list of security issues,
-> http://www.opera.com/docs/changelogs/windows/950/ , the Security
-> section.
+On Sat, May 17, 2008 at 04:46:30PM +0200, Robert Buchholz wrote:
+> On Friday 16 May 2008, Solar Designer wrote:
+> > Thanks for the "bug" reference.  FWIW, the shell script in this
+> > comment is vulnerable itself, in more than one way:
+> >
+> > 	http://bugs.gentoo.org/show_bug.cgi?id=221759#c9
+> >
+> > For example, it lets a user have any other user's or root's
+> > authorized_keys removed, by replacing .ssh with a symlink to someone
+> > else's .ssh directory.
 > 
-> Can you please assign CVEs?
+> Do you mean the race condition between finding and removing the key?
 
-Isn't this list about open source software? ;-P
-Cheers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+Yes, this is what I meant, but it is not the only issue - real or
+potential ("unverified", or depending on "unspecified" behavior, which I
+wouldn't want my servers' security to depend upon).  Another real but
+minor issue is having this script rewind a backup tape or freeze up the
+machine (depends on what device files exist).
 
-Content of type "application/pgp-signature" skipped
+It is just plain wrong to access users' files like that.
+
+> Do you have a patch to propose, implementing your idea?
+
+Not yet, but we (Openwall) are likely to have a patch within a few days,
+and this:
+
+> There has been approval of your idea inside Gentoo's hardened team.
+
+is one of the reasons for us to go for the effort.
+
+We're not quite happy with the existing Debian/Ubuntu patch for other
+reasons as well, and doing a thorough security audit of that patch, then
+fixing whatever the audit uncovers could be about as time-consuming as
+coming up with a new patch.
+
+If other distros are interested, please speak up.
+
+Besides the patch, it is equally important to agree on what keys to have
+blacklisted, and to have the blacklist ready.  I think we should have
+"source" blacklists, which are per-{arch,key}-type and have 32 hex chars
+per entry (no attempt at size reduction yet), so we'll be able to
+(re)build the binary files from them.
+
+Right now, there doesn't appear to be a consensus on what key {type,
+size} combinations to have in the blacklist yet.  So let's discuss this.
+
+As to arch types, I've been told that Debian only supports le32, le64,
+and be32 userlands, so we can safely omit be64.
+
+The PID range can be 2 to 32767.  PID 1 is init.
+/proc/sys/kernel/pid_max defaults to 32768, but the highest PID value
+specified in there is skipped, at least by current 2.6 kernels (we may
+want to double-check this on older kernels).  Of course, this does not
+cover custom configs and patched kernels (e.g., some PID randomization
+patch could alter the maximum PID value).
+
+Alexander
