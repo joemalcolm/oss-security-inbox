@@ -1,29 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/21/4
-Message-ID: <0802210843160.17898@mjc.redhat.com>
-Date: Thu, 21 Feb 2008 08:49:52 +0000 (GMT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/18/6
+Message-ID: <0805181633190.9200@mjc.redhat.com>
+Date: Sun, 18 May 2008 16:33:36 +0100 (BST)
 From: Mark J Cox <mjc@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: code review CVS
+Subject: Re: CVE id request: apache2
 Content-Type: text/plain; charset=utf-8
 
-> hahah... as Mark can attest, you're not the only one.  I've had to email
-> him a few times looking for some obscure src.rpm.
+> can I get a CVE id for:
+> https://issues.apache.org/bugzilla/show_bug.cgi?id=44975
+>
+> When used with zlib compression and mod_ssl it is possible
+> to use a memleak to cause a denial of service.
 
-We give the full path in our emailed advisories (except for the cases 
-where we are shipping something not open source like java/acroread) but 
-the paths are not in the web based versions.  So 
-http://www.redhat.com/archives/rhsa-announce/ since Nov 2007, or for older 
-stuff http://www.redhat.com/archives/enterprise-watch-list/
-
-Once you get a rpm then unpacking it without installing it is easy:
-rpm2cpio fn.rpm | cpio --make-directories --extract
-
-And we nearly always ship the pristine upstream tarball along with each 
-patch separately (exception being things like OpenSSL).
-
-This is definately material for a 'how to find out how the vendor fixed 
-this' page.
+This already had CVE-2008-1678 reserved for it.
 
 Thanks, Mark
 --
