@@ -1,26 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/21/8
-Message-ID: <20080521170258.3ed71101@redhat.com>
-Date: Wed, 21 May 2008 17:02:58 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: chris@...ry.beasts.org
-Cc: oss-security@...ts.openwall.com
-Subject: vsftpd CVE-2007-5962 (Red Hat / Fedora specific)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/18/3
+Message-ID: <Pine.GSO.4.51.0805180754140.26846@faron.mitre.org>
+Date: Sun, 18 May 2008 07:54:48 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE id request: uudeview
 Content-Type: text/plain; charset=utf-8
 
-Hi Chris!
 
-This is just a heads-up.  We are releasing updated vsftpd packages
-containing a fix for a minor memory leak identified by CVE-2007-5962.
 
-The issue occurred because of the Red Hat / Fedora specific patch
-which, according to information from our vsftpd maintainer, is not in
-upstream.  I also checked few major vendors, it seems no one is using
-the patch.
+======================================================
+Name: CVE-2008-2266
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2266
+Reference: MLIST:[oss-security] 20080514 Re: CVE id request: uudeview
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/05/14/10
+Reference: MISC:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=480972
+Reference: BID:29211
+Reference: URL:http://www.securityfocus.com/bid/29211
+Reference: SECUNIA:30171
+Reference: URL:http://secunia.com/advisories/30171
 
-More details in our BZ:
+uulib/uunconc.c in UUDeview 0.5.20 allows local users to overwrite
+arbitrary files via a symlink attack on a temporary filename generated
+by the tempnam function.  NOTE: this may be a CVE-2004-2265 regression.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2007-5962
 
--- 
-Tomas Hoger / Red Hat Security Response Team
