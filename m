@@ -1,31 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/02/3
-Message-ID: <20080602124028.GA27106@ngolde.de>
-Date: Mon, 2 Jun 2008 14:40:28 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/18/7
+Message-ID: <20080518161216.GZ12850@outflux.net>
+Date: Sun, 18 May 2008 09:12:16 -0700
+From: Kees Cook <kees@...flux.net>
 To: oss-security@...ts.openwall.com
-Cc: spikey.it@...il.com
-Subject: Re: ARP handler Inspection tool released
+Subject: Re: OpenSSH key blacklisting
 Content-Type: text/plain; charset=utf-8
 
-Hi Andrea,
-* Andrea Di Pasquale <spikey.it@...il.com> [2008-06-02 12:49]:
-> ArpON (Arp handler inspectiON) is a portable Arp handler.
-> It Detects and Blocks all ARP Poisoning/Spoofing attacks with
-> Static Arp Inspection (SARPI) and Dynamic Arp Inspection (DARPI)
-> approach on switched/hubbed LAN with/without DHCP protocol.
-> Important to note, it doesn't compromise the ARP protocol performances.
+On Sun, May 18, 2008 at 04:06:55AM +0400, Solar Designer wrote:
+> I've dropped the explicit CC because Kees is subscribed.
 
-Is this really appropriate content for this list? I guess 
-all of us read full-disclosure, bugtraq etc. and this is a 
-"list for open source software authors and vendors to 
-discuss public security issues". I don't think that the nth 
-cross-post of software announces belong to this list.
+(I've adjusted my mail server to quit using SRS for the time being...)
 
-Cheers
-Nico
+> postings.  As to the fingerprint list, I'd appreciate it if you provide
+> separate lists for different key types, sizes, and archs - such that we
+> can produce any combinations.  The "unshortened" aspect is not as
+> important; we'll probably pick last N bits of fingerprints anyway, to
+> allow for comparison between our blacklist and that in the Debian and
+> Ubuntu packages.
+
+Ah, I haven't been separating it by arch, but I can certainly do that.
+I've been including the "full" hashes in the Debian openssh-blacklist
+source package and reducing them for the final files.  I can easily
+split up the source blacklist files by arch and combine them during the
+"build".
+
+I will probably also keep the file in PID order, and sort it during the
+build.  I've been interested in the pid origin just to see where in the
+pid list keys tend to land.
+
+-Kees
+
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+Kees Cook                                            @outflux.net
