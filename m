@@ -1,33 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/05/1
-Message-ID: <48C0F57B.70300@redhat.com>
-Date: Fri, 05 Sep 2008 17:01:47 +0800
-From: Eugene Teo <eteo@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/18/8
+Message-ID: <20080518163510.GA11435@openwall.com>
+Date: Sun, 18 May 2008 20:35:10 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: coley@...re.org
-Subject: CVE request: kernel: local keyboard DoS through LED switching
+Cc: Kees Cook <kees@...ntu.com>
+Subject: Re: OpenSSH key blacklisting
 Content-Type: text/plain; charset=utf-8
 
-This old issue needs a CVE name.
+On Sun, May 18, 2008 at 09:12:16AM -0700, Kees Cook wrote:
+> Ah, I haven't been separating it by arch, but I can certainly do that.
+> I've been including the "full" hashes in the Debian openssh-blacklist
+> source package and reducing them for the final files.  I can easily
+> split up the source blacklist files by arch and combine them during the
+> "build".
 
-"[PATCH] Input: atkbd - throttle LED switching
+Yes, please split by {arch, key type, key size}.  That is, let's have
+one "source" file per combination of these.
 
-On some boxes keyboard controllers are too slow to withstand
-continuous flow of requests to turn keyboard LEDs on and off
-and start losing some keypresses or even all of them.
+> I will probably also keep the file in PID order, and sort it during the
+> build.
 
-Delay executing of LED switching request if we had another one
-within 50 ms thus easing load on the controller."
+Good idea.  That way, it'd be easier for us to compare your blacklists
+against those others may have.
 
-Upstream commit:
-da4249c99fd59c4e224e4f9acaf07669d205bb1d
+What about my question re: RSA keys for protocol 1 vs. protocol 2?
 
-Reproducer:
-while true; do setleds +num; setleds -num; done
+Thanks,
 
-Reference:
-http://lkml.org/lkml/2007/6/15/22
-
-Thanks, Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
+Alexander
