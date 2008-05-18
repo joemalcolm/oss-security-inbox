@@ -1,20 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/09/1
-Message-ID: <20080509143056.GA6430@ngolde.de>
-Date: Fri, 9 May 2008 16:30:56 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/18/4
+Message-ID: <20080518122652.GA11407@ngolde.de>
+Date: Sun, 18 May 2008 14:26:52 +0200
 From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: versions affected by CVE-2008-1675 - update
+Subject: CVE id request: apache2
 Content-Type: text/plain; charset=utf-8
 
 Hi,
-the description of CVE-2008-1675 states that the linux 
-kernel versions before 2.6.25 are vulnerable. This is wrong, 
-this should be kernel versions before 2.6.25.1.
+can I get a CVE id for:
+https://issues.apache.org/bugzilla/show_bug.cgi?id=44975
 
-See: http://www.kernel.org/pub/linux/kernel/v2.6/patch-2.6.25.1.bz2
+When used with zlib compression and mod_ssl it is possible
+to use a memleak to cause a denial of service.
 
-Cheers
+Kind regards
 Nico
 
 -- 
