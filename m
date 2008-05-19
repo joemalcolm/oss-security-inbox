@@ -1,28 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/22/5
-Message-ID: <Pine.GSO.4.51.0810221332220.25959@faron.mitre.org>
-Date: Wed, 22 Oct 2008 13:33:03 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/19/2
+Message-ID: <20080519202158.GK12850@outflux.net>
+Date: Mon, 19 May 2008 13:21:59 -0700
+From: Kees Cook <kees@...ntu.com>
 To: oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: Re: CVE Request: Opera 9.60 with security fixes
+Subject: Re: OpenSSH key blacklisting
 Content-Type: text/plain; charset=utf-8
 
+On Sun, May 18, 2008 at 08:35:10PM +0400, Solar Designer wrote:
+> On Sun, May 18, 2008 at 09:12:16AM -0700, Kees Cook wrote:
+> > Ah, I haven't been separating it by arch, but I can certainly do that.
+> > I've been including the "full" hashes in the Debian openssh-blacklist
+> > source package and reducing them for the final files.  I can easily
+> > split up the source blacklist files by arch and combine them during the
+> > "build".
+> 
+> Yes, please split by {arch, key type, key size}.  That is, let's have
+> one "source" file per combination of these.
 
-to be filled in later...
+This has been done in the 0.2.1 upload of openssh-blacklist[1].  (I also
+dropped pid 0 and 32768, and sorted by pid, as mentioned earlier.)
 
-fixed in Opera 9.6:
+[1] http://packages.qa.debian.org/o/openssh-blacklist.html
 
- CVE-2008-4694 code execution using redirects to crafted addresses
- CVE-2008-4695  Java applets cache file read
-
-fixed in 9.6.1:
-
- CVE-2008-4696 History Search infoleak by insufficient escaping
- CVE-2008-4697 Fast Forward XSS
- CVE-2008-4698 improper script blocking for unrelated news feeds
-
-
-Arguably some of the 9.6.1 script issues could have been combined...
-
-- Steve
+-- 
+Kees Cook
+Ubuntu Security Team
