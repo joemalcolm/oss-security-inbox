@@ -1,25 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/20/3
-Message-Id: <200807210116.13053.hanno@hboeck.de>
-Date: Mon, 21 Jul 2008 01:16:12 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/19/1
+Message-ID: <871w3yqcb1.fsf@mid.deneb.enyo.de>
+Date: Mon, 19 May 2008 22:16:50 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: CVE request: punbb < 1.2.19
+Subject: CVE ID request: GNUTLS
 Content-Type: text/plain; charset=utf-8
 
-http://punbb.informer.com/
+Several issues have been announced in GNUTLS-SA-2008-1:
 
-From Changelog:
-    *  Fixed an SMTP command injection vulnerability, discovered by Stefan 
-Esser.
-    * Fixed an XSS issue in include/parser.php, discovered by Dan Crowley.
-    * Fixed issue with database returning the same user on multiple pages of 
-the userlist, noticed by hcgtv.
-    * Fixed several potential XSS vectors in moderate.php.
+*** [GNUTLS-SA-2008-1-1]
+*** libgnutls: Fix crash when sending invalid server name.
+The crash can be triggered remotely before authentication, which can
+lead to a Daniel of Service attack to disable the server.  The bug
+cause gnutls to store more session resumption data than what was
+allocated for, thus overwriting unallocated memory.
 
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+*** [GNUTLS-SA-2008-1-2]
+*** libgnutls: Fix crash when sending repeated client hellos.
+The crash can be triggered remotely before authentication, which can
+lead to a Daniel of Service attack to disable the server.  The bug
+triggers a null-pointer dereference.
 
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+*** [GNUTLS-SA-2008-1-3]
+*** libgnutls: Fix crash in cipher padding decoding for invalid record
+*** lengths.
+The crash can be triggered remotely before authentication, which can
+lead to a Daniel of Service attack to disable the server.  The bug
+cause gnutls to read memory beyond the end of the received record.
+
+AFAIK, no CVE IDs have bee assigned yet.
