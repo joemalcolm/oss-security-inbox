@@ -1,62 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/29/7
-Message-ID: <20080929160052.GX23089@fuse.inversepath.com>
-Date: Mon, 29 Sep 2008 16:00:52 +0000
-From: Andrea Barisani <lcars@...rt.org>
-To: ocert-announce@...ts.ocert.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: [oCERT-2008-013] MPlayer Real demuxer heap overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/19/3
+Message-ID: <20080519202636.GL12850@outflux.net>
+Date: Mon, 19 May 2008 13:26:36 -0700
+From: Kees Cook <kees@...flux.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: OpenSSH key blacklisting
 Content-Type: text/plain; charset=utf-8
 
+On Sun, May 18, 2008 at 04:06:55AM +0400, Solar Designer wrote:
+> Also, aren't protocol 1 keys 1024-bit RSA only, even with the latest
+> ssh-keygen?
+> 
+> Then, is it just one set of vulnerable 1024-bit RSA keys for both
+> protocols - or is it two sets?
 
-2008/09/29 #2008-013 MPlayer Real demuxer heap overflow
+Yes -- in the tests I did, RSA1 and RSA keys shared the same modulus,
+so RSA1 is covered by the same blacklists.  RSA1024 is in the
+openssh-blacklist-extra binary package in debian.
 
-Description:
+As for other corner-cases, DSA2048 weren't generate-able[1] with a broken
+version of ssh-keygen, so I've been considering publishing an _empty_
+DSA2048 blacklist, just so that ssh-vulnkey will report DSA2048 as "safe"
+instead of "unknown".
 
-The MPlayer multimedia player suffers from a vulnerability which could result
-in arbitrary code execution and at the least, in unexpected process
-termination.
+-Kees
 
-Three integer underflows located in the Real demuxer code can be used to
-exploit a heap overflow, a specific video file can be crafted in order to make
-the stream_read function reading or writing arbitrary amounts of memory.
+[1] dsa was forced to be 1024 for a while now:
+$ ssh-keygen -f /tmp/foo -t dsa -b 2048
+DSA keys must be 1024 bits
 
-The following patch fixes the issue:
-http://www.ocert.org/patches/2008-013/mplayer_demux_real.patch
-
-Affected version:
-
-MPlayer <= 1.0_rc2
-
-Fixed version:
-
-MPlayer, N/A
-
-Credit: vulnerability report, patch and PoC code received from Felipe Andres
-Manzano <fmanzano [at] fceia [dot] unr [dot] edu [dot] ar>.
-
-CVE: CVE-2008-3827
-
-Timeline:
-2008-08-12: vulnerability report received
-2008-08-24: contacted mplayer maintainers
-2008-08-25: maintainer provides patch
-2008-08-28: reporter indicates that the patch is incomplete and sends new PoC
-2008-09-15: maintainer provides updated patch
-2008-09-16: reporter confirms patch
-2008-09-29: advisory release
-
-References:
-
-Links:
-http://www.mplayerhq.hu
-
-Permalink:
-http://www.ocert.org/advisories/ocert-2008-013.html
 
 -- 
-Andrea Barisani |                Founder & Project Coordinator
-          oCERT | Open Source Computer Emergency Response Team
-
-<lcars@...rt.org>                         http://www.ocert.org
- 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
-        "Pluralitas non est ponenda sine necessitate"
+Kees Cook                                            @outflux.net
