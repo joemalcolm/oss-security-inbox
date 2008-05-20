@@ -1,33 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/10/9
-Message-ID: <Pine.GSO.4.51.0811101304320.6724@faron.mitre.org>
-Date: Mon, 10 Nov 2008 13:04:40 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Chris Evans <scarybeasts@...il.com>
-cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...re.org>, Will Drewry <redpig@...rt.org>
-Subject: Re: CVE Request - Python string expandtabs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/20/4
+Message-ID: <4832E82F.1020905@gmx.de>
+Date: Tue, 20 May 2008 17:03:11 +0200
+From: Matthias Andree <matthias.andree@....de>
+To: oss-security@...ts.openwall.com
+Subject: Re: OpenSSH key blacklisting
 Content-Type: text/plain; charset=utf-8
 
+Solar Designer wrote:
+> Not yet, but we (Openwall) are likely to have a patch within a few days,
+> and this:
 
-======================================================
-Name: CVE-2008-5031
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5031
-Reference: MLIST:[oss-security] 20081105 CVE Request - Python string expandtabs
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/05/2
-Reference: MLIST:[oss-security] 20081105 Re: CVE Request - Python string expandtabs
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/05/3
-Reference: MISC:http://scary.beasts.org/security/CESA-2008-008.html
-Reference: CONFIRM:http://svn.python.org/view/python/trunk/Objects/stringobject.c?rev=61350&view=diff&r1=61350&r2=61349&p1=python/trunk/Objects/stringobject.c&p2=/python/trunk/Objects/stringobject.c
-Reference: CONFIRM:http://svn.python.org/view/python/trunk/Objects/unicodeobject.c?rev=61350&view=diff&r1=61350&r2=61349&p1=python/trunk/Objects/unicodeobject.c&p2=/python/trunk/Objects/unicodeobject.c
-Reference: CONFIRM:http://svn.python.org/view?rev=61350&view=rev
+> On Sat, May 17, 2008 at 04:46:30PM +0200, Robert Buchholz wrote:
 
-Multiple integer overflows in Python 2.5.2 allow context-dependent
-attackers to have an unknown impact via a large integer value in the
-tabsize argument to the expandtabs method, as implemented by (1) the
-string_expandtabs function in Objects/stringobject.c and (2) the
-unicode_expandtabs function in Objects/unicodeobject.c.  NOTE: this
-vulnerability reportedly exists because of an incomplete fix for
-CVE-2008-2315.
+>> There has been approval of your idea inside Gentoo's hardened team.
 
+> is one of the reasons for us to go for the effort.
 
+Thank you.
+
+For tossing in an end-users view, it is also likely of wider interest since
+keys generated once may travel (floppy, USB stick, scp/rsync/ssh-add -L,
+you name it), or systems being cross-"updated" to other operating systems
+(into/out of Debian/Ubuntu) for instance, so it likely wouldn't hurt to
+forward the whole blacklisting or at least check tools upstream once
+everyone is happy with it.
+
+It may take some convincing upstream maintainers to help with working
+around a b0rkup issue that happend by a downstream distro, but anyways, I'd
+like to do some sort of "ssh-vulnkey -a" on my SUSE boxen (perhaps after
+some sanity checks such as making sure the file being read by this tool is
+actually a regular file after opening it and things like that).
+
+-- 
+Matthias Andree
