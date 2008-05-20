@@ -1,35 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/29/3
-Message-Id: <1225276113.3524.8.camel@dhcp-lab-164.englab.brq.redhat.com>
-Date: Wed, 29 Oct 2008 11:28:33 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: coley@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: CVE Request - Python imageop
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/20/1
+Message-ID: <87y765bjug.fsf@mocca.josefsson.org>
+Date: Tue, 20 May 2008 07:55:19 +0200
+From: Simon Josefsson <simon@...efsson.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE ID request: GNUTLS
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve,
+Jonathan Smith
+<smithj-TzNcu2uxYW0shl4onS21xdBPR1lH4CV8@...lic.gmane.org> writes:
 
-  could you please assign a new CVE id for the following
-Python imageop integer / buffer overflow. Advisory
-and PoC at:
+> Florian Weimer wrote:
+> | Several issues have been announced in GNUTLS-SA-2008-1:
+>
+> Note that the fixed versions has changed. 2.2.4 didn't fix the issue, so
+> they pushed 2.2.5 today as well.
+>
+> reference
+> http://permalink.gmane.org/gmane.comp.encryption.gpg.gnutls.devel/2812
 
-http://scary.beasts.org/security/CESA-2008-008.html
+Actually, v2.2.4 did fix the security issue.
 
-(The other issues from this link were addressed within
-the mega "[vendor-sec] Multiple python vulnerabilities
-(CVE-2008-2315, CVE-2008-2316)" thread.)
+However, the code to detect and print a debug message about the attack
+was buggy and was triggered for normal connections under some conditions
+(conditions which, alas, the self-tests did not exercise).
 
-Proposed patch:
-against trunk: http://svn.python.org/view?rev=66689&view=rev
-against release-25maint: http://svn.python.org/view?rev=66690&view=rev
+Still, the 2.2.5 announcement is what you want to read to get the full
+picture.  Note that gmane garbles OpenPGP signed cleartext patches.  Try
+this link instead:
 
-Affected Python versions: 1.5.2 through 2.5.1
+http://lists.gnu.org/archive/html/gnutls-devel/2008-05/msg00060.html
 
-This issue different one from CVE-2007-4965 and CVE-2008-1679.
-
-Thanks!
-
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
+/Simon
