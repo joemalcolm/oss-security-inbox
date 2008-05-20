@@ -1,41 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/22/2
-Message-ID: <49283824.9090800@beamnet.de>
-Date: Sat, 22 Nov 2008 17:49:40 +0100
-From: Thomas Viehmann <tv@...mnet.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/20/2
+Message-ID: <20080520113437.58a4dbd8@redhat.com>
+Date: Tue, 20 May 2008 11:34:37 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: 498243@...s.debian.org, xine-user@...ts.sourceforge.net,  redpig@...rt.org
-Subject: xine-lib and ocert-2008-008
+Cc: smithj@...ethemallocs.com, Florian Weimer <fw@...eb.enyo.de>, "Steven M. Christey" <coley@...us.mitre.org>, Simon Josefsson <simon@...efsson.org>
+Subject: Re: CVE ID request: GNUTLS
 Content-Type: text/plain; charset=utf-8
 
-[resending this with hopefully less broken CC, apologies]
+On Mon, 19 May 2008 15:26:41 -0800 Jonathan Smith
+<smithj@...ethemallocs.com> wrote:
 
-Hi,
+> Florian Weimer wrote:
+> | Several issues have been announced in GNUTLS-SA-2008-1:
 
-I am not quite sure whether I can agree with Will Drewry's analysis[1]
-accompanying ocert advisory 2008-008[1]. Looking at item 1A, which Will
-says is fixed in 1.1.5, attached .mov seems to fit the case description
-and will still corrupt the memory when viewed e.g. in gxine. xine-lib
-with the attached patch seems to be more successful in preventing the
-attach (note that the file is more tuned to be small than to be a valid
-.mov, but the same works by including the bad meta in an otherwise good
-file). Note that xine_xmalloc is specifically designed to allocate
-memory when passed size 0. Upstream seems to move away from it, but...
-As Will notices, demux-qt.c has loads of unfixed problems.
+Some references for Steven to use in the CVE descriptions:
 
-If anyone cares to go over the xine-lib issues (primarily the unfixed
-ones from Will's section 3), I'd much appreciate a CC. In order to make
-the analysis and verification more, I would also be interested in the
-test cases mentioned in the advisory.
+Upstream announcements:
 
-Kind regards
+http://www.gnu.org/software/gnutls/security.html
+http://lists.gnu.org/archive/html/gnutls-devel/2008-05/msg00051.html
+http://lists.gnu.org/archive/html/gnutls-devel/2008-05/msg00060.html
 
-T.
+CERT-FI advisory:
 
-1. http://www.ocert.org/analysis/2008-008/analysis.txt
-2. http://www.ocert.org/advisories/ocert-2008-008.html
+https://www.cert.fi/haavoittuvuudet/advisory-gnutls.html
+
+Upstream patches:
+
+http://git.savannah.gnu.org/gitweb/?p=gnutls.git;a=commitdiff;h=bc8102405fda11ea00ca3b42acc4f4bce9d6e97b
+http://git.savannah.gnu.org/gitweb/?p=gnutls.git;a=commitdiff;h=d223040e498bd50a4b9e0aa493e78587ae1ed653
+
+
+> Note that the fixed versions has changed. 2.2.4 didn't fix the issue,
+> so they pushed 2.2.5 today as well.
+> 
+> reference
+> http://permalink.gmane.org/gmane.comp.encryption.gpg.gnutls.devel/2812
+
+Based on discussion here:
+
+http://lists.gnu.org/archive/html/gnutls-devel/2008-05/msg00055.html
+
+It seems like a regression.
+
+Adding Simon to CC, so he may comment on this if he wants.
+
 -- 
-Thomas Viehmann, http://thomas.viehmann.net/
-
-
-View attachment "fix-for-ocert-2008-008-1a.diff" of type "text/x-patch" (2496 bytes)
+Tomas Hoger / Red Hat Security Response Team
