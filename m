@@ -1,44 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/15/3
-Message-Id: <1229362201.14026.7.camel@dhcp-lab-164.englab.brq.redhat.com>
-Date: Mon, 15 Dec 2008 18:30:01 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request - rsyslog ($allowedSender issue repost + imudp DoS)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/20/5
+Message-ID: <48335972.2010002@freethemallocs.com>
+Date: Tue, 20 May 2008 15:06:26 -0800
+From: Jonathan Smith <smithj@...ethemallocs.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com
+Subject: CVE request: mtr
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-  rsyslog upstream has fixed DoS in rsyslog's imudp
-plugin -- "imudp emitted a message when a non-permitted sender
-tried to send a message to it. This behaviour is operator-configurable."
+http://seclists.org/fulldisclosure/2008/May/0488.html has all the details.
 
-Changelog: http://www.rsyslog.com/Topic4.phtml
-Upstream commit: http://git.adiscon.com/?p=rsyslog.git;a=commit;h=afdccceefa30306cf720a27efd5a29bcc5a916c9
-Affected versions: 3.20.2 [v3-stable], 3.21.9 [BETA], 4.1.2 [DEVEL]
+https://issues.rpath.com/browse/RPL-2558 is the rpath issue.
 
-On Mon, 2008-12-08 at 15:53 +0100, Jan Lieskovsky wrote:
-> Hello Steve,
-> 
->   the following vulnerability has been recently reported
-> in rsyslog:
-> 
-> http://www.rsyslog.com/Article322.phtml
-> 
-> References:
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=508027
-> http://secunia.com/Advisories/32857/
-> 
-> Upstream patch:
-> http://git.adiscon.com/?p=rsyslog.git;a=commitdiff;h=f0ddbed44c332391ae6d9bbf6b07e2f06c4dd676
-> 
-> The reporter mentions:
-> "The versions affected are rsyslog 3.12.1 to 3.20.0, 4.1.0 and 4.1.1.    
->  The v2-stable branch is not affected."
+Thanks in advance.
 
-Could you allocate a new CVE id for these two rsyslog flaws?
+	smithj
 
-Thanks, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
 
+iEYEARECAAYFAkgzWXIACgkQCG91qXPaRelxLQCeJbiX9xTsWm7FkgHV63cu1ckS
+v/sAniIDJ2ZZ09zGqtHgCnzkaJEexrJF
+=2CQe
+-----END PGP SIGNATURE-----
