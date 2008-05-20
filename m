@@ -1,18 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/30/2
-Message-Id: <200805302316.03315.turkay.eren@gmail.com>
-Date: Fri, 30 May 2008 23:16:03 +0300
-From: Eren Türkay <turkay.eren@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/20/3
+Message-ID: <0805201501150.18945@mjc.redhat.com>
+Date: Tue, 20 May 2008 15:02:42 +0100 (BST)
+From: Mark J Cox <mjc@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Latest flash player is not vulnerable
+Subject: Re: CVE ID request: GNUTLS
 Content-Type: text/plain; charset=utf-8
 
-Adobe announced that the flaw that is in the wild is not a new one. The attack 
-took the advantage of other security flaws to redirect the user from 
-legitimate sites to malicious domains serving exploit SWFs
+> Several issues have been announced in GNUTLS-SA-2008-1:
 
-http://blogs.adobe.com/psirt/2008/05/more_information_on_recent_fla.html
+I've not been able to get hold of Steve Chrisey today to get names 
+allocated, but many of us have updates queued.  So I've allocated from 
+our CNA and will page Steve with the names to try to avoid any
+duplicates when he returns.
 
-Just for informing for those who missed the news :-)
+> *** [GNUTLS-SA-2008-1-1]
+> *** libgnutls: Fix crash when sending invalid server name.
+> The crash can be triggered remotely before authentication, which can
+> lead to a Daniel of Service attack to disable the server.  The bug
+> cause gnutls to store more session resumption data than what was
+> allocated for, thus overwriting unallocated memory.
 
---Eren
+CVE-2008-1948 GNUTLS-SA-2008-1-1
+
+> *** [GNUTLS-SA-2008-1-2]
+> *** libgnutls: Fix crash when sending repeated client hellos.
+> The crash can be triggered remotely before authentication, which can
+> lead to a Daniel of Service attack to disable the server.  The bug
+> triggers a null-pointer dereference.
+
+CVE-2008-1949 GNUTLS-SA-2008-1-2 (NULL deference)
+
+> *** [GNUTLS-SA-2008-1-3]
+> *** libgnutls: Fix crash in cipher padding decoding for invalid record
+> *** lengths.
+> The crash can be triggered remotely before authentication, which can
+> lead to a Daniel of Service attack to disable the server.  The bug
+> cause gnutls to read memory beyond the end of the received record.
+
+CVE-2008-1950 GNUTLS-SA-2008-1-3 (read mem OOB)
+
+Mark
