@@ -1,30 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/27/2
-Message-ID: <4064.1211896846@devserv.devel.redhat.com>
-Date: Tue, 27 May 2008 10:00:46 -0400
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/21/11
+Message-ID: <48347C9E.4050404@freethemallocs.com>
+Date: Wed, 21 May 2008 11:48:46 -0800
+From: Jonathan Smith <smithj@...ethemallocs.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Security, Open Source Style
+Subject: Re: Root name server changes -> bind
 Content-Type: text/plain; charset=utf-8
 
-On 27 May 2008, Josh Bressers wrote:
-> Today we are excited to announce another community initiative--the Open
-> Source Software Security community (oss-security). This project is an
-> ongoing effort to manage security information in Open Source software by
-> building on the collaborative foundation of the open source model.
-> 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-For those of you playing along at home, the Red Hat blog entry about this
-is here:
-http://www.press.redhat.com/2008/05/27/security-open-source-style/
+Marcus Meissner wrote:
+| 	The security consequences of obscure DNS root server usage are
+obvious, IMHO.
+| 	You might want to consider security updates to the bind package with
+an updated
+| 	root.hint file. (Since the story is on Slashdot, it is as public as
+it can get;
+| 	thus I use the regular channel for this request.)
 
-I added a note on my blog here:
-http://www.bress.net/blog/archives/115-Announcing-oss-security.html
+Why did ICANN allow the old IP address to be taken by an untrusted
+party? It would seem that IPs formerly used by root DNS servers should
+be permanently retired to prevent just this sort of thing.
 
-That will get picked up by the Fedora blog aggregator, which will help to
-spread the word.
+	smithj
 
-Thanks.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
 
--- 
-    JB
+iEYEARECAAYFAkg0fJ4ACgkQCG91qXPaRenl1QCfWEVV3nZ7s2J1AKVO23F7CQ2l
+uxcAoKp9TR5X4e/hcc5sz1o+bpNVoAla
+=ZYQf
+-----END PGP SIGNATURE-----
