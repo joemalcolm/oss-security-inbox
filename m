@@ -1,31 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/17/31
-Message-ID: <87d4fqo8cf.fsf@mid.deneb.enyo.de>
-Date: Wed, 17 Dec 2008 21:27:44 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/21/5
+Message-ID: <Pine.GSO.4.51.0805210200300.8317@faron.mitre.org>
+Date: Wed, 21 May 2008 02:00:57 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: Re:  Re: CVE Request - roundcubemail
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: mtr
 Content-Type: text/plain; charset=utf-8
 
-* Steven M. Christey:
 
-> The general issue of /e in preg_replace is covered by CWE-624 Executable
-> Regular Expression Error (http://cwe.mitre.org/data/definitions/624.html)
-> which has a couple other CVE examples.
+On Tue, 20 May 2008, Jonathan Smith wrote:
 
-Thanks for the reference.
+> http://seclists.org/fulldisclosure/2008/May/0488.html has all the details.
 
-> I bet there's a chunk of these in various applications.  I believe Perl
-> has similar functionality.
+Use CVE-2008-2357 - it will be filled in later.
 
-Not quite, the s///e operator uses a compile-time transformation for
-the replacement expression, so it shouldn't be affected by this very
-issue.
-
-\Q \E pairs are an issue in the pattern, not the replacement.
-Mistakes in this area increase the attack surface by exposing the
-regular expression compiler to potentially hostile input, and it may
-lead to denial-of-service vulnerabilities because some implementations
-do not cope well with certain patterns.  Perhaps CWE-624 should be
-split to reflect this?
+- Steve
