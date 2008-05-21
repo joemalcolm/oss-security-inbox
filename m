@@ -1,35 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/31/5
-Message-ID: <Pine.GSO.4.51.0803311743450.16237@faron.mitre.org>
-Date: Mon, 31 Mar 2008 17:44:40 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/21/7
+Message-ID: <20080521130222.GA14109@suse.de>
+Date: Wed, 21 May 2008 15:02:22 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: comix
+Subject: Root name server changes -> bind
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-On Mon, 31 Mar 2008, Nico Golde wrote:
+We received this customer report regarding the IP number change of the "L" root
+nameserver and sync with bind:
 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=462840
->
-> I confirmed this using comix\"\;echo\ owned\>bla\;ls\ \"
-> as a simple reroducer.
+	ICANN moved one of its DNS root servers, l.root-servers.net to another IP
+	address, see http://blog.icann.org/?p=227. As reported on the blog
+	http://www.renesys.com/blog/2008/05/identity_theft_hits_the_root_n_1.shtml,
+	independent DNS servers popped up on the old root server address -- actually
+	several of them.
 
-Use CVE-2008-1568
+	The security consequences of obscure DNS root server usage are obvious, IMHO.
+	You might want to consider security updates to the bind package with an updated
+	root.hint file. (Since the story is on Slashdot, it is as public as it can get;
+	thus I use the regular channel for this request.)
 
-What about the comicthumb in Message #10 - if that's part of comix, I'd
-MERGE with CVE-2008-1568.
+Not sure if this warrants a CVE id.
 
-- Steve
-
-======================================================
-Name: CVE-2008-1568
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1568
-Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=462840
-
-comix 3.6.4 allows attackers to execute arbitrary commands via a
-filename containing shell metacharacters that are not properly
-sanitized when executing the rar, unrar, or jpegtran programs.
-
-
+Ciao, Marcus
+-- 
+Working, but not speaking, for the following german company:
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
