@@ -1,22 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/27/2
-Message-ID: <48DD9C7A.3080705@redhat.com>
-Date: Sat, 27 Sep 2008 10:37:46 +0800
-From: Eugene Teo <eteo@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/21/10
+Message-ID: <48347952.7080105@freethemallocs.com>
+Date: Wed, 21 May 2008 11:34:42 -0800
+From: Jonathan Smith <smithj@...ethemallocs.com>
 To: oss-security@...ts.openwall.com
-CC: coley@...re.org
-Subject: Re: CVE-2008-4113 update: kernel: sctp: fix random memory dereference with SCTP_HMAC_IDENT option
+CC: chris@...ry.beasts.org
+Subject: Re: vsftpd CVE-2007-5962 (Red Hat / Fedora specific)
 Content-Type: text/plain; charset=utf-8
 
-Eugene Teo wrote:
-> Hi Steve,
-[...]
->> and this one:
->>
->>   http://marc.info/?l=linux-sctp&m=121988176932559&w=2
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-This patch is for CVE-2008-3526.
+Tomas Hoger wrote:
+| This is just a heads-up.  We are releasing updated vsftpd packages
+| containing a fix for a minor memory leak identified by CVE-2007-5962.
 
-Thanks, Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
+The memory leak itself is CVE-2007-5962? Or is the CVE for the original
+issue where deny_hosts didn't work as expected? It doesn't seem to be
+public.
+
+| The issue occurred because of the Red Hat / Fedora specific patch
+| which, according to information from our vsftpd maintainer, is not in
+| upstream.  I also checked few major vendors, it seems no one is using
+| the patch.
+
+rPath/Foresight does :-/
+
+| More details in our BZ:
+|
+| https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2007-5962
+
+Thanks for the heads-up.
+
+	smithj
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEARECAAYFAkg0eVEACgkQCG91qXPaRemHagCfck874lv1ONGXaZPPGRWo0i6x
+R3AAnRE/9lpHs8D4NAYSV59MudHSoLRy
+=ZSXA
+-----END PGP SIGNATURE-----
