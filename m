@@ -1,30 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/21/5
-Message-ID: <Pine.GSO.4.51.0811202034580.20524@faron.mitre.org>
-Date: Thu, 20 Nov 2008 20:35:31 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/21/4
+Message-ID: <48338E45.8000804@freethemallocs.com>
+Date: Tue, 20 May 2008 18:51:49 -0800
+From: Jonathan Smith <smithj@...ethemallocs.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: imlib2
+Subject: Re: CVE request: mtr
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-SECUNIA:32796 suggests a Debian bug report, but I couldn't quickly find
-it.
+security curmudgeon wrote:
+| I did a quick once over on the site and did not see anything in the news,
+| bug system or changelog (dated 2004 i think) in the archive.
 
-======================================================
-Name: CVE-2008-5187
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5187
-Reference: MLIST:[oss-security] 20081120 CVE Request: imlib2
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/20/5
-Reference: SECUNIA:32796
-Reference: URL:http://secunia.com/advisories/32796
+The changelog threw me as well. It seems recent changes are contained in
+the NEWS file. It did not, however, mention this issue, or anything else
+that may have been fixed in 0.73.
 
-The load function in the XPM loader for imlib2 1.4.2, and possibly
-other versions, allows attackers to execute arbitrary code via a
-crafted XPM file that triggers a "pointer arithmetic error" and a
-heap-based buffer overflow, a different vulnerability than
-CVE-2008-2426.  NOTE: the provenance of this information is unknown;
-the details are obtained solely from third party information.
+	smithj
 
 
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEARECAAYFAkgzjkUACgkQCG91qXPaRelH2wCfXkGRuwSImXC1KMBaVFzs7oVm
+LuwAoItrvaEe7VtfR5jMOAA87ROL4LYC
+=E5qZ
+-----END PGP SIGNATURE-----
