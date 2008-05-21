@@ -1,22 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/04/9
-Message-ID: <20080404221643.GA24481@openwall.com>
-Date: Sat, 5 Apr 2008 02:16:43 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: announcing oCERT & oss-security to Bugtraq & f-d
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/21/12
+Message-ID: <27653.1211399917@devserv.devel.redhat.com>
+Date: Wed, 21 May 2008 15:58:37 -0400
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com, Jonathan Smith <smithj@...ethemallocs.com>
+cc: chris@...ry.beasts.org
+Subject: Re: vsftpd CVE-2007-5962 (Red Hat / Fedora specific)
 Content-Type: text/plain; charset=utf-8
 
-Andrea,
+On 21 May 2008, Jonathan Smith wrote:
+> Tomas Hoger wrote:
+> > This is just a heads-up.  We are releasing updated vsftpd packages
+> > containing a fix for a minor memory leak identified by CVE-2007-5962.
+> 
+> The memory leak itself is CVE-2007-5962? Or is the CVE for the original
+> issue where deny_hosts didn't work as expected? It doesn't seem to be
+> public.
+> 
 
-On Fri, Apr 04, 2008 at 10:07:18PM +0000, Andrea Barisani wrote:
-> Ok, but if the only issue is time I'd be happy to delay until monday,
-> (announcements on weekends are bad anyway).
+The leak is CVE-2007-5962.  deny_hosts not working did not get a CVE id.
 
-I'll let others in this group discuss this with you and make a
-determination - as well as work on the announcement text.  My opinion
-does not matter all that much, nor do I have time for this right now.
-
-Thanks,
-
-Alexander
+-- 
+    JB
