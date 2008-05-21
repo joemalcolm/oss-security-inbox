@@ -1,42 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/08/5
-Message-ID: <20080408150154.GK27160@fuse.inversepath.com>
-Date: Tue, 8 Apr 2008 15:01:54 +0000
-From: Andrea Barisani <lcars@...rt.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/21/6
+Message-ID: <Pine.GSO.4.51.0805210202470.8317@faron.mitre.org>
+Date: Wed, 21 May 2008 02:06:52 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: announcing oCERT & oss-security to Bugtraq & f-d
+cc: coley@...re.org
+Subject: CVE assignments during May
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Apr 08, 2008 at 10:58:57AM -0400, Josh Bressers wrote:
-> > Josh,
-> > 
-> > Would you be able and willing to start working on the announcement text
-> > for oss-security now?  We'll be able to combine it with one for oCERT
-> > later if needed (that is, if it's not too late) - or you can work on it
-> > with Andrea right away (on this list).  I think I'd announce both
-> > projects at once at least to the Openwall announcements list.
-> 
-> Probably not this week.  I have quite a few more pressing matters to attend
-> to, and for the limited oss-security time I have, I plan to clean up the
-> wiki a bit in preparation for a public announcement.
-> 
-> I think oCERT needs to do their own thing here.  I'm not pleased with this
-> unneeded pressure being placed on this group because of the desire of
-> oCERT.
->
 
-I don't think anyone wanted to put any kind of pressure. Just trying to
-coordinate, I never wanted to influence oss-security matters and just wanted
-to see if there was a compatible timeframe.
+All,
 
-And as you can see from my other post we already did our own thing.
+I had been hoping to make this seamless, but it's not quite working out,
+so: I'm in Australia at the AusCERT conference, and network connectivity
+is periodically dicey, plus there's the time zone difference with the
+US/Europe which seems to be where most CVE requesters are located.  This
+is affecting my responsiveness more than I'd like.  We recently hired a
+new person who will share some of my CNA duties, but he just started so
+isn't ready.
 
-Cheers
+I'll arrive back in the States on May 30.  Meanwhile, I'll send off a
+couple more CVE reservation pools to Red Hat and Debian, who can take care
+of more timely assignments on this list.
 
--- 
-Andrea Barisani |                Founder & Project Coordinator
-          oCERT | Open Source Computer Emergency Response Team
-
-<lcars@...rt.org>                         http://www.ocert.org
- 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
-        "Pluralitas non est ponenda sine necessitate"
+- Steve
