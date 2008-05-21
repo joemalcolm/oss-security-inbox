@@ -1,22 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/17/22
-Message-ID: <Pine.GSO.4.51.0812171055580.17008@faron.mitre.org>
-Date: Wed, 17 Dec 2008 10:56:49 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/21/2
+Message-ID: <Pine.LNX.4.64.0805210249020.6145@forced.attrition.org>
+Date: Wed, 21 May 2008 02:49:44 +0000 (UTC)
+From: security curmudgeon <jericho@...rition.org>
 To: oss-security@...ts.openwall.com
-cc: Eugene Teo <eugeneteo@...nel.sg>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: Re: CVE request: kernel: applicom: fix an unchecked user ioctl range
+Subject: Re: CVE request: mtr
 Content-Type: text/plain; charset=utf-8
 
 
-On Wed, 17 Dec 2008, Marcus Meissner wrote:
+: On Wednesday, 21. May 2008, Jonathan Smith wrote:
+: > http://seclists.org/fulldisclosure/2008/May/0488.html has all the
+: > details.
+: >
+: > https://issues.rpath.com/browse/RPL-2558 is the rpath issue.
+: 
+: Secunia suggests [1] that 0.73 contains a fix. Did you find any 
+: indication to that? The advisory mentions 0.72 as vulnerable, but it is 
+: also dated February 28. The last mtr was released on April 7, but it 
+: seems to me all changes are unrelated.
 
-> I guess the accessibility very much depends on the /dev/ac* device
-> permissions here. For a multiport serial card I guess root/tty only.
+I did a quick once over on the site and did not see anything in the news, 
+bug system or changelog (dated 2004 i think) in the archive.
 
-If there are any realistic situations under which /dev/ac* might have less
-stringent permissions, then that's good enough for inclusion - either the
-default configuration, a common configuration, recommended vendor
-practice, etc.
-
-- Steve
