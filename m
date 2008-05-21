@@ -1,24 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/06/2
-Message-ID: <Pine.GSO.4.51.0803061453080.23642@faron.mitre.org>
-Date: Thu, 6 Mar 2008 14:53:13 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Josh Bressers <bressers@...hat.com>
-cc: coley@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/21/9
+Message-Id: <1211390100.7929.6.camel@dhcp-lab-164.englab.brq.redhat.com>
+Date: Wed, 21 May 2008 19:15:00 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: oss-security@...ts.openwall.com, vendor-sec@....de, "Steven M. Christey" <coley@...re.org>
+Subject: [vendor-sec] New Xen ioemu: PVFB backend issue
 Content-Type: text/plain; charset=utf-8
 
+Hello guys,
 
-======================================================
-Name: CVE-2008-1198
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1198
-Reference: MISC:http://www.ernw.de/download/pskattack.pdf
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=435274
+  on May the 15th, the following report has been posted to the
+xen-unstable list:
 
-The default IPSec ifup script in Red Hat Enterprise Linux 3 through 5
-configures racoon to use aggressive IKE mode instead of main IKE mode,
-which makes it easier for remote attackers to conduct brute force
-attacks by sniffing an unencrypted preshared key (PSK) hash.
 
+Problem description:
+====================
+
+ioemu: Fix PVFB backend to limit frame buffer size
+
+The recent fix to validate the frontend's frame buffer description
+neglected to limit the frame buffer size correctly. This lets a
+malicious frontend make the backend attempt to map an arbitrary amount
+of guest memory, which could be useful for a denial of service attack
+against dom0.
+
+Proposed fix:
+============
+
+http://xenbits.xensource.com/xen-unstable.hg?rev/9044705960cb30cec385bdca7305bcf7db096721
+
+
+As this vulnerability has security implications, we have assigned
+CVE-2008-1952 to it. Please use it when referring to this issue.
+
+
+Kind regards
+Jan iankko Lieskovsky
+RH kernel Security Response Team
 
