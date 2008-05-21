@@ -1,27 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/19/10
-Message-id: <1203441045.14668.TMDA@linsec.ca>
-Date: Tue, 19 Feb 2008 10:09:23 -0700
-From: Vincent Danen <vdanen@...sec.ca>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/21/1
+Message-Id: <200805210423.19123.rbu@gentoo.org>
+Date: Wed, 21 May 2008 04:23:16 +0200
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: charter
+Subject: Re: CVE request: mtr
 Content-Type: text/plain; charset=utf-8
 
-* [2008-02-19 09:04:03 -0500] Josh Bressers wrote:
-
->> "Advisories are welcome"? I thought we decided that this was
->> discussion-only?
+On Wednesday, 21. May 2008, Jonathan Smith wrote:
+> http://seclists.org/fulldisclosure/2008/May/0488.html has all the
+> details.
 >
->What do others think?  I can see it either way, so I put it in.
+> https://issues.rpath.com/browse/RPL-2558 is the rpath issue.
 
-Yeah, I noticed this as well.  I think advisories should be kept off the
-list, for the same "signal-to-noise ratio" principal as bugtraq and FD.
+Secunia suggests [1] that 0.73 contains a fix. Did you find any indication 
+to that? The advisory mentions 0.72 as vulnerable, but it is also dated 
+February 28. The last mtr was released on April 7, but it seems to me all 
+changes are unrelated.
 
-It may be a better idea, if desired, to make a separate list that is a
-fully moderated (or possibly a reject-all with exceptions) list specific
-to carrying vendor advisories.
 
--- 
-Vincent Danen @ http://linsec.ca/
+Robert
 
-Content of type "application/pgp-signature" skipped
+[1] http://secunia.com/advisories/30312/
+
+
+Download attachment "signature.asc " of type "application/pgp-signature" (828 bytes)
