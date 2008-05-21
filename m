@@ -1,23 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/23/6
-Message-ID: <Pine.GSO.4.51.0804231154320.10164@faron.mitre.org>
-Date: Wed, 23 Apr 2008 11:54:36 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/21/3
+Message-ID: <48338DFF.6070502@freethemallocs.com>
+Date: Tue, 20 May 2008 18:50:39 -0800
+From: Jonathan Smith <smithj@...ethemallocs.com>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: phpmyadmin PMASA-2008-3
+Subject: Re: CVE request: mtr
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-======================================================
-Name: CVE-2008-1924
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1924
-Reference: CONFIRM:http://www.phpmyadmin.net/home_page/security.php?issue=PMASA-2008-3
+Robert Buchholz wrote
+| Secunia suggests [1] that 0.73 contains a fix. Did you find any
+indication
+| to that? The advisory mentions 0.72 as vulnerable, but it is also dated
+| February 28. The last mtr was released on April 7, but it seems to me all
+| changes are unrelated.
 
-Unspecified vulnerability in phpMyAdmin before 2.11.5.2, when running
-on shared hosts, allows attackers with CREATE table permissions to
-read arbitrary files via a crafted HTTP POST request, related to use
-of an undefined UploadDir variable.
+The issue was an insecure use of sprintf in split_redraw(). In 0.73,
+uptream changed this to use snprintf, thus fixing the issue.
 
+	smithj
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEARECAAYFAkgzjf4ACgkQCG91qXPaRekhhACeKPMka0sknIpsV4gtS1zojRl6
+jKYAoIrwOd4pxgvxetx39dlJ4fhll2Su
+=gZQa
+-----END PGP SIGNATURE-----
