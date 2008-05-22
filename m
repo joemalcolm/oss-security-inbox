@@ -1,25 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/25/2
-Message-ID: <31249.1209148771@devserv.devel.redhat.com>
-Date: Fri, 25 Apr 2008 14:39:31 -0400
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/22/9
+Message-ID: <87ej7ujjyj.fsf@mid.deneb.enyo.de>
+Date: Thu, 22 May 2008 20:02:28 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: list: members vs. read-only subscribers
+Subject: Re: Root name server changes -> bind
 Content-Type: text/plain; charset=utf-8
 
-On 23 April 2008, Solar Designer wrote:
-> 
-> Josh - now that the list setup has been restricted like you wanted, are
-> you going to work on an announcement suitable for posting to Bugtraq?
-> 
+* Jonathan Smith:
 
-Just so nobody thinks I missed this,
+> So, why are they running a DNS server on that IP?
 
-It's been a very busy week for me, so I've not started on this yet.  I'll
-try to draft something up this weekend or early next week.  I have some
-ideas.
+I can't speak for them.  Why does one run a root server?  I don't know.
 
-Thanks.
+> | ICANN should have arranged for a longer transition period, as it was
+> | done in previous transitions (I think a few older address still respond
+> | to queries).
+>
+> I think the transition period began in late 2007, but this is the first
+> I've (and, I think, many others) heard about it.
 
--- 
-    JB
+A period of six months is relatively short, compared to previous
+transitions and software release cycles.
+
+> | There's no way to retire an IP address, especially if it is located in a
+> | network prefix that is still in production (which was a driving force
+> | behind most past root servers migrations).
+>
+> I was under the impression that ICANN "owned" or at least "was in charge
+> of" the allocation of IPs for the root name servers.
+
+No, this is not the case.  They didn't even control fully the old L root
+prefix, which partly motivated the migration.
+
+> So why couldn't they just bar (via policy, not via technical means)
+> whoever owns the rest of the prefix that IP is in from using it?
+
+They don't own the IP addresses.  AFAIK, only one root operator has
+entered into an agreement with ICANN.  DNS root operations are totally
+self-regulated, and as we can see, this works (sort of).
