@@ -1,45 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/13/1
-Message-ID: <6edf76c20807121735h23201ecey668e79d217fc8416@mail.gmail.com>
-Date: Sun, 13 Jul 2008 01:35:42 +0100
-From: "Jan Minář" <rdancer@...ncer.org>
-To: "Tomas Hoger" <thoger@...hat.com>
-Cc: oss-security@...ts.openwall.com,  "Jonathan Smith" <smithj@...ethemallocs.com>, coley@...us.mitre.org,  "Bram Moolenaar" <Bram@...lenaar.net>,  "Charles E Campbell, Jr" <drchip@...pbellfamily.biz>
-Subject: Re: Re: More arbitrary code executions in Netrw version 125, Vim 7.2a.10
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/22/4
+Message-ID: <4835115C.4010400@freethemallocs.com>
+Date: Wed, 21 May 2008 22:23:24 -0800
+From: Jonathan Smith <smithj@...ethemallocs.com>
+To: oss-security@...ts.openwall.com
+CC: chris@...ry.beasts.org
+Subject: Re: vsftpd CVE-2007-5962 (Red Hat / Fedora specific)
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Thanks for CCing me.  Thomas's observations are right.
+Steven M. Christey wrote:
+| On Wed, 21 May 2008, Josh Bressers wrote:
+|
+|> The leak is CVE-2007-5962.  deny_hosts not working did not get a CVE id.
+|
+| Should it?  If an admin configures deny_hosts in some fashion that vsftpd
+| doesn't implement correctly, that might be worthy of a CVE.
 
-On Thu, Jul 10, 2008 at 5:55 PM, Tomas Hoger <thoger@...hat.com> wrote:
+I don't think rPath treated it as such when we originally added the
+patch, though. It would probably be worth adding it to our other branch
+and pushing it upstream as a security issue.
 
-> obvious to me why zip and tar tests are included in the test suite.
-> Maybe just to point out that those issues are still unfixed.
+So, yeah, I'd say it needs a CVE. Thanks.
 
-Indeed, I included all that had not been fixed in the test suite.
+	smithj
 
-> Moreover, if you diff zipplugin directories in vulnerablevim.tar.bz2
-> and vulnerablevim-netrw.tar.bz2, you will see this test did not change
-> at all between the two test suites.  So CVE-2008-3075 should already
-> be covered by previous CVE-2008-2712.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
 
-The zip exploit is the same.  It still has not been fixed as of Vim
-7.2a.19/zip.vim v19.
-
-> tarplugin test was updated since the first test suite to use different
-> payload.  I'm not really sure if it is the same issue or not, but the
-> new exploit is blocked by the previously proposed Jan's patch.  So it
-> may be the same issue as described in the first advisory.  Btw,
-
-There are two attack vectors, both fixed in the original patch of
-mine.  I only updated the tarplugin exploit to use the other vector.
-
-> CVE-2008-2712 description does not mention tar.vim issue.  It is
-> described in 3.4.2.3, but its test does not seem to be run when doing
-> make test for the top-most Makefile in the first test suite.
-
-That's correct, I omitted the test from the top-most Makefile by mistake.
-
-Hope that helps.
-Jan.
+iEYEARECAAYFAkg1EVwACgkQCG91qXPaRel/yQCgrCYbog7T8HMCP0AmpY/oMGWg
+kGwAnAlkIiFG7LkTuE4TxKaN+8rBv72p
+=vEXX
+-----END PGP SIGNATURE-----
