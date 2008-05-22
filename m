@@ -1,30 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/08/2
-Message-ID: <322492059.1468141223466552988.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 8 Oct 2008 07:49:13 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/22/8
+Message-ID: <4835AF00.90101@freethemallocs.com>
+Date: Thu, 22 May 2008 09:36:00 -0800
+From: Jonathan Smith <smithj@...ethemallocs.com>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: Re: Mozilla CVE duplicate
+Subject: Re: Root name server changes -> bind
 Content-Type: text/plain; charset=utf-8
 
-> 
-> > CVE-2008-4067 is a duplicate of CVE-2007-3073, both reference
-> > https://bugzilla.mozilla.org/show_bug.cgi?id=380994 and the
-> > reporter is identical.
-> 
-> This seems to be the case.  Josh Bressers, can you confirm?
-> CVE-2007-3073
-> is associated with comment #16 in bug 367428, but later comments for
-> bug
-> 367428 seem to suggest it's the same (or almost the same) as bug
-> 380994.
-> 
-> If these are dupes, then CVE-2008-4067 would be preferred due to usage
-> by
-> more authoritative sources, and more commonly referenced.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Argh, yeah they're the same.  Sorry about that.
+Florian Weimer wrote:
+| The party isn't untrusted (they're still involved in operating the B
+| root).  They're not a third party, either, they're the legitimate owner
+| of that address block.
 
--- 
-    JB
+Oh. I didn't understand that from the articles I've read.
+
+So, why are they running a DNS server on that IP?
+
+| ICANN should have arranged for a longer transition period, as it was
+| done in previous transitions (I think a few older address still respond
+| to queries).
+
+I think the transition period began in late 2007, but this is the first
+I've (and, I think, many others) heard about it.
+
+| There's no way to retire an IP address, especially if it is located in a
+| network prefix that is still in production (which was a driving force
+| behind most past root servers migrations).
+
+I was under the impression that ICANN "owned" or at least "was in charge
+of" the allocation of IPs for the root name servers. So why couldn't
+they just bar (via policy, not via technical means) whoever owns the
+rest of the prefix that IP is in from using it?
+
+Anyway, if the IP is in the hands of a trusted party, I'm much less
+concerned. That just wasn't the impression I had.
+
+	smithj
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEARECAAYFAkg1rwAACgkQCG91qXPaRek7fQCfRhsgegj2pKK2NRb8Bb+CVba5
+H3wAnRqQUF87txOTvxDRvGm5/9shYTKe
+=PqSd
+-----END PGP SIGNATURE-----
