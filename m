@@ -1,36 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/11/7
-Message-ID: <49195358.7030405@redhat.com>
-Date: Tue, 11 Nov 2008 17:41:44 +0800
-From: Eugene Teo <eteo@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/22/3
+Message-ID: <Pine.GSO.4.51.0805220159510.15003@faron.mitre.org>
+Date: Thu, 22 May 2008 02:01:05 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: Unix sockets kernel panic
+cc: Jonathan Smith <smithj@...ethemallocs.com>, chris@...ry.beasts.org
+Subject: Re: vsftpd CVE-2007-5962 (Red Hat / Fedora specific)
 Content-Type: text/plain; charset=utf-8
 
-Eugene Teo wrote:
-> We need a CVE name for this issue. This was reported in netdev today.
-> 
-> "The following code causes a kernel panic on Linux 2.6.26:
-> http://darkircop.org/unix.c
-> 
-> I haven't investigated the bug so I'm not sure what is causing it, and
-> don't know if it's exploitable.  The code passes unix sockets from one
-> process to another using unix sockets.  The bug probably has to do
-> with closing file descriptors."
-> 
-> http://marc.info/?l=linux-netdev&m=122593044330973&w=2
-> https://bugzilla.redhat.com/show_bug.cgi?id=470201
-> 
-> There isn't a fix yet. Dave is working on it.
 
-There's a fix now.
+On Wed, 21 May 2008, Josh Bressers wrote:
 
-Upstream commits: f8d570a, 3b53fbf, and 6209344.
+> The leak is CVE-2007-5962.  deny_hosts not working did not get a CVE id.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=470201#c10
-https://bugzilla.redhat.com/show_bug.cgi?id=470201#c14
-https://bugzilla.redhat.com/show_bug.cgi?id=470201#c9
-https://bugzilla.redhat.com/show_bug.cgi?id=470201#c13
+Should it?  If an admin configures deny_hosts in some fashion that vsftpd
+doesn't implement correctly, that might be worthy of a CVE.
 
-Thanks, Eugene
+- Steve
