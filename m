@@ -1,30 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/25/1
-Message-ID: <48B25AB3.3040000@redhat.com>
-Date: Mon, 25 Aug 2008 15:09:39 +0800
-From: Eugene Teo <eteo@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/22/1
+Message-ID: <Pine.GSO.4.51.0805220138070.15003@faron.mitre.org>
+Date: Thu, 22 May 2008 01:39:43 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-CC: coley@...re.org
-Subject: CVE request: kernel: sctp: fix potential panics in the SCTP-AUTH API
+Subject: Re: Root name server changes -> bind
 Content-Type: text/plain; charset=utf-8
 
-This was committed in upstream kernel recently.
 
-"[PATCH] sctp: fix potential panics in the SCTP-AUTH API.
+On Wed, 21 May 2008, Marcus Meissner wrote:
 
-All of the SCTP-AUTH socket options could cause a panic if the extension
-is disabled and the API is envoked.
+> Not sure if this warrants a CVE id.
 
-Additionally, there were some additional assumptions that certain
-pointers would always be valid which may not always be the case."
+Gut reaction here, but I would say that if a software package has
+hard-coded those IP addresses and doesn't check them e.g. through a
+reverse lookup, then the issue in that package would require a CVE.
 
-Upstream commit:
-5e739d1752aca4e8f3e794d431503bfca3162df4
+I have a feeling I could regret that statement :-/
 
-References:
-http://marc.info/?l=linux-netdev&m=121928747903176&w=2
-http://lkml.org/lkml/2008/8/23/49
-
-Thanks, Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
+- Steve
