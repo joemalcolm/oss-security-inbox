@@ -1,37 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/28/2
-Message-ID: <20080328000940.GD19773@ngolde.de>
-Date: Fri, 28 Mar 2008 01:09:40 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/22/6
+Message-ID: <87tzgqwupg.fsf@mid.deneb.enyo.de>
+Date: Thu, 22 May 2008 11:31:55 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: using oss-security references in CVE
+Subject: Re: Root name server changes -> bind
 Content-Type: text/plain; charset=utf-8
 
-Hi Vincent,
-* Vincent Danen <vdanen@...sec.ca> [2008-03-28 00:51]:
-> * [2008-03-28 00:09:46 +0100] Lubomir Kundrak wrote:
-> >On Thu, 2008-03-27 at 18:59 -0400, Steven M. Christey wrote:
-> >>In CVE, we try to provide "provenance" for every detail that makes its way
-> >>into the description.  Issues like rxvt and CenterIM have some details
-> >>that are only publicly documented in oss-security, and I would like to add
-> >>these as references.
-> >
-> >I agree. There shouldn't really be things like more public and less
-> >public places to share security-related information.
-> 
-> I think this list is pretty public, and is intentionally so.  There
-> should be no reason to hold back referring to oss-security messages as
-> references for CVE names or any other vuln DB... in fact, this may even
-> help the list to grow (which is ultimately what we want... within
-> reason, of course).
-> 
-> I see no problem with this.
+* Jonathan Smith:
 
-Just that it doesn't look like two single opinions: ACK :)
-Cheers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+> Why did ICANN allow the old IP address to be taken by an untrusted
+> party?
 
-Content of type "application/pgp-signature" skipped
+The party isn't untrusted (they're still involved in operating the B
+root).  They're not a third party, either, they're the legitimate owner
+of that address block.
+
+ICANN should have arranged for a longer transition period, as it was
+done in previous transitions (I think a few older address still respond
+to queries).
+
+> It would seem that IPs formerly used by root DNS servers should
+> be permanently retired to prevent just this sort of thing.
+
+There's no way to retire an IP address, especially if it is located in a
+network prefix that is still in production (which was a driving force
+behind most past root servers migrations).
