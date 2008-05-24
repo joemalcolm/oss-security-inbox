@@ -1,29 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/26/3
-Message-ID: <20080726195507.GP32057@genesis.frugalware.org>
-Date: Sat, 26 Jul 2008 21:55:07 +0200
-From: Miklos Vajna <vmiklos@...galware.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/24/3
+Message-ID: <20080524203745.GA14969@ngolde.de>
+Date: Sat, 24 May 2008 22:37:45 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: drupal issue in < 5.9
+Subject: CVE id request: libpam-pgsql
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Jul 26, 2008 at 09:27:33PM +0200, Nico Golde <oss-security+ml@...lde.de> wrote:
-> Hi Miklos,
-> * Miklos Vajna <vmiklos@...galware.org> [2008-07-26 21:13]:
-> > DRUPAL SA-2008-046
-> > http://drupal.org/node/286417
-> > 
-> > Contains a session fixation.
-> 
-> This is CVE-2008-3222.
+Hi,
+it was discovered that a programming error in libpam-pgsql 
+(value always being evaluated as true because of a missing 
+bracket) enables an attacker to get root access for example 
+by pressing ctrl-c after calling sudo.
 
-Isn't this different?
+This change was introduced somewhere between version 0.5.2 
+and 0.6.2 (maybe earlier).
 
-It refers to http://www.openwall.com/lists/oss-security/2008/07/10/3
-which is a bug fixed in 5.8.
+This is Debian bug http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=481970
 
-The issue I'm talking about is _not_ fixed in 5.8.
+Note: this only leads to direct root access if the 
+authentication using this pam module is configured as 
+sufficient.
 
-Thanks.
+Patch:
+
+Index: pam-pgsql-0.6.3/pam_pgsql.c
+===================================================================
+--- pam-pgsql-0.6.3.orig/pam_pgsql.c    2008-05-24 19:37:21.000000000 +0200
++++ pam-pgsql-0.6.3/pam_pgsql.c 2008-05-24 19:43:17.000000000 +0200
+@@ -583,7 +583,7 @@
+                if ((rc = pam_get_user(pamh, &user, NULL)) == PAM_SUCCESS) {
+                        if ((rc = get_module_options(argc, argv, &options)) == PAM_SUCCESS) {
+                                DBGLOG("attempting to authenticate: %s", user);
+-                               if ((rc = pam_get_pass(pamh, PAM_AUTHTOK, &password, PASSWORD_PROMPT, options->std_flags) == PAM_SUCCESS)) {
++                               if ((rc = pam_get_pass(pamh, PAM_AUTHTOK, &password, PASSWORD_PROMPT, options->std_flags)) == PAM_SUCCESS) {
+                                        if ((rc = auth_verify_password(pam_get_service(pamh), user, password, rhost, options)) == PAM_SUCCESS) {
+                                                if ((password == 0 || *password == 0) && (flags & PAM_DISALLOW_NULL_AUTHTOK)) {
+                                                        rc = PAM_AUTH_ERR; 
+
+Can I get a CVE id for this one please?
+
+Cheers
+Nico
+
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
 Content of type "application/pgp-signature" skipped
