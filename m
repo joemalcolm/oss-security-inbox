@@ -1,31 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/20/2
-Message-ID: <48838E2A.40409@freethemallocs.com>
-Date: Sun, 20 Jul 2008 11:12:42 -0800
-From: Jonathan Smith <smithj@...ethemallocs.com>
-To: Tomas Hoger <thoger@...hat.com>
-CC: oss-security@...ts.openwall.com, coley@...us.mitre.org,  Bram Moolenaar <Bram@...lenaar.net>, "Charles E Campbell, Jr" <drchip@...pbellfamily.biz>,  Jan Minar <rdancer@...ncer.org>
-Subject: Re: Re: More arbitrary code executions in Netrw version 125, Vim 7.2a.10
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/24/2
+Message-ID: <20080524113409.GB20762@ngolde.de>
+Date: Sat, 24 May 2008 13:34:09 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2008-2292 net-snmp __snprint_value
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
+* Nico Golde <oss-security+ml@...lde.de> [2008-05-24 12:18]:
+> the CVE id states that PERL/SNMP.xs is vulnerable to
+> a buffer overflow "via a large OCTETSTRING in an attribute 
+> value pair (AVP)."
+> 
+> Unfortunately the same vulnerability applies to the python 
+> module as well. See python/netsnmp/client_intf.c
+> 
+> Please update your patches and the CVE id.
 
-Sorry it took so long to get back; I've been rather busy lately.
+http://people.debian.org/~nion/nmu-diff/net-snmp-5.4.1~dfsg-1_5.4.1~dfsg-7.1.patch
+my patch.
 
-Tomas Hoger wrote:
-> Jonathan, did new netrw tests work for you?  With which vim version?
-> They all failed for me with vim 7.1.245 / netrw 109.
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-No vulnerability was found for me for vim 7.1.213 with netrw 109, as
-compiled for rPath Linux.
-
-	smithj
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEAREIAAYFAkiDjikACgkQCG91qXPaRemfSACfXqVyBkM2UIO9mTauAYHpcI2q
-/V8AoKG33DoPJOYOmeBwt4Uu5/MwJTjk
-=CQ9K
------END PGP SIGNATURE-----
+Content of type "application/pgp-signature" skipped
