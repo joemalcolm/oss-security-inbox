@@ -1,42 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/10/6
-Message-ID: <28fa9c5e0811100734xe094309m789d9c9225dcbab5@mail.gmail.com>
-Date: Mon, 10 Nov 2008 23:34:53 +0800
-From: "Eugene Teo" <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/24/1
+Message-ID: <20080524101630.GA20762@ngolde.de>
+Date: Sat, 24 May 2008 12:16:30 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, "Greg KH" <greg@...ah.com>
-Subject: Re: CVE requests: kernel: hfsplus-related bugs
+Cc: coley@...re.org
+Subject: CVE-2008-2292 net-snmp __snprint_value
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
+Hi,
+the CVE id states that PERL/SNMP.xs is vulnerable to
+a buffer overflow "via a large OCTETSTRING in an attribute 
+value pair (AVP)."
 
-On Mon, Nov 10, 2008 at 10:47 PM, Steven M. Christey
-<coley@...us.mitre.org> wrote:
->
-> On Mon, 10 Nov 2008, Eugene Teo wrote:
->
->> > 1) hfsplus: fix Buffer overflow with a corrupted image
->> > Upstream commit: efc7ffcb4237f8cb9938909041c4ed38f6e1bf40
->> ...
->> There's an equivalent bug for hfs. The upstream commit is d38b7aa. We
->> will need a CVE name for this too.
->
-> Use CVE-2008-5025
->
-> Is the bug exactly equivalent?  Could you be more specific about existing
-> references?  "d38b7aa" doesn't look like a typical commit ID so the CVE is
-> currently marked as reserved.
+Unfortunately the same vulnerability applies to the python 
+module as well. See python/netsnmp/client_intf.c
 
-Both patches validate the catalog name length.
+Please update your patches and the CVE id.
 
-The following is the description of the hfs bug:
-"Fix a stack corruption caused by a corrupted hfs filesystem.  If the
-catalog name length is corrupted the memcpy overwrites the catalog
-btree structure.  Since the field is limited to HFS_NAMELEN bytes in
-the structure and the file format, we throw an error if it is too
-long."
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-It is possible to use the 7-hexdigit instead of the usual 40-hexdigit
-SHA1 hash to refer to the commit ID.
-
-Thanks, Eugene
+Content of type "application/pgp-signature" skipped
