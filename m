@@ -1,25 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/21/4
-Message-ID: <Pine.GSO.4.51.0811202026300.20524@faron.mitre.org>
-Date: Thu, 20 Nov 2008 20:27:25 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/25/4
+Message-Id: <200805252355.04352.steffen.joeris@skolelinux.de>
+Date: Sun, 25 May 2008 23:54:58 +1000
+From: Steffen Joeris <steffen.joeris@...lelinux.de>
 To: oss-security@...ts.openwall.com
-cc: toots@...tageeks.org
-Subject: Re: CVE id request: another geshi issue (was: GeSHi: Clarification about the recent security (non-)issues (SA32559))
+Subject: Re: CVE id request: xscreensaver
 Content-Type: text/plain; charset=utf-8
 
+Hi
 
-======================================================
-Name: CVE-2008-5185
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5185
-Reference: MLIST:[oss-security] 20081120 CVE id request: another geshi issue (was: [oss-security] GeSHi: Clarification about the recent security (non-)issues (SA32559))
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/20/4
-Reference: CONFIRM:http://geshi.svn.sourceforge.net/viewvc/geshi/trunk/geshi-1.0.X/src/geshi.php?r1=1321&r2=1322&view=patch
+On Sun, 25 May 2008 11:41:53 pm Tomas Hoger wrote:
+> On Sun, 25 May 2008 18:29:13 +1000 Steffen Joeris
+>
+> <steffen.joeris@...lelinux.de> wrote:
+> > Pierre Habouzit discovered that resizing with the xrandr tool can
+> > crash xscreensaver.
+> >
+> > Debian Bug report:
+> > http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=482385
+> >
+> > The tested version of xscreensaver is 5.05-1, but at the moment there
+> > is no reason to assume that the bug did not exist in previous
+> > versions.
+>
+> Is there any known attack vector crossing trust boundary?  Usage of
+> xrandr should be fully under the control of the user running
+> xscreensaver.
+None that I know about. I assume that on a terminalserver it should not 
+matter, since it would only crash the user's own xscreensaver and not others.
 
-The highlighting functionality in geshi.php in GeSHi before 1.0.8 allows
-remote attackers to cause a denial of service (infinite loop) via an XML
-sequence containing an opening delimiter without a closing delimiter, as
-demonstrated using "<".
+However, users might not be aware of this and just try to lock their screens 
+and leave. IMHO it could be treated as a low security issue.
 
+Cheers
+Steffen
 
+Download attachment "signature.asc " of type "application/pgp-signature" (190 bytes)
