@@ -1,26 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/16/8
-Message-ID: <20080516215854.GB3801@openwall.com>
-Date: Sat, 17 May 2008 01:58:54 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/25/1
+Message-Id: <200805251829.17276.steffen.joeris@skolelinux.de>
+Date: Sun, 25 May 2008 18:29:13 +1000
+From: Steffen Joeris <steffen.joeris@...lelinux.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSH key blacklisting
+Subject: CVE id request: xscreensaver
 Content-Type: text/plain; charset=utf-8
 
-On Fri, May 16, 2008 at 05:10:43PM -0300, Gustavo De Nardin (spuk) wrote:
-> If this is going to be accepted as a more general solution, it'd be good to
-> allow also for local, admin-maintened, blacklists, not just upstream
-> maintened (and automatically updated).
+Hi
 
-I agree that this might be desirable functionality, but unfortunately it
-has a price - we'd have to maintain two file parsers and lookup
-algorithms (perhaps binary and indexed, and text and sequential) or an
-additional program to update the binary file.  (If we only create the
-binary file ourselves, then that program can be a quick hack - maybe
-even a Perl script.)
+Pierre Habouzit discovered that resizing with the xrandr tool can crash 
+xscreensaver.
 
-Has there been any demand for such blacklists, prior to the Debian issue
-coming up?  If not, then this additional feature is probably not worth
-implementing right away.
+Debian Bug report:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=482385
 
-Alexander
+The tested version of xscreensaver is 5.05-1, but at the moment there is no 
+reason to assume that the bug did not exist in previous versions.
+
+Could I please have a CVE id for this issue?
+
+Cheers
+Steffen
+
+Download attachment "signature.asc " of type "application/pgp-signature" (190 bytes)
