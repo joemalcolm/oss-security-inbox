@@ -1,69 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/12/1
-Message-ID: <Pine.GSO.4.51.0804121515340.20756@faron.mitre.org>
-Date: Sat, 12 Apr 2008 15:15:59 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/25/2
+Message-ID: <20080525152531.4ddd05dc@redhat.com>
+Date: Sun, 25 May 2008 15:25:31 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Opera <9.27 Multiple issues
+Cc: Mamoru Tasaka <mtasaka@....s.u-tokyo.ac.jp>, coley@...re.org
+Subject: CVE id request: cbrpager
 Content-Type: text/plain; charset=utf-8
 
+Hi all!
 
-On Fri, 11 Apr 2008, Robert Buchholz wrote:
+Mamoru Tasaka, cbrpager package maintainer in Fedora, discovered, that
+cbrpager is affected by command execution flaw via malicious file
+names in a similar way as comix was affected (as discussed on this list
+previously - http://www.openwall.com/lists/oss-security/2008/03/31/1 ).
 
->     * Improved keyboard handling of password inputs, as reported by
-> Trystan S.
->                 --------------
-> I have no idea what the third vulnerability actually means.
+Mamoru's patch was accepted in the new upstream version - 0.9.17.
 
-Me neither...
+Further details and links in:
+https://bugzilla.redhat.com/show_bug.cgi?id=448285
 
-
-======================================================
-Name: CVE-2008-1761
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1761
-Reference: CONFIRM:http://www.opera.com/support/search/view/881/
-Reference: BID:28585
-Reference: URL:http://www.securityfocus.com/bid/28585
-Reference: FRSIRT:ADV-2008-1084
-Reference: URL:http://www.frsirt.com/english/advisories/2008/1084/references
-Reference: SECUNIA:29662
-Reference: URL:http://secunia.com/advisories/29662
-Reference: XF:opera-newsfeed-code-execution(41625)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/41625
-
-Opera before 9.27 allows remote attackers to cause a denial of service
-(crash) and possibly execute arbitrary code via a crafted newsfeed
-source, which triggers an invalid memory access.
-
-
-======================================================
-Name: CVE-2008-1762
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1762
-Reference: CONFIRM:http://www.opera.com/support/search/view/882/
-Reference: BID:28585
-Reference: URL:http://www.securityfocus.com/bid/28585
-Reference: FRSIRT:ADV-2008-1084
-Reference: URL:http://www.frsirt.com/english/advisories/2008/1084/references
-Reference: SECUNIA:29662
-Reference: URL:http://secunia.com/advisories/29662
-Reference: XF:opera-htmlcanvas-code-execution(41627)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/41627
-
-Opera before 9.27 allows remote attackers to cause a denial of service
-(crash) and possibly execute arbitrary code via a crafted scaled image
-pattern in an HTML CANVAS element, which triggers a memory corruption.
-
-
-======================================================
-Name: CVE-2008-1764
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1764
-Reference: CONFIRM:http://www.opera.com/docs/changelogs/windows/927/
-
-Unspecified vulnerability in Opera for Windows before 9.27 has unknown
-impact and attack vectors related to "keyboard handling of password
-inputs."
-
-
+-- 
+Tomas Hoger / Red Hat Security Response Team
