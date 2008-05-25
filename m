@@ -1,40 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/23/5
-Message-ID: <Pine.GSO.4.51.0806231440080.1760@faron.mitre.org>
-Date: Mon, 23 Jun 2008 14:41:31 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Nico Golde <oss-security+ml@...lde.de>
-cc: oss-security@...ts.openwall.com, vendor-sec@....de, "Steven M. Christey" <coley@...re.org>
-Subject: Re: New Xen ioemu: PVFB backend issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/25/6
+Message-ID: <20080525170008.GA11957@pcpool00.mathematik.uni-freiburg.de>
+Date: Sun, 25 May 2008 19:00:08 +0200
+From: "Bernhard R. Link" <brlink@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE id request: xscreensaver
 Content-Type: text/plain; charset=utf-8
 
+* Tomas Hoger <thoger@...hat.com> [080525 16:03]:
+> Is there any known attack vector crossing trust boundary?  Usage of
+> xrandr should be fully under the control of the user running
+> xscreensaver.
 
-On Thu, 19 Jun 2008, Nico Golde wrote:
+Some vectors might be thinkable due to increasing automation:
+Perhaps some desktop environments realize a external monitor vanishing
+and rearrange the layout (which is quite nice to avoid programs being
+in invisible parts of the layout).
+If that is the case a local attacker might use this weakness gain access
+to the account without getting noticed that easily as when opening the
+case of the computer.
 
-> Can you take care about the remaining steps to get this on
-> the mitre site or Steve could you update this? Quite some
-> time passed since this was assigned :)
+An already possible attack vector, though needing very unlikely
+requirements: An user issued an ssh -X localhost to an more priviliged
+account in an xterm and started an xscreenserver there, because he
+suspects someone else might know the password and login with the
+unprivileged account he is logged in. Then this sense of protection
+would be false due to this problem. The unlikely part is that this
+would only work if the computer was not running before since the
+possible compromize of the password and only connected to the net
+after entering the password into ssh. So also in that case it could
+only widen a gap that is hardly totally closed anyway.
 
-There was enough in the initial post, I just missed it the first time
-around.
-
-Any idea on affected Xen versions?
-
-- Steve
-
-======================================================
-Name: CVE-2008-1952
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1952
-Reference: MLIST:[Xen-devel] 20080521 [PATCH] ioemu: Fix PVFB backend to limit frame buffer size
-Reference: URL:http://lists.xensource.com/archives/html/xen-devel/2008-05/msg00421.html
-Reference: MLIST:[oss-security] 20080521 New Xen ioemu: PVFB backend issue
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/05/21/9
-Reference: CONFIRM:http://xenbits.xensource.com/xen-unstable.hg?rev/9044705960cb30cec385bdca7305bcf7db096721
-
-The backend for XenSource Xen Para Virtualized Frame Buffer (PVFB) in
-Xen ioemu does not properly restrict the frame buffer size, which
-allows attackers to cause a denial of service (crash) by mapping an
-arbitrary amoount of guest memory.
-
-
+Hochachtungsvoll,
+	Bernhard R. Link
