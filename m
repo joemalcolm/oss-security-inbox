@@ -1,35 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/04/13
-Message-ID: <20080804185314.GA13412@ngolde.de>
-Date: Mon, 4 Aug 2008 20:53:14 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/25/5
+Message-ID: <20080525145409.GA308@ngolde.de>
+Date: Sun, 25 May 2008 16:54:09 +0200
 From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: openttd
+Subject: Re: CVE id request: xscreensaver
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-Can I get a CVE id for the following security issues fixed 
-in openttd 6.2?
+Hi Tomas,
+* Tomas Hoger <thoger@...hat.com> [2008-05-25 15:52]:
+> On Sun, 25 May 2008 18:29:13 +1000 Steffen Joeris
+> <steffen.joeris@...lelinux.de> wrote:
+> > Pierre Habouzit discovered that resizing with the xrandr tool can
+> > crash xscreensaver.
+> > 
+> > Debian Bug report:
+> > http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=482385
+> > 
+> > The tested version of xscreensaver is 5.05-1, but at the moment there
+> > is no reason to assume that the bug did not exist in previous
+> > versions.
+> 
+> Is there any known attack vector crossing trust boundary?  Usage of
+> xrandr should be fully under the control of the user running
+> xscreensaver.
 
-"OpenTTD servers of version 0.6.1 and below are susceptible to a remotely
-exploitable buffer overflow when the server is filled with companies and
-clients with names that are (near) the maximum allowed length for names.
-In the worst case OpenTTD will write the following (mostly remotely
-changable bytes) into 1460 bytes of malloc-ed memory:
-up to 11 times (amount of players) 118 bytes
-up to 8 times (amount of companies) 124 bytes
-and 7 "header" bytes
-Resulting in up to 2297 bytes being written in 1460 bytes of malloc-ed
-memory. This makes it possible to remotely crash the game or change the
-gamestate into an unrecoverable state.  "
-
-This is Debian bug #493714.
-
-I didn't yet have the time to check the diff between the versions.
+I don't see any, looks more like an normal application bug to me.
 
 Kind regards
 Nico
-
 -- 
 Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
 For security reasons, all text in this mail is double-rot13 encrypted.
