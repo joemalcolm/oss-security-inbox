@@ -1,32 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/11/1
-Message-Id: <200808111906.10893.steffen.joeris@skolelinux.de>
-Date: Mon, 11 Aug 2008 19:06:10 +1000
-From: Steffen Joeris <steffen.joeris@...lelinux.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/26/1
+Message-Id: <200805261049.30817.rbu@gentoo.org>
+Date: Mon, 26 May 2008 10:49:28 +0200
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE id requests: ruby
+Cc: Mamoru Tasaka <mtasaka@....s.u-tokyo.ac.jp>
+Subject: Re: CVE id request: cbrpager
 Content-Type: text/plain; charset=utf-8
 
-Hi
+On Sunday 25 May 2008, Tomas Hoger wrote:
+> Mamoru's patch was accepted in the new upstream version - 0.9.17.
+>
+> Further details and links in:
+> https://bugzilla.redhat.com/show_bug.cgi?id=448285
 
-It seems that there was another ruby release, which addresses some security 
-fixes.
-I guess the new ones are:
+As noted in your Bugzilla, there's an update to the patch:
+http://cvs.fedoraproject.org/viewcvs/rpms/cbrpager/devel/cbrpager-0.9.17-zip-filen-escape.patch?rev=1.1
 
-* Several vulnerabilities in safe level
-* DoS vulnerability in WEBrick
-* Lack of taintness check in dl
 
-I didn't check their exploitability, but it might be good to have CVE ids for 
-them anyway.
+Robert
 
-Upstream page:
-http://www.ruby-lang.org/en/news/2008/08/08/multiple-vulnerabilities-in-ruby/
-
-Debian Bug report:
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=494401
-
-Cheers
-Steffen
-
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
