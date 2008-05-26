@@ -1,39 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/20/3
-Message-ID: <Pine.GSO.4.51.0808201209520.28950@faron.mitre.org>
-Date: Wed, 20 Aug 2008 12:16:41 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/26/2
+Message-ID: <20080526154449.GA13776@ngolde.de>
+Date: Mon, 26 May 2008 17:44:49 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: Re: wordpress 2.6.1
+Subject: update on CVE-2008-2424
 Content-Type: text/plain; charset=utf-8
 
+Hi,
+the CVE id description states this is fixed in 5.6.0.
+This is wrong, it's already fixed in 5.5.1, see:
+http://ftp.icdevgroup.org/interchange/5.5/WHATSNEW or the 
+diff between 5.5.3 and 5.6.0.
 
-On Tue, 19 Aug 2008, Hanno [utf-8] Böck wrote:
+Cheers
+Nico
 
-> Just had a look at the wp 2.6.1 changelog.
->
-> Two security relevant bugs are listed as fixed.
->
-> http://trac.wordpress.org/ticket/7359
-> I'd consider this worth a CVE. It's good that this ssl stuff got some
-> attention lately (I think this is a similar issue to the recently reported
-> cookie / secureflag issues, as it can undermine the sniffing-safety of
-> ssl-enabled pages).
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-It's hard to read into this one since I don't know what they mean by
-"SSL-aware" here, or what apply_filters() is intended to do.
-
-Use CVE-2008-3747, to be filled in later.
-
-> http://trac.wordpress.org/ticket/6871
->
-> AFAICS this enables one to hide malicious plugins but is no real vuln. Not
-> sure if it deserves a CVE.
-
-Presumably, only the admin would be able to install plugins.  So plugin
-"hiding" isn't feasible.  The admin knows which plugins were installed,
-unless there's some other exploit that installs the plugins, in which case
-there's a different vuln.  So I don't think this deserves a CVE either.
-
-- Steve
+Content of type "application/pgp-signature" skipped
