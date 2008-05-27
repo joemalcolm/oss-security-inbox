@@ -1,24 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/21/2
-Message-ID: <Pine.LNX.4.64.0805210249020.6145@forced.attrition.org>
-Date: Wed, 21 May 2008 02:49:44 +0000 (UTC)
-From: security curmudgeon <jericho@...rition.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: mtr
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/27/1
+Message-ID: <3318.1211896227@devserv.devel.redhat.com>
+Date: Tue, 27 May 2008 09:50:27 -0400
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com, full-disclosure@...ts.grok.org.uk, bugtraq@...urityfocus.com
+Subject: Security, Open Source Style
 Content-Type: text/plain; charset=utf-8
 
+Today we are excited to announce another community initiative--the Open
+Source Software Security community (oss-security). This project is an
+ongoing effort to manage security information in Open Source software by
+building on the collaborative foundation of the open source model.
 
-: On Wednesday, 21. May 2008, Jonathan Smith wrote:
-: > http://seclists.org/fulldisclosure/2008/May/0488.html has all the
-: > details.
-: >
-: > https://issues.rpath.com/browse/RPL-2558 is the rpath issue.
-: 
-: Secunia suggests [1] that 0.73 contains a fix. Did you find any 
-: indication to that? The advisory mentions 0.72 as vulnerable, but it is 
-: also dated February 28. The last mtr was released on April 7, but it 
-: seems to me all changes are unrelated.
+The purpose of oss-security is to encourage public discussion of security
+flaws, concepts, and practices in the open source community.  We don't want
+to simply be an information clearinghouse, or to replace any of the current
+security lists and groups.  The goal is to fill an existing vacuum by
+encouraging active participation of those interested in the ideas and
+unique challenges in securing Open Source software.  This includes
+activities such as flaw discovery, understanding, reporting, and overall
+best practices.
 
-I did a quick once over on the site and did not see anything in the news, 
-bug system or changelog (dated 2004 i think) in the archive.
+The oss-security community was initially founded by individuals from
+Foresight Linux, Mandriva, Openwall, and Red Hat and has since grown to
+include contributions from many other projects and individuals.  The
+computing resources are currently graciously donated by the Openwall
+Project.
 
+If you have an interest in the Open Source security space, you are
+encouraged to participate in the oss-security community by adding content
+to the wiki, contributing to mailing list discussions, or joining us on
+IRC.
+
+More information can be found on the group's wiki page here:
+http://oss-security.openwall.org
+
+Thank You.
+
+-- 
+    JB
