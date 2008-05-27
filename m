@@ -1,25 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/27/3
-Message-ID: <Pine.GSO.4.51.0803262203490.22958@faron.mitre.org>
-Date: Wed, 26 Mar 2008 22:05:40 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/27/3
+Message-ID: <20080527154435.GA16462@openwall.com>
+Date: Tue, 27 May 2008 19:44:35 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-cc: Jonathan Smith <smithj@...ethemallocs.com>
-Subject: Re: firefox 2.0.0.13
+Subject: Re: OpenSSH key blacklisting
 Content-Type: text/plain; charset=utf-8
 
+On Sat, May 17, 2008 at 04:46:30PM +0200, Robert Buchholz wrote:
+> Do you have a patch to propose, implementing your idea?
 
-On Tue, 25 Mar 2008, Josh Bressers wrote:
+Dmitry V. Levin and I have completed design of the encoding scheme, and
+Dmitry implemented it.  Now we have:
 
-> The advisories should be posted soon.  It is a security update comparable
-> to past ones.
+blacklist-encode.c - the encoder program;
+blacklist-check.c - the "checker" program, used for testing only;
+openssh-3.6.1p2-owl-blacklist.diff - the patch to sshd.
 
-Josh,
+The patch is against an older version that we still have in Owl (with
+lots of other patches), but it is trivial to forward-port.  In fact, I
+expect that Dmitry will port it to the newer version in ALT Linux's
+distributions very soon (if not already).  Dmitry - please announce your
+forward-port in here when you have it.
 
-Any idea on what Mozilla means by using CVE-2008-1240 in MFSA 2008-18?
-They already list CVE-2008-1195, which is associated with the Sun
-advisory, and that seems like the only issue they're really trying to
-address.
+Dmitry has done fairly extensive testing, but we would not mind others
+in the community doing more tests and reporting back in here.
 
-Thanks,
-Steve
+We also have openssh-blacklist-0.3-1.bin.bz2, which is used as a
+"source" in our OpenSSH package.  It was generated from
+ftp://ftp.debian.org/debian/pool/main/o/openssh-blacklist/openssh-blacklist_0.3.tar.gz
+with:
+
+	cat [DR]SA-{1024,2048}.[bl]e{32,64} | ./blacklist-encode 6 > openssh-blacklist-0.3-1.bin
+	bzip2 !$
+
+That is, it contains 48-bit partial fingerprints for 1024-bit and
+2048-bit RSA and 1024-bit DSA keys for PID range 1 to 32767 (a total of
+almost 300k keys).  The installed file size is just 1.3 MB, which
+corresponds to less than 4.5 bytes per fingerprint, and the .bz2 (and
+.rpm) is just 1.2 MB.  Lookups are very quick, and only three small
+portions of the file are read per lookup, for a total of under 100
+bytes of data to read (as far as sshd is concerned).
+
+Neither the code nor the file format is specific to 48-bit partial
+fingerprints; it is possible to use larger ones by supplying something
+other than "6" (the size in bytes) on blacklist-encode's command-line.
+There is a safety check against even smaller values in
+blacklist-encode.c's main(), although if you really know what you're
+doing, you can go for 40-bit as well, bringing file size for the same
+keys to under 1 MB.
+
+Our latest source code may be found here:
+
+	http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/openssh/
+
+(along with lots of other patches to OpenSSH).
+
+The pre-encoded blacklist file may be found here:
+
+	ftp://ftp.ru.openwall.com/pub/Owl/pool/sources/openssh/
+
+(and on other mirrors).
+
+I've attached current revisions of the source files and patch mentioned
+above.  This is to encourage community review and comments, and to
+enable easy quoting of relevant context (please do not overquote).
+
+Please note that this effort was/is supported by CivicActions.  It will
+enable us to receive funding for and get involved in more community
+activities in the future if you give due credit to both Openwall and
+CivicActions (especially with website links) when you reuse this stuff.
+
+Thanks in advance for any feedback.
+
+Alexander
+
+View attachment "blacklist-encode.c" of type "text/plain" (6532 bytes)
+
+View attachment "blacklist-check.c" of type "text/plain" (5902 bytes)
+
+View attachment "openssh-3.6.1p2-owl-blacklist.diff" of type "text/plain" (18092 bytes)
