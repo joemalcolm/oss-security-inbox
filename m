@@ -1,28 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/16/4
-Message-ID: <20080716113614.GB11937@ngolde.de>
-Date: Wed, 16 Jul 2008 13:36:14 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/27/2
+Message-ID: <4064.1211896846@devserv.devel.redhat.com>
+Date: Tue, 27 May 2008 10:00:46 -0400
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: libavformat
+Subject: Re: Security, Open Source Style
 Content-Type: text/plain; charset=utf-8
 
-Hi Steffen,
-* Steffen Joeris <steffen.joeris@...lelinux.de> [2008-07-09 17:02]:
-[...] 
-> Upstream patch:
-> http://svn.mplayerhq.hu/ffmpeg/trunk/libavformat/psxstr.c?r1=13993&r2=13992&pathrev=13993
+On 27 May 2008, Josh Bressers wrote:
+> Today we are excited to announce another community initiative--the Open
+> Source Software Security community (oss-security). This project is an
+> ongoing effort to manage security information in Open Source software by
+> building on the collaborative foundation of the open source model.
 > 
-> Debian bugreport:
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=489965
-> 
-> Could I get a CVE id for this?
 
-Seems to be CVE-2008-3162.
-Cheers
-Nico
+For those of you playing along at home, the Red Hat blog entry about this
+is here:
+http://www.press.redhat.com/2008/05/27/security-open-source-style/
+
+I added a note on my blog here:
+http://www.bress.net/blog/archives/115-Announcing-oss-security.html
+
+That will get picked up by the Fedora blog aggregator, which will help to
+spread the word.
+
+Thanks.
+
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+    JB
