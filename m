@@ -1,35 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/07/11
-Message-ID: <20080407190036.GA2514@openwall.com>
-Date: Mon, 7 Apr 2008 23:00:36 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/27/4
+Message-ID: <20080527155903.GA7699@wo.int.altlinux.org>
+Date: Tue, 27 May 2008 19:59:03 +0400
+From: "Dmitry V. Levin" <ldv@...linux.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: gcc 4.2 optimizations and integer overflow checks
+Subject: Re: OpenSSH key blacklisting
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 07, 2008 at 06:39:33PM +0200, Nico Golde wrote:
-> * Steven M. Christey <coley@...us.mitre.org> [2008-04-07 18:24]:
-> > While an unusual bug, we decided to assign a CVE for it.
-...
-> > URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1685
-> > Reference: CERT-VN:VU#162289
-> > Reference: URL:http://www.kb.cert.org/vuls/id/162289
-> [...]
-> Please add http://gcc.gnu.org/bugzilla/show_bug.cgi?id=26763
-> to the references.
+On Tue, May 27, 2008 at 07:44:35PM +0400, Solar Designer wrote:
+> On Sat, May 17, 2008 at 04:46:30PM +0200, Robert Buchholz wrote:
+> > Do you have a patch to propose, implementing your idea?
+> 
+> Dmitry V. Levin and I have completed design of the encoding scheme, and
+> Dmitry implemented it.  Now we have:
+> 
+> blacklist-encode.c - the encoder program;
+> blacklist-check.c - the "checker" program, used for testing only;
+> openssh-3.6.1p2-owl-blacklist.diff - the patch to sshd.
+> 
+> The patch is against an older version that we still have in Owl (with
+> lots of other patches), but it is trivial to forward-port.  In fact, I
+> expect that Dmitry will port it to the newer version in ALT Linux's
+> distributions very soon (if not already).  Dmitry - please announce your
+> forward-port in here when you have it.
 
-FWIW, there are also actual gcc bugs that cause miscompiles - and they
-may potentially result in security vulnerabilities - yet I am not sure
-if "proactively" treating the gcc bugs themselves as security issues is
-appropriate.  This is interesting - here we have a gcc non-bug that
-deserves a CERT Vulnerability Note and a CVE number (which I agree
-with), yet actual bugs might not deserve such treatment.
+These changes for ALT Linux's openssh package can be found at
+http://git.altlinux.org/people/ldv/packages/?p=openssh.git
+It should apply to vanilla openssh-5.0p1 with trivial modifications to
+auth2-pubkey.c and servconf.c hunks.
 
-Here's an example of an actual bug -
-http://gcc.gnu.org/bugzilla/show_bug.cgi?id=26587 - this one caused my
-Blowfish implementation to be miscompiled, possibly making the cipher
-weaker (in case the misbehavior went unnoticed).  By the way, I was
-surprised by how quickly this one was confirmed (16 minutes) and fixed
-(less than a day).
 
-Alexander
+-- 
+ldv
+
+Content of type "application/pgp-signature" skipped
