@@ -1,69 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/24/3
-Message-ID: <48613EE0.6040100@freethemallocs.com>
-Date: Tue, 24 Jun 2008 10:37:20 -0800
-From: Jonathan Smith <smithj@...ethemallocs.com>
-To: Drew Yao <ayao@...le.com>
-CC: Vendor-Sec Distribution Vendors <vendor-sec@....de>,  oss-security@...ts.openwall.com
-Subject: ruby regression (was: Re: [vendor-sec] Ruby memory corruption bugs in array and string handling)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/28/4
+Message-ID: <483D6F9B.7070307@hoyletech.com>
+Date: Wed, 28 May 2008 10:43:39 -0400
+From: Nathanael Hoyle <nhoyle@...letech.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: OpenSSH key blacklisting
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-Since this is public now, I'm CCing oss-security (and trimming the CC
-list of people known to be on that list).
-
-My comments are inline...
-
-Drew Yao wrote:
-> Also in case anyone was wondering about the comments on
-> http://www.matasano.com/log/1070/updates-on-drew-yaos-terrible-ruby-vulnerabilities/
+Tim Brown wrote:
+> All,
 > 
-> the ruby version that was released to fix these introduced a regression.
+> Maybe I've missed something, in which case, shoot me down, but why unlike 
+> other services that make use of public key cryptography, does OpenSSH not 
+> have use a model which supports proper authorisation and revocation 
+> mechanisms?  Would this not be an ideal opportunity to implement this?  
+> Whilst I think there was a reasonable case for such features prior to the 
+> Debian OpenSSL vulnerability being identified, I would argue that this issue 
+> highlights the case.  Comercial SSH already has such functionality - can 
+> anyone offer a view on how [well] it works?
 > 
-> ruby -ve ’str = “A”*(2**16) ; loop{ str << str ; puts str.size }’
+> Tim
 
-The above command does crash for me using ruby 1.8.6p230 on rPath Linux
-2 or Foresight Linux 2. However, the test suite ("make test" in the
-build dir) passes. It was my understanding that the test suite should
-fail, given my reading of the forum thread linked to by the blog post
-Drew mentioned above: http://www.ruby-forum.com/topic/157034
+My first thought here has to do with the issues involved in key
+management.  I'm not sure that a certifying/key-issuing central ($$$)
+authority with the ability to do revocations is the right model for most
+OSS users.  Think SSL certificates and Verisign... I believe many OSS
+projects would not wish to incur this expense.  Then you have
+self-signed certificates (and/or self-generated key pairs) and
+PGP/GPG-style web of trust things... all quite complicated and somewhat
+questionable.
 
-> causes a crash with 1.8.6p231 and 1.8.7p22.
+Obviously, there has to be a way to invalidate a key.  Doing it in a
+non-standardized way in the common implementation (openssh) isn't ideal.
+  Using a 16-bit seed to generate a much longer key (the debian PID
+usage) is a great example of what happens when you try to
+automate/simplify certain things for the users (practically all
+distributions used to ask you to press letters on the keyboard and move
+the mouse to create an entropy pool...) in a way that invalidates the
+premise of the security model (a highly random seed value).
 
-Where did you get 1.8.6p231? The latest I see is 1.8.6p230, which,
-according to upstream's advisory [1], fixes the security issues.
+The specific case is somewhat unusual, because it is not an instance
+where a single host/site needed to revoke a previously valid key because
+of compromise (although that case is not properly addressed, currently),
+but one where many hosts, including those to which one has never before
+connected, might have keys which fall within the predictable space, and
+therefore be effectively compromised.
 
-> That crash is fixed by this patch
-> http://svn.ruby-lang.org/cgi-bin/viewvc.cgi/branches/ruby_1_8/string.c?r1=17530&r2=17529&pathrev=17530
+It is interesting to note that a typical 'web-of-trust' implementation
+would not properly handle this type of situation in a reliable manner,
+highlighting the need for a central key authority.  The question then
+becomes, who in the OSS community would be considered a universally
+trusted entity to perform key registration and revocation for SSH key
+pairs, and how is such an entity funded?  Also, how does on resolve the
+apparent privacy concerns over querying such a central repository with a
+ public key signature to check for revocation prior to usage?  For my
+own purposes, I would not want to pass the key in question along...
+which means that perhaps an rsync-style source which could be
+synchronized to a local revoked key list is the proper implementation,
+avoiding disclosing which keys you were specifically interested in to
+the central key authority.
 
-Applying that patch, the segfault does go away. I get another
-(presumably correct) error message:
-- -e:1:in `<<': string sizes too big (ArgumentError)
-        from -e:1
-        from -e:1:in `loop'
-        from -e:1
+It's definitely a question worth pursuing, but I don't think it will be
+particularly trivial to solve across the community.
 
-
-> This issue doesn't exist on versions of Ruby before the recent patches,
-> because in the old versions, str_buf_append didn't exist. 
-> rb_str_buf_append takes two RString pointers, so if str and str2 are the
-> same, when str->ptr gets realloced, str2->ptr also gets realloced.  This
-> also does not affect the patched version if you used the patches I sent
-> originally.
-
-Thanks for the info.
-
-[1]:
-http://www.ruby-lang.org/en/news/2008/06/20/arbitrary-code-execution-vulnerabilities/
-
-	smithj
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEAREIAAYFAkhhPt8ACgkQCG91qXPaRelBOQCggJfnupOAUudgwoGeX5LY7Oq4
-yFcAn0+DmKwFv258pEXcoGPE1YtYNRyg
-=72d4
------END PGP SIGNATURE-----
+-Nathanael
