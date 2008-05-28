@@ -1,23 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/04/18
-Message-ID: <Pine.GSO.4.51.0809041251340.29613@faron.mitre.org>
-Date: Thu, 4 Sep 2008 12:51:47 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/28/2
+Message-Id: <200805281503.42627.timb@nth-dimension.org.uk>
+Date: Wed, 28 May 2008 15:03:42 +0100
+From: Tim Brown <timb@...-dimension.org.uk>
 To: oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: Re: CVE request: kernel: nfsd: fix buffer overrun decoding NFSv4 acl
+Subject: Re: OpenSSH key blacklisting
 Content-Type: text/plain; charset=utf-8
 
+All,
 
-On Thu, 4 Sep 2008, Eugene Teo wrote:
+Maybe I've missed something, in which case, shoot me down, but why unlike 
+other services that make use of public key cryptography, does OpenSSH not 
+have use a model which supports proper authorisation and revocation 
+mechanisms?  Would this not be an ideal opportunity to implement this?  
+Whilst I think there was a reasonable case for such features prior to the 
+Debian OpenSSL vulnerability being identified, I would argue that this issue 
+highlights the case.  Comercial SSH already has such functionality - can 
+anyone offer a view on how [well] it works?
 
-> "[PATCH] nfsd: fix buffer overrun decoding NFSv4 acl
->
-> The array we kmalloc() here is not large enough."
->
-> Upstream commit:
-> 91b80969ba466ba4b915a4a1d03add8c297add3f
-
-Use CVE-2008-3915, to be filled in later.
-
-- Steve
+Tim
+-- 
+Tim Brown
+<mailto:timb@...-dimension.org.uk>
+<http://www.nth-dimension.org.uk/>
