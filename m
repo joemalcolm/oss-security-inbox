@@ -1,37 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/15/2
-Message-ID: <20081015115929.GC25586@suse.de>
-Date: Wed, 15 Oct 2008 13:59:29 +0200
-From: Thomas Biege <thomas@...e.de>
-To: coley@...re.org, oss-security@...ts.openwall.com
-Subject: CVE request: graphviz buffer overflow while parsinf DOT file
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/28/5
+Message-ID: <87lk1u4g1d.fsf@mid.deneb.enyo.de>
+Date: Wed, 28 May 2008 17:14:22 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: OpenSSH key blacklisting
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-was a CVE-ID assigned to the following issue already?
+* Tim Brown:
 
--------------------------------
-The graphviz team has just released a patch to a critical security issue
-I reported to them. 
+> Maybe I've missed something, in which case, shoot me down, but why
+> unlike other services that make use of public key cryptography, does
+> OpenSSH not have use a model which supports proper authorisation and
+> revocation mechanisms?
 
-The following is the advisory (also available at
-http://roeehay.blogspot.com/2008/10/graphviz-buffer-overflow-code-execution.html):
-
-Background 
-==========
-Graphviz is an open-source multi-platform graph visualization software. It
-takes a description of graphs in a simple text format (DOT language), and
-makes diagrams out of it in several useful formats (including SVG).
-...
--------------------------------
-
--- 
-Bye,
-     Thomas
--- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
--- 
-           Hamming's Motto:
-           The purpose of computing is insight, not numbers.
-                                -- Richard W. Hamming
+I haven't seen a working revocation mechanism implemented elsewhere.
+It's a very difficult problem.
