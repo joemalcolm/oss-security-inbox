@@ -1,45 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/23/8
-Message-ID: <Pine.GSO.4.51.0804231206191.10164@faron.mitre.org>
-Date: Wed, 23 Apr 2008 12:12:08 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/29/1
+Message-ID: <483EBAE6.9050106@gmail.com>
+Date: Thu, 29 May 2008 10:17:10 -0400
+From: Pavel Polischouk <pavel.polischouk@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re:  CVE Request: inspircd
+Subject: CVE-2008-2363: pan - heap overflow
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-On Tue, 22 Apr 2008, Micah Anderson wrote:
+I discovered a heap overflow in pan affecting the parsing of .nzb files. 
+Details (including stack dumps and offending .nzb files) in RedHat 
+Bugzilla entry:
 
->
-> Versions prior to 1.1.17 of InspIRCd are vulnerable to a remotely
-> triggerable buffer overflow which can lead to a Denial of Service
-> (daemon crash) when the namesx and uhnames modules are loaded.
+https://bugzilla.redhat.com/show_bug.cgi?id=446902
 
-The reference you pointed to is for a fix in 1.1.18, which suggests that
-1.1.17 is vulnerable.
+Patch: https://bugzilla.redhat.com/attachment.cgi?id=306880
 
-Thanks for the clarification of the issue - the vendor's post only alluded
-to "security" with no additional details, which left a lot of vuln DBs
-guessing.
+Links to this bug at other project/vendor sites:
 
-- Steve
+GNOME bugzilla: http://bugzilla.gnome.org/show_bug.cgi?id=535413
+Gentoo bugzilla: http://bugs.gentoo.org/show_bug.cgi?id=224051
 
-======================================================
-Name: CVE-2008-1925
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1925
-Reference: MISC:http://www.inspircd.org/bugtrack/view_bug.php?bug_id=438
-Reference: CONFIRM:http://www.inspircd.org/forum/showthread.php?t=2945
-Reference: MLIST:[oss-security] 20080422 CVE Request: inspircd
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/04/22/3
-Reference: FRSIRT:ADV-2008-1041
-Reference: URL:http://www.frsirt.com/english/advisories/2008/1041/references
-Reference: SECUNIA:29610
-Reference: URL:http://secunia.com/advisories/29610
+Project developers have been notified. CVE issued by Red Hat Security 
+Response Team.
 
-Buffer overflow in InspIRCd before 1.1.18, when using the namesx and
-uhnames modules, allows remote attackers to cause a denial of service
-(daemon crash) via a large number of channel users with crafted
-nicknames, idents, and long hostnames.
-
-
+Thanks,
+Pavel
