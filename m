@@ -1,30 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/19/1
-Message-Id: <200809190440.16342.hanno@hboeck.de>
-Date: Fri, 19 Sep 2008 04:40:16 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/30/1
+Message-Id: <200805300908.32714.rbu@gentoo.org>
+Date: Fri, 30 May 2008 09:08:29 +0200
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request (gallery2)
+Subject: Re: CVE id request: uudeview
 Content-Type: text/plain; charset=utf-8
 
-Am Thursday 18 September 2008 schrieb Josh Bressers:
-> A new version of Gallery 2 is out that fixes three security flaws:
->
-> http://gallery.menalto.com/gallery_2.2.6_released
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=499408
+On Tuesday 13 May 2008, Nico Golde wrote:
+> It makes use of tempnam which is known to be insecure to
+> generate temporary files.
 
- 
-" Insecure cookies over HTTPS - When accessing Gallery over HTTPS, cookies 
-were missing the "secure" flag, leaving the connection vulnerable to cookie 
-sniffing attacks. 
- The Gallery team would like to thank Hanno Boeck for bringing this issue to 
-our attention."
-
-CVE-2008-3662 for this one.
+nzbget before 0.3.0 (I tried 0.2.3) ships a copy of the affected code. 
+Nico's patch applies there fine. As for false positives, Convert-UUlib 
+and pan fixed their copies of the code.
 
 
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+Robert
 
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
