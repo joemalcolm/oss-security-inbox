@@ -1,40 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/27/8
-Message-ID: <488CE661.7090308@gentoo.org>
-Date: Sun, 27 Jul 2008 23:19:29 +0200
-From: Pierre-Yves Rofes <py@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/30/2
+Message-Id: <200805302316.03315.turkay.eren@gmail.com>
+Date: Fri, 30 May 2008 23:16:03 +0300
+From: Eren Türkay <turkay.eren@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Links < 2.1 security issue
+Subject: Latest flash player is not vulnerable
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Adobe announced that the flaw that is in the wild is not a new one. The attack 
+took the advantage of other security flaws to redirect the user from 
+legitimate sites to malicious domains serving exploit SWFs
 
-Hi,
+http://blogs.adobe.com/psirt/2008/05/more_information_on_recent_fla.html
 
-Our links maintainer catched this:
+Just for informing for those who missed the news :-)
 
-http://links.twibright.com/download/ChangeLog
-
-http://bugs.gentoo.org/show_bug.cgi?id=231737
-
-Quoting changelog:
-"Security bug fixed: when "only proxies" is selected, don't pass URLs
-to external programs"
-
-
-Anyone investigated this, or even has a clue on the potential impact?
-Not sure if a CVE can be assigned, since this is very (too?) vague...
-
-- --
-Pierre-Yves Rofes
-Gentoo Linux Security Team
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
-
-iEYEARECAAYFAkiM5mEACgkQuhJ+ozIKI5jqogCfdnQPTfA0RFWaSaF7kOD59w2h
-8lAAmwSK0w0nKpzrJUuKCejrvkgm7oP6
-=trsQ
------END PGP SIGNATURE-----
+--Eren
