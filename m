@@ -1,23 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/06/1
-Message-Id: <200807061829.09567.hanno@hboeck.de>
-Date: Sun, 6 Jul 2008 18:29:09 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/31/2
+Message-ID: <g1r2gi$96g$1@ger.gmane.org>
+Date: Sat, 31 May 2008 08:33:22 +0000 (UTC)
+From: Mike Frysinger <vapier@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: CVE request: mybb
+Subject: Re: OpenSSH key blacklisting
 Content-Type: text/plain; charset=utf-8
 
-MyBB 1.2.13 release announcement:
-"MyBB 1.2.13 is a security update to the MyBB 1.2 series. It fixes 1 HIGH risk 
-and 1 Medium risk security vulnerability."
+On Sat, 17 May 2008 01:50:00 +0400, Solar Designer wrote:
+> Thanks for the "bug" reference.  FWIW, the shell script in this comment
+> is vulnerable itself, in more than one way:
+> 
+> 	http://bugs.gentoo.org/show_bug.cgi?id=221759#c9
+> 
+> For example, it lets a user have any other user's or root's
+> authorized_keys removed, by replacing .ssh with a symlink to someone
+> else's .ssh directory.  It's just bad practice to access users' files as
+> root (or as another user); this is difficult to do safely.
+> 
+> Also, it misses authorized_keys2.
 
-http://community.mybboard.net/showthread.php?tid=31666
+while the issues you raise are certainly valid in the general case, i 
+wrote it for use on a constrained system -- users are not allowed login 
+nor are they allowed to control any files directly.  it's a gforge 
+system, so all keys are managed via a web interface and the ssh backend 
+is only for committing to svn/cvs/git repositories.  so in this setup, 
+none of the concerns you raise need to be accounted for.  i leave it up 
+to others to extend it for their own safe use ;).
+-mike
 
-No further details though...
-
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
