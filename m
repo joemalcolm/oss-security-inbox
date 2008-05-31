@@ -1,26 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/24/5
-Message-ID: <Pine.GSO.4.51.0812241254080.12707@faron.mitre.org>
-Date: Wed, 24 Dec 2008 12:54:14 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/31/1
+Message-ID: <20080531005146.GA16885@ngolde.de>
+Date: Sat, 31 May 2008 02:51:46 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re:  CVE id request: verlihub
+Cc: joey@...ian.org
+Subject: CVE id request: ikiwiki
 Content-Type: text/plain; charset=utf-8
 
+Hi,
+Joey Hess discovered that if openid and passwordauth 
+plugins are both ennabled in ikiwiki which is the case in 
+the default installation anyone can log in using an openid 
+that has already been used to login into the wiki and 
+doesn't use a password.
 
-======================================================
-Name: CVE-2008-5706
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5706
-Reference: MILW0RM:7183
-Reference: URL:http://www.milw0rm.com/exploits/7183
-Reference: MLIST:[oss-security] 20081216 CVE id request: verlihub
-Reference: URL:http://openwall.com/lists/oss-security/2008/12/17/16
-Reference: MISC:http://bugs.debian.org/506530
+This is Debian bug: http://bugs.debian.org/483770
 
-The cTrigger::DoIt function in src/ctrigger.cpp in the trigger
-mechanism in the daemon in Verlihub 0.9.8d-RC2 and earlier allows
-local users to overwrite arbitrary files via a symlink attack on the
-/tmp/trigger.tmp temporary file.
+As Steven is currently on semi-vacation, Martin can you 
+assign a CVE id for this issue from the Debian pool?
 
+Kind regards
+Nico
 
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
