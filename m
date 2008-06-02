@@ -1,18 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/17/30
-Message-ID: <Pine.GSO.4.51.0812171348511.17008@faron.mitre.org>
-Date: Wed, 17 Dec 2008 13:49:19 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/02/10
+Message-ID: <4844772C.5020201@freethemallocs.com>
+Date: Mon, 02 Jun 2008 14:41:48 -0800
+From: Jonathan Smith <smithj@...ethemallocs.com>
 To: oss-security@...ts.openwall.com
-cc: Nico Golde <oss-security+ml@...lde.de>, Steffen Joeris <steffen.joeris@...lelinux.de>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE id request: php-xajax
+Subject: Re: ARP handler Inspection tool released
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Wed, 17 Dec 2008, Nico Golde wrote:
+Nico Golde wrote:
+| I don't think that the nth
+| cross-post of software announces belong to this list.
 
-> Yes but this would be a bug, no security issue by itself.
+I wholeheartedly agree. Announcements of this kind belong on bugtraq/FD
+or per-software announce lists like nmap-announce. I think this list is,
+or should be, for discussion only. If the post isn't designed to spark
+discussion (other than "does this belong here" discussion :-) it should
+be somewhere else.
 
-Frankly I'm just grasping at straws trying not to waste a CVE number :)
+Announcements are intended either for existing end-users or as a PR
+ploy. Existing users are probably subscribed to the project-specific
+list (or don't care) and this isn't the place for PR.
 
-- Steve
+So, was this message, and "SQL_injection detection tool released" held
+for moderation? If so, why were they approved? Presumably whoever did so
+has some reason not-yet-mentioned, since the SQL_injection one didn't
+contain a query about testing and code review.
+
+If they were not held for moderation, why not? I thought everything not
+coming from a limited whitelist of people was held...
+
+	smithj
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEAREIAAYFAkhEdywACgkQCG91qXPaRemWWgCgjm8qsvqt4kHcx1OFtMTiBv1F
+wOcAoIspEKXl/+yHBcC9CO9onL5UjtUr
+=GjEo
+-----END PGP SIGNATURE-----
