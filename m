@@ -1,38 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/29/2
-Message-Id: <200804300046.49698.hanno@hboeck.de>
-Date: Wed, 30 Apr 2008 00:46:46 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/02/2
+Message-ID: <4843E4D5.3040208@mare-system.de>
+Date: Mon, 02 Jun 2008 14:17:25 +0200
+From: MARE system Security <security@...e-system.de>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: CVE request: egroupware
+Subject: SQL_injection detection tool released
 Content-Type: text/plain; charset=utf-8
 
-http://www.egroupware.org/
 
-eGroupWare 1.4.004 FCKeditor update & security release
-Eingetragen von Ralf Becker am 2008/04/15 - 17:46
+We just released a tool to check for (well known)
+sql_injections on a file-basis. 
+Due to the mass-hacks during the last months we just
+wanted to know if probably our webservers got
+hacked through sql_injections (although reports mostly 
+speak about MSSQL/ASP), so this check is based
+upon a regex for /[a-zA-Z0-9].js but might
+be extended via words-lists
 
-UPDATE: the first 1.4.004 packages contained two bugs:
-- felamimail gave an error "no egw_simple toolbar set"
-- the spellchecker / aspell did not work (it need to be configured and enabled 
-in Admin >> Site configuration)
+freshmeat: http://freshmeat.net/projects/check_websites/
+sourceforge: http://sourceforge.net/project/showfiles.php?group_id=193013&package_id=278354
 
-The 1.4.004-2 tar.bz2, tar.gz and zip packages and the 1.4.005-15 rpm packages 
-are fixing the above errors.
-
-==> WE RECOMMEND EVERYONE UPDATES AS SOON AS POSSIBLE!
-
-The update includes all previous 1.4 updates and requires no schema update (if 
-you upgrade within the 1.4 release).
-
-The fixed security problems are grave, if you have directories writable by the 
-webserver in you docroot (in most windows server the complete docroot 
-writable by default, but many linux servers are also set up that way). 
+We'd like to discuss file-based scanning vs remote-scanning 
+via htdig or other web-crawlers, since we do that too with our
+websites. 
 
 
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+from the README:
+
+check_websites is a program to basically
+check a webser_document_root, webserver_logfiles
+and sql_dumps against possible hackings. so it does not
+prevent you from creating safe code (see links), but if
+you are an administrator of a web/applicationserver 
+you might want to know if some of your customers
+have  already_hacked applications running, spreading
+virsues and exploits all over the planet. this suite will not
+protect your webserver but you might be able to check
+if you already have been attacked and hacked. 
+
