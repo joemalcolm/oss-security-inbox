@@ -1,39 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/25/9
-Message-ID: <26712.1203949348@devserv.devel.redhat.com>
-Date: Mon, 25 Feb 2008 09:22:28 -0500
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/02/8
+Message-ID: <20080602170330.GV10078@fuse.inversepath.com>
+Date: Mon, 2 Jun 2008 17:03:30 +0000
+From: Andrea Barisani <lcars@...rt.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: wiki page/namespace names, wiki feature requests, etc.
+Subject: Re: code reviews (was: ARP handler Inspection tool released)
 Content-Type: text/plain; charset=utf-8
 
+On Mon, Jun 02, 2008 at 06:53:20PM +0200, Nico Golde wrote:
 > 
-> > The problem I see though, is keeping track of all these terms.  Is there a
-> > way I could create a page called "terms:buffer_overflow", that would then
-> > be magically added to an index at "terms"?
-> 
-> I can install the auto-index plugin that does this.  Currently, we are running
-> a bare installation of DokuWiki with the minimal set of plugins.
-> 
-> One more topic to discuss is where all these Wiki enhancements should be
-> discussed.  I feel that oss-security is the wrong place since this
-> mailing list's goal is to discuss security and not the Wiki itself.
-> Perhaps, all Wiki-related discussions should go to to a namespace that
-> is describing the Wiki itself, and once some functionality is discussed
-> there - a short request for approval/disapproval should be posted here.
-> My concern is that if we move the whole Wiki-enhancement topic off this
-> list we might lose a connection between people on this list (who are
-> populating the Wiki) and a team who is maintaining the Wiki (currently,
-> it's me and Solar).
-> 
+> At least for Debian there is an audit project 
+> (http://www.debian.org/security/audit/) which is not really 
+> active anymore though. As far as I know Gentoo has a similar 
+> project. What about replacing those by an oss-security-audit 
+> project? I don't think oCert is the solution to audit 
+> requests as it simply lacks of enough manpower to do that in 
+> an organized fashion.
 
-I think you're getting a little too technical here. While in theory we
-could have a separate list for infrastructure discussions, it's probably
-too premature for that. If in the future, we find it's generating too much
-noise, we can do this. For now though, if someone doesn't care about the
-wiki, they can just not read those messages. I think discussing issues
-pertinent to the oss-security concept as a whole on this list is relevant
-and wise. As you say, if we move off-list, we will lose a lot of eyeballs.
+With all due respect, how exactly do you know that? :)
+
+We will expand man power accordingly to load, we are here for organizing and
+handling, otherwise we wouldn't have started oCERT in the first place.
+
+Also not everyone might like a public review as they might want embargoes for
+potential issues and so on.
+
+Sure we might be in scenarios where we can't cope, if so we will declare so.
+Still that didn't happened yet and any speculation about it shouldn't suggest
+that people should not send us reports if they want to.
+
+Cheers!
 
 -- 
-    JB
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | Open Source Computer Emergency Response Team
+
+<lcars@...rt.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
