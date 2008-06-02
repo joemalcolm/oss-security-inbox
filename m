@@ -1,43 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/21/7
-Message-ID: <Pine.GSO.4.51.0811202048180.20524@faron.mitre.org>
-Date: Thu, 20 Nov 2008 20:52:42 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/02/6
+Message-ID: <1681f2df0806020729i649bc084ne73d463cf802f75d@mail.gmail.com>
+Date: Mon, 2 Jun 2008 10:29:24 -0400
+From: "Chris Rohlf" <chris.rohlf@...il.com>
 To: oss-security@...ts.openwall.com
-cc: coley@...re.org, Jamie Strandboge <jamie@...onical.com>
-Subject: Re: CVE Request - ecryptfs-utils
+Subject: Re: code reviews (was: ARP handler Inspection tool released)
 Content-Type: text/plain; charset=utf-8
 
+I have not contributed to this list yet (just signed up) but I do like
+the idea of open source projects having a public place to request code
+reviews.
 
-CVE practice in this case is to place fault on the program that's sending
-the passwords over the command line.  Arguably it could go the other way,
-but CVE generally doesn't cover what I call "design limitations" - issues
-that are not fundamental security vulnerabilities in themselves, but which
-make it easier for others to introduce them.  THe ecryptfs-setup-private
-feature of accepting command-line password arguments isn't fundamentally
-different than strcpy()'s feature of happily writing past the end of the
-buffer if that's what it's told to do.  This line continues to get fuzzy,
-however.
+Chris
 
-- Steve
-
-======================================================
-Name: CVE-2008-5188
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5188
-Reference: MLIST:[oss-security] 20081023 CVE request for ecryptfs
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/10/23/3
-Reference: MLIST:[oss-security] 20081029 Re: CVE request for ecryptfs
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/10/29/4
-Reference: MLIST:[oss-security] 20081029 Re: CVE request for ecryptfs
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/10/29/7
-Reference: CONFIRM:http://git.kernel.org/?p=linux/kernel/git/mhalcrow/ecryptfs-utils.git;a=commit;h=06de99afd53f03fe07eda0ad9d61ac6d5d4d9f53
-Reference: CONFIRM:https://launchpad.net/bugs/287908
-
-The (1) ecryptfs-setup-private, (2) ecryptfs-setup-confidential, and
-(3) ecryptfs-setup-pam-wrapped.sh scripts in ecryptfs-utils 45 through
-61 in eCryptfs place cleartext passwords on command lines, which
-allows local users to obtain sensitive information by listing the
-process.
-
-
+On Mon, Jun 2, 2008 at 10:17 AM, Andrea Barisani <lcars@...rt.org> wrote:
+> On Mon, Jun 02, 2008 at 06:10:53PM +0400, Solar Designer wrote:
+>>
+>> In case we do, I would not mind having such community code reviews occur
+>> on this list.  I think they would be on-topic.  In fact, Sebastian
+>> Krahmer even created a section on the wiki for the code reviews - but
+>> neither he nor anyone else contributed to it.  Sebastian?  Anyone else?
+>> Please defend yourselves. ;-)
+>>
+>
+> I personally think that open code reviews are a very good idea, and it's
+> something OSS projects would greatly benefit from.
+>
+> That's why oCERT was also started for helping in security audits and code
+> review requests (we are already doing some). But if requestor doesn't mind a
+> public scrutiny oss-security sure feels like the good place for it.
+>
+> So I wouldn't mind and I'd actually see this as a benefit for this list.
+>
+> Cheers
+>
+> --
+> Andrea Barisani |                Founder & Project Coordinator
+>          oCERT | Open Source Computer Emergency Response Team
+>
+> <lcars@...rt.org>                         http://www.ocert.org
+>  0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+>        "Pluralitas non est ponenda sine necessitate"
+>
