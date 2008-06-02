@@ -1,52 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/02/5
-Message-ID: <20080502193949.GG17990@linsec.ca>
-Date: Fri, 2 May 2008 13:39:49 -0600
-From: Vincent Danen <vdanen@...sec.ca>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/02/3
+Message-ID: <20080602124028.GA27106@ngolde.de>
+Date: Mon, 2 Jun 2008 14:40:28 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: group announcement (was: list: members vs. read-only subscribers)
+Cc: spikey.it@...il.com
+Subject: Re: ARP handler Inspection tool released
 Content-Type: text/plain; charset=utf-8
 
-* [2008-05-02 15:26:26 -0400] Josh Bressers wrote:
+Hi Andrea,
+* Andrea Di Pasquale <spikey.it@...il.com> [2008-06-02 12:49]:
+> ArpON (Arp handler inspectiON) is a portable Arp handler.
+> It Detects and Blocks all ARP Poisoning/Spoofing attacks with
+> Static Arp Inspection (SARPI) and Dynamic Arp Inspection (DARPI)
+> approach on switched/hubbed LAN with/without DHCP protocol.
+> Important to note, it doesn't compromise the ARP protocol performances.
 
->On 25 April 2008, Josh Bressers wrote:
->> On 23 April 2008, Solar Designer wrote:
->> > 
->> > Josh - now that the list setup has been restricted like you wanted, are
->> > you going to work on an announcement suitable for posting to Bugtraq?
->> > 
->> 
->> Just so nobody thinks I missed this,
->> 
->> It's been a very busy week for me, so I've not started on this yet.  I'll
->> try to draft something up this weekend or early next week.  I have some
->> ideas.
->> 
->
->OK, sorry for the delay, there was a reason though.
->
->I have a first draft writeup, that I'm sticking at the end of this message,
->and I plan to run this past the Red Hat Corporate Communications people
->(which is where the delay came from, they are busy people).  They have
->offered to add this announcement (presuming it conforms to their standards)
->to the Red Hat press blog, which is well read by various people in the
->computing press world.  This should help get a lot more attention than just
->sending this out to a few mailing lists.  I did however explain that
->whatever goes on the press blog needs to be cleared with this group first,
->and they completely understand.
->
->So here is my plan.  If everyone could take a look at this writeup and add
->comments, then around mid next week, I'll send our changes to the Red Hat
->folks, then hopefully by weeks end we'll all be synced up, with something
->ready to go the week after.
->
->Thanks.
->
->-------------------- snip ----------------------------
+Is this really appropriate content for this list? I guess 
+all of us read full-disclosure, bugtraq etc. and this is a 
+"list for open source software authors and vendors to 
+discuss public security issues". I don't think that the nth 
+cross-post of software announces belong to this list.
 
-I have no problem with this at all.  I think it sounds great.
-
+Cheers
+Nico
 -- 
-Vincent Danen @ http://linsec.ca/
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
 Content of type "application/pgp-signature" skipped
