@@ -1,34 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/08/2
-Message-ID: <493CEAE5.4090403@op5.se>
-Date: Mon, 08 Dec 2008 10:37:41 +0100
-From: Andreas Ericsson <ae@....se>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/02/1
+Message-Id: <5943CFA7-CC27-41C4-8D3D-3244FFC5D751@gmail.com>
+Date: Mon, 2 Jun 2008 10:40:32 +0200
+From: Andrea Di Pasquale <spikey.it@...il.com>
 To: oss-security@...ts.openwall.com
-CC: coley@...re.org
-Subject: Re: CVE Request (nagios)
+Subject: ARP handler Inspection tool released
 Content-Type: text/plain; charset=utf-8
 
-Josh Bressers wrote:
-> Hi Steve,
-> 
-> I'm not seeing a CVE id for this.  It seems the Nagios 3.0.6 release fixes a flaw:
-> http://www.nagios.org/development/history/nagios-3x.php
-> http://bugs.gentoo.org/show_bug.cgi?id=249876
-> 
-> Here is the patch:
-> http://sourceforge.net/mailarchive/forum.php?thread_name=E1L6mat-0001sb-RN%40fdv4jf1.ch3.sourceforge.com&forum_name=nagios-checkins
-> 
+ArpON (Arp handler inspectiON) is a portable Arp handler.
+It Detects and Blocks all ARP Poisoning/Spoofing attacks with
+Static Arp Inspection (SARPI) and Dynamic Arp Inspection (DARPI)
+approach on switched/hubbed LAN with/without DHCP protocol.
+Important to note, it doesn't compromise the ARP protocol performances.
 
-CVE id 2008-5028 has been assigned to this. I requested a CVE id through this list
-on Nov 6 2008. Fairly full details on the two issues described in my original email
-(Message-Id: <49131C7E.8050105@....se>) can be found at http://blogs.op5.org
+     I need testing and code revision, thank you.
 
-The patch has been publicly available since Nov 7, when I announced it on the
-nagios-devel mailing list.
+The link to project's documentation is:
+     http://arpon.sourceforge.net/about.html
 
-Both issues were reported to the Nagios dev team by Tim Starling on Oct 26.
-
--- 
-Andreas Ericsson                   andreas.ericsson@....se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+The link to the project is:
+     http://arpon.sourceforge.net
