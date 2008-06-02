@@ -1,24 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/24/1
-Message-Id: <1206353623.30020.10.camel@localhost.localdomain>
-Date: Mon, 24 Mar 2008 11:13:43 +0100
-From: Lubomir Kundrak <lkundrak@...hat.com>
-To: Secunia Research <vuln@...unia.com>
-Cc: oss-security@...ts.openwall.com
-Subject: SA29489 CenterIM URL handling flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/02/9
+Message-ID: <20080602174105.GA17910@ngolde.de>
+Date: Mon, 2 Jun 2008 19:41:05 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: code reviews (was: ARP handler Inspection tool released)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi Andrea,
+* Andrea Barisani <lcars@...rt.org> [2008-06-02 19:17]:
+> On Mon, Jun 02, 2008 at 06:53:20PM +0200, Nico Golde wrote:
+> > At least for Debian there is an audit project 
+> > (http://www.debian.org/security/audit/) which is not really 
+> > active anymore though. As far as I know Gentoo has a similar 
+> > project. What about replacing those by an oss-security-audit 
+> > project? I don't think oCert is the solution to audit 
+> > requests as it simply lacks of enough manpower to do that in 
+> > an organized fashion.
+> 
+> With all due respect, how exactly do you know that? :)
 
-Ad SA29489 [1] "CenterIM URL Parsing Command Execution Vulnerability"
+Just a wild guess, audits are time consuming and you are all 
+employed ;)
+This was in no way meant to discredit oCert lacking of 
+manpower in general. I just didn't had the impression you 
+guys have the time to focus on source code audits in the 
+first place but mostly on coordination. Sorry if this is 
+wrong!
 
-CenterIM does completely nothing with received URLs. Maybe the
-unfortuate "exploit writer" was using XFCE Terminal [2], or a terminal
-emulator with a similar problem.
-
-[1] http://secunia.com/advisories/29489/
-[2] http://bugzilla.xfce.org/show_bug.cgi?id=3383
-
+Cheers
+Nico
 -- 
-Lubomir Kundrak (Red Hat Security Response Team)
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
+Content of type "application/pgp-signature" skipped
