@@ -1,24 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/14/2
-Message-ID: <Pine.GSO.4.51.0810141446300.1682@faron.mitre.org>
-Date: Tue, 14 Oct 2008 14:47:51 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security <oss-security@...ts.openwall.com>
-cc: coley <coley@...re.org>
-Subject: Re: CVE Request (nfs-utils)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/02/7
+Message-ID: <20080602165320.GA15827@ngolde.de>
+Date: Mon, 2 Jun 2008 18:53:20 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: code reviews (was: ARP handler Inspection tool released)
 Content-Type: text/plain; charset=utf-8
 
+Hi,
+* Solar Designer <solar@...nwall.com> [2008-06-02 16:16]:
+> On Mon, Jun 02, 2008 at 02:40:28PM +0200, Nico Golde wrote:
+> > Is this really appropriate content for this list? I guess 
+> > all of us read full-disclosure, bugtraq etc. and this is a 
+> > "list for open source software authors and vendors to 
+> > discuss public security issues". I don't think that the nth 
+> > cross-post of software announces belong to this list.
+> 
+> I don't mind seeing announcements of security tools related to Open
+> Source software in here, as long as this does not dominate the list
+> traffic (in which case we can always setup another list just for those
+> announcements).  I understand that others may have different opinion
+> (please speak up).
 
+I don't really mind about announces either, only about 
+quadrupled ones because of cross-posting :)
 
-======================================================
-Name: CVE-2008-4552
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4552
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=458676
+[...] 
+> Do we have people like the security-audit activists of late 1990s in
+> here?  (I know that some of the same people are in fact in here, but I'm
+> sure that they have changed - similarly to the way I have changed.  So I
+> mean people "like" those who were active on security-audit at the time
+> and who are in this shape now.)
 
-nfs-utils 1.0.9, and possibly other versions before 1.1.3, invokes the
-host_ctl function with the wrong order of arguments, which causes TCP
-Wrappers to ignore netgroups and allows remote attackers to bypass
-intended access restrictions.
+At least for Debian there is an audit project 
+(http://www.debian.org/security/audit/) which is not really 
+active anymore though. As far as I know Gentoo has a similar 
+project. What about replacing those by an oss-security-audit 
+project? I don't think oCert is the solution to audit 
+requests as it simply lacks of enough manpower to do that in 
+an organized fashion.
+But having some kind of general list for this hosted in a 
+distribution neutral environment might work out.
 
+[...] 
+> Now, do any/all of you find my posting appropriate? ;-)
 
+I do! ;)
+
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
