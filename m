@@ -1,38 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/17/10
-Message-ID: <4807B079.8060301@gentoo.org>
-Date: Thu, 17 Apr 2008 22:18:01 +0200
-From: Matthias Geerdsen <vorlon@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/03/2
+Message-ID: <20080603161200.GA9417@steve.org.uk>
+Date: Tue, 3 Jun 2008 17:12:01 +0100
+From: Steve Kemp <steve@...ve.org.uk>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: DBMail <2.2.9
+Subject: Re: code reviews (was: ARP handler Inspection tool released)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Mon Jun 02, 2008 at 18:10:53 +0400, Solar Designer wrote:
 
-could we get a CVE for the following issue?
-
- From the dbmail changelog <http://dbmail.org/index.php?page=news&id=44>:
-Bugs fixed since 2.2.8:
-[...]
-0000662: [Authentication layer] Ability to bypass authentication on 
-Active Directory
-[...]
+> I feel that it'd be nice if a list existed where one could ask for some
+> source code to be reviewed - and get useful feedback.  We had the
+> security-audit list in late 1990s that kind of worked like that; 
 
 
-bug report: 
-<http://www.mail-archive.com/dbmail-dev@dbmail.org/msg09942.html>
+> Do we have people like the security-audit activists of late 1990s in
+> here?  (I know that some of the same people are in fact in here, but I'm
+> sure that they have changed - similarly to the way I have changed.  So I
+> mean people "like" those who were active on security-audit at the time
+> and who are in this shape now.)
 
-patch:
-<http://git.dbmail.eu/?p=paul/dbmail;a=commitdiff;h=5a4458b9f4b1a1453e35a1c5674c2253b9d00138>
+  I setup the Debian security audit project with the intention that
+ people would volunteer to do this.  I guess I found 20-50 issues of
+ pretty low severity in my stint, and had hoped to find more.
 
+  The specific problem at the time the audit was started was that
+ very few people had the time, the skills, and the motivation to
+ join in and help.
 
+  Optimistically if there were people volunteering here I'd be willing
+ to spend more of my time on that kind of work myself.  Pessimistically
+ people find the work time-consuming and difficult.  Without a few big
+ holes found early on many many people lose interest.
+
+  (Me personally I found my time was taken up with other issues, and
+ from memory the most prolific auditors that I managed to hook up with
+ managed to get jobs in the security field and so they started auditing
+ behind closed doors - at least one person told me he was no longer
+ allowed to take part in public audits.  Understandable, but
+ frustrating.)
+
+> I find it highly unlikely that anyone, even
+> the kind of people I mentioned above, would bother downloading a tarball
+> of something they had never heard of to do a security audit of it -
+> unless this is paid work.
+
+  Indeed.
+
+  My initial aim was to divide the Debian archive into "high" and "low"
+ risk packages and then only look at the high-risk ones.  (Where
+ high-risk meant setuid/setgid or network accessible.)
+
+  Random programs that people point me at aren't terribly interesting
+ *unless* I happen to use them myself! ;)
+
+> Now, do any/all of you find my posting appropriate? ;-)
+
+  Yes!
+
+  One interesting recent development I was watching was the google
+ audits. I know nothing of the details, but I do recall that several
+ issues were reported to vendor sec with a "google audit" "ownership".
+
+Steve
 -- 
-Matthias Geerdsen
-vorlon@...too.org
-
-Gentoo Linux Security Team
-http://security.gentoo.org
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (190 bytes)
+http://www.steve.org.uk/
