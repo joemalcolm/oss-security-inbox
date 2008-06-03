@@ -1,27 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/25/5
-Message-ID: <0802250834490.19076@mjc.redhat.com>
-Date: Mon, 25 Feb 2008 08:41:22 +0000 (GMT)
-From: Mark J Cox <mjc@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/03/4
+Message-ID: <20080603180045.GB30768@openwall.com>
+Date: Tue, 3 Jun 2008 22:00:45 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: charter - advisories
+Subject: Re: tool announcements (was: ARP handler Inspection tool released)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 25 Feb 2008, Solar Designer wrote:
-> Also, a question to those vendors (represented in here) who don't copy
-> their advisories to Bugtraq currently (too shy or polite) - will you
-> start sending them to this new special-purpose list?
+Nico,
 
-For Red Hat products since we stopped supporting Red Hat Linux 9 we don't 
-send to public mailing lists; customers using our products would be signed 
-up to Red Hat Network which gives them customised alerts based on what 
-they've got installed, and other interested folks who are not customers 
-can subscribe to our announcement mailing list.
+On Mon, Jun 02, 2008 at 06:53:20PM +0200, Nico Golde wrote:
+> * Solar Designer <solar@...nwall.com> [2008-06-02 16:16]:
+> > I don't mind seeing announcements of security tools related to Open
+> > Source software in here, as long as this does not dominate the list
+> > traffic (in which case we can always setup another list just for those
+> > announcements).  I understand that others may have different opinion
+> > (please speak up).
+> 
+> I don't really mind about announces either, only about 
+> quadrupled ones because of cross-posting :)
 
-LWN already capture advisories from all vendors and try to collate it 
-(with moderate degrees of sucess): http://lwn.net/Alerts/   so I'm not 
-convinced of the value of another list.
+OK, but as I've just tried to explain, this is not always possible or
+feasible for a list moderator to figure out.
 
-Thanks, Mark
---
-Mark J Cox / Red Hat Security Response Team
+Also, there are not that many security tool announcements on Bugtraq.
+I think that people are often too shy to announce on Bugtraq.  This is
+another reason why I think there's room for a new list, but before one
+is created, we could simply let the announcements to be sent in here,
+regardless of whether they're cross-posted or not.  If this works, then
+create the list.
+
+Alexander
