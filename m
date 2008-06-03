@@ -1,24 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/01/1
-Message-ID: <20081001134843.GA10309@anguilla.debian.or.at>
-Date: Wed, 1 Oct 2008 15:48:43 +0200
-From: Gerfried Fuchs <rhonda@....at>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/03/6
+Message-ID: <Pine.GSO.4.51.0806031541080.27244@faron.mitre.org>
+Date: Tue, 3 Jun 2008 15:43:46 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: sabre
+Subject: Re: tool announcements (was: ARP handler Inspection tool released)
 Content-Type: text/plain; charset=utf-8
 
-        Hello!
 
- There is a tmp file symlink attack pattern in the sabre run scripts
-introduced by a Debian patch to them. Given that one of the binaries has
-to be run as root due to svgalib requirements this might lead to
-overwriting root-owned files in certain use cases.
+On Tue, 3 Jun 2008, Solar Designer wrote:
 
-Debian Bugreport: <http://bugs.debian.org/433996>
+> Also, there are not that many security tool announcements on Bugtraq.
 
-Patch is currently in the works so I can't offer it yet.
+Due to a side effect of how CVE tracks Bugtraq posts, I actually have some
+approximate stats for this.  There were only about 100 tool announcements
+to Bugtraq since December of 2006, with 12 being the maximum for a single
+month.
 
- Could I please get a CVE id for it?
-
- Thanks in advance,
-Rhonda
+- Steve
