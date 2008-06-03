@@ -1,32 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/03/8
-Message-ID: <Pine.GSO.4.51.0810031538500.28497@faron.mitre.org>
-Date: Fri, 3 Oct 2008 16:00:08 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/03/9
+Message-ID: <Pine.GSO.4.51.0806031804260.27244@faron.mitre.org>
+Date: Tue, 3 Jun 2008 18:08:59 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: Re: regarding CVE-2008-4382 & CVE-2008-4381
+Subject: Re: tool announcements
 Content-Type: text/plain; charset=utf-8
 
 
-On Fri, 3 Oct 2008, Nico Golde wrote:
+On Tue, 3 Jun 2008, Pierre-Yves Rofes wrote:
 
-> looking at the PoC this would work in every browser
-> supporting JavaScript as this is just a trivial memory
-> consumption issue by passing a very large string too the
-> alert function and thus eating memory, a simple
-> while(true){} would be equally effective for eating cpu
-> cycles which I wouldn't consider as a vulnerability
-> either...
+> Looking at the archives, at least half of the topics are CVE requests,
+> so maybe we should think about renaming the list "oss-CVEreq" :)
 
-I usually wouldn't call it a vulnerability, either.  However, based on our
-analysis, the String.fromCharCode(550) creates a Unicode string for
-character 550, but the escape() for URL encoding can only cover 0 to 255,
-so it seemed like something else was going on here, maybe the alert
-function not working.
-
-I don't know how Javascript manages large strings, but it seems like
-somewhere around the "x4 += x4;" statement, you exceed multiple gigs.  So
-maybe the alert function isn't even being reached...
+Until oss-security, these CVE requests were typically made either by one
+distro and included in their bug report, or through vendor-sec even if the
+issue was technically public.  When we assigned the CVE, it would often
+become the first place where the issue was more widely announced.
+Amongst the other benefits of this list, I think it provides a function
+for wider, quicker dissemination of these types of issues.  The CVE
+requests just happen to be part of the coordination function that the
+distros used to perform in less visible ways.
 
 - Steve
