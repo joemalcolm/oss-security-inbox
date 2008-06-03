@@ -1,49 +1,113 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/07/3
-Message-ID: <Pine.GSO.4.51.0810071431570.6161@faron.mitre.org>
-Date: Tue, 7 Oct 2008 14:33:24 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Tomas Hoger <thoger@...hat.com>
-cc: coley@...us.mitre.org, oss-security@...ts.openwall.com, veillard@...hat.com, Robert Buchholz <rbu@...too.org>
-Subject: Re: Re: libxml2 "ampproblem" DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/03/3
+Message-ID: <20080603175335.GA30768@openwall.com>
+Date: Tue, 3 Jun 2008 21:53:35 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: tool announcements (was: ARP handler Inspection tool released)
 Content-Type: text/plain; charset=utf-8
 
+Nico, Jonathan -
 
-On Mon, 6 Oct 2008, Tomas Hoger wrote:
+> Nico Golde wrote:
+> | I don't think that the nth
+> | cross-post of software announces belong to this list.
 
-> CVE-2008-4409 is public on NVD site, CVE-2008-4422 in Gentoo BZ and
-> here...  CVE-2008-4422 should probably be rejected.
+OK, maybe not (although I am not sure) - but how are the list moderators
+supposed to detect cross-posting (if we decide that it should be
+relevant to approval of a message)?  We receive moderation requests
+almost instantly - before the message has a chance to arrive via
+full-disclosure (large list) or Bugtraq (extra-large list with long
+moderation delays).  Are we supposed to delay decision just to see if a
+message is possibly a cross-post?  Also, I am not on full-disclosure -
+should this prevent me from being a moderator for oss-security, or do I
+have to subscribe to full-disclosure?  Of course, in some cases
+cross-posting is obvious from the headers, but in many cases it is not.
 
-Agreed.
+On Mon, Jun 02, 2008 at 02:41:48PM -0800, Jonathan Smith wrote:
+> I wholeheartedly agree.
 
-- Steve
+Thank you for commenting on this.  Your opinion is appreciated and may
+affect our moderation policy.  At this point, I am not sure if it is the
+prevailing opinion of this group, though.
 
-======================================================
-Name: CVE-2008-4409
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4409
-Reference: MLIST:[oss-security] 20081002 libxml2 "ampproblem" DoS
-Reference: URL:http://openwall.com/lists/oss-security/2008/10/02/4
-Reference: CONFIRM:http://bugzilla.gnome.org/show_bug.cgi?id=554660
+> Announcements of this kind belong on bugtraq/FD
 
-libxml2 2.7.0 and 2.7.1 does not properly handle "predefined entities
-definitions" in entities, which allows context-dependent attackers to
-cause a denial of service (memory consumption and application crash),
-as demonstrated by use of xmllint on a certain XML document, a
-different vulnerability than CVE-2003-1564 and CVE-2008-3281.
+Maybe.  However, many topics are valid on Bugtraq - not only Open Source
+ones.  I imagine that someone could be interested in security tool
+announcements relevant to Open Source software only.  Also, Bugtraq is
+so large that few of us would dare to bother its readers with
+announcements of new versions of a tool, even fairly major ones.
 
+As to full-disclosure, we all know that there's a lot of noise on that
+list.  I'd rather not join it, although I like to receive occasional
+announcements of security tools.
 
-======================================================
-Name: CVE-2008-4422
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4422
+Maybe we need to setup a new oss-sectools list, but I'd rather not go
+for it until we start to receive a substantial number of security tool
+announcements in here.  This implies that we let those announcements
+through moderation - or people will stop sending them.  At a later time,
+I'd start rejecting them with requests to repost to oss-sectools - but
+this is not an option yet.
 
-** REJECT **
+> or per-software announce lists like nmap-announce.
 
-DO NOT USE THIS CANDIDATE NUMBER.  ConsultIDs: CVE-2008-4409.  Reason:
-This candidate is a duplicate of CVE-2008-4409.  Notes: All CVE users
-should reference CVE-2008-4409 instead of this candidate.  All
-references and descriptions in this candidate have been removed to
-prevent accidental usage.
+Indeed, but that does not eliminate the need for a shared list.
 
+> I think this list is,
+> or should be, for discussion only. If the post isn't designed to spark
+> discussion (other than "does this belong here" discussion :-) it should
+> be somewhere else.
 
+I mostly agree, but please see above re: "something else".
+
+As to "sparking discussion", it is impossible to know that in advance.
+Yes, you wrote "designed to ..." - does ending a post with "comments,
+please?" qualify?  If so, that could be used on any announcement - even
+on a mostly-PR one.
+
+Also, what about those CVE requests - is a single response, assigning
+the CVE number, "discussion"?  OK, in some cases people actually have
+comments.
+
+> Announcements are intended either for existing end-users or as a PR
+> ploy. Existing users are probably subscribed to the project-specific
+> list (or don't care) and this isn't the place for PR.
+
+Of the existing lists, Bugtraq is probably the place for PR.
+
+However, some tools could be of specific relevance to oss-security
+members - e.g., source code analysis tools and fuzzers.  Do you agree?
+Is a moderator supposed to decide whether or not this is the case?
+
+> So, was this message, and "SQL_injection detection tool released" held
+> for moderation?
+
+Yes, they were.
+
+> If so, why were they approved? Presumably whoever did so
+> has some reason not-yet-mentioned, since the SQL_injection one didn't
+> contain a query about testing and code review.
+
+I was the one to approve both messages.  So far, the only messages that
+were not approved were spam.
+
+I don't regret approving these messages - I think that we're having
+useful discussion as a result, and I think that it was important for
+this group's members to be aware of what was coming to the list (except
+for spam).  Let's say that these two messages are "samples" of content
+that we might or might not want in here.
+
+My opinion is that moderators are not supposed to define the list's
+policy on their own - and we did not (and still do not) have this bit of
+policy fully defined.  So let's try to take care of that now, or I would
+not know what to do if more messages like these two arrive to the list.
+
+> If they were not held for moderation, why not? I thought everything not
+> coming from a limited whitelist of people was held...
+
+They were held for moderation, and your understanding was/is correct.
+
+Thanks,
+
+Alexander
