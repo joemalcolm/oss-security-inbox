@@ -1,30 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/02/2
-Message-ID: <47F3B931.7020609@freethemallocs.com>
-Date: Wed, 02 Apr 2008 08:49:53 -0800
-From: Jonathan Smith <smithj@...ethemallocs.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com
-Subject: CVE request: openssh "ForceCommand" improperly implemented
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/04/1
+Message-ID: <82abd3a70806040451w75a568b7n18d08595e7480bd6@mail.gmail.com>
+Date: Wed, 4 Jun 2008 12:51:45 +0100
+From: "Michael Simpson" <mikie.simpson@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: tool announcements (was: ARP handler Inspection tool released)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+> On Mon, Jun 02, 2008 at 02:41:48PM -0800, Jonathan Smith wrote:
+> > I wholeheartedly agree.
+>
+> Thank you for commenting on this.  Your opinion is appreciated and may
+> affect our moderation policy.  At this point, I am not sure if it is the
+> prevailing opinion of this group, though.
+>
+> > Announcements of this kind belong on bugtraq/FD
+>
+> Maybe.  However, many topics are valid on Bugtraq - not only Open Source
+> ones.  I imagine that someone could be interested in security tool
+> announcements relevant to Open Source software only.  Also, Bugtraq is
+> so large that few of us would dare to bother its readers with
+> announcements of new versions of a tool, even fairly major ones.
+>
+> As to full-disclosure, we all know that there's a lot of noise on that
+> list.  I'd rather not join it, although I like to receive occasional
+> announcements of security tools.
 
-http://secunia.com/advisories/29602/
+I agree
+FD's signal to noise ratio has plummeted in the last few years and is
+only really useful as entertainment.
 
-https://bugs.gentoo.org/show_bug.cgi?id=215702
-https://issues.rpath.com/browse/RPL-2419
+There was a secfocus mailing list for beta-announces
+<betaannounce@...urityfocus.com>
+which seems to have died a death
 
-It looks to be a rather minor issue since ~/.ssh/rc is usually 0600 and
-~/.ssh is usually 0700.
+Having just gone into production with an OSS webapp i would really
+appreciate an oss-sectools list.
 
-	smithj
+best wishes
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.8 (GNU/Linux)
-
-iEYEARECAAYFAkfzuTEACgkQCG91qXPaRekKzwCdEnSwrkEVCXR8NzZEXCBkpXe/
-2O4Ani9EzXE2CUGpYEJj8+P8O06UarYO
-=wKkZ
------END PGP SIGNATURE-----
+mike
