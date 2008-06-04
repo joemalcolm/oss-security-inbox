@@ -1,77 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/17/4
-Message-ID: <20434.1203215944@devserv.devel.redhat.com>
-Date: Sat, 16 Feb 2008 21:39:04 -0500
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: welcome
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/04/4
+Message-Id: <1212593693.6649.18.camel@media>
+Date: Wed, 04 Jun 2008 08:34:53 -0700
+From: Ned Ludd <solar@...too.org>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Python Unsafe Module Loading
 Content-Type: text/plain; charset=utf-8
 
+Sending this to oss-sec vs vendor-sec cuz I've talked about this problem
+in public no less than 10 times on different occasions.
 
-> > * Organized - Not a mishmash of undecided people.  Have clear goals and
-> >     procedures.
-> > 
-> >     There will be a wiki that contains the static information with respect to
-> >     how things are handled.  Some issues that will need deciding are:
-> > 
-> >     1) How are new members accepted
-> >     2) When do we kick out unresponsive members
-> >     3) How do we deal with people who develop bad attitudes
-> 
-> This sounds good, except that I see no need to "kick out unresponsive
-> members".  If they like to listen to our conversations in real time
-> (rather than browse the archives) and maybe learn from them - this can
-> only be good.  Of course, active contribution would be even better.
-> So is this "kick out policy" an attempt to encourage contribution?..
-> 
-> Or were you speaking of a vendor-sec equivalent - not this list, but
-> perhaps yet another list to be created for the small-and-trusted part of
-> the group?  If so, how would that differ from vendor-sec itself?   Would
-> it differ in that any (trusted?) Open Source projects would be accepted,
-> not just distribution "vendors"?
+I've been sitting on this bug for a while now and guess I should share
+it in an effort so hopefully somebody other than myself can come up with
+a patch. Anyway I've not tested pythons from other distros but I'm
+pretty sure they all behave the same as Gentoo's.
 
-We can probably disregard the whole kick out bits.  That really would only
-apply to a private list that deals with sensitive information.  I don't
-think there is a benefit to creating a private list at this time, as
-vendor-sec exists and is functional.
+So for nearly every python based program you can simply dump  *.so *.py
+*.pyc files just about anywhere on the file system where an admin might
+invoke python.
 
-> 
-> > * Active - discuss flaws (not a bunch of sponges)
-> > 
-> >     We want a group that is responsive and active with respect to the handling
-> >     of flaws.  There will always be a subset of members that don't care about
-> >     a certain flaw and this is fine, but if someone is always silent, how are
-> >     they a benefit?  Members should be encouraged to participate in
-> >     discussions and analysis.
-> 
-> The same comments apply here.
-> 
-> Yes, we would like to see a lot of active members, but do we really need
-> to kick out the sponges, would that be of benefit?
 
-No, there isn't a benefit in this instance.  I do think that encouraging
-everyone to contribute in some meaningful manner is a good goal.  Anytime
-you have a list full of smart people, the new people are usually quite
-intimidated and afraid to engage.  We need to be mindful of this.
+Example:
+strace -o /dev/stdout -eopen python -c 'import string'  | grep -v ^open
+\(\"/
 
-> 
-> > * Educate - many open source groups suck at security
-> > 
-> >     Create several documents that are helpful to the open source community
-> > 
-> >     1) How to report a security flaw
-> >     2) How to accept security reports from researchers
-> >     3) Basic ideas behind having a security response team
-> 
-> Right - all of this should go on the wiki, and any discussions may occur
-> in here.
+This should be empty ^^
 
-Yes.  I have some notes on this as well.  I've been pondering how best to
-present this data for quite some time, and have unsuccessfully peddled a
-presentation to several conferences..  I'll have to dig out my old notes
-(which really means find them in the file ghetto that is my ~).
+solar@...ia /tmp $ touch re.so
+solar@...ia /tmp $ sudo su -
+***************** 
+media ~ # cd /tmp/
+media tmp # python -c 'import string'
+Traceback (most recent call last):
+  File "<string>", line 1, in ?
+  File "/usr/lib/python2.4/string.py", line 83, in ?
+    import re as _re
+ImportError: ./re.so: file too short
 
-Thanks for the feedback.
+If that was a real module.. We can guess at what all could be done.
+
+Last time I poked at the source code I found I could trick python to put
+zipimport (an internal module) as the first thing in it's sys.path[0]
+and all was fine. But when I dug up my old patch and tested it with
+newer versions of python it no longer worked as before. Thus the need
+for a new patch.
+
+This is the old patch that might give anybody that decides to poke at
+this an idea the area of code that needs loving.
+
+http://dev.gentoo.org/~solar/patch_overlay/dev-lang/python/python-2.4.2-zipimport-env.patch
+
 
 -- 
-    JB
+Ned Ludd <solar@...too.org>
+
