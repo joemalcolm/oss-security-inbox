@@ -1,23 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/04/20
-Message-ID: <Pine.GSO.4.51.0809041300510.29613@faron.mitre.org>
-Date: Thu, 4 Sep 2008 13:02:11 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Nico Golde <oss-security+ml@...lde.de>
-cc: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: newsbeuter
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/04/8
+Message-ID: <4846E660.8060402@freethemallocs.com>
+Date: Wed, 04 Jun 2008 11:00:48 -0800
+From: Jonathan Smith <smithj@...ethemallocs.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: OpenSSH key blacklisting
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Thu, 4 Sep 2008, Nico Golde wrote:
+The Fungi wrote:
+| Not to be argumentative, but have you installed OpenBSD lately
+| (effectively the reference platform for OpenSSH development)? For
+| years, its base install has run sshd by default, generated host keys
+| at first boot, and not prompted at the console for human interaction
+| to augment entropy for this process. I find it hard to blame this
+| *particular* behavior on Debian (unless you're suggesting that they
+| strong-armed OpenSSH upstream to integrate these changes on their
+| behalf?).
 
-> Please use version 1.2 here as the fix for 1.1 was
-> incomplete.
+rPath also auto-generates keys using the initscript found in the openssh
+source. In the unpacked tarball, it is called contrib/redhat/sshd.init.
+So, presumably, Red Hat does the same. Key generation pulls random bits
+from /dev/random, though, and thus blocks until enough randomness is
+available. That actually caused me some problems once when the machine
+hung on first-boot until it got enough disk interrupts or whatever.
 
-Our interpretation was that 1.1 fixes the vulnerability, but a
-non-security bug forced the release of 1.2.  So 1.1, while perhaps
-unusable in practice, was safe from the vuln.
+	smithj
 
-Was that an incorrect interpretation?
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
 
-- Steve
+iEYEAREIAAYFAkhG5mAACgkQCG91qXPaRenT1wCeOQF0FIJ4mGzu6t7kgyktngML
+AEAAn2rvxOY/txkB44bXgvMk2l1eUElA
+=ldUl
+-----END PGP SIGNATURE-----
