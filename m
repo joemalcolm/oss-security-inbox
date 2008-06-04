@@ -1,23 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/17/7
-Message-ID: <Pine.GSO.4.51.0806171023350.16500@faron.mitre.org>
-Date: Tue, 17 Jun 2008 10:25:08 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/04/2
+Message-Id: <200806042250.57491.steffen.joeris@skolelinux.de>
+Date: Wed, 4 Jun 2008 22:50:52 +1000
+From: Steffen Joeris <steffen.joeris@...lelinux.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: FreeType 2.3.6
+Subject: CVE id request: slash
 Content-Type: text/plain; charset=utf-8
 
+Hi
 
-On Tue, 17 Jun 2008, Thomas Biege wrote:
+I am not sure, if anyone asked for a CVE id for slash yet, if so please point 
+to it and disregard this request.
 
-> > Yes, CVE-2008-1806 CVE-2008-1807 CVE-2008-1808.  See NVD site or
-> > iDefense advisories.
->
-> Ah thanks. Next time I will look harder. :)
+The Slashdote (also just known as Slash) vulnerability was an SQL injection. 
+Its effect was to allow a user with no special authorization to read any 
+information from any table the Slash site's mysql user was authorized to read 
+(which may include other databases, including information_schema).
 
-In general, the NVD site is really the best place to look - we don't
-automatically update the CVE web site like NVD does (it's a
-resource/security thing for us), although more regular updates should be
-happening sometime this summer.
+Upstream announcement:
+http://www.slashcode.com/article.pl?sid=08/01/07/2314232
 
-- Steve
+Upstream patch:
+http://slashcode.cvs.sourceforge.net/slashcode/slash/Slash/Utility/Environment/Environment.pm?r1=1.223&r2=1.225
+
+Debian Bug report:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=484499
+
+
+
+Cheers
+Steffen
+
+Download attachment "signature.asc " of type "application/pgp-signature" (190 bytes)
