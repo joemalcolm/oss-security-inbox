@@ -1,29 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/24/2
-Message-ID: <87skxbghs6.fsf@mid.deneb.enyo.de>
-Date: Thu, 24 Apr 2008 21:43:53 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: Jonathan Smith <smithj@...ethemallocs.com>,  oss-security@...ts.openwall.com
-Subject: Re: CVE request:Perl bug #48156
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/04/6
+Message-ID: <20080604181825.GG6146@yuggoth.org>
+Date: Wed, 4 Jun 2008 18:18:26 +0000
+From: The Fungi <fungi@...goth.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: OpenSSH key blacklisting
 Content-Type: text/plain; charset=utf-8
 
-* Steven M. Christey:
+On Wed, Jun 04, 2008 at 11:14:12AM -0400, Nathanael Hoyle wrote:
+[...]
+> However, the reason debian got into the mess they did in the first
+> place with this was specifically because they were trying to
+> remove responsibility from the can't-be-bothered users for
+> configuration. At one point, nearly all ssh key generation systems
+> required the user the type keys 'at random' on the keyboard,
+> and/or to move the mouse to generate an entropy pool for a seed
+> value for key generation. Because debian performs key-generation
+> on first boot in most cases, that early in the startup there might
+> not be sufficient entropy in the network traffic for utility. I
+> guess they found that users were either incapable of or
+> disinclined to participate in the key generation process.
+[...]
 
-> removing vendor-sec just in case, since oss-security is archived.
->
-> ======================================================
-> Name: CVE-2008-1927
-> Status: Candidate
-> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1927
-> Reference: MISC:http://rt.perl.org/rt3/Public/Bug/Display.html?id=48156
-> Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=454792
->
-> Double free vulnerability in Perl 5.8.8 allows context-dependent
-> attackers to cause a denial of service (memory corruption and crash)
-> via a crafted regular expression containing UTF8 characters.  NOTE:
-> this issue might only be present on certain operating systems.
-
-Oops, I think this is a heap overflow, not a double-free vulnerability.
-The GNU libc error message which is triggered by the heap corruption can
-be a bit misleading.
+Not to be argumentative, but have you installed OpenBSD lately
+(effectively the reference platform for OpenSSH development)? For
+years, its base install has run sshd by default, generated host keys
+at first boot, and not prompted at the console for human interaction
+to augment entropy for this process. I find it hard to blame this
+*particular* behavior on Debian (unless you're suggesting that they
+strong-armed OpenSSH upstream to integrate these changes on their
+behalf?).
+-- 
+{ IRL(Jeremy_Stanley); PGP(9E8DFF2E4F5995F8FEADDC5829ABF7441FB84657);
+SMTP(fungi@...goth.org); IRC(fungi@....yuggoth.org#ccl); ICQ(114362511);
+AIM(dreadazathoth); YAHOO(crawlingchaoslabs); FINGER(fungi@...goth.org);
+MUD(fungi@...arsis.mudpy.org:6669); WWW(http://fungi.yuggoth.org/); }
