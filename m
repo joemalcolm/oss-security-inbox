@@ -1,24 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/31/8
-Message-Id: <200808010149.04777.hanno@hboeck.de>
-Date: Fri, 1 Aug 2008 01:49:04 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/04/5
+Message-Id: <200806050259.27141.steffen.joeris@skolelinux.de>
+Date: Thu, 5 Jun 2008 02:59:26 +1000
+From: Steffen Joeris <steffen.joeris@...lelinux.de>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: CVE request: phpwebgallery < 1.7.2
+Subject: Re: CVE id request: slash
 Content-Type: text/plain; charset=utf-8
 
-Changelog:
-http://bugs.phpwebgallery.net/changelog_page.php
+Hi
 
-- 0000769: [security] Affichage des adresses email des utilisateurs en mode 
-adviser (Pat) - closed.
+> The Slashdote (also just known as Slash) vulnerability was an SQL
+> injection. Its effect was to allow a user with no special authorization to
+> read any information from any table the Slash site's mysql user was
+> authorized to read (which may include other databases, including
+> information_schema).
+<snip>
 
-Yeah, it is in french, but nevertheless it's a security issue. (maybe someone 
-wants to write an english advisory)
+CVE-2008-2231 from the debian pool was allocated to this as a reference.
 
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+Cheers
+Steffen
 
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+Download attachment "signature.asc " of type "application/pgp-signature" (190 bytes)
