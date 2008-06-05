@@ -1,46 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/03/9
-Message-ID: <20081203193613.GG21497@ngolde.de>
-Date: Wed, 3 Dec 2008 20:36:13 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/05/1
+Message-Id: <200806051010.57849.rbu@gentoo.org>
+Date: Thu, 5 Jun 2008 10:10:55 +0200
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: redpig@...rt.org, coley@...re.org
-Subject: Re: xine-lib and ocert-2008-008
+Cc: Ned Ludd <solar@...too.org>
+Subject: Re: Python Unsafe Module Loading
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Steven M. Christey <coley@...us.mitre.org> [2008-11-26 09:27]:
-[...] 
-> Name: CVE-2008-5244
-> Status: Candidate
-> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5244
-> Reference: CONFIRM:http://sourceforge.net/project/shownotes.php?release_id=619869
-> Reference: SECTRACK:1020703
-> Reference: URL:http://securitytracker.com/id?1020703
-> 
-> Unspecified vulnerability in xine-lib before 1.1.15 has unknown impact
-> and attack vectors related to libfaad.  NOTE: due to the lack of
-> details, it is not clear whether this is an issue in xine-lib or in
-> libfaad.
+On Wednesday 04 June 2008, Ned Ludd wrote:
+> So for nearly every python based program you can simply dump  *.so
+> *.py *.pyc files just about anywhere on the file system where an
+> admin might invoke python.
 
-Checked back with upstream, this is:
-http://hg.debian.org/hg/xine-lib/xine-lib?cmd=changeset;node=18c0264660b9;style=gitweb
+As I also pointed out in our bug [1], this only happens in two cases:
+(1) The interactive shell is used to run python code.
+(2) A python script resides inside an untrusted directory.
 
-So no xine issue, but a libfaad one.
-Referring to upstream this is a fix for 
-http://caca.zoy.org/attachment/wiki/zzuf/bugs/lol-vlc.aac 
-which originally was CVE-2008-4610. I have no idea nor the 
-time to check the whole patch for the fix for that but I can 
-confirm that it is fixed in 2.6.1, no crash here.
+What I expect to be the most common use case, running python code 
+from /usr, or /home, is safe. Since all out-of-the-box software would 
+be installed in directories that are not world-writable, I am tempted 
+call (2) an error on the user side. Changing the behaviour of python in 
+this manner would also break existing programs.
 
-I contacted upstream to get more information.
 
-Steve, could you update this CVE id?
+Robert
 
-Cheers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+[1] https://bugs.gentoo.org/show_bug.cgi?id=224925
 
-Content of type "application/pgp-signature" skipped
+
+Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
