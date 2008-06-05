@@ -1,32 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/28/3
-Message-ID: <20080328001622.GE19773@ngolde.de>
-Date: Fri, 28 Mar 2008 01:16:23 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/05/3
+Message-ID: <87lk1kb4w2.fsf@mid.deneb.enyo.de>
+Date: Thu, 05 Jun 2008 11:35:57 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVEs for zzuf crashers?
+Cc: Robert Buchholz <rbu@...too.org>
+Subject: Re: Python Unsafe Module Loading
 Content-Type: text/plain; charset=utf-8
 
-Hi Hanno,
-* Hanno Böck <hanno@...eck.de> [2008-03-28 00:26]:
-> Sam Hovecar has created zzuf more than a year ago and posted a bunch of 
-> samples crashing various multimedia and other apps:
-> http://sam.zoy.org/blog/2007-01-16-exposing-file-parsing-vulnerabilities
-> 
-> I've done some re-testing about a year later:
-> http://hboeck.de/archives/578-How-long-does-it-take-to-fix-a-crash-bug.html
-> 
-> Some are still unfixed, I recently opened some upstream bug reports:
-[...] 
-Since a crash itself in a non-service appliction is not necessary
-a security issue I think we should check them in detail 
-before assigning CVE ids for them (does not mean they are 
-non-issues though).
+* Ned Ludd:
 
-Kind regards
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+> Re: (1)
+> How this limited to interactive shells? Our portage/emerge being 
+> directly not vuln is left to near sheer luck that Nick.C opted to shove 
+> a path into our portage module a-long time ago.. But our tools are 
+> questionable as it all depends on load order..
+>
+> More examples:
+>
+> solar@...ia /tmp $ touch re.so
+> solar@...ia /tmp $ cat foo.py 
+> import string
+> print "foo"
+>
+> solar@...ia /tmp $ python foo.py
+> Traceback (most recent call last):
+>   File "foo.py", line 1, in ?
+>     import string
+>   File "/usr/lib/python2.4/string.py", line 83, in ?
+>     import re as _re
+> ImportError: /tmp/re.so: file too short
+> solar@...ia /tmp $ ls -l re.so 
+> -rw-r--r-- 1 solar solar 0 Jun  5 01:22 re.so
 
-Content of type "application/pgp-signature" skipped
+I think this is actually case (2) because it's not the current directory
+which is on the search path, but the directory in which the script
+resides.  They just happen to be the same in your example.
+
+I think the behavior for "python -c" ought to be fixed, though.
