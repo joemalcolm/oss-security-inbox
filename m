@@ -1,18 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/13/4
-Message-ID: <1423939151.130251223911065371.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 13 Oct 2008 11:17:45 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: coley <coley@...re.org>
-Subject: CVE Request (nfs-utils)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/05/2
+Message-Id: <1212654544.6369.4.camel@media>
+Date: Thu, 05 Jun 2008 01:29:04 -0700
+From: Ned Ludd <solar@...too.org>
+To: Robert Buchholz <rbu@...too.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Python Unsafe Module Loading
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
 
-There is a bug in nfs-utils where it won't honor the netgroups setting properly.
+On Thu, 2008-06-05 at 10:10 +0200, Robert Buchholz wrote:
+> On Wednesday 04 June 2008, Ned Ludd wrote:
+> > So for nearly every python based program you can simply dump  *.so
+> > *.py *.pyc files just about anywhere on the file system where an
+> > admin might invoke python.
+> 
+> As I also pointed out in our bug [1], this only happens in two cases:
+> (1) The interactive shell is used to run python code.
+> (2) A python script resides inside an untrusted directory.
+> 
+> What I expect to be the most common use case, running python code 
+> from /usr, or /home, is safe. Since all out-of-the-box software would 
+> be installed in directories that are not world-writable, I am tempted 
+> call (2) an error on the user side. Changing the behaviour of python in 
+> this manner would also break existing programs.
+> 
+> 
+> Robert
+> 
+> [1] https://bugs.gentoo.org/show_bug.cgi?id=224925
+> 
 
-https://bugzilla.redhat.com/show_bug.cgi?id=458676
 
--- 
-    JB
+Re: (1)
+How this limited to interactive shells? Our portage/emerge being 
+directly not vuln is left to near sheer luck that Nick.C opted to shove 
+a path into our portage module a-long time ago.. But our tools are 
+questionable as it all depends on load order..
+
+More examples:
+
+solar@...ia /tmp $ touch re.so
+solar@...ia /tmp $ cat foo.py 
+import string
+print "foo"
+
+solar@...ia /tmp $ python foo.py
+Traceback (most recent call last):
+  File "foo.py", line 1, in ?
+    import string
+  File "/usr/lib/python2.4/string.py", line 83, in ?
+    import re as _re
+ImportError: /tmp/re.so: file too short
+solar@...ia /tmp $ ls -l re.so 
+-rw-r--r-- 1 solar solar 0 Jun  5 01:22 re.so
+
+(2) yeah that's pretty much 50% of the problem.
+
