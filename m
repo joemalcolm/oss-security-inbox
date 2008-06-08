@@ -1,26 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/01/4
-Message-ID: <20080401110847.43ec1e36@redhat.com>
-Date: Tue, 1 Apr 2008 11:08:47 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: ludwig.nussel@...e.de
-Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...re.org>
-Subject: Re: CVE Request: otrs authentication bypass
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/08/1
+Message-Id: <200806081940.39502.hanno@hboeck.de>
+Date: Sun, 8 Jun 2008 19:40:39 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Cc: coley@...re.org
+Subject: CVE-Request: courier-authlib sql injection
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 1 Apr 2008 09:20:52 +0200 Ludwig Nussel <ludwig.nussel@...e.de>
-wrote:
+courier-authlib before 0.60.6 suffers from an sql injection.
 
-> OTRS has released a new version that fixes an authentication bypass:
-> http://otrs.org/advisory/OSA-2008-01-en/
+The sourceforge webarchive is somehow broken and the gmame one isn't 
+up-to-date, so I can't post the announcement...
 
-I see:
-
-  CVE:          CVE-2008-1515
-
-in the advisory...
-
-HTH
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
