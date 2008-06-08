@@ -1,24 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/18/4
-Message-ID: <Pine.GSO.4.51.0807181147300.17955@faron.mitre.org>
-Date: Fri, 18 Jul 2008 11:47:34 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/08/2
+Message-Id: <200806090020.52171.rbu@gentoo.org>
+Date: Mon, 9 Jun 2008 00:20:49 +0200
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: Re: CVE request: phpbb < 3.0.2
+Subject: Re: CVE-Request: courier-authlib sql injection
 Content-Type: text/plain; charset=utf-8
 
+On Sunday 08 June 2008, Hanno Böck wrote:
+> courier-authlib before 0.60.6 suffers from an sql injection.
+>
+> The sourceforge webarchive is somehow broken and the gmame one isn't
+> up-to-date, so I can't post the announcement...
 
-======================================================
-Name: CVE-2008-3224
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3224
-Reference: MLIST:[oss-security] 20080712 CVE request: phpbb < 3.0.2
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/07/12/1
-Reference: CONFIRM:http://www.phpbb.com/community/viewtopic.php?f=14&t=1059565&sid=2d3a6352a484588e1ad80f09dd19fe33
+Christian Hoffmann pointed out this link on our bug:
+http://marc.info/?l=courier-users&m=121294465330832
 
-Unspecified vulnerability in phpBB before 3.0.1 has unknown impact and
-attack vectors related to "urls gone through redirect() being used
-within login_box()."
+Robert
 
-
+Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
