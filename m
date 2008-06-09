@@ -1,34 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/19/3
-Message-ID: <20080819162257.GA12901@ngolde.de>
-Date: Tue, 19 Aug 2008 18:22:57 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: swfdec 0.6.8 stable update
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/09/1
+Message-ID: <20080609230649.GI1354@fuse.inversepath.com>
+Date: Mon, 9 Jun 2008 23:06:49 +0000
+From: Andrea Barisani <lcars@...rt.org>
+To: ocert-announce@...ts.ocert.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: [oCERT-2008-006] multiple SNMP implementations HMAC authentication spoofing
 Content-Type: text/plain; charset=utf-8
 
-Hi Marcus,
-* Marcus Meissner <meissner@...e.de> [2008-08-19 16:48]:
-> Wonder if we should track updates for swfdec. The 0.6.8 announcement
-> looks like it at least fixes several Denial of Service problems:
-[...] 
-I have problems to understand why this would be a Denial of 
-Service. While I don't share the opinion about browser 
-crashes I think there are at least good arguments for both 
-sides.
 
-But if swfdec crashes on playing a flash movie this 
-looks like an application bug. At least I wouldn't talk 
-about Denial of Service if vim would crash on opening a text 
-file.
+2008/06/09 #2008-006 multiple SNMP implementations HMAC authentication spoofing
 
-It would be interesting what is causing this crash and if 
-there is underlying a more serious issue.
+Description:
 
-Kind regards
-Nico
+Some SNMP implementations include incomplete HMAC authentication code that
+allows spoofing of authenticated SNMPv3 packets.
+
+The authentication code reads the length to be checked from sender input,
+this allows the sender to supply single byte HMAC code and have a 1 in 256
+chance of matching the correct HMAC and authenticating, as only the first
+byte will be checked. The sender would need to know a valid username.
+
+Currently Net-SNMP and UCD-SNMP are known to be vulnerable, other SNMP
+implementations may also be affected. The eCos project includes code derived
+from UCD-SNMP and is therefore also affected.
+
+Affected version:
+
+Net-SNMP <= 5.4.1, <= 5.3.2, <= 5.2.4
+UCD-SNMP, all versions
+eCos, all versions
+
+Fixed version:
+
+Net-SNMP >= 5.4.1.1, >= 5.3.2.1, >= 5.2.4.1
+UCD-SNMP, N/A
+eCos, N/A
+
+Credit: this issue was reported by CERT/CC, it is tracked as VU#878044.
+
+CVE: CVE-2008-0960
+
+Timeline:
+2008-06-05: CERT/CC reports VU#878044 to oCERT requesting joint coordination
+2008-06-05: contacted affected vendors
+2008-06-06: added eCos to affected packages
+2008-06-09: patched net-snmp packages released
+2008-06-09: advisory release
+
+References:
+http://sourceforge.net/forum/forum.php?forum_id=833770
+http://sourceforge.net/tracker/index.php?func=detail&aid=1989089&group_id=12694&atid=456380
+http://www.kb.cert.org/vuls/id/878044
+
+Links:
+http://www.net-snmp.org
+http://www.ece.ucdavis.edu/ucd-snmp
+http://ecos.sourceware.org
+
+Permalink:
+http://www.ocert.org/advisories/ocert-2008-006.html
+
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | Open Source Computer Emergency Response Team
 
-Content of type "application/pgp-signature" skipped
+<lcars@...rt.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
