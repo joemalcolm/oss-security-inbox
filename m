@@ -1,34 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/26/8
-Message-ID: <48B41A98.2040405@redhat.com>
-Date: Tue, 26 Aug 2008 23:00:40 +0800
-From: Eugene Teo <eteo@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/10/2
+Message-ID: <8453.1213124558@devserv.devel.redhat.com>
+Date: Tue, 10 Jun 2008 15:02:38 -0400
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: coley@...re.org
-Subject: Re: CVE request: kernel: sctp: fix potential panics in the SCTP-AUTH API
+Subject: FreeType 2.3.6
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
+So it seems FreeType 2.3.6 fixes some security issues:
 
-Steven M. Christey wrote:
-> On Mon, 25 Aug 2008, Eugene Teo wrote:
-> 
->> "[PATCH] sctp: fix potential panics in the SCTP-AUTH API.
->>
->> All of the SCTP-AUTH socket options could cause a panic if the extension
->> is disabled and the API is envoked.
-> 
-> Use CVE-2008-3792, to be filled in later.
-> 
->> Additionally, there were some additional assumptions that certain
->> pointers would always be valid which may not always be the case."
-> 
-> Use CVE-2008-3793, to be filled in later.  I'm assuming that when
-> SCTP-AUTH is enabled, that these APIs are reachable from unprivileged
-> users?
+    - A  bunch of  potential security  problems have  been found.  All
+      users should update.
 
-One CVE name is sufficient for this. So, we will just use CVE-2008-3792?
+Does anyone have a freetype contact who we can try to convince to work with
+the community in the future (or give us patches for these)?
 
-Thanks, Eugene
+Thanks.
+
 -- 
-Eugene Teo / Red Hat Security Response Team
+    JB
