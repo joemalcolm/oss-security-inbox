@@ -1,24 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/15/3
-Message-ID: <48A588EB.3030501@redhat.com>
-Date: Fri, 15 Aug 2008 21:47:23 +0800
-From: Eugene Teo <eteo@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/10/4
+Message-ID: <17746.1213141161@devserv.devel.redhat.com>
+Date: Tue, 10 Jun 2008 19:39:21 -0400
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2008-3276 Linux kernel dccp_setsockopt_change() integer overflow
+Subject: Re: FreeType 2.3.6
 Content-Type: text/plain; charset=utf-8
 
-An integer overflow flaw was found in the Linux kernel
-dccp_setsockopt_change() function. The vulnerability exists due to a
-lack of sanitisation performed on a user-controlled integer value before
-the value is employed as the size argument of a memory allocation
-operation. An attacker may leverage this vulnerability to trigger a
-kernel panic on a victim's machine remotely.
+On 10 June 2008, Josh Bressers wrote:
+> So it seems FreeType 2.3.6 fixes some security issues:
+> 
+>     - A  bunch of  potential security  problems have  been found.  All
+>       users should update.
+> 
+> Does anyone have a freetype contact who we can try to convince to work with
+> the community in the future (or give us patches for these)?
+> 
 
-This affects kernel versions since 2.6.17-rc1. The proposed upstream
-commit is: 3e8a0a559c66ee9e7468195691a56fefc3589740
+After looking at the iDefense advisory, and through the Freetype changelog,
+it looks like this is the changeset we need to fix this:
 
-I have allocated this CVE-2008-3276.
+2008-06-08  Werner Lemberg
 
-Thanks, Eugene
+        * src/type1/t1parse.h (T1_ParserRec): Make `base_len' and
+        `private_len' unsigned.
+
+        * src/type1/t1parse.c (read_pfb_tag): Make `asize' unsigned and
+        * read
+        it as such.
+        (T1_New_Parser, T1_Get_Private_Dict): Make `size' unsigned.
+
+
+        * src/base/ftstream.c (FT_Stream_Skip): Reject negative values.
+
+
+        * src/type1/t1load.c (parse_blend_design_positions): Check `n_axis'
+        for sane value.
+        Fix typo.
+
+
+        * src/psaux/psobjs.c (ps_table_add): Check `idx' correctly.
+
+
+        * src/truetype/ttinterp (Ins_SHC): Use BOUNDS() to check
+        `last_point'.
+
+
+        * src/sfnt/ttload.c (tt_face_load_max_profile): Limit
+        `maxTwilightPoints'.
+
+I'll attach the patch (with comment changes stripped).
+
 -- 
-Eugene Teo / Red Hat Security Response Team
+    JB
+
+
+View attachment "freetype.patch" of type "text/plain" (5812 bytes)
