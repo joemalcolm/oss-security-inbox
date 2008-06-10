@@ -1,23 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/24/6
-Message-ID: <Pine.GSO.4.51.0803241818050.27382@faron.mitre.org>
-Date: Mon, 24 Mar 2008 18:18:13 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/10/3
+Message-ID: <20080610232906.GA4586@openwall.com>
+Date: Wed, 11 Jun 2008 03:29:06 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re:  CVE Request: openssh local users may hijack forwarded X connections
+Subject: Re: exploitability of off-by-one in motion webserver
 Content-Type: text/plain; charset=utf-8
 
+On Tue, Jun 10, 2008 at 06:24:33PM +0200, Nico Golde wrote:
+> 1950 static int read_client(int client_socket, void *userdata, char *auth)
+> ....
+> 1953         int ret = 1;
+> 1954         char buffer[1024] = {'\0'};
+> 1955         int length = 1024;
+...
+> Overwriting the frame pointer should be not possible since there are variables
+> on the stack before buffer.
 
-======================================================
-Name: CVE-2008-1483
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1483
-Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=463011
+You're assuming that all automatic variables are allocated on the stack
+and in-order, but neither has to be the case.  The compiler is free to
+place these variables in registers (in which case it might or might not
+also allocate stack space for them), to re-order the variables that it
+does allocate stack space for, and even to optimize some variables out
+if it can.
 
-OpenSSH 4.3p2, and probably other versions, allows local users to
-hijack forwarded X connections by causing ssh to set DISPLAY to :10,
-even when another process is listening on the associated port, as
-demonstrated by opening TCP port 6010 (IPv4) and sniffing a cookie
-sent by Emacs.
+This means that the frame pointer attack is not out of consideration.
+The risk is there.
 
+> However it should be possible to overwrite ret with 0 which is used in line 2073 as
+> the return value of the function (normal termination returns 1).
+...
+> This is the theoretical point but I was not able to reproduce this on
+> a 64bit system. Does anyone have an idea why this could be the case or
+> is even able to reproduce this?
 
+I'd expect "ret" to be placed into a register, or at least cached in a
+register, which explains why you're not able to affect its value.  Of
+course, there's no guarantee that it won't be read back from the stack
+in another build, allowing for the attack in case it's also placed right
+above the buffer.  (I assume that you're on little-endian.)
+
+I hope this helps.
+ 
+Alexander
