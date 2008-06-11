@@ -1,36 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/18/3
-Message-Id: <1221744482.7082.29.camel@dhcp-lab-164.englab.brq.redhat.com>
-Date: Thu, 18 Sep 2008 15:28:02 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: coley@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: CVE Request (openswan, emacspeak, cman)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/11/4
+Message-ID: <20080611154814.GA31330@ngolde.de>
+Date: Wed, 11 Jun 2008 17:48:14 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE id request: nasm off-by-one
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve,
+Hi,
+There is an off-by-one in the ppscan() function which is 
+used to preprocess files.
 
-  could you please assign a CVE ids for the following three
-issues:
+Details:
+https://sourceforge.net/tracker/?func=detail&atid=106208&aid=1942146&group_id=6208
 
-a, openswan: Insecure auxiliary /tmp file usage (symlink attack possible)
-   Affected file: /usr/libexec/ipsec/livetest 
-   References: https://bugzilla.redhat.com/show_bug.cgi?id=460425
-               http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=496374
+Can I get a CVE id for this one?
 
-b, emacspeak: Insecure auxiliary /tmp file usage (symlink attack possible)
-   Affected file: /usr/share/emacs/site-lisp/emacspeak/etc/extract-table.pl
-   References: https://bugzilla.redhat.com/show_bug.cgi?id=460435
-               http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=496431
+Cheers
+Nico
 
-c, cman: Insecure auxiliary /tmp file usage (symlink attack possible)
-   Affected file: /sbin/fence_egenera
-   References: https://bugzilla.redhat.com/show_bug.cgi?id=460476
-               http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=496410
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-
-Thank you in advance
-Kind regards
-Jan iankko Lieskovsky
-RH Security Response Team
-
+Content of type "application/pgp-signature" skipped
