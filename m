@@ -1,17 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/10/2
-Message-Id: <200805101447.45081.rbu@gentoo.org>
-Date: Sat, 10 May 2008 14:47:44 +0200
-From: Robert Buchholz <rbu@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/11/3
+Message-ID: <Pine.GSO.4.51.0806102146590.23282@faron.mitre.org>
+Date: Tue, 10 Jun 2008 21:47:06 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Emacs 21 fast-lock-mode arbitrary lips code execution
+cc: coley@...re.org
+Subject: Re: CVE-Request: courier-authlib sql injection
 Content-Type: text/plain; charset=utf-8
 
-Emacs 21 and Xemacs will execute any lisp code present in a .flc file that 
-accompanies the file the user opens.
 
-Details:
-http://thread.gmane.org/gmane.emacs.devel/96903
-https://bugs.gentoo.org/show_bug.cgi?id=221197
+On Sun, 8 Jun 2008, Hanno [utf-8] Böck wrote:
 
-Download attachment "signature.asc " of type "application/pgp-signature" (190 bytes)
+> courier-authlib before 0.60.6 suffers from an sql injection.
+
+Use CVE-2008-2667
+
+- Steve
