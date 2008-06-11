@@ -1,29 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/04/2
-Message-ID: <Pine.GSO.4.51.0803041650310.5494@faron.mitre.org>
-Date: Tue, 4 Mar 2008 16:51:42 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/11/5
+Message-Id: <200806112040.53640.turkay.eren@gmail.com>
+Date: Wed, 11 Jun 2008 20:40:53 +0300
+From: Eren Türkay <turkay.eren@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: request CVE id: insecure handling of DISPLAY in rxvt
+Subject: Re: CVE id request: nasm off-by-one
 Content-Type: text/plain; charset=utf-8
 
-
-On Tue, 4 Mar 2008, Nico Golde wrote:
-
-> "If the DISPLAY environment is not set, rxvt opens an xterm
-> on :0, which on some headless login-server means anyone can setup
-> an fake X server waiting for someone loggin in without X
-> forwarding to start rxvt by some mistake or by some program (thus
-> without even noticing) and getting full shell access to that other
-> account."
+On 11 Jun 2008 Wed 18:48:14 Nico Golde wrote:
+> There is an off-by-one in the ppscan() function which is
+> used to preprocess files.
 >
-> This is Debian bug 469296[0].
+> Details:
+> https://sourceforge.net/tracker/?func=detail&atid=106208&aid=1942146&group_
+>id=6208
+>
+> Can I get a CVE id for this one?
 
-Use CVE-2008-1142
+Secunia [0] implies that this security flaw also ocurrs in 0.x. I looked at 
+the code in 0.98.39 [1] tarball to backport vendor-supported patch but it 
+seems that 0.x is not vulnerable.
 
-I'm not going to pretend to understand this issue, plus Lubomir's bug
-comment raises the question of dependency on user error (though it's
-probably a relatively common error, I'd think).  So, I'll fill in the CVE
-later once this has been fleshed out.
+The control of TOKEN_ID in 2.03 [2] is blow;
 
-- Steve
+    if (tline->type == TOK_ID) {
+        p = tokval->t_charptr = tline->text;
+        if (p[0] == '$') {
+            tokval->t_charptr++;
+            return tokval->t_type = TOKEN_ID;
+        }
+
+        for (r = p, s = ourcopy; *r; r++) {
+            if (r >= p+MAX_KEYWORD)
+                return tokval->t_type = TOKEN_ID; /* Not a keyword */
+            *s++ = tolower(*r);
+        }
+        *s = '\0';
+        return nasm_token_hash(ourcopy, tokval);
+    }
+
+While 0.98.39 has;
+
+    if (tline->type == TOK_ID) {
+        tokval->t_charptr = tline->text;
+        if (tline->text[0] == '$') {
+            tokval->t_charptr++;
+            return tokval->t_type = TOKEN_ID;
+        }
+
+        if (!nasm_stricmp(tline->text, "seg"))
+            return tokval->t_type = TOKEN_SEG;
+
+        return tokval->t_type = TOKEN_ID;
+    }
+
+There is only control for "seq" value, and after it, it just returns TOKEN_ID. 
+Could someone shed light on this issue, I'm not completely sure whether this 
+occurs in 0.x, too.
+
+[0] http://secunia.com/advisories/30594/
+[1] http://ovh.dl.sourceforge.net/sourceforge/nasm/nasm-0.98.39.tar.bz2
+[2] ftp://ftp.zytor.com/pub/nasm/releasebuilds/2.03/nasm-2.03.tar.bz2
