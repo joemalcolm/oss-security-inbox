@@ -1,41 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/03/2
-Message-ID: <Pine.GSO.4.51.0812031152550.15404@faron.mitre.org>
-Date: Wed, 3 Dec 2008 11:52:59 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: OSS Security <oss-security@...ts.openwall.com>
-cc: coley@...re.org
-Subject: Re: CVE request: lcms (old issues)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/11/1
+Message-ID: <20080611001422.GE7320@ngolde.de>
+Date: Wed, 11 Jun 2008 02:14:22 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com
+Cc: coley@...re.org
+Subject: Re: exploitability of off-by-one in motion webserver
 Content-Type: text/plain; charset=utf-8
 
+Hi,
+* Solar Designer <solar@...nwall.com> [2008-06-11 01:41]:
+> On Tue, Jun 10, 2008 at 06:24:33PM +0200, Nico Golde wrote:
+> > 1950 static int read_client(int client_socket, void *userdata, char *auth)
+> > ....
+> > 1953         int ret = 1;
+> > 1954         char buffer[1024] = {'\0'};
+> > 1955         int length = 1024;
+> ...
+> > Overwriting the frame pointer should be not possible since there are variables
+> > on the stack before buffer.
+> 
+> You're assuming that all automatic variables are allocated on the stack
+> and in-order, but neither has to be the case.  The compiler is free to
+> place these variables in registers (in which case it might or mIGHT NOT
+> also allocate stack space for them), to re-order the variables that it
+> does allocate stack space for, and even to optimize some variables out
+> if it can.
+> 
+> This means that the frame pointer attack is not out of consideration.
+> The risk is there.
 
-======================================================
-Name: CVE-2008-5316
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5316
-Reference: MLIST:[oss-security] 20081128 CVE request: lcms (old issues)
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/28/3
-Reference: CONFIRM:http://lcms.cvs.sourceforge.net/viewvc/lcms/lcms/src/cmsio1.c?r1=1.33&r2=1.34
+True that makes sense. Thanks for pointing this out.
+In this case it might be good to have a CVE id allocated for 
+this. Steve, can you provide one?
 
-Buffer overflow in the ReadEmbeddedTextTag function in src/cmsio1.c in
-Little cms color engine (aka lcms) before 1.16 allows attackers to
-have an unknown impact via vectors related to a length parameter
-inconsistency involving the contents of "the input file," a different
-vulnerability than CVE-2007-2741.
+> > However it should be possible to overwrite ret with 0 which is used in line 2073 as
+> > the return value of the function (normal termination returns 1).
+> ...
+> > This is the theoretical point but I was not able to reproduce this on
+> > a 64bit system. Does anyone have an idea why this could be the case or
+> > is even able to reproduce this?
+> 
+> I'd expect "ret" to be placed into a register, or at least cached in a
+> register, which explains why you're not able to affect its value.  Of
+> course, there's no guarantee that it won't be read back from the stack
+> in another build, allowing for the attack in case it's also placed right
+> above the buffer.  (I assume that you're on little-endian.)
 
+Yes this is little-endian(amd64) and having a deeper look at 
+the generated code you are right as well, this is indeed 
+place into a register.
 
-======================================================
-Name: CVE-2008-5317
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5317
-Reference: MLIST:[oss-security] 20081128 CVE request: lcms (old issues)
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/28/3
-Reference: CONFIRM:http://lcms.cvs.sourceforge.net/viewvc/lcms/lcms/src/cmsgamma.c?view=diff&r1=1.16&r2=1.17
+> I hope this helps.
 
-Integer signedness error in the cmsAllocGamma function in
-src/cmsgamma.c in Little cms color engine (aka lcms) before 1.17
-allows attackers to have an unknown impact via a file containing a
-certain "number of entries" value, which is interpreted improperly,
-leading to an allocation of insufficient memory.
+Yes it does, thanks for your help!
 
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
+Content of type "application/pgp-signature" skipped
