@@ -1,32 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/07/9
-Message-ID: <20080407163933.GB27995@ngolde.de>
-Date: Mon, 7 Apr 2008 18:39:33 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/11/2
+Message-ID: <Pine.GSO.4.51.0806102037420.23282@faron.mitre.org>
+Date: Tue, 10 Jun 2008 20:37:57 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: gcc 4.2 optimizations and integer overflow checks
+Subject: Re: exploitability of off-by-one in motion webserver
 Content-Type: text/plain; charset=utf-8
 
-Hi Steven,
-* Steven M. Christey <coley@...us.mitre.org> [2008-04-07 18:24]:
-> While an unusual bug, we decided to assign a CVE for it.
-> 
-> - Steve
-> 
-> ======================================================
-> Name: CVE-2008-1685
-> Status: Candidate
-> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1685
-> Reference: CERT-VN:VU#162289
-> Reference: URL:http://www.kb.cert.org/vuls/id/162289
-[...] 
-Please add http://gcc.gnu.org/bugzilla/show_bug.cgi?id=26763 
-to the references.
 
-Kind regards
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+On Tue, 10 Jun 2008, Nico Golde wrote:
 
-Content of type "application/pgp-signature" skipped
+> Hi,
+> in http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=484572 I
+> reported an off-by-one programming error in motion:
+>
+> 1950 static int read_client(int client_socket, void *userdata, char *auth)
+
+Use CVE-2008-2654
+
+- Steve
