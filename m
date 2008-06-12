@@ -1,19 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/17/2
-Message-ID: <20080617101035.16228b67@redhat.com>
-Date: Tue, 17 Jun 2008 10:10:35 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: thomas@...e.de
-Cc: oss-security@...ts.openwall.com
-Subject: Re: FreeType 2.3.6
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/12/1
+Message-ID: <b357636cf6ba980046fc788ceea80740.squirrel@wm.kinkhorst.nl>
+Date: Thu, 12 Jun 2008 09:55:50 +0200 (CEST)
+From: "Thijs Kinkhorst" <thijs@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE id request: TYPO3-20080611-1: Multiple vulnerabilities in  TYPO3 Core
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 17 Jun 2008 10:05:17 +0200 Thomas Biege <thomas@...e.de> wrote:
+Hi,
 
-> Are CVE-IDs assigned for this issues?
+Does anyone already have a CVE id, or could I get one (probably two)
+assigned for, the following TYPO3 security announcement:
 
-Yes, CVE-2008-1806 CVE-2008-1807 CVE-2008-1808.  See NVD site or
-iDefense advisories.
+http://typo3.org/teams/security/security-bulletins/typo3-20080611-1/
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+Vulnerability #1: Default value of fileDenyPattern allows arbitrary code
+execution on Apache
+Vulnerability #2: fe_adminlib.inc allows Cross Site Scripting
+
+
+cheers,
+Thijs
+
