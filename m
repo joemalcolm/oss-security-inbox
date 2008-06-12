@@ -1,58 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/21/18
-Message-ID: <4926883C.5080505@pardus.org.tr>
-Date: Fri, 21 Nov 2008 12:06:52 +0200
-From: Pınar Yanardağ <pinar@...dus.org.tr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/12/3
+Message-ID: <20080612105024.GA23449@suse.de>
+Date: Thu, 12 Jun 2008 12:50:24 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: imlib2
+Subject: Re: CVE id request: nasm off-by-one
 Content-Type: text/plain; charset=utf-8
 
-On 11/21/2008 03:35 AM Steven M. Christey wrote:
-> SECUNIA:32796 suggests a Debian bug report, but I couldn't quickly find
-> it.
->   
+On Wed, Jun 11, 2008 at 08:40:53PM +0300, Eren Türkay wrote:
+> On 11 Jun 2008 Wed 18:48:14 Nico Golde wrote:
+> > There is an off-by-one in the ppscan() function which is
+> > used to preprocess files.
+> >
+> > Details:
+> > https://sourceforge.net/tracker/?func=detail&atid=106208&aid=1942146&group_
+> >id=6208
+> >
+> > Can I get a CVE id for this one?
+> 
+> Secunia [0] implies that this security flaw also ocurrs in 0.x. I looked at 
+> the code in 0.98.39 [1] tarball to backport vendor-supported patch but it 
+> seems that 0.x is not vulnerable.
+> 
+> The control of TOKEN_ID in 2.03 [2] is blow;
+> 
+>     if (tline->type == TOK_ID) {
+>         p = tokval->t_charptr = tline->text;
+>         if (p[0] == '$') {
+>             tokval->t_charptr++;
+>             return tokval->t_type = TOKEN_ID;
+>         }
+> 
+>         for (r = p, s = ourcopy; *r; r++) {
+>             if (r >= p+MAX_KEYWORD)
+>                 return tokval->t_type = TOKEN_ID; /* Not a keyword */
+>             *s++ = tolower(*r);
+>         }
+>         *s = '\0';
+>         return nasm_token_hash(ourcopy, tokval);
+>     }
+> 
+> While 0.98.39 has;
+> 
+>     if (tline->type == TOK_ID) {
+>         tokval->t_charptr = tline->text;
+>         if (tline->text[0] == '$') {
+>             tokval->t_charptr++;
+>             return tokval->t_type = TOKEN_ID;
+>         }
+> 
+>         if (!nasm_stricmp(tline->text, "seg"))
+>             return tokval->t_type = TOKEN_SEG;
+> 
+>         return tokval->t_type = TOKEN_ID;
+>     }
+> 
+> There is only control for "seq" value, and after it, it just returns TOKEN_ID. 
+> Could someone shed light on this issue, I'm not completely sure whether this 
+> occurs in 0.x, too.
+> 
+> [0] http://secunia.com/advisories/30594/
+> [1] http://ovh.dl.sourceforge.net/sourceforge/nasm/nasm-0.98.39.tar.bz2
+> [2] ftp://ftp.zytor.com/pub/nasm/releasebuilds/2.03/nasm-2.03.tar.bz2
 
+I would say that this is the usual badly researched list of versions we see
+from the security resellers.
 
-It seems they've added the reference today:
+And yes, only the the second snippet has the problem.
 
------
-*Changelog*:
-2008-11-21: Added link to "Original Advisory" section.
+Btw, we just fixed this as regular bug (the original report was from us).
 
-*Original Advisory*:
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=505714
-
-----
-
-
-
-> ======================================================
-> Name: CVE-2008-5187
-> Status: Candidate
-> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5187
-> Reference: MLIST:[oss-security] 20081120 CVE Request: imlib2
-> Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/20/5
-> Reference: SECUNIA:32796
-> Reference: URL:http://secunia.com/advisories/32796
->
-> The load function in the XPM loader for imlib2 1.4.2, and possibly
-> other versions, allows attackers to execute arbitrary code via a
-> crafted XPM file that triggers a "pointer arithmetic error" and a
-> heap-based buffer overflow, a different vulnerability than
-> CVE-2008-2426.  NOTE: the provenance of this information is unknown;
-> the details are obtained solely from third party information.
->
->
->
->   
-
-
--- 
-Pınar Yanardağ (a.k.a PINguAR)
-http://pinguar.org
-_____________________________
-
-Pardus Security Team
-http://security.pardus.org.tr
-
-
+Ciao, Marcus
