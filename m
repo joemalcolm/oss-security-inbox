@@ -1,53 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/28/13
-Message-ID: <20080328142752.GA26532@pcpool00.mathematik.uni-freiburg.de>
-Date: Fri, 28 Mar 2008 15:27:52 +0100
-From: "Bernhard R. Link" <brlink@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/12/2
+Message-Id: <200806121234.04677.hanno@hboeck.de>
+Date: Thu, 12 Jun 2008 12:34:01 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: request CVE id: insecure handling of DISPLAY in rxvt
+Cc: coley@...re.org
+Subject: CVE id request: menalto gallery
 Content-Type: text/plain; charset=utf-8
 
-* Robert Buchholz <rbu@...too.org> [080327 03:30]:
-> The same issue also exists in:
-> aterm, tested 1.0.1
-> mrxvt, tested 0.5.3
-> multi-aterm, tested 0.2.1
-> rxvt-unicode, tested 8.3 and 8.9
-> wterm, tested with 6.2.9
+http://gallery.menalto.com/gallery_2.2.5_released
 
-These seem all to be rxvt forks. (At least aterm and wterm are, I'm
-judging the rest by their names).
+cite:
 
-> eterm, tested 0.9.4
+Gallery 2.2.5 addresses the following security vulnerabilities:
 
-That seems to be an independent buggy implementation.
-(I've sent a patch to the Debian bts at http://bugs.debian.org/473127)
+    * XSS through host and path component of request URL - The complete 
+request URL is now properly sanitized (applying the same input filtering as 
+for all other inputs). This severe vulnerability affects all modules.
+    * Information disclosure in album-select module - Fixed exposure of album 
+titles through the album-select module when a guest would add a new album to 
+a hidden album.
+    * Permission escalation through zip archive extraction - No longer 
+creating sub-albums when adding items from a zip archive if the active user 
+does not have the necessary permission to do so.
+    * Information disclosure through embed.php - embed.php is no longer 
+susceptible to spoofing the remote address and thus no longer discloses the 
+local filesystem path of the Gallery 2 installation folder.
+    * View permissions not enforced for password protected items - No longer 
+offering the option to protect non-album items directly and only offering the 
+feature for albums since full protection only applies to the items within the 
+album.
 
-> This is almost half of the terminal emulators I tried. There are
-> probably tons of other X applications doing this, not all with the
-> impact of a shell, but many allow starting other programs one way or
-> another.
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
-I'm really quite suprised to see this, as an application has to
-actually do something to end up having this problem.
-
-> Reading the attack vector, I would consider it a vulnerability, but
-> looking at the amount of programs that fall into this category, I'm
-> worried how many programs do this and if the low impact is really worth
-> fixing all of them.
-
-Clicking fast enough to enter some commands is not that easy, and not every
-program will allow direct entering of commands, so I guess are most
-programs are only usability problems (you get to wait 3 to 10 seconds
-before you get an error message when by mistake starting it via an ssh
-without -X), and a malicious fake X server would most likely be prepared
-for every single program (to reject unexploitable programe early so it
-is not noticed, and to send the keyboard events to the right window), so
-most programs might not be that much of a problem.
-
-On the other hand, having so many different terminals with almost
-identical source might make it even easier to write one exploit that
-can cope with all of them.
-
-Hochachtungsvoll,
-	Bernhard R. Link
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
