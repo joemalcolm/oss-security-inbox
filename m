@@ -1,34 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/22/8
-Message-ID: <20080222131300.GF17228@suse.de>
-Date: Fri, 22 Feb 2008 14:13:00 +0100
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/12/4
+Message-ID: <41250.141.76.45.35.1213287131.squirrel@mail.macmail.com>
+Date: Thu, 12 Jun 2008 17:12:11 +0100 (BST)
+From: pandora@...mail.com
 To: oss-security@...ts.openwall.com
-Subject: Re: first spam message on the list
+Subject: malloc and heap corruption
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Feb 21, 2008 at 09:23:19PM -0500, Josh Bressers wrote:
-> > This was unusually quick.  S - thank you for posting the list address on
-> > a blog non-obfuscated. :-(
-> > 
-> > http://c-skills.blogspot.com/2008/02/open-source-software-security-wiki.html
-> 
-> Well, while this is lame, it was bound to happen eventually anyhow.
+Hi,
 
-Please don't overreact.
-Spam emails will not be stopped by obfuscating email addresses in a static
-manner or by suppressing information in other ways.
+(apologies if this is not appropriate content, but secproc seems dead)
 
-This is not a closed-source obscurity list.
+I've just read up a bit on heap corruption and malloc implementations, and
+found that there's at least one open source malloc (dnmalloc by Yves Younan,
+http://www.fort-knox.org/) which claims to be invulnerable against
+overflows and double frees (it keeps heap management data in a separate area
+protected by guard pages), at performance cempetitive to glibc malloc.
+
+However, it seems nobody has picked up on that (only a prototype, apparently
+coded as part of a PhD thesis, has been released two years ago), thus I
+wonder what the reason is.
+
+Is the whole idea is somehow flawed? Can one construct heap buffer overflows
+that could jump across a guard page without touching it? Would you consider
+silent data corruption (dnmalloc only protects the heap management data) as
+more ominous than the possibility of executing arbitrary code?
+
+(No, I'm not the dnmalloc author, and I'm not begging for code review
+either - I would just like to know whether there is some obvious reason
+why it would be stupid to use it in my app instead of the glibc malloc).
+
+Thanks.
+
+- IB
 
 
 -- 
-Bye,
-     Thomas
--- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
--- 
-           Hamming's Motto:
-           The purpose of computing is insight, not numbers.
-                                -- Richard W. Hamming
+MacMail - the Webmail service especially for Mac users worldwide
+http://www.macmail.com
