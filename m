@@ -1,71 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/20/4
-Message-ID: <20081120120449.GA326@ngolde.de>
-Date: Thu, 20 Nov 2008 13:04:49 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Cc: toots@...tageeks.org
-Subject: CVE id request: another geshi issue (was: GeSHi: Clarification about the recent security (non-)issues (SA32559))
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/14/1
+Message-ID: <20080614081658.GA19914@suse.de>
+Date: Sat, 14 Jun 2008 10:16:59 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: oss-security@...ts.openwall.com, coley@...re.org
+Subject: CVE request: Opera 9.50
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Christian Hoffmann <hoffie@...too.org> [2008-11-10 19:09]:
-> I was reading up on Secunia Advisory 32559 [1] and the related upstream
-> statement [2] and ChangeLog [3] and well, it left me with some mixed
-> impressions, what's true and what not, so I took a closer look.
-[...] 
-A more important issue has been silently fixed as well. Unfortunately 
-I can not find a public reference or a changelog entry to it. 
-A user can get geshi into an infinite loop and thus causing 
-a DoS (php process will eat a lot CPU) by highlighting a 
-crafted xml sequence. As a PoC '<' works.
+Hi Stephen,
 
-The upstream fix for this is 
-http://geshi.svn.sourceforge.net/viewvc/geshi/trunk/geshi-1.0.X/src/geshi.php?r1=1321&r2=1322&view=patch
+Opera 9.50 was released and has quite a list of security issues,
+http://www.opera.com/docs/changelogs/windows/950/ , the Security
+section.
 
-Let me explain a little.
-geshi.php:
-   1520         $code = "\n" . $code . "\n";
-    ..
-   1523         $length           = strlen($code);
-    ..
-   1545             for ($i = 0; $i < $length; ++$i) {
-   1546                 foreach ($this->language_data['SCRIPT_DELIMITERS'] as $delimiters) {
-   1547                     foreach ($delimiters as $open => $close) {
-   1548                         // Get the next little bit for this opening string
-   1549                         $open_strlen = strlen($open);
-   1550                         $check = substr($code, $i, $open_strlen);
-   1551                         // If it matches...
-   1552                         if ($check == $open) {
-    ..
-   1556                             $parts[$k][0] = $open;
-   1557                             $close_i = strpos($code, $close, $i + $open_strlen)  + strlen($close);
-   1558                             if ($close_i === false) {
-   1559                                 $close_i = $length - 1;
-   1560                             }
-    ..
-   1562                             $i = $close_i - 1;
-    ..
-   1569                         }
-   1570                     }
-   1571                 }
+Can you please assign CVEs?
 
-$this->language_data['SCRIPT_DELIMITERS'] is defined as an array of arrays that
-holds start and end tags, in the case for xml this is holds a tuple ('<', '>')
-and assigns them to $open and $close.
-
-For < in line 1557 strpos will fail resulting in false because there is no
-close tag.  Adding strlen($close) to it will result in $close_i being 1. In
-line 1562 $i will be set $close_i - 1 resulting in 1 being 0. Loop starts again
-and $i is 1 again -> infinite loop.
-
-Steve, can you assign a CVE id to this? This should affect every version < 1.0.8.
-
-Cheers
-Nico
-
+Ciao, Marcus
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+Working, but not speaking, for the following german company:
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
