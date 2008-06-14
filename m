@@ -1,30 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/08/5
-Message-ID: <Pine.GSO.4.51.0810081731020.15489@faron.mitre.org>
-Date: Wed, 8 Oct 2008 17:37:58 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/14/2
+Message-ID: <20080614093645.GA2561@ngolde.de>
+Date: Sat, 14 Jun 2008 11:36:45 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: data-destroiny malfunction: is that a "security" issue
+Subject: Re: CVE request: Opera 9.50
 Content-Type: text/plain; charset=utf-8
 
+Hi Marcus,
+* Marcus Meissner <meissner@...e.de> [2008-06-14 11:20]:
+> Opera 9.50 was released and has quite a list of security issues,
+> http://www.opera.com/docs/changelogs/windows/950/ , the Security
+> section.
+> 
+> Can you please assign CVEs?
 
-I don't think this is a security issue either, at least not in terms of
-CVE coverage or how I define "vulnerability."  For there to be a
-vulnerability, there needs to be some "attacker" role.  The attacker can
-either actively force the error (as in a classic buffer overflow attack
-against a server), passively benefit (as in an accidental information
-leak), or perform some social engineering attack that has a high
-likelihood of succeeding for a user during typical operations (e.g.
-accepting a private message in an IRC client).
+Isn't this list about open source software? ;-P
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-Some people might have very generic notions of vulnerability that include
-inadvertent things that trusted people do to themselves, that don't
-benefit any external attacker.  However, it seems that the people who
-think this way are operating in environments with extremely high demands
-for confidentiality, integrity, and availability.
-
-The example you give demonstrates how sometimes, a plain ol' bug can be
-much more serious than a security issue, depending on the priorities of
-the victim.
-
-- Steve
+Content of type "application/pgp-signature" skipped
