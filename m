@@ -1,32 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/01/2
-Message-ID: <20080901070554.GA14496@sdf.lonestar.org>
-Date: Mon, 1 Sep 2008 07:05:54 +0000
-From: Tavis Ormandy <taviso@....lonestar.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/15/2
+Message-Id: <200806152121.39370.steffen.joeris@skolelinux.de>
+Date: Sun, 15 Jun 2008 21:21:30 +1000
+From: Steffen Joeris <steffen.joeris@...lelinux.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: GNU ed heap overflow
+Subject: CVE id request: Clamav
 Content-Type: text/plain; charset=utf-8
 
-If you can specify an arbitrary filename, can't you execute commands
-anyway?
+Hi
 
-$ ed '!ls>&2'
-bin   dev  home  lost+found  misc  net  proc  sbin     srv  tmp  var
-boot  etc  lib   media       mnt   opt  root  selinux  sys  usr
-0
+The upstream changelog says:
+* libclamav/petite.c: fix possible invalid memory access (bb#1000)
+				Reported by Damian Put
 
-Thanks, Tavis.
+This seems to read beyond the end of an array and could potentially lead to a 
+DoS.
 
-On Sun, Aug 31, 2008 at 01:13:01PM +0200, Florian Weimer wrote:
-> Can we get a CVE for this?  The overflow is in the command line
-> processing, and also affects the red command.
-> 
-> | Alfredo Ortega from Core Security Technologies has found that GNU Ed
-> | is vulnerable to a heap overflow.
-> 
-> <http://lists.gnu.org/archive/html/bug-ed/2008-06/msg00000.html>
+Upstream bugreport:
+https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1000
 
--- 
--------------------------------------
-taviso@....lonestar.org | finger me for my gpg key.
--------------------------------------------------------
+
+Could I get a CVE id for this?
+
+Cheers
+Steffen
+
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
