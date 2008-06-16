@@ -1,25 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/17/12
-Message-ID: <Pine.GSO.4.51.0812162128480.5724@faron.mitre.org>
-Date: Tue, 16 Dec 2008 21:28:52 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: Steven Christey <coley@...us.mitre.org>
-Subject: Re: CVE request: moodle (XSS)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/16/5
+Message-ID: <4856B9D5.8010407@freethemallocs.com>
+Date: Mon, 16 Jun 2008 11:07:01 -0800
+From: Jonathan Smith <smithj@...ethemallocs.com>
+To: matthias.andree@....de
+CC: oss-security@...ts.openwall.com
+Subject: Re: CVE Id Request: fetchmail <= 6.3.8 DoS when	logging long headers in -v -v mode
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-======================================================
-Name: CVE-2008-5432
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5432
-Reference: MLIST:[oss-security] 20081209 CVE request: moodle (XSS)
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/12/09/4
-Reference: CONFIRM:http://moodle.org/mod/forum/discuss.php?d=108590
+Matthias Andree wrote:
+> Impeding the 6.3.9 release, there are some nasty bugs that aren't
+> security relevant which are pending the fix, but are hard to debug.
 
-Cross-site scripting (XSS) vulnerability in Moodle before 1.6.8, 1.7
-before 1.7.6, 1.8 before 1.8.7, and 1.9 before 1.9.3 allows remote
-attackers to inject arbitrary web script or HTML via a Wiki page name
-(aka page title).
+Are these bugs regressions against 6.3.8? If so, it might make sense to
+cherry-pick the security fixes from svn and cut a 6.3.8.1 release with
+6.3.8+patches. If not, why let non-regressions hold up 6.3.9?
 
+	smithj
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEAREIAAYFAkhWudUACgkQCG91qXPaRelIxwCgljo90dSgky/T/FTXCLM4sfRp
+/9cAn2hrrcwsuH8a9lIS45z5MiW3IK0c
+=D/74
+-----END PGP SIGNATURE-----
