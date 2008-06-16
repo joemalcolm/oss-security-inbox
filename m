@@ -1,20 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/06/1
-Message-ID: <20080506171454.0c993710@redhat.com>
-Date: Tue, 6 May 2008 17:14:54 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com, coley@...re.org
-Subject: CVE id request - libid3tag
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/16/8
+Message-ID: <Pine.GSO.4.51.0806161654000.16840@faron.mitre.org>
+Date: Mon, 16 Jun 2008 16:54:08 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE id request: Clamav
 Content-Type: text/plain; charset=utf-8
 
-Hi!
 
-There seems to be an infinite loop issue in libid3tag:
+======================================================
+Name: CVE-2008-2713
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2713
+Reference: MLIST:[oss-security] 20080615 CVE id request: Clamav
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/06/15/2
+Reference: CONFIRM:http://svn.clamav.net/websvn/diff.php?repname=clamav-devel&path=/branches/0.93/libclamav/petite.c&rev=3886
+Reference: CONFIRM:https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1000
+Reference: BID:29750
+Reference: URL:http://www.securityfocus.com/bid/29750
 
-http://www.mars.org/mailman/public/mad-dev/2008-January/001366.html
-http://bugs.gentoo.org/show_bug.cgi?id=210564
+libclamav/petite.c in ClamAV before 0.93.1 allows remote attackers to
+cause a denial of service via a crafted Petite file that triggers an
+out-of-bounds read.
 
-Steven, can you please assign CVE id?  Thanks!
 
--- 
-Tomas Hoger / Red Hat Security Response Team
