@@ -1,35 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/21/14
-Message-ID: <28fa9c5e0811201826n2ff949d6l1e384a3b34a3b164@mail.gmail.com>
-Date: Fri, 21 Nov 2008 10:26:26 +0800
-From: "Eugene Teo" <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/16/10
+Message-ID: <Pine.GSO.4.51.0806161723090.16840@faron.mitre.org>
+Date: Mon, 16 Jun 2008 17:23:21 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>,  "Mauro Chehab" <mchehab@...hat.com>
-Subject: Re: CVE request: kernel: V4L/DVB (9621): Avoid writing outside shadow.bytes[] array
+Subject: Re: CVE id request: TYPO3-20080611-1: Multiple vulnerabilities in      TYPO3 Core
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
 
-On Fri, Nov 21, 2008 at 9:59 AM, Steven M. Christey
-<coley@...us.mitre.org> wrote:
->
-> On Wed, 19 Nov 2008, Eugene Teo wrote:
->
->> If the write operation fails, the device won't be able to decode audio
->> signals properly, so on further analysis, we probably don't need a CVE
->> name for this. Take note.
->
-> Does this mean, roughly, that this write only occurs into a different
-> portion of a larger contiguous buffer, so it affects audio processing
-> (e.g. throwing an error) or parsing, but otherwise can't be used to affect
-> other memory locations outside that buffer?
+======================================================
+Name: CVE-2008-2717
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2717
+Reference: BUGTRAQ:20080611 TYPO3 Security Bulletin TYPO3-20080611-1: Multiple vulnerabilities in TYPO3 Core
+Reference: URL:http://www.securityfocus.com/archive/1/archive/1/493270/100/0/threaded
+Reference: CONFIRM:http://buzz.typo3.org/teams/security/article/advice-on-core-security-issue-regarding-filedenypattern/
+Reference: CONFIRM:http://typo3.org/teams/security/security-bulletins/typo3-20080611-1/
+Reference: DEBIAN:DSA-1596
+Reference: URL:http://www.debian.org/security/2008/dsa-1596
+Reference: FRSIRT:ADV-2008-1802
+Reference: URL:http://www.frsirt.com/english/advisories/2008/1802
+Reference: SECUNIA:30619
+Reference: URL:http://secunia.com/advisories/30619
+Reference: SECUNIA:30660
+Reference: URL:http://secunia.com/advisories/30660
 
-To be honest, I'm not entirely familiar with the bug. I have Cc'ed
-Mauro who is the maintainer of the driver, and he should be able to
-share with us more about it.
+TYPO3 4.0.x before 4.0.9, 4.1.x before 4.1.7, and 4.2.x before 4.2.1,
+uses an insufficiently restrictive default fileDenyPattern for Apache,
+which allows remote attackers bypass security restrictions and upload
+configuration files such as .htaccess, or conduct file upload attacks
+using multiple extensions.
 
-Mauro, can you explain to us the implications of not including the
-"V4L/DVB (9621): Avoid writing outside shadow.bytes[] array" fix, and
-if it has a security consequence?
 
-Thanks, Eugene
+======================================================
+Name: CVE-2008-2718
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2718
+Reference: BUGTRAQ:20080611 TYPO3 Security Bulletin TYPO3-20080611-1: Multiple vulnerabilities in TYPO3 Core
+Reference: URL:http://www.securityfocus.com/archive/1/archive/1/493270/100/0/threaded
+Reference: CONFIRM:http://typo3.org/teams/security/security-bulletins/typo3-20080611-1/
+Reference: DEBIAN:DSA-1596
+Reference: URL:http://www.debian.org/security/2008/dsa-1596
+Reference: FRSIRT:ADV-2008-1802
+Reference: URL:http://www.frsirt.com/english/advisories/2008/1802
+Reference: SECUNIA:30619
+Reference: URL:http://secunia.com/advisories/30619
+Reference: SECUNIA:30660
+Reference: URL:http://secunia.com/advisories/30660
+
+Cross-site scripting (XSS) vulnerability in fe_adminlib.inc in TYPO3
+4.0.x before 4.0.9, 4.1.x before 4.1.7, and 4.2.x before 4.2.1, as
+used in extensions such as (1) direct_mail_subscription, (2)
+feuser_admin, and (3) kb_md5fepw, allows remote attackers to inject
+arbitrary web script or HTML via unspecified vectors.
+
+
