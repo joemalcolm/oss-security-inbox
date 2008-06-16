@@ -1,61 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/08/9
-Message-ID: <4fXAC5uj8WxiwyDGa4exYzy490I@DnrfhFPe1KmBT9SMnrHVxzpiU9A>
-Date: Mon, 8 Dec 2008 17:19:52 +0300
-From: Eygene Ryabinkin <rea-sec@...elabs.ru>
-To: oss-security@...ts.openwall.com, jlieskov@...hat.com
-Cc: coley@...re.org
-Subject: Re: CVE Request (nagios)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/16/7
+Message-ID: <Pine.GSO.4.51.0806161644570.16840@faron.mitre.org>
+Date: Mon, 16 Jun 2008 16:47:07 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com, Jamie Strandboge <jamie@...onical.com>
+cc: coley@...re.org
+Subject: Re: CVE Id request: vim
 Content-Type: text/plain; charset=utf-8
 
-Mon, Dec 08, 2008 at 03:57:46PM +0300, Eygene Ryabinkin wrote:
-> Hmm, this seems to be unrelated to CVE-2008-5027, but it may be the
-> upstream fix for CSRF: judging by the contents of
->   http://git.op5.org/git/?p=nagios.git;a=commitdiff;h=9c2a418ab4f6e4ef3a53ddcde402fe4781caa764
-> the original patch from Tim Starling should introduce at least 'csrf' word
-> into cgi/cmd.c.  And I am failing to find one in the latest version,
->   http://nagios.cvs.sourceforge.net/viewvc/nagios/nagios/cgi/cmd.c?revision=1.47&view=markup
-> 
-> So either it was fixed in the completely different way or it is the
-> quick fix to prevent CSRFs for the eventhandler mangling commands.
 
-Uhm, the fix for the CSRF was in the 3.0.5, but it was really simple
-(and not very complete -- not every Nagios command was blocked ;):
------ cgi/cmd.c
-static int cmd_submitf(int id, const char *fmt, ...)
-{
-	char cmd[MAX_EXTERNAL_COMMAND_LENGTH];
-	const char *command;
-	int len, len2;
-	va_list ap;
+In a perfect world, we'd know which Vim scripts were vulnerable in which
+version, but I don't see an easy way of determining that.  So, only one
+CVE is being assigned for them, pending any additional details.
 
-	command = extcmd_get_name(id);
+- Steve
 
-	/*
-	 * We disallow sending 'CHANGE' commands from the cgi's
-	 * until we do proper session handling to prevent cross-site
-	 * request forgery
-	 */
-	if (!command || (strlen(command) > 6 && !memcmp("CHANGE", command, 6)))
-		return ERROR;
------
-So
-  http://nagios.cvs.sourceforge.net/viewvc/nagios/nagios/base/commands.c?r1=1.109&r2=1.110&view=patch
-just completely closes the processing of these commands from the
-Nagios side.  May be this was the fix for the case when the evil
-contents from the command file were still floating around but the
-upgraded Nagios won't process them because they could go from the
-previous successful attack but are lying unprocessed?
 
-> It is a bit strange that it was done after 3.0.5 (CSRF was documented in
-> 3.0.5 release notes), but...  By the way, entry for CVE-2008-5028 speaks
-> about 3.0.5 as about the vulnerable to the CSRF and it is inconsistent
-> with the release notes at
->   http://www.nagios.org/development/history/nagios-3x.php.
+======================================================
+Name: CVE-2008-2712
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2712
+Reference: BUGTRAQ:20080613 Collection of Vulnerabilities in Fully Patched Vim 7.1
+Reference: URL:http://www.securityfocus.com/archive/1/archive/1/493352/100/0/threaded
+Reference: BUGTRAQ:20080614 Re: Collection of Vulnerabilities in Fully Patched Vim 7.1
+Reference: URL:http://www.securityfocus.com/archive/1/archive/1/493353/100/0/threaded
+Reference: MISC:http://www.rdancer.org/vulnerablevim.html
+Reference: MLIST:[oss-security] CVE Id request: vim
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/06/16/2
 
-So I feel the the CSRF was "somehow closed" in 3.0.5 and CVE entry may
-need fixing.  The remains from this bug that could migrate from 3.0.5 to
-3.0.6 (but not in the functional sense, only via the unprocessed command
-file) were "fixed" in 3.0.6.
--- 
-Eygene
+Vim 7.1.314, 6.4, and other versions allows user-assisted remote
+attackers to execute arbitrary commands via Vim scripts that do not
+properly sanitize inputs before invoking the execute or system
+functions, as demonstrated using (1) filetype.vim, (2) zipplugin, (3)
+xpm.vim, (4) gzip_vim, and (5) netrw.
+
+
