@@ -1,24 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/17/2
-Message-Id: <200804171045.49953.hanno@hboeck.de>
-Date: Thu, 17 Apr 2008 10:45:49 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: coley@...re.org, oss-security@...ts.openwall.com
-Subject: CVE request: firefox 2.0.14 ( Crash in JavaScript garbage collector)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/16/11
+Message-ID: <Pine.GSO.4.51.0806161806091.16840@faron.mitre.org>
+Date: Mon, 16 Jun 2008 18:06:18 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE id request: nasm off-by-one
 Content-Type: text/plain; charset=utf-8
 
-Please assign a cve for 
-http://www.mozilla.org/projects/security/known-vulnerabilities.html#firefox2.0.0.14
-http://www.mozilla.org/security/announce/2008/mfsa2008-20.html
 
-And again, are pure browser crashers considered security relevant? I'd do so, 
-as e.g. placing a crashing gif on e.g. some popular wiki could cause much 
-trouble:
-http://www.securityfocus.com/bid/27243
-(I think it's still unfixed)
+======================================================
+Name: CVE-2008-2719
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2719
+Reference: CONFIRM:http://repo.or.cz/w/nasm.git?a=commit;h=76ec8e73db16f4cf1453a142d03bcc74d528f72f
+Reference: CONFIRM:https://sourceforge.net/tracker/?func=detail&atid=106208&aid=1942146&group_id=6208
+Reference: MLIST:[oss-security] 20080611 CVE id request: nasm off-by-one
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/06/11/4
+Reference: FRSIRT:ADV-2008-1811
+Reference: URL:http://www.frsirt.com/english/advisories/2008/1811
 
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+Off-by-one error in the ppscan function (preproc.c) in Netwide
+Assembler (NASM) 2.02 allows context-dependent attackers to cause a
+denial of service (crash) and possibly execute arbitrary code via a
+crafted file that triggers a stack-based buffer overflow.
 
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+
