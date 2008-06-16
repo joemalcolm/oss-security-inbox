@@ -1,32 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/10/11
-Message-ID: <Pine.GSO.4.51.0811101307030.6724@faron.mitre.org>
-Date: Mon, 10 Nov 2008 13:07:16 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/16/4
+Message-ID: <20080616144244.GF7183@severus.strandboge.com>
+Date: Mon, 16 Jun 2008 10:42:44 -0400
+From: Jamie Strandboge <jamie@...onical.com>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: Unix sockets kernel panic
+Subject: Re: CVE Id request: vim
 Content-Type: text/plain; charset=utf-8
 
+On Mon, 16 Jun 2008, Jamie Strandboge wrote:
 
-======================================================
-Name: CVE-2008-5029
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5029
-Reference: MLIST:[linux-netdev] 20081106 UNIX sockets kernel panic
-Reference: URL:http://marc.info/?l=linux-netdev&m=122593044330973&w=2
-Reference: MLIST:[oss-security] 20081106 CVE request: kernel: Unix sockets kernel panic
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/06/1
-Reference: MISC:http://darkircop.org/unix.c
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=470201
-Reference: BID:32154
-Reference: URL:http://www.securityfocus.com/bid/32154
+> These should all be fixed now according to:
+> http://groups.google.com/group/vim_dev/browse_frm/month/2008-06
+> 
+This link is easier to get to the information:
+http://groups.google.com/group/vim_dev/tree/browse_frm/month/2008-06/6d7899eac89aa333?rnum=131&_done=%2Fgroup%2Fvim_dev%2Fbrowse_frm%2Fmonth%2F2008-06%3F#doc_9bb6550f4f955f04
 
-The __scm_destroy function in net/core/scm.c in the Linux kernel
-2.6.27.4, 2.6.26, and earlier makes indirect recursive calls to itself
-through calls to the fput function, which allows local users to cause
-a denial of service (panic) via vectors related to sending an
-SCM_RIGHTS message through a UNIX domain socket and closing file
-descriptors.
+-- 
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
 
-
+Download attachment "signature.asc" of type "application/pgp-signature" (190 bytes)
