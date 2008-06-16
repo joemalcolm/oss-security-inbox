@@ -1,30 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/20/6
-Message-ID: <20081120143738.GB13324@ngolde.de>
-Date: Thu, 20 Nov 2008 15:37:38 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/16/1
+Message-ID: <20080616074200.GB9023@merlin.emma.line.org>
+Date: Mon, 16 Jun 2008 09:42:00 +0200
+From: Matthias Andree <matthias.andree@....de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: imlib2
+Subject: Re: CVE Id Request: fetchmail <= 6.3.8 DoS when logging long headers in -v -v mode
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* P??nar Yanarda?? <pinar@...dus.org.tr> [2008-11-20 14:29]:
-> ----
-> *Description*:
-> A vulnerability has been discovered in imlib2, which can be exploited by 
-> malicious people to potentially compromise an application using the library.
+On Sun, 15 Jun 2008, Robert Buchholz wrote:
+
+> Hi Matthias,
 > 
-> The vulnerability is caused due to a pointer arithmetic error within the 
-> "load()" function provided by the XPM loader. This can be exploited to cause a 
-> heap-based buffer overflow via a specially crafted XPM file.
-[...] 
-Reference:
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=505714#15
+> On Friday 13 June 2008, Matthias Andree wrote:
+> > Affects:        fetchmail release < 6.3.9 exclusively
+> >
+> > Not affected:   fetchmail release 6.3.9 and newer
+> >                 systems without varargs (stdargs.h) support.
+> >
+> > Corrected:      2008-06-13 fetchmail SVN (rev XXX)
+> 
+> Is there an ETA for the 6.3.9 release? The last advisory in 2007-09 also 
+> recommended to upgrade to this still unreleased version.
 
-Cheers
-Nico
+You're right, but I'm sorry to say there is no estimated release date -
+it's "as soon as it's ready", and the official patches are part of the
+advisories, taken from the SVN repository - and beyond that are what
+distributors usually ask for. fetchmail is, in spite of its widespread
+use, effectively a one-man spare-time show.
+
+Impeding the 6.3.9 release, there are some nasty bugs that aren't
+security relevant which are pending the fix, but are hard to debug.
+
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+Matthias Andree
