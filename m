@@ -1,27 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/09/4
-Message-Id: <200812091355.28895.hanno@hboeck.de>
-Date: Tue, 9 Dec 2008 13:55:28 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/16/3
+Message-ID: <20080616164127.3e55511c@redhat.com>
+Date: Mon, 16 Jun 2008 16:41:27 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Steven Christey <coley@...us.mitre.org>
-Subject: CVE request: moodle (XSS)
+Cc: steffen.joeris@...lelinux.de
+Subject: Re: CVE id request: Clamav
 Content-Type: text/plain; charset=utf-8
 
-http://moodle.org/mod/forum/discuss.php?d=108590
+On Sun, 15 Jun 2008 21:21:30 +1000 Steffen Joeris
+<steffen.joeris@...lelinux.de> wrote:
 
- 	Cross Site Scripting (XSS) possible through Wiki page titles 
+> The upstream changelog says:
+> * libclamav/petite.c: fix possible invalid memory access (bb#1000)
+> 				Reported by Damian Put
 
-Wiki page names were not sanitised on output, allowing for potential cross 
-site scripting (XSS) issues.
+For the sake of CVE description completeness, I'm adding that it's from
+the clamav 0.93.1 changelog.
 
-Versions affected: 	< 1.6.8, < 1.7.6, < 1.8.7, < 1.9.3
+Applied patch:
 
+http://svn.clamav.net/websvn/diff.php?repname=clamav-devel&path=/branches/0.93/libclamav/petite.c&rev=3886
 
 -- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-
-http://www.jukss.de/ Jugemdumweltkongress, 27.12.-4.1.
-
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+Tomas Hoger / Red Hat Security Response Team
