@@ -1,44 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/28/15
-Message-ID: <20080328170933.GU3582@fuse.inversepath.com>
-Date: Fri, 28 Mar 2008 17:09:33 +0000
-From: Andrea Barisani <lcars@...rt.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/17/5
+Message-ID: <48577C03.3050802@gmx.de>
+Date: Tue, 17 Jun 2008 10:55:31 +0200
+From: Matthias Andree <matthias.andree@....de>
 To: oss-security@...ts.openwall.com
-Subject: project announcement - oCERT - Open Source CERT
+Subject: Re: CVE Id Request: fetchmail <= 6.3.8 DoS when	logging long headers in -v -v mode
 Content-Type: text/plain; charset=utf-8
 
+Jonathan Smith schrieb:
+> Matthias Andree wrote:
+>> Impeding the 6.3.9 release, there are some nasty bugs that aren't
+>> security relevant which are pending the fix, but are hard to debug.
+> 
+> Are these bugs regressions against 6.3.8? If so, it might make sense to
+> cherry-pick the security fixes from svn and cut a 6.3.8.1 release with
+> 6.3.8+patches. If not, why let non-regressions hold up 6.3.9?
 
-Hi everyone,
-
-we are pleased to announce a new project called oCERT, the Open Source
-Computer Emergency Response Team.
-
-The oCERT project is a public effort providing security handling support to
-Open Source projects affected by security incidents or vulnerabilities, just
-like national CERTs offer services for their respective countries.
-
-If you are a small project lacking security handling resources we can aid you
-in tracking down the extent and nature of potential compromises and security
-vulnerabilities and co-ordinate with all affected parties (like projects that
-ship your code).
-
-If you are a big project and/or Open Source vendor we can promptly communicate
-with you reports and vulnerabilities that might affect your codebase and
-infrastructure and help you out with your security requirements.
-
-You can read all about the project at http://www.ocert.org.
-
-Any feedback is appreciated.
-
-Cheers!
-
-The oCERT Team
-<team@...rt.org>
+Release overhead; but you're right, I might just make that cut and let
+6.3.9 out (since the bugs are long-standing, rather than recent
+regressions) and postpone fixing of the other bugs to 6.3.10.
 
 -- 
-Andrea Barisani |                Founder & Project Coordinator
-          oCERT | Open Source Computer Emergency Response Team
-
-<lcars@...rt.org>                         http://www.ocert.org
- 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
-        "Pluralitas non est ponenda sine necessitate"
+Matthias Andree
