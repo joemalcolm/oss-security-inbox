@@ -1,20 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/11/2
-Message-ID: <14091.1218473620@devserv.devel.redhat.com>
-Date: Mon, 11 Aug 2008 12:53:40 -0400
-From: Josh Bressers <bressers@...hat.com>
-To: coley@...re.org
-cc: oss-security@...ts.openwall.com
-Subject: CVE Request (ipsec-tools)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/17/8
+Message-ID: <485815FF.4060404@clamav.net>
+Date: Tue, 17 Jun 2008 22:52:31 +0300
+From: Török Edwin <edwin@...mav.net>
+To: Eren Türkay <turkay.eren@...il.com>
+CC: oss-security@...ts.openwall.com
+Subject: Re: CVE id request: Clamav
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
+Eren Türkay wrote:
+> On 17 Jun 2008 Tue 10:38:13 Eren Türkay wrote:
+>>   * libclamav/mbox.c, shared/network.c: prevent uninitialized use of
+>> hostent structure (bb #1003).
+>>
+>> The bug entry says that after zip file's arriving at clamd, it suddenly
+>> dies and nothing can be retrieved thereafter. Clamav developer also
+>> comfirms that this happens when MailFollowURLs is enabled.
+> 
+> Hello,
+> 
+> I talked to Edwin on #clamav channel. He says this is a rare-case and he 
+> thinks that it's a vulnerability rather than a security flaw.
 
-This one is a bit old now, but I can't find a CVE id for it.  Our bug has
-various URL references in it:
-https://bugzilla.redhat.com/show_bug.cgi?id=456660
+I said that its a bug rather than a security flaw. However you can
+assign it a CVE id if you want to.
+We didn't treat it as security, because it occurs in a non-default
+config (MailFollowURLs), it is not externally controllable, and it
+occurs rarely (so far we got 2 reports of this bug).
 
-Thanks.
+> 
+> Edwin, could you please inform us about important vulnerabilities/security 
+> flaws fixed in 0.93.1?
 
--- 
-    JB
+I recommend to use 0.93.1, however if you want to backport parts of
+it, these are the most important (from the ChangeLog).
+The daily.cfg and dconf changes are important for turning off
+vulnerable modules, the rest is self explanatory.
+
+Wed Jun  4 14:18:27 CEST 2008 (tk)
+----------------------------------
+  * libclamav/petite.c: fix possible invalid memory access (bb#1000)
+			Reported by Damian Put
+
+Sat May  3 14:46:41 CEST 2008 (tk)
+----------------------------------
+* libclamav/readdb.h: read daily.cfg stored inside .cld containers
+(bb#1006)
+
+Thu Apr 24 17:44:38 MSD 2008 (tk)
+---------------------------------
+  * libclamav: scan for embedded PEs inside OLE2 files (bb#914)
+
+Fri Apr 18 13:55:41 EEST 2008 (edwin)
+-------------------------------------
+  * libclamav/dconf.h: fix flag code assignment (bb #952)
+
+Best regards,
+--Edwin
+
