@@ -1,28 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/08/5
-Message-ID: <20080808154500.GC13386@redhat.com>
-Date: Fri, 8 Aug 2008 16:45:00 +0100
-From: Joe Orton <jorton@...hat.com>
-To: Christian Hoffmann <hoffie@...too.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: php-5.2.6 overflow issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/17/7
+Message-ID: <Pine.GSO.4.51.0806171023350.16500@faron.mitre.org>
+Date: Tue, 17 Jun 2008 10:25:08 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: FreeType 2.3.6
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Aug 08, 2008 at 04:55:37PM +0200, Christian Hoffmann wrote:
-> On 2008-08-08 16:01, Joe Orton wrote:
->> The explode() bug could only be triggered if a script passed a 
->> delimiter from untrusted script input without sanitizing/checking it 
->> first, which is fairly pathological behaviour.  I would call that a 
->> script bug, not an issue in the PHP interpreter.
-> Ok, sounds reasonable.
+
+On Tue, 17 Jun 2008, Thomas Biege wrote:
+
+> > Yes, CVE-2008-1806 CVE-2008-1807 CVE-2008-1808.  See NVD site or
+> > iDefense advisories.
 >
-> No idea whether a CVE should be assigned anyway -- if it does indeed  
-> allow for (local) code execution, that'd effectively mean bypass of  
-> safe_mode/open_basedir. Such issues already got CVEs assigned in the  
-> pass, so I guess this one should as well.
+> Ah thanks. Next time I will look harder. :)
 
-We (Red Hat) don't consider bugs which allow bypass of safe_mode or 
-open_basedir to be security issues; opinions here vary but having a CVE 
-name is useful anyway so that the issue can be identified definitively.
+In general, the NVD site is really the best place to look - we don't
+automatically update the CVE web site like NVD does (it's a
+resource/security thing for us), although more regular updates should be
+happening sometime this summer.
 
-Regards, Joe
+- Steve
