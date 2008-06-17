@@ -1,31 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/13/2
-Message-ID: <20080713113206.GF20593@ngolde.de>
-Date: Sun, 13 Jul 2008 13:32:07 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/17/3
+Message-ID: <20080617081738.GB23907@suse.de>
+Date: Tue, 17 Jun 2008 10:17:38 +0200
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: openldap DoS
+Subject: Re: FreeType 2.3.6
 Content-Type: text/plain; charset=utf-8
 
-Hi Steven,
-* Steven M. Christey <coley@...us.mitre.org> [2008-07-01 23:14]:
-> ======================================================
-> Name: CVE-2008-2952
-> Status: Candidate
-> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2952
-> Reference: CONFIRM:http://www.openldap.org/its/index.cgi/Software%20Bugs?id=5580;selectid=5580
+On Tue, Jun 17, 2008 at 10:10:35AM +0200, Tomas Hoger wrote:
+> On Tue, 17 Jun 2008 10:05:17 +0200 Thomas Biege <thomas@...e.de> wrote:
 > 
-> liblber/io.c in OpenLDAP 2.3.41, 2.3.42, and possibly other versions
-> allows remote attackers to cause a denial of service (program
-> termination) via crafted ASN.1 BER datagrams, which triggers an
-> assertion error.
+> > Are CVE-IDs assigned for this issues?
+> 
+> Yes, CVE-2008-1806 CVE-2008-1807 CVE-2008-1808.  See NVD site or
+> iDefense advisories.
 
-All versions from 2.2.4 to 2.4.10 are vulnerable referring 
-to upstream, can you update the description to reflect this?
-Kind regards
-Nico
+Ah thanks. Next time I will look harder. :)
+
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+Bye,
+     Thomas
+-- 
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+-- 
+           Hamming's Motto:
+           The purpose of computing is insight, not numbers.
+                                -- Richard W. Hamming
