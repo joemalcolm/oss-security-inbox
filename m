@@ -1,32 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/27/4
-Message-ID: <20081027183819.GA10180@sdf.lonestar.org>
-Date: Mon, 27 Oct 2008 18:38:19 +0000
-From: Tavis Ormandy <taviso@....lonestar.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/17/1
+Message-ID: <20080617080517.GA23907@suse.de>
+Date: Tue, 17 Jun 2008 10:05:17 +0200
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: Re: CVE request: lynx (old) .mailcap handling flaw
+Subject: Re: FreeType 2.3.6
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Oct 25, 2008 at 08:27:51PM +0200, Tomas Hoger wrote:
-> Hi Steven!
-> 
-> There's one old lynx issue that seem to need a 2006 CVE id.  lynx
-> browser prior to 2.8.6rel.4 tries to open mailcap and mime type
-> definition files form the current directory.  If user can be convinced
-> to run lynx in a specially crafted directory, an attacker controlling
-> the directory may be able to run arbitrary code as the victim running
-> lynx.
 
-That reminds me, I recently noticed valgrind also does this.
-
-$ printf -- "--db-command=/usr/bin/id\n--db-attach=yes\n" > /tmp/.valgrindrc
-
-Etc.
-
-Thanks, Tavis.
+Are CVE-IDs assigned for this issues?
 
 -- 
--------------------------------------
-taviso@....lonestar.org | finger me for my gpg key.
--------------------------------------------------------
+Bye,
+     Thomas
+-- 
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+-- 
+           Hamming's Motto:
+           The purpose of computing is insight, not numbers.
+                                -- Richard W. Hamming
