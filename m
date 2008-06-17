@@ -1,39 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/24/2
-Message-Id: <200807240420.22187.rbu@gentoo.org>
-Date: Thu, 24 Jul 2008 04:20:19 +0200
-From: Robert Buchholz <rbu@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/17/6
+Message-Id: <200806171155.10842.turkay.eren@gmail.com>
+Date: Tue, 17 Jun 2008 11:55:10 +0300
+From: Eren Türkay <turkay.eren@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Josh Bressers <bressers@...hat.com>, Jamie Strandboge <jamie@...onical.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request for dnsmasq DoS
+Cc: edwin@...mav.net
+Subject: Re: CVE id request: Clamav
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday 23 July 2008, Josh Bressers wrote:
-> On 8 July 2008, Jamie Strandboge wrote:
-> > I finally had time to develop a PoC and confirm this on my own. A
-> > client need only send a DHCPREQUEST for an IP address not on the
-> > same network as dnsmasq. Eg:
-> >
-> > 1. dnsmasq listening on and giving IP addresses for
-> > 192.168.122.0/24 2. client requests IP address on another network,
-> > such as 192.168.0.1 3. dnsmasq 2.25 (and presumably earlier)
-> > crashes
+On 17 Jun 2008 Tue 10:38:13 Eren Türkay wrote:
+>   * libclamav/mbox.c, shared/network.c: prevent uninitialized use of
+> hostent structure (bb #1003).
 >
-> It seems there is also a problem with newer dnsmasq that is very
-> similar to this:
-> http://bugs.gentoo.org/show_bug.cgi?id=232523
->
-> That problem appears to be pretty much the same thing, but affecting
-> versions 2.43 - 2.45
+> The bug entry says that after zip file's arriving at clamd, it suddenly
+> dies and nothing can be retrieved thereafter. Clamav developer also
+> comfirms that this happens when MailFollowURLs is enabled.
 
-I could reproduce the issue using the dhcp_request.py Jamie sent 
-earlier. The problem manifests the same way as the 2.25 flaw, but it 
-only affects 2.43 -- 2.42 survives, and so does 2.44. However, that 
-release has been withdrawn [1] because of another bug.
+Hello,
 
-Hope that helps,
-Robert
+I talked to Edwin on #clamav channel. He says this is a rare-case and he 
+thinks that it's a vulnerability rather than a security flaw.
 
-[1] http://www.thekelleys.org.uk/dnsmasq/dnsmasq-2.44-REMOVED.txt
+Edwin, could you please inform us about important vulnerabilities/security 
+flaws fixed in 0.93.1?
 
-Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
+My best regards,
+Eren
