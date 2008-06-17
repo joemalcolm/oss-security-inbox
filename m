@@ -1,25 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/27/3
-Message-ID: <Pine.GSO.4.51.0810271235340.1641@faron.mitre.org>
-Date: Mon, 27 Oct 2008 12:35:38 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security <oss-security@...ts.openwall.com>
-cc: coley@...re.org
-Subject: Re: CVE request: lynx (old) .mailcap handling flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/17/2
+Message-ID: <20080617101035.16228b67@redhat.com>
+Date: Tue, 17 Jun 2008 10:10:35 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: thomas@...e.de
+Cc: oss-security@...ts.openwall.com
+Subject: Re: FreeType 2.3.6
 Content-Type: text/plain; charset=utf-8
 
+On Tue, 17 Jun 2008 10:05:17 +0200 Thomas Biege <thomas@...e.de> wrote:
 
-======================================================
-Name: CVE-2006-7234
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-7234
-Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=396949
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=214205
-Reference: MLIST:[oss-security] 20081025 CVE request: lynx (old) .mailcap handling flaw
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/10/25/3
+> Are CVE-IDs assigned for this issues?
 
-Untrusted search path vulnerability in Lynx before 2.8.6rel.4 allows
-local users to execute arbitrary code via malicious (1) .mailcap and
-(2) mime.types files in the current working directory.
+Yes, CVE-2008-1806 CVE-2008-1807 CVE-2008-1808.  See NVD site or
+iDefense advisories.
 
-
+-- 
+Tomas Hoger / Red Hat Security Response Team
