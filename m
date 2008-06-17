@@ -1,32 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/07/1
-Message-ID: <20080807084154.GB4919@ngolde.de>
-Date: Thu, 7 Aug 2008 10:41:54 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/17/4
+Message-Id: <200806171038.13349.turkay.eren@gmail.com>
+Date: Tue, 17 Jun 2008 10:38:13 +0300
+From: Eren Türkay <turkay.eren@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: git
+Subject: Re: CVE id request: Clamav
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-http://www.kernel.org/pub/software/scm/git/docs/RelNotes-1.5.6.4.txt:
-"* Various commands could overflow its internal buffer on a 
-platform with small PATH_MAX value in a repository that has contents with
-long pathnames."
+On 15 Jun 2008 Sun 14:21:30 Steffen Joeris wrote:
+> The upstream changelog says:
+> * libclamav/petite.c: fix possible invalid memory access (bb#1000)
+>                                 Reported by Damian Put
 
-An attacker can exploit this causing a stack-based buffer 
-overflow if a victim user executes the git-diff or git-grep 
-commands in a crafted repository.
+Hello,
 
-Patch: 
-http://git.kernel.org/?p=git/git.git;a=commitdiff;h=fd55a19eb1d49ae54008d932a65f79cd6fda45c9
+Here is another upstream log, I suspect that this is a security fix too.
 
-Can someone assign a CVE id to this one?
+  * libclamav/mbox.c, shared/network.c: prevent uninitialized use of hostent
+  structure (bb #1003).
 
-Cheers
-Nico
+The bug entry says that after zip file's arriving at clamd, it suddenly dies 
+and nothing can be retrieved thereafter. Clamav developer also comfirms that 
+this happens when MailFollowURLs is enabled.
 
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+Could someone take a look at this issue?
 
-Content of type "application/pgp-signature" skipped
+https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1003
