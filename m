@@ -1,25 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/16/10
-Message-ID: <Pine.GSO.4.51.0807161348480.3856@faron.mitre.org>
-Date: Wed, 16 Jul 2008 13:48:55 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: byacc
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/18/1
+Message-ID: <20080618161840.GC28873@suse.de>
+Date: Wed, 18 Jun 2008 18:18:40 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: oss-security@...ts.openwall.com, security@...nel.org
+Subject: query on a pppol2tp_recvmsg() fix - security relevant?
 Content-Type: text/plain; charset=utf-8
 
+Hi folks,
 
-======================================================
-Name: CVE-2008-3196
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3196
-Reference: MLIST:[openbsd-cvs] 20080708 CVS: cvs.openbsd.org: src
-Reference: URL:http://marc.info/?l=openbsd-cvs&m=121553004431393&w=2
-Reference: MLIST:[openbsd-cvs] 20080708 Re: CVS: cvs.openbsd.org: src
-Reference: URL:http://marc.info/?l=openbsd-cvs&m=121553036432044&w=2
+A customer asks us if the following is a security problem:
 
-skeleton.c in yacc does not properly handle reduction of a rule with
-an empty right hand side, which allows context-dependent attackers to
-cause an out-of-bounds stack access when the yacc stack pointer points
-to the end of the stack.
+http://kernel.org/pub/linux/kernel/v2.6/testing/ChangeLog-2.6.26-rc6
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=6b6707a50c7598a83820077393f8823ab791abf8
+
+--
+l2tp: Fix potential memory corruption in pppol2tp_recvmsg()
+
+    This patch fixes a potential memory corruption in
+    pppol2tp_recvmsg(). If skb->len is bigger than the caller's buffer
+    length, memcpy_toiovec() will go into unintialized data on the kernel
+    heap, interpret it as an iovec and start modifying memory.
+
+    The fix is to change the memcpy_toiovec() call to
+    skb_copy_datagram_iovec() so that paged packets (rare for PPPOL2TP)
+    are handled properly. Also check that the caller's buffer is big
+    enough for the data and set the MSG_TRUNC flag if it is not so.
+
+    Reported-by: Ilja <ilja@...ric.org>
+    Signed-off-by: James Chapman <jchapman@...alix.com>
+    Signed-off-by: David S. Miller <davem@...emloft.net>
 
 
+Is this a problem?
+
+Ciao, Marcus
