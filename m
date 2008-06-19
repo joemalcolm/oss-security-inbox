@@ -1,44 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/08/3
-Message-Id: <1228732067.3834.24.camel@dhcp-lab-164.englab.brq.redhat.com>
-Date: Mon, 08 Dec 2008 11:27:47 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: coley@...re.org
-Cc: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request - tor
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/19/5
+Message-ID: <20080619153438.GE4263@ngolde.de>
+Date: Thu, 19 Jun 2008 17:34:38 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: php 5.2.6 safe_mode bypass
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve,
+Hi Hanno,
+* Hanno Böck <hanno@...eck.de> [2008-06-19 17:24]:
+> Both posted on FD
+> 
+> [PHP 5.2.6 posix_access() (posix ext) safe_mode bypass ]
+> http://securityreason.com/achievement_securityalert/54
 
-  the new upstream 0.2.0.32 version of Tor has been released.
-It fixes between others also two security issues:
+This is CVE-2008-2665.
 
-References:
-===========
-http://blog.torproject.org/blog/tor-0.2.0.32-released
-http://bugs.gentoo.org/show_bug.cgi?id=250018
-https://svn.torproject.org/cgi-bin/viewcvs.cgi?rev=17255&view=rev
-https://svn.torproject.org/cgi-bin/viewcvs.cgi?rev=17342&view=rev
+> [PHP 5.2.6 chdir(),ftok() (standard ext) safe_mode bypass ]
+> http://securityreason.com/achievement_securityalert/55
 
-Patches (against 0.2.0.32):
-===========================
-1, User/Group config options from Jacob Appelbaum
-and Steven Murdoch (BTS 848 and 857):
-https://svn.torproject.org/cgi-bin/viewcvs.cgi?rev=17255&view=rev
+This is CVE-2008-2666.
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-2, The "ClientDNSRejectInternalAddresses" config option:
-Backport of R17135 against 0-2-0:  https://svn.torproject.org/cgi-bin/viewcvs.cgi?rev=17342&view=rev
-Original R17135:                   https://svn.torproject.org/cgi-bin/viewcvs.cgi?rev=17135&view=rev
-
-Affected Tor versions: x <= 0.2.0.32
-======================
-Checked both vulnerabilities present also in 0.1.2.17 and possibly older versions.
-
-Could you please allocate a new CVE id(s) for these issues?
-
-Thanks, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-
-
+Content of type "application/pgp-signature" skipped
