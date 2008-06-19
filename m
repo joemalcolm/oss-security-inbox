@@ -1,33 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/14/5
-Message-ID: <Pine.GSO.4.51.0808141844030.17005@faron.mitre.org>
-Date: Thu, 14 Aug 2008 18:45:52 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-cc: oss-security@...ts.openwall.com, coley@...re.org
-Subject: Re: CVE id requests: ruby
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/19/2
+Message-ID: <20080619135005.GB4263@ngolde.de>
+Date: Thu, 19 Jun 2008 15:50:05 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Critical vuln in Firefox 3.0
 Content-Type: text/plain; charset=utf-8
 
+Hi Hanno,
+* Hanno Böck <hanno@...eck.de> [2008-06-19 11:24]:
+> Very limited information:
+> http://dvlabs.tippingpoint.com/blog/2008/06/18/vulnerability-in-mozilla-firefox-30
 
-Note the following DoS in the regular expression engine, which smells like
-a NULL pointer dereference.  This appears to have been fixed in the latest
-release.  A *likely* (but not provable) changelog entry for the fix is:
-"regex.c (DOUBLE_STACK, re_compile_fastmap0, re_adjust_startpos),
-(re_search, re_match_exec): check if failed to allocate memory."
+Let's wait until they publish their advisory, having a CVE 
+id without any useful description now doesn't help anyone.
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-- Steve
-
-======================================================
-Name: CVE-2008-3443
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3443
-Reference: MILW0RM:6239
-Reference: URL:http://www.milw0rm.com/exploits/6239
-
-The regular expression engine (regex.c) in Ruby 1.8.5 and earlier,
-1.8.6 through 1.8.6-p286, 1.8.7 through 1.8.7-p71, and 1.9 through
-r18423 allows remote attackers to cause a denial of service (infinite
-loop and crash) via multiple long requests to a Ruby socket, related
-to memory allocation failure, and as demonstrated against Webrick.
-
-
+Content of type "application/pgp-signature" skipped
