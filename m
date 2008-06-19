@@ -1,34 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/17/16
-Message-ID: <gi9qjm$vo2$2@ger.gmane.org>
-Date: Tue, 16 Dec 2008 21:10:33 -0600
-From: Raphael Geissert <atomo64+debian@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/19/6
+Message-ID: <485A8B62.3050503@gentoo.org>
+Date: Thu, 19 Jun 2008 18:37:54 +0200
+From: Christian Hoffmann <hoffie@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: verlihub
+CC: coley@...re.org
+Subject: CVE request: php 5.2.6 ext/imap buffer overflows
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Heya,
 
-Hi,
+php-5.2.6 uses old c-client API calls in ext/imap, which do not have any 
+bound checkings, as such it seems to be vulnerable to buffer overflow 
+problems. Can we get a CVE id for this issue please?
 
-Two issues were discovered in verlihub: one allows remote commands execution,
-and the second one is a symlink attack vulnerability.
+References:
+http://bugs.php.net/bug.php?id=42862
+http://bugs.php.net/bug.php?id=40925
+https://bugs.gentoo.org/show_bug.cgi?id=221969
 
-More information at http://bugs.debian.org/506530
+-- 
+Christian Hoffmann
 
-Could CVE ids be assigned to those issues? thanks in advance.
 
-Cheers,
-- -- 
-Raphael Geissert - Debian Maintainer
-www.debian.org - get.debian.net
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAklIbakACgkQYy49rUbZzlqVtACdExVg9tyyQWTbyBBh4hXhN1+o
-lSoAnRDDR6D8HUIM30Tbem1pR+w4zWu+
-=GQdg
------END PGP SIGNATURE-----
-
+Download attachment "signature.asc" of type "application/pgp-signature" (261 bytes)
