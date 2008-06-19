@@ -1,43 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/20/3
-Message-ID: <0805201501150.18945@mjc.redhat.com>
-Date: Tue, 20 May 2008 15:02:42 +0100 (BST)
-From: Mark J Cox <mjc@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/19/1
+Message-Id: <200806191033.57812.hanno@hboeck.de>
+Date: Thu, 19 Jun 2008 10:33:54 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE ID request: GNUTLS
+Cc: coley@...re.org
+Subject: CVE Request: Critical vuln in Firefox 3.0
 Content-Type: text/plain; charset=utf-8
 
-> Several issues have been announced in GNUTLS-SA-2008-1:
+Very limited information:
+http://dvlabs.tippingpoint.com/blog/2008/06/18/vulnerability-in-mozilla-firefox-30
 
-I've not been able to get hold of Steve Chrisey today to get names 
-allocated, but many of us have updates queued.  So I've allocated from 
-our CNA and will page Steve with the names to try to avoid any
-duplicates when he returns.
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
-> *** [GNUTLS-SA-2008-1-1]
-> *** libgnutls: Fix crash when sending invalid server name.
-> The crash can be triggered remotely before authentication, which can
-> lead to a Daniel of Service attack to disable the server.  The bug
-> cause gnutls to store more session resumption data than what was
-> allocated for, thus overwriting unallocated memory.
-
-CVE-2008-1948 GNUTLS-SA-2008-1-1
-
-> *** [GNUTLS-SA-2008-1-2]
-> *** libgnutls: Fix crash when sending repeated client hellos.
-> The crash can be triggered remotely before authentication, which can
-> lead to a Daniel of Service attack to disable the server.  The bug
-> triggers a null-pointer dereference.
-
-CVE-2008-1949 GNUTLS-SA-2008-1-2 (NULL deference)
-
-> *** [GNUTLS-SA-2008-1-3]
-> *** libgnutls: Fix crash in cipher padding decoding for invalid record
-> *** lengths.
-> The crash can be triggered remotely before authentication, which can
-> lead to a Daniel of Service attack to disable the server.  The bug
-> cause gnutls to read memory beyond the end of the received record.
-
-CVE-2008-1950 GNUTLS-SA-2008-1-3 (read mem OOB)
-
-Mark
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
