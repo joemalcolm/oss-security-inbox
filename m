@@ -1,47 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/28/3
-Message-ID: <20080528142607.GC4722@suse.de>
-Date: Wed, 28 May 2008 16:26:07 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/19/7
+Message-ID: <20080619185805.GH4263@ngolde.de>
+Date: Thu, 19 Jun 2008 20:58:05 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSH key blacklisting
+Cc: vendor-sec@....de, "Steven M. Christey" <coley@...re.org>
+Subject: Re: New Xen ioemu: PVFB backend issue
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi Jan,
+* Jan Lieskovsky <jlieskov@...hat.com> [2008-05-21 19:14]:
+[...] 
+> As this vulnerability has security implications, we have assigned
+> CVE-2008-1952 to it. Please use it when referring to this issue.
 
-Last time I looked at the drafts (now RFC) there was no
-spec for revoking user-keys. However it allows x509
-certificates for hostkeys.
-Its all about the RFCs. OpenSSH folks shouldnt implement
-proprietary stuff :)
-At the end of the day SSH is not really a PKI system. The focus
-has been on different issues.
+Can you take care about the remaining steps to get this on 
+the mitre site or Steve could you update this? Quite some 
+time passed since this was assigned :)
 
-Sebastian
-
-On Wed, May 28, 2008 at 03:03:42PM +0100, Tim Brown wrote:
-
-> All,
-> 
-> Maybe I've missed something, in which case, shoot me down, but why unlike 
-> other services that make use of public key cryptography, does OpenSSH not 
-> have use a model which supports proper authorisation and revocation 
-> mechanisms?  Would this not be an ideal opportunity to implement this?  
-> Whilst I think there was a reasonable case for such features prior to the 
-> Debian OpenSSL vulnerability being identified, I would argue that this issue 
-> highlights the case.  Comercial SSH already has such functionality - can 
-> anyone offer a view on how [well] it works?
-> 
-> Tim
-> -- 
-> Tim Brown
-> <mailto:timb@...-dimension.org.uk>
-> <http://www.nth-dimension.org.uk/>
-
+Cheers
+Nico
 -- 
-~
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-~ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
+Content of type "application/pgp-signature" skipped
