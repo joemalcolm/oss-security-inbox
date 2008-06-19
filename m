@@ -1,21 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/08/2
-Message-Id: <200806090020.52171.rbu@gentoo.org>
-Date: Mon, 9 Jun 2008 00:20:49 +0200
-From: Robert Buchholz <rbu@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/19/8
+Message-ID: <Pine.GSO.4.51.0806191602500.14175@faron.mitre.org>
+Date: Thu, 19 Jun 2008 16:07:30 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-Request: courier-authlib sql injection
+Subject: Re: CVE Request: Critical vuln in Firefox 3.0
 Content-Type: text/plain; charset=utf-8
 
-On Sunday 08 June 2008, Hanno Böck wrote:
-> courier-authlib before 0.60.6 suffers from an sql injection.
->
-> The sourceforge webarchive is somehow broken and the gmame one isn't
-> up-to-date, so I can't post the announcement...
 
-Christian Hoffmann pointed out this link on our bug:
-http://marc.info/?l=courier-users&m=121294465330832
+On Thu, 19 Jun 2008, Nico Golde wrote:
 
-Robert
+> Let's wait until they publish their advisory, having a CVE
+> id without any useful description now doesn't help anyone.
 
-Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
+At this stage, I believe that a CVE identifier is important.  Here, it
+serves two roles:
+
+1) being absolutely sure we know which Firefox 3.0 issue is being
+discussed - which can be done if a CVE description is anchored on a
+particular reference or source.
+
+2) Tracking, then eventually resolving, confusion between multiple
+disclosures.  Granted we don't always succeed at this, but it's a goal.
+
+So, I've assigned CVE-2008-2785 for the unspecified issue being claimed by
+Tipping Point.
+
+But, I've also assigned a separate CVE-2008-2786 for a Full-Disclosure
+post talking about a buffer overflow.  Typically I try to avoid creating
+CVEs for these - anyone could claim "I found BUG-TYPE X in product Z" and
+there's no way of proving things - but here, there's likely some confusion
+about whether the FD post is the same as ZDI's or not.  And ZDI is
+specifically not saying anything about that.
+
+- Steve
+
+
+======================================================
+Name: CVE-2008-2785
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2785
+Reference: MISC:http://dvlabs.tippingpoint.com/blog/2008/06/18/vulnerability-in-mozilla-firefox-30
+Reference: BID:29802
+Reference: URL:http://www.securityfocus.com/bid/29802
+Reference: FRSIRT:ADV-2008-1873
+Reference: URL:http://www.frsirt.com/english/advisories/2008/1873
+Reference: SECUNIA:30761
+Reference: URL:http://secunia.com/advisories/30761
+Reference: XF:firefox-unspecified-code-execution(43167)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/43167
+
+Unspecified vulnerability in Firefox 3.0 and 2.0.x has unknown impact
+and remote attack vectors, aka ZDI-CAN-349.
+
+
+======================================================
+Name: CVE-2008-2786
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2786
+Reference: FULLDISC:20080618 Coming soon : Firefox 3 Release overflow
+Reference: URL:http://lists.grok.org.uk/pipermail/full-disclosure/2008-June/062832.html
+Reference: BID:29794
+Reference: URL:http://www.securityfocus.com/bid/29794
+
+Buffer overflow in Firefox 3.0 and 2.0.x has unknown impact and attack
+vectors.  NOTE: due to lack of details as of 20080619, it is not clear
+whether this is the same issue as CVE-2008-2785.  A CVE identifier has
+been assigned for tracking purposes.
+
+
