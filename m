@@ -1,30 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/04/17
-Message-ID: <Pine.GSO.4.51.0809041250090.29613@faron.mitre.org>
-Date: Thu, 4 Sep 2008 12:50:18 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/20/3
+Message-ID: <20080620121216.GI9978@ngolde.de>
+Date: Fri, 20 Jun 2008 14:12:16 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: Re: CVE request: kernel: sunrpc: fix possible overrun on read of /proc/sys/sunrpc/transports
+Subject: Re: CVE id request: tmsnc
 Content-Type: text/plain; charset=utf-8
 
+Hi Eren,
+* Eren Türkay <turkay.eren@...il.com> [2008-06-20 14:02]:
+> On 20 Jun 2008 Fri 14:12:42 Nico Golde wrote:
+> > There is a buffer overflow in the tmsnc UBX handling code.
+> > http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=487222
+> >
+> 
+> I'm not sure if msn protocol allows longer than 512 bytes of data. If it 
+> doesn't support, there seems no security issue in UBX handling code. 
+> 
+> Does anyone know what's the longest value of personal message?
 
-======================================================
-Name: CVE-2008-3911
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3911
-Reference: MLIST:[linux-kernel] 20080830 Re: buffer overflow in /proc/sys/sunrpc/transports
-Reference: URL:http://lkml.org/lkml/2008/8/30/184
-Reference: MLIST:[linux-kernel] 20080830 buffer overflow in /proc/sys/sunrpc/transports
-Reference: URL:http://lkml.org/lkml/2008/8/30/140
-Reference: MLIST:[oss-security] 20080904 CVE request: kernel: sunrpc: fix possible overrun on read of /proc/sys/sunrpc/transports
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/09/04/2
-Reference: CONFIRM:http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=27df6f25ff218072e0e879a96beeb398a79cdbc8
+Looking at http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=487046
+it does.
 
-The proc_do_xprt function in net/sunrpc/sysctl.c in the Linux kernel
-2.6.26.3 does not check the length of a certain buffer obtained from
-userspace, which allows local users to overflow a stack-based buffer
-and have unspecified other impact via a crafted read system call for
-the /proc/sys/sunrpc/transports file.
-
-
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
