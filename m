@@ -1,29 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/04/4
-Message-ID: <Pine.GSO.4.51.0808041236350.23930@faron.mitre.org>
-Date: Mon, 4 Aug 2008 12:37:28 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Thijs Kinkhorst <thijs@...ian.org>
-cc: oss-security@...ts.openwall.com, coley@...re.org
-Subject: Re: CVE request: httrack buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/20/1
+Message-ID: <20080620111242.GF9978@ngolde.de>
+Date: Fri, 20 Jun 2008 13:12:42 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE id request: tmsnc
 Content-Type: text/plain; charset=utf-8
 
+Hi,
+There is a buffer overflow in the tmsnc UBX handling code.
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=487222
 
-On Mon, 4 Aug 2008, Thijs Kinkhorst wrote:
+Can I get a CVE id for this?
 
-> On Monday 4 August 2008 12:21, Tomas Hoger wrote:
-> > CVE-2008-3429 ?
-> >
-> > Buffer overflow in URI processing in HTTrack and WinHTTrack before
-> > 3.42-3 allows remote attackers to cause a denial of service (crash) and
-> > possibly execute arbitrary code via a long URL.
-> >
-> > http://nvd.nist.gov/nvd.cfm?cvename=CVE-2008-3429
->
-> Thanks! I somehow missed that one...
+Kind regards
+Nico
 
-It's in NVD but not yet on the public CVE site, due to various process
-oddities.  98% of the time, NVD will have the CVEs before the CVE web site
-does.
-
-- Steve
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
