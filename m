@@ -1,36 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/25/4
-Message-Id: <1219670431.7715.24.camel@iankko.englab.brq.redhat.com>
-Date: Mon, 25 Aug 2008 15:20:31 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: coley@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: CVE Request (ruby)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/20/2
+Message-Id: <200806201434.41285.turkay.eren@gmail.com>
+Date: Fri, 20 Jun 2008 14:34:41 +0300
+From: Eren Türkay <turkay.eren@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE id request: tmsnc
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve,
+On 20 Jun 2008 Fri 14:12:42 Nico Golde wrote:
+> Hi,
 
-  Ruby upstream has announced another security flaw
-(DoS vulnerability in REXML module):
+Hello
 
-http://www.ruby-lang.org/en/news/2008/08/23/dos-vulnerability-in-rexml/
+> There is a buffer overflow in the tmsnc UBX handling code.
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=487222
+>
 
-Test case available in part: "Impact".
+I'm not sure if msn protocol allows longer than 512 bytes of data. If it 
+doesn't support, there seems no security issue in UBX handling code. 
 
-Proposed preliminary fix: http://www.ruby-lang.org/security/20080823rexml/rexml-expansion-fix.rb
-
-Testing status: REXML parsing of provided *.xml file causes
-                100% cpu usage for about 1 and 1/4 minutes
-                (checked the ruby-1.8.5-5.5 case).
-
-Could you please assign a CVE id for it?
-
-Thank you in advance.
-
-Kind regards
-Jan iankko Lieskovsky
-RH Security Response Team
-
-
-
-
+Does anyone know what's the longest value of personal message?
