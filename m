@@ -1,81 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/18/1
-Message-ID: <20080518000655.GA9017@openwall.com>
-Date: Sun, 18 May 2008 04:06:55 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/21/1
+Message-Id: <200806211325.40802.steffen.joeris@skolelinux.de>
+Date: Sat, 21 Jun 2008 13:25:36 +0200
+From: Steffen Joeris <steffen.joeris@...lelinux.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSH key blacklisting
+Subject: CVE id request: perl
 Content-Type: text/plain; charset=utf-8
 
-On Sun, May 18, 2008 at 01:20:59AM +0200, Robert Buchholz wrote:
-> let's focus on the blacklist:
-...
-> I like the Debian/Ubuntu idea of being able to add/remove blacklists 
-> easily.
+Hi
 
-Just how easy do we want to make this?  Do we need this capability for
-ourselves (package maintainers) or for end-users (sysadmins)?  I'd
-choose the former, and use maybe Perl scripts for the task.  Those
-scripts would be publicly available, such as via an URL posted to this
-mailing list, but not made a part of any packages.
+rmtree() when used with symlinks changes permissions of the link target to the
+link, which allows symlinks attacks.
 
-I find it undesirable to make this functionality directly available to
-end-users.  That's for several reasons:
+Upstream Bug:
+http://rt.cpan.org/Public/Bug/Display.html?id=36982
 
-1. We'd have to spend far more time on the blacklist update code,
-perhaps programming it in C and making it extra-reliable (such as
-detecting incorrect invocations and input files), as well as on
-documentation for it.
+Debian Bug (with proposed patch):
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=487319
 
-2. Both pieces of code - the "updater" and the patch - would have to be
-made more generic (e.g., work for a wide range of blacklist sizes) -
-which might increase code size and complexity (e.g., we'd be tempted to
-support arbitrary "prefix lengths", not just 12 bits).
 
-3. How would an end-user add a key to our blacklist?  Would we have to
-support multiple blacklist files in the patch?  Or would we include an
-"uncompressor" program?  Or would the user need to download either the
-"source" blacklist or the "uncompressor" program?  In the latter case,
-the user could as well download our "encoder" script, and not fear its
-dependency on Perl.
+Could I please have a CVE id for this?
 
-> Personally, I generated an incomplete (due to lack of hardware) 
-> set of keys for RSA 1024, 2048, 4096, and DSA 1024 keys, since that is 
-> what I have seen in the wild.
-> It might be argued that since Sep. 2006, few people generated 1024 bit RSA 
-> keys, but I do not know exactly when "ssh-keygen"'s default was changed.
+Cheers
+Steffen
 
-What matters is when the default in Debian's package was changed,
-although it is possible that some users updated OpenSSL, but not
-OpenSSH, which would result in vulnerable 1024-bit RSA keys.
-
-Also, aren't protocol 1 keys 1024-bit RSA only, even with the latest
-ssh-keygen?
-
-Then, is it just one set of vulnerable 1024-bit RSA keys for both
-protocols - or is it two sets?
-
-> I'm putting Kees in CC since I hope he can help with the unshortened 
-> fingerprint list (at least via private mail).
-
-I've dropped the explicit CC because Kees is subscribed.
-
-Kees - please let us know if you'd like to be CC'ed on most relevant
-postings.  As to the fingerprint list, I'd appreciate it if you provide
-separate lists for different key types, sizes, and archs - such that we
-can produce any combinations.  The "unshortened" aspect is not as
-important; we'll probably pick last N bits of fingerprints anyway, to
-allow for comparison between our blacklist and that in the Debian and
-Ubuntu packages.
-
-> Whoever changed his pid_max to another value, and generated the key after 
-> running some 33000 processes, would be both lucky (because his key is 
-> unlikeley to be in the attacker's keychain), and unlucky (since the key is 
-> not blacklisted). I see little point in supporting other than the default 
-> PIDs.
-
-I agree.
-
-Thanks,
-
-Alexander
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
