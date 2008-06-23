@@ -1,31 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/15/8
-Message-ID: <Pine.GSO.4.51.0810151440370.15058@faron.mitre.org>
-Date: Wed, 15 Oct 2008 14:46:39 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/23/3
+Message-ID: <Pine.GSO.4.51.0806231418190.1760@faron.mitre.org>
+Date: Mon, 23 Jun 2008 14:18:50 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel: sctp: Fix oops when INIT-ACK indicates that peer doesn't support AUTH
+Subject: Re: CVE id request: perl
 Content-Type: text/plain; charset=utf-8
 
 
-This is one of those "I don't know what I'm typing" descriptions so any
-clarification would be welcome.
+This looks distinct from some older rmtree() issues, so I'm assigning a
+new number.
 
 - Steve
 
-
 ======================================================
-Name: CVE-2008-4576
+Name: CVE-2008-2827
 Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4576
-Reference: MLIST:[linux-kernel] 20081006 [patch 58/71] sctp: Fix oops when INIT-ACK indicates that peer doesnt support AUTH
-Reference: URL:http://www.gossamer-threads.com/lists/linux/kernel/981012?page=last
-Reference: CONFIRM:http://kernel.org/pub/linux/kernel/v2.6/ChangeLog-2.6.25.18
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2827
+Reference: MISC:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=487319
+Reference: MISC:http://rt.cpan.org/Public/Bug/Display.html?id=36982
 
-sctp in Linux kernel before 2.6.25.18 allows remote attackers to cause
-a denial of service (OOPS) via an INIT-ACK that states the peer does
-not support AUTH, which causes the sctp_process_init function to clean
-up active transports and triggers the OOPS when the T1-Init timer
-expires.
+The rmtree function in lib/File/Path.pm in Perl 5.10 does not properly
+check permissions before performing a chmod, which allows local users
+to modify the permissions of arbitrary files via a symlink attack, a
+different vulnerability than CVE-2005-0448 and CVE-2004-0452.
 
 
