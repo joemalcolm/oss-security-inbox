@@ -1,25 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/11/2
-Message-ID: <20080311223029.GE30071@ngolde.de>
-Date: Tue, 11 Mar 2008 23:30:29 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: insecure X11 handling in ltsp
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/23/5
+Message-ID: <Pine.GSO.4.51.0806231440080.1760@faron.mitre.org>
+Date: Mon, 23 Jun 2008 14:41:31 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Nico Golde <oss-security+ml@...lde.de>
+cc: oss-security@...ts.openwall.com, vendor-sec@....de, "Steven M. Christey" <coley@...re.org>
+Subject: Re: New Xen ioemu: PVFB backend issue
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-Due to passing the -ac option to the X server in ltsp it is possible for any
-attacker knowing the victims ip address and the display number to read keystrokes
-on the client and display client windows.
 
-Can I get a CVE id for this?
-Details on: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=469462
+On Thu, 19 Jun 2008, Nico Golde wrote:
 
-Cheers
-Nico
+> Can you take care about the remaining steps to get this on
+> the mitre site or Steve could you update this? Quite some
+> time passed since this was assigned :)
 
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+There was enough in the initial post, I just missed it the first time
+around.
 
-Content of type "application/pgp-signature" skipped
+Any idea on affected Xen versions?
+
+- Steve
+
+======================================================
+Name: CVE-2008-1952
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1952
+Reference: MLIST:[Xen-devel] 20080521 [PATCH] ioemu: Fix PVFB backend to limit frame buffer size
+Reference: URL:http://lists.xensource.com/archives/html/xen-devel/2008-05/msg00421.html
+Reference: MLIST:[oss-security] 20080521 New Xen ioemu: PVFB backend issue
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/05/21/9
+Reference: CONFIRM:http://xenbits.xensource.com/xen-unstable.hg?rev/9044705960cb30cec385bdca7305bcf7db096721
+
+The backend for XenSource Xen Para Virtualized Frame Buffer (PVFB) in
+Xen ioemu does not properly restrict the frame buffer size, which
+allows attackers to cause a denial of service (crash) by mapping an
+arbitrary amoount of guest memory.
+
+
