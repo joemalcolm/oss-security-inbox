@@ -1,36 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/28/3
-Message-Id: <200812281456.07346.rbu@gentoo.org>
-Date: Sun, 28 Dec 2008 14:55:57 +0100
-From: Robert Buchholz <rbu@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/23/1
+Message-ID: <20080623123431.67470131@redhat.com>
+Date: Mon, 23 Jun 2008 12:34:31 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Tomas Hoger <thoger@...hat.com>, coley@...re.org
-Subject: Re: CVE request - pdfjam
+Cc: matthias.andree@....de
+Subject: Re: CVE Id Request: fetchmail <= 6.3.8 DoS when logging long headers in -v -v mode
 Content-Type: text/plain; charset=utf-8
 
-On Friday 19 December 2008, Tomas Hoger wrote:
-> Hi!
->
-> Insecure temporary file handling flaw was reported for pdfjam:
->
-> https://bugzilla.novell.com/show_bug.cgi?id=459031
->
-> Issue affects all 3 scripts shipped in pdfjam: pdf90, pdfjoin and
-> pdfnup
->
-> They create various temporary files in tempfileDir (/var/tmp),
-> process id ($$) is used for file name uniqueness.
+On Fri, 13 Jun 2008 18:11:02 +0200 Matthias Andree
+<matthias.andree@....de> wrote:
 
-Martin Väth also discovered an untrusted search path vulnerability in 
-the pdfjam scripts: They prepend . to PATH, allowing attackers to 
-execute code by preparing executables (e.g. sed) in the directory 
-pdfnup was run from or in /var/tmp (e.g. pdflatex, cp, rm).
+> Summary: fetchmail crashes (SIGSEGV while reading) in -v -v mode when
+> trying to format log messages exceeding 2048 bytes.
+> 
+> Reference: <https://bugzilla.novell.com/show_bug.cgi?id=354291>
 
-Martin also prepared a patch, see:
-https://bugs.gentoo.org/show_bug.cgi?id=252734
+Just out of curiosity, has anyone managed to reproduce this on any
+other arch than x86_64?  i386 does not seem affected by this at all,
+while on x86_64 it SEGVs on some glibc versions and prints "About to
+rewrite To: (null)" with no crash on others.
 
-Please assign another CVE for this issue.
-
-Robert
-
-Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
+-- 
+Tomas Hoger / Red Hat Security Response Team
