@@ -1,47 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/20/1
-Message-ID: <488383BC.3040204@freethemallocs.com>
-Date: Sun, 20 Jul 2008 10:28:12 -0800
-From: Jonathan Smith <smithj@...ethemallocs.com>
-To: mci@....openwall.com
-CC: oss-security@...ts.openwall.com, chris@...ry.beasts.org
-Subject: Re: vsftpd CVE-2007-5962 (Red Hat / Fedora specific)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/23/7
+Message-ID: <Pine.GSO.4.51.0806231522310.1760@faron.mitre.org>
+Date: Mon, 23 Jun 2008 15:22:38 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: query on a pppol2tp_recvmsg() fix - security relevant?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
 
-Michail Litvak wrote:
-> Hello Jonathan Smith! 
-> 
->  Wed, May 21, 2008 at 11:34:42AM -0800, smithj wrote about "Re: [oss-security] vsftpd CVE-2007-5962 (Red Hat / Fedora specific)": 
-> 
->> Tomas Hoger wrote:
->> | This is just a heads-up.  We are releasing updated vsftpd packages
->> | containing a fix for a minor memory leak identified by CVE-2007-5962.
->>
->> The memory leak itself is CVE-2007-5962? Or is the CVE for the original
->> issue where deny_hosts didn't work as expected? It doesn't seem to be
->> public.
-> 
-> As I understand RH released patch to fix problem with deny_file
-> statement (not hosts) -- https://bugzilla.redhat.com/show_bug.cgi?id=174764
-> 
-> But introduce memory leak (CVE-2007-5962) and release package with
-> fixed version of their patch.
-> 
-> Please correct me if I make mistake, but seems this is a typo and
-> You mean deny_file, not deny_hosts.
+======================================================
+Name: CVE-2008-2750
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2750
+Reference: CONFIRM:http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=6b6707a50c7598a83820077393f8823ab791abf8
+Reference: CONFIRM:http://kernel.org/pub/linux/kernel/v2.6/testing/ChangeLog-2.6.26-rc6
+Reference: BID:29747
+Reference: URL:http://www.securityfocus.com/bid/29747
+Reference: FRSIRT:ADV-2008-1854
+Reference: URL:http://www.frsirt.com/english/advisories/2008/1854
+Reference: SECTRACK:1020297
+Reference: URL:http://securitytracker.com/id?1020297
+Reference: SECUNIA:30719
+Reference: URL:http://secunia.com/advisories/30719
+Reference: XF:linux-kernel-pppol2tprecvmsg-dos(43111)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/43111
 
-You are correct. Someone from rPath also noticed this, but I guess I
-never followed up and corrected myself on oss-security :)
+The pppol2tp_recvmsg function in drivers/net/pppol2tp.c in the Linux
+kernel 2.6 before 2.6.26-rc6 allows remote attackers to cause a denial
+of service (kernel heap memory corruption and system crash) and
+possibly have unspecified other impact via a crafted PPPOL2TP packet
+that results in a large value for a certain length variable.
 
-	smithj
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEAREIAAYFAkiDg7wACgkQCG91qXPaRekUtACggz/IxZ1l1sgKC9KXrCM0bPT3
-Ov8Anjw4sWOLNBdiy+5P0YgwE06IWVJ8
-=c/61
------END PGP SIGNATURE-----
