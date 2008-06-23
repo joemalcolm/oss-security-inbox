@@ -1,16 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/18/2
-Message-Id: <200806181941.40292.turkay.eren@gmail.com>
-Date: Wed, 18 Jun 2008 19:41:40 +0300
-From: Eren Türkay <turkay.eren@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/23/6
+Message-ID: <Pine.GSO.4.51.0806231519560.1760@faron.mitre.org>
+Date: Mon, 23 Jun 2008 15:20:02 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: query on a pppol2tp_recvmsg() fix - security relevant?
+cc: coley@...re.org
+Subject: Re: CVE request: php 5.2.6 ext/imap buffer overflows
 Content-Type: text/plain; charset=utf-8
 
-On 18 Jun 2008 Wed 19:18:40 Marcus Meissner wrote:
-> A customer asks us if the following is a security problem:
 
-Secunia issued an advisory for that issue. It seems that it's a security 
-problem, but I'm not sure :)
+======================================================
+Name: CVE-2008-2829
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2829
+Reference: MISC:http://bugs.php.net/bug.php?id=42862
+Reference: CONFIRM:https://bugs.gentoo.org/show_bug.cgi?id=221969
+Reference: MLIST:[oss-security] 20080619 CVE request: php 5.2.6 ext/imap buffer overflows
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/06/19/6
 
-http://secunia.com/advisories/30719/
+php_imap.c in PHP 5.2.5, 5.2.6, 4.x, and other versions, uses obsolete
+API calls that allow context-dependent attackers to cause a denial of
+service (crash) via a long IMAP request, which triggers an "rfc822.c
+legacy routine buffer overflow" error message.
+
+
