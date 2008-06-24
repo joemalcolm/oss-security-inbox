@@ -1,22 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/21/10
-Message-ID: <20080221205142.GF8804@severus.strandboge.com>
-Date: Thu, 21 Feb 2008 15:51:42 -0500
-From: Jamie Strandboge <jamie@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/24/4
+Message-Id: <E3DB0344-D596-40A5-946F-A7B06D54A646@apple.com>
+Date: Tue, 24 Jun 2008 12:02:20 -0700
+From: Drew Yao <ayao@...le.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request for mysql bug #22413
+Cc: Vendor-Sec Distribution Vendors <vendor-sec@....de>
+Subject: Re: ruby regression (was: Re: [vendor-sec] Ruby memory corruption bugs in array and string handling)
 Content-Type: text/plain; charset=utf-8
 
-We have a bug report open to fix http://bugs.mysql.com/bug.php?id=22413.
-This is a DoS via a 'EXPLAIN SELECT FROM view with ORDER BY' statement
-and is fixed in 5.0.32. Can a CVE be assigned for this?
+> Where did you get 1.8.6p231? The latest I see is 1.8.6p230, which,
+> according to upstream's advisory [1], fixes the security issues.
 
-Thanks,
+Sorry, I meant p230.
 
-Jamie
 
---
-Email: jamie@...onical.com
-IRC:   jdstrand
+> However, the test suite ("make test" in the
+> build dir) passes. It was my understanding that the test suite should
+> fail, given my reading of the forum thread linked to by the blog post
+> Drew mentioned above: http://www.ruby-forum.com/topic/157034
 
-Download attachment "signature.asc" of type "application/pgp-signature" (190 bytes)
+
+I think make test is not the same test suite they're talking about.
+
+
+---
+Drew Yao
+Apple Product Security
+
+
+>
+
