@@ -1,70 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/10/4
-Message-ID: <493FD7FB.9050006@op5.se>
-Date: Wed, 10 Dec 2008 15:53:47 +0100
-From: Andreas Ericsson <ae@....se>
-To: Eygene Ryabinkin <rea-sec@...elabs.ru>
-CC: oss-security@...ts.openwall.com, jlieskov@...hat.com,  coley@...re.org
-Subject: Re: CVE Request (nagios)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/24/1
+Message-Id: <200806241014.51258.rbu@gentoo.org>
+Date: Tue, 24 Jun 2008 10:14:47 +0200
+From: Robert Buchholz <rbu@...too.org>
+To: vendor-sec@....de
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com
+Subject: Re: [vendor-sec] Re: New Xen ioemu: PVFB backend issue
 Content-Type: text/plain; charset=utf-8
 
-Eygene Ryabinkin wrote:
-> Andreas, good day.
-> 
-> Will you be able to clarify two things.
-> 
-> Mon, Dec 08, 2008 at 05:19:52PM +0300, Eygene Ryabinkin wrote:
->> So
->>   http://nagios.cvs.sourceforge.net/viewvc/nagios/nagios/base/commands.c?r1=1.109&r2=1.110&view=patch
->> just completely closes the processing of these commands from the
->> Nagios side.  May be this was the fix for the case when the evil
->> contents from the command file were still floating around but the
->> upgraded Nagios won't process them because they could go from the
->> previous successful attack but are lying unprocessed?
-> 
-> Do you think it is really so?
-> 
+On Monday 23 June 2008, Steven M. Christey wrote:
+> On Thu, 19 Jun 2008, Nico Golde wrote:
+> > Can you take care about the remaining steps to get this on
+> > the mitre site or Steve could you update this? Quite some
+> > time passed since this was assigned :)
+>
+> There was enough in the initial post, I just missed it the first time
+> around.
+>
+> Any idea on affected Xen versions?
 
-Umm... I can't parse the above paragraph. In short though, the removed
-commands are removed *from the cgi's* because it's far too dangerous
-to allow such things over the web. Nagios will still process them if
-they are submitted to the command-pipe, but the CGI's can no longer
-write such commands to said pipe.
+It is not part of the latest release 3.2.1, as it was only introduced 
+two days prior (May 13) here:
+http://xenbits.xensource.com/xen-unstable.hg?rev/53195719f762
 
->>> It is a bit strange that it was done after 3.0.5 (CSRF was documented in
->>> 3.0.5 release notes), but...  By the way, entry for CVE-2008-5028 speaks
->>> about 3.0.5 as about the vulnerable to the CSRF and it is inconsistent
->>> with the release notes at
->>>   http://www.nagios.org/development/history/nagios-3x.php.
->> So I feel the the CSRF was "somehow closed" in 3.0.5 and CVE entry may
->> need fixing.  The remains from this bug that could migrate from 3.0.5 to
->> 3.0.6 (but not in the functional sense, only via the unprocessed command
->> file) were "fixed" in 3.0.6.
-> 
-> CVE-2008-5028 really speaks about 3.0.5 as about vulnerable to CSRF.  At
-> least CHANGE_ commands were closed in 3.0.5 and were (presumably)
-> additionally closed at the Nagios server side in 3.0.6.  So either 3.0.6
-> is vulnerable too, 3.0.5 is not vulnerable to CSRF or I am missing
-> something.  What to choose?
-> 
+As mentioned, fixed here:
+http://xenbits.xensource.com/xen-unstable.hg?rev/9044705960cb
 
-3.0.5 is vulnerable to CSRF. 3.0.6 (which adds in-form session tokens to
-cmd.cgi, which processes all commands from the web-forms), is not vulnerable
-to CSRF.
+As for the first commit, it does not fall under CVE-2008-1952 -- so I 
+assume we need a new CVE, marking CVE-2008-1952 as an improper fix for 
+it.
 
-3.0.5 fixes the authorization bypass discussed in CVE-2008-5027, where an
-authenticated user can submit commands he/she was not supposed to be able
-to submit. However, by blocking the CHANGE_ set of commands, the worst-case
-impact of the CSRF was drastically reduced, and the change to blocking those
-commands was also a part of 3.0.5.
 
-I'm afraid Ethan (the Nagios maintainer) got it wrong in the changelog,
-which is why, I presume, there's so much confusion right now.
+> ======================================================
+> Name: CVE-2008-1952
+...
+> amoount of guest memory.
 
-I wrote the patches for it though, so I think it's safe to say I know what
-patch (and version) fixed what.
+a-moo-unt ? ;-)
 
--- 
-Andreas Ericsson                   andreas.ericsson@....se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+
+Robert
+
+Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
