@@ -1,41 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/27/1
-Message-ID: <3318.1211896227@devserv.devel.redhat.com>
-Date: Tue, 27 May 2008 09:50:27 -0400
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com, full-disclosure@...ts.grok.org.uk, bugtraq@...urityfocus.com
-Subject: Security, Open Source Style
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/24/3
+Message-ID: <48613EE0.6040100@freethemallocs.com>
+Date: Tue, 24 Jun 2008 10:37:20 -0800
+From: Jonathan Smith <smithj@...ethemallocs.com>
+To: Drew Yao <ayao@...le.com>
+CC: Vendor-Sec Distribution Vendors <vendor-sec@....de>,  oss-security@...ts.openwall.com
+Subject: ruby regression (was: Re: [vendor-sec] Ruby memory corruption bugs in array and string handling)
 Content-Type: text/plain; charset=utf-8
 
-Today we are excited to announce another community initiative--the Open
-Source Software Security community (oss-security). This project is an
-ongoing effort to manage security information in Open Source software by
-building on the collaborative foundation of the open source model.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-The purpose of oss-security is to encourage public discussion of security
-flaws, concepts, and practices in the open source community.  We don't want
-to simply be an information clearinghouse, or to replace any of the current
-security lists and groups.  The goal is to fill an existing vacuum by
-encouraging active participation of those interested in the ideas and
-unique challenges in securing Open Source software.  This includes
-activities such as flaw discovery, understanding, reporting, and overall
-best practices.
+Since this is public now, I'm CCing oss-security (and trimming the CC
+list of people known to be on that list).
 
-The oss-security community was initially founded by individuals from
-Foresight Linux, Mandriva, Openwall, and Red Hat and has since grown to
-include contributions from many other projects and individuals.  The
-computing resources are currently graciously donated by the Openwall
-Project.
+My comments are inline...
 
-If you have an interest in the Open Source security space, you are
-encouraged to participate in the oss-security community by adding content
-to the wiki, contributing to mailing list discussions, or joining us on
-IRC.
+Drew Yao wrote:
+> Also in case anyone was wondering about the comments on
+> http://www.matasano.com/log/1070/updates-on-drew-yaos-terrible-ruby-vulnerabilities/
+> 
+> the ruby version that was released to fix these introduced a regression.
+> 
+> ruby -ve ’str = “A”*(2**16) ; loop{ str << str ; puts str.size }’
 
-More information can be found on the group's wiki page here:
-http://oss-security.openwall.org
+The above command does crash for me using ruby 1.8.6p230 on rPath Linux
+2 or Foresight Linux 2. However, the test suite ("make test" in the
+build dir) passes. It was my understanding that the test suite should
+fail, given my reading of the forum thread linked to by the blog post
+Drew mentioned above: http://www.ruby-forum.com/topic/157034
 
-Thank You.
+> causes a crash with 1.8.6p231 and 1.8.7p22.
 
--- 
-    JB
+Where did you get 1.8.6p231? The latest I see is 1.8.6p230, which,
+according to upstream's advisory [1], fixes the security issues.
+
+> That crash is fixed by this patch
+> http://svn.ruby-lang.org/cgi-bin/viewvc.cgi/branches/ruby_1_8/string.c?r1=17530&r2=17529&pathrev=17530
+
+Applying that patch, the segfault does go away. I get another
+(presumably correct) error message:
+- -e:1:in `<<': string sizes too big (ArgumentError)
+        from -e:1
+        from -e:1:in `loop'
+        from -e:1
+
+
+> This issue doesn't exist on versions of Ruby before the recent patches,
+> because in the old versions, str_buf_append didn't exist. 
+> rb_str_buf_append takes two RString pointers, so if str and str2 are the
+> same, when str->ptr gets realloced, str2->ptr also gets realloced.  This
+> also does not affect the patched version if you used the patches I sent
+> originally.
+
+Thanks for the info.
+
+[1]:
+http://www.ruby-lang.org/en/news/2008/06/20/arbitrary-code-execution-vulnerabilities/
+
+	smithj
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEAREIAAYFAkhhPt8ACgkQCG91qXPaRelBOQCggJfnupOAUudgwoGeX5LY7Oq4
+yFcAn0+DmKwFv258pEXcoGPE1YtYNRyg
+=72d4
+-----END PGP SIGNATURE-----
