@@ -1,64 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/28/5
-Message-ID: <20080728182721.GB896@ngolde.de>
-Date: Mon, 28 Jul 2008 20:27:21 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/26/1
+Message-Id: <1214492018.19960.39.camel@iankko.englab.brq.redhat.com>
+Date: Thu, 26 Jun 2008 16:53:38 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Links < 2.1 security issue
+Subject: CVE-2008-2365 kernel: ptrace: Crash on PTRACE_{ATTACH,DETACH} race -- affecting kernel versions <= 2.6.25
 Content-Type: text/plain; charset=utf-8
 
-Hi Steven,
-* Steven M. Christey <coley@...us.mitre.org> [2008-07-28 00:24]:
-> On Sun, 27 Jul 2008, Pierre-Yves Rofes wrote:
-> 
-> > Anyone investigated this, or even has a clue on the potential impact?
-> > Not sure if a CVE can be assigned, since this is very (too?) vague...
-> 
-> We operate on the assumption that if a developer says it's a security
-> issue, it's worth assigning a CVE for.
-> 
-> But you wind up with uninformative descriptions like the one below :-/
+Hello guys,
 
-As far as I understand the patch fixes two problems:
-diff -ur new/links2-2.1pre37/url.c upstream/links-2.1/url.c
---- new/links2-2.1pre37/url.c   2007-12-26 04:00:49.000000000 +0000
-+++ upstream/links-2.1/url.c    2008-06-29 16:47:21.000000000 +0000
-@@ -16,7 +16,7 @@
-        int allow_post;
-        int bypasses_socks;
- } protocols[]= {
--               {"file", 0, file_func, NULL,            1, 1, 0, 0, 0},
-+               {"file", 0, file_func, NULL,            1, 1, 0, 0, 1},
-                {"https", 443, https_func, NULL,        0, 1, 1, 1, 0},
-                {"http", 80, http_func, NULL,           0, 1, 1, 1, 0},
-                {"proxy", 3128, proxy_func, NULL,       0, 1, 1, 1, 0},
+  wanted to inform you about recently discovered utrace/ptrace
+attach and detach race condition affecting Linux kernel from versions
+2.6.9 up to the upstream one (< 2.6.25).
+The upstream Linux kernel version got already patched with the following
+three patches, which resolve this issue:
 
-This does nothing more than setting the socks bypass option to 1 allowing
-links to not use the socks proxy for local file urls.
+http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.25.y.git;a=commit;h=5ecfbae093f0c37311e89b29bfc0c9d586eace87
+http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.25.y.git;a=commit;h=f5b40e363ad6041a96e3da32281d8faa191597b9
+http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.25.y.git;a=commit;h=f358166a9405e4f1d8e50d8f415c26d95505b6de
 
-The second part seems to be the actual security issue:
-diff -ur new/links2-2.1pre37/session.c upstream/links-2.1/session.c
---- new/links2-2.1pre37/session.c       2008-06-21 16:12:07.000000000 +0000
-+++ upstream/links-2.1/session.c        2008-06-29 16:47:21.000000000 +0000
-@@ -2317,6 +2317,7 @@
-        if (a->accept_http && !strcasecmp(proto, "http")) ret = 1;
-        if (a->accept_ftp && !strcasecmp(proto, "ftp")) ret = 1;
-        mem_free(proto);
-+       if (proxies.only_proxies) ret = 0;
-        return ret;
- }
 
-Before the patch this set ses->tq_prog_flag_direct to 1 which causes the
-continue_download() function to pass the url to an external program (after
-links identified the file type) and thus bypassing the socks proxy (e.g. tor)
-even if you have configured links to never use anything else than the proxy
-(proxies.only_proxies). This should be a problem for example if you rely on the
-anonymity you don't have in this case.
+More 2.6.9 kernel version specific details about this issue
+can be found at:
 
-Cheers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2008-2365
 
-Content of type "application/pgp-signature" skipped
+To resolve this issue on the 2.6.9 version of the Linux kernel,
+you will need to backport the above upstream patches.
+
+There is also testcase available to reproduce this issue at:
+
+http://sources.redhat.com/cgi-bin/cvsweb.cgi/~checkout~/tests/ptrace-tests/tests/late-ptrace-may-attach-check.c?cvsroot=systemtap
+
+This works for both utrace (2.6.9) and ptrace (not patched upstream) 
+*trace call versions.
+
+Please use CVE-2008-2365 identifier, for future references to this
+issue.
+
+If you are shipping kernel versions < 2.6.25, you are encouraged
+to fix this issue.
+
+Let me know, if you would need any further details about this issue
+and ways, how to reproduce it. 
+
+Kind regards
+Jan iankko Lieskovsky
+RH Security Response Team
+
