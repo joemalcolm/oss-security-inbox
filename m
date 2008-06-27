@@ -1,33 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/21/2
-Message-ID: <48FD2868.5090408@redhat.com>
-Date: Tue, 21 Oct 2008 08:55:04 +0800
-From: Eugene Teo <eteo@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/27/1
+Message-Id: <200806271147.13056.steffen.joeris@skolelinux.de>
+Date: Fri, 27 Jun 2008 11:47:11 +0200
+From: Steffen Joeris <steffen.joeris@...lelinux.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2008-3528 Linux kernel ext[234] directory corruption DoS
+Subject: CVE id request: checkinstall
 Content-Type: text/plain; charset=utf-8
 
-Eugene Teo wrote:
-> Eugene Teo wrote:
->> The ext[234] filesystem code fails to properly handle corrupted data
->> structures. With a mounted filesystem image or partition that have
->> corrupted dir->i_size and dir->i_blocks, a user performing either a read
->> or write operation on the mounted image or partition can lead to a
->> possible denial of service.
->>
->> References:
->> https://bugzilla.redhat.com/show_bug.cgi?id=459577
->> http://lkml.org/lkml/2008/9/13/98
->> http://lkml.org/lkml/2008/9/13/99
->> http://lkml.org/lkml/2008/9/17/371
->>
->> The issue is not fixed upstream yet, but the patch has been added to -mm
->>  tree. I will update this email as soon as I know the commit hashes.
->> This issue has been allocated with CVE-2008-3528.
-> 
-> Upstream commits: cdbf6dba28e8e6268c8420857696309470009fd9 (ext3)
-> 		  bd39597cbd42a784105a04010100e27267481c67 (ext2)
+Hi
 
-Not forgetting 9d9f177572d9e4eba0f2e18523b44f90dd51fe74 (ext4) too.
+Checkinstall (and installwatch) create temporary directories manually
+instead of using mktemp, which creates a race condition.
 
-Thanks, Eugene
+patch:
+http://lists.alioth.debian.org/pipermail/secure-testing-team/2008-June/001672.html
+
+Could I please get a CVE id for this issue?
+
+Cheers
+Steffen
+
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
