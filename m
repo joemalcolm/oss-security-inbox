@@ -1,29 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/18/7
-Message-ID: <20080818202618.GH27231@ngolde.de>
-Date: Mon, 18 Aug 2008 22:26:18 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/27/2
+Message-ID: <15087.1214574378@devserv.devel.redhat.com>
+Date: Fri, 27 Jun 2008 09:46:18 -0400
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: mktemp
+cc: coley@...re.org
+Subject: Squid advisory
 Content-Type: text/plain; charset=utf-8
 
-Hi Steven,
-* Steven M. Christey <coley@...us.mitre.org> [2008-08-18 22:09]:
-> On Mon, 18 Aug 2008, Nico Golde wrote:
-> 
-> > This is known but as I wrote in the bug report:
-> > "the file is safely created with O_EXCL and 0600, still
-> > unsafe if used with -u"
-> 
-> Given that -u is "unsafe mode" with a disclaimer against race conditions
-> (at least based on the manpage I looked at), I'm of the mindset that you'd
-> flag an application for using mktemp -u, but not mktemp itself.
+Just in case anyone missed it:
+http://www.squid-cache.org/Advisories/SQUID-2008_1.txt
 
-Ok fine, makes sense to me.
-Cheers
-Nico
+I'm ccing Steve as I'm not sure if this one should get a new CVE id (at the
+very least, the old CVE description needs to be updated).
+
+Thanks.
+
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+    JB
