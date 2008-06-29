@@ -1,46 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/02/1
-Message-ID: <49348C3E.4020003@redhat.com>
-Date: Tue, 02 Dec 2008 09:15:42 +0800
-From: Eugene Teo <eteo@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/29/1
+Message-Id: <200806300137.03519.rbu@gentoo.org>
+Date: Mon, 30 Jun 2008 01:37:00 +0200
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: Unix sockets kernel panic
+Subject: Two remote DoS issues in linuxdcpp
 Content-Type: text/plain; charset=utf-8
 
-dann frazier wrote:
-> On Tue, Nov 11, 2008 at 05:41:44PM +0800, Eugene Teo wrote:
->> Eugene Teo wrote:
->>> We need a CVE name for this issue. This was reported in netdev today.
->>>
->>> "The following code causes a kernel panic on Linux 2.6.26:
->>> http://darkircop.org/unix.c
->>>
->>> I haven't investigated the bug so I'm not sure what is causing it, and
->>> don't know if it's exploitable.  The code passes unix sockets from one
->>> process to another using unix sockets.  The bug probably has to do
->>> with closing file descriptors."
->>>
->>> http://marc.info/?l=linux-netdev&m=122593044330973&w=2
->>> https://bugzilla.redhat.com/show_bug.cgi?id=470201
->>>
->>> There isn't a fix yet. Dave is working on it.
->> There's a fix now.
->>
->> Upstream commits: f8d570a, 3b53fbf, and 6209344.
->>
->> https://bugzilla.redhat.com/show_bug.cgi?id=470201#c10
->> https://bugzilla.redhat.com/show_bug.cgi?id=470201#c14
->> https://bugzilla.redhat.com/show_bug.cgi?id=470201#c9
->> https://bugzilla.redhat.com/show_bug.cgi?id=470201#c13
-> 
-> Thanks for following up.
-> 
-> fyi, our testing of this fix has uncovered additional issues.
-> Local/unprivileged users can cause soft lockups and take out system
-> processes by triggering the OOM killer:
->   http://marc.info/?l=linux-netdev&m=122721862313564&w=2
+Hey,
 
-This additional bug is assigned with CVE-2008-5300.
+Linux DC++ (linuxdcpp) is a Direct Connect client based on the same 
+client code as DC++, so it is vulnerable to the recently reported
 
-Thanks, Eugene
+[1] NULL pointer dereference remote DoS via partial file list requests
+http://secunia.com/advisories/30812/
+http://sourceforge.net/project/shownotes.php?release_id=608612&group_id=40287
+https://bugs.launchpad.net/dcplusplus/+bug/238333 [Can't view]
+
+Patch for linuxdcpp:
+http://cvs.berlios.de/cgi-bin/viewcvs.cgi/linuxdcpp/linuxdcpp/client/ShareManager.cpp.diff?r1=1.14&r2=1.15&sortby=date
+
+[2] Empty message Remote DoS
+When an attacker sends an empty message, he can cause the client to 
+abort with "std::out_of_range" in substr().
+
+Patch for linuxdcpp:
+http://cvs.berlios.de/cgi-bin/viewcvs.cgi/linuxdcpp/linuxdcpp/client/NmdcHub.cpp.diff?r1=1.14&r2=1.15&sortby=date
+
+
+Robert
+
+Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
