@@ -1,52 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/16/7
-Message-ID: <Pine.GSO.4.51.0809152115580.6953@faron.mitre.org>
-Date: Mon, 15 Sep 2008 21:19:18 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: Re: CVE request: joomla < 1.5.7
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/30/6
+Message-ID: <20080630211012.GD11562@severus.strandboge.com>
+Date: Mon, 30 Jun 2008 17:10:12 -0400
+From: Jamie Strandboge <jamie@...onical.com>
+To: Robert Buchholz <rbu@...too.org>
+Cc: vendor-sec@....de, oss-security@...ts.openwall.com
+Subject: Re: [vendor-sec] Re: patch sets for recent ruby vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
+On Sun, 29 Jun 2008, Robert Buchholz wrote:
 
-On Thu, 11 Sep 2008, Hanno [utf-8] Böck wrote:
+> On Thursday 26 June 2008, Jamie Strandboge wrote:
+> > ----- Forwarded message from Shugo Maeda <security@...y-lang.org>
+> > -----
+> >
+> > Date: Thu, 26 Jun 2008 12:16:52 +0900
+> > From: Shugo Maeda <security@...y-lang.org>
+> > To: Jamie Strandboge <jamie@...onical.com>
+> > Cc: security@...ntu.com
+> > Subject: Re: patch sets for recent ruby vulnerabilities
+> >
+> > Hello,
+> >
+> > 2008/6/25 Jamie Strandboge <jamie@...onical.com>:
+> > >> ------------------------------------------------------------------
+> > >>------ r17530 | nobu | 2008-06-22 07:16:45 +0900 (Sun, 22 Jun 2008)
+> > >> | 2 lines Changed paths:
+> > >>    M /branches/ruby_1_8/ChangeLog
+> > >>    M /branches/ruby_1_8/string.c
+> > >>
+> > >> * string.c (str_buf_cat): check for self concatenation.
+> > >
+> > > Without having dived into the code yet, is this the fix for the
+> > > regressions with rails and others?
+> >
+> > No, it's not.
+> > The following commit may be the cause of the problems with Rails.
+> >
+> > ---------------------------------------------------------------------
+> >--- r15856 | matz | 2008-03-30 00:47:54 +0900 (Sun, 30 Mar 2008) | 2
+> > lines Changed paths:
+> >    M /branches/ruby_1_8/ChangeLog
+> >    M /branches/ruby_1_8/class.c
+> >
+> > * class.c (clone_method): should copy cref as well.
+> >   [ruby-core:15833]
+> 
+> 
+> Thanks for the info, one of our Ruby maintainers confirmed that 
+> reverting this patch lets the test suite run through without errors.
+> Did your email contact with Ruby folks yield an information whether they 
+> plan to fix it for the 1.8 branch, or do they rely on distributions to 
+> ship reverts of the commit if they care about older Rails?
+> 
+They did not say, however, this patch is not part of the security
+patchsets as detailed by Drew Yao or upstream Ruby, so we ommitted it.
 
-> http://www.joomla.org/announcements/release-news/5212-joomla-157-security-release-now-available.html
->
-> Security
->
->     * Several security issues were fixed in this release. There was 1
-> critical, 1 major and 2 moderate security vulnerabilities fixed in 1.5.7. For
-> more information, visit the Security Center.
+> Also, there was a similar thread on oss-security, you posting the 
+> information there would probably be appreciated.
+> 
+Ah yes, meant to do that. Done.
 
-more details were from http://developer.joomla.org/security.html
+Jamie
 
+-- 
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
 
-[20080902] - Core - Random Number Generation Flaw
-http://developer.joomla.org/security/news/272-20080902-core-random-number-generation-flaw.html
-
-Use CVE-2008-4102
-
-------
-
-[20080903] - Core - com_mailto Spam
-http://developer.joomla.org/security/news/273-20080903-core-commailto-spam.html
-
-Use CVE-2008-4103
-
-------
-
-[20080904] - Core - Redirect Spam
-http://developer.joomla.org/security/news/274-20080904-core-redirect-spam.html
-
-Use CVE-2008-4104
-
-------
-
-[20080901] - Core - JRequest Variable Injection
-http://developer.joomla.org/security/news/271-20080901-core-jrequest-variable-injection.html
-
-Use CVE-2008-4105
-
-
-- Steve
+Download attachment "signature.asc" of type "application/pgp-signature" (190 bytes)
