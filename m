@@ -1,28 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/14/2
-Message-ID: <60255.82.67.177.178.1210758388.squirrel@mail.rofes.fr>
-Date: Wed, 14 May 2008 11:46:28 +0200 (CEST)
-From: "Pierre-Yves Rofes" <py@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/30/3
+Message-Id: <200806301749.54012.ludwig.nussel@suse.de>
+Date: Mon, 30 Jun 2008 17:49:53 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: Django Cross-Site Scripting
+Subject: openldap DoS
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
+Hi,
 
-please assign a CVE id for the following issue:
+Remote unauthenticated attackers can trigger an assertion in the ASN.1 BER
+decoding of openlap and crash the server:
+http://www.openldap.org/its/index.cgi/Software%20Bugs?id=5580;selectid=5580
 
-http://www.djangoproject.com/weblog/2008/may/14/security/
-https://bugs.gentoo.org/show_bug.cgi?id=222029
-
-Thanks
+cu
+Ludwig
 
 -- 
-Pierre-Yves Rofes
-Gentoo Linux Security Team
-
-
-
-
-
+ (o_   Ludwig Nussel
+ //\   
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
 
 
