@@ -1,22 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/12/2
-Message-ID: <20080512150358.GB29079@ngolde.de>
-Date: Mon, 12 May 2008 17:03:58 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/30/1
+Message-Id: <200806300947.19739.steffen.joeris@skolelinux.de>
+Date: Mon, 30 Jun 2008 09:47:19 +0200
+From: Steffen Joeris <steffen.joeris@...lelinux.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Emacs 21 fast-lock-mode arbitrary lips code execution
+Subject: CVE id request mercurial:Insufficient input validation
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Robert Buchholz <rbu@...too.org> [2008-05-10 15:01]:
-> Emacs 21 and Xemacs will execute any lisp code present in a .flc file that 
-> accompanies the file the user opens.
+Hi
 
-The same applies to emacs22.
+Moving this to oss-sec, since it is unembargoed.
+
+It is possible to touch files outside root with a maliciously crafted
+patch.
+
+Upstream patch:
+http://www.selenic.com/hg/rev/87c704ac92d4
+
 Cheers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+Steffen
 
-Content of type "application/pgp-signature" skipped
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
