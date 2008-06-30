@@ -1,28 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/18/3
-Message-ID: <Pine.GSO.4.51.0805180754140.26846@faron.mitre.org>
-Date: Sun, 18 May 2008 07:54:48 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/30/7
+Message-ID: <20080630212319.GE11562@severus.strandboge.com>
+Date: Mon, 30 Jun 2008 17:23:19 -0400
+From: Jamie Strandboge <jamie@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: uudeview
+Subject: CVE request for dnsmasq DoS
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
+There is a remote DoS in dnsmasq 2.25 (and presumably earlier) that is
+fixed in 2.26. Details can be found at [1]. Can we get a CVE assigned
+for this?
 
-======================================================
-Name: CVE-2008-2266
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2266
-Reference: MLIST:[oss-security] 20080514 Re: CVE id request: uudeview
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/05/14/10
-Reference: MISC:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=480972
-Reference: BID:29211
-Reference: URL:http://www.securityfocus.com/bid/29211
-Reference: SECUNIA:30171
-Reference: URL:http://secunia.com/advisories/30171
+Jamie Strandboge
 
-uulib/uunconc.c in UUDeview 0.5.20 allows local users to overwrite
-arbitrary files via a symlink attack on a temporary filename generated
-by the tempnam function.  NOTE: this may be a CVE-2004-2265 regression.
+[1] https://bugs.launchpad.net/ubuntu/+source/dnsmasq/+bug/47438
 
+-- 
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
 
+Download attachment "signature.asc" of type "application/pgp-signature" (190 bytes)
