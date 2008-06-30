@@ -1,33 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/31/7
-Message-ID: <20080331221859.GB14070@ngolde.de>
-Date: Tue, 1 Apr 2008 00:18:59 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/30/4
+Message-ID: <27027.1214846362@devserv.devel.redhat.com>
+Date: Mon, 30 Jun 2008 13:19:22 -0400
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: comix
+cc: coley@...re.org
+Subject: Re: openldap DoS
 Content-Type: text/plain; charset=utf-8
 
-Hi Steven,
-* Steven M. Christey <coley@...us.mitre.org> [2008-04-01 00:09]:
-> On Mon, 31 Mar 2008, Nico Golde wrote:
+On 30 June 2008, Ludwig Nussel wrote:
+> Hi,
 > 
-> > http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=462840
-> >
-> > I confirmed this using comix\"\;echo\ owned\>bla\;ls\ \"
-> > as a simple reroducer.
+> Remote unauthenticated attackers can trigger an assertion in the ASN.1 BER
+> decoding of openlap and crash the server:
+> http://www.openldap.org/its/index.cgi/Software%20Bugs?id=5580;selectid=5580
 > 
-> Use CVE-2008-1568
 
-Thanks
+The patch is here it seems:
+http://www.openldap.org/devel/cvsweb.cgi/libraries/liblber/io.c.diff?r1=1.120&r2=1.121&hideattic=1&sortbydate=0
 
-> What about the comicthumb in Message #10 - if that's part of comix, I'd
-> MERGE with CVE-2008-1568.
+I'm adding Steve Christey to the CC for a CVE id.
 
-Yes that seems to be a script part of the comix package.
-Kind regards
-Nico
+Thanks.
+
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+    JB
