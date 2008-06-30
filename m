@@ -1,43 +1,129 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/28/7
-Message-ID: <Pine.GSO.4.51.0810281448280.7363@faron.mitre.org>
-Date: Tue, 28 Oct 2008 14:53:58 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/30/8
+Message-ID: <20080630215401.GI11562@severus.strandboge.com>
+Date: Mon, 30 Jun 2008 17:54:01 -0400
+From: Jamie Strandboge <jamie@...onical.com>
 To: oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: Re: CVE request phpmyadmin (Fwd: XSS in phpMyadmin)
+Subject: Re: patch sets for recent ruby vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
+Passing this along from the ruby developers. I asked for comments
+regarding the regressions, but did not get any, but the commit to
+string.c on 2008/06/22 (ie after the announcement) is probably part of
+that. These commits are what I thought were the commits, but there was
+so much confusion at [1] and [2] that I went straight to the developers
+for confirmation.
 
-We generally assign CVE's for issues requiring register_globals because
-there are common configurations in which this is enabled, e.g. hosting
-environments or older PHP deployments. Many PHP-based worms wouldn't
-succeed without this setting.  Also, in some cases, the software requires
-it.  Finally, in some cases, a researcher CLAIMS register_globals is
-required but is erroneous (in this specific case, Secunia doesn't say
-register_globals is required, and they typically do this.)
+Hope this helps.
 
-register_globals might limit the applicability to environments where the
-admin doesn't (or can't) follow solid configuration practices, but it's
-still feasible.
+Jamie
 
-- Steve
+[1] http://www.ruby-forum.com/topic/157034
+[2] http://weblog.rubyonrails.com/2008/6/21/multiple-ruby-security-vulnerabilities
 
-======================================================
-Name: CVE-2008-4775
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4775
-Reference: BUGTRAQ:20081027 XSS in phpMyadmin
-Reference: URL:http://www.securityfocus.com/archive/1/archive/1/497815/100/0/threaded
-Reference: BID:31928
-Reference: URL:http://www.securityfocus.com/bid/31928
-Reference: SECUNIA:32449
-Reference: URL:http://secunia.com/advisories/32449
+On Wed, 25 Jun 2008, Shugo Maeda wrote:
 
-Cross-site scripting (XSS) vulnerability in pmd_pdf.php in phpMyAdmin
-3.0.0, and possibly other versions including 2.11.9.2 and 3.0.1, when
-register_globals is enabled, allows remote attackers to inject
-arbitrary web script or HTML via the db parameter, a different vector
-than CVE-2006-6942 and CVE-2007-5977.
+> Hello,
+> 
+> 2008/6/25 Jamie Strandboge <jamie@...onical.com>:
+> > Can you provide more details on the vulnerabilities as well as what files
+> > and commits pertain to these issues? If you don't mind, I would like to
+> > forward this information to the vendor-sec mailing list as well, so the
+> > other vendors can patch their distributions.
+> 
+> The following commits pertain to the vulnerabilities.  The SVN repository
+> is at http://svn.ruby-lang.org/repos/ruby/.
+> Please forward this information to the vendor-sec.
+> 
+> ------------------------------------------------------------------------
+> r17530 | nobu | 2008-06-22 07:16:45 +0900 (Sun, 22 Jun 2008) | 2 lines
+> Changed paths:
+>    M /branches/ruby_1_8/ChangeLog
+>    M /branches/ruby_1_8/string.c
+> 
+> * string.c (str_buf_cat): check for self concatenation.
+> 
+> ------------------------------------------------------------------------
+> r17483 | nobu | 2008-06-20 18:16:03 +0900 (Fri, 20 Jun 2008) | 2 lines
+> Changed paths:
+>    M /branches/ruby_1_8/ChangeLog
+>    M /branches/ruby_1_8/string.c
+> 
+> * string.c (rb_str_buf_append): should infect.
+> 
+> ------------------------------------------------------------------------
+> r17472 | nobu | 2008-06-20 15:42:07 +0900 (Fri, 20 Jun 2008) | 5 lines
+> Changed paths:
+>    M /branches/ruby_1_8/array.c
+>    M /branches/ruby_1_8/string.c
+>    M /trunk/array.c
+>    M /trunk/string.c
+> 
+> * array.c (rb_ary_store, rb_ary_splice): not depend on unspecified
+>   behavior at integer overflow.
+> 
+> * string.c (str_buf_cat): ditto.
+> 
+> ------------------------------------------------------------------------
+> r17471 | nobu | 2008-06-20 15:40:10 +0900 (Fri, 20 Jun 2008) | 5 lines
+> Changed paths:
+>    M /branches/ruby_1_8/ChangeLog
+>    M /trunk/ChangeLog
+> 
+> * array.c (rb_ary_store, rb_ary_splice): not depend on unspecified
+>   behavior at integer overflow.
+> 
+> * string.c (str_buf_cat): ditto.
+> 
+> ------------------------------------------------------------------------
+> r17460 | shyouhei | 2008-06-20 08:12:46 +0900 (Fri, 20 Jun 2008) | 13 lines
+> Changed paths:
+>    M /branches/ruby_1_8/ChangeLog
+>    M /branches/ruby_1_8/array.c
+>    M /branches/ruby_1_8/intern.h
+>    M /branches/ruby_1_8/sprintf.c
+>    M /branches/ruby_1_8/string.c
+>    M /branches/ruby_1_8_5/ChangeLog
+>    M /branches/ruby_1_8_5/array.c
+>    M /branches/ruby_1_8_5/intern.h
+>    M /branches/ruby_1_8_5/sprintf.c
+>    M /branches/ruby_1_8_5/string.c
+>    M /branches/ruby_1_8_5/version.h
+>    M /branches/ruby_1_8_6/ChangeLog
+>    M /branches/ruby_1_8_6/array.c
+>    M /branches/ruby_1_8_6/intern.h
+>    M /branches/ruby_1_8_6/sprintf.c
+>    M /branches/ruby_1_8_6/string.c
+>    M /branches/ruby_1_8_6/version.h
+>    M /branches/ruby_1_8_7/ChangeLog
+>    M /branches/ruby_1_8_7/array.c
+>    M /branches/ruby_1_8_7/intern.h
+>    M /branches/ruby_1_8_7/sprintf.c
+>    M /branches/ruby_1_8_7/string.c
+>    M /branches/ruby_1_8_7/version.h
+>    M /trunk/ChangeLog
+>    M /trunk/array.c
+>    M /trunk/string.c
+> 
+> * array.c (ary_new, rb_ary_initialize, rb_ary_store,
+>   rb_ary_aplice, rb_ary_times): integer overflows should be
+>   checked. based on patches from Drew Yao <ayao at apple.com>
+>   fixed CVE-2008-2726
+> 
+> * string.c (rb_str_buf_append): fixed unsafe use of alloca,
+>   which led memory corruption. based on a patch from Drew Yao
+>   <ayao at apple.com> fixed CVE-2008-2726
+> 
+> * sprintf.c (rb_str_format): backported from trunk.
+> 
+> * intern.h: ditto.
+> 
+> 
+> -- 
+> Shugo Maeda
 
+-- 
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
 
+Download attachment "signature.asc" of type "application/pgp-signature" (190 bytes)
