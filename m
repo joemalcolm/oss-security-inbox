@@ -1,51 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/02/2
-Message-Id: <200807020848.03183.ludwig.nussel@suse.de>
-Date: Wed, 2 Jul 2008 08:48:02 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/30/9
+Message-ID: <20080630215449.GJ11562@severus.strandboge.com>
+Date: Mon, 30 Jun 2008 17:54:49 -0400
+From: Jamie Strandboge <jamie@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: openldap DoS
+Subject: Re: patch sets for recent ruby vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Josh Bressers wrote:
-> On 30 June 2008, Ludwig Nussel wrote:
-> > Remote unauthenticated attackers can trigger an assertion in the ASN.1 BER
-> > decoding of openlap and crash the server:
-> > http://www.openldap.org/its/index.cgi/Software%20Bugs?id=5580;selectid=5580
-> > 
-> 
-> The patch is here it seems:
-> http://www.openldap.org/devel/cvsweb.cgi/libraries/liblber/io.c.diff?r1=1.120&r2=1.121&hideattic=1&sortbydate=0
+----- Forwarded message from Shugo Maeda <security@...y-lang.org> -----
 
-Looks like the change was broken. Citing our maintainer from bugzilla:
+Date: Thu, 26 Jun 2008 12:16:52 +0900
+From: Shugo Maeda <security@...y-lang.org>
+To: Jamie Strandboge <jamie@...onical.com>
+Cc: security@...ntu.com
+Subject: Re: patch sets for recent ruby vulnerabilities
 
---- Comment #7 from Ralf Haferkamp <rhafer@...ell.com>  2008-07-02 00:38:08 MDT ---
-The OpenLDAP commit log just turned up this:
+Hello,
 
--------------8<-----------------------------
-Update of /repo/OpenLDAP/pkg/ldap/libraries/liblber
+2008/6/25 Jamie Strandboge <jamie@...onical.com>:
+>> ------------------------------------------------------------------------
+>> r17530 | nobu | 2008-06-22 07:16:45 +0900 (Sun, 22 Jun 2008) | 2 lines
+>> Changed paths:
+>>    M /branches/ruby_1_8/ChangeLog
+>>    M /branches/ruby_1_8/string.c
+>>
+>> * string.c (str_buf_cat): check for self concatenation.
+>>
+> Without having dived into the code yet, is this the fix for the
+> regressions with rails and others?
 
-Modified Files:
-        io.c  1.121 -> 1.122
+No, it's not.
+The following commit may be the cause of the problems with Rails.
 
-Log Message:
-ITS#5580: Revert prev commit, failed on byte-at-a-time input. Different
-approach used here.
+------------------------------------------------------------------------
+r15856 | matz | 2008-03-30 00:47:54 +0900 (Sun, 30 Mar 2008) | 2 lines
+Changed paths:
+   M /branches/ruby_1_8/ChangeLog
+   M /branches/ruby_1_8/class.c
 
-
-CVS Web URLs:
-  http://www.openldap.org/devel/cvsweb.cgi/libraries/liblber/
-    http://www.openldap.org/devel/cvsweb.cgi/libraries/liblber/io.c
-------------->8-----------------------------
-The thread discussing those changes starts here:
-http://www.openldap.org/lists/openldap-devel/200807/msg00000.html
-
-cu
-Ludwig
+* class.c (clone_method): should copy cref as well.
+  [ruby-core:15833]
 
 -- 
- (o_   Ludwig Nussel
- //\   
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+Shugo Maeda
 
+----- End forwarded message -----
+-- 
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (190 bytes)
