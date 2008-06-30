@@ -1,22 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/10/1
-Message-ID: <2062125959.2220401223661998599.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 10 Oct 2008 14:06:38 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: coley@...re.org
-Subject: CVE Request
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/30/2
+Message-ID: <0806300916560.26198@mjc.redhat.com>
+Date: Mon, 30 Jun 2008 09:45:05 +0100 (BST)
+From: Mark J Cox <mjc@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2008-2375 older vsftpd authentication memory leak
 Content-Type: text/plain; charset=utf-8
 
-I steve,
+Customers reported that the pre 2.0.5 versions of vsftpd as shipped in Red 
+Hat Enterprise Linux 3 and 4 when used in combination with PAM had a 
+memory leak on an invalid authentication attempt.  Since upstream vsftpd 
+prior to 2.0.5 allows any number of invalid attempts on the same 
+connection this memory leak could lead to an eventual DoS.  I've allocated 
+this CVE-2008-2375.
 
-I ran across these three Gentoo bugs that could use CVE ids:
+Upstream vsftpd 2.0.5 changed its behaviour so that 3 (configurable) 
+invalid password attempts would close the connection (hence allowing 
+easier detection of brute forcing attacks etc), and this therefore also 
+stops any memory leak from leading to a DoS.  So we're going to add this 
+backported patch to our older vsftpd versions:
+https://bugzilla.redhat.com/attachment.cgi?id=201051
 
-dovecot: http://bugs.gentoo.org/show_bug.cgi?id=240409
-graphviz: http://bugs.gentoo.org/show_bug.cgi?id=240636
-fence: http://bugs.gentoo.org/show_bug.cgi?id=240576
+No embargo on this, the CVE only applies to other distros that are 
+supporting vsftpd < 2.0.5 and have a memory leak.  We also didn't yet 
+chase down the root cause of the leak since it's mitigated by the patch.
 
-Thanks.
-
--- 
-    JB
+Thanks, Mark
+--
+Mark J Cox / Red Hat Security Response Team
