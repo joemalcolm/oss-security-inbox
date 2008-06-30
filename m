@@ -1,23 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/11/5
-Message-Id: <200809111916.51700.hanno@hboeck.de>
-Date: Thu, 11 Sep 2008 19:16:50 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/30/5
+Message-ID: <Pine.GSO.4.51.0806301519290.13725@faron.mitre.org>
+Date: Mon, 30 Jun 2008 15:21:15 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: CVE request: joomla < 1.5.7
+Subject: Re: CVE id request mercurial:Insufficient input validation
 Content-Type: text/plain; charset=utf-8
 
-http://www.joomla.org/announcements/release-news/5212-joomla-157-security-release-now-available.html
 
-Security
+Out of curiosity, what attack scenarios exist for this issue?  If an
+attacker has control over the patch already, then code execution on the
+system already seems likely.  Or is the impact mostly limited to "compile
+farms" and limited-access user accounts?
 
-    * Several security issues were fixed in this release. There was 1 
-critical, 1 major and 2 moderate security vulnerabilities fixed in 1.5.7. For 
-more information, visit the Security Center.
+- Steve
 
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+======================================================
+Name: CVE-2008-2942
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2942
+Reference: CONFIRM:http://www.selenic.com/hg/rev/87c704ac92d4
+Reference: MLIST:[oss-security] 20080630 CVE id request mercurial:Insufficient input validation
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/06/30/1
+
+Directory traversal vulnerability in patch.py in Mercurial 1.0.1
+allows user-assisted attackers to modify arbitrary files via ".." (dot
+dot) sequences in a patch file.
+
+
