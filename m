@@ -1,60 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/05/2
-Message-Id: <1225883454.17904.19.camel@dhcp-lab-164.englab.brq.redhat.com>
-Date: Wed, 05 Nov 2008 12:10:54 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...re.org>, Chris Evans <scarybeasts@...il.com>
-Cc: oss-security@...ts.openwall.com
-Subject: CVE Request - Python string expandtabs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/01/2
+Message-ID: <22011.1214924737@devserv.devel.redhat.com>
+Date: Tue, 01 Jul 2008 11:05:37 -0400
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: openldap DoS
 Content-Type: text/plain; charset=utf-8
 
-Hello!
+On 30 June 2008, Josh Bressers wrote:
+> On 30 June 2008, Ludwig Nussel wrote:
+> > Hi,
+> > 
+> > Remote unauthenticated attackers can trigger an assertion in the ASN.1 BER
+> > decoding of openlap and crash the server:
+> > http://www.openldap.org/its/index.cgi/Software%20Bugs?id=5580;selectid=5580
+> > 
+> 
+> The patch is here it seems:
+> http://www.openldap.org/devel/cvsweb.cgi/libraries/liblber/io.c.diff?r1=1.120&r2=1.121&hideattic=1&sortbydate=0
+> 
 
-  yesterday looked yet at the Python issues reported
-by Chris Evans at:
+So It seems from my testing, this flaw does not trigger the assertion on
+OpenLDAP version 2.0.27, but does on at least 2.2.13.
 
-http://scary.beasts.org/security/CESA-2008-008.html
+As upstream suggested this was added in version 1.88 of the io.c file, that
+would suggest this flaw should affect OpenLDAP versions after 2.1.20 (don't
+quote me on this, as I'm not completely sure, it could affect a few older
+versions around 2.1.20).
 
-and found out, the issue:
+Thanks.
 
-* Integer overflow in string expandtabs operation
-
-*  PoC: s = 't\tt\t'
-        str.expandtabs(s, 2147483647)
-
-  still lacks its own separate CVE identifier.
-
-  Different issue than CVE-2008-2315.
-
-  Reasoning:
-  =========
-
-  Integer overflows in stringobject.c and unicodeobject.c 
-  in Python 2.5.2 are part of CVE-2008-2315, but
-  part of CVE-2008-2315 is also mention about patch:
-  
-  http://bugs.gentoo.org/attachment.cgi?id=159418&action=view
-
-  which by itself is not sufficient to resolve this flaw.
-
-  Upstream has applied the following patch:
-  ========================================= 
-
-  http://svn.python.org/view?rev=61350&view=rev
-
-  Have checked by above PoC that applying this patch
-  solves this vulnerability.
-
-  Affected Python versions: 2.2.3 <= x <= 2.5.1
-  =========================
-
-Chris, can you confirm my investigation?
-
-Steve, could you allocate a new CVE id?
-
-Thanks, Jan.
-
---
-Jan iankko Lieskovsky / Red Hat Security Response Team  
-  
-
+-- 
+    JB
