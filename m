@@ -1,44 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/21/3
-Message-ID: <Pine.GSO.4.51.0811202025020.20524@faron.mitre.org>
-Date: Thu, 20 Nov 2008 20:26:25 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/01/4
+Message-ID: <Pine.GSO.4.51.0807011710000.19497@faron.mitre.org>
+Date: Tue, 1 Jul 2008 17:10:09 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-cc: mail@...ianw.de
-Subject: Re: GeSHi: Clarification about the recent security (non-)issues (SA32559)
+Subject: Re: Two remote DoS issues in linuxdcpp
 Content-Type: text/plain; charset=utf-8
 
 
-Because it got published in other sources a CVE is needed to track it, but
-I agree that this should be regarded as a problem in web apps that use
-GeSHi.
+======================================================
+Name: CVE-2008-2953
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2953
+Reference: CONFIRM:http://sourceforge.net/project/shownotes.php?release_id=608612&group_id=40287
+Reference: CONFIRM:http://cvs.berlios.de/cgi-bin/viewcvs.cgi/linuxdcpp/linuxdcpp/client/ShareManager.cpp.diff?r1=1.14&r2=1.15&sortby=date
+Reference: SECUNIA:30812
+Reference: URL:http://secunia.com/advisories/30812
 
-- Steve
+Linux DC++ (linuxdcpp) before 0.707 allows remote attackers to cause a
+denial of service (crash) via "partial file list requests" that
+trigger a NULL pointer dereference.
 
 
 ======================================================
-Name: CVE-2008-5186
+Name: CVE-2008-2954
 Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5186
-Reference: MLIST:[oss-security] 20081110 GeSHi: Clarification about the recent security (non-)issues (SA32559)
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/10/8
-Reference: CONFIRM:http://sourceforge.net/project/shownotes.php?release_id=637321
-Reference: BID:32070
-Reference: URL:http://www.securityfocus.com/bid/32070
-Reference: SECUNIA:32559
-Reference: URL:http://secunia.com/advisories/32559
-Reference: XF:geshi-unspecified-code-execution(46271)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/46271
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2954
+Reference: CONFIRM:http://cvs.berlios.de/cgi-bin/viewcvs.cgi/linuxdcpp/linuxdcpp/Changelog.txt
+Reference: CONFIRM:http://cvs.berlios.de/cgi-bin/viewcvs.cgi/linuxdcpp/linuxdcpp/client/NmdcHub.cpp.diff?r1=1.14&r2=1.15&sortby=date
 
-** DISPUTED **
-
-The set_language_path function in geshi.php in Generic Syntax
-Highlighter (GeSHi) before 1.0.8.1 might allow remote attackers to
-conduct file inclusion attacks via crafted inputs that influence the
-default language path ($path variable).  NOTE: this issue has been
-disputed by a vendor, stating that only a static value is used, so
-this is not a vulnerability in GeSHi. Separate CVE identifiers would
-be created for web applications that integrate GeSHi in a way that
-allows control of the default language path.
+client/NmdcHub.cpp in Linux DC++ (linuxdcpp) before 0.707 allows
+remote attackers to cause a denial of service (crash) via an empty
+private message, which triggers an out-of-bounds read.
 
 
