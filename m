@@ -1,28 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/17/4
-Message-ID: <3408.1208430638@devserv.devel.redhat.com>
-Date: Thu, 17 Apr 2008 07:10:38 -0400
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: firefox 2.0.14 ( Crash in JavaScript garbage collector)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/01/8
+Message-ID: <Pine.GSO.4.51.0807011754080.19497@faron.mitre.org>
+Date: Tue, 1 Jul 2008 17:57:53 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com, Jamie Strandboge <jamie@...onical.com>
+Subject: Re: CVE request for dnsmasq DoS
 Content-Type: text/plain; charset=utf-8
 
-> 
-> And again, are pure browser crashers considered security relevant? I'd do so,
-> as e.g. placing a crashing gif on e.g. some popular wiki could cause much
-> trouble:
-> http://www.securityfocus.com/bid/27243
-> (I think it's still unfixed)
-> 
 
-As the advisory states:
+On Mon, 30 Jun 2008, Jamie Strandboge wrote:
 
-    We have no demonstration that this particular crash is exploitable but
-    are issuing this advisory because some crashes of this type have been
-    shown to be exploitable in the past.
+> Hi,
+>
+> There is a remote DoS in dnsmasq 2.25 (and presumably earlier) that is
+> fixed in 2.26. Details can be found at [1]. Can we get a CVE assigned
+> for this?
 
-It is almost certain that given how Firefox is crashing, someone with the
-time and know how could leverage this to execute arbitrary code.
+I'm not sure I fully understand Thierry Carrez' comment about the security
+implications of this issue.  It seems like an exploit would require a
+malicious DHCP server, in which case isn't DHCP service already
+compromised?  If so, then a crash of dnsmasq (null dereference?) doesn't
+seem to be any worse than the loss of DHCP itself.
 
--- 
-    JB
+- Steve
