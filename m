@@ -1,53 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/21/2
-Message-id: <1203575178.18236.TMDA@linsec.ca>
-Date: Wed, 20 Feb 2008 23:24:45 -0700
-From: Vincent Danen <vdanen@...sec.ca>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/01/3
+Message-ID: <Pine.GSO.4.51.0807011647030.19497@faron.mitre.org>
+Date: Tue, 1 Jul 2008 16:54:51 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: code review CVS
+Subject: Re: openldap DoS
 Content-Type: text/plain; charset=utf-8
 
-* [2008-02-20 17:51:47 -0800] Kees Cook wrote:
 
->> I like the patch idea, however.  A "vendor patch" database of sorts
->> would be nice (would save me from hunting from, say, ubuntu packages for
->> a patch for something they already fixed, or looking at ubuntu for one,
->> and SUSE for another because of version differences).
->
->I'd really like to have at least a "how to find a patch for [distro],
->release [version]".  I have an easier time finding Debian patches,
->for example, since http://snapshot.debian.net/ exists.  Ubuntu is a
->bit less patch-hunter-friendly in that regard, but we try to alway keep
->patches external to from the source tree, so they're easy to locate from
->change logs.  Doing this with src.rpms follows a similar convention,
->but can sometimes get tricky too.  Finding them can sometimes be a chore
->-- I always bang my head when looking for RHEL src.rpms.  :)
+======================================================
+Name: CVE-2008-2952
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2952
+Reference: CONFIRM:http://www.openldap.org/its/index.cgi/Software%20Bugs?id=5580;selectid=5580
 
-hahah... as Mark can attest, you're not the only one.  I've had to email
-him a few times looking for some obscure src.rpm.
+liblber/io.c in OpenLDAP 2.3.41, 2.3.42, and possibly other versions
+allows remote attackers to cause a denial of service (program
+termination) via crafted ASN.1 BER datagrams, which triggers an
+assertion error.
 
-Usually I look at vendor advisories and grab from there; Debian and
-Ubuntu are the best for that although I sometimes find working with your
-massive diff's a bit of a pain, but that's neither here nor there.
-FWIW, yours are probably the easiest to find.
 
-The other RPM-based distros are usually pretty easy to find.  Mandriva
-also has a public svn where all our updates are committed, so standalone
-patches can be found there too.
-
-http://svn.mandriva.com/cgi-bin/viewvc.cgi/packages/updates_releases/
-
-Although that may change to just /updates/ in the future.  You'll find
-everything for our currently supported products in there.
-
-I think having a "patch page" on the wiki with this info might be useful
-too... others may have repositories or other means of getting patches
-without resorting to downloading diff's and src.rpm's.
-
-And I'd *love* to see what the Gentoo folks will link to.. =)  They have
-to be the biggest head-scratcher for me.
-
--- 
-Vincent Danen @ http://linsec.ca/
-
-Content of type "application/pgp-signature" skipped
