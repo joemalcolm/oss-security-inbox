@@ -1,69 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/14/7
-Message-ID: <Pine.GSO.4.51.0808141901250.17005@faron.mitre.org>
-Date: Thu, 14 Aug 2008 19:12:30 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/01/5
+Message-ID: <Pine.GSO.4.51.0807011719400.19497@faron.mitre.org>
+Date: Tue, 1 Jul 2008 17:25:40 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: oss-security+ml@...lde.de, coley@...re.org
-Subject: Re: horde webmail edition < 1.1.1
+To: Josh Bressers <bressers@...hat.com>
+cc: oss-security@...ts.openwall.com, coley@...re.org
+Subject: Re: CVE Request (pidgin)
 Content-Type: text/plain; charset=utf-8
 
 
-On Wed, 13 Aug 2008, Tomas Hoger wrote:
-
-> On Wed, 13 Aug 2008 14:00:03 +0200 Nico Golde
-> <oss-security+ml@...lde.de> wrote:
->
-> > > > This should be a duplicate of CVE-2008-3330.
-> > >
-> > > Actually, (1) is covered by CVE-2008-3330, (2) probably never got an
-> > > id.  Bit more info on (2) here:
-> > >
-> > >   https://bugzilla.redhat.com/show_bug.cgi?id=452549
-> > >
-> > > Steven, can you please correct CVE description.  Thanks!
-> >
-> > Hmm, actually I thought this would have been added after my
-> > post on:
-> > http://www.openwall.com/lists/oss-security/2008/07/28/3
-> > which already mentions this.
->
-> Ah, so actually both issue were previously mentioned here... I forgot.
-> It seems that after you pointed out (2), no more CVE id was allocated
-> in that thread.
-
-OK, some followups:
-
-1) CVE-2008-3330.2, for Turba, affects contact.php, which only exists in
-   Turba 2.2.
-
-2) The Debian bug report seems to have found contact issues in Turba 2.1,
-   in browse.php:
-   http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=492578#40
-
-3) The code from Turba 2.1 looks quite different than the contact.php code
-   as quoted by Nico here:
-
-    http://www.openwall.com/lists/oss-security/2008/07/28/3
-
-4) I haven't seen any mention of contact issues in Horde itself, is this
-   correct?
-
-5) CVE-2008-3650, the "unspecified" issues based on a vague Horde
-   Groupware advisory, appears to line up closely with both
-   CVE-2008-3330.1 (obrowser) and CVE-2008-3330.2 (Turba contacts).  Is
-   this sufficiently confirmed?
-
-> It seems different ids should be used for (1) and (2), as different
-> Horde project components are affected, also in different versions.
-
-Difference in components is not treated as relevant for CVE purposes.
-
-However, the different versions are.  Question 3 is especially relevant
-even in this case.
-
-This might be a candidate for a SPLIT, but I'm generally reluctant to do
-so after a CVE has been published, since we don't know how many people are
-already using it...
+Note that the UPnP functionality is characterized by the researchers as a
+bandwidth/disk DoS.  I don't know much about UPnP or Pidgin, but it might
+be reasonable to investigate what Pidgin does with the file once it's
+downloaded the contents.
 
 - Steve
+
+
+======================================================
+Name: CVE-2008-2955
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2955
+Reference: BUGTRAQ:20080626 Pidgin 2.4.1 Vulnerability
+Reference: URL:http://www.securityfocus.com/archive/1/archive/1/493682/100/0/threaded
+Reference: FRSIRT:ADV-2008-1947
+Reference: URL:http://www.frsirt.com/english/advisories/2008/1947
+Reference: SECUNIA:30881
+Reference: URL:http://secunia.com/advisories/30881
+
+Pidgin 2.4.1 allows remote attackers to cause a denial of service
+(crash) via a long filename that contains certain characters, as
+demonstrated using an MSN message that triggers the crash in the
+msn_slplink_process_msg function.
+
+
+======================================================
+Name: CVE-2008-2956
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2956
+Reference: MISC:http://crisp.cs.du.edu/?q=ca2007-1
+Reference: MLIST:[oss-security] 20080627 CVE Request (pidgin)
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/06/27/3
+
+Memory leak in Pidgin 2.0.0, and possibly other versions, allows
+remote attackers to cause a denial of service (memory consumption) via
+malformed XML documents.
+
+
+======================================================
+Name: CVE-2008-2957
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2957
+Reference: MISC:http://crisp.cs.du.edu/?q=ca2007-1
+Reference: MLIST:[oss-security] 20080627 CVE Request (pidgin)
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/06/27/3
+
+The UPnP functionality in Pidgin 2.0.0, and possibly other versions,
+allows remote attackers to trigger the download of arbitrary files and
+cause a denial of service (memory or disk consumption) via a UDP
+packet that specifies an arbitrary URL.
+
+
