@@ -1,40 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/26/3
-Message-Id: <200809262326.03434.steffen.joeris@skolelinux.de>
-Date: Fri, 26 Sep 2008 23:26:02 +1000
-From: Steffen Joeris <steffen.joeris@...lelinux.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: faad2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/01/7
+Message-ID: <Pine.GSO.4.51.0807011735020.19497@faron.mitre.org>
+Date: Tue, 1 Jul 2008 17:46:02 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Christian Hoffmann <hoffie@...too.org>
+cc: oss-security@...ts.openwall.com, coley@...us.mitre.org
+Subject: Re: CVE request: php 5.2.6 ext/imap buffer overflows
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 26 Sep 2008 10:49:55 pm Josh Bressers wrote:
-> ----- "Steffen Joeris" <steffen.joeris@...lelinux.de> wrote:
-> > Hi
-> >
-> > There is a heap overflow in faad2.
-> > Upstream announcement:
-> > http://www.audiocoding.com/
-> >
-> > Gentoo Bugreport:
-> > http://bugs.gentoo.org/show_bug.cgi?id=238445
-> >
-> > Debian Bugreport:
-> > http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=499899
-> >
-> > Upstream patch:
-> > http://www.audiocoding.com/patch/main_overflow.diff
-> >
-> > Could I please get a CVE id for this?
->
-> This has already been assigned CVE-2008-4201
-> http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2008-4201
->
-> It's not live on the MITRE site yet though.
-Grrr damn typo and I had a personal note that a CVE id was requested, just 
-didn't find it in my inbox when searching for faud2 :/ 
-Thanks for pointing it out and sorry for the noise.
 
-Cheers
-Steffen
 
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+On Tue, 24 Jun 2008, Christian Hoffmann wrote:
+
+> On 2008-06-23 21:20, Steven M. Christey wrote:
+> > ======================================================
+> > Name: CVE-2008-2829
+> > Status: Candidate
+> >
+> > ...
+> > ...
+>
+> So, according to the information from the bug, this issue might not only
+> allow for DoS but possibly for code execution as well, at least this is
+> what it looks like to me.
+
+Changed the description to account for this possibility.
+
+> Also, I'm not quote sure why you are explicitily mentioning 5.2.5. To me
+> it looks like all versions of php are affected, so in my opinion this
+> looks a bit confusing. Only a cosmetic thing though.
+
+5.2.5 was mentioned since http://bugs.php.net/bug.php?id=42862 supplied a
+patch against 5.2.5.  We don't always provide exhaustive lists of versions
+in CVE descriptions, but we do include those that seem to be most likely
+reported by others.  These serve as "correlators" across distinct sources.
+
+For example, a milw0rm post might say "1.6 is affected" and the vendor
+might later say "1.4 through 1.9."  If we exclude the version as reported
+in the milw0rm post, then it produces more work for people who have to
+figure out whether the milw0rm post and vendor announcement are really the
+same issue or not.  This is a very subtle point and one that most
+consumers probably don't care about, but we try to do this in CVE as much
+as we can, since we have to deal with multiple audiences.
+
+In this particular case, including 5.2.5 was probably not essential and
+potentially confusing to some, but it was a natural consequence of the
+mindset that we have when we write descriptions.
+
+- Steve
