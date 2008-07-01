@@ -1,50 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/26/1
-Message-Id: <1214492018.19960.39.camel@iankko.englab.brq.redhat.com>
-Date: Thu, 26 Jun 2008 16:53:38 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/01/6
+Message-ID: <Pine.GSO.4.51.0807011733370.19497@faron.mitre.org>
+Date: Tue, 1 Jul 2008 17:33:43 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2008-2365 kernel: ptrace: Crash on PTRACE_{ATTACH,DETACH} race -- affecting kernel versions <= 2.6.25
+Subject: Re: CVE id request: checkinstall
 Content-Type: text/plain; charset=utf-8
 
-Hello guys,
 
-  wanted to inform you about recently discovered utrace/ptrace
-attach and detach race condition affecting Linux kernel from versions
-2.6.9 up to the upstream one (< 2.6.25).
-The upstream Linux kernel version got already patched with the following
-three patches, which resolve this issue:
+======================================================
+Name: CVE-2008-2958
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2958
+Reference: MISC:http://lists.alioth.debian.org/pipermail/secure-testing-team/2008-June/001672.html
+Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=488140
+Reference: SECUNIA:30873
+Reference: URL:http://secunia.com/advisories/30873
+Reference: XF:checkinstall-multiple-symlink(43440)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/43440
 
-http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.25.y.git;a=commit;h=5ecfbae093f0c37311e89b29bfc0c9d586eace87
-http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.25.y.git;a=commit;h=f5b40e363ad6041a96e3da32281d8faa191597b9
-http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.25.y.git;a=commit;h=f358166a9405e4f1d8e50d8f415c26d95505b6de
+Race condition in (1) checkinstall 1.6.1 and (2) installwatch allows
+local users to overwrite arbitrary files and have other impacts via
+symlink and possibly other attacks on temporary working directories.
 
-
-More 2.6.9 kernel version specific details about this issue
-can be found at:
-
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2008-2365
-
-To resolve this issue on the 2.6.9 version of the Linux kernel,
-you will need to backport the above upstream patches.
-
-There is also testcase available to reproduce this issue at:
-
-http://sources.redhat.com/cgi-bin/cvsweb.cgi/~checkout~/tests/ptrace-tests/tests/late-ptrace-may-attach-check.c?cvsroot=systemtap
-
-This works for both utrace (2.6.9) and ptrace (not patched upstream) 
-*trace call versions.
-
-Please use CVE-2008-2365 identifier, for future references to this
-issue.
-
-If you are shipping kernel versions < 2.6.25, you are encouraged
-to fix this issue.
-
-Let me know, if you would need any further details about this issue
-and ways, how to reproduce it. 
-
-Kind regards
-Jan iankko Lieskovsky
-RH Security Response Team
 
