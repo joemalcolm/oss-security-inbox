@@ -1,27 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/25/1
-Message-Id: <200807250917.50664.ludwig.nussel@suse.de>
-Date: Fri, 25 Jul 2008 09:17:50 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/02/1
+Message-Id: <200807020203.39355.rbu@gentoo.org>
+Date: Wed, 2 Jul 2008 02:03:36 +0200
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: cve@...re.org
-Subject: CVE id request: moodle XSS and CSRF
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: Two remote DoS issues in linuxdcpp
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Tuesday 01 July 2008, Steven M. Christey wrote:
+> ======================================================
+> Name: CVE-2008-2953
+> Status: Candidate
+> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2953
+> Reference:
+> CONFIRM:http://sourceforge.net/project/shownotes.php?release_id=60861
+>2&group_id=40287 Reference:
+> CONFIRM:http://cvs.berlios.de/cgi-bin/viewcvs.cgi/linuxdcpp/linuxdcpp
+>/client/ShareManager.cpp.diff?r1=1.14&r2=1.15&sortby=date Reference:
+> SECUNIA:30812
+> Reference: URL:http://secunia.com/advisories/30812
+>
+> Linux DC++ (linuxdcpp) before 0.707 allows remote attackers to cause
+> a denial of service (crash) via "partial file list requests" that
+> trigger a NULL pointer dereference.
 
-The moodle project has fixed a CSRF issue
-http://moodle.org/mod/forum/discuss.php?d=101405
-and an XSS problem
-http://moodle.org/mod/forum/discuss.php?d=101401
+That Secunia advisory is actually for the Windows version of DC++, which 
+has a different versioning. I think you might want to expand that in 
+the description.
 
-cu
-Ludwig
+Robert
 
--- 
- (o_   Ludwig Nussel
- //\   
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
-
-
+Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
