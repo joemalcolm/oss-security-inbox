@@ -1,41 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/04/8
-Message-ID: <20080404221135.GV23804@fuse.inversepath.com>
-Date: Fri, 4 Apr 2008 22:11:35 +0000
-From: Andrea Barisani <andrea@...ersepath.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/02/5
+Message-ID: <Pine.GSO.4.51.0807021629440.26618@faron.mitre.org>
+Date: Wed, 2 Jul 2008 16:30:48 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: announcing oss-security to Bugtraq & f-d
+cc: coley@...re.org
+Subject: Re: CVE request: phpmyadmin < 2.11.7 XSS
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Apr 05, 2008 at 01:28:58AM +0400, Solar Designer wrote:
-> 
-> > > Also, Josh, are you OK with mentioning oCERT here? -
-> > > 
-> > > http://oss-security.openwall.org/wiki/disclosure/researcher
-> > 
-> > We really need a page dedicated to embargoed issue handling organizations.
-> > For now though, that would be appropriate given it already lists a few
-> > organizations.
-> 
-> Andrea - maybe you'd like to join us in populating the wiki with content -
-> e.g., you could start by adding a mention of oCERT to the above page,
-> then proceed to create a new page (also in the disclosure namespace?) on
-> CERT-like organizations (with more detailed information than that
-> already available on the links page).
-> 
 
-Yep, I'll be happy to do that.
+Sorry about the long delay.
+
+======================================================
+Name: CVE-2008-2960
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2960
+Reference: CONFIRM:http://www.phpmyadmin.net/home_page/security.php?issue=PMASA-2008-4
+Reference: FRSIRT:ADV-2008-1904
+Reference: URL:http://www.frsirt.com/english/advisories/2008/1904/references
+Reference: SECUNIA:30813
+Reference: URL:http://secunia.com/advisories/30813
+
+Cross-site scripting (XSS) vulnerability in phpMyAdmin before 2.11.7,
+when register_globals is enabled and .htaccess support is disabled,
+allows remote attackers to inject arbitrary web script or HTML via
+unspecified vectors involving scripts in libraries/.
 
 
-I might also take the chance to expand vendor information with the additional
-vendors I contacted but that are not present in that page.
-
-Cheers!
-
--- 
-Andrea Barisani                             Inverse Path Ltd
-Chief Security Engineer                     -----> <--------
-
-<andrea@...ersepath.com>          http://www.inversepath.com
-0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
-       "Pluralitas non est ponenda sine necessitate"
