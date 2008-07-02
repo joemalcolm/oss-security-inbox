@@ -1,53 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/18/7
-Message-ID: <20080218165051.GH24232@openwall.com>
-Date: Mon, 18 Feb 2008 19:50:51 +0300
-From: "(GalaxyMaster)" <galaxy@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/02/2
+Message-Id: <200807020848.03183.ludwig.nussel@suse.de>
+Date: Wed, 2 Jul 2008 08:48:02 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: wiki
+Subject: Re: openldap DoS
 Content-Type: text/plain; charset=utf-8
 
-Vincent,
+Josh Bressers wrote:
+> On 30 June 2008, Ludwig Nussel wrote:
+> > Remote unauthenticated attackers can trigger an assertion in the ASN.1 BER
+> > decoding of openlap and crash the server:
+> > http://www.openldap.org/its/index.cgi/Software%20Bugs?id=5580;selectid=5580
+> > 
+> 
+> The patch is here it seems:
+> http://www.openldap.org/devel/cvsweb.cgi/libraries/liblber/io.c.diff?r1=1.120&r2=1.121&hideattic=1&sortbydate=0
 
-On Sun, Feb 17, 2008 at 08:49:34PM -0700, Vincent Danen wrote:
+Looks like the change was broken. Citing our maintainer from bugzilla:
 
-> Thanks, GalaxyMaster, for setting that up.  Docuwiki's syntax is a
-> little wierd but works well enough.  =)
+--- Comment #7 from Ralf Haferkamp <rhafer@...ell.com>  2008-07-02 00:38:08 MDT ---
+The OpenLDAP commit log just turned up this:
 
-I'd like to point out that this weirdness is a result of DokuWiki's goal
-to provide Wiki owners with an almost plain-text on-disk version of the
-Wiki.  This on-disk version is still well structured and could be
-post-processed with a great number of text utils like docutils and
-alike.
+-------------8<-----------------------------
+Update of /repo/OpenLDAP/pkg/ldap/libraries/liblber
 
-> Feel free to start adding content.  I think the structure is ok enough
-> to start with, we'll see how it goes from there.  It's pretty
-> straight-forward and should be easy enough to add to (I just added a few
+Modified Files:
+        io.c  1.121 -> 1.122
 
-Re: the structure.  It's worth to mention that DokuWiki (unlike many other
-wiki engines) provides an efficient way to add structure to the entire
-wiki.  There are namespaces and pages.  Imagine that a namespace is
-a directory and a page is a file.  This way you can create a well
-structured hierarchy of pages (much like you do with your files on your
-workstation/server).
+Log Message:
+ITS#5580: Revert prev commit, failed on byte-at-a-time input. Different
+approach used here.
 
-For instance, http://oss-security.openwall.org/wiki/vendors/list could
-provide a list of all vendors participating in the project and
-http://oss-security.openwall.org/wiki/vendors/openwall could be
-a page/namespace for Openwall as a vendor.
 
-Moreover, DokuWiki allows to limit access on per namespace basis.  For
-example, you can grant create/modify/delete permissions on
-/wiki/vendors/mandrake to Mandrake folks, while others would be
-disallowed to change anything there.  Indeed this is just to make you
-aware of such a feature of DokuWiki.
+CVS Web URLs:
+  http://www.openldap.org/devel/cvsweb.cgi/libraries/liblber/
+    http://www.openldap.org/devel/cvsweb.cgi/libraries/liblber/io.c
+------------->8-----------------------------
+The thread discussing those changes starts here:
+http://www.openldap.org/lists/openldap-devel/200807/msg00000.html
 
-Additionally, I would like to point out that we are running a bare
-installation of DokuWiki with a default (minimal) set of plugins.  There
-is tremendous number of syntax plugins for DokuWiki and if you need some
-additional functionality just notify me (I'll search for a suitable
-plugin, will install it, and will provide you with usage instructions).
+cu
+Ludwig
 
 -- 
-(GM)
+ (o_   Ludwig Nussel
+ //\   
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
 
