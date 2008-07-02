@@ -1,45 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/25/3
-Message-ID: <1tlcdwEPn+AOVZV4UhoZ2bNo7L8@5RY6ROcUbLuHED60eZqMyxBEGG8>
-Date: Tue, 25 Nov 2008 15:38:30 +0300
-From: Eygene Ryabinkin <rea-sec@...elabs.ru>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/02/3
+Message-ID: <20080702095318.37f8c23b@redhat.com>
+Date: Wed, 2 Jul 2008 09:53:18 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...re.org>, Michael Sweet <mike@...ysw.com>
-Subject: Re: CVE request: cups - potential integer overflow in PNG image reader [was: CUPS DoS via RSS subscriptions]
+Subject: More ruby integer overflows (rb_ary_fill / Array#fill)
 Content-Type: text/plain; charset=utf-8
 
-Jan, good day.
+Hi!
 
-Tue, Nov 25, 2008 at 12:39:00PM +0100, Jan Lieskovsky wrote:
-> Eygene - Thanks for the post!
+During the work on ruby updates, our ruby maintainer (Akira Tagoh) came
+across some commits in the ruby SVN, that fix (or attempt to fix)
+integer overflows in rb_ary_fill() - Array#fill method.
 
-No problems ;))
+This problem is probably less severe than recent Drew Yao's issues, as
+it's probably less likely this is exposed to an untrusted input in some
+random ruby application.
 
-> Btw. this CHANGES-1.3.txt files also
-> mentions another security flaw, i.e incomplete fix for CVE-2008-1722:
-> 
-> <cite>
-> 
-> - SECURITY: The PNG image reading code did not validate the
-> 	  image size properly, leading to a potential buffer overflow
-> 	  (STR #2974)
-> 
-> </cite>
+First, ~9 months ago following change was added:
+http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=rev&revision=13397
 
-Oops, thanks for spotting this!
+The idea of this fix was to prevent "end = beg + len;" to overflow and
+end ending up being negative, causing a bypass of the memory
+reallocation below.
 
-> The relevant upstream cups BTS post together with patch attached is
-> here:
-> 
-> Advisory: http://www.cups.org/str.php?L2974
-> Patch: http://www.cups.org/strfiles/2974/str2974.patch
+This was insufficient, as end is array length, but size of each array
+element is more than 1byte.  So you can only have arrays up to
+ARY_MAX_SIZE elements (added in the fixes for recent integer
+overflows reported by Drew Yao).  So you could still get an overflow
+during the array fill below or cause integer overflow in REALLOC_N.
 
-Hmm, my brains aren't in a perfect shape today, so I could be missing
-some important point, but I don't understand how swapping 'xsize' and
-'ysize' can help to fix anything.  IIRC, the order of multiplication
-isn't guaranteed and multiplication is commutative, so 'xsize' and
-'ysize' both are equally good or bad and one can not prefer either.
+This was further addressed in:
+http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=rev&revision=17688
 
-What am I missing here?
+However, even with that fix, it was still possible to trigger overflow
+by specifying a beg index greater than ARY_MAX_SIZE.  Following check
+"if (len > ARY_MAX_SIZE - beg)" gets evaluated as unsigned (search for
+unsigned sizeof(VALUE) in ARY_MAX_SIZE definition) and you could get
+negative end again.
+
+This problem was fixed quickly after being reported upstream in:
+http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=rev&revision=17756
+
+We have assigned CVE-2008-2376 to this issue.  If you want to claim
+you have fixed CVE-2008-2376, please make sure you have all fixes up to
+r17756.
+
+Note: I've quickly reviewed other uses of ARY_MAX_SIZE in 1.8.6-p230.
+There is only one case when value is subtracted from ARY_MAX_SIZE
+without being explicitly checked not to be greater than ARY_MAX_SIZE:
+
+  if (beg > ARY_MAX_SIZE - rlen) {
+
+However, rlen is the length of some existing array, hence can not be
+more than ARY_MAX_SIZE.
+
 -- 
-Eygene
+Tomas Hoger / Red Hat Security Response Team
