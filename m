@@ -1,17 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/26/5
-Message-ID: <990410451.168721222458395405.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 26 Sep 2008 15:46:35 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/03/3
+Message-ID: <13511.1215102746@devserv.devel.redhat.com>
+Date: Thu, 03 Jul 2008 12:32:26 -0400
 From: Josh Bressers <bressers@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: coley@...re.org
-Subject: CVE Request (lighttpd)
+To: oss-security@...ts.openwall.com, Nico Golde <oss-security+ml@...lde.de>
+Subject: Re: Re: CVE Request (pidgin)
 Content-Type: text/plain; charset=utf-8
 
-I ran across this Gentoo bug for lighttpd:
-http://bugs.gentoo.org/show_bug.cgi?id=238180
+On 3 July 2008, Nico Golde wrote:
+> > Name: CVE-2008-2955
 
-Thanks.
+> >
+> > Pidgin 2.4.1 allows remote attackers to cause a denial of service
+> > (crash) via a long filename that contains certain characters, as
+> > demonstrated using an MSN message that triggers the crash in the
+> > msn_slplink_process_msg function.
+> 
+> Did anyone try if this can be done by some random user=20
+> without authorization and if the victim needs to accept the=20
+> file first to trigger this?
+> 
+
+My testing showed that random users can't send files, they need to be in
+your buddy list.  I'm not sure if the victim needs to accept the file or
+not.  Last I knew, upstream was still working on this one.
 
 -- 
     JB
