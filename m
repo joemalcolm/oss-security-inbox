@@ -1,30 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/03/2
-Message-ID: <20081003071616.GE16214@redhat.com>
-Date: Fri, 3 Oct 2008 09:16:16 +0200
-From: Daniel Veillard <veillard@...hat.com>
-To: Robert Buchholz <rbu@...too.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: libxml2 "ampproblem" DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/03/6
+Message-Id: <200807040003.50004.rbu@gentoo.org>
+Date: Fri, 4 Jul 2008 00:03:44 +0200
+From: Robert Buchholz <rbu@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE Request (pidgin)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Oct 02, 2008 at 06:41:18PM +0200, Robert Buchholz wrote:
-> Hey,
-> 
-> I did not look into this issue closely yet, but I can reproduce an OOM 
-> situation on libxml2 2.7.1, but not on 2.6.32.
-> 
-> The malicious XML file can be found on
-> http://bugzilla.gnome.org/show_bug.cgi?id=554660
-> 
-> I'm not sure if and how this is related to CVE-2008-3281.
+On Thursday 03 July 2008, Josh Bressers wrote:
+> On 3 July 2008, Nico Golde wrote:
+> > > Name: CVE-2008-2955
+> > >
+> > >
+> > > Pidgin 2.4.1 allows remote attackers to cause a denial of service
+> > > (crash) via a long filename that contains certain characters, as
+> > > demonstrated using an MSN message that triggers the crash in the
+> > > msn_slplink_process_msg function.
+> >
+> > Did anyone try if this can be done by some random user=20
+> > without authorization and if the victim needs to accept the=20
+> > file first to trigger this?
+>
+> My testing showed that random users can't send files, they need to be
+> in your buddy list.  I'm not sure if the victim needs to accept the
+> file or not.  Last I knew, upstream was still working on this one.
 
-  It's unrelated, the patch is attached to the bug, only 2.7.x is affected
-and I will release 2.7.2 within a couple of hours.
+Our maintainer digged out these changes that are in the newly released 
+2.4.3:
 
-Daniel
+http://developer.pidgin.im/viewmtn/revision/diff/6eb1949a96fa80a4c744fc749c2562abc4cc9ed6/with/c3831c9181f4f61b747321240086ee79e4a08fd8/libpurple/protocols/msn/slplink.c
+http://developer.pidgin.im/viewmtn/revision/diff/6eb1949a96fa80a4c744fc749c2562abc4cc9ed6/with/c3831c9181f4f61b747321240086ee79e4a08fd8/libpurple/protocols/msnp9/slplink.c
 
--- 
-Daniel Veillard      | libxml Gnome XML XSLT toolkit  http://xmlsoft.org/
-daniel@...llard.com  | Rpmfind RPM search engine http://rpmfind.net/
-http://veillard.com/ | virtualization library  http://libvirt.org/
+Are they incomplete?
+
+
+Robert
