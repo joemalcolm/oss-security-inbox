@@ -1,55 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/13/1
-Message-ID: <20081113090617.GG5799@suse.de>
-Date: Thu, 13 Nov 2008 10:06:17 +0100
-From: Thomas Biege <thomas@...e.de>
-To: OSS-Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: coley@...re.org
-Subject: CVE request: clamav get_unicode_name() off-by-one buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/03/5
+Message-ID: <20080703192115.GJ18550@linsec.ca>
+Date: Thu, 3 Jul 2008 13:21:15 -0600
+From: Vincent Danen <vdanen@...sec.ca>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE Request (pidgin)
 Content-Type: text/plain; charset=utf-8
 
-Hello,
-AFAIK no CVE-ID was assigned for the following issue yet.
+* [2008-07-01 17:25:40 -0400] Steven M. Christey wrote:
 
------------------------------------------------------------------
-ClamAV get_unicode_name() off-by-one buffer overflow
+>======================================================
+>Name: CVE-2008-2956
+>Status: Candidate
+>URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2956
+>Reference: MISC:http://crisp.cs.du.edu/?q=ca2007-1
+>Reference: MLIST:[oss-security] 20080627 CVE Request (pidgin)
+>Reference: URL:http://www.openwall.com/lists/oss-security/2008/06/27/3
+>
+>Memory leak in Pidgin 2.0.0, and possibly other versions, allows
+>remote attackers to cause a denial of service (memory consumption) via
+>malformed XML documents.
+>
+>
+>======================================================
+>Name: CVE-2008-2957
+>Status: Candidate
+>URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2957
+>Reference: MISC:http://crisp.cs.du.edu/?q=ca2007-1
+>Reference: MLIST:[oss-security] 20080627 CVE Request (pidgin)
+>Reference: URL:http://www.openwall.com/lists/oss-security/2008/06/27/3
+>
+>The UPnP functionality in Pidgin 2.0.0, and possibly other versions,
+>allows remote attackers to trigger the download of arbitrary files and
+>cause a denial of service (memory or disk consumption) via a UDP
+>packet that specifies an arbitrary URL.
 
-Copyright (c) 2008 Moritz Jodeit <moritz@...eit.org> (2008/11/08)
------------------------------------------------------------------
-
-Application details:
-
-        From http://www.clamav.net/:
-
-        "Clam AntiVirus is an open source (GPL) anti-virus toolkit for UNIX,
-        designed especially for e-mail scanning on mail gateways. It provides
-        a number of utilities including a flexible and scalable multi-threaded
-        daemon, a command line scanner and advanced tool for automatic
-        database updates. The core of the package is an anti-virus engine
-        available in a form of shared library."
-
-Vulnerability description:
-
-        ClamAV contains an off-by-one heap overflow vulnerability in the
-        code responsible for parsing VBA project files. Successful
-        exploitation could allow an attacker to execute arbitrary code with
-        the privileges of the `clamd' process by sending an email with a
-        prepared attachment.
-
-        The vulnerability occurs inside the get_unicode_name() function
-        in libclamav/vba_extract.c when a specific `name' buffer is passed
-        to it.
-...
-
-
+There are patches with the original advisory for these two.  Has anyone
+had a chance to look at them to make sure they're ok?  I don't see any
+references to any of these issues on the pidgin website and no vendors
+have issued pidgin updates for these that I can see, so I'm wondering if
+anyone has looked at these patches (be it vendors or upstream) to
+determine whether or not they're sufficient and/or suitable to apply to
+a security update.
 
 -- 
-Bye,
-     Thomas
--- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
--- 
-           Hamming's Motto:
-           The purpose of computing is insight, not numbers.
-                                -- Richard W. Hamming
+Vincent Danen @ http://linsec.ca/
+
+Content of type "application/pgp-signature" skipped
