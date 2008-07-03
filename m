@@ -1,60 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/17/8
-Message-ID: <485815FF.4060404@clamav.net>
-Date: Tue, 17 Jun 2008 22:52:31 +0300
-From: Török Edwin <edwin@...mav.net>
-To: Eren Türkay <turkay.eren@...il.com>
-CC: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: Clamav
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/03/4
+Message-ID: <20080703174953.GA10067@severus.strandboge.com>
+Date: Thu, 3 Jul 2008 13:49:53 -0400
+From: Jamie Strandboge <jamie@...onical.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com, Jamie Strandboge <jamie@...onical.com>
+Subject: Re: CVE request for dnsmasq DoS
 Content-Type: text/plain; charset=utf-8
 
-Eren Türkay wrote:
-> On 17 Jun 2008 Tue 10:38:13 Eren Türkay wrote:
->>   * libclamav/mbox.c, shared/network.c: prevent uninitialized use of
->> hostent structure (bb #1003).
->>
->> The bug entry says that after zip file's arriving at clamd, it suddenly
->> dies and nothing can be retrieved thereafter. Clamav developer also
->> comfirms that this happens when MailFollowURLs is enabled.
-> 
-> Hello,
-> 
-> I talked to Edwin on #clamav channel. He says this is a rare-case and he 
-> thinks that it's a vulnerability rather than a security flaw.
-
-I said that its a bug rather than a security flaw. However you can
-assign it a CVE id if you want to.
-We didn't treat it as security, because it occurs in a non-default
-config (MailFollowURLs), it is not externally controllable, and it
-occurs rarely (so far we got 2 reports of this bug).
+On Tue, 01 Jul 2008, Steven M. Christey wrote:
 
 > 
-> Edwin, could you please inform us about important vulnerabilities/security 
-> flaws fixed in 0.93.1?
+> On Mon, 30 Jun 2008, Jamie Strandboge wrote:
+> 
+> > Hi,
+> >
+> > There is a remote DoS in dnsmasq 2.25 (and presumably earlier) that is
+> > fixed in 2.26. Details can be found at [1]. Can we get a CVE assigned
+> > for this?
+> 
+> I'm not sure I fully understand Thierry Carrez' comment about the security
+> implications of this issue.  It seems like an exploit would require a
+> malicious DHCP server, in which case isn't DHCP service already
+> compromised?  If so, then a crash of dnsmasq (null dereference?) doesn't
+> seem to be any worse than the loss of DHCP itself.
+> 
+I haven't had time to develop a PoC, but from the dnsmasq 2.26 announce
+page at [1], a client need only send a crafted renewal request to crash
+the server. Thierry's comments were only for trying to reproduce the
+problem and test the patch.
 
-I recommend to use 0.93.1, however if you want to backport parts of
-it, these are the most important (from the ChangeLog).
-The daily.cfg and dconf changes are important for turning off
-vulnerable modules, the rest is self explanatory.
+Jamie
 
-Wed Jun  4 14:18:27 CEST 2008 (tk)
-----------------------------------
-  * libclamav/petite.c: fix possible invalid memory access (bb#1000)
-			Reported by Damian Put
+[1] http://freshmeat.net/projects/dnsmasq/?branch_id=1991&release_id=217681
 
-Sat May  3 14:46:41 CEST 2008 (tk)
-----------------------------------
-* libclamav/readdb.h: read daily.cfg stored inside .cld containers
-(bb#1006)
+-- 
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
 
-Thu Apr 24 17:44:38 MSD 2008 (tk)
----------------------------------
-  * libclamav: scan for embedded PEs inside OLE2 files (bb#914)
-
-Fri Apr 18 13:55:41 EEST 2008 (edwin)
--------------------------------------
-  * libclamav/dconf.h: fix flag code assignment (bb #952)
-
-Best regards,
---Edwin
-
+Download attachment "signature.asc" of type "application/pgp-signature" (190 bytes)
