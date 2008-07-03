@@ -1,27 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/16/5
-Message-ID: <Pine.GSO.4.51.0809152108300.6953@faron.mitre.org>
-Date: Mon, 15 Sep 2008 21:11:30 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/03/1
+Message-ID: <20080703152947.GR13234@ngolde.de>
+Date: Thu, 3 Jul 2008 17:29:47 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-cc: coley@...re.org, Jan Minář <rdancer@...ncer.org>, Tomas Hoger <thoger@...hat.com>, Karsten Hopp <karsten@...hat.com>
-Subject: Re: [oss-list] CVE request (vim)
+Subject: Re: Re: CVE Request (pidgin)
 Content-Type: text/plain; charset=utf-8
 
+Hi Steven,
+* Steven M. Christey <coley@...us.mitre.org> [2008-07-01 23:40]:
+> Name: CVE-2008-2955
+> Status: Candidate
+> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2955
+> Reference: BUGTRAQ:20080626 Pidgin 2.4.1 Vulnerability
+> Reference: URL:http://www.securityfocus.com/archive/1/archive/1/493682/100/0/threaded
+> Reference: FRSIRT:ADV-2008-1947
+> Reference: URL:http://www.frsirt.com/english/advisories/2008/1947
+> Reference: SECUNIA:30881
+> Reference: URL:http://secunia.com/advisories/30881
+> 
+> Pidgin 2.4.1 allows remote attackers to cause a denial of service
+> (crash) via a long filename that contains certain characters, as
+> demonstrated using an MSN message that triggers the crash in the
+> msn_slplink_process_msg function.
 
-On Thu, 11 Sep 2008, Jan Lieskovsky wrote:
+Did anyone try if this can be done by some random user 
+without authorization and if the victim needs to accept the 
+file first to trigger this?
 
-> Hello Steve,
->
->   found relatively old issue in Vim, which was not covered
-> by the CVE-2008-2712 patch. Could you please assign a new
-> CVE id for it:
->
-> Report: http://www.rdancer.org/vulnerablevim-K.html  [1]
+Kind regards
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-Use CVE-2008-4101
-
-What about the ``Control-]'' and ``g]'' Commands (section 3.2)?  On the
-surface, the patch seems to only be related to the K command.
-
-- Steve
+Content of type "application/pgp-signature" skipped
