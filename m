@@ -1,22 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/06/1
-Message-ID: <25727.1204830552@devserv.devel.redhat.com>
-Date: Thu, 06 Mar 2008 14:09:12 -0500
-From: Josh Bressers <bressers@...hat.com>
-To: coley@...re.org
-cc: oss-security@...ts.openwall.com
-Subject: CVE Request
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/03/2
+Message-ID: <20080703160520.GA23759@suse.de>
+Date: Thu, 3 Jul 2008 18:05:20 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: 2.6.25.10 security fixes, please assign CVE id
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
+http://lwn.net/Articles/288473/
 
-Can I get a CVE id for this one:
-https://bugzilla.redhat.com/show_bug.cgi?id=435274
+> Stable kernel 2.6.25.10
+> Posted Jul 3, 2008 15:34 UTC (Thu) by PaXTeam (subscriber, #24616) [Link] 
+> ..and once again, users get the usual treatment of not actually being told why an upgrade is
+> so strongly encouraged. it seems that in this episode of the -stable security fix coverup
+> series (that's not to say that the corresponding vanilla commits got a better treatment), we
+> got at least two fine examples of how such bugs should not fall victim of the kernel devs'
+> full disclosure policy.
+> 
+> as for the particular bugs:
+> 
+> 1.
+> http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.25.y.git;a=commitdiff;h=2a739dd53ad7ee010ae6e155438507f329dce788
+> adds several checks against NULL function pointers, which is an immediate 'get direct ring-0
+> code execution' flag, unfortunately we don't learn whether this is actually possible or not,
+> but one assumes the STRONGLY encouraged upgrade wasn't for nothing at least.
 
-I'm not sure if this will affect anyone else, so I'm sending it to
-oss-security as well.
+This is CVE-2008-2812.
+ 
+> 2.
+> http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.25.y.git;a=commitdiff;h=1e9a615bfce7996ea4d815d45d364b47ac6a74e8
+> is an even better one, it allows one to overflow the task struct refcount (a 32 bit atomic_t
+> on the affected amd64) and cause its subsequent freeing with dangling references to it all
+> over the place (including 'current' of the ptraced task itself). corresponding exploit avenues
+> abound.
 
-Thanks.
+I don't know if this one has a CVE yet.
 
+> Greg, instead of witchhunting on vendor-sec you guys should sit down and decide what you want
+> for your disclosure policy for real. the next Kernel Summit would be a good opportunity i
+> think.
+
+[no comment]
+
+Ciao, Marcus
 -- 
-    JB
+Working, but not speaking, for the following german company:
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
