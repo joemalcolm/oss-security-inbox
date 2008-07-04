@@ -1,37 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/02/9
-Message-ID: <20080602174105.GA17910@ngolde.de>
-Date: Mon, 2 Jun 2008 19:41:05 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/04/1
+Message-ID: <31450.1215137140@devserv.devel.redhat.com>
+Date: Thu, 03 Jul 2008 22:05:40 -0400
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: code reviews (was: ARP handler Inspection tool released)
+cc: packagers@...gin.im
+Subject: Re: Re: CVE Request (pidgin)
 Content-Type: text/plain; charset=utf-8
 
-Hi Andrea,
-* Andrea Barisani <lcars@...rt.org> [2008-06-02 19:17]:
-> On Mon, Jun 02, 2008 at 06:53:20PM +0200, Nico Golde wrote:
-> > At least for Debian there is an audit project 
-> > (http://www.debian.org/security/audit/) which is not really 
-> > active anymore though. As far as I know Gentoo has a similar 
-> > project. What about replacing those by an oss-security-audit 
-> > project? I don't think oCert is the solution to audit 
-> > requests as it simply lacks of enough manpower to do that in 
-> > an organized fashion.
+On 4 July 2008, Robert Buchholz wrote:
+> On Thursday 03 July 2008, Josh Bressers wrote:
+> > On 3 July 2008, Nico Golde wrote:
+> > > > Name: CVE-2008-2955
+> > > >
+> > > >
+> > > > Pidgin 2.4.1 allows remote attackers to cause a denial of service
+> > > > (crash) via a long filename that contains certain characters, as
+> > > > demonstrated using an MSN message that triggers the crash in the
+> > > > msn_slplink_process_msg function.
+> > >
+> > > Did anyone try if this can be done by some random user=20
+> > > without authorization and if the victim needs to accept the=20
+> > > file first to trigger this?
+> >
+> > My testing showed that random users can't send files, they need to be
+> > in your buddy list.  I'm not sure if the victim needs to accept the
+> > file or not.  Last I knew, upstream was still working on this one.
 > 
-> With all due respect, how exactly do you know that? :)
+> Our maintainer digged out these changes that are in the newly released 
+> 2.4.3:
+> 
+> http://developer.pidgin.im/viewmtn/revision/diff/6eb1949a96fa80a4c744fc749c2562abc4cc9ed6/with/c3831c9181f4f61b747321240086ee79e4a08fd8/
+> libpurple/protocols/msn/slplink.c
+> http://developer.pidgin.im/viewmtn/revision/diff/6eb1949a96fa80a4c744fc749c2562abc4cc9ed6/with/c3831c9181f4f61b747321240086ee79e4a08fd8/
+> libpurple/protocols/msnp9/slplink.c
+> 
+> Are they incomplete?
+> 
 
-Just a wild guess, audits are time consuming and you are all 
-employed ;)
-This was in no way meant to discredit oCert lacking of 
-manpower in general. I just didn't had the impression you 
-guys have the time to focus on source code audits in the 
-first place but mostly on coordination. Sorry if this is 
-wrong!
+These are patches for a different integer overflow fixed in Pidgin 2.4.3.
+So to prevent creating confusion, I'm opening the Red Hat bug that has the
+patch and CVE id noted in it.  It was initially planned to not announce
+these fixes in public until next week.
 
-Cheers
-Nico
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2008-2927
+
+I'm also adding the upstream packagers list to the CC so they know what's
+going on.
+
+If anyone has any questions, please reply via the oss-security list.  We'll
+make that the primary information source to hopefully clear things up.
+
+Thanks.
+
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+    JB
