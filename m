@@ -1,28 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/18/2
-Message-ID: <48D1E9ED.1030809@redhat.com>
-Date: Thu, 18 Sep 2008 13:41:01 +0800
-From: Eugene Teo <eteo@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/06/1
+Message-Id: <200807061829.09567.hanno@hboeck.de>
+Date: Sun, 6 Jul 2008 18:29:09 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2008-3528 Linux kernel ext[234] directory corruption DoS
+Cc: coley@...re.org
+Subject: CVE request: mybb
 Content-Type: text/plain; charset=utf-8
 
-The ext[234] filesystem code fails to properly handle corrupted data
-structures. With a mounted filesystem image or partition that have
-corrupted dir->i_size and dir->i_blocks, a user performing either a read
-or write operation on the mounted image or partition can lead to a
-possible denial of service.
+MyBB 1.2.13 release announcement:
+"MyBB 1.2.13 is a security update to the MyBB 1.2 series. It fixes 1 HIGH risk 
+and 1 Medium risk security vulnerability."
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=459577
-http://lkml.org/lkml/2008/9/13/98
-http://lkml.org/lkml/2008/9/13/99
-http://lkml.org/lkml/2008/9/17/371
+http://community.mybboard.net/showthread.php?tid=31666
 
-The issue is not fixed upstream yet, but the patch has been added to -mm
- tree. I will update this email as soon as I know the commit hashes.
-This issue has been allocated with CVE-2008-3528.
+No further details though...
 
-Thanks, Eugene
 -- 
-Eugene Teo / Red Hat Security Response Team
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
