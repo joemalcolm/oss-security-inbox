@@ -1,21 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/09/10
-Message-ID: <Pine.GSO.4.51.0809091038190.6699@faron.mitre.org>
-Date: Tue, 9 Sep 2008 10:38:28 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/06/2
+Message-Id: <200807061831.41014.hanno@hboeck.de>
+Date: Sun, 6 Jul 2008 18:31:40 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: Re: cve request: punbb < 1.2.20 xss
+Cc: coley@...re.org
+Subject: CVE request: simple machines forum
 Content-Type: text/plain; charset=utf-8
 
+http://www.simplemachines.org/community/index.php?P=c3696c2022b54fa50c5f341bf5710aa3&topic=236816.0
 
-On Tue, 9 Sep 2008, Hanno [utf-8] Böck wrote:
 
-> http://punbb.informer.com/
->
-> cite:
-> "The XSS via the "p" GET parameter is fixed. Reported by Henry Sudhof."
+"This version addresses a few security issues and fixes some small bugs."
 
-Use CVE-2008-3968
+These sound like security issues:
+* Sanitation of $topic wasn't always done right.
+* Fixed a vulnerability with the use of the html-tag - issue reported by 
+Jessica Hope.
 
-- Steve
+Though they don't list which issues are security relevant.
+
+They also don't mention if CVE-2007-5943 is fixed.
+
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
