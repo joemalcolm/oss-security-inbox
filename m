@@ -1,48 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/23/16
-Message-ID: <20080423205526.GA866@openwall.com>
-Date: Thu, 24 Apr 2008 00:55:26 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/06/3
+Message-Id: <200807061842.56164.hanno@hboeck.de>
+Date: Sun, 6 Jul 2008 18:42:55 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: web archives
+Cc: coley@...re.org
+Subject: CVE request: moodle xss in < 1.8.5
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Apr 23, 2008 at 12:01:32PM -0400, Steven M. Christey wrote:
-> The archives as stored at
-> http://www.openwall.com/lists/oss-security/2008/04/ etc. only list posts
-> using sequence numbers.  Would it be easy to list these by subject line,
-> author, and/or in a threaded basis?  I find it hard to navigate when I'm
-> looking for a particular post.
+http://docs.moodle.org/en/Release_Notes#Moodle_1.8.5
+    *  KSES related XSS security vulnerability fixed 
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
-There's a to-do item for the blists software that powers these archives
-to store message Subjects and Froms in the index file and to display
-them on index pages as well as on prev/next links.  There are some
-subtle issues with implementing this, but it should be done - and your
-request may speed this up.
-
-In case anyone is curious (or would like to join the project?), the
-source code for blists is now public at:
-
-	http://cvsweb.openwall.com/blists
-
-Do I understand it correctly that your request is to not only list the
-subjects and authors on index pages, but also to provide versions of the
-index pages with different message grouping - by subject, author, and/or
-by thread?  Any suggestions on the URLs to use for these versions?
-
-BTW, as to grouping by thread, there are already thread-prev and/or
-thread-next links on messages that are detected as being part of a
-thread, and the detection is based on Message-ID, In-Reply-To, and
-References headers.
-
-Jonathan, jericho, and everyone else -
-
-As to submitting this list to more third-party archives, while I
-appreciate this being done, I'd like to be given a chance to provide the
-archive with past messages.  It often takes more time to get those
-messages imported when the list is already submitted.  I've e-mailed
-Fyodor and the Neohapsis folks now.
-
-Thanks,
-
-Alexander
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
