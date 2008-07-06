@@ -1,37 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/16/7
-Message-ID: <Pine.GSO.4.51.0806161644570.16840@faron.mitre.org>
-Date: Mon, 16 Jun 2008 16:47:07 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com, Jamie Strandboge <jamie@...onical.com>
-cc: coley@...re.org
-Subject: Re: CVE Id request: vim
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/06/4
+Message-ID: <20080706174732.GL23347@ngolde.de>
+Date: Sun, 6 Jul 2008 19:47:32 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: moodle xss in < 1.8.5
 Content-Type: text/plain; charset=utf-8
 
+Hi Hanno,
+* Hanno Böck <hanno@...eck.de> [2008-07-06 19:04]:
+> http://docs.moodle.org/en/Release_Notes#Moodle_1.8.5
+>     *  KSES related XSS security vulnerability fixed 
 
-In a perfect world, we'd know which Vim scripts were vulnerable in which
-version, but I don't see an easy way of determining that.  So, only one
-CVE is being assigned for them, pending any additional details.
+This should be CVE-2008-1502:
+http://moodle.org/mod/forum/discuss.php?d=95031
 
-- Steve
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-
-======================================================
-Name: CVE-2008-2712
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2712
-Reference: BUGTRAQ:20080613 Collection of Vulnerabilities in Fully Patched Vim 7.1
-Reference: URL:http://www.securityfocus.com/archive/1/archive/1/493352/100/0/threaded
-Reference: BUGTRAQ:20080614 Re: Collection of Vulnerabilities in Fully Patched Vim 7.1
-Reference: URL:http://www.securityfocus.com/archive/1/archive/1/493353/100/0/threaded
-Reference: MISC:http://www.rdancer.org/vulnerablevim.html
-Reference: MLIST:[oss-security] CVE Id request: vim
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/06/16/2
-
-Vim 7.1.314, 6.4, and other versions allows user-assisted remote
-attackers to execute arbitrary commands via Vim scripts that do not
-properly sanitize inputs before invoking the execute or system
-functions, as demonstrated using (1) filetype.vim, (2) zipplugin, (3)
-xpm.vim, (4) gzip_vim, and (5) netrw.
-
-
+Content of type "application/pgp-signature" skipped
