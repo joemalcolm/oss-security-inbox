@@ -1,21 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/27/6
-Message-ID: <Pine.GSO.4.51.0810271924530.1641@faron.mitre.org>
-Date: Mon, 27 Oct 2008 19:30:55 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/07/3
+Message-ID: <20080707140622.GS29304@fuse.inversepath.com>
+Date: Mon, 7 Jul 2008 14:06:22 +0000
+From: Andrea Barisani <lcars@...rt.org>
 To: oss-security@...ts.openwall.com
-Subject: XSS in HTML Tidy plugin used in WYSIWYG HTML editors
+Subject: [oCERT-2008-007] libpoppler uninitialized pointer
 Content-Type: text/plain; charset=utf-8
 
 
-http://www.securityfocus.com/bid/31908 covers a claimed issue in Kayako
-eSupport that probably stems from an XSS in some plugin called HtmlTidy
-which is for some WYSIWYG HTML editor called htmlArea.  Quick Google
-searches suggest it may be in extensive use in various packages;
-squirrelmail and Dragonfly were some of the products I've heard of that
-popped up in early results.  I didn't dig deeply though.
+2008/07/07 #2008-007 libpoppler uninitialized pointer
 
-This will have a CVE momentarily, but this post should be in the initial
-CVE.  Chicken and egg thing basically...
+Description:
 
-- Steve
+The poppler PDF rendering library suffers a memory management bug which leads
+to arbitrary code execution.
+
+The vulnerability is present in the Page class constructor/destructor. The
+pageWidgets object is not initialized in the Page constructor if specific
+conditions are met, but it is deleted afterwards in the destructor regardless
+of its initialization.
+
+Specific PDF files can be crafted which allocate arbitrary memory to trigger
+the vulnerability.
+
+A new poppler version addressing the issue is scheduled to be released on
+July 30th according to maintainer.
+
+The following patch fixes the issue:
+
+
+diff --git a/poppler/Page.cc b/poppler/Page.cc
+index b28a3ee..72a706b 100644
+--- a/poppler/Page.cc
++++ b/poppler/Page.cc
+@@ -230,7 +230,7 @@ GBool PageAttrs::readBox(Dict *dict, char *key, PDFRectangle *box) {
+ 
+ Page::Page(XRef *xrefA, int numA, Dict *pageDict, PageAttrs *attrsA, Form *form) {
+   Object tmp;
+-	
++  pageWidgets =	NULL;  //Security fix
+   ok = gTrue;
+   xref = xrefA;
+   num = numA;
+
+
+Affected version:
+
+poppler <= 0.8.4
+
+Fixed version:
+
+poppler, N/A
+
+Credit: vulnerability report, patch and PoC code received from Felipe Andres
+Manzano <fmanzano [at] fceia [dot] unr [dot] edu [dot] ar>.
+
+CVE: CVE-2008-2950
+
+Timeline:
+2008-06-27: vulnerability report received
+2008-06-28: contacted poppler maintainers and affected vendors
+2008-06-30: maintainer confirms issue and patch
+2008-07-07: advisory release
+
+References:
+
+Links:
+http://poppler.freedesktop.org
+
+Permalink:
+http://www.ocert.org/advisories/ocert-2008-007.html
+
+-- 
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | Open Source Computer Emergency Response Team
+
+<lcars@...rt.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
