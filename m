@@ -1,83 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/10/1
-Message-ID: <20080610162433.GA23755@ngolde.de>
-Date: Tue, 10 Jun 2008 18:24:33 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/08/13
+Message-ID: <Pine.GSO.4.51.0807081359060.16947@faron.mitre.org>
+Date: Tue, 8 Jul 2008 13:59:50 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: exploitability of off-by-one in motion webserver
+Subject: Re: 2.6.25.10 security fixes, please assign CVE id
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-in http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=484572 I 
-reported an off-by-one programming error in motion:
 
-1950 static int read_client(int client_socket, void *userdata, char *auth)
-....
-1953         int ret = 1;
-1954         char buffer[1024] = {'\0'};
-1955         int length = 1024;
-....
-1963                 int nread = 0, readb = -1; 
-1964·
-1965                 nread = read (client_socket, buffer, length);
-1966·
-1967                 if (nread <= 0) {
-1968                         motion_log(LOG_ERR, 1, "httpd First read");
-1969                         pthread_mutex_unlock(&httpd_mutex);
-1970                         return -1; 
-1971                 }   
-1972                 else {
-1973                         char method[sizeof (buffer)];
-1974                         char url[sizeof (buffer)];
-1975                         char protocol[sizeof (buffer)];
-1976                         char *authentication=NULL;
-1977·
-1978                         buffer[nread] = '\0';
-....
-2073         return ret;
+On Thu, 3 Jul 2008, Marcus Meissner wrote:
 
+> > 2.
+> > http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.25.y.git;a=commitdiff;h=1e9a615bfce7996ea4d815d45d364b47ac6a74e8
+> > is an even better one, it allows one to overflow the task struct refcount (a 32 bit atomic_t
+> > on the affected amd64) and cause its subsequent freeing with dangling references to it all
+> > over the place (including 'current' of the ptraced task itself). corresponding exploit avenues
+> > abound.
 
-If the clients sends 1024 or more bytes this leads to an off-by-one writing
-to buffer[1024]. However I am unsure about the exploitability at the moment.
-Overwriting the frame pointer should be not possible since there are variables
-on the stack before buffer.
+Use CVE-2008-3077, to be filled in later.
 
-However it should be possible to overwrite ret with 0 which is used in line 2073 as
-the return value of the function (normal termination returns 1).
-
-The value of ret is used as a check for a while loop which handles the incoming connections:
-2181         while ((client_sent_quit_message!=0) && (!closehttpd)) { 
-2182 
-2183                 client_socket_fd = acceptnonblocking(sd, 1);
-2184 
-2185                 if (client_socket_fd<0) {
-....
-2190                 } else {
-2191                         /* Get the Client request */
-2192                         client_sent_quit_message = read_client (client_socket_fd, cnt, authentication);
-....
-2196                         if (client_socket_fd)
-2197                                 close(client_socket_fd);
-2198                 }
-2200         }
-
-So if read_client will be evaluated to 0 the while condition in 2181 should
-be evaluated to false which causes the server to not accept connections on
-the http port anymore.
-
-This is the theoretical point but I was not able to reproduce this on
-a 64bit system. Does anyone have an idea why this could be the case or
-is even able to reproduce this?
-
-Install motion and send an arbitrary HTTP request to port 8080 with a
-lengt >= 1024.
-
-Opinions?
-
-Cheers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+- Steve
