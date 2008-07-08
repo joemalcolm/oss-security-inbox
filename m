@@ -1,23 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/27/3
-Message-ID: <20080827132515.GB12859@ngolde.de>
-Date: Wed, 27 Aug 2008 15:25:15 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/08/3
+Message-ID: <48734D8E.5060603@redhat.com>
+Date: Tue, 08 Jul 2008 19:20:46 +0800
+From: Eugene Teo <eteo@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: awstats
+Subject: CVE-2008-2931 kernel: missing check before setting mount propagation
 Content-Type: text/plain; charset=utf-8
 
-Hi Nico,
-* Nico Golde <oss-security+ml@...lde.de> [2008-08-27 15:23]:
-> there is a new XSS issue and one remote code execution (php code)
-> in awstats.
+The do_change_type routine in the Linux kernel has a missing check for
+capable(CAP_SYS_ADMIN). Even though the mount command restricts the
+changing of mountpoint type to only root users, it is possible for local
+unprivileged users to bypass and abuse this problem. More details can be
+found at: https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2008-2931
 
-sorry, awstats totals.
+This affects kernel versions from 2.6.15-rc1 up to 2.6.22-rc1. The
+proposed upstream commit is: ee6f958291e2a768fd727e7a67badfff0b67711a.
 
-Cheers
-Nico
+I have allocated this CVE-2008-2931.
+
+Thanks,
+Eugene
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+Eugene Teo / Red Hat Security Response Team
