@@ -1,27 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/21/9
-Message-ID: <Pine.GSO.4.51.0811202109260.20524@faron.mitre.org>
-Date: Thu, 20 Nov 2008 21:09:29 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/08/9
+Message-ID: <Pine.GSO.4.51.0807081317020.16947@faron.mitre.org>
+Date: Tue, 8 Jul 2008 13:18:37 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...re.org>
-Subject: Re: CVE Request: ruby on rails header injection
+cc: coley@...re.org
+Subject: Re: CVE request: mybb
 Content-Type: text/plain; charset=utf-8
 
 
-======================================================
-Name: CVE-2008-5189
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5189
-Reference: CONFIRM:http://github.com/rails/rails/commit/7282ed863ca7e6f928bae9162c9a63a98775a19d
-Reference: CONFIRM:http://weblog.rubyonrails.org/2008/10/19/rails-2-0-5-redirect_to-and-offset-limit-sanitizing
-Reference: CONFIRM:http://weblog.rubyonrails.org/2008/10/19/response-splitting-risk
-Reference: BID:32359
-Reference: URL:http://www.securityfocus.com/bid/32359
+On Sun, 6 Jul 2008, Hanno [utf-8] Böck wrote:
 
-CRLF injection vulnerability in Ruby on Rails before 2.0.5 allows
-remote attackers to inject arbitrary HTTP headers and conduct HTTP
-response splitting attacks via a crafted URL to the redirect_to
-function.
+> MyBB 1.2.13 release announcement:
+> "MyBB 1.2.13 is a security update to the MyBB 1.2 series. It fixes 1 HIGH risk
+> and 1 Medium risk security vulnerability."
+>
+> http://community.mybboard.net/showthread.php?tid=31666
+>
+> No further details though...
+
+
+The forum post linked to a security-only patch that provides some pretty
+good hints.
+
+======================================================
+Name: CVE-2008-3069
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3069
+Reference: CONFIRM:http://community.mybboard.net/attachment.php?aid=9272
+Reference: CONFIRM:http://community.mybboard.net/showthread.php?tid=31666
+
+Multiple cross-site scripting (XSS) vulnerabilities in MyBB before
+1.2.13 allow remote attackers to inject arbitrary web script or HTML
+via unspecified parameters to (1) portal.php and (2)
+inc/functions_post.php.
+
+
+======================================================
+Name: CVE-2008-3070
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3070
+Reference: CONFIRM:http://community.mybboard.net/attachment.php?aid=9272
+Reference: CONFIRM:http://community.mybboard.net/showthread.php?tid=31666
+
+Unspecified vulnerability in inc/datahandler/user.php in MyBB before
+1.2.13 has unknown impact and attack vectors related to the
+$user['language'] variable, probably related to SQL injection.
+
+
+======================================================
+Name: CVE-2008-3071
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3071
+Reference: CONFIRM:http://community.mybboard.net/attachment.php?aid=9272
+Reference: CONFIRM:http://community.mybboard.net/showthread.php?tid=31666
+
+Directory traversal vulnerability in inc/class_language.php in MyBB
+before 1.2.13 has unknown impact and attack vectors related to the
+$language variable.
 
 
