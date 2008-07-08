@@ -1,36 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/23/18
-Message-ID: <Pine.LNX.4.64.0804232213280.24155@forced.attrition.org>
-Date: Wed, 23 Apr 2008 22:15:46 +0000 (UTC)
-From: security curmudgeon <jericho@...rition.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/08/11
+Message-ID: <Pine.GSO.4.51.0807081339140.16947@faron.mitre.org>
+Date: Tue, 8 Jul 2008 13:42:21 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: web archives
+Subject: Re: CVE request: moodle xss in < 1.8.5
 Content-Type: text/plain; charset=utf-8
 
 
-: Do I understand it correctly that your request is to not only list the 
-: subjects and authors on index pages, but also to provide versions of the 
-: index pages with different message grouping - by subject, author, and/or 
-: by thread?  Any suggestions on the URLs to use for these versions?
+On Tue, 8 Jul 2008, Hanno [utf-8] Böck wrote:
 
-Message threading is very helpful to Steve/CVE and other VDBs. I'll let 
-him speak to his wishes obviously.
+> Am Sonntag 06 Juli 2008 schrieb Nico Golde:
+> > Hi Hanno,
+> >
+> > * Hanno Böck <hanno@...eck.de> [2008-07-06 19:04]:
+> > > http://docs.moodle.org/en/Release_Notes#Moodle_1.8.5
+> > >     *  KSES related XSS security vulnerability fixed
+> >
+> > This should be CVE-2008-1502:
 
->From the OSVDB side, if the URLs would use a year/month scheme at the 
-least, that would be ideal. We do not reference mail list archives like 
-SecurityFocus or MARC unless we have to, as their URLs aren't very 
-informative by themselves. 
- 
-: Jonathan, jericho, and everyone else -
-: 
-: As to submitting this list to more third-party archives, while I 
-: appreciate this being done, I'd like to be given a chance to provide the 
-: archive with past messages.  It often takes more time to get those 
-: messages imported when the list is already submitted.  I've e-mailed 
-: Fyodor and the Neohapsis folks now.
+This looks like a shared codebase relationship, which would usually
+involve the same CVE.
 
-It's no issue with Neohapsis. I've had them backfill archives in the 
-past, and they can do it trivially with the messages in several formats. 
-I had this in mind when I contacted them.
+If the issue is really in KSES, then CVE-2008-1502 would need to be
+updated to reflect that it affects KSES as used in egroupWare, Moodle, and
+others.
 
-Brian
+Can anyone clarify?
+
+- Steve
