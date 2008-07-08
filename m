@@ -1,40 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/02/8
-Message-ID: <20080602170330.GV10078@fuse.inversepath.com>
-Date: Mon, 2 Jun 2008 17:03:30 +0000
-From: Andrea Barisani <lcars@...rt.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/08/14
+Message-ID: <20080708215221.GG5493@ngolde.de>
+Date: Tue, 8 Jul 2008 23:52:21 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: code reviews (was: ARP handler Inspection tool released)
+Subject: Re: CVE request: moodle xss in < 1.8.5
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jun 02, 2008 at 06:53:20PM +0200, Nico Golde wrote:
+Hi Steven,
+* Steven M. Christey <coley@...us.mitre.org> [2008-07-08 19:54]:
+> On Tue, 8 Jul 2008, Hanno [utf-8] BÃ¶ck wrote:
 > 
-> At least for Debian there is an audit project 
-> (http://www.debian.org/security/audit/) which is not really 
-> active anymore though. As far as I know Gentoo has a similar 
-> project. What about replacing those by an oss-security-audit 
-> project? I don't think oCert is the solution to audit 
-> requests as it simply lacks of enough manpower to do that in 
-> an organized fashion.
+> > Am Sonntag 06 Juli 2008 schrieb Nico Golde:
+> > > Hi Hanno,
+> > >
+> > > * Hanno BÃ¶ck <hanno@...eck.de> [2008-07-06 19:04]:
+> > > > http://docs.moodle.org/en/Release_Notes#Moodle_1.8.5
+> > > >     *  KSES related XSS security vulnerability fixed
+> > >
+> > > This should be CVE-2008-1502:
+> 
+> This looks like a shared codebase relationship, which would usually
+> involve the same CVE.
+> 
+> If the issue is really in KSES, then CVE-2008-1502 would need to be
+> updated to reflect that it affects KSES as used in egroupWare, Moodle, and
+> others.
+> 
+> Can anyone clarify?
 
-With all due respect, how exactly do you know that? :)
+http://cvs.moodle.org/moodle/lib/kses.php?r1=1.3.2.2&r2=1.3.2.3
+http://cvs.moodle.org/moodle/lib/weblib.php?r1=1.581.4.10&r2=1.581.4.11
 
-We will expand man power accordingly to load, we are here for organizing and
-handling, otherwise we wouldn't have started oCERT in the first place.
+Did you get the vulnerability notes by the initial bug 
+reporter that I forwarded to you + vendor-sec?
 
-Also not everyone might like a public review as they might want embargoes for
-potential issues and so on.
-
-Sure we might be in scenarios where we can't cope, if so we will declare so.
-Still that didn't happened yet and any speculation about it shouldn't suggest
-that people should not send us reports if they want to.
-
-Cheers!
+Cheers
+Nico
 
 -- 
-Andrea Barisani |                Founder & Project Coordinator
-          oCERT | Open Source Computer Emergency Response Team
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-<lcars@...rt.org>                         http://www.ocert.org
- 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
-        "Pluralitas non est ponenda sine necessitate"
+Content of type "application/pgp-signature" skipped
