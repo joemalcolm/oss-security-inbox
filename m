@@ -1,31 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/11/12
-Message-ID: <20081111213229.GE6123@kroah.com>
-Date: Tue, 11 Nov 2008 13:32:29 -0800
-From: Greg KH <greg@...ah.com>
-To: Eugene Teo <eteo@...hat.com>
-Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE requests: kernel: hfsplus-related bugs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/08/10
+Message-ID: <Pine.GSO.4.51.0807081330440.16947@faron.mitre.org>
+Date: Tue, 8 Jul 2008 13:38:04 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+cc: coley@...re.org
+Subject: Re: CVE request: simple machines forum
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Nov 10, 2008 at 01:27:42PM +0800, Eugene Teo wrote:
-> Eugene Teo wrote:
-> > These were committed in upstream kernel. Reported by Eric Sesterhenn.
-> > 
-> > 1) hfsplus: fix Buffer overflow with a corrupted image
-> > Upstream commit: efc7ffcb4237f8cb9938909041c4ed38f6e1bf40
-> > 
-> > When an hfsplus image gets corrupted it might happen that the catalog
-> > namelength field gets b0rked.  If we mount such an image the memcpy() in
-> > hfsplus_cat_build_key_uni() writes more than the 255 that fit in the
-> > name field.  Depending on the size of the overwritten data, we either
-> > only get memory corruption or also trigger an oops.
-> 
-> There's an equivalent bug for hfs. The upstream commit is d38b7aa. We
-> will need a CVE name for this too.
-> 
-> Greg, I don't recall seeing this in -stable kernel. FYI.
 
-Thanks, I've now added it.
+On Sun, 6 Jul 2008, Hanno [utf-8] Böck wrote:
 
-greg k-h
+> http://www.simplemachines.org/community/index.php?P=c3696c2022b54fa50c5f341bf5710aa3&topic=236816.0
+>
+>
+> "This version addresses a few security issues and fixes some small bugs."
+>
+> These sound like security issues:
+> * Sanitation of $topic wasn't always done right.
+
+This might be a straightforward bug - maybe the topic is always
+"sanitized" to 0 and prevents legitimate display of pages.
+
+> * Fixed a vulnerability with the use of the html-tag - issue reported by
+> Jessica Hope.
+
+Use CVE-2008-3073, see below.
+
+There's also this:
+
+  Improved the random generator seeding for PHP < 4.2.0 - issue reported
+  by Jessica Hope
+
+Since Jessica has a track record for reporting SMF vulns, I think there's
+a high probability that this issue is also security-related.
+
+So, use CVE-2008-3072 for this.
+
+> Though they don't list which issues are security relevant.
+
+They also fixed CVE-2008-2019: "Increased the randomness of the Captcha
+sound."  This, in conjunction with the original researcher's claim of
+vendor notification, seems like sufficient acknowledgement.
+
+> They also don't mention if CVE-2007-5943 is fixed.
+
+... also CVE-2008-0284, CVE-2008-0775, and others.
+
+- Steve
+
+======================================================
+Name: CVE-2008-3072
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3072
+Reference: CONFIRM:http://www.simplemachines.org/community/index.php?P=c3696c2022b54fa50c5f341bf5710aa3&topic=236816.0
+
+Simple Machines Forum (SMF) 1.1.x before 1.1.5 and 1.0.x before
+1.0.13, when running in PHP before 4.2.0, does not properly seed the
+random number generator, which has unknown impact and attack vectors.
+
+
+======================================================
+Name: CVE-2008-3073
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3073
+Reference: CONFIRM:http://www.simplemachines.org/community/index.php?P=c3696c2022b54fa50c5f341bf5710aa3&topic=236816.0
+
+Unspecified vulnerability in Simple Machines Forum (SMF) 1.1.x before
+1.1.5 and 1.0.x before 1.0.13 has unknown impact and attack vectors,
+probably cross-site scripting (XSS), related to "use of the html-tag."
+
+
