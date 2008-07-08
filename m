@@ -1,46 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/18/6
-Message-id: <1203350498.25709.TMDA@linsec.ca>
-Date: Mon, 18 Feb 2008 09:00:24 -0700
-From: Vincent Danen <vdanen@...sec.ca>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/08/1
+Message-ID: <48733DB0.1050700@redhat.com>
+Date: Tue, 08 Jul 2008 18:13:04 +0800
+From: Eugene Teo <eteo@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: code review CVS
+CC: coley@...re.org
+Subject: Re: 2.6.25.10 security fixes, please assign CVE id
 Content-Type: text/plain; charset=utf-8
 
-* [2008-02-18 10:28:36 +0100] Sebastian Krahmer wrote:
+Marcus Meissner wrote:
+> http://lwn.net/Articles/288473/
+> 
+>> Stable kernel 2.6.25.10
+>> Posted Jul 3, 2008 15:34 UTC (Thu) by PaXTeam (subscriber, #24616) [Link] 
+[...]
+>> 2.
+>> http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.25.y.git;a=commitdiff;h=1e9a615bfce7996ea4d815d45d364b47ac6a74e8
+>> is an even better one, it allows one to overflow the task struct refcount (a 32 bit atomic_t
+>> on the affected amd64) and cause its subsequent freeing with dangling references to it all
+>> over the place (including 'current' of the ptraced task itself). corresponding exploit avenues
+>> abound.
+> 
+> I don't know if this one has a CVE yet.
 
->>>From my view it would be helpful to have some forum/CVS or whatever
->where code reviewers can submit the code they already audited along
->with remarks/exploits/patches etc.
->So everyone can match this against the version of the OSS project.
->In an ideal case their latest released version equals the
->version in the review CVS. It saves also the time to review
->files again which didnt change during versions.
+I'm cc'ing Steve just to make sure that this gets a CVE id.
 
-This is an intriguing idea, but I wonder if a version control system is
-actually required, or if we could use the wiki itself for something like
-this.
-
-A code checkin of audited source might be nice for "pristine" code
-purposes, but then we almost duplicate an author's scm system.
-
-Would not a simple list of software be sufficient?  For instance,
-something that listed:
-
-- software name
-- audited version
-- audit date
-- who did the audit
-- results of the audit (links to patches, whatever)
-
-Most authors keep old packages kicking around, so I don't think we need
-an scm for this.  I mean, if you review foo-1.1 and it's ok, and someone
-indicates a vuln in foo-1.3, then one could easily download both foo-1.1
-and foo-1.3 and just do a diff to see what's changed, right?
-
-Or do I miss something where a scm would be really valuable?
-
+Thanks,
+Eugene
 -- 
-Vincent Danen @ http://linsec.ca/
-
-Content of type "application/pgp-signature" skipped
+Eugene Teo / Red Hat Security Response Team
