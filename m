@@ -1,56 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/04/4
-Message-Id: <1212593693.6649.18.camel@media>
-Date: Wed, 04 Jun 2008 08:34:53 -0700
-From: Ned Ludd <solar@...too.org>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Python Unsafe Module Loading
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/08/15
+Message-ID: <Pine.LNX.4.64.0807082206400.27940@forced.attrition.org>
+Date: Tue, 8 Jul 2008 22:09:23 +0000 (UTC)
+From: security curmudgeon <jericho@...rition.org>
+To: oss-security@...ts.openwall.com
+Subject: Major DNS vulnerability announced  [CVE Question]
 Content-Type: text/plain; charset=utf-8
 
-Sending this to oss-sec vs vendor-sec cuz I've talked about this problem
-in public no less than 10 times on different occasions.
 
-I've been sitting on this bug for a while now and guess I should share
-it in an effort so hopefully somebody other than myself can come up with
-a patch. Anyway I've not tested pythons from other distros but I'm
-pretty sure they all behave the same as Gentoo's.
+Since this is about to make VDB life complicated..
 
-So for nearly every python based program you can simply dump  *.so *.py
-*.pyc files just about anywhere on the file system where an admin might
-invoke python.
+Microsoft has:
+DNS Insufficient Socket Entropy Vulnerability - CVE-2008-1447
+DNS Cache Poisoning Vulnerability - CVE-2008-1454
 
+Cisco has:
+CVE-2008-1447
 
-Example:
-strace -o /dev/stdout -eopen python -c 'import string'  | grep -v ^open
-\(\"/
+Question: Is CVE going to keep those two identifiers for the fundamental 
+issues, and load them up with affected vendors?
 
-This should be empty ^^
+---------- Forwarded message ----------
 
-solar@...ia /tmp $ touch re.so
-solar@...ia /tmp $ sudo su -
-***************** 
-media ~ # cd /tmp/
-media tmp # python -c 'import string'
-Traceback (most recent call last):
-  File "<string>", line 1, in ?
-  File "/usr/lib/python2.4/string.py", line 83, in ?
-    import re as _re
-ImportError: ./re.so: file too short
+http://www.kb.cert.org/vuls/id/800113
 
-If that was a real module.. We can guess at what all could be done.
+Vulnerability Note VU#800113
+Multiple DNS implementations vulnerable to cache poisoning
 
-Last time I poked at the source code I found I could trick python to put
-zipimport (an internal module) as the first thing in it's sys.path[0]
-and all was fine. But when I dug up my old patch and tested it with
-newer versions of python it no longer worked as before. Thus the need
-for a new patch.
+Overview
 
-This is the old patch that might give anybody that decides to poke at
-this an idea the area of code that needs loving.
+Deficiencies in the DNS protocol and common DNS implementations facilitate 
+DNS cache poisoning attacks.
 
-http://dev.gentoo.org/~solar/patch_overlay/dev-lang/python/python-2.4.2-zipimport-env.patch
+I. Description
 
+The Domain Name System (DNS) is responsible for translating host names to 
+IP addresses (and vice versa) and is critical for the normal operation of 
+internet-connected systems. DNS cache poisoning (sometimes referred to as 
+cache pollution) is an attack technique that allows an attacker to 
+introduce forged DNS information into the cache of a caching nameserver. 
+DNS cache poisoning is not a new concept; in fact, there are published 
+articles that describe a number of inherent deficiencies in the DNS 
+protocol and defects in common DNS implementations that facilitate DNS 
+cache poisoning. The following are examples of these deficiencies and 
+defects:
 
--- 
-Ned Ludd <solar@...too.org>
+< - >
+
+II. Impact
+
+An attacker with the ability to conduct a successful cache poisoning 
+attack can cause a nameserver's clients to contact the incorrect, and 
+possibly malicious, hosts for particular services. Consequently, web 
+traffic, email, and other important network data can be redirected to 
+systems under the attacker's control.
+
+< - >
 
