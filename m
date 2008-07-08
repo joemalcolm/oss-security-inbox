@@ -1,19 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/13/3
-Message-ID: <Pine.GSO.4.51.0805131156180.22220@faron.mitre.org>
-Date: Tue, 13 May 2008 11:56:31 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Hanno Böck <hanno@...eck.de>
-cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: Re: CVE request: Bugzilla (Unauthorized Bug Change, XSS, Account Impersonation)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/08/2
+Message-Id: <200807081321.06494.hanno@hboeck.de>
+Date: Tue, 8 Jul 2008 13:21:06 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: moodle xss in < 1.8.5
 Content-Type: text/plain; charset=utf-8
 
+Am Sonntag 06 Juli 2008 schrieb Nico Golde:
+> Hi Hanno,
+>
+> * Hanno Böck <hanno@...eck.de> [2008-07-06 19:04]:
+> > http://docs.moodle.org/en/Release_Notes#Moodle_1.8.5
+> >     *  KSES related XSS security vulnerability fixed
+>
+> This should be CVE-2008-1502:
 
-On Tue, 13 May 2008, Hanno [utf-8] Böck wrote:
+http://nvd.nist.gov/nvd.cfm?cvename=CVE-2008-1502
+is about egroupware.
 
-> I think this should be "3.1.3 and before" ?
-> As 3.1.3 is also affected according to the upstream advisory.
+I found no cve related to moodle 1.8.4.
 
-Yes, fixed - thanks.
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
-- Steve
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
