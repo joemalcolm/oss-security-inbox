@@ -1,51 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/18/4
-Message-ID: <20080218142328.GA30453@openwall.com>
-Date: Mon, 18 Feb 2008 17:23:28 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/08/6
+Message-ID: <20080708143954.GD376@linsec.ca>
+Date: Tue, 8 Jul 2008 08:39:54 -0600
+From: Vincent Danen <vdanen@...sec.ca>
 To: oss-security@...ts.openwall.com
-Subject: Re: wiki
+Subject: Re: Re: CVE Request (pidgin)
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Feb 17, 2008 at 08:49:34PM -0700, Vincent Danen wrote:
-> I've setup a few pages to give it some structure and content.
+* [2008-07-05 13:56:00 +0200] Nico Golde wrote:
 
-Yes, and I notice that Matthieu has added some more content to the pages
-you had created.  Thanks to both of you!
+>Hi Vincent,
+>* Vincent Danen <vdanen@...sec.ca> [2008-07-03 21:42]:
+>> * [2008-07-01 17:25:40 -0400] Steven M. Christey wrote:
+>> >Name: CVE-2008-2957
+>> >Status: Candidate
+>> >URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2957
+>> >Reference: MISC:http://crisp.cs.du.edu/?q=ca2007-1
+>> >Reference: MLIST:[oss-security] 20080627 CVE Request (pidgin)
+>> >Reference: URL:http://www.openwall.com/lists/oss-security/2008/06/27/3
+>> >
+>> >The UPnP functionality in Pidgin 2.0.0, and possibly other versions,
+>> >allows remote attackers to trigger the download of arbitrary files and
+>> >cause a denial of service (memory or disk consumption) via a UDP
+>> >packet that specifies an arbitrary URL.
+>> 
+>> There are patches with the original advisory for these two.  Has anyone
+>> had a chance to look at them to make sure they're ok?  I don't see any
+>> references to any of these issues on the pidgin website and no vendors
+>> have issued pidgin updates for these that I can see, so I'm wondering if
+>> anyone has looked at these patches (be it vendors or upstream) to
+>> determine whether or not they're sufficient and/or suitable to apply to
+>> a security update.
+>
+>I just had a look at http://crisp.cs.du.edu/crisp-files/pidgin-2.0.0-upnp-limit-download.diff 
+>to fix CVE-2008-2957. I think the patch itself is fine 
+>however I am not sure if this is the right way to fix the 
+>issue cause I basically just workarounds the problem by 
+>limiting the downloads triggered by UPnP (128k) without 
+>giving any way to reconfigure this value or to switch it off 
+>completely. This may be the reason why there isn't yet an 
+>official patch by the pidgin people.
+>
+>If you want to go with that simple workaround the patch is 
+>just fine.
 
-Also, I've noticed what I think is a major issue with the wiki -
-although it is configured to obfuscate e-mail addresses, it only does so
-when displaying the latest revision of a page.  Older revisions and page
-source appear with the e-mail addresses intact, ready to be grabbed by a
-"spambot".  I think that we'll need to either fix it in the code (or is
-there a configuration setting I have missed?) or obfuscate e-mail
-addresses manually.  The latter will be of little help for the addresses
-already entered into the wiki as they will remain in the old revisions.
+Thanks for looking at it, Nico.  I think the consensus of the Pidgin
+developers is that neither issue is very serious, which I think is
+another reason why it hasn't been fixed upstream yet.  I think that I'm
+going to do is just wait for them to fix it upstream before fixing
+anything (if they determine it isn't really a vulnerability, then I'd
+rather not waste my time fixing something that isn't really an issue).
 
-> ... setup a redirect on
-> http://oss-security.openwall.org/ so that you get bumped to /wiki/
-> instead of seeing an apache directory listing.
+-- 
+Vincent Danen @ http://linsec.ca/
 
-Done.  I've made this a temporary redirect (code 302) such that we can
-replace it with a static page later on (with links to the wiki and to
-non-wiki content that we might add).
-
-> Feel free to start adding content.  I think the structure is ok enough
-> to start with, we'll see how it goes from there.  It's pretty
-> straight-forward and should be easy enough to add to (I just added a few
-> links, some pages, etc. but every vendor should be adding their own info
-> there), and others can add content, etc.
-
-Yes.  I think that some of the content to add would be list charter for
-oss-security (Josh?) and official(?) or primary description of
-vendor-sec.  For the latter, we can take the text from the recently
-created Wikipedia page - http://en.wikipedia.org/wiki/Vendor-sec - then
-have the Wikipedia page backed by the already-public info on our wiki.
-
-> I've also registered #oss-security on Freenode for chatting.
-
-Thanks!  I am a little bit concerned that having an IRC channel might
-result in us having less "permanent" content (on this list and on the
-wiki) as questions will be asked and answered on IRC instead...
-
-Alexander
+Content of type "application/pgp-signature" skipped
