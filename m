@@ -1,39 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/01/1
-Message-Id: <200811012301.20834.steffen.joeris@skolelinux.de>
-Date: Sat, 1 Nov 2008 23:01:15 +1100
-From: Steffen Joeris <steffen.joeris@...lelinux.de>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: coley@...re.org
-Subject: CVE-2008-4796: snoopy triage
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/08/7
+Message-ID: <20080708161037.GA1008@ngolde.de>
+Date: Tue, 8 Jul 2008 18:10:37 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: moodle xss in < 1.8.5
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Hi Hanno,
+* Hanno Böck <hanno@...eck.de> [2008-07-08 13:29]:
+> Am Sonntag 06 Juli 2008 schrieb Nico Golde:
+> > * Hanno Böck <hanno@...eck.de> [2008-07-06 19:04]:
+> > > http://docs.moodle.org/en/Release_Notes#Moodle_1.8.5
+> > >     *  KSES related XSS security vulnerability fixed
+> >
+> > This should be CVE-2008-1502:
+> 
+> http://nvd.nist.gov/nvd.cfm?cvename=CVE-2008-1502
+> is about egroupware.
+> 
+> I found no cve related to moodle 1.8.4.
 
-I thought I'd share the outcome of my snoopy triage for debian.
-I had a look at upstream's patch[0] and compared it with packages in debian.
-
-We had 6 packages including the file Snoopy.class.php, all were vulnerable.
-List of packages:
-ampache: /usr/share/ampache/www/modules/infotools/Snoopy.class.php
-libphp-snoopy: /usr/share/php/libphp-snoopy/Snoopy.class.php
-mahara: /usr/share/mahara/lib/snoopy/Snoopy.class.php
-mediamate: /usr/share/mediamate/Snoopy.class.php
-opendb: /usr/share/opendb/functions/Snoopy.class.php
-pixelpost: /usr/share/pixelpost/addons/_defensio/libraries/Snoopy.class.php
-
-I haven't checked, how they depend on the Snoopy.class.php file yet.
-Of course there might be more out there and included in other distributions, 
-so don't assume that this is all. The packages in debian duplicating the 
-source should just depend on the libphp-snoopy package, which in debian is 
-the snoopy upstream package.
-
-Steve, do you want to update the CVE description to reflect that the file is 
-included in several other packages?
+Yes, this should get updated, I sent a request to update 
+this together with more information to vendor-sec.
 
 Cheers
-Steffen
+Nico
 
-[0]: http://klecker.debian.org/~white/libphp-snoopy/CVE-2008-4796.patch
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+Content of type "application/pgp-signature" skipped
