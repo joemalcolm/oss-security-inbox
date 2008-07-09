@@ -1,27 +1,93 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/12/5
-Message-ID: <87r69y3h72.fsf@mid.deneb.enyo.de>
-Date: Sat, 12 Jul 2008 23:50:41 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/09/3
+Message-ID: <487484DF.30206@gmx.de>
+Date: Wed, 09 Jul 2008 11:29:03 +0200
+From: Matthias Andree <matthias.andree@....de>
 To: oss-security@...ts.openwall.com
-Subject: Re: DNS vulnerability: other relevant software
+Subject: Re: Major DNS vulnerability announced  [CVE Question]
 Content-Type: text/plain; charset=utf-8
 
-* Eugene Teo:
+Steven M. Christey schrieb:
+> On Tue, 8 Jul 2008, security curmudgeon wrote:
+> 
+>> Microsoft has:
+>> DNS Insufficient Socket Entropy Vulnerability - CVE-2008-1447
+>> DNS Cache Poisoning Vulnerability - CVE-2008-1454
+>>
+>> Cisco has:
+>> CVE-2008-1447
+>>
+>> Question: Is CVE going to keep those two identifiers for the fundamental
+>> issues, and load them up with affected vendors?
+> 
+> Based on my current read of things (perhaps faulty, and definitely without
+> all the relevant details), CVE-2008-1447 is for a fundamental design
+> problem with DNS itself, so it applies to all implementations (or "most,"
+> according to CERT... I'm afraid to ask the followup question).
+> 
+> CVE runs into this kind of challenge a couple times a year.  Usually it's
+> for PROTOS-style analyses that find tons of issues in tons of
+> implementations, where there are so many complications (and often
+> insufficient details) that only a couple CVE's are used to identify them
+> all.  However, when it comes to protocol design issues, it's not always
+> clear what to do.
+> 
+> In this case, there's also the practical implication that the same CVE is
+> already being used for BIND, MS, and Cisco.  So even if we realize that
+> splitting into separate ID's would be technically correct, doing so would
+> probably cause more headaches than it solves.  (Although as Mark Cox
+> mentioned to me, CVSS scoring might be more problematic since we have
+> multiple products with the same CVE.)
+> 
+> Unfortunately, these are limitations of CVE, especially early in the
+> disclosure process.
 
-> Actually, I'm not sure. I'm checking with my colleagues who may be more
-> familiar with the implementation of net_random/random32() routine.
+Steven,
 
-Gosh, I must be missing something.  This generator appears to be linear
-(but the reduction to the available port range is not).
+what you describe looks like a problem how to assign figures - should the
+CVE name be assigned to a vulnerability (of a concept or something), or to
+a particular implementation?
 
-The comment is pretty clear, too:
+There are sometimes mitigating factors for certain implementations, such as
+distribution-specific compiler fortifications of the code, the pertinence
+of particular implementations or something. Would you want to assign
+individual CVE names? I doubt that, both from reading between your lines
+and from what I'd see as useful. IMO, a proliferation of CVE names for
+related vulnerabilities helps no-one.
 
- *      A 32 bit pseudo-random number is generated using a fast
- *      algorithm suitable for simulation. This algorithm is NOT
- *      considered safe for cryptographic use.
+I think what may make sense is to have a vulnerability-specific CVE name as
+an umbrella (and you seem to be saying that this is the easier way to solve
+the issue), even if different implementations show different susceptibility
+- which might make a point for providing implementation-specific CVSS. The
+latter may still explode in our faces.
 
-I haven't written an exploit because I'm not sure how to bypass the
-modulo operation.  The modulus is 28233 = 3 * 3 * 3137 by default, so
-it's not obvious to me how to recover the internal status without 2**51
-effort.
+So you might go:
+
+CVE-2008-1447   (1)
+   Microsoft Windows $VERSION_SET(): CVSS vector foo=2/blah=4   (2)
+   Bind $VERSION:                    CVSS vector foo=3/blah=3   (2)
+
+where (1) is the CVE "umbrella" and (2) are implementation-specific CVSS
+variations; but you probably don't want to go into more detailed variations
+like (I'm rolling dice for numbers here and am exaggerating)
+
+   Bind VERSION 9.4.3.7.patch123 on Solaris 10 FCS
+   Bind VERSION 9.4.3.7.patch654 on FreeBSD 7.0-STABLE checked out at full
+moon when run in a jail on IP 10.9.8.7 and the administrator's maternal
+grandpa passed away on a Wednesday
+
+I've personally always seen the CVE as a "chance of vulnerability"; how
+severe it is in MY installation is up to the implementation's vendor and my
+system administrator to decide (including misjudgments if $SOME_VENDOR
+wants to forfeit user trust, which isn't too prevalent in OSS) and often
+enough configuration dependent if the problematic code was in a certain
+branch of the code.
+
+If this concept is somehow viable, it should probably be refined and be
+based on an empirical study of problem cases that CVE has faced so far, and
+some more concept work.
+
+HTH
+
+-- 
+Matthias Andree
