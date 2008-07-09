@@ -1,28 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/29/2
-Message-ID: <20081029102236.0f77cfcf@redhat.com>
-Date: Wed, 29 Oct 2008 10:22:36 +0100
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/09/7
+Message-ID: <0807091431360.14641@mjc.redhat.com>
+Date: Wed, 9 Jul 2008 14:36:10 +0100 (BST)
+From: Mark J Cox <mjc@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request - libgadu
+Subject: Re: DNS vulnerability: other relevant software
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 28 Oct 2008 11:23:56 +0100 Tomas Hoger <thoger@...hat.com>
-wrote:
+> Additionally, Debian has noted (DSA 1605-1) that the GNU libc stub
+> resolver could benefit from random query source ports as well, but
+> no patches are currently available to implement this:
 
-> New upstream libgadu version 1.8.2 is marked as security update and
-> seems to fix a buffer over-read flaw:
-> 
-> http://toxygen.net/libgadu/releases/1.8.2.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=468830
-> https://admin.fedoraproject.org/updates/libgadu-1.8.2-1.fc9
+Note that GNU libc stub resolver when used with a recent kernel (2.6.24+) 
+will give you random UDP source ports on each request because of this 
+Linux commit:
 
-Just for the future reference:
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=32c1da70810017a98aa6c431a5494a302b6b9a30
 
-CVE-2008-4776:
-libgadu before 1.8.2 allows remote servers to cause a denial of
-service (crash) via a contact description with a large length, which
-triggers a buffer over-read.
+Vendors may with to consider backporting that kernel patch as an effective 
+mitigation without requiring glibc changes (and with the advantage of 
+being able to be have a customized range using ip_local_port_range etc)
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+Cheers, Mark
