@@ -1,30 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/14/10
-Message-ID: <20080514170558.GA19481@ngolde.de>
-Date: Wed, 14 May 2008 19:05:58 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/09/1
+Message-ID: <487405A6.5030406@freethemallocs.com>
+Date: Tue, 08 Jul 2008 16:26:14 -0800
+From: Jonathan Smith <smithj@...ethemallocs.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: uudeview
+Subject: Re: Major DNS vulnerability announced  [CVE Question]
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Nico Golde <oss-security+ml@...lde.de> [2008-05-13 21:39]:
-> can I get a CVE id for uudeview[0]?
-> 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=480972
-> 
-> It makes use of tempnam which is known to be insecure to 
-> generate temporary files.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Looks like CAN-2004-2265 was reintroduced, have a look at:
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=320541
+Steven M. Christey wrote:
+> By the way, I'm treating Microsoft's "DNS Cache Poisoning Vulnerability"
+> (CVE-2008-1454) as something that's Microsoft-specific, pending any
+> further public details.  The bulletin doesn't seem to say anything about
+> it being a general design problem.
 
-Same issue, rewritten code.
+BIND's advisory sounds suspiciously similar (indeed, until you sent this
+email, I didn't even consider that they were different).
 
-Cheers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+http://ftp.isc.org/isc/bind9/9.5.1b1/9.5.1b1 says "The method used makes
+it harder to spoof answers to a resolver by expanding the range of UDP
+ports from which queries are sent by the nameserver, thereby increasing
+the variability of parameters in outgoing queries."
 
-Content of type "application/pgp-signature" skipped
+My reading of the above is that since a caching nameserver would
+obviously cache responses received, spoofing an answer to a query is a
+cache poisoning attack.
+
+Note how similar this is to
+http://www.microsoft.com/technet/security/bulletin/ms08-037.mspx. "The
+security update addresses the vulnerabilities by... using random sockets
+for UDP queries..."
+
+But, really, I don't care. This mailing list is for FOSS software, and I
+doubt Microsoft's DNS server qualifies ;-)
+
+	smithj
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEAREIAAYFAkh0BaYACgkQCG91qXPaRel2owCePCG6ladJ+Jp3uHEgqQebEe79
+2pcAnizEmlO1LSAsGCiKmWoHhQBswVfC
+=3wnE
+-----END PGP SIGNATURE-----
