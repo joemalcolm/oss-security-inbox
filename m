@@ -1,37 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/17/2
-Message-ID: <Pine.GSO.4.51.0812162012070.5724@faron.mitre.org>
-Date: Tue, 16 Dec 2008 20:12:13 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security <oss-security@...ts.openwall.com>, jlieskov@...hat.com
-Subject: Re: CVE Request - rsyslog ($allowedSender issue repost + imudp DoS)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/09/9
+Message-Id: <200807100050.45264.steffen.joeris@skolelinux.de>
+Date: Thu, 10 Jul 2008 00:50:44 +1000
+From: Steffen Joeris <steffen.joeris@...lelinux.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE id request: libavformat
 Content-Type: text/plain; charset=utf-8
 
+Hi
 
-======================================================
-Name: CVE-2008-5617
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5617
-Reference: CONFIRM:http://www.rsyslog.com/Article322.phtml
-Reference: CONFIRM:http://www.rsyslog.com/Topic4.phtml
-Reference: SECUNIA:32857
-Reference: URL:http://secunia.com/advisories/32857
+There is a possible DoS in libavformat.
 
-The ACL handling in rsyslog 3.12.1 to 3.20.0, 4.1.0, and 4.1.1 does
-not follow $AllowedSender directive, which allows remote attackers to
-bypass intended access restrictions and spoof log messages or create a
-large number of spurious messages.
+mplayer bugreport:
+https://roundup.mplayerhq.hu/roundup/ffmpeg/issue311
 
+The quote from the bugreport:
+This has audio sectors mixed in with video sectors, so the check at 
+psxstr.c:319 copies them onto the end of the video packet, going past 
+the end of the buffer.
 
-======================================================
-Name: CVE-2008-5618
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5618
-Reference: CONFIRM:http://www.rsyslog.com/Topic4.phtml
+Upstream patch:
+http://svn.mplayerhq.hu/ffmpeg/trunk/libavformat/psxstr.c?r1=13993&r2=13992&pathrev=13993
 
-imudp in rsyslog 4.x before 4.1.2, 3.21 before 3.21.9 beta, and 3.20
-before 3.20.2 generates a message even when it is sent by an
-unauthorized sender, which allows remote attackers to cause a denial
-of service (disk consumption) via a large number of spurious messages.
+Debian bugreport:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=489965
 
+Could I get a CVE id for this?
 
+Cheers
+Steffen
+
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
