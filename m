@@ -1,26 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/13/4
-Message-ID: <87myklr529.fsf@mid.deneb.enyo.de>
-Date: Sun, 13 Jul 2008 20:51:10 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/09/10
+Message-ID: <878wwbf1bb.fsf@mid.deneb.enyo.de>
+Date: Wed, 09 Jul 2008 18:51:36 +0200
 From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: DNS vulnerability: other relevant software
+Subject: CVE request: PowerDNS recursor source port randomization
 Content-Type: text/plain; charset=utf-8
 
-* Bernhard R. Link:
+3.1.5 did not use the strong PRNG for source port selection.
+References:
 
-> if there are many queries, I think attacking only gets harder, because
-> guessing the order of requests gets harder to predict, adding more
-> variables.
+<http://doc.powerdns.com/changelog.html#CHANGELOG-RECURSOR-3-1-6>
+<http://wiki.powerdns.com/cgi-bin/trac.fcgi/changeset/1179>
 
-Right.
-
-> I'm also looking forward to this. I was under the impression that is was
-> common knowledg that dns is simply insecure, everyone trusting on it is
-> insane, and security issues meaning it is easier to hijack than it
-> should be (like dns servers accepting answers for things they never
-> asked for and things like that).
-
-Online banking security mainly relies on the integrity of DNS and
-routing.  (Bert's DNS forgery resilience draft actually covers this, and
-I think he's right.)
+Somehow this fell through the cracks. 8-(
