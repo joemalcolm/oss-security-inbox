@@ -1,24 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/27/11
-Message-Id: <1206659386.4858.92.camel@localhost.localdomain>
-Date: Fri, 28 Mar 2008 00:09:46 +0100
-From: Lubomir Kundrak <lkundrak@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/09/8
+Message-ID: <20080709144854.GA28399@ngolde.de>
+Date: Wed, 9 Jul 2008 16:48:54 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: using oss-security references in CVE
+Subject: CVE id request: projectl
 Content-Type: text/plain; charset=utf-8
 
+Hi,
+the projectl game seems to be vulnerable to a symlink 
+attack. It writes its preferences file to the current 
+working directory to a hardcoded file name and following 
+symlinks when doing this.
 
-On Thu, 2008-03-27 at 18:59 -0400, Steven M. Christey wrote:
-> All,
-> 
-> In CVE, we try to provide "provenance" for every detail that makes its way
-> into the description.  Issues like rxvt and CenterIM have some details
-> that are only publicly documented in oss-security, and I would like to add
-> these as references.
+http://bugs.debian.org/489988
 
-I agree. There shouldn't really be things like more public and less
-public places to share security-related information.
+Can I get a CVE identifier for this?
+
+Thanks!
+Nico
 
 -- 
-Lubomir Kundrak (Red Hat Security Response Team)
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
+Content of type "application/pgp-signature" skipped
