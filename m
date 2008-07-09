@@ -1,31 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/18/4
-Message-ID: <Pine.GSO.4.51.0803181655070.5905@faron.mitre.org>
-Date: Tue, 18 Mar 2008 16:55:16 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Josh Bressers <bressers@...hat.com>
-cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: bzip2 CERT-FI: 20469
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/09/5
+Message-ID: <8763rfns1q.fsf@mid.deneb.enyo.de>
+Date: Wed, 09 Jul 2008 14:46:57 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: Major DNS vulnerability announced  [CVE Question]
 Content-Type: text/plain; charset=utf-8
 
+* Steven M. Christey:
 
+> Based on my current read of things (perhaps faulty, and definitely without
+> all the relevant details), CVE-2008-1447 is for a fundamental design
+> problem with DNS itself, so it applies to all implementations (or "most,"
+> according to CERT... I'm afraid to ask the followup question).
 
-======================================================
-Name: CVE-2008-1372
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1372
-Reference: MISC:http://www.cert.fi/haavoittuvuudet/joint-advisory-archive-formats.html
-Reference: CONFIRM:http://bzip.org/
-Reference: CONFIRM:https://bugs.gentoo.org/attachment.cgi?id=146488&action=view
-Reference: CERT-VN:VU#813451
-Reference: URL:http://www.kb.cert.org/vuls/id/813451
-Reference: BID:28286
-Reference: URL:http://www.securityfocus.com/bid/28286
-Reference: FRSIRT:ADV-2008-0915
-Reference: URL:http://www.frsirt.com/english/advisories/2008/0915
+I guess you should label this as the "workaround for the Kaminsky DNS
+thing" for now.  Source port randomization does not actually fix
+anything.  It just shifts the statistics a bit (enough to be comfortable
+with for the coming months/weeks, but surely not in the long term).
 
-bzlib.c in bzip2 before 1.0.5 allows user-assisted remote attackers to
-cause a denial of service (crash) via a crafted file that triggers a
-buffer over-read, as demonstrated by the PROTOS GENOME test suite.
-
-
+When the actual attack vectors become public knowledge, it might make
+sense to split the CVE along them because some of them can be addressed
+by code changes, and some are a bit more difficult to protect against.
+In short, this has "DNSSEC" written all over it.
