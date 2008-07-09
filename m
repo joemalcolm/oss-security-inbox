@@ -1,69 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/31/2
-Message-ID: <20080731150859.GJ10031@fuse.inversepath.com>
-Date: Thu, 31 Jul 2008 15:08:59 +0000
-From: Andrea Barisani <lcars@...rt.org>
-To: ocert-announce@...ts.ocert.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: [oCERT-2008-009] libxslt heap overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/09/2
+Message-ID: <20080709010806.GE23625@yuggoth.org>
+Date: Wed, 9 Jul 2008 01:08:07 +0000
+From: The Fungi <fungi@...goth.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Major DNS vulnerability announced [CVE Question]
 Content-Type: text/plain; charset=utf-8
 
+On Tue, Jul 08, 2008 at 04:26:14PM -0800, Jonathan Smith wrote:
+> BIND's advisory sounds suspiciously similar (indeed, until you
+> sent this email, I didn't even consider that they were different).
+[...]
 
-2008/07/31 #2008-009 libxslt heap overflow
-
-Description:
-
-The libexslt library bundled with libxslt is affected by a heap-based buffer
-overflow which can lead to arbitrary code execution.
-
-The vulnerability is present in the rc4 encryption/decryption functions. An
-arbitrary length string, passed as an argument in the XSL input, is
-incorrectly copied over a padding variable which is previously allocated with
-a fixed size of 128bit (RC4_KEY_LENGTH).
-
-Aside from the heap overflow other bugs affect the code, the length of the
-plaintext string argument is used for computing the key length rather than
-the actual key and the zero-padding of the key is incorrectly computed.
-
-A simple XML file with excessively long input can be crafted for triggering
-the heap overflow.
-
-The following patch fixes the issue:
-http://www.ocert.org/patches/exslt_crypt.patch
-
-Affected version:
-
-libxslt >= 1.1.8, <= 1.1.24
-
-Fixed version:
-
-libxslt, N/A
-
-Credit: vulnerability report and PoC code received from Chris Evans
-<scarybeasts [at] gmail [dot] com>, Google Security Team.
-
-CVE: CVE-2008-2935
-
-Timeline:
-2008-07-03: vulnerability report received
-2008-07-08: contacted libxslt maintainer
-2008-07-10: maintainer provides patch
-2008-07-17: patch fixes finalized per reporter feedback
-2008-07-18: contacted affected vendors
-2008-07-31: advisory release
-
-References:
-http://www.scary.beasts.org/security/CESA-2008-003.html
-
-Links:
-http://xmlsoft.org/XSLT
-
-Permalink:
-http://www.ocert.org/advisories/ocert-2008-009.html
-
+My understanding is that this was a coordinated/embargoed patch
+announcement date among several vendors, including both ISC and
+Microsoft, the reasons for which will become more apparent when Dan
+presents at Black Hat next month.
 -- 
-Andrea Barisani |                Founder & Project Coordinator
-          oCERT | Open Source Computer Emergency Response Team
-
-<lcars@...rt.org>                         http://www.ocert.org
- 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
-        "Pluralitas non est ponenda sine necessitate"
+{ IRL(Jeremy_Stanley); PGP(9E8DFF2E4F5995F8FEADDC5829ABF7441FB84657);
+SMTP(fungi@...goth.org); IRC(fungi@....yuggoth.org#ccl); ICQ(114362511);
+AIM(dreadazathoth); YAHOO(crawlingchaoslabs); FINGER(fungi@...goth.org);
+MUD(fungi@...arsis.mudpy.org:6669); WWW(http://fungi.yuggoth.org/); }
