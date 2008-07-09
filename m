@@ -1,17 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/21/5
-Message-ID: <20081021093131.GA13709@suse.de>
-Date: Tue, 21 Oct 2008 11:31:31 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: coley@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: CVE Request: Opera 9.60 with security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/09/11
+Message-Id: <200807091921.05537.rbu@gentoo.org>
+Date: Wed, 9 Jul 2008 19:21:03 +0200
+From: Robert Buchholz <rbu@...too.org>
+To: oss-security@...ts.openwall.com
+Cc: Matthias Geerdsen <vorlon@...too.org>
+Subject: Re: DNS vulnerability: other relevant software
 Content-Type: text/plain; charset=utf-8
 
-Hi Steven,
+On Wednesday 09 July 2008, Matthias Geerdsen wrote:
+> - pdnsd [4]:
+> 	no info yet
 
-http://www.opera.com/docs/changelogs/linux/960/#sec
+Quoting from http://members.home.nl/p.a.rombouts/pdnsd/doc.html :
 
-It had some security fixes, were there CVE ids assigned already?
+query_port_start=number;
+...
+In case a query start port is given pdnsd uses this port as the first 
+port of a specified port range (see query_port_end) used for queries. 
+pdnsd will try to randomly select a free port from this range as local 
+port for the query.
+...
 
-Ciao, Marcus
+The sample configuration file that is shipped does not have this option 
+set, the default value of this is "0". I can't currently test this on a 
+kernel that does not randomize by default, so this domaind supports 
+randomization, and *seems* to have it enabled by default.
+
+
+Robert
+
+Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
