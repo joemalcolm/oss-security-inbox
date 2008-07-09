@@ -1,18 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/21/5
-Message-ID: <Pine.GSO.4.51.0805210200300.8317@faron.mitre.org>
-Date: Wed, 21 May 2008 02:00:57 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/09/12
+Message-ID: <87d4lnapu9.fsf@mid.deneb.enyo.de>
+Date: Wed, 09 Jul 2008 20:13:02 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: mtr
+Subject: Re: DNS vulnerability: other relevant software
 Content-Type: text/plain; charset=utf-8
 
+* Mark J. Cox:
 
-On Tue, 20 May 2008, Jonathan Smith wrote:
+>> Additionally, Debian has noted (DSA 1605-1) that the GNU libc stub
+>> resolver could benefit from random query source ports as well, but
+>> no patches are currently available to implement this:
+>
+> Note that GNU libc stub resolver when used with a recent kernel
+> (2.6.24+) will give you random UDP source ports on each request
+> because of this Linux commit:
+>
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=32c1da70810017a98aa6c431a5494a302b6b9a30
 
-> http://seclists.org/fulldisclosure/2008/May/0488.html has all the details.
+Is net_random() cryptographically secure?  The paper referenced in the
+source doesn't talk about this.
 
-Use CVE-2008-2357 - it will be filled in later.
+> Vendors may with to consider backporting that kernel patch as an
+> effective mitigation without requiring glibc changes (and with the
+> advantage of being able to be have a customized range using
+> ip_local_port_range etc)
 
-- Steve
+This still leaves the transaction ID generation to deal with.  It's
+rdtsc on amd64 (don't know if this is good enough), but
+gettimeofday-based on some other architectures.
