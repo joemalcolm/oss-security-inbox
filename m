@@ -1,24 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/18/4
-Message-ID: <20080518122652.GA11407@ngolde.de>
-Date: Sun, 18 May 2008 14:26:52 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/09/4
+Message-ID: <4874A9E5.6040601@gentoo.org>
+Date: Wed, 09 Jul 2008 14:07:01 +0200
+From: Matthias Geerdsen <vorlon@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: apache2
+Subject: DNS vulnerability: other relevant software
 Content-Type: text/plain; charset=utf-8
 
 Hi,
-can I get a CVE id for:
-https://issues.apache.org/bugzilla/show_bug.cgi?id=44975
 
-When used with zlib compression and mod_ssl it is possible
-to use a memleak to cause a denial of service.
+looking at some of the DNS related software in our tree, I thought it 
+might be nice to keep track of any findings of affected and unaffected 
+packages...
+So here is a start:
 
-Kind regards
-Nico
+- posadis [1]:
+	has not seen an update since dec 2004; I could not find 	any info on 
+port randomization etc., but considering the age it might probably have 
+other issues too.
+
+- dnsmasq [2]:
+	no port randomization [3]
+
+- pdnsd [4]:
+	no info yet
+
+- MaraDNS [5]:
+	"MaraDNS uses a strong secure RNG for both the query (16 bits of 
+entropy) and the source port of the query (12 bits of entropy). This 
+makes spoofing replies to a MaraDNS server more difficult, since the 
+attacker has only a one in 250 million chance that a given spoofed reply 
+will be considered valid." [6]
+
+- MyDNS [7]:
+	"MyDNS does not include recursive name service, nor a resolver library."
+	also this thread [8]
+
+- DNRD [9]: "Uses random source port and random query ID's to prevent 
+cache poisoning."
+
+Matthias
+
+
+
+[1] <http://posadis.sourceforge.net/>
+[2] <http://www.thekelleys.org.uk/dnsmasq/doc>
+[3] 
+<http://lists.thekelleys.org.uk/pipermail/dnsmasq-discuss/2008q3/002147.html>
+[4] <http://www.phys.uu.nl/~rombouts/pdnsd/>
+[5] <http://www.maradns.org/>
+[6] <http://www.maradns.org/tutorial/man.maradns.html>
+[7] <http://mydns.bboy.net/>
+[8] 
+<http://sourceforge.net/mailarchive/forum.php?thread_name=714ef0060807081802h4e52a70ak4f52e06c11e2abfe%40mail.gmail.com&forum_name=mydns-users>
+[9] <http://dnrd.sourceforge.net/>
+
 
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+Matthias Geerdsen (vorlon)
 
-Content of type "application/pgp-signature" skipped
+Gentoo Linux Security Team
+http://security.gentoo.org
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (190 bytes)
