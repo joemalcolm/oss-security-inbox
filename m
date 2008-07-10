@@ -1,63 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/11/5
-Message-Id: <200806112040.53640.turkay.eren@gmail.com>
-Date: Wed, 11 Jun 2008 20:40:53 +0300
-From: Eren Türkay <turkay.eren@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/10/5
+Message-ID: <4875DA0D.6090000@redhat.com>
+Date: Thu, 10 Jul 2008 17:44:45 +0800
+From: Eugene Teo <eteo@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: nasm off-by-one
+Subject: Re: DNS vulnerability: other relevant software
 Content-Type: text/plain; charset=utf-8
 
-On 11 Jun 2008 Wed 18:48:14 Nico Golde wrote:
-> There is an off-by-one in the ppscan() function which is
-> used to preprocess files.
->
-> Details:
-> https://sourceforge.net/tracker/?func=detail&atid=106208&aid=1942146&group_
->id=6208
->
-> Can I get a CVE id for this one?
+Eugene Teo wrote:
+> Eugene Teo wrote:
+>> Florian Weimer wrote:
+>>> * Mark J. Cox:
+>>>
+>>>>> Additionally, Debian has noted (DSA 1605-1) that the GNU libc stub
+>>>>> resolver could benefit from random query source ports as well, but
+>>>>> no patches are currently available to implement this:
+>>>> Note that GNU libc stub resolver when used with a recent kernel
+>>>> (2.6.24+) will give you random UDP source ports on each request
+>>>> because of this Linux commit:
+>>>>
+>>>> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=32c1da70810017a98aa6c431a5494a302b6b9a30
+>>> Is net_random() cryptographically secure?  The paper referenced in the
+>>> source doesn't talk about this.
+>> It isn't. It's actually a 32-bit pseudo-random number generator AFAIK.
 
-Secunia [0] implies that this security flaw also ocurrs in 0.x. I looked at 
-the code in 0.98.39 [1] tarball to backport vendor-supported patch but it 
-seems that 0.x is not vulnerable.
+So I spoke to Dave Miller. He said that it is not "cryptographically
+secure" to his knowledge, but in his opinion, it is good enough for port
+randomisation.
 
-The control of TOKEN_ID in 2.03 [2] is blow;
-
-    if (tline->type == TOK_ID) {
-        p = tokval->t_charptr = tline->text;
-        if (p[0] == '$') {
-            tokval->t_charptr++;
-            return tokval->t_type = TOKEN_ID;
-        }
-
-        for (r = p, s = ourcopy; *r; r++) {
-            if (r >= p+MAX_KEYWORD)
-                return tokval->t_type = TOKEN_ID; /* Not a keyword */
-            *s++ = tolower(*r);
-        }
-        *s = '\0';
-        return nasm_token_hash(ourcopy, tokval);
-    }
-
-While 0.98.39 has;
-
-    if (tline->type == TOK_ID) {
-        tokval->t_charptr = tline->text;
-        if (tline->text[0] == '$') {
-            tokval->t_charptr++;
-            return tokval->t_type = TOKEN_ID;
-        }
-
-        if (!nasm_stricmp(tline->text, "seg"))
-            return tokval->t_type = TOKEN_SEG;
-
-        return tokval->t_type = TOKEN_ID;
-    }
-
-There is only control for "seq" value, and after it, it just returns TOKEN_ID. 
-Could someone shed light on this issue, I'm not completely sure whether this 
-occurs in 0.x, too.
-
-[0] http://secunia.com/advisories/30594/
-[1] http://ovh.dl.sourceforge.net/sourceforge/nasm/nasm-0.98.39.tar.bz2
-[2] ftp://ftp.zytor.com/pub/nasm/releasebuilds/2.03/nasm-2.03.tar.bz2
+Thanks, Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
