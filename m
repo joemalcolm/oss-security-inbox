@@ -1,83 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/18/5
-Message-ID: <20080518150934.GU12850@outflux.net>
-Date: Sun, 18 May 2008 08:09:34 -0700
-From: Kees Cook <kees@...ntu.com>
-To: Robert Buchholz <rbu@...too.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: OpenSSH key blacklisting
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/10/7
+Message-ID: <20080710185546.5289902b@redhat.com>
+Date: Thu, 10 Jul 2008 18:55:46 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com, Jonathan Smith <smithj@...ethemallocs.com>
+Cc: coley@...us.mitre.org, Bram Moolenaar <Bram@...lenaar.net>, "Charles E Campbell, Jr" <drchip@...pbellfamily.biz>, Jan Minar <rdancer@...ncer.org>
+Subject: Re: Re: More arbitrary code executions in Netrw version 125, Vim 7.2a.10
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi Jonathan!
 
-On Sun, May 18, 2008 at 01:20:59AM +0200, Robert Buchholz wrote:
-> On Saturday, 17. May 2008, Solar Designer wrote:
-> > Besides the patch, it is equally important to agree on what keys to have
-> > blacklisted, and to have the blacklist ready.  I think we should have
-> > "source" blacklists, which are per-{arch,key}-type and have 32 hex chars
-> > per entry (no attempt at size reduction yet), so we'll be able to
-> > (re)build the binary files from them.
-> >
-> > Right now, there doesn't appear to be a consensus on what key {type,
-> > size} combinations to have in the blacklist yet.  So let's discuss this.
+On Tue, 8 Jul 2008 13:53:48 -0400 (EDT) "Steven M. Christey"
+<coley@...us.mitre.org> wrote:
+
+> On Mon, 7 Jul 2008, Jonathan Smith wrote:
 > 
-> I like the Debian/Ubuntu idea of being able to add/remove blacklists 
-> easily. Personally, I generated an incomplete (due to lack of hardware) 
-> set of keys for RSA 1024, 2048, 4096, and DSA 1024 keys, since that is 
-> what I have seen in the wild.
-> It might be argued that since Sep. 2006, few people generated 1024 bit RSA 
-> keys, but I do not know exactly when "ssh-keygen"'s default was changed.
+> > Steve, could we get CVEs assigned, please? I'd imagine we'd need
+> > three; one for the tarplugin issue, one for the zipplugin, and one
+> > for the netrw issues (which are similar enough to probably justify
+> > lumping them together).
 > 
-> I'm putting Kees in CC since I hope he can help with the unshortened 
-> fingerprint list (at least via private mail).
-
-Thanks for the CC.  I'm on oss-security, but rather behind on all my
-lists presently.  ;)
-
-The thought was to get DSA1024 and RSA2048 out asap because those were
-the default settings through the vulnerable range of time.  rsa2048 was
-the ssh-keygen default the entire time, and if people still in the habit
-of using "-t dsa" they'd get a dsa1024.
-
-I just published full lists for rsa1024 to Debian[1], and I'm currently
-waiting for rsa4096 to finish on be32 (it will be a few more days -- if
-I have time today I'm going to hunt down a few other ppc boxes to help
-out).
-
-I'd like to get rsa8192 as well.  I've seen dsa2048, but not in the
-time-frame where it's an issue.
-
-> > As to arch types, I've been told that Debian only supports le32, le64,
-> > and be32 userlands, so we can safely omit be64.
-
-That's correct.  Same is true of Ubuntu.
-
-> > The PID range can be 2 to 32767.  PID 1 is init.
-> > /proc/sys/kernel/pid_max defaults to 32768, but the highest PID value
-> > specified in there is skipped, at least by current 2.6 kernels (we may
-> > want to double-check this on older kernels).  Of course, this does not
-> > cover custom configs and patched kernels (e.g., some PID randomization
-> > patch could alter the maximum PID value).
+> CVE-2008-3074 - tarplugin
+> CVE-2008-3075 - zipplugin
+> CVE-2008-3076 - netrw issues
 > 
-> Whoever changed his pid_max to another value, and generated the key after 
-> running some 33000 processes, would be both lucky (because his key is 
-> unlikeley to be in the attacker's keychain), and unlucky (since the key is 
-> not blacklisted). I see little point in supporting other than the default 
-> PIDs.
+> These will be filled in later.
 
-I had originally generated pid 0-32768 just because I had fired it off
-quickly and was busy with other things.  Rather than cleaning up the few
-useless entries after the fact, I just threw them in with the others.
-Now that things have settled down a little I plan to drop the hashes
-for pid 0 and pid 32768.  While pid 1 is insanely unlikely, I don't
-want to rule out some kind of freaky embedded device that managed to do
-keygen as pid 1.  I lack imagination to think of a way it could happen,
-but I'm not opposed to adding 1 extra hash per arch, per type/size.
+Are you sure 3 new CVEs are needed for this second rdancer advisory?
+Advisory text itself only speaks of netrw issues and it's not quite
+obvious to me why zip and tar tests are included in the test suite.
+Maybe just to point out that those issues are still unfixed.
 
--Kees
+Moreover, if you diff zipplugin directories in vulnerablevim.tar.bz2
+and vulnerablevim-netrw.tar.bz2, you will see this test did not change
+at all between the two test suites.  So CVE-2008-3075 should already
+be covered by previous CVE-2008-2712.
 
-[1] http://packages.qa.debian.org/o/openssh-blacklist/news/20080517T222846Z.html
+tarplugin test was updated since the first test suite to use different
+payload.  I'm not really sure if it is the same issue or not, but the
+new exploit is blocked by the previously proposed Jan's patch.  So it
+may be the same issue as described in the first advisory.  Btw,
+CVE-2008-2712 description does not mention tar.vim issue.  It is
+described in 3.4.2.3, but its test does not seem to be run when doing
+make test for the top-most Makefile in the first test suite.
+
+Jonathan, did new netrw tests work for you?  With which vim version?
+They all failed for me with vim 7.1.245 / netrw 109.
+
+Adding also Jan to CC, in case he is interested in tossing in some
+comments.  For some context for discussion, you can see:
+
+  http://marc.info/?t=121541947300001&r=1&w=4
+
+Jan, feel free to ignore this discussion if you are not interested,
+though your comments are welcome.
+
+Thanks!
 
 -- 
-Kees Cook
-Ubuntu Security Team
+Tomas Hoger
