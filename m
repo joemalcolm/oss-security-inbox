@@ -1,46 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/05/4
-Message-ID: <20080305102227.GA32121@openwall.com>
-Date: Wed, 5 Mar 2008 13:22:27 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/10/1
+Message-ID: <48759BD2.8070802@redhat.com>
+Date: Thu, 10 Jul 2008 13:19:14 +0800
+From: Eugene Teo <eteo@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: wiki: Debian, auditing tools, vendor-sec
+Subject: Re: DNS vulnerability: other relevant software
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Mar 05, 2008 at 09:24:32AM +0000, Steve Kemp wrote:
-...
-> # The Debian Security Audit Project.
-> http://www.debian.org/security/audit
+Mark J Cox wrote:
+>> Additionally, Debian has noted (DSA 1605-1) that the GNU libc stub
+>> resolver could benefit from random query source ports as well, but
+>> no patches are currently available to implement this:
+> 
+> Note that GNU libc stub resolver when used with a recent kernel
+> (2.6.24+) will give you random UDP source ports on each request because
+> of this Linux commit:
+> 
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=32c1da70810017a98aa6c431a5494a302b6b9a30
+> 
+> 
+> Vendors may with to consider backporting that kernel patch as an
+> effective mitigation without requiring glibc changes (and with the
+> advantage of being able to be have a customized range using
+> ip_local_port_range etc)
 
-Steve,
+I have backported the kernel patch to apply cleanly to various versions
+of Red Hat Enterprise Linux kernels. Vendors interested in the patch can
+find it at:
 
-Some of the info you have on those pages is also useful for our wiki.
-I've just added links to your Security Auditing Tools and Automated
-Audit Examples pages to:
+https://bugzilla.redhat.com/show_bug.cgi?id=454566
 
-	http://oss-security.openwall.org/wiki/tools
-	http://oss-security.openwall.org/wiki/links
-
-Perhaps brief info on the tools should also be added to our tools page
-directly - maybe you could do that?
-
-Also, I notice that Debian is still not on our vendors page - would you
-add it, please? -
-
-	http://oss-security.openwall.org/wiki/vendors
-
-Debian is already on the distro-patches page, though. :-)
-
-Finally, are you still planning on creating an oss-security wiki page on
-vendor-sec, under the mailinglists namespace?  It could be as simple as
-copying your existing Wikipedia content onto our wiki.  It's just that I
-think it'd be most appropriate for you to do it.  Then others will be
-able to work on that page further, and the Wikipedia page could be based
-on ours.
-
-Thanks,
-
+Thanks, Eugene
 -- 
-Alexander Peslyak <solar at openwall.com>
-GPG key ID: 5B341F15  fp: B3FB 63F4 D7A3 BCCC 6F6E  FC55 A2FC 027C 5B34 1F15
-http://www.openwall.com - bringing security into open computing environments
+Eugene Teo / Red Hat Security Response Team
+
