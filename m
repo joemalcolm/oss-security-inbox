@@ -1,30 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/25/8
-Message-ID: <8763pp7ykw.fsf@mid.deneb.enyo.de>
-Date: Mon, 25 Aug 2008 20:13:03 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/10/3
+Message-Id: <200807100752.08925.hanno@hboeck.de>
+Date: Thu, 10 Jul 2008 07:52:08 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: [vendor-sec] Re: Re: libxml2 denial of service flaw (CVE-2008-3281)
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: multiple drupal issues in < 6.3,5.8
 Content-Type: text/plain; charset=utf-8
 
-* Vincent Danen:
+DRUPAL SA-2008-044
+http://drupal.org/node/280571
 
-> Does anyone know if this affects anything other than librsvg?
+contains xss, csrf, session fixation and sql injection.
 
-It's unclear if struct xmlEntity (especially its external allocation) is
-part of the public API or not.
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
-liferea 1.4.16b has this:
-
-  src/xml.c:                    entity = (xmlEntityPtr)g_new0 (xmlEntity, 1);
-
-PHP 5.2.6 has this:
-
-  ext/dom/dom_iterators.c:61:      ret = (xmlEntityPtr) xmlMalloc(sizeof(xmlEntity));
-  ext/dom/dom_iterators.c:62:      memset(ret, 0, sizeof(xmlEntity));
-
-QT 4.4.0 has this (with an instructive comment in front of it):
-
-  src/3rdparty/webkit/WebCore/dom/XMLTokenizer.cpp:static xmlEntity sharedXHTMLEntity = {
-
-(This is not the result of an exhaustive search.)
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
