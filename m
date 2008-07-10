@@ -1,29 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/18/3
-Message-ID: <Pine.LNX.4.64.0802181026180.27709@wotan.suse.de>
-Date: Mon, 18 Feb 2008 10:28:36 +0100 (CET)
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/10/4
+Message-ID: <4875A771.8080803@redhat.com>
+Date: Thu, 10 Jul 2008 14:08:49 +0800
+From: Eugene Teo <eteo@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: code review CVS
+Subject: Re: DNS vulnerability: other relevant software
 Content-Type: text/plain; charset=utf-8
 
+Eugene Teo wrote:
+> Florian Weimer wrote:
+>> * Mark J. Cox:
+>>
+>>>> Additionally, Debian has noted (DSA 1605-1) that the GNU libc stub
+>>>> resolver could benefit from random query source ports as well, but
+>>>> no patches are currently available to implement this:
+>>> Note that GNU libc stub resolver when used with a recent kernel
+>>> (2.6.24+) will give you random UDP source ports on each request
+>>> because of this Linux commit:
+>>>
+>>> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=32c1da70810017a98aa6c431a5494a302b6b9a30
+>> Is net_random() cryptographically secure?  The paper referenced in the
+>> source doesn't talk about this.
+> 
+> It isn't. It's actually a 32-bit pseudo-random number generator AFAIK.
 
-Hi,
+Actually, I'm not sure. I'm checking with my colleagues who may be more
+familiar with the implementation of net_random/random32() routine.
 
->From my view it would be helpful to have some forum/CVS or whatever
-where code reviewers can submit the code they already audited along
-with remarks/exploits/patches etc.
-So everyone can match this against the version of the OSS project.
-In an ideal case their latest released version equals the
-version in the review CVS. It saves also the time to review
-files again which didnt change during versions.
-
-Sebastian
-
--- 
-~
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-~ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
-
+Thanks, Eugene
