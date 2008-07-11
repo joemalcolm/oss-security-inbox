@@ -1,129 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/03/8
-Message-ID: <4845A94C.5080502@gentoo.org>
-Date: Tue, 03 Jun 2008 22:27:56 +0200
-From: Pierre-Yves Rofes <py@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/11/4
+Message-ID: <20080711144508.GD19401@ngolde.de>
+Date: Fri, 11 Jul 2008 16:45:08 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: tool announcements
+Subject: Re: CVE request: moodle xss in < 1.8.5
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-Solar Designer a écrit :
-
-> 
-> On Mon, Jun 02, 2008 at 02:41:48PM -0800, Jonathan Smith wrote:
->> I wholeheartedly agree.
-> 
-> Thank you for commenting on this.  Your opinion is appreciated and may
-> affect our moderation policy.  At this point, I am not sure if it is the
-> prevailing opinion of this group, though.
-
-FWIW, I tend to agree too. Many of us are already subscribed to
-full-disclosure/bugtraq because we send our advisories there, so it
-seems a bit pointless.
-
-> 
->> Announcements of this kind belong on bugtraq/FD
-> 
-> Maybe.  However, many topics are valid on Bugtraq - not only Open Source
-> ones.  I imagine that someone could be interested in security tool
-> announcements relevant to Open Source software only.  Also, Bugtraq is
-> so large that few of us would dare to bother its readers with
-> announcements of new versions of a tool, even fairly major ones.
-> 
-> As to full-disclosure, we all know that there's a lot of noise on that
-> list. 
-
-That's unfortunate, hopefully it won't happen here if we keep moderating
-it, but I agree with what's said below, we should think about a proper
-policy to detail what's allowed (and encouraged) on the list, and what's
-not.
-
-> Maybe we need to setup a new oss-sectools list, but I'd rather not go
-> for it until we start to receive a substantial number of security tool
-> announcements in here.  This implies that we let those announcements
-> through moderation - or people will stop sending them.  At a later time,
-> I'd start rejecting them with requests to repost to oss-sectools - but
-> this is not an option yet.
-> 
->> or per-software announce lists like nmap-announce.
-> 
-> Indeed, but that does not eliminate the need for a shared list.
-> 
->> I think this list is,
->> or should be, for discussion only. If the post isn't designed to spark
->> discussion (other than "does this belong here" discussion :-) it should
->> be somewhere else.
-> 
-> I mostly agree, but please see above re: "something else".
-> 
-> As to "sparking discussion", it is impossible to know that in advance.
-> Yes, you wrote "designed to ..." - does ending a post with "comments,
-> please?" qualify?  If so, that could be used on any announcement - even
-> on a mostly-PR one.
-> 
-> Also, what about those CVE requests - is a single response, assigning
-> the CVE number, "discussion"?  OK, in some cases people actually have
-> comments.
-
-Looking at the archives, at least half of the topics are CVE requests,
-so maybe we should think about renaming the list "oss-CVEreq" :)
-But personally, I find it very useful, it's also a handy way to keep an
-eye on possible issues before they're on secunia, e.g when a user
-reports a bug on a distro's BTS instead of reporting directly
-to the upstream project.
-
-> 
->> Announcements are intended either for existing end-users or as a PR
->> ploy. Existing users are probably subscribed to the project-specific
->> list (or don't care) and this isn't the place for PR.
-> 
-> Of the existing lists, Bugtraq is probably the place for PR.
-> 
-> However, some tools could be of specific relevance to oss-security
-> members - e.g., source code analysis tools and fuzzers.  Do you agree?
-> Is a moderator supposed to decide whether or not this is the case?
-> 
->> So, was this message, and "SQL_injection detection tool released" held
->> for moderation?
-> 
-> Yes, they were.
-> 
->> If so, why were they approved? Presumably whoever did so
->> has some reason not-yet-mentioned, since the SQL_injection one didn't
->> contain a query about testing and code review.
-> 
-> I was the one to approve both messages.  So far, the only messages that
-> were not approved were spam.
+Hi Hanno,
+* Hanno Böck <hanno@...eck.de> [2008-07-08 13:29]:
+> Am Sonntag 06 Juli 2008 schrieb Nico Golde:
+> > Hi Hanno,
+> >
+> > * Hanno Böck <hanno@...eck.de> [2008-07-06 19:04]:
+> > > http://docs.moodle.org/en/Release_Notes#Moodle_1.8.5
+> > >     *  KSES related XSS security vulnerability fixed
+> >
+> > This should be CVE-2008-1502:
 >
-> I don't regret approving these messages - I think that we're having
-> useful discussion as a result, and I think that it was important for
-> this group's members to be aware of what was coming to the list (except
-> for spam).  Let's say that these two messages are "samples" of content
-> that we might or might not want in here.
-> 
-That's a wise decision, at least now we know what content we're going
-to receive.
+> http://nvd.nist.gov/nvd.cfm?cvename=CVE-2008-1502
+> is about egroupware.
+>
+> I found no cve related to moodle 1.8.4.
 
-> My opinion is that moderators are not supposed to define the list's
-> policy on their own - and we did not (and still do not) have this bit of
-> policy fully defined.  So let's try to take care of that now, or I would
-> not know what to do if more messages like these two arrive to the list.
-> 
+Will be update soon, the new description is:
 
-As said before, I totally agree here.
+"The _bad_protocol_once function in phpgwapi/inc/class.kses.inc.php in
+KSES, as used in eGroupWare before 1.4.003, Moodle before 1.8.5, and
+other products, allows remote attackers to bypass HTML filtering and
+conduct cross-site scripting (XSS) attacks via a string containing
+crafted URL protocols."
 
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-- --
-Pierre-Yves Rofes
-Gentoo Linux Security Team
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.7 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
-
-iD8DBQFIRalLuhJ+ozIKI5gRAhRIAJ90hvNzoAOzUoL/zcyX6aHCpVu7VQCeN888
-xnh/i0rVtkrWE+Rl0nEMpnQ=
-=Zjed
------END PGP SIGNATURE-----
+Content of type "application/pgp-signature" skipped
