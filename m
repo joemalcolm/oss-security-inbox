@@ -1,19 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/27/4
-Message-ID: <20080827132710.GA31091@steve.org.uk>
-Date: Wed, 27 Aug 2008 14:27:10 +0100
-From: Steve Kemp <steve@...ve.org.uk>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/12/4
+Message-ID: <20080712193839.GB20593@ngolde.de>
+Date: Sat, 12 Jul 2008 21:38:39 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: awstats
+Subject: CVE id request: op
 Content-Type: text/plain; charset=utf-8
 
-On Wed Aug 27, 2008 at 15:19:08 +0200, Nico Golde wrote:
-> there is a new XSS issue and one remote code execution (php code)
-> in awstats.
+Hi,
+op, a replacement for sudo that is used to grant access to 
+certain root operations to users suffers of a stack based 
+buffer overflow because of missing bounds check of the 
+XAUTHORITY variable used if op is configured with 
+--enable-xauth and op.conf uses the xauth configuration 
+option. Under a normal installation this tool runs with an 
+effective user id 0 so it is possible to exploit this and 
+get more privileges or execute arbitrary code with root 
+privileges.
 
-  I was scared there for a minute.  This is a bug in "awstats totals"
- not in "awstats".
+Fixed upstream changeset:
+http://swapoff.org/changeset/563
 
-Steve
+Steve, could you assign a CVE id to this?
+
+Kind regards
+Nico
+
 -- 
-http://www.steve.org.uk/
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
