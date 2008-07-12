@@ -1,37 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/20/7
-Message-id: <1203535814.7488.TMDA@linsec.ca>
-Date: Wed, 20 Feb 2008 12:28:44 -0700
-From: Vincent Danen <vdanen@...sec.ca>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/12/3
+Message-ID: <20080712122807.GD1437@severus.strandboge.com>
+Date: Sat, 12 Jul 2008 08:28:07 -0400
+From: Jamie Strandboge <jamie@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: code review CVS
+Cc: coley@...us.mitre.org
+Subject: Re: CVE request for dnsmasq DoS
 Content-Type: text/plain; charset=utf-8
 
-* [2008-02-19 08:35:44 +0100] Sebastian Krahmer wrote:
+On Thu, 03 Jul 2008, Jamie Strandboge wrote:
 
->On Mon, Feb 18, 2008 at 09:00:24AM -0700, Vincent Danen wrote:
->
->I am not sure if a cvs or something like a -AUDITED
->branch would be the right way, since it might not be obvious
->which older versions were reviewed too if new versions are commited.
->Maybe a wiki with patch subdir and link to the reviewed
->CVS version/branch will suffice. Need to play around :)
->On the other hand if such a project grows you can have a complete distro
->you can check out and you always see which parts of a distro or larger project
->are reviewed such as apache w/o certain modules. problem is that
->such partial reviews may stop to compile upon checkout.
+> On Tue, 01 Jul 2008, Steven M. Christey wrote:
+> 
+> > I'm not sure I fully understand Thierry Carrez' comment about the security
+> > implications of this issue.  It seems like an exploit would require a
+> > malicious DHCP server, in which case isn't DHCP service already
+> > compromised?  If so, then a crash of dnsmasq (null dereference?) doesn't
+> > seem to be any worse than the loss of DHCP itself.
+> > 
+> I haven't had time to develop a PoC, but from the dnsmasq 2.26 announce
+> page at [1], a client need only send a crafted renewal request to crash
+> the server. Thierry's comments were only for trying to reproduce the
+> problem and test the patch.
+> 
+(resending as the first one didn't make it to the list)
 
-Hmmm... I'm not sure I'm completely following you here.
+I finally had time to develop a PoC and confirm this on my own. A client
+need only send a DHCPREQUEST for an IP address not on the same network
+as dnsmasq. Eg:
 
-I like the patch idea, however.  A "vendor patch" database of sorts
-would be nice (would save me from hunting from, say, ubuntu packages for
-a patch for something they already fixed, or looking at ubuntu for one,
-and SUSE for another because of version differences).
+1. dnsmasq listening on and giving IP addresses for 192.168.122.0/24
+2. client requests IP address on another network, such as 192.168.0.1
+3. dnsmasq 2.25 (and presumably earlier) crashes
 
-That doesn't really concentrate on *auditing* however, but I could see
-how the two could work well together under one common implementation.
+This can happen in normal operation with roaming users, but can also
+happen with a malicious request. Attached is a script to easily test for
+this (requires python scapy).
+
+Jamie
 
 -- 
-Vincent Danen @ http://linsec.ca/
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
 
-Content of type "application/pgp-signature" skipped
+View attachment "dhcp_request.py" of type "text/x-python" (1928 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (190 bytes)
