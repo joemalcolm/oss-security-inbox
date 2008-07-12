@@ -1,63 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/19/1
-Message-ID: <20080419024233.GB11347@openwall.com>
-Date: Sat, 19 Apr 2008 06:42:33 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/12/5
+Message-ID: <87r69y3h72.fsf@mid.deneb.enyo.de>
+Date: Sat, 12 Jul 2008 23:50:41 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: gcc 4.2 optimizations and integer overflow checks
+Subject: Re: DNS vulnerability: other relevant software
 Content-Type: text/plain; charset=utf-8
 
-I'm sorry for failing to find time to comment on this earlier.
+* Eugene Teo:
 
-On Fri, Apr 18, 2008 at 01:18:32PM +0200, Marcus Meissner wrote:
-> On Thu, Apr 10, 2008 at 02:31:13PM -0400, Steven M. Christey wrote:
-> > My immediate suspicion is that they're not the same, based solely on
-> > affected versions - CVE-2008-1685 has a specific affected version range
-> > because it changed behaviors in 4.2.0.  Maybe that change came out of
-> > followup analysis stemming from CVE-2006-1902.
-> > 
-> > But, I'm not completely sure.  Solar?
-> 
-> They are mostly unrelated, one is about signed integers, while the
-> new one is "pointer + offset" related.
+> Actually, I'm not sure. I'm checking with my colleagues who may be more
+> familiar with the implementation of net_random/random32() routine.
 
-Yes, I am aware of these two gcc non-bugs - one is that the behavior on
-signed integer overflow is undefined, the other is that pointer
-arithmetic is only defined within the object (and one element beyond its
-end).  So this would be two CVEs, if CVEs are to be assigned for things
-like that at all (are they for common application bugs? or for the gcc
-non-bugs?)
+Gosh, I must be missing something.  This generator appears to be linear
+(but the reduction to the available port range is not).
 
-However, the current descriptions and references for CVE-2006-1902 and
-CVE-2008-1685 are very confusing.  Neither appears to be for signed
-integer overflows being undefined.  By the way, this issue was discussed
-on mailing lists in 2002, so I presume that gcc started doing that kind
-of optimizations at about that time.  In fact, I've been fixing some of
-my own older code to use unsigned arithmetic or to pre-check (rather
-than post-check) for potential integer overflows at about that time.
+The comment is pretty clear, too:
 
-Both CVE-2006-1902 and CVE-2008-1685 refer to gcc bug 26763, which deals
-with the pointer arithmetic issue.  It appears that gcc developers
-decided to not have gcc take full advantage of pointer arithmetic
-outside of the object being undefined, thus fixing the bug on 2006-04-05.
-But I could be wrong here - maybe the fix is for an actual gcc bug only.
-The most straightforward and reliable way to find this out is to ask one
-of the gcc developers who worked on this bug (I'd ask Richard Guenther).
+ *      A 32 bit pseudo-random number is generated using a fast
+ *      algorithm suitable for simulation. This algorithm is NOT
+ *      considered safe for cryptographic use.
 
-Finally, CVE-2008-1685 refers to "gcc 4.2.0 through 4.3.0", which means
-that it can't be for the non-bug (or actual bug?) that got fixed in 2006.
-Yet I think that the reference to gcc bug 26763 is somewhat relevant,
-because both CERT VU#162289 and comments on that bug mention the
-wraparound case.  My limited understanding is that the fix that got
-committed on 2006-04-05 would deal with the wraparound case as well.
-However, perhaps - I am just guessing here - the same issue (a non-bug)
-got re-introduced with another change to gcc later, and we do not
-currently have a reference for that in the CVE entries.
-
-I am really not into gcc internals, so it doesn't make sense for me to
-continue to speculate on this.  Please ask the people who actually know,
-such as Richard.
-
-Thanks,
-
-Alexander
+I haven't written an exploit because I'm not sure how to bypass the
+modulo operation.  The modulus is 28233 = 3 * 3 * 3137 by default, so
+it's not obvious to me how to recover the internal status without 2**51
+effort.
