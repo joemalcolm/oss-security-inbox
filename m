@@ -1,26 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/23/10
-Message-ID: <Pine.GSO.4.51.0804231228270.10164@faron.mitre.org>
-Date: Wed, 23 Apr 2008 12:29:20 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Jonathan Smith <smithj@...ethemallocs.com>
-cc: "Steven M. Christey" <coley@...us.mitre.org>, Florian Weimer <fw@...eb.enyo.de>, oss-security@...ts.openwall.com
-Subject: Re: CVE request:Perl bug #48156
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/12/2
+Message-Id: <200807121403.52928.hanno@hboeck.de>
+Date: Sat, 12 Jul 2008 14:03:52 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com, coley@...re.org
+Subject: CVE requests: joomla <1.5.4
 Content-Type: text/plain; charset=utf-8
 
+http://www.joomla.org/content/view/5180/1/
 
-removing vendor-sec just in case, since oss-security is archived.
+Cite:
 
-======================================================
-Name: CVE-2008-1927
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1927
-Reference: MISC:http://rt.perl.org/rt3/Public/Bug/Display.html?id=48156
-Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=454792
+Security Fixes: 
 
-Double free vulnerability in Perl 5.8.8 allows context-dependent
-attackers to cause a denial of service (memory corruption and crash)
-via a crafted regular expression containing UTF8 characters.  NOTE:
-this issue might only be present on certain operating systems.
+    * LDAP security fix to prevent unauthorized access to administration
+    * Added security to file caching to prevent unauthorized access to cached 
+pages
+    * User Redirect Spam fix
+    * htaccess global variable security fix when SEF is enabled (See .htaccess 
+Security Fix)
 
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
