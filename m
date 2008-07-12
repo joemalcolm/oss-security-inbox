@@ -1,40 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/02/1
-Message-ID: <20080902122818.GK12017@ngolde.de>
-Date: Tue, 2 Sep 2008 14:28:18 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: newsbeuter
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/12/1
+Message-Id: <200807121358.37810.hanno@hboeck.de>
+Date: Sat, 12 Jul 2008 13:58:34 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com, coley@...re.org
+Subject: CVE request: phpbb < 3.0.2
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Nico Golde <oss-security+ml@...lde.de> [2008-09-01 12:09]:
-> newsbeuter (http://www.newsbeuter.org) 1.1 fixes a security 
-> issue that was discovered by J.H.M. Dassen (Ray) and is 
-> fixed in svn revision 1429.
-> 
-> The previous version allowed to execute arbitrary code by a 
-> crafted feed URL that is passed as a command line parameter 
-> if the URL is opened by an external browser.
-> 
-> Upstream changelog:
->  1.1:
->         Added a line wrap for the article view's headers and the link list on the bottom (fixes Debian issue #491122)
->         Added test suite for functional tests of the user interface
->         Fixed quoting issue in open-in-browser command
->         ^^^^^
-> 
-> This issue should affect all newsbeuter versions < 1.1.
+Changelog 3.0.2:
 
-Update, it also affects 1.1, the fix is not sufficient, see 
-Debian bug #497495. r1445 and r1447 is needed as an 
-additional fix which now replaces all ' by their hex 
-representations so this affects < 1.2.
+http://www.phpbb.com/community/viewtopic.php?f=14&t=1059565&sid=2d3a6352a484588e1ad80f09dd19fe33
 
-Kind regards
-Nico
+"Additionally one minor security-related bug was fixed."
+"[Sec] Only allow urls gone through redirect() being used within login_box(). 
+(thanks nookieman)"
+
+
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
-Content of type "application/pgp-signature" skipped
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
