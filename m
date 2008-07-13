@@ -1,33 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/04/6
-Message-ID: <20080904151641.GA2625@ngolde.de>
-Date: Thu, 4 Sep 2008 17:16:41 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/13/2
+Message-ID: <20080713113206.GF20593@ngolde.de>
+Date: Sun, 13 Jul 2008 13:32:07 +0200
 From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request (gpicview)
+Subject: Re: openldap DoS
 Content-Type: text/plain; charset=utf-8
 
-Hi Jan,
-* Jan Lieskovsky <jlieskov@...hat.com> [2008-09-01 11:25]:
-> On Sun, 2008-08-31 at 01:46 +0200, Nico Golde wrote:
-> > Same piece of code main-win.c doesn't look too trustworthy 
-> > to me either:
-> > 
-> >     690     int error = jpegtran (filename, "/tmp/rot.jpg" , code);
-> >     691     if(error)
-> >     692         return error;
-> >     693 
-> >     694     //now copy /tmp/rot.jpg back to the original file
-> >     695     char command[strlen(filename)+50]; //this should not generate buffer owerflow
-> >     696     // MS: didn't know, how to make it better, maybe an own copy routine
-> >     697     sprintf(command,"cp /tmp/rot.jpg \"%s\"",filename);
-> >     698     system(command);
+Hi Steven,
+* Steven M. Christey <coley@...us.mitre.org> [2008-07-01 23:14]:
+> ======================================================
+> Name: CVE-2008-2952
+> Status: Candidate
+> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2952
+> Reference: CONFIRM:http://www.openldap.org/its/index.cgi/Software%20Bugs?id=5580;selectid=5580
 > 
-> CVE-2008-3791 was allocated to handle the security issue related
-[...] 
-This only covers the insecure temporary file name creation.
+> liblber/io.c in OpenLDAP 2.3.41, 2.3.42, and possibly other versions
+> allows remote attackers to cause a denial of service (program
+> termination) via crafted ASN.1 BER datagrams, which triggers an
+> assertion error.
 
-Cheers
+All versions from 2.2.4 to 2.4.10 are vulnerable referring 
+to upstream, can you update the description to reflect this?
+Kind regards
 Nico
 -- 
 Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
