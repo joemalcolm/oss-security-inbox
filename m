@@ -1,111 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/03/7
-Message-ID: <48459F96.5010803@freethemallocs.com>
-Date: Tue, 03 Jun 2008 11:46:30 -0800
-From: Jonathan Smith <smithj@...ethemallocs.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: tool announcements
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/13/1
+Message-ID: <6edf76c20807121735h23201ecey668e79d217fc8416@mail.gmail.com>
+Date: Sun, 13 Jul 2008 01:35:42 +0100
+From: "Jan Minář" <rdancer@...ncer.org>
+To: "Tomas Hoger" <thoger@...hat.com>
+Cc: oss-security@...ts.openwall.com,  "Jonathan Smith" <smithj@...ethemallocs.com>, coley@...us.mitre.org,  "Bram Moolenaar" <Bram@...lenaar.net>,  "Charles E Campbell, Jr" <drchip@...pbellfamily.biz>
+Subject: Re: Re: More arbitrary code executions in Netrw version 125, Vim 7.2a.10
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi!
 
-Solar Designer wrote:
-| Also, I am not on full-disclosure -
-| should this prevent me from being a moderator for oss-security, or do I
-| have to subscribe to full-disclosure?
+Thanks for CCing me.  Thomas's observations are right.
 
-I don't think so, no. I actually gave up on FD recently as well, given
-the ever-decreasing signal-to-noise ratio.
+On Thu, Jul 10, 2008 at 5:55 PM, Tomas Hoger <thoger@...hat.com> wrote:
 
-I should clarify; I don't actually mind cross-posting, so long as the
-content is appropriate on all the lists posted to. I just don't,
-personally, believe announcements should be on-topic on oss-security.
+> obvious to me why zip and tar tests are included in the test suite.
+> Maybe just to point out that those issues are still unfixed.
 
-| Maybe.  However, many topics are valid on Bugtraq - not only Open Source
-| ones.  I imagine that someone could be interested in security tool
-| announcements relevant to Open Source software only.  Also, Bugtraq is
-| so large that few of us would dare to bother its readers with
-| announcements of new versions of a tool, even fairly major ones.
+Indeed, I included all that had not been fixed in the test suite.
 
-Maybe part of the problem is that I'm not that interested in new tools.
-The ones I currently have work well enough, and I can only spend so much
-effort learning new stuff, and there are more interesting new stuff to
-learn :)
+> Moreover, if you diff zipplugin directories in vulnerablevim.tar.bz2
+> and vulnerablevim-netrw.tar.bz2, you will see this test did not change
+> at all between the two test suites.  So CVE-2008-3075 should already
+> be covered by previous CVE-2008-2712.
 
-| Maybe we need to setup a new oss-sectools list, but I'd rather not go
-| for it until we start to receive a substantial number of security tool
-| announcements in here.
+The zip exploit is the same.  It still has not been fixed as of Vim
+7.2a.19/zip.vim v19.
 
-Sounds good.
+> tarplugin test was updated since the first test suite to use different
+> payload.  I'm not really sure if it is the same issue or not, but the
+> new exploit is blocked by the previously proposed Jan's patch.  So it
+> may be the same issue as described in the first advisory.  Btw,
 
-| As to "sparking discussion", it is impossible to know that in advance.
-| Yes, you wrote "designed to ..." - does ending a post with "comments,
-| please?" qualify?  If so, that could be used on any announcement - even
-| on a mostly-PR one.
+There are two attack vectors, both fixed in the original patch of
+mine.  I only updated the tarplugin exploit to use the other vector.
 
-Eh. I'd still lean "no" here. It doesn't seem very likely that "new
-version of $my_package released with shiny new stuff" is going to
-generate useful discussion. If, on the other hand, the author of the
-tool emails the list asking for comments on a new method of
-vulnerability scanning or similar, which may have been recently added to
-his/her toolkit, that seems quite germane.
+> CVE-2008-2712 description does not mention tar.vim issue.  It is
+> described in 3.4.2.3, but its test does not seem to be run when doing
+> make test for the top-most Makefile in the first test suite.
 
-| Also, what about those CVE requests - is a single response, assigning
-| the CVE number, "discussion"?  OK, in some cases people actually have
-| comments.
+That's correct, I omitted the test from the top-most Makefile by mistake.
 
-Good point. CVE assignments to oss software clearly belong on-list since
-they help us all by not duplicating work, even if they aren't strictly
-discussion.
-
-| Of the existing lists, Bugtraq is probably the place for PR.
-
-Agreed.
-
-| However, some tools could be of specific relevance to oss-security
-| members - e.g., source code analysis tools and fuzzers.  Do you agree?
-
-Sure.
-
-| Is a moderator supposed to decide whether or not this is the case?
-
-Well, I'm not sure. Not being a moderator, I don't know how much work it
-really is. *If* it is a relatively low workload, I think weeding out the
-not-as-relevant announces would be very valuable.
-
-|> So, was this message, and "SQL_injection detection tool released" held
-|> for moderation?
-|
-| Yes, they were.
-
-Good to know.
-
-| I don't regret approving these messages - I think that we're having
-| useful discussion as a result, and I think that it was important for
-| this group's members to be aware of what was coming to the list (except
-| for spam).  Let's say that these two messages are "samples" of content
-| that we might or might not want in here.
-|
-| My opinion is that moderators are not supposed to define the list's
-| policy on their own - and we did not (and still do not) have this bit of
-| policy fully defined.  So let's try to take care of that now, or I would
-| not know what to do if more messages like these two arrive to the list.
-
-Agreed. I wasn't intending to pass judgment on the moderators, just
-wondering.
-
-For now, I'll concede that there isn't enough traffic to justify forming
-a new list. Consequently, I suppose I'm in favor of keeping them
-on-list. When/if the announcement traffic level changes, perhaps we
-should revisit.
-
-	smithj
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEAREIAAYFAkhFn5UACgkQCG91qXPaRen2WQCeJRbmeWlU3ejUH/yDIPU9Wc2Z
-fUEAnjEj0IqoXLSmBLXsCMePoG+H3ea1
-=4j4N
------END PGP SIGNATURE-----
+Hope that helps.
+Jan.
