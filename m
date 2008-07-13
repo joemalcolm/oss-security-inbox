@@ -1,42 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/09/3
-Message-ID: <Pine.GSO.4.51.0803091949130.22863@faron.mitre.org>
-Date: Sun, 9 Mar 2008 19:51:28 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Jonathan Smith <smithj@...ethemallocs.com>
-cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>, tss@....fi
-Subject: Re: CVE? CCE? dovecot setting is often used incorrectly
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/13/4
+Message-ID: <87myklr529.fsf@mid.deneb.enyo.de>
+Date: Sun, 13 Jul 2008 20:51:10 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: DNS vulnerability: other relevant software
 Content-Type: text/plain; charset=utf-8
 
+* Bernhard R. Link:
 
-On Tue, 4 Mar 2008, Jonathan Smith wrote:
+> if there are many queries, I think attacking only gets harder, because
+> guessing the order of requests gets harder to predict, adding more
+> variables.
 
-> I've been trying to figure out what to do with this one. I'm not
-> inclined to believe it deserves a CVE given that it is configuration
-> (either dovecot config or filesystem permissions configuration). I read
-> once on mitre.org about "Common Configuration Enumeration" aka "CCE"
-> issues, but I've never seen them actually used. Maybe this is a good
-> candidate?
->
-> Steve, any ideas?
+Right.
 
-Sorry for the delayed response - had some computer problems just as I was
-about to press "send" and forgot about this.
+> I'm also looking forward to this. I was under the impression that is was
+> common knowledg that dns is simply insecure, everyone trusting on it is
+> insane, and security issues meaning it is easier to hijack than it
+> should be (like dns servers accepting answers for things they never
+> asked for and things like that).
 
-CCE is gaining a lot of ground these days as part of the US government's
-SCAP program for enterprise-level security information management
-(summarizing SCAP approximately at best).
-
-We've identified some areas of potential overlap where both CCE and CVE
-could apply.  At this stage though, CCE is mostly about
-configuration/hardening at the OS layer, including major OS applications -
-that said, conceptually it could apply to any application.
-
-Especially in cases where a "non-OS-level" application has a default
-configuration, or where a bug introduces a configuration issue, CVE
-continues to assign identifiers.  We'll also assign an identifier for a
-common misconfiguration, even if it's not the default.
-
-So - use CVE-2008-1199 for this issue.
-
-- Steve
+Online banking security mainly relies on the integrity of DNS and
+routing.  (Bert's DNS forgery resilience draft actually covers this, and
+I think he's right.)
