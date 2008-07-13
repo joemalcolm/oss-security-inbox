@@ -1,21 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/18/4
-Message-ID: <1123880963.1364131221758294733.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 18 Sep 2008 13:18:14 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/13/3
+Message-Id: <200807131346.15097.hanno@hboeck.de>
+Date: Sun, 13 Jul 2008 13:46:14 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
 Cc: coley@...re.org
-Subject: CVE Request (gallery2)
+Subject: CVE requests: crashers by zzuf
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
+I want to track down all of them now that are still unfixed. More cve requests 
+will follow.
+FYI:
+http://hboeck.de/archives/578-How-long-does-it-take-to-fix-a-crash-bug.html
 
-A new version of Gallery 2 is out that fixes three security flaws:
+Steve, please assign cves for these:
 
-http://gallery.menalto.com/gallery_2.2.6_released
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=499408
+crash (unknown if exploitable) by corrupted gif in ffmpeg lavf:
+http://bugzilla.gnome.org/show_bug.cgi?id=542643
+Sample: http://sam.zoy.org/zzuf/lol-giftopnm.gif
 
-Thanks.
+crash (unknown if exploitable) by corrupted ogg in xine.
+Sample: http://sam.zoy.org/zzuf/lol-ffplay.ogg
+
 
 -- 
-    JB
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
