@@ -1,51 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/26/1
-Message-ID: <48B3C2CB.50405@pardus.org.tr>
-Date: Tue, 26 Aug 2008 11:46:03 +0300
-From: Pınar Yanardağ <pinar@...dus.org.tr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/14/1
+Message-ID: <20080714144723.GA26711@suse.de>
+Date: Mon, 14 Jul 2008 16:47:23 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request (ruby)
+Subject: Re: CVE-2008-2365 kernel: ptrace: Crash on PTRACE_{ATTACH,DETACH} race -- affecting kernel versions <= 2.6.25
 Content-Type: text/plain; charset=utf-8
 
-Jan Lieskovsky wrote On 25-08-2008 16:20:
-> Hello Steve,
->
->    Ruby upstream has announced another security flaw
-> (DoS vulnerability in REXML module):
->
-> http://www.ruby-lang.org/en/news/2008/08/23/dos-vulnerability-in-rexml/
->
-> Test case available in part: "Impact".
->
-> Proposed preliminary fix: http://www.ruby-lang.org/security/20080823rexml/rexml-expansion-fix.rb
->    
+On Thu, Jun 26, 2008 at 04:53:38PM +0200, Jan Lieskovsky wrote:
+> Hello guys,
+> 
+>   wanted to inform you about recently discovered utrace/ptrace
+> attach and detach race condition affecting Linux kernel from versions
+> 2.6.9 up to the upstream one (< 2.6.25).
+> The upstream Linux kernel version got already patched with the following
+> three patches, which resolve this issue:
+> 
+> http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.25.y.git;a=commit;h=5ecfbae093f0c37311e89b29bfc0c9d586eace87
+> http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.25.y.git;a=commit;h=f5b40e363ad6041a96e3da32281d8faa191597b9
+> http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.25.y.git;a=commit;h=f358166a9405e4f1d8e50d8f415c26d95505b6de
 
+Jan, these patches are from 2006 and were even fixed in a 2.6.16.x stable release...
+and the code was rewritten in 2.6.17 as far as I can see.
 
-There is an ongoing discussion on comp.lang.ruby about announcing this 
-flaw more focused on Rails more than Ruby. [1] I am agree the majority 
-of vulnerable apps are Rails' but there is still no update for Ruby's 
-standart library in 3 days, though.
+So is 2.6.25 really the upper bound?
 
-[1]: 
-http://groups.google.com/group/comp.lang.ruby/browse_thread/thread/19f69e8a081fc0d1/e138e014b74352ca?#e138e014b74352ca
-
-> Testing status: REXML parsing of provided *.xml file causes
->                  100% cpu usage for about 1 and 1/4 minutes
->                  (checked the ruby-1.8.5-5.5 case).
->
-> Could you please assign a CVE id for it?
->
-> Thank you in advance.
->
-> Kind regards
-> Jan iankko Lieskovsky
-> RH Security Response Team
->
->    
-
-Regards,
-
--- 
-Pınar Yanardağ
-http://pinguar.org
-
+Ciao, Marcus
