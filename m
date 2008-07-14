@@ -1,40 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/19/12
-Message-id: <1203441396.14803.TMDA@linsec.ca>
-Date: Tue, 19 Feb 2008 10:15:15 -0700
-From: Vincent Danen <vdanen@...sec.ca>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/14/2
+Message-Id: <200807141727.39382.hanno@hboeck.de>
+Date: Mon, 14 Jul 2008 17:27:36 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: Jim Meyering <jim@...ering.net>
-Subject: Re: subscription-request procedure?
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: dotclear < 1.2.8
 Content-Type: text/plain; charset=utf-8
 
-* [2008-02-19 08:47:01 -0500] Josh Bressers wrote:
+http://www.dotclear.net/blog/post/2008/04/18/Dotclear-128
+(in french)
 
->> Thanks for setting up this list.
->> It sounds like what I've been looking for.
->> 
->> I've skimmed the archives and looked through the wiki,
->> but didn't find a subscription-request procedure, so maybe
->> this will do.
->> 
->> I tend the upstream GNU coreutils and am co-maintainer of gnulib
->> automake, autoconf, and a few others.
->
->We don't really have a policy at this point.  I work with Jim, I'd say we
->should subscribe him.  His insight would likely be useful.
->
->I'm thinking the official subscription procedure should just be to mail the
->list, and as long as nobody has a good reason not to, let them in.
+From CHANGELOG:
+== 1.2.8 ==================================================
+- Images upload vulnerability fix
 
-I agree.  That should probably be added on the charter page that a
-simple introductory email requesting subscription should suffice (i.e.
-indicate who you are and what you're involved with).
-
-Since folks like Jim are exactly the type of people we want on the list,
-we need to make the process fairly simple (and fast, if possible) to
-prevent turning people off.
 
 -- 
-Vincent Danen @ http://linsec.ca/
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
-Content of type "application/pgp-signature" skipped
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
