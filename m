@@ -1,40 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/10/5
-Message-ID: <Pine.GSO.4.51.0811101019580.609@faron.mitre.org>
-Date: Mon, 10 Nov 2008 10:20:41 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/15/6
+Message-Id: <200807152100.58988.hanno@hboeck.de>
+Date: Tue, 15 Jul 2008 21:00:55 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: libcdaudio
+Cc: coley@...re.org
+Subject: CVE request: phpmyadmin < 2.11.7.1
 Content-Type: text/plain; charset=utf-8
 
+http://www.phpmyadmin.net/home_page/downloads.php?relnotes=0
 
+From Changelog:
+- protection against XSS when register_globals is on and .htaccess
+  has no effect, thanks to Tim Starling
+- (2.11.7.1)  [security] XSRF/CSRF by manipulating the db,
+  convcharset and collation_connection parameters,
+  thanks to YGN Ethical Hacker Group
 
-On Wed, 5 Nov 2008, Thomas Biege wrote:
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
-> Hello,
-> we need a CVE-ID for a buffer overflow in libcdaudio.
-> It is a remotely exploitable heap-based buffer overflow.
-
-Out of curiosity, what makes it remote?
-
-Use CVE-2008-5030
-
-- Steve
-
-======================================================
-Name: CVE-2008-5030
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5030
-Reference: MLIST:[oss-security] 20081105 CVE request: libcdaudio
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/05/1
-Reference: MLIST:[oss-security] 20081107 Re: CVE request: libcdaudio
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/07/1
-Reference: MISC:http://sourceforge.net/tracker/index.php?func=detail&aid=1288043&group_id=27134&atid=389442
-Reference: BID:32122
-Reference: URL:http://www.securityfocus.com/bid/32122
-
-Heap-based buffer overflow in the cddb_read_disc_data function in
-cddb.c in libcdaudio 0.99.12p2 allows remote attackers to execute
-arbitrary code via long CDDB data.
-
-
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
