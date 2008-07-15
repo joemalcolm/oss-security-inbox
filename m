@@ -1,28 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/31/4
-Message-ID: <Pine.GSO.4.51.0803311740270.16237@faron.mitre.org>
-Date: Mon, 31 Mar 2008 17:40:31 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Hanno Böck <hanno@...eck.de>
-cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: phpmyadmin (PMASA-2008-2)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/15/5
+Message-Id: <200807151922.48252.hanno@hboeck.de>
+Date: Tue, 15 Jul 2008 19:22:47 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Cc: coley@...re.org
+Subject: CVE request: Wordpress XSS
 Content-Type: text/plain; charset=utf-8
 
+http://trac.wordpress.org/ticket/7220
 
-======================================================
-Name: CVE-2008-1567
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1567
-Reference: MISC:http://sourceforge.net/tracker/index.php?func=detail&aid=1909711&group_id=23067&atid=377408
-Reference: CONFIRM:http://www.phpmyadmin.net/home_page/security.php?issue=PMASA-2008-2
-Reference: FRSIRT:ADV-2008-1037
-Reference: URL:http://www.frsirt.com/english/advisories/2008/1037/references
-Reference: SECUNIA:29613
-Reference: URL:http://secunia.com/advisories/29613
-
-phpMyAdmin before 2.11.5.1 stores the (1) MySQL username, (2)
-password, and the (2) Blowfish secret key in plaintext in the /tmp
-Session file, which allows local users to obtain sensitive
-information.
+Fixed in 2.6.
 
 
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
