@@ -1,27 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/27/3
-Message-ID: <20080727145959.GX32057@genesis.frugalware.org>
-Date: Sun, 27 Jul 2008 16:59:59 +0200
-From: Miklos Vajna <vmiklos@...galware.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/15/2
+Message-ID: <20080715110027.5ffc200c@redhat.com>
+Date: Tue, 15 Jul 2008 11:00:27 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: drupal issue in < 5.9
+Cc: coley@...us.mitre.org, Jamie Strandboge <jamie@...onical.com>
+Subject: Re: CVE Id request: vim
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Jul 26, 2008 at 04:44:16PM -0400, "Steven M. Christey" <coley@...us.mitre.org> wrote:
-> My interpretation of this new advisory is that they meant to fix the
-> session fixation in 5.8, but they didn't.  The original advisory covered
-> multiple other issues as well.  So this new advisory might better be
-> considered a clarification of versions for the session fixation, rather
-> than a regression error or incomplete fix (which would require a new CVE).
+On Mon, 16 Jun 2008 16:47:07 -0400 (EDT) "Steven M. Christey"
+<coley@...us.mitre.org> wrote:
+
+> In a perfect world, we'd know which Vim scripts were vulnerable in
+> which version, but I don't see an easy way of determining that.  So,
+> only one CVE is being assigned for them, pending any additional
+> details.
+
+Let's push the world a bit towards "perfect" state ;)
+
+- zip.vim and tar.vim (omitted in the CVE description) only seem to be
+shipped with vim as of vim 7.0.  6.x versions of vim do not have them
+and can not be used to browse .zip/.tar archives.  Affected in versions
+used in 7.0 and 7.1.  I don't see them in 6.4 tarball, so no sure why
+advisory states 6.4 is not affected.  6.3 and 6.0 were verified to be
+unaffected.
+
+- netrw seems to be used as directory explorer as of vim 7.0.  However,
+netrw test case triggers similar problem in explorer.vim plugin used in
+vim 6.x versions.  So netrw test reports vulnerable for multiple
+versions back to 6.0 (tested on 7.1, 7.0, 6.3 and 6.0), even though
+different plugins are affected on 7.x and 6.x.
+
+- All other tests affect vim versions at least back to 6.0 (tested on
+versions listed above).
+
+> ======================================================
+> Name: CVE-2008-2712
+> Status: Candidate
+> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2712
+> Reference: BUGTRAQ:20080613 Collection of Vulnerabilities in Fully
+> Patched Vim 7.1 Reference:
+> URL:http://www.securityfocus.com/archive/1/archive/1/493352/100/0/threaded
+> Reference: BUGTRAQ:20080614 Re: Collection of Vulnerabilities in
+> Fully Patched Vim 7.1 Reference:
+> URL:http://www.securityfocus.com/archive/1/archive/1/493353/100/0/threaded
+> Reference: MISC:http://www.rdancer.org/vulnerablevim.html Reference:
+> MLIST:[oss-security] CVE Id request: vim Reference:
+> URL:http://www.openwall.com/lists/oss-security/2008/06/16/2
 > 
-> Granted, the lack of specifics from Drupal makes it difficult to be
-> certain about what happened.
+> Vim 7.1.314, 6.4, and other versions allows user-assisted remote
+> attackers to execute arbitrary commands via Vim scripts that do not
+> properly sanitize inputs before invoking the execute or system
+> functions, as demonstrated using (1) filetype.vim, (2) zipplugin, (3)
+> xpm.vim, (4) gzip_vim, and (5) netrw.
 
-As far as I see, they wanted to fix the session fixation issue in 5.8,
-but the fix did not solve the problem, as you say.
-
-I asked for a CVE because we already released an advisory for 5.8 with
-the old CVE, we released a new one for 5.9 and I thought it's better if
-there is a common id for the new "session fixation in 5.8" issue.
-
-Content of type "application/pgp-signature" skipped
+-- 
+Tomas Hoger / Red Hat Security Response Team
