@@ -1,40 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/15/3
-Message-ID: <20081015140622.77537def@redhat.com>
-Date: Wed, 15 Oct 2008 14:06:22 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/15/1
+Message-ID: <20080715092140.3634636f@redhat.com>
+Date: Tue, 15 Jul 2008 09:21:40 +0200
 From: Tomas Hoger <thoger@...hat.com>
-To: thomas@...e.de
-Cc: oss-security@...ts.openwall.com, coley@...re.org
-Subject: Re: CVE request: graphviz buffer overflow while parsinf DOT file
+To: oss-security@...ts.openwall.com
+Cc: steffen.joeris@...lelinux.de, coley@...re.org
+Subject: Re: CVE id request: Clamav
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 15 Oct 2008 13:59:29 +0200 Thomas Biege <thomas@...e.de> wrote:
+On Tue, 8 Jul 2008 15:42:33 +0200 Tomas Hoger <thoger@...hat.com> wrote:
 
-> was a CVE-ID assigned to the following issue already?
+> > > The upstream changelog says:
+> > > * libclamav/petite.c: fix possible invalid memory access (bb#1000)
+> > > 				Reported by Damian Put
+> > 
+> > For the sake of CVE description completeness, I'm adding that it's
+> > from the clamav 0.93.1 changelog.
 
-Name: CVE-2008-4555
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4555
-Final-Decision: 
-Interim-Decision: 
-Modified: 
-Proposed: 
-Assigned: 20081014
-Category: 
-Reference: BUGTRAQ:20081008 Advisory: Graphviz Buffer Overflow Code Execution
-Reference: URL:http://www.securityfocus.com/archive/1/archive/1/497150/100/0/threaded
-Reference: MISC:http://roeehay.blogspot.com/2008/10/graphviz-buffer-overflow-code-execution.html
-Reference: CONFIRM:http://bugs.gentoo.org/show_bug.cgi?id=240636
-Reference: BID:31648
-Reference: URL:http://www.securityfocus.com/bid/31648
-Reference: SECUNIA:32186
-Reference: URL:http://secunia.com/advisories/32186
+[ ... ]
 
-Stack-based buffer overflow in the push_subg function in parser.y
-(lib/graph/parser.c) in Graphviz 2.20.2, and possibly earlier
-versions, allows user-assisted remote attackers to cause a denial of
-service (memory corruption) or execute arbitrary code via a DOT file
-with a large number of Agraph_t elements.
+> Btw, following is mentioned in the 0.93.2 changelog:
+> 
+> Thu Jul  3 16:15:23 CEST 2008
+> -----------------------------
+>   * libclamav/petite.c: fix another out of bounds memory read
+> (bb#1000) Reported by Secunia (CVE-2008-2713)
+> 
+> Referring to the same bug as before, which is now restricted (was it
+> publicly accessible before?).
+
+Upstream bug report is no longer restricted and mentions original fix
+was incomplete:
+
+https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1000#c4
+
+Steven, this seems to deserve a CVE id as an incomplete fix for
+CVE-2008-2713.
+
+[ ... ]
+
+> The fix does not even seem to be committed in the public clamav SVN
+> (either trunk or 0.93 branch).
+
+Change now committed as:
+
+http://svn.clamav.net/websvn/diff.php?repname=clamav-devel&path=/branches/0.93/libclamav/
+petite.c&rev=3920
 
 -- 
 Tomas Hoger / Red Hat Security Response Team
