@@ -1,25 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/10/5
-Message-ID: <Pine.GSO.4.51.0803101644450.18792@faron.mitre.org>
-Date: Mon, 10 Mar 2008 16:44:50 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Jonathan Smith <smithj@...ethemallocs.com>
-cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: yet another lighttpd issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/15/3
+Message-Id: <1216122452.9537.6.camel@iankko.englab.brq.redhat.com>
+Date: Tue, 15 Jul 2008 13:47:32 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE id request: byacc
 Content-Type: text/plain; charset=utf-8
 
+Hello,
 
-======================================================
-Name: CVE-2008-1270
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1270
-Reference: CONFIRM:http://trac.lighttpd.net/trac/ticket/1587
-Reference: CONFIRM:https://bugs.gentoo.org/show_bug.cgi?id=212930
-Reference: CONFIRM:https://issues.rpath.com/browse/RPL-2344
+  there is already for a long time known 
+possible out of allocated stack bounds access in yacc.
 
-mod_userdir in lighttpd 1.4.18 and earlier, when userdir.path is not
-set, uses a default of $HOME, which might allow remote attackers to
-read arbitrary files, as demonstrated by accessing the ~nobody
-directory.
+Description of problem:
+=======================
 
+Otto Moerbeck has reported the following potential out of bounds of the
+allocated stack access in the yacc binary:
+
+Fix an venerable bug: if we're reducing a rule that has an empty
+right hand side and the yacc stackpointer is pointing at the very
+end of the allocated stack, we end up accessing the stack out of
+bounds by the implicit $$ = $1 action.  Detected by my new malloc,
+experienced by sturm@ on sparc64; ok deraadt@
+
+Public mention of this issue:
+=============================
+
+http://marc.info/?l=openbsd-cvs&m=121553004431393&w=2
+
+Proposed OpenBSD patch:
+=======================
+
+http://www.openbsd.org/cgi-bin/cvsweb/src/usr.bin/yacc/skeleton.c.diff?r1=1.28&r2=1.29
+
+Steve, could you please allocate a CVE identifier,
+we could use for future references to this one?
+
+Thank you in advance!
+
+Kind regards
+Jan iankko Lieskovsky
+RH Security Response Team
 
