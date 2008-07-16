@@ -1,47 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/23/2
-Message-ID: <20080823095852.GA29247@suse.de>
-Date: Sat, 23 Aug 2008 11:58:52 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/16/11
+Message-ID: <Pine.GSO.4.51.0807161350420.3856@faron.mitre.org>
+Date: Wed, 16 Jul 2008 13:57:34 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: swfdec 0.6.8 stable update
+cc: coley@...re.org
+Subject: Re: CVE request: phpmyadmin < 2.11.7.1
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Aug 19, 2008 at 06:22:57PM +0200, Nico Golde wrote:
-> Hi Marcus,
-> * Marcus Meissner <meissner@...e.de> [2008-08-19 16:48]:
-> > Wonder if we should track updates for swfdec. The 0.6.8 announcement
-> > looks like it at least fixes several Denial of Service problems:
-> [...] 
-> I have problems to understand why this would be a Denial of 
-> Service. While I don't share the opinion about browser 
-> crashes I think there are at least good arguments for both 
-> sides.
 
-If it can be triggered by a SWF on the website, I would perhaps
-call it a security issue.
+On Tue, 15 Jul 2008, Thijs Kinkhorst wrote:
 
-If it crashes the SWF mozilla plugin and so the browser, it is
-a denial of service in my eyes.
+> On Tuesday 15 July 2008 21:00, Hanno Böck wrote:
+> > From Changelog:
+> > - protection against XSS when register_globals is on and .htaccess
+> >   has no effect, thanks to Tim Starling
+>
+> Note: this has already been assigned CVE-2008-2960 following a previous
+> request from you.
 
-More importantly if code execution is possible.
+PMASA-2008-4, which is CVE-2008-2960, credits Tim Starling, so I'd suspect
+they are the same.
+
+>
+> > - (2.11.7.1)  [security] XSRF/CSRF by manipulating the db,
+> >   convcharset and collation_connection parameters,
+> >   thanks to YGN Ethical Hacker Group
+>
+> This still needs one.
+
+======================================================
+Name: CVE-2008-3197
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3197
+Reference: CONFIRM:http://www.phpmyadmin.net/home_page/security.php?issue=PMASA-2008-5
+Reference: MISC:http://yehg.net/lab/pr0js/advisories/XSRF_CreateDB_inPhpMyAdmin2.11.7.pdf
+
+Cross-site request forgery (CSRF) vulnerability in phpMyAdmin before
+2.11.7.1 allows remote attackers to perform unauthorized actions via a
+link or IMG tag to (1) the "Creating a Database" functionality
+(db_create.php) and (2) unspecified vectors that modify the connection
+character set.
 
 
-I have however not researched those further (just saw the changelog as
-packager of swfdec), and currently swfdec itself is probably not yet
-fully production ready anyway.
 
-> But if swfdec crashes on playing a flash movie this 
-> looks like an application bug. At least I wouldn't talk 
-> about Denial of Service if vim would crash on opening a text 
-> file.
-
-Yeah.
-
-> It would be interesting what is causing this crash and if 
-> there is underlying a more serious issue.
-
-Not really investigated and no time :/ Since swfdec is beta and not yet
-wildy iin use we could let it rest.
-
-Ciao, Marcus
+- Steve
