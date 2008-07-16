@@ -1,53 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/20/3
-Message-ID: <Pine.GSO.4.51.0810201236430.28212@faron.mitre.org>
-Date: Mon, 20 Oct 2008 12:37:56 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security <oss-security@...ts.openwall.com>
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: crashers / potential security risks in mplayer
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/16/9
+Message-ID: <6edf76c20807160941i7aac7881v9fe4546ca738c2d7@mail.gmail.com>
+Date: Wed, 16 Jul 2008 17:41:17 +0100
+From: "Jan Minář" <rdancer@...ncer.org>
+To: "Tomas Hoger" <thoger@...hat.com>
+Cc: oss-security@...ts.openwall.com,  "Jonathan Smith" <smithj@...ethemallocs.com>, coley@...us.mitre.org,  "Bram Moolenaar" <Bram@...lenaar.net>,  "Charles E Campbell, Jr" <drchip@...pbellfamily.biz>
+Subject: Re: Re: More arbitrary code executions in Netrw version 125, Vim 7.2a.10
 Content-Type: text/plain; charset=utf-8
 
+On Wed, Jul 16, 2008 at 3:42 PM, Tomas Hoger <thoger@...hat.com> wrote:
+> On Wed, 16 Jul 2008 11:35:01 +0100 "Jan Minář" <rdancer@...ncer.org>
+>> are versioned and dated, so for example the first version of ftp.vim
+>> not vulnerable is version 21 of 2008-07-12.
 
-Note, some of this stuff is hard to sift through because of such a large
-number of crashers.  We're taking a relatively conservative approach here.
+Should read ``zip.vim'' of course.
 
-The 2007 CVE number is for issues that were technically released in 2007.
+>> The overall issue is that up until recently Vim  script did not
+>> provide any means of quoting metacharacters.  At the time of the
+>> first advisory, there were close to a thousand ``execute''
+>> statements.
+>
+> Based on your research, do you believe that all / most of them can
+> really be exploited to perform some harmful actions just by user
+> opening some file with odd file name?
 
-- Steve
+Let's see:
 
-======================================================
-Name: CVE-2007-6718
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6718
-Reference: MLIST:[oss-security] 20081007 CVE request: crashers / potential security risks in mplayer
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/10/07/1
-Reference: MISC:http://sam.zoy.org/blog/2007-01-16-exposing-file-parsing-vulnerabilities
+``zip.vim'':
+Version ................ 14
+Released ............... 2007-05-08
+Lines .................. 373
+``execute'' statements:  11
+out of which exploitable 10
 
-MPlayer, possibly 1.0rc1, allows remote attackers to cause a denial of
-service (SIGSEGV and application crash) via (1) a malformed MP3 file,
-as demonstrated by lol-mplayer.mp3; (2) a malformed Ogg Vorbis file,
-as demonstrated by lol-mplayer.ogg; (3) a malformed MPEG-1 file, as
-demonstrated by lol-mplayer.mpg; (4) a malformed MPEG-2 file, as
-demonstrated by lol-mplayer.m2v; (5) a malformed MPEG-4 AVI file, as
-demonstrated by lol-mplayer.avi; (6) a malformed FLAC file, as
-demonstrated by lol-mplayer.flac; (7) a malformed Ogg Theora file, as
-demonstrated by lol-mplayer.ogm; (8) a malformed WMV file, as
-demonstrated by lol-mplayer.wmv; or (9) a malformed AAC file, as
-demonstrated by lol-mplayer.aac.  NOTE: vector 5 might overlap
-CVE-2007-4938, and vector 6 might overlap CVE-2008-0486.
+Version ................ 21
+Released ............... 2008-07-12
+Lines .................. 387
+``execute'' statements:  8
+out of which exploitable ???
 
+I wasn't joking when I used grep in the first advisory to estimate the
+size of the problem.
 
-======================================================
-Name: CVE-2008-4610
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4610
-Reference: MLIST:[oss-security] 20081007 CVE request: crashers / potential security risks in mplayer
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/10/07/1
+>> The particular vulnerabilities detailed in the advisories are
+>> examples of a more widespread tendency in the Vim code. Should there
+>> be a separate CVE for the overall issue, alongside CVEs for the
+>> particular vulnerabilities?
+>
+> I'm not aware of any example of such generic umbrella CVE and I believe
+> "tendency" it not a good candidate for CVE id, as CVE should map to
+> particular vulnerability.  Though there are few special cases / CVEs,
+> so Steven may correct me in this.
 
-MPlayer allows remote attackers to cause a denial of service
-(application crash) via (1) a malformed AAC file, as demonstrated by
-lol-vlc.aac; or (2) a malformed Ogg Media (OGM) file, as demonstrated
-by lol-ffplay.ogm, different vectors than CVE-2007-6718.
+What I meant was, all those execute statements and system() calls
+should be fixed, which means quoting introduced, and until that
+happens, it doesn't really matter much if the problems with CVEs are
+fixed, because any script kiddie can just pick one of the places that
+will not have been fixed, and use one of the existing exploits.  But
+as I said, I know very little about CVE number assignment, and I fully
+submit to you collective wisdom.
 
+Have a nice day,
+Jan Minar.
 
+PS: I have published two more advisories:
+
+(1) Vim: Improper Implementation of shellescape()/Arbitrary Code Execution
+    http://www.rdancer.org/vulnerablevim-shellescape.html
+    -- This is two issues:
+          (a) Flawed implementation of shellescape() (not all
+metacharacters are escaped)
+          (b) Updated still the same tar.vim exploit to use the
+abovementioned vulnerability
+
+(2) Arbitrary code execution in Netrw version 127, Vim 7.2b
+    http://www.rdancer.org/vulnerablevim-netrw.v5.html
+    -- This is new vulnerability, same old pattern: 6 instances of
+unsanitized execute statemtents
+
+The updated testsuite:
+http://www.rdancer.org/vulnerablevim-latest.tar.bz2
