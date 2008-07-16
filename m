@@ -1,28 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/13/2
-Message-ID: <Pine.GSO.4.51.0808122019150.26550@faron.mitre.org>
-Date: Tue, 12 Aug 2008 20:23:33 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/16/6
+Message-ID: <20080716135824.GD11937@ngolde.de>
+Date: Wed, 16 Jul 2008 15:58:24 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: phpmyadmin < 2.11.8
+Subject: Re: CVE request: Wordpress XSS
 Content-Type: text/plain; charset=utf-8
 
+Hi Tomas,
+* Tomas Hoger <thoger@...hat.com> [2008-07-16 14:01]:
+> On Tue, 15 Jul 2008 19:22:47 +0200 Hanno Böck <hanno@...eck.de> wrote:
+> > http://trac.wordpress.org/ticket/7220
+> > 
+> > Fixed in 2.6.
+> 
+> According to
+> 
+>   http://wordpress.org/development/2008/07/wordpress-26-tyner/
+> 
+> affected Press This! feature is one of the "hot" news in wordpress
+> 2.6.  Affected wp-admin/press-this.php does not seem to exist in
+> previous stable version 2.5.1.  This is just based on the very quick
+> look, but it seems this issue may only affect some development SVN
+> snapshots, but no released version.  Please correct me if I'm wrong.
 
-On Fri, 8 Aug 2008, Nico Golde wrote:
+I just confirmed this. This vulnerability was never present 
+in any released wordpress version.
 
-> > Name: CVE-2008-3457
-> > ...
->
-> Hmm where is the issue here? Sure the application is
-> vulnerable if an attacker can edit a file that is included
-> all over the place. I think you have way more problems than
-> an XSS in setup.php in such a case.
+Kind regards
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-I agree that it doesn't sound like much of an issue (and setup.php being
-left around sounds suspicious in itself), but we take the approach that if
-a vendor thinks it's important enough to issue a security advisory, we'll
-tag it on the assumption that vendors don't have any motivation to
-over-inflate the importance of a bug without some consideration of
-security risk.
-
-- Steve
+Content of type "application/pgp-signature" skipped
