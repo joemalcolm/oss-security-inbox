@@ -1,33 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/04/2
-Message-Id: <1228405150.3608.62.camel@dhcp-lab-164.englab.brq.redhat.com>
-Date: Thu, 04 Dec 2008 16:39:10 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security@...ts.openwall.com, security@...y-lang.org
-Subject: ruby CVE-2008-4310 (Red Hat specific)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/16/5
+Message-ID: <20080716134655.582373cf@redhat.com>
+Date: Wed, 16 Jul 2008 13:46:55 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: hanno@...eck.de
+Cc: oss-security@...ts.openwall.com, coley@...re.org
+Subject: Re: CVE request: Wordpress XSS
 Content-Type: text/plain; charset=utf-8
 
-Hello guys,
+On Tue, 15 Jul 2008 19:22:47 +0200 Hanno Böck <hanno@...eck.de> wrote:
 
-This is just a heads-up to avoid confusion, as we are releasing Ruby
-updates that address one Red Hat-specific problem that was assigned
-CVE id CVE-2008-4310.
+> http://trac.wordpress.org/ticket/7220
+> 
+> Fixed in 2.6.
 
-In our security update to address CVE-2008-3656 [1] we have managed to
-use incorrect patch, that did not address the flaw as was stated in the
-advisory. Therefore, we are using CVE-2008-4310 as an identifier for
-this incomplete / incorrect fix.
+According to
 
-This issue is specific to the previously released Ruby updates for Red
-Hat Enteprise Linux 4 and 5.  This is unlikely to affect anyone else
-that does not ship this packages based on these.  No new flaw was
-discovered, if you've applied correct patch, you can safely ignore this
-CVE.
+  http://wordpress.org/development/2008/07/wordpress-26-tyner/
 
-[1] https://rhn.redhat.com/errata/RHSA-2008-0897.html
+affected Press This! feature is one of the "hot" news in wordpress
+2.6.  Affected wp-admin/press-this.php does not seem to exist in
+previous stable version 2.5.1.  This is just based on the very quick
+look, but it seems this issue may only affect some development SVN
+snapshots, but no released version.  Please correct me if I'm wrong.
 
-
-Thanks, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
+-- 
+Tomas Hoger / Red Hat Security Response Team
