@@ -1,29 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/04/10
-Message-ID: <20080404222204.GB24481@openwall.com>
-Date: Sat, 5 Apr 2008 02:22:04 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/16/10
+Message-ID: <Pine.GSO.4.51.0807161348480.3856@faron.mitre.org>
+Date: Wed, 16 Jul 2008 13:48:55 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: wiki: vendor info
+Subject: Re: CVE id request: byacc
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Apr 04, 2008 at 10:11:35PM +0000, Andrea Barisani wrote:
-> Yep, I'll be happy to do that.
 
-Please register for a wiki account and start editing.
+======================================================
+Name: CVE-2008-3196
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3196
+Reference: MLIST:[openbsd-cvs] 20080708 CVS: cvs.openbsd.org: src
+Reference: URL:http://marc.info/?l=openbsd-cvs&m=121553004431393&w=2
+Reference: MLIST:[openbsd-cvs] 20080708 Re: CVS: cvs.openbsd.org: src
+Reference: URL:http://marc.info/?l=openbsd-cvs&m=121553036432044&w=2
 
-> I might also take the chance to expand vendor information with the additional
-> vendors I contacted but that are not present in that page.
+skeleton.c in yacc does not properly handle reduction of a rule with
+an empty right hand side, which allows context-dependent attackers to
+cause an out-of-bounds stack access when the yacc stack pointer points
+to the end of the stack.
 
-Good idea.  Also, maybe you could invite them to join this mailing list?
-(Perhaps ask me first to confirm that they are not already on the list.)
 
-BTW, we currently have two pages with vendor info: one is with security
-contacts and advisory links, and the other is with "patch-finding" info.
-Perhaps you should update both whenever you can obtain the necessary
-info.  Or maybe we should combine them into one page - this needs to be
-discussed in here first.
-
-Thanks,
-
-Alexander
