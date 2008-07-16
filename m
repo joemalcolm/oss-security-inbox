@@ -1,21 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/27/10
-Message-ID: <Pine.GSO.4.51.0807271756560.20336@faron.mitre.org>
-Date: Sun, 27 Jul 2008 17:57:05 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/16/12
+Message-ID: <87bq0xod77.fsf@mid.deneb.enyo.de>
+Date: Wed, 16 Jul 2008 21:12:44 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: horde3/turba2
+Subject: Re: CVE request: PowerDNS recursor source port randomization
 Content-Type: text/plain; charset=utf-8
 
+* Florian Weimer:
 
-======================================================
-Name: CVE-2008-3330
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3330
-Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=492578
+> 3.1.5 did not use the strong PRNG for source port selection.
+> References:
+>
+> <http://doc.powerdns.com/changelog.html#CHANGELOG-RECURSOR-3-1-6>
+> <http://wiki.powerdns.com/cgi-bin/trac.fcgi/changeset/1179>
+>
+> Somehow this fell through the cracks. 8-(
 
-Cross-site scripting (XSS) vulnerability in
-services/obrowser/index.php in Horde 3.2 and Turba 2.2 allows remote
-attackers to inject arbitrary web script or HTML via the contact name.
+We reissued a new security update with the old CVE, as no decision on a
+SPLIT was reached in time.
 
-
+I believe that the CVE description should be updated ("before version
+3.1.6" instead of "before version 3.1.5").
