@@ -1,25 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/11/1
-Message-ID: <4918D1A0.7030907@redhat.com>
-Date: Tue, 11 Nov 2008 08:28:16 +0800
-From: Eugene Teo <eteo@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/16/3
+Message-Id: <200807161336.33402.hanno@hboeck.de>
+Date: Wed, 16 Jul 2008 13:36:33 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>, Greg KH <greg@...ah.com>
-Subject: Re: CVE requests: kernel: hfsplus-related bugs
+Subject: Re: CVE request: phpmyadmin < 2.11.7.1
 Content-Type: text/plain; charset=utf-8
 
-Steven M. Christey wrote:
-> On Mon, 10 Nov 2008, Eugene Teo wrote:
-> 
->> Both patches validate the catalog name length.
-> 
-> Thanks for the clarification.
-> 
-> Is there any reference for this issue (say, a bug ID) besides your post to
-> oss-security?
+Am Dienstag 15 Juli 2008 schrieb Thijs Kinkhorst:
+> On Tuesday 15 July 2008 21:00, Hanno Böck wrote:
+> > From Changelog:
+> > - protection against XSS when register_globals is on and .htaccess
+> >   has no effect, thanks to Tim Starling
+>
+> Note: this has already been assigned CVE-2008-2960 following a previous
+> request from you.
 
-Yes.
+This line is from the 2.11.7.1-changelog, while cve-2008-2960 has been fixed 
+in 2.11.7. So either their changelogs are mixed up or it's a different issue.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2008-5025
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
-Thanks, Eugene
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
