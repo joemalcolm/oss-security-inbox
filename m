@@ -1,32 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/25/1
-Message-Id: <200810251511.59777.rbu@gentoo.org>
-Date: Sat, 25 Oct 2008 15:11:56 +0200
-From: Robert Buchholz <rbu@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: Not a security issue: htpdate "buffer overflow"
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/16/2
+Message-ID: <6edf76c20807160335o266845b9x2f51a4dbeeecbbb2@mail.gmail.com>
+Date: Wed, 16 Jul 2008 11:35:01 +0100
+From: "Jan Minář" <rdancer@...ncer.org>
+To: "Tomas Hoger" <thoger@...hat.com>
+Cc: oss-security@...ts.openwall.com,  "Jonathan Smith" <smithj@...ethemallocs.com>, coley@...us.mitre.org,  "Bram Moolenaar" <Bram@...lenaar.net>,  "Charles E Campbell, Jr" <drchip@...pbellfamily.biz>
+Subject: Re: Re: More arbitrary code executions in Netrw version 125, Vim 7.2a.10
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Tue, Jul 15, 2008 at 4:43 PM, Tomas Hoger <thoger@...hat.com> wrote:
+> On Sun, 13 Jul 2008 01:35:42 +0100 "Jan Minář" <rdancer@...ncer.org>
+> wrote:
+>
+>> Thanks for CCing me.  Thomas's observations are right.
+>
+> No problem.  Your inputs are really appreciated, as you obviously spent
+> a lot of time on researching those issues.
+>
+>> > CVE-2008-2712 description does not mention tar.vim issue.  It is
+>> > described in 3.4.2.3, but its test does not seem to be run when
+>> > doing make test for the top-most Makefile in the first test suite.
+>>
+>> That's correct, I omitted the test from the top-most Makefile by
+>> mistake.
+>
+> I believe this is already corrected in your updated test suite:
+> http://www.rdancer.org/vulnerablevim.2008-07-13.tar.bz2
+>
+> On Thu, 10 Jul 2008 18:55:46 +0200 Tomas Hoger <thoger@...hat.com>
+> wrote:
+>
+>> Jonathan, did new netrw tests work for you?  With which vim version?
+>> They all failed for me with vim 7.1.245 / netrw 109.
+>
+> Regarding those new netrw issues:
+>
+> - Issues 1 (netrw.v2) and 2 (netrw.v3) (for mz and mc commands) does not
+> seem to affect any stable version of vim.  Support for those commands
+> was only added after vim 7.1 and should only affect 7.2 alpha (and
+> possibly also beta, which was released this week iirc).
 
-a user reported[1] an apparant security issue to use regarding htpdate, 
-which states in their changelog[2]:
-" - Fixed a buffer overflow when time offset gets to large
-    https://dev.openwrt.org/cgi-bin/trac.fcgi/ticket/3940 "
+As has been pointed out elsewhere, the runtime (netrw.vim being part
+of it) updates are independently of the patches -- at the time of the
+release of the first advisory, the contemporary runtime had some of
+the vulnerabilities fixed, for example.  I'm not sure if the changes
+are kept track of outside of the point releases.  Since distributions
+generally pick whatever is current at the time of the release, is it
+meaningful to say x.y is vulnerable, and x.z isn't?  The runtime files
+are versioned and dated, so for example the first version of ftp.vim
+not vulnerable is version 21 of 2008-07-12.
 
-However, the diff upstream applied shows this only is an integer 
-overflow, which they also confirmed via mail:
-'Sorry for the wrong wordings, but it is indeed "only" an integer 
-overflow.'
+> Steven, are you going to split / de-dupe CVE ids based on this
+> information and the information in my post in other thread:
+>
+> http://www.openwall.com/lists/oss-security/2008/07/15/2 ?
 
-Since other distros also seem to ship htpdate, hopefully this helps to 
-save some time.
+You people are obviously more versed in assigning CVEs, so let me
+submit very humbly:  The overall issue is that up until recently Vim
+script did not provide any means of quoting metacharacters.  At the
+time of the first advisory, there were close to a thousand ``execute''
+statements.   The particular vulnerabilities detailed in the
+advisories are examples of a more widespread tendency in the Vim code.
+ Should there be a separate CVE for the overall issue, alongside CVEs
+for the particular vulnerabilities?
 
+From what I could find on the web this morning, I'm not sure whether
+this is the way CVEs are supposed to work.  There will surely be more
+confirmed vulnerabilities, and it would be nice to be able to point to
+a CVE number and say: ``This is one of the vulnerabilities under
+CVE-2008-xxxx''?
 
-Robert
+I hope I've helped the discussion a bit.
 
-[1] https://bugs.gentoo.org/show_bug.cgi?id=243294
-[2] http://www.clevervest.com/twiki/bin/view/HTP/ChangelogC
-[3] http://bugs.gentoo.org/attachment.cgi?id=169570&action=view
+Jan Minar.
 
-Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
+PS: The buffer overflow is interesting -- thanks!
