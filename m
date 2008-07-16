@@ -1,23 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/02/1
-Message-ID: <Pine.GSO.4.51.0804021102590.23425@faron.mitre.org>
-Date: Wed, 2 Apr 2008 11:04:38 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Tomas Hoger <thoger@...hat.com>
-cc: coley@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE id request: mod_suphp
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/16/7
+Message-ID: <20080716141245.GE11937@ngolde.de>
+Date: Wed, 16 Jul 2008 16:12:45 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Critical vuln in Firefox 3.0
 Content-Type: text/plain; charset=utf-8
 
+Hi Steven,
+* Steven M. Christey <coley@...us.mitre.org> [2008-06-19 22:09]:
+> Name: CVE-2008-2785
+> Status: Candidate
+> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2785
+> Reference: MISC:http://dvlabs.tippingpoint.com/blog/2008/06/18/vulnerability-in-mozilla-firefox-30
+> Reference: BID:29802
+> Reference: URL:http://www.securityfocus.com/bid/29802
+> Reference: FRSIRT:ADV-2008-1873
+> Reference: URL:http://www.frsirt.com/english/advisories/2008/1873
+> Reference: SECUNIA:30761
+> Reference: URL:http://secunia.com/advisories/30761
+> Reference: XF:firefox-unspecified-code-execution(43167)
+> Reference: URL:http://xforce.iss.net/xforce/xfdb/43167
+> 
+> Unspecified vulnerability in Firefox 3.0 and 2.0.x has unknown impact
+> and remote attack vectors, aka ZDI-CAN-349.
 
-======================================================
-Name: CVE-2008-1614
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1614
-Reference: MLIST:[suPHP] 20080330 SECURITY ISSUE: Immediate update advised
-Reference: URL:http://lists.marsching.biz/pipermail/suphp/2008-March/001750.html
+There is a description of the vulnerability available now in 
+the mozilla security advisory on:
+http://www.mozilla.org/security/announce/2008/mfsa2008-34.html
 
-suPHP before 0.6.3 allows local users to gain privileges via (1) a
-race condition that involves multiple symlink changes to point a file
-owned by a different user, or (2) a symlink to the directory of a
-different user, which is used to determine privileges.
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
+Content of type "application/pgp-signature" skipped
