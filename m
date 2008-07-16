@@ -1,27 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/17/23
-Message-Id: <200812171545.37760.steffen.joeris@skolelinux.de>
-Date: Wed, 17 Dec 2008 15:45:31 +0100
-From: Steffen Joeris <steffen.joeris@...lelinux.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/16/4
+Message-ID: <20080716113614.GB11937@ngolde.de>
+Date: Wed, 16 Jul 2008 13:36:14 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE id request: php-xajax
+Subject: Re: CVE id request: libavformat
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Hi Steffen,
+* Steffen Joeris <steffen.joeris@...lelinux.de> [2008-07-09 17:02]:
+[...] 
+> Upstream patch:
+> http://svn.mplayerhq.hu/ffmpeg/trunk/libavformat/psxstr.c?r1=13993&r2=13992&pathrev=13993
+> 
+> Debian bugreport:
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=489965
+> 
+> Could I get a CVE id for this?
 
-Steven, I am not sure, if you want to assign a new CVE id for this, but since 
-we did it for several other issues where an incomplete patch was issued, I 
-guess it can be done here as well.
-
-The patch for CVE-2007-2739 seems incomplete as it doesn't escape "&".
-I recommend removing the replace call and using htmlspecialchars() instead.
-
-Also, I seem to be unable to find anything regarding CVE-2007-2740. Did anyone 
-manage to find a patch or even what kind of issue we are talking about? I 
-only see the XSS.
-
+Seems to be CVE-2008-3162.
 Cheers
-Steffen
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+Content of type "application/pgp-signature" skipped
