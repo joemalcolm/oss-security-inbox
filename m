@@ -1,26 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/15/3
-Message-ID: <20080415222411.GB2549@ngolde.de>
-Date: Wed, 16 Apr 2008 00:24:11 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/17/1
+Message-ID: <20080717211052.GA14420@shadow.in.ua>
+Date: Fri, 18 Jul 2008 00:10:52 +0300
+From: Michail Litvak <mci@....openwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: cecilia insecure temporary file usage
+Cc: chris@...ry.beasts.org
+Subject: Re: vsftpd CVE-2007-5962 (Red Hat / Fedora specific)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=476321
-cecilia[0] writes data into a predictable temporary file not 
-opening with O_EXCL and opens this up for a symlink attack.
+Hello Jonathan Smith! 
 
-Can I get a CVE id please for this one?
+ Wed, May 21, 2008 at 11:34:42AM -0800, smithj wrote about "Re: [oss-security] vsftpd CVE-2007-5962 (Red Hat / Fedora specific)": 
 
-[0] http://cecilia.sourceforge.net/
+> Tomas Hoger wrote:
+> | This is just a heads-up.  We are releasing updated vsftpd packages
+> | containing a fix for a minor memory leak identified by CVE-2007-5962.
+> 
+> The memory leak itself is CVE-2007-5962? Or is the CVE for the original
+> issue where deny_hosts didn't work as expected? It doesn't seem to be
+> public.
 
-Kind regards
-Nico
+As I understand RH released patch to fix problem with deny_file
+statement (not hosts) -- https://bugzilla.redhat.com/show_bug.cgi?id=174764
+
+But introduce memory leak (CVE-2007-5962) and release package with
+fixed version of their patch.
+
+Please correct me if I make mistake, but seems this is a typo and
+You mean deny_file, not deny_hosts.
 
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+//ShaD0w
