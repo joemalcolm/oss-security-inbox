@@ -1,30 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/04/4
-Message-ID: <48BFED69.5010001@redhat.com>
-Date: Thu, 04 Sep 2008 22:15:05 +0800
-From: Eugene Teo <eteo@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/18/1
+Message-ID: <Pine.GSO.4.51.0807181143320.17955@faron.mitre.org>
+Date: Fri, 18 Jul 2008 11:43:55 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-CC: coley@...re.org
-Subject: CVE request: kernel: nfsd: fix buffer overrun decoding NFSv4 acl
+cc: steffen.joeris@...lelinux.de
+Subject: Re: CVE id request: Clamav
 Content-Type: text/plain; charset=utf-8
 
-This was committed in upstream kernel recently.
 
-"[PATCH] nfsd: fix buffer overrun decoding NFSv4 acl
+On Tue, 8 Jul 2008, Tomas Hoger wrote:
 
-The array we kmalloc() here is not large enough."
+> Does anyone have more info?  From commit message, it looks like DoS, so
+> probably worth new id for an incomplete fix.
 
-Upstream commit:
-91b80969ba466ba4b915a4a1d03add8c297add3f
+======================================================
+Name: CVE-2008-3215
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3215
+Reference: MLIST:[oss-security] 20080708 Re: CVE id request: Clamav
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/07/08/5
+Reference: MLIST:[oss-security] 20080715 Re: CVE id request: Clamav
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/07/15/1
+Reference: CONFIRM:http://lurker.clamav.net/message/20080707.155612.ad411b00.en.html
+Reference: CONFIRM:http://svn.clamav.net/websvn/diff.php?repname=clamav-devel&path=/branches/0.93/libclamav/petite.c&rev=3920
+Reference: CONFIRM:https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1000#c4
 
-The array allocated in init_state() is not large enough. It is possible
-to write past the end of the allocated memory. This requires NFSv4 to be
-enabled.
+libclamav/petite.c in ClamAV before 0.93.3 allows remote attackers to
+cause a denial of service via a malformed Petite file that triggers an
+out-of-bounds memory access.  NOTE: this issue exists because of an
+incomplete fix for CVE-2008-2713.
 
-References:
-http://lkml.org/lkml/2008/9/3/286
-https://bugzilla.redhat.com/show_bug.cgi?id=461101
 
-Thanks, Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
