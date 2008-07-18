@@ -1,22 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/10/2
-Message-ID: <Pine.GSO.4.51.0811100944560.609@faron.mitre.org>
-Date: Mon, 10 Nov 2008 09:45:54 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/18/6
+Message-ID: <Pine.GSO.4.51.0807181148300.17955@faron.mitre.org>
+Date: Fri, 18 Jul 2008 11:48:34 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>, Greg KH <greg@...ah.com>
-Subject: Re: CVE requests: kernel: hfsplus-related bugs
+Subject: Re: CVE id request: op
 Content-Type: text/plain; charset=utf-8
 
 
-> 1) hfsplus: fix Buffer overflow with a corrupted image
-> Upstream commit: efc7ffcb4237f8cb9938909041c4ed38f6e1bf40
+======================================================
+Name: CVE-2008-3229
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3229
+Reference: MLIST:[oss-security] 20080712 CVE id request: op
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/07/12/4
+Reference: CONFIRM:http://swapoff.org/changeset/563
 
-CVE-2008-4933
+Stack-based buffer overflow in op before Changeset 563, when xauth
+support is enabled, allows local users to gain privileges via a long
+XAUTHORITY environment variable.
 
-> 2) hfsplus: check read_mapping_page() return value
-> Upstream commit: 649f1ee6c705aab644035a7998d7b574193a598a
 
-CVE-2008-4934
-
-- Steve
