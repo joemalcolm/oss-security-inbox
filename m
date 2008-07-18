@@ -1,38 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/12/2
-Message-Id: <200806121234.04677.hanno@hboeck.de>
-Date: Thu, 12 Jun 2008 12:34:01 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/18/5
+Message-ID: <Pine.GSO.4.51.0807181148050.17955@faron.mitre.org>
+Date: Fri, 18 Jul 2008 11:48:11 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: CVE id request: menalto gallery
+cc: coley@...re.org
+Subject: Re: CVE requests: joomla <1.5.4
 Content-Type: text/plain; charset=utf-8
 
-http://gallery.menalto.com/gallery_2.2.5_released
 
-cite:
+======================================================
+Name: CVE-2008-3225
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3225
+Reference: MLIST:[oss-security] 20080712 CVE requests: joomla <1.5.4
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/07/12/2
+Reference: CONFIRM:http://www.joomla.org/content/view/5180/1/
 
-Gallery 2.2.5 addresses the following security vulnerabilities:
+Joomla! before 1.5.4 allows attackers to access administration
+functionality, which has unknown impact and attack vectors related to
+a missing "LDAP security fix."
 
-    * XSS through host and path component of request URL - The complete 
-request URL is now properly sanitized (applying the same input filtering as 
-for all other inputs). This severe vulnerability affects all modules.
-    * Information disclosure in album-select module - Fixed exposure of album 
-titles through the album-select module when a guest would add a new album to 
-a hidden album.
-    * Permission escalation through zip archive extraction - No longer 
-creating sub-albums when adding items from a zip archive if the active user 
-does not have the necessary permission to do so.
-    * Information disclosure through embed.php - embed.php is no longer 
-susceptible to spoofing the remote address and thus no longer discloses the 
-local filesystem path of the Gallery 2 installation folder.
-    * View permissions not enforced for password protected items - No longer 
-offering the option to protect non-album items directly and only offering the 
-feature for albums since full protection only applies to the items within the 
-album.
 
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+======================================================
+Name: CVE-2008-3226
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3226
+Reference: MLIST:[oss-security] 20080712 CVE requests: joomla <1.5.4
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/07/12/2
+Reference: CONFIRM:http://www.joomla.org/content/view/5180/1/
 
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+The file caching implementation in Joomla! before 1.5.4 allows
+attackers to access cached pages via unknown attack vectors.
+
+
+======================================================
+Name: CVE-2008-3227
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3227
+Reference: MLIST:[oss-security] 20080712 CVE requests: joomla <1.5.4
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/07/12/2
+Reference: CONFIRM:http://www.joomla.org/content/view/5180/1/
+
+Unspecified vulnerability in Joomla! before 1.5.4 has unknown impact
+and attack vectors related to a "User Redirect Spam fix," possibly an
+open redirect vulnerability.
+
+
+======================================================
+Name: CVE-2008-3228
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3228
+Reference: MLIST:[oss-security] 20080712 CVE requests: joomla <1.5.4
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/07/12/2
+Reference: CONFIRM:http://www.joomla.org/content/view/5180/1/
+Reference: CONFIRM:http://www.joomla.org/content/view/5180/1/1/1/#htaccess
+
+Joomla! before 1.5.4 does not configure .htaccess to apply certain
+security checks that "block common exploits" to SEF URLs, which has
+unknown impact and remote attack vectors.
+
+
