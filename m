@@ -1,31 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/08/1
-Message-ID: <48733DB0.1050700@redhat.com>
-Date: Tue, 08 Jul 2008 18:13:04 +0800
-From: Eugene Teo <eteo@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/18/2
+Message-ID: <Pine.GSO.4.51.0807181144510.17955@faron.mitre.org>
+Date: Fri, 18 Jul 2008 11:44:56 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-CC: coley@...re.org
-Subject: Re: 2.6.25.10 security fixes, please assign CVE id
+Subject: Re: CVE id request: projectl
 Content-Type: text/plain; charset=utf-8
 
-Marcus Meissner wrote:
-> http://lwn.net/Articles/288473/
-> 
->> Stable kernel 2.6.25.10
->> Posted Jul 3, 2008 15:34 UTC (Thu) by PaXTeam (subscriber, #24616) [Link] 
-[...]
->> 2.
->> http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.25.y.git;a=commitdiff;h=1e9a615bfce7996ea4d815d45d364b47ac6a74e8
->> is an even better one, it allows one to overflow the task struct refcount (a 32 bit atomic_t
->> on the affected amd64) and cause its subsequent freeing with dangling references to it all
->> over the place (including 'current' of the ptraced task itself). corresponding exploit avenues
->> abound.
-> 
-> I don't know if this one has a CVE yet.
 
-I'm cc'ing Steve just to make sure that this gets a CVE id.
+======================================================
+Name: CVE-2008-3216
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3216
+Reference: MLIST:[oss-security] 20080709 CVE id request: projectl
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/07/09/8
+Reference: CONFIRM:http://bugs.debian.org/489988
 
-Thanks,
-Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
+The save function in br/prefmanager.d in projectl 1.001 creates a
+projectL.prf file in the current working directory, which allows local
+users to overwrite arbitrary files via a symlink attack.
+
+
