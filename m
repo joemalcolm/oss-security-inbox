@@ -1,61 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/24/1
-Message-ID: <Pine.GSO.4.51.0809232122470.10422@faron.mitre.org>
-Date: Tue, 23 Sep 2008 21:22:57 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/18/4
+Message-ID: <Pine.GSO.4.51.0807181147300.17955@faron.mitre.org>
+Date: Fri, 18 Jul 2008 11:47:34 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security <oss-security@...ts.openwall.com>
+To: oss-security@...ts.openwall.com
 cc: coley@...re.org
-Subject: Re: CVE Request (gallery2)
+Subject: Re: CVE request: phpbb < 3.0.2
 Content-Type: text/plain; charset=utf-8
 
 
 ======================================================
-Name: CVE-2008-3662
+Name: CVE-2008-3224
 Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3662
-Reference: FULLDISC:20080918 menalto gallery: Session hijacking vulnerability, CVE-2008-3662
-Reference: URL:http://seclists.org/fulldisclosure/2008/Sep/0379.html
-Reference: MISC:http://int21.de/cve/CVE-2008-3662-gallery.html
-Reference: CONFIRM:http://gallery.menalto.com/gallery_1.5.9_released
-Reference: CONFIRM:http://gallery.menalto.com/gallery_2.2.6_released
-Reference: BID:31231
-Reference: URL:http://www.securityfocus.com/bid/31231
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3224
+Reference: MLIST:[oss-security] 20080712 CVE request: phpbb < 3.0.2
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/07/12/1
+Reference: CONFIRM:http://www.phpbb.com/community/viewtopic.php?f=14&t=1059565&sid=2d3a6352a484588e1ad80f09dd19fe33
 
-Gallery before 1.5.9, and 2.x before 2.2.6, does not set the secure
-flag for the session cookie in an https session, which can cause the
-cookie to be sent in http requests and make it easier for remote
-attackers to capture this cookie.
-
-
-======================================================
-Name: CVE-2008-4129
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4129
-Reference: CONFIRM:http://gallery.menalto.com/gallery_1.5.9_released
-Reference: CONFIRM:http://gallery.menalto.com/gallery_2.2.6_released
-Reference: BID:31231
-Reference: URL:http://www.securityfocus.com/bid/31231
-
-Gallery before 1.5.9, and 2.x before 2.2.6, does not properly handle
-ZIP archives containing symbolic links, which allows remote
-authenticated users to conduct directory traversal attacks and read
-arbitrary files via vectors related to the archive upload (aka zip
-upload) functionality.
-
-
-======================================================
-Name: CVE-2008-4130
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4130
-Reference: CONFIRM:http://gallery.menalto.com/gallery_2.2.6_released
-Reference: BID:31231
-Reference: URL:http://www.securityfocus.com/bid/31231
-Reference: SECUNIA:31858
-Reference: URL:http://secunia.com/advisories/31858
-
-Cross-site scripting (XSS) vulnerability in Gallery 2.x before 2.2.6
-allows remote attackers to inject arbitrary web script or HTML via a
-crafted Flash animation, related to the ability of the animation to
-"interact with the embedding page."
+Unspecified vulnerability in phpBB before 3.0.1 has unknown impact and
+attack vectors related to "urls gone through redirect() being used
+within login_box()."
 
 
