@@ -1,35 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/11/7
-Message-ID: <6edf76c20809111628q9f81a2eo9907128e1d995584@mail.gmail.com>
-Date: Fri, 12 Sep 2008 00:28:28 +0100
-From: "Jan Minář" <rdancer@...ncer.org>
-To: oss-security@...ts.openwall.com, coley@...re.org,  "Tomas Hoger" <thoger@...hat.com>,  "Karsten Hopp" <karsten@...hat.com>
-Subject: Re: [oss-list] CVE request (vim)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/20/2
+Message-ID: <48838E2A.40409@freethemallocs.com>
+Date: Sun, 20 Jul 2008 11:12:42 -0800
+From: Jonathan Smith <smithj@...ethemallocs.com>
+To: Tomas Hoger <thoger@...hat.com>
+CC: oss-security@...ts.openwall.com, coley@...us.mitre.org,  Bram Moolenaar <Bram@...lenaar.net>, "Charles E Campbell, Jr" <drchip@...pbellfamily.biz>,  Jan Minar <rdancer@...ncer.org>
+Subject: Re: Re: More arbitrary code executions in Netrw version 125, Vim 7.2a.10
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Sep 11, 2008 at 3:56 PM, Jan Lieskovsky <jlieskov@...hat.com> wrote:
-> Hello Steve,
->
->  found relatively old issue in Vim, which was not covered
-> by the CVE-2008-2712 patch. Could you please assign a new
-> CVE id for it:
->
-> Report: http://www.rdancer.org/vulnerablevim-K.html  [1]
-> Proposed patch: http://groups.google.com/group/vim_dev/attach/dd32ad3a84f36bb2/K-arbitrary-command-execution.patch?part=2
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-That's an early version.  The latest from me was the version 3 (three)
-of the patch -- attachment of this message:
+Sorry it took so long to get back; I've been rather busy lately.
 
-http://groups.google.com/group/vim_dev/msg/9290f26f9bc11b33
+Tomas Hoger wrote:
+> Jonathan, did new netrw tests work for you?  With which vim version?
+> They all failed for me with vim 7.1.245 / netrw 109.
 
-The whole thread is illustrative.
+No vulnerability was found for me for vim 7.1.213 with netrw 109, as
+compiled for rPath Linux.
 
-Also, patch 7.2.010 [0] addresses the issue (I'm not aware of anybody
-having analyzing it properly, as to what extent it really eradicates
-the vulnerability.  If anybody is going to do that, please keep me
-CC'd.).
+	smithj
 
-[0] http://ftp.vim.org/pub/vim/patches/7.2/7.2.010
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
 
-HTH,
-Jan.
+iEYEAREIAAYFAkiDjikACgkQCG91qXPaRemfSACfXqVyBkM2UIO9mTauAYHpcI2q
+/V8AoKG33DoPJOYOmeBwt4Uu5/MwJTjk
+=CQ9K
+-----END PGP SIGNATURE-----
