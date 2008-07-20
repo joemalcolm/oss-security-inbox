@@ -1,24 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/04/3
-Message-Id: <CD78D38B-81DF-496B-B0F7-617B917785AE@apple.com>
-Date: Thu, 4 Dec 2008 13:43:46 -0800
-From: David Remahl <dremahl@...le.com>
-To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE for SE-2008-06 in PHP 5.2.7 (ZipArchive)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/20/4
+Message-Id: <200807210119.09129.hanno@hboeck.de>
+Date: Mon, 21 Jul 2008 01:19:08 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Cc: coley@...re.org
+Subject: CVE request: mybb < 1.2.14
 Content-Type: text/plain; charset=utf-8
 
-http://www.sektioneins.de/advisories/SE-2008-06.txt
+http://community.mybboard.net/thread-33865.html
 
-PHP 5.2.7 addresses several CVEs that are listed in the NEWS file.  
-Apparently, it also addresses the above bug, but no CVE has been  
-assigned:
+From announcement:
 
-- Fixed extraction of zip files or directories when the entry name is a
-   relative path. (Pierre)
 
-The advisory from Stefan also does not contain a CVE.
+This security update fixes:
 
-Steve, please assign
+    * [Low Risk] HTML Injection vulnerability
 
-/ Regards, David
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
