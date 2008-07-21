@@ -1,49 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/27/1
-Message-id: <1204077336.32227.TMDA@linsec.ca>
-Date: Tue, 26 Feb 2008 18:53:23 -0700
-From: Vincent Danen <vdanen@...sec.ca>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/21/4
+Message-ID: <20080721154438.47a3514b@redhat.com>
+Date: Mon, 21 Jul 2008 15:44:38 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: wiki page/namespace names, wiki feature	requests, etc.
+Cc: rdancer@...ncer.org, "Jonathan Smith" <smithj@...ethemallocs.com>, coley@...us.mitre.org, "Bram Moolenaar" <Bram@...lenaar.net>, "Charles E Campbell, Jr" <drchip@...pbellfamily.biz>
+Subject: Re: Re: More arbitrary code executions in Netrw version 125, Vim 7.2a.10
 Content-Type: text/plain; charset=utf-8
 
-* [2008-02-25 09:22:28 -0500] Josh Bressers wrote:
+On Mon, 21 Jul 2008 12:57:48 +0100 "Jan Minář" <rdancer@...ncer.org>
+wrote:
 
->> > The problem I see though, is keeping track of all these terms.  Is there a
->> > way I could create a page called "terms:buffer_overflow", that would then
->> > be magically added to an index at "terms"?
->> 
->> I can install the auto-index plugin that does this.  Currently, we are running
->> a bare installation of DokuWiki with the minimal set of plugins.
->> 
->> One more topic to discuss is where all these Wiki enhancements should be
->> discussed.  I feel that oss-security is the wrong place since this
->> mailing list's goal is to discuss security and not the Wiki itself.
->> Perhaps, all Wiki-related discussions should go to to a namespace that
->> is describing the Wiki itself, and once some functionality is discussed
->> there - a short request for approval/disapproval should be posted here.
->> My concern is that if we move the whole Wiki-enhancement topic off this
->> list we might lose a connection between people on this list (who are
->> populating the Wiki) and a team who is maintaining the Wiki (currently,
->> it's me and Solar).
->> 
->
->I think you're getting a little too technical here. While in theory we
->could have a separate list for infrastructure discussions, it's probably
->too premature for that. If in the future, we find it's generating too much
->noise, we can do this. For now though, if someone doesn't care about the
->wiki, they can just not read those messages. I think discussing issues
->pertinent to the oss-security concept as a whole on this list is relevant
->and wise. As you say, if we move off-list, we will lose a lot of eyeballs.
+> Version 109 is probably too old.  There has been a lot of
+> functionality added since, and I presume a lot of refactoring done
+> too.  According to the [0]Netrw version history, marking files (used
+> by netrw.v2 & netrw.v3) was introduced in version 111.
 
-I agree.  And besides, this is 1-2 weeks old now?  Of course there will
-be some infrastructure issues to discuss now, but in 2mos time there
-probably won't be nearly as many.
+Agree.  netrw 109 bundled with vim 7.1 does not implement mz and mc
+commands, so is not affected by .v2 and .v3.  This was already
+mentioned in this thread.
 
-So there's some extra noise on the list for a few weeks while things get
-sorted out.  So what?  =)
+> On the other hand, these vulnerabilities should not depend on the Vim
+> version; the TIOCSTI method used in netrw.v4 ``test'' target may not
+> be very portable outside Un*x though.
+
+But 109 (and older) is affected by D command / .v4 issue, just the test
+case does not work with 109 out of the box.  Test assumes that the
+cursor in on the line right above the one showing crafted file name,
+but that does not seem to be correct assumption for 109 (netrw version
+differences or locale changes, I haven't really investigated).  See
+suggestion in my other reply.
 
 -- 
-Vincent Danen @ http://linsec.ca/
-
-Content of type "application/pgp-signature" skipped
+Tomas Hoger / Red Hat Security Response Team
