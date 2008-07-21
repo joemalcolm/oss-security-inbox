@@ -1,61 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/15/2
-Message-Id: <200804151207.46257.hanno@hboeck.de>
-Date: Tue, 15 Apr 2008 12:07:43 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com, coley@...re.org
-Cc: bugtraq@...urityfocus.com, full-disclosure@...ts.grok.org.uk
-Subject: clamav: Endless loop / hang with crafter arj, CVE-2008-1387
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/21/5
+Message-ID: <6edf76c20807210705n52240a6fy56f847341c5c5683@mail.gmail.com>
+Date: Mon, 21 Jul 2008 15:05:28 +0100
+From: "Jan Minář" <rdancer@...ncer.org>
+To: "Tomas Hoger" <thoger@...hat.com>
+Cc: oss-security@...ts.openwall.com,  "Jonathan Smith" <smithj@...ethemallocs.com>, coley@...us.mitre.org,  "Bram Moolenaar" <Bram@...lenaar.net>,  "Charles E Campbell, Jr" <drchip@...pbellfamily.biz>
+Subject: Re: Re: More arbitrary code executions in Netrw version 125, Vim 7.2a.10
 Content-Type: text/plain; charset=utf-8
 
-Advisory published at:
-http://int21.de/cve/CVE-2008-1387-clamav.html
+On Mon, Jul 21, 2008 at 2:44 PM, Tomas Hoger <thoger@...hat.com> wrote:
+> On Mon, 21 Jul 2008 12:57:48 +0100 "Jan Minář" <rdancer@...ncer.org>
+> wrote:
+>
+>> Version 109 is probably too old.  There has been a lot of
+>> functionality added since, and I presume a lot of refactoring done
+>> too.  According to the [0]Netrw version history, marking files (used
+>> by netrw.v2 & netrw.v3) was introduced in version 111.
+>
+> Agree.  netrw 109 bundled with vim 7.1 does not implement mz and mc
+> commands, so is not affected by .v2 and .v3.  This was already
+> mentioned in this thread.
+>
+>> On the other hand, these vulnerabilities should not depend on the Vim
+>> version; the TIOCSTI method used in netrw.v4 ``test'' target may not
+>> be very portable outside Un*x though.
+>
+> But 109 (and older) is affected by D command / .v4 issue, just the test
+> case does not work with 109 out of the box.  Test assumes that the
+> cursor in on the line right above the one showing crafted file name,
+> but that does not seem to be correct assumption for 109 (netrw version
+> differences or locale changes, I haven't really investigated).  See
+> suggestion in my other reply.
 
-clamav: Endless loop / hang with crafter arj, CVE-2008-1387
+I have updated the test suite, it tests v110 correctly as VULNERABLE now:
 
-References
+http://www.rdancer.org/vulnerablevim-latest.tar.bz2
 
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1387
-http://svn.clamav.net/svn/clamav-devel/trunk/ChangeLog
-http://www.cert.fi/haavoittuvuudet/joint-advisory-archive-formats.html
+Thanks.
 
-Description
-
-CERT-FI published an advisory with a large number of samples of crafted 
-archives.
-The file with the md5sum b6046d890e6bd304e3756c88b989559a (named 
-b6046d890e6bd304e3756c88b989559a.arj) hangs clamav with high load.
-
-If you're running clamav on a mailserver, an attacker can DoS your Server 
-remotely by sending some mails with the archive attached.
-
-Workaround/Fix
-
-clamav 0.93 fixes this issue beside other security issues, if you're running 
-clamav you should upgrade as soon as possible.
-
-Disclosure Timeline
-
-2008-03-17 CERT-FI publishes advisory
-2008-03-26 Vendor contacted
-2008-03-27 Vendor approves issue
-2008-04-14 Vendor releases 0.93
-2008-04-16 Advisory published
-
-CVE Information
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name 
-CVE-2008-1387 to this issue. This is a candidate for inclusion in the CVE 
-list (http://cve.mitre.org/), which standardizes names for security problems.
-
-Credits and copyright
-
-This vulnerability was discovered by Hanno Boeck of schokokeks.org webhosting. 
-It's licensed under the creative commons attribution license.
-
-Hanno Boeck, 2008-04-16, http://www.hboeck.de
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+Jan.
