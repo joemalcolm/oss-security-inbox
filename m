@@ -1,39 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/03/5
-Message-ID: <2060949893.46241223035591181.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 3 Oct 2008 08:06:31 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/21/2
+Message-ID: <20080721095603.5f099593@redhat.com>
+Date: Mon, 21 Jul 2008 09:56:03 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org, berrange@...hat.com
-Subject: Re: CVE Request (xen)
+Cc: coley@...re.org
+Subject: CVE request: mantis < 1.1.2
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
+Hi!
 
-This one seems to have slipped through the cracks.
+New mantis 1.1.2 fixes multiple security issues:
 
-Thanks.
+  http://www.mantisbt.org/bugs/changelog_page.php
+
+- 0008974: [security] XSS Vulnerability in filters (thraxisp) - closed.
+- 0008975: [security] CSRF Vulnerabilities in user_create (jreese) - closed.
+- 0008976: [security] Remote Code Execution in adm_config (giallu) -
+closed.
+- 0009154: [security] arbitrary file inclusion through user preferences
+page (giallu) - closed.
+
+First 3 are described in the bugtraq post from ~2months ago:
+
+  http://marc.info/?l=bugtraq&m=121130774617956&w=4
+
+with issue B) / CSRF / 0008975 being known as CVE-2008-2276.
 
 -- 
-    JB
-
-
------ "Josh Bressers" <bressers@...hat.com> wrote:
-
-> Hello,
-> 
-> This xen issue was just brought to our attention:
-> https://bugzilla.redhat.com/show_bug.cgi?id=464817
-> https://bugzilla.redhat.com/show_bug.cgi?id=464818
-> 
-> http://lists.xensource.com/archives/html/xen-devel/2008-09/msg00992.html
-> 
-> It seems that a xen guest can write some data into the xenstore that
-> is
-> later read by libvirt (and possibly other things), which could cause
-> troubles for the Xen admin.
-> 
-> Thanks.
-> 
-> -- 
->     JB
+Tomas Hoger / Red Hat Security Response Team
