@@ -1,46 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/19/16
-Message-ID: <20749.1203450603@devserv.devel.redhat.com>
-Date: Tue, 19 Feb 2008 14:50:03 -0500
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
-Subject: Re: charter - advisories
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/21/3
+Message-ID: <6edf76c20807210457i1254aab6q333c223c01f2ce17@mail.gmail.com>
+Date: Mon, 21 Jul 2008 12:57:48 +0100
+From: "Jan Minář" <rdancer@...ncer.org>
+To: "Jonathan Smith" <smithj@...ethemallocs.com>
+Cc: "Tomas Hoger" <thoger@...hat.com>, oss-security@...ts.openwall.com,  coley@...us.mitre.org, "Bram Moolenaar" <Bram@...lenaar.net>,  "Charles E Campbell, Jr" <drchip@...pbellfamily.biz>
+Subject: Re: Re: More arbitrary code executions in Netrw version 125, Vim 7.2a.10
 Content-Type: text/plain; charset=utf-8
 
-> On Tue, Feb 19, 2008 at 10:09:23AM -0700, Vincent Danen wrote:
-> > Yeah, I noticed this as well.  I think advisories should be kept off the
-> > list, for the same "signal-to-noise ratio" principal as bugtraq and FD.
-> 
-> For now, I've edited the charter draft as follows:
-> 
-> Security advisories aimed at end-users only are not welcome (e.g., those
-> from a distribution vendor announcing new pre-built packages).  There has
-> to be desirable information for others in the Open Source community
-> (e.g., an upstream maintainer may announce a new version of their
-> software with security fixes to be picked up by distributors).
-> 
-> If anyone can word it better, please do.
-> 
-> > It may be a better idea, if desired, to make a separate list that is a
-> > fully moderated (or possibly a reject-all with exceptions) list specific
-> > to carrying vendor advisories.
-> 
-> Yes, that was my idea too.  However, now that we mention the distinction
-> between two kinds of advisories (those for end-users only vs. those
-> useful to others as well), I am not sure which of these we want to go to
-> that other list.  Should we create a list for advisories that are useful
-> for us, then change the above guideline to "no advisories" for the main
-> oss-security list?  Or should we create a list for both kinds of
-> advisories?  In the latter case, should we ban the useful advisories
-> from the main oss-security list or should these be CC'ed to both lists?
-> Or should we create two new lists?..
-> 
+On Sun, Jul 20, 2008 at 8:12 PM, Jonathan Smith
+<smithj@...ethemallocs.com> wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+>
+> Sorry it took so long to get back; I've been rather busy lately.
+>
+> Tomas Hoger wrote:
+>> Jonathan, did new netrw tests work for you?  With which vim version?
+>> They all failed for me with vim 7.1.245 / netrw 109.
+>
+> No vulnerability was found for me for vim 7.1.213 with netrw 109, as
+> compiled for rPath Linux.
 
-Let's leave it be for now.  Given how much speculation this is causing, I'm
-hesitant to solve a problem that doesn't yet exist.
+Version 109 is probably too old.  There has been a lot of
+functionality added since, and I presume a lot of refactoring done
+too.  According to the [0]Netrw version history, marking files (used
+by netrw.v2 & netrw.v3) was introduced in version 111.
 
-I like the above text, that sounds nice.  If this proves to be a problem at
-a later date, we can create some new lists.
+On the other hand, these vulnerabilities should not depend on the Vim
+version; the TIOCSTI method used in netrw.v4 ``test'' target may not
+be very portable outside Un*x though.
 
--- 
-    JB
+[0] http://www.vim.org/scripts/script.php?script_id=1075
+
+Hope that helps.
+
+Jan.
