@@ -1,33 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/25/2
-Message-Id: <200810251520.57158.rbu@gentoo.org>
-Date: Sat, 25 Oct 2008 15:20:54 +0200
-From: Robert Buchholz <rbu@...too.org>
-To: vuln@...unia.com
-Cc: oss-security@...ts.openwall.com
-Subject: Regarding SA32329 (Smarty "_expand_quoted_text()" Security Bypass)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/23/1
+Message-ID: <6922.1216840848@devserv.devel.redhat.com>
+Date: Wed, 23 Jul 2008 15:20:48 -0400
+From: Josh Bressers <bressers@...hat.com>
+To: Jamie Strandboge <jamie@...onical.com>
+cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com
+Subject: Re: CVE request for dnsmasq DoS
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 8 July 2008, Jamie Strandboge wrote:
+> 
+> I finally had time to develop a PoC and confirm this on my own. A client
+> need only send a DHCPREQUEST for an IP address not on the same network
+> as dnsmasq. Eg:
+> 
+> 1. dnsmasq listening on and giving IP addresses for 192.168.122.0/24
+> 2. client requests IP address on another network, such as 192.168.0.1
+> 3. dnsmasq 2.25 (and presumably earlier) crashes
+> 
 
-unfortunately, Secunia does not list any references for SA32329 [1]. 
-Apparantly, they are refering to the last three commits to 
-libs/Smarty_Compiler.class.php, r2781:2797 [2].
+It seems there is also a problem with newer dnsmasq that is very similar to
+this:
+http://bugs.gentoo.org/show_bug.cgi?id=232523
 
-However, this issue is not fixed in 2.6.20, and I could not find a 
-2.6.20-1 release. I have no idea where this version information comes 
-from.
+That problem appears to be pretty much the same thing, but affecting
+versions 2.43 - 2.45
 
-It might be worthwhile to check applications that bundle smarty, like 
-tikiwiki, gallery 2 or PEAR-PhpDocumentor.
+Did this ever get a CVE id?
 
+I presume this new flaw will need one as well.
 
-Robert
+Thanks.
 
-[1] http://secunia.com/advisories/32329/
-[2] 
-http://code.google.com/p/smarty-php/source/list?path=/trunk/libs/Smarty_Compiler.class.php&start=2797
-https://bugs.gentoo.org/attachment.cgi?id=169804&action=view
-
-
-Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
+-- 
+    JB
