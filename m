@@ -1,45 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/15/3
-Message-Id: <1216122452.9537.6.camel@iankko.englab.brq.redhat.com>
-Date: Tue, 15 Jul 2008 13:47:32 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/24/1
+Message-Id: <200807240323.39387.rbu@gentoo.org>
+Date: Thu, 24 Jul 2008 03:23:33 +0200
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: byacc
+Cc: Josh Bressers <bressers@...hat.com>, Jamie Strandboge <jamie@...onical.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request for dnsmasq DoS
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Wednesday 23 July 2008, Josh Bressers wrote:
+> On 8 July 2008, Jamie Strandboge wrote:
+> > I finally had time to develop a PoC and confirm this on my own. A
+> > client need only send a DHCPREQUEST for an IP address not on the
+> > same network as dnsmasq. Eg:
+> >
+> > 1. dnsmasq listening on and giving IP addresses for
+> > 192.168.122.0/24 2. client requests IP address on another network,
+> > such as 192.168.0.1 3. dnsmasq 2.25 (and presumably earlier)
+> > crashes
+>
+> It seems there is also a problem with newer dnsmasq that is very
+> similar to this:
+> http://bugs.gentoo.org/show_bug.cgi?id=232523
+>
+> That problem appears to be pretty much the same thing, but affecting
+> versions 2.43 - 2.45
 
-  there is already for a long time known 
-possible out of allocated stack bounds access in yacc.
+I also had to think of this <2.26 issue when I saw the bug, but I did 
+not get to request a CVE yet, so thank you.
 
-Description of problem:
-=======================
+> Did this ever get a CVE id?
 
-Otto Moerbeck has reported the following potential out of bounds of the
-allocated stack access in the yacc binary:
+Yes, the <2.26 one is CVE-2008-3214.
 
-Fix an venerable bug: if we're reducing a rule that has an empty
-right hand side and the yacc stackpointer is pointing at the very
-end of the allocated stack, we end up accessing the stack out of
-bounds by the implicit $$ = $1 action.  Detected by my new malloc,
-experienced by sturm@ on sparc64; ok deraadt@
+Robert
 
-Public mention of this issue:
-=============================
-
-http://marc.info/?l=openbsd-cvs&m=121553004431393&w=2
-
-Proposed OpenBSD patch:
-=======================
-
-http://www.openbsd.org/cgi-bin/cvsweb/src/usr.bin/yacc/skeleton.c.diff?r1=1.28&r2=1.29
-
-Steve, could you please allocate a CVE identifier,
-we could use for future references to this one?
-
-Thank you in advance!
-
-Kind regards
-Jan iankko Lieskovsky
-RH Security Response Team
-
+Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
