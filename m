@@ -1,24 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/26/9
-Message-ID: <48B4207C.80802@redhat.com>
-Date: Tue, 26 Aug 2008 23:25:48 +0800
-From: Eugene Teo <eteo@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/24/2
+Message-Id: <200807240420.22187.rbu@gentoo.org>
+Date: Thu, 24 Jul 2008 04:20:19 +0200
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2008-3526 Linux kernel sctp_setsockopt_auth_key() integer overflow
+Cc: Josh Bressers <bressers@...hat.com>, Jamie Strandboge <jamie@...onical.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request for dnsmasq DoS
 Content-Type: text/plain; charset=utf-8
 
-An integer overflow flaw was found in the Linux kernel
-sctp_setsockopt_auth_key() function. The structure used for
-SCTP_AUTH_KEY option contains a length that needs to be verified to
-prevent integer overflow conditions.
+On Wednesday 23 July 2008, Josh Bressers wrote:
+> On 8 July 2008, Jamie Strandboge wrote:
+> > I finally had time to develop a PoC and confirm this on my own. A
+> > client need only send a DHCPREQUEST for an IP address not on the
+> > same network as dnsmasq. Eg:
+> >
+> > 1. dnsmasq listening on and giving IP addresses for
+> > 192.168.122.0/24 2. client requests IP address on another network,
+> > such as 192.168.0.1 3. dnsmasq 2.25 (and presumably earlier)
+> > crashes
+>
+> It seems there is also a problem with newer dnsmasq that is very
+> similar to this:
+> http://bugs.gentoo.org/show_bug.cgi?id=232523
+>
+> That problem appears to be pretty much the same thing, but affecting
+> versions 2.43 - 2.45
 
-This affects kernel versions since 2.6.24-rc1. The proposed upstream
-commit is: 30c2235cbc477d4629983d440cdc4f496fec9246. Note that the
-SCTP-AUTH extension is now disabled by default since last week with
-upstream commit 5e739d17.
+I could reproduce the issue using the dhcp_request.py Jamie sent 
+earlier. The problem manifests the same way as the 2.25 flaw, but it 
+only affects 2.43 -- 2.42 survives, and so does 2.44. However, that 
+release has been withdrawn [1] because of another bug.
 
-I have allocated this CVE-2008-3526.
+Hope that helps,
+Robert
 
-Thanks, Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
+[1] http://www.thekelleys.org.uk/dnsmasq/dnsmasq-2.44-REMOVED.txt
+
+Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
