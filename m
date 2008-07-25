@@ -1,28 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/26/2
-Message-ID: <Pine.GSO.4.51.0802261303360.2856@faron.mitre.org>
-Date: Tue, 26 Feb 2008 13:04:06 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/25/2
+Message-ID: <Pine.GSO.4.51.0807251137410.29569@faron.mitre.org>
+Date: Fri, 25 Jul 2008 11:39:42 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: lighttpd
+cc: cve@...re.org
+Subject: Re: CVE id request: moodle XSS and CSRF
 Content-Type: text/plain; charset=utf-8
 
 
-======================================================
-Name: CVE-2008-0983
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0983
-Reference: CONFIRM:http://trac.lighttpd.net/trac/ticket/1562
-Reference: BID:27943
-Reference: URL:http://www.securityfocus.com/bid/27943
-Reference: FRSIRT:ADV-2008-0659
-Reference: URL:http://www.frsirt.com/english/advisories/2008/0659/references
-Reference: SECUNIA:29066
-Reference: URL:http://secunia.com/advisories/29066
+Notice thewebroot disclosure in CVE-2008-3327.
 
-lighttpd 1.4.18, and possibly other versions before 1.5.0, does not
-properly calculate the size of a file descriptor array, which allows
-remote attackers to cause a denial of service (crash) via a large
-number of connections, which triggers an out-of-bounds access.
+- Steve
+
+
+======================================================
+Name: CVE-2008-3325
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3325
+Reference: MISC:http://www.procheckup.com/Vulnerability_PR08-16.php
+Reference: CONFIRM:http://moodle.org/mod/forum/discuss.php?d=101405
+
+Cross-site request forgery (CSRF) vulnerability in Moodle 1.6.x before
+1.6.7 and 1.7.x before 1.7.5 allows remote attackers to modify profile
+settings and gain privileges as other users via a link or IMG tag to
+the user edit profile page.
+
+
+======================================================
+Name: CVE-2008-3326
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3326
+Reference: MISC:http://www.procheckup.com/Vulnerability_PR08-13.php
+Reference: CONFIRM:http://moodle.org/mod/forum/discuss.php?d=101401
+
+Cross-site scripting (XSS) vulnerability in blog/edit.php in Moodle
+1.6.x before 1.6.7 and 1.7.x before 1.7.5 allows remote attackers to
+inject arbitrary web script or HTML via the etitle parameter (blog
+entry title).
+
+
+======================================================
+Name: CVE-2008-3327
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3327
+Reference: MISC:http://www.procheckup.com/Vulnerability_PR08-15.php
+Reference: CONFIRM:http://moodle.org/mod/forum/discuss.php?d=101403
+
+Moodle 1.6.5, when display_errors is enabled, allows remote attackers
+to obtain the full installation path via a direct request to (1)
+blog/blogpage.php and (2) course/report/stats/report.php, which leaks
+the path in an error message.
 
 
