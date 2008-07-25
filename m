@@ -1,21 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/11/2
-Message-ID: <Pine.GSO.4.51.0806102037420.23282@faron.mitre.org>
-Date: Tue, 10 Jun 2008 20:37:57 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/25/1
+Message-Id: <200807250917.50664.ludwig.nussel@suse.de>
+Date: Fri, 25 Jul 2008 09:17:50 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: exploitability of off-by-one in motion webserver
+Cc: cve@...re.org
+Subject: CVE id request: moodle XSS and CSRF
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-On Tue, 10 Jun 2008, Nico Golde wrote:
+The moodle project has fixed a CSRF issue
+http://moodle.org/mod/forum/discuss.php?d=101405
+and an XSS problem
+http://moodle.org/mod/forum/discuss.php?d=101401
 
-> Hi,
-> in http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=484572 I
-> reported an off-by-one programming error in motion:
->
-> 1950 static int read_client(int client_socket, void *userdata, char *auth)
+cu
+Ludwig
 
-Use CVE-2008-2654
+-- 
+ (o_   Ludwig Nussel
+ //\   
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
 
-- Steve
+
