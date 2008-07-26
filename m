@@ -1,25 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/03/2
-Message-ID: <Pine.GSO.4.51.0803022346450.27505@faron.mitre.org>
-Date: Sun, 2 Mar 2008 23:47:17 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Robert Buchholz <rbu@...too.org>
-cc: oss-security@...ts.openwall.com, coley@...re.org
-Subject: Re: CVE request: lighttpd mod_cgi script source disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/26/3
+Message-ID: <20080726195507.GP32057@genesis.frugalware.org>
+Date: Sat, 26 Jul 2008 21:55:07 +0200
+From: Miklos Vajna <vmiklos@...galware.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: drupal issue in < 5.9
 Content-Type: text/plain; charset=utf-8
 
+On Sat, Jul 26, 2008 at 09:27:33PM +0200, Nico Golde <oss-security+ml@...lde.de> wrote:
+> Hi Miklos,
+> * Miklos Vajna <vmiklos@...galware.org> [2008-07-26 21:13]:
+> > DRUPAL SA-2008-046
+> > http://drupal.org/node/286417
+> > 
+> > Contains a session fixation.
+> 
+> This is CVE-2008-3222.
 
-On Mon, 3 Mar 2008, Robert Buchholz wrote:
+Isn't this different?
 
-> mod_cgi in lighttpd 1.4.18 (and earlier?) will send the source of a cgi
-> script if it fails to fork the cgi handler, instead of an HTTP 500.
-> mod_cgi is disabled by default.
->
-> See for a patch:
->   http://trac.lighttpd.net/trac/changeset/2107
->   https://bugs.gentoo.org/show_bug.cgi?id=211956
+It refers to http://www.openwall.com/lists/oss-security/2008/07/10/3
+which is a bug fixed in 5.8.
 
+The issue I'm talking about is _not_ fixed in 5.8.
 
-Use CVE-2008-1111 - this will be public (in CVE) sometime on Monday.
+Thanks.
 
-- Steve
+Content of type "application/pgp-signature" skipped
