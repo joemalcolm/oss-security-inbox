@@ -1,36 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/05/3
-Message-ID: <20080305092432.GA10542@steve.org.uk>
-Date: Wed, 5 Mar 2008 09:24:32 +0000
-From: Steve Kemp <steve@...ve.org.uk>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/26/4
+Message-ID: <Pine.GSO.4.51.0807261642140.23860@faron.mitre.org>
+Date: Sat, 26 Jul 2008 16:44:16 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: request CVE id: insecure handling of DISPLAY in rxvt
+Subject: Re: CVE request: drupal issue in < 5.9
 Content-Type: text/plain; charset=utf-8
 
-On Wed Mar 05, 2008 at 10:19:09 +0100, Tomas Hoger wrote:
 
-> Yes, many assumptions and ifs, but still silently assuming DISPLAY=:0
-> when no DISPLAY is set does not sound like a safe default.
+On Sat, 26 Jul 2008, Miklos Vajna wrote:
 
-  Agreed.
+> On Sat, Jul 26, 2008 at 09:27:33PM +0200, Nico Golde <oss-security+ml@...lde.de> wrote:
+> >
+> > This is CVE-2008-3222.
+>
+> Isn't this different?
+>
+> It refers to http://www.openwall.com/lists/oss-security/2008/07/10/3
+> which is a bug fixed in 5.8.
+>
+> The issue I'm talking about is _not_ fixed in 5.8.
 
-> But then  I also don't understant what you mean by "setup an fake X  
-> server waiting for someone loggin in..."
+My interpretation of this new advisory is that they meant to fix the
+session fixation in 5.8, but they didn't.  The original advisory covered
+multiple other issues as well.  So this new advisory might better be
+considered a clarification of versions for the session fixation, rather
+than a regression error or incomplete fix (which would require a new CVE).
 
-  This should be a matter of running 'startx' appropriately.  I was
- under the misapprehension that only root could startup X, but that
- seems not to be the case.
+Granted, the lack of specifics from Drupal makes it difficult to be
+certain about what happened.
 
-  Providing the host wasn't already running X then it might be possible
- for local users to launch a copy they control.
-
-> Could you describe the attack scenario in  a bit more details?
-
-  I'd look forward to that too.
-
-
-Steve
--- 
-# The Debian Security Audit Project.
-http://www.debian.org/security/audit
-
+- Steve
