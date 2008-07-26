@@ -1,60 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/06/1
-Message-ID: <20080406102643.GI4969@fuse.inversepath.com>
-Date: Sun, 6 Apr 2008 10:26:43 +0000
-From: Andrea Barisani <lcars@...rt.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/26/1
+Message-ID: <20080726175901.GO32057@genesis.frugalware.org>
+Date: Sat, 26 Jul 2008 19:59:01 +0200
+From: Miklos Vajna <vmiklos@...galware.org>
 To: oss-security@...ts.openwall.com
-Subject: [oCERT 2008-02] libfishsound insufficient boundary checks
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: drupal issue in < 5.9
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-2008/04/06 #2008-02 libfishsound insufficient boundary checks
+DRUPAL SA-2008-046
+http://drupal.org/node/286417
 
-Description:
+Contains a session fixation.
 
-The libfishsound decoder library incorrectly implements the reference speex
-decoder from the Speex library, performing insufficient boundary checks on a
-header structure read from user input.
+Thanks.
 
-A user controlled field in the header structure is used to build a function
-pointer. The libfishsound implementation does not check for negative values for
-the field, allowing the function pointer to be pointed at an arbitary position
-in memory. This allows remote code execution.
-
-A patch has been committed to the libfishsound public repository.
-
-Affected version: <= 0.9.0
-
-Fixed version: current svn tree
-
-Additional affected packages:
-
-Illuminable DirectShow Filters for Ogg Vorbis, which statically include the
-libfishsound library.
-
-Credit: reporter wishes to remain anonymous
-
-CVE: N/A
-
-Timeline:
-
-2008-04-05: vulnerability report received
-2008-04-05: contacted libfishsound maintainers
-2008-04-06: upstream maintainer publicly releases patch
-2008-04-06: advisory release
-
-References:
-http://trac.annodex.net/changeset/3535
-http://trac.annodex.net/changeset/3536
-http://www.annodex.net/software/libfishsound
-
-Permalink:
-http://www.ocert.org/advisories/ocert-2008-2.html
-
--- 
-Andrea Barisani |                Founder & Project Coordinator
-          oCERT | Open Source Computer Emergency Response Team
-
-<lcars@...rt.org>                         http://www.ocert.org
- 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
-        "Pluralitas non est ponenda sine necessitate"
+Content of type "application/pgp-signature" skipped
