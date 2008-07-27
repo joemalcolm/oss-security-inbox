@@ -1,18 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/11/3
-Message-ID: <Pine.GSO.4.51.0806102146590.23282@faron.mitre.org>
-Date: Tue, 10 Jun 2008 21:47:06 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/27/11
+Message-ID: <Pine.GSO.4.51.0807271822290.20336@faron.mitre.org>
+Date: Sun, 27 Jul 2008 18:22:38 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
 cc: coley@...re.org
-Subject: Re: CVE-Request: courier-authlib sql injection
+Subject: Re: CVE request: mantis < 1.1.2
 Content-Type: text/plain; charset=utf-8
 
 
-On Sun, 8 Jun 2008, Hanno [utf-8] Böck wrote:
+======================================================
+Name: CVE-2008-2276
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2276
+Reference: BUGTRAQ:20080520 Mantis Bug Tracker 1.1.1 Multiple Vulnerabilities
+Reference: URL:http://marc.info/?l=bugtraq&m=121130774617956&w=4
+Reference: CONFIRM:http://sourceforge.net/project/shownotes.php?group_id=14963&release_id=595025
+Reference: FEDORA:FEDORA-2008-6647
+Reference: URL:https://www.redhat.com/archives/fedora-package-announce/2008-July/msg00801.html
+Reference: FEDORA:FEDORA-2008-6657
+Reference: URL:https://www.redhat.com/archives/fedora-package-announce/2008-July/msg00813.html
+Reference: SECUNIA:30270
+Reference: URL:http://secunia.com/advisories/30270
+Reference: SECUNIA:31171
+Reference: URL:http://secunia.com/advisories/31171
+Reference: XF:mantis-usercreate-csrf(42447)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/42447
 
-> courier-authlib before 0.60.6 suffers from an sql injection.
+Cross-site request forgery (CSRF) vulnerability in
+manage_user_create.php in Mantis 1.1.1 allows remote attackers to
+create new administrative users via a crafted link.
 
-Use CVE-2008-2667
 
-- Steve
+======================================================
+Name: CVE-2008-3331
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3331
+Reference: BUGTRAQ:20080520 Mantis Bug Tracker 1.1.1 Multiple Vulnerabilities
+Reference: URL:http://marc.info/?l=bugtraq&m=121130774617956&w=4
+Reference: CONFIRM:http://www.mantisbt.org/bugs/changelog_page.php
+Reference: SECUNIA:30270
+Reference: URL:http://secunia.com/advisories/30270
+
+Cross-site scripting (XSS) vulnerability in return_dynamic_filters.php
+in Mantis before 1.1.2 allows remote attackers to inject arbitrary web
+script or HTML via the filter_target parameter.
+
+
+======================================================
+Name: CVE-2008-3332
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3332
+Reference: BUGTRAQ:20080520 Mantis Bug Tracker 1.1.1 Multiple Vulnerabilities
+Reference: URL:http://marc.info/?l=bugtraq&m=121130774617956&w=4
+Reference: CONFIRM:http://www.mantisbt.org/bugs/changelog_page.php
+Reference: SECUNIA:30270
+Reference: URL:http://secunia.com/advisories/30270
+
+Eval injection vulnerability in adm_config_set.php in Mantis before
+1.1.2 allows remote authenticated administrators to execute arbitrary
+code via the value parameter.
+
+
+======================================================
+Name: CVE-2008-3333
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3333
+Reference: CONFIRM:http://www.mantisbt.org/bugs/changelog_page.php
+Reference: CONFIRM:http://www.mantisbt.org/bugs/view.php?id=9154
+Reference: SECUNIA:30270
+Reference: URL:http://secunia.com/advisories/30270
+
+Directory traversal vulnerability in core/lang_api.php in Mantis
+before 1.1.2 allows remote attackers to read and include arbitrary
+files via the language parameter to the user preferences page
+(account_prefs_update.php).
+
+
