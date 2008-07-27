@@ -1,26 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/01/2
-Message-ID: <9109.1217553450@devserv.devel.redhat.com>
-Date: Thu, 31 Jul 2008 21:17:30 -0400
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com, "Alexander Konovalenko" <alexkon@...il.com>
-Subject: Re: SVG vulnerability affecting Firefox, evince, eog, Gimp?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/27/8
+Message-ID: <488CE661.7090308@gentoo.org>
+Date: Sun, 27 Jul 2008 23:19:29 +0200
+From: Pierre-Yves Rofes <py@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: Links < 2.1 security issue
 Content-Type: text/plain; charset=utf-8
 
-On 1 August 2008, "Alexander Konovalenko" wrote:
-> Does anybody know whether this [1] is a real vulnerability? I
-> currently lack a spare machine to test it. If it is real, it probably
-> deserves CVE number.
-> 
-> The SHA-256 sum of the .zip file there was
-> 56d597cda98d796ec94723c540b967903886649412bce131eec4d232152aba3c
-> when I fetched it.
-> 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I can't get this to crash anything I've tried.  Has anyone else had any
-luck?
+Hi,
 
-Thanks for the heads up.  it's appreciated.
+Our links maintainer catched this:
 
--- 
-    JB
+http://links.twibright.com/download/ChangeLog
+
+http://bugs.gentoo.org/show_bug.cgi?id=231737
+
+Quoting changelog:
+"Security bug fixed: when "only proxies" is selected, don't pass URLs
+to external programs"
+
+
+Anyone investigated this, or even has a clue on the potential impact?
+Not sure if a CVE can be assigned, since this is very (too?) vague...
+
+- --
+Pierre-Yves Rofes
+Gentoo Linux Security Team
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+
+iEYEARECAAYFAkiM5mEACgkQuhJ+ozIKI5jqogCfdnQPTfA0RFWaSaF7kOD59w2h
+8lAAmwSK0w0nKpzrJUuKCejrvkgm7oP6
+=trsQ
+-----END PGP SIGNATURE-----
