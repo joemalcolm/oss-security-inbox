@@ -1,39 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/23/3
-Message-Id: <200808231753.27948.rbu@gentoo.org>
-Date: Sat, 23 Aug 2008 17:53:16 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/27/6
+Message-Id: <200807272103.57061.rbu@gentoo.org>
+Date: Sun, 27 Jul 2008 21:03:54 +0200
 From: Robert Buchholz <rbu@...too.org>
-To: vendor-sec@....de, veillard@...hat.com
-Cc: gnome@...too.org, oss-security@...ts.openwall.com
-Subject: Re: libxml2 denial of service flaw (CVE-2008-3281)
+To: oss-security@...ts.openwall.com
+Cc: Steffen Joeris <steffen.joeris@...lelinux.de>
+Subject: Re: cups patches for CVE-2008-0597 and CVE-2008-0596
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday 20 August 2008, Daniel Veillard wrote:
-> On Wed, Aug 20, 2008 at 12:42:29PM -0400, Josh Bressers wrote:
-> > Yes, this can be considered public.  An announcement should be
-> > appearing on the xml list shortly:
-> >
-> > http://mail.gnome.org/archives/xml/
+On Sunday 27 July 2008, Steffen Joeris wrote:
+> Hi
 >
->   It's out:
->
->    http://mail.gnome.org/archives/xml/2008-August/msg00034.html
->
-> thanks everybody !
+> I am working on a cups update at the moment and I am looking for two
+> missing patches. Could somebody please email me the patches for
+> CVE-2008-0596 and CVE-2008-0597 (both DoS due to crafted IPP packets
+> and a large number of requests for adding and removing printers).
+> I saw them marked as fixed in the opensuse announcement, but couldn't
+> find the patches for some reason and the novell bugzilla does not
+> grant access to the bugs to everyone :/
+> Thanks heaps in advance.
 
-Our gnome maintainers pointed out that the patch (which was also pushed 
-upstream) breaks GDM in GNOME 2.22, as can be seen in Gentoo and 
-Mandriva:
-  https://bugs.gentoo.org/show_bug.cgi?id=235529
-  https://qa.mandriva.com/show_bug.cgi?id=43094
+Hi Steffen,
 
-upstream bug:
-  http://bugzilla.gnome.org/show_bug.cgi?id=549087
-
-Those who did not push updates yet might want to delay this, we have 
-been reverting the patch for now.
-I am CC'ing oss-security, please send follow-ups to that list.
-
+the RedHat Bugzilla does not link the patches directly, but you can 
+easily extract them from this SRPM:
+ftp://updates.redhat.com/enterprise/3desktop/en/os/SRPMS/cups-1.1.17-13.3.51.src.rpm
 
 Robert
 
