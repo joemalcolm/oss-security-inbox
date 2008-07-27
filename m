@@ -1,28 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/14/1
-Message-ID: <20080714144723.GA26711@suse.de>
-Date: Mon, 14 Jul 2008 16:47:23 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/27/5
+Message-ID: <20080727171708.GC22366@ngolde.de>
+Date: Sun, 27 Jul 2008 19:17:08 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2008-2365 kernel: ptrace: Crash on PTRACE_{ATTACH,DETACH} race -- affecting kernel versions <= 2.6.25
+Subject: Re: CVE request: drupal issue in < 5.9
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jun 26, 2008 at 04:53:38PM +0200, Jan Lieskovsky wrote:
-> Hello guys,
+Hi Miklos,
+* Miklos Vajna <vmiklos@...galware.org> [2008-07-27 18:49]:
+> On Sat, Jul 26, 2008 at 04:44:16PM -0400, "Steven M. Christey" <coley@...us.mitre.org> wrote:
+> > My interpretation of this new advisory is that they meant to fix the
+> > session fixation in 5.8, but they didn't.  The original advisory covered
+> > multiple other issues as well.  So this new advisory might better be
+> > considered a clarification of versions for the session fixation, rather
+> > than a regression error or incomplete fix (which would require a new CVE).
+> > 
+> > Granted, the lack of specifics from Drupal makes it difficult to be
+> > certain about what happened.
 > 
->   wanted to inform you about recently discovered utrace/ptrace
-> attach and detach race condition affecting Linux kernel from versions
-> 2.6.9 up to the upstream one (< 2.6.25).
-> The upstream Linux kernel version got already patched with the following
-> three patches, which resolve this issue:
-> 
-> http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.25.y.git;a=commit;h=5ecfbae093f0c37311e89b29bfc0c9d586eace87
-> http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.25.y.git;a=commit;h=f5b40e363ad6041a96e3da32281d8faa191597b9
-> http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.25.y.git;a=commit;h=f358166a9405e4f1d8e50d8f415c26d95505b6de
+> As far as I see, they wanted to fix the session fixation issue in 5.8,
+> but the fix did not solve the problem, as you say.
 
-Jan, these patches are from 2006 and were even fixed in a 2.6.16.x stable release...
-and the code was rewritten in 2.6.17 as far as I can see.
+Why didn't it solve the problem?
+http://drupal.org/files/sa-2008-046/SA-2008-046-5.8.patch
+compared to: 
+diff -u -p -r1.745.2.26 user.module
+--- modules/user/user.module    7 Jan 2008 02:30:35 -0000   1.745.2.26
++++ modules/user/user.module    9 Jul 2008 20:37:51 -0000
+@@ -968,9 +968,11 @@ function user_login_submit($form_id, $fo
+     // Update the user table timestamp noting user has logged in.
+     db_query("UPDATE {users} SET login = %d WHERE uid = %d", time(), $user->uid);
+ 
++    // Regenerate the session ID to prevent against session fixation attacks.
++    sess_regenerate();
++
+     user_module_invoke('login', $form_values, $user);
+ 
+-    sess_regenerate();
+     return 'user/'. $user->uid;
+   }
+ }
 
-So is 2.6.25 really the upper bound?
+from http://drupal.org/files/sa-2008-044/SA-2008-044-5.7.patch looks pretty much
+the same. So I guess they did not include their own patch in 5.8.
 
-Ciao, Marcus
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
