@@ -1,62 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/18/10
-Message-ID: <20080218191653.GA31686@openwall.com>
-Date: Mon, 18 Feb 2008 22:16:53 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/27/1
+Message-ID: <20080727111916.GA19470@ngolde.de>
+Date: Sun, 27 Jul 2008 13:19:16 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: wiki
+Subject: Re: CVE request: drupal issue in < 5.9
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Feb 18, 2008 at 08:56:16AM -0700, Vincent Danen wrote:
-> Hmmm... so where's the Openwall vendor info, eh?  <wink wink>  =)
-
-Added.
-
-Earlier today, I wrote:
-
-> >Also, I've noticed what I think is a major issue with the wiki -
-> >although it is configured to obfuscate e-mail addresses, it only does so
-> >when displaying the latest revision of a page.  Older revisions and page
-> >source appear with the e-mail addresses intact, ready to be grabbed by a
-> >"spambot".
-
-It turned out that the older revisions were also subject to automated
-e-mail address obfuscation, and the reason I got confused was that I was
-looking specifically at the welcome page where you did not enter this
-list's address in the DokuWiki-supported format right away.  And it only
-obfuscates e-mail addresses it recognizes - not anything with an @-sign.
-So we need to be very careful about this - e-mail addresses must be
-entered as <user@...mple.org> - with the angle brackets.  Anyway, I went
-ahead and corrected this in the old revisions for the welcome page
-(using VIM on files in the attic) - I hope you don't mind.
-
-As to page source, I've disabled the view source / export raw feature.
-Of course, logged in users with page editing rights can view the source
-with non-obfuscated e-mail addresses anyway, but let's hope "spambots"
-are not that good yet - and at a later time we might want to (or have
-to) revoke page editing rights for new user accounts anyway.
-
-> > ... I think that some of the content to add would be list charter for
-> >oss-security (Josh?) and official(?) or primary description of
-> >vendor-sec.  For the latter, we can take the text from the recently
-> >created Wikipedia page - http://en.wikipedia.org/wiki/Vendor-sec - then
-> >have the Wikipedia page backed by the already-public info on our wiki.
+Hi,
+* Steven M. Christey <coley@...us.mitre.org> [2008-07-27 11:41]:
+> On Sat, 26 Jul 2008, Miklos Vajna wrote:
 > 
-> These sound like good ideas to me.  Particularly the bit on vendor-sec.
+> > On Sat, Jul 26, 2008 at 09:27:33PM +0200, Nico Golde <oss-security+ml@...lde.de> wrote:
+> > >
+> > > This is CVE-2008-3222.
+> >
+> > Isn't this different?
+> >
+> > It refers to http://www.openwall.com/lists/oss-security/2008/07/10/3
+> > which is a bug fixed in 5.8.
+> >
+> > The issue I'm talking about is _not_ fixed in 5.8.
+> 
+> My interpretation of this new advisory is that they meant to fix the
+> session fixation in 5.8, but they didn't.  The original advisory covered
+> multiple other issues as well.  So this new advisory might better be
+> considered a clarification of versions for the session fixation, rather
+> than a regression error or incomplete fix (which would require a new CVE).
+> 
+> Granted, the lack of specifics from Drupal makes it difficult to be
+> certain about what happened.
 
-OK, so who is to create the page on vendor-sec?  It'd be great if the
-same people who edited the Wikipedia page would do it, but Steve Kemp
-did not join us on this list - and I can't force people to join... OK,
-maybe I can ask him about that.
+Yes, I have no idea either but at least the patch stayed the 
+same.
 
-> I think for this to become effective, we need to expose it more
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-We'll definitely expose the oss-security wiki.  I am going to mention it
-in one of Openwall news items and in an announcement list posting.
-
-> and at the same time we can expose vendor-sec a little bit more too.
-
-Yes, this is what will happen, and it appears that vendor-sec members
-are either for greater exposure or feel neutral about it.
-
-Alexander
+Content of type "application/pgp-signature" skipped
