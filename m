@@ -1,59 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/29/1
-Message-ID: <Pine.GSO.4.51.0802282054390.4080@faron.mitre.org>
-Date: Thu, 28 Feb 2008 20:54:52 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/27/7
+Message-ID: <20080727182225.GB32057@genesis.frugalware.org>
+Date: Sun, 27 Jul 2008 20:22:25 +0200
+From: Miklos Vajna <vmiklos@...galware.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE ids for Opera 9.26 security update?
+Subject: Re: CVE request: drupal issue in < 5.9
 Content-Type: text/plain; charset=utf-8
 
+On Sun, Jul 27, 2008 at 07:17:08PM +0200, Nico Golde <oss-security+ml@...lde.de> wrote:
+> from http://drupal.org/files/sa-2008-044/SA-2008-044-5.7.patch looks pretty much
+> the same. So I guess they did not include their own patch in 5.8.
 
-======================================================
-Name: CVE-2008-1080
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1080
-Reference: CONFIRM:http://www.opera.com/docs/changelogs/linux/926/
-Reference: CONFIRM:http://www.opera.com/support/search/view/877/
-Reference: FRSIRT:ADV-2008-0622
-Reference: URL:http://www.frsirt.com/english/advisories/2008/0622
-Reference: SECUNIA:29029
-Reference: URL:http://secunia.com/advisories/29029
+Aah, OK.
 
-Opera before 9.26 allows user-assisted remote attackers to read
-arbitrary files by tricking a user into typing the characters of the
-target filename into a file input.
+Thanks, I should have noticed that there are no more differences in the
+patch.
 
+Sorry for the noise,
+Miklos
 
-======================================================
-Name: CVE-2008-1081
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1081
-Reference: CONFIRM:http://www.opera.com/docs/changelogs/linux/926/
-Reference: CONFIRM:http://www.opera.com/support/search/view/879/
-Reference: FRSIRT:ADV-2008-0622
-Reference: URL:http://www.frsirt.com/english/advisories/2008/0622
-Reference: SECUNIA:29029
-Reference: URL:http://secunia.com/advisories/29029
-
-Opera before 9.26 allows user-assisted remote attackers to execute
-arbitrary script via images that contain custom comments, which are
-treated as script when the user displays the image properties.
-
-
-======================================================
-Name: CVE-2008-1082
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1082
-Reference: CONFIRM:http://www.opera.com/docs/changelogs/linux/926/
-Reference: CONFIRM:http://www.opera.com/support/search/view/880/
-Reference: FRSIRT:ADV-2008-0622
-Reference: URL:http://www.frsirt.com/english/advisories/2008/0622
-Reference: SECUNIA:29029
-Reference: URL:http://secunia.com/advisories/29029
-
-Opera before 9.26 allows remote attackers to "bypass sanitization
-filters" and conduct cross-site scripting (XSS) attacks via crafted
-attribute values in an XML document, which are not properly handled
-during DOM presentation.
-
-
+Content of type "application/pgp-signature" skipped
