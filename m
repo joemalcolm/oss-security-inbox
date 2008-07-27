@@ -1,27 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/08/1
-Message-ID: <20081208093649.5bc12406@redhat.com>
-Date: Mon, 8 Dec 2008 09:36:49 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: OSS Security <oss-security@...ts.openwall.com>
-Cc: coley@...re.org
-Subject: CVE request: vinagre
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/27/3
+Message-ID: <20080727145959.GX32057@genesis.frugalware.org>
+Date: Sun, 27 Jul 2008 16:59:59 +0200
+From: Miklos Vajna <vmiklos@...galware.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: drupal issue in < 5.9
 Content-Type: text/plain; charset=utf-8
 
-vinagre upstream released new upstream versions 0.5.2 and 2.24.2 fixing format
-string issue in vinagre_utils_show_error() in src/vinagre-utils.c.
+On Sat, Jul 26, 2008 at 04:44:16PM -0400, "Steven M. Christey" <coley@...us.mitre.org> wrote:
+> My interpretation of this new advisory is that they meant to fix the
+> session fixation in 5.8, but they didn't.  The original advisory covered
+> multiple other issues as well.  So this new advisory might better be
+> considered a clarification of versions for the session fixation, rather
+> than a regression error or incomplete fix (which would require a new CVE).
+> 
+> Granted, the lack of specifics from Drupal makes it difficult to be
+> certain about what happened.
 
-Upstream commits:
-Gnome 2.22 branch (0.5.x):
-  http://svn.gnome.org/viewvc/vinagre?view=revision&revision=528
-Gnome 2.24 branch (2.24.x):
-  http://svn.gnome.org/viewvc/vinagre?view=revision&revision=525
+As far as I see, they wanted to fix the session fixation issue in 5.8,
+but the fix did not solve the problem, as you say.
 
-I did not have an opportunity what attack vectors exist for this flaw.
-Upstream seems to treat is as a security flaw, so probably deserves CVE
-name.
+I asked for a CVE because we already released an advisory for 5.8 with
+the old CVE, we released a new one for 5.9 and I thought it's better if
+there is a common id for the new "session fixation in 5.8" issue.
 
-Thank you!
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+Content of type "application/pgp-signature" skipped
