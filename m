@@ -1,38 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/19/18
-Message-ID: <20080219212223.GA4083@openwall.com>
-Date: Wed, 20 Feb 2008 00:22:23 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/27/2
+Message-ID: <20080727153802.GA21640@ngolde.de>
+Date: Sun, 27 Jul 2008 17:38:02 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: subscription-request procedure?
+Subject: CVE id request: horde3/turba2
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Feb 19, 2008 at 10:15:15AM -0700, Vincent Danen wrote:
-> ... That should probably be added on the charter page that a
-> simple introductory email requesting subscription should suffice (i.e.
-> indicate who you are and what you're involved with).
+Hi,
+there is an XSS flaw in the contact management of 
+horde3/turba2.
 
-Feel free to do it.  We can always change this policy (and edit the wiki
-page accordingly) if needed.
+Debian bug: http://bugs.debian.org/492578
 
-> Since folks like Jim are exactly the type of people we want on the list,
-> we need to make the process fairly simple (and fast, if possible) to
-> prevent turning people off.
+Can someone please assign a CVE id to this issue?
 
-In fact, I think even something as simple as compulsory introduction
-will turn some people away - e.g., those Open Source authors who are new
-to security and would like to listen to our conversations before they
-might dare to introduce themselves.
+Kind regards
+Nico
 
-Maybe we don't really require it?  Maybe we don't really need to make
-this list subscription-moderated?  This implies that we'll have to
-enable message moderation (with its associated delays) even for list
-members at some point, though.
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-To avoid the delays, we might enhance (patch) ezmlm-idx to honor its
-"allow" list even for fully-message-moderated lists.  This is probably
-not too hard to do, although I have not looked into it.  Normally, the
-"allow" list appears to only be honored for lists that are
-message-moderated for non-members.
-
-Alexander
+Content of type "application/pgp-signature" skipped
