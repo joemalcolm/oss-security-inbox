@@ -1,27 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/02/1
-Message-ID: <20080502114716.74cde9e6@redhat.com>
-Date: Fri, 2 May 2008 11:47:16 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/27/13
+Message-ID: <Pine.GSO.4.51.0807271839050.20336@faron.mitre.org>
+Date: Sun, 27 Jul 2008 18:39:48 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: CVE-2008-0553 / CVE-2006-4484 also affects tkimg
+cc: coley@...re.org
+Subject: Re: CVE request: punbb < 1.2.19
 Content-Type: text/plain; charset=utf-8
 
-Hi!
 
-It was brought to our attention that tkimg uses / forks tk gif handling
-code and is affected by CVE-2008-0553 (as used for tk) / CVE-2006-4484
-(as used for gd).
+On Mon, 21 Jul 2008, Hanno [utf-8] Böck wrote:
 
-http://tkimg.svn.sourceforge.net/viewvc/tkimg?view=rev&revision=135
+>     *  Fixed an SMTP command injection vulnerability, discovered by Stefan
+> Esser.
 
-Tk fix:
+CVE-2008-3335
 
-http://tktoolkit.cvs.sourceforge.net/tktoolkit/tk/generic/tkImgGIF.c?r1=1.40&r2=1.41
+>     * Fixed an XSS issue in include/parser.php, discovered by Dan Crowley.
+>     * Fixed several potential XSS vectors in moderate.php.
 
-tkimg changelog uses CVE-2006-4484 (as it's used in the tk commit
-message as well), but CVE-2008-0553 should probably be used here.
+Combined, these are CVE-2008-3336
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+>     * Fixed issue with database returning the same user on multiple pages of
+> the userlist, noticed by hcgtv.
+
+This sounds like a usability issue, not a security issue.
+
+- Steve
+
+======================================================
+Name: CVE-2008-3335
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3335
+Reference: CONFIRM:http://punbb.informer.com/
+
+Unspecified vulnerability in PunBB before 1.2.19 allows remote
+attackers to inject arbitrary SMTP commands via unknown vectors.
+
+
+======================================================
+Name: CVE-2008-3336
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3336
+Reference: CONFIRM:http://punbb.informer.com/
+
+Multiple cross-site scripting (XSS) vulnerabilities in PunBB before
+1.2.19 allow remote attackers to inject arbitrary web script or HTML
+via (1) include/parser.php and (2) moderate.php.
+
+
