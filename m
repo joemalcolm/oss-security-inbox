@@ -1,26 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/04/14
-Message-ID: <Pine.LNX.4.64.0804042314580.25602@forced.attrition.org>
-Date: Fri, 4 Apr 2008 23:17:44 +0000 (UTC)
-From: lyger <lyger@...rition.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/27/12
+Message-ID: <Pine.GSO.4.51.0807271828430.20336@faron.mitre.org>
+Date: Sun, 27 Jul 2008 18:28:46 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: wiki: vendor info
+cc: coley@...re.org
+Subject: Re: CVE request: mybb < 1.2.14
 Content-Type: text/plain; charset=utf-8
 
 
+======================================================
+Name: CVE-2008-3334
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3334
+Reference: CONFIRM:http://community.mybboard.net/thread-33865.html
 
-On Fri, 4 Apr 2008, Josh Bressers wrote:
+Cross-site scripting (XSS) vulnerability in MyBB 1.2.x before 1.2.14
+allows remote attackers to inject arbitrary web script or HTML via
+unspecified vectors.
 
-": " > 	http://osvdb.org/vendors
-": " 
-": " Holy Smokes that's impressive!
-": " 
-": " I don't think there's anything to consolidate, I think we just need to
-": " ensure everything on the oss-security wiki page is in your data (I would be
-": " surprised if it's not), then we just point at that.  The page about easily
-": " finding patches is probably still relevant, but there's no sense in
-": " duplicating information, especially when there is such an extensive source
-": " as this.
 
-One thing to note is that anonymous edits to OSVDB's vendor dictionary are 
-allowed and will be added to the list pending moderator approval.
