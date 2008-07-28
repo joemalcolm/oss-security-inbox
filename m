@@ -1,29 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/28/10
-Message-ID: <18440.1206675859@devserv.devel.redhat.com>
-Date: Thu, 27 Mar 2008 23:44:19 -0400
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/28/3
+Message-ID: <20080728175344.GA896@ngolde.de>
+Date: Mon, 28 Jul 2008 19:53:44 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: wiki: links from list archive (was: using oss-security references in CVE)
+Subject: Re: CVE id request: horde3/turba2
 Content-Type: text/plain; charset=utf-8
 
-> I suggested:
-> > > By the way, maybe we should also add a link to the oss-security wiki to
-> > > page footers on that archive?  Or even to message trailers (such that
-> > > the wiki link will be seen on third-party archives as well)?
+Hi Tomas,
+* Tomas Hoger <thoger@...hat.com> [2008-07-28 10:53]:
+> On Sun, 27 Jul 2008 17:57:05 -0400 (EDT) "Steven M. Christey"
+> <coley@...us.mitre.org> wrote:
+> > Name: CVE-2008-3330
+> > Cross-site scripting (XSS) vulnerability in
+> > services/obrowser/index.php in Horde 3.2 and Turba 2.2 allows remote
+> > attackers to inject arbitrary web script or HTML via the contact name.
 > 
-> On Thu, Mar 27, 2008 at 08:29:22PM -0400, Josh Bressers wrote:
-> > I like this idea.
-> 
-> Which of the two?
-> 
+> Why does this mention Turba?  Affected script does not seem to be part
+> of Turba, at least not part of Fedora packages.
 
-Indeed, answering an or question with a yes isn't quite right.  I like the
-idea of adding a link on the archive pages, but I'm not so sure about the
-messages themselves.  There is the obvious advantage if the URL gets into
-third party archives, but at the same time, we would be polluting the
-message.  I've never liked mailing list footers,  I find them to be
-eyesores.
+In turba the affected file is src/contact.php:
+Index: turba/contact.php
+===================================================================
+RCS file: /repository/turba/contact.php,v
+retrieving revision 1.11
+diff -u -r1.11 contact.php
+--- turba/contact.php   5 May 2008 05:14:12 -0000       1.11
++++ turba/contact.php   13 Jun 2008 21:37:43 -0000
+@@ -103,7 +103,7 @@
+ if (!$print_view) {
+     echo $tabs->render($viewName);
+ }
+-echo '<h1 class="header">' . ($contact->getValue('name') ? $contact->getValue('name') : '<em>' . _("Blank name") . '</em>') . '</h1>';
++echo '<h1 class="header">' . ($contact->getValue('name') ? htmlspecialchars($contact->getValue('name')) : '<em>' . _("Blank name") . '</em>') . '</h1>';
+ $view->html();
+ echo '</div>';
+ require $registry->get('templates', 'horde') . '/common-footer.inc';
 
+Turba 2.1 was not affected, this file is new in 2.2
+and the old code did escape the title.
+
+> Btw, this seems to be an issue fixed by upstream mid-June in horde
+> 3.1.8 and 3.2.1 (and other Horde suites that include Horde Framework +
+> some other components in all-in-one suite), see following bug for
+> further references:
+> 
+>   https://bugzilla.redhat.com/show_bug.cgi?id=452539
+
+Yes this information seems to be correct to me.
+
+Cheers
+Nico
 -- 
-    JB
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
