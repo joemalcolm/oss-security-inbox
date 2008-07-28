@@ -1,41 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/22/3
-Message-id: <1203647259.3732.TMDA@linsec.ca>
-Date: Thu, 21 Feb 2008 19:26:01 -0700
-From: Vincent Danen <vdanen@...sec.ca>
-To: oss-security@...ts.openwall.com
-Subject: Re: first spam message on the list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/28/6
+Message-ID: <Pine.GSO.4.51.0807281629200.23713@faron.mitre.org>
+Date: Mon, 28 Jul 2008 16:30:48 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Tomas Hoger <thoger@...hat.com>
+cc: oss-security@...ts.openwall.com, coley@...us.mitre.org
+Subject: Re: CVE id request: horde3/turba2
 Content-Type: text/plain; charset=utf-8
 
-* [2008-02-22 04:30:14 +0300] Solar Designer wrote:
 
->This was unusually quick.  S - thank you for posting the list address on
->a blog non-obfuscated. :-(
->
->http://c-skills.blogspot.com/2008/02/open-source-software-security-wiki.html
+On Mon, 28 Jul 2008, Tomas Hoger wrote:
 
-Who the... ohhhh... tsk tsk tsk.
+> Why does this mention Turba?  Affected script does not seem to be part
+> of Turba, at least not part of Fedora packages.
 
->I've just enabled a simple spam filter for the list address (it will
->drop HTML-only messages - and more).  I will also be turning on message
->pre-moderation.  It's a pity that we have to do this so early.
->
->Anyone would like to be a moderator (and receive the undetected spam)?
+Turba was mentioned in a comment in the Debian bug report:
 
-I can do moderation as well.
+  "upstream said only Horde 3.2 and Turba 2.2 are affected"
 
->Meanwhile, (GalaxyMaster) has patched the Wiki to obfuscate e-mail
->addresses in more cases.  Nothing should be reported non-obfuscated now,
->not even via the RSS feed or diffs view.  In fact, we'll probably relax
->the current fix a bit to not mangle the Openwall anoncvs access shell
->command. ;-)
-
-Good stuff.  Thanks, Solar.  Too bad, like you said, we had to do it so
-soon.
-
-I'll hit a certain somone with a clue-bat later.  =)
-
--- 
-Vincent Danen @ http://linsec.ca/
-
-Content of type "application/pgp-signature" skipped
+- Steve
