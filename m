@@ -1,53 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/20/8
-Message-id: <1203536066.7580.TMDA@linsec.ca>
-Date: Wed, 20 Feb 2008 12:32:57 -0700
-From: Vincent Danen <vdanen@...sec.ca>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/28/1
+Message-ID: <20080728091555.3feddbd4@redhat.com>
+Date: Mon, 28 Jul 2008 09:15:55 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: subscription-request procedure?
+Cc: rbu@...too.org, Steffen Joeris <steffen.joeris@...lelinux.de>
+Subject: Re: cups patches for CVE-2008-0597 and CVE-2008-0596
 Content-Type: text/plain; charset=utf-8
 
-* [2008-02-19 16:36:45 -0500] Josh Bressers wrote:
+Hi Steffen!
 
->> > Since folks like Jim are exactly the type of people we want on the list,
->> > we need to make the process fairly simple (and fast, if possible) to
->> > prevent turning people off.
->> 
->> In fact, I think even something as simple as compulsory introduction
->> will turn some people away - e.g., those Open Source authors who are new
->> to security and would like to listen to our conversations before they
->> might dare to introduce themselves.
->> 
->> Maybe we don't really require it?  Maybe we don't really need to make
->> this list subscription-moderated?  This implies that we'll have to
->> enable message moderation (with its associated delays) even for list
->> members at some point, though.
->> 
->> To avoid the delays, we might enhance (patch) ezmlm-idx to honor its
->> "allow" list even for fully-message-moderated lists.  This is probably
->> not too hard to do, although I have not looked into it.  Normally, the
->> "allow" list appears to only be honored for lists that are
->> message-moderated for non-members.
->> 
->
->Yes, these are very good points.  I think the best solution at the moment
->would be to let anyone who is subscribed to post, and let anyone subscribe.
->If we have problems, we can tighten things up a bit later.
->
->This is one of the tricking things when starting something up such as this.
->It's easy to solve problems that don't exist, which then end up turning
->people away.
->
->FWIW, mailman has the ability to enable individual user moderation.
->Something similar would certainly be a useful feature here.
+On Sun, 27 Jul 2008 21:03:54 +0200 Robert Buchholz <rbu@...too.org>
+wrote:
 
-Sounds good to me.  Maybe having the thing unfettered for a time and see
-how it works would be best.  If problems do come up, we can always fall
-back to the subscriber-moderation and/or message moderation (although,
-to be honest, I'm more in favour of subscriber-moderation than message
-moderation unless spam starts to become a real problem).
+> > I am working on a cups update at the moment and I am looking for two
+> > missing patches. Could somebody please email me the patches for
+> > CVE-2008-0596 and CVE-2008-0597 (both DoS due to crafted IPP packets
+> > and a large number of requests for adding and removing printers).
+> > I saw them marked as fixed in the opensuse announcement, but
+> > couldn't find the patches for some reason and the novell bugzilla
+> > does not grant access to the bugs to everyone :/
+> > Thanks heaps in advance.
+
+[ ... ]
+
+> the RedHat Bugzilla does not link the patches directly, but you can 
+> easily extract them from this SRPM:
+> ftp://updates.redhat.com/enterprise/3desktop/en/os/SRPMS/cups-1.1.17-13.3.51.src.rpm
+
+I've attached the patches from Red Hat Enterprise Linux 4 packages to
+our Bugzilla:
+
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2008-0596#c5
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2008-0597#c6
+
+Both issues should only affect old cups versions (rough guess is
+pre-1.2, but we haven't really investigated where exactly they got
+fixed), so as the version in Etch is 1.2.7, you probably do not need to
+care.  They were not needed for 1.2.4 in RHEL5 according to our
+maintainer.
+
+HTH
 
 -- 
-Vincent Danen @ http://linsec.ca/
-
-Content of type "application/pgp-signature" skipped
+Tomas Hoger / Red Hat Security Response Team
