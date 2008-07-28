@@ -1,29 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/10/4
-Message-ID: <Pine.GSO.4.51.0804101429380.18291@faron.mitre.org>
-Date: Thu, 10 Apr 2008 14:31:13 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/28/4
+Message-Id: <200807281956.12714.hanno@hboeck.de>
+Date: Mon, 28 Jul 2008 19:56:09 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: gcc 4.2 optimizations and integer overflow checks
+Cc: coley@...re.org
+Subject: CVE request: phpmyadmin < 2.11.8
 Content-Type: text/plain; charset=utf-8
 
+From release notes:
+- [security] protection against cross-frame scripting and
+  new directive AllowThirdPartyFraming
+- [security] possible XSS during setup
 
-On Wed, 9 Apr 2008, Nico Golde wrote:
 
-> Hi Steven,
-> * Steven M. Christey <coley@...us.mitre.org> [2008-04-07 18:24]:
-> > While an unusual bug, we decided to assign a CVE for it.
-> [...]
-> Just stumbled upon CVE-2006-1902, look spretty much the same
-> to me, is this a dup?
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
-Nice find!
-
-My immediate suspicion is that they're not the same, based solely on
-affected versions - CVE-2008-1685 has a specific affected version range
-because it changed behaviors in 4.2.0.  Maybe that change came out of
-followup analysis stemming from CVE-2006-1902.
-
-But, I'm not completely sure.  Solar?
-
-- Steve
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
