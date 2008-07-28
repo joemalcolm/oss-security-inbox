@@ -1,25 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/28/12
-Message-Id: <1206708021.4858.106.camel@localhost.localdomain>
-Date: Fri, 28 Mar 2008 13:40:21 +0100
-From: Lubomir Kundrak <lkundrak@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/28/5
+Message-ID: <20080728182721.GB896@ngolde.de>
+Date: Mon, 28 Jul 2008 20:27:21 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: silc
+Subject: Re: Links < 2.1 security issue
 Content-Type: text/plain; charset=utf-8
 
-
-On Fri, 2008-03-28 at 13:36 +0100, Ludwig Nussel wrote:
-> Hi,
+Hi Steven,
+* Steven M. Christey <coley@...us.mitre.org> [2008-07-28 00:24]:
+> On Sun, 27 Jul 2008, Pierre-Yves Rofes wrote:
 > 
-> This report about a buffer overflow in SILC was posted to bugtraq
-> recently and doesn't seem to have a CVE number yet:
-> http://www.coresecurity.com/?action=item&id=2206
+> > Anyone investigated this, or even has a clue on the potential impact?
+> > Not sure if a CVE can be assigned, since this is very (too?) vague...
+> 
+> We operate on the assumption that if a developer says it's a security
+> issue, it's worth assigning a CVE for.
+> 
+> But you wind up with uninformative descriptions like the one below :-/
 
-By the way core security is wrong there. This can not be exploited into
-arbitrary code execution, as it will crash on memcpy called with very
-large (underflown negative) size argument.
+As far as I understand the patch fixes two problems:
+diff -ur new/links2-2.1pre37/url.c upstream/links-2.1/url.c
+--- new/links2-2.1pre37/url.c   2007-12-26 04:00:49.000000000 +0000
++++ upstream/links-2.1/url.c    2008-06-29 16:47:21.000000000 +0000
+@@ -16,7 +16,7 @@
+        int allow_post;
+        int bypasses_socks;
+ } protocols[]= {
+-               {"file", 0, file_func, NULL,            1, 1, 0, 0, 0},
++               {"file", 0, file_func, NULL,            1, 1, 0, 0, 1},
+                {"https", 443, https_func, NULL,        0, 1, 1, 1, 0},
+                {"http", 80, http_func, NULL,           0, 1, 1, 1, 0},
+                {"proxy", 3128, proxy_func, NULL,       0, 1, 1, 1, 0},
 
+This does nothing more than setting the socks bypass option to 1 allowing
+links to not use the socks proxy for local file urls.
+
+The second part seems to be the actual security issue:
+diff -ur new/links2-2.1pre37/session.c upstream/links-2.1/session.c
+--- new/links2-2.1pre37/session.c       2008-06-21 16:12:07.000000000 +0000
++++ upstream/links-2.1/session.c        2008-06-29 16:47:21.000000000 +0000
+@@ -2317,6 +2317,7 @@
+        if (a->accept_http && !strcasecmp(proto, "http")) ret = 1;
+        if (a->accept_ftp && !strcasecmp(proto, "ftp")) ret = 1;
+        mem_free(proto);
++       if (proxies.only_proxies) ret = 0;
+        return ret;
+ }
+
+Before the patch this set ses->tq_prog_flag_direct to 1 which causes the
+continue_download() function to pass the url to an external program (after
+links identified the file type) and thus bypassing the socks proxy (e.g. tor)
+even if you have configured links to never use anything else than the proxy
+(proxies.only_proxies). This should be a problem for example if you rely on the
+anonymity you don't have in this case.
+
+Cheers
+Nico
 -- 
-Lubomir Kundrak (Red Hat Security Response Team)
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
+Content of type "application/pgp-signature" skipped
