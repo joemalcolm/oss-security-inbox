@@ -1,22 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/16/4
-Message-ID: <20080616144244.GF7183@severus.strandboge.com>
-Date: Mon, 16 Jun 2008 10:42:44 -0400
-From: Jamie Strandboge <jamie@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/28/2
+Message-ID: <20080728105015.74e6fb48@redhat.com>
+Date: Mon, 28 Jul 2008 10:50:15 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Id request: vim
+Cc: coley@...us.mitre.org
+Subject: Re: CVE id request: horde3/turba2
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 16 Jun 2008, Jamie Strandboge wrote:
+On Sun, 27 Jul 2008 17:57:05 -0400 (EDT) "Steven M. Christey"
+<coley@...us.mitre.org> wrote:
 
-> These should all be fixed now according to:
-> http://groups.google.com/group/vim_dev/browse_frm/month/2008-06
-> 
-This link is easier to get to the information:
-http://groups.google.com/group/vim_dev/tree/browse_frm/month/2008-06/6d7899eac89aa333?rnum=131&_done=%2Fgroup%2Fvim_dev%2Fbrowse_frm%2Fmonth%2F2008-06%3F#doc_9bb6550f4f955f04
+> Name: CVE-2008-3330
+> Cross-site scripting (XSS) vulnerability in
+> services/obrowser/index.php in Horde 3.2 and Turba 2.2 allows remote
+> attackers to inject arbitrary web script or HTML via the contact name.
+
+Why does this mention Turba?  Affected script does not seem to be part
+of Turba, at least not part of Fedora packages.
+
+Btw, this seems to be an issue fixed by upstream mid-June in horde
+3.1.8 and 3.2.1 (and other Horde suites that include Horde Framework +
+some other components in all-in-one suite), see following bug for
+further references:
+
+  https://bugzilla.redhat.com/show_bug.cgi?id=452539
 
 -- 
-Ubuntu Security Engineer     | http://www.ubuntu.com/
-Canonical Ltd.               | http://www.canonical.com/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (190 bytes)
+Tomas Hoger / Red Hat Security Response Team
