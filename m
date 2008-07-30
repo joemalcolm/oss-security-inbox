@@ -1,56 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/02/7
-Message-ID: <20080602165320.GA15827@ngolde.de>
-Date: Mon, 2 Jun 2008 18:53:20 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/30/1
+Message-ID: <0807300958030.19809@mjc.redhat.com>
+Date: Wed, 30 Jul 2008 10:01:00 +0100 (BST)
+From: Mark J Cox <mjc@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: code reviews (was: ARP handler Inspection tool released)
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: condor < 7.0.4
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Solar Designer <solar@...nwall.com> [2008-06-02 16:16]:
-> On Mon, Jun 02, 2008 at 02:40:28PM +0200, Nico Golde wrote:
-> > Is this really appropriate content for this list? I guess 
-> > all of us read full-disclosure, bugtraq etc. and this is a 
-> > "list for open source software authors and vendors to 
-> > discuss public security issues". I don't think that the nth 
-> > cross-post of software announces belong to this list.
-> 
-> I don't mind seeing announcements of security tools related to Open
-> Source software in here, as long as this does not dominate the list
-> traffic (in which case we can always setup another list just for those
-> announcements).  I understand that others may have different opinion
-> (please speak up).
+Needs CVE name
 
-I don't really mind about announces either, only about 
-quadrupled ones because of cross-posting :)
+https://lists.cs.wisc.edu/archive/condor-world/2008q2/msg00003.shtml
+leading to:
+http://www.cs.wisc.edu/condor/manual/v7.0/8_3Stable_Release.html
 
-[...] 
-> Do we have people like the security-audit activists of late 1990s in
-> here?  (I know that some of the same people are in fact in here, but I'm
-> sure that they have changed - similarly to the way I have changed.  So I
-> mean people "like" those who were active on security-audit at the time
-> and who are in this shape now.)
+ 	This release fixes a problem causing possible incorrect handling of wild
+ 	cards in authorization lists. Examples of the configuration variables that
+ 	specify authorization lists are
 
-At least for Debian there is an audit project 
-(http://www.debian.org/security/audit/) which is not really 
-active anymore though. As far as I know Gentoo has a similar 
-project. What about replacing those by an oss-security-audit 
-project? I don't think oCert is the solution to audit 
-requests as it simply lacks of enough manpower to do that in 
-an organized fashion.
-But having some kind of general list for this hosted in a 
-distribution neutral environment might work out.
+ 	  ALLOW_WRITE
+ 	  DENY_WRITE
+ 	  HOSTALLOW_WRITE
+ 	  HOSTDENY_WRITE
 
-[...] 
-> Now, do any/all of you find my posting appropriate? ;-)
+ 	If a configuration variable uses the asterisk character (*) in
+ 	configuration variables that specify the authorization policy, it is
+ 	advisable to upgrade. This is especially true for the use of wild cards in
+ 	any DENY list, since this problem could result in access being allowed,
+ 	when it should have been denied. This issue affects all previous versions
+ 	of Condor.
 
-I do! ;)
-
-Cheers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+Thanks, Mark
+--
+Mark J Cox / Red Hat Security Response Team
