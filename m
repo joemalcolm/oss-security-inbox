@@ -1,39 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/16/1
-Message-ID: <20081016100547.5c02528a@redhat.com>
-Date: Thu, 16 Oct 2008 10:05:47 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/31/4
+Message-ID: <Pine.GSO.4.51.0807311630480.13418@faron.mitre.org>
+Date: Thu, 31 Jul 2008 16:30:52 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org, coley@...re.org
-Subject: Re: CVE Request
+cc: coley@...re.org
+Subject: Re: Mono ASP.net cross site scripting issue
 Content-Type: text/plain; charset=utf-8
 
-Hi Steven!
 
-On Wed, 15 Oct 2008 15:07:40 -0400 (EDT) "Steven M. Christey"
-<coley@...us.mitre.org> wrote:
+======================================================
+Name: CVE-2008-3422
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3422
+Reference: MLIST:[Mono-dev] 20080726 [PATCH] HTML encode attributes that might need encoding
+Reference: URL:http://lists.ximian.com/pipermail/mono-devel-list/2008-July/028633.html
+Reference: CONFIRM:https://bugzilla.novell.com/show_bug.cgi?id=413534
 
-> For the fence issues.
+Multiple cross-site scripting (XSS) vulnerabilities in the ASP.net
+class libraries in Mono 2.0 and earlier allow remote attackers to
+inject arbitrary web script or HTML via crafted attributes related to
+(1) HtmlControl.cs (PreProcessRelativeReference), (2) HtmlForm.cs
+(RenderAttributes), (3) HtmlInputButton (RenderAttributes), (4)
+HtmlInputRadioButton (RenderAttributes), and (5) HtmlSelect
+(RenderChildren).
 
-Thanks!
 
-> Which packages does the fence_manual issue affect?
-
-Same as the other fence_* issues.  Those tools are fencing agents used
-by Red Hat Cluster Suite (tools that can be used by a cluster to make
-sure that non-responding cluster member is really down, so shared
-resources can be taken by some other cluster member;  they usually do
-so by communicating with some remote device capable of cutting the
-system from power, or reboot it (power switches, kvm switches, remote
-consoles, ...)).
-
-In the Cluster Suite for Red Hat Enterprise Linux 4, they were packaged
-in the fence package.  Cluster Suite for Red Hat Enterprise Linux 5 has
-them in cman package (Cluster Manager).
-
-Other vendors shipping Cluster Suite are likely to have them packaged
-in packages named as fence and cman, or similar, based on the version
-they use.
-
--- 
-Tomas Hoger / Red Hat Security Response Team
