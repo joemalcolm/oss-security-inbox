@@ -1,69 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/09/1
-Message-ID: <20080609230649.GI1354@fuse.inversepath.com>
-Date: Mon, 9 Jun 2008 23:06:49 +0000
-From: Andrea Barisani <lcars@...rt.org>
-To: ocert-announce@...ts.ocert.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: [oCERT-2008-006] multiple SNMP implementations HMAC authentication spoofing
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/31/3
+Message-Id: <200807311715.22777.aj@dungeon.inka.de>
+Date: Thu, 31 Jul 2008 17:15:22 +0200
+From: Andreas Jellinghaus <aj@...geon.inka.de>
+To: vendor-sec@....de
+Cc: oss-security@...ts.openwall.com
+Subject: OpenSC Security Advisory
 Content-Type: text/plain; charset=utf-8
 
+OpenSC Security Advisory [31-Jul-2008]
 
-2008/06/09 #2008-006 multiple SNMP implementations HMAC authentication spoofing
+OpenSC initializes CardOS cards with improper access rights
+-----------------------------------------------------------
 
-Description:
+Chaskiel M Grundman found a security vulnerability in OpenSC.
+The vulnerability has been fixed in OpenSC 0.11.5.
+In Mitre's CVE dictionary this issue is filed under CVE-2008-2235.
+Users will need to run "pkcs15-tool -T -U" to test (-T) and 
+update (-U) the security settings on their card.
 
-Some SNMP implementations include incomplete HMAC authentication code that
-allows spoofing of authenticated SNMPv3 packets.
+All versions of OpenSC prior to 0.11.5 initialized smart cards
+with Siemens CardOS M4 card operating system without proper
+access right: the ADMIN file control information in the 5015
+directory on the smart card was left to 00 (all access allowed).
 
-The authentication code reads the length to be checked from sender input,
-this allows the sender to supply single byte HMAC code and have a 1 in 256
-chance of matching the correct HMAC and authenticating, as only the first
-byte will be checked. The sender would need to know a valid username.
+With this bug anyone can change a user PIN without having the PIN
+or PUK or the superusers PIN or PUK. However it can not be used
+to figure out the PIN. Thus if the PIN on your card is still the
+same you always had, then you can be sure, that noone exploited
+this vulnerability.
 
-Currently Net-SNMP and UCD-SNMP are known to be vulnerable, other SNMP
-implementations may also be affected. The eCos project includes code derived
-from UCD-SNMP and is therefore also affected.
+This vulnerability affects only smart cards and usb crypto tokens
+based on Siemens CardOS M4, and within that group only those that
+were initialized with OpenSC.
 
-Affected version:
+Users of other smart cards and usb crypto tokens are not affected.
+Users of Siemens CardOS M4 based smart cards and crypto tokens are
+not affected, if the card was initialized with some software other
+than OpenSC.
 
-Net-SNMP <= 5.4.1, <= 5.3.2, <= 5.2.4
-UCD-SNMP, all versions
-eCos, all versions
+The new version of OpenSC implements a simple way to verify if a
+card is affected or not:
+	pkcs15-tool has now two new options:
+  --test-update, -T             Test if the card needs a security update
+  --update, -U                  Update the card with a security update
 
-Fixed version:
+Running
+	pkcs15-tool -T
+will either show
+	fci is up-to-date, card is fine
+or 
+	fci is out-off-date, card is vulnerable
 
-Net-SNMP >= 5.4.1.1, >= 5.3.2.1, >= 5.2.4.1
-UCD-SNMP, N/A
-eCos, N/A
+If the card is vulnerable, please update the security setting using:
+	pkcs15-tool -T -U
+this will show:
+	fci is out-off-date, card is vulnerable
+	security update applied with success.
 
-Credit: this issue was reported by CERT/CC, it is tracked as VU#878044.
 
-CVE: CVE-2008-0960
+Our Mac OS X Installer Package "SCA" is also affected by this vulnerability:
+Version 0.2.2 and earleir are vulnerable. A new version 0.2.3 including this
+fix will soon be available at
+		http://www.opensc-project.org/
 
-Timeline:
-2008-06-05: CERT/CC reports VU#878044 to oCERT requesting joint coordination
-2008-06-05: contacted affected vendors
-2008-06-06: added eCos to affected packages
-2008-06-09: patched net-snmp packages released
-2008-06-09: advisory release
+Our Windows Installer Package "SCB" is also affected by this vulnerability:
+All versions are affected. We don't have any windows developer left, so right
+now noone can update this package. But new windows binaries build using mingw
+will be soon available at
+		http://www.opensc-project.org/files/build/
 
-References:
-http://sourceforge.net/forum/forum.php?forum_id=833770
-http://sourceforge.net/tracker/index.php?func=detail&aid=1989089&group_id=12694&atid=456380
-http://www.kb.cert.org/vuls/id/878044
+--cut--
 
-Links:
-http://www.net-snmp.org
-http://www.ece.ucdavis.edu/ucd-snmp
-http://ecos.sourceware.org
+attached is a patch distributions can apply instead of updating to the new 
+version. still users will need to run "pkcs15-tool -T -U" for all their smart 
+cards and usb crypto tokens (only those based on "Siemens CardOS M4" and 
+initialized with OpenSC), please let them know.
 
-Permalink:
-http://www.ocert.org/advisories/ocert-2008-006.html
+Regards, Andreas
 
--- 
-Andrea Barisani |                Founder & Project Coordinator
-          oCERT | Open Source Computer Emergency Response Team
-
-<lcars@...rt.org>                         http://www.ocert.org
- 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
-        "Pluralitas non est ponenda sine necessitate"
+View attachment "advisory.diff" of type "text/x-diff" (8539 bytes)
