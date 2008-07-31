@@ -1,24 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/07/5
-Message-ID: <Pine.GSO.4.51.0810071705070.6161@faron.mitre.org>
-Date: Tue, 7 Oct 2008 17:05:13 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/31/5
+Message-ID: <Pine.GSO.4.51.0807311747550.13418@faron.mitre.org>
+Date: Thu, 31 Jul 2008 17:48:14 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: Re: CVE id request: mon
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: condor < 7.0.4
 Content-Type: text/plain; charset=utf-8
 
 
 ======================================================
-Name: CVE-2008-4477
+Name: CVE-2008-3424
 Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4477
-Reference: MLIST:[debian-devel] 20080812 Re: Possible mass bug filing: The possibility of attack with the help of symlinks in some Debian packages
-Reference: URL:http://lists.debian.org/debian-devel/2008/08/msg00312.html
-Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=496398
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3424
+Reference: CONFIRM:http://www.cs.wisc.edu/condor/manual/v7.0/8_3Stable_Release.html#sec:New-7-0-4
+Reference: BID:30440
+Reference: URL:http://www.securityfocus.com/bid/30440
+Reference: SECUNIA:31284
+Reference: URL:http://secunia.com/advisories/31284
+Reference: XF:condor-authpolicy-security-bypass(44063)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/44063
 
-alert.d/test.alert in mon 0.99.2 allows local users to overwrite
-arbitrary files via a symlink attack on the test.alert.log temporary
-file.
+Condor before 7.0.4 does not properly handle wildcards in the
+ALLOW_WRITE, DENY_WRITE, HOSTALLOW_WRITE, or HOSTDENY_WRITE
+configuration variables in authorization policy lists, which might
+allow remote attackers to bypass intended access restrictions.
 
 
