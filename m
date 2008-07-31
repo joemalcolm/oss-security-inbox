@@ -1,24 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/30/4
-Message-ID: <Pine.GSO.4.51.0804301056350.868@faron.mitre.org>
-Date: Wed, 30 Apr 2008 10:57:00 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Hanno Böck <hanno@...eck.de>
-cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: egroupware
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/31/1
+Message-ID: <20080731141537.GB1081@suse.de>
+Date: Thu, 31 Jul 2008 16:15:37 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: oss-security@...ts.openwall.com, coley@...re.org
+Subject: Mono ASP.net cross site scripting issue
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-I love the fresh smell of unspecified in the morning.
+Dean Brettle found a cross site scripting issue in the ASP.net
+class libraries of Mono and potentially also for MS.NET, where you
+can inject code into the "action" of a FORM submit and the tags
+HtmlInputRadioButton.Value, HtmlImage.Src and HtmlInputImage.Src.
 
-======================================================
-Name: CVE-2008-2041
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2041
-Reference: CONFIRM:http://www.egroupware.org/
+https://bugzilla.novell.com/show_bug.cgi?id=413534
+is our bugreport which was published on posting due to a
+public QA contact mailinglist.
 
-Multiple unspecified vulnerabilities in eGroupWare before 1.4.004 have
-unspecified attack vectors and "grave" impact when the web server has
-write access to a directory under the web document root.
+The proposed patch for the Html* parts is:
+http://lists.ximian.com/pipermail/mono-devel-list/2008-July/028633.html
 
+Steven, can you please assign a CVE id?
 
+Ciao, Marcus
