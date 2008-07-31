@@ -1,34 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/22/7
-Message-Id: <200805221058.48248.thijs@debian.org>
-Date: Thu, 22 May 2008 10:58:46 +0200
-From: Thijs Kinkhorst <thijs@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: Marcus Meissner <meissner@...e.de>
-Subject: Re: Root name server changes -> bind
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/31/2
+Message-ID: <20080731150859.GJ10031@fuse.inversepath.com>
+Date: Thu, 31 Jul 2008 15:08:59 +0000
+From: Andrea Barisani <lcars@...rt.org>
+To: ocert-announce@...ts.ocert.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: [oCERT-2008-009] libxslt heap overflow
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday 21 May 2008 15:02, Marcus Meissner wrote:
->         The security consequences of obscure DNS root server usage are
-> obvious, IMHO. You might want to consider security updates to the bind
-> package with an updated root.hint file. (Since the story is on Slashdot, it
-> is as public as it can get; thus I use the regular channel for this
-> request.)
->
-> Not sure if this warrants a CVE id.
 
-We've gotten similar requests at Debian, with people requesting it be fixed in 
-a security update. Our position until now has been that we're not treating it 
-as a security issue: it has been in that IP space for years and there are no 
-concrete indications that the owner of that block has turned bad. The same 
-could be said for many other IP's of the root servers, where the owner of the 
-space, connectivity or housing is currently trusted but could go bad at some 
-point. We'll probably fix it in a next point update.
+2008/07/31 #2008-009 libxslt heap overflow
 
-However, if many other vendors are treating it as a security issue, we're 
-interested in their reasons and may follow suit to prevent confusion.
+Description:
 
+The libexslt library bundled with libxslt is affected by a heap-based buffer
+overflow which can lead to arbitrary code execution.
 
-Thijs
+The vulnerability is present in the rc4 encryption/decryption functions. An
+arbitrary length string, passed as an argument in the XSL input, is
+incorrectly copied over a padding variable which is previously allocated with
+a fixed size of 128bit (RC4_KEY_LENGTH).
 
-Content of type "application/pgp-signature" skipped
+Aside from the heap overflow other bugs affect the code, the length of the
+plaintext string argument is used for computing the key length rather than
+the actual key and the zero-padding of the key is incorrectly computed.
+
+A simple XML file with excessively long input can be crafted for triggering
+the heap overflow.
+
+The following patch fixes the issue:
+http://www.ocert.org/patches/exslt_crypt.patch
+
+Affected version:
+
+libxslt >= 1.1.8, <= 1.1.24
+
+Fixed version:
+
+libxslt, N/A
+
+Credit: vulnerability report and PoC code received from Chris Evans
+<scarybeasts [at] gmail [dot] com>, Google Security Team.
+
+CVE: CVE-2008-2935
+
+Timeline:
+2008-07-03: vulnerability report received
+2008-07-08: contacted libxslt maintainer
+2008-07-10: maintainer provides patch
+2008-07-17: patch fixes finalized per reporter feedback
+2008-07-18: contacted affected vendors
+2008-07-31: advisory release
+
+References:
+http://www.scary.beasts.org/security/CESA-2008-003.html
+
+Links:
+http://xmlsoft.org/XSLT
+
+Permalink:
+http://www.ocert.org/advisories/ocert-2008-009.html
+
+-- 
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | Open Source Computer Emergency Response Team
+
+<lcars@...rt.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
