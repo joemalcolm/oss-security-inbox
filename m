@@ -1,40 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/21/9
-Message-Id: <1211390100.7929.6.camel@dhcp-lab-164.englab.brq.redhat.com>
-Date: Wed, 21 May 2008 19:15:00 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security@...ts.openwall.com, vendor-sec@....de, "Steven M. Christey" <coley@...re.org>
-Subject: [vendor-sec] New Xen ioemu: PVFB backend issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/31/6
+Message-Id: <200808010018.56057.hanno@hboeck.de>
+Date: Fri, 1 Aug 2008 00:18:55 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: vtigercrm < 5.0.4
 Content-Type: text/plain; charset=utf-8
 
-Hello guys,
+http://wiki.vtiger.com/index.php/Vtiger_CRM_5.0.4_-_Release_Notes
+refers to
+http://trac.vtiger.com/cgi-bin/trac.cgi/ticket/2107
 
-  on May the 15th, the following report has been posted to the
-xen-unstable list:
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
-
-Problem description:
-====================
-
-ioemu: Fix PVFB backend to limit frame buffer size
-
-The recent fix to validate the frontend's frame buffer description
-neglected to limit the frame buffer size correctly. This lets a
-malicious frontend make the backend attempt to map an arbitrary amount
-of guest memory, which could be useful for a denial of service attack
-against dom0.
-
-Proposed fix:
-============
-
-http://xenbits.xensource.com/xen-unstable.hg?rev/9044705960cb30cec385bdca7305bcf7db096721
-
-
-As this vulnerability has security implications, we have assigned
-CVE-2008-1952 to it. Please use it when referring to this issue.
-
-
-Kind regards
-Jan iankko Lieskovsky
-RH kernel Security Response Team
-
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
