@@ -1,35 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/25/5
-Message-ID: <20080325142214.GI30264@ngolde.de>
-Date: Tue, 25 Mar 2008 15:22:14 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/31/7
+Message-ID: <c7b40f9d0807311545u5373de4dh82a83b5cd780c957@mail.gmail.com>
+Date: Fri, 1 Aug 2008 04:45:18 +0600
+From: "Alexander Konovalenko" <alexkon@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Need CVEs for joomla, egroupware
+Subject: SVG vulnerability affecting Firefox, evince, eog, Gimp?
 Content-Type: text/plain; charset=utf-8
 
-Hi Pierre,
-* Pierre-Yves Rofes <py@...too.org> [2008-03-25 15:07]:
-> On Tue, March 25, 2008 2:17 pm, Nico Golde wrote:
-> > * Nico Golde <oss-security+ml@...lde.de> [2008-03-25 14:16]:
-> >> * Hanno Böck <hanno@...eck.de> [2008-03-25 14:03]:
-> >> > egroupware: www.egroupware.org states this:
-> >> > eGroupWare 1.4.003 Security- and bugfix-release
-> >> > * fixed security problem reported by lukasz.pilorz@...egro.pl
-> >>
-> >> Already requested CVE ids for this one.
-> >
-> > I have to add that I didn't post to this list because I
-> > included the details for this vulnerability which seem to be
-> > under embargo :/
-> 
-> Not anymore, according to http://secunia.com/advisories/29491/
+Does anybody know whether this [1] is a real vulnerability? I
+currently lack a spare machine to test it. If it is real, it probably
+deserves CVE number.
 
-This report doesn't cover all vulnerabilities in this 
-function.
-Kind regards
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+The SHA-256 sum of the .zip file there was
+56d597cda98d796ec94723c540b967903886649412bce131eec4d232152aba3c
+when I fetched it.
 
-Content of type "application/pgp-signature" skipped
+ -- Alexander Konovalenko
+
+[1] http://www.milw0rm.com/exploits/6029
