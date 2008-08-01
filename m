@@ -1,35 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/23/5
-Message-ID: <32428.1208949174@devserv.devel.redhat.com>
-Date: Wed, 23 Apr 2008 07:12:54 -0400
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/01/2
+Message-ID: <9109.1217553450@devserv.devel.redhat.com>
+Date: Thu, 31 Jul 2008 21:17:30 -0400
 From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: list: members vs. read-only subscribers
+To: oss-security@...ts.openwall.com, "Alexander Konovalenko" <alexkon@...il.com>
+Subject: Re: SVG vulnerability affecting Firefox, evince, eog, Gimp?
 Content-Type: text/plain; charset=utf-8
 
-On 23 April 2008, Solar Designer wrote:
-> On Tue, Apr 22, 2008 at 09:04:40AM -0400, Josh Bressers wrote:
-> > Have the gears started turning that will make this happen yet?  I'm not in
-> > a big rush, I just don't want this conversation to be forgotten.
+On 1 August 2008, "Alexander Konovalenko" wrote:
+> Does anybody know whether this [1] is a real vulnerability? I
+> currently lack a spare machine to test it. If it is real, it probably
+> deserves CVE number.
 > 
-> Thank you for pinging me, although the request was not forgotten -
-> rather, it was queued.
-> 
-> Well, this turned out to be a trivial change to the ezmlm-gate line in
-> the editor file; it's just that it was beyond the capabilities of
-> ezmlm-make (so we'll need to remember to not lose this custom change
-> when re-configuring the list later).
-> 
-> The list should now be message-moderated for everyone except for people
-> (or rather, for their envelope-from addresses) who have subscribed or
-> posted desirable messages until today.  As more people (or addresses)
-> make desirable postings, we may be adding those to the "allow" list as
-> well (or maybe not - this is up to us).
-> 
-> Let's see how this works in practice.
+> The SHA-256 sum of the .zip file there was
+> 56d597cda98d796ec94723c540b967903886649412bce131eec4d232152aba3c
+> when I fetched it.
 > 
 
-This is wonderful, thank you.  I shall try to update the wiki later today.
+I can't get this to crash anything I've tried.  Has anyone else had any
+luck?
+
+Thanks for the heads up.  it's appreciated.
 
 -- 
     JB
