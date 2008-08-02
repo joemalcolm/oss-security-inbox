@@ -1,43 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/02/2
-Message-ID: <ncFa51czU1IMphI7W3tlfqWNjUM@Um7h9ZFcZ87Dgn/yxoqRH8ltMKU>
-Date: Tue, 2 Dec 2008 13:51:21 +0300
-From: Eygene Ryabinkin <rea-sec@...elabs.ru>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/02/1
+Message-Id: <200808021759.20662.hanno@hboeck.de>
+Date: Sat, 2 Aug 2008 17:59:19 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: jlieskov@...hat.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request - cups, dovecot-managesieve, perl, wireshark
+Cc: coley@...re.org
+Subject: CVE request: Contenido < 4.8.7, < 4.6.24
 Content-Type: text/plain; charset=utf-8
 
-Steven, *, good day.
+Upstream information is very limited. www.contenido.org
 
-Mon, Dec 01, 2008 at 11:36:45AM -0500, Steven M. Christey wrote:
-> Regarding the Perl issues: as seen in this list and elsewhere, there seems
-> to be a ton of confusion about which CVE's were originally fixed (or not),
-> and which CVE's have since reappeared (or not), and which versions of Perl
-> and File::Path are or are not affected, plus Eygene's commentary on other
-> race conditions.
+From their webpage
+"Contenido in den Versionen 4.6.24 und 4.8.7 erschienen. Beide Versionen 
+beheben die relevanten Sicherheitslücken. "
+(in english something like: contenido released in version 4.6.24 and 4.8.7. 
+Both versions fix the relevant security issues.)
 
-It seems to me that the original issue for the 'setuid' stuff was
-not completely fixed in Perl 5.8.4: it misses the stanza 'if
-$force_writable' at the second chmod (this is from virgin perl-5.8.5):
------
-            chmod 0777, $root
-              or carp "Can't make directory $root writeable: $!"
-                if $force_writeable;
-            print "rmdir $root\n" if $verbose;
-            if (rmdir $root) {
-                ++$count;
-            }
-            else {
-                carp "Can't remove directory $root: $!";
-                chmod($rp, ($Is_VMS ? VMS::Filespec::fileify($root) : $root))
-                    or carp("and can't restore permissions to "
-                            . sprintf("0%o",$rp) . "\n");
-            }
------
-This is in line with the Niko Tyni's patch:
-  http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=36;filename=sid_fix_file_path;att=2;bug=286922
+Changelog in 4.8 is missing, changelog in 4.6.24 states:
+"- Bugfixes / Hotfixes zu u.a. CON-148, CON-150, CON-152
+- diverse Hotfixes fuer potentielle Luecken"
+(bugfixes/hotfixes for CON-148, CON-150, CON-152 and others, several hotfixes 
+for potential vulnerabilities)
 
-So perl >= 5.8 <= 5.8.8 seems to be affected too.
+I think CON-xxx is some kind of internal advisory numbering, but I found 
+nowhere what CON-xxx is.
+
 -- 
-Eygene
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
