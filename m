@@ -1,19 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/08/9
-Message-ID: <16842.1207688057@devserv.devel.redhat.com>
-Date: Tue, 08 Apr 2008 16:54:17 -0400
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: CVE Request (rsync)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/03/1
+Message-ID: <20080803111248.25843627@redhat.com>
+Date: Sun, 3 Aug 2008 11:12:48 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com, coley@...re.org
+Subject: CVE request: OpenVPN (client) 2.1-beta14 through 2.1-rc8
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
+OpenVPN 2.1_rc9 changelog contains following:
 
-Can you assign a CVE id for this:
-http://samba.anu.edu.au/rsync/security.html#s3_0_2
+* Security Fix -- affects non-Windows OpenVPN clients running
+  OpenVPN 2.1-beta14 through 2.1-rc8 (OpenVPN 2.0.x clients are NOT
+  vulnerable nor are any versions of the OpenVPN server vulnerable).
+  An OpenVPN client connecting to a malicious or compromised
+  server could potentially receive an "lladdr" or "iproute" configuration
+  directive from the server which could cause arbitrary code execution on
+  the client. A successful attack requires that (a) the client has agreed
+  to allow the server to push configuration directives to it by including
+  "pull" or the macro "client" in its configuration file, (b) the client
+  succesfully authenticates the server, (c) the server is malicious or has
+  been compromised and is under the control of the attacker, and (d) the
+  client is running a non-Windows OS.  Credit: David Wagner.
 
-Thanks.
+References:
+http://openvpn.net/index.php/documentation/change-log/changelog-21.html
 
 -- 
-    JB
+Tomas Hoger / Red Hat Security Response Team
