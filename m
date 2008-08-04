@@ -1,22 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/14/6
-Message-ID: <20081014221036.GA5779@ngolde.de>
-Date: Wed, 15 Oct 2008 00:10:36 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/04/5
+Message-Id: <200808041858.10680.thijs@debian.org>
+Date: Mon, 4 Aug 2008 18:58:08 +0200
+From: Thijs Kinkhorst <thijs@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: vlc
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: source for CVE feed (was: Re: CVE request: httrack buffer overflow)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi Steve,
 
-can I get a CVE id for 
-http://www.coresecurity.com/content/vlc-xspf-memory-corruption 
-please?
+On Monday 4 August 2008 18:37, Steven M. Christey wrote:
+> It's in NVD but not yet on the public CVE site, due to various process
+> oddities.  98% of the time, NVD will have the CVEs before the CVE web site
+> does.
 
-Cheers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+Good to know. Here at Debian we currently import all CVEs into our own system, 
+and we use http://cve.mitre.org/data/downloads/allitems.html.gz as the source 
+for that.
+
+Considering your statement we would better be using one of the XML Data feeds 
+from http://nvd.nist.gov/download.cfm , right? Or would you recommend another 
+feed (e.g. the one where NVD gets its data from)?
+
+
+thanks,
+Thijs
 
 Content of type "application/pgp-signature" skipped
