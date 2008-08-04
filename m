@@ -1,21 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/20/5
-Message-ID: <87r6f7bg4s.fsf@rho.meyering.net>
-Date: Wed, 20 Feb 2008 20:08:03 +0100
-From: Jim Meyering <jim@...ering.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/04/13
+Message-ID: <20080804185314.GA13412@ngolde.de>
+Date: Mon, 4 Aug 2008 20:53:14 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: subscription-request procedure?
+Subject: CVE id request: openttd
 Content-Type: text/plain; charset=utf-8
 
-Solar Designer <solar@...nwall.com> wrote:
-> I've subscribed Jim earlier today.  Welcome!
+Hi,
+Can I get a CVE id for the following security issues fixed 
+in openttd 6.2?
 
-Thank you :)
+"OpenTTD servers of version 0.6.1 and below are susceptible to a remotely
+exploitable buffer overflow when the server is filled with companies and
+clients with names that are (near) the maximum allowed length for names.
+In the worst case OpenTTD will write the following (mostly remotely
+changable bytes) into 1460 bytes of malloc-ed memory:
+up to 11 times (amount of players) 118 bytes
+up to 8 times (amount of companies) 124 bytes
+and 7 "header" bytes
+Resulting in up to 2297 bytes being written in 1460 bytes of malloc-ed
+memory. This makes it possible to remotely crash the game or change the
+gamestate into an unrecoverable state.  "
 
-> Jim - you may want to add these projects to:
->
-> http://oss-security.openwall.org/wiki/software
+This is Debian bug #493714.
 
-There have been so few security-related problems in
-those projects over all these years that I hesitate
-to list them there.
+I didn't yet have the time to check the diff between the versions.
+
+Kind regards
+Nico
+
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
