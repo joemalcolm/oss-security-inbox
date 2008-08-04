@@ -1,17 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/17/5
-Message-Id: <200804171605.52834.hanno@hboeck.de>
-Date: Thu, 17 Apr 2008 16:05:49 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/04/1
+Message-Id: <200808041142.19187.thijs@debian.org>
+Date: Mon, 4 Aug 2008 11:42:15 +0200
+From: Thijs Kinkhorst <thijs@...ian.org>
 To: oss-security@...ts.openwall.com, coley@...re.org
-Subject: CVE id request: xine-lib <= 1.1.12 nsf handling
+Subject: CVE request: httrack buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-See
-http://milw0rm.com/exploits/5458
+Hi,
 
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+Please see:
+http://www.frsirt.com/english/advisories/2008/2221
+http://www.debian.org/security/2008/dsa-1626
 
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+Could we get a CVE name assigned to that please?
+
+thanks,
+Thijs
+
+Content of type "application/pgp-signature" skipped
