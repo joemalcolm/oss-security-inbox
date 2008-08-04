@@ -1,20 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/21/9
-Message-ID: <Pine.GSO.4.51.0802211403420.27720@faron.mitre.org>
-Date: Thu, 21 Feb 2008 14:05:22 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/04/9
+Message-ID: <Pine.GSO.4.51.0808041421020.23930@faron.mitre.org>
+Date: Mon, 4 Aug 2008 14:30:19 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Marcus Meissner <meissner@...e.de>
-cc: oss-security@...ts.openwall.com, coley@...us.mitre.org
-Subject: Re: Acrobat Reader 8.1.2 tmp racy wrapper script
+To: oss-security@...ts.openwall.com
+cc: coley@...re.org
+Subject: Re: CVE request: Contenido < 4.8.7, < 4.6.24
 Content-Type: text/plain; charset=utf-8
 
 
-Marcus,
+On Sat, 2 Aug 2008, Hanno [utf-8] Böck wrote:
 
-Regarding symlink issues in general, I have one word: LinkGuard.  (OK so
-that's 2 words and it probably wouldn't ever work but it's fun to think
-of).
+> Changelog in 4.8 is missing, changelog in 4.6.24 states:
+> "- Bugfixes / Hotfixes zu u.a. CON-148, CON-150, CON-152
+> - diverse Hotfixes fuer potentielle Luecken"
+> (bugfixes/hotfixes for CON-148, CON-150, CON-152 and others, several hotfixes
+> for potential vulnerabilities)
+>
+> I think CON-xxx is some kind of internal advisory numbering, but I found
+> nowhere what CON-xxx is.
 
-Use CVE-2008-0883
+I downloaded 4.8.7 and looked at the changelog, which says:
+
+  [CON-XXX] - Some XSS/RFI Bugfixes
+
+The XSS and RFI lines up with a MILW0RM:5810 post on June 14, which
+produced CVE-2008-2912 for the RFI and CVE-2008-2911 for the XSS.
+
+HOWEVER, that might be just a coincidence.  Contenido 4.8.6 says
+"[CON-XXX] - Additional hot- and bugfixes added" and SECUNIA:30683 (which
+is associated with those two CVEs) says "upgrade to 4.8.6" - so according
+to Secunia, those two CVEs were fixed in 4.8.6, *NOT* 4.8.7.
+
+Then, release 4.8.5 says "[CON-152] - Security fixes in cronjobs" and
+"[CON-150] - Security fixes".  CVE-2008-2912 covers a lot of RFI issues in
+cronjobs, but it also covers some others.
+
+Release 4.8.5 also alludes to deprecating some tool scripts because they
+are "evil in productive environments" which sounds like security but
+doesn't even actually say so.
+
+There are also older Contenido CVE's that we haven't recorded vendor fixes
+for, so maybe Contenido is catching up... or maybe they're getting
+proactive and fixing new things.
+
+Any thoughts?  Typical CVE practice would be to split all these up based
+on affected version and allude to potential fixes for the existing CVEs,
+but that doesn't quite seem appropriate here.
 
 - Steve
