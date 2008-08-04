@@ -1,23 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/30/1
-Message-ID: <20080430134352.GA14352@suse.de>
-Date: Wed, 30 Apr 2008 15:43:53 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com, security@...nel.org
-Subject: security problem in ESP fragment handling?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/04/14
+Message-ID: <20080804185604.GK27709@ngolde.de>
+Date: Mon, 4 Aug 2008 20:56:04 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: source for CVE feed (was: Re: CVE request: httrack buffer overflow)
 Content-Type: text/plain; charset=utf-8
 
-Hi folks,
+Hi Steven,
+* Steven M. Christey <coley@...us.mitre.org> [2008-08-04 20:16]:
+> On Mon, 4 Aug 2008, Thijs Kinkhorst wrote:
+> 
+> > Considering your statement we would better be using one of the XML Data feeds
+> > from http://nvd.nist.gov/download.cfm , right? Or would you recommend another
+> > feed (e.g. the one where NVD gets its data from)?
+> 
+> NVD's XML data feed is probably the best out there that's publicly
+> available.  Representatives of CVE-compatible product authors,
+> vulnerability databases, and software vendors can get direct access to an
+> email-based feed from MITRE, which is the feed that NVD uses.  MITRE
+> hasn't opened this to the general public because most people would use it
+> like a database, and we don't want to compete with other feeds out there.
+> Guess that's kind of silly these days given that NVD turns it around in 5
+> minutes, but there it is.
 
-We came across this commit and think it is security relevant...
+In June you said more regular updates to the MITRE site will probably happen
+this summer. This was what I was waiting for so we don't need to adapt the software
+behind our security tracker :) Any news on this?
 
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=920fc941a9617f95ccb283037fe6f8a38d95bb69
+Kind regards
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-This will at least hang the networking of the system if triggered.
-
-
-According to Karsten Keil just ESP fragment packets need to be accepted
-by the kernel to trigger the condition.
-We think this might be true for all 2.6 kernels (ever since esp.c got added).
-
-Ciao, Marcus
+Content of type "application/pgp-signature" skipped
