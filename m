@@ -1,59 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/05/2
-Message-Id: <1212654544.6369.4.camel@media>
-Date: Thu, 05 Jun 2008 01:29:04 -0700
-From: Ned Ludd <solar@...too.org>
-To: Robert Buchholz <rbu@...too.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Python Unsafe Module Loading
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/04/10
+Message-ID: <Pine.GSO.4.51.0808041443370.23930@faron.mitre.org>
+Date: Mon, 4 Aug 2008 14:45:58 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+cc: coley@...re.org
+Subject: Re: CVE request: phpmyadmin < 2.11.8
 Content-Type: text/plain; charset=utf-8
 
 
-On Thu, 2008-06-05 at 10:10 +0200, Robert Buchholz wrote:
-> On Wednesday 04 June 2008, Ned Ludd wrote:
-> > So for nearly every python based program you can simply dump  *.so
-> > *.py *.pyc files just about anywhere on the file system where an
-> > admin might invoke python.
-> 
-> As I also pointed out in our bug [1], this only happens in two cases:
-> (1) The interactive shell is used to run python code.
-> (2) A python script resides inside an untrusted directory.
-> 
-> What I expect to be the most common use case, running python code 
-> from /usr, or /home, is safe. Since all out-of-the-box software would 
-> be installed in directories that are not world-writable, I am tempted 
-> call (2) an error on the user side. Changing the behaviour of python in 
-> this manner would also break existing programs.
-> 
-> 
-> Robert
-> 
-> [1] https://bugs.gentoo.org/show_bug.cgi?id=224925
-> 
+======================================================
+Name: CVE-2008-3456
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3456
+Reference: MISC:http://yehg.net/lab/pr0js/advisories/Cross-Site_Framing_inphpMyAdmin2.11.7.pdf
+Reference: CONFIRM:http://www.phpmyadmin.net/home_page/security.php?issue=PMASA-2008-6
+Reference: FRSIRT:ADV-2008-2226
+Reference: URL:http://www.frsirt.com/english/advisories/2008/2226/references
+Reference: SECUNIA:31263
+Reference: URL:http://secunia.com/advisories/31263
+
+phpMyAdmin before 2.11.8 does not sufficiently prevent its pages from
+using frames that point to pages in other domains, which makes it
+easier for remote attackers to conduct spoofing or phishing activities
+via a cross-site framing attack.
 
 
-Re: (1)
-How this limited to interactive shells? Our portage/emerge being 
-directly not vuln is left to near sheer luck that Nick.C opted to shove 
-a path into our portage module a-long time ago.. But our tools are 
-questionable as it all depends on load order..
+======================================================
+Name: CVE-2008-3457
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3457
+Reference: MISC:http://yehg.net/lab/pr0js/advisories/XSS_inPhpMyAdmin2.11.7.pdf
+Reference: CONFIRM:http://www.phpmyadmin.net/home_page/security.php?issue=PMASA-2008-6
+Reference: FRSIRT:ADV-2008-2226
+Reference: URL:http://www.frsirt.com/english/advisories/2008/2226/references
+Reference: SECUNIA:31263
+Reference: URL:http://secunia.com/advisories/31263
 
-More examples:
+Cross-site scripting (XSS) vulnerability in setup.php in phpMyAdmin
+before 2.11.8 allows user-assisted remote attackers to inject
+arbitrary web script or HTML via crafted setup arguments.  NOTE: this
+issue can only be exploited in limited scenarios in which the attacker
+must be able to modify config/config.inc.php.
 
-solar@...ia /tmp $ touch re.so
-solar@...ia /tmp $ cat foo.py 
-import string
-print "foo"
-
-solar@...ia /tmp $ python foo.py
-Traceback (most recent call last):
-  File "foo.py", line 1, in ?
-    import string
-  File "/usr/lib/python2.4/string.py", line 83, in ?
-    import re as _re
-ImportError: /tmp/re.so: file too short
-solar@...ia /tmp $ ls -l re.so 
--rw-r--r-- 1 solar solar 0 Jun  5 01:22 re.so
-
-(2) yeah that's pretty much 50% of the problem.
 
