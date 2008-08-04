@@ -1,39 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/21/7
-Message-id: <1203619493.27378.TMDA@linsec.ca>
-Date: Thu, 21 Feb 2008 11:43:17 -0700
-From: Vincent Danen <vdanen@...sec.ca>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/04/2
+Message-ID: <20080804122102.39a4c011@redhat.com>
+Date: Mon, 4 Aug 2008 12:21:02 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: code review CVS
+Cc: thijs@...ian.org, coley@...re.org
+Subject: Re: CVE request: httrack buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-* [2008-02-21 08:49:52 +0000] Mark J Cox wrote:
+On Mon, 4 Aug 2008 11:42:15 +0200 Thijs Kinkhorst <thijs@...ian.org>
+wrote:
 
->> hahah... as Mark can attest, you're not the only one.  I've had to email
->> him a few times looking for some obscure src.rpm.
->
-> We give the full path in our emailed advisories (except for the cases where 
-> we are shipping something not open source like java/acroread) but the paths 
-> are not in the web based versions.  So 
-> http://www.redhat.com/archives/rhsa-announce/ since Nov 2007, or for older 
-> stuff http://www.redhat.com/archives/enterprise-watch-list/
->
-> Once you get a rpm then unpacking it without installing it is easy:
-> rpm2cpio fn.rpm | cpio --make-directories --extract
->
-> And we nearly always ship the pristine upstream tarball along with each 
-> patch separately (exception being things like OpenSSL).
->
-> This is definately material for a 'how to find out how the vendor fixed 
-> this' page.
+> Please see:
+> http://www.frsirt.com/english/advisories/2008/2221
+> http://www.debian.org/security/2008/dsa-1626
+> 
+> Could we get a CVE name assigned to that please?
 
-Looks like Kees beat me to it:
+CVE-2008-3429 ?
 
-http://oss-security.openwall.org/wiki/distro-patches
+Buffer overflow in URI processing in HTTrack and WinHTTrack before
+3.42-3 allows remote attackers to cause a denial of service (crash) and
+possibly execute arbitrary code via a long URL.
 
-I've added Red Hat to this list based on the above info.
+http://nvd.nist.gov/nvd.cfm?cvename=CVE-2008-3429
 
 -- 
-Vincent Danen @ http://linsec.ca/
-
-Content of type "application/pgp-signature" skipped
+Tomas Hoger / Red Hat Security Response Team
