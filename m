@@ -1,37 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/29/2
-Message-Id: <200809291554.57968.rbu@gentoo.org>
-Date: Mon, 29 Sep 2008 15:54:55 +0200
-From: Robert Buchholz <rbu@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/04/3
+Message-Id: <200808041238.15180.thijs@debian.org>
+Date: Mon, 4 Aug 2008 12:38:13 +0200
+From: Thijs Kinkhorst <thijs@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: Steffen Joeris <steffen.joeris@...lelinux.de>
-Subject: Re: CVE id request: ftpd
+Cc: coley@...re.org
+Subject: Re: CVE request: httrack buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-On Monday 29 September 2008, Steffen Joeris wrote:
-> Hi
+On Monday 4 August 2008 12:21, Tomas Hoger wrote:
+> CVE-2008-3429 ?
 >
-> There seems to be a Cross-site request forgery[0] in ftpd.
+> Buffer overflow in URI processing in HTTrack and WinHTTrack before
+> 3.42-3 allows remote attackers to cause a denial of service (crash) and
+> possibly execute arbitrary code via a long URL.
+>
+> http://nvd.nist.gov/nvd.cfm?cvename=CVE-2008-3429
 
-There have been two CVEs assigned, one for proftpd and one for 
-netkit-ftpd:
-
-CVE-2008-4242 (http://nvd.nist.gov/nvd.cfm?cvename=CVE-2008-4242):
-  ProFTPD 1.3.1 interprets long commands from an FTP client as multiple
-  commands, which allows remote attackers to conduct cross-site request
-  forgery (CSRF) attacks and execute arbitrary FTP commands via a long
-  ftp:// URI that leverages an existing session from the FTP client
-  implementation in a web browser.
-
-CVE-2008-4247 (http://nvd.nist.gov/nvd.cfm?cvename=CVE-2008-4247):
-  ftpd in OpenBSD 4.3, FreeBSD 7.0, and NetBSD 4.0 interprets long
-  commands from an FTP client as multiple commands, which allows remote
-  attackers to conduct cross-site request forgery (CSRF) attacks and
-  execute arbitrary FTP commands via a long ftp:// URI that leverages
-  an existing session from the FTP client implementation in a web
-  browser.
+Thanks! I somehow missed that one...
 
 
-Robert
+Thijs
 
-Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
+Content of type "application/pgp-signature" skipped
