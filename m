@@ -1,39 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/21/1
-Message-ID: <480BF149.8000406@freethemallocs.com>
-Date: Sun, 20 Apr 2008 17:43:37 -0800
-From: Jonathan Smith <smithj@...ethemallocs.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: Florian Weimer <fw@...eb.enyo.de>, vendor-sec@....de,  oss-security@...ts.openwall.com
-Subject: CVE request:Perl bug #48156
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/04/8
+Message-ID: <Pine.GSO.4.51.0808041311530.23930@faron.mitre.org>
+Date: Mon, 4 Aug 2008 13:12:31 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Thijs Kinkhorst <thijs@...ian.org>
+cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: source for CVE feed (was: Re: CVE request: httrack buffer overflow)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-Florian Weimer wrote:
-| Debian will release a security update for Perl bug #48156.  This looks a
-| bit like a heap overflow in valgrind.  I consider the DoS vector
-| important enough (which manifest on i386), so I haven't checked if it is
-| exploitable beyond that.
-|
-| This is just a heads-up, in case someone else wants to release an
-| update.  The issue itself is already public (also via Debian bug
-| #454792).
+On Mon, 4 Aug 2008, Thijs Kinkhorst wrote:
 
-Thanks for the info. Since this is already public, I'm CCing oss-security.
+> Good to know. Here at Debian we currently import all CVEs into our own system,
+> and we use http://cve.mitre.org/data/downloads/allitems.html.gz as the source
+> for that.
 
-I've reproduced the crash on rPath Linux 2, with perl 5.8.8. On rPL 1,
-perl 5.8.7 does not crash, but valgrind shows overflows.
+In recent months, this has been updated once or twice a week, but it will
+become a daily process fairly soon (we have a new content team member
+who'll be helping with the site updates).
 
-So, we'll probably need a CVE. Steve?
-
-	smithj
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEARECAAYFAkgL8UkACgkQCG91qXPaRek4EQCfQfem29oadZ+DVJoSK/Ti0weA
-//0AnRICT5rf/KGfvOfJ+bxDg69k6bDj
-=bTwa
------END PGP SIGNATURE-----
+- Steve
