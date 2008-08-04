@@ -1,27 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/21/11
-Message-ID: <Pine.GSO.4.51.0811202113470.20524@faron.mitre.org>
-Date: Thu, 20 Nov 2008 21:14:15 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/04/12
+Message-ID: <Pine.GSO.4.51.0808041449060.23930@faron.mitre.org>
+Date: Mon, 4 Aug 2008 14:49:11 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re:  CVE request: wordpress can be subject of delayed attacks via cookies
+Subject: Re: CVE request: vtigercrm < 5.0.4
 Content-Type: text/plain; charset=utf-8
 
 
 ======================================================
-Name: CVE-2008-5113
+Name: CVE-2008-3458
 Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5113
-Reference: MLIST:[oss-security] 20081113 CVE request: wordpress can be subject of delayed attacks via cookies
-Reference: URL:http://openwall.com/lists/oss-security/2008/11/14/1
-Reference: CONFIRM:http://bugs.debian.org/504771
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3458
+Reference: MISC:http://trac.vtiger.com/cgi-bin/trac.cgi/changeset/11811
+Reference: CONFIRM:http://sourceforge.net/project/shownotes.php?release_id=567189
+Reference: CONFIRM:http://trac.vtiger.com/cgi-bin/trac.cgi/ticket/2107
+Reference: CONFIRM:http://wiki.vtiger.com/index.php/Vtiger_CRM_5.0.4_-_Release_Notes
+Reference: BID:27228
+Reference: URL:http://www.securityfocus.com/bid/27228
+Reference: OSVDB:40218
+Reference: URL:http://www.osvdb.org/40218
+Reference: SECUNIA:28370
+Reference: URL:http://secunia.com/advisories/28370
 
-WordPress 2.6.3 relies on the REQUEST superglobal array in certain
-dangerous situations, which makes it easier for remote attackers to
-conduct delayed and persistent cross-site request forgery (CSRF)
-attacks via crafted cookies, as demonstrated by attacks that (1)
-delete user accounts or (2) cause a denial of service (loss of
-application access).  NOTE: this issue relies on the presence of an
-independent vulnerability that allows cookie injection.
+Vtiger CRM before 5.0.4 stores sensitive information under the web
+root with insufficient access control, which allows remote attackers
+to read mail merge templates via a direct request to the
+wordtemplatedownload directory.
 
 
