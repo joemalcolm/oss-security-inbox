@@ -1,26 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/17/9
-Message-ID: <Pine.GSO.4.51.0804171307380.3756@faron.mitre.org>
-Date: Thu, 17 Apr 2008 13:07:53 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/04/7
+Message-ID: <Pine.GSO.4.51.0808041304400.23930@faron.mitre.org>
+Date: Mon, 4 Aug 2008 13:08:01 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: tss <= 0.8.1-3: arbitary file reading
+To: Thijs Kinkhorst <thijs@...ian.org>
+cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: source for CVE feed (was: Re: CVE request: httrack buffer overflow)
 Content-Type: text/plain; charset=utf-8
 
 
-On Thu, 17 Apr 2008, Nico Golde wrote:
+On Mon, 4 Aug 2008, Thijs Kinkhorst wrote:
 
-> Steve (the mitre one :) did you miss that?
+> Considering your statement we would better be using one of the XML Data feeds
+> from http://nvd.nist.gov/download.cfm , right? Or would you recommend another
+> feed (e.g. the one where NVD gets its data from)?
 
-yes, but I didn't miss this anyway :)
+NVD's XML data feed is probably the best out there that's publicly
+available.  Representatives of CVE-compatible product authors,
+vulnerability databases, and software vendors can get direct access to an
+email-based feed from MITRE, which is the feed that NVD uses.  MITRE
+hasn't opened this to the general public because most people would use it
+like a database, and we don't want to compete with other feeds out there.
+Guess that's kind of silly these days given that NVD turns it around in 5
+minutes, but there it is.
 
-======================================================
-Name: CVE-2008-1877
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1877
-Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=475747
-
-tss 0.8.1 allows local users to read arbitrary files via the -a
-parameter, which is processed while tss is running with privileges.
-
-
+- Steve
