@@ -1,47 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/03/1
-Message-Id: <200809030200.05035.rbu@gentoo.org>
-Date: Wed, 3 Sep 2008 01:59:47 +0200
-From: Robert Buchholz <rbu@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request (gpicview)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/04/4
+Message-ID: <Pine.GSO.4.51.0808041236350.23930@faron.mitre.org>
+Date: Mon, 4 Aug 2008 12:37:28 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Thijs Kinkhorst <thijs@...ian.org>
+cc: oss-security@...ts.openwall.com, coley@...re.org
+Subject: Re: CVE request: httrack buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-On Sunday 31 August 2008, Nico Golde wrote:
-> Same piece of code main-win.c doesn't look too trustworthy
-> to me either:
+
+On Mon, 4 Aug 2008, Thijs Kinkhorst wrote:
+
+> On Monday 4 August 2008 12:21, Tomas Hoger wrote:
+> > CVE-2008-3429 ?
+> >
+> > Buffer overflow in URI processing in HTTrack and WinHTTrack before
+> > 3.42-3 allows remote attackers to cause a denial of service (crash) and
+> > possibly execute arbitrary code via a long URL.
+> >
+> > http://nvd.nist.gov/nvd.cfm?cvename=CVE-2008-3429
 >
->     690     int error = jpegtran (filename, "/tmp/rot.jpg" , code);
->     691     if(error)
->     692         return error;
->     693
->     694     //now copy /tmp/rot.jpg back to the original file
->     695     char command[strlen(filename)+50]; //this should not
-> generate buffer owerflow 696     // MS: didn't know, how to make it
-> better, maybe an own copy routine 697     sprintf(command,"cp
-> /tmp/rot.jpg \"%s\"",filename); 698     system(command);
->
-> Anyone played with crafted file names?
+> Thanks! I somehow missed that one...
 
-Good catch! You need to append '.jpg' at the end of the crafed filename 
-so the rotation via jpegtran is invoked, but besides that it works ok:
+It's in NVD but not yet on the public CVE site, due to various process
+oddities.  98% of the time, NVD will have the CVEs before the CVE web site
+does.
 
-rbu@...nut ~/devel/gentoo/security/gpicview $ ls -l
-total 484K
--rw-------  1 rbu rbu 469K 2008-09-03 01:35 bla.jpg"; touch XX ;".jpg
-
-rbu@...nut ~/devel/gentoo/security/gpicview $ gpicview *
-QSettings: failed to open file '/usr/qt/3/etc/settings/qt_plugins_3.3rc'
-sh: .jpg: command not found
-^C
-
-rbu@...nut ~/devel/gentoo/security/gpicview $ ls -l
-total 960K
--rw-------  1 rbu rbu 469K 2008-09-03 01:52 bla.jpg
--rw-------  1 rbu rbu 469K 2008-09-03 01:35 bla.jpg"; touch XX ;".jpg
--rw-------  1 rbu rbu    0 2008-09-03 01:52 XX
-
-
-Robert
-
-Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
+- Steve
