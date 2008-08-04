@@ -1,34 +1,125 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/24/4
-Message-ID: <20080224235237.GA22466@openwall.com>
-Date: Mon, 25 Feb 2008 02:52:37 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/04/6
+Message-Id: <1217869242.27889.24.camel@iankko.englab.brq.redhat.com>
+Date: Mon, 04 Aug 2008 19:00:42 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: code review CVS
+Cc: Alexander Konovalenko <alexkon@...il.com>
+Subject: Re: SVG vulnerability affecting Firefox, evince, eog, Gimp?
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Feb 18, 2008 at 10:28:36AM +0100, Sebastian Krahmer wrote:
-> From my view it would be helpful to have some forum/CVS or whatever
-> where code reviewers can submit the code they already audited along
-> with remarks/exploits/patches etc.
+Hello guys,
 
-We don't yet have such a CVS (or similar) repository - and it is not
-obvious whether one is needed - but maybe you (and others) could start
-by using a namespace on the wiki for this?  The wiki includes support
-for file uploads - it's the "Add Images and other files" icon (picture
-in a frame) on top of the page edit area.  We have not yet tested this
-functionality, though (might need to add a chmod as we're running the
-wiki scripts under a dedicated UID and with umask 077).
+  have looked a little bit at this one.
 
-Obviously, you shouldn't upload entire source trees (tarballs?) in this
-way, but remarks, patches, and testcases may be uploaded.  Actually,
-the remarks are better edited on the wiki, which provides a structure
-(namespaces) and revision control.
+On Thu, 2008-07-31 at 21:17 -0400, Josh Bressers wrote:
+> On 1 August 2008, "Alexander Konovalenko" wrote:
+> > Does anybody know whether this [1] is a real vulnerability? I
+> > currently lack a spare machine to test it. If it is real, it probably
+> > deserves CVE number.
+> > 
+> > The SHA-256 sum of the .zip file there was
+> > 56d597cda98d796ec94723c540b967903886649412bce131eec4d232152aba3c
+> > when I fetched it.
+> > 
+> 
+> I can't get this to crash anything I've tried.  Has anyone else had any
+> luck?
 
-That way, we'll see if anyone actually contributes their audit results
-in this way.  Then, if there's specific demand for a CVS repository or
-whatever, that can be added as well.
+Maybe the crash isn't the worst thing occurring there.
 
-Thanks,
+Scenario A: (Running window manager without Gconfd support, i.e. twm in
+my case);
 
-Alexander
+1, The malicious SVG file is 'test.svg' in my case.
+2, root@...t] # echo "hello" > /var/log/messages
+3, from first console (as root): root@...t] # tail -f /var/log/messages >> evince_test_svg_output
+4, testuser@...t] $ evince test.svg
+5, root@...t] # cat evince_test_svg_output
+
+The output looks like this:
+
+# cat evince_test_svg_output 
+hello
+Aug  4 11:50:58 dell-pe700-01 gconfd (testuser-16434): starting (version
+2.22.0), pid 16434 user 'testuser'
+Aug  4 11:50:58 dell-pe700-01 gconfd (testuser-16434): Resolved address
+"xml:readonly:/etc/gconf/gconf.xml.mandatory" to a read-only
+configuration source at position 0
+Aug  4 11:50:58 dell-pe700-01 gconfd (testuser-16434): Resolved address
+"xml:readwrite:/home/testuser/.gconf" to a writable configuration source
+at position 1
+Aug  4 11:50:58 dell-pe700-01 gconfd (testuser-16434): Resolved address
+"xml:readonly:/etc/gconf/gconf.xml.defaults" to a read-only
+configuration source at position 2
+Aug  4 11:51:58 dell-pe700-01 gconfd (testuser-16434): GConf server is
+not in use, shutting down.
+Aug  4 11:51:58 dell-pe700-01 gconfd (testuser-16434): Exiting
+
+When I repeat the scenario for both (eog, gimp) cases, the output looks
+similar (is the same). The 'attack' appears only by the first run
+on the 'test.svg' file, e.g. when running 'evince test.svg' followed by
+'eog test.svg' the attack would appear only in the first case. In the
+second case there is no mention resolving some address.
+
+Scenario B (running window manager with Gconf support, i.e.
+gnome-session):
+
+The same scenario steps as in the A case. 
+
+1, Malicious SVG file name 'test.svg'.
+2, root@...t] # rpm -e gimp eog evince && yum install eog gimp evince
+(to ensure the attack would appear again)
+3, root@...t] # echo "hello_evince" > /var/log/messages
+4, root@...t] # tail -f /var/log/messages >> gnome_evince_test_svg_output
+5, testuser@...t] $ evince test.svg (after closing the window)
+6, root@...t] [root@...t ~]# cat gnome_evince_test_svg_output 
+
+The output looks like the following: 
+
+# cat gnome_evince_test_svg_output
+hello_evince
+Aug  4 12:32:16 hp-xw6400-01 gconfd (testuser-17504): starting (version
+2.20.1), pid 17504 user 'testuser'
+Aug  4 12:32:16 hp-xw6400-01 gconfd (testuser-17504): Resolved address
+"xml:readonly:/etc/gconf/gconf.xml.mandatory" to a read-only
+configuration source at position 0
+Aug  4 12:32:16 hp-xw6400-01 gconfd (testuser-17504): Resolved address
+"xml:readwrite:/home/testuser/.gconf" to a writable configuration source
+at position 1
+Aug  4 12:32:16 hp-xw6400-01 gconfd (testuser-17504): Resolved address
+"xml:readonly:/etc/gconf/gconf.xml.defaults" to a read-only
+configuration source at position 2
+
+So the only difference now is the Gconfd server is running, and
+it 'recognizes' some interesting patterns in the malicious 'test.svg'
+file and tries to parse them (there is no visible mention by evince,
+eog or gimp something went wrong by opening || reading the file).
+Also this time, the attack to appear once again, all the packages
+needs to be first removed, then tried the another one. By subsequent
+running of e.g. 'eog' then 'evince', the 'attack' doesn't appear.
+ 
+Have tried two different versions of gnome-session
+(gnome-session-2.20.3-1.fc8, gnome-session-2.22.3-1.fc9.i386)
+and dbus (dbus-1.1.2-9.fc8, dbus-1.2.1-1.fc9.i386). Similar
+results can be seen on older systems too. 
+
+Now the question remains, how can these GConfd recognition messages
+be used to attack the system (I think these can be used as some
+'food' for the dbus-daemon to attack the system -- but this one
+only presumption). 
+
+Was unable to reproduce the behavior with the 'firefox' package.
+
+Let me know your thoughts and I will in the meantime try to
+find out the possible impact of such messages.
+
+Kind regards
+Jan iankko Lieskovsky
+RH Security Response Team
+
+
+> 
+> Thanks for the heads up.  it's appreciated.
+> 
+
