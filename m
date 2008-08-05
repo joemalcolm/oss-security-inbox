@@ -1,123 +1,188 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/10/1
-Message-ID: <20080910170002.GA6845@ocert.org>
-Date: Wed, 10 Sep 2008 12:00:05 -0500
-From: Will Drewry <redpig@...rt.org>
-To: ocert-announce@...ts.ocert.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: [oCERT-2008-012] Horde, Popoon frameworks common input sanitization errors (XSS)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/05/2
+Message-ID: <20080805164229.7291780b@redhat.com>
+Date: Tue, 5 Aug 2008 16:42:29 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley@...us.mitre.org, Jan Minar <rdancer@...ncer.org>, smithj@...ethemallocs.com, Bram Moolenaar <Bram@...lenaar.net>, "Charles E Campbell, Jr" <drchip@...pbellfamily.biz>
+Subject: Re: Re: More arbitrary code executions in Netrw version 125, Vim 7.2a.10
 Content-Type: text/plain; charset=utf-8
 
+Hi Steven!
 
-#2008-012 Horde, Popoon frameworks common input sanitization errors (XSS)
-
-Two cross-site scripting (XSS) vulnerabilities were reported in Horde
-Framework. The first of which is that the Horde framework fails to properly
-sanitize the filename of MIME attachments on received emails.  The second
-vulnerability has a wider impact.
-
-Horde relies on code similar to Popoon's externalinput.php to filter out
-potential XSS attacks on user-supplied input.  This filter, and the original,
-fail to fully sanitize user data.  In particular, this filter fails to
-protect against '/'s acting as spaces in both Microsoft Internet Explorer and
-Mozilla Firefox.
-
-Patches have been made available for Horde:
-
-* 3.1:
-  http://ocert.org/patches/2008-012/Text_Filter.31.patch
-* 3.2 - CVS HEAD:
-  http://ocert.org/patches/2008-012/MIME.patch
-  http://ocert.org/patches/2008-012/Text_Filter.patch
-
-A replacement for externalinput.php is linked below as well.
+I'll try to answer some of the questions where I can...
 
 
-Affected version:
+On Thu, 31 Jul 2008 20:44:12 -0400 (EDT) "Steven M. Christey"
+<coley@...us.mitre.org> wrote:
 
-Popoon (externalinput.php) <= r22196
+> heap overflow, demonstrated by netrw.v3
+> 
+>     - NEW CVE assigned: CVE-2008-3432
+> 
+>       - vim 6.2 and 6.3 (mch_expand_wildcards)
+> 
+>       - http://www.openwall.com/lists/oss-security/2008/07/15/4
 
-Horde >= 3.2, <= 3.2.1 (both issues)
-Horde >= 3.1, <  3.2   (XSS filter only)
-
-(secondary affected versions)
-
-Horde Groupware >= 1.0, <= 1.0.6 (XSS filter only)
-Horde Groupware Webmail Edition >= 1.0, <= 1.0.7 (XSS filter only)
-Horde Groupware >= 1.1, <= 1.1.2 (both issues)
-Horde Groupware Webmail Edition >= 1.1, <= 1.1.2 (both issues)
-Cake-PHP <= 1.2.0.7296 RC2
-phpMyFAQ <= 2.5.0-dev (2008-08-18)
-deluxeBB <= 1.2
-emucms <= 0.3
-SimpleSite <= 1.6.4
-RevokeBB <= 1.0RC11_normal
-TPLN <= 2.9
-Logicoder <= r27
-phour <= r106
-MDPro <= 1.0821
-noserub <= r784/0.6
+I guess you can safely use 6.2.429 - 6.3.059 here, as it was identified
+which change introduced and which resolved the problem.
 
 
-Fixed version:
+> tar.vim
+>
+>   - Report TAR-3
+> 
+>      assignment of CVE-2008-3074 to "tarplugin"
+> 
+> 	 http://www.openwall.com/lists/oss-security/2008/07/10/7
+> 
+> 	 - already used by rPath in advisory
 
-Horde > 3.2.1 (see patches)
-
-externalinput/clean.php (see links)
-
-
-Credit: Vulnerability report and proof of concepts received from
-        Alexios Fakos <security [at] nruns [dot] com>.
-
-
-CVE: CVE-2008-3823 (MIME attachment), CVE-2008-3824 (XSS filtering)
-
-
-Timeline:
-2008-08-05: initial report and proof of concepts received.
-2008-08-18: affected software survey completed by oCERT.
-2008-08-18: externalinput.php/Popoon author contacted.
-2008-08-19: Horde author contacted.
-2008-08-19: initial patches for Horde and Popoon supplied by vendors.
-2008-08-19: reporter calls out additional possible vectors in externalinput.php.
-2008-08-20: secondary fixed for externalinput.php supplied.
-2008-08-20: attempted to contact CakePHP.
-2008-09-04: final Horde patches supplied.
-2008-09-04: potentially affected oCERT members and vendor-sec notified.
-2008-08-05: CVEs assigned.
-2008-09-05: oCERT requests end of embargo to be Sep 10, 1700 UTC.
-2008-09-06: contacted phlymail lite; confirmed unaffected.
-2008-09-06: notified all secondary vendors above.
-2008-09-06: acknowledgement from cakephp, noserub, phpmyfaq.
-2008-09-09: confirmed exact embargo end with vendor-sec and other vendors.
-2008-09-10: advisory released.
-
-References:
-http://blog.liip.ch/archive/2005/01/16/xss-how-we-try-to-prevent-it.html
-http://blog.liip.ch/missed-case-in-externalinput-php-resulting-in-viable-xss-attacks.html
-
-Links:
-http://horde.org
-http://svn.bitflux.ch/repos/public/popoon/trunk/classes/externalinput.php
-https://svn.liip.ch/repos/public/ext/externalinput/trunk/lx/externalinput/clean.php
-http://horde.org/groupware
-http://www.cakephp.org
-http://www.phpmyfaq.de
-http://www.deluxebb.com
-http://www.emusoft.org/index.php?page=category&cat_id=14
-http://dev.mistralys.com/SimpleSite
-http://sourceforge.net/projects/revokebb
-http://tpln.h2lsoft.com/
-http://code.google.com/p/logicoder/
-http://code.google.com/p/phour/
-http://www.maxdev.com/AboutMD.phtml
-http://code.google.com/p/noserub/
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3823
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3824
-
-Permalink:
-http://www.ocert.org.org/advisories/ocert-2008-012.html
+Was it?  There are very few public references of this id found by
+google.  rPath link goes to their issue tracker:
+  https://issues.rpath.com/browse/RPL-2651
 
 
---
-Will Drewry <redpig@...rt.org>
-oCERT Team :: http://ocert.org
+> zip.vim
+> 
+>   - Report ZIP-1
+> 
+>     rdancer says "zip.vim" as well as "zipPlugin.vim"
+
+" zip.vim: Handles browsing zipfiles
+"            AUTOLOAD PORTION
+
+" zipPlugin.vim: Handles browsing zipfiles
+"            PLUGIN PORTION
+
+zipPlugin.vim only seems to be an interface to functionality
+implemented in zip.vim.  Actual issues should be in zip.vim, but terms
+are likely used as synonyms in the advisory.
+
+> 	- Vim 7.1.298 and 6.4
+
+vim-6.4.tar.bz2 does not contain zip.vim, and it is not added by
+subsequent 6.4 patches ftp://ftp.vim.org/pub/vim/patches/6.4/ , I guess
+this should be 7.0+, just like tar.vim issues.
+
+>   - Report ZIP-2
+> 
+>     Tomas Hoger suggests "still unfixed"
+> 
+> 	   http://www.openwall.com/lists/oss-security/2008/07/10/7
+
+That comment was based on Jan's advisory vulnerablevim-netrw.html with
+was updated to cover current state the upstream fixes, and was still
+listing tar and zip as vulnerable.
+
+>     - CVE-2008-3075 assigned; used by rPath
+> 
+> 	- since CVE-2008-2712 issues were fixed and zip.vim remains
+>       unfixed, a SPLIT from CVE-2008-2712 is reasonable
+
+Similar to CVE-2008-3074 above.
+
+>   - Report ZIP-3
+> 
+>     Tomas Hoger says "only 7.0 and 7.1" affected
+
+In context of GA versions, without additional patches.  I'm not sure
+what is the current status wrt 7.1 official patches.  7.0 should be
+first affected, all 7.0.x should be affected.
+
+> 3) Given the varying results for TAR-1 through TAR-4, should zip.vim
+>    be split from the tar issues?  What about zipplugin.vim?
+
+Given http://www.openwall.com/lists/oss-security/2008/07/08/12 , they
+are currently split.
+
+> 4) It might be reasonable to remove item (2) from CVE-2008-2712.
+
+Probably yes, based on first affected versions.
+
+
+> Looking at netrw.v2:
+> 
+>   - Report NETRW2-a
+> 
+>     rdancer says "mx" and "mz" in:
+>     http://www.rdancer.org/vulnerablevim-netrw.html
+> 
+> 	NO version information provided in this advisory, but title
+> 	indicates "Netrw version 125, Vim 7.2a.10"
+> 
+>   - Report NETRW2-b
+> 
+>     Tomas Hoger mentions "mz and mc" in:
+>     http://www.openwall.com/lists/oss-security/2008/07/15/4
+> 
+> 	but: mc is probably referring to netrw.v3, so not relevant
+> here
+> 
+> 	mz "should only affect 7.2 alpha"
+
+Actually, advisory is:
+
+1. Compression and Decompression (The ``mz'' Command)
+  (which mentions mx and mz, context of mx is bit unclear)
+
+netrw.v2 demonstrates mz flaw.
+
+2. Copying Files (The ``mc'' Command)
+
+demonstrated by netrw.v3
+
+All 3 commands - mx, mz and mc are only recognized by netrw version as
+bundled with 7.2 alpha.  These issues did not affect 7.1.x and previous.
+
+> 1) What role, if any, does "mf" play (NETRW2-c)?  It's listed as a
+>    "prerequisite" then nothing else is said.  Does it have a
+>    vulnerability?  Or does the victim need to mark a file before
+>    decompressing it?
+
+mf is used in netrw.v[23] to mark files, before compress / copy is run
+on them.
+
+> 3) Which combination of mx, mz, and mf is really being covered by
+>    the netrw.v2 test case?
+
+mf mz is command sequence executed.
+
+
+> Looking at netrw.v3:
+> 
+> 1) NETRW3-c is clearly different, so CVE-2008-3432 is assigned.
+
+It was not the purpose of netrw.v3 to demonstrate this, it just
+accidentally uncovered this issue.  Taking into account which versions
+are affect by this, I guess it's quite unlikely this affects anyone but
+us at this point in time.
+
+> 2) Are NETRW3-a and NETRW3-b talking about the same issue?
+
+Probably not.  -a talks about mx and mz, but demonstrates mz.  -b is
+about -mc.  Shour be different issues.
+
+
+> Looking at netrw explorer.vim plugin:
+> 
+>   - Report EXP-1
+> 
+>     "netrw" test case triggers "similar problem" in explorer.vim:
+> 
+> 	http://www.openwall.com/lists/oss-security/2008/07/15/2
+> 
+> 	- in vim 6.x
+> 
+>   - Report EXP-2
+> 
+>     "netrw.v4" test case does not affect explorer.vim
+> 
+> 
+> 1) Does this need a separate ID?  If not, which does it belong with?
+
+Given that it affects different plugins, separate id seems to make
+sense wrt to the rules how CVE ids are usually assigned.
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
