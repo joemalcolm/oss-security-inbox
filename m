@@ -1,56 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/04/3
-Message-ID: <20080404212858.GA23929@openwall.com>
-Date: Sat, 5 Apr 2008 01:28:58 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/05/1
+Message-Id: <200808050522.40342.rbu@gentoo.org>
+Date: Tue, 5 Aug 2008 05:22:37 +0200
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: Andrea Barisani <andrea@...ersepath.com>
-Subject: announcing oss-security to Bugtraq & f-d
+Subject: Re: CVE id request: openttd
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Apr 04, 2008 at 03:35:53PM -0400, Josh Bressers wrote:
-> My initial thought here is why?  I still see oss-security as a group in its
-> inception.  I'm personally not entirely happy with the content on the wiki
-> yet (it has far too many holes).  Sadly other things have been preventing
-> me from working on it lately.
+On Monday 04 August 2008, Nico Golde wrote:
+> "OpenTTD servers of version 0.6.1 and below are susceptible to a
+> remotely exploitable buffer overflow when the server is filled with
+> companies and clients with names that are (near) the maximum allowed
+> length for names. In the worst case OpenTTD will write the following
+> (mostly remotely changable bytes) into 1460 bytes of malloc-ed
+> memory:
+> up to 11 times (amount of players) 118 bytes
+> up to 8 times (amount of companies) 124 bytes
+> and 7 "header" bytes
+> Resulting in up to 2297 bytes being written in 1460 bytes of
+> malloc-ed memory. This makes it possible to remotely crash the game
+> or change the gamestate into an unrecoverable state.  "
+>
+> This is Debian bug #493714.
+>
+> I didn't yet have the time to check the diff between the versions.
 
-Indeed.  My thought was that maybe some of those Bugtraqers would
-actually help us in working on the wiki content.  Of course, we may also
-get inappropriate edits, which we'll have to deal with, but that's life.
-Wikipedia is very well known and popular - yet they manage to keep the
-wiki wide open and with reasonable content.
+Secunia interpreted [1] the "remotely exploitable buffer overflows" 
+mentioned in the changelog [2] to be a "boundary error within 
+the "TruncateString()" function in src/gfx.cpp". This would be the 
+following patch [3]. However, this would overwrite the buffer by max. 2 
+bytes, and does not match your bug description too well. Is this maybe 
+r13712 [4] ?
 
-Also, many of our wiki pages are intended for a wider audience than the
-current oss-security membership.  Keeping the intended audience unaware
-of our wiki is counter-productive.
+Robert
 
-Finally, there's PageRank.  We can't make it easy to find our wiki
-content when our wiki is not linked to from lots of sites.
 
-> I'm also quite happy with the rather slow growth we're currently seeing on
-> the mailing list.  We need a solid base before we can handle what will be
-> explosive list growth from a big public announcement.
+[1] http://secunia.com/advisories/31350/
+[2] http://sourceforge.net/project/shownotes.php?release_id=617243
+[3] https://bugs.gentoo.org/attachment.cgi?id=162239
+[4] svn diff -c 13712 svn://svn.openttd.org/trunk
 
-Understood and agreed.  I thought that we kind of already had a
-sufficiently solid base for this, and I also noticed that we became
-inactive at populating the wiki lately - which means that delaying the
-announcement by another month might not result in us having much more
-and/or better wiki content by then.
-
-> > Also, Josh, are you OK with mentioning oCERT here? -
-> > 
-> > http://oss-security.openwall.org/wiki/disclosure/researcher
-> 
-> We really need a page dedicated to embargoed issue handling organizations.
-> For now though, that would be appropriate given it already lists a few
-> organizations.
-
-Andrea - maybe you'd like to join us in populating the wiki with content -
-e.g., you could start by adding a mention of oCERT to the above page,
-then proceed to create a new page (also in the disclosure namespace?) on
-CERT-like organizations (with more detailed information than that
-already available on the links page).
-
-Thanks,
-
-Alexander
+Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
