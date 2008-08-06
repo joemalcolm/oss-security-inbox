@@ -1,37 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/17/26
-Message-Id: <200812171857.31297.steffen.joeris@skolelinux.de>
-Date: Wed, 17 Dec 2008 18:57:27 +0100
-From: Steffen Joeris <steffen.joeris@...lelinux.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/06/1
+Message-ID: <0808061435350.1142@mjc.redhat.com>
+Date: Wed, 6 Aug 2008 14:41:30 +0100 (BST)
+From: Mark J Cox <mjc@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Nico Golde <oss-security+ml@...lde.de>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE id request: php-xajax
+Subject: CVE-2008-2939 low severity Apache httpd XSS
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 17 Dec 2008 06:19:20 pm Nico Golde wrote:
-> Hi,
->
-> * Steven M. Christey <coley@...us.mitre.org> [2008-12-17 17:53]:
-> > On Wed, 17 Dec 2008, Steffen Joeris wrote:
-> > > The patch for CVE-2007-2739 seems incomplete as it doesn't escape "&".
-> > > I recommend removing the replace call and using htmlspecialchars()
-> > > instead.
-> >
-> > This counts for a new CVE, so use CVE-2008-5623
-> >
-> > Will there be more details available, or should I just write the
-> > description up based on the oss-security post?  Which versions are
-> > affected?
->
-> Please enlighten me why it is incomplete. As far as I know
-> you can't perform an XSS with & only (I'm not a webappsec
-> expert though). But the reason it behaves different from
-> htmlspecialchars should not make this patch incomplete.
-Afaik you can use & to specify values like ../foo.php&value=bar
-Thus the patch looked incomplete to me and should be extended to escape & as 
-well.
+FYI as this was committed yesterday but isn't triggering a new upstream 
+release so might not get noticed much until the advisory comes out from 
+Rapid7:
 
-Cheers
-Steffen
+   *) SECURITY: CVE-2008-2939 (cve.mitre.org)
+      mod_proxy_ftp: Prevent XSS attacks when using wildcards in the path of
+      the FTP URL. Discovered by Marc Bevand of Rapid7. [Ruediger Pluem]
 
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+Hence Low severity, affects 2.0.*, 2.2.*, fixes in svn:
+http://svn.apache.org/viewvc?view=rev&revision=682870
+
+Thanks, Mark
+--
+Mark J Cox / Red Hat Security Response Team
