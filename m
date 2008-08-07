@@ -1,45 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/10/3
-Message-ID: <bYzcr3rPIUFO2o4fPZ/nQ+xtMqk@keEvuTOlYdAfFUWWrDbTGrfqNd0>
-Date: Wed, 10 Dec 2008 16:48:08 +0300
-From: Eygene Ryabinkin <rea-sec@...elabs.ru>
-To: ae@....se, oss-security@...ts.openwall.com, jlieskov@...hat.com
-Cc: coley@...re.org
-Subject: Re: CVE Request (nagios)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/07/2
+Message-ID: <20080807121445.2a0004c6@redhat.com>
+Date: Thu, 7 Aug 2008 12:14:45 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: oss-security+ml@...lde.de
+Subject: Re: CVE id request: git
 Content-Type: text/plain; charset=utf-8
 
-Andreas, good day.
+On Thu, 7 Aug 2008 10:41:54 +0200 Nico Golde
+<oss-security+ml@...lde.de> wrote:
 
-Will you be able to clarify two things.
+> Patch: 
+> http://git.kernel.org/?p=git/git.git;a=commitdiff;h=fd55a19eb1d49ae54008d932a65f79cd6fda45c9
 
-Mon, Dec 08, 2008 at 05:19:52PM +0300, Eygene Ryabinkin wrote:
-> So
->   http://nagios.cvs.sourceforge.net/viewvc/nagios/nagios/base/commands.c?r1=1.109&r2=1.110&view=patch
-> just completely closes the processing of these commands from the
-> Nagios side.  May be this was the fix for the case when the evil
-> contents from the command file were still floating around but the
-> upgraded Nagios won't process them because they could go from the
-> previous successful attack but are lying unprocessed?
+As it's on Secunia (SA31347), it's likely to be processed by Mitre
+soon.  Risk of duplicating ids seems fairly high here.
 
-Do you think it is really so?
+Btw, this should not be a big deal issue for fortify_sourced builds.
 
-> > It is a bit strange that it was done after 3.0.5 (CSRF was documented in
-> > 3.0.5 release notes), but...  By the way, entry for CVE-2008-5028 speaks
-> > about 3.0.5 as about the vulnerable to the CSRF and it is inconsistent
-> > with the release notes at
-> >   http://www.nagios.org/development/history/nagios-3x.php.
-> 
-> So I feel the the CSRF was "somehow closed" in 3.0.5 and CVE entry may
-> need fixing.  The remains from this bug that could migrate from 3.0.5 to
-> 3.0.6 (but not in the functional sense, only via the unprocessed command
-> file) were "fixed" in 3.0.6.
-
-CVE-2008-5028 really speaks about 3.0.5 as about vulnerable to CSRF.  At
-least CHANGE_ commands were closed in 3.0.5 and were (presumably)
-additionally closed at the Nagios server side in 3.0.6.  So either 3.0.6
-is vulnerable too, 3.0.5 is not vulnerable to CSRF or I am missing
-something.  What to choose?
-
-Thanks!
 -- 
-Eygene
+Tomas Hoger / Red Hat Security Response Team
