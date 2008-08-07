@@ -1,33 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/10/5
-Message-ID: <4875DA0D.6090000@redhat.com>
-Date: Thu, 10 Jul 2008 17:44:45 +0800
-From: Eugene Teo <eteo@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/07/4
+Message-ID: <Pine.GSO.4.51.0808071640440.25461@faron.mitre.org>
+Date: Thu, 7 Aug 2008 16:40:56 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: DNS vulnerability: other relevant software
+Subject: Re: CVE id request: git
 Content-Type: text/plain; charset=utf-8
 
-Eugene Teo wrote:
-> Eugene Teo wrote:
->> Florian Weimer wrote:
->>> * Mark J. Cox:
->>>
->>>>> Additionally, Debian has noted (DSA 1605-1) that the GNU libc stub
->>>>> resolver could benefit from random query source ports as well, but
->>>>> no patches are currently available to implement this:
->>>> Note that GNU libc stub resolver when used with a recent kernel
->>>> (2.6.24+) will give you random UDP source ports on each request
->>>> because of this Linux commit:
->>>>
->>>> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=32c1da70810017a98aa6c431a5494a302b6b9a30
->>> Is net_random() cryptographically secure?  The paper referenced in the
->>> source doesn't talk about this.
->> It isn't. It's actually a 32-bit pseudo-random number generator AFAIK.
 
-So I spoke to Dave Miller. He said that it is not "cryptographically
-secure" to his knowledge, but in his opinion, it is good enough for port
-randomisation.
 
-Thanks, Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
+======================================================
+Name: CVE-2008-3546
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3546
+Reference: MLIST:[git] 20080716 [PATCH] Fix buffer overflow in git diff
+Reference: URL:http://kerneltrap.org/mailarchive/git/2008/7/16/2529284
+Reference: CONFIRM:http://www.kernel.org/pub/software/scm/git/docs/RelNotes-1.5.6.4.txt
+Reference: BID:30549
+Reference: URL:http://www.securityfocus.com/bid/30549
+Reference: FRSIRT:ADV-2008-2306
+Reference: URL:http://www.frsirt.com/english/advisories/2008/2306
+Reference: SECTRACK:1020627
+Reference: URL:http://www.securitytracker.com/id?1020627
+Reference: SECUNIA:31347
+Reference: URL:http://secunia.com/advisories/31347
+
+Stack-based buffer overflow in the (1) diff_addremove and (2)
+diff_change functions in GIT before 1.5.6.4 might allow local users to
+execute arbitrary code via a PATH whose length is larger than the
+system's PATH_MAX when running GIT utilities such as git-diff or
+git-grep.
+
+
+
