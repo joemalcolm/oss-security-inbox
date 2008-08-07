@@ -1,22 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/06/4
-Message-ID: <20080506204230.GB15130@ngolde.de>
-Date: Tue, 6 May 2008 22:42:30 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/07/5
+Message-ID: <Pine.GSO.4.51.0808071642120.25461@faron.mitre.org>
+Date: Thu, 7 Aug 2008 16:42:47 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: openssh CVE-2008-1657 question
+Subject: Re: CVE id request: openttd
 Content-Type: text/plain; charset=utf-8
 
-Hi Vincent,
-* Vincent Danen <vdanen@...sec.ca> [2008-05-06 21:52]:
-> Out of curiousity, CVE-2008-1657 should only affect 4.4-4.9, correct?
-> The ForceCommand functionality was introduced in 4.4.
 
-Yep that's correct.
-Cheers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+On Mon, 4 Aug 2008, Nico Golde wrote:
 
-Content of type "application/pgp-signature" skipped
+> "OpenTTD servers of version 0.6.1 and below are susceptible to a remotely
+> exploitable buffer overflow when the server is filled with companies and
+> clients with names that are (near) the maximum allowed length for names.
+> In the worst case OpenTTD will write the following (mostly remotely
+> changable bytes) into 1460 bytes of malloc-ed memory:
+> up to 11 times (amount of players) 118 bytes
+> up to 8 times (amount of companies) 124 bytes
+> and 7 "header" bytes
+> Resulting in up to 2297 bytes being written in 1460 bytes of malloc-ed
+> memory. This makes it possible to remotely crash the game or change the
+> gamestate into an unrecoverable state.  "
+>
+> This is Debian bug #493714.
+
+Use CVE-2008-3547 (to be updated later) for this issue, as reported.
+
+If Secunia wound up reporting a distinct bug, that would need an
+additional CVE.
+
+- Steve
