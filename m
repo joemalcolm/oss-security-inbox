@@ -1,24 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/27/4
-Message-Id: <200807280205.22296.steffen.joeris@skolelinux.de>
-Date: Mon, 28 Jul 2008 02:05:21 +1000
-From: Steffen Joeris <steffen.joeris@...lelinux.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/07/1
+Message-ID: <20080807084154.GB4919@ngolde.de>
+Date: Thu, 7 Aug 2008 10:41:54 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: cups patches for CVE-2008-0597 and CVE-2008-0596
+Subject: CVE id request: git
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Hi,
+http://www.kernel.org/pub/software/scm/git/docs/RelNotes-1.5.6.4.txt:
+"* Various commands could overflow its internal buffer on a 
+platform with small PATH_MAX value in a repository that has contents with
+long pathnames."
 
-I am working on a cups update at the moment and I am looking for two missing 
-patches. Could somebody please email me the patches for CVE-2008-0596 and 
-CVE-2008-0597 (both DoS due to crafted IPP packets and a large number of 
-requests for adding and removing printers).
-I saw them marked as fixed in the opensuse announcement, but couldn't find the 
-patches for some reason and the novell bugzilla does not grant access to the 
-bugs to everyone :/
-Thanks heaps in advance.
+An attacker can exploit this causing a stack-based buffer 
+overflow if a victim user executes the git-diff or git-grep 
+commands in a crafted repository.
+
+Patch: 
+http://git.kernel.org/?p=git/git.git;a=commitdiff;h=fd55a19eb1d49ae54008d932a65f79cd6fda45c9
+
+Can someone assign a CVE id to this one?
 
 Cheers
-Steffen
+Nico
 
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
