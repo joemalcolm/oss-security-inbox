@@ -1,65 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/17/3
-Message-Id: <200805180121.01964.rbu@gentoo.org>
-Date: Sun, 18 May 2008 01:20:59 +0200
-From: Robert Buchholz <rbu@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/08/1
+Message-ID: <20080808093409.GD25853@ngolde.de>
+Date: Fri, 8 Aug 2008 11:34:09 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Cc: Kees Cook <kees@...ntu.com>
-Subject: Re: OpenSSH key blacklisting
+Subject: Re: CVE request: phpmyadmin < 2.11.8
 Content-Type: text/plain; charset=utf-8
 
-On Saturday, 17. May 2008, Solar Designer wrote:
+Hi Steven,
+* Steven M. Christey <coley@...us.mitre.org> [2008-08-04 22:10]:
+> Name: CVE-2008-3457
+> Status: Candidate
+> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3457
+> Reference: MISC:http://yehg.net/lab/pr0js/advisories/XSS_inPhpMyAdmin2.11.7.pdf
+> Reference: CONFIRM:http://www.phpmyadmin.net/home_page/security.php?issue=PMASA-2008-6
+> Reference: FRSIRT:ADV-2008-2226
+> Reference: URL:http://www.frsirt.com/english/advisories/2008/2226/references
+> Reference: SECUNIA:31263
+> Reference: URL:http://secunia.com/advisories/31263
+> 
+> Cross-site scripting (XSS) vulnerability in setup.php in phpMyAdmin
+> before 2.11.8 allows user-assisted remote attackers to inject
+> arbitrary web script or HTML via crafted setup arguments.  NOTE: this
+> issue can only be exploited in limited scenarios in which the attacker
+> must be able to modify config/config.inc.php.
 
-<snip>
-> It is just plain wrong to access users' files like that.
->
+Hmm where is the issue here? Sure the application is 
+vulnerable if an attacker can edit a file that is included 
+all over the place. I think you have way more problems than 
+an XSS in setup.php in such a case.
 
-I won't judge the script any further, since personally I find one-time 
-checks unrealiable; let's focus on the blacklist:
-
-
-> > Do you have a patch to propose, implementing your idea?
->
-> Not yet, but we (Openwall) are likely to have a patch within a few days,
-
-Great.
-
-> Besides the patch, it is equally important to agree on what keys to have
-> blacklisted, and to have the blacklist ready.  I think we should have
-> "source" blacklists, which are per-{arch,key}-type and have 32 hex chars
-> per entry (no attempt at size reduction yet), so we'll be able to
-> (re)build the binary files from them.
->
-> Right now, there doesn't appear to be a consensus on what key {type,
-> size} combinations to have in the blacklist yet.  So let's discuss this.
-
-I like the Debian/Ubuntu idea of being able to add/remove blacklists 
-easily. Personally, I generated an incomplete (due to lack of hardware) 
-set of keys for RSA 1024, 2048, 4096, and DSA 1024 keys, since that is 
-what I have seen in the wild.
-It might be argued that since Sep. 2006, few people generated 1024 bit RSA 
-keys, but I do not know exactly when "ssh-keygen"'s default was changed.
-
-I'm putting Kees in CC since I hope he can help with the unshortened 
-fingerprint list (at least via private mail).
-
-> As to arch types, I've been told that Debian only supports le32, le64,
-> and be32 userlands, so we can safely omit be64.
->
-> The PID range can be 2 to 32767.  PID 1 is init.
-> /proc/sys/kernel/pid_max defaults to 32768, but the highest PID value
-> specified in there is skipped, at least by current 2.6 kernels (we may
-> want to double-check this on older kernels).  Of course, this does not
-> cover custom configs and patched kernels (e.g., some PID randomization
-> patch could alter the maximum PID value).
-
-Whoever changed his pid_max to another value, and generated the key after 
-running some 33000 processes, would be both lucky (because his key is 
-unlikeley to be in the attacker's keychain), and unlucky (since the key is 
-not blacklisted). I see little point in supporting other than the default 
-PIDs.
-
-Robert
-
-
-Download attachment "signature.asc " of type "application/pgp-signature" (828 bytes)
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
