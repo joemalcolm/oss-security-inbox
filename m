@@ -1,27 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/18/5
-Message-Id: <200808181203.m7IC3GPE028083@core.courtesan.com>
-Date: Mon, 18 Aug 2008 08:03:15 -0400
-From: "Todd C. Miller" <Todd.Miller@...rtesan.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/08/4
+Message-ID: <489C5E69.5010804@gentoo.org>
+Date: Fri, 08 Aug 2008 16:55:37 +0200
+From: Christian Hoffmann <hoffie@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: mktemp 
+CC: jorton@...hat.com
+Subject: Re: CVE request: php-5.2.6 overflow issues
 Content-Type: text/plain; charset=utf-8
 
-In message <20080818113643.GC27231@...lde.de>
-	so spake Nico Golde (oss-security+ml):
+On 2008-08-08 16:01, Joe Orton wrote:
+> The explode() bug could only be triggered if a script passed a delimiter 
+> from untrusted script input without sanitizing/checking it first, which 
+> is fairly pathological behaviour.  I would call that a script bug, not 
+> an issue in the PHP interpreter.
+Ok, sounds reasonable.
 
-> This is known but as I wrote in the bug report:
-> "the file is safely created with O_EXCL and 0600, still
-> unsafe if used with -u"
+No idea whether a CVE should be assigned anyway -- if it does indeed 
+allow for (local) code execution, that'd effectively mean bypass of 
+safe_mode/open_basedir. Such issues already got CVEs assigned in the 
+pass, so I guess this one should as well.
 
- -u      Operate in ``unsafe'' mode.  The temp file will be unlinked be-
-	 fore mktemp exits.  This is slightly better than mktemp(3) but
-	 still introduces a race condition.  Use of this option is not en-
-	 couraged.
+Local DoS only could be caused by several other means as well (infinite 
+recursion, ...), so if somebody could prove it that it only allows for 
+DoS, then there is probably no need for a CVE.
 
-The manual explicitly says this option is unsafe.  It should only
-be used when the directory in which you are making the temporary
-file is not writable by other users.  Furthermore, you are only
-using 4 X's which makes it even less safe.
 
- - todd
+Thanks for your reply!
+
+-- 
+Christian Hoffmann
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (261 bytes)
