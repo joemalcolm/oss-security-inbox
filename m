@@ -1,34 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/13/1
-Message-ID: <48F2EBA1.9000300@redhat.com>
-Date: Mon, 13 Oct 2008 14:33:05 +0800
-From: Eugene Teo <eteo@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/08/3
+Message-ID: <20080808140144.GB13386@redhat.com>
+Date: Fri, 8 Aug 2008 15:01:44 +0100
+From: Joe Orton <jorton@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel: don't allow splice() to files opened with O_APPEND
+Cc: jorton@...hat.com
+Subject: Re: CVE request: php-5.2.6 overflow issues
 Content-Type: text/plain; charset=utf-8
 
-This was committed in upstream kernel recently.
+On Fri, Aug 08, 2008 at 03:31:45PM +0200, Christian Hoffmann wrote:
+>   * Overflow in ext/gd's imageloadfont() function [1] [2] [3]
+>   * Overflow in php's internal memnstr() function which is exposed
+>     to userspace as "explode()" [1] [2] [4] [5]
+>
+> As those functions might take user-supplied data in certain webapps  
+> (which is a valid use case at least in case of explode()), those issues  
+> should probably expected to be remotely exploitable.
 
-"[PATCH] Don't allow splice() to files opened with O_APPEND
+The explode() bug could only be triggered if a script passed a delimiter 
+from untrusted script input without sanitizing/checking it first, which 
+is fairly pathological behaviour.  I would call that a script bug, not 
+an issue in the PHP interpreter.
 
-This is debatable, but while we're debating it, let's disallow the
-combination of splice and an O_APPEND destination.
+e.g looking through the first ~80 hits from:
 
-It's not entirely clear what the semantics of O_APPEND should be, and
-POSIX apparently expects pwrite() to ignore O_APPEND, for example.  So
-we could make up any semantics we want, including the old ones.
+http://www.google.com/codesearch?hl=en&q=+lang:php+explode\+*\(&start=70&sa=N
 
-But Miklos convinced me that we should at least give it some thought,
-and that accepting writes at arbitrary offsets is wrong at least for
-IS_APPEND() files (which always have O_APPEND set, even if the reverse
-isn't true: you can obviously have O_APPEND set on a regular file).
+as expected, every explode() call uses a constant/trusted delimiter.
 
-So disallow O_APPEND entirely for now.  I doubt anybody cares, and this
-way we have one less gray area to worry about."
-
-Upstream commit: efc968d450e013049a662d22727cf132618dcb2f
-
-Files opened with O_APPEND are ignored. This could allow users to bypass
-the append-only restriction. This probably needs a CVE name.
-
-Thanks, Eugene
+Regards, Joe (please CC me on replies)
