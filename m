@@ -1,46 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/02/2
-Message-ID: <22537.1209740522@devserv.devel.redhat.com>
-Date: Fri, 02 May 2008 11:02:02 -0400
-From: Josh Bressers <bressers@...hat.com>
-To: coley@...re.org
-cc: oss-security@...ts.openwall.com
-Subject: CVE Request (PHP)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/08/5
+Message-ID: <20080808154500.GC13386@redhat.com>
+Date: Fri, 8 Aug 2008 16:45:00 +0100
+From: Joe Orton <jorton@...hat.com>
+To: Christian Hoffmann <hoffie@...too.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: php-5.2.6 overflow issues
 Content-Type: text/plain; charset=utf-8
 
-So as some may have noticed, PHP 5.2.6 is out.  Most of the flaws noted in
-the changelog have CVE ids, so here is the list:
+On Fri, Aug 08, 2008 at 04:55:37PM +0200, Christian Hoffmann wrote:
+> On 2008-08-08 16:01, Joe Orton wrote:
+>> The explode() bug could only be triggered if a script passed a 
+>> delimiter from untrusted script input without sanitizing/checking it 
+>> first, which is fairly pathological behaviour.  I would call that a 
+>> script bug, not an issue in the PHP interpreter.
+> Ok, sounds reasonable.
+>
+> No idea whether a CVE should be assigned anyway -- if it does indeed  
+> allow for (local) code execution, that'd effectively mean bypass of  
+> safe_mode/open_basedir. Such issues already got CVEs assigned in the  
+> pass, so I guess this one should as well.
 
-* Fixed possible stack buffer overflow in the FastCGI SAPI identified by Andrei Nigmatulin.
-    http://cvs.php.net/viewvc.cgi/php-src/sapi/cgi/fastcgi.c?r1=1.44&r2=1.45&diff_format=u
+We (Red Hat) don't consider bugs which allow bypass of safe_mode or 
+open_basedir to be security issues; opinions here vary but having a CVE 
+name is useful anyway so that the issue can be identified definitively.
 
-* Fixed integer overflow in printf() identified by Maksymilian Aciemowicz.
-  (CVE-2008-1384)
-    http://cvs.php.net/viewvc.cgi/php-src/ext/standard/formatted_print.c?r1=1.104&r2=1.105&diff_format=u
-
-* Fixed security issue detailed in CVE-2008-0599 identified by Ryan Permeh.
-    http://cvs.php.net/viewvc.cgi/php-src/sapi/cgi/cgi_main.c?r1=1.267.2.15.2.50.2.12&r2=1.267.2.15.2.50.2.13&diff_format=u
-
-* Fixed a safe_mode bypass in cURL identified by Maksymilian Arciemowicz.
-  (CVE-2007-4850)
-
-* Properly address incomplete multibyte chars inside escapeshellcmd()
-  identified by Stefan Esser.
-    http://cvs.php.net/viewvc.cgi/php-src/ext/standard/exec.c?r1=1.113.2.3.2.1.2.3&r2=1.113.2.3.2.1.2.4&diff_format=u
-
-* Upgraded bundled PCRE to version 7.6 (fixes CVE-2008-0674)
-
-Only two seem to need CVE ids:
-
-* Fixed possible stack buffer overflow in the FastCGI SAPI identified by
-  Andrei Nigmatulin.
-
-* Properly address incomplete multibyte chars inside escapeshellcmd() 
-  identified by Stefan Esser.
-
-Steve, can you help out.
-
-Thanks.
-
--- 
-    JB
+Regards, Joe
