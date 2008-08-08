@@ -1,39 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/04/7
-Message-ID: <20080904151757.GB2625@ngolde.de>
-Date: Thu, 4 Sep 2008 17:17:57 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/08/2
+Message-ID: <489C4AC1.1030000@gentoo.org>
+Date: Fri, 08 Aug 2008 15:31:45 +0200
+From: Christian Hoffmann <hoffie@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request (gpicview)
+Subject: CVE request: php-5.2.6 overflow issues
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Robert Buchholz <rbu@...too.org> [2008-09-03 11:22]:
-> On Sunday 31 August 2008, Nico Golde wrote:
-> > Same piece of code main-win.c doesn't look too trustworthy
-> > to me either:
-> >
-> >     690     int error = jpegtran (filename, "/tmp/rot.jpg" , code);
-> >     691     if(error)
-> >     692         return error;
-> >     693
-> >     694     //now copy /tmp/rot.jpg back to the original file
-> >     695     char command[strlen(filename)+50]; //this should not
-> > generate buffer owerflow 696     // MS: didn't know, how to make it
-> > better, maybe an own copy routine 697     sprintf(command,"cp
-> > /tmp/rot.jpg \"%s\"",filename); 698     system(command);
-> >
-> > Anyone played with crafted file names?
-> 
-> Good catch! You need to append '.jpg' at the end of the crafed filename 
-> so the rotation via jpegtran is invoked, but besides that it works ok:
-[...] 
-Can we get a second CVE id for this then please?
+Heya,
 
-Kind regards
-Nico
+two security issues, which might possibly allow for arbitrary code 
+execution (afaik nobody has analyzed the details...), but at least DoS 
+(think of FastCGI setups), were silently fixed in PHP again:
+
+   * Overflow in ext/gd's imageloadfont() function [1] [2] [3]
+   * Overflow in php's internal memnstr() function which is exposed
+     to userspace as "explode()" [1] [2] [4] [5]
+
+As those functions might take user-supplied data in certain webapps 
+(which is a valid use case at least in case of explode()), those issues 
+should probably expected to be remotely exploitable.
+
+Those issues are fixed by the recent php-4.4.9 release, but they affect 
+php-5.2.6 as well and the fixes are not part of any released version in 
+case of 5.2.
+
+Can we get CVEs for these please? :)
+
+
+[1] http://bugs.gentoo.org/show_bug.cgi?id=234102
+[2] http://www.php.net/archive/2008.php#id2008-08-07-1
+[3] http://news.php.net/php.cvs/51219
+[4] http://news.php.net/php.cvs/52039
+[5] http://news.php.net/php.cvs/52002
+
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+Christian Hoffmann
 
-Content of type "application/pgp-signature" skipped
+
+Download attachment "signature.asc" of type "application/pgp-signature" (261 bytes)
