@@ -1,24 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/21/1
-Message-ID: <20080721084911.34e5b98b@redhat.com>
-Date: Mon, 21 Jul 2008 08:49:11 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: smithj@...ethemallocs.com, coley@...us.mitre.org, Bram Moolenaar <Bram@...lenaar.net>, "Charles E Campbell, Jr" <drchip@...pbellfamily.biz>, Jan Minar <rdancer@...ncer.org>
-Subject: Re: Re: More arbitrary code executions in Netrw version 125, Vim 7.2a.10
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/11/3
+Message-Id: <1218483469.8327.12.camel@dhcp-lab-164.englab.brq.redhat.com>
+Date: Mon, 11 Aug 2008 21:37:49 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: coley@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: Multiple CVE Request (ruby)
 Content-Type: text/plain; charset=utf-8
 
-On Sun, 20 Jul 2008 11:12:42 -0800 Jonathan Smith
-<smithj@...ethemallocs.com> wrote:
+Hello Steve,
 
-> Tomas Hoger wrote:
-> > Jonathan, did new netrw tests work for you?  With which vim version?
-> > They all failed for me with vim 7.1.245 / netrw 109.
-> 
-> No vulnerability was found for me for vim 7.1.213 with netrw 109, as
-> compiled for rPath Linux.
+  Ruby upstream has announced multiple vulnerabilities 
+present in Ruby code (even with testcases).
 
-Even with jjD instead of jD in do_tiocsti?
+All of these issues responsibly reported at the following
+URL:
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+http://www.ruby-lang.org/en/news/2008/08/08/multiple-vulnerabilities-in-ruby/
+
+
+Could you please allocate a CVE id for each of the following:
+
+* untrace_var is permitted at safe level 4.
+
+* $PROGRAM_NAME may be modified at safe level 4.
+
+* Insecure methods may be called at safe level 1-3.
+
+* Syslog operations are permitted at safe level 4.
+
+* DoS vulnerability in WEBrick
+
+* Lack of taintness check in dl
+
+* DNS spoofing vulnerability in resolv.rb -- already seems to
+  have assigned CVE-2008-1447. 
+
+All of these issues exploitable by a normal unprivileged
+user (slightly testcases / exploits modification is needed
+in some cases). 
+
+For further reference about the features allowed at different
+$SAVE levels in Ruby, please have a look at:
+
+http://www.rubycentral.com/book/taint.html (part "Definition of the safe
+levels")
+
+Please do not hesitate to ask for any further information related
+with each of these issues and / or their test cases.
+
+Thank you in advance.
+
+Kind regards
+Jan iankko Lieskovsky
+RH Security Response Team
+
