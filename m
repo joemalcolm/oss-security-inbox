@@ -1,41 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/04/13
-Message-ID: <15434.1207350396@devserv.devel.redhat.com>
-Date: Fri, 04 Apr 2008 19:06:36 -0400
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/12/2
+Message-ID: <16417.1218562202@devserv.devel.redhat.com>
+Date: Tue, 12 Aug 2008 13:30:02 -0400
 From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com, security curmudgeon <jericho@...rition.org>
-Subject: Re: wiki: vendor info
+To: oss-security@...ts.openwall.com
+cc: coley@...re.org
+Subject: CVE Request (ipsec-tools again)
 Content-Type: text/plain; charset=utf-8
 
-> 
-> : > I might also take the chance to expand vendor information with the additional
-> : > vendors I contacted but that are not present in that page.
-> : 
-> : Good idea.  Also, maybe you could invite them to join this mailing list? 
-> : (Perhaps ask me first to confirm that they are not already on the list.)
-> : 
-> : BTW, we currently have two pages with vendor info: one is with security 
-> : contacts and advisory links, and the other is with "patch-finding" info. 
-> : Perhaps you should update both whenever you can obtain the necessary 
-> : info.  Or maybe we should combine them into one page - this needs to be 
-> : discussed in here first.
-> 
-> Just a reminder that the OSVDB Vendor Dictionary aims to capture this 
-> information as well. At some point the two groups should probably 
-> consolidate their information.
-> 
-> 	http://osvdb.org/vendors
+Hi Steve,
 
-Holy Smokes that's impressive!
+So while investigating the ipsec-tools flaw I mailed you about yesterday, I
+was told of this:
+http://sourceforge.net/mailarchive/forum.php?thread_name=48a0c7a0.qPeWZAE0PY8bDDq%2B%25olel%40ans.pl&forum_name=ipsec-tools-devel
 
-I don't think there's anything to consolidate, I think we just need to
-ensure everything on the oss-security wiki page is in your data (I would be
-surprised if it's not), then we just point at that.  The page about easily
-finding patches is probably still relevant, but there's no sense in
-duplicating information, especially when there is such an extensive source
-as this.
+It's essentially a pre-auth racoon DoS.
 
-Thanks!
+You can find the patch from their CVS here:
+http://cvsweb.netbsd.org/bsdweb.cgi/src/crypto/dist/ipsec-tools/src/racoon/isakmp.c.diff?r1=1.20.6.11&r2=1.20.6.12&f=h
+
+Thanks.
 
 -- 
     JB
