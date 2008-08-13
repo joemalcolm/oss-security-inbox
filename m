@@ -1,29 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/03/3
-Message-ID: <13511.1215102746@devserv.devel.redhat.com>
-Date: Thu, 03 Jul 2008 12:32:26 -0400
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com, Nico Golde <oss-security+ml@...lde.de>
-Subject: Re: Re: CVE Request (pidgin)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/13/6
+Message-ID: <Pine.GSO.4.51.0808122032490.26550@faron.mitre.org>
+Date: Tue, 12 Aug 2008 20:35:48 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+cc: coley@...re.org
+Subject: Re: CVE id requests: ruby
 Content-Type: text/plain; charset=utf-8
 
-On 3 July 2008, Nico Golde wrote:
-> > Name: CVE-2008-2955
 
-> >
-> > Pidgin 2.4.1 allows remote attackers to cause a denial of service
-> > (crash) via a long filename that contains certain characters, as
-> > demonstrated using an MSN message that triggers the crash in the
-> > msn_slplink_process_msg function.
-> 
-> Did anyone try if this can be done by some random user=20
-> without authorization and if the victim needs to accept the=20
-> file first to trigger this?
-> 
+Seems reasonable to include the DNS issue under CVE-2008-1447.
 
-My testing showed that random users can't send files, they need to be in
-your buddy list.  I'm not sure if the victim needs to accept the file or
-not.  Last I knew, upstream was still working on this one.
+For the 0.2 people who might wonder why CVE-2008-3655 and CVE-2008-3657
+were SPLIT, the first is a case of improperly specified "permissions"
+(regardless of the type of "object" being accessed), whereas the latter
+involves the failure to use a protection mechanism that happens to be
+related to permissions.
 
--- 
-    JB
+- Steve
+
+
+======================================================
+Name: CVE-2008-3655
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3655
+Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=494401
+Reference: CONFIRM:http://www.ruby-lang.org/en/news/2008/08/08/multiple-vulnerabilities-in-ruby/
+
+Ruby 1.8.5 and earlier, 1.8.5 through 1.8.6-p286, 1.8.7 through
+1.8.7-p71, and 1.9 through r18423 does not properly restrict access to
+critical variables and methods at various safe levels, which allows
+context-dependent attackers to bypass intended access restrictions via
+(1) untrace_var (2) $PROGRAM_NAME, and (3) syslog at safe level 4, and
+(4) insecure methods at safe levels 1 through 3.
+
+
+======================================================
+Name: CVE-2008-3656
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3656
+Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=494401
+Reference: CONFIRM:http://www.ruby-lang.org/en/news/2008/08/08/multiple-vulnerabilities-in-ruby/
+
+Algorithmic complexity vulnerability in
+WEBrick::HTTP::DefaultFileHandler in WEBrick in Ruby 1.8.5 and
+earlier, 1.8.5 through 1.8.6-p286, 1.8.7 through 1.8.7-p71, and 1.9
+through r18423 allows context-dependent attackers to cause a denial of
+service (CPU consumption) via a crafted HTTP request that is processed
+by a backtracking regular expression.
+
+
+======================================================
+Name: CVE-2008-3657
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3657
+Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=494401
+Reference: CONFIRM:http://www.ruby-lang.org/en/news/2008/08/08/multiple-vulnerabilities-in-ruby/
+
+The dl module in Ruby 1.8.5 and earlier, 1.8.5 through 1.8.6-p286,
+1.8.7 through 1.8.7-p71, and 1.9 through r18423 does not check
+"taintness" of inputs, which allows context-dependent attackers to
+bypass safe levels and execute dangerous functions by accessing a
+library using DL.dlopen.
+
+
