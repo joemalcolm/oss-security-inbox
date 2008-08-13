@@ -1,36 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/10/3
-Message-ID: <20080310083512.3e5a9cc6@redhat.com>
-Date: Mon, 10 Mar 2008 08:35:12 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com, smithj@...ethemallocs.com
-Cc: "Steven M. Christey" <coley@...re.org>
-Subject: Re: CVE request: ruby information disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/13/7
+Message-ID: <Pine.GSO.4.51.0808122036040.26550@faron.mitre.org>
+Date: Tue, 12 Aug 2008 20:37:36 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+cc: "Steven M. Christey" <coley@...re.org>
+Subject: Re: CVE request: tikiwiki < 2.0
 Content-Type: text/plain; charset=utf-8
 
-On Sun, 09 Mar 2008 17:18:04 -0800 Jonathan Smith
-<smithj@...ethemallocs.com> wrote:
 
-> Gentoo has an open bug [1] indicating a minor information disclosure
-> issue in ruby. They also sortof indicate that there has been a CVE
-> request, but I can't find it anywhere. So either consider this a
-> request or a ping on an existing request :)
-> 
-> rPath also has an issue [2] if you need references.
-> 
-> [1]: https://bugs.gentoo.org/show_bug.cgi?id=212264
-> [2]: https://issues.rpath.com/browse/RPL-2338
+These were SPLIT since CVE-2008-3654, while unspecified, has more specific
+consequences that suggest certain bug types (e.g. an accessible
+phpinfo()), whereas the others convey no information whatsoever.
 
-CVE-2008-1145
 
-http://www.ruby-lang.org/en/news/2008/03/03/webrick-file-access-vulnerability/
-for better reference.
+======================================================
+Name: CVE-2008-3653
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3653
+Reference: CONFIRM:http://info.tikiwiki.org/tiki-read_article.php?articleId=35
 
-Check NVD site [1], as CVE descriptions frequently appear there hours to
-days earlier than on CVE site.
+Multiple unspecified vulnerabilities in TikiWiki CMS/Groupware before
+2.0 have unknown impact and attack vectors.
 
-[1] http://nvd.nist.gov/nvd.cfm?cvename=CVE-2008-1145
 
--- 
-Tomas Hoger
-Red Hat Security Response Team
+======================================================
+Name: CVE-2008-3654
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3654
+Reference: CONFIRM:http://info.tikiwiki.org/tiki-read_article.php?articleId=35
+Reference: CONFIRM:http://tikiwiki.org/ReleaseNotes20
+
+Unspecified vulnerability in TikiWiki CMS/Groupware before 2.0 allows
+attackers to obtain "path and PHP configuration" via unknown vectors.
+
+
