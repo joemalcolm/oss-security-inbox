@@ -1,37 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/03/1
-Message-ID: <20080703152947.GR13234@ngolde.de>
-Date: Thu, 3 Jul 2008 17:29:47 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/13/4
+Message-ID: <Pine.GSO.4.51.0808122031570.26550@faron.mitre.org>
+Date: Tue, 12 Aug 2008 20:32:06 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE Request (pidgin)
+cc: coley@...re.org
+Subject: Re: CVE Request (ipsec-tools again)
 Content-Type: text/plain; charset=utf-8
 
-Hi Steven,
-* Steven M. Christey <coley@...us.mitre.org> [2008-07-01 23:40]:
-> Name: CVE-2008-2955
-> Status: Candidate
-> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2955
-> Reference: BUGTRAQ:20080626 Pidgin 2.4.1 Vulnerability
-> Reference: URL:http://www.securityfocus.com/archive/1/archive/1/493682/100/0/threaded
-> Reference: FRSIRT:ADV-2008-1947
-> Reference: URL:http://www.frsirt.com/english/advisories/2008/1947
-> Reference: SECUNIA:30881
-> Reference: URL:http://secunia.com/advisories/30881
-> 
-> Pidgin 2.4.1 allows remote attackers to cause a denial of service
-> (crash) via a long filename that contains certain characters, as
-> demonstrated using an MSN message that triggers the crash in the
-> msn_slplink_process_msg function.
 
-Did anyone try if this can be done by some random user 
-without authorization and if the victim needs to accept the 
-file first to trigger this?
+======================================================
+Name: CVE-2008-3652
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3652
+Reference: MLIST:[ipsec-tools-devel] 20080811 [PATCH] Track and delete orphaned ph1s
+Reference: URL:http://sourceforge.net/mailarchive/forum.php?thread_name=48a0c7a0.qPeWZAE0PY8bDDq%2B%25olel%40ans.pl&forum_name=ipsec-tools-devel
 
-Kind regards
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+src/racoon/handler.c in racoon in ipsec-tools does not remove an
+"orphaned ph1" (phase 1) handle when it has been initiated remotely,
+which allows remote attackers to cause a denial of service (resource
+consumption).
 
-Content of type "application/pgp-signature" skipped
+
