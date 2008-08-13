@@ -1,47 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/08/7
-Message-ID: <20080408151456.GA5449@openwall.com>
-Date: Tue, 8 Apr 2008 19:14:56 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/13/14
+Message-ID: <20080813141751.71ee2ea3@redhat.com>
+Date: Wed, 13 Aug 2008 14:17:51 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: announcing oCERT & oss-security to Bugtraq & f-d
+Cc: oss-security+ml@...lde.de, coley@...re.org
+Subject: Re: horde webmail edition < 1.1.1
 Content-Type: text/plain; charset=utf-8
 
-Josh,
+On Wed, 13 Aug 2008 14:00:03 +0200 Nico Golde
+<oss-security+ml@...lde.de> wrote:
 
-Thank you for the prompt response.
+> > > This should be a duplicate of CVE-2008-3330.
+> > 
+> > Actually, (1) is covered by CVE-2008-3330, (2) probably never got an
+> > id.  Bit more info on (2) here:
+> > 
+> >   https://bugzilla.redhat.com/show_bug.cgi?id=452549
+> > 
+> > Steven, can you please correct CVE description.  Thanks!
+> 
+> Hmm, actually I thought this would have been added after my 
+> post on: 
+> http://www.openwall.com/lists/oss-security/2008/07/28/3
+> which already mentions this.
 
-On Tue, Apr 08, 2008 at 10:58:57AM -0400, Josh Bressers wrote:
-> Probably not this week.  I have quite a few more pressing matters to attend
-> to, and for the limited oss-security time I have, I plan to clean up the
-> wiki a bit in preparation for a public announcement.
+Ah, so actually both issue were previously mentioned here... I forgot.
+It seems that after you pointed out (2), no more CVE id was allocated
+in that thread.
 
-OK, that's up to you indeed, and I appreciate your work on the wiki a
-lot.  I just thought that we could proceed with these tasks in parallel
-to have something ready sooner rather than later.  And it does not have
-to be a "big" public announcement right away - but having some
-announcement text that this group is comfortable with would be helpful.
+It seems different ids should be used for (1) and (2), as different
+Horde project components are affected, also in different versions.
 
-> I'm not pleased with this unneeded pressure being placed on this group
-> because of the desire of oCERT.
-
-That's not how I see it.  We had an opportunity here, which we could use
-if we wanted to - but we chose not to.  That's all.
-
-> We also need to sort out the mailing list situation before we can
-> reasonably expect what will be a spike of interest.
-
-We can trivially turn message moderation on for everyone - which is what
-I will do as soon as we start getting undesirable postings.  So I am not
-afraid of this list being announced on Bugtraq & f-d right now.
-
-We can also implement your desired setup, but possibly not right away.
-
-> Did anyone disagree with my proposal yesterday?
-
-It looks like everyone is fine with it, and I have just responded to
-that message.
-
-Thanks again,
-
-Alexander
+-- 
+Tomas Hoger / Red Hat Security Response Team
