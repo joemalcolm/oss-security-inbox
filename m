@@ -1,37 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/28/4
-Message-Id: <200810281050.17900.hanno@hboeck.de>
-Date: Tue, 28 Oct 2008 10:50:17 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/13/10
+Message-ID: <20080813103443.GG5666@ngolde.de>
+Date: Wed, 13 Aug 2008 12:34:43 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request phpmyadmin (Fwd: XSS in phpMyadmin)
+Subject: Re: Joomla 1.5.x core.
 Content-Type: text/plain; charset=utf-8
 
-Am Dienstag 28 Oktober 2008 schrieb Thijs Kinkhorst:
-> Do we still call things that require register_globals to be on a
-> 'vulnerability'?
->
-> Register_globals has been advertised (including in the PHP documentation
-> of that option) as a very bad idea for many years now, it's turned off by
-> default since years aswell. Turning it on could be considered as knowingly
-> taking the risk on a certain class of exploits.
->
-> At least Debian doesn't provide any security support for these issues.
+Hi Emanuele,
+* Emanuele Gentili <emgent@...ntu.com> [2008-08-13 11:04]:
+> New hight security issue was found in Joomla 1.5.x that allow remote
+> admin password change via com_user core component.
+> 
+> More info are available here [¹]
+> 
+> [¹] http://en.emanuele-gentili.com/index.php/wh/joomla/
 
-I'd think this is okay as a policy for a distribution and agree that it's a 
-very bad idea to enable register_globals these days (afaik it should go away 
-in php6 anyway). But anyway a register_globals issue most likely leads to at 
-least some bad programming practise (using uninitalized variables), I think 
-it's okay to still track them.
+What a shameless plug ;)
 
-And beside, would be worth a check but I am pretty sure there are still lot's 
-of webhosters out there having it enabled.
-
-
+BTW http://www.milw0rm.com/exploits/6234 is the original advisory.
+Cheers
+Nico
 -- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-http://x1000malquer.de/ - ab 8.11. Atomtransporte stoppen
-
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+Content of type "application/pgp-signature" skipped
