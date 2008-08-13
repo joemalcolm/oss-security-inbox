@@ -1,24 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/16/6
-Message-ID: <Pine.GSO.4.51.0806161617300.16840@faron.mitre.org>
-Date: Mon, 16 Jun 2008 16:18:18 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/13/5
+Message-ID: <Pine.GSO.4.51.0808122032180.26550@faron.mitre.org>
+Date: Tue, 12 Aug 2008 20:32:26 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Id Request: fetchmail <= 6.3.8 DoS when logging long headers in -v -v mode
+cc: coley@...re.org
+Subject: Re: CVE Request (ipsec-tools)
 Content-Type: text/plain; charset=utf-8
 
 
 ======================================================
-Name: CVE-2008-2711
+Name: CVE-2008-3651
 Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2711
-Reference: MLIST:[oss-security] 20080613 CVE Id Request: fetchmail <= 6.3.8 DoS when logging long headers in -v -v mode
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/06/13/1
-Reference: MISC:https://bugzilla.novell.com/show_bug.cgi?id=354291
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3651
+Reference: MLIST:[ipsec-tools-devel] 20080724 Ipsec-tools 0.7.1 released
+Reference: URL:http://marc.info/?l=ipsec-tools-devel&m=121688914101709&w=2
+Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=456660
 
-fetchmail 6.3.8 and earlier, when running in -v -v mode, allows remote
-attackers to cause a denial of service (crash and persistent mail
-failure) via a malformed mail message with long headers, which is not
-properly handled when using vsnprintf to format log messages.
+Memory leak in racoon/proposal.c in the racoon daemon in ipsec-tools
+before 0.7.1 allows remote authenticated users to cause a denial of
+service (memory consumption) via invalid proposals.
 
 
