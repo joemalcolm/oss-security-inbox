@@ -1,22 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/01/3
-Message-ID: <Pine.GSO.4.51.0807011647030.19497@faron.mitre.org>
-Date: Tue, 1 Jul 2008 16:54:51 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/13/12
+Message-ID: <20080813133740.3f2b61ea@redhat.com>
+Date: Wed, 13 Aug 2008 13:37:40 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: openldap DoS
+Cc: oss-security+ml@...lde.de
+Subject: Re: horde webmail edition < 1.1.1
 Content-Type: text/plain; charset=utf-8
 
+On Wed, 13 Aug 2008 12:31:03 +0200 Nico Golde
+<oss-security+ml@...lde.de> wrote:
 
-======================================================
-Name: CVE-2008-2952
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2952
-Reference: CONFIRM:http://www.openldap.org/its/index.cgi/Software%20Bugs?id=5580;selectid=5580
+> > Multiple unspecified vulnerabilities in Horde Groupware Webmail
+> > before Edition 1.1.1 (final) have unknown impact and attack vectors
+> > related to "unescaped output," possibly cross-site scripting (XSS),
+> > in the (1) object browser and (2) contact view.
+> 
+> This should be a duplicate of CVE-2008-3330.
 
-liblber/io.c in OpenLDAP 2.3.41, 2.3.42, and possibly other versions
-allows remote attackers to cause a denial of service (program
-termination) via crafted ASN.1 BER datagrams, which triggers an
-assertion error.
+Actually, (1) is covered by CVE-2008-3330, (2) probably never got an
+id.  Bit more info on (2) here:
 
+  https://bugzilla.redhat.com/show_bug.cgi?id=452549
 
+Steven, can you please correct CVE description.  Thanks!
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
