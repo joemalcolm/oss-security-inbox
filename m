@@ -1,45 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/29/5
-Message-ID: <20081029124557.GA13910@sdf.lonestar.org>
-Date: Wed, 29 Oct 2008 12:45:57 +0000
-From: Tavis Ormandy <taviso@....lonestar.org>
-To: Tomas Hoger <thoger@...hat.com>
-Cc: oss-security@...ts.openwall.com, coley@...re.org
-Subject: Re: CVE request: lynx (old) .mailcap handling flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/13/9
+Message-ID: <20080813103103.GF5666@ngolde.de>
+Date: Wed, 13 Aug 2008 12:31:03 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: horde webmail edition < 1.1.1
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Oct 28, 2008 at 10:38:43AM +0100, Tomas Hoger wrote:
-> 2) Local social engineering attack - local attacker convinces victim to
-> run lynx in some specially crafted local directory.
+Hi Steven,
+* Steven M. Christey <coley@...us.mitre.org> [2008-08-13 11:04]:
+> ======================================================
+> Name: CVE-2008-3650
+> Status: Candidate
+> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3650
+> Reference: MLIST:[horde-announce] 20080614 [announce] Horde Groupware Webmail Edition 1.1.1 (final)
+> Reference: URL:http://lists.horde.org/archives/announce/2008/000420.html
 > 
-> For valgrind, 1) does not seem to make much sense (or is lot less
-> likely), as if you valgrind random binary downloaded form the net,
-> you're already running attacker's code.
+> Multiple unspecified vulnerabilities in Horde Groupware Webmail before
+> Edition 1.1.1 (final) have unknown impact and attack vectors related
+> to "unescaped output," possibly cross-site scripting (XSS), in the (1)
+> object browser and (2) contact view.
 
-Well obviously. The attack would be convincing someone to debug an
-application with a testcase provided in a tarball, or to debug something
-in a specific directory.
-
-If you just dumped one in /tmp on a system I use and waited a few weeks,
-there's a strong possibility you would pwn me.
-
-> 
-> Actually, gdb may be another target with its handling of .gdbinit:
-> 
->    echo 'shell /usr/bin/id' > .gdbinit ; gdb
-> 
-> (gdb seems to have some checks in place though and refuses to open files
-> that world-writable or not owned by the user)
-> 
-
-Of course, guess who reported that ;-) (me).
-
-The patch to make those checks was provided by me. I'm suggesting
-valgrind should do the same thing.
-
-Thanks, Tavis.
-
+This should be a duplicate of CVE-2008-3330.
+Cheers
+Nico
 -- 
--------------------------------------
-taviso@....lonestar.org | finger me for my gpg key.
--------------------------------------------------------
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
