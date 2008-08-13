@@ -1,66 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/28/4
-Message-ID: <483D6F9B.7070307@hoyletech.com>
-Date: Wed, 28 May 2008 10:43:39 -0400
-From: Nathanael Hoyle <nhoyle@...letech.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/13/1
+Message-ID: <48A22441.3090106@ubuntu.com>
+Date: Wed, 13 Aug 2008 02:01:05 +0200
+From: Emanuele Gentili <emgent@...ntu.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSH key blacklisting
+Subject: Joomla 1.5.x core.
 Content-Type: text/plain; charset=utf-8
 
-Tim Brown wrote:
-> All,
-> 
-> Maybe I've missed something, in which case, shoot me down, but why unlike 
-> other services that make use of public key cryptography, does OpenSSH not 
-> have use a model which supports proper authorisation and revocation 
-> mechanisms?  Would this not be an ideal opportunity to implement this?  
-> Whilst I think there was a reasonable case for such features prior to the 
-> Debian OpenSSL vulnerability being identified, I would argue that this issue 
-> highlights the case.  Comercial SSH already has such functionality - can 
-> anyone offer a view on how [well] it works?
-> 
-> Tim
+New hight security issue was found in Joomla 1.5.x that allow remote
+admin password change via com_user core component.
 
-My first thought here has to do with the issues involved in key
-management.  I'm not sure that a certifying/key-issuing central ($$$)
-authority with the ability to do revocations is the right model for most
-OSS users.  Think SSL certificates and Verisign... I believe many OSS
-projects would not wish to incur this expense.  Then you have
-self-signed certificates (and/or self-generated key pairs) and
-PGP/GPG-style web of trust things... all quite complicated and somewhat
-questionable.
+More info are available here [¹]
 
-Obviously, there has to be a way to invalidate a key.  Doing it in a
-non-standardized way in the common implementation (openssh) isn't ideal.
-  Using a 16-bit seed to generate a much longer key (the debian PID
-usage) is a great example of what happens when you try to
-automate/simplify certain things for the users (practically all
-distributions used to ask you to press letters on the keyboard and move
-the mouse to create an entropy pool...) in a way that invalidates the
-premise of the security model (a highly random seed value).
+[¹] http://en.emanuele-gentili.com/index.php/wh/joomla/
 
-The specific case is somewhat unusual, because it is not an instance
-where a single host/site needed to revoke a previously valid key because
-of compromise (although that case is not properly addressed, currently),
-but one where many hosts, including those to which one has never before
-connected, might have keys which fall within the predictable space, and
-therefore be effectively compromised.
 
-It is interesting to note that a typical 'web-of-trust' implementation
-would not properly handle this type of situation in a reliable manner,
-highlighting the need for a central key authority.  The question then
-becomes, who in the OSS community would be considered a universally
-trusted entity to perform key registration and revocation for SSH key
-pairs, and how is such an entity funded?  Also, how does on resolve the
-apparent privacy concerns over querying such a central repository with a
- public key signature to check for revocation prior to usage?  For my
-own purposes, I would not want to pass the key in question along...
-which means that perhaps an rsync-style source which could be
-synchronized to a local revoked key list is the proper implementation,
-avoiding disclosing which keys you were specifically interested in to
-the central key authority.
+E.
 
-It's definitely a question worth pursuing, but I don't think it will be
-particularly trivial to solve across the community.
+-- 
+Emanuele Gentili 	    | https://edge.launchpad.net/~emgent
+emgent@...ntu.com           | Ubuntu Security Developer
+emgent@...dowmaker.info     | Window Maker Developer
+emgent@...ache.org          | Rapache Developer
 
--Nathanael
+Key fingerprint: F4B7 0793 069A 217E BB9F 8925 E0AC 34C2 2201 1E9A
+gpg --keyserver keyserver.ubuntu.com --recv-keys 22011E9A
+
+
