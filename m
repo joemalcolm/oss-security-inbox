@@ -1,19 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/08/4
-Message-Id: <200805082005.23449.rbu@gentoo.org>
-Date: Thu, 8 May 2008 20:05:23 +0200
-From: Robert Buchholz <rbu@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/13/15
+Message-ID: <20080813215911.GA3125@linsec.ca>
+Date: Wed, 13 Aug 2008 15:59:11 -0600
+From: Vincent Danen <vdanen@...sec.ca>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE Request (PHP)
+Subject: amarok temp file vuln
 Content-Type: text/plain; charset=utf-8
 
-On Tuesday 06 May 2008, Robert Buchholz wrote:
-> Also, we could need a CVE for the "GENERATE_SEED() Weak Random Number
-> Seed Vulnerability":
-> http://www.sektioneins.de/advisories/SE-2008-02.txt
+One of the Mandriva developers pointed out the following to me:
 
-This is CVE-2008-2107.
+http://websvn.kde.org/?view=rev&revision=846626
 
--R.
+Looks like a temporary file vulnerability.
 
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+More references here:
+
+http://secunia.com/advisories/31418/
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=494765
+
+Doesn't look like it has a CVE assigned to it.
+
+-- 
+Vincent Danen @ http://linsec.ca/
+
+Content of type "application/pgp-signature" skipped
