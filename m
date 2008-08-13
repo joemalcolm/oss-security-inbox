@@ -1,28 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/09/13
-Message-ID: <Pine.GSO.4.51.0809091043460.6699@faron.mitre.org>
-Date: Tue, 9 Sep 2008 10:46:16 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/13/3
+Message-ID: <Pine.GSO.4.51.0808122030550.26550@faron.mitre.org>
+Date: Tue, 12 Aug 2008 20:31:05 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id requests: gmanedit
+cc: "Steven M. Christey" <coley@...re.org>
+Subject: Re: horde webmail edition < 1.1.1
 Content-Type: text/plain; charset=utf-8
 
 
-On Sat, 6 Sep 2008, Steffen Joeris wrote:
+======================================================
+Name: CVE-2008-3650
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3650
+Reference: MLIST:[horde-announce] 20080614 [announce] Horde Groupware Webmail Edition 1.1.1 (final)
+Reference: URL:http://lists.horde.org/archives/announce/2008/000420.html
 
-> There are two possible buffer overflows in gmanedit. One is via crafted
-> configuration file and the other one via crafted manual page.
-> See the Debian bug report for more information.
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=497835
+Multiple unspecified vulnerabilities in Horde Groupware Webmail before
+Edition 1.1.1 (final) have unknown impact and attack vectors related
+to "unescaped output," possibly cross-site scripting (XSS), in the (1)
+object browser and (2) contact view.
 
-Use CVE-2008-3971, which covers the manual page and (if it's
-security-relevant) the configuration page.  Even though the source of
-attack is different, the vuln type is the same.
 
-Nico - I don't know the typical usage scenarios for gmanedit, but if the
-design of the configuration file allows the user to define dangerous
-actions (such as their own executable commands), then it's clearly not
-intended for external influence and wouldn't count as a vuln in my book.
-Still would be merged under CVE-2008-3971 if there's a scenario.
-
-- Steve
