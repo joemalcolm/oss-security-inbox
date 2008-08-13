@@ -1,44 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/19/19
-Message-ID: <3633.1203457005@devserv.devel.redhat.com>
-Date: Tue, 19 Feb 2008 16:36:45 -0500
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
-Subject: Re: subscription-request procedure?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/13/8
+Message-ID: <Pine.GSO.4.51.0808122041310.26550@faron.mitre.org>
+Date: Tue, 12 Aug 2008 20:45:58 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+cc: coley@...re.org
+Subject: Re: CVE request: php-5.2.6 overflow issues
 Content-Type: text/plain; charset=utf-8
 
-> 
-> > Since folks like Jim are exactly the type of people we want on the list,
-> > we need to make the process fairly simple (and fast, if possible) to
-> > prevent turning people off.
-> 
-> In fact, I think even something as simple as compulsory introduction
-> will turn some people away - e.g., those Open Source authors who are new
-> to security and would like to listen to our conversations before they
-> might dare to introduce themselves.
-> 
-> Maybe we don't really require it?  Maybe we don't really need to make
-> this list subscription-moderated?  This implies that we'll have to
-> enable message moderation (with its associated delays) even for list
-> members at some point, though.
-> 
-> To avoid the delays, we might enhance (patch) ezmlm-idx to honor its
-> "allow" list even for fully-message-moderated lists.  This is probably
-> not too hard to do, although I have not looked into it.  Normally, the
-> "allow" list appears to only be honored for lists that are
-> message-moderated for non-members.
-> 
 
-Yes, these are very good points.  I think the best solution at the moment
-would be to let anyone who is subscribed to post, and let anyone subscribe.
-If we have problems, we can tighten things up a bit later.
+On Fri, 8 Aug 2008, Christian Hoffmann wrote:
 
-This is one of the tricking things when starting something up such as this.
-It's easy to solve problems that don't exist, which then end up turning
-people away.
+> two security issues, which might possibly allow for arbitrary code
+> execution (afaik nobody has analyzed the details...), but at least DoS
+> (think of FastCGI setups), were silently fixed in PHP again:
+>
+>    * Overflow in ext/gd's imageloadfont() function [1] [2] [3]
 
-FWIW, mailman has the ability to enable individual user moderation.
-Something similar would certainly be a useful feature here.
+Use CVE-2008-3658, to be filled in later - I'm assuming this is a distinct
+component that doesn't just affect PHP.
 
--- 
-    JB
+>    * Overflow in php's internal memnstr() function which is exposed
+>      to userspace as "explode()" [1] [2] [4] [5]
+
+Use CVE-2008-3659.
+
+For the FastCGI "foo..php" issue, use CVE-2008-3660.
+
+These will be filled in later.
+
+> As those functions might take user-supplied data in certain webapps
+> (which is a valid use case at least in case of explode()), those issues
+> should probably expected to be remotely exploitable.
+
+We use the term "context-dependent" to cover cases where the reachability
+and remote/local nature of the issue can vary widely, depending on how the
+product is used.  This term typically applies to libraries or interpreters
+that are used by third-party applications.
+
+- Steve
