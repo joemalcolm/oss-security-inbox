@@ -1,43 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/21/10
-Message-ID: <48347952.7080105@freethemallocs.com>
-Date: Wed, 21 May 2008 11:34:42 -0800
-From: Jonathan Smith <smithj@...ethemallocs.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/13/11
+Message-ID: <48A2BD10.7050105@gentoo.org>
+Date: Wed, 13 Aug 2008 12:53:04 +0200
+From: Christian Hoffmann <hoffie@...too.org>
 To: oss-security@...ts.openwall.com
-CC: chris@...ry.beasts.org
-Subject: Re: vsftpd CVE-2007-5962 (Red Hat / Fedora specific)
+CC: coley@...re.org
+Subject: Re: CVE request: php-5.2.6 overflow issues
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 2008-08-13 02:45, Steven M. Christey wrote:
+> On Fri, 8 Aug 2008, Christian Hoffmann wrote:
+> 
+>> two security issues, which might possibly allow for arbitrary code
+>> execution (afaik nobody has analyzed the details...), but at least DoS
+>> (think of FastCGI setups), were silently fixed in PHP again:
+>>
+>>    * Overflow in ext/gd's imageloadfont() function [1] [2] [3]
+> 
+> Use CVE-2008-3658, to be filled in later - I'm assuming this is a distinct
+> component that doesn't just affect PHP.
+Pierre from php and libgd upstream just confirmed that the vulnerable 
+code is only present in php's copy (fork) of libgd. The independent 
+libgd library is not vulnerable to this problem.
 
-Tomas Hoger wrote:
-| This is just a heads-up.  We are releasing updated vsftpd packages
-| containing a fix for a minor memory leak identified by CVE-2007-5962.
+-- 
+Christian Hoffmann
 
-The memory leak itself is CVE-2007-5962? Or is the CVE for the original
-issue where deny_hosts didn't work as expected? It doesn't seem to be
-public.
 
-| The issue occurred because of the Red Hat / Fedora specific patch
-| which, according to information from our vsftpd maintainer, is not in
-| upstream.  I also checked few major vendors, it seems no one is using
-| the patch.
-
-rPath/Foresight does :-/
-
-| More details in our BZ:
-|
-| https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2007-5962
-
-Thanks for the heads-up.
-
-	smithj
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEARECAAYFAkg0eVEACgkQCG91qXPaRemHagCfck874lv1ONGXaZPPGRWo0i6x
-R3AAnRE/9lpHs8D4NAYSV59MudHSoLRy
-=ZSXA
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (261 bytes)
