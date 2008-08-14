@@ -1,44 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/27/1
-Message-ID: <5009DB4198%linux@youmustbejoking.demon.co.uk>
-Date: Wed, 26 Nov 2008 19:26:18 +0000
-From: Darren Salt <linux@...mustbejoking.demon.co.uk>
-To: Matthias Hopf <mhopf@...e.de>, 498243@...s.debian.org
-Cc: oss-security@...ts.openwall.com, redpig@...rt.org
-Subject: Re: Bug#498243: xine-lib and ocert-2008-008
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/14/5
+Message-ID: <Pine.GSO.4.51.0808141844030.17005@faron.mitre.org>
+Date: Thu, 14 Aug 2008 18:45:52 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+cc: oss-security@...ts.openwall.com, coley@...re.org
+Subject: Re: CVE id requests: ruby
 Content-Type: text/plain; charset=utf-8
 
-[xine-user dropped; should probably have been sent to xine-devel, and this
-thread doesn't seem to be appearing there anyway]
 
-I demand that Matthias Hopf may or may not have written...
+Note the following DoS in the regular expression engine, which smells like
+a NULL pointer dereference.  This appears to have been fixed in the latest
+release.  A *likely* (but not provable) changelog entry for the fix is:
+"regex.c (DOUBLE_STACK, re_compile_fastmap0, re_adjust_startpos),
+(re_search, re_match_exec): check if failed to allocate memory."
 
-> On Nov 22, 08 17:49:40 +0100, Thomas Viehmann wrote:
-[snip]
->> If anyone cares to go over the xine-lib issues (primarily the unfixed
->> ones from Will's section 3), I'd much appreciate a CC. In order to make
->> the analysis and verification more, I would also be interested in the
->> test cases mentioned in the advisory.
+- Steve
 
-> I have fixed all of them (at least I believe so, but I have to verify your
-> test case), and we're waiting for new ocert numbers. Given that this takes
-> so long, and the issues are public anyway, I will probably upstream the
-> fixes soon. If you would verify them it would be awesome.
+======================================================
+Name: CVE-2008-3443
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3443
+Reference: MILW0RM:6239
+Reference: URL:http://www.milw0rm.com/exploits/6239
 
-I'd appreciate these *not* being committed to the 1.1 tip: just make sure
-that I get the patch series (no more than one CVE no. per patch), prepared so
-that I can just "hg import" each one, and I'll handle things from there.
-(Somebody, probably me, will have to backport at least some of this lot for
-etch, and separate patches should make this a bit easier.)
+The regular expression engine (regex.c) in Ruby 1.8.5 and earlier,
+1.8.6 through 1.8.6-p286, 1.8.7 through 1.8.7-p71, and 1.9 through
+r18423 allows remote attackers to cause a denial of service (infinite
+loop and crash) via multiple long requests to a Ruby socket, related
+to memory allocation failure, and as demonstrated against Webrick.
 
-I'm currently not sure whether to do 1.1.15.1 or 1.1.16, mainly because
-1.1.15.1 can be uploaded to unstable and still make it into lenny; OTOH,
-that'd be a new sourceful upload. And I'm not sure that we're ready for
-1.1.16 yet anyway.
 
--- 
-| Darren Salt    | linux or ds at              | nr. Ashington, | Toon
-| RISC OS, Linux | youmustbejoking,demon,co,uk | Northumberland | Army
-| + Use more efficient products. Use less.          BE MORE ENERGY EFFICIENT.
-
-You will be reincarnated as a toad; and you will be much happier.
