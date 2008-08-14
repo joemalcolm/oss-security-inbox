@@ -1,34 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/17/1
-Message-ID: <Pine.GSO.4.51.0812161958580.5724@faron.mitre.org>
-Date: Tue, 16 Dec 2008 19:59:56 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/14/8
+Message-ID: <Pine.GSO.4.51.0808141941030.17005@faron.mitre.org>
+Date: Thu, 14 Aug 2008 19:41:16 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-cc: Steven Christey <coley@...us.mitre.org>
-Subject: Re: CVE request: mplayer
+Subject: Re: Joomla 1.5.x core.
 Content-Type: text/plain; charset=utf-8
 
 
-Sorry for being so long to answer everything, I was on travel and the CVE
-team is re-analyzing our process so that we can be more responsive and
-stable in the longer term.
-
-- Steve
-
 ======================================================
-Name: CVE-2008-5616
+Name: CVE-2008-3681
 Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5616
-Reference: MISC:http://trapkit.de/advisories/TKADV2008-014.txt
-Reference: CONFIRM:http://svn.mplayerhq.hu/mplayer/branches/1.0rc2/libmpdemux/demux_vqf.c?r1=24723&r2=28150&pathrev=28150
-Reference: CONFIRM:http://svn.mplayerhq.hu/mplayer/branches/1.0rc2/libmpdemux/demux_vqf.c?view=log&pathrev=28150#rev28150
-Reference: BID:32822
-Reference: URL:http://www.securityfocus.com/bid/32822
-Reference: SECUNIA:33136
-Reference: URL:http://secunia.com/advisories/33136
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3681
+Reference: MILW0RM:6234
+Reference: URL:http://www.milw0rm.com/exploits/6234
+Reference: CONFIRM:http://developer.joomla.org/security/news/241-20080801-core-password-remind-functionality.html
+Reference: BID:30667
+Reference: URL:http://www.securityfocus.com/bid/30667
+Reference: SECTRACK:1020687
+Reference: URL:http://www.securitytracker.com/id?1020687
+Reference: SECUNIA:31457
+Reference: URL:http://secunia.com/advisories/31457
 
-Stack-based buffer overflow in the demux_open_vqf function in
-libmpdemux/demux_vqf.c in MPlayer 1.0 rc2 before r28150 allows remote
-attackers to execute arbitrary code via a malformed TwinVQ file.
+components/com_user/models/reset.php in Joomla! 1.5 through 1.5.5 does
+not properly restrict access, which allows remote attackers to reset
+the "first enabled user (lowest id)" password, typically for the
+administrator.
 
 
