@@ -1,40 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/15/1
-Message-Id: <1229336221.3431.24.camel@dhcp-lab-164.englab.brq.redhat.com>
-Date: Mon, 15 Dec 2008 11:17:01 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/14/4
+Message-ID: <Pine.GSO.4.51.0808141757570.17005@faron.mitre.org>
+Date: Thu, 14 Aug 2008 17:59:51 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: Florian Weimer <fw@...eb.enyo.de>, Raphael Geissert <atomo64+debian@...il.com>
-Subject: Re:  Re: CVE Request - roundcubemail
+cc: coley@...re.org
+Subject: Re: CVE request: openfire login page XSS (JM-629)
 Content-Type: text/plain; charset=utf-8
 
-Hello guys,
 
-On Sat, 2008-12-13 at 13:54 +0100, Florian Weimer wrote:
-> * Raphael Geissert:
-> 
-> > I became aware of some sort of code execution vulnerability one day
-> > before that ticket was reported. After reviewing the file I
-> > determined that it isn't a vulnerability in roundcube, but in PHP
-> > itself; but I'm open to be proved wrong.
-> 
-> I think this is a documented feature of preg_replace with the "e"
-> flag, comparable to what happens when you use string concatenation to
-> create SQL statements.
+Notice that there were two distinct attacks/issues related to the username
+parameter in 2005 - one was a basic XSS, then the vendor did an incomplete
+fix, which left a variant XSS exposed.
 
-Yes, according to:
-http://bugs.php.net/bug.php?id=35960
+- Steve
 
-the behavior of 'e' modifier in the preg_replace function is
-expected and well documented feature:
 
-http://php.net/manual/en/reference.pcre.pattern.modifiers.php
+======================================================
+Name: CVE-2005-4876
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2005-4876
+Reference: CONFIRM:http://www.igniterealtime.org/issues/browse/JM-430
 
-So the problem isn't in PHP itself, the problem is
-roundcubemail (and possibly other applications) use it
-in wrong/improper/vulnerable way.
+Cross-site scripting (XSS) vulnerability in the login form (login.jsp)
+of the admin console in Openfire (formerly Wildfire) 2.2.2, and
+possibly other versions before 2.3.0 Beta 2, allows remote attackers
+to inject arbitrary web script or HTML via the username parameter, a
+different vulnerability than CVE-2005-4877.
 
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+
+======================================================
+Name: CVE-2005-4877
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2005-4877
+Reference: CONFIRM:http://www.igniterealtime.org/issues/browse/JM-430
+
+Cross-site scripting (XSS) vulnerability in the login form (login.jsp)
+of the admin console in Openfire (formerly Wildfire) 2.3.0 Beta 2
+allows remote attackers to inject arbitrary web script or HTML via
+Javascript events in the username parameter, a different vulnerability
+than CVE-2005-4876.
+
+
+======================================================
+Name: CVE-2006-7233
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-7233
+Reference: MISC:http://www.igniterealtime.org/issues/browse/JM-430
+Reference: MISC:http://www.igniterealtime.org/issues/browse/JM-629
+Reference: OSVDB:47448
+Reference: URL:http://www.osvdb.org/47448
+Reference: SECUNIA:31483
+Reference: URL:http://secunia.com/advisories/31483
+
+Cross-site scripting (XSS) vulnerability in the login form (login.jsp)
+of the admin console in Openfire (formerly Wildfire) 2.6.0, and
+possibly other versions before 3.5.3, allows remote attackers to
+inject arbitrary web script or HTML via the url parameter.
 
 
