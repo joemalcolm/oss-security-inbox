@@ -1,65 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/19/2
-Message-Id: <1229693532.19341.23.camel@iankko.englab.brq.redhat.com>
-Date: Fri, 19 Dec 2008 14:32:12 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...re.org>
-Cc: oss-security@...ts.openwall.com
-Subject: CVE Request - Incomplete dahdi/zaptel tor2.c patch for CVE-2008-5396
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/14/2
+Message-ID: <20080814150155.GA22912@falco.falcal.net>
+Date: Thu, 14 Aug 2008 17:01:55 +0200
+From: Raphael Marichez <falco@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: HAVP 0.89 fixes a crash
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve,
 
-  Eugene Teo has discovered the tor2 upstream
-patch for CVE-2008-5396 was incomplete.
+Hi,
 
-http://bugs.digium.com/file_download.php?file_id=20796&type=bug
+havp (http://www.server-side.de/) seems to fix a DoS:
 
-We were checking if lc->sync is in range of 0-63
-kernel/tor2.c:#define MAX_TOR_CARDS 64, but then
-lately in the code we used:
+03.08.2008
+HAVP 0.89 released
+- Fix possible retry loop and hang (thanks to Peter Warasin @ endian.it)
+- Always send Via: header, fixes some IIS problems (e.g. MSNBC)
 
-zaptel/kernel/tor2.c:
+Original report:
 
-    216         /* if a sync src, put it in the proper place */
-    217         if (lc->sync) {
-    218                 p->tor->syncs[lc->sync - 1] = span->spanno;
-    219                 p->tor->psyncs[lc->sync - 1] = p->span + 1;
-    220         }
-
-The problem is 'syncs/psyncs' is defined as array with only 4 items (from zaptel/kernel/tor2.c)
-
-     79 struct tor2 {
-     80         /* This structure exists one per card */
-     81         struct pci_dev *pci;            /* Pointer to PCI device */
-     82         int num;                        /* Which card we are */
-     83         int syncsrc;                    /* active sync source */
-     84         int syncs[SPANS_PER_CARD];      /* sync sources */
-     85         int psyncs[SPANS_PER_CARD];     /* span-relative sync sources */
-
-where 'SPANS_PER_CARD' is defined as:
-tor2.c:#define SPANS_PER_CARD  4
-
-so the array index would overflow.
-
-References:
-==========
-http://bugs.digium.com/view.php?id=13954
-http://bugs.digium.com/file_download.php?file_id=20796&type=bug (original tor2 CVE-2008-5396 patch)
-http://bugs.digium.com/view.php?id=13954#96700
-https://bugzilla.redhat.com/show_bug.cgi?id=475446#c4
-
-Patch: Upstream has already released patch for this issue available at:
-=====
-http://svn.digium.com/view/dahdi?view=rev&revision=5590
-
-Credit for discovering this issue goes to Eugene Teo.
-=====
-
-Could you please allocate a CVE id for this issue?
-
-Thanks, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+https://sourceforge.net/mailarchive/message.php?msg_name=487CDF51.5060201%40endian.com
 
 
+-- 
+Raphael Marichez aka Falco
+Gentoo Linux Security Team
