@@ -1,30 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/28/6
-Message-ID: <13538.1206664162@devserv.devel.redhat.com>
-Date: Thu, 27 Mar 2008 20:29:22 -0400
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
-Subject: Re: using oss-security references in CVE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/14/6
+Message-ID: <Pine.GSO.4.51.0808141856191.17005@faron.mitre.org>
+Date: Thu, 14 Aug 2008 18:56:24 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: amarok temp file vuln
 Content-Type: text/plain; charset=utf-8
 
-> 
-> By the way, maybe we should also add a link to the oss-security wiki to
-> page footers on that archive?  Or even to message trailers (such that
-> the wiki link will be seen on third-party archives as well)?
 
-I like this idea.  It will help drive eyeballs to the wiki, which in turn
-should improve the wiki (or at least help educate the viewer).
+======================================================
+Name: CVE-2008-3699
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3699
+Reference: MISC:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=494765
+Reference: CONFIRM:http://amarok.kde.org/en/releases/1/4/10
+Reference: CONFIRM:http://websvn.kde.org/?view=rev&revision=846626
+Reference: SECUNIA:31418
+Reference: URL:http://secunia.com/advisories/31418
 
-> 
-> Oh, and someone should write a wiki page about getting CVE IDs.  This is
-> currently mentioned as a FIXME here:
-> 
-> 	http://oss-security.openwall.org/wiki/disclosure/researcher
+The MagnatuneBrowser::listDownloadComplete function in
+magnatunebrowser/magnatunebrowser.cpp in Amarok before 1.4.10 allows
+local users to overwrite arbitrary files via a symlink attack on the
+album_info.xml temporary file.
 
-I added some minimal content:
-http://oss-security.openwall.org/wiki/disclosure/cve
 
-Thanks.
-
--- 
-    JB
