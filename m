@@ -1,24 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/03/1
-Message-ID: <48E56D76.3080603@redhat.com>
-Date: Fri, 03 Oct 2008 08:55:18 +0800
-From: Eugene Teo <eteo@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/14/1
+Message-Id: <200808141316.13241.rbu@gentoo.org>
+Date: Thu, 14 Aug 2008 13:16:10 +0200
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2008-3833 kernel: remove SUID when splicing into an inode
+Subject: CVE request: openfire login page XSS (JM-629)
 Content-Type: text/plain; charset=utf-8
 
-This was committed in upstream kernel. I am unable to find a reference
-to any discussion about this on LKML. Fixed by Mark Fasheh.
+Hi all,
 
-"generic_file_splice_write() does not remove S_ISUID or S_ISGID. This is
-inconsistent with the way we generally write to files."
+a XSS issue in login.jsp in Openfire (formerly Wildfire) up to version 
+3.5.2 (latest) is currently without fix and without CVE id:
+  http://www.igniterealtime.org/issues/browse/JM-629
+  https://bugs.gentoo.org/show_bug.cgi?id=229515
 
-Please use CVE-2008-3833 for this vulnerability. This has similar
-consequences as CVE-2008-4210.
 
-Upstream commit: 8c34e2d63231d4bf4852bac8521883944d770fe3
+The upstream bug report also mentions another login XSS that was fixed 
+in 2005 -- http://www.igniterealtime.org/issues/browse/JM-430
 
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=464450
 
-Thanks, Eugene
+
+Robert
+
+Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
