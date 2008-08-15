@@ -1,29 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/02/5
-Message-ID: <Pine.GSO.4.51.0807021629440.26618@faron.mitre.org>
-Date: Wed, 2 Jul 2008 16:30:48 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/15/3
+Message-ID: <48A588EB.3030501@redhat.com>
+Date: Fri, 15 Aug 2008 21:47:23 +0800
+From: Eugene Teo <eteo@...hat.com>
 To: oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: Re: CVE request: phpmyadmin < 2.11.7 XSS
+Subject: CVE-2008-3276 Linux kernel dccp_setsockopt_change() integer overflow
 Content-Type: text/plain; charset=utf-8
 
+An integer overflow flaw was found in the Linux kernel
+dccp_setsockopt_change() function. The vulnerability exists due to a
+lack of sanitisation performed on a user-controlled integer value before
+the value is employed as the size argument of a memory allocation
+operation. An attacker may leverage this vulnerability to trigger a
+kernel panic on a victim's machine remotely.
 
-Sorry about the long delay.
+This affects kernel versions since 2.6.17-rc1. The proposed upstream
+commit is: 3e8a0a559c66ee9e7468195691a56fefc3589740
 
-======================================================
-Name: CVE-2008-2960
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2960
-Reference: CONFIRM:http://www.phpmyadmin.net/home_page/security.php?issue=PMASA-2008-4
-Reference: FRSIRT:ADV-2008-1904
-Reference: URL:http://www.frsirt.com/english/advisories/2008/1904/references
-Reference: SECUNIA:30813
-Reference: URL:http://secunia.com/advisories/30813
+I have allocated this CVE-2008-3276.
 
-Cross-site scripting (XSS) vulnerability in phpMyAdmin before 2.11.7,
-when register_globals is enabled and .htaccess support is disabled,
-allows remote attackers to inject arbitrary web script or HTML via
-unspecified vectors involving scripts in libraries/.
-
-
+Thanks, Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
