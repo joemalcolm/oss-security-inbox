@@ -1,26 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/02/1
-Message-ID: <48E4226E.9000200@redhat.com>
-Date: Thu, 02 Oct 2008 09:22:54 +0800
-From: Eugene Teo <eteo@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/15/4
+Message-ID: <20080815134502.GA8133@manyfish.co.uk>
+Date: Fri, 15 Aug 2008 14:45:02 +0100
+From: Joe Orton <joe@...yfish.co.uk>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2008-3832 kernel: null pointer dereference in utrace_control
+Subject: CVE request for neon
 Content-Type: text/plain; charset=utf-8
 
-Michael Simms reported that it is possible for an unprivileged user to
-crash the machine by running gdb on a running process with pid 1.
+I haven't had any luck contacting either the Debian maintainer or the 
+Debian BTS to update details of this issue.
 
-This affects the version of utrace as shipped with Fedora 8 and 9. This
-is addressed in kernel-2.6.26.5-28 for Fedora 8, and kernel-2.6.26.5-45
-for Fedora 9. This issue is specific to Fedora, and does not affect
-upstream or any of the Red Hat Enterprise Linux kernels.
+----- Forwarded message from Joe Orton <joe@...yfish.co.uk> -----
 
-References:
-http://kerneloops.org/oops.php?number=56705
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2008-3832
+Hi, can you assign a CVE number for an issue in neon:
 
-Thanks, Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
+A NULL pointer deference in the Digest authentication support in neon 
+versions 0.28.0 through 0.28.2 inclusive allows a malicious server to 
+crash a client application, resulting in possible denial of service.
 
-View attachment "patch" of type "text/plain" (608 bytes)
+Reference: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=476571
+
+Regards, Joe
+
+----- End forwarded message -----
+
