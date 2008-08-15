@@ -1,26 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/13/15
-Message-ID: <20080813215911.GA3125@linsec.ca>
-Date: Wed, 13 Aug 2008 15:59:11 -0600
-From: Vincent Danen <vdanen@...sec.ca>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/15/2
+Message-ID: <20080815115550.GD31878@ngolde.de>
+Date: Fri, 15 Aug 2008 13:55:50 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: amarok temp file vuln
+Subject: CVE id request: mktemp
 Content-Type: text/plain; charset=utf-8
 
-One of the Mandriva developers pointed out the following to me:
+Hi,
+mktemp (not the coreutils one) from 
+ftp://ftp.mktemp.org/pub/mktemp/ is not generating fully 
+random names. Steve, can you assign a CVE id to this?
 
-http://websvn.kde.org/?view=rev&revision=846626
+This is 
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=495193
+I wrote an explanation on why this happens, available on:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=495193#30
 
-Looks like a temporary file vulnerability.
-
-More references here:
-
-http://secunia.com/advisories/31418/
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=494765
-
-Doesn't look like it has a CVE assigned to it.
+Kind regards
+Nico
 
 -- 
-Vincent Danen @ http://linsec.ca/
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
 Content of type "application/pgp-signature" skipped
