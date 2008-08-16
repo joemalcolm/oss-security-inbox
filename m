@@ -1,31 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/21/2
-Message-ID: <20080721095603.5f099593@redhat.com>
-Date: Mon, 21 Jul 2008 09:56:03 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/16/1
+Message-ID: <20080816140528.GB12604@ngolde.de>
+Date: Sat, 16 Aug 2008 16:05:28 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: CVE request: mantis < 1.1.2
+Subject: Re: horde webmail edition < 1.1.1
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+Hi Steven,
+* Steven M. Christey <coley@...us.mitre.org> [2008-08-15 01:23]:
+> On Wed, 13 Aug 2008, Tomas Hoger wrote:
+> > On Wed, 13 Aug 2008 14:00:03 +0200 Nico Golde
+> > <oss-security+ml@...lde.de> wrote:
+> > > > > This should be a duplicate of CVE-2008-3330.
+> > > >
+> > > > Actually, (1) is covered by CVE-2008-3330, (2) probably never got an
+> > > > id.  Bit more info on (2) here:
+> > > >
+> > > >   https://bugzilla.redhat.com/show_bug.cgi?id=452549
+> > > >
+> > > > Steven, can you please correct CVE description.  Thanks!
+> > >
+> > > Hmm, actually I thought this would have been added after my
+> > > post on:
+> > > http://www.openwall.com/lists/oss-security/2008/07/28/3
+> > > which already mentions this.
+> >
+> > Ah, so actually both issue were previously mentioned here... I forgot.
+> > It seems that after you pointed out (2), no more CVE id was allocated
+> > in that thread.
+> 
+> OK, some followups:
+> 
+> 1) CVE-2008-3330.2, for Turba, affects contact.php, which only exists in
+>    Turba 2.2.
 
-New mantis 1.1.2 fixes multiple security issues:
+Yes
 
-  http://www.mantisbt.org/bugs/changelog_page.php
+> 2) The Debian bug report seems to have found contact issues in Turba 2.1,
+>    in browse.php:
+>    http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=492578#40
 
-- 0008974: [security] XSS Vulnerability in filters (thraxisp) - closed.
-- 0008975: [security] CSRF Vulnerabilities in user_create (jreese) - closed.
-- 0008976: [security] Remote Code Execution in adm_config (giallu) -
-closed.
-- 0009154: [security] arbitrary file inclusion through user preferences
-page (giallu) - closed.
+Yes, the one mentioned in 
+http://www.openwall.com/lists/oss-security/2008/07/28/3.
 
-First 3 are described in the bugtraq post from ~2months ago:
+> 3) The code from Turba 2.1 looks quite different than the contact.php code
+>    as quoted by Nico here:
+> 
+>     http://www.openwall.com/lists/oss-security/2008/07/28/3
 
-  http://marc.info/?l=bugtraq&m=121130774617956&w=4
+That's because Turba 2.1 is not affected, 2.2 is. The file and the 
+vulnerable code doesn't exist.
+ 
+> 4) I haven't seen any mention of contact issues in Horde itself, is this
+>    correct?
 
-with issue B) / CSRF / 0008975 being known as CVE-2008-2276.
+Not really. Well, the issue is the same except that it's 
+present in different source files. So there is no contact 
+handling and the obrowser thing in horde, it's one piece of 
+code to manage contacts in obrowser.
 
+> 5) CVE-2008-3650, the "unspecified" issues based on a vague Horde
+>    Groupware advisory, appears to line up closely with both
+>    CVE-2008-3330.1 (obrowser) and CVE-2008-3330.2 (Turba contacts).  Is
+>    this sufficiently confirmed?
+
+Yes, I already had contact to upstream and our maintainer 
+before asking for a CVE id.
+
+Kind regards
+Nico
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
