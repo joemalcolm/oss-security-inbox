@@ -1,31 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/04/19
-Message-ID: <20080904165556.GC2625@ngolde.de>
-Date: Thu, 4 Sep 2008 18:55:56 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/18/7
+Message-ID: <20080818202618.GH27231@ngolde.de>
+Date: Mon, 18 Aug 2008 22:26:18 +0200
 From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: newsbeuter
+Subject: Re: CVE id request: mktemp
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
-* Steven M. Christey <coley@...us.mitre.org> [2008-09-04 18:49]:
-> ======================================================
-> Name: CVE-2008-3907
-> Status: Candidate
-> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3907
-> Reference: MLIST:[oss-security] 20080901 CVE id request: newsbeuter
-> Reference: URL:http://www.openwall.com/lists/oss-security/2008/09/01/4
-> Reference: CONFIRM:http://www.newsbeuter.org/downloads/CHANGES
-> Reference: BID:30964
-> Reference: URL:http://www.securityfocus.com/bid/30964
-> Reference: SECUNIA:31676
-> Reference: URL:http://secunia.com/advisories/31676
+Hi Steven,
+* Steven M. Christey <coley@...us.mitre.org> [2008-08-18 22:09]:
+> On Mon, 18 Aug 2008, Nico Golde wrote:
 > 
-> The open-in-browser command in newsbeuter before 1.1 allows remote
-[...] 
-Please use version 1.2 here as the fix for 1.1 was 
-incomplete.
+> > This is known but as I wrote in the bug report:
+> > "the file is safely created with O_EXCL and 0600, still
+> > unsafe if used with -u"
+> 
+> Given that -u is "unsafe mode" with a disclaimer against race conditions
+> (at least based on the manpage I looked at), I'm of the mindset that you'd
+> flag an application for using mktemp -u, but not mktemp itself.
 
+Ok fine, makes sense to me.
 Cheers
 Nico
 -- 
