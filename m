@@ -1,35 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/09/3
-Message-Id: <200812091352.16053.hanno@hboeck.de>
-Date: Tue, 9 Dec 2008 13:52:15 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/18/2
+Message-ID: <20080818113643.GC27231@ngolde.de>
+Date: Mon, 18 Aug 2008 13:36:43 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Cc: Steven Christey <coley@...us.mitre.org>
-Subject: CVE request: Four issues in PunBB
+Subject: Re: CVE id request: mktemp
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi Sebastian,
+* Sebastian Krahmer <krahmer@...e.de> [2008-08-18 13:25]:
+> BTW, mktemp(1) is using O_EXCL anyway, so I dont see
+> an issue. Additionally all of our scripts use
+> more than 6 X' as also shown in the
+> example section of the manpage. We are not going to
+> release updates for this non-issue.
 
-From
-http://punbb.informer.com/
+This is known but as I wrote in the bug report:
+"the file is safely created with O_EXCL and 0600, still 
+unsafe if used with -u"
 
-Fixed in 1.3.2:
-    * an XSS vulnerability in login.php;
-    * a possible SQL-injection in the the admin settings page with permission 
-config values;
-    * a possible SQL-injection in the the admin users page.
-
-
-Fixed in 1.3.1:
-    * XSS vulnerability via topic subjects in moderate.php is fixed (reported 
-by PHPLizardo).
-
-
-
+Kind regards
+Nico
 -- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-http://www.jukss.de/ Jugemdumweltkongress, 27.12.-4.1.
-
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+Content of type "application/pgp-signature" skipped
