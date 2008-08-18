@@ -1,21 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/04/1
-Message-Id: <200808041142.19187.thijs@debian.org>
-Date: Mon, 4 Aug 2008 11:42:15 +0200
-From: Thijs Kinkhorst <thijs@...ian.org>
-To: oss-security@...ts.openwall.com, coley@...re.org
-Subject: CVE request: httrack buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/18/3
+Message-Id: <200808181147.m7IBlrWO032394@core.courtesan.com>
+Date: Mon, 18 Aug 2008 07:47:53 -0400
+From: "Todd C. Miller" <Todd.Miller@...rtesan.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE id request: mktemp 
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+In message <20080818085956.GB29717@...e.de>
+	so spake Sebastian Krahmer (krahmer):
 
-Please see:
-http://www.frsirt.com/english/advisories/2008/2221
-http://www.debian.org/security/2008/dsa-1626
+> BTW, mktemp(1) is using O_EXCL anyway, so I dont see
+> an issue. Additionally all of our scripts use
+> more than 6 X' as also shown in the
+> example section of the manpage. We are not going to
+> release updates for this non-issue.
 
-Could we get a CVE name assigned to that please?
+I don't think it is a security issue either.  Vendors can also just
+configure mktemp with the --with-libc flag to use the libc
+mkstemp()/mkdtemp() functions instead of the bundled version if
+they prefer.
 
-thanks,
-Thijs
-
-Content of type "application/pgp-signature" skipped
+ - todd
