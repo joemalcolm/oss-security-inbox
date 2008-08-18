@@ -1,34 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/23/7
-Message-ID: <Pine.GSO.4.51.0806231522310.1760@faron.mitre.org>
-Date: Mon, 23 Jun 2008 15:22:38 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/18/5
+Message-Id: <200808181203.m7IC3GPE028083@core.courtesan.com>
+Date: Mon, 18 Aug 2008 08:03:15 -0400
+From: "Todd C. Miller" <Todd.Miller@...rtesan.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: query on a pppol2tp_recvmsg() fix - security relevant?
+Subject: Re: CVE id request: mktemp 
 Content-Type: text/plain; charset=utf-8
 
+In message <20080818113643.GC27231@...lde.de>
+	so spake Nico Golde (oss-security+ml):
 
-======================================================
-Name: CVE-2008-2750
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2750
-Reference: CONFIRM:http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=6b6707a50c7598a83820077393f8823ab791abf8
-Reference: CONFIRM:http://kernel.org/pub/linux/kernel/v2.6/testing/ChangeLog-2.6.26-rc6
-Reference: BID:29747
-Reference: URL:http://www.securityfocus.com/bid/29747
-Reference: FRSIRT:ADV-2008-1854
-Reference: URL:http://www.frsirt.com/english/advisories/2008/1854
-Reference: SECTRACK:1020297
-Reference: URL:http://securitytracker.com/id?1020297
-Reference: SECUNIA:30719
-Reference: URL:http://secunia.com/advisories/30719
-Reference: XF:linux-kernel-pppol2tprecvmsg-dos(43111)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/43111
+> This is known but as I wrote in the bug report:
+> "the file is safely created with O_EXCL and 0600, still
+> unsafe if used with -u"
 
-The pppol2tp_recvmsg function in drivers/net/pppol2tp.c in the Linux
-kernel 2.6 before 2.6.26-rc6 allows remote attackers to cause a denial
-of service (kernel heap memory corruption and system crash) and
-possibly have unspecified other impact via a crafted PPPOL2TP packet
-that results in a large value for a certain length variable.
+ -u      Operate in ``unsafe'' mode.  The temp file will be unlinked be-
+	 fore mktemp exits.  This is slightly better than mktemp(3) but
+	 still introduces a race condition.  Use of this option is not en-
+	 couraged.
 
+The manual explicitly says this option is unsafe.  It should only
+be used when the directory in which you are making the temporary
+file is not writable by other users.  Furthermore, you are only
+using 4 X's which makes it even less safe.
 
+ - todd
