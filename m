@@ -1,41 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/20/5
-Message-ID: <49255FCC.9020704@pardus.org.tr>
-Date: Thu, 20 Nov 2008 15:02:04 +0200
-From: Pınar Yanardağ <pinar@...dus.org.tr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/18/1
+Message-ID: <20080818085956.GB29717@suse.de>
+Date: Mon, 18 Aug 2008 10:59:56 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: imlib2
+Subject: Re: CVE id request: mktemp
 Content-Type: text/plain; charset=utf-8
 
- From Secunia [1]
 
-----
-*Description*:
-A vulnerability has been discovered in imlib2, which can be exploited by 
-malicious people to potentially compromise an application using the library.
+BTW, mktemp(1) is using O_EXCL anyway, so I dont see
+an issue. Additionally all of our scripts use
+more than 6 X' as also shown in the
+example section of the manpage. We are not going to
+release updates for this non-issue.
 
-The vulnerability is caused due to a pointer arithmetic error within the 
-"load()" function provided by the XPM loader. This can be exploited to 
-cause a heap-based buffer overflow via a specially crafted XPM file.
+l8er,
+Sebastian
 
-Successful exploitation may allow execution of arbitrary code.
+On Fri, Aug 15, 2008 at 01:55:50PM +0200, Nico Golde wrote:
 
-The vulnerability is confirmed in version 1.4.2. Other versions may also 
-be affected.
-----
+> Hi,
+> mktemp (not the coreutils one) from 
+> ftp://ftp.mktemp.org/pub/mktemp/ is not generating fully 
+> random names. Steve, can you assign a CVE id to this?
+> 
+> This is 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=495193
+> I wrote an explanation on why this happens, available on:
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=495193#30
+> 
+> Kind regards
+> Nico
+> 
+> -- 
+> Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+> For security reasons, all text in this mail is double-rot13 encrypted.
 
-[1]: http://secunia.com/Advisories/32796
 
-Can you assign a CVE please?
-
-Cheers,
 
 -- 
-Pınar Yanardağ (a.k.a PINguAR)
-http://pinguar.org
-_____________________________
-
-Pardus Security Team
-http://security.pardus.org.tr
-
+~
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+~ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
 
