@@ -1,31 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/15/1
-Message-Id: <1221483119.30858.4.camel@dhcp-lab-164.englab.brq.redhat.com>
-Date: Mon, 15 Sep 2008 14:51:59 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: coley@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: CVE Request (python)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/18/6
+Message-ID: <Pine.GSO.4.51.0808181541070.19112@faron.mitre.org>
+Date: Mon, 18 Aug 2008 15:42:20 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE id request: mktemp
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve,
 
-  could you please allocate a CVE id for the 
-following Python generic FAQ wizard moving tool
-issue:
+On Mon, 18 Aug 2008, Nico Golde wrote:
 
-References:
+> This is known but as I wrote in the bug report:
+> "the file is safely created with O_EXCL and 0600, still
+> unsafe if used with -u"
 
-https://bugzilla.redhat.com/show_bug.cgi?id=462326
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=498899
+Given that -u is "unsafe mode" with a disclaimer against race conditions
+(at least based on the manpage I looked at), I'm of the mindset that you'd
+flag an application for using mktemp -u, but not mktemp itself.
 
-Impact: Symbolic link attack possibility
-Affected versions: python-2.3.4-*+
-
-Thank you in advance
-
-Kind regards
-Jan iankko Lieskovsky
-RH Security Response Team
-
-
+- Steve
