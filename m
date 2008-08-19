@@ -1,30 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/10/6
-Message-ID: <20080710142733.GD11688@suse.de>
-Date: Thu, 10 Jul 2008 16:27:33 +0200
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/19/3
+Message-ID: <20080819162257.GA12901@ngolde.de>
+Date: Tue, 19 Aug 2008 18:22:57 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: DNS vulnerability: other relevant software
+Subject: Re: swfdec 0.6.8 stable update
 Content-Type: text/plain; charset=utf-8
 
-> - dnsmasq [2]:
-> 	no port randomization [3]
-dnsmasq is a simple forwarder AFAIK threfore it should not be vulnerable.
-the author told me he will add TRXID and port randomization...
+Hi Marcus,
+* Marcus Meissner <meissner@...e.de> [2008-08-19 16:48]:
+> Wonder if we should track updates for swfdec. The 0.6.8 announcement
+> looks like it at least fixes several Denial of Service problems:
+[...] 
+I have problems to understand why this would be a Denial of 
+Service. While I don't share the opinion about browser 
+crashes I think there are at least good arguments for both 
+sides.
 
-> - pdnsd [4]:
-> 	no info yet
+But if swfdec crashes on playing a flash movie this 
+looks like an application bug. At least I wouldn't talk 
+about Denial of Service if vim would crash on opening a text 
+file.
 
-powerdns-recursor uses port randomization with a better
-PRNG than glibc rand() since version 3.1.6.
+It would be interesting what is causing this crash and if 
+there is underlying a more serious issue.
 
+Kind regards
+Nico
 -- 
-Bye,
-     Thomas
--- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
--- 
-           Hamming's Motto:
-           The purpose of computing is insight, not numbers.
-                                -- Richard W. Hamming
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
