@@ -1,33 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/04/4
-Message-Id: <200810041843.16208.rbu@gentoo.org>
-Date: Sat, 4 Oct 2008 18:43:06 +0200
-From: Robert Buchholz <rbu@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/19/1
+Message-Id: <200808191133.47157.hanno@hboeck.de>
+Date: Tue, 19 Aug 2008 11:33:46 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: amarok temp file vuln
+Cc: coley@...re.org
+Subject: wordpress 2.6.1
 Content-Type: text/plain; charset=utf-8
 
-On Friday 15 August 2008, Steven M. Christey wrote:
-> ======================================================
-> Name: CVE-2008-3699
-> Status: Candidate
-> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3699
-> Reference:
-> MISC:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=494765
-> Reference: CONFIRM:http://amarok.kde.org/en/releases/1/4/10
-> Reference: CONFIRM:http://websvn.kde.org/?view=rev&revision=846626
-> Reference: SECUNIA:31418
-> Reference: URL:http://secunia.com/advisories/31418
->
-> The MagnatuneBrowser::listDownloadComplete function in
-> magnatunebrowser/magnatunebrowser.cpp in Amarok before 1.4.10 allows
-> local users to overwrite arbitrary files via a symlink attack on the
-> album_info.xml temporary file.
+Just had a look at the wp 2.6.1 changelog.
 
-It seems CVE-2008-4430 is a duplicate for this?
+Two security relevant bugs are listed as fixed.
+
+http://trac.wordpress.org/ticket/7359
+I'd consider this worth a CVE. It's good that this ssl stuff got some 
+attention lately (I think this is a similar issue to the recently reported 
+cookie / secureflag issues, as it can undermine the sniffing-safety of 
+ssl-enabled pages).
+
+http://trac.wordpress.org/ticket/6871
+
+AFAICS this enables one to hide malicious plugins but is no real vuln. Not 
+sure if it deserves a CVE.
 
 
-Robert
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
-Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
