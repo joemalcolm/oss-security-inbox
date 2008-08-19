@@ -1,42 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/16/2
-Message-ID: <482DC363.4010506@chatspike.net>
-Date: Fri, 16 May 2008 18:24:51 +0100
-From: "Craig Edwards (Brain)" <brain@...tspike.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/19/2
+Message-ID: <20080819141215.GA13100@suse.de>
+Date: Tue, 19 Aug 2008 16:12:15 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSH key blacklisting
+Subject: swfdec 0.6.8 stable update
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-I havent been following this debacle too closely as i dont have much to 
-do with debian, however, wouldnt such a system be vulnerable to false 
-positives if you are just going to hash partial fingerprints rather than 
-whole fingerprints?
+Wonder if we should track updates for swfdec. The 0.6.8 announcement
+looks like it at least fixes several Denial of Service problems:
 
--- Brain
+http://lists.freedesktop.org/archives/swfdec/2008-July/001801.html
 
-Solar Designer wrote:
-> Hi,
->
-> Are any other distros, besides Debian, Ubuntu, and derived ones, going
-> to implement key blacklisting in OpenSSH - or are considering it?
->
-> We are considering it for Openwall GNU/*/Linux, and if our effort would
-> be reused by others, or if others join us in developing and/or testing
-> the patch, this would be a reason for us to go for it.
->
-> I don't think we'll take the Debian/Ubuntu patch as-is.  Rather, we are
-> likely to use a trivial binary encoding/compression method for the
-> partial fingerprints.  We'd also use smaller partial fingerprints.  With
-> the approach I have in mind, it'd take around 4.55 bytes per key to
-> store 48-bit partial fingerprints, bringing the installed file size for
-> 3 arch types and 2 key types/sizes in under 1 MB (or just over 1 MB for
-> 3 key types/sizes).
->
-> Please comment.
->
-> Thanks,
->
-> Alexander
->   
+	swfdec-0.6.8 ("Mario Rush")
+	http://swfdec.freedesktop.org/download/swfdec/0.6/swfdec-0.6.8.tar.gz
+	MD5: 740caf52068556ffe151703342fb634b
+
+	Changes:
+	- fix a crash when decoding 1x1 JPEG images
+	- fix a crash in XMLSocket.send
+	- fix crashes when FLV decoding was aborted
+	- fix a crash in exception handling code
+	- fix some infinite loops with prototype loops
+	- fix crasher when handling broken dates
+	- fix crashers with native constructors found in testing
+	- compatibility fixes: compile with gold linker, make includes work from C++
+
+(SUSE at least is shipping swfdec.)
+
+Ciao, Marcus
