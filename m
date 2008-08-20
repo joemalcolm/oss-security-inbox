@@ -1,44 +1,117 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/03/8
-Message-ID: <20081203190307.GF21497@ngolde.de>
-Date: Wed, 3 Dec 2008 20:03:07 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com, coley@...re.org
-Cc: redpig@...rt.org
-Subject: Re: xine-lib and ocert-2008-008
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/20/4
+Message-ID: <16F53A6138D7A84D93C3CF09D7291CF03B6FED31F6@GVW0442EXB.americas.hpqcorp.net>
+Date: Wed, 20 Aug 2008 18:08:19 +0000
+From: "Morris, John R. (SSRT)" <john.morris@...com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: FW: CVE-2008-1668 - ftpd 2.4 - unauthorized root access - patch details
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Steven M. Christey <coley@...us.mitre.org> [2008-11-26 09:27]:
-[...] 
-> ======================================================
-> Name: CVE-2008-5248
-> Status: Candidate
-> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5248
-> Reference: CONFIRM:http://sourceforge.net/project/shownotes.php?release_id=619869
-> 
-> xine-lib before 1.1.15 allows remote attackers to cause a denial of
-> service (crash) via "MP3 files with metadata consisting only of
-> separators."
+ Re-send. oss-security@...ts.openwall.com truncated for some reason.
 
-http://hg.debian.org/hg/xine-lib/xine-lib?cmd=changeset;node=60ab5d2bdd82
+-----Original Message-----
+From: Morris, John R. (SSRT)
+Sent: Wednesday, August 20, 2008 2:05 PM
+To: oss-
+Cc: Steven M. Christey
+Subject: CVE-2008-1668 - ftpd 2.4 - unauthorized root access - patch details
 
-This is the corresponding upstream patch.
-139   i = len - 1;
-140
-141   while ((i >= 0) && ((unsigned char)str[i] <= 32)) {
-142     str[i] = 0;
-143     i--;
-144   }
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-If len is size_t this is the problematic code if i len is 0 this will result in
-a 0 bytes written all over the memory because of integer promotion.
+This security vulnerability was reported in the HP Security Bulletin,
+HPSBUX02356 SSRT080051 rev.1 - HP-UX Running ftpd, Remote Privileged Access.
+http://h20000.www2.hp.com/bizsupport/TechSupport/Document.jsp?objectID
+=c01525562  We believe the vulnerability exists in the latest wu-ftpd
+2.4 code.
 
-Cheers
-Nico
+Code diff
+==========
 
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+111,113d110
+< /* CVE-2008-1668: Introduced to track  errno set by getpwnam() */ < int getpwnam_err=0; <
+1299,1301d1295
+<
+< /* CVE-2008-1668 : Setting ernno to zero to get the errno details of getpwnam() */ < errno = 0;
+1314,1315c1308
+<     if ((p = getpwnam(name)) == NULL){
+<       getpwnam_err = errno;  /* CVE-2008-1668 */
+- ---
+>     if ((p = getpwnam(name)) == NULL)
+1317d1309
+<     }
+2455,2464c2447,2452
+<               /* CVE-2008-1668: pw check is introduced to avoid
+unauthorised access */
+<       if (((status = pam_process_pass(passwd, &pw) ) !=
+PAM_SUCCESS) || ( pw  == NULL)) {
+<                    reply(530, "Login incorrect.");
+<                    if (logging){
+<                       if ( pw == NULL  && getpwnam_err )
+<                               syslog(LOG_ERR,"getpwnam failed :
+%s",strerror(getpwnam_err));
+<                       else
+<                               syslog(LOG_INFO, "User %s: Login
+incorrect", the_user);
+<                   }
+<                     if (++login_attempts >= lgi_failure_threshold){
+- ---
+>                 if ((status = pam_process_pass (passwd, &pw)) !=
+> PAM_SUCCESS) {
+>                         reply(530, "Login incorrect.");
+>                         if (logging)
+>                                syslog(LOG_INFO, "User %s: Login
+> incorrect", the_user);
+>                         if (++login_attempts >=
+> lgi_failure_threshold)
+>                         {
 
-Content of type "application/pgp-signature" skipped
+Problem description
+====================
+
+SSRT080051 (CVE-2008-1668):
+WU-FTP2.4 Security issue problem setting up user environment
+
+Problem Statement:
+
+WU-FTPD2.4 allows a user to login even if the user does not have an entry in the passwd(4) file.  The user incorrectly gets 'root'
+access.
+
+Detail Analysis:
+
+This issue occurs when LDAP is used for pam(3) authentication and the
+nsswitch.conf(4) file does not include 'ldap' as a source for the 'passwd' database.
+
+When a client tries to FTP LOGIN as a user included in an LDAP directory, where the FTP server machine is not configured correctly (i.e. pam(3) is configured to use LDAP but nsswitch.conf(4) has no entry for ldap against 'passwd') then the pam authentication passes (because pam(3) is using ldap for authentication) but getpwnam(3C) fails to get the users details (as nsswitch.conf(4) has no entry for ldap).
+
+In this situation user is incorrectly given root privileges thus causing a Security issue.
+
+In short, ftpd allows a user to login as root if pam(3) authentication passes and getpwnam(3C) returns NULL.
+
+Note1: getpwnam(3C) gets an entry from the databases listed in
+nsswitch.conf(4) and if no entry for the user present is present
+getpwnam(3C) will return NULL.
+
+Note2: This problem may also occur when using database sources other than LDAP  (LDAP was used in all our testing).  The primary factor is successful pam(3) authentication followed by a failure to retrieve user details.
+
+Note3: It is possible to see this problem where an ldapclientd hang occurs, such that the correct nsswitch.conf(4) configuration is in place but the ldap client does not return correctly.
+
+To get the security-alert PGP keys, please send an e-mail message as
+follows:
+  To: security-alert@...com
+  Subject: get key
+
+Yours truly,
+John
+john.morris@...com
+HP Software Security Response Team (SSRT)
+
+-----BEGIN PGP SIGNATURE-----
+Version: PGP 8.1
+
+iQA/AwUBSKxbTOAfOvwtKn1ZEQICFgCfXF1ZGFfiv6IWyj2G9y8qoVL8V8UAn04p
+tw+XG57pY4RqsxjkAEDtwNtg
+=tsWs
+-----END PGP SIGNATURE-----
+
+View attachment "SB2356r1.txt" of type "text/plain" (6429 bytes)
