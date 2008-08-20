@@ -1,34 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/23/11
-Message-ID: <480F6E73.7040804@freethemallocs.com>
-Date: Wed, 23 Apr 2008 09:14:27 -0800
-From: Jonathan Smith <smithj@...ethemallocs.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/20/5
+Message-ID: <20080820200859.GC4203@redhat.com>
+Date: Wed, 20 Aug 2008 21:08:59 +0100
+From: Joe Orton <jorton@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: web archives
+Subject: Re: CVE request for neon
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, Aug 20, 2008 at 12:06:35PM -0400, Steven M. Christey wrote:
+> On Fri, 15 Aug 2008, Joe Orton wrote:
+> > A NULL pointer deference in the Digest authentication support in neon
+> > versions 0.28.0 through 0.28.2 inclusive allows a malicious server to
+> > crash a client application, resulting in possible denial of service.
+> >
+> > Reference: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=476571
+> 
+> Use CVE-2008-3746, to be filled in later.
 
-Steven M. Christey wrote:
-| The archives as stored at
-| http://www.openwall.com/lists/oss-security/2008/04/ etc. only list posts
-| using sequence numbers.  Would it be easy to list these by subject line,
-| author, and/or in a threaded basis?  I find it hard to navigate when I'm
-| looking for a particular post.
+Thanks.  I've now released neon 0.28.3 to fix this issue:
 
-I find this annoying as well, but GMANE also mirrors the list. Reference
-http://blog.gmane.org/gmane.comp.security.oss.general.
+http://lists.manyfish.co.uk/pipermail/neon/2008-August/000038.html
+http://lists.manyfish.co.uk/pipermail/neon/2008-August/000040.html
 
-Personally, I'm a fan of the seclists.org interface. I'll shoot fyodor
-an email and ask him to mirror us.
-
-	smithj
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEARECAAYFAkgPbnMACgkQCG91qXPaRelq6QCfRUx7Sk/1VzqxzXlVOxprOnhb
-8RUAoIInx2L26Rtz5Uo5g5mrhBFF8fDk
-=n+vu
------END PGP SIGNATURE-----
+Regards, Joe
