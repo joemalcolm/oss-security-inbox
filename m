@@ -1,38 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/24/1
-Message-Id: <200807240323.39387.rbu@gentoo.org>
-Date: Thu, 24 Jul 2008 03:23:33 +0200
-From: Robert Buchholz <rbu@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/20/1
+Message-ID: <Pine.GSO.4.51.0808201200440.28950@faron.mitre.org>
+Date: Wed, 20 Aug 2008 12:04:28 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: Josh Bressers <bressers@...hat.com>, Jamie Strandboge <jamie@...onical.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request for dnsmasq DoS
+cc: "Steven M. Christey" <coley@...re.org>
+Subject: Re: CVE request: drupal 5.10/6.4
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday 23 July 2008, Josh Bressers wrote:
-> On 8 July 2008, Jamie Strandboge wrote:
-> > I finally had time to develop a PoC and confirm this on my own. A
-> > client need only send a DHCPREQUEST for an IP address not on the
-> > same network as dnsmasq. Eg:
-> >
-> > 1. dnsmasq listening on and giving IP addresses for
-> > 192.168.122.0/24 2. client requests IP address on another network,
-> > such as 192.168.0.1 3. dnsmasq 2.25 (and presumably earlier)
-> > crashes
->
-> It seems there is also a problem with newer dnsmasq that is very
-> similar to this:
-> http://bugs.gentoo.org/show_bug.cgi?id=232523
->
-> That problem appears to be pretty much the same thing, but affecting
-> versions 2.43 - 2.45
 
-I also had to think of this <2.26 issue when I saw the bug, but I did 
-not get to request a CVE yet, so thank you.
+On Fri, 15 Aug 2008, Hanno [utf-8] Böck wrote:
 
-> Did this ever get a CVE id?
+> http://drupal.org/node/295053
 
-Yes, the <2.26 one is CVE-2008-3214.
+Use the following, to be filled in later:
 
-Robert
+CVE-2008-3740 - first XSS
 
-Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
+CVE-2008-3741 - second XSS.  This has a different root cause so is SPLIT.
+
+CVE-2008-3742 - BlogAPI file uploads
+
+CVE-2008-3743 - first CSRF, for 6.x only
+
+CVE-2008-3744 - second CSRF, for 6.x/5.x (different affected versions so
+                SPLIT)
+
+CVE-2008-3745 - Upload module priv escalation
+
+
+- Steve
