@@ -1,28 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/21/1
-Message-ID: <20080221015147.GR32357@outflux.net>
-Date: Wed, 20 Feb 2008 17:51:47 -0800
-From: Kees Cook <kees@...flux.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/20/3
+Message-ID: <Pine.GSO.4.51.0808201209520.28950@faron.mitre.org>
+Date: Wed, 20 Aug 2008 12:16:41 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: code review CVS
+cc: coley@...re.org
+Subject: Re: wordpress 2.6.1
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Feb 20, 2008 at 12:28:44PM -0700, Vincent Danen wrote:
-> I like the patch idea, however.  A "vendor patch" database of sorts
-> would be nice (would save me from hunting from, say, ubuntu packages for
-> a patch for something they already fixed, or looking at ubuntu for one,
-> and SUSE for another because of version differences).
 
-I'd really like to have at least a "how to find a patch for [distro],
-release [version]".  I have an easier time finding Debian patches,
-for example, since http://snapshot.debian.net/ exists.  Ubuntu is a
-bit less patch-hunter-friendly in that regard, but we try to alway keep
-patches external to from the source tree, so they're easy to locate from
-change logs.  Doing this with src.rpms follows a similar convention,
-but can sometimes get tricky too.  Finding them can sometimes be a chore
--- I always bang my head when looking for RHEL src.rpms.  :)
+On Tue, 19 Aug 2008, Hanno [utf-8] Böck wrote:
 
--Kees
+> Just had a look at the wp 2.6.1 changelog.
+>
+> Two security relevant bugs are listed as fixed.
+>
+> http://trac.wordpress.org/ticket/7359
+> I'd consider this worth a CVE. It's good that this ssl stuff got some
+> attention lately (I think this is a similar issue to the recently reported
+> cookie / secureflag issues, as it can undermine the sniffing-safety of
+> ssl-enabled pages).
 
--- 
-Kees Cook                                            @outflux.net
+It's hard to read into this one since I don't know what they mean by
+"SSL-aware" here, or what apply_filters() is intended to do.
+
+Use CVE-2008-3747, to be filled in later.
+
+> http://trac.wordpress.org/ticket/6871
+>
+> AFAICS this enables one to hide malicious plugins but is no real vuln. Not
+> sure if it deserves a CVE.
+
+Presumably, only the admin would be able to install plugins.  So plugin
+"hiding" isn't feasible.  The admin knows which plugins were installed,
+unless there's some other exploit that installs the plugins, in which case
+there's a different vuln.  So I don't think this deserves a CVE either.
+
+- Steve
