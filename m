@@ -1,41 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/30/2
-Message-ID: <48E23FAD.7090703@gentoo.org>
-Date: Tue, 30 Sep 2008 17:03:09 +0200
-From: Christian Hoffmann <hoffie@...too.org>
-To: coley@...re.org
-CC: vendor-sec@....de, darix@...nsu.se, stbuehler@....de,  oss-security@...ts.openwall.com
-Subject: Re: CVE request: lighttpd issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/23/1
+Message-ID: <20080822181152.GA9722@dhcp-172-29-39-77.aus.corp.google.com>
+Date: Fri, 22 Aug 2008 13:11:52 -0500
+From: Will Drewry <redpig@...rt.org>
+To: bugtraq@...urityfocus.com, ocert-announce@...ts.ocert.org, oss-security@...ts.openwall.com
+Subject: [oCERT-2008-008] multiple heap overflows in xine-lib
 Content-Type: text/plain; charset=utf-8
 
-Sorry for the spam, I fail..
 
-On 2008-09-30 16:55, Christian Hoffmann wrote:
-> We still need CVEs for these three issues.
-Wrong, only two are remaining, see below.
+#2008-008 multiple heap overflows in xine-lib
 
->>   * Unexpected behavior of url.redirect / url.rewrite config options
->>
->>     While this is not a security issue in lighttpd, the user might
->>     rely on the fact, that those options are suppoosed to be matched
->>     against the urldecoded version of the URL. Depending on the
->>     configuration, this would allow for unwanted access to certain
->>     resources (information disclosure or even manipulation of data)
-This one.
+Description:
 
->>
->>   * Information disclosure w/ mod_userdir on case-insensitive file
->>     systems
-And this one.
+The xine free multimedia player suffers from a number of vulnerabilities
+ranging in severity. The worst of these vulnerabilities results in
+arbitrary code execution and the least, in unexpected process
+termination.
 
->>
->>   * User-controllable memory leak, possibly leading to a Denial of
->>     Service
-This has been assigned CVE-2008-4298 already.
+Five heap buffer overflows exist in parsing of real audio files, id3
+tags, qt mov files, and matroska headers which all can result in
+arbitrary code execution.
+
+Three additional heap buffer overflows occur in mng, mod, and real
+handling which are potentially exploitable.
+
+Seven additional issues were identified in the input plugins as well as
+the real, qt, and matroska demuxers which result in process termination
+or memory corruption that may have wider implications.
+
+The oCERT team was contacted by the Xine project requesting a review of
+some code changes relating to memory allocations. These vulnerabilities
+were the findings of this requested analysis. The full analysis text can
+be found in the references below.
+
+Affected version:
+
+xine-lib <= 1.1.14
+
+Fixed version:
+
+xine-lib >= 1.1.15 [*]
+
+* - see analysis text for more detail on fixes
+
+Credit: Will Drewry, oCERT Team | Google Security Team.
+
+CVE: TBD
+
+Timeline:
+2008-04-30: vendor contacts oCERT asking patch analysis
+2008-05-06: analysis results in bug being found, test case sent upstream
+2008-05-07: vendor submits second set of patches for analysis
+2008-05-07: vendor provides issue private exposure to some vendors
+2008-05-07: vendor proposes patch for the found security bug
+2008-05-25: Full analysis results supplied to vendor and another PoC
+2008-05-27: oCERT contacts vendor regarding timeline and coordination
+2008-05-28: vendor asks for clarification
+2008-06-09: oCERT contacts vendor offering help
+2008-06-11: vendor supplies patches
+2008-06-18: oCERT indicates that patches are incomplete
+2008-06-21: vendor confirms receipt and looks in to options
+2008-07-02: vendor indicates problem with a potential fix; oCERT replies
+2008-07-28: vendor contact becomes unavailable
+2008-08-11: oCERT attempts another contact with vendor
+2008-08-12: new contact is confirmed
+2008-08-14: xine-lib releases 1.1.15 with fixes (w/out oCERT knowledge)
+2008-08-18: oCERT supplies all original findings and test cases again
+2008-08-22: Ludwig Nussel notified oCERT regarding 1.1.15
+2008-08-22: advisory release
+
+References:
+- Vulnerability analysis report:
+  http://www.ocert.org/analysis/2008-008/analysis.txt
+- xine-1.1.15 release notes:
+  http://sourceforge.net/project/shownotes.php?release_id=619869&group_id=9655
+
+Links:
+- http://xinehq.de
 
 
--- 
-Christian Hoffmann
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (261 bytes)
+--
+Will Drewry <redpig@...rt.org>
+oCERT Team :: http://ocert.org
