@@ -1,21 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/28/2
-Message-ID: <20081028084238.258e8a09@redhat.com>
-Date: Tue, 28 Oct 2008 08:42:38 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: OSS Security <oss-security@...ts.openwall.com>
-Subject: CVE-2008-4619 / milw0rm6775
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/23/4
+Message-ID: <20080823162156.GA11010@ngolde.de>
+Date: Sat, 23 Aug 2008 18:21:57 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: swfdec 0.6.8 stable update
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+Hi Marcus,
+* Marcus Meissner <meissner@...e.de> [2008-08-23 18:05]:
+> On Tue, Aug 19, 2008 at 06:22:57PM +0200, Nico Golde wrote:
+> > * Marcus Meissner <meissner@...e.de> [2008-08-19 16:48]:
+> > > Wonder if we should track updates for swfdec. The 0.6.8 announcement
+> > > looks like it at least fixes several Denial of Service problems:
+> > [...] 
+> > I have problems to understand why this would be a Denial of 
+> > Service. While I don't share the opinion about browser 
+> > crashes I think there are at least good arguments for both 
+> > sides.
+> 
+> If it can be triggered by a SWF on the website, I would perhaps
+> call it a security issue.
+> 
+> If it crashes the SWF mozilla plugin and so the browser, it is
+> a denial of service in my eyes.
 
-Just a heads up ...  In the case you distribute rpcbind using
-(lib)tirpc as an RPC port mapper, you may be interested in the
-CVE-2008-4619.  Some more info is in our BZ, along with Steve Dickson's
-patch: https://bugzilla.redhat.com/show_bug.cgi?id=468014
+I'm not sure how firefox handles this, at least opera does 
+not crash if the flash plugin crashes.
 
-This is very likely the same issue as Solaris one, as tirpc is based on
-the Sun's RPC source code, and fails in the same place.
+> More importantly if code execution is possible.
 
+That should be self-evident.
+
+[...] 
+> > It would be interesting what is causing this crash and if 
+> > there is underlying a more serious issue.
+> 
+> Not really investigated and no time :/ Since swfdec is beta and not yet
+> wildy iin use we could let it rest.
+
+Yeah same here, maybe we can get comments about this by the 
+upstream people.
+
+Cheers
+Nico
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
