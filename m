@@ -1,30 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/24/2
-Message-ID: <Pine.GSO.4.51.0812241158430.12707@faron.mitre.org>
-Date: Wed, 24 Dec 2008 11:58:48 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: soft lockup occurs when network load is very high
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/23/3
+Message-Id: <200808231753.27948.rbu@gentoo.org>
+Date: Sat, 23 Aug 2008 17:53:16 +0200
+From: Robert Buchholz <rbu@...too.org>
+To: vendor-sec@....de, veillard@...hat.com
+Cc: gnome@...too.org, oss-security@...ts.openwall.com
+Subject: Re: libxml2 denial of service flaw (CVE-2008-3281)
 Content-Type: text/plain; charset=utf-8
 
+On Wednesday 20 August 2008, Daniel Veillard wrote:
+> On Wed, Aug 20, 2008 at 12:42:29PM -0400, Josh Bressers wrote:
+> > Yes, this can be considered public.  An announcement should be
+> > appearing on the xml list shortly:
+> >
+> > http://mail.gnome.org/archives/xml/
+>
+>   It's out:
+>
+>    http://mail.gnome.org/archives/xml/2008-August/msg00034.html
+>
+> thanks everybody !
 
-======================================================
-Name: CVE-2008-5713
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5713
-Reference: MLIST:[oss-security] 20081223 CVE request: kernel: soft lockup occurs when network load is very high
-Reference: URL:http://openwall.com/lists/oss-security/2008/12/23/1
-Reference: CONFIRM:http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.27.y.git;a=commit;h=2ba2506ca7ca62c56edaa334b0fe61eb5eab6ab0
-Reference: CONFIRM:http://kernel.org/pub/linux/kernel/v2.6/ChangeLog-2.6.25
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=477744
-Reference: BID:32985
-Reference: URL:http://www.securityfocus.com/bid/32985
+Our gnome maintainers pointed out that the patch (which was also pushed 
+upstream) breaks GDM in GNOME 2.22, as can be seen in Gentoo and 
+Mandriva:
+  https://bugs.gentoo.org/show_bug.cgi?id=235529
+  https://qa.mandriva.com/show_bug.cgi?id=43094
 
-The __qdisc_run function in net/sched/sch_generic.c in the Linux
-kernel before 2.6.25 on SMP machines allows local users to cause a
-denial of service (soft lockup) by sending a large amount of network
-traffic, as demonstrated by multiple simultaneous invocations of the
-Netperf benchmark application in UDP_STREAM mode.
+upstream bug:
+  http://bugzilla.gnome.org/show_bug.cgi?id=549087
+
+Those who did not push updates yet might want to delay this, we have 
+been reverting the patch for now.
+I am CC'ing oss-security, please send follow-ups to that list.
 
 
+Robert
+
+Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
