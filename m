@@ -1,32 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/23/3
-Message-ID: <20080423035811.GA30865@openwall.com>
-Date: Wed, 23 Apr 2008 07:58:11 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/23/2
+Message-ID: <20080823095852.GA29247@suse.de>
+Date: Sat, 23 Aug 2008 11:58:52 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: list: members vs. read-only subscribers
+Subject: Re: swfdec 0.6.8 stable update
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Apr 22, 2008 at 07:41:16PM -0800, Jonathan Smith wrote:
-> So, this means that anyone from this point on who subscribes to the list
-> does so effectively as read-only, and messages they send will be held
-> for moderation. Similarly, folks who aren't subscribed at all will be
-> held for moderation, but not rejected automatically. Folks in the white
-> list (whether or not they are subscribed) can post with no delay, and
-> everyone who has posted a message prior to today is in the white list.
-> Right?
+On Tue, Aug 19, 2008 at 06:22:57PM +0200, Nico Golde wrote:
+> Hi Marcus,
+> * Marcus Meissner <meissner@...e.de> [2008-08-19 16:48]:
+> > Wonder if we should track updates for swfdec. The 0.6.8 announcement
+> > looks like it at least fixes several Denial of Service problems:
+> [...] 
+> I have problems to understand why this would be a Denial of 
+> Service. While I don't share the opinion about browser 
+> crashes I think there are at least good arguments for both 
+> sides.
 
-Exactly.  Thank you for summarizing it so nicely.
+If it can be triggered by a SWF on the website, I would perhaps
+call it a security issue.
 
-On a related note, now that this list has been CC'ed on some Bugtraq
-postings, we're receiving a lot more spam to it.  Unfortunately, some of
-this spam gets through the filters and takes up the time of the
-moderators.  Yet we obviously couldn't have avoided this happening,
-sooner or later - and it makes some sense to have the list CC'ed like
-that.  It also serves to advertise the list to subscribers of other
-related lists, such as Bugtraq.
+If it crashes the SWF mozilla plugin and so the browser, it is
+a denial of service in my eyes.
 
-Josh - now that the list setup has been restricted like you wanted, are
-you going to work on an announcement suitable for posting to Bugtraq?
+More importantly if code execution is possible.
 
-Alexander
+
+I have however not researched those further (just saw the changelog as
+packager of swfdec), and currently swfdec itself is probably not yet
+fully production ready anyway.
+
+> But if swfdec crashes on playing a flash movie this 
+> looks like an application bug. At least I wouldn't talk 
+> about Denial of Service if vim would crash on opening a text 
+> file.
+
+Yeah.
+
+> It would be interesting what is causing this crash and if 
+> there is underlying a more serious issue.
+
+Not really investigated and no time :/ Since swfdec is beta and not yet
+wildy iin use we could let it rest.
+
+Ciao, Marcus
