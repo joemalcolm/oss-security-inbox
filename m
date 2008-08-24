@@ -1,79 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/27/11
-Message-ID: <Pine.GSO.4.51.0807271822290.20336@faron.mitre.org>
-Date: Sun, 27 Jul 2008 18:22:38 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/24/2
+Message-ID: <48B12175.8020006@pardus.org.tr>
+Date: Sun, 24 Aug 2008 11:53:09 +0300
+From: Pınar Yanardağ <pinar@...dus.org.tr>
 To: oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: Re: CVE request: mantis < 1.1.2
+Subject: Re: CVE id request: vlc
 Content-Type: text/plain; charset=utf-8
 
+Nico Golde wrote On 24-08-2008 03:13:
+> Hi,
+> there seems to be a buffer overflow in videolans mms
+> handling:
+> http://www.orange-bat.com/adv/2008/adv.08.24.txt
+>    
 
-======================================================
-Name: CVE-2008-2276
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2276
-Reference: BUGTRAQ:20080520 Mantis Bug Tracker 1.1.1 Multiple Vulnerabilities
-Reference: URL:http://marc.info/?l=bugtraq&m=121130774617956&w=4
-Reference: CONFIRM:http://sourceforge.net/project/shownotes.php?group_id=14963&release_id=595025
-Reference: FEDORA:FEDORA-2008-6647
-Reference: URL:https://www.redhat.com/archives/fedora-package-announce/2008-July/msg00801.html
-Reference: FEDORA:FEDORA-2008-6657
-Reference: URL:https://www.redhat.com/archives/fedora-package-announce/2008-July/msg00813.html
-Reference: SECUNIA:30270
-Reference: URL:http://secunia.com/advisories/30270
-Reference: SECUNIA:31171
-Reference: URL:http://secunia.com/advisories/31171
-Reference: XF:mantis-usercreate-csrf(42447)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/42447
+Btw, a vendor patch has been released:
+http://mailman.videolan.org/pipermail/vlc-devel/2008-August/048488.html
 
-Cross-site request forgery (CSRF) vulnerability in
-manage_user_create.php in Mantis 1.1.1 allows remote attackers to
-create new administrative users via a crafted link.
+> Can I get a CVE id for this?
+>
+> Cheers
+> Nico
+>
+>    
 
 
-======================================================
-Name: CVE-2008-3331
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3331
-Reference: BUGTRAQ:20080520 Mantis Bug Tracker 1.1.1 Multiple Vulnerabilities
-Reference: URL:http://marc.info/?l=bugtraq&m=121130774617956&w=4
-Reference: CONFIRM:http://www.mantisbt.org/bugs/changelog_page.php
-Reference: SECUNIA:30270
-Reference: URL:http://secunia.com/advisories/30270
-
-Cross-site scripting (XSS) vulnerability in return_dynamic_filters.php
-in Mantis before 1.1.2 allows remote attackers to inject arbitrary web
-script or HTML via the filter_target parameter.
-
-
-======================================================
-Name: CVE-2008-3332
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3332
-Reference: BUGTRAQ:20080520 Mantis Bug Tracker 1.1.1 Multiple Vulnerabilities
-Reference: URL:http://marc.info/?l=bugtraq&m=121130774617956&w=4
-Reference: CONFIRM:http://www.mantisbt.org/bugs/changelog_page.php
-Reference: SECUNIA:30270
-Reference: URL:http://secunia.com/advisories/30270
-
-Eval injection vulnerability in adm_config_set.php in Mantis before
-1.1.2 allows remote authenticated administrators to execute arbitrary
-code via the value parameter.
-
-
-======================================================
-Name: CVE-2008-3333
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3333
-Reference: CONFIRM:http://www.mantisbt.org/bugs/changelog_page.php
-Reference: CONFIRM:http://www.mantisbt.org/bugs/view.php?id=9154
-Reference: SECUNIA:30270
-Reference: URL:http://secunia.com/advisories/30270
-
-Directory traversal vulnerability in core/lang_api.php in Mantis
-before 1.1.2 allows remote attackers to read and include arbitrary
-files via the language parameter to the user preferences page
-(account_prefs_update.php).
+-- 
+Pınar Yanardağ
+http://pinguar.org
 
 
