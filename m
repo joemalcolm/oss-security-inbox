@@ -1,27 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/19/7
-Message-ID: <20080619185805.GH4263@ngolde.de>
-Date: Thu, 19 Jun 2008 20:58:05 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/24/6
+Message-ID: <48B1548D.2040207@pardus.org.tr>
+Date: Sun, 24 Aug 2008 15:31:09 +0300
+From: Pınar Yanardağ <pinar@...dus.org.tr>
 To: oss-security@...ts.openwall.com
-Cc: vendor-sec@....de, "Steven M. Christey" <coley@...re.org>
-Subject: Re: New Xen ioemu: PVFB backend issue
+Subject: Re: CVE id request: vlc
 Content-Type: text/plain; charset=utf-8
 
-Hi Jan,
-* Jan Lieskovsky <jlieskov@...hat.com> [2008-05-21 19:14]:
-[...] 
-> As this vulnerability has security implications, we have assigned
-> CVE-2008-1952 to it. Please use it when referring to this issue.
+Nico Golde wrote On 24-08-2008 13:10:
+> Hi,
+> * Pinar Yanarda<pinar@...dus.org.tr>  [2008-08-24 11:23]:
+>    
+>> Nico Golde wrote On 24-08-2008 03:13:
+>>      
+>>> Hi,
+>>> there seems to be a buffer overflow in videolans mms
+>>> handling:
+>>> http://www.orange-bat.com/adv/2008/adv.08.24.txt
+>>>
+>>>        
+>> Btw, a vendor patch has been released:
+>> http://mailman.videolan.org/pipermail/vlc-devel/2008-August/048488.html
+>>      
+>
+> Wow that was fast, 4 hours after I notified them of the
+> problem.
+> Looks correct to me. Anyone else had a look at the patch?
+>    
 
-Can you take care about the remaining steps to get this on 
-the mitre site or Steve could you update this? Quite some 
-time passed since this was assigned :)
+I was having some trouble to apply this patch but they updated it a 
+couple of hours ago, which works fine now.
 
-Cheers
-Nico
+http://mailman.videolan.org/pipermail/vlc-devel/2008-August/048504.html
+
+Cheers,
+
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+Pınar Yanardağ
+http://pinguar.org
 
-Content of type "application/pgp-signature" skipped
