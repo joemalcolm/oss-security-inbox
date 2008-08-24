@@ -1,34 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/27/13
-Message-id: <20080327233422.GT12339@linsec.ca>
-Date: Thu, 27 Mar 2008 17:34:22 -0600
-From: Vincent Danen <vdanen@...sec.ca>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/24/3
+Message-ID: <20080824101032.GA24876@ngolde.de>
+Date: Sun, 24 Aug 2008 12:10:32 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: using oss-security references in CVE
+Subject: Re: CVE id request: vlc
 Content-Type: text/plain; charset=utf-8
 
-* [2008-03-28 00:09:46 +0100] Lubomir Kundrak wrote:
+Hi,
+* Pinar Yanarda <pinar@...dus.org.tr> [2008-08-24 11:23]:
+> Nico Golde wrote On 24-08-2008 03:13:
+> >Hi,
+> >there seems to be a buffer overflow in videolans mms
+> >handling:
+> >http://www.orange-bat.com/adv/2008/adv.08.24.txt
+> >   
+> 
+> Btw, a vendor patch has been released:
+> http://mailman.videolan.org/pipermail/vlc-devel/2008-August/048488.html
 
->On Thu, 2008-03-27 at 18:59 -0400, Steven M. Christey wrote:
->> All,
->> 
->> In CVE, we try to provide "provenance" for every detail that makes its way
->> into the description.  Issues like rxvt and CenterIM have some details
->> that are only publicly documented in oss-security, and I would like to add
->> these as references.
->
->I agree. There shouldn't really be things like more public and less
->public places to share security-related information.
+Wow that was fast, 4 hours after I notified them of the 
+problem.
+Looks correct to me. Anyone else had a look at the patch?
 
-I think this list is pretty public, and is intentionally so.  There
-should be no reason to hold back referring to oss-security messages as
-references for CVE names or any other vuln DB... in fact, this may even
-help the list to grow (which is ultimately what we want... within
-reason, of course).
-
-I see no problem with this.
-
+Kind regards
+Nico
 -- 
-Vincent Danen @ http://linsec.ca/
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
 Content of type "application/pgp-signature" skipped
