@@ -1,31 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/16/3
-Message-ID: <20080516174344.GA2305@openwall.com>
-Date: Fri, 16 May 2008 21:43:44 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSH key blacklisting
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/24/5
+Message-ID: <20080824151655.GB16647@ngolde.de>
+Date: Sun, 24 Aug 2008 17:16:55 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com, vendor-sec@....de
+Subject: Re: Re: libxml2 denial of service flaw (CVE-2008-3281)
 Content-Type: text/plain; charset=utf-8
 
-On Fri, May 16, 2008 at 06:24:51PM +0100, Craig Edwards (Brain) wrote:
-> I havent been following this debacle too closely as i dont have much to 
-> do with debian, however, wouldnt such a system be vulnerable to false 
-> positives if you are just going to hash partial fingerprints rather than 
-> whole fingerprints?
+Hi again,
+* Nico Golde <oss-security+ml@...lde.de> [2008-08-24 17:07]:
+> * Robert Buchholz <rbu@...too.org> [2008-08-23 18:06]:
+> > On Wednesday 20 August 2008, Daniel Veillard wrote:
+> > > On Wed, Aug 20, 2008 at 12:42:29PM -0400, Josh Bressers wrote:
+[...] 
+> > Our gnome maintainers pointed out that the patch (which was also pushed 
+> > upstream) breaks GDM in GNOME 2.22, as can be seen in Gentoo and 
+> > Mandriva:
+> >   https://bugs.gentoo.org/show_bug.cgi?id=235529
+> >   https://qa.mandriva.com/show_bug.cgi?id=43094
+> > 
+> > upstream bug:
+> >   http://bugzilla.gnome.org/show_bug.cgi?id=549087
+> > 
+> > Those who did not push updates yet might want to delay this, we have 
+> > been reverting the patch for now.
+> > I am CC'ing oss-security, please send follow-ups to that list.
+> 
+> Looks like rebuilding librsvg against libxml2 does solve the 
+> problem referring to our bug report:
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=496125#79
 
-Such a system would have a higher likelihood of false positives, yes.
-However, it would not exactly be "vulnerable" to them - or at least, the
-worst-case impact (depending on server settings) is a DoS for a given
-user's ability to login.  With 48-bit partial fingerprints, there may be
-like one such false positive in the entire world, or none.  If we go
-down to 40 bits, it's less than one in a million of different keys.
-(I am assuming a blacklist size of around 200,000 partial fingerprints.)
+YFYI there is a new patch which is not extending the 
+xmlEntity struct but abusing an already existing field.
+See https://bugzilla.redhat.com/show_bug.cgi?id=459830
 
-In fact, the Debian/Ubuntu patch already uses partial fingerprints based
-on my earlier suggestion, but I was more conservative at the time, so I
-suggested 80 bits.  Willy Tarreau has since convinced me that even as
-low as 40 bits is reasonable.
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-Oh, and we are not "hashing" fingerprints, we're merely matching them.
-
-Alexander
+Content of type "application/pgp-signature" skipped
