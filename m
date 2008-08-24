@@ -1,44 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/24/1
-Message-Id: <200806241014.51258.rbu@gentoo.org>
-Date: Tue, 24 Jun 2008 10:14:47 +0200
-From: Robert Buchholz <rbu@...too.org>
-To: vendor-sec@....de
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com
-Subject: Re: [vendor-sec] Re: New Xen ioemu: PVFB backend issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/24/4
+Message-ID: <20080824144955.GA16647@ngolde.de>
+Date: Sun, 24 Aug 2008 16:49:55 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com, vendor-sec@....de
+Subject: Re: Re: libxml2 denial of service flaw (CVE-2008-3281)
 Content-Type: text/plain; charset=utf-8
 
-On Monday 23 June 2008, Steven M. Christey wrote:
-> On Thu, 19 Jun 2008, Nico Golde wrote:
-> > Can you take care about the remaining steps to get this on
-> > the mitre site or Steve could you update this? Quite some
-> > time passed since this was assigned :)
->
-> There was enough in the initial post, I just missed it the first time
-> around.
->
-> Any idea on affected Xen versions?
+Hi Robert,
+* Robert Buchholz <rbu@...too.org> [2008-08-23 18:06]:
+> On Wednesday 20 August 2008, Daniel Veillard wrote:
+> > On Wed, Aug 20, 2008 at 12:42:29PM -0400, Josh Bressers wrote:
+> > > Yes, this can be considered public.  An announcement should be
+> > > appearing on the xml list shortly:
+> > >
+> > > http://mail.gnome.org/archives/xml/
+> >
+> >   It's out:
+> >
+> >    http://mail.gnome.org/archives/xml/2008-August/msg00034.html
+> >
+> > thanks everybody !
+> 
+> Our gnome maintainers pointed out that the patch (which was also pushed 
+> upstream) breaks GDM in GNOME 2.22, as can be seen in Gentoo and 
+> Mandriva:
+>   https://bugs.gentoo.org/show_bug.cgi?id=235529
+>   https://qa.mandriva.com/show_bug.cgi?id=43094
+> 
+> upstream bug:
+>   http://bugzilla.gnome.org/show_bug.cgi?id=549087
+> 
+> Those who did not push updates yet might want to delay this, we have 
+> been reverting the patch for now.
+> I am CC'ing oss-security, please send follow-ups to that list.
 
-It is not part of the latest release 3.2.1, as it was only introduced 
-two days prior (May 13) here:
-http://xenbits.xensource.com/xen-unstable.hg?rev/53195719f762
+Looks like rebuilding librsvg against libxml2 does solve the 
+problem referring to our bug report:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=496125#79
 
-As mentioned, fixed here:
-http://xenbits.xensource.com/xen-unstable.hg?rev/9044705960cb
+Kind regards
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-As for the first commit, it does not fall under CVE-2008-1952 -- so I 
-assume we need a new CVE, marking CVE-2008-1952 as an improper fix for 
-it.
-
-
-> ======================================================
-> Name: CVE-2008-1952
-...
-> amoount of guest memory.
-
-a-moo-unt ? ;-)
-
-
-Robert
-
-Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
+Content of type "application/pgp-signature" skipped
