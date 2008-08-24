@@ -1,21 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/18/6
-Message-ID: <Pine.GSO.4.51.0808181541070.19112@faron.mitre.org>
-Date: Mon, 18 Aug 2008 15:42:20 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/24/1
+Message-ID: <20080824001324.GA31263@ngolde.de>
+Date: Sun, 24 Aug 2008 02:13:24 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: mktemp
+Subject: CVE id request: vlc
 Content-Type: text/plain; charset=utf-8
 
+Hi,
+there seems to be a buffer overflow in videolans mms 
+handling:
+http://www.orange-bat.com/adv/2008/adv.08.24.txt
 
-On Mon, 18 Aug 2008, Nico Golde wrote:
+Can I get a CVE id for this?
 
-> This is known but as I wrote in the bug report:
-> "the file is safely created with O_EXCL and 0600, still
-> unsafe if used with -u"
+Cheers
+Nico
 
-Given that -u is "unsafe mode" with a disclaimer against race conditions
-(at least based on the manpage I looked at), I'm of the mindset that you'd
-flag an application for using mktemp -u, but not mktemp itself.
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-- Steve
+Content of type "application/pgp-signature" skipped
