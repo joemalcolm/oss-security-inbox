@@ -1,39 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/23/14
-Message-ID: <Pine.LNX.4.64.0804231839080.4890@forced.attrition.org>
-Date: Wed, 23 Apr 2008 18:39:30 +0000 (UTC)
-From: security curmudgeon <jericho@...rition.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: seclists.org archive request: oss-security
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/25/3
+Message-Id: <1219661157.7715.13.camel@iankko.englab.brq.redhat.com>
+Date: Mon, 25 Aug 2008 12:45:57 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: coley@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: CVE Request (gpicview)
 Content-Type: text/plain; charset=utf-8
 
+Hello Steve,
 
-I made the same request to http://archives.neohapsis.com/ today.
+  could you please allocate a CVE id for the following
+three gpicview issues:
+
+1,
+
+http://sourceforge.net/tracker/index.php?func=detail&aid=2019481&group_id=180858&atid=894869
+
+Possible symlink attack via the temporary created "/tmp/rot.jpg" 
+file used for image rotation.
+
+2,
+
+http://sourceforge.net/tracker/index.php?func=detail&aid=2019485&group_id=180858&atid=894869
+
+Related part of the code (the check for previous same filename file
+existence is done only in the 'main_win_save' function):
+
+#ifdef HAVE_LIBJPEG
+    if(strcmp(type,"jpeg")==0){
+        if(rotate_and_save_jpeg_lossless(file_name,mw->rotation_angle)!=0)
+            main_win_show_error(mw, "Save failed! Check permissions.");
+    } else
+#endif
+        main_win_save( mw, file_name, type, pref.ask_before_save ); 
+        
+By presence of the LIBJPEG library we could without confirmation rewrite
+the by the symlink targeted JPEG filesystem file.
+
+3, 
+
+http://sourceforge.net/tracker/index.php?func=detail&aid=2019492&group_id=180858&atid=894869
+
+Related part of the code:
+
+void on_rotate_clockwise( GtkWidget* btn, MainWin* mw )
+{
+    rotate_image( mw, GDK_PIXBUF_ROTATE_CLOCKWISE );
+    mw->rotation_angle += 90;
+    if(pref.auto_save_rotated){
+        pref.ask_before_save = FALSE;
+        on_save(btn,mw);
+        pref.ask_before_save = TRUE;
+    }
+}
+
+Consequences: Bad enough, just think about them in context of the two
+previously mentioned issues.
+
+Public mention of these issues:
+
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=495968
 
 
-On Wed, 23 Apr 2008, Jonathan Smith wrote:
+Thank you in advance!
 
-: -----BEGIN PGP SIGNED MESSAGE-----
-: Hash: SHA1
-: 
-: oss-security is a relatively new mailing list dedicated to... open
-: source software security. It was the offspring of vendor-sec, and is
-: intended only for public information. We would appreciate being
-: archived/mirrored/whatever on seclists.org.
-: 
-: List charter, including subscription information:
-: http://oss-security.openwall.org/wiki/mailinglists/oss-security-charter
-: 
-: Archive: http://www.openwall.com/lists/oss-security/
-: 
-: 	smithj
-: 
-: 
-: -----BEGIN PGP SIGNATURE-----
-: Version: GnuPG v2.0.9 (GNU/Linux)
-: 
-: iEYEARECAAYFAkgPcP0ACgkQCG91qXPaRelWlQCffC0Pnd2tp2yOMTQNWa+Wz6VT
-: DuIAoITDtihSMUtij7EtBJLN54VjlLqu
-: =gjuP
-: -----END PGP SIGNATURE-----
-: 
+Kind regards
+Jan iankko Lieskovsky
+RH Security Resposne Team
+
