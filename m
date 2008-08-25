@@ -1,26 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/19/6
-Message-ID: <485A8B62.3050503@gentoo.org>
-Date: Thu, 19 Jun 2008 18:37:54 +0200
-From: Christian Hoffmann <hoffie@...too.org>
-To: oss-security@...ts.openwall.com
-CC: coley@...re.org
-Subject: CVE request: php 5.2.6 ext/imap buffer overflows
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/25/7
+Message-ID: <20080825165041.GZ451@linsec.ca>
+Date: Mon, 25 Aug 2008 10:50:41 -0600
+From: Vincent Danen <vdanen@...sec.ca>
+To: Tomas Hoger <thoger@...hat.com>
+Cc: oss-security@...ts.openwall.com, vendor-sec@....de
+Subject: Re: Re: libxml2 denial of service flaw (CVE-2008-3281)
 Content-Type: text/plain; charset=utf-8
 
-Heya,
+* [2008-08-25 18:11:36 +0200] Tomas Hoger wrote:
 
-php-5.2.6 uses old c-client API calls in ext/imap, which do not have any 
-bound checkings, as such it seems to be vulnerable to buffer overflow 
-problems. Can we get a CVE id for this issue please?
+>> Does anyone know if this affects anything other than librsvg?  If so,
+>> the patch approach to fixing libxml2 would be better.  I've just
+>> started looking into this today, so I'm not quite up to speed on
+>> this, but it looks like there are problems with the gnome menus as
+>> well.
+>
+>librsvg and strigi are known to be affected, according to the Debian
+>bug.  Rebuild against new libxml2 should do the trick, if that's the
+>way you can go.
 
-References:
-http://bugs.php.net/bug.php?id=42862
-http://bugs.php.net/bug.php?id=40925
-https://bugs.gentoo.org/show_bug.cgi?id=221969
+If nothing else may crop up later, then that would be acceptable, but I
+wouldn't want something to bite back later.
+
+>> Has anyone tried this new patch?
+>
+>Being tested now.
+
+Ok, nice.  I'll probably be grabbing the patches from your bugzilla as
+well to test myself since quite a few users are (rightfully so)
+complaining.
 
 -- 
-Christian Hoffmann
+Vincent Danen @ http://linsec.ca/
 
-
-Download attachment "signature.asc" of type "application/pgp-signature" (261 bytes)
+Content of type "application/pgp-signature" skipped
