@@ -1,19 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/18/3
-Message-ID: <962054141.542411227031599439.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 18 Nov 2008 13:06:39 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: coley@...re.org
-Subject: CVE Request (ssh)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/25/1
+Message-ID: <48B25AB3.3040000@redhat.com>
+Date: Mon, 25 Aug 2008 15:09:39 +0800
+From: Eugene Teo <eteo@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: coley@...re.org
+Subject: CVE request: kernel: sctp: fix potential panics in the SCTP-AUTH API
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
+This was committed in upstream kernel recently.
 
-So this has been out for a few days and I've not seen a CVE id for it yet:
-http://www.cpni.gov.uk/Docs/Vulnerability_Advisory_SSH.txt
+"[PATCH] sctp: fix potential panics in the SCTP-AUTH API.
 
-Thanks.
+All of the SCTP-AUTH socket options could cause a panic if the extension
+is disabled and the API is envoked.
 
+Additionally, there were some additional assumptions that certain
+pointers would always be valid which may not always be the case."
+
+Upstream commit:
+5e739d1752aca4e8f3e794d431503bfca3162df4
+
+References:
+http://marc.info/?l=linux-netdev&m=121928747903176&w=2
+http://lkml.org/lkml/2008/8/23/49
+
+Thanks, Eugene
 -- 
-    JB
+Eugene Teo / Red Hat Security Response Team
