@@ -1,48 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/31/6
-Message-ID: <Pine.GSO.4.51.0803311759500.16237@faron.mitre.org>
-Date: Mon, 31 Mar 2008 18:00:16 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/25/10
+Message-ID: <20080825183546.GE451@linsec.ca>
+Date: Mon, 25 Aug 2008 12:35:46 -0600
+From: Vincent Danen <vdanen@...sec.ca>
 To: oss-security@...ts.openwall.com
-cc: Thijs Kinkhorst <thijs@...ian.org>, Andrej Kacian <ticho@...too.org>, chris@...ishowells.co.uk
-Subject: Re: CVE request: policyd-weight insecure temporary file creation
+Subject: Re: Re: [vendor-sec] Re: Re: libxml2 denial of service flaw (CVE-2008-3281)
 Content-Type: text/plain; charset=utf-8
 
+* [2008-08-25 20:13:03 +0200] Florian Weimer wrote:
 
-Two separate CVEs - one for the original problem, one for the insufficient
-patch.
+>* Vincent Danen:
+>
+>> Does anyone know if this affects anything other than librsvg?
+>
+>It's unclear if struct xmlEntity (especially its external allocation) is
+>part of the public API or not.
+>
+>liferea 1.4.16b has this:
+>
+>  src/xml.c:                    entity = (xmlEntityPtr)g_new0 (xmlEntity, 1);
+>
+>PHP 5.2.6 has this:
+>
+>  ext/dom/dom_iterators.c:61:      ret = (xmlEntityPtr) xmlMalloc(sizeof(xmlEntity));
+>  ext/dom/dom_iterators.c:62:      memset(ret, 0, sizeof(xmlEntity));
+>
+>QT 4.4.0 has this (with an instructive comment in front of it):
+>
+>  src/3rdparty/webkit/WebCore/dom/XMLTokenizer.cpp:static xmlEntity sharedXHTMLEntity = {
+>
+>(This is not the result of an exhaustive search.)
 
-- Steve
+Thanks, Florian.  Looks like just recompiling librsvg may not be a good
+idea.
 
+-- 
+Vincent Danen @ http://linsec.ca/
 
-======================================================
-Name: CVE-2008-1569
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1569
-Reference: CONFIRM:http://www.policyd-weight.org/
-Reference: CONFIRM:https://bugs.gentoo.org/show_bug.cgi?id=214403
-Reference: DEBIAN:DSA-1531
-Reference: URL:http://www.debian.org/security/2008/dsa-1531
-Reference: BID:28480
-Reference: URL:http://www.securityfocus.com/bid/28480
-Reference: SECUNIA:29553
-Reference: URL:http://secunia.com/advisories/29553
-
-policyd-weight before 0.1.14 beta-16 allows local users to modify or
-delete arbitrary files via a symlink attack on temporary files that
-are used when creating a socket.
-
-
-======================================================
-Name: CVE-2008-1570
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1570
-Reference: CONFIRM:https://bugs.gentoo.org/show_bug.cgi?id=214403
-
-Race condition in the create_lockpath function in policyd-weight
-0.1.14 beta-16 allows local users to modify or delete arbitrary files
-by creating the LOCKPATH directory, then modifying it after the
-symbolic link check occurs.  NOTE: this is due to an incomplete fix
-for CVE-2008-1569.
-
-
+Content of type "application/pgp-signature" skipped
