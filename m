@@ -1,21 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/04/1
-Message-ID: <87wsegs6l1.fsf@mid.deneb.enyo.de>
-Date: Thu, 04 Dec 2008 09:11:22 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request (zaptel)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/25/4
+Message-Id: <1219670431.7715.24.camel@iankko.englab.brq.redhat.com>
+Date: Mon, 25 Aug 2008 15:20:31 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: coley@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: CVE Request (ruby)
 Content-Type: text/plain; charset=utf-8
 
-* Josh Bressers:
+Hello Steve,
 
-> I ran across this Debian bug:
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=507459
->
-> The upstream report is here:
-> http://bugs.digium.com/view.php?id=13954
->
-> As best as I can tell, it's for real.
+  Ruby upstream has announced another security flaw
+(DoS vulnerability in REXML module):
 
-Yes, we plan to release an update, once we find someone who can
-actually test the fix. 8-/
+http://www.ruby-lang.org/en/news/2008/08/23/dos-vulnerability-in-rexml/
+
+Test case available in part: "Impact".
+
+Proposed preliminary fix: http://www.ruby-lang.org/security/20080823rexml/rexml-expansion-fix.rb
+
+Testing status: REXML parsing of provided *.xml file causes
+                100% cpu usage for about 1 and 1/4 minutes
+                (checked the ruby-1.8.5-5.5 case).
+
+Could you please assign a CVE id for it?
+
+Thank you in advance.
+
+Kind regards
+Jan iankko Lieskovsky
+RH Security Response Team
+
+
+
+
