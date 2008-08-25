@@ -1,30 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/29/3
-Message-ID: <20080829232414.GR16514@genesis.frugalware.org>
-Date: Sat, 30 Aug 2008 01:24:14 +0200
-From: Miklos Vajna <vmiklos@...galware.org>
-To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: CVE request for bitlbee
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/25/6
+Message-ID: <20080825181136.6116bcf6@redhat.com>
+Date: Mon, 25 Aug 2008 18:11:36 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: vdanen@...sec.ca
+Cc: oss-security@...ts.openwall.com, vendor-sec@....de
+Subject: Re: Re: libxml2 denial of service flaw (CVE-2008-3281)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Mon, 25 Aug 2008 09:58:38 -0600 Vincent Danen <vdanen@...sec.ca>
+wrote:
 
-bitlbee-1.2.2 is released, and it comes with a NULL pointer dereference
-fix, which allows people to hijack accounts.
+> Does anyone know if this affects anything other than librsvg?  If so,
+> the patch approach to fixing libxml2 would be better.  I've just
+> started looking into this today, so I'm not quite up to speed on
+> this, but it looks like there are problems with the gnome menus as
+> well.
 
-More info:
+librsvg and strigi are known to be affected, according to the Debian
+bug.  Rebuild against new libxml2 should do the trick, if that's the
+way you can go.
 
-http://bitlbee.org/main.php/changelog.html
+> Has anyone tried this new patch?
 
-and
+Being tested now.
 
-http://code.bitlbee.org/hgweb/release?cmd=revision;revid=wilmer%40gaast.net-20080825204848-bzp7ye1i07bpnole
-
-Can I get a CVE id please?
-
-Thanks,
-
-Miklos
-
-Content of type "application/pgp-signature" skipped
+-- 
+Tomas Hoger / Red Hat Security Response Team
