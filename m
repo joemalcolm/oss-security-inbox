@@ -1,71 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/28/7
-Message-ID: <20081128225448.GD25910@ngolde.de>
-Date: Fri, 28 Nov 2008 23:54:48 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/25/2
+Message-Id: <200808251159.57055.rbu@gentoo.org>
+Date: Mon, 25 Aug 2008 11:59:49 +0200
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: 498243@...s.debian.org, xine-user@...ts.sourceforge.net, redpig@...rt.org
-Subject: Re: xine-lib and ocert-2008-008
+Cc: Pınar Yanardağ <pinar@...dus.org.tr>
+Subject: Pardus Bugs / Patches, Was: Re: CVE id request: vlc
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Steven M. Christey <coley@...us.mitre.org> [2008-11-26 09:27]:
-> ======================================================
-> Name: CVE-2008-5234
-> Status: Candidate
-> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5234
-> Reference: BUGTRAQ:20080822 [oCERT-2008-008] multiple heap overflows in xine-lib
-> Reference: URL:http://www.securityfocus.com/archive/1/archive/1/495674/100/0/threaded
-> Reference: MISC:http://www.ocert.org/analysis/2008-008/analysis.txt
-> Reference: CONFIRM:http://sourceforge.net/project/shownotes.php?release_id=619869
-> Reference: BID:30797
-> Reference: URL:http://www.securityfocus.com/bid/30797
-> Reference: FRSIRT:ADV-2008-2382
-> Reference: URL:http://www.frsirt.com/english/advisories/2008/2382
-> Reference: SECTRACK:1020703
-> Reference: URL:http://securitytracker.com/id?1020703
-> Reference: SECUNIA:31502
-> Reference: URL:http://secunia.com/advisories/31502
-> 
-> Multiple heap-based buffer overflows in xine-lib 1.1.12, and other
-> versions before 1.1.15, allow remote attackers to execute arbitrary
-> code via vectors related to (1) a crafted metadata atom size processed
-> by the parse_moov_atom function in demux_qt.c and (2) frame reading in
-> the id3v23_interp_frame function in id3.c.  NOTE: as of 20081122, it is
-> possible that vector 1 has not been fixed in 1.1.15.
-> 
-[...] 
-> ======================================================
-> Name: CVE-2008-5246
-> Status: Candidate
-> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5246
-> Reference: CONFIRM:http://sourceforge.net/project/shownotes.php?release_id=619869
-> Reference: FRSIRT:ADV-2008-2382
-> Reference: URL:http://www.frsirt.com/english/advisories/2008/2382
-> Reference: SECTRACK:1020703
-> Reference: URL:http://securitytracker.com/id?1020703
-> 
-> Multiple heap-based buffer overflows in xine-lib before 1.1.15 allow
-> remote attackers to execute arbitrary code via vectors that send ID3
-> data to the (1) id3v22_interp_frame and (2) id3v24_interp_frame
-> functions in src/demuxers/id3.c.  NOTE: the provenance of this
-> information is unknown; the details are obtained solely from third
-> party information.
+On Sunday 24 August 2008, Pınar Yanardağ wrote:
+> Nico Golde wrote On 24-08-2008 13:10:
+> > Hi,
+> >
+> > * Pinar Yanarda<pinar@...dus.org.tr>  [2008-08-24 11:23]:
+> >> Nico Golde wrote On 24-08-2008 03:13:
+> >>> Hi,
+> >>> there seems to be a buffer overflow in videolans mms
+> >>> handling:
+> >>> http://www.orange-bat.com/adv/2008/adv.08.24.txt
+> >>
+> >> Btw, a vendor patch has been released:
+> >> http://mailman.videolan.org/pipermail/vlc-devel/2008-August/048488
+> >>.html
+> >
+> > Wow that was fast, 4 hours after I notified them of the
+> > problem.
+> > Looks correct to me. Anyone else had a look at the patch?
+>
+> I was having some trouble to apply this patch but they updated it a
+> couple of hours ago, which works fine now.
 
-Isn't the second part of CVE-2008-5234 the same like 
-CVE-2008-5246? About CVE-2008-5246 and the provenance of 
-this information, I can hereby confirm this.
-See http://hg.debian.org/hg/xine-lib/xine-lib?cmd=changeset;node=268c1c1639d7;style=gitweb
+Hey Pınar,
 
-the length is user supplied + 1 used to allocate a buffer 
-which is used for a read call later -> typical heap 
-overflow.
+I noticed Pardus is not yet listed on the 'How to steal hard work and 
+patches from others' page, aka:
+  http://oss-security.openwall.org/wiki/distro-patches
 
-Cheers
-Nico
-> 
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+If you host your patches somewhere, please add a pointer there.
+Also, are you managing security bugs with Bugzilla, or somewhere else 
+where one can look up the status of an issue?
 
-Content of type "application/pgp-signature" skipped
+Thanks,
+Robert
+
+Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
