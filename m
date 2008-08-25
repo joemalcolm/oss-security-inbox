@@ -1,25 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/30/1
-Message-ID: <20081230153827.GA2569@ngolde.de>
-Date: Tue, 30 Dec 2008 16:38:27 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/25/9
+Message-ID: <48B2F4CB.5040106@pardus.org.tr>
+Date: Mon, 25 Aug 2008 21:07:07 +0300
+From: Pınar Yanardağ <pinar@...dus.org.tr>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: audiofile
+CC: Robert Buchholz <rbu@...too.org>
+Subject: Re: Pardus Bugs / Patches, Was: Re: CVE id request: vlc
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Robert Buchholz wrote On 25-08-2008 12:59:
+> Hey Pınar,
+>
+> I noticed Pardus is not yet listed on the 'How to steal hard work and
+> patches from others' page, aka:
+>    http://oss-security.openwall.org/wiki/distro-patches
+>
+> If you host your patches somewhere, please add a pointer there.
+>    
 
-there is a heap-based buffer overflow in libaudiofile in WAV 
-processing that was reported through the Debian BTS:
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=510205
 
+Hi Robert,
 
-Steve, can you assign a CVE id to this?
+I added where to find our source packages and a workflow. Thanks for the 
+suggestion.
 
-Cheers
-Nico
+> Also, are you managing security bugs with Bugzilla, or somewhere else
+> where one can look up the status of an issue?
+>    
+
+We have been discussing security issues on a private e-mail list, but 
+from now on we'll manage security bugs with Bugzilla [1].
+
+[1]: http://bugs.pardus.org.tr/query.cgi (Pardus-Security component)
+
+Cheers,
+
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+Pınar Yanardağ
+http://pinguar.org
 
-Content of type "application/pgp-signature" skipped
+
