@@ -1,38 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/16/4
-Message-ID: <20080516175325.GB381@linsec.ca>
-Date: Fri, 16 May 2008 11:53:25 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/25/5
+Message-ID: <20080825155838.GY451@linsec.ca>
+Date: Mon, 25 Aug 2008 09:58:38 -0600
 From: Vincent Danen <vdanen@...sec.ca>
-To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSH key blacklisting
+To: oss-security@...ts.openwall.com, vendor-sec@....de
+Subject: Re: Re: libxml2 denial of service flaw (CVE-2008-3281)
 Content-Type: text/plain; charset=utf-8
 
-* [2008-05-16 21:18:54 +0400] Solar Designer wrote:
+* [2008-08-24 17:16:55 +0200] Nico Golde wrote:
 
->Are any other distros, besides Debian, Ubuntu, and derived ones, going
->to implement key blacklisting in OpenSSH - or are considering it?
+>Hi again,
+>* Nico Golde <oss-security+ml@...lde.de> [2008-08-24 17:07]:
+>> * Robert Buchholz <rbu@...too.org> [2008-08-23 18:06]:
+>> > On Wednesday 20 August 2008, Daniel Veillard wrote:
+>> > > On Wed, Aug 20, 2008 at 12:42:29PM -0400, Josh Bressers wrote:
+>[...] 
+>> > Our gnome maintainers pointed out that the patch (which was also pushed 
+>> > upstream) breaks GDM in GNOME 2.22, as can be seen in Gentoo and 
+>> > Mandriva:
+>> >   https://bugs.gentoo.org/show_bug.cgi?id=235529
+>> >   https://qa.mandriva.com/show_bug.cgi?id=43094
+>> > 
+>> > upstream bug:
+>> >   http://bugzilla.gnome.org/show_bug.cgi?id=549087
+>> > 
+>> > Those who did not push updates yet might want to delay this, we have 
+>> > been reverting the patch for now.
+>> > I am CC'ing oss-security, please send follow-ups to that list.
+>> 
+>> Looks like rebuilding librsvg against libxml2 does solve the 
+>> problem referring to our bug report:
+>> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=496125#79
 >
->We are considering it for Openwall GNU/*/Linux, and if our effort would
->be reused by others, or if others join us in developing and/or testing
->the patch, this would be a reason for us to go for it.
->
->I don't think we'll take the Debian/Ubuntu patch as-is.  Rather, we are
->likely to use a trivial binary encoding/compression method for the
->partial fingerprints.  We'd also use smaller partial fingerprints.  With
->the approach I have in mind, it'd take around 4.55 bytes per key to
->store 48-bit partial fingerprints, bringing the installed file size for
->3 arch types and 2 key types/sizes in under 1 MB (or just over 1 MB for
->3 key types/sizes).
+>YFYI there is a new patch which is not extending the 
+>xmlEntity struct but abusing an already existing field.
+>See https://bugzilla.redhat.com/show_bug.cgi?id=459830
 
-We (Mandriva) have kinda sat back to see what other vendors are going to
-do.  A few people have asked us to incorporate the Ubuntu patch, but the
-stance I've taken so far is that if upstream openssh is going to do it,
-then we will too.  Otherwise I don't think we will, unless a number of
-other vendors are going to do so.
+Does anyone know if this affects anything other than librsvg?  If so,
+the patch approach to fixing libxml2 would be better.  I've just started
+looking into this today, so I'm not quite up to speed on this, but it
+looks like there are problems with the gnome menus as well.
 
-We did send an announcement with more info to our security-announce
-mailing list to give our users a head's up, but didn't think we needed
-to push this on our users since very few will likely be affected.
+Has anyone tried this new patch?
 
 -- 
 Vincent Danen @ http://linsec.ca/
