@@ -1,36 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/07/1
-Message-ID: <20081107182526.31135a20@redhat.com>
-Date: Fri, 7 Nov 2008 18:25:26 +0100
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/25/8
+Message-ID: <8763pp7ykw.fsf@mid.deneb.enyo.de>
+Date: Mon, 25 Aug 2008 20:13:03 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Cc: thomas@...e.de
-Subject: Re: CVE request: libcdaudio
+Subject: Re: [vendor-sec] Re: Re: libxml2 denial of service flaw (CVE-2008-3281)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 5 Nov 2008 09:07:23 +0100 Thomas Biege <thomas@...e.de> wrote:
+* Vincent Danen:
 
-> we need a CVE-ID for a buffer overflow in libcdaudio.
-> It is a remotely exploitable heap-based buffer overflow.
+> Does anyone know if this affects anything other than librsvg?
 
-If you have been using libcdaudio packages based on ATrpms / Fedora,
-you may have libcdaudio-0.99.12-buffovfl.patch, which addresses the
-same issue, it only mallocs more instead of fgetsing less.
+It's unclear if struct xmlEntity (especially its external allocation) is
+part of the public API or not.
 
-http://cvs.fedoraproject.org/viewvc/rpms/libcdaudio/devel/libcdaudio-0.99.12-buffovfl.patch
+liferea 1.4.16b has this:
 
-This issue does not seem to affect CDDB code used by grip/gnome-vfs2,
-which may have common origin and previously had some flaws identical to
-libcdaudio (see below).
+  src/xml.c:                    entity = (xmlEntityPtr)g_new0 (xmlEntity, 1);
 
-Additionally, if you are shipping libcdaudio, you may be interested in
-patch for CVE-2005-0706 used by Gentoo:
+PHP 5.2.6 has this:
 
-http://sources.gentoo.org/viewcvs.py/gentoo-x86/media-libs/libcdaudio/files/libcdaudio-0.99-CAN-2005-0706.patch
+  ext/dom/dom_iterators.c:61:      ret = (xmlEntityPtr) xmlMalloc(sizeof(xmlEntity));
+  ext/dom/dom_iterators.c:62:      memset(ret, 0, sizeof(xmlEntity));
 
-According to the libcdaudio home page, upstream seems to be aware of
-this issue, as they acknowledge having security issues and even link to
-old Gentoo GLSA.
+QT 4.4.0 has this (with an instructive comment in front of it):
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+  src/3rdparty/webkit/WebCore/dom/XMLTokenizer.cpp:static xmlEntity sharedXHTMLEntity = {
+
+(This is not the result of an exhaustive search.)
