@@ -1,64 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/19/11
-Message-id: <1203441240.14722.TMDA@linsec.ca>
-Date: Tue, 19 Feb 2008 10:12:38 -0700
-From: Vincent Danen <vdanen@...sec.ca>
-To: oss-security@...ts.openwall.com
-Subject: Re: list archive
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/26/10
+Message-Id: <1219769601.9043.6.camel@dhcp-lab-164.englab.brq.redhat.com>
+Date: Tue, 26 Aug 2008 18:53:21 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: coley@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE Request (gpicview)
 Content-Type: text/plain; charset=utf-8
 
-* [2008-02-19 01:32:36 +0300] Solar Designer wrote:
+Hello Steve,
 
->> >The archive of this mailing list is now public on the web:
->> >
->> >http://www.openwall.com/lists/oss-security/
->...
->
->On Sun, Feb 17, 2008 at 09:17:04PM -0700, Vincent Danen wrote:
->> Have you requested any other 3rd-party archiving sites to archive the
->> list too?
->
->Not yet.
->
->I was thinking that we should get started first, with the list and the
->wiki wide open like they are now, then decide on how we want to tighten
->things up and do it, and only after that try to gain greater exposure.
+  On Tue, 2008-08-26 at 10:19 -0400, Steven M. Christey wrote:
+> Jan,
+> 
+> Are there common usage scenarios under which gpicview would receive the
+> filename to create from some external source, say, as a web browser
+> plugin?
+> 
+> I'm asking because the missing "ask_before_save" issues only seem like
+> non-security bugs - the user messing him/herself up - unless the target
+> file can be influenced by an external attacker.
 
-Fair enough, makes sense.
+I can't see any possibility, how the last two issues could be used by
+an external attacker to destroy the targeted user image files 
+(when not considering the attack possible via CVE-2008-3791).
 
->> The reason I ask is that the archive there isn't the friendliest in
->> terms of easily scanning or viewing messages (like a mhonarc-based
->> archive or MARC or something).
->
->Yes, I am sorry about that.  This is my "blists" software that got stuck
->in an early development stage (no time), with many desirable features
->yet to be implemented.  It works off indexed mbox files, in case you're
->curious - just two files per mailing list (the mbox and its index).
+> 
+> > http://sourceforge.net/tracker/index.php?func=detail&aid=2019481&group_id=180858&atid=894869
+> >
+> > Possible symlink attack via the temporary created "/tmp/rot.jpg"
+> > file used for image rotation.
+> 
+> Use CVE-2008-3791
+> 
+> > 2, http://sourceforge.net/tracker/index.php?func=detail&aid=2019485&group_id=180858&atid=894869
+> > 3, > http://sourceforge.net/tracker/index.php?func=detail&aid=2019492&group_id=180858&atid=894869
 
-Ahhh... ok, gotchya.  It's not bad, you just need to hunt around a lot
-to get anything useful out of it.
+> These two might need a second CVE depending on the influence over the file
+> that "ask_before_save" would ask about.
 
->This list should definitely be submitted to Gmane and MARC, maybe to
->some others as well.  I am just not sure whether it's time to do that.
+These two rather normal bugs, than a security issues. 
 
-Ok.
+Thank you for checking!
 
->> Just curious if anyone has done so or if I should go ahead and do it.
->
->I think I am the one to do it since I will need to provide the mbox
->with past messages - and I am willing to do it if/when the most active
->list members (including you) request that.  Just have in mind that this
->might result in us having to turn on subscription and/or message
->moderation and disallow wiki editing by new users a bit earlier.
+Regards
+Jan iankko Lieskovsky
+RH Security Response Team
 
-Ok.  So leave things open for the time being so we don't hassle the
-folks that should be here from the get-go, then clamp down on things
-later (in a few weeks?) and send in the requests?
-
-I think when we "open the doors" more, we should disallow wiki editing
-for new users and moderate who gets to edit, etc.
-
--- 
-Vincent Danen @ http://linsec.ca/
-
-Content of type "application/pgp-signature" skipped
