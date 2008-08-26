@@ -1,37 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/25/7
-Message-ID: <20080825165041.GZ451@linsec.ca>
-Date: Mon, 25 Aug 2008 10:50:41 -0600
-From: Vincent Danen <vdanen@...sec.ca>
-To: Tomas Hoger <thoger@...hat.com>
-Cc: oss-security@...ts.openwall.com, vendor-sec@....de
-Subject: Re: Re: libxml2 denial of service flaw (CVE-2008-3281)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/26/2
+Message-Id: <1219742248.3367.20.camel@dhcp-lab-164.englab.brq.redhat.com>
+Date: Tue, 26 Aug 2008 11:17:28 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: coley@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: CVE Request (samba)
 Content-Type: text/plain; charset=utf-8
 
-* [2008-08-25 18:11:36 +0200] Tomas Hoger wrote:
+Hello Steve,
 
->> Does anyone know if this affects anything other than librsvg?  If so,
->> the patch approach to fixing libxml2 would be better.  I've just
->> started looking into this today, so I'm not quite up to speed on
->> this, but it looks like there are problems with the gnome menus as
->> well.
->
->librsvg and strigi are known to be affected, according to the Debian
->bug.  Rebuild against new libxml2 should do the trick, if that's the
->way you can go.
+  Sascha Herrmann has noticed a file access permissions 
+change, present by one of the critical TBD files,
+shipped within the Samba product (group_mapping.{tdb,ldb},
+mask changed from 0600 to 0666). As this file is of 
+critical importance for proper function of the Samba tool,
+it should not allow read and write access for the group
+and for others. 
 
-If nothing else may crop up later, then that would be acceptable, but I
-wouldn't want something to bite back later.
+Affected Samba versions: 3.2.0-* +
+========================
 
->> Has anyone tried this new patch?
->
->Being tested now.
+Current behavior: (samba-3.2.0-2.17)
+====================================
 
-Ok, nice.  I'll probably be grabbing the patches from your bugzilla as
-well to test myself since quite a few users are (rightfully so)
-complaining.
+# ls -l group_mapping.ldb
+-rw-rw-rw- 1 root root 77824 2008-08-25 10:56 group_mapping.ldb
 
--- 
-Vincent Danen @ http://linsec.ca/
+Expected behavior (present in all prior Samba versions): 
+========================================================
 
-Content of type "application/pgp-signature" skipped
+# ls -l /var/lib/samba/group_mapping.tdb
+-rw------- 1 root root 4096 2008-08-25 11:21 /var/lib/samba/group_mapping.tdb
+
+Public mention of this report: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=496073
+=============================
+
+For the reference and explanation of meaning of Samba *.TBD files, please see:
+==============================================================================
+
+http://wiki.samba.org/index.php/Frequently_Asked_Questions
+http://www.samba.org/samba/docs/man/Samba-HOWTO-Collection/msdfs.html
+
+Could you please allocate a CVE id for this issue?
+
+Thank you in advance.
+
+Kind regards
+Jan iankko Lieskovsky
+RH Security Response Team
+
