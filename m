@@ -1,62 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/16/3
-Message-ID: <cfec5fb80810160940i4fb752c3veb14d573be35b417@mail.gmail.com>
-Date: Thu, 16 Oct 2008 12:40:46 -0400
-From: "John Dong" <jdong@...ntu.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com, "Jamie Strandboge" <jamie@...onical.com>
-Subject: Re: CVE request: jhead
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/26/3
+Message-ID: <Pine.GSO.4.51.0808261009100.18466@faron.mitre.org>
+Date: Tue, 26 Aug 2008 10:09:27 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+cc: coley@...re.org
+Subject: Re: CVE Request (samba)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Oct 15, 2008 at 2:28 PM, Steven M. Christey
-<coley@...us.mitre.org>wrote:
 
+On Tue, 26 Aug 2008, Jan Lieskovsky wrote:
+
+> -rw-rw-rw- 1 root root 77824 2008-08-25 10:56 group_mapping.ldb
 >
-> On Wed, 15 Oct 2008, Jamie Strandboge wrote:
->
-> > CC'ing John, as he is who found the majority of the issues and
-> > coordinated with upstream.
->
-> So the jhead changelog only acknowledges "potential string overflows".
->
-> John's comment in bug 271020 alludes to various other types of issues, but
-> specifics are unknown.  And there are some references to other overflows
-> that may or may not have been fixed by upstream.
->
-> So, we'd need multiple CVEs, but how many is unclear.
->
-> 1 - long -cmd
-> 2 - unsafe temp file creation
-> 3 - "more unchecked buffers" and "unsafe buffer sized strcat's in
->    ModifyDescriptComment"  [this assumes that upstream only fixed
->    issue 1)
-> 4 - shell escapes
->
->
-> Without knowing what exactly is being reported and fixed, it's pretty
-> difficult to assign CVEs, especially with phrases like "more unchecked
-> buffers" that could apply to anything.
+> Public mention of this report: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=496073
+> =============================
 
+Use CVE-2008-3789, to be filled in later.
 
-Hi Steven,
-
-Sorry for the delay. I just had a chance to look over the diff of the new
-2.84 release. I see that the long cmd and all the unchecked buffers I found
-were resolved by use of length-checked strcat functions. In addition, unsafe
-tempfile creation was fixed by checking for existence of existing filenames,
-trying a larger variety of filenames, and erroring out if there is not an
-empty filename. However, this fix doesn't seem complete for DoCommand where
-you can trick it to unlink() a file by the name of the input file mangled
-with the last char of "z" instead of "t" or vice versa.
-
-The shell escape potential for DoCommand, as far as I can tell, is also not
-resolved.
-
-So, bottom line is I think 2.84 fixes 1 and 3 acceptably, while 2 and 4 are
-still unresolved.
-
-
-
-
-John
-
+- Steve
