@@ -1,71 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/28/2
-Message-ID: <87eizsa94r.fsf@mid.deneb.enyo.de>
-Date: Sun, 28 Dec 2008 11:26:12 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/26/9
+Message-ID: <48B4207C.80802@redhat.com>
+Date: Tue, 26 Aug 2008 23:25:48 +0800
+From: Eugene Teo <eteo@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: Re:  Re: CVE Request - roundcubemail
+Subject: CVE-2008-3526 Linux kernel sctp_setsockopt_auth_key() integer overflow
 Content-Type: text/plain; charset=utf-8
 
-* Steven M. Christey:
+An integer overflow flaw was found in the Linux kernel
+sctp_setsockopt_auth_key() function. The structure used for
+SCTP_AUTH_KEY option contains a length that needs to be verified to
+prevent integer overflow conditions.
 
-> On Wed, 17 Dec 2008, Florian Weimer wrote:
->
->> > I bet there's a chunk of these in various applications.  I believe Perl
->> > has similar functionality.
->>
->> Not quite, the s///e operator uses a compile-time transformation for
->> the replacement expression, so it shouldn't be affected by this very
->> issue.
->>
->> \Q \E pairs are an issue in the pattern, not the replacement.
->> Mistakes in this area increase the attack surface by exposing the
->> regular expression compiler to potentially hostile input, and it may
->> lead to denial-of-service vulnerabilities because some implementations
->> do not cope well with certain patterns.  Perhaps CWE-624 should be
->> split to reflect this?
->
-> We'll take a closer look at it.
+This affects kernel versions since 2.6.24-rc1. The proposed upstream
+commit is: 30c2235cbc477d4629983d440cdc4f496fec9246. Note that the
+SCTP-AUTH extension is now disabled by default since last week with
+upstream commit 5e739d17.
 
-Thanks!
+I have allocated this CVE-2008-3526.
 
-> I'm not exactly sure what you're saying here, though.  Do you mean that if
-> attackers can insert a \Q or \E into the pattern, then they might be able
-> to effectively modify the pattern in unexpected ways?
-
-What I'm trying to say is: The PHP way of implementing
-preg_replace("/$pattern/e", $expr, $subject) is something like this:
-
-  my @captures = $subject =~ /$pattern/;
-  if (@captures) {
-    $expr =~ s/\$(\d+)/quotemeta($captures[$1])/ge; # expand captures
-    $result = eval "$expr"; # run code
-  } else {
-    $result = $subject;
-  }
-
-This means that capture contents can leak into $expr and be executed.
-
-Perl translates 
-
-  $subject =~ s/$pattern/$expr/e;
-
-to:
-
-  BEGIN {
-    eval "sub regexp001 {
-      \$0 = \$_[0];
-      \$1 = \$_[1];
-      ... # number of assignments depends on \$expr
-      $expr;
-    }";
-  }
-
-  if ($subject =~ /$pattern/) {
-    substr $subject, $-[0], $+[0] - $-[0], regexp001($1, $2, ...);
-  }
-
-Or something like that.  I can't find it in the source code, but it's
-possible to reveal that the replacement expression is compiled early
-by putting a BEGIN block into the replacement expression.
+Thanks, Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
