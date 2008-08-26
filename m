@@ -1,32 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/26/7
-Message-ID: <Pine.GSO.4.51.0808261039520.18466@faron.mitre.org>
-Date: Tue, 26 Aug 2008 10:39:58 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/26/6
+Message-ID: <Pine.GSO.4.51.0808261025270.18466@faron.mitre.org>
+Date: Tue, 26 Aug 2008 10:26:33 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Nico Golde <oss-security+ml@...lde.de>
-cc: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: vlc
+To: oss-security@...ts.openwall.com
+cc: coley@...re.org
+Subject: Re: CVE request: kernel: sctp: fix potential panics in the SCTP-AUTH API
 Content-Type: text/plain; charset=utf-8
 
 
-======================================================
-Name: CVE-2008-3794
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3794
-Reference: MILW0RM:6293
-Reference: URL:http://www.milw0rm.com/exploits/6293
-Reference: MLIST:[oss-security] 20080824 Re: CVE id request: vlc
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/08/24/3
-Reference: MLIST:[vlc-devel] 20080824 commit: MMS integers handling fixes, including buffer overflow ( R�mi Denis-Courmont )
-Reference: URL:http://mailman.videolan.org/pipermail/vlc-devel/2008-August/048488.html
-Reference: MISC:http://www.orange-bat.com/adv/2008/adv.08.24.txt
-Reference: BID:30806
-Reference: URL:http://www.securityfocus.com/bid/30806
+On Mon, 25 Aug 2008, Eugene Teo wrote:
 
-Integer signedness error in the mms_ReceiveCommand function in
-modules/access/mms/mmstu.c in VLC Media Player 0.8.6i allows remote
-attackers to execute arbitrary code via a crafted mmst link with a
-negative size value, which bypasses a size check and triggers an
-integer overflow followed by a stack-based buffer overflow.
+> "[PATCH] sctp: fix potential panics in the SCTP-AUTH API.
+>
+> All of the SCTP-AUTH socket options could cause a panic if the extension
+> is disabled and the API is envoked.
 
+Use CVE-2008-3792, to be filled in later.
 
+> Additionally, there were some additional assumptions that certain
+> pointers would always be valid which may not always be the case."
+
+Use CVE-2008-3793, to be filled in later.  I'm assuming that when
+SCTP-AUTH is enabled, that these APIs are reachable from unprivileged
+users?
+
+- Steve
