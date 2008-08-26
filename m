@@ -1,70 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/30/6
-Message-ID: <20080630211012.GD11562@severus.strandboge.com>
-Date: Mon, 30 Jun 2008 17:10:12 -0400
-From: Jamie Strandboge <jamie@...onical.com>
-To: Robert Buchholz <rbu@...too.org>
-Cc: vendor-sec@....de, oss-security@...ts.openwall.com
-Subject: Re: [vendor-sec] Re: patch sets for recent ruby vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/26/7
+Message-ID: <Pine.GSO.4.51.0808261039520.18466@faron.mitre.org>
+Date: Tue, 26 Aug 2008 10:39:58 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Nico Golde <oss-security+ml@...lde.de>
+cc: oss-security@...ts.openwall.com
+Subject: Re: CVE id request: vlc
 Content-Type: text/plain; charset=utf-8
 
-On Sun, 29 Jun 2008, Robert Buchholz wrote:
 
-> On Thursday 26 June 2008, Jamie Strandboge wrote:
-> > ----- Forwarded message from Shugo Maeda <security@...y-lang.org>
-> > -----
-> >
-> > Date: Thu, 26 Jun 2008 12:16:52 +0900
-> > From: Shugo Maeda <security@...y-lang.org>
-> > To: Jamie Strandboge <jamie@...onical.com>
-> > Cc: security@...ntu.com
-> > Subject: Re: patch sets for recent ruby vulnerabilities
-> >
-> > Hello,
-> >
-> > 2008/6/25 Jamie Strandboge <jamie@...onical.com>:
-> > >> ------------------------------------------------------------------
-> > >>------ r17530 | nobu | 2008-06-22 07:16:45 +0900 (Sun, 22 Jun 2008)
-> > >> | 2 lines Changed paths:
-> > >>    M /branches/ruby_1_8/ChangeLog
-> > >>    M /branches/ruby_1_8/string.c
-> > >>
-> > >> * string.c (str_buf_cat): check for self concatenation.
-> > >
-> > > Without having dived into the code yet, is this the fix for the
-> > > regressions with rails and others?
-> >
-> > No, it's not.
-> > The following commit may be the cause of the problems with Rails.
-> >
-> > ---------------------------------------------------------------------
-> >--- r15856 | matz | 2008-03-30 00:47:54 +0900 (Sun, 30 Mar 2008) | 2
-> > lines Changed paths:
-> >    M /branches/ruby_1_8/ChangeLog
-> >    M /branches/ruby_1_8/class.c
-> >
-> > * class.c (clone_method): should copy cref as well.
-> >   [ruby-core:15833]
-> 
-> 
-> Thanks for the info, one of our Ruby maintainers confirmed that 
-> reverting this patch lets the test suite run through without errors.
-> Did your email contact with Ruby folks yield an information whether they 
-> plan to fix it for the 1.8 branch, or do they rely on distributions to 
-> ship reverts of the commit if they care about older Rails?
-> 
-They did not say, however, this patch is not part of the security
-patchsets as detailed by Drew Yao or upstream Ruby, so we ommitted it.
+======================================================
+Name: CVE-2008-3794
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3794
+Reference: MILW0RM:6293
+Reference: URL:http://www.milw0rm.com/exploits/6293
+Reference: MLIST:[oss-security] 20080824 Re: CVE id request: vlc
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/08/24/3
+Reference: MLIST:[vlc-devel] 20080824 commit: MMS integers handling fixes, including buffer overflow ( R�mi Denis-Courmont )
+Reference: URL:http://mailman.videolan.org/pipermail/vlc-devel/2008-August/048488.html
+Reference: MISC:http://www.orange-bat.com/adv/2008/adv.08.24.txt
+Reference: BID:30806
+Reference: URL:http://www.securityfocus.com/bid/30806
 
-> Also, there was a similar thread on oss-security, you posting the 
-> information there would probably be appreciated.
-> 
-Ah yes, meant to do that. Done.
+Integer signedness error in the mms_ReceiveCommand function in
+modules/access/mms/mmstu.c in VLC Media Player 0.8.6i allows remote
+attackers to execute arbitrary code via a crafted mmst link with a
+negative size value, which bypasses a size check and triggers an
+integer overflow followed by a stack-based buffer overflow.
 
-Jamie
 
--- 
-Ubuntu Security Engineer     | http://www.ubuntu.com/
-Canonical Ltd.               | http://www.canonical.com/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (190 bytes)
