@@ -1,36 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/18/14
-Message-ID: <47B9F281.3030304@freethemallocs.com>
-Date: Mon, 18 Feb 2008 12:02:57 -0900
-From: Jonathan Smith <smithj@...ethemallocs.com>
-To: oss-security@...ts.openwall.com
-CC: Josh Bressers <bressers@...hat.com>
-Subject: charter
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/26/4
+Message-ID: <Pine.GSO.4.51.0808261011480.18466@faron.mitre.org>
+Date: Tue, 26 Aug 2008 10:12:05 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com, oss-security@...ts.openwall.com
+cc: coley@...re.org
+Subject: Re: CVE Request (ruby)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-Josh Bressers wrote:
-| I just added my current working draft charter:
-| http://oss-security.openwall.org/wiki/mailinglists/oss-security/charter
+On Mon, 25 Aug 2008, Jan Lieskovsky wrote:
 
-Good work, thanks :)
+>   Ruby upstream has announced another security flaw
+> (DoS vulnerability in REXML module):
+>
+> http://www.ruby-lang.org/en/news/2008/08/23/dos-vulnerability-in-rexml/
 
-What do you mean by "Please don't send working vulnerabilities"?
+Use CVE-2008-3790, to be filled in later.
 
-I'd append "for non-public issues, please contact vendor-sec" to "Public
-security issues only please"
-
-"Advisories are welcome"? I thought we decided that this was
-discussion-only?
-
-	smithj
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.8 (GNU/Linux)
-
-iEYEARECAAYFAke58oEACgkQCG91qXPaRembsACdGQsfObTtOOwvkCaWHWIbSV/D
-LnUAniJSv1EtaRHxx5fj3yCgIDtmXm6G
-=xw/l
------END PGP SIGNATURE-----
+- Steve
