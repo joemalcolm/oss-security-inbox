@@ -1,33 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/03/3
-Message-ID: <Pine.GSO.4.51.0812031153290.15404@faron.mitre.org>
-Date: Wed, 3 Dec 2008 11:54:18 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/26/1
+Message-ID: <48B3C2CB.50405@pardus.org.tr>
+Date: Tue, 26 Aug 2008 11:46:03 +0300
+From: Pınar Yanardağ <pinar@...dus.org.tr>
 To: oss-security@...ts.openwall.com
-cc: coley@...us.mitre.org
-Subject: Re: CVE request: clamav 0.94.2
+Subject: Re: CVE Request (ruby)
 Content-Type: text/plain; charset=utf-8
 
+Jan Lieskovsky wrote On 25-08-2008 16:20:
+> Hello Steve,
+>
+>    Ruby upstream has announced another security flaw
+> (DoS vulnerability in REXML module):
+>
+> http://www.ruby-lang.org/en/news/2008/08/23/dos-vulnerability-in-rexml/
+>
+> Test case available in part: "Impact".
+>
+> Proposed preliminary fix: http://www.ruby-lang.org/security/20080823rexml/rexml-expansion-fix.rb
+>    
 
-Note that we try to avoid the term "stack overflow" since it's often used
-for buffer overflows.
 
-- Steve
+There is an ongoing discussion on comp.lang.ruby about announcing this 
+flaw more focused on Rails more than Ruby. [1] I am agree the majority 
+of vulnerable apps are Rails' but there is still no update for Ruby's 
+standart library in 3 days, though.
 
-======================================================
-Name: CVE-2008-5314
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5314
-Reference: MLIST:[clamav-announce] 20081126 announcing ClamAV 0.94.2
-Reference: URL:http://lurker.clamav.net/message/20081126.150241.55b1e092.en.html
-Reference: MLIST:[oss-security] 20081201 CVE request: clamav 0.94.2
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/12/01/8
-Reference: CONFIRM:https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1266
+[1]: 
+http://groups.google.com/group/comp.lang.ruby/browse_thread/thread/19f69e8a081fc0d1/e138e014b74352ca?#e138e014b74352ca
 
-Stack consumption vulnerability in libclamav/special.c in ClamAV
-before 0.94.2 allows remote attackers to cause a denial of service
-(daemon crash) via a crafted JPEG file, related to the
-cli_check_jpeg_exploit, jpeg_check_photoshop, and
-jpeg_check_photoshop_8bim functions.
+> Testing status: REXML parsing of provided *.xml file causes
+>                  100% cpu usage for about 1 and 1/4 minutes
+>                  (checked the ruby-1.8.5-5.5 case).
+>
+> Could you please assign a CVE id for it?
+>
+> Thank you in advance.
+>
+> Kind regards
+> Jan iankko Lieskovsky
+> RH Security Response Team
+>
+>    
 
+Regards,
+
+-- 
+Pınar Yanardağ
+http://pinguar.org
 
