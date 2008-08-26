@@ -1,28 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/25/4
-Message-ID: <20081125185236.5868de90@redhat.com>
-Date: Tue, 25 Nov 2008 18:52:36 +0100
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/26/5
+Message-ID: <Pine.GSO.4.51.0808261015310.18466@faron.mitre.org>
+Date: Tue, 26 Aug 2008 10:19:17 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: rea-sec@...elabs.ru, "Steven M. Christey" <coley@...re.org>, Michael Sweet <mike@...ysw.com>
-Subject: Re: CVE request: cups - potential integer overflow in PNG image reader [was: CUPS DoS via RSS subscriptions]
+cc: coley@...re.org
+Subject: Re: CVE Request (gpicview)
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 25 Nov 2008 15:38:30 +0300 Eygene Ryabinkin
-<rea-sec@...elabs.ru> wrote:
 
-> > Advisory: http://www.cups.org/str.php?L2974
-> > Patch: http://www.cups.org/strfiles/2974/str2974.patch
-> 
-> Hmm, my brains aren't in a perfect shape today, so I could be missing
-> some important point, but I don't understand how swapping 'xsize' and
-> 'ysize' can help to fix anything.  IIRC, the order of multiplication
-> isn't guaranteed and multiplication is commutative, so 'xsize' and
-> 'ysize' both are equally good or bad and one can not prefer either.
+Jan,
 
-The bug suggests that xsize and ysize values use different upper
-bounds.  So ysize * 3 can overflow (upper bound 2^31-1), while xsize * 3
-can't (2^27-1).
+Are there common usage scenarios under which gpicview would receive the
+filename to create from some external source, say, as a web browser
+plugin?
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+I'm asking because the missing "ask_before_save" issues only seem like
+non-security bugs - the user messing him/herself up - unless the target
+file can be influenced by an external attacker.
+
+> http://sourceforge.net/tracker/index.php?func=detail&aid=2019481&group_id=180858&atid=894869
+>
+> Possible symlink attack via the temporary created "/tmp/rot.jpg"
+> file used for image rotation.
+
+Use CVE-2008-3791
+
+> 2,
+>
+> http://sourceforge.net/tracker/index.php?func=detail&aid=2019485&group_id=180858&atid=894869
+>
+> By presence of the LIBJPEG library we could without confirmation rewrite
+> the by the symlink targeted JPEG filesystem file.
+>
+> 3,
+>
+> http://sourceforge.net/tracker/index.php?func=detail&aid=2019492&group_id=180858&atid=894869
+>
+> Consequences: Bad enough, just think about them in context of the two
+> previously mentioned issues.
+
+These two might need a second CVE depending on the influence over the file
+that "ask_before_save" would ask about.
+
+- Steve
