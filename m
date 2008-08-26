@@ -1,56 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/07/10
-Message-ID: <20306.1207589753@devserv.devel.redhat.com>
-Date: Mon, 07 Apr 2008 13:35:53 -0400
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
-Subject: Re: list: members vs. read-only subscribers
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/26/8
+Message-ID: <48B41A98.2040405@redhat.com>
+Date: Tue, 26 Aug 2008 23:00:40 +0800
+From: Eugene Teo <eteo@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: coley@...re.org
+Subject: Re: CVE request: kernel: sctp: fix potential panics in the SCTP-AUTH API
 Content-Type: text/plain; charset=utf-8
 
+Hi Steve,
+
+Steven M. Christey wrote:
+> On Mon, 25 Aug 2008, Eugene Teo wrote:
 > 
-> It appears that Josh and Vincent have expressed the same opinion in the
-> quotes above.  Unfortunately, ezmlm-idx does not have a notion of having
-> different types of subscribers to a list - "members who can post" vs.
-> "read-only subscribers".  Yet, if this is really what we want (any other
-> opinions?), we may be able to achieve it in one of two ways:
+>> "[PATCH] sctp: fix potential panics in the SCTP-AUTH API.
+>>
+>> All of the SCTP-AUTH socket options could cause a panic if the extension
+>> is disabled and the API is envoked.
 > 
-> 1. Use the "allow" list feature to specify the addresses of "full
-> members".  Unfortunately, in my experience the "allow" list is used for
-> lists that are moderated for non-subscribers only (to allow some
-> non-subscribers or alternate addresses of subscribers to post without
-> moderation), not for those that are also moderated for subscribers.
-> I have not looked into whether this would be easy to fix or not - but I
-> or someone else at Openwall can look into it if needed.  It might turn
-> out that the fix is trivial.
+> Use CVE-2008-3792, to be filled in later.
 > 
-> 2. Setup a second list for the read-only subscribers, and subscribe that
-> list to the main one.
+>> Additionally, there were some additional assumptions that certain
+>> pointers would always be valid which may not always be the case."
 > 
+> Use CVE-2008-3793, to be filled in later.  I'm assuming that when
+> SCTP-AUTH is enabled, that these APIs are reachable from unprivileged
+> users?
 
-Here is my proposal, technical issues aside (we are smart people, we'll
-figure something out).
+One CVE name is sufficient for this. So, we will just use CVE-2008-3792?
 
-* The current member list can post unmoderated
-* New subscribers (anyone can subscribe) will be moderated by default, but
-  can have the moderation flag lifted when the prove to be useful
-  contributors (we need to define what a useful contributor is)
-* Non members can post, but will be moderated (if spam is an issue, we
-  could consider just throwing this stuff out, but I'd really like to avoid
-  it if possible)
-
-I think that this should appear as one list to the end user.  If we end up
-using some bizarre solution with multiple lists to work around the
-ezmlm-idx shortcomings, we need to ensure that this is not obvious to the
-end users.  Users should be able to hit reply and the right thing just
-happens.
-
-
-For the wiki, I'd say just make it a free for all.  If they take the time
-to create an account, let them make changes, we'll keep an eye on what gets
-modified.  We can deal with spam if it becomes a problem.
-
-If you don't like this, speak up now, otherwise, I think it would make
-sense to find a solution that fits this model.
-
+Thanks, Eugene
 -- 
-    JB
+Eugene Teo / Red Hat Security Response Team
