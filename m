@@ -1,24 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/24/8
-Message-ID: <Pine.GSO.4.51.0809241419240.16490@faron.mitre.org>
-Date: Wed, 24 Sep 2008 14:19:42 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: Re: CVE request: kernel: open() call allows setgid bit when user is not in new file's group
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/27/6
+Message-ID: <20080827162556.GD31017@suse.de>
+Date: Wed, 27 Aug 2008 18:25:56 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: coley@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: CVE request: mono Sys.Web header injection
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-On Wed, 24 Sep 2008, Eugene Teo wrote:
+Monos Sys.Web DLL is prone to HTTP header injection attacks,
+which have been fixed in mono SVN now.
 
-> "When creating a file, open()/creat() allows the setgid bit to be set
-> via the mode argument even when, due to the bsdgroups mount option or
-> the file being created in a setgid directory, the new file's group is
-> one which the user is not a member of.  The user can then use
-> ftruncate() and memory-mapped I/O to turn the new file into an arbitrary
-> binary and thus gain the privileges of this group, since these
-> operations do not clear the setgid bit."
+(bug for reference)
+https://bugzilla.novell.com/show_bug.cgi?id=418620
 
-Use CVE-2008-4210, to  be filled in later.
-
-- Steve
+Ciao, Marcus
