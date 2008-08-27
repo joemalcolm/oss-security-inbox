@@ -1,32 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/08/7
-Message-ID: <20080708161037.GA1008@ngolde.de>
-Date: Tue, 8 Jul 2008 18:10:37 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/27/3
+Message-ID: <20080827132515.GB12859@ngolde.de>
+Date: Wed, 27 Aug 2008 15:25:15 +0200
 From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: moodle xss in < 1.8.5
+Subject: Re: CVE id request: awstats
 Content-Type: text/plain; charset=utf-8
 
-Hi Hanno,
-* Hanno Böck <hanno@...eck.de> [2008-07-08 13:29]:
-> Am Sonntag 06 Juli 2008 schrieb Nico Golde:
-> > * Hanno Böck <hanno@...eck.de> [2008-07-06 19:04]:
-> > > http://docs.moodle.org/en/Release_Notes#Moodle_1.8.5
-> > >     *  KSES related XSS security vulnerability fixed
-> >
-> > This should be CVE-2008-1502:
-> 
-> http://nvd.nist.gov/nvd.cfm?cvename=CVE-2008-1502
-> is about egroupware.
-> 
-> I found no cve related to moodle 1.8.4.
+Hi Nico,
+* Nico Golde <oss-security+ml@...lde.de> [2008-08-27 15:23]:
+> there is a new XSS issue and one remote code execution (php code)
+> in awstats.
 
-Yes, this should get updated, I sent a request to update 
-this together with more information to vendor-sec.
+sorry, awstats totals.
 
 Cheers
 Nico
-
 -- 
 Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
 For security reasons, all text in this mail is double-rot13 encrypted.
