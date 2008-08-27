@@ -1,33 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/29/1
-Message-Id: <200806300137.03519.rbu@gentoo.org>
-Date: Mon, 30 Jun 2008 01:37:00 +0200
-From: Robert Buchholz <rbu@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/27/4
+Message-ID: <20080827132710.GA31091@steve.org.uk>
+Date: Wed, 27 Aug 2008 14:27:10 +0100
+From: Steve Kemp <steve@...ve.org.uk>
 To: oss-security@...ts.openwall.com
-Subject: Two remote DoS issues in linuxdcpp
+Subject: Re: CVE id request: awstats
 Content-Type: text/plain; charset=utf-8
 
-Hey,
+On Wed Aug 27, 2008 at 15:19:08 +0200, Nico Golde wrote:
+> there is a new XSS issue and one remote code execution (php code)
+> in awstats.
 
-Linux DC++ (linuxdcpp) is a Direct Connect client based on the same 
-client code as DC++, so it is vulnerable to the recently reported
+  I was scared there for a minute.  This is a bug in "awstats totals"
+ not in "awstats".
 
-[1] NULL pointer dereference remote DoS via partial file list requests
-http://secunia.com/advisories/30812/
-http://sourceforge.net/project/shownotes.php?release_id=608612&group_id=40287
-https://bugs.launchpad.net/dcplusplus/+bug/238333 [Can't view]
-
-Patch for linuxdcpp:
-http://cvs.berlios.de/cgi-bin/viewcvs.cgi/linuxdcpp/linuxdcpp/client/ShareManager.cpp.diff?r1=1.14&r2=1.15&sortby=date
-
-[2] Empty message Remote DoS
-When an attacker sends an empty message, he can cause the client to 
-abort with "std::out_of_range" in substr().
-
-Patch for linuxdcpp:
-http://cvs.berlios.de/cgi-bin/viewcvs.cgi/linuxdcpp/linuxdcpp/client/NmdcHub.cpp.diff?r1=1.14&r2=1.15&sortby=date
-
-
-Robert
-
-Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
+Steve
+-- 
+http://www.steve.org.uk/
