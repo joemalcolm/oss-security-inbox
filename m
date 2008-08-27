@@ -1,17 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/19/5
-Message-ID: <0802191427540.2202@mjc.redhat.com>
-Date: Tue, 19 Feb 2008 14:28:19 +0000 (GMT)
-From: Mark J Cox <mjc@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/27/2
+Message-ID: <20080827131908.GA12859@ngolde.de>
+Date: Wed, 27 Aug 2008 15:19:08 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: charter
+Subject: CVE id request: awstats
 Content-Type: text/plain; charset=utf-8
 
->> What do you mean by "Please don't send working vulnerabilities"?
+Hi,
+there is a new XSS issue and one remote code execution (php code)
+in awstats.
 
-BTW I edited this to state 'working exploits' which is what I believe Josh 
-was thinking about when he wrote that.
+Can I get two CVE ids please?
+http://userwww.service.emory.edu/~ekenda2/EMORY-2008-01.txt
 
-Thanks, Mark
---
-Mark J Cox / Red Hat Security Response Team
+Cheers
+Nico
+
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
