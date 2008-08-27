@@ -1,29 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/04/16
-Message-ID: <Pine.GSO.4.51.0809041249440.29613@faron.mitre.org>
-Date: Thu, 4 Sep 2008 12:49:51 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/27/5
+Message-ID: <20080827145211.GE9981@ngolde.de>
+Date: Wed, 27 Aug 2008 16:52:11 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: Re: CVE request: kernel: dio: zero struct dio with kzalloc instead of manually
+Subject: Re: CVE id request: awstats
 Content-Type: text/plain; charset=utf-8
 
+Hi Steve,
+* Steve Kemp <steve@...ve.org.uk> [2008-08-27 16:11]:
+> On Wed Aug 27, 2008 at 15:19:08 +0200, Nico Golde wrote:
+> > there is a new XSS issue and one remote code execution (php code)
+> > in awstats.
+> 
+>   I was scared there for a minute.  This is a bug in "awstats totals"
+>  not in "awstats".
 
-======================================================
-Name: CVE-2007-6716
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6716
-Reference: MLIST:[linux-kernel] 20070731 Re: [PATCH] add check do_direct_IO() return val
-Reference: URL:http://lkml.org/lkml/2007/7/30/448
-Reference: MLIST:[oss-security] 20080904 CVE request: kernel: dio: zero struct dio with kzalloc instead of manually
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/09/04/1
-Reference: CONFIRM:http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=848c4dd5153c7a0de55470ce99a8e13a63b4703f
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=461082
-Reference: CONFIRM:http://www.kernel.org/pub/linux/kernel/v2.6/ChangeLog-2.6.23
+Sorry, realized that I didn't add the "totals" after the 
+mail was already out :/
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-fs/direct-io.c in the dio subsystem in the Linux kernel before 2.6.23
-does not properly zero out the dio struct, which allows local users to
-cause a denial of service (OOPS), as demonstrated by a certain fio
-test.
-
-
+Content of type "application/pgp-signature" skipped
