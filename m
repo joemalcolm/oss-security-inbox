@@ -1,34 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/30/2
-Message-ID: <g2BMw9g7W0GP3gxdFJTwDSUjWik@DnrfhFPe1KmBT9SMnrHVxzpiU9A>
-Date: Mon, 1 Dec 2008 02:23:21 +0300
-From: Eygene Ryabinkin <rea-sec@...elabs.ru>
-To: oss-security@...ts.openwall.com, jlieskov@...hat.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request - cups, dovecot-managesieve, perl, wireshark
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/29/3
+Message-ID: <20080829232414.GR16514@genesis.frugalware.org>
+Date: Sat, 30 Aug 2008 01:24:14 +0200
+From: Miklos Vajna <vmiklos@...galware.org>
+To: oss-security@...ts.openwall.com
+Cc: coley@...re.org
+Subject: CVE request for bitlbee
 Content-Type: text/plain; charset=utf-8
 
-Me again.
+Hi,
 
-Mon, Dec 01, 2008 at 12:52:18AM +0300, Eygene Ryabinkin wrote:
-> 
-> Fri, Nov 28, 2008 at 04:29:10PM +0100, Jan Lieskovsky wrote:
-> > One point yet -- this is perl-5.8.8-1+ specific issue (different than
-> > CVE-2004-0452, CVE-2005-0448 and even different than recently fixed
-> > CVE-2008-2827). Seems that upstream forgot to apply the fix for
-> > CVE-2005-0448 to 5.8 perl after rebase. This newly reported issue
-> > already fixed in perl-5.10.
-> > 
-> > CVE-2008-2827 affects only perl-5.10 (and it already applies additional
-> > fix to CVE-2005-0448, which has been properly applied in perl-5.10).
+bitlbee-1.2.2 is released, and it comes with a NULL pointer dereference
+fix, which allows people to hijack accounts.
 
-By the way, I had glanced over perl from 5.8.0 to 5.8.4 (the latter were
-said to be not vulnerable in the CVE-2005-0448).  But since it misses
-'if $force_writeable' on the second 'chmod', it should be vulnerable to
-the 'setuid' issue too.  And since there are no checks for
-inode/mountpoint device changes for the directory, rmtree is called for,
-I assume that it is vulnerable to the deletion issue too.
+More info:
 
-Any comments?
--- 
-Eygene
+http://bitlbee.org/main.php/changelog.html
+
+and
+
+http://code.bitlbee.org/hgweb/release?cmd=revision;revid=wilmer%40gaast.net-20080825204848-bzp7ye1i07bpnole
+
+Can I get a CVE id please?
+
+Thanks,
+
+Miklos
+
+Content of type "application/pgp-signature" skipped
