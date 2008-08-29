@@ -1,24 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/03/10
-Message-ID: <1417903381.3720301228339030908.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 3 Dec 2008 16:17:10 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: coley@...re.org
-Subject: CVE Request (zaptel)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/29/1
+Message-ID: <48B75683.9020800@redhat.com>
+Date: Fri, 29 Aug 2008 09:53:07 +0800
+From: Eugene Teo <eteo@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2008-3526 Linux kernel sctp_setsockopt_auth_key() integer overflow
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
+Eugene Teo wrote:
+> An integer overflow flaw was found in the Linux kernel
+> sctp_setsockopt_auth_key() function. The structure used for
+> SCTP_AUTH_KEY option contains a length that needs to be verified to
+> prevent integer overflow conditions.
+> 
+> This affects kernel versions since 2.6.24-rc1. The proposed upstream
+> commit is: 30c2235cbc477d4629983d440cdc4f496fec9246. Note that the
 
-I ran across this Debian bug:
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=507459
+Take note. It needs 328fc47ea0bcc27d9afa69c3ad6e52431cadd76c too.
 
-The upstream report is here:
-http://bugs.digium.com/view.php?id=13954
-
-As best as I can tell, it's for real.
-
-Thanks.
-
+Thanks, Eugene
 -- 
-    JB
+Eugene Teo / Red Hat Security Response Team
