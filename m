@@ -1,32 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/24/4
-Message-Id: <E3DB0344-D596-40A5-946F-A7B06D54A646@apple.com>
-Date: Tue, 24 Jun 2008 12:02:20 -0700
-From: Drew Yao <ayao@...le.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/29/2
+Message-ID: <48B757E9.3040509@redhat.com>
+Date: Fri, 29 Aug 2008 09:59:05 +0800
+From: Eugene Teo <eteo@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Vendor-Sec Distribution Vendors <vendor-sec@....de>
-Subject: Re: ruby regression (was: Re: [vendor-sec] Ruby memory corruption bugs in array and string handling)
+Subject: CVE-2008-3525 kernel: missing capability checks in sbni_ioctl()
 Content-Type: text/plain; charset=utf-8
 
-> Where did you get 1.8.6p231? The latest I see is 1.8.6p230, which,
-> according to upstream's advisory [1], fixes the security issues.
+I reported some bogus capability checks in the SBNI WAN driver. Proper
+capability checks are required for the privileged operations.
 
-Sorry, I meant p230.
+This affects both 2.4 and 2.6 kernels. The proposed upstream commit is:
+f2455eb176ac87081bbfc9a44b21c7cd2bc1967e.
 
+I have allocated this CVE-2008-3525.
 
-> However, the test suite ("make test" in the
-> build dir) passes. It was my understanding that the test suite should
-> fail, given my reading of the forum thread linked to by the blog post
-> Drew mentioned above: http://www.ruby-forum.com/topic/157034
-
-
-I think make test is not the same test suite they're talking about.
-
-
----
-Drew Yao
-Apple Product Security
-
-
->
-
+Thanks, Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
