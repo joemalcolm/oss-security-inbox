@@ -1,27 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/22/1
-Message-ID: <20080222013014.GA12966@openwall.com>
-Date: Fri, 22 Feb 2008 04:30:14 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/30/1
+Message-ID: <20080830234625.GC12017@ngolde.de>
+Date: Sun, 31 Aug 2008 01:46:25 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: first spam message on the list
+Subject: Re: CVE Request (gpicview)
 Content-Type: text/plain; charset=utf-8
 
-This was unusually quick.  S - thank you for posting the list address on
-a blog non-obfuscated. :-(
+Hi Jan,
+* Jan Lieskovsky <jlieskov@...hat.com> [2008-08-25 13:06]:
+>   could you please allocate a CVE id for the following
+> three gpicview issues:
+> 
+> 1,
+> 
+> http://sourceforge.net/tracker/index.php?func=detail&aid=2019481&group_id=180858&atid=894869
+> 
+> Possible symlink attack via the temporary created "/tmp/rot.jpg" 
+> file used for image rotation.
+[...] 
+Same piece of code main-win.c doesn't look too trustworthy 
+to me either:
 
-http://c-skills.blogspot.com/2008/02/open-source-software-security-wiki.html
+    690     int error = jpegtran (filename, "/tmp/rot.jpg" , code);
+    691     if(error)
+    692         return error;
+    693 
+    694     //now copy /tmp/rot.jpg back to the original file
+    695     char command[strlen(filename)+50]; //this should not generate buffer owerflow
+    696     // MS: didn't know, how to make it better, maybe an own copy routine
+    697     sprintf(command,"cp /tmp/rot.jpg \"%s\"",filename);
+    698     system(command);
 
-I've just enabled a simple spam filter for the list address (it will
-drop HTML-only messages - and more).  I will also be turning on message
-pre-moderation.  It's a pity that we have to do this so early.
+Anyone played with crafted file names?
+Cheers
+Nico
 
-Anyone would like to be a moderator (and receive the undetected spam)?
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-Meanwhile, (GalaxyMaster) has patched the Wiki to obfuscate e-mail
-addresses in more cases.  Nothing should be reported non-obfuscated now,
-not even via the RSS feed or diffs view.  In fact, we'll probably relax
-the current fix a bit to not mangle the Openwall anoncvs access shell
-command. ;-)
-
-Alexander
+Content of type "application/pgp-signature" skipped
