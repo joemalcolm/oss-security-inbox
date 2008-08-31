@@ -1,20 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/28/6
-Message-ID: <20081028112356.441e3b3a@redhat.com>
-Date: Tue, 28 Oct 2008 11:23:56 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: OSS Security <oss-security@...ts.openwall.com>
-Subject: CVE request - libgadu
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/31/1
+Message-ID: <87k5dxtp36.fsf@mid.deneb.enyo.de>
+Date: Sun, 31 Aug 2008 13:13:01 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
+To: oss-security@...ts.openwall.com
+Subject: GNU ed heap overflow
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+Can we get a CVE for this?  The overflow is in the command line
+processing, and also affects the red command.
 
-New upstream libgadu version 1.8.2 is marked as security update and
-seems to fix a buffer over-read flaw:
+| Alfredo Ortega from Core Security Technologies has found that GNU Ed
+| is vulnerable to a heap overflow.
 
-http://toxygen.net/libgadu/releases/1.8.2.html
-https://bugzilla.redhat.com/show_bug.cgi?id=468830
-https://admin.fedoraproject.org/updates/libgadu-1.8.2-1.fc9
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+<http://lists.gnu.org/archive/html/bug-ed/2008-06/msg00000.html>
