@@ -1,18 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/31/6
-Message-Id: <200808010018.56057.hanno@hboeck.de>
-Date: Fri, 1 Aug 2008 00:18:55 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/01/1
+Message-Id: <1220252447.5118.8.camel@dhcp-lab-164.englab.brq.redhat.com>
+Date: Mon, 01 Sep 2008 09:00:47 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: vtigercrm < 5.0.4
+Subject: Re: CVE Request (gpicview)
 Content-Type: text/plain; charset=utf-8
 
-http://wiki.vtiger.com/index.php/Vtiger_CRM_5.0.4_-_Release_Notes
-refers to
-http://trac.vtiger.com/cgi-bin/trac.cgi/ticket/2107
 
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+Hi Nico!,
 
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+On Sun, 2008-08-31 at 01:46 +0200, Nico Golde wrote:
+> Same piece of code main-win.c doesn't look too trustworthy 
+> to me either:
+> 
+>     690     int error = jpegtran (filename, "/tmp/rot.jpg" , code);
+>     691     if(error)
+>     692         return error;
+>     693 
+>     694     //now copy /tmp/rot.jpg back to the original file
+>     695     char command[strlen(filename)+50]; //this should not generate buffer owerflow
+>     696     // MS: didn't know, how to make it better, maybe an own copy routine
+>     697     sprintf(command,"cp /tmp/rot.jpg \"%s\"",filename);
+>     698     system(command);
+
+CVE-2008-3791 was allocated to handle the security issue related
+with this part of code. This is at least, how we have reported
+https://bugzilla.redhat.com/show_bug.cgi?id=460180 (CVE-2008-3791).
+
+Kind regards
+Jan iankko Lieskovsky
+RH Security Response Team
+
+> 
+> Anyone played with crafted file names?
+> Cheers
+> Nico
+> 
+
