@@ -1,33 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/27/10
-Message-Id: <200803280007.22930.hanno@hboeck.de>
-Date: Fri, 28 Mar 2008 00:07:22 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com
-Subject: CVEs for zzuf crashers?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/01/2
+Message-ID: <20080901070554.GA14496@sdf.lonestar.org>
+Date: Mon, 1 Sep 2008 07:05:54 +0000
+From: Tavis Ormandy <taviso@....lonestar.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: GNU ed heap overflow
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+If you can specify an arbitrary filename, can't you execute commands
+anyway?
 
-Sam Hovecar has created zzuf more than a year ago and posted a bunch of 
-samples crashing various multimedia and other apps:
-http://sam.zoy.org/blog/2007-01-16-exposing-file-parsing-vulnerabilities
+$ ed '!ls>&2'
+bin   dev  home  lost+found  misc  net  proc  sbin     srv  tmp  var
+boot  etc  lib   media       mnt   opt  root  selinux  sys  usr
+0
 
-I've done some re-testing about a year later:
-http://hboeck.de/archives/578-How-long-does-it-take-to-fix-a-crash-bug.html
+Thanks, Tavis.
 
-Some are still unfixed, I recently opened some upstream bug reports:
-https://bugzilla.mozilla.org/show_bug.cgi?id=424333
-also mentioned on http://www.securityfocus.com/bid/27243
-http://bugs.xine-project.org/show_bug.cgi?id=74
-http://bugzilla.mplayerhq.hu/show_bug.cgi?id=1043
-(gstreamer not done yet, waiting for 0.10.18 to land in gentoo)
-
-At least the firefox issue and the still open mediaplayer crashers could have 
-their own CVE (if there aren't already ones for it).
+On Sun, Aug 31, 2008 at 01:13:01PM +0200, Florian Weimer wrote:
+> Can we get a CVE for this?  The overflow is in the command line
+> processing, and also affects the red command.
+> 
+> | Alfredo Ortega from Core Security Technologies has found that GNU Ed
+> | is vulnerable to a heap overflow.
+> 
+> <http://lists.gnu.org/archive/html/bug-ed/2008-06/msg00000.html>
 
 -- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+-------------------------------------
+taviso@....lonestar.org | finger me for my gpg key.
+-------------------------------------------------------
