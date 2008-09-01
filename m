@@ -1,38 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/28/6
-Message-ID: <20081128224536.GC25910@ngolde.de>
-Date: Fri, 28 Nov 2008 23:45:36 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: xine-lib and ocert-2008-008
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/01/5
+Message-Id: <D62D1C1A-D4D9-4AAB-A256-C231D4EAF9EF@ocert.org>
+Date: Mon, 1 Sep 2008 13:37:24 +0100
+From: Rob Holland <rob@...rt.org>
+To: ocert-announce@...ts.ocert.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: [oCERT-2008-014] WordNet stack and heap overflows
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Steven M. Christey <coley@...us.mitre.org> [2008-11-26 09:27]:
-> On Sat, 22 Nov 2008, Thomas Viehmann wrote:
-[...] 
-> ======================================================
-> Name: CVE-2008-5244
-> Status: Candidate
-> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5244
-> Reference: CONFIRM:http://sourceforge.net/project/shownotes.php?release_id=619869
-> Reference: SECTRACK:1020703
-> Reference: URL:http://securitytracker.com/id?1020703
-> 
-> Unspecified vulnerability in xine-lib before 1.1.15 has unknown impact
-> and attack vectors related to libfaad.  NOTE: due to the lack of
-> details, it is not clear whether this is an issue in xine-lib or in
-> libfaad.
+2008/08/25 #2008-014 WordNet stack overflows
 
-Anyone having details for this one? I can't find any fix 
-related to this in id3.c/h and the only faad change I saw is 
-http://hg.debian.org/hg/xine-lib/xine-lib?cmd=changeset;node=18c0264660b9;style=gitweb
-which talks about aac files.
+Description:
 
-Cheers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+The WordNet 3.0 Unix library and command-line interface suffer from a
+number of stack overflows due to their handling of command line  
+arguments,
+environment variables and data read from user supplied dictionaries.
 
-Content of type "application/pgp-signature" skipped
+The oCERT team was contacted by Moritz Muehlenhoff from the Debian
+project requesting an audit of the WordNet code base. These  
+vulnerabilities
+were the findings of the requested audit.
+
+Stack overflows fed via the command line, environment variables or
+WordNet library calls can result in arbitrary code execution.
+
+Stack and heap overflows via modified WordNet dictionaries may allow  
+arbitrary
+code execution.
+
+It should be noted that despite the ease with which arbitrary code can
+be executed via these WordNet flaws, unless WordNet is being used by a  
+daemon or web
+service running as a user other than that of the attacker, this is  
+unlikely to
+result in privilege escalation or the ability to take any action not  
+already
+possible as the attacking user.
+
+The following patch fixes the issues:
+http://www.ocert.org/analysis/2008-014/wordnet.patch
+
+Affected version:
+
+WordNet = 3.0
+
+Fixed version:
+
+Princeton unfortunately lack the resources to produce a new release of  
+this
+code and will therefore not be releasing a new version as a result of  
+this
+audit.
+
+Credit: Rob Holland, oCERT Team | Inverse Path Ltd
+
+CVE: TBD
+
+Timeline:
+
+2008-06-02: audit requested
+2008-06-25: first phase audit completed
+2008-07-15: second phase audit completed
+2008-07-19: report and patch sent upstream and to audit requester
+2008-08-12: report and patch resent upstream due to lack of response
+2008-08-13: upstream acknowledge issues
+2008-09-01: advisory release
+
+References:
+http://www.ocert.org/analysis/2008-014/analysis.txt: oCERT  
+vulnerability analysis report
+
+Permalink:
+http://www.ocert.org/advisories/ocert-2008-014.html
+
+--
+Rob Holland
+rob@...rt.org
+
