@@ -1,27 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/04/7
-Message-ID: <Pine.GSO.4.51.0808041304400.23930@faron.mitre.org>
-Date: Mon, 4 Aug 2008 13:08:01 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Thijs Kinkhorst <thijs@...ian.org>
-cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: source for CVE feed (was: Re: CVE request: httrack buffer overflow)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/01/3
+Message-ID: <87od381eb8.fsf@mid.deneb.enyo.de>
+Date: Mon, 01 Sep 2008 10:05:31 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: GNU ed heap overflow
 Content-Type: text/plain; charset=utf-8
 
+* Tavis Ormandy:
 
-On Mon, 4 Aug 2008, Thijs Kinkhorst wrote:
+> If you can specify an arbitrary filename, can't you execute commands
+> anyway?
+>
+> $ ed '!ls>&2'
+> bin   dev  home  lost+found  misc  net  proc  sbin     srv  tmp  var
+> boot  etc  lib   media       mnt   opt  root  selinux  sys  usr
+> 0
 
-> Considering your statement we would better be using one of the XML Data feeds
-> from http://nvd.nist.gov/download.cfm , right? Or would you recommend another
-> feed (e.g. the one where NVD gets its data from)?
-
-NVD's XML data feed is probably the best out there that's publicly
-available.  Representatives of CVE-compatible product authors,
-vulnerability databases, and software vendors can get direct access to an
-email-based feed from MITRE, which is the feed that NVD uses.  MITRE
-hasn't opened this to the general public because most people would use it
-like a database, and we don't want to compete with other feeds out there.
-Guess that's kind of silly these days given that NVD turns it around in 5
-minutes, but there it is.
-
-- Steve
+Interesting.  But this type of command execution is not possible with
+"red", which suffers from the same overflow.
