@@ -1,32 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/24/4
-Message-ID: <20081124212020.GA22752@inutil.org>
-Date: Mon, 24 Nov 2008 22:20:20 +0100
-From: Moritz Muehlenhoff <jmm@...til.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/01/4
+Message-ID: <20080901094729.GF12017@ngolde.de>
+Date: Mon, 1 Sep 2008 11:47:29 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Cc: cve@...re.org
-Subject: Re: CVE Request: VirtualBox tmp file issue
+Subject: CVE id request: newsbeuter
 Content-Type: text/plain; charset=utf-8
 
-Ludwig Nussel wrote:
+Hi,
+newsbeuter (http://www.newsbeuter.org) 1.1 fixes a security 
+issue that was discovered by J.H.M. Dassen (Ray) and is 
+fixed in svn revision 1429.
 
-> http://www.virtualbox.org/wiki/Changelog:
-> VirtualBox 2.0.6
-> - Linux/Solaris/Darwin hosts: verify permissions in /tmp/vbox-$USER-ipc
-> 
-> These changes match that description:
-> http://www.virtualbox.org/changeset?new=trunk%2Fsrc%2Flibs%2Fxpcom18a4%2Fipc%2Fipcd%2Fdaemon%2Fsrc%2FipcdUnix.cpp%4013810&old=trunk%2Fsrc%2Flibs%2Fxpcom18a4%2Fipc%2Fipcd%2Fdaemon%2Fsrc%2FipcdUnix.cpp%407049
-> 
-> VirtualBox uses /tmp/vbox-$USER-ipc to store a socket and a lock
-> file. The lock file is truncated after a simple open call. AFAICS
-> creating /tmp/vbox-$USER-ipc before the victim starts VirtualBox
-> could therefore be exploited to create files as the victim or
-> truncate files of the victim.
+The previous version allowed to execute arbitrary code by a 
+crafted feed URL that is passed as a command line parameter 
+if the URL is opened by an external browser.
 
-This is http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=504149
+Upstream changelog:
+ 1.1:
+        Added a line wrap for the article view's headers and the link list on the bottom (fixes Debian issue #491122)
+        Added test suite for functional tests of the user interface
+        Fixed quoting issue in open-in-browser command
+        ^^^^^
 
-(I already sent this to vendor-sec on the 7th, but the CVE
-request seems to have fallen through the crack)
+This issue should affect all newsbeuter versions < 1.1.
 
-Cheers,
-        Moritz
+Can I get a CVE id for this please?
+
+Kind regards
+Nico
+
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
