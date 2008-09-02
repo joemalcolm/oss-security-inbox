@@ -1,77 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/05/4
-Message-Id: <200811052317.11277.rem@videolan.org>
-Date: Wed, 5 Nov 2008 23:17:11 +0200
-From: Rémi Denis-Courmont <rem@...eolan.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/02/1
+Message-ID: <20080902122818.GK12017@ngolde.de>
+Date: Tue, 2 Sep 2008 14:28:18 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: VideoLAN security advisory 0810
+Subject: Re: CVE id request: newsbeuter
 Content-Type: text/plain; charset=utf-8
 
-Summary           : Buffer overflows in VLC RealText and CUE demuxers
-Date              : November 2008
-Affected versions : VLC media player 0.9.5 down to 0.5.0
-ID                : VideoLAN-SA-0810
-CVE reference     : None yet.
+Hi,
+* Nico Golde <oss-security+ml@...lde.de> [2008-09-01 12:09]:
+> newsbeuter (http://www.newsbeuter.org) 1.1 fixes a security 
+> issue that was discovered by J.H.M. Dassen (Ray) and is 
+> fixed in svn revision 1429.
+> 
+> The previous version allowed to execute arbitrary code by a 
+> crafted feed URL that is passed as a command line parameter 
+> if the URL is opened by an external browser.
+> 
+> Upstream changelog:
+>  1.1:
+>         Added a line wrap for the article view's headers and the link list on the bottom (fixes Debian issue #491122)
+>         Added test suite for functional tests of the user interface
+>         Fixed quoting issue in open-in-browser command
+>         ^^^^^
+> 
+> This issue should affect all newsbeuter versions < 1.1.
 
+Update, it also affects 1.1, the fix is not sufficient, see 
+Debian bug #497495. r1445 and r1447 is needed as an 
+additional fix which now replaces all ' by their hex 
+representations so this affects < 1.2.
 
-- Details -
-
-When parsing the header of an invalid CUE image file or an invalid RealText 
-subtitle file, stack-based buffer overflows might occur. 
-
-
-- Impact -
-
-If successful, a malicious third party could trigger execution of arbitrary 
-code within the context of the VLC media player. 
-
-
-- Threat mitigation -
-
-Exploitation of this issue requires the user to explicitly open a specially 
-crafted file. 
-
-
-- Workarounds -
-
-The user should refrain from opening files from untrusted third parties or 
-accessing untrusted remote sites (or disable the VLC browser plugins), until 
-the patch is applied. 
-Alternatively, the VCD and Subtitles plugins (libvcd_plugin.* and 
-libsubtitle_plugin.*) can be removed manually from the VLC plugin 
-installation directory. However, this will prevent use of subtitle files and 
-Video CD altogether.
-
-
-- Solution -
-
-VLC media player 0.9.6 addresses this issue. Patches for older versions are 
-available from the official VLC source code repository 0.9-bugfix branch. 
-
-
-- Credits -
-
-These vulnerabilities were reported by Tobias Klein. 
-
-
-- References -
-
-The VideoLAN project
-	http://www.videolan.org/ 
-Tobias Klein
-	http://www.trapkit.de/advisories/ 
-
-
-- History -
-
-3 November 2008
-	Vendor notification.
-4 November 2008
-	Internal patches for VLC development version and 0.9-bugfix tree.
-5 November 2008
-	Initial security advisory.
-	VLC media player 0.9.6 released.
-
+Kind regards
+Nico
 -- 
-Rémi Denis-Courmont,
-on behalf of the VideoLAN project
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
