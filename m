@@ -1,38 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/03/4
-Message-ID: <20081103144957.GD18126@ngolde.de>
-Date: Mon, 3 Nov 2008 15:49:57 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/03/1
+Message-Id: <200809030200.05035.rbu@gentoo.org>
+Date: Wed, 3 Sep 2008 01:59:47 +0200
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: Re: CVE request - uw-imap
+Subject: Re: CVE Request (gpicview)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Tomas Hoger <thoger@...hat.com> [2008-11-03 15:38]:
-> uw-imap upstream released new version 2007d on friday, announcing it as
-> security update fixing some issues in dmail and tmail utilities:
-> 
-> http://mailman2.u.washington.edu/pipermail/imap-uw/2008-October/002267.html
-> http://mailman2.u.washington.edu/pipermail/imap-uw/2008-October/002268.html
-> 
-> Further digging into this, the issue seem to be a buffer overflow
-> (strcpy) when handling command line arguments (overlong mailbox
-> specification when utility is called with user+folder argument). This
-> can have security implications in the setups where tmail is installed 
-> setuid root (according to the resources I found, that's required in
-> certain configurations; dmail is not expected to run under different
-> user), or when one of the utilities is configured as deliver agent in
-> the MTA.
+On Sunday 31 August 2008, Nico Golde wrote:
+> Same piece of code main-win.c doesn't look too trustworthy
+> to me either:
+>
+>     690     int error = jpegtran (filename, "/tmp/rot.jpg" , code);
+>     691     if(error)
+>     692         return error;
+>     693
+>     694     //now copy /tmp/rot.jpg back to the original file
+>     695     char command[strlen(filename)+50]; //this should not
+> generate buffer owerflow 696     // MS: didn't know, how to make it
+> better, maybe an own copy routine 697     sprintf(command,"cp
+> /tmp/rot.jpg \"%s\"",filename); 698     system(command);
+>
+> Anyone played with crafted file names?
 
-Patch attached.
-HTH
+Good catch! You need to append '.jpg' at the end of the crafed filename 
+so the rotation via jpegtran is invoked, but besides that it works ok:
 
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+rbu@...nut ~/devel/gentoo/security/gpicview $ ls -l
+total 484K
+-rw-------  1 rbu rbu 469K 2008-09-03 01:35 bla.jpg"; touch XX ;".jpg
 
-View attachment "uw-imap.patch" of type "text/x-diff" (1289 bytes)
+rbu@...nut ~/devel/gentoo/security/gpicview $ gpicview *
+QSettings: failed to open file '/usr/qt/3/etc/settings/qt_plugins_3.3rc'
+sh: .jpg: command not found
+^C
 
-Content of type "application/pgp-signature" skipped
+rbu@...nut ~/devel/gentoo/security/gpicview $ ls -l
+total 960K
+-rw-------  1 rbu rbu 469K 2008-09-03 01:52 bla.jpg
+-rw-------  1 rbu rbu 469K 2008-09-03 01:35 bla.jpg"; touch XX ;".jpg
+-rw-------  1 rbu rbu    0 2008-09-03 01:52 XX
+
+
+Robert
+
+Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
