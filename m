@@ -1,28 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/20/11
-Message-ID: <16907.1203541661@devserv.devel.redhat.com>
-Date: Wed, 20 Feb 2008 16:07:41 -0500
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com, Jonathan Smith <smithj@...ethemallocs.com>
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: cups
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/03/2
+Message-ID: <20080903090327.GA21117@suse.de>
+Date: Wed, 3 Sep 2008 11:03:27 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: request for CVE: clamav 0.94 release
 Content-Type: text/plain; charset=utf-8
 
-> 
-> OK, lets start actually using this list... below is an advisory from
-> secunia detailing a cups DoS.
-> 
-> Steve, could we get a CVE assigned?
-> 
-> Attached is the patch upstream used to fix it (against 1.1.23, but it is
-> the same for other versions, just with a different offset).
-> 
+Hi,
 
-The upstream bug:
-http://www.cups.org/str.php?L2656
+Again released without fanfare, clamav 0.94.
 
-claims this is a better patch:
-http://www.cups.org/strfiles/2656/str2656.patch
+http://lurker.clamav.net/message/20080902.154137.289f280b.en.html
 
--- 
-    JB
+The full changelog has those apparent security related entries:
+ * fix out-of-memory null dereferenc (bb#1141)
+ * fix possible invalid memory access (bb#1089)
+ * fix error path memleaks and fd leaks (bb#1141)
+
+Ciao, Marcus
