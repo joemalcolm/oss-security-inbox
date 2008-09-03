@@ -1,31 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/02/6
-Message-ID: <481B6E13.3030504@freethemallocs.com>
-Date: Fri, 02 May 2008 11:40:03 -0800
-From: Jonathan Smith <smithj@...ethemallocs.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/03/5
+Message-ID: <20080903222410.GF16980@ngolde.de>
+Date: Thu, 4 Sep 2008 00:24:10 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: group announcement
+Subject: CVE id request: dns2tcp
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
+dns2tcp fixed a buffer overflow in 0.4.1:
+http://www.hsc.fr/ressources/outils/dns2tcp/index.html.en
 
-Josh Bressers wrote:
-| So here is my plan.  If everyone could take a look at this writeup and add
-| comments, then around mid next week, I'll send our changes to the Red Hat
-| folks, then hopefully by weeks end we'll all be synced up, with something
-| ready to go the week after.
+diff -Nurad dns2tcp-0.4.dfsg/common/dns.c dns2tcp-0.4.1/common/dns.c
+--- dns2tcp-0.4.dfsg/common/dns.c       2007-07-07 19:18:10.000000000 +0200
++++ dns2tcp-0.4.1/common/dns.c  2008-09-01 14:49:08.000000000 +0200
+@@ -114,7 +114,7 @@
+ 
+ void           dns_simple_decode(char *input, char *output, int max_len)
+ {
+-  int          len;
++  uint8_t      len;
+   char         *ptr;
+   int          total_len =0;
+   
+@@ -122,7 +122,7 @@
+   *output = 0;
+   while (*ptr)
+     {
+-      len = (int) *ptr;
++      len = (uint8_t) *ptr;
+       total_len +=len;
+       if (total_len > max_len)
+        break;
+diff -Nurad dns2tcp-0.4.dfsg/server/dns_decode.c dns2tcp-0.4.1/server/dns_decode.c
+--- dns2tcp-0.4.dfsg/server/dns_decode.c        2007-07-07 19:18:10.000000000 +0200
++++ dns2tcp-0.4.1/server/dns_decode.c   2008-09-01 14:49:08.000000000 +0200
+@@ -1,6 +1,6 @@
+@@ -79,7 +79,7 @@
+ {
+   int          max_compress_depth = MAX_COMPRESS_DEPTH;
+   int          total_len = 0;
+-  int          len;
++  uint8_t      len;
+   char         *ptr;
+ 
+   ptr = input;
+@@ -87,7 +87,8 @@
+   
+   while ((max_compress_depth) && (*ptr))
+     {
+-      len = (int) *ptr;
++      // Oups ...
++      len = (uint8_t) *ptr;
+       total_len += len;
+       if ((len & COMPRESS_FLAG_CHAR) == COMPRESS_FLAG_CHAR)
+        {
 
-I don't have much to say other than that it looks good. I also like the
-idea of getting RH HR (that acronym makes me giggle) to help promote the
-group.
 
-	smithj
+This looks like it is possible to overwrite a buffer by passing a negative length to
+dns_simple_decode() or dns_decode().
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
+Can I get a CVE id for this please?
 
-iEYEARECAAYFAkgbbhMACgkQCG91qXPaRenUZgCgoqXS1WKIy/3zZdl3qdX6KCXY
-opIAn0n5KkVNp8ZrQnp56TWSQ4Jx0qnL
-=kWZa
------END PGP SIGNATURE-----
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
