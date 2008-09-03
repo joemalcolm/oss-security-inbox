@@ -1,19 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/29/10
-Message-ID: <1567534965.4693091225305036881.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 29 Oct 2008 14:30:36 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/03/4
+Message-ID: <20080903144913.GR31241@linsec.ca>
+Date: Wed, 3 Sep 2008 08:49:13 -0600
+From: Vincent Danen <vdanen@...sec.ca>
+To: oss-security@...ts.openwall.com
 Cc: coley@...re.org
-Subject: CVE Request (dovecot)
+Subject: django CSRF vuln
 Content-Type: text/plain; charset=utf-8
 
-I'm not sure if this is a Red Hat specific issue, but I figured I'd mention it here:
-It seems dovecot can have an SSL key file password disclosure issue:
-https://bugzilla.redhat.com/show_bug.cgi?id=436287
+I think this one needs a CVE name:
 
-Basically, if your dovecot.conf file is world readable and you have your SSL key
-password in it, anyone can see it.
+http://www.djangoproject.com/weblog/2008/sep/02/security/
 
 -- 
-    JB
+Vincent Danen @ http://linsec.ca/
+
+Content of type "application/pgp-signature" skipped
