@@ -1,25 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/31/1
-Message-ID: <20080331134037.GE16335@ngolde.de>
-Date: Mon, 31 Mar 2008 15:40:37 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE id request: comix
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/04/20
+Message-ID: <Pine.GSO.4.51.0809041300510.29613@faron.mitre.org>
+Date: Thu, 4 Sep 2008 13:02:11 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Nico Golde <oss-security+ml@...lde.de>
+cc: oss-security@...ts.openwall.com
+Subject: Re: CVE id request: newsbeuter
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-comix is vulnerable to arbitrary code execution via crafted 
-file names.
 
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=462840
+On Thu, 4 Sep 2008, Nico Golde wrote:
 
-I confirmed this using comix\"\;echo\ owned\>bla\;ls\ \"
-as a simple reroducer.
+> Please use version 1.2 here as the fix for 1.1 was
+> incomplete.
 
-Kind regards
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+Our interpretation was that 1.1 fixes the vulnerability, but a
+non-security bug forced the release of 1.2.  So 1.1, while perhaps
+unusable in practice, was safe from the vuln.
 
-Content of type "application/pgp-signature" skipped
+Was that an incorrect interpretation?
+
+- Steve
