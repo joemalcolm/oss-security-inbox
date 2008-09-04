@@ -1,50 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/08/5
-Message-ID: <20080708154233.1fe81628@redhat.com>
-Date: Tue, 8 Jul 2008 15:42:33 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/04/3
+Message-Id: <200809041609.41320.hanno@hboeck.de>
+Date: Thu, 4 Sep 2008 16:09:40 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: steffen.joeris@...lelinux.de
-Subject: Re: CVE id request: Clamav
+Subject: Re: request for CVE: clamav 0.94 release
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 16 Jun 2008 16:41:27 +0200 Tomas Hoger <thoger@...hat.com>
-wrote:
+Am Mittwoch 03 September 2008 schrieb Marcus Meissner:
+>  * fix possible invalid memory access (bb#1089)
 
-> On Sun, 15 Jun 2008 21:21:30 +1000 Steffen Joeris
-> <steffen.joeris@...lelinux.de> wrote:
-> 
-> > The upstream changelog says:
-> > * libclamav/petite.c: fix possible invalid memory access (bb#1000)
-> > 				Reported by Damian Put
-> 
-> For the sake of CVE description completeness, I'm adding that it's
-> from the clamav 0.93.1 changelog.
-> 
-> Applied patch:
-> 
-> http://svn.clamav.net/websvn/diff.php?repname=clamav-devel&path=/branches/0.93/libclamav/petite.c&rev=3886
+CVE-2008-1389
 
-Btw, following is mentioned in the 0.93.2 changelog:
-
-Thu Jul  3 16:15:23 CEST 2008
------------------------------
-  * libclamav/petite.c: fix another out of bounds memory read (bb#1000)
-                        Reported by Secunia (CVE-2008-2713)
-
-Referring to the same bug as before, which is now restricted (was it
-publicly accessible before?).
-
-The announcement mentions it too, but without specifying any
-implications:
-
-http://lurker.clamav.net/message/20080707.155612.ad411b00.en.html
-
-The fix does not even seem to be committed in the public clamav SVN
-(either trunk or 0.93 branch).
-
-Does anyone have more info?  From commit message, it looks like DoS, so
-probably worth new id for an incomplete fix.
+http://int21.de/cve/CVE-2008-1389-clamav-chd.html
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
