@@ -1,27 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/17/10
-Message-ID: <Pine.GSO.4.51.0812162114230.5724@faron.mitre.org>
-Date: Tue, 16 Dec 2008 21:18:20 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Jan Lieskovsky <jlieskov@...hat.com>
-cc: Andreas Ericsson <ae@....se>, Eygene Ryabinkin <rea-sec@...elabs.ru>, oss-security@...ts.openwall.com, coley@...re.org
-Subject: Re: CVE Request (nagios)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/04/1
+Message-ID: <48BF5EAF.301@redhat.com>
+Date: Thu, 04 Sep 2008 12:06:07 +0800
+From: Eugene Teo <eteo@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: coley@...re.org
+Subject: CVE request: kernel: dio: zero struct dio with kzalloc instead of manually
 Content-Type: text/plain; charset=utf-8
 
+Hi Steve,
 
-On Thu, 11 Dec 2008, Jan Lieskovsky wrote:
+Is this assigned with a CVE name already? If not, please allocate one.
 
->   I can't follow this. Nagios 3.0.5 should fix two issues:
+This upstream commit addressed a user triggerable DoS:
+848c4dd5153c7a0de55470ce99a8e13a63b4703f
 
-Neither can I.  I'm not sure if we need to clean up the CVE descriptions
-or not.
+Summary:
+[PATCH] dio: zero struct dio with kzalloc instead of manually
 
-Note that general CVE practice is - if you have vuln X in version 1, and
-you don't completely fix X, then we give a separate CVE for version 2.
+To avoid exposing ourselves to the risk of finding another field like
+.map_bh.b_state where we rely on zeroing but don't enforce it in the
+code. The fix uses kzalloc to zero all the struct dio rather than
+manually trying to track which fields we rely on being zero.
 
-In this case, I'd probably want to modify CVE-2008-5028 to say it's
-related to "submission of external commands" which is in the 3.0.6
-changelog, then refer to the original, pre-3.0.5 CSRF as the "Tim
-Starling" bug or something like that.
+Reproducer:
+http://lkml.org/lkml/2007/7/30/448
 
-- Steve
+References:
+http://lkml.org/lkml/2007/7/26/88
+https://bugzilla.redhat.com/show_bug.cgi?id=461082
+
+Thanks, Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
