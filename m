@@ -1,32 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/24/1
-Message-ID: <87k5iokud8.fsf@lillypad.riseup.net>
-Date: Wed, 23 Apr 2008 19:46:11 -0400
-From: Micah Anderson <micah@...eup.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/04/11
+Message-ID: <Pine.GSO.4.51.0809041222010.29613@faron.mitre.org>
+Date: Thu, 4 Sep 2008 12:22:07 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: inspircd
+Subject: Re: CVE id request: newsbeuter
 Content-Type: text/plain; charset=utf-8
 
-"Steven M. Christey" <coley@...us.mitre.org>
-writes:
 
-> On Tue, 22 Apr 2008, Micah Anderson wrote:
->
->>
->> Versions prior to 1.1.17 of InspIRCd are vulnerable to a remotely
->> triggerable buffer overflow which can lead to a Denial of Service
->> (daemon crash) when the namesx and uhnames modules are loaded.
->
-> The reference you pointed to is for a fix in 1.1.18, which suggests that
-> 1.1.17 is vulnerable.
+======================================================
+Name: CVE-2008-3907
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3907
+Reference: MLIST:[oss-security] 20080901 CVE id request: newsbeuter
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/09/01/4
+Reference: CONFIRM:http://www.newsbeuter.org/downloads/CHANGES
+Reference: BID:30964
+Reference: URL:http://www.securityfocus.com/bid/30964
+Reference: SECUNIA:31676
+Reference: URL:http://secunia.com/advisories/31676
 
-Sorry for the confusion, that was my mistake.
+The open-in-browser command in newsbeuter before 1.1 allows remote
+attackers to execute arbitrary commands via shell metacharacters in a
+feed URL.
 
-> Thanks for the clarification of the issue - the vendor's post only alluded
-> to "security" with no additional details, which left a lot of vuln DBs
-> guessing.
-
-I was also guessing, thats why I sought clarification :)
-
-Micah
 
