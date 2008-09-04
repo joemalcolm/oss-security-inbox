@@ -1,28 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/09/16
-Message-ID: <48C68EE6.1070102@redhat.com>
-Date: Tue, 09 Sep 2008 22:57:42 +0800
-From: Eugene Teo <eteo@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/04/12
+Message-ID: <Pine.GSO.4.51.0809041222130.29613@faron.mitre.org>
+Date: Thu, 4 Sep 2008 12:24:22 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-CC: coley@...re.org
-Subject: Re: CVE request: kernel: local keyboard DoS through LED switching
+cc: coley@...re.org
+Subject: Re: [oCERT-2008-014] WordNet stack and heap overflows
 Content-Type: text/plain; charset=utf-8
 
-Steven M. Christey wrote:
-> On Fri, 5 Sep 2008, Eugene Teo wrote:
-> 
->> This old issue needs a CVE name.
->>
->> "[PATCH] Input: atkbd - throttle LED switching
->>
->> On some boxes keyboard controllers are too slow to withstand
->> continuous flow of requests to turn keyboard LEDs on and off
->> and start losing some keypresses or even all of them.
-> 
-> Can this be exploited by anyone except the person sitting at the keyboard?
 
-I don't think so. It requires physical access to the console.
+Notice how CVE treats these as all the same core type of issue, even
+though the types of attack vectors are different (command line vs. env
+variable) and the types of buffers are different (heap vs. stack).  The
+basic programming error was the same regardless of where it occurred or
+what it affected.
 
-Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
+- Steve
+
+======================================================
+Name: CVE-2008-3908
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3908
+Reference: BUGTRAQ:20080901 [oCERT-2008-014] WordNet stack and heap overflows
+Reference: URL:http://www.securityfocus.com/archive/1/archive/1/495883/100/0/threaded
+Reference: MISC:http://http://www.ocert.org/analysis/2008-014/analysis.txt
+Reference: MISC:http://www.ocert.org/advisories/ocert-2008-014.html
+Reference: MISC:http://www.ocert.org/analysis/2008-014/wordnet.patch
+Reference: BID:30958
+Reference: URL:http://www.securityfocus.com/bid/30958
+Reference: XF:wordnet-binsrch-search-bo(44851)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/44851
+Reference: XF:wordnet-morph-search-bo(44848)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/44848
+Reference: XF:wordnet-morphinit-bo(44849)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/44849
+Reference: XF:wordnet-wninit-bo(44850)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/44850
+
+Multiple buffer overflows in Princeton WordNet (wn) 3.0 allow
+context-dependent attackers to execute arbitrary code via (1) a long
+argument on the command line; a long (2) WNSEARCHDIR, (3) WNHOME, or
+(4) WNDBVERSION environment variable; or (5) a user-supplied
+dictionary (aka data file).  NOTE: since WordNet itself does not run
+with special privileges, this issue only crosses privilege boundaries
+in cases such as when WordNet is invoked as a third party component.
+
+
