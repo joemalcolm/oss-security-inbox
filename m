@@ -1,50 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/24/3
-Message-ID: <20080524203745.GA14969@ngolde.de>
-Date: Sat, 24 May 2008 22:37:45 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/04/18
+Message-ID: <Pine.GSO.4.51.0809041251340.29613@faron.mitre.org>
+Date: Thu, 4 Sep 2008 12:51:47 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: libpam-pgsql
+cc: coley@...re.org
+Subject: Re: CVE request: kernel: nfsd: fix buffer overrun decoding NFSv4 acl
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-it was discovered that a programming error in libpam-pgsql 
-(value always being evaluated as true because of a missing 
-bracket) enables an attacker to get root access for example 
-by pressing ctrl-c after calling sudo.
 
-This change was introduced somewhere between version 0.5.2 
-and 0.6.2 (maybe earlier).
+On Thu, 4 Sep 2008, Eugene Teo wrote:
 
-This is Debian bug http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=481970
+> "[PATCH] nfsd: fix buffer overrun decoding NFSv4 acl
+>
+> The array we kmalloc() here is not large enough."
+>
+> Upstream commit:
+> 91b80969ba466ba4b915a4a1d03add8c297add3f
 
-Note: this only leads to direct root access if the 
-authentication using this pam module is configured as 
-sufficient.
+Use CVE-2008-3915, to be filled in later.
 
-Patch:
-
-Index: pam-pgsql-0.6.3/pam_pgsql.c
-===================================================================
---- pam-pgsql-0.6.3.orig/pam_pgsql.c    2008-05-24 19:37:21.000000000 +0200
-+++ pam-pgsql-0.6.3/pam_pgsql.c 2008-05-24 19:43:17.000000000 +0200
-@@ -583,7 +583,7 @@
-                if ((rc = pam_get_user(pamh, &user, NULL)) == PAM_SUCCESS) {
-                        if ((rc = get_module_options(argc, argv, &options)) == PAM_SUCCESS) {
-                                DBGLOG("attempting to authenticate: %s", user);
--                               if ((rc = pam_get_pass(pamh, PAM_AUTHTOK, &password, PASSWORD_PROMPT, options->std_flags) == PAM_SUCCESS)) {
-+                               if ((rc = pam_get_pass(pamh, PAM_AUTHTOK, &password, PASSWORD_PROMPT, options->std_flags)) == PAM_SUCCESS) {
-                                        if ((rc = auth_verify_password(pam_get_service(pamh), user, password, rhost, options)) == PAM_SUCCESS) {
-                                                if ((password == 0 || *password == 0) && (flags & PAM_DISALLOW_NULL_AUTHTOK)) {
-                                                        rc = PAM_AUTH_ERR; 
-
-Can I get a CVE id for this one please?
-
-Cheers
-Nico
-
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+- Steve
