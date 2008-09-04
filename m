@@ -1,46 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/24/2
-Message-ID: <4860C0C7.6080302@gentoo.org>
-Date: Tue, 24 Jun 2008 11:39:19 +0200
-From: Christian Hoffmann <hoffie@...too.org>
-To: oss-security@...ts.openwall.com
-CC: coley@...us.mitre.org
-Subject: Re: CVE request: php 5.2.6 ext/imap buffer overflows
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/04/23
+Message-ID: <20080904173203.GA18305@ngolde.de>
+Date: Thu, 4 Sep 2008 19:32:03 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE id request: newsbeuter
 Content-Type: text/plain; charset=utf-8
 
-On 2008-06-23 21:20, Steven M. Christey wrote:
-> ======================================================
-> Name: CVE-2008-2829
-> Status: Candidate
-> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2829
-> Reference: MISC:http://bugs.php.net/bug.php?id=42862
-> Reference: CONFIRM:https://bugs.gentoo.org/show_bug.cgi?id=221969
-> Reference: MLIST:[oss-security] 20080619 CVE request: php 5.2.6 ext/imap buffer overflows
-> Reference: URL:http://www.openwall.com/lists/oss-security/2008/06/19/6
+Hi Steve,
+* Steven M. Christey <coley@...us.mitre.org> [2008-09-04 19:12]:
+> On Thu, 4 Sep 2008, Nico Golde wrote:
 > 
-> php_imap.c in PHP 5.2.5, 5.2.6, 4.x, and other versions, uses obsolete
-> API calls that allow context-dependent attackers to cause a denial of
-> service (crash) via a long IMAP request, which triggers an "rfc822.c
-> legacy routine buffer overflow" error message.
+> > Please use version 1.2 here as the fix for 1.1 was
+> > incomplete.
+> 
+> Our interpretation was that 1.1 fixes the vulnerability, but a
+> non-security bug forced the release of 1.2.  So 1.1, while perhaps
+> unusable in practice, was safe from the vuln.
+> 
+> Was that an incorrect interpretation?
 
-Thanks. I do not have a deeper understanding of the issue in question, 
-but the upstream bug report at bugs.php.net quotes a mail from a 
-c-client developer, which says that the abort() will most likely not 
-catch all possible buffer overflows, and as such allow for the buffer to 
-overflow.
-So, according to the information from the bug, this issue might not only 
-allow for DoS but possibly for code execution as well, at least this is 
-what it looks like to me.
-Maybe you did further investigation and found it to be exploitable as a 
-DoS only, but if this is not the case the description of the CVE entry 
-should be clarified, in my opinion.
+Yes that is correct.
 
-Also, I'm not quote sure why you are explicitily mentioning 5.2.5. To me 
-it looks like all versions of php are affected, so in my opinion this 
-looks a bit confusing. Only a cosmetic thing though.
-
+Kind regards
+Nico
 -- 
-Christian Hoffmann
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-
-Download attachment "signature.asc" of type "application/pgp-signature" (261 bytes)
+Content of type "application/pgp-signature" skipped
