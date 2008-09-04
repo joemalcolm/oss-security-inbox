@@ -1,29 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/17/11
-Message-ID: <Pine.GSO.4.51.0812162121230.5724@faron.mitre.org>
-Date: Tue, 16 Dec 2008 21:24:32 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/04/16
+Message-ID: <Pine.GSO.4.51.0809041249440.29613@faron.mitre.org>
+Date: Thu, 4 Sep 2008 12:49:51 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Eugene Teo <eugeneteo@...nel.sg>
-cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel: applicom: fix an unchecked user ioctl range
+To: oss-security@...ts.openwall.com
+cc: coley@...re.org
+Subject: Re: CVE request: kernel: dio: zero struct dio with kzalloc instead of manually
 Content-Type: text/plain; charset=utf-8
 
 
-On Wed, 17 Dec 2008, Eugene Teo wrote:
+======================================================
+Name: CVE-2007-6716
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6716
+Reference: MLIST:[linux-kernel] 20070731 Re: [PATCH] add check do_direct_IO() return val
+Reference: URL:http://lkml.org/lkml/2007/7/30/448
+Reference: MLIST:[oss-security] 20080904 CVE request: kernel: dio: zero struct dio with kzalloc instead of manually
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/09/04/1
+Reference: CONFIRM:http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=848c4dd5153c7a0de55470ce99a8e13a63b4703f
+Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=461082
+Reference: CONFIRM:http://www.kernel.org/pub/linux/kernel/v2.6/ChangeLog-2.6.23
 
-> Hmm, there's a comment in the ac_ioctl() that the device for this is
-> only accessible by root, so if out of range may not matter. Hmm. So,
-> maybe, maybe not.
+fs/direct-io.c in the dio subsystem in the Linux kernel before 2.6.23
+does not properly zero out the dio struct, which allows local users to
+cause a denial of service (OOPS), as demonstrated by a certain fio
+test.
 
-Our current approach would be, probably not.
 
-We're probably going to see an increase in issues related to IOCTLs
-(simply because we're seeing an increase in CVE, mostly in Windows
-software so far).  So the accessibility of the IOCTL matters - in some
-cases, maybe the IOCTL shouldn't be exposed to anybody untrusted at all
-(maybe you're listening on a socket that allows anyone to connect).  In
-other cases, maybe it can accept requests from untrusted users but then
-has to validate its inputs, like we're seeing with userland-to-kernel
-interfaces.
-
-- Steve
