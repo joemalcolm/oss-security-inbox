@@ -1,35 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/21/4
-Message-ID: <20080721154438.47a3514b@redhat.com>
-Date: Mon, 21 Jul 2008 15:44:38 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/04/7
+Message-ID: <20080904151757.GB2625@ngolde.de>
+Date: Thu, 4 Sep 2008 17:17:57 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Cc: rdancer@...ncer.org, "Jonathan Smith" <smithj@...ethemallocs.com>, coley@...us.mitre.org, "Bram Moolenaar" <Bram@...lenaar.net>, "Charles E Campbell, Jr" <drchip@...pbellfamily.biz>
-Subject: Re: Re: More arbitrary code executions in Netrw version 125, Vim 7.2a.10
+Subject: Re: CVE Request (gpicview)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 21 Jul 2008 12:57:48 +0100 "Jan Minář" <rdancer@...ncer.org>
-wrote:
+Hi,
+* Robert Buchholz <rbu@...too.org> [2008-09-03 11:22]:
+> On Sunday 31 August 2008, Nico Golde wrote:
+> > Same piece of code main-win.c doesn't look too trustworthy
+> > to me either:
+> >
+> >     690     int error = jpegtran (filename, "/tmp/rot.jpg" , code);
+> >     691     if(error)
+> >     692         return error;
+> >     693
+> >     694     //now copy /tmp/rot.jpg back to the original file
+> >     695     char command[strlen(filename)+50]; //this should not
+> > generate buffer owerflow 696     // MS: didn't know, how to make it
+> > better, maybe an own copy routine 697     sprintf(command,"cp
+> > /tmp/rot.jpg \"%s\"",filename); 698     system(command);
+> >
+> > Anyone played with crafted file names?
+> 
+> Good catch! You need to append '.jpg' at the end of the crafed filename 
+> so the rotation via jpegtran is invoked, but besides that it works ok:
+[...] 
+Can we get a second CVE id for this then please?
 
-> Version 109 is probably too old.  There has been a lot of
-> functionality added since, and I presume a lot of refactoring done
-> too.  According to the [0]Netrw version history, marking files (used
-> by netrw.v2 & netrw.v3) was introduced in version 111.
-
-Agree.  netrw 109 bundled with vim 7.1 does not implement mz and mc
-commands, so is not affected by .v2 and .v3.  This was already
-mentioned in this thread.
-
-> On the other hand, these vulnerabilities should not depend on the Vim
-> version; the TIOCSTI method used in netrw.v4 ``test'' target may not
-> be very portable outside Un*x though.
-
-But 109 (and older) is affected by D command / .v4 issue, just the test
-case does not work with 109 out of the box.  Test assumes that the
-cursor in on the line right above the one showing crafted file name,
-but that does not seem to be correct assumption for 109 (netrw version
-differences or locale changes, I haven't really investigated).  See
-suggestion in my other reply.
-
+Kind regards
+Nico
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
