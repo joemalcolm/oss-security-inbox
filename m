@@ -1,33 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/03/4
-Message-ID: <20080603180045.GB30768@openwall.com>
-Date: Tue, 3 Jun 2008 22:00:45 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/04/2
+Message-ID: <48BF756F.3060706@redhat.com>
+Date: Thu, 04 Sep 2008 13:43:11 +0800
+From: Eugene Teo <eteo@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: tool announcements (was: ARP handler Inspection tool released)
+CC: coley@...re.org
+Subject: CVE request: kernel: sunrpc: fix possible overrun on read of /proc/sys/sunrpc/transports
 Content-Type: text/plain; charset=utf-8
 
-Nico,
+Interesting bug.
 
-On Mon, Jun 02, 2008 at 06:53:20PM +0200, Nico Golde wrote:
-> * Solar Designer <solar@...nwall.com> [2008-06-02 16:16]:
-> > I don't mind seeing announcements of security tools related to Open
-> > Source software in here, as long as this does not dominate the list
-> > traffic (in which case we can always setup another list just for those
-> > announcements).  I understand that others may have different opinion
-> > (please speak up).
-> 
-> I don't really mind about announces either, only about 
-> quadrupled ones because of cross-posting :)
+This was committed in upstream kernel recently to address a regression
+introduced in commit dc9a16e49dbba3dd042e6aec5d9a7929e099a89b.
 
-OK, but as I've just tried to explain, this is not always possible or
-feasible for a list moderator to figure out.
+Summary:
+proc_do_xprt() does not check for user-side buffer size. The stack can
+be overwritten by reading /proc/sys/sunrpc/transports even when the
+length given to read() is a small value, i.e. < 38 bytes.
 
-Also, there are not that many security tool announcements on Bugtraq.
-I think that people are often too shy to announce on Bugtraq.  This is
-another reason why I think there's room for a new list, but before one
-is created, we could simply let the announcements to be sent in here,
-regardless of whether they're cross-posted or not.  If this works, then
-create the list.
+Upstream commit:
+27df6f25ff218072e0e879a96beeb398a79cdbc8
 
-Alexander
+References/Reproducer:
+http://lkml.org/lkml/2008/8/30/140
+http://lkml.org/lkml/2008/8/30/184
+
+It probably needs a CVE name. Agree?
+
+Thanks, Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
