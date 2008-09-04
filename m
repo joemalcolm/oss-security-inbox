@@ -1,21 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/22/1
-Message-Id: <200809221757.45784.steffen.joeris@skolelinux.de>
-Date: Mon, 22 Sep 2008 17:57:45 +1000
-From: Steffen Joeris <steffen.joeris@...lelinux.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/04/22
+Message-ID: <Pine.GSO.4.51.0809041307120.29613@faron.mitre.org>
+Date: Thu, 4 Sep 2008 13:07:36 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: proftpd
+Subject: Re: GNU ed heap overflow
 Content-Type: text/plain; charset=utf-8
 
-Hi
 
-proftpd suffers from a Cross-site request forgery. Could we please get a CVE 
-id for this?
+On Mon, 1 Sep 2008, Florian Weimer wrote:
 
-Upstream bugreport with patch:
-http://bugs.proftpd.org/show_bug.cgi?id=3115
+> Interesting.  But this type of command execution is not possible with
+> "red", which suffers from the same overflow.
 
-Cheers
-Steffen
+Does red share the same codebase as ed?  Or is a separate CVE necessary?
 
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+- Steve
