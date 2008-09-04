@@ -1,30 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/11/3
-Message-ID: <20080311231412.GH30843@outflux.net>
-Date: Tue, 11 Mar 2008 16:14:12 -0700
-From: Kees Cook <kees@...flux.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/04/19
+Message-ID: <20080904165556.GC2625@ngolde.de>
+Date: Thu, 4 Sep 2008 18:55:56 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: setrlimit can be avoided (Linux less than 2.6.22)
+Subject: Re: CVE id request: newsbeuter
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi Steve,
+* Steven M. Christey <coley@...us.mitre.org> [2008-09-04 18:49]:
+> ======================================================
+> Name: CVE-2008-3907
+> Status: Candidate
+> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3907
+> Reference: MLIST:[oss-security] 20080901 CVE id request: newsbeuter
+> Reference: URL:http://www.openwall.com/lists/oss-security/2008/09/01/4
+> Reference: CONFIRM:http://www.newsbeuter.org/downloads/CHANGES
+> Reference: BID:30964
+> Reference: URL:http://www.securityfocus.com/bid/30964
+> Reference: SECUNIA:31676
+> Reference: URL:http://secunia.com/advisories/31676
+> 
+> The open-in-browser command in newsbeuter before 1.1 allows remote
+[...] 
+Please use version 1.2 here as the fix for 1.1 was 
+incomplete.
 
-This rlimit-avoiding bug probably needs a CVE associated with it.  Users
-could avoid RLIMIT_CPU by setting it to "0".  The fixes in 2.6.17 did
-not actually fix the problem.
-
-
-Bugs:
-  https://launchpad.net/bugs/107209
-  http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=419706
-
-Fixed in 2.6.22:
-  http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=9926e4c74300c4b31dee007298c6475d33369df0
-
-Thanks,
-
--Kees
-
+Cheers
+Nico
 -- 
-Kees Cook
-Ubuntu Security Team
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
