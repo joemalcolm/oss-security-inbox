@@ -1,47 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/18/1
-Message-ID: <20080818085956.GB29717@suse.de>
-Date: Mon, 18 Aug 2008 10:59:56 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/04/14
+Message-ID: <Pine.GSO.4.51.0809041248260.29613@faron.mitre.org>
+Date: Thu, 4 Sep 2008 12:48:38 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: mktemp
+cc: coley@...re.org
+Subject: Re: django CSRF vuln
 Content-Type: text/plain; charset=utf-8
 
 
-BTW, mktemp(1) is using O_EXCL anyway, so I dont see
-an issue. Additionally all of our scripts use
-more than 6 X' as also shown in the
-example section of the manpage. We are not going to
-release updates for this non-issue.
+======================================================
+Name: CVE-2008-3909
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3909
+Reference: MLIST:[oss-security] 20080903 django CSRF vuln
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/09/03/4
+Reference: CONFIRM:http://www.djangoproject.com/weblog/2008/sep/02/security/
 
-l8er,
-Sebastian
+The administration application in Django 0.91, 0.95, and 0.96 stores
+unauthenticated HTTP POST requests and processes them after successful
+authentication occurs, which allows remote attackers to conduct
+cross-site request forgery (CSRF) attacks and delete or modify data
+via unspecified requests.
 
-On Fri, Aug 15, 2008 at 01:55:50PM +0200, Nico Golde wrote:
-
-> Hi,
-> mktemp (not the coreutils one) from 
-> ftp://ftp.mktemp.org/pub/mktemp/ is not generating fully 
-> random names. Steve, can you assign a CVE id to this?
-> 
-> This is 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=495193
-> I wrote an explanation on why this happens, available on:
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=495193#30
-> 
-> Kind regards
-> Nico
-> 
-> -- 
-> Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-> For security reasons, all text in this mail is double-rot13 encrypted.
-
-
-
--- 
-~
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-~ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
 
