@@ -1,29 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/26/3
-Message-ID: <20080226183230.GA24290@ngolde.de>
-Date: Tue, 26 Feb 2008 19:32:30 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/04/13
+Message-ID: <Pine.GSO.4.51.0809041240570.29613@faron.mitre.org>
+Date: Thu, 4 Sep 2008 12:44:44 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: vlc
+Subject: Re: request for CVE: clamav 0.94 release
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
-can I get a CVE id for vlc because of the following issue?
 
-The mp4 demuxer of vlc is missing validation of array 
-boundaries and thus allows overwriting arbitrary memory.
+On Wed, 3 Sep 2008, Marcus Meissner wrote:
 
-For more details see:
-http://www.videolan.org/security/sa0802.html
+> The full changelog has those apparent security related entries:
+>  * fix out-of-memory null dereferenc (bb#1141)
 
-Patch:
-http://www.videolan.org/patches/vlc-0.8.6-CORE-2008-0130.patch
+Use CVE-2008-3912, to be filled in later.  I have mixed opinions on
+out-of-memory null dereferences, though in security software it seems
+reasonable to flag it.
 
-Cheers
-Nico
+>  * fix possible invalid memory access (bb#1089)
 
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+CVE-2008-1389 as mentioned by Hanno.
 
-Content of type "application/pgp-signature" skipped
+>  * fix error path memleaks and fd leaks (bb#1141)
+
+Use CVE-2008-3913 for the memory leak.
+
+Use CVE-2008-3914 for the fd leak.
+
+- Steve
