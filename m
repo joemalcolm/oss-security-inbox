@@ -1,22 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/06/2
-Message-Id: <200809061151.21737.steffen.joeris@skolelinux.de>
-Date: Sat, 6 Sep 2008 11:51:13 +1000
-From: Steffen Joeris <steffen.joeris@...lelinux.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE id requests: gmanedit
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/04/9
+Message-ID: <Pine.GSO.4.51.0809041158300.29613@faron.mitre.org>
+Date: Thu, 4 Sep 2008 12:01:04 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com, oss-security@...ts.openwall.com
+cc: coley@...re.org
+Subject: Re: CVE Request (ruby -- DNS spoofing vulnerability in resolv.rb)
 Content-Type: text/plain; charset=utf-8
 
-Hi
 
-There are two possible buffer overflows in gmanedit. One is via crafted 
-configuration file and the other one via crafted manual page.
-See the Debian bug report for more information.
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=497835
+On Wed, 3 Sep 2008, Jan Lieskovsky wrote:
 
-Could I please get CVE ids for these issues?
+>   could you please allocate an another CVE id
+> for the DNS spoofing vulnerability in Ruby resolv.rb code.
+>
+> http://www.ruby-lang.org/en/news/2008/08/08/multiple-vulnerabilities-in-ruby/
+> (part DNS spoofing vulnerability in resolv.rb)
+>
+>...
+>
 
-Cheers
-Steffen
+> The transaction IDs are assigned in sequential (n+1 order) and the
+> source ports are always the same.
 
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+Use CVE-2008-3905, to be filled in soon.
+
+We're treating this as a distinct issue because this is *REALLY* bad
+randomness within a particular implementation, besides the inherent
+limitation of DNS when source ports are fixed.
+
+- Steve
