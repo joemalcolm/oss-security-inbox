@@ -1,49 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/03/5
-Message-ID: <20080703192115.GJ18550@linsec.ca>
-Date: Thu, 3 Jul 2008 13:21:15 -0600
-From: Vincent Danen <vdanen@...sec.ca>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/04/10
+Message-ID: <Pine.GSO.4.51.0809041220150.29613@faron.mitre.org>
+Date: Thu, 4 Sep 2008 12:20:34 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE Request (pidgin)
+cc: coley@...re.org
+Subject: Re: CVE request: mono Sys.Web header injection
 Content-Type: text/plain; charset=utf-8
 
-* [2008-07-01 17:25:40 -0400] Steven M. Christey wrote:
 
->======================================================
->Name: CVE-2008-2956
->Status: Candidate
->URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2956
->Reference: MISC:http://crisp.cs.du.edu/?q=ca2007-1
->Reference: MLIST:[oss-security] 20080627 CVE Request (pidgin)
->Reference: URL:http://www.openwall.com/lists/oss-security/2008/06/27/3
->
->Memory leak in Pidgin 2.0.0, and possibly other versions, allows
->remote attackers to cause a denial of service (memory consumption) via
->malformed XML documents.
->
->
->======================================================
->Name: CVE-2008-2957
->Status: Candidate
->URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2957
->Reference: MISC:http://crisp.cs.du.edu/?q=ca2007-1
->Reference: MLIST:[oss-security] 20080627 CVE Request (pidgin)
->Reference: URL:http://www.openwall.com/lists/oss-security/2008/06/27/3
->
->The UPnP functionality in Pidgin 2.0.0, and possibly other versions,
->allows remote attackers to trigger the download of arbitrary files and
->cause a denial of service (memory or disk consumption) via a UDP
->packet that specifies an arbitrary URL.
+======================================================
+Name: CVE-2008-3906
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3906
+Reference: MLIST:[oss-security] 20080827 CVE request: mono Sys.Web header injection
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/08/27/6
+Reference: CONFIRM:https://bugzilla.novell.com/show_bug.cgi?id=418620
+Reference: BID:30867
+Reference: URL:http://www.securityfocus.com/bid/30867
+Reference: FRSIRT:ADV-2008-2443
+Reference: URL:http://www.frsirt.com/english/advisories/2008/2443
+Reference: SECUNIA:31643
+Reference: URL:http://secunia.com/advisories/31643
 
-There are patches with the original advisory for these two.  Has anyone
-had a chance to look at them to make sure they're ok?  I don't see any
-references to any of these issues on the pidgin website and no vendors
-have issued pidgin updates for these that I can see, so I'm wondering if
-anyone has looked at these patches (be it vendors or upstream) to
-determine whether or not they're sufficient and/or suitable to apply to
-a security update.
+CRLF injection vulnerability in Sys.Web in Mono 2.0 and earlier allows
+remote attackers to inject arbitrary HTTP headers and conduct HTTP
+response splitting attacks via CRLF sequences in the query string.
 
--- 
-Vincent Danen @ http://linsec.ca/
 
-Content of type "application/pgp-signature" skipped
