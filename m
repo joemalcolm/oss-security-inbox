@@ -1,18 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/23/7
-Message-ID: <Pine.GSO.4.51.0804231158190.10164@faron.mitre.org>
-Date: Wed, 23 Apr 2008 12:01:32 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/04/15
+Message-ID: <Pine.GSO.4.51.0809041249120.29613@faron.mitre.org>
+Date: Thu, 4 Sep 2008 12:49:16 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: web archives
+Subject: Re: CVE id request: dns2tcp
 Content-Type: text/plain; charset=utf-8
 
 
-The archives as stored at
-http://www.openwall.com/lists/oss-security/2008/04/ etc. only list posts
-using sequence numbers.  Would it be easy to list these by subject line,
-author, and/or in a threaded basis?  I find it hard to navigate when I'm
-looking for a particular post.
+======================================================
+Name: CVE-2008-3910
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3910
+Reference: MLIST:[oss-security] 20080904 CVE id request: dns2tcp
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/09/03/5
+Reference: CONFIRM:http://www.hsc.fr/ressources/outils/dns2tcp/index.html.en
 
-Thanks for the consideration,
-Steve
+dns2tcp before 0.4.1 does not properly handle negative values in a
+certain length field in the input argument to the (1)
+dns_simple_decode or (2) dns_decode function, which allows remote
+attackers to overwrite a buffer and have unspecified other impact.
+
+
