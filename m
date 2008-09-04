@@ -1,29 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/25/4
-Message-ID: <57833.82.67.177.178.1206453867.squirrel@mail.rofes.fr>
-Date: Tue, 25 Mar 2008 15:04:27 +0100 (CET)
-From: "Pierre-Yves Rofes" <py@...too.org>
-To: "Nico Golde" <oss-security+ml@...lde.de>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Need CVEs for joomla, egroupware
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/04/6
+Message-ID: <20080904151641.GA2625@ngolde.de>
+Date: Thu, 4 Sep 2008 17:16:41 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request (gpicview)
 Content-Type: text/plain; charset=utf-8
 
-On Tue, March 25, 2008 2:17 pm, Nico Golde wrote:
-> * Nico Golde <oss-security+ml@...lde.de> [2008-03-25 14:16]:
->> * Hanno Böck <hanno@...eck.de> [2008-03-25 14:03]:
->> > egroupware: www.egroupware.org states this:
->> > eGroupWare 1.4.003 Security- and bugfix-release
->> > * fixed security problem reported by lukasz.pilorz@...egro.pl
->>
->> Already requested CVE ids for this one.
->
-> I have to add that I didn't post to this list because I
-> included the details for this vulnerability which seem to be
-> under embargo :/
+Hi Jan,
+* Jan Lieskovsky <jlieskov@...hat.com> [2008-09-01 11:25]:
+> On Sun, 2008-08-31 at 01:46 +0200, Nico Golde wrote:
+> > Same piece of code main-win.c doesn't look too trustworthy 
+> > to me either:
+> > 
+> >     690     int error = jpegtran (filename, "/tmp/rot.jpg" , code);
+> >     691     if(error)
+> >     692         return error;
+> >     693 
+> >     694     //now copy /tmp/rot.jpg back to the original file
+> >     695     char command[strlen(filename)+50]; //this should not generate buffer owerflow
+> >     696     // MS: didn't know, how to make it better, maybe an own copy routine
+> >     697     sprintf(command,"cp /tmp/rot.jpg \"%s\"",filename);
+> >     698     system(command);
+> 
+> CVE-2008-3791 was allocated to handle the security issue related
+[...] 
+This only covers the insecure temporary file name creation.
 
-Not anymore, according to http://secunia.com/advisories/29491/
-
+Cheers
+Nico
 -- 
-Pierre-Yves Rofes
-Gentoo Linux Security Team
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
+Content of type "application/pgp-signature" skipped
