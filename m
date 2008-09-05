@@ -1,31 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/22/4
-Message-id: <1203647455.3811.TMDA@linsec.ca>
-Date: Thu, 21 Feb 2008 19:29:17 -0700
-From: Vincent Danen <vdanen@...sec.ca>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/05/1
+Message-ID: <48C0F57B.70300@redhat.com>
+Date: Fri, 05 Sep 2008 17:01:47 +0800
+From: Eugene Teo <eteo@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2008-0416 for mozilla-firefox; details request
+CC: coley@...re.org
+Subject: CVE request: kernel: local keyboard DoS through LED switching
 Content-Type: text/plain; charset=utf-8
 
-The CVE entry for this one is horribly obscure, and only Ubuntu has
-noted it.  I don't even see it referenced in an MFSA on mozilla's site.
+This old issue needs a CVE name.
 
-Kees, is this specific to 1.5.x, do you know?  Or anyone else for that
-matter?  The CVE entry reads:
+"[PATCH] Input: atkbd - throttle LED switching
 
-Multiple unspecified vulnerabilities in Mozilla Firefox, as used in
-Ubuntu 6.06 through 7.10 and possibly other distributions, allow remote
-attackers to conduct cross-site scripting (XSS) attacks via unknown
-vectors related to character encoding.
+On some boxes keyboard controllers are too slow to withstand
+continuous flow of requests to turn keyboard LEDs on and off
+and start losing some keypresses or even all of them.
 
-Doesn't indicate a version, but Ubuntu's advisory is providing a
-1.5.0.15 (pre-patch?), so I'd like to know if this affects 2.0.0.11 (and
-is fixed in 2.0.0.12?), or if this is still unresolved in upstream 2.0.x
-(or doesn't affect it all).
+Delay executing of LED switching request if we had another one
+within 50 ms thus easing load on the controller."
 
-More details would be fabulous.  Thanks.
+Upstream commit:
+da4249c99fd59c4e224e4f9acaf07669d205bb1d
 
+Reproducer:
+while true; do setleds +num; setleds -num; done
+
+Reference:
+http://lkml.org/lkml/2007/6/15/22
+
+Thanks, Eugene
 -- 
-Vincent Danen @ http://linsec.ca/
-
-Content of type "application/pgp-signature" skipped
+Eugene Teo / Red Hat Security Response Team
