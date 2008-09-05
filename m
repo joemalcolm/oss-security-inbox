@@ -1,36 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/25/5
-Message-ID: <20080525145409.GA308@ngolde.de>
-Date: Sun, 25 May 2008 16:54:09 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/05/2
+Message-Id: <200809051528.36357.ludwig.nussel@suse.de>
+Date: Fri, 5 Sep 2008 15:28:35 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: xscreensaver
+Cc: cve@...re.org
+Subject: Re: opensc 0.11.6 with fixed security update
 Content-Type: text/plain; charset=utf-8
 
-Hi Tomas,
-* Tomas Hoger <thoger@...hat.com> [2008-05-25 15:52]:
-> On Sun, 25 May 2008 18:29:13 +1000 Steffen Joeris
-> <steffen.joeris@...lelinux.de> wrote:
-> > Pierre Habouzit discovered that resizing with the xrandr tool can
-> > crash xscreensaver.
-> > 
-> > Debian Bug report:
-> > http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=482385
-> > 
-> > The tested version of xscreensaver is 5.05-1, but at the moment there
-> > is no reason to assume that the bug did not exist in previous
-> > versions.
+Andreas Jellinghaus wrote:
+> this is a copy of a new security announcement we had to make, already public.
+> our last security update with OpenSC 0.11.5 had a small glitch, so this 
+> version fixes that glitch. Please everyone update the opensc packages in your
+> distribution.
+> [...]
+> This is an update to our security advisory 31-Jul-2008. 
 > 
-> Is there any known attack vector crossing trust boundary?  Usage of
-> xrandr should be fully under the control of the user running
-> xscreensaver.
+> Chaskiel M Grundman found a security vulnerability in OpenSC. The 
+> vulnerability has been fixed in OpenSC 0.11.6. In Mitre's CVE dictionary this 
+> issue is filed under CVE-2008-2235. Users will need to 
+> run "pkcs15-tool -T -U" to test (-T) and update (-U) the security settings on 
+> their card. 
 
-I don't see any, looks more like an normal application bug to me.
+I guess this need a new CVE number then?
 
-Kind regards
-Nico
+cu
+Ludwig
+
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+ (o_   Ludwig Nussel
+ //\   
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
 
-Content of type "application/pgp-signature" skipped
