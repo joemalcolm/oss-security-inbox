@@ -1,28 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/17/6
-Message-Id: <200806171155.10842.turkay.eren@gmail.com>
-Date: Tue, 17 Jun 2008 11:55:10 +0300
-From: Eren Türkay <turkay.eren@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/06/1
+Message-ID: <48C1D1FF.7050704@redhat.com>
+Date: Sat, 06 Sep 2008 08:42:39 +0800
+From: Eugene Teo <eteo@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: edwin@...mav.net
-Subject: Re: CVE id request: Clamav
+CC: Till Maas <opensource@...l.name>, fedora-security-list@...hat.com, coley@...re.org
+Subject: CVE request: pam_mount: conf: re-add luserconf security checks
 Content-Type: text/plain; charset=utf-8
 
-On 17 Jun 2008 Tue 10:38:13 Eren Türkay wrote:
->   * libclamav/mbox.c, shared/network.c: prevent uninitialized use of
-> hostent structure (bb #1003).
->
-> The bug entry says that after zip file's arriving at clamd, it suddenly
-> dies and nothing can be retrieved thereafter. Clamav developer also
-> comfirms that this happens when MailFollowURLs is enabled.
+Till Maas wrote:
+> On Fri September 5 2008, Till Maas wrote:
+> 
+>> pam_mount just released an update that fixes a security vulnerability:
+>> https://sourceforge.net/project/shownotes.php?release_id=624240
+> 
+> Will someone create the needed tracking bugs[1] for this and maybe request / 
+> assign a CVE number?
 
-Hello,
+This email was posted in fedora-security-list@rc.
 
-I talked to Edwin on #clamav channel. He says this is a rare-case and he 
-thinks that it's a vulnerability rather than a security flaw.
+v0.47 (September 04 2008)
+=========================
+This release incorporates a security fix (item 3 on the list).
+All administrators who have enabled <luserconf> in the configuration
+file should upgrade. A workaround is to comment out <luserconf>.
 
-Edwin, could you please inform us about important vulnerabilities/security 
-flaws fixed in 0.93.1?
+- mount.crypt: add missing null command to conform to sh syntax
+  (SF bug #2089446)
+- conf: fix printing of strings when luser volume options were not ok
+- conf: re-add luserconf security checks
+[...]
 
-My best regards,
-Eren
+https://sourceforge.net/project/shownotes.php?release_id=624240
+http://dev.medozas.de/gitweb.cgi?p=pam_mount;a=commitdiff;h=33b91d7659ae3aa78b1e94fd3f8e545ae5ff25db
+
+Thanks, Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
