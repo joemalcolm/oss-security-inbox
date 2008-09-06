@@ -1,67 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/03/2
-Message-ID: <20080603161200.GA9417@steve.org.uk>
-Date: Tue, 3 Jun 2008 17:12:01 +0100
-From: Steve Kemp <steve@...ve.org.uk>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/06/3
+Message-Id: <200809061323.20555.hanno@hboeck.de>
+Date: Sat, 6 Sep 2008 13:23:20 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: code reviews (was: ARP handler Inspection tool released)
+Cc: coley@...re.org
+Subject: CVE request: pam_mount < 0.47 missing security checks
 Content-Type: text/plain; charset=utf-8
 
-On Mon Jun 02, 2008 at 18:10:53 +0400, Solar Designer wrote:
+Citing release notes mail:
 
-> I feel that it'd be nice if a list existed where one could ask for some
-> source code to be reviewed - and get useful feedback.  We had the
-> security-audit list in late 1990s that kind of worked like that; 
+About the security issue
+========================
+
+During code refactoring approximately 3 years ago, are affected), some 
+sanity/security checks for user-defined volumes were, probably 
+accidentally, removed. This allowed users to mount arbitrary sources 
+onto arbitrary directories; normally, they can only do so when they own 
+the mountpoint, and own the source, or the source is a non-local mount.
+
+Versions 0.10 through 0.45 are affected. The correct behavior enforcing 
+these restrictions has been restored in 0.47. By default, user-defined 
+configuration files are disabled in pam_mount.conf.xml anyway, and it is 
+believed that luserconf-enabled systems are not numerous, so this is 
+only a minor issue. It is advised to upgrade the affected systems, or as 
+a workaround, disable user-defined volumes by commenting out the 
+<luserconf ...> configuration item.
 
 
-> Do we have people like the security-audit activists of late 1990s in
-> here?  (I know that some of the same people are in fact in here, but I'm
-> sure that they have changed - similarly to the way I have changed.  So I
-> mean people "like" those who were active on security-audit at the time
-> and who are in this shape now.)
-
-  I setup the Debian security audit project with the intention that
- people would volunteer to do this.  I guess I found 20-50 issues of
- pretty low severity in my stint, and had hoped to find more.
-
-  The specific problem at the time the audit was started was that
- very few people had the time, the skills, and the motivation to
- join in and help.
-
-  Optimistically if there were people volunteering here I'd be willing
- to spend more of my time on that kind of work myself.  Pessimistically
- people find the work time-consuming and difficult.  Without a few big
- holes found early on many many people lose interest.
-
-  (Me personally I found my time was taken up with other issues, and
- from memory the most prolific auditors that I managed to hook up with
- managed to get jobs in the security field and so they started auditing
- behind closed doors - at least one person told me he was no longer
- allowed to take part in public audits.  Understandable, but
- frustrating.)
-
-> I find it highly unlikely that anyone, even
-> the kind of people I mentioned above, would bother downloading a tarball
-> of something they had never heard of to do a security audit of it -
-> unless this is paid work.
-
-  Indeed.
-
-  My initial aim was to divide the Debian archive into "high" and "low"
- risk packages and then only look at the high-risk ones.  (Where
- high-risk meant setuid/setgid or network accessible.)
-
-  Random programs that people point me at aren't terribly interesting
- *unless* I happen to use them myself! ;)
-
-> Now, do any/all of you find my posting appropriate? ;-)
-
-  Yes!
-
-  One interesting recent development I was watching was the google
- audits. I know nothing of the details, but I do recall that several
- issues were reported to vendor sec with a "google audit" "ownership".
-
-Steve
 -- 
-http://www.steve.org.uk/
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
