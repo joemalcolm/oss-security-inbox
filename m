@@ -1,29 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/19/3
-Message-ID: <20081119190745.GJ11234@outflux.net>
-Date: Wed, 19 Nov 2008 11:07:45 -0800
-From: Kees Cook <kees@...ntu.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/08/1
+Message-ID: <20080908093608.2e28237d@redhat.com>
+Date: Mon, 8 Sep 2008 09:36:08 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...re.org>
-Subject: CVE request: CUPS DoS via RSS subscriptions
+Cc: vmiklos@...galware.org, coley@...re.org
+Subject: Re: CVE request for bitlbee
 Content-Type: text/plain; charset=utf-8
 
-Hello!
+On Sat, 30 Aug 2008 01:24:14 +0200 Miklos Vajna
+<vmiklos@...galware.org> wrote:
 
-I'd like to get a CVE assigned for the RSS subscription DoS mentioned
-here[1].  It seems that CUPS upstream already fixed[2] the issue[3] in
-their 1.3.8 release.  Prior to 1.3.8, the server can be made to crash
-when visiting a malicious website due to CUPS general CSRF issues.
+> bitlbee-1.2.2 is released, and it comes with a NULL pointer
+> dereference fix, which allows people to hijack accounts.
+> 
+> More info:
+> 
+> http://bitlbee.org/main.php/changelog.html
 
-Thanks,
+This issue fixed in 1.2.2 was assigned CVE id CVE-2008-3920:
 
--Kees
+  Unspecified vulnerability in BitlBee before 1.2.2 allows remote
+  attackers to "recreate" and "hijack" existing accounts via unspecified
+  vectors.
 
-[1] https://bugs.launchpad.net/ubuntu/+source/cups/+bug/298241
-    http://www.gnucitizen.org/blog/pwning-ubuntu-via-cups/
-[2] http://www.cups.org/strfiles/2774/str2774.patch
-[3] http://www.cups.org/str.php?L2774
+However, upstream released 1.2.3 in the meantime, fixing the incomplete
+fix in 1.2.2.  Quoting news page:
+
+  Unfortunately 1.2.2 did not fix all possible account hijacking
+  loopholes. Another very similar flaw was found by Tero Marttila. In
+  the migration to the user configuration storage abstraction layer, a
+  few safeguards that prevent overwriting existing accounts disappeared.
+  Over the week I went over all the related code to make sure that
+  everything's done in a sane, safe and consistent way.
+
+  http://www.bitlbee.org/main.php/news.r.html
+
+And changelog:
+
+  Version 1.2.3 (released 2008-09-07) hilights:
+    * Fixed a security issue similar to the previous account overwrite/hijack bug.
+
+  http://www.bitlbee.org/main.php/changelog.html
+
+This should probably get a new id.
 
 -- 
-Kees Cook
-Ubuntu Security Team
+Tomas Hoger / Red Hat Security Response Team
