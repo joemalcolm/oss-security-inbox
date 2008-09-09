@@ -1,26 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/12/2
-Message-ID: <Pine.GSO.4.51.0804121520500.20756@faron.mitre.org>
-Date: Sat, 12 Apr 2008 15:20:57 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: openfire <3.5.0 Denial of Service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/09/18
+Message-ID: <48C69186.4020702@redhat.com>
+Date: Tue, 09 Sep 2008 23:08:54 +0800
+From: Eugene Teo <eteo@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, coley@...re.org
+Subject: Re: CVE request: kernel: local keyboard DoS through LED switching
 Content-Type: text/plain; charset=utf-8
 
+Steven M. Christey wrote:
+> On Tue, 9 Sep 2008, Eugene Teo wrote:
+> 
+>>> Can this be exploited by anyone except the person sitting at the keyboard?
+>> I don't think so. It requires physical access to the console.
+> 
+> Then perhaps they can use the unplug exploit to DoS the whole system ;-)
 
-======================================================
-Name: CVE-2008-1728
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1728
-Reference: MISC:http://www.igniterealtime.org/fisheye/changelog/svn-org?cs=10031
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/04/10/7
-Reference: CONFIRM:http://www.igniterealtime.org/issues/browse/JM-1289
-Reference: MLIST:[oss-security] 20080411 CVE request: openfire <3.5.0
-Reference: SECUNIA:29751
-Reference: URL:http://secunia.com/advisories/29751
+Well... heh :)
 
-ConnectionManagerImpl.java in Ignite Realtime Openfire 3.4.5 allows
-remote attackers to cause a denial of service (daemon outage) by
-triggering large outgoing queues without reading messages.
+> Do you have an alternate interpretation of the issue?
 
+Not really. Interesting. I guess this don't need a CVE name then.
 
+Thanks, Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
