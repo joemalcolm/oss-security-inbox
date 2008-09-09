@@ -1,21 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/05/7
-Message-ID: <Pine.LNX.4.64.0804050917450.15329@forced.attrition.org>
-Date: Sat, 5 Apr 2008 09:18:33 +0000 (UTC)
-From: security curmudgeon <jericho@...rition.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/09/8
+Message-ID: <Pine.GSO.4.51.0809091032460.6699@faron.mitre.org>
+Date: Tue, 9 Sep 2008 10:32:58 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: wiki: vendor info
+Subject: Re: CVE request (libpng)
 Content-Type: text/plain; charset=utf-8
 
 
-: I'd like to point out that email addresses aren't obfuscated on 
-: osvdb.org.  Perhaps this is something to fix?  Meanwhile I updated 
-: Openwall info there and provided our security e-mail in the obfuscated 
-: form.
+On Tue, 9 Sep 2008, [UTF-8] Pınar Yanarda�^_ wrote:
 
-I'll talk to our dev. On 1.0, they were obfuscated to prevent harvesting. 
-A few months ago we launched 2.0, which was a full re-write in RoR. That 
-little feature must have been overlooked. I will open a ticket and 
-prioritive it.
+> libpng 1.2.32beta01 fixes an off-by-one error within the
+> "png_push_read_zTXt()" function in pngread.c when processing malicious
+> PNG images with specially crafted zTXt chunks.
 
-Brian
+Use CVE-2008-3964, to be filled in later.
+
+- Steve
