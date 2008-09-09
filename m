@@ -1,24 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/08/12
-Message-ID: <Pine.GSO.4.51.0807081353030.16947@faron.mitre.org>
-Date: Tue, 8 Jul 2008 13:53:48 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/09/9
+Message-ID: <Pine.GSO.4.51.0809091033250.6699@faron.mitre.org>
+Date: Tue, 9 Sep 2008 10:37:18 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Jonathan Smith <smithj@...ethemallocs.com>
-cc: vim_dev@...glegroups.com, "Steven M. Christey" <coley@...us.mitre.org>, "Charles E Campbell, Jr" <drchip@...pbellfamily.biz>, oss-security@...ts.openwall.com
-Subject: Re: More arbitrary code executions in Netrw version 125, Vim 7.2a.10
+To: oss-security@...ts.openwall.com
+cc: coley@...re.org
+Subject: Re: CVE request: mybb < 1.4.1
 Content-Type: text/plain; charset=utf-8
 
 
-On Mon, 7 Jul 2008, Jonathan Smith wrote:
+On Tue, 9 Sep 2008, Hanno [utf-8] Böck wrote:
 
-> Steve, could we get CVEs assigned, please? I'd imagine we'd need three;
-> one for the tarplugin issue, one for the zipplugin, and one for the
-> netrw issues (which are similar enough to probably justify lumping them
-> together).
+> http://community.mybboard.net/showthread.php?tid=36022
+>
+> Hmm, they mention vulns, but they don't give any info about...
 
-CVE-2008-3074 - tarplugin
-CVE-2008-3075 - zipplugin
-CVE-2008-3076 - netrw issues
+That post links to a patch file that gives a lot of clues:
+
+http://community.mybboard.net/attachment.php?aid=10579
+
+Looks like:
+
+
+CVE-2008-3965
+-------------
+misc.php - SQL injection
+
+
+CVE-2008-3966
+-------------
+usercp2.php, inc/functions_online.php,  moderation.php - XSS
+
+
+CVE-2008-3967
+-------------
+moderation.php also has some privilege/permission checking (see
+"is_moderator_by_tids")
+
 
 These will be filled in later.
 
