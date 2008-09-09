@@ -1,31 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/31/2
-Message-ID: <g1r2gi$96g$1@ger.gmane.org>
-Date: Sat, 31 May 2008 08:33:22 +0000 (UTC)
-From: Mike Frysinger <vapier@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/09/12
+Message-ID: <Pine.GSO.4.51.0809091040100.6699@faron.mitre.org>
+Date: Tue, 9 Sep 2008 10:41:02 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSH key blacklisting
+cc: coley@...re.org
+Subject: Re: CVE request: pam_mount < 0.47 missing security checks
 Content-Type: text/plain; charset=utf-8
 
-On Sat, 17 May 2008 01:50:00 +0400, Solar Designer wrote:
-> Thanks for the "bug" reference.  FWIW, the shell script in this comment
-> is vulnerable itself, in more than one way:
-> 
-> 	http://bugs.gentoo.org/show_bug.cgi?id=221759#c9
-> 
-> For example, it lets a user have any other user's or root's
-> authorized_keys removed, by replacing .ssh with a symlink to someone
-> else's .ssh directory.  It's just bad practice to access users' files as
-> root (or as another user); this is difficult to do safely.
-> 
-> Also, it misses authorized_keys2.
 
-while the issues you raise are certainly valid in the general case, i 
-wrote it for use on a constrained system -- users are not allowed login 
-nor are they allowed to control any files directly.  it's a gforge 
-system, so all keys are managed via a web interface and the ssh backend 
-is only for committing to svn/cvs/git repositories.  so in this setup, 
-none of the concerns you raise need to be accounted for.  i leave it up 
-to others to extend it for their own safe use ;).
--mike
+On Sat, 6 Sep 2008, Hanno [utf-8] Böck wrote:
 
+> During code refactoring approximately 3 years ago, are affected), some
+> sanity/security checks for user-defined volumes were, probably
+> accidentally, removed.
+
+Use CVE-2008-3970 for this meta-fix.
+
+- Steve
