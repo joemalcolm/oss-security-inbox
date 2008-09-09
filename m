@@ -1,41 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/27/2
-Message-Id: <1225124564.10262.15.camel@dhcp-lab-164.englab.brq.redhat.com>
-Date: Mon, 27 Oct 2008 17:22:44 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security@...ts.openwall.com, coley@...re.org
-Subject: CVE request -- Python imageop#3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/09/17
+Message-ID: <Pine.GSO.4.51.0809091058560.6699@faron.mitre.org>
+Date: Tue, 9 Sep 2008 11:01:26 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Eugene Teo <eteo@...hat.com>
+cc: oss-security@...ts.openwall.com, coley@...re.org
+Subject: Re: CVE request: kernel: local keyboard DoS through LED switching
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve,
 
-  could you please allocate a new CVE id for the
-following Python integer / buffer overflow in imageop module -
-from commit log:
+On Tue, 9 Sep 2008, Eugene Teo wrote:
 
-"fix security issue 2: imageop's poor validation of arguments could
-result in segfaults"
+> > Can this be exploited by anyone except the person sitting at the keyboard?
+>
+> I don't think so. It requires physical access to the console.
 
-Proposed patch:
-against trunk: http://svn.python.org/view?rev=66689&view=rev
-against release-25maint: http://svn.python.org/view?rev=66690&view=rev
+Then perhaps they can use the unplug exploit to DoS the whole system ;-)
 
-Affected Python versions: 1.5.2 through 2.5.1
+Do you have an alternate interpretation of the issue?
 
-This issue yet different one, than two previous Python imageop
-related security issues (CVE-2007-4965 and CVE-2008-1679):
-
-CVE-2007-4965 imageop module heap overflow / corruption / infinite loop)
-its patch against trunk: http://svn.python.org/view?rev=65880&view=rev
-its patch against release-25maint: http://svn.python.org/view?rev=65878&view=rev
-
-CVE-2008-1679 (imageop integer overflow -incomplete fix of CVE-2007-4965)
-advisory: https://issues.rpath.com/browse/RPL-2424
-patch:  http://bugs.python.org/file9975/python-2.5-int-overflow-2.patch
-The patch for this issue has been in upstream included into CVE-2008-4965.patch.
-
-
-Thanks, Jan.
--- 
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
+- Steve
