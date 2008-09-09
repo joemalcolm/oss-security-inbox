@@ -1,34 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/18/1
-Message-ID: <Pine.GSO.4.51.0807181143320.17955@faron.mitre.org>
-Date: Fri, 18 Jul 2008 11:43:55 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/09/3
+Message-ID: <48C5EA91.4000602@pardus.org.tr>
+Date: Tue, 09 Sep 2008 06:16:33 +0300
+From: Pınar Yanardağ <pinar@...dus.org.tr>
 To: oss-security@...ts.openwall.com
-cc: steffen.joeris@...lelinux.de
-Subject: Re: CVE id request: Clamav
+Subject: CVE request (libpng)
 Content-Type: text/plain; charset=utf-8
 
+Hi all,
 
-On Tue, 8 Jul 2008, Tomas Hoger wrote:
+libpng 1.2.32beta01 fixes an off-by-one error within the 
+"png_push_read_zTXt()" function in pngread.c when processing malicious 
+PNG images with specially crafted zTXt chunks.
 
-> Does anyone have more info?  From commit message, it looks like DoS, so
-> probably worth new id for an incomplete fix.
+ From release notes [1]:
 
-======================================================
-Name: CVE-2008-3215
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3215
-Reference: MLIST:[oss-security] 20080708 Re: CVE id request: Clamav
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/07/08/5
-Reference: MLIST:[oss-security] 20080715 Re: CVE id request: Clamav
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/07/15/1
-Reference: CONFIRM:http://lurker.clamav.net/message/20080707.155612.ad411b00.en.html
-Reference: CONFIRM:http://svn.clamav.net/websvn/diff.php?repname=clamav-devel&path=/branches/0.93/libclamav/petite.c&rev=3920
-Reference: CONFIRM:https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1000#c4
+*Notes:* Fixed 1-byte buffer overflow in pngpread.c Fixed 1-byte buffer 
+overflow in pngtest.c
 
-libclamav/petite.c in ClamAV before 0.93.3 allows remote attackers to
-cause a denial of service via a malformed Petite file that triggers an
-out-of-bounds memory access.  NOTE: this issue exists because of an
-incomplete fix for CVE-2008-2713.
+[1]: http://sourceforge.net/project/shownotes.php?release_id=624518
 
+Reference: 
+http://sourceforge.net/tracker/index.php?func=detail&aid=2095669&group_id=5624&atid=105624
+
+Cheers,
+
+-- 
+Pınar Yanardağ
+http://pinguar.org
+_____________________________
+
+"Always program as if the person who will be maintaining your program is a violent psychopath that knows where you live."
+-- Martin Golding
 
