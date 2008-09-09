@@ -1,40 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/15/4
-Message-ID: <4946DFBC.1060800@gentoo.org>
-Date: Mon, 15 Dec 2008 23:52:44 +0100
-From: Christian Hoffmann <hoffie@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/09/19
+Message-ID: <20080909170129.GD11131@ngolde.de>
+Date: Tue, 9 Sep 2008 19:01:29 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-CC: jlieskov@...hat.com, Raphael Geissert <atomo64+debian@...il.com>
-Subject: Re:  Re: CVE Request - roundcubemail
+Subject: Re: CVE id requests: gmanedit
 Content-Type: text/plain; charset=utf-8
 
-On 2008-12-15 11:32, Florian Weimer wrote:
-> Nowhere in the documentation it says that "" quotes are unsafe when
-> combined with a sufficiently general capture pattern.
-Well yes, it would probably be better to have a big warning at this
-place, because this flag is very dangerous unless used properly and all
-use cases should be expressable through preg_replace_callback as well,
-which is hard to use improperly from a syntax point of view, as no
-evaluation of user-supplied data is ever going to happen. :)
-But I would not say that PHP or its docs are wrong because of this.
+Hi Steven,
+* Steven M. Christey <coley@...us.mitre.org> [2008-09-09 18:12]:
+> On Sat, 6 Sep 2008, Steffen Joeris wrote:
+> 
+> > There are two possible buffer overflows in gmanedit. One is via crafted
+> > configuration file and the other one via crafted manual page.
+> > See the Debian bug report for more information.
+> > http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=497835
+> 
+> Use CVE-2008-3971, which covers the manual page and (if it's
+> security-relevant) the configuration page.  Even though the source of
+> attack is different, the vuln type is the same.
+> 
+> Nico - I don't know the typical usage scenarios for gmanedit, but if the
+> design of the configuration file allows the user to define dangerous
+> actions (such as their own executable commands), then it's clearly not
+> intended for external influence and wouldn't count as a vuln in my book.
+> Still would be merged under CVE-2008-3971 if there's a scenario.
 
-Of course you can still mess up your callback function in a way which
-creates issues, but this is a generic issue which might as well happen
-at different places in your code.
+I share your opinion here, I'd rather see the COMMANDS thing 
+as an application bug as a user who doesn't read the 
+configuration but just uses it could also get owned with a 
+valid command. The only difference I see is that as far as I 
+understood the command is only executed after user action 
+while the configuration value is read without. The manpage 
+utf-8 conversion is the real vulnerability as it is possible 
+to exploit a victim by opening a crafted manpage in 
+gmanedit.
 
-
-> Do you happen to know if it's safe in all cases to use '' quotes
-> around the capture reference?  For instance, how does PHP deal with
-> MBCS in the replacement string?
-I cannot think of a case where single quotes could be easily
-circumvented somehow, but I'd never claim to be perfectly right here.
-Upstream added a perfectly fine fix, they replaced the /e usage by
-preg_replace_callback, so I don't see a reason why you would want to
-apply a different fix.
-
-
+Cheers
+Nico
 -- 
-Christian Hoffmann
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-
-Download attachment "signature.asc" of type "application/pgp-signature" (261 bytes)
+Content of type "application/pgp-signature" skipped
