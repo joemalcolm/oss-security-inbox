@@ -1,31 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/04/3
-Message-ID: <20081004160557.GA7301@redhat.com>
-Date: Sat, 4 Oct 2008 17:05:57 +0100
-From: "Daniel P. Berrange" <berrange@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com, coley@...re.org
-Subject: Re: CVE Request (xen)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/09/15
+Message-ID: <Pine.GSO.4.51.0809091049550.6699@faron.mitre.org>
+Date: Tue, 9 Sep 2008 10:52:10 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+cc: coley@...re.org
+Subject: Re: CVE request: kernel: local keyboard DoS through LED switching
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Oct 03, 2008 at 05:17:44PM -0400, Steven M. Christey wrote:
-> 
-> We wrote this up as a libvirt issue, but is it really a Xen issue?
 
-At its core it is a Xen permissions issue, because the host was not
-protecting data it mainers from guest modification. This permissions 
-problem impacted Xen tools themselves, and any other application
-which made use of xenstore - of which libvirt was one. The original
-proposed fix to Xen would require changes in both Xen and libvirt
-to fully resolve. The Xen developers eventually worked out a fix
-that directly addresses all users, so there is no longer any need
-for libvirt to be fixed. It is sufficient to apply the Xen permisions
-fixes, so I'd class this as primarily a Xen issue.
+On Fri, 5 Sep 2008, Eugene Teo wrote:
 
-Regards,
-Daniel
--- 
-|: Red Hat, Engineering, London   -o-   http://people.redhat.com/berrange/ :|
-|: http://libvirt.org  -o-  http://virt-manager.org  -o-  http://ovirt.org :|
-|: http://autobuild.org       -o-         http://search.cpan.org/~danberr/ :|
-|: GnuPG: 7D3B9505  -o-  F3C9 553F A1DA 4AC2 5648 23C1 B3DF F742 7D3B 9505 :|
+> This old issue needs a CVE name.
+>
+> "[PATCH] Input: atkbd - throttle LED switching
+>
+> On some boxes keyboard controllers are too slow to withstand
+> continuous flow of requests to turn keyboard LEDs on and off
+> and start losing some keypresses or even all of them.
+
+Can this be exploited by anyone except the person sitting at the keyboard?
+
+- Steve
