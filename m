@@ -1,39 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/17/1
-Message-Id: <200805171646.37622.rbu@gentoo.org>
-Date: Sat, 17 May 2008 16:46:30 +0200
-From: Robert Buchholz <rbu@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/09/10
+Message-ID: <Pine.GSO.4.51.0809091038190.6699@faron.mitre.org>
+Date: Tue, 9 Sep 2008 10:38:28 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: Solar Designer <solar@...nwall.com>
-Subject: Re: OpenSSH key blacklisting
+cc: coley@...re.org
+Subject: Re: cve request: punbb < 1.2.20 xss
 Content-Type: text/plain; charset=utf-8
 
-On Friday 16 May 2008, Solar Designer wrote:
-> Thanks for the "bug" reference.  FWIW, the shell script in this
-> comment is vulnerable itself, in more than one way:
+
+On Tue, 9 Sep 2008, Hanno [utf-8] Böck wrote:
+
+> http://punbb.informer.com/
 >
-> 	http://bugs.gentoo.org/show_bug.cgi?id=221759#c9
->
-> For example, it lets a user have any other user's or root's
-> authorized_keys removed, by replacing .ssh with a symlink to someone
-> else's .ssh directory.  
+> cite:
+> "The XSS via the "p" GET parameter is fixed. Reported by Henry Sudhof."
 
-Do you mean the race condition between finding and removing the key? 
-Otherwise, I cannot see how to have someone else's removed.
+Use CVE-2008-3968
 
-
-> > I assume whichever version has the acceptance of the OpenSSH
-> > upstream is what most of us would be willing to go with. Did you
-> > discuss either blacklist format with them already?
->
-> Yes, very briefly.  They don't intend to implement key blacklisting.
-
-That's not too helpful for our case.
-Do you have a patch to propose, implementing your idea? There has been 
-approval of your idea inside Gentoo's hardened team.
-
-
-Robert
-
-
-Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
+- Steve
