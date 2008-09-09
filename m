@@ -1,28 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/10/2
-Message-ID: <48759F2E.1020406@redhat.com>
-Date: Thu, 10 Jul 2008 13:33:34 +0800
-From: Eugene Teo <eteo@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/09/5
+Message-Id: <200809091443.53823.rbu@gentoo.org>
+Date: Tue, 9 Sep 2008 14:43:51 +0200
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: DNS vulnerability: other relevant software
+Subject: ssmtp =2.62 unitialized memory disclosure
 Content-Type: text/plain; charset=utf-8
 
-Florian Weimer wrote:
-> * Mark J. Cox:
-> 
->>> Additionally, Debian has noted (DSA 1605-1) that the GNU libc stub
->>> resolver could benefit from random query source ports as well, but
->>> no patches are currently available to implement this:
->> Note that GNU libc stub resolver when used with a recent kernel
->> (2.6.24+) will give you random UDP source ports on each request
->> because of this Linux commit:
->>
->> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=32c1da70810017a98aa6c431a5494a302b6b9a30
-> 
-> Is net_random() cryptographically secure?  The paper referenced in the
-> source doesn't talk about this.
+Hi,
 
-It isn't. It's actually a 32-bit pseudo-random number generator AFAIK.
-Hmm.
+Maurice van der Pot of Gentoo reported a bug in ssmtp 2.62:
+The from_format() function in ssmtp.c will call strdup() on an 
+unitialized memory if the user's gecos is unset and "FromLineOverride" 
+is disabled in the configuration. This might disclose memory contents 
+by sending them off in the the "From:" field of an email or cause a 
+(client) crash.
 
-Eugene
+We're handling this as bug 234391 [ https://bugs.gentoo.org/234391 ].
+Patch: https://bugs.gentoo.org/attachment.cgi?id=165005
+
+ssmtp 2.61 is not affected.
+
+If anyone needs a CVE identifier, please speak up. We will handle this 
+low-impact issue without a GLSA.
+
+
+Thanks,
+Robert
+
+Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
