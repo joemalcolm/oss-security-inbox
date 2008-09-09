@@ -1,27 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/01/6
-Message-ID: <Pine.GSO.4.51.0812011104540.843@faron.mitre.org>
-Date: Mon, 1 Dec 2008 11:05:01 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/09/13
+Message-ID: <Pine.GSO.4.51.0809091043460.6699@faron.mitre.org>
+Date: Tue, 9 Sep 2008 10:46:16 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel: fix soft lockups/OOM issues with unix garbage collector
+Subject: Re: CVE id requests: gmanedit
 Content-Type: text/plain; charset=utf-8
 
 
-======================================================
-Name: CVE-2008-5300
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5300
-Reference: MLIST:[linux-netdev] 20081120 soft lockups/OOM after unix socket fixes
-Reference: URL:http://marc.info/?l=linux-netdev&m=122721862313564&w=2
-Reference: MLIST:[linux-netdev] 20081125 [PATCH] Fix soft lockups/OOM issues w/ unix garbage collector
-Reference: URL:http://marc.info/?l=linux-netdev&m=122765505415944&w=2
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=470201
+On Sat, 6 Sep 2008, Steffen Joeris wrote:
 
-Linux kernel 2.6.28 allows local users to cause a denial of service
-("soft lockup" and process loss) via a large number of sendmsg
-function calls, which does not block during AF_UNIX garbage collection
-and triggers an OOM condition, a different vulnerability than
-CVE-2008-5029.
+> There are two possible buffer overflows in gmanedit. One is via crafted
+> configuration file and the other one via crafted manual page.
+> See the Debian bug report for more information.
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=497835
 
+Use CVE-2008-3971, which covers the manual page and (if it's
+security-relevant) the configuration page.  Even though the source of
+attack is different, the vuln type is the same.
 
+Nico - I don't know the typical usage scenarios for gmanedit, but if the
+design of the configuration file allows the user to define dangerous
+actions (such as their own executable commands), then it's clearly not
+intended for external influence and wouldn't count as a vuln in my book.
+Still would be merged under CVE-2008-3971 if there's a scenario.
+
+- Steve
