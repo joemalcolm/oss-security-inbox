@@ -1,37 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/04/6
-Message-ID: <20080604181825.GG6146@yuggoth.org>
-Date: Wed, 4 Jun 2008 18:18:26 +0000
-From: The Fungi <fungi@...goth.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/09/7
+Message-ID: <Pine.GSO.4.51.0809091031050.6699@faron.mitre.org>
+Date: Tue, 9 Sep 2008 10:31:18 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSH key blacklisting
+Subject: Re: CVE request: MySQL empty bit-string literal server crash
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jun 04, 2008 at 11:14:12AM -0400, Nathanael Hoyle wrote:
-[...]
-> However, the reason debian got into the mess they did in the first
-> place with this was specifically because they were trying to
-> remove responsibility from the can't-be-bothered users for
-> configuration. At one point, nearly all ssh key generation systems
-> required the user the type keys 'at random' on the keyboard,
-> and/or to move the mouse to generate an entropy pool for a seed
-> value for key generation. Because debian performs key-generation
-> on first boot in most cases, that early in the startup there might
-> not be sufficient entropy in the network traffic for utility. I
-> guess they found that users were either incapable of or
-> disinclined to participate in the key generation process.
-[...]
 
-Not to be argumentative, but have you installed OpenBSD lately
-(effectively the reference platform for OpenSSH development)? For
-years, its base install has run sshd by default, generated host keys
-at first boot, and not prompted at the console for human interaction
-to augment entropy for this process. I find it hard to blame this
-*particular* behavior on Debian (unless you're suggesting that they
-strong-armed OpenSSH upstream to integrate these changes on their
-behalf?).
--- 
-{ IRL(Jeremy_Stanley); PGP(9E8DFF2E4F5995F8FEADDC5829ABF7441FB84657);
-SMTP(fungi@...goth.org); IRC(fungi@....yuggoth.org#ccl); ICQ(114362511);
-AIM(dreadazathoth); YAHOO(crawlingchaoslabs); FINGER(fungi@...goth.org);
-MUD(fungi@...arsis.mudpy.org:6669); WWW(http://fungi.yuggoth.org/); }
+On Tue, 9 Sep 2008, Robert Buchholz wrote:
+
+>   An empty bit-string literal (b'') caused a server crash. Now the value
+>   is parsed as an empty bit value (which is treated as an empty string
+>   in string context or 0 in numeric context). (Bug#35658)
+
+Use CVE-2008-3963.
+
+- Steve
