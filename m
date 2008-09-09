@@ -1,32 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/09/14
-Message-ID: <Pine.GSO.4.51.0809091047030.6699@faron.mitre.org>
-Date: Tue, 9 Sep 2008 10:49:02 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Ludwig Nussel <ludwig.nussel@...e.de>
-cc: oss-security@...ts.openwall.com, cve@...re.org
-Subject: Re: opensc 0.11.6 with fixed security update
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/09/4
+Message-Id: <200809091418.43187.rbu@gentoo.org>
+Date: Tue, 9 Sep 2008 14:18:40 +0200
+From: Robert Buchholz <rbu@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: MySQL empty bit-string literal server crash
 Content-Type: text/plain; charset=utf-8
 
+Hi,
+
+we consider the following bug a security issue. I'm not sure whether 
+MySQL upstream feels so as well. Quoting the ChangeLog:
+
+  An empty bit-string literal (b'') caused a server crash. Now the value  
+  is parsed as an empty bit value (which is treated as an empty string
+  in string context or 0 in numeric context). (Bug#35658)
 
 
-Details on the "glitch" from
-http://www.opensc-project.org/pipermail/opensc-announce/2008-August/000021.html
-:
+Bug:
+  http://bugs.mysql.com/bug.php?id=35658
 
-OpenSC 0.11.5 released July 30th 2008 was found to contain only a partial
-fix.  The new tool for testing and updating smart cards ("pkcs15-tool -T")
-contained a too strict check - including the Card label to match "OpenSC".
-Jean-Pierre Szikora found this problem: a card can be initialized with
-setting any label (use "pkcs15-init --create-pkcs15 --label foobar" for
-example), thus this check was too strict and had to be removed.
-
-With this bug anyone can change a user PIN without having the PIN or PUK
-or the superusers PIN or PUK. However it can not be used to figure out the
-PIN.  Thus if the PIN on your card is still the same you always had, then
-you can be sure, that noone exploited this vulnerability.
+ChangeLogs:
+* 5.0.66
+  http://dev.mysql.com/doc/refman/5.0/en/releasenotes-es-5-0-66.html
+* 5.1.26
+  http://dev.mysql.com/doc/refman/5.1/en/news-5-1-26.html
+* 6.0.6
+  http://dev.mysql.com/doc/refman/6.0/en/news-6-0-6.html
 
 
-Use CVE-2008-3972
+Gentoo handles this as bug 237166 [ https://bugs.gentoo.org/237166 ].
 
-- Steve
+
+Thanks,
+Robert
+
+Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
