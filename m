@@ -1,47 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/30/2
-Message-Id: <200810302253.40409.rbu@gentoo.org>
-Date: Thu, 30 Oct 2008 22:53:29 +0100
-From: Robert Buchholz <rbu@...too.org>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE requests: tempfile issues for aview, mgetty, openoffice, crossfire
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/09/11
+Message-ID: <Pine.GSO.4.51.0809091039060.6699@faron.mitre.org>
+Date: Tue, 9 Sep 2008 10:39:37 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+cc: vmiklos@...galware.org, coley@...re.org
+Subject: Re: CVE request for bitlbee
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-Gentoo could need CVEs for some more of the insecure tempfile issues 
-found by Debian. For others, we have gathered a list of all the bugs 
-created at our tracker https://bugs.gentoo.org/show_bug.cgi?id=235770
+On Mon, 8 Sep 2008, Tomas Hoger wrote:
 
-* aview
-DEBIAN: http://bugs.debian.org/496422
-GENTOO: https://bugs.gentoo.org/235808
-FILES: asciiview
-CODE: http://dev.gentoo.org/~rbu/security/debiantemp/aview
+> On Sat, 30 Aug 2008 01:24:14 +0200 Miklos Vajna
+> This issue fixed in 1.2.2 was assigned CVE id CVE-2008-3920:
+>
+>   Unspecified vulnerability in BitlBee before 1.2.2 allows remote
+>   attackers to "recreate" and "hijack" existing accounts via unspecified
+>   vectors.
+>
+> However, upstream released 1.2.3 in the meantime, fixing the incomplete
+> fix in 1.2.2.  Quoting news page:
+>
+>   Unfortunately 1.2.2 did not fix all possible account hijacking
+>   loopholes. Another very similar flaw was found by Tero Marttila. In
+>   the migration to the user configuration storage abstraction layer, a
+>   few safeguards that prevent overwriting existing accounts disappeared.
 
-* mgetty
-DEBIAN: http://bugs.debian.org/496403
-GENTOO: https://bugs.gentoo.org/235806
-FILES: faxspool
-CODE: http://dev.gentoo.org/~rbu/security/debiantemp/mgetty-fax
+Use CVE-2008-3969 for this meta-fix.
 
-* openoffice.org
-DEBIAN: http://bugs.debian.org/496361
-GENTOO: https://bugs.gentoo.org/235824
-http://www.securityfocus.com/bid/30925
-FILES: senddoc
-CODE: 
-http://dev.gentoo.org/~rbu/security/debiantemp/openoffice.org-common
-   [etch] - openoffice.org <not-affected> (Vulnerable code not present)
-   NOTE: also not present in 3.0.0, only in 2.4.1. Fix pending upload.
-
-* crossfire
-DEBIAN: http://bugs.debian.org/496358
-GENTOO: https://bugs.gentoo.org/236205
-FILES: combine.pl
-CODE: http://dev.gentoo.org/~rbu/security/debiantemp/crossfire-maps
-
-
-Robert
-
-Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
+- Steve
