@@ -1,22 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/02/1
-Message-Id: <5943CFA7-CC27-41C4-8D3D-3244FFC5D751@gmail.com>
-Date: Mon, 2 Jun 2008 10:40:32 +0200
-From: Andrea Di Pasquale <spikey.it@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/09/6
+Message-ID: <Pine.GSO.4.51.0809091022190.6699@faron.mitre.org>
+Date: Tue, 9 Sep 2008 10:29:38 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: ARP handler Inspection tool released
+Subject: Re: ssmtp =2.62 unitialized memory disclosure
 Content-Type: text/plain; charset=utf-8
 
-ArpON (Arp handler inspectiON) is a portable Arp handler.
-It Detects and Blocks all ARP Poisoning/Spoofing attacks with
-Static Arp Inspection (SARPI) and Dynamic Arp Inspection (DARPI)
-approach on switched/hubbed LAN with/without DHCP protocol.
-Important to note, it doesn't compromise the ARP protocol performances.
 
-     I need testing and code revision, thank you.
+On Tue, 9 Sep 2008, Robert Buchholz wrote:
 
-The link to project's documentation is:
-     http://arpon.sourceforge.net/about.html
+> Maurice van der Pot of Gentoo reported a bug in ssmtp 2.62:
+> The from_format() function in ssmtp.c will call strdup() on an
+> unitialized memory if the user's gecos is unset and "FromLineOverride"
+> is disabled in the configuration. This might disclose memory contents
+> by sending them off in the the "From:" field of an email or cause a
+> (client) crash.
 
-The link to the project is:
-     http://arpon.sourceforge.net
+Wow, this is definitely an edge case.  Technically the memory disclosure
+is a security issue, at least for the couple emails that get sent before
+the user gives up in frustration.
+
+So, use CVE-2008-3962 (to be filled in later).
+
+- Steve
