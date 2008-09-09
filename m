@@ -1,24 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/08/3
-Message-ID: <48734D8E.5060603@redhat.com>
-Date: Tue, 08 Jul 2008 19:20:46 +0800
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/09/16
+Message-ID: <48C68EE6.1070102@redhat.com>
+Date: Tue, 09 Sep 2008 22:57:42 +0800
 From: Eugene Teo <eteo@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2008-2931 kernel: missing check before setting mount propagation
+CC: coley@...re.org
+Subject: Re: CVE request: kernel: local keyboard DoS through LED switching
 Content-Type: text/plain; charset=utf-8
 
-The do_change_type routine in the Linux kernel has a missing check for
-capable(CAP_SYS_ADMIN). Even though the mount command restricts the
-changing of mountpoint type to only root users, it is possible for local
-unprivileged users to bypass and abuse this problem. More details can be
-found at: https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2008-2931
+Steven M. Christey wrote:
+> On Fri, 5 Sep 2008, Eugene Teo wrote:
+> 
+>> This old issue needs a CVE name.
+>>
+>> "[PATCH] Input: atkbd - throttle LED switching
+>>
+>> On some boxes keyboard controllers are too slow to withstand
+>> continuous flow of requests to turn keyboard LEDs on and off
+>> and start losing some keypresses or even all of them.
+> 
+> Can this be exploited by anyone except the person sitting at the keyboard?
 
-This affects kernel versions from 2.6.15-rc1 up to 2.6.22-rc1. The
-proposed upstream commit is: ee6f958291e2a768fd727e7a67badfff0b67711a.
+I don't think so. It requires physical access to the console.
 
-I have allocated this CVE-2008-2931.
-
-Thanks,
 Eugene
 -- 
 Eugene Teo / Red Hat Security Response Team
