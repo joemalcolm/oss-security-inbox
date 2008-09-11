@@ -1,72 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/14/7
-Message-ID: <20080514153812.GI28202@ngolde.de>
-Date: Wed, 14 May 2008 17:38:12 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/12/1
+Message-ID: <48C9929C.5040205@ubuntu.com>
+Date: Thu, 11 Sep 2008 23:50:20 +0200
+From: Emanuele Gentili <emgent@...ntu.com>
 To: oss-security@...ts.openwall.com
-Subject: vim $TMPDIR directory stat (was: Re: CVE request: Emacs 21 fast-lock-mode arbitrary lips code execution)
+CC: coley@...re.org
+Subject: CVE request for Joomla multiple vuln.
 Content-Type: text/plain; charset=utf-8
 
-Hi Tavis,
-* Tavis Ormandy <taviso@....lonestar.org> [2008-05-14 17:03]:
-> On Wed, May 14, 2008 at 04:03:34PM +0200, Sven Joachim wrote:
-> > On 2008-05-14 15:27 +0200, Nico Golde wrote:
-> > 
-> > > As I am a vim user I might have done something wrong too, 
-> > > not sure. What I did after installing emacs:
-> 
-> Same here, so out of curiosity i ran strace -efile -o log vim, and
-> edited a few files. I observed vim looking for a directory called
-> $TMPDIR in the wd, and using it as you would expect. Obviously a bug,
-> and perhaps some minor security implications, anyone want to
-> investigate? :-)
+http://developer.joomla.org/security/news/271-20080901-core-jrequest-variable-injection.html
+http://developer.joomla.org/security/news/272-20080902-core-random-number-generation-flaw.html
+http://developer.joomla.org/security/news/273-20080903-core-commailto-spam.html
+http://developer.joomla.org/security/news/274-20080904-core-redirect-spam.html
 
-The reason is:
-src/unix.h:
-#  define TEMPDIRNAMES  "$TMPDIR", "/tmp", ".", "$HOME"
+E.
 
-on startup vim then expands those paths and checks if the 
-directory exists (that's where the stat comes from I think). 
-If it exists it will use it as temporary directory to mkdir 
-the temporary directory for vim files, v<somenumber>.
-
-src/fileio.c:
-   6811         for (i = 0; i < sizeof(tempdirs) / sizeof(char *); ++i)
-   6812         {
-   6813             /* expand $TMP, leave room for "/v1100000/999999999" */
-   6814             expand_env((char_u *)tempdirs[i], itmp, TEMPNAMELEN - 20);
-   6815             printf("expanded %s to %s\n", tempdirs[i], itmp);
-   6816             if (mch_isdir(itmp))                /* directory exists */
-   ....
-   6843                     sprintf((char *)itmp + STRLEN(itmp), "v%ld", nr + off);
-   6844 # ifndef EEXIST
-   6845                     /* If mkdir() does not set errno to EEXIST, check for
-   6846                      * existing file here.  There is a race condition then,
-   6847                      * although it's fail-safe. */
-   6848                     if (mch_stat((char *)itmp, &st) >= 0)
-   6849                         continue;
-   6850 # endif
-   6851 #if defined(UNIX) || defined(VMS)
-   6852                     /* Make sure the umask doesn't remove the executable bit.
-   6853                      * "repl" has been reported to use "177". */
-   6854                     umask_save = umask(077);
-   6855 #endif
-   6856                     r = vim_mkdir(itmp, 0700);
-
-
-So it checks for $TMPDIR on your system because this 
-environment variable is not set and therefore can't be expanded?!
-
-You could redirect the temporary files of a user to a 
-location the attacker and the victim has access to but vim 
-still sets the correct permissions so this does not help the 
-attacker. After a quick check this doesn't look like a 
-security issue to me.
-
-Kind regards
-Nico
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+Emanuele Gentili                      | http://launchpad.net/~emgent
+emgent@...ntu.com                     | Ubuntu Security Developer
+emgent@...dowmaker.info               | Window Maker Developer
+emgent@...ache.org                    | Rapache Developer
+emanuele.gentili@...munity.joomla.org | Joomla! Security Developer
 
-Content of type "application/pgp-signature" skipped
+Key fingerprint: F4B7 0793 069A 217E BB9F 8925 E0AC 34C2 2201 1E9A
+gpg --keyserver keyserver.ubuntu.com --recv-keys 22011E9A
+
