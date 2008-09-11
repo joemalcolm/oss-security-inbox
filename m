@@ -1,24 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/03/11
-Message-ID: <Pine.GSO.4.51.0810031708570.9068@faron.mitre.org>
-Date: Fri, 3 Oct 2008 17:09:15 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com, veillard@...hat.com
-cc: Robert Buchholz <rbu@...too.org>
-Subject: Re: Re: libxml2 "ampproblem" DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/11/4
+Message-ID: <48C944FF.2050309@pardus.org.tr>
+Date: Thu, 11 Sep 2008 19:19:11 +0300
+From: Pınar Yanardağ <pinar@...dus.org.tr>
+To: oss-security@...ts.openwall.com
+Subject: Re: [oss-list] CVE request (vim)
 Content-Type: text/plain; charset=utf-8
 
+Hi Jan,
 
-On Fri, 3 Oct 2008, Daniel Veillard wrote:
 
-> > The malicious XML file can be found on
-> > http://bugzilla.gnome.org/show_bug.cgi?id=554660
-> >
-> > I'm not sure if and how this is related to CVE-2008-3281.
+Jan Lieskovsky wrote On 09/11/2008 05:56 PM:
+> (...)
 >
->   It's unrelated, the patch is attached to the bug, only 2.7.x is affected
-> and I will release 2.7.2 within a couple of hours.
+> Report: http://www.rdancer.org/vulnerablevim-K.html  [1]
+> Proposed patch: http://groups.google.com/group/vim_dev/attach/dd32ad3a84f36bb2/K-arbitrary-command-execution.patch?part=2
+>   
 
-Use CVE-2008-4422
 
-- Steve
+Unfortunately, this patch was incomplete and  rdancer has released 
+another patch for this issue:
+
+http://groups.google.com/group/vim_dev/browse_thread/thread/1434d0812b5c817e/f730da13efe2dd73?hide_quotes=no#msg_9290f26f9bc11b33
+
+Cheers,
+
+-- 
+Pınar Yanardağ (a.k.a PINguAR)
+http://pinguar.org
+_____________________________
+
+"Always program as if the person who will be maintaining your program is a violent psychopath that knows where you live."
+-- Martin Golding
+
+
