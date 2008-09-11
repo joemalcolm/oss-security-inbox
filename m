@@ -1,27 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/30/4
-Message-ID: <27027.1214846362@devserv.devel.redhat.com>
-Date: Mon, 30 Jun 2008 13:19:22 -0400
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/11/6
+Message-Id: <200809111920.10413.hanno@hboeck.de>
+Date: Thu, 11 Sep 2008 19:20:08 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: Re: openldap DoS
+Cc: coley@...re.org
+Subject: CVE request: wordpress < 2.6.2
 Content-Type: text/plain; charset=utf-8
 
-On 30 June 2008, Ludwig Nussel wrote:
-> Hi,
-> 
-> Remote unauthenticated attackers can trigger an assertion in the ASN.1 BER
-> decoding of openlap and crash the server:
-> http://www.openldap.org/its/index.cgi/Software%20Bugs?id=5580;selectid=5580
-> 
+http://wordpress.org/development/2008/09/wordpress-262/
 
-The patch is here it seems:
-http://www.openldap.org/devel/cvsweb.cgi/libraries/liblber/io.c.diff?r1=1.120&r2=1.121&hideattic=1&sortbydate=0
+cite:
 
-I'm adding Steve Christey to the CC for a CVE id.
 
-Thanks.
+
+Stefan Esser recently warned developers of the dangers of SQL Column 
+Truncation and the weakness of mt_rand().  With his help we worked around 
+these problems and are now releasing WordPress 2.6.2.  If you allow open 
+registration on your blog, you should definitely upgrade.  With open 
+registration enabled, it is possible in WordPress versions 2.6.1 and earlier 
+to craft a username such that it will allow resetting another user’s password 
+to a randomly generated password.  The randomly generated password is not 
+disclosed to the attacker, so this problem by itself is annoying but not a 
+security exploit.  However, this attack coupled with a weakness in the random 
+number seeding in mt_rand() could be used to predict the randomly generated 
+password.  Stefan Esser will release details of the complete attack shortly.  
+The attack is difficult to accomplish,  but its mere possibility means we 
+recommend upgrading to 2.6.2.
 
 -- 
-    JB
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
