@@ -1,49 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/28/4
-Message-ID: <20080328002233.GF19773@ngolde.de>
-Date: Fri, 28 Mar 2008 01:22:33 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/11/2
+Message-Id: <200809111125.13667.rbu@gentoo.org>
+Date: Thu, 11 Sep 2008 11:25:10 +0200
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: was: SA29489 CenterIM URL handling flaw
+Subject: Re: ssmtp =2.62 unitialized memory disclosure
 Content-Type: text/plain; charset=utf-8
 
-Hi Steven,
-* Steven M. Christey <coley@...us.mitre.org> [2008-03-28 00:01]:
-> On Tue, 25 Mar 2008, Nico Golde wrote:
-> > * Nico Golde <oss-security+ml@...lde.de> [2008-03-25 16:25]:
-> > > * Lubomir Kundrak <lkundrak@...hat.com> [2008-03-24 15:08]:
-[...] 
-> > > That's partly true. While centerim has no special URL
-> > > handler to handle incoming urls it does provide the ability
-> > > to list urls in a message by pressing F2. If you press enter
-> > > on one of these urls it tries to open it in an external
-> > > browser and executes the other commands as well.
-> 
-> This is the kind of situation that CVE adopted the "user-assisted" term
-> for: the user assists the attacker in his/her own demise.
+On Tuesday 09 September 2008, Robert Buchholz wrote:
+> Hi,
+>
+> Maurice van der Pot of Gentoo reported a bug in ssmtp 2.62:
+> The from_format() function in ssmtp.c will call strdup() on an
+> unitialized memory if the user's gecos is unset and
+> "FromLineOverride" is disabled in the configuration. This might
+> disclose memory contents by sending them off in the the "From:" field
+> of an email or cause a (client) crash.
+>
+> We're handling this as bug 234391 [ https://bugs.gentoo.org/234391 ].
+> Patch: https://bugs.gentoo.org/attachment.cgi?id=165005
+>
+> ssmtp 2.61 is not affected.
 
-makes sense.
+As Tomas Hoger pointed out on IRC, 2.61 is affected as well -- I 
+accidently checked our patched sources and not the vanilla tarball.
+We added a patch to 2.61 in 2006, and accidently dropped it when bumping 
+to 2.62.
+Back then, this was bug 127592 [ https://bugs.gentoo.org/127592 ].
 
-> > > You see the commands in the URL however so I think the
-> > > impact of this is like sending someone a message with
-> > > "please type rm -rf ~ in your shell" so the secunia rating
-> > > is a bit beyond the actual impact.
-> 
-> Is the URL still encoded at the time it is viewed?  if so, then I don't
-> expect a typical user to notice this equivalent of "rm -rf *":
-> 
->   %72%6D%20%2D%72%66%20%2A
-> 
-> and that's part of the "smell test" for user-assisted issues.
+Thanks,
+Robert
 
-Nope it won't be encoded. Otherwise I would agree that a 
-decoding hex is too much for a user :)
-
-Kind regards
-Nico
-
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
