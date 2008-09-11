@@ -1,21 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/04/3
-Message-Id: <200809041609.41320.hanno@hboeck.de>
-Date: Thu, 4 Sep 2008 16:09:40 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/11/1
+Message-ID: <20080911110633.67b7a5e7@redhat.com>
+Date: Thu, 11 Sep 2008 11:06:33 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: request for CVE: clamav 0.94 release
+Cc: coley@...us.mitre.org
+Subject: Re: CVE Request (ruby -- DNS spoofing vulnerability in resolv.rb)
 Content-Type: text/plain; charset=utf-8
 
-Am Mittwoch 03 September 2008 schrieb Marcus Meissner:
->  * fix possible invalid memory access (bb#1089)
+On Thu, 4 Sep 2008 12:01:04 -0400 (EDT) "Steven M. Christey"
+<coley@...us.mitre.org> wrote:
 
-CVE-2008-1389
+> > The transaction IDs are assigned in sequential (n+1 order) and the
+> > source ports are always the same.
+> 
+> Use CVE-2008-3905, to be filled in soon.
+> 
+> We're treating this as a distinct issue because this is *REALLY* bad
+> randomness within a particular implementation, besides the inherent
+> limitation of DNS when source ports are fixed.
 
-http://int21.de/cve/CVE-2008-1389-clamav-chd.html
+Applying this rule, separate id should probably be used for PyDNS [1]
+[2] and adns [3] as well, at they both suffer from the similar flaws -
+use predictable transactions ids and source port.
+
+PyDNS should be fixed as of upstream version 2.3.2 [4], adns issue is
+rather considered a design decision as documented in the INSTALL file
+[5].
+
+[1] http://pydns.sourceforge.net/
+[2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=490217
+[3] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=492698
+[4]
+http://packages.debian.org/changelogs/pool/main/p/python-dns/python-dns_2.3.3-1/changelog
+[5] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=492698#15
 
 -- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+Tomas Hoger / Red Hat Security Response Team
