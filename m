@@ -1,36 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/22/4
-Message-ID: <4835115C.4010400@freethemallocs.com>
-Date: Wed, 21 May 2008 22:23:24 -0800
-From: Jonathan Smith <smithj@...ethemallocs.com>
-To: oss-security@...ts.openwall.com
-CC: chris@...ry.beasts.org
-Subject: Re: vsftpd CVE-2007-5962 (Red Hat / Fedora specific)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/11/7
+Message-ID: <6edf76c20809111628q9f81a2eo9907128e1d995584@mail.gmail.com>
+Date: Fri, 12 Sep 2008 00:28:28 +0100
+From: "Jan Minář" <rdancer@...ncer.org>
+To: oss-security@...ts.openwall.com, coley@...re.org,  "Tomas Hoger" <thoger@...hat.com>,  "Karsten Hopp" <karsten@...hat.com>
+Subject: Re: [oss-list] CVE request (vim)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Thu, Sep 11, 2008 at 3:56 PM, Jan Lieskovsky <jlieskov@...hat.com> wrote:
+> Hello Steve,
+>
+>  found relatively old issue in Vim, which was not covered
+> by the CVE-2008-2712 patch. Could you please assign a new
+> CVE id for it:
+>
+> Report: http://www.rdancer.org/vulnerablevim-K.html  [1]
+> Proposed patch: http://groups.google.com/group/vim_dev/attach/dd32ad3a84f36bb2/K-arbitrary-command-execution.patch?part=2
 
-Steven M. Christey wrote:
-| On Wed, 21 May 2008, Josh Bressers wrote:
-|
-|> The leak is CVE-2007-5962.  deny_hosts not working did not get a CVE id.
-|
-| Should it?  If an admin configures deny_hosts in some fashion that vsftpd
-| doesn't implement correctly, that might be worthy of a CVE.
+That's an early version.  The latest from me was the version 3 (three)
+of the patch -- attachment of this message:
 
-I don't think rPath treated it as such when we originally added the
-patch, though. It would probably be worth adding it to our other branch
-and pushing it upstream as a security issue.
+http://groups.google.com/group/vim_dev/msg/9290f26f9bc11b33
 
-So, yeah, I'd say it needs a CVE. Thanks.
+The whole thread is illustrative.
 
-	smithj
+Also, patch 7.2.010 [0] addresses the issue (I'm not aware of anybody
+having analyzing it properly, as to what extent it really eradicates
+the vulnerability.  If anybody is going to do that, please keep me
+CC'd.).
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
+[0] http://ftp.vim.org/pub/vim/patches/7.2/7.2.010
 
-iEYEARECAAYFAkg1EVwACgkQCG91qXPaRel/yQCgrCYbog7T8HMCP0AmpY/oMGWg
-kGwAnAlkIiFG7LkTuE4TxKaN+8rBv72p
-=vEXX
------END PGP SIGNATURE-----
+HTH,
+Jan.
