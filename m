@@ -1,31 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/08/3
-Message-ID: <20080808140144.GB13386@redhat.com>
-Date: Fri, 8 Aug 2008 15:01:44 +0100
-From: Joe Orton <jorton@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: jorton@...hat.com
-Subject: Re: CVE request: php-5.2.6 overflow issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/11/3
+Message-Id: <1221144997.21072.17.camel@iankko.englab.brq.redhat.com>
+Date: Thu, 11 Sep 2008 16:56:36 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: coley@...re.org
+Cc: oss-security@...ts.openwall.com, Jan Minář <rdancer@...ncer.org>, Tomas Hoger <thoger@...hat.com>, Karsten Hopp <karsten@...hat.com>
+Subject: [oss-list] CVE request (vim)
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Aug 08, 2008 at 03:31:45PM +0200, Christian Hoffmann wrote:
->   * Overflow in ext/gd's imageloadfont() function [1] [2] [3]
->   * Overflow in php's internal memnstr() function which is exposed
->     to userspace as "explode()" [1] [2] [4] [5]
->
-> As those functions might take user-supplied data in certain webapps  
-> (which is a valid use case at least in case of explode()), those issues  
-> should probably expected to be remotely exploitable.
+Hello Steve,
 
-The explode() bug could only be triggered if a script passed a delimiter 
-from untrusted script input without sanitizing/checking it first, which 
-is fairly pathological behaviour.  I would call that a script bug, not 
-an issue in the PHP interpreter.
+  found relatively old issue in Vim, which was not covered
+by the CVE-2008-2712 patch. Could you please assign a new
+CVE id for it:
 
-e.g looking through the first ~80 hits from:
+Report: http://www.rdancer.org/vulnerablevim-K.html  [1]
+Proposed patch: http://groups.google.com/group/vim_dev/attach/dd32ad3a84f36bb2/K-arbitrary-command-execution.patch?part=2
+Other references: https://bugzilla.redhat.com/show_bug.cgi?id=461927
 
-http://www.google.com/codesearch?hl=en&q=+lang:php+explode\+*\(&start=70&sa=N
+Affected versions: Successfully reproduced on vim-6.0-7.15 through vim-7.1.291-1.
 
-as expected, every explode() call uses a constant/trusted delimiter.
+Proof of concept: See part "4. EXPLOIT" from [1] report. The xclock
+                  part is easily reproducible.
 
-Regards, Joe (please CC me on replies)
+Impact: Arbitrary code execution.
+
+Thank you in advance
+Kind regards
+Jan iankko Lieskovsky
+RH Security Response Team
+
