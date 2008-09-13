@@ -1,19 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/18/2
-Message-ID: <Pine.GSO.4.51.0805180751160.26846@faron.mitre.org>
-Date: Sun, 18 May 2008 07:52:18 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/13/2
+Message-Id: <200809132020.57253.rbu@gentoo.org>
+Date: Sat, 13 Sep 2008 20:20:52 +0200
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: Django Cross-Site Scripting
+Subject: CVE request: Ruby on Rails <2.1.1 :limit and :offset SQL injection
 Content-Type: text/plain; charset=utf-8
 
+Hey,
 
-On Wed, 14 May 2008, Pierre-Yves Rofes wrote:
-> http://www.djangoproject.com/weblog/2008/may/14/security/
-> https://bugs.gentoo.org/show_bug.cgi?id=222029
+Ruby 2.1.1 has been released, fixing sanitation in the :limit 
+and :offset parameters to SQL queries.
 
-Use CVE-2008-2302
+References:
+http://blog.innerewut.de/2008/6/16/why-you-should-upgrade-to-rails-2-1
+http://www.rorsecurity.info/2008/09/08/sql-injection-issue-in-limit-and-offset-parameter/
+http://rails.lighthouseapp.com/projects/8994/tickets/288
+http://rails.lighthouseapp.com/projects/8994/tickets/964
 
-CVE will be filled in later.
 
-- Steve
+Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
