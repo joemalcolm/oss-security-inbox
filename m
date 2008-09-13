@@ -1,27 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/01/1
-Message-ID: <20080701085816.GA3630@ngolde.de>
-Date: Tue, 1 Jul 2008 10:58:16 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/13/1
+Message-Id: <200809131955.55815.rbu@gentoo.org>
+Date: Sat, 13 Sep 2008 19:55:52 +0200
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request mercurial:Insufficient input validation
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request (gpicview)
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
-* Steven M. Christey <coley@...us.mitre.org> [2008-06-30 21:41]:
-> Out of curiosity, what attack scenarios exist for this issue?  If an
-> attacker has control over the patch already, then code execution on the
-> system already seems likely.  Or is the impact mostly limited to "compile
-> farms" and limited-access user accounts?
+On Tuesday 26 August 2008, Steven M. Christey wrote:
+> > http://sourceforge.net/tracker/index.php?func=detail&aid=2019481&gr
+> >oup_id=180858&atid=894869
+> >
+> > Possible symlink attack via the temporary created "/tmp/rot.jpg"
+> > file used for image rotation.
+>
+> Use CVE-2008-3791
 
-Yes I agree, the attack scenarios are really limited to 
-systems/people blindly importing patches for example if 
-received via mail.
+This issue (and CVE-2008-3904) have been resolved by r845, and released 
+as 0.1.10:
+http://lxde.svn.sourceforge.net/viewvc/lxde?view=rev&sortby=date&revision=845
 
-Cheers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+Interestingly, upstream also fixed a bug in the open_url() function 
+where invoking the browser would allow for code execution via shell 
+metacharacters in the URL. However, from what I see the function is 
+only called with URLs in the "about" box. Unfortunately, upstream calls 
+this non-issue CVE-2008-3904. Patch here:
+http://lxde.svn.sourceforge.net/viewvc/lxde?view=rev&sortby=date&revision=847
 
-Content of type "application/pgp-signature" skipped
+
+Regards,
+Robert
+
+Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
