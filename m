@@ -1,21 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/12/3
-Message-Id: <200808122147.47785.hanno@hboeck.de>
-Date: Tue, 12 Aug 2008 21:47:46 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/15/2
+Message-Id: <200809152050.41925.thijs@debian.org>
+Date: Mon, 15 Sep 2008 20:50:37 +0200
+From: Thijs Kinkhorst <thijs@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...re.org>
-Subject: horde webmail edition < 1.1.1
+Cc: coley@...re.org
+Subject: phpMyAdmin code execution (CVE request)
 Content-Type: text/plain; charset=utf-8
 
-http://lists.horde.org/archives/announce/2008/000420.html
+Hi all,
 
-"This is a security release that fixes unescaped output in the object browser
-and the contact view. The holes are only exploitable by authenticated users."
+"- (2.11.9.1)  [security] Code execution vulnerability"
 
+http://www.phpmyadmin.net/home_page/downloads.php?relnotes=1
 
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+"Welcome to this security update for phpMyAdmin 2.11.9.
+Details will follow on http://phpmyadmin.net."
 
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+http://www.nabble.com/phpMyAdmin-2.11.9.1-is-released-td19497113.html
+
+Attached patch is the fix from upstream. Judging from that (no other 
+information is available yet), an authenticated user can supply a crafted 
+sort_by parameter to server_databases.php, which will be turned in to 
+executed PHP code because it is passed into create_function(). It is present 
+at least since 2.9.1.
+
+I would like to have a CVE id to refer to this issue.
+
+Thijs
+
+View attachment "pma_codeexecution.diff" of type "text/x-diff" (2833 bytes)
+
+Content of type "application/pgp-signature" skipped
