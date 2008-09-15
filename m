@@ -1,25 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/03/10
-Message-ID: <Pine.GSO.4.51.0810031612540.9068@faron.mitre.org>
-Date: Fri, 3 Oct 2008 16:23:00 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: Re: regarding CVE-2008-4382 & CVE-2008-4381
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/15/1
+Message-Id: <1221483119.30858.4.camel@dhcp-lab-164.englab.brq.redhat.com>
+Date: Mon, 15 Sep 2008 14:51:59 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: coley@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: CVE Request (python)
 Content-Type: text/plain; charset=utf-8
 
+Hello Steve,
 
-I did a little more investigation into IE 7, since that's what the
-original report was for.  Its behavior is different than Firefox.  It
-quickly ran through most of the code, expanding up to 600 Meg or so,
-before generating an "out of memory" alert (but not crashing) while
-processing the escape(x4) statement.  So IE goes further, with less of an
-impact on my Windows session than the noticeable slowdown using Firefox
-(2.x), but IE still doesn't reach the alert(wildboy) statement.
+  could you please allocate a CVE id for the 
+following Python generic FAQ wizard moving tool
+issue:
 
-http://www.securityfocus.com/archive/1/496926/100/0/threaded suggests a
-relationship with ActiveX content being enabled, but I don't see how that
-could apply in the given source (though I only extracted the relevant
-code, skipping the image and l33t-sp33k).
+References:
 
-- Steve
+https://bugzilla.redhat.com/show_bug.cgi?id=462326
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=498899
+
+Impact: Symbolic link attack possibility
+Affected versions: python-2.3.4-*+
+
+Thank you in advance
+
+Kind regards
+Jan iankko Lieskovsky
+RH Security Response Team
+
+
