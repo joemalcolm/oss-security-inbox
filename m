@@ -1,21 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/26/3
-Message-ID: <Pine.GSO.4.51.0808261009100.18466@faron.mitre.org>
-Date: Tue, 26 Aug 2008 10:09:27 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/16/10
+Message-ID: <48CF75CF.8020404@redhat.com>
+Date: Tue, 16 Sep 2008 17:01:03 +0800
+From: Eugene Teo <eteo@...hat.com>
 To: oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: Re: CVE Request (samba)
+CC: coley@...re.org
+Subject: CVE request: kernel: splice: fix bad unlock_page() in error case
 Content-Type: text/plain; charset=utf-8
 
+Hi Steve,
 
-On Tue, 26 Aug 2008, Jan Lieskovsky wrote:
+This bug requires a CVE name. Please allocate one.
 
-> -rw-rw-rw- 1 root root 77824 2008-08-25 10:56 group_mapping.ldb
->
-> Public mention of this report: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=496073
-> =============================
+This upstream commit addressed a user triggerable DoS:
+6a860c979b35469e4d77da781a96bdb2ca05ae64
 
-Use CVE-2008-3789, to be filled in later.
+Summary:
+[PATCH] splice: fix bad unlock_page() in error case
 
-- Steve
+If add_to_page_cache_lru() fails, the page will not be locked. But
+splice jumps to an error path that does a page release and unlock,
+causing a BUG() in unlock_page().
+
+Reproducer:
+http://lkml.org/lkml/2007/7/30/448
+(different issue, but same reproducer)
+
+References:
+http://lkml.org/lkml/2007/7/20/168
+https://bugzilla.redhat.com/show_bug.cgi?id=462434
+
+Thanks, Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
