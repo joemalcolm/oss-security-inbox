@@ -1,17 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/22/1
-Message-ID: <87myore55f.fsf@pond.riseup.net>
-Date: Sat, 22 Mar 2008 00:47:40 -0400
-From: Micah Anderson <micah@...eup.net>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: openssh local users may hijack forwarded X connections
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/16/3
+Message-ID: <Pine.GSO.4.51.0809152052550.6953@faron.mitre.org>
+Date: Mon, 15 Sep 2008 20:53:40 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Tomas Hoger <thoger@...hat.com>
+cc: oss-security@...ts.openwall.com, coley@...re.org
+Subject: Re: CVE request: MySQL incomplete fix for CVE-2008-2079
 Content-Type: text/plain; charset=utf-8
 
 
-This has been forwared to OpenBSD upstream:
+On Tue, 9 Sep 2008, Tomas Hoger wrote:
 
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=463011
+> Devin Carraway of Debian noticed, that the upstream fix can be defeated
+> by local users via directory symlinks:
+>
+>   http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=480292#25
 
-Thanks,
-Micah
+Use CVE-2008-4097
 
+> Which is also possible to defeat, as described by Devin in the upstream
+> bug report related to the original issue:
+>
+>   http://bugs.mysql.com/bug.php?id=32167
+>   comment dated with "[18 Jul 9:43]"
+
+Use CVE-2008-4098
+
+- Steve
