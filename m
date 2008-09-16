@@ -1,31 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/25/10
-Message-ID: <20080225143507.GH20336@openwall.com>
-Date: Mon, 25 Feb 2008 17:35:07 +0300
-From: "(GalaxyMaster)" <galaxy@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/16/7
+Message-ID: <Pine.GSO.4.51.0809152115580.6953@faron.mitre.org>
+Date: Mon, 15 Sep 2008 21:19:18 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: wiki page/namespace names, wiki feature requests, etc.
+cc: coley@...re.org
+Subject: Re: CVE request: joomla < 1.5.7
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Feb 25, 2008 at 09:22:28AM -0500, Josh Bressers wrote:
 
-> wiki, they can just not read those messages. I think discussing issues
-> pertinent to the oss-security concept as a whole on this list is relevant
-> and wise. As you say, if we move off-list, we will lose a lot of eyeballs.
+On Thu, 11 Sep 2008, Hanno [utf-8] Böck wrote:
 
-Agreed.  Then I propose to prefix any Wiki-related messages with the
-'wiki:' prefix, so those who aren't interested can easily distinguish
-such messages and skip them.
+> http://www.joomla.org/announcements/release-news/5212-joomla-157-security-release-now-available.html
+>
+> Security
+>
+>     * Several security issues were fixed in this release. There was 1
+> critical, 1 major and 2 moderate security vulnerabilities fixed in 1.5.7. For
+> more information, visit the Security Center.
 
-Now re: modules (like auto-index).  We need some way to determine when
-a request for a new Wiki functionality should be fulfilled and when it
-should be denied.  Although, I'm glad to invest my spare time into this
-project (as a sysadmin, a wiki maintainer, etc.) I think it's unwise to
-install any requested plugin (or implement some feature from scratch)
-per initial request.  How about votes from 3-4 subscribers to get
-a green light to a request?  Or we can define a list of people who are
-eligible to approve such changes.
+more details were from http://developer.joomla.org/security.html
 
--- 
-(GM)
 
+[20080902] - Core - Random Number Generation Flaw
+http://developer.joomla.org/security/news/272-20080902-core-random-number-generation-flaw.html
+
+Use CVE-2008-4102
+
+------
+
+[20080903] - Core - com_mailto Spam
+http://developer.joomla.org/security/news/273-20080903-core-commailto-spam.html
+
+Use CVE-2008-4103
+
+------
+
+[20080904] - Core - Redirect Spam
+http://developer.joomla.org/security/news/274-20080904-core-redirect-spam.html
+
+Use CVE-2008-4104
+
+------
+
+[20080901] - Core - JRequest Variable Injection
+http://developer.joomla.org/security/news/271-20080901-core-jrequest-variable-injection.html
+
+Use CVE-2008-4105
+
+
+- Steve
