@@ -1,28 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/10/2
-Message-ID: <28fa9c5e0812092339j4f3b01d5g8a3cf5c38cdabd48@mail.gmail.com>
-Date: Wed, 10 Dec 2008 15:39:23 +0800
-From: "Eugene Teo" <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/16/8
+Message-ID: <Pine.GSO.4.51.0809152124070.6953@faron.mitre.org>
+Date: Mon, 15 Sep 2008 21:24:33 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: watchdog: ib700wdt.c - buffer_underflow bug
+cc: coley@...re.org
+Subject: Re: CVE request: wordpress < 2.6.2
 Content-Type: text/plain; charset=utf-8
 
-Steve, here's another one that needs a CVE name. Thanks!
 
-http://bugzilla.kernel.org/show_bug.cgi?id=11399
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=7c2500f
+On Thu, 11 Sep 2008, Hanno [utf-8] Böck wrote:
 
----
-[WATCHDOG] ib700wdt.c - fix buffer_underflow bug
+> http://wordpress.org/development/2008/09/wordpress-262/
 
-This fixes Bug 11399:
-if ibwdt_set_heartbeat(int t) is called with value 30 then the check
-"if ((t < 0) || (t > 30))" in ibwdt_set_heartbeat is not going to fail
-because t == 30, but in the loop, the check wd_times[i] > t is never
-going to be true because none of the wd_times are greater than the
-value of t (i.e. 30). So we are exiting the loop with i == -1 and
-therefore setting wd_margin to -1 which is wrong.
+SQL Column truncation - CVE-2008-4106
 
-Reported-by: Zvonimir Rakamaric <zrakamar@...ubc.ca>
-Signed-off-by: Wim Van Sebroeck <wim@...ana.be>
+mt_rand limitations - CVE-2008-4107
+
+- Steve
