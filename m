@@ -1,41 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/08/2
-Message-ID: <489C4AC1.1030000@gentoo.org>
-Date: Fri, 08 Aug 2008 15:31:45 +0200
-From: Christian Hoffmann <hoffie@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/16/4
+Message-ID: <Pine.GSO.4.51.0809152058040.6953@faron.mitre.org>
+Date: Mon, 15 Sep 2008 20:59:40 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: php-5.2.6 overflow issues
+cc: coley@...us.mitre.org
+Subject: Re: CVE Request (ruby -- DNS spoofing vulnerability in resolv.rb)
 Content-Type: text/plain; charset=utf-8
 
-Heya,
 
-two security issues, which might possibly allow for arbitrary code 
-execution (afaik nobody has analyzed the details...), but at least DoS 
-(think of FastCGI setups), were silently fixed in PHP again:
+On Thu, 11 Sep 2008, Tomas Hoger wrote:
 
-   * Overflow in ext/gd's imageloadfont() function [1] [2] [3]
-   * Overflow in php's internal memnstr() function which is exposed
-     to userspace as "explode()" [1] [2] [4] [5]
+> > We're treating this as a distinct issue because this is *REALLY* bad
+> > randomness within a particular implementation, besides the inherent
+> > limitation of DNS when source ports are fixed.
+>
+> Applying this rule, separate id should probably be used for PyDNS [1]
+> [2] and adns [3] as well, at they both suffer from the similar flaws -
+> use predictable transactions ids and source port.
 
-As those functions might take user-supplied data in certain webapps 
-(which is a valid use case at least in case of explode()), those issues 
-should probably expected to be remotely exploitable.
+CVE-2008-4099 - PyDNS
 
-Those issues are fixed by the recent php-4.4.9 release, but they affect 
-php-5.2.6 as well and the fixes are not part of any released version in 
-case of 5.2.
+CVE-2008-4100 - adns
 
-Can we get CVEs for these please? :)
-
-
-[1] http://bugs.gentoo.org/show_bug.cgi?id=234102
-[2] http://www.php.net/archive/2008.php#id2008-08-07-1
-[3] http://news.php.net/php.cvs/51219
-[4] http://news.php.net/php.cvs/52039
-[5] http://news.php.net/php.cvs/52002
-
--- 
-Christian Hoffmann
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (261 bytes)
+- Steve
