@@ -1,23 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/24/9
-Message-ID: <48DAD113.70408@redhat.com>
-Date: Thu, 25 Sep 2008 07:45:23 +0800
-From: Eugene Teo <eteo@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/16/2
+Message-ID: <Pine.GSO.4.51.0809152046020.6953@faron.mitre.org>
+Date: Mon, 15 Sep 2008 20:48:03 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-CC: coley@...re.org
-Subject: CVE-2008-4113 update: kernel: sctp: fix random memory dereference with SCTP_HMAC_IDENT option
+cc: coley@...re.org
+Subject: Re: phpMyAdmin code execution (CVE request)
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
 
-The first three references to CVE-2008-4113[1] are incorrect. Please
-update the CVE with the following references:
+On Mon, 15 Sep 2008, Thijs Kinkhorst wrote:
 
-http://marc.info/?l=linux-sctp&m=121986743009093&w=2
-http://marc.info/?l=linux-sctp&m=121986743209110&w=2
+> "- (2.11.9.1)  [security] Code execution vulnerability"
+>
+> http://www.phpmyadmin.net/home_page/downloads.php?relnotes=1
+>
+> "Welcome to this security update for phpMyAdmin 2.11.9.
+> Details will follow on http://phpmyadmin.net."
+>
+> http://www.nabble.com/phpMyAdmin-2.11.9.1-is-released-td19497113.html
 
-[1] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4113
+Use CVE-2008-4096, to be filled in later.
 
-Thanks, Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
+FYI to PHP auditors out there - add create_function() to your list of
+dangerous functions.  I've seen a couple reports of vulnerabilities
+related to it, and some PHP developer advocates singing its praises ("it's
+like eval, but it's different!")
+
+- Steve
