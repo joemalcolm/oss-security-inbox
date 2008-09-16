@@ -1,48 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/03/4
-Message-ID: <Pine.GSO.4.51.0812031154450.15404@faron.mitre.org>
-Date: Wed, 3 Dec 2008 11:56:00 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/16/9
+Message-ID: <Pine.GSO.4.51.0809152129380.6953@faron.mitre.org>
+Date: Mon, 15 Sep 2008 21:29:48 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-Subject: Re:  CVE id request/update: mailscanner: many scripts allow local users to overwrite arbitrary files via symlink attacks
+To: oss-security@...ts.openwall.com, oss-security@...ts.openwall.com
+cc: coley@...re.org
+Subject: Re: CVE Request (python)
 Content-Type: text/plain; charset=utf-8
 
 
-Different CVE's because different versions were reported affected.
+On Mon, 15 Sep 2008, Jan Lieskovsky wrote:
 
-======================================================
-Name: CVE-2008-5312
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5312
-Reference: MLIST:[oss-security] 20081128 CVE id request/update: mailscanner: many scripts allow local users to overwrite arbitrary files via symlink attacks
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/29/1
-Reference: MISC:http://bugs.debian.org/506353
+> https://bugzilla.redhat.com/show_bug.cgi?id=462326
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=498899
 
-mailscanner 4.55.10 might allow local users to overwrite arbitrary
-files via a symlink attack on certain temporary files used by the (1)
-f-prot-autoupdate, (2) clamav-autoupdate, (3) panda-autoupdate.new,
-(4) trend-autoupdate.new, and (5) rav-autoupdate.new scripts in
-/etc/MailScanner/autoupdate/, a different vulnerability than
-CVE-2008-5140.
+Use CVE-2008-4108
 
-
-======================================================
-Name: CVE-2008-5313
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5313
-Reference: MLIST:[oss-security] 20081128 CVE id request/update: mailscanner: many scripts allow local users to overwrite arbitrary files via symlink attacks
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/29/1
-Reference: MISC:http://bugs.debian.org/506353
-
-mailscanner 4.68.8 might allow local users to overwrite arbitrary
-files via a symlink attack on certain temporary files used by the (1)
-f-prot-autoupdate, (2) clamav-autoupdate, (3) avast-autoupdate, and
-(4) f-prot-6-autoupdate scripts in /etc/MailScanner/autoupdate/; the
-(5) bitdefender-wrapper, (6) kaspersky-wrapper, (7) clamav-wrapper,
-and (8) rav-wrapper scripts in /etc/MailScanner/wrapper/; the (9)
-Quarantine.pm, (10) TNEF.pm, (11) MessageBatch.pm, (12) WorkArea.pm,
-and (13) SA.pm scripts in /usr/share/MailScanner/MailScanner/; (14)
-/usr/sbin/MailScanner; and (15) scripts that load the
-/etc/MailScanner/mailscanner.conf.with.mcp configuration file.
-
-
+- Steve
