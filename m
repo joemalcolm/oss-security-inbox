@@ -1,21 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/30/1
-Message-Id: <200805300908.32714.rbu@gentoo.org>
-Date: Fri, 30 May 2008 09:08:29 +0200
-From: Robert Buchholz <rbu@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/16/6
+Message-ID: <Pine.GSO.4.51.0809152111340.6953@faron.mitre.org>
+Date: Mon, 15 Sep 2008 21:13:32 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: uudeview
+Subject: Re: [oss-list] CVE request (vim)
 Content-Type: text/plain; charset=utf-8
 
-On Tuesday 13 May 2008, Nico Golde wrote:
-> It makes use of tempnam which is known to be insecure to
-> generate temporary files.
 
-nzbget before 0.3.0 (I tried 0.2.3) ships a copy of the affected code. 
-Nico's patch applies there fine. As for false positives, Convert-UUlib 
-and pan fixed their copies of the code.
+On Thu, 11 Sep 2008, [UTF-8] Pınar Yanarda�^_ wrote:
 
+> Jan Lieskovsky wrote On 09/11/2008 05:56 PM:
+> > (...)
+> >
+> > Report: http://www.rdancer.org/vulnerablevim-K.html  [1]
+> > Proposed patch: http://groups.google.com/group/vim_dev/attach/dd32ad3a84f36bb2/K-arbitrary-command-execution.patch?part=2
+> >
+>
+>
+> Unfortunately, this patch was incomplete and  rdancer has released
+> another patch for this issue:
+>
+> http://groups.google.com/group/vim_dev/browse_thread/thread/1434d0812b5c817e/f730da13efe2dd73?hide_quotes=no#msg_9290f26f9bc11b33
 
-Robert
+It's not clear whether to merge this with CVE-2008-4101 - if the original
+incomplete patch made it into some distro or public version of vim then
+OK, but we generally don't distinguish between patches (CVE-wise) when
+they're all part of the same bug discussion and there hasn't been a
+release.
 
-Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
+- Steve
