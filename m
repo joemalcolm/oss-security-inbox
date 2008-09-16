@@ -1,54 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/27/5
-Message-ID: <20080727171708.GC22366@ngolde.de>
-Date: Sun, 27 Jul 2008 19:17:08 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/16/5
+Message-ID: <Pine.GSO.4.51.0809152108300.6953@faron.mitre.org>
+Date: Mon, 15 Sep 2008 21:11:30 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: drupal issue in < 5.9
+cc: coley@...re.org, Jan Minář <rdancer@...ncer.org>, Tomas Hoger <thoger@...hat.com>, Karsten Hopp <karsten@...hat.com>
+Subject: Re: [oss-list] CVE request (vim)
 Content-Type: text/plain; charset=utf-8
 
-Hi Miklos,
-* Miklos Vajna <vmiklos@...galware.org> [2008-07-27 18:49]:
-> On Sat, Jul 26, 2008 at 04:44:16PM -0400, "Steven M. Christey" <coley@...us.mitre.org> wrote:
-> > My interpretation of this new advisory is that they meant to fix the
-> > session fixation in 5.8, but they didn't.  The original advisory covered
-> > multiple other issues as well.  So this new advisory might better be
-> > considered a clarification of versions for the session fixation, rather
-> > than a regression error or incomplete fix (which would require a new CVE).
-> > 
-> > Granted, the lack of specifics from Drupal makes it difficult to be
-> > certain about what happened.
-> 
-> As far as I see, they wanted to fix the session fixation issue in 5.8,
-> but the fix did not solve the problem, as you say.
 
-Why didn't it solve the problem?
-http://drupal.org/files/sa-2008-046/SA-2008-046-5.8.patch
-compared to: 
-diff -u -p -r1.745.2.26 user.module
---- modules/user/user.module    7 Jan 2008 02:30:35 -0000   1.745.2.26
-+++ modules/user/user.module    9 Jul 2008 20:37:51 -0000
-@@ -968,9 +968,11 @@ function user_login_submit($form_id, $fo
-     // Update the user table timestamp noting user has logged in.
-     db_query("UPDATE {users} SET login = %d WHERE uid = %d", time(), $user->uid);
- 
-+    // Regenerate the session ID to prevent against session fixation attacks.
-+    sess_regenerate();
-+
-     user_module_invoke('login', $form_values, $user);
- 
--    sess_regenerate();
-     return 'user/'. $user->uid;
-   }
- }
+On Thu, 11 Sep 2008, Jan Lieskovsky wrote:
 
-from http://drupal.org/files/sa-2008-044/SA-2008-044-5.7.patch looks pretty much
-the same. So I guess they did not include their own patch in 5.8.
+> Hello Steve,
+>
+>   found relatively old issue in Vim, which was not covered
+> by the CVE-2008-2712 patch. Could you please assign a new
+> CVE id for it:
+>
+> Report: http://www.rdancer.org/vulnerablevim-K.html  [1]
 
-Cheers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+Use CVE-2008-4101
 
-Content of type "application/pgp-signature" skipped
+What about the ``Control-]'' and ``g]'' Commands (section 3.2)?  On the
+surface, the patch seems to only be related to the K command.
+
+- Steve
