@@ -1,21 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/20/1
-Message-ID: <20080620111242.GF9978@ngolde.de>
-Date: Fri, 20 Jun 2008 13:12:42 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE id request: tmsnc
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/18/1
+Message-ID: <969559020.1179271221698303548.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 17 Sep 2008 20:38:23 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: coley@...re.org
+Subject: CVE Request (mercurial)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-There is a buffer overflow in the tmsnc UBX handling code.
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=487222
+Hi Steve,
 
-Can I get a CVE id for this?
+Looks like there's one more flaw in Mercurial we missed:
+http://www.selenic.com/mercurial/wiki/index.cgi/WhatsNew#head-905b8adb3420a77d92617e06590055bd8952e02b
 
-Kind regards
-Nico
+* hgweb: fix "allowpull" permission being ignored when pulling from hgweb
+
+I admit I don't completely understand it.  rPath seems to have a little more info:
+https://issues.rpath.com/browse/RPL-2753
+
+Thanks
 
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+    JB
