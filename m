@@ -1,41 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/03/9
-Message-ID: <20081003201848.GA2179@ngolde.de>
-Date: Fri, 3 Oct 2008 22:18:48 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: regarding CVE-2008-4382 & CVE-2008-4381
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/18/3
+Message-Id: <1221744482.7082.29.camel@dhcp-lab-164.englab.brq.redhat.com>
+Date: Thu, 18 Sep 2008 15:28:02 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: coley@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: CVE Request (openswan, emacspeak, cman)
 Content-Type: text/plain; charset=utf-8
 
-Hi Steven,
-* Steven M. Christey <coley@...us.mitre.org> [2008-10-03 22:15]:
-> On Fri, 3 Oct 2008, Nico Golde wrote:
-> 
-> > looking at the PoC this would work in every browser
-> > supporting JavaScript as this is just a trivial memory
-> > consumption issue by passing a very large string too the
-> > alert function and thus eating memory, a simple
-> > while(true){} would be equally effective for eating cpu
-> > cycles which I wouldn't consider as a vulnerability
-> > either...
-> 
-> I usually wouldn't call it a vulnerability, either.  However, based on our
-> analysis, the String.fromCharCode(550) creates a Unicode string for
-> character 550, but the escape() for URL encoding can only cover 0 to 255,
-> so it seemed like something else was going on here, maybe the alert
-> function not working.
-> 
-> I don't know how Javascript manages large strings, but it seems like
-> somewhere around the "x4 += x4;" statement, you exceed multiple gigs.  So
-> maybe the alert function isn't even being reached...
+Hello Steve,
 
-I tested this already using a lower loop count in the for 
-loops and got similar behaviour and saw the alert box.
+  could you please assign a CVE ids for the following three
+issues:
 
-Cheers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+a, openswan: Insecure auxiliary /tmp file usage (symlink attack possible)
+   Affected file: /usr/libexec/ipsec/livetest 
+   References: https://bugzilla.redhat.com/show_bug.cgi?id=460425
+               http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=496374
 
-Content of type "application/pgp-signature" skipped
+b, emacspeak: Insecure auxiliary /tmp file usage (symlink attack possible)
+   Affected file: /usr/share/emacs/site-lisp/emacspeak/etc/extract-table.pl
+   References: https://bugzilla.redhat.com/show_bug.cgi?id=460435
+               http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=496431
+
+c, cman: Insecure auxiliary /tmp file usage (symlink attack possible)
+   Affected file: /sbin/fence_egenera
+   References: https://bugzilla.redhat.com/show_bug.cgi?id=460476
+               http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=496410
+
+
+Thank you in advance
+Kind regards
+Jan iankko Lieskovsky
+RH Security Response Team
+
