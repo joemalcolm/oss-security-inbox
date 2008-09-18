@@ -1,69 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/16/9
-Message-ID: <Pine.GSO.4.51.0806161707040.16840@faron.mitre.org>
-Date: Mon, 16 Jun 2008 17:08:13 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Marcus Meissner <meissner@...e.de>
-cc: oss-security@...ts.openwall.com, coley@...re.org
-Subject: Re: CVE request: Opera 9.50
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/18/4
+Message-ID: <1123880963.1364131221758294733.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 18 Sep 2008 13:18:14 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: coley@...re.org
+Subject: CVE Request (gallery2)
 Content-Type: text/plain; charset=utf-8
 
+Hi Steve,
 
+A new version of Gallery 2 is out that fixes three security flaws:
 
-======================================================
-Name: CVE-2008-2714
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2714
-Reference: CONFIRM:http://www.opera.com/docs/changelogs/linux/950/#security
-Reference: CONFIRM:http://www.opera.com/docs/changelogs/windows/950/#security
-Reference: CONFIRM:http://www.opera.com/support/search/view/878/
-Reference: BID:29684
-Reference: URL:http://www.securityfocus.com/bid/29684
-Reference: FRSIRT:ADV-2008-1812
-Reference: URL:http://www.frsirt.com/english/advisories/2008/1812
-Reference: SECUNIA:30636
-Reference: URL:http://secunia.com/advisories/30636
+http://gallery.menalto.com/gallery_2.2.6_released
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=499408
 
-Opera before 9.26 allows remote attackers to misrepresent web page
-addresses using "certain characters" that "cause the page address text
-to be misplaced."
+Thanks.
 
-
-======================================================
-Name: CVE-2008-2715
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2715
-Reference: CONFIRM:http://www.opera.com/docs/changelogs/linux/950/#security
-Reference: CONFIRM:http://www.opera.com/docs/changelogs/windows/950/#security
-Reference: CONFIRM:http://www.opera.com/support/search/view/883/
-Reference: BID:29684
-Reference: URL:http://www.securityfocus.com/bid/29684
-Reference: FRSIRT:ADV-2008-1812
-Reference: URL:http://www.frsirt.com/english/advisories/2008/1812
-Reference: SECUNIA:30636
-Reference: URL:http://secunia.com/advisories/30636
-
-Unspecified vulnerability in Opera before 9.5 allows remote attackers
-to read cross-domain images via HTML CANVAS elements that use the
-images as patterns.
-
-
-======================================================
-Name: CVE-2008-2716
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2716
-Reference: CONFIRM:http://www.opera.com/docs/changelogs/linux/950/#security
-Reference: CONFIRM:http://www.opera.com/docs/changelogs/windows/950/#security
-Reference: CONFIRM:http://www.opera.com/support/search/view/885/
-Reference: BID:29684
-Reference: URL:http://www.securityfocus.com/bid/29684
-Reference: FRSIRT:ADV-2008-1812
-Reference: URL:http://www.frsirt.com/english/advisories/2008/1812
-Reference: SECUNIA:30636
-Reference: URL:http://secunia.com/advisories/30636
-
-Unspecified vulnerability in Opera before 9.5 allows remote attackers
-to spoof the contents of trusted frames on the same parent page by
-modifying the location, which can facilitate phishing attacks.
-
-
+-- 
+    JB
