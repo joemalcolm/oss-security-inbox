@@ -1,26 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/03/6
-Message-ID: <490F1FEF.2020704@pardus.org.tr>
-Date: Mon, 03 Nov 2008 17:59:43 +0200
-From: Pınar Yanardağ <pinar@...dus.org.tr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/18/2
+Message-ID: <48D1E9ED.1030809@redhat.com>
+Date: Thu, 18 Sep 2008 13:41:01 +0800
+From: Eugene Teo <eteo@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request (libsamplerate)
+Subject: CVE-2008-3528 Linux kernel ext[234] directory corruption DoS
 Content-Type: text/plain; charset=utf-8
 
->From libsamplerate's changelog [1] (2008-07-02):
+The ext[234] filesystem code fails to properly handle corrupted data
+structures. With a mounted filesystem image or partition that have
+corrupted dir->i_size and dir->i_blocks, a user performing either a read
+or write operation on the mounted image or partition can lead to a
+possible denial of service.
 
-    * src/src_sinc.c
-    Fix buffer overrrun bug at extreme low conversion ratios. Thanks to Russell
-    O'Connor for the report.
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=459577
+http://lkml.org/lkml/2008/9/13/98
+http://lkml.org/lkml/2008/9/13/99
+http://lkml.org/lkml/2008/9/17/371
 
-I couldn't find any CVE number or request for it. If it's so, can you assign a CVE for it?
+The issue is not fixed upstream yet, but the patch has been added to -mm
+ tree. I will update this email as soon as I know the commit hashes.
+This issue has been allocated with CVE-2008-3528.
 
-[1]: http://www.mega-nerd.com/SRC/ChangeLog
-
-Cheers,
-
+Thanks, Eugene
 -- 
-Pınar Yanardağ (a.k.a PINguAR)
-http://pinguar.org
-
-
+Eugene Teo / Red Hat Security Response Team
