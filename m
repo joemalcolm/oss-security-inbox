@@ -1,34 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/01/2
-Message-ID: <22011.1214924737@devserv.devel.redhat.com>
-Date: Tue, 01 Jul 2008 11:05:37 -0400
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/19/2
+Message-ID: <60982.217.128.171.81.1221824046.squirrel@mail.rofes.fr>
+Date: Fri, 19 Sep 2008 13:34:06 +0200 (CEST)
+From: "Pierre-Yves Rofes" <py@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: openldap DoS
+Subject: CVE request: Opera < 9.52 multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On 30 June 2008, Josh Bressers wrote:
-> On 30 June 2008, Ludwig Nussel wrote:
-> > Hi,
-> > 
-> > Remote unauthenticated attackers can trigger an assertion in the ASN.1 BER
-> > decoding of openlap and crash the server:
-> > http://www.openldap.org/its/index.cgi/Software%20Bugs?id=5580;selectid=5580
-> > 
-> 
-> The patch is here it seems:
-> http://www.openldap.org/devel/cvsweb.cgi/libraries/liblber/io.c.diff?r1=1.120&r2=1.121&hideattic=1&sortbydate=0
-> 
+Hi,
 
-So It seems from my testing, this flaw does not trigger the assertion on
-OpenLDAP version 2.0.27, but does on at least 2.2.13.
+Could we please get CVE ids for the following:
+http://www.opera.com/docs/changelogs/linux/952/
+https://bugs.gentoo.org/show_bug.cgi?id=235298
 
-As upstream suggested this was added in version 1.88 of the io.c file, that
-would suggest this flaw should affect OpenLDAP versions after 2.1.20 (don't
-quote me on this, as I'm not completely sure, it could affect a few older
-versions around 2.1.20).
-
-Thanks.
+Thanks,
 
 -- 
-    JB
+Pierre-Yves Rofes
+Gentoo Linux Security Team
+
