@@ -1,18 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/07/6
-Message-ID: <16701.1207584754@devserv.devel.redhat.com>
-Date: Mon, 07 Apr 2008 12:12:34 -0400
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/19/3
+Message-Id: <200809191446.07443.rbu@gentoo.org>
+Date: Fri, 19 Sep 2008 14:46:04 +0200
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: gcc 4.2 optimizations and integer overflow checks
+Subject: CVE request: pdnsd <1.2.7 Denial of Service
 Content-Type: text/plain; charset=utf-8
 
-Has anyone started to look at this yet:
-http://www.kb.cert.org/vuls/id/162289
+Hey,
 
-I suspect this isn't going to be trivial to detect.  Ideas are welcome.
+we'd like a CVE for issue (2) of SA31847:
+An error exists within the "p_exec_query()" function in src/dns_query.c 
+when processing long replies with many answer sections. This can be 
+exploited to e.g. crash the service by sending a specially crafted 
+reply.
 
-Thanks.
+http://secunia.com/advisories/31847/
 
--- 
-    JB
+Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
