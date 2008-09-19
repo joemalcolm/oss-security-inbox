@@ -1,50 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/05/8
-Message-ID: <20080305125836.GA21650@ngolde.de>
-Date: Wed, 5 Mar 2008 13:58:36 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/19/1
+Message-Id: <200809190440.16342.hanno@hboeck.de>
+Date: Fri, 19 Sep 2008 04:40:16 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: request CVE id: insecure handling of DISPLAY in rxvt
+Subject: Re: CVE Request (gallery2)
 Content-Type: text/plain; charset=utf-8
 
-Hi Tomas,
-* Tomas Hoger <thoger@...hat.com> [2008-03-05 12:54]:
-> On Tue, 4 Mar 2008 22:34:10 +0000 Steve Kemp <steve@...ve.org.uk> wrote:
-> >   The idea is that if you typically connect to a host with display
-> >  forwarding you'll be used to running rxvt and having the resulting
-> >  application display locally.
-> > 
-> >   However if you forget to enable display forwarding then run
-> >  RXVT it will connect to :1, rather than complain there is no
-> >  DISPLAY set and abort.  That *could* allow a malicious local
-> >  server to steal keyboard, & etc.
-> > 
-> >   However I have a hard time seeing this in practise.  It would
-> >  mean that locally you couldn't trust root - since it would take
-> >  a local root user to setup the fake X11 server on :1..
-> 
-> I don't think you need root privileges to take advantage of this...
-> 
-> Let's assume shared box where users ssh -X and run some X programs,
-> e.g. rxvt.  Let's assume unprivileged user can start local X session
-> which will be DISPLAY=:0 and do xhost + to allow connections from other
-> users to her display (maybe Xvnc can be used instead of local X session
-> too).  Now she just have to wait for some other user to ssh without X
-> forwarding and start rxvt on her display.
+Am Thursday 18 September 2008 schrieb Josh Bressers:
+> A new version of Gallery 2 is out that fixes three security flaws:
+>
+> http://gallery.menalto.com/gallery_2.2.6_released
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=499408
 
-That was the scenario I thought of. Sure this is still not a 
-big issue and I doubt this gets "exploited" in practise 
-but...
+ 
+" Insecure cookies over HTTPS - When accessing Gallery over HTTPS, cookies 
+were missing the "secure" flag, leaving the connection vulnerable to cookie 
+sniffing attacks. 
+ The Gallery team would like to thank Hanno Boeck for bringing this issue to 
+our attention."
 
-> Yes, many assumptions and ifs, but still silently assuming DISPLAY=:0
-> when no DISPLAY is set does not sound like a safe default.
+CVE-2008-3662 for this one.
 
-... I also see no reason in supporting a user "mistake" by 
-setting it to some default.
-Cheers
-Nico
+
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
-Content of type "application/pgp-signature" skipped
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
