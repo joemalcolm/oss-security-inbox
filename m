@@ -1,27 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/21/1
-Message-Id: <200805210423.19123.rbu@gentoo.org>
-Date: Wed, 21 May 2008 04:23:16 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/20/1
+Message-Id: <200809201206.32700.rbu@gentoo.org>
+Date: Sat, 20 Sep 2008 12:06:28 +0200
 From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: mtr
+Subject: Re: viewvc security flaw?
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday, 21. May 2008, Jonathan Smith wrote:
-> http://seclists.org/fulldisclosure/2008/May/0488.html has all the
-> details.
+On Friday, 19. September 2008, Josh Bressers wrote:
+> I'm not sure about this one, I'm wondering if someone else has an
+> opinion: http://viewvc.tigris.org/issues/show_bug.cgi?id=354
 >
-> https://issues.rpath.com/browse/RPL-2558 is the rpath issue.
+> It was submitted as a Fedora security update, which I'm letting through
+> for now, as better safe than sorry.
+>
+> To sum it up, it looks like the mime type used to display a given file
+> in viewvc can be set via the URL.  Obviously this means that an attacker
+> could force an arbitrary mime type on any file in a viewvc repository.
+>
+> It strikes me as not crossing a trust boundary though, as I suspect
+> you'd need something malicious in the repo in order for this to really
+> be useful.  If the bad guys can already add arbitrary content, you have
+> bigger problems.
 
-Secunia suggests [1] that 0.73 contains a fix. Did you find any indication 
-to that? The advisory mentions 0.72 as vulnerable, but it is also dated 
-February 28. The last mtr was released on April 7, but it seems to me all 
-changes are unrelated.
-
+We also just received this report as upstream announced it as a security 
+issue. Nevertheless, I would follow your argument. A crafted link could at 
+worst case crash the browser. But as far as I can imagine nothing inside 
+the repository can be exploited by changing its mime-type at delivery.
 
 Robert
-
-[1] http://secunia.com/advisories/30312/
-
 
 Download attachment "signature.asc " of type "application/pgp-signature" (828 bytes)
