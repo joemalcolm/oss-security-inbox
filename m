@@ -1,26 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/29/1
-Message-ID: <20080429212419.GG25892@ngolde.de>
-Date: Tue, 29 Apr 2008 23:24:19 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/22/2
+Message-Id: <200809230116.36645.hanno@hboeck.de>
+Date: Tue, 23 Sep 2008 01:16:36 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: wordpress
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE req: phpmyadmin < 2.11.9.2 xss
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-Can I get a CVE id for a privilege escalation in wordpress:
-http://trac.wordpress.org/ticket/4748
+http://www.phpmyadmin.net/home_page/downloads.php?relnotes=1
 
-Fix: http://trac.wordpress.org/changeset/6029
-
-The fix is included in the 2.2.3 release:
-http://trac.wordpress.org/changeset?old_path=tags%2F2.2.2&old=6063&new_path=tags%2F2.2.3&new=6063#file10
-
-Cheers
-Nico
+cite:
+- (2.11.9.2)  [security] XSS in MSIE using NUL byte
 
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
-Content of type "application/pgp-signature" skipped
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
