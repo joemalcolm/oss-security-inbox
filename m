@@ -1,27 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/02/3
-Message-ID: <Pine.GSO.4.51.0805021149450.13518@faron.mitre.org>
-Date: Fri, 2 May 2008 11:50:48 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Josh Bressers <bressers@...hat.com>
-cc: coley@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request (PHP)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/22/1
+Message-Id: <200809221757.45784.steffen.joeris@skolelinux.de>
+Date: Mon, 22 Sep 2008 17:57:45 +1000
+From: Steffen Joeris <steffen.joeris@...lelinux.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE id request: proftpd
 Content-Type: text/plain; charset=utf-8
 
+Hi
 
+proftpd suffers from a Cross-site request forgery. Could we please get a CVE 
+id for this?
 
-On Fri, 2 May 2008, Josh Bressers wrote:
+Upstream bugreport with patch:
+http://bugs.proftpd.org/show_bug.cgi?id=3115
 
-> * Fixed possible stack buffer overflow in the FastCGI SAPI identified by
->   Andrei Nigmatulin.
+Cheers
+Steffen
 
-Use CVE-2008-2050
-
-> * Properly address incomplete multibyte chars inside escapeshellcmd()
->   identified by Stefan Esser.
-
-Use CVE-2008-2051
-
-These will beupdated later.
-
-- Steve
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
