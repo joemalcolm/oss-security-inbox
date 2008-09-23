@@ -1,36 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/26/2
-Message-ID: <695379064.3724951222433395531.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 26 Sep 2008 08:49:55 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/23/1
+Message-Id: <200809240053.59988.steffen.joeris@skolelinux.de>
+Date: Wed, 24 Sep 2008 00:53:55 +1000
+From: Steffen Joeris <steffen.joeris@...lelinux.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: faad2
+Subject: CVE id request: fraud2
 Content-Type: text/plain; charset=utf-8
 
+Hi
 
------ "Steffen Joeris" <steffen.joeris@...lelinux.de> wrote:
-> Hi
-> 
-> There is a heap overflow in faad2.
-> Upstream announcement:
-> http://www.audiocoding.com/
-> 
-> Gentoo Bugreport:
-> http://bugs.gentoo.org/show_bug.cgi?id=238445
-> 
-> Debian Bugreport:
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=499899
-> 
-> Upstream patch:
-> http://www.audiocoding.com/patch/main_overflow.diff
-> 
-> Could I please get a CVE id for this?
-> 
+fraad2 is affected by a heap overflow. 
 
-This has already been assigned CVE-2008-4201
-http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2008-4201
+Upstream announcement:
+http://www.audiocoding.com/
 
-It's not live on the MITRE site yet though.
+Upstream patch:
+http://www.audiocoding.com/patch/main_overflow.diff
 
--- 
-    JB
+Gentoo Bugreport:
+http://bugs.gentoo.org/show_bug.cgi?id=238445
+
+Debian Bugreport:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=499899
+
+Could I please get a CVE id for this?
+
+Cheers
+Steffen
+
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
