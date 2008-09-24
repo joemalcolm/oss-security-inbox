@@ -1,30 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/16/5
-Message-ID: <4856B9D5.8010407@freethemallocs.com>
-Date: Mon, 16 Jun 2008 11:07:01 -0800
-From: Jonathan Smith <smithj@...ethemallocs.com>
-To: matthias.andree@....de
-CC: oss-security@...ts.openwall.com
-Subject: Re: CVE Id Request: fetchmail <= 6.3.8 DoS when	logging long headers in -v -v mode
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/24/1
+Message-ID: <Pine.GSO.4.51.0809232122470.10422@faron.mitre.org>
+Date: Tue, 23 Sep 2008 21:22:57 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security <oss-security@...ts.openwall.com>
+cc: coley@...re.org
+Subject: Re: CVE Request (gallery2)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
 
-Matthias Andree wrote:
-> Impeding the 6.3.9 release, there are some nasty bugs that aren't
-> security relevant which are pending the fix, but are hard to debug.
+======================================================
+Name: CVE-2008-3662
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3662
+Reference: FULLDISC:20080918 menalto gallery: Session hijacking vulnerability, CVE-2008-3662
+Reference: URL:http://seclists.org/fulldisclosure/2008/Sep/0379.html
+Reference: MISC:http://int21.de/cve/CVE-2008-3662-gallery.html
+Reference: CONFIRM:http://gallery.menalto.com/gallery_1.5.9_released
+Reference: CONFIRM:http://gallery.menalto.com/gallery_2.2.6_released
+Reference: BID:31231
+Reference: URL:http://www.securityfocus.com/bid/31231
 
-Are these bugs regressions against 6.3.8? If so, it might make sense to
-cherry-pick the security fixes from svn and cut a 6.3.8.1 release with
-6.3.8+patches. If not, why let non-regressions hold up 6.3.9?
+Gallery before 1.5.9, and 2.x before 2.2.6, does not set the secure
+flag for the session cookie in an https session, which can cause the
+cookie to be sent in http requests and make it easier for remote
+attackers to capture this cookie.
 
-	smithj
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
+======================================================
+Name: CVE-2008-4129
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4129
+Reference: CONFIRM:http://gallery.menalto.com/gallery_1.5.9_released
+Reference: CONFIRM:http://gallery.menalto.com/gallery_2.2.6_released
+Reference: BID:31231
+Reference: URL:http://www.securityfocus.com/bid/31231
 
-iEYEAREIAAYFAkhWudUACgkQCG91qXPaRelIxwCgljo90dSgky/T/FTXCLM4sfRp
-/9cAn2hrrcwsuH8a9lIS45z5MiW3IK0c
-=D/74
------END PGP SIGNATURE-----
+Gallery before 1.5.9, and 2.x before 2.2.6, does not properly handle
+ZIP archives containing symbolic links, which allows remote
+authenticated users to conduct directory traversal attacks and read
+arbitrary files via vectors related to the archive upload (aka zip
+upload) functionality.
+
+
+======================================================
+Name: CVE-2008-4130
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4130
+Reference: CONFIRM:http://gallery.menalto.com/gallery_2.2.6_released
+Reference: BID:31231
+Reference: URL:http://www.securityfocus.com/bid/31231
+Reference: SECUNIA:31858
+Reference: URL:http://secunia.com/advisories/31858
+
+Cross-site scripting (XSS) vulnerability in Gallery 2.x before 2.2.6
+allows remote attackers to inject arbitrary web script or HTML via a
+crafted Flash animation, related to the ability of the animation to
+"interact with the embedding page."
+
+
