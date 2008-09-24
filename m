@@ -1,33 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/08/4
-Message-ID: <29617.1207666737@devserv.devel.redhat.com>
-Date: Tue, 08 Apr 2008 10:58:57 -0400
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/24/7
+Message-ID: <Pine.GSO.4.51.0809241403001.16490@faron.mitre.org>
+Date: Wed, 24 Sep 2008 14:03:26 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: announcing oCERT & oss-security to Bugtraq & f-d
+Subject: Re: CVE id request: fraud2
 Content-Type: text/plain; charset=utf-8
 
-> Josh,
-> 
-> Would you be able and willing to start working on the announcement text
-> for oss-security now?  We'll be able to combine it with one for oCERT
-> later if needed (that is, if it's not too late) - or you can work on it
-> with Andrea right away (on this list).  I think I'd announce both
-> projects at once at least to the Openwall announcements list.
 
-Probably not this week.  I have quite a few more pressing matters to attend
-to, and for the limited oss-security time I have, I plan to clean up the
-wiki a bit in preparation for a public announcement.
+On Wed, 24 Sep 2008, Robert Buchholz wrote:
 
-I think oCERT needs to do their own thing here.  I'm not pleased with this
-unneeded pressure being placed on this group because of the desire of
-oCERT.
+> CVE-2008-4201 states "in FAAD2 before 2.6.1", whereas the patch is based
+> on 2.6.1 -- i.e. 2.6.1 is affected. So the CVE needs to be corrected.
 
-We also need to sort out the mailing list situation before we can
-reasonably expect what will be a spike of interest.  Did anyone disagree
-with my proposal yesterday?
+I inferred 2.6.1 incorrectly because that was the latest version available
+for download.  THanks for the correction.
 
-Thanks.
-
--- 
-    JB
+- Steve
