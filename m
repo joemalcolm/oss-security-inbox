@@ -1,40 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/12/4
-Message-ID: <41250.141.76.45.35.1213287131.squirrel@mail.macmail.com>
-Date: Thu, 12 Jun 2008 17:12:11 +0100 (BST)
-From: pandora@...mail.com
-To: oss-security@...ts.openwall.com
-Subject: malloc and heap corruption
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/24/2
+Message-ID: <Pine.GSO.4.51.0809232132530.10422@faron.mitre.org>
+Date: Tue, 23 Sep 2008 21:51:44 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com, oss-security@...ts.openwall.com
+cc: coley@...re.org
+Subject: Re: CVE Request (openswan, emacspeak, cman)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-(apologies if this is not appropriate content, but secproc seems dead)
+On Thu, 18 Sep 2008, Jan Lieskovsky wrote:
 
-I've just read up a bit on heap corruption and malloc implementations, and
-found that there's at least one open source malloc (dnmalloc by Yves Younan,
-http://www.fort-knox.org/) which claims to be invulnerable against
-overflows and double frees (it keeps heap management data in a separate area
-protected by guard pages), at performance cempetitive to glibc malloc.
+> a, openswan: Insecure auxiliary /tmp file usage (symlink attack possible)
+>    Affected file: /usr/libexec/ipsec/livetest
+>    References: https://bugzilla.redhat.com/show_bug.cgi?id=460425
+>                http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=496374
 
-However, it seems nobody has picked up on that (only a prototype, apparently
-coded as part of a PhD thesis, has been released two years ago), thus I
-wonder what the reason is.
+Use CVE-2008-4190.
 
-Is the whole idea is somehow flawed? Can one construct heap buffer overflows
-that could jump across a guard page without touching it? Would you consider
-silent data corruption (dnmalloc only protects the heap management data) as
-more ominous than the possibility of executing arbitrary code?
+There's probably also a second-order symlink vulnerability in the call to
+wget using ipsec.olts.remote.log as an output file.  Has that been
+addressed/investigated?
 
-(No, I'm not the dnmalloc author, and I'm not begging for code review
-either - I would just like to know whether there is some obvious reason
-why it would be stupid to use it in my app instead of the glibc malloc).
+Note to source auditors - pay close attention to second-order symlinks, I
+bet they're hidden in a lot of places.
 
-Thanks.
+> b, emacspeak: Insecure auxiliary /tmp file usage (symlink attack possible)
+>    Affected file: /usr/share/emacs/site-lisp/emacspeak/etc/extract-table.pl
+>    References: https://bugzilla.redhat.com/show_bug.cgi?id=460435
+>                http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=496431
 
-- IB
+Use CVE-2008-4191.
+
+> c, cman: Insecure auxiliary /tmp file usage (symlink attack possible)
+>    Affected file: /sbin/fence_egenera
+>    References: https://bugzilla.redhat.com/show_bug.cgi?id=460476
+>                http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=496410
+
+Use CVE-2008-4192, to be filled in later.
+
+- Steve
 
 
--- 
-MacMail - the Webmail service especially for Mac users worldwide
-http://www.macmail.com
+======================================================
+Name: CVE-2008-4190
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4190
+Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=496374
+Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=460425
+Reference: BID:31243
+Reference: URL:http://www.securityfocus.com/bid/31243
+Reference: XF:openswan-livetest-symlink(45250)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/45250
+
+The IPSEC livetest tool in Openswan 2.4.4 and earlier allows local
+users to overwrite arbitrary files and execute arbitrary code via a
+symlink attack on the (1) ipseclive.conn and (2) ipsec.olts.remote.log
+temporary files.
+
+
+======================================================
+Name: CVE-2008-4191
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4191
+Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=496431
+Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=460435
+Reference: BID:31241
+Reference: URL:http://www.securityfocus.com/bid/31241
+Reference: SECUNIA:31880
+Reference: URL:http://secunia.com/advisories/31880
+Reference: XF:emacspeak-extracttable-symlink(45237)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/45237
+
+extract-table.pl in Emacspeak 26 and 28 allows local users to
+overwrite arbitrary files via a symlink attack on the
+extract-table.csv temporary file.
+
+
