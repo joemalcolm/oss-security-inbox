@@ -1,33 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/05/5
-Message-Id: <200803051153.17067.rbu@gentoo.org>
-Date: Wed, 5 Mar 2008 11:53:16 +0100
-From: Robert Buchholz <rbu@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/24/8
+Message-ID: <Pine.GSO.4.51.0809241419240.16490@faron.mitre.org>
+Date: Wed, 24 Sep 2008 14:19:42 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: Solar Designer <solar@...nwall.com>
-Subject: Re: list archive
+cc: coley@...re.org
+Subject: Re: CVE request: kernel: open() call allows setgid bit when user is not in new file's group
 Content-Type: text/plain; charset=utf-8
 
-On Sunday 24 February 2008, Solar Designer wrote:
-> That was my intent, but apparently things just don't work that way -
-> someone has just submitted oss-security and xvendor to Gmane.  I wish
-> that person asked me to do it instead - and I would have done it now.
-> Anyway, I've just exchanged some e-mails with Lars of Gmane,
-> requesting changes to the way those lists were submitted, and I've
-> provided the archives of past messages.  I've also re-configured
-> oss-security to no longer set the X-No-Archive header (xvendor was
-> already configured that way).  The Gmane archive is now available at:
->
-> 	http://dir.gmane.org/gmane.comp.security.oss.general
 
-Unfortunately, all messages prior to this change of setting will expire 
-and be removed from Gmane on March 9, because they have been added on
-February 24. Can you please contact the Gmane folks to remove the 
-X-No-Archive from the mails or just ignore it list-wide, or is that 
-intentional?
+On Wed, 24 Sep 2008, Eugene Teo wrote:
 
-Thanks,
-Robert
+> "When creating a file, open()/creat() allows the setgid bit to be set
+> via the mode argument even when, due to the bsdgroups mount option or
+> the file being created in a setgid directory, the new file's group is
+> one which the user is not a member of.  The user can then use
+> ftruncate() and memory-mapped I/O to turn the new file into an arbitrary
+> binary and thus gain the privileges of this group, since these
+> operations do not clear the setgid bit."
 
+Use CVE-2008-4210, to  be filled in later.
 
-Download attachment "signature.asc " of type "application/pgp-signature" (190 bytes)
+- Steve
