@@ -1,30 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/26/1
-Message-ID: <Pine.GSO.4.51.0802261233290.2856@faron.mitre.org>
-Date: Tue, 26 Feb 2008 12:33:53 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Jonathan Smith <smithj@...ethemallocs.com>
-cc: oss-security@...ts.openwall.com, jamie@...onical.com
-Subject: Re: CVE request for mysql bug #22413
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/24/9
+Message-ID: <48DAD113.70408@redhat.com>
+Date: Thu, 25 Sep 2008 07:45:23 +0800
+From: Eugene Teo <eteo@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: coley@...re.org
+Subject: CVE-2008-4113 update: kernel: sctp: fix random memory dereference with SCTP_HMAC_IDENT option
 Content-Type: text/plain; charset=utf-8
 
+Hi Steve,
 
-I've joined the oss-security list, all.  Hopefully this makes it through.
+The first three references to CVE-2008-4113[1] are incorrect. Please
+update the CVE with the following references:
 
-- Steve
+http://marc.info/?l=linux-sctp&m=121986743009093&w=2
+http://marc.info/?l=linux-sctp&m=121986743209110&w=2
 
+[1] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4113
 
-======================================================
-Name: CVE-2006-7232
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-7232
-Reference: CONFIRM:http://bugs.mysql.com/bug.php?id=22413
-Reference: CONFIRM:http://dev.mysql.com/doc/refman/5.0/en/releasenotes-es-5-0-32.html
-Reference: CONFIRM:http://dev.mysql.com/doc/refman/5.1/en/news-5-1-14.html
-
-sql_select.cc in MySQL 5.0.x before 5.0.32 and 5.1.x before 5.1.14
-allows remote authenticated users to cause a denial of service (crash)
-via an EXPLAIN SELECT FROM on the INFORMATION_SCHEMA table, as
-originally demonstrated using ORDER BY.
-
-
+Thanks, Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
