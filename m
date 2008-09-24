@@ -1,26 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/31/1
-Message-ID: <20080731141537.GB1081@suse.de>
-Date: Thu, 31 Jul 2008 16:15:37 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com, coley@...re.org
-Subject: Mono ASP.net cross site scripting issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/24/4
+Message-ID: <Pine.GSO.4.51.0809232244240.14140@faron.mitre.org>
+Date: Tue, 23 Sep 2008 22:44:43 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: Opera < 9.52 multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-Dean Brettle found a cross site scripting issue in the ASP.net
-class libraries of Mono and potentially also for MS.NET, where you
-can inject code into the "action" of a FORM submit and the tags
-HtmlInputRadioButton.Value, HtmlImage.Src and HtmlInputImage.Src.
+CVEs to be filled in later.
 
-https://bugzilla.novell.com/show_bug.cgi?id=413534
-is our bugreport which was published on posting due to a
-public QA contact mailinglist.
+CVE-2008-4195 Sites can change framed content on other sites
+CVE-2008-4196 cross-site scripting
+CVE-2008-4197 Custom shortcuts
+CVE-2008-4198 insecure pages show incorrect security information
+CVE-2008-4199 Feed links can link to local files
+CVE-2008-4200 feed subscription can cause the wrong page address to be displayed
 
-The proposed patch for the Html* parts is:
-http://lists.ximian.com/pipermail/mono-devel-list/2008-July/028633.html
+Can anyone parse this statement: "Fixed a problem with the CRL
+override for certificates that do not have a CRL specified: Override
+was not checked."  Is this a security issue, or just a bug in a
+security mechanism?
 
-Steven, can you please assign a CVE id?
 
-Ciao, Marcus
+- Steve
