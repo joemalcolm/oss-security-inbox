@@ -1,25 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/28/11
-Message-Id: <200803281336.54934.ludwig.nussel@suse.de>
-Date: Fri, 28 Mar 2008 13:36:54 +0100
-From: Ludwig Nussel <ludwig.nussel@...e.de>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE request: silc
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/24/6
+Message-Id: <200809241747.08239.rbu@gentoo.org>
+Date: Wed, 24 Sep 2008 17:47:05 +0200
+From: Robert Buchholz <rbu@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE id request: fraud2
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Tuesday 23 September 2008, Steffen Joeris wrote:
+> Hi
+>
+> fraad2 is affected by a heap overflow.
+>
+> Upstream announcement:
+> http://www.audiocoding.com/
+>
+> Upstream patch:
+> http://www.audiocoding.com/patch/main_overflow.diff
+>
+> Gentoo Bugreport:
+> http://bugs.gentoo.org/show_bug.cgi?id=238445
+>
+> Debian Bugreport:
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=499899
+>
+> Could I please get a CVE id for this?
+>
+> Cheers
+> Steffen
 
-This report about a buffer overflow in SILC was posted to bugtraq
-recently and doesn't seem to have a CVE number yet:
-http://www.coresecurity.com/?action=item&id=2206
+CVE-2008-4201 states "in FAAD2 before 2.6.1", whereas the patch is based 
+on 2.6.1 -- i.e. 2.6.1 is affected. So the CVE needs to be corrected.
 
-cu
-Ludwig
+Robert
 
--- 
- (o_   Ludwig Nussel
- //\   
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
-
+Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
