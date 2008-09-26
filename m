@@ -1,29 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/30/5
-Message-ID: <20080430145844.GA23611@suse.de>
-Date: Wed, 30 Apr 2008 16:58:44 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/26/3
+Message-Id: <200809262326.03434.steffen.joeris@skolelinux.de>
+Date: Fri, 26 Sep 2008 23:26:02 +1000
+From: Steffen Joeris <steffen.joeris@...lelinux.de>
 To: oss-security@...ts.openwall.com
-Cc: security@...nel.org, Karsten Keil <kkeil@...e.de>
-Subject: Re: security problem in ESP fragment handling?
+Subject: Re: CVE id request: faad2
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Apr 30, 2008 at 10:21:18AM -0400, Steven M. Christey wrote:
-> 
-> On Wed, 30 Apr 2008, Marcus Meissner wrote:
-> 
-> > According to Karsten Keil just ESP fragment packets need to be accepted
-> > by the kernel to trigger the condition.
-> > We think this might be true for all 2.6 kernels (ever since esp.c got added)
-> 
-> Any idea what the starting version might be?
+On Fri, 26 Sep 2008 10:49:55 pm Josh Bressers wrote:
+> ----- "Steffen Joeris" <steffen.joeris@...lelinux.de> wrote:
+> > Hi
+> >
+> > There is a heap overflow in faad2.
+> > Upstream announcement:
+> > http://www.audiocoding.com/
+> >
+> > Gentoo Bugreport:
+> > http://bugs.gentoo.org/show_bug.cgi?id=238445
+> >
+> > Debian Bugreport:
+> > http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=499899
+> >
+> > Upstream patch:
+> > http://www.audiocoding.com/patch/main_overflow.diff
+> >
+> > Could I please get a CVE id for this?
+>
+> This has already been assigned CVE-2008-4201
+> http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2008-4201
+>
+> It's not live on the MITRE site yet though.
+Grrr damn typo and I had a personal note that a CVE id was requested, just 
+didn't find it in my inbox when searching for faud2 :/ 
+Thanks for pointing it out and sorry for the noise.
 
-2.6.0 (introduced during 2.5 development).
- 
-> Also, you mentioned a hang, but the commit says a BUG() is generated.  is
-> this just based on different inputs?
+Cheers
+Steffen
 
-I think the BUG() will kill the network event handler thread, but I let
-the experts comment here.
-
-Ciao, Marcus
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
