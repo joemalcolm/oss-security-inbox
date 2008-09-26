@@ -1,28 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/10/1
-Message-ID: <4917C64E.8030704@redhat.com>
-Date: Mon, 10 Nov 2008 13:27:42 +0800
-From: Eugene Teo <eteo@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>, Greg KH <greg@...ah.com>
-Subject: Re: CVE requests: kernel: hfsplus-related bugs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/26/5
+Message-ID: <990410451.168721222458395405.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 26 Sep 2008 15:46:35 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: coley@...re.org
+Subject: CVE Request (lighttpd)
 Content-Type: text/plain; charset=utf-8
 
-Eugene Teo wrote:
-> These were committed in upstream kernel. Reported by Eric Sesterhenn.
-> 
-> 1) hfsplus: fix Buffer overflow with a corrupted image
-> Upstream commit: efc7ffcb4237f8cb9938909041c4ed38f6e1bf40
-> 
-> When an hfsplus image gets corrupted it might happen that the catalog
-> namelength field gets b0rked.  If we mount such an image the memcpy() in
-> hfsplus_cat_build_key_uni() writes more than the 255 that fit in the
-> name field.  Depending on the size of the overwritten data, we either
-> only get memory corruption or also trigger an oops.
+I ran across this Gentoo bug for lighttpd:
+http://bugs.gentoo.org/show_bug.cgi?id=238180
 
-There's an equivalent bug for hfs. The upstream commit is d38b7aa. We
-will need a CVE name for this too.
+Thanks.
 
-Greg, I don't recall seeing this in -stable kernel. FYI.
-
-Thanks, Eugene
+-- 
+    JB
