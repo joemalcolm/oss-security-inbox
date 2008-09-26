@@ -1,26 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/04/14
-Message-ID: <Pine.GSO.4.51.0809041248260.29613@faron.mitre.org>
-Date: Thu, 4 Sep 2008 12:48:38 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/26/2
+Message-ID: <695379064.3724951222433395531.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 26 Sep 2008 08:49:55 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: Re: django CSRF vuln
+Subject: Re: CVE id request: faad2
 Content-Type: text/plain; charset=utf-8
 
 
-======================================================
-Name: CVE-2008-3909
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3909
-Reference: MLIST:[oss-security] 20080903 django CSRF vuln
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/09/03/4
-Reference: CONFIRM:http://www.djangoproject.com/weblog/2008/sep/02/security/
+----- "Steffen Joeris" <steffen.joeris@...lelinux.de> wrote:
+> Hi
+> 
+> There is a heap overflow in faad2.
+> Upstream announcement:
+> http://www.audiocoding.com/
+> 
+> Gentoo Bugreport:
+> http://bugs.gentoo.org/show_bug.cgi?id=238445
+> 
+> Debian Bugreport:
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=499899
+> 
+> Upstream patch:
+> http://www.audiocoding.com/patch/main_overflow.diff
+> 
+> Could I please get a CVE id for this?
+> 
 
-The administration application in Django 0.91, 0.95, and 0.96 stores
-unauthenticated HTTP POST requests and processes them after successful
-authentication occurs, which allows remote attackers to conduct
-cross-site request forgery (CSRF) attacks and delete or modify data
-via unspecified requests.
+This has already been assigned CVE-2008-4201
+http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2008-4201
 
+It's not live on the MITRE site yet though.
 
+-- 
+    JB
