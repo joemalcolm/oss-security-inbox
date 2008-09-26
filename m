@@ -1,66 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/13/6
-Message-ID: <Pine.GSO.4.51.0808122032490.26550@faron.mitre.org>
-Date: Tue, 12 Aug 2008 20:35:48 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/26/6
+Message-ID: <Pine.GSO.4.51.0809261805440.235@faron.mitre.org>
+Date: Fri, 26 Sep 2008 18:16:31 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
 cc: coley@...re.org
-Subject: Re: CVE id requests: ruby
+Subject: Re: CVE-2008-4113 update: kernel: sctp: fix random memory dereference with SCTP_HMAC_IDENT option
 Content-Type: text/plain; charset=utf-8
 
 
-Seems reasonable to include the DNS issue under CVE-2008-1447.
+On Thu, 25 Sep 2008, Eugene Teo wrote:
 
-For the 0.2 people who might wonder why CVE-2008-3655 and CVE-2008-3657
-were SPLIT, the first is a case of improperly specified "permissions"
-(regardless of the type of "object" being accessed), whereas the latter
-involves the failure to use a protection mechanism that happens to be
-related to permissions.
+> Hi Steve,
+>
+> The first three references to CVE-2008-4113[1] are incorrect. Please
+> update the CVE with the following references:
+>
+> http://marc.info/?l=linux-sctp&m=121986743009093&w=2
+> http://marc.info/?l=linux-sctp&m=121986743209110&w=2
+>
+> [1] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4113
+
+This was in reference to the TKADV2008-007 advisory.
+
+I guess the question becomes - TKADV2008-007 talks about separate issues,
+one involving crashes by calling the API functions when SCTP-AUTH is
+disabled (CVE-2008-3792), and another involving SCTP_HMAC_IDENT and a
+length value for sctp_getsockopt_hmac_ident.
+
+CVE-2008-4113 is anchored on what's specified in TKADV2008-007:
+
+  The Linux Kernel contains an information disclosure vulnerability while
+  parsing the IOCTL SCTP_HMAC_IDENT...
+
+  if (get_user(len, optlen)) <-- [1]
+
+   ...
+
+  retval = sctp_getsockopt_hmac_ident(sk, len, optval, optlen); <-- [2]
+
+
+which seems different from this one:
+
+  http://marc.info/?l=linux-sctp&m=121986743209110&w=2
+
+  "The number of identifiers needs to be checked against the option
+   length.  Also, the identifier index provided needs to be verified
+   to make sure that it doesn't exceed the bounds of the array."
+
+and this one:
+
+  http://marc.info/?l=linux-sctp&m=121988176932559&w=2
+
+  The bonds check to prevent buffer overlflow was not exactly
+  right.  It still allowed overflow of up to 8 bytes which is
+  sizeof(struct sctp_authkey)."
+
+
+So Eugene, it sounds like the issues that you found were variants of the
+issue reported for the sctp_getsockopt_hmac_ident (a different function)
+by TKADV2008-007 for CVE-2008-4113.
+
+Do we need new CVE identifiers?  Or am I missing something?
 
 - Steve
-
-
-======================================================
-Name: CVE-2008-3655
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3655
-Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=494401
-Reference: CONFIRM:http://www.ruby-lang.org/en/news/2008/08/08/multiple-vulnerabilities-in-ruby/
-
-Ruby 1.8.5 and earlier, 1.8.5 through 1.8.6-p286, 1.8.7 through
-1.8.7-p71, and 1.9 through r18423 does not properly restrict access to
-critical variables and methods at various safe levels, which allows
-context-dependent attackers to bypass intended access restrictions via
-(1) untrace_var (2) $PROGRAM_NAME, and (3) syslog at safe level 4, and
-(4) insecure methods at safe levels 1 through 3.
-
-
-======================================================
-Name: CVE-2008-3656
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3656
-Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=494401
-Reference: CONFIRM:http://www.ruby-lang.org/en/news/2008/08/08/multiple-vulnerabilities-in-ruby/
-
-Algorithmic complexity vulnerability in
-WEBrick::HTTP::DefaultFileHandler in WEBrick in Ruby 1.8.5 and
-earlier, 1.8.5 through 1.8.6-p286, 1.8.7 through 1.8.7-p71, and 1.9
-through r18423 allows context-dependent attackers to cause a denial of
-service (CPU consumption) via a crafted HTTP request that is processed
-by a backtracking regular expression.
-
-
-======================================================
-Name: CVE-2008-3657
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3657
-Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=494401
-Reference: CONFIRM:http://www.ruby-lang.org/en/news/2008/08/08/multiple-vulnerabilities-in-ruby/
-
-The dl module in Ruby 1.8.5 and earlier, 1.8.5 through 1.8.6-p286,
-1.8.7 through 1.8.7-p71, and 1.9 through r18423 does not check
-"taintness" of inputs, which allows context-dependent attackers to
-bypass safe levels and execute dangerous functions by accessing a
-library using DL.dlopen.
-
-
