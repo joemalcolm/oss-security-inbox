@@ -1,24 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/10/1
-Message-Id: <200805101441.21478.rbu@gentoo.org>
-Date: Sat, 10 May 2008 14:41:21 +0200
-From: Robert Buchholz <rbu@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: Linux vfs: fix permission checking in sys_utimensat
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/26/4
+Message-ID: <198718832.98881222452979039.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 26 Sep 2008 14:16:19 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE-2008-4182 clarification
 Content-Type: text/plain; charset=utf-8
 
-This patch has been released in Linux 2.6.25.3:
+Hello eveyone,
 
-http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.25.y.git;a=commit;h=f9dfda1ad0637a89a64d001cf81478bd8d9b6306
-> If utimensat() is called with both times set to UTIME_NOW or one of them 
-> to UTIME_NOW and the other to UTIME_OMIT, then it will update the file 
-> time without any permission checking.
->
-> I don't think this can be used for anything other than a local DoS, but
-> could be quite bewildering at that (e.g.  "Why was that large source tree
-> rebuilt when I didn't modify anything???")
+So I spent some time today trying to figure out the Horde issue described in CVE-2008-4182.  Needless to say the advisory is hard to follow, so the upstream
+folks were kind enough to clarify this for me.
 
+This issue affects Turba and Imp.  The fix can be found here:
+http://cvs.horde.org/diff.php/imp/test.php?r1=1.70&r2=1.71
+http://cvs.horde.org/diff.php/turba/test.php?r1=1.22&r2=1.23
 
-Robert
+We don't need another CVE id as it's the same issue in both files.
 
-Download attachment "signature.asc " of type "application/pgp-signature" (190 bytes)
+-- 
+    JB
