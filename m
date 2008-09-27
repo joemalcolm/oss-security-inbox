@@ -1,84 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/23/1
-Message-ID: <20080822181152.GA9722@dhcp-172-29-39-77.aus.corp.google.com>
-Date: Fri, 22 Aug 2008 13:11:52 -0500
-From: Will Drewry <redpig@...rt.org>
-To: bugtraq@...urityfocus.com, ocert-announce@...ts.ocert.org, oss-security@...ts.openwall.com
-Subject: [oCERT-2008-008] multiple heap overflows in xine-lib
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/27/2
+Message-ID: <48DD9C7A.3080705@redhat.com>
+Date: Sat, 27 Sep 2008 10:37:46 +0800
+From: Eugene Teo <eteo@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: coley@...re.org
+Subject: Re: CVE-2008-4113 update: kernel: sctp: fix random memory dereference with SCTP_HMAC_IDENT option
 Content-Type: text/plain; charset=utf-8
 
+Eugene Teo wrote:
+> Hi Steve,
+[...]
+>> and this one:
+>>
+>>   http://marc.info/?l=linux-sctp&m=121988176932559&w=2
 
-#2008-008 multiple heap overflows in xine-lib
+This patch is for CVE-2008-3526.
 
-Description:
-
-The xine free multimedia player suffers from a number of vulnerabilities
-ranging in severity. The worst of these vulnerabilities results in
-arbitrary code execution and the least, in unexpected process
-termination.
-
-Five heap buffer overflows exist in parsing of real audio files, id3
-tags, qt mov files, and matroska headers which all can result in
-arbitrary code execution.
-
-Three additional heap buffer overflows occur in mng, mod, and real
-handling which are potentially exploitable.
-
-Seven additional issues were identified in the input plugins as well as
-the real, qt, and matroska demuxers which result in process termination
-or memory corruption that may have wider implications.
-
-The oCERT team was contacted by the Xine project requesting a review of
-some code changes relating to memory allocations. These vulnerabilities
-were the findings of this requested analysis. The full analysis text can
-be found in the references below.
-
-Affected version:
-
-xine-lib <= 1.1.14
-
-Fixed version:
-
-xine-lib >= 1.1.15 [*]
-
-* - see analysis text for more detail on fixes
-
-Credit: Will Drewry, oCERT Team | Google Security Team.
-
-CVE: TBD
-
-Timeline:
-2008-04-30: vendor contacts oCERT asking patch analysis
-2008-05-06: analysis results in bug being found, test case sent upstream
-2008-05-07: vendor submits second set of patches for analysis
-2008-05-07: vendor provides issue private exposure to some vendors
-2008-05-07: vendor proposes patch for the found security bug
-2008-05-25: Full analysis results supplied to vendor and another PoC
-2008-05-27: oCERT contacts vendor regarding timeline and coordination
-2008-05-28: vendor asks for clarification
-2008-06-09: oCERT contacts vendor offering help
-2008-06-11: vendor supplies patches
-2008-06-18: oCERT indicates that patches are incomplete
-2008-06-21: vendor confirms receipt and looks in to options
-2008-07-02: vendor indicates problem with a potential fix; oCERT replies
-2008-07-28: vendor contact becomes unavailable
-2008-08-11: oCERT attempts another contact with vendor
-2008-08-12: new contact is confirmed
-2008-08-14: xine-lib releases 1.1.15 with fixes (w/out oCERT knowledge)
-2008-08-18: oCERT supplies all original findings and test cases again
-2008-08-22: Ludwig Nussel notified oCERT regarding 1.1.15
-2008-08-22: advisory release
-
-References:
-- Vulnerability analysis report:
-  http://www.ocert.org/analysis/2008-008/analysis.txt
-- xine-1.1.15 release notes:
-  http://sourceforge.net/project/shownotes.php?release_id=619869&group_id=9655
-
-Links:
-- http://xinehq.de
-
-
---
-Will Drewry <redpig@...rt.org>
-oCERT Team :: http://ocert.org
+Thanks, Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
