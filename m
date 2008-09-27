@@ -1,31 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/16/1
-Message-ID: <20080516171854.GA2050@openwall.com>
-Date: Fri, 16 May 2008 21:18:54 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/27/1
+Message-ID: <48DD9876.8020508@redhat.com>
+Date: Sat, 27 Sep 2008 10:20:38 +0800
+From: Eugene Teo <eteo@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: OpenSSH key blacklisting
+CC: coley@...re.org
+Subject: Re: CVE-2008-4113 update: kernel: sctp: fix random memory dereference with SCTP_HMAC_IDENT option
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi Steve,
 
-Are any other distros, besides Debian, Ubuntu, and derived ones, going
-to implement key blacklisting in OpenSSH - or are considering it?
+Steven M. Christey wrote:
+> On Thu, 25 Sep 2008, Eugene Teo wrote:
+>> The first three references to CVE-2008-4113[1] are incorrect. Please
+>> update the CVE with the following references:
+>>
+>> http://marc.info/?l=linux-sctp&m=121986743009093&w=2
+>> http://marc.info/?l=linux-sctp&m=121986743209110&w=2
+>>
+>> [1] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4113
+> 
+> This was in reference to the TKADV2008-007 advisory.
+> 
+> I guess the question becomes - TKADV2008-007 talks about separate issues,
+> one involving crashes by calling the API functions when SCTP-AUTH is
+> disabled (CVE-2008-3792), and another involving SCTP_HMAC_IDENT and a
+> length value for sctp_getsockopt_hmac_ident.
 
-We are considering it for Openwall GNU/*/Linux, and if our effort would
-be reused by others, or if others join us in developing and/or testing
-the patch, this would be a reason for us to go for it.
+I see what the confusion is now.
 
-I don't think we'll take the Debian/Ubuntu patch as-is.  Rather, we are
-likely to use a trivial binary encoding/compression method for the
-partial fingerprints.  We'd also use smaller partial fingerprints.  With
-the approach I have in mind, it'd take around 4.55 bytes per key to
-store 48-bit partial fingerprints, bringing the installed file size for
-3 arch types and 2 key types/sizes in under 1 MB (or just over 1 MB for
-3 key types/sizes).
+TKADV2008-007[1] mentioned two separate, but related issues. The second
+issue that the advisory mentioned is an example of a function that may
+have two possible consequences, and it all depends on whether SCTP
+authentication is enabled or not.
 
-Please comment.
+The patch[2] that addressed these issues mentioned only one of them in
+the changelog description, even though it appears to be fixing possibly
+more than two issues.
 
-Thanks,
+Should this be assigned with just one CVE name instead of two?
 
-Alexander
+[1] http://www.trapkit.de/advisories/TKADV2008-007.txt
+[2] http://tinyurl.com/be9467bd75b522a3db0369c12db739
+
+The sctp_setsockopt_hmac_ident() bug I found was reported around the
+same time as Tobias. More on this below.
+
+> which seems different from this one:
+> 
+>   http://marc.info/?l=linux-sctp&m=121986743209110&w=2
+[...]
+> and this one:
+> 
+>   http://marc.info/?l=linux-sctp&m=121988176932559&w=2
+[...]
+> So Eugene, it sounds like the issues that you found were variants of the
+> issue reported for the sctp_getsockopt_hmac_ident (a different function)
+> by TKADV2008-007 for CVE-2008-4113.
+
+The sctp_setsockopt_hmac_ident() bug I found has a user-controllable
+hmacs->shmac_num_idents. There is no sanity check for id in
+sctp_auth_ep_set_hmacs(), and the check for has_sha1 can be bypassed, so
+it is possible that memcpy copies a little more than it should. It
+depends on sctp_getsockopt_hmac_ident() to read the data structure back
+to the user-space. When I reported this, sctp_getsockopt_hmac_ident()
+problem as reported in TKADV2008-007 was not fixed yet. We probably need
+a CVE name for this.
+
+Thanks for clearing up the confusion.
+
+Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
