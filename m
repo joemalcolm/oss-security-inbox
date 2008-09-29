@@ -1,41 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/28/8
-Message-Id: <BE24F8FC-A62D-4400-8D0D-923C90D48203@noxss.org>
-Date: Fri, 28 Nov 2008 23:31:05 +0100
-From: Jeremias Reith <jr@...ss.org>
-To: oss-security@...ts.openwall.com
-Cc: Steffen Joeris <steffen.joeris@...lelinux.de>
-Subject: Re: CVE requset: WordPress XSS vulnerability in RSS Feed Generator
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/29/6
+Message-ID: <48E0F04A.1060007@gentoo.org>
+Date: Mon, 29 Sep 2008 17:12:10 +0200
+From: Christian Hoffmann <hoffie@...too.org>
+To: ludwig.nussel@...e.de
+CC: oss-security@...ts.openwall.com
+Subject: Re: CVE Request (mercurial)
 Content-Type: text/plain; charset=utf-8
 
-On Nov 28, 2008, at 22:39 , Steffen Joeris wrote:
-
-> Hi
->
->> a XSS vulnerability has been discovered in WordPress.
+On 2008-09-29 16:13, Ludwig Nussel wrote:
+> Josh Bressers wrote:
+>> Looks like there's one more flaw in Mercurial we missed:
+>> http://www.selenic.com/mercurial/wiki/index.cgi/WhatsNew#head-905b8adb3420a77d92617e06590055bd8952e02b
 >>
->> Vendor info:
->> http://wordpress.org/development/2008/11/wordpress-265/
->>
->> Detailed information:
->> http://www.securityfocus.com/archive/1/498652 (Note: It should be
->> "prior to 2.6.5" in the summary)
-> I might be off here, but doesn't the patch[0] create another XSS by  
-> removing
-> wp_specialchars?
->
-> Cheers
-> Steffen
->
-> [0]:
-> http://trac.wordpress.org/changeset?old_path=tags%2F2.6.3&old=&new_path=tags%2F2.6.5&new=
+>> * hgweb: fix "allowpull" permission being ignored when pulling from hgweb
+> 
+> Did anyone assign a CVE number for this issue yet?
+Looks like CVE-2008-4297 [1] has been assigned to this issue, at least
+our bug [2] mentions it and the description matches. ;o)
+
+[1] http://nvd.nist.gov/nvd.cfm?cvename=CVE-2008-4297
+[2] https://bugs.gentoo.org/show_bug.cgi?id=239055
+
+-- 
+Christian Hoffmann
 
 
-Looks fine to me.
-
-You probably missed that the added clean_url() is applied on the  
-entire URL instead of wp_specialchars() to REQUSET_URI.
-
-
-Cheers,
-Jeremias
+Download attachment "signature.asc" of type "application/pgp-signature" (261 bytes)
