@@ -1,37 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/08/3
-Message-ID: <20080408145604.GA5389@openwall.com>
-Date: Tue, 8 Apr 2008 18:56:04 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/29/5
+Message-Id: <200809291657.01910.rbu@gentoo.org>
+Date: Mon, 29 Sep 2008 16:56:59 +0200
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: list: members vs. read-only subscribers
+Cc: Ludwig Nussel <ludwig.nussel@...e.de>, coley@...re.org
+Subject: Re: CVE Request (mercurial)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 07, 2008 at 01:35:53PM -0400, Josh Bressers wrote:
-> Here is my proposal, technical issues aside (we are smart people, we'll
-> figure something out).
-> 
-> * The current member list can post unmoderated
-> * New subscribers (anyone can subscribe) will be moderated by default, but
->   can have the moderation flag lifted when the prove to be useful
->   contributors (we need to define what a useful contributor is)
-> * Non members can post, but will be moderated (if spam is an issue, we
->   could consider just throwing this stuff out, but I'd really like to avoid
->   it if possible)
-> 
-> I think that this should appear as one list to the end user.
-...
-> For the wiki, I'd say just make it a free for all.  If they take the time
-> to create an account, let them make changes, we'll keep an eye on what gets
-> modified.  We can deal with spam if it becomes a problem.
-> 
-> If you don't like this, speak up now, otherwise, I think it would make
-> sense to find a solution that fits this model.
+On Monday 29 September 2008, Ludwig Nussel wrote:
+> Josh Bressers wrote:
+> > Looks like there's one more flaw in Mercurial we missed:
+> > http://www.selenic.com/mercurial/wiki/index.cgi/WhatsNew#head-905b8
+> >adb3420a77d92617e06590055bd8952e02b
+> >
+> > * hgweb: fix "allowpull" permission being ignored when pulling from
+> > hgweb
+>
+> Did anyone assign a CVE number for this issue yet?
+>
+> cu
+> Ludwig
 
-I am OK with your proposal, although I think that we could simply do
-message moderation for all instead, with a few moderators.
+Yes, only recently:
 
-Anyway, should we (Openwall) interpret the above as a request to go
-ahead and apply the changes?
+CVE-2008-4297 (http://nvd.nist.gov/nvd.cfm?cvename=CVE-2008-4297):
+  Mercurial before 1.0.2 does not enforce the allowpull permission
+  setting for a pull operation from hgweb, which allows remote
+  attackers to read arbitrary files from a repository via an "hg pull"
+  request.
 
-Alexander
+
+Robert
+
+Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
