@@ -1,31 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/19/4
-Message-ID: <48320CB1.80605@freethemallocs.com>
-Date: Mon, 19 May 2008 15:26:41 -0800
-From: Jonathan Smith <smithj@...ethemallocs.com>
-To: Florian Weimer <fw@...eb.enyo.de>
-CC: oss-security@...ts.openwall.com,  "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE ID request: GNUTLS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/29/1
+Message-Id: <200809292022.17748.steffen.joeris@skolelinux.de>
+Date: Mon, 29 Sep 2008 20:22:16 +1000
+From: Steffen Joeris <steffen.joeris@...lelinux.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE id request: ftpd
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi
 
-Florian Weimer wrote:
-| Several issues have been announced in GNUTLS-SA-2008-1:
+There seems to be a Cross-site request forgery[0] in ftpd.
+Upstream used these patches[1][2] to address the issue. There are also two 
+Debian Bugreports[3][4] for this issue.
+Could I please get a CVE id for this?
 
-Note that the fixed versions has changed. 2.2.4 didn't fix the issue, so
-they pushed 2.2.5 today as well.
+Cheers
+Steffen
 
-reference
-http://permalink.gmane.org/gmane.comp.encryption.gpg.gnutls.devel/2812
+[0]: 
+http://lists.grok.org.uk/pipermail/full-disclosure/2008-September/064697.html
 
-	smithj
+[1]: 
+http://www.openbsd.org/cgi-bin/cvsweb/src/libexec/ftpd/ftpcmd.y.diff?r1=1.50&r2=1.51&f=h
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
+[2]: 
+http://www.openbsd.org/cgi-bin/cvsweb/src/libexec/ftpd/ftpcmd.y.diff?r1=1.51&r2=1.52&f=h
 
-iEYEARECAAYFAkgyDLEACgkQCG91qXPaRel40gCgjkeK+JP2BfuWQsMX1WrypSS/
-5XwAn1EL/PuuqbrxWRKsFeb1tjQI/0gR
-=mrDL
------END PGP SIGNATURE-----
+[3]: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=500518
+
+[4]: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=500278
+
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
