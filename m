@@ -1,29 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/25/3
-Message-ID: <20080525154153.44d2782a@redhat.com>
-Date: Sun, 25 May 2008 15:41:53 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/29/3
+Message-Id: <200809291613.57114.ludwig.nussel@suse.de>
+Date: Mon, 29 Sep 2008 16:13:56 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: steffen.joeris@...lelinux.de
-Subject: Re: CVE id request: xscreensaver
+Cc: coley@...re.org
+Subject: Re: CVE Request (mercurial)
 Content-Type: text/plain; charset=utf-8
 
-On Sun, 25 May 2008 18:29:13 +1000 Steffen Joeris
-<steffen.joeris@...lelinux.de> wrote:
-
-> Pierre Habouzit discovered that resizing with the xrandr tool can
-> crash xscreensaver.
+Josh Bressers wrote:
+> Looks like there's one more flaw in Mercurial we missed:
+> http://www.selenic.com/mercurial/wiki/index.cgi/WhatsNew#head-905b8adb3420a77d92617e06590055bd8952e02b
 > 
-> Debian Bug report:
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=482385
-> 
-> The tested version of xscreensaver is 5.05-1, but at the moment there
-> is no reason to assume that the bug did not exist in previous
-> versions.
+> * hgweb: fix "allowpull" permission being ignored when pulling from hgweb
 
-Is there any known attack vector crossing trust boundary?  Usage of
-xrandr should be fully under the control of the user running
-xscreensaver.
+Did anyone assign a CVE number for this issue yet?
+
+cu
+Ludwig
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+ (o_   Ludwig Nussel
+ //\   
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+
