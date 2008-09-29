@@ -1,28 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/16/1
-Message-Id: <200807152109.06098.thijs@debian.org>
-Date: Tue, 15 Jul 2008 21:09:03 +0200
-From: Thijs Kinkhorst <thijs@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: Re: CVE request: phpmyadmin < 2.11.7.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/29/7
+Message-ID: <20080929160052.GX23089@fuse.inversepath.com>
+Date: Mon, 29 Sep 2008 16:00:52 +0000
+From: Andrea Barisani <lcars@...rt.org>
+To: ocert-announce@...ts.ocert.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: [oCERT-2008-013] MPlayer Real demuxer heap overflow
 Content-Type: text/plain; charset=utf-8
 
-On Tuesday 15 July 2008 21:00, Hanno Böck wrote:
-> From Changelog:
-> - protection against XSS when register_globals is on and .htaccess
->   has no effect, thanks to Tim Starling
 
-Note: this has already been assigned CVE-2008-2960 following a previous 
-request from you.
+2008/09/29 #2008-013 MPlayer Real demuxer heap overflow
 
-> - (2.11.7.1)  [security] XSRF/CSRF by manipulating the db,
->   convcharset and collation_connection parameters,
->   thanks to YGN Ethical Hacker Group
+Description:
 
-This still needs one.
+The MPlayer multimedia player suffers from a vulnerability which could result
+in arbitrary code execution and at the least, in unexpected process
+termination.
 
+Three integer underflows located in the Real demuxer code can be used to
+exploit a heap overflow, a specific video file can be crafted in order to make
+the stream_read function reading or writing arbitrary amounts of memory.
 
-Thijs
+The following patch fixes the issue:
+http://www.ocert.org/patches/2008-013/mplayer_demux_real.patch
 
-Content of type "application/pgp-signature" skipped
+Affected version:
+
+MPlayer <= 1.0_rc2
+
+Fixed version:
+
+MPlayer, N/A
+
+Credit: vulnerability report, patch and PoC code received from Felipe Andres
+Manzano <fmanzano [at] fceia [dot] unr [dot] edu [dot] ar>.
+
+CVE: CVE-2008-3827
+
+Timeline:
+2008-08-12: vulnerability report received
+2008-08-24: contacted mplayer maintainers
+2008-08-25: maintainer provides patch
+2008-08-28: reporter indicates that the patch is incomplete and sends new PoC
+2008-09-15: maintainer provides updated patch
+2008-09-16: reporter confirms patch
+2008-09-29: advisory release
+
+References:
+
+Links:
+http://www.mplayerhq.hu
+
+Permalink:
+http://www.ocert.org/advisories/ocert-2008-013.html
+
+-- 
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | Open Source Computer Emergency Response Team
+
+<lcars@...rt.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
