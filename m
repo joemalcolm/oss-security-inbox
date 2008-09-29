@@ -1,45 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/01/3
-Message-ID: <41932.82.67.177.178.1217577378.squirrel@mail.rofes.fr>
-Date: Fri, 1 Aug 2008 09:56:18 +0200 (CEST)
-From: "Pierre-Yves Rofes" <py@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/29/2
+Message-Id: <200809291554.57968.rbu@gentoo.org>
+Date: Mon, 29 Sep 2008 15:54:55 +0200
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: Re: CVE request: phpwebgallery < 1.7.2
+Cc: Steffen Joeris <steffen.joeris@...lelinux.de>
+Subject: Re: CVE id request: ftpd
 Content-Type: text/plain; charset=utf-8
 
-On Fri, August 1, 2008 1:49 am, Hanno BÃ¶ck wrote:
-> Changelog:
-> http://bugs.phpwebgallery.net/changelog_page.php
+On Monday 29 September 2008, Steffen Joeris wrote:
+> Hi
 >
-> - 0000769: [security] Affichage des adresses email des utilisateurs en
-> mode
-> adviser (Pat) - closed.
->
-> Yeah, it is in french, but nevertheless it's a security issue. (maybe
-> someone
-> wants to write an english advisory)
->
-Hi,
+> There seems to be a Cross-site request forgery[0] in ftpd.
 
-Even if it's probably easy to guess with or without a translator, the
-ticket description says:
+There have been two CVEs assigned, one for proftpd and one for 
+netkit-ftpd:
 
-In advisor mode, users's e-mails are masked with the address
-"advisor.mode@...ite"
-But if the advisor clicks to edit the user's profile, he can access
-his real address.
+CVE-2008-4242 (http://nvd.nist.gov/nvd.cfm?cvename=CVE-2008-4242):
+  ProFTPD 1.3.1 interprets long commands from an FTP client as multiple
+  commands, which allows remote attackers to conduct cross-site request
+  forgery (CSRF) attacks and execute arbitrary FTP commands via a long
+  ftp:// URI that leverages an existing session from the FTP client
+  implementation in a web browser.
 
-For those wondering what the "advisor mode" is, since it seems to be
-documented only in french
-(http://phpwebgallery.net/doc/doku.php/fr:fonctionnalites:conseiller),
-this is actually a read-only access to the admin interface, for helping
-out a user to configure the gallery. So this issue is basically an
-information disclosure.
+CVE-2008-4247 (http://nvd.nist.gov/nvd.cfm?cvename=CVE-2008-4247):
+  ftpd in OpenBSD 4.3, FreeBSD 7.0, and NetBSD 4.0 interprets long
+  commands from an FTP client as multiple commands, which allows remote
+  attackers to conduct cross-site request forgery (CSRF) attacks and
+  execute arbitrary FTP commands via a long ftp:// URI that leverages
+  an existing session from the FTP client implementation in a web
+  browser.
 
-HTH,
 
--- 
-Pierre-Yves Rofes
-Gentoo Linux Security Team
+Robert
 
+Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
