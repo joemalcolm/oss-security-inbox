@@ -1,66 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/26/6
-Message-ID: <Pine.GSO.4.51.0809261805440.235@faron.mitre.org>
-Date: Fri, 26 Sep 2008 18:16:31 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: Re: CVE-2008-4113 update: kernel: sctp: fix random memory dereference with SCTP_HMAC_IDENT option
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/30/1
+Message-ID: <48E23DCA.9050207@gentoo.org>
+Date: Tue, 30 Sep 2008 16:55:06 +0200
+From: Christian Hoffmann <hoffie@...too.org>
+To: coley@...re.org
+CC: vendor-sec@....de, darix@...nsu.se, stbuehler@....de,  oss-security@...ts.openwall.com
+Subject: Re: CVE request: lighttpd issues
 Content-Type: text/plain; charset=utf-8
 
+On 2008-09-24 18:15, Christian Hoffmann wrote:
+> multiple security-related issues are going to be fixed in the
+> soon-to-be-released version 1.4.20 of lighttpd, which all seem CVE-worthy.
+1.4.20 has been released meanwhile. The issues along with their
+advisories are public now, CC'ing oss-sec as such.
+We still need CVEs for these three issues.
 
-On Thu, 25 Sep 2008, Eugene Teo wrote:
 
-> Hi Steve,
+>   * Unexpected behavior of url.redirect / url.rewrite config options
+> 
+>     While this is not a security issue in lighttpd, the user might
+>     rely on the fact, that those options are suppoosed to be matched
+>     against the urldecoded version of the URL. Depending on the
+>     configuration, this would allow for unwanted access to certain
+>     resources (information disclosure or even manipulation of data)
+>     References: [1] [2]
 >
-> The first three references to CVE-2008-4113[1] are incorrect. Please
-> update the CVE with the following references:
+>   * Information disclosure w/ mod_userdir on case-insensitive file
+>     systems
+>     References: [3] [4]
 >
-> http://marc.info/?l=linux-sctp&m=121986743009093&w=2
-> http://marc.info/?l=linux-sctp&m=121986743209110&w=2
->
-> [1] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4113
-
-This was in reference to the TKADV2008-007 advisory.
-
-I guess the question becomes - TKADV2008-007 talks about separate issues,
-one involving crashes by calling the API functions when SCTP-AUTH is
-disabled (CVE-2008-3792), and another involving SCTP_HMAC_IDENT and a
-length value for sctp_getsockopt_hmac_ident.
-
-CVE-2008-4113 is anchored on what's specified in TKADV2008-007:
-
-  The Linux Kernel contains an information disclosure vulnerability while
-  parsing the IOCTL SCTP_HMAC_IDENT...
-
-  if (get_user(len, optlen)) <-- [1]
-
-   ...
-
-  retval = sctp_getsockopt_hmac_ident(sk, len, optval, optlen); <-- [2]
+>   * User-controllable memory leak, possibly leading to a Denial of
+>     Service
+>     References: [5] [6]
+(There has been another request for a CVE for this entry on oss-sec)
 
 
-which seems different from this one:
-
-  http://marc.info/?l=linux-sctp&m=121986743209110&w=2
-
-  "The number of identifiers needs to be checked against the option
-   length.  Also, the identifier index provided needs to be verified
-   to make sure that it doesn't exceed the bounds of the array."
-
-and this one:
-
-  http://marc.info/?l=linux-sctp&m=121988176932559&w=2
-
-  The bonds check to prevent buffer overlflow was not exactly
-  right.  It still allowed overflow of up to 8 bytes which is
-  sizeof(struct sctp_authkey)."
+> [1] http://www.lighttpd.net/security/lighttpd_sa_2008_05.txt
+> [2]
+> http://www.lighttpd.net/security/lighttpd-1.4.x_rewrite_redirect_decode_url.patch
+> [3] http://www.lighttpd.net/security/lighttpd_sa_2008_06.txt
+> [4] http://www.lighttpd.net/security/lighttpd-1.4.x_userdir_lowercase.patch
+> [5] http://www.lighttpd.net/security/lighttpd_sa_2008_07.txt
+> [6]
+> http://www.lighttpd.net/security/lighttpd-1.4.x_request_header_memleak.patch
 
 
-So Eugene, it sounds like the issues that you found were variants of the
-issue reported for the sctp_getsockopt_hmac_ident (a different function)
-by TKADV2008-007 for CVE-2008-4113.
+-- 
+Christian Hoffmann
 
-Do we need new CVE identifiers?  Or am I missing something?
 
-- Steve
+Download attachment "signature.asc" of type "application/pgp-signature" (261 bytes)
