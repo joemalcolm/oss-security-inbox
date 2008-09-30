@@ -1,33 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/10/4
-Message-ID: <47D53457.4090004@freethemallocs.com>
-Date: Mon, 10 Mar 2008 05:15:03 -0800
-From: Jonathan Smith <smithj@...ethemallocs.com>
-To: oss-security@...ts.openwall.com,  "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: yet another lighttpd issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/30/7
+Message-ID: <Pine.GSO.4.51.0809301652470.3627@faron.mitre.org>
+Date: Tue, 30 Sep 2008 16:55:36 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE id request: ftpd
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-This is another one of those only-with-strange-configuration issues. If
-you enable mod_userdir and don't set userdir.path, it defaults to $HOME.
-This can be undesirable, but especially so when you browse to a user
-such as nobody, who has a homedir of /. Thus, folks can read any file on
-the system.
+On Tue, 30 Sep 2008, Josh Bressers wrote:
 
-Upstream ticket: http://trac.lighttpd.net/trac/ticket/1587
-Fix (require that userdir.path be set):
-http://trac.lighttpd.net/trac/changeset/2120?format=diff&new=2120
-rPath issue: https://issues.rpath.com/browse/RPL-2344#action_51691
-Gentoo bug: https://bugs.gentoo.org/show_bug.cgi?id=212930
+>
+> ----- "Steven M. Christey" <coley@...us.mitre.org> wrote:
+>
+> > CVE-2008-4247 is for *BSD's ftpd; CVE-2008-4242 is for ProFTPD.
+> >
+>
+> I'm pretty sure this also affects at least wu-ftpd, but looking into what
+> else is on my list of things to do.  From my quick investigation, the file
+> in question (ftpcmd.y) is in lots of other ftp daemons, and the code is
+> eerily similar.
 
-	smithj
+If the same file is affected, and it's known, then technically these all
+stem from the same bad code and thus retain the same CVE.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.8 (GNU/Linux)
+We split ProFTPD from ftpd largely based on ProFTPD's statement that "it's
+an independent source tree from the ground up."
 
-iEYEARECAAYFAkfVNFcACgkQCG91qXPaRelLGQCfUGob1qal/OLZsmKterBepfuN
-OPkAoK0XBj92rLKEURDaLTebgChD6IK5
-=rzz7
------END PGP SIGNATURE-----
+- Steve
