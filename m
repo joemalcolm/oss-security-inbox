@@ -1,24 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/07/7
-Message-ID: <Pine.GSO.4.51.0810071732270.6161@faron.mitre.org>
-Date: Tue, 7 Oct 2008 17:35:15 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/30/3
+Message-ID: <Pine.GSO.4.51.0809301424500.3627@faron.mitre.org>
+Date: Tue, 30 Sep 2008 14:25:56 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Mozilla CVE duplicate
+cc: coley@...re.org, vendor-sec@....de, darix@...nsu.se, stbuehler@....de
+Subject: Re: Re: CVE request: lighttpd issues
 Content-Type: text/plain; charset=utf-8
 
 
-On Tue, 7 Oct 2008, Moritz Muehlenhoff wrote:
+On Tue, 30 Sep 2008, Christian Hoffmann wrote:
 
-> CVE-2008-4067 is a duplicate of CVE-2007-3073, both reference
-> https://bugzilla.mozilla.org/show_bug.cgi?id=380994 and the
-> reporter is identical.
+> >>   * Unexpected behavior of url.redirect / url.rewrite config options
 
-This seems to be the case.  Josh Bressers, can you confirm? CVE-2007-3073
-is associated with comment #16 in bug 367428, but later comments for bug
-367428 seem to suggest it's the same (or almost the same) as bug 380994.
+Use CVE-2008-4359, to be filled in later.
 
-If these are dupes, then CVE-2008-4067 would be preferred due to usage by
-more authoritative sources, and more commonly referenced.
+This is a border case in my book.
+
+> >>   * Information disclosure w/ mod_userdir on case-insensitive file
+> >>     systems
+
+Use CVE-2008-4360, to be filled in later.
 
 - Steve
