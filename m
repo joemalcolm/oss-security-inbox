@@ -1,21 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/26/4
-Message-ID: <Pine.GSO.4.51.0808261011480.18466@faron.mitre.org>
-Date: Tue, 26 Aug 2008 10:12:05 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/30/4
+Message-ID: <Pine.GSO.4.51.0809301427120.3627@faron.mitre.org>
+Date: Tue, 30 Sep 2008 14:28:02 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com, oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: Re: CVE Request (ruby)
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE id request: ftpd
 Content-Type: text/plain; charset=utf-8
 
 
-On Mon, 25 Aug 2008, Jan Lieskovsky wrote:
-
->   Ruby upstream has announced another security flaw
-> (DoS vulnerability in REXML module):
->
-> http://www.ruby-lang.org/en/news/2008/08/23/dos-vulnerability-in-rexml/
-
-Use CVE-2008-3790, to be filled in later.
+CVE-2008-4247 is for *BSD's ftpd; CVE-2008-4242 is for ProFTPD.
 
 - Steve
+
+
+======================================================
+Name: CVE-2008-4242
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4242
+Reference: CONFIRM:http://bugs.proftpd.org/show_bug.cgi?id=3115
+Reference: BID:31289
+Reference: URL:http://www.securityfocus.com/bid/31289
+Reference: SECUNIA:31930
+Reference: URL:http://secunia.com/advisories/31930
+Reference: XF:proftpd-url-csrf(45274)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/45274
+
+ProFTPD 1.3.1 interprets long commands from an FTP client as multiple
+commands, which allows remote attackers to conduct cross-site request
+forgery (CSRF) attacks and execute arbitrary FTP commands via a long
+ftp:// URI that leverages an existing session from the FTP client
+implementation in a web browser.
+
+
+======================================================
+Name: CVE-2008-4247
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4247
+Reference: MISC:http://bugs.proftpd.org/show_bug.cgi?id=3115
+Reference: CONFIRM:http://www.openbsd.org/cgi-bin/cvsweb/src/libexec/ftpd/ftpcmd.y
+Reference: CONFIRM:http://www.openbsd.org/cgi-bin/cvsweb/src/libexec/ftpd/ftpcmd.y.diff?r1=1.51&r2=1.52&f=h
+Reference: CONFIRM:http://www.openbsd.org/cgi-bin/cvsweb/src/libexec/ftpd/ftpd.c
+Reference: CONFIRM:http://www.openbsd.org/cgi-bin/cvsweb/src/libexec/ftpd/ftpd.c.diff?r1=1.183&r2=1.184&f=h
+Reference: SECTRACK:1020946
+Reference: URL:http://www.securitytracker.com/id?1020946
+
+ftpd in OpenBSD 4.3, FreeBSD 7.0, and NetBSD 4.0 interprets long
+commands from an FTP client as multiple commands, which allows remote
+attackers to conduct cross-site request forgery (CSRF) attacks and
+execute arbitrary FTP commands via a long ftp:// URI that leverages an
+existing session from the FTP client implementation in a web browser.
+
+
