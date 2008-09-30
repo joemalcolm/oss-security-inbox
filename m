@@ -1,43 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/30/1
-Message-ID: <20080830234625.GC12017@ngolde.de>
-Date: Sun, 31 Aug 2008 01:46:25 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/30/5
+Message-ID: <1137093294.964811222799647193.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 30 Sep 2008 14:34:07 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request (gpicview)
+Subject: Re: CVE id request: ftpd
 Content-Type: text/plain; charset=utf-8
 
-Hi Jan,
-* Jan Lieskovsky <jlieskov@...hat.com> [2008-08-25 13:06]:
->   could you please allocate a CVE id for the following
-> three gpicview issues:
-> 
-> 1,
-> 
-> http://sourceforge.net/tracker/index.php?func=detail&aid=2019481&group_id=180858&atid=894869
-> 
-> Possible symlink attack via the temporary created "/tmp/rot.jpg" 
-> file used for image rotation.
-[...] 
-Same piece of code main-win.c doesn't look too trustworthy 
-to me either:
 
-    690     int error = jpegtran (filename, "/tmp/rot.jpg" , code);
-    691     if(error)
-    692         return error;
-    693 
-    694     //now copy /tmp/rot.jpg back to the original file
-    695     char command[strlen(filename)+50]; //this should not generate buffer owerflow
-    696     // MS: didn't know, how to make it better, maybe an own copy routine
-    697     sprintf(command,"cp /tmp/rot.jpg \"%s\"",filename);
-    698     system(command);
+----- "Steven M. Christey" <coley@...us.mitre.org> wrote:
 
-Anyone played with crafted file names?
-Cheers
-Nico
+> CVE-2008-4247 is for *BSD's ftpd; CVE-2008-4242 is for ProFTPD.
+> 
+
+I'm pretty sure this also affects at least wu-ftpd, but looking into what
+else is on my list of things to do.  From my quick investigation, the file
+in question (ftpcmd.y) is in lots of other ftp daemons, and the code is
+eerily similar.
 
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+    JB
