@@ -1,40 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/13/13
-Message-ID: <20080813120003.GK5666@ngolde.de>
-Date: Wed, 13 Aug 2008 14:00:03 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: horde webmail edition < 1.1.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/30/2
+Message-ID: <48E23FAD.7090703@gentoo.org>
+Date: Tue, 30 Sep 2008 17:03:09 +0200
+From: Christian Hoffmann <hoffie@...too.org>
+To: coley@...re.org
+CC: vendor-sec@....de, darix@...nsu.se, stbuehler@....de,  oss-security@...ts.openwall.com
+Subject: Re: CVE request: lighttpd issues
 Content-Type: text/plain; charset=utf-8
 
-Hi Tomas,
-* Tomas Hoger <thoger@...hat.com> [2008-08-13 13:50]:
-> On Wed, 13 Aug 2008 12:31:03 +0200 Nico Golde
-> <oss-security+ml@...lde.de> wrote:
-> 
-> > > Multiple unspecified vulnerabilities in Horde Groupware Webmail
-> > > before Edition 1.1.1 (final) have unknown impact and attack vectors
-> > > related to "unescaped output," possibly cross-site scripting (XSS),
-> > > in the (1) object browser and (2) contact view.
-> > 
-> > This should be a duplicate of CVE-2008-3330.
-> 
-> Actually, (1) is covered by CVE-2008-3330, (2) probably never got an
-> id.  Bit more info on (2) here:
-> 
->   https://bugzilla.redhat.com/show_bug.cgi?id=452549
-> 
-> Steven, can you please correct CVE description.  Thanks!
+Sorry for the spam, I fail..
 
-Hmm, actually I thought this would have been added after my 
-post on: 
-http://www.openwall.com/lists/oss-security/2008/07/28/3
-which already mentions this.
+On 2008-09-30 16:55, Christian Hoffmann wrote:
+> We still need CVEs for these three issues.
+Wrong, only two are remaining, see below.
 
-Kind regards
-Nico
+>>   * Unexpected behavior of url.redirect / url.rewrite config options
+>>
+>>     While this is not a security issue in lighttpd, the user might
+>>     rely on the fact, that those options are suppoosed to be matched
+>>     against the urldecoded version of the URL. Depending on the
+>>     configuration, this would allow for unwanted access to certain
+>>     resources (information disclosure or even manipulation of data)
+This one.
+
+>>
+>>   * Information disclosure w/ mod_userdir on case-insensitive file
+>>     systems
+And this one.
+
+>>
+>>   * User-controllable memory leak, possibly leading to a Denial of
+>>     Service
+This has been assigned CVE-2008-4298 already.
+
+
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+Christian Hoffmann
 
-Content of type "application/pgp-signature" skipped
+
+Download attachment "signature.asc" of type "application/pgp-signature" (261 bytes)
