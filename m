@@ -1,21 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/22/1
-Message-ID: <Pine.GSO.4.51.0805220138070.15003@faron.mitre.org>
-Date: Thu, 22 May 2008 01:39:43 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/01/2
+Message-Id: <200810011733.44646.hanno@hboeck.de>
+Date: Wed, 1 Oct 2008 17:33:44 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Root name server changes -> bind
+Subject: Re: CVE req: phpmyadmin < 2.11.9.2 xss
 Content-Type: text/plain; charset=utf-8
 
+Am Dienstag 23 September 2008 schrieb Hanno Böck:
+> http://www.phpmyadmin.net/home_page/downloads.php?relnotes=1
+>
+> cite:
+> - (2.11.9.2)  [security] XSS in MSIE using NUL byte
 
-On Wed, 21 May 2008, Marcus Meissner wrote:
+Seems Steven forgot to answer, though CVE is assigned:
+CVE-2008-4326
 
-> Not sure if this warrants a CVE id.
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
-Gut reaction here, but I would say that if a software package has
-hard-coded those IP addresses and doesn't check them e.g. through a
-reverse lookup, then the issue in that package would require a CVE.
+http://freiheitstattangst.de/ - 11.10. Berlin gegen Überwachung
+http://x1000malquer.de/ - ab 8.11. Atomtransporte stoppen
 
-I have a feeling I could regret that statement :-/
-
-- Steve
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
