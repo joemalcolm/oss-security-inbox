@@ -1,36 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/29/5
-Message-Id: <200809291657.01910.rbu@gentoo.org>
-Date: Mon, 29 Sep 2008 16:56:59 +0200
-From: Robert Buchholz <rbu@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/02/2
+Message-ID: <20081002132716.GL23137@genesis.frugalware.org>
+Date: Thu, 2 Oct 2008 15:27:16 +0200
+From: Miklos Vajna <vmiklos@...galware.org>
 To: oss-security@...ts.openwall.com
-Cc: Ludwig Nussel <ludwig.nussel@...e.de>, coley@...re.org
-Subject: Re: CVE Request (mercurial)
+Subject: Re: CVE id request: proftpd
 Content-Type: text/plain; charset=utf-8
 
-On Monday 29 September 2008, Ludwig Nussel wrote:
-> Josh Bressers wrote:
-> > Looks like there's one more flaw in Mercurial we missed:
-> > http://www.selenic.com/mercurial/wiki/index.cgi/WhatsNew#head-905b8
-> >adb3420a77d92617e06590055bd8952e02b
-> >
-> > * hgweb: fix "allowpull" permission being ignored when pulling from
-> > hgweb
->
-> Did anyone assign a CVE number for this issue yet?
->
-> cu
-> Ludwig
+On Mon, Sep 22, 2008 at 05:57:45PM +1000, Steffen Joeris <steffen.joeris@...lelinux.de> wrote:
+> proftpd suffers from a Cross-site request forgery. Could we please get a CVE 
+> id for this?
 
-Yes, only recently:
+For the reference, this is CVE-2008-4242.
 
-CVE-2008-4297 (http://nvd.nist.gov/nvd.cfm?cvename=CVE-2008-4297):
-  Mercurial before 1.0.2 does not enforce the allowpull permission
-  setting for a pull operation from hgweb, which allows remote
-  attackers to read arbitrary files from a repository via an "hg pull"
-  request.
-
-
-Robert
-
-Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
+Content of type "application/pgp-signature" skipped
