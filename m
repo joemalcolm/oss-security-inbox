@@ -1,34 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/22/1
-Message-ID: <28fa9c5e0812211745l67725a78od3bc6e1b9d6b6cd8@mail.gmail.com>
-Date: Mon, 22 Dec 2008 09:45:07 +0800
-From: "Eugene Teo" <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/02/3
+Message-Id: <200810021817.38762.hanno@hboeck.de>
+Date: Thu, 2 Oct 2008 18:17:38 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
 Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: watchdog: ib700wdt.c - buffer_underflow bug
+Subject: CVE request: XSS in mediawiki 1.13.1 and 1.12.0
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Dec 17, 2008 at 11:36 PM, Marcus Meissner <meissner@...e.de> wrote:
-> On Wed, Dec 17, 2008 at 10:14:27AM +0800, Eugene Teo wrote:
->> On Wed, Dec 17, 2008 at 10:00 AM, Steven M. Christey
->> <coley@...us.mitre.org> wrote:
->> >
->> > On Wed, 10 Dec 2008, Eugene Teo wrote:
->> >
->> >> Steve, here's another one that needs a CVE name. Thanks!
->> >>
->> >> http://bugzilla.kernel.org/show_bug.cgi?id=11399
->> >
->> > Similar to the other issue, is this IOCTL reachable by anyone malicious?
->>
->> From what I can see in ibwdt_ioctl(), it does not restrict access to
->> unprivileged users.
->
-> Again, depends on how the device node is created I think. Not sure
-> what mode udev hands out for those.
+http://svn.wikimedia.org/svnroot/mediawiki/tags/REL1_13_2/phase3/RELEASE-NOTES
 
-I discussed this with Wim, and it depends on the permissions for the
-miscdev device, /dev/watchdog. On Fedora, it's accessible by root user
-only.
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
-Thanks, Eugene
+http://freiheitstattangst.de/ - 11.10. Berlin gegen Überwachung
+http://x1000malquer.de/ - ab 8.11. Atomtransporte stoppen
+
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
