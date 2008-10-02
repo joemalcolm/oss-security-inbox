@@ -1,20 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/03/6
-Message-ID: <Pine.GSO.4.51.0806031541080.27244@faron.mitre.org>
-Date: Tue, 3 Jun 2008 15:43:46 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/02/5
+Message-ID: <20081002163047.GA3002@anguilla.debian.or.at>
+Date: Thu, 2 Oct 2008 18:30:47 +0200
+From: Gerfried Fuchs <rhonda@....at>
 To: oss-security@...ts.openwall.com
-Subject: Re: tool announcements (was: ARP handler Inspection tool released)
+Subject: blosxom XSS issue (CVE-2008-2236)
 Content-Type: text/plain; charset=utf-8
 
+	Hi!
 
-On Tue, 3 Jun 2008, Solar Designer wrote:
+ I'd like to inform you of a XSS issue in blosxom which was reported
+by Yoshinori Ohta of Business Architects Inc. and got assigned the IDs
+CVE-2008-2236 and JVN#03300113. The problem allowed to inject arbitrary
+output into the default error page and possibly any plugin that uses the
+$flavour variable in its output directly.
 
-> Also, there are not that many security tool announcements on Bugtraq.
+ A fixed version was released today and announced on the blosxom-users
+list:
+<http://sourceforge.net/mailarchive/forum.php?thread_name=20081002155914.GL10579%40sym.noone.org&forum_name=blosxom-users>
 
-Due to a side effect of how CVE tracks Bugtraq posts, I actually have some
-approximate stats for this.  There were only about 100 tool announcements
-to Bugtraq since December of 2006, with 12 being the maximum for a single
-month.
+ The Debian Bug about the issue:
+<http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=500873>
 
-- Steve
+ The patch to fix the problem:
+<http://blosxom.cvs.sourceforge.net/viewvc/blosxom/blosxom2/blosxom.cgi?r1=1.83&r2=1.84>
+
+ Hope that helps. :)
+Rhonda
