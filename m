@@ -1,35 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/16/10
-Message-ID: <48CF75CF.8020404@redhat.com>
-Date: Tue, 16 Sep 2008 17:01:03 +0800
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/02/1
+Message-ID: <48E4226E.9000200@redhat.com>
+Date: Thu, 02 Oct 2008 09:22:54 +0800
 From: Eugene Teo <eteo@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: coley@...re.org
-Subject: CVE request: kernel: splice: fix bad unlock_page() in error case
+Subject: CVE-2008-3832 kernel: null pointer dereference in utrace_control
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
+Michael Simms reported that it is possible for an unprivileged user to
+crash the machine by running gdb on a running process with pid 1.
 
-This bug requires a CVE name. Please allocate one.
-
-This upstream commit addressed a user triggerable DoS:
-6a860c979b35469e4d77da781a96bdb2ca05ae64
-
-Summary:
-[PATCH] splice: fix bad unlock_page() in error case
-
-If add_to_page_cache_lru() fails, the page will not be locked. But
-splice jumps to an error path that does a page release and unlock,
-causing a BUG() in unlock_page().
-
-Reproducer:
-http://lkml.org/lkml/2007/7/30/448
-(different issue, but same reproducer)
+This affects the version of utrace as shipped with Fedora 8 and 9. This
+is addressed in kernel-2.6.26.5-28 for Fedora 8, and kernel-2.6.26.5-45
+for Fedora 9. This issue is specific to Fedora, and does not affect
+upstream or any of the Red Hat Enterprise Linux kernels.
 
 References:
-http://lkml.org/lkml/2007/7/20/168
-https://bugzilla.redhat.com/show_bug.cgi?id=462434
+http://kerneloops.org/oops.php?number=56705
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2008-3832
 
 Thanks, Eugene
 -- 
 Eugene Teo / Red Hat Security Response Team
+
+View attachment "patch" of type "text/plain" (608 bytes)
