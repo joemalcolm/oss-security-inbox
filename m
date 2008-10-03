@@ -1,39 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/14/1
-Message-ID: <gfiptm$jv8$1@ger.gmane.org>
-Date: Thu, 13 Nov 2008 21:05:17 -0600
-From: Raphael Geissert <atomo64+debian@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/03/5
+Message-ID: <2060949893.46241223035591181.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 3 Oct 2008 08:06:31 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: wordpress can be subject of delayed attacks via cookies
+Cc: coley@...re.org, berrange@...hat.com
+Subject: Re: CVE Request (xen)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi Steve,
 
-Hi,
+This one seems to have slipped through the cracks.
 
-Due to the completely incorrect usage of $_REQUEST almost all over the place 
-wordpress is subject to delayed attacks via cookies.
+Thanks.
 
-The attack can be performed as long as there is some way to inject a cookie 
-which is sent by the browser to the server.
+-- 
+    JB
 
-More info at http://bugs.debian.org/504771
 
-Could a CVE id be assigned please?
+----- "Josh Bressers" <bressers@...hat.com> wrote:
 
-Thanks in advance.
-
-Kind regards,
-- -- 
-Raphael Geissert - Debian Maintainer
-www.debian.org - get.debian.net
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkkc6u0ACgkQYy49rUbZzlrmmQCfZNQ6ZERLCODohN1+TTvUcXvs
-KHcAn1rGqXuxrvmPU70ULqeR75L3vp1X
-=pVPw
------END PGP SIGNATURE-----
-
+> Hello,
+> 
+> This xen issue was just brought to our attention:
+> https://bugzilla.redhat.com/show_bug.cgi?id=464817
+> https://bugzilla.redhat.com/show_bug.cgi?id=464818
+> 
+> http://lists.xensource.com/archives/html/xen-devel/2008-09/msg00992.html
+> 
+> It seems that a xen guest can write some data into the xenstore that
+> is
+> later read by libvirt (and possibly other things), which could cause
+> troubles for the Xen admin.
+> 
+> Thanks.
+> 
+> -- 
+>     JB
