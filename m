@@ -1,30 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/16/2
-Message-ID: <Pine.GSO.4.51.0809152046020.6953@faron.mitre.org>
-Date: Mon, 15 Sep 2008 20:48:03 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/03/10
+Message-ID: <Pine.GSO.4.51.0810031612540.9068@faron.mitre.org>
+Date: Fri, 3 Oct 2008 16:23:00 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
 cc: coley@...re.org
-Subject: Re: phpMyAdmin code execution (CVE request)
+Subject: Re: regarding CVE-2008-4382 & CVE-2008-4381
 Content-Type: text/plain; charset=utf-8
 
 
-On Mon, 15 Sep 2008, Thijs Kinkhorst wrote:
+I did a little more investigation into IE 7, since that's what the
+original report was for.  Its behavior is different than Firefox.  It
+quickly ran through most of the code, expanding up to 600 Meg or so,
+before generating an "out of memory" alert (but not crashing) while
+processing the escape(x4) statement.  So IE goes further, with less of an
+impact on my Windows session than the noticeable slowdown using Firefox
+(2.x), but IE still doesn't reach the alert(wildboy) statement.
 
-> "- (2.11.9.1)  [security] Code execution vulnerability"
->
-> http://www.phpmyadmin.net/home_page/downloads.php?relnotes=1
->
-> "Welcome to this security update for phpMyAdmin 2.11.9.
-> Details will follow on http://phpmyadmin.net."
->
-> http://www.nabble.com/phpMyAdmin-2.11.9.1-is-released-td19497113.html
-
-Use CVE-2008-4096, to be filled in later.
-
-FYI to PHP auditors out there - add create_function() to your list of
-dangerous functions.  I've seen a couple reports of vulnerabilities
-related to it, and some PHP developer advocates singing its praises ("it's
-like eval, but it's different!")
+http://www.securityfocus.com/archive/1/496926/100/0/threaded suggests a
+relationship with ActiveX content being enabled, but I don't see how that
+could apply in the given source (though I only extracted the relevant
+code, skipping the image and l33t-sp33k).
 
 - Steve
