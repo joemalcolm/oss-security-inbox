@@ -1,50 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/22/8
-Message-ID: <4835AF00.90101@freethemallocs.com>
-Date: Thu, 22 May 2008 09:36:00 -0800
-From: Jonathan Smith <smithj@...ethemallocs.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/03/13
+Message-ID: <Pine.GSO.4.51.0810031716100.9068@faron.mitre.org>
+Date: Fri, 3 Oct 2008 17:17:44 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Root name server changes -> bind
+cc: coley@...re.org, berrange@...hat.com
+Subject: Re: CVE Request (xen)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-Florian Weimer wrote:
-| The party isn't untrusted (they're still involved in operating the B
-| root).  They're not a third party, either, they're the legitimate owner
-| of that address block.
+We wrote this up as a libvirt issue, but is it really a Xen issue?
 
-Oh. I didn't understand that from the articles I've read.
-
-So, why are they running a DNS server on that IP?
-
-| ICANN should have arranged for a longer transition period, as it was
-| done in previous transitions (I think a few older address still respond
-| to queries).
-
-I think the transition period began in late 2007, but this is the first
-I've (and, I think, many others) heard about it.
-
-| There's no way to retire an IP address, especially if it is located in a
-| network prefix that is still in production (which was a driving force
-| behind most past root servers migrations).
-
-I was under the impression that ICANN "owned" or at least "was in charge
-of" the allocation of IPs for the root name servers. So why couldn't
-they just bar (via policy, not via technical means) whoever owns the
-rest of the prefix that IP is in from using it?
-
-Anyway, if the IP is in the hands of a trusted party, I'm much less
-concerned. That just wasn't the impression I had.
-
-	smithj
+- Steve
 
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
+======================================================
+Name: CVE-2008-4405
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4405
+Acknowledged: yes
+Announced: 20080930
+Flaw: other
+Reference: MLIST:[oss-security] 20080930 CVE Request (xen)
+Reference: URL:http://openwall.com/lists/oss-security/2008/09/30/6
+Reference: MLIST:[xen-devel] 20080930 Re: [PATCH] [Xend] Move some backend configuration
+Reference: URL:http://lists.xensource.com/archives/html/xen-devel/2008-09/msg00994.html
+Reference: MLIST:[xen-devel] 20080930 [PATCH] [Xend] Move some backend configuration
+Reference: URL:http://lists.xensource.com/archives/html/xen-devel/2008-09/msg00992.html
+Reference: MISC:https://bugzilla.redhat.com/show_bug.cgi?id=464817
+Reference: CONFIRM:http://xenbits.xensource.com/staging/xen-3.3-testing.hg?rev/e0e17216ba70
+Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=464818
 
-iEYEARECAAYFAkg1rwAACgkQCG91qXPaRek7fQCfRhsgegj2pKK2NRb8Bb+CVba5
-H3wAnRqQUF87txOTvxDRvGm5/9shYTKe
-=PqSd
------END PGP SIGNATURE-----
+libvirt 0.3.3 relies on files located under subdirectories of
+/local/domain in xenstore despite lack of protection against
+modification by Xen guest virtual machines, which allows guest OS
+users to have an unspecified impact, as demonstrated by writing to (1)
+the text console (console/tty) or (2) the VNC port for the graphical
+framebuffer.
+
+
+Analysis:
+
+There are two perspectives on the problem. First, one can argue that the
+flaw is in libvirt, because libvirt relies on untrusted data from guest
+VMs. Second, one can argue that the flaw is in Xen, because Xen makes it
+possible for guest VMs to write the untrusted data. Because the CVE
+request is associated with a Red Hat bug report for the libvirt product,
+CVE takes the first perspective.
+
