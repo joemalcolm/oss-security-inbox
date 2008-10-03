@@ -1,28 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/10/3
-Message-ID: <20080510233755.GB9690@ngolde.de>
-Date: Sun, 11 May 2008 01:37:55 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/03/12
+Message-ID: <Pine.GSO.4.51.0810031709450.9068@faron.mitre.org>
+Date: Fri, 3 Oct 2008 17:11:03 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: vlc local privilege escalation
+Subject: Re: CVE request: kernel: x86: Fix broken LDT access in VMI
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-can I get a CVE id for vlc?
-https://trac.videolan.org/vlc/ticket/1578:
 
-"At startup, VLC recursively scans the modules/ and plugins/ subdirectories
-from the current working directory, and tries to execute the vlc_entry__0_8_6
-(or another in other VLC versions) symbol from any file matching the
-"lib*_plugin.so" pattern."
+On Fri, 3 Oct 2008, Eugene Teo wrote:
 
-Patch: http://git.videolan.org/?p=vlc.git;a=commit;h=c7cef4fdd8dd72ce0a45be3cda8ba98df5e83181
+> "[PATCH] x86: Fix broken LDT access in VMI
 
-Kind regards
-Nico
 
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
 
-Content of type "application/pgp-signature" skipped
+======================================================
+Name: CVE-2008-4410
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4410
+Reference: MLIST:[oss-security] 20081003 CVE request: kernel: x86: Fix broken LDT access in VMI
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/10/03/3
+Reference: CONFIRM:http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.26.y.git;a=commit;h=de59985e3a623d4d5d6207f1777398ca0606ab1c
+
+The vmi_write_ldt_entry function in arch/x86/kernel/vmi_32.c in the
+Virtual Machine Interface (VMI) in the Linux kernel 2.6.26.5 invokes
+write_idt_entry where write_ldt_entry was intended, which allows local
+users to cause a denial of service (persistent application failure)
+via crafted function calls, related to the Java Runtime Environment
+(JRE) experiencing improper LDT selector state, a different
+vulnerability than CVE-2008-3247.
+
+
