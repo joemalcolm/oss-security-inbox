@@ -1,56 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/26/3
-Message-ID: <20081126095135.GD14536@fuse.inversepath.com>
-Date: Wed, 26 Nov 2008 09:51:35 +0000
-From: Andrea Barisani <lcars@...rt.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/03/6
+Message-ID: <20081003154037.GA13876@pool.math.tu-berlin.de>
+Date: Fri, 3 Oct 2008 17:40:37 +0200
+From: Thomas Bläsing <thomasbl@...l.math.tu-berlin.de>
 To: oss-security@...ts.openwall.com
-Cc: 498243@...s.debian.org, xine-user@...ts.sourceforge.net, redpig@...rt.org
-Subject: Re: xine-lib and ocert-2008-008
+Subject: Re: CVE id request: proftpd
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Nov 25, 2008 at 07:46:19PM -0500, Steven M. Christey wrote:
-> 
-> On Sat, 22 Nov 2008, Thomas Viehmann wrote:
-> 
-> > I am not quite sure whether I can agree with Will Drewry's analysis[1]
-> > accompanying ocert advisory 2008-008[1]. Looking at item 1A, which Will
-> > says is fixed in 1.1.5, attached .mov seems to fit the case description
-> > and will still corrupt the memory when viewed e.g. in gxine.
-> 
-> This has finally prompted me to process CVE's for the issues originally
-> disclosed by Will back in August.  Our analysts didn't have a very
-> pleasant time with the volume and complexity, I'm sure.  Sorry it took so
-> long.
->
+Hi,
 
-Steve, thanks for this assignment, I updated our advisory with the
-references.  We'll try to take a look at the new test case sometimes next
-week.
+On Thu, Oct 02, 2008 at 03:27:16PM +0200, Miklos Vajna wrote:
+> On Mon, Sep 22, 2008 at 05:57:45PM +1000, Steffen Joeris <steffen.joeris@...lelinux.de> wrote:
+> > proftpd suffers from a Cross-site request forgery. Could we please get a CVE 
+> > id for this?
+> 
+> For the reference, this is CVE-2008-4242.
 
-Cheers
+is this possible an issue just for *BSD systems?
 
-> CVE-2008-5234 includes two separate bugs, one of which is the item 1A you
-> mention (parse_moov_atom in demux_qt.c). If CVE-2008-5234 actually wasn't
-> fixed in 1.1.15, we might need a new CVE to handle the variant.
-> 
-> There are also some cases where an xine bug announcement includes some
-> bugs that weren't covered by Will's analysis; those won't have an OCERT
-> reference.
-> 
-> CVE-2008-5236 and CVE-2008-5237, and possibly others, don't have a
-> "CONFIRM" reference in them - which implies that, based on CVE analysis,
-> the upstream vendor didn't provide enough clear evidence of a fix.
-> 
-> My brain is too fried to process the followup comment that listed
-> individual patches.
-> 
-> - Steve
-> 
+I've installed the vulnerable proftpd version from source on a linux system
+and was doing the following to reproduce the bug:
 
--- 
-Andrea Barisani |                Founder & Project Coordinator
-          oCERT | Open Source Computer Emergency Response Team
+$ echo "open ftp://thomasbl@....0.0.1:21" > script; python -c 'for i in range(1,5200): print "%ssyst" % ("A"*i)' >> script
+$ lftp -f script &> out
+$ grep -iv "Unknown command \`[A]*syst'." out | wc -l
+0
 
-<lcars@...rt.org>                         http://www.ocert.org
- 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
-        "Pluralitas non est ponenda sine necessitate"
+Furthermore, I didn't found the vulnerable lines of code in the source
+where the patch for the issue is based on. As well as in the actually proftpd
+source package the vulnerable source isn't existing.
+
+So, I was wondering that the issue is still a *BSD issue and the
+description is wrong.
+
+I am right? Or did I do a mistake?
+
+The same problem I have for CVE-2008-4247. Is it also still a BSD issue?
+
+Kind regards,
+Thomas.
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (190 bytes)
