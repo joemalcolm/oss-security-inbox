@@ -1,28 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/18/1
-Message-Id: <200804181300.31541.hanno@hboeck.de>
-Date: Fri, 18 Apr 2008 13:00:30 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: firefox 2.0.14 ( Crash in JavaScript garbage collector)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/03/11
+Message-ID: <Pine.GSO.4.51.0810031708570.9068@faron.mitre.org>
+Date: Fri, 3 Oct 2008 17:09:15 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com, veillard@...hat.com
+cc: Robert Buchholz <rbu@...too.org>
+Subject: Re: Re: libxml2 "ampproblem" DoS
 Content-Type: text/plain; charset=utf-8
 
-Am Donnerstag 17 April 2008 schrieb Steven M. Christey:
-> See below.
+
+On Fri, 3 Oct 2008, Daniel Veillard wrote:
+
+> > The malicious XML file can be found on
+> > http://bugzilla.gnome.org/show_bug.cgi?id=554660
+> >
+> > I'm not sure if and how this is related to CVE-2008-3281.
 >
-> Do you have a specific Firefox/Gentoo/Debian version?
+>   It's unrelated, the patch is attached to the bug, only 2.7.x is affected
+> and I will release 2.7.2 within a couple of hours.
 
-Happened with different versions in gentoo. Atm I'm running 2.0.0.14, but as 
-the original discovery is by sam hocevar (debian developer), it probably 
-happens under debian as well.
-Do you have problems to reproduce it?
+Use CVE-2008-4422
 
-You can also add this as a reference:
-https://bugzilla.mozilla.org/show_bug.cgi?id=424333
-
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+- Steve
