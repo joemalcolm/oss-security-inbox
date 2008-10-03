@@ -1,24 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/30/3
-Message-ID: <Pine.LNX.4.64.0805302043140.28609@forced.attrition.org>
-Date: Fri, 30 May 2008 20:43:51 +0000 (UTC)
-From: security curmudgeon <jericho@...rition.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Latest flash player is not vulnerable
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/03/2
+Message-ID: <20081003071616.GE16214@redhat.com>
+Date: Fri, 3 Oct 2008 09:16:16 +0200
+From: Daniel Veillard <veillard@...hat.com>
+To: Robert Buchholz <rbu@...too.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: libxml2 "ampproblem" DoS
 Content-Type: text/plain; charset=utf-8
 
+On Thu, Oct 02, 2008 at 06:41:18PM +0200, Robert Buchholz wrote:
+> Hey,
+> 
+> I did not look into this issue closely yet, but I can reproduce an OOM 
+> situation on libxml2 2.7.1, but not on 2.6.32.
+> 
+> The malicious XML file can be found on
+> http://bugzilla.gnome.org/show_bug.cgi?id=554660
+> 
+> I'm not sure if and how this is related to CVE-2008-3281.
 
-: Adobe announced that the flaw that is in the wild is not a new one. The 
-: attack took the advantage of other security flaws to redirect the user 
-: from legitimate sites to malicious domains serving exploit SWFs
-: 
-: http://blogs.adobe.com/psirt/2008/05/more_information_on_recent_fla.html
-: 
-: Just for informing for those who missed the news :-)
+  It's unrelated, the patch is attached to the bug, only 2.7.x is affected
+and I will release 2.7.2 within a couple of hours.
 
-This was quite the frenzy, all based on some fairly poor vulnerability 
-'research' and testing.
+Daniel
 
-http://osvdb.org/blog/?p=246
-Whos to blame? The hazard of 0-day.
-May 30th, 2008
+-- 
+Daniel Veillard      | libxml Gnome XML XSLT toolkit  http://xmlsoft.org/
+daniel@...llard.com  | Rpmfind RPM search engine http://rpmfind.net/
+http://veillard.com/ | virtualization library  http://libvirt.org/
