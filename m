@@ -1,24 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/07/3
-Message-ID: <Pine.GSO.4.51.0804062041200.16600@faron.mitre.org>
-Date: Sun, 6 Apr 2008 20:42:07 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/03/9
+Message-ID: <20081003201848.GA2179@ngolde.de>
+Date: Fri, 3 Oct 2008 22:18:48 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: Re: Security fixes in m4-1.4.11
+Subject: Re: regarding CVE-2008-4382 & CVE-2008-4381
 Content-Type: text/plain; charset=utf-8
 
+Hi Steven,
+* Steven M. Christey <coley@...us.mitre.org> [2008-10-03 22:15]:
+> On Fri, 3 Oct 2008, Nico Golde wrote:
+> 
+> > looking at the PoC this would work in every browser
+> > supporting JavaScript as this is just a trivial memory
+> > consumption issue by passing a very large string too the
+> > alert function and thus eating memory, a simple
+> > while(true){} would be equally effective for eating cpu
+> > cycles which I wouldn't consider as a vulnerability
+> > either...
+> 
+> I usually wouldn't call it a vulnerability, either.  However, based on our
+> analysis, the String.fromCharCode(550) creates a Unicode string for
+> character 550, but the escape() for URL encoding can only cover 0 to 255,
+> so it seemed like something else was going on here, maybe the alert
+> function not working.
+> 
+> I don't know how Javascript manages large strings, but it seems like
+> somewhere around the "x4 += x4;" statement, you exceed multiple gigs.  So
+> maybe the alert function isn't even being reached...
 
-On Sun, 6 Apr 2008, Patrick J. Volkerding wrote:
+I tested this already using a lower loop count in the for 
+loops and got similar behaviour and saw the alert box.
 
-> Minor security fix: Quote output of mkstemp.
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-Use CVE-2008-1687
-
-> Security fix: avoid arbitrary code execution with 'm4 -F'.
-
-Use CVE-2008-1688
-
-Note - these CVE's will not be live until Monday.
-
-- Steve
+Content of type "application/pgp-signature" skipped
