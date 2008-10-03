@@ -1,66 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/09/4
-Message-ID: <4874A9E5.6040601@gentoo.org>
-Date: Wed, 09 Jul 2008 14:07:01 +0200
-From: Matthias Geerdsen <vorlon@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/03/14
+Message-ID: <Pine.GSO.4.51.0810031744410.9068@faron.mitre.org>
+Date: Fri, 3 Oct 2008 17:44:47 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: DNS vulnerability: other relevant software
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: XSS in mediawiki 1.13.1 and 1.12.0
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-looking at some of the DNS related software in our tree, I thought it 
-might be nice to keep track of any findings of affected and unaffected 
-packages...
-So here is a start:
+======================================================
+Name: CVE-2008-4408
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4408
+Reference: MLIST:[oss-security] 20081002 CVE request: XSS in mediawiki 1.13.1 and 1.12.0
+Reference: URL:http://openwall.com/lists/oss-security/2008/10/02/3
+Reference: CONFIRM:http://svn.wikimedia.org/svnroot/mediawiki/tags/REL1_13_2/phase3/RELEASE-NOTES
 
-- posadis [1]:
-	has not seen an update since dec 2004; I could not find 	any info on 
-port randomization etc., but considering the age it might probably have 
-other issues too.
-
-- dnsmasq [2]:
-	no port randomization [3]
-
-- pdnsd [4]:
-	no info yet
-
-- MaraDNS [5]:
-	"MaraDNS uses a strong secure RNG for both the query (16 bits of 
-entropy) and the source port of the query (12 bits of entropy). This 
-makes spoofing replies to a MaraDNS server more difficult, since the 
-attacker has only a one in 250 million chance that a given spoofed reply 
-will be considered valid." [6]
-
-- MyDNS [7]:
-	"MyDNS does not include recursive name service, nor a resolver library."
-	also this thread [8]
-
-- DNRD [9]: "Uses random source port and random query ID's to prevent 
-cache poisoning."
-
-Matthias
+Cross-site scripting (XSS) vulnerability in MediaWiki 1.13.1, 1.12.0,
+and possibly other versions before 1.13.2 allows remote attackers to
+inject arbitrary web script or HTML via the useskin parameter to an
+unspecified component.
 
 
-
-[1] <http://posadis.sourceforge.net/>
-[2] <http://www.thekelleys.org.uk/dnsmasq/doc>
-[3] 
-<http://lists.thekelleys.org.uk/pipermail/dnsmasq-discuss/2008q3/002147.html>
-[4] <http://www.phys.uu.nl/~rombouts/pdnsd/>
-[5] <http://www.maradns.org/>
-[6] <http://www.maradns.org/tutorial/man.maradns.html>
-[7] <http://mydns.bboy.net/>
-[8] 
-<http://sourceforge.net/mailarchive/forum.php?thread_name=714ef0060807081802h4e52a70ak4f52e06c11e2abfe%40mail.gmail.com&forum_name=mydns-users>
-[9] <http://dnrd.sourceforge.net/>
-
-
--- 
-Matthias Geerdsen (vorlon)
-
-Gentoo Linux Security Team
-http://security.gentoo.org
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (190 bytes)
