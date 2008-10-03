@@ -1,24 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/09/7
-Message-ID: <0807091431360.14641@mjc.redhat.com>
-Date: Wed, 9 Jul 2008 14:36:10 +0100 (BST)
-From: Mark J Cox <mjc@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/03/7
+Message-ID: <20081003175000.GA7567@ngolde.de>
+Date: Fri, 3 Oct 2008 19:50:00 +0200
+From: Nico Golde <nico@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: DNS vulnerability: other relevant software
+Cc: coley@...re.org
+Subject: regarding CVE-2008-4382 & CVE-2008-4381
 Content-Type: text/plain; charset=utf-8
 
-> Additionally, Debian has noted (DSA 1605-1) that the GNU libc stub
-> resolver could benefit from random query source ports as well, but
-> no patches are currently available to implement this:
+Hi,
+I just had a look at CVE-2008-4382 which is the same issue 
+as CVE-2008-4381 but just for conqueror should not get its 
+own CVE id in my opinion.
 
-Note that GNU libc stub resolver when used with a recent kernel (2.6.24+) 
-will give you random UDP source ports on each request because of this 
-Linux commit:
+We at Debian don't handle browser 
+issues like this as security issues anyway but in this case 
+looking at the PoC this would work in every browser 
+supporting JavaScript as this is just a trivial memory 
+consumption issue by passing a very large string too the 
+alert function and thus eating memory, a simple 
+while(true){} would be equally effective for eating cpu 
+cycles which I wouldn't consider as a vulnerability 
+either...
 
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=32c1da70810017a98aa6c431a5494a302b6b9a30
+I verified this at least with firefox and opera.
 
-Vendors may with to consider backporting that kernel patch as an effective 
-mitigation without requiring glibc changes (and with the advantage of 
-being able to be have a customized range using ip_local_port_range etc)
+Cheers
+Nico
 
-Cheers, Mark
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
