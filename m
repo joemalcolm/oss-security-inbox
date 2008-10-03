@@ -1,37 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/08/1
-Message-ID: <48EC2EA6.4020003@redhat.com>
-Date: Wed, 08 Oct 2008 11:53:10 +0800
-From: Eugene Teo <eteo@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/03/4
+Message-Id: <200810031227.11252.rbu@gentoo.org>
+Date: Fri, 3 Oct 2008 12:27:08 +0200
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel: sctp: Fix oops when INIT-ACK indicates that peer doesn't support AUTH
+Cc: Daniel Veillard <veillard@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: Re: libxml2 "ampproblem" DoS
 Content-Type: text/plain; charset=utf-8
 
-This was committed in upstream kernel recently.
+On Friday 03 October 2008, Daniel Veillard wrote:
+> On Thu, Oct 02, 2008 at 06:41:18PM +0200, Robert Buchholz wrote:
+> > Hey,
+> >
+> > I did not look into this issue closely yet, but I can reproduce an
+> > OOM situation on libxml2 2.7.1, but not on 2.6.32.
+> >
+> > The malicious XML file can be found on
+> > http://bugzilla.gnome.org/show_bug.cgi?id=554660
+> >
+> > I'm not sure if and how this is related to CVE-2008-3281.
+>
+>   It's unrelated, the patch is attached to the bug, only 2.7.x is
+> affected and I will release 2.7.2 within a couple of hours.
 
-"[PATCH] sctp: Fix oops when INIT-ACK indicates that peer doesn't
-support AUTH
+Sounds good, thanks.
 
-If INIT-ACK is received with SupportedExtensions parameter which
-indicates that the peer does not support AUTH, the packet will be
-silently ignore, and sctp_process_init() do cleanup all of the
-transports in the association. When T1-Init timer is expires, OOPS
-happen while we try to choose a different init transport.
 
-The solution is to only clean up the non-active transports, i.e
-the ones that the peer added.  However, that introduces a problem
-with sctp_connectx(), because we don't mark the proper state for
-the transports provided by the user.  So, we'll simply mark
-user-provided transports as ACTIVE.  That will allow INIT
-retransmissions to work properly in the sctp_connectx() context
-and prevent the crash."
+Steven, can you assign a CVE id for this?
 
-Upstream commit: add52379dde2e5300e2d574b172e62c6cf43b3d3
 
-This can be triggered if the SCTP connection between both ends have
-mis-matched settings, i.e. one end with AUTH extensions enabled, and the
-other end with AUTH extension disabled. This requires a CVE name.
+Robert
 
-Thanks, Eugene
---
-Eugene Teo / Red Hat Security Response Team
+Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
