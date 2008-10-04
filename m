@@ -1,19 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/16/9
-Message-ID: <Pine.GSO.4.51.0809152129380.6953@faron.mitre.org>
-Date: Mon, 15 Sep 2008 21:29:48 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com, oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: Re: CVE Request (python)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/04/2
+Message-Id: <200810041833.18887.steffen.joeris@skolelinux.de>
+Date: Sat, 4 Oct 2008 18:33:18 +1000
+From: Steffen Joeris <steffen.joeris@...lelinux.de>
+To: oss-security@...ts.openwall.com
+Cc: coley@...re.org
+Subject: CVE id request: mon
 Content-Type: text/plain; charset=utf-8
 
+Hi
 
-On Mon, 15 Sep 2008, Jan Lieskovsky wrote:
+There is an insecure temp file use in mon in alert.d/test.alert.
 
-> https://bugzilla.redhat.com/show_bug.cgi?id=462326
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=498899
+Debian Bugreport:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=496398
 
-Use CVE-2008-4108
+Could I please get a CVE id for this?
 
-- Steve
+Cheers
+Steffen
+
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
