@@ -1,39 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/08/6
-Message-ID: <30724.1207667798@devserv.devel.redhat.com>
-Date: Tue, 08 Apr 2008 11:16:38 -0400
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/04/1
+Message-Id: <200810041830.42044.steffen.joeris@skolelinux.de>
+Date: Sat, 4 Oct 2008 18:30:37 +1000
+From: Steffen Joeris <steffen.joeris@...lelinux.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: list: members vs. read-only subscribers
+Cc: coley@...re.org
+Subject: duplicates: CVE-2008-4406 and CVE-2008-4407 [sabre insecure temp file]
 Content-Type: text/plain; charset=utf-8
 
-> > 
-> > * The current member list can post unmoderated
-> > * New subscribers (anyone can subscribe) will be moderated by default, but
-> >   can have the moderation flag lifted when the prove to be useful
-> >   contributors (we need to define what a useful contributor is)
-> > * Non members can post, but will be moderated (if spam is an issue, we
-> >   could consider just throwing this stuff out, but I'd really like to avoid
-> >   it if possible)
-> > 
-> 
-> I am OK with your proposal, although I think that we could simply do
-> message moderation for all instead, with a few moderators.
+Hi
 
-I'm not terribly keen on this I admit.  Involving humans creates problems
-in any process.  If we are going to moderate things, we will need to ensure
-we have near 24 hour moderator coverage.  Tools should enhance process, not
-define it.
+The CVE ids issued for sabre regarding the insecure use of the tmp file are 
+the same. The issue was introduced by a debian patch, but other vendors might 
+have possibly patched it the same way. I suggest to mark one of them as a 
+duplicate though, because it might be confusing.
 
-> 
-> Anyway, should we (Openwall) interpret the above as a request to go
-> ahead and apply the changes?
-> 
+Cheers
+Steffen
 
-Let's say unless someone complains before tomorrow, we go ahead with this
-plan.
-
-Thanks.
-
--- 
-    JB
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
