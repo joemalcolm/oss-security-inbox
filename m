@@ -1,36 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/13/14
-Message-ID: <20080813141751.71ee2ea3@redhat.com>
-Date: Wed, 13 Aug 2008 14:17:51 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: oss-security+ml@...lde.de, coley@...re.org
-Subject: Re: horde webmail edition < 1.1.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/04/3
+Message-ID: <20081004160557.GA7301@redhat.com>
+Date: Sat, 4 Oct 2008 17:05:57 +0100
+From: "Daniel P. Berrange" <berrange@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com, coley@...re.org
+Subject: Re: CVE Request (xen)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 13 Aug 2008 14:00:03 +0200 Nico Golde
-<oss-security+ml@...lde.de> wrote:
-
-> > > This should be a duplicate of CVE-2008-3330.
-> > 
-> > Actually, (1) is covered by CVE-2008-3330, (2) probably never got an
-> > id.  Bit more info on (2) here:
-> > 
-> >   https://bugzilla.redhat.com/show_bug.cgi?id=452549
-> > 
-> > Steven, can you please correct CVE description.  Thanks!
+On Fri, Oct 03, 2008 at 05:17:44PM -0400, Steven M. Christey wrote:
 > 
-> Hmm, actually I thought this would have been added after my 
-> post on: 
-> http://www.openwall.com/lists/oss-security/2008/07/28/3
-> which already mentions this.
+> We wrote this up as a libvirt issue, but is it really a Xen issue?
 
-Ah, so actually both issue were previously mentioned here... I forgot.
-It seems that after you pointed out (2), no more CVE id was allocated
-in that thread.
+At its core it is a Xen permissions issue, because the host was not
+protecting data it mainers from guest modification. This permissions 
+problem impacted Xen tools themselves, and any other application
+which made use of xenstore - of which libvirt was one. The original
+proposed fix to Xen would require changes in both Xen and libvirt
+to fully resolve. The Xen developers eventually worked out a fix
+that directly addresses all users, so there is no longer any need
+for libvirt to be fixed. It is sufficient to apply the Xen permisions
+fixes, so I'd class this as primarily a Xen issue.
 
-It seems different ids should be used for (1) and (2), as different
-Horde project components are affected, also in different versions.
-
+Regards,
+Daniel
 -- 
-Tomas Hoger / Red Hat Security Response Team
+|: Red Hat, Engineering, London   -o-   http://people.redhat.com/berrange/ :|
+|: http://libvirt.org  -o-  http://virt-manager.org  -o-  http://ovirt.org :|
+|: http://autobuild.org       -o-         http://search.cpan.org/~danberr/ :|
+|: GnuPG: 7D3B9505  -o-  F3C9 553F A1DA 4AC2 5648 23C1 B3DF F742 7D3B 9505 :|
