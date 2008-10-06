@@ -1,65 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/20/2
-Message-ID: <4924C369.5050803@easysw.com>
-Date: Wed, 19 Nov 2008 17:54:49 -0800
-From: Michael Sweet <mike@...ysw.com>
-To: Eygene Ryabinkin <rea-sec@...elabs.ru>
-CC: oss-security@...ts.openwall.com,  "Steven M. Christey" <coley@...re.org>
-Subject: Re: CVE request: CUPS DoS via RSS subscriptions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/06/2
+Message-ID: <20081006111814.396edc1c@redhat.com>
+Date: Mon, 6 Oct 2008 11:18:14 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: coley@...us.mitre.org
+Cc: oss-security@...ts.openwall.com, veillard@...hat.com, Robert Buchholz <rbu@...too.org>
+Subject: Re: Re: libxml2 "ampproblem" DoS
 Content-Type: text/plain; charset=utf-8
 
-Eygene Ryabinkin wrote:
-> Josh, Mike, *, good day.
-> 
-> Wed, Nov 19, 2008 at 03:14:43PM -0500, Josh Bressers wrote:
->> So from looking at cups 1.3.7 on Fedora 8, here is what I see:
->>
->> (gdb) bt
->> #0  create_subscription (con=0xb88975c0, uri=0xb889ae00) at ipp.c:5858
->> #1  0xb7facba7 in cupsdProcessIPPRequest (con=0xb88975c0) at ipp.c:615
->> #2  0xb7f88bfc in cupsdReadClient (con=0xb88975c0) at client.c:2253
->> #3  0xb7fc0606 in cupsdDoSelect (timeout=1) at select.c:537
->> #4  0xb7f98710 in main (argc=1, argv=0xbfdd6194) at main.c:817
->> (gdb) list
->> 5853        else if (printer)
->> 5854          cupsdLogMessage(CUPSD_LOG_DEBUG,
->> 5855                          "Added subscription %d for printer \"%s\"",
->> 5856                          sub->id, printer->name);
->> 5857        else
->> 5858          cupsdLogMessage(CUPSD_LOG_DEBUG, "Added subscription %d for server",
->> 5859                          sub->id);
->> 5860
->> 5861        sub->interval = interval;
->> 5862        sub->lease    = lease;
->> (gdb) print sub
->> $1 = (cupsd_subscription_t *) 0x0
->>
->> It would appear to be a NULL pointer dereference.  It seems that this call a
->> few lines above the snippet shown above:
->>  sub = cupsdAddSubscription(mask, printer, job, recipient, 0);
->>
->> will return NULL when the hardcoded value of 100 subscriptions is hit.
-> 
-> Not really hardcoded -- it is settable with the 'MaxSubscriptions'
-> directive.  I had just reproduced the bug with CUPS 1.3.9 at FreeBSD.
-> MaxSubscriptions was set to 3 to ease the PoC.  Just repeated
-> invocations of 'lpr -m <somefile>' were crashing cups daemon
-> reproducibly.
-> 
-> The attached patch fixes the things for me, but perhaps it needs
-> some more polishing.  Will try to take a fresh look at this tomorrow.
-> 
-> Mike, please, take a look at this!
+On Fri, 3 Oct 2008 17:09:15 -0400 (EDT) "Steven M. Christey"
+<coley@...us.mitre.org> wrote:
 
-You'll find a much more complete patch already in CUPS svn for both
-1.3.x and 1.4.x, along with a new subscription test for the
-"make check" target.  I didn't withhold the patch since the browser
-attack vector was closed in 1.3.8...
+> > > The malicious XML file can be found on
+> > > http://bugzilla.gnome.org/show_bug.cgi?id=554660
+> > >
+> > > I'm not sure if and how this is related to CVE-2008-3281.
+> >
+> >   It's unrelated, the patch is attached to the bug, only 2.7.x is
+> > affected and I will release 2.7.2 within a couple of hours.
+> 
+> Use CVE-2008-4422
 
-I've attached my 1.3.x patch...
+Looks like this is also duplicate of previously assigned:
+
+Name: CVE-2008-4409
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4409
+Final-Decision: 
+Interim-Decision: 
+Modified: 
+Proposed: 
+Assigned: 20081003
+Category: 
+Reference: MLIST:[oss-security] 20081002 libxml2 "ampproblem" DoS
+Reference: URL:http://openwall.com/lists/oss-security/2008/10/02/4
+Reference: CONFIRM:http://bugzilla.gnome.org/show_bug.cgi?id=554660
+
+libxml2 2.7.0 and 2.7.1 does not properly handle "predefined entities
+definitions" in entities, which allows context-dependent attackers to
+cause a denial of service (memory consumption and application crash),
+as demonstrated by use of xmllint on a certain XML document, a
+different vulnerability than CVE-2003-1564 and CVE-2008-3281.
+
+
+CVE-2008-4409 is public on NVD site, CVE-2008-4422 in Gentoo BZ and
+here...  CVE-2008-4422 should probably be rejected.
 
 -- 
-______________________________________________________________________
-Michael Sweet, Easy Software Products           mike at easysw dot com
-
-View attachment "cups-1.3-max-subscriptions.patch" of type "text/plain" (5341 bytes)
+Tomas Hoger / Red Hat Security Response Team
