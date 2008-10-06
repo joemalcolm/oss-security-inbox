@@ -1,28 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/23/3
-Message-ID: <Pine.GSO.4.51.0806231418190.1760@faron.mitre.org>
-Date: Mon, 23 Jun 2008 14:18:50 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/06/1
+Message-ID: <48E9BB33.3010903@redhat.com>
+Date: Mon, 06 Oct 2008 15:16:03 +0800
+From: Eugene Teo <eteo@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: perl
+Subject: CVE request: kernel: sctp: Fix kernel panic while process protocol violation parameter
 Content-Type: text/plain; charset=utf-8
 
+This was committed in upstream kernel recently.
 
-This looks distinct from some older rmtree() issues, so I'm assigning a
-new number.
+"[PATCH] sctp: Fix kernel panic while process protocol violation parameter
 
-- Steve
+Since call to function sctp_sf_abort_violation() need paramter 'arg'
+with 'struct sctp_chunk' type, it will read the chunk type and chunk
+length from the chunk_hdr member of chunk. But call to
+sctp_sf_violation_paramlen() always with 'struct sctp_paramhdr' type's
+parameter, it will be passed to sctp_sf_abort_violation(). This may
+cause kernel panic."
 
-======================================================
-Name: CVE-2008-2827
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2827
-Reference: MISC:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=487319
-Reference: MISC:http://rt.cpan.org/Public/Bug/Display.html?id=36982
+Upstream commit: ba0166708ef4da7eeb61dd92bbba4d5a749d6561
 
-The rmtree function in lib/File/Path.pm in Perl 5.10 does not properly
-check permissions before performing a chmod, which allows local users
-to modify the permissions of arbitrary files via a symlink attack, a
-different vulnerability than CVE-2005-0448 and CVE-2004-0452.
+This is user-triggerable.
 
-
+Thanks, Eugene
