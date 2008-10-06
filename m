@@ -1,36 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/20/4
-Message-ID: <4832E82F.1020905@gmx.de>
-Date: Tue, 20 May 2008 17:03:11 +0200
-From: Matthias Andree <matthias.andree@....de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/06/6
+Message-ID: <20081006153943.GD24948@ngolde.de>
+Date: Mon, 6 Oct 2008 17:39:43 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSH key blacklisting
+Subject: Re: data-destroiny malfunction: is that a "security" issue
 Content-Type: text/plain; charset=utf-8
 
-Solar Designer wrote:
-> Not yet, but we (Openwall) are likely to have a patch within a few days,
-> and this:
+Hi Hanno,
+* Hanno Böck <hanno@...eck.de> [2008-10-06 17:23]:
+> Today some question arised in my mind.
+> 
+> Preface: I found a bug in obexftp. It has some option -G, which will download 
+> a file and afterwards delete it. The problem is, it'll do the second step 
+> even if the first failed. So if you have some connection problem on step 1, 
+> your file will be gone.
+> 
+> In my case, as it's the internal memory of a mobile phone, it's probably 
+> pretty much impossible to restore without some professional data rescue lab.
+> 
+> 
+> Now, my question: Is this a security issue? Does it deserve a CVE?
+[...] 
+As this is nothing that can be triggered by an attacker I 
+think it's rather a normal application bug or if not a bug 
+behaviour that should be documented.
 
-> On Sat, May 17, 2008 at 04:46:30PM +0200, Robert Buchholz wrote:
-
->> There has been approval of your idea inside Gentoo's hardened team.
-
-> is one of the reasons for us to go for the effort.
-
-Thank you.
-
-For tossing in an end-users view, it is also likely of wider interest since
-keys generated once may travel (floppy, USB stick, scp/rsync/ssh-add -L,
-you name it), or systems being cross-"updated" to other operating systems
-(into/out of Debian/Ubuntu) for instance, so it likely wouldn't hurt to
-forward the whole blacklisting or at least check tools upstream once
-everyone is happy with it.
-
-It may take some convincing upstream maintainers to help with working
-around a b0rkup issue that happend by a downstream distro, but anyways, I'd
-like to do some sort of "ssh-vulnkey -a" on my SUSE boxen (perhaps after
-some sanity checks such as making sure the file being read by this tool is
-actually a regular file after opening it and things like that).
-
+Cheers
+Nico
 -- 
-Matthias Andree
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
