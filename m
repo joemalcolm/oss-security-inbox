@@ -1,38 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/17/29
-Message-ID: <20081217183010.GG19388@ngolde.de>
-Date: Wed, 17 Dec 2008 19:30:10 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Cc: Nico Golde <oss-security+ml@...lde.de>, Steffen Joeris <steffen.joeris@...lelinux.de>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE id request: php-xajax
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/06/7
+Message-ID: <1976330789.674121223313406140.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 6 Oct 2008 13:16:46 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: coley@...re.org
+Subject: dbus DoS (CVE-2008-3834)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Steven M. Christey <coley@...us.mitre.org> [2008-12-17 19:28]:
-> On Wed, 17 Dec 2008, Nico Golde wrote:
-> 
-> > > Afaik you can use & to specify values like ../foo.php&value=bar
-> > > Thus the patch looked incomplete to me and should be extended to escape & as
-> > > well.
-> >
-> > I see no problem with specifying GET variables here unless
-> > this is some kind of CSRF which I don't see in this case.
-> 
-> If there's CSRF then that would be a separate issue.
-> 
-> If ";" is also allowed then there might be some possibilities for odd
-> entity encodings, but I don't know if that would translate directly into
-> XSS.  A simple, likely-incorrect example might be "&lt;" which would
-> decode into "<" but the browser would treat it as a literal "<" instead of
-> the start of a tag.
+Hello everyone,
 
-Yes but this would be a bug, no security issue by itself.
+Just a heads up about a Dbus DoS:
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2008-3834
+https://bugs.freedesktop.org/show_bug.cgi?id=17803
 
-Cheers
-Nico
+Given it hasn't been well announced, I used CVE-2008-3834 out of Red Hat's pool.
+
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+    JB
