@@ -1,43 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/27/1
-Message-ID: <20080727111916.GA19470@ngolde.de>
-Date: Sun, 27 Jul 2008 13:19:16 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/06/5
+Message-Id: <200810061631.55208.hanno@hboeck.de>
+Date: Mon, 6 Oct 2008 16:31:54 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: drupal issue in < 5.9
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: data-destroiny malfunction: is that a "security" issue
 Content-Type: text/plain; charset=utf-8
 
 Hi,
-* Steven M. Christey <coley@...us.mitre.org> [2008-07-27 11:41]:
-> On Sat, 26 Jul 2008, Miklos Vajna wrote:
-> 
-> > On Sat, Jul 26, 2008 at 09:27:33PM +0200, Nico Golde <oss-security+ml@...lde.de> wrote:
-> > >
-> > > This is CVE-2008-3222.
-> >
-> > Isn't this different?
-> >
-> > It refers to http://www.openwall.com/lists/oss-security/2008/07/10/3
-> > which is a bug fixed in 5.8.
-> >
-> > The issue I'm talking about is _not_ fixed in 5.8.
-> 
-> My interpretation of this new advisory is that they meant to fix the
-> session fixation in 5.8, but they didn't.  The original advisory covered
-> multiple other issues as well.  So this new advisory might better be
-> considered a clarification of versions for the session fixation, rather
-> than a regression error or incomplete fix (which would require a new CVE).
-> 
-> Granted, the lack of specifics from Drupal makes it difficult to be
-> certain about what happened.
 
-Yes, I have no idea either but at least the patch stayed the 
-same.
+Today some question arised in my mind.
 
-Cheers
-Nico
+Preface: I found a bug in obexftp. It has some option -G, which will download 
+a file and afterwards delete it. The problem is, it'll do the second step 
+even if the first failed. So if you have some connection problem on step 1, 
+your file will be gone.
+
+In my case, as it's the internal memory of a mobile phone, it's probably 
+pretty much impossible to restore without some professional data rescue lab.
+
+
+Now, my question: Is this a security issue? Does it deserve a CVE?
+
+While it probably does not fit in our common sense of security issues, as in 
+the normal scenario, you don't have any attacker, it is still something where 
+users should probably be warned. And it endangers the security of one's data.
+
+After thinking a bit more about it, I even thought that this might be feasible 
+for some kind of unlikely attack: An attacker could disturb the bluetooth 
+connection at the right time so the data connection fails.
+
+So, thouhgts?
+
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
-Content of type "application/pgp-signature" skipped
+http://freiheitstattangst.de/ - 11.10. Berlin gegen Überwachung
+http://x1000malquer.de/ - ab 8.11. Atomtransporte stoppen
+
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
