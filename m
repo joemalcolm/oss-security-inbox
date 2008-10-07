@@ -1,45 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/20/1
-Message-ID: <20081020091652.5f6e358a@redhat.com>
-Date: Mon, 20 Oct 2008 09:16:52 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: hoffie@...too.org, coley@...re.org
-Subject: Re: CVE request: mantisbt < 1.1.4: RCE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/07/3
+Message-ID: <Pine.GSO.4.51.0810071431570.6161@faron.mitre.org>
+Date: Tue, 7 Oct 2008 14:33:24 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Tomas Hoger <thoger@...hat.com>
+cc: coley@...us.mitre.org, oss-security@...ts.openwall.com, veillard@...hat.com, Robert Buchholz <rbu@...too.org>
+Subject: Re: Re: libxml2 "ampproblem" DoS
 Content-Type: text/plain; charset=utf-8
 
-On Sun, 19 Oct 2008 11:18:31 +0200 Christian Hoffmann
-<hoffie@...too.org> wrote:
 
-> has a CVE id been already assigned to the recent remote code execution
-> issue in mantis < 1.1.4? If not, please do so.
-> 
-> References:
-> http://www.mantisbt.org/bugs/view.php?id=0009704
-> http://mantisbt.svn.sourceforge.net/viewvc/mantisbt/branches/BRANCH_1_1_0/mantisbt/core/utility_api.php?r1=5679&r2=5678&pathrev=5679
-> http://www.milw0rm.com/exploits/6768
-> https://bugs.gentoo.org/show_bug.cgi?id=242722
+On Mon, 6 Oct 2008, Tomas Hoger wrote:
 
-There's actually at least one issue fixed in 1.1.3 that probably
-deserves a CVE:
+> CVE-2008-4409 is public on NVD site, CVE-2008-4422 in Gentoo BZ and
+> here...  CVE-2008-4422 should probably be rejected.
 
-- 0009321: [security] Users can get title and status of issues that
-they don't have access to. (vboctor) - closed.
-  http://www.mantisbt.org/bugs/view.php?id=9321
+Agreed.
 
-Additionally, Gentoo bug:
-  http://bugs.gentoo.org/show_bug.cgi?id=241940
+- Steve
 
-points out another fix in 1.1.3:
+======================================================
+Name: CVE-2008-4409
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4409
+Reference: MLIST:[oss-security] 20081002 libxml2 "ampproblem" DoS
+Reference: URL:http://openwall.com/lists/oss-security/2008/10/02/4
+Reference: CONFIRM:http://bugzilla.gnome.org/show_bug.cgi?id=554660
 
-- 0009664: [authentication] Logout without unsetting session cookie
-(jreese) - closed.
-  http://www.mantisbt.org/bugs/view.php?id=9664
+libxml2 2.7.0 and 2.7.1 does not properly handle "predefined entities
+definitions" in entities, which allows context-dependent attackers to
+cause a denial of service (memory consumption and application crash),
+as demonstrated by use of xmllint on a certain XML document, a
+different vulnerability than CVE-2003-1564 and CVE-2008-3281.
 
-Which seems to be on the edge between security fix and security
-enhancement, not sure if this kind of fixes get CVE ids assigned.
 
-Thanks!
+======================================================
+Name: CVE-2008-4422
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4422
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+** REJECT **
+
+DO NOT USE THIS CANDIDATE NUMBER.  ConsultIDs: CVE-2008-4409.  Reason:
+This candidate is a duplicate of CVE-2008-4409.  Notes: All CVE users
+should reference CVE-2008-4409 instead of this candidate.  All
+references and descriptions in this candidate have been removed to
+prevent accidental usage.
+
+
