@@ -1,36 +1,15 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/21/2
-Message-ID: <Pine.GSO.4.51.0811201943230.20524@faron.mitre.org>
-Date: Thu, 20 Nov 2008 19:43:29 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: OSS-Security Mailinglist <oss-security@...ts.openwall.com>
-cc: coley@...re.org
-Subject: Re: CVE request: clamav get_unicode_name() off-by-one buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/07/2
+Message-ID: <20081007160639.GB3486@galadriel.inutil.org>
+Date: Tue, 7 Oct 2008 18:06:39 +0200
+From: Moritz Muehlenhoff <jmm@...til.org>
+To: oss-security@...ts.openwall.com
+Subject: Mozilla CVE duplicate
 Content-Type: text/plain; charset=utf-8
 
+CVE-2008-4067 is a duplicate of CVE-2007-3073, both reference
+https://bugzilla.mozilla.org/show_bug.cgi?id=380994 and the
+reporter is identical.
 
-======================================================
-Name: CVE-2008-5050
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5050
-Reference: BUGTRAQ:20081108 ClamAV get_unicode_name() off-by-one buffer overflow
-Reference: URL:http://www.securityfocus.com/archive/1/archive/1/498169/100/0/threaded
-Reference: FULLDISC:20081109 ClamAV get_unicode_name() off-by-one buffer overflow
-Reference: URL:http://lists.grok.org.uk/pipermail/full-disclosure/2008-November/065530.html
-Reference: CONFIRM:http://sourceforge.net/project/shownotes.php?release_id=637952&group_id=86638
-Reference: BID:32207
-Reference: URL:http://www.securityfocus.com/bid/32207
-Reference: FRSIRT:ADV-2008-3085
-Reference: URL:http://www.frsirt.com/english/advisories/2008/3085
-Reference: SECUNIA:32663
-Reference: URL:http://secunia.com/advisories/32663
-Reference: XF:clamav-getunicodename-bo(46462)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/46462
-
-Off-by-one error in the get_unicode_name function
-(libclamav/vba_extract.c) in Clam Anti-Virus (ClamAV) before 0.94.1
-allows remote attackers to cause a denial of service (crash) or
-possibly execute arbitrary code via a crafted VBA project file, which
-triggers a heap-based buffer overflow.
-
-
+Cheers,
+        Moritz
