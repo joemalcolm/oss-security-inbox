@@ -1,34 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/05/6
-Message-ID: <20080305110829.GA32473@openwall.com>
-Date: Wed, 5 Mar 2008 14:08:29 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/07/7
+Message-ID: <Pine.GSO.4.51.0810071732270.6161@faron.mitre.org>
+Date: Tue, 7 Oct 2008 17:35:15 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: list archive
+Subject: Re: Mozilla CVE duplicate
 Content-Type: text/plain; charset=utf-8
 
-On Sunday 24 February 2008, Solar Designer wrote:
-> > ... I've also re-configured
-> > oss-security to no longer set the X-No-Archive header (xvendor was
-> > already configured that way).  The Gmane archive is now available at:
-> >
-> > 	http://dir.gmane.org/gmane.comp.security.oss.general
 
-On Wed, Mar 05, 2008 at 11:53:16AM +0100, Robert Buchholz wrote:
-> Unfortunately, all messages prior to this change of setting will expire 
-> and be removed from Gmane on March 9, because they have been added on
-> February 24. Can you please contact the Gmane folks to remove the 
-> X-No-Archive from the mails or just ignore it list-wide,
+On Tue, 7 Oct 2008, Moritz Muehlenhoff wrote:
 
-I've already done that twice, including on the same day those messages
-were imported.  The first time I was told that this was taken care of,
-but it seems not.  I guess let's wait and see what happens, then I'll
-contact Lars again if needed.
+> CVE-2008-4067 is a duplicate of CVE-2007-3073, both reference
+> https://bugzilla.mozilla.org/show_bug.cgi?id=380994 and the
+> reporter is identical.
 
-> or is that intentional?
+This seems to be the case.  Josh Bressers, can you confirm? CVE-2007-3073
+is associated with comment #16 in bug 367428, but later comments for bug
+367428 seem to suggest it's the same (or almost the same) as bug 380994.
 
-No.
+If these are dupes, then CVE-2008-4067 would be preferred due to usage by
+more authoritative sources, and more commonly referenced.
 
-Thank you!
-
-Alexander
+- Steve
