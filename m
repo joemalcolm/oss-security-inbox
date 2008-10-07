@@ -1,45 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/08/14
-Message-ID: <20080708215221.GG5493@ngolde.de>
-Date: Tue, 8 Jul 2008 23:52:21 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: moodle xss in < 1.8.5
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/07/1
+Message-Id: <200810071250.42339.hanno@hboeck.de>
+Date: Tue, 7 Oct 2008 12:50:41 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: "oss-security" <oss-security@...ts.openwall.com>
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: crashers / potential security risks in mplayer
 Content-Type: text/plain; charset=utf-8
 
-Hi Steven,
-* Steven M. Christey <coley@...us.mitre.org> [2008-07-08 19:54]:
-> On Tue, 8 Jul 2008, Hanno [utf-8] BÃ¶ck wrote:
-> 
-> > Am Sonntag 06 Juli 2008 schrieb Nico Golde:
-> > > Hi Hanno,
-> > >
-> > > * Hanno BÃ¶ck <hanno@...eck.de> [2008-07-06 19:04]:
-> > > > http://docs.moodle.org/en/Release_Notes#Moodle_1.8.5
-> > > >     *  KSES related XSS security vulnerability fixed
-> > >
-> > > This should be CVE-2008-1502:
-> 
-> This looks like a shared codebase relationship, which would usually
-> involve the same CVE.
-> 
-> If the issue is really in KSES, then CVE-2008-1502 would need to be
-> updated to reflect that it affects KSES as used in egroupWare, Moodle, and
-> others.
-> 
-> Can anyone clarify?
+Seems we're still not done with the zzuf stuff Sam Hocevar released ages ago.
+Original source:
+http://sam.zoy.org/blog/2007-01-16-exposing-file-parsing-vulnerabilities
 
-http://cvs.moodle.org/moodle/lib/kses.php?r1=1.3.2.2&r2=1.3.2.3
-http://cvs.moodle.org/moodle/lib/weblib.php?r1=1.581.4.10&r2=1.581.4.11
+Please assign some CVEs for mplayer:
 
-Did you get the vulnerability notes by the initial bug 
-reporter that I forwarded to you + vendor-sec?
+Crasher in aac parser, samples:
+http://sam.zoy.org/zzuf/lol-mplayer.aac
+http://sam.zoy.org/zzuf/lol-vlc.aac
+http://sam.zoy.org/zzuf/lol-mplayer.aac
 
-Cheers
-Nico
+Crasher in ogg parser, samples:
+http://sam.zoy.org/zzuf/lol-mplayer.ogm
+http://sam.zoy.org/zzuf/lol-ffplay.ogm
+
+
 
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
-Content of type "application/pgp-signature" skipped
+http://freiheitstattangst.de/ - 11.10. Berlin gegen Überwachung
+http://x1000malquer.de/ - ab 8.11. Atomtransporte stoppen
+
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
