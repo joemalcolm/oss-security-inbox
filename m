@@ -1,24 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/28/14
-Message-ID: <47ED0427.1060609@gentoo.org>
-Date: Fri, 28 Mar 2008 15:43:51 +0100
-From: Christian Hoffmann <hoffie@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: lighttpd DoS: forcefully closing of foreign SSL connections
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/07/6
+Message-ID: <Pine.GSO.4.51.0810071707090.6161@faron.mitre.org>
+Date: Tue, 7 Oct 2008 17:10:39 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Robert Buchholz <rbu@...too.org>
+cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: amarok temp file vuln
 Content-Type: text/plain; charset=utf-8
 
-On 2008-03-26 17:26, Christian Hoffmann wrote:
-> can we please get a CVE id for the following issue?
-> https://bugs.gentoo.org/show_bug.cgi?id=214892
-> http://trac.lighttpd.net/trac/ticket/285#comment:18
-> http://trac.lighttpd.net/trac/changeset/2136
-> 
-> Impact is rather low, but I think it still qualifies for DoS.
-Just for reference, apparently CVE-2008-1531 has been assigned to this 
-issue, thanks to whoever did it. :)
 
--- 
-Christian Hoffmann
+On Sat, 4 Oct 2008, Robert Buchholz wrote:
+
+> On Friday 15 August 2008, Steven M. Christey wrote:
+> > ======================================================
+> > Name: CVE-2008-3699
+> >
+> > The MagnatuneBrowser::listDownloadComplete function in
+> > magnatunebrowser/magnatunebrowser.cpp in Amarok before 1.4.10 allows
+> > local users to overwrite arbitrary files via a symlink attack on the
+> > album_info.xml temporary file.
+>
+> It seems CVE-2008-4430 is a duplicate for this?
+
+Yes, this was my error.  I was catching up on a backlog and didn't account
+for the duplicate.
+
+Keep CVE-2008-3699.
+
+- Steve
+
+======================================================
+Name: CVE-2008-3699
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3699
+Reference: MISC:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=494765
+Reference: CONFIRM:http://amarok.kde.org/en/releases/1/4/10
+Reference: CONFIRM:http://websvn.kde.org/?view=rev&revision=846626
+Reference: FEDORA:FEDORA-2008-7719
+Reference: URL:https://www.redhat.com/archives/fedora-package-announce/2008-September/msg00097.html
+Reference: FEDORA:FEDORA-2008-7739
+Reference: URL:https://www.redhat.com/archives/fedora-package-announce/2008-September/msg00057.html
+Reference: GENTOO:GLSA-200809-08
+Reference: URL:http://security.gentoo.org/glsa/glsa-200809-08.xml
+Reference: MANDRIVA:MDVSA-2008:172
+Reference: URL:http://www.mandriva.com/security/advisories?name=MDVSA-2008:172
+Reference: SLACKWARE:SSA:2008-241-01
+Reference: URL:http://slackware.com/security/viewer.php?l=slackware-security&y=2008&m=slackware-security.455790
+Reference: FRSIRT:ADV-2008-2338
+Reference: URL:http://www.frsirt.com/english/advisories/2008/2338
+Reference: SECUNIA:31418
+Reference: URL:http://secunia.com/advisories/31418
+Reference: SECUNIA:31663
+Reference: URL:http://secunia.com/advisories/31663
+Reference: SECUNIA:31839
+Reference: URL:http://secunia.com/advisories/31839
+
+The MagnatuneBrowser::listDownloadComplete function in
+magnatunebrowser/magnatunebrowser.cpp in Amarok before 1.4.10 allows
+local users to overwrite arbitrary files via a symlink attack on the
+album_info.xml temporary file.
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (261 bytes)
+======================================================
+Name: CVE-2008-4430
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4430
+
+** REJECT **
+
+DO NOT USE THIS CANDIDATE NUMBER.  ConsultIDs: CVE-2008-3699.  Reason:
+This candidate is a duplicate of CVE-2008-3699.  Notes: All CVE users
+should reference CVE-2008-3699 instead of this candidate.  All
+references and descriptions in this candidate have been removed to
+prevent accidental usage.
+
+
