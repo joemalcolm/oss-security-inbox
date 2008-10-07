@@ -1,35 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/18/7
-Message-ID: <20080518161216.GZ12850@outflux.net>
-Date: Sun, 18 May 2008 09:12:16 -0700
-From: Kees Cook <kees@...flux.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/07/4
+Message-ID: <Pine.GSO.4.51.0810071650150.6161@faron.mitre.org>
+Date: Tue, 7 Oct 2008 16:56:27 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSH key blacklisting
+cc: coley@...re.org
+Subject: Re: duplicates: CVE-2008-4406 and CVE-2008-4407 [sabre insecure temp file]
 Content-Type: text/plain; charset=utf-8
 
-On Sun, May 18, 2008 at 04:06:55AM +0400, Solar Designer wrote:
-> I've dropped the explicit CC because Kees is subscribed.
 
-(I've adjusted my mail server to quit using SRS for the time being...)
+On Sat, 4 Oct 2008, Steffen Joeris wrote:
 
-> postings.  As to the fingerprint list, I'd appreciate it if you provide
-> separate lists for different key types, sizes, and archs - such that we
-> can produce any combinations.  The "unshortened" aspect is not as
-> important; we'll probably pick last N bits of fingerprints anyway, to
-> allow for comparison between our blacklist and that in the Debian and
-> Ubuntu packages.
+> The CVE ids issued for sabre regarding the insecure use of the tmp file
+> are the same. The issue was introduced by a debian patch, but other
+> vendors might have possibly patched it the same way. I suggest to mark
+> one of them as a duplicate though, because it might be confusing.
 
-Ah, I haven't been separating it by arch, but I can certainly do that.
-I've been including the "full" hashes in the Debian openssh-blacklist
-source package and reducing them for the final files.  I can easily
-split up the source blacklist files by arch and combine them during the
-"build".
+We happened to SPLIT on the symlink issue versus the "can't overwrite
+/tmp/sabre.log" issue because fixing the symlink does not necessarily fix
+the other problem.  Also, if the patch introduced CVE-2008-4407 and others
+might have used that patch, these are distinct errors - someone might have
+fixed CVE-2008-4406 but not CVE-2008-4407.
 
-I will probably also keep the file in PID order, and sort it during the
-build.  I've been interested in the pid origin just to see where in the
-pid list keys tend to land.
+Some more explanation is below; let me know if I'm still missing
+something.
 
--Kees
+I've noticed that Debian generally treats multiple different errors as a
+more general "insecure file creation" issue.  For CVE, we haven't figured
+out how to handle this.
 
--- 
-Kees Cook                                            @outflux.net
+- Steve
+
+======================================================
+Name: CVE-2008-4406
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4406
+Acknowledged: yes bug-report
+Announced: 20081001
+Flaw: link
+Reference: MLIST:[oss-security] 20081001 CVE id request: sabre
+Reference: URL:http://openwall.com/lists/oss-security/2008/10/01/1
+Reference: CONFIRM:http://bugs.debian.org/433996
+
+A certain Debian patch to the run scripts for sabre (aka xsabre)
+0.2.4b allows local users to delete or overwrite arbitrary files via a
+symlink attack on unspecified .tmp files.
+
+
+Analysis:
+WIKI: Message #10 in bug 433996 says "delete" whereas
+oss-security/2008/10/01/1 says "overwriting."
+
+WIKI: It is unclear whether ".tmp files" is different from
+/tmp/sabre.log.
+
+ACKNOWLEDGEMENT: in Debian bug 433996, Nico Golde set the severity to
+"grave," implying acknowledgement.
+
+
+======================================================
+Name: CVE-2008-4407
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4407
+Acknowledged: unknown
+Announced: 20081001
+Flaw: other
+Reference: MISC:http://bugs.debian.org/433996
+
+XRunSabre in sabre (aka xsabre) 0.2.4b relies on the ability to create
+/tmp/sabre.log, which allows local users to cause a denial of service
+(application unavailability) by creating a /tmp/sabre.log file that
+cannot be overwritten.
+
+
+Analysis:
+INCLUSION: This seems to be a distinct vulnerability, although this
+type of vulnerability happens to accompany cases of symlink
+vulnerabilities that involve fixed filenames and unprivileged users.
+
+ACKNOWLEDGEMENT: in Debian bug 433996, Nico Golde set the severity to
+"grave," implying acknowledgement.
+
+
