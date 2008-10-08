@@ -1,38 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/25/4
-Message-Id: <200805252355.04352.steffen.joeris@skolelinux.de>
-Date: Sun, 25 May 2008 23:54:58 +1000
-From: Steffen Joeris <steffen.joeris@...lelinux.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/08/3
+Message-ID: <20081008185009.GA3450@galadriel.inutil.org>
+Date: Wed, 8 Oct 2008 20:50:09 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: xscreensaver
+Cc: coley@...re.org
+Subject: Re: Mozilla CVE duplicate
 Content-Type: text/plain; charset=utf-8
 
-Hi
+On Wed, Oct 08, 2008 at 07:49:13AM -0400, Josh Bressers wrote:
+> > 
+> > > CVE-2008-4067 is a duplicate of CVE-2007-3073, both reference
+> > > https://bugzilla.mozilla.org/show_bug.cgi?id=380994 and the
+> > > reporter is identical.
+> > 
+> > This seems to be the case.  Josh Bressers, can you confirm?
+> > CVE-2007-3073
+> > is associated with comment #16 in bug 367428, but later comments for
+> > bug
+> > 367428 seem to suggest it's the same (or almost the same) as bug
+> > 380994.
+> > 
+> > If these are dupes, then CVE-2008-4067 would be preferred due to usage
+> > by
+> > more authoritative sources, and more commonly referenced.
+> 
+> Argh, yeah they're the same.  Sorry about that.
 
-On Sun, 25 May 2008 11:41:53 pm Tomas Hoger wrote:
-> On Sun, 25 May 2008 18:29:13 +1000 Steffen Joeris
->
-> <steffen.joeris@...lelinux.de> wrote:
-> > Pierre Habouzit discovered that resizing with the xrandr tool can
-> > crash xscreensaver.
-> >
-> > Debian Bug report:
-> > http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=482385
-> >
-> > The tested version of xscreensaver is 5.05-1, but at the moment there
-> > is no reason to assume that the bug did not exist in previous
-> > versions.
->
-> Is there any known attack vector crossing trust boundary?  Usage of
-> xrandr should be fully under the control of the user running
-> xscreensaver.
-None that I know about. I assume that on a terminalserver it should not 
-matter, since it would only crash the user's own xscreensaver and not others.
+Ok, we'll treat CVE-2007-3073 as rejected, then.
 
-However, users might not be aware of this and just try to lock their screens 
-and leave. IMHO it could be treated as a low security issue.
-
-Cheers
-Steffen
-
-Download attachment "signature.asc " of type "application/pgp-signature" (190 bytes)
+Cheers,
+        Moritz
