@@ -1,30 +1,12 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/27/8
-Message-ID: <Pine.GSO.4.51.0803271854080.14208@faron.mitre.org>
-Date: Thu, 27 Mar 2008 18:59:27 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/08/4
+Message-ID: <48ED25D2.9080400@haquarter.de>
+Date: Wed, 08 Oct 2008 23:27:46 +0200
+From: "lists@...uarter.de" <lists@...uarter.de>
 To: oss-security@...ts.openwall.com
-Subject: using oss-security references in CVE
+Subject: CVE-2008-4324 
 Content-Type: text/plain; charset=utf-8
 
-
-All,
-
-In CVE, we try to provide "provenance" for every detail that makes its way
-into the description.  Issues like rxvt and CenterIM have some details
-that are only publicly documented in oss-security, and I would like to add
-these as references.
-
-However, I haven't done so yet.  If I start to add oss-security references
-to CVEs when needed, this will be noticed by the other vuln DBs and added
-to their watch lists.  As their response is sometimes faster than CVE's,
-this means that new vuln reports will start showing up publicly much more
-quickly.
-
-While the monitoring of oss-security will happen regardless of whether
-it's mentioned in CVE or not, including an oss-security reference in CVE
-will definitely accelerate this.
-
-Are people OK with that?
-
-- Steve
+Hi, the exploit from: http://www.secniche.org/moz303/index.html
+Also crashes version 3.0.1-r1 and 3.0.3 on Gentoo Linux (and probably 
+others).
