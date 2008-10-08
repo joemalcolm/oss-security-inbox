@@ -1,21 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/01/2
-Message-ID: <20080401091627.7bc8fb36@redhat.com>
-Date: Tue, 1 Apr 2008 09:16:27 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: coley@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: CVE id request: mod_suphp
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/08/1
+Message-ID: <48EC2EA6.4020003@redhat.com>
+Date: Wed, 08 Oct 2008 11:53:10 +0800
+From: Eugene Teo <eteo@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: kernel: sctp: Fix oops when INIT-ACK indicates that peer doesn't support AUTH
 Content-Type: text/plain; charset=utf-8
 
-New upstream suphp version fixes two symlink races possibly leading to
-privilege escalation.
+This was committed in upstream kernel recently.
 
-References:
-http://lists.marsching.biz/pipermail/suphp/2008-March/001750.html
-http://www.suphp.org/Home.html
+"[PATCH] sctp: Fix oops when INIT-ACK indicates that peer doesn't
+support AUTH
 
-Steven, can you please assign CVE id.  Thanks!
+If INIT-ACK is received with SupportedExtensions parameter which
+indicates that the peer does not support AUTH, the packet will be
+silently ignore, and sctp_process_init() do cleanup all of the
+transports in the association. When T1-Init timer is expires, OOPS
+happen while we try to choose a different init transport.
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+The solution is to only clean up the non-active transports, i.e
+the ones that the peer added.  However, that introduces a problem
+with sctp_connectx(), because we don't mark the proper state for
+the transports provided by the user.  So, we'll simply mark
+user-provided transports as ACTIVE.  That will allow INIT
+retransmissions to work properly in the sctp_connectx() context
+and prevent the crash."
+
+Upstream commit: add52379dde2e5300e2d574b172e62c6cf43b3d3
+
+This can be triggered if the SCTP connection between both ends have
+mis-matched settings, i.e. one end with AUTH extensions enabled, and the
+other end with AUTH extension disabled. This requires a CVE name.
+
+Thanks, Eugene
+--
+Eugene Teo / Red Hat Security Response Team
