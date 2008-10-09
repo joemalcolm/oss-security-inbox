@@ -1,20 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/07/2
-Message-ID: <Pine.GSO.4.51.0804062039370.16600@faron.mitre.org>
-Date: Sun, 6 Apr 2008 20:40:00 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: [oCERT 2008-02] libfishsound insufficient boundary checks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/09/2
+Message-ID: <734638270.1993841223581968480.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 9 Oct 2008 15:52:48 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: clint.ruoho@...onicsecurity.com
+Subject: lynx lynxcgi handler flaw
 Content-Type: text/plain; charset=utf-8
 
+Clint Ruoho brought this to our attention, and I think there is a greater benefit
+in in sharing this than there is in keeping it embargoed.
 
-On Sun, 6 Apr 2008, Andrea Barisani wrote:
+The fix for CVE-2005-2929 only disable the lynxcgi handler when you're not in
+advanced mode.  It's considered to not be a flaw in advanced mode because it
+displays the URL that is selected.  The potential problem here though is if lynx
+is called from the command line if it's your URL handler.
 
->
-> 2008/04/06 #2008-02 libfishsound insufficient boundary checks
+Clint pointed out that the easiest way to fix this is to just disable CGI support
+in /etc/lynx.cfg, which I agree with, and is a wise default.
 
-Use CVE-2008-1686
+Initially I thought this was an issue that should be fixed, but I'm starting to
+wonder this.  So some open discussion is in order.
 
-This CVE will not be live until Monday.
+Does anything allow the lynxcgi:// handler?  A user would have to have defined
+this protocol handler, which I think is quite unlikely.
 
-- Steve
+Thanks.
+
+-- 
+    JB
