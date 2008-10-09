@@ -1,19 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/09/8
-Message-ID: <Pine.GSO.4.51.0809091032460.6699@faron.mitre.org>
-Date: Tue, 9 Sep 2008 10:32:58 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/09/1
+Message-Id: <200810090300.54256.hanno@hboeck.de>
+Date: Thu, 9 Oct 2008 03:00:54 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request (libpng)
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: xss in phpmyid 0.9
 Content-Type: text/plain; charset=utf-8
 
+http://seclists.org/bugtraq/2008/Oct/0009.html
 
-On Tue, 9 Sep 2008, [UTF-8] Pınar Yanarda�^_ wrote:
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
-> libpng 1.2.32beta01 fixes an off-by-one error within the
-> "png_push_read_zTXt()" function in pngread.c when processing malicious
-> PNG images with specially crafted zTXt chunks.
+http://freiheitstattangst.de/ - 11.10. Berlin gegen Überwachung
+http://x1000malquer.de/ - ab 8.11. Atomtransporte stoppen
 
-Use CVE-2008-3964, to be filled in later.
-
-- Steve
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
