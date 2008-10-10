@@ -1,23 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/01/3
-Message-Id: <200804010920.53008.ludwig.nussel@suse.de>
-Date: Tue, 1 Apr 2008 09:20:52 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
-To: oss-security <oss-security@...ts.openwall.com>, "Steven M. Christey" <coley@...re.org>
-Subject: CVE Request: otrs authentication bypass
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/10/1
+Message-ID: <2062125959.2220401223661998599.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 10 Oct 2008 14:06:38 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: coley@...re.org
+Subject: CVE Request
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+I steve,
 
-OTRS has released a new version that fixes an authentication bypass:
-http://otrs.org/advisory/OSA-2008-01-en/
+I ran across these three Gentoo bugs that could use CVE ids:
 
-cu
-Ludwig
+dovecot: http://bugs.gentoo.org/show_bug.cgi?id=240409
+graphviz: http://bugs.gentoo.org/show_bug.cgi?id=240636
+fence: http://bugs.gentoo.org/show_bug.cgi?id=240576
+
+Thanks.
 
 -- 
- (o_   Ludwig Nussel
- //\   
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
-
+    JB
