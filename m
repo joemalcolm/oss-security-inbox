@@ -1,26 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/16/3
-Message-Id: <200807161336.33402.hanno@hboeck.de>
-Date: Wed, 16 Jul 2008 13:36:33 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/13/1
+Message-ID: <48F2EBA1.9000300@redhat.com>
+Date: Mon, 13 Oct 2008 14:33:05 +0800
+From: Eugene Teo <eteo@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: phpmyadmin < 2.11.7.1
+Subject: CVE request: kernel: don't allow splice() to files opened with O_APPEND
 Content-Type: text/plain; charset=utf-8
 
-Am Dienstag 15 Juli 2008 schrieb Thijs Kinkhorst:
-> On Tuesday 15 July 2008 21:00, Hanno Böck wrote:
-> > From Changelog:
-> > - protection against XSS when register_globals is on and .htaccess
-> >   has no effect, thanks to Tim Starling
->
-> Note: this has already been assigned CVE-2008-2960 following a previous
-> request from you.
+This was committed in upstream kernel recently.
 
-This line is from the 2.11.7.1-changelog, while cve-2008-2960 has been fixed 
-in 2.11.7. So either their changelogs are mixed up or it's a different issue.
+"[PATCH] Don't allow splice() to files opened with O_APPEND
 
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+This is debatable, but while we're debating it, let's disallow the
+combination of splice and an O_APPEND destination.
 
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+It's not entirely clear what the semantics of O_APPEND should be, and
+POSIX apparently expects pwrite() to ignore O_APPEND, for example.  So
+we could make up any semantics we want, including the old ones.
+
+But Miklos convinced me that we should at least give it some thought,
+and that accepting writes at arbitrary offsets is wrong at least for
+IS_APPEND() files (which always have O_APPEND set, even if the reverse
+isn't true: you can obviously have O_APPEND set on a regular file).
+
+So disallow O_APPEND entirely for now.  I doubt anybody cares, and this
+way we have one less gray area to worry about."
+
+Upstream commit: efc968d450e013049a662d22727cf132618dcb2f
+
+Files opened with O_APPEND are ignored. This could allow users to bypass
+the append-only restriction. This probably needs a CVE name.
+
+Thanks, Eugene
