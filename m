@@ -1,22 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/26/4
-Message-ID: <198718832.98881222452979039.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 26 Sep 2008 14:16:19 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/13/2
+Message-Id: <200810132314.05913.steffen.joeris@skolelinux.de>
+Date: Mon, 13 Oct 2008 23:14:04 +1100
+From: Steffen Joeris <steffen.joeris@...lelinux.de>
 To: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE-2008-4182 clarification
+Cc: coley@...re.org
+Subject: CVE id request: qemu
 Content-Type: text/plain; charset=utf-8
 
-Hello eveyone,
+Hi
 
-So I spent some time today trying to figure out the Horde issue described in CVE-2008-4182.  Needless to say the advisory is hard to follow, so the upstream
-folks were kind enough to clarify this for me.
+I think this one is still unassigned.
+The qemu-make-debian-root script is prone to a symlink attack.
+I am not sure, if other vendors use it, but I guess it can't hurt to get a CVE 
+id assigned. :)
 
-This issue affects Turba and Imp.  The fix can be found here:
-http://cvs.horde.org/diff.php/imp/test.php?r1=1.70&r2=1.71
-http://cvs.horde.org/diff.php/turba/test.php?r1=1.22&r2=1.23
+Debian Bugreport:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=496394
 
-We don't need another CVE id as it's the same issue in both files.
+Cheers
+Steffen
 
--- 
-    JB
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
