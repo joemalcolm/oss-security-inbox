@@ -1,71 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/25/3
-Message-Id: <1219661157.7715.13.camel@iankko.englab.brq.redhat.com>
-Date: Mon, 25 Aug 2008 12:45:57 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: coley@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: CVE Request (gpicview)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/13/3
+Message-ID: <20081013161716.5335a68b@redhat.com>
+Date: Mon, 13 Oct 2008 16:17:16 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley@...re.org
+Subject: Re: CVE Request
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve,
+On Fri, 10 Oct 2008 14:06:38 -0400 (EDT) Josh Bressers
+<bressers@...hat.com> wrote:
 
-  could you please allocate a CVE id for the following
-three gpicview issues:
+> fence: http://bugs.gentoo.org/show_bug.cgi?id=240576
 
-1,
+Please mention both fence_apc and fence_apc_snmp in the CVE
+description, as both agents do the same kind of logging.  Description
+may also mention cman package, as those fencing agents may be bundled
+in fence or cman package, based on the version used.
 
-http://sourceforge.net/tracker/index.php?func=detail&aid=2019481&group_id=180858&atid=894869
+Note: CVE-2008-4192 was recently assigned to fence_egenera having
+similar flaw.
 
-Possible symlink attack via the temporary created "/tmp/rot.jpg" 
-file used for image rotation.
+Additionally, fence_manual / fence_ack_manual communicate via FIFO
+socket created in /tmp.  fence_manual creates
+fifo /tmp/fence_manual.fifo and waits for fence_ack_manual to write to
+it.  This can possibly result in the overwrite of arbitrary file.
 
-2,
-
-http://sourceforge.net/tracker/index.php?func=detail&aid=2019485&group_id=180858&atid=894869
-
-Related part of the code (the check for previous same filename file
-existence is done only in the 'main_win_save' function):
-
-#ifdef HAVE_LIBJPEG
-    if(strcmp(type,"jpeg")==0){
-        if(rotate_and_save_jpeg_lossless(file_name,mw->rotation_angle)!=0)
-            main_win_show_error(mw, "Save failed! Check permissions.");
-    } else
-#endif
-        main_win_save( mw, file_name, type, pref.ask_before_save ); 
-        
-By presence of the LIBJPEG library we could without confirmation rewrite
-the by the symlink targeted JPEG filesystem file.
-
-3, 
-
-http://sourceforge.net/tracker/index.php?func=detail&aid=2019492&group_id=180858&atid=894869
-
-Related part of the code:
-
-void on_rotate_clockwise( GtkWidget* btn, MainWin* mw )
-{
-    rotate_image( mw, GDK_PIXBUF_ROTATE_CLOCKWISE );
-    mw->rotation_angle += 90;
-    if(pref.auto_save_rotated){
-        pref.ask_before_save = FALSE;
-        on_save(btn,mw);
-        pref.ask_before_save = TRUE;
-    }
-}
-
-Consequences: Bad enough, just think about them in context of the two
-previously mentioned issues.
-
-Public mention of these issues:
-
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=495968
-
-
-Thank you in advance!
-
-Kind regards
-Jan iankko Lieskovsky
-RH Security Resposne Team
-
+-- 
+Tomas Hoger / Red Hat Security Response Team
