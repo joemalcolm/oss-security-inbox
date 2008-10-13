@@ -1,32 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/11/2
-Message-Id: <200804110311.32750.rbu@gentoo.org>
-Date: Fri, 11 Apr 2008 03:11:32 +0200
-From: Robert Buchholz <rbu@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: Opera <9.27 Multiple issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/13/4
+Message-ID: <1423939151.130251223911065371.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 13 Oct 2008 11:17:45 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: coley <coley@...re.org>
+Subject: CVE Request (nfs-utils)
 Content-Type: text/plain; charset=utf-8
 
-These are more than a week old, but I haven't see CVEs popping up yet. 
-So here's a formal request ;-)
+Hi Steve,
 
-To quote the ChangeLog:
-                 --------------
-    * Fixed an issue where newsfeed prompts could cause Opera to execute 
-arbitrary code, as reported by Michal Zalewski. See our advisory.
-    * Solved an issue where resized canvas patterns could cause Opera to 
-execute arbitrary code, as reported by Michal Zalewski. See our 
-advisory.
-    * Improved keyboard handling of password inputs, as reported by 
-Trystan S. 
-                --------------
+There is a bug in nfs-utils where it won't honor the netgroups setting properly.
 
-I have no idea what the third vulnerability actually means.
+https://bugzilla.redhat.com/show_bug.cgi?id=458676
 
-References:
-http://www.opera.com/docs/changelogs/windows/927/
-http://www.opera.com/support/search/view/881/     (1)
-http://www.opera.com/support/search/view/882/     (2)
-http://secunia.com/advisories/29662/
-
-Download attachment "signature.asc " of type "application/pgp-signature" (190 bytes)
+-- 
+    JB
