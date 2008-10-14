@@ -1,24 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/03/5
-Message-ID: <20080603180630.GC30768@openwall.com>
-Date: Tue, 3 Jun 2008 22:06:30 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: code reviews (was: ARP handler Inspection tool released)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/14/4
+Message-ID: <Pine.GSO.4.51.0810141449100.1682@faron.mitre.org>
+Date: Tue, 14 Oct 2008 14:49:23 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security <oss-security@...ts.openwall.com>
+cc: coley@...re.org
+Subject: Re: CVE id request: qemu
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jun 02, 2008 at 06:53:20PM +0200, Nico Golde wrote:
-> At least for Debian there is an audit project 
-> (http://www.debian.org/security/audit/) which is not really 
-> active anymore though. As far as I know Gentoo has a similar 
-> project. What about replacing those by an oss-security-audit 
-> project?
 
-I don't think there's a need to setup such a project "formally", under
-its own name or whatever, before it is started.  Instead, if there are
-people to work on this, they are more than welcome to use this mailing
-list and the oss-security wiki for it (we even have a wiki namespace
-pre-created).  If we ever get to the point where this needs to be
-separated, that won't be hard to do.
+On Mon, 13 Oct 2008, Steffen Joeris wrote:
 
-Alexander
+> The qemu-make-debian-root script is prone to a symlink attack.
+>
+> Debian Bugreport:
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=496394
+
+Use CVE-2008-4553, to be filled in later.
+
+- Steve
