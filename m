@@ -1,33 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/09/11
-Message-Id: <200807091921.05537.rbu@gentoo.org>
-Date: Wed, 9 Jul 2008 19:21:03 +0200
-From: Robert Buchholz <rbu@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/14/7
+Message-ID: <Pine.GSO.4.51.0810141819140.1682@faron.mitre.org>
+Date: Tue, 14 Oct 2008 18:19:24 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: Matthias Geerdsen <vorlon@...too.org>
-Subject: Re: DNS vulnerability: other relevant software
+Subject: Re: CVE id request: vlc
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday 09 July 2008, Matthias Geerdsen wrote:
-> - pdnsd [4]:
-> 	no info yet
 
-Quoting from http://members.home.nl/p.a.rombouts/pdnsd/doc.html :
+======================================================
+Name: CVE-2008-4558
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4558
+Reference: MISC:http://www.coresecurity.com/content/vlc-xspf-memory-corruption
 
-query_port_start=number;
-...
-In case a query start port is given pdnsd uses this port as the first 
-port of a specified port range (see query_port_end) used for queries. 
-pdnsd will try to randomly select a free port from this range as local 
-port for the query.
-...
-
-The sample configuration file that is shipped does not have this option 
-set, the default value of this is "0". I can't currently test this on a 
-kernel that does not randomize by default, so this domaind supports 
-randomization, and *seems* to have it enabled by default.
+Array index error in VLC media player 0.9.2 allows remote attackers to
+overwrite arbitrary memory and execute arbitrary code via an XSPF
+playlist file with a negative identifier tag, which passes a signed
+comparison.
 
 
-Robert
-
-Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
