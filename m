@@ -1,37 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/18/1
-Message-ID: <20080618161840.GC28873@suse.de>
-Date: Wed, 18 Jun 2008 18:18:40 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com, security@...nel.org
-Subject: query on a pppol2tp_recvmsg() fix - security relevant?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/14/6
+Message-ID: <20081014221036.GA5779@ngolde.de>
+Date: Wed, 15 Oct 2008 00:10:36 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE id request: vlc
 Content-Type: text/plain; charset=utf-8
 
-Hi folks,
+Hi,
 
-A customer asks us if the following is a security problem:
+can I get a CVE id for 
+http://www.coresecurity.com/content/vlc-xspf-memory-corruption 
+please?
 
-http://kernel.org/pub/linux/kernel/v2.6/testing/ChangeLog-2.6.26-rc6
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=6b6707a50c7598a83820077393f8823ab791abf8
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
---
-l2tp: Fix potential memory corruption in pppol2tp_recvmsg()
-
-    This patch fixes a potential memory corruption in
-    pppol2tp_recvmsg(). If skb->len is bigger than the caller's buffer
-    length, memcpy_toiovec() will go into unintialized data on the kernel
-    heap, interpret it as an iovec and start modifying memory.
-
-    The fix is to change the memcpy_toiovec() call to
-    skb_copy_datagram_iovec() so that paged packets (rare for PPPOL2TP)
-    are handled properly. Also check that the caller's buffer is big
-    enough for the data and set the MSG_TRUNC flag if it is not so.
-
-    Reported-by: Ilja <ilja@...ric.org>
-    Signed-off-by: James Chapman <jchapman@...alix.com>
-    Signed-off-by: David S. Miller <davem@...emloft.net>
-
-
-Is this a problem?
-
-Ciao, Marcus
+Content of type "application/pgp-signature" skipped
