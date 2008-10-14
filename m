@@ -1,29 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/29/1
-Message-ID: <483EBAE6.9050106@gmail.com>
-Date: Thu, 29 May 2008 10:17:10 -0400
-From: Pavel Polischouk <pavel.polischouk@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/14/1
+Message-ID: <20081014125400.GG17682@suse.de>
+Date: Tue, 14 Oct 2008 14:54:00 +0200
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2008-2363: pan - heap overflow
+Cc: coley@...re.org
+Subject: CVE request: strongswam denial-of-service
 Content-Type: text/plain; charset=utf-8
 
 Hi,
+our maintainer of strongswan found this:
 
-I discovered a heap overflow in pan affecting the parsing of .nzb files. 
-Details (including stack dumps and offending .nzb files) in RedHat 
-Bugzilla entry:
+See also http://download.strongswan.org/CHANGES4.txt
+"[...]
+strongswan-4.2.7
+----------------
 
-https://bugzilla.redhat.com/show_bug.cgi?id=446902
+- Fixed a Denial-of-Service vulnerability where an IKE_SA_INIT message with
+  a KE payload containing zeroes only can cause a crash of the IKEv2 charon
+  daemon due to a NULL pointer returned by the mpz_export() function of the
+  GNU Multiprecision Library (GMP). Thanks go to Mu Dynamics Research Labs
+  for making us aware of this problem.
+[...]"
 
-Patch: https://bugzilla.redhat.com/attachment.cgi?id=306880
 
-Links to this bug at other project/vendor sites:
+patch: http://trac.strongswan.org/changeset/4345Hi,
 
-GNOME bugzilla: http://bugzilla.gnome.org/show_bug.cgi?id=535413
-Gentoo bugzilla: http://bugs.gentoo.org/show_bug.cgi?id=224051
 
-Project developers have been notified. CVE issued by Red Hat Security 
-Response Team.
 
-Thanks,
-Pavel
+
+-- 
+Bye,
+     Thomas
+-- 
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+-- 
+           Hamming's Motto:
+           The purpose of computing is insight, not numbers.
+                                -- Richard W. Hamming
