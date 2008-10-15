@@ -1,43 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/02/10
-Message-ID: <4844772C.5020201@freethemallocs.com>
-Date: Mon, 02 Jun 2008 14:41:48 -0800
-From: Jonathan Smith <smithj@...ethemallocs.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/15/5
+Message-ID: <20081015165542.GA8206@severus.strandboge.com>
+Date: Wed, 15 Oct 2008 11:55:42 -0500
+From: Jamie Strandboge <jamie@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: ARP handler Inspection tool released
+Cc: jdong@...ntu.com
+Subject: CVE request: jhead
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-Nico Golde wrote:
-| I don't think that the nth
-| cross-post of software announces belong to this list.
+Marc Merlin and John Dong discovered several vulnerabilities in jhead.
+Upstream was contacted, who later released jhead 2.84 [1]. Initial
+report can be seen in Ubuntu's bug tracker [2].
 
-I wholeheartedly agree. Announcements of this kind belong on bugtraq/FD
-or per-software announce lists like nmap-announce. I think this list is,
-or should be, for discussion only. If the post isn't designed to spark
-discussion (other than "does this belong here" discussion :-) it should
-be somewhere else.
+CC'ing John, as he is who found the majority of the issues and
+coordinated with upstream.
 
-Announcements are intended either for existing end-users or as a PR
-ploy. Existing users are probably subscribed to the project-specific
-list (or don't care) and this isn't the place for PR.
+Jamie
 
-So, was this message, and "SQL_injection detection tool released" held
-for moderation? If so, why were they approved? Presumably whoever did so
-has some reason not-yet-mentioned, since the SQL_injection one didn't
-contain a query about testing and code review.
+[1] http://www.sentex.net/~mwandel/jhead/changes.txt
+[2] https://bugs.launchpad.net/ubuntu/+source/jhead/+bug/271020
 
-If they were not held for moderation, why not? I thought everything not
-coming from a limited whitelist of people was held...
+-- 
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
 
-	smithj
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEAREIAAYFAkhEdywACgkQCG91qXPaRemWWgCgjm8qsvqt4kHcx1OFtMTiBv1F
-wOcAoIspEKXl/+yHBcC9CO9onL5UjtUr
-=GjEo
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (190 bytes)
