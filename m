@@ -1,32 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/24/2
-Message-ID: <48B12175.8020006@pardus.org.tr>
-Date: Sun, 24 Aug 2008 11:53:09 +0300
-From: Pınar Yanardağ <pinar@...dus.org.tr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/15/8
+Message-ID: <Pine.GSO.4.51.0810151440370.15058@faron.mitre.org>
+Date: Wed, 15 Oct 2008 14:46:39 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: vlc
+Subject: Re: CVE request: kernel: sctp: Fix oops when INIT-ACK indicates that peer doesn't support AUTH
 Content-Type: text/plain; charset=utf-8
 
-Nico Golde wrote On 24-08-2008 03:13:
-> Hi,
-> there seems to be a buffer overflow in videolans mms
-> handling:
-> http://www.orange-bat.com/adv/2008/adv.08.24.txt
->    
 
-Btw, a vendor patch has been released:
-http://mailman.videolan.org/pipermail/vlc-devel/2008-August/048488.html
+This is one of those "I don't know what I'm typing" descriptions so any
+clarification would be welcome.
 
-> Can I get a CVE id for this?
->
-> Cheers
-> Nico
->
->    
+- Steve
 
 
--- 
-Pınar Yanardağ
-http://pinguar.org
+======================================================
+Name: CVE-2008-4576
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4576
+Reference: MLIST:[linux-kernel] 20081006 [patch 58/71] sctp: Fix oops when INIT-ACK indicates that peer doesnt support AUTH
+Reference: URL:http://www.gossamer-threads.com/lists/linux/kernel/981012?page=last
+Reference: CONFIRM:http://kernel.org/pub/linux/kernel/v2.6/ChangeLog-2.6.25.18
+
+sctp in Linux kernel before 2.6.25.18 allows remote attackers to cause
+a denial of service (OOPS) via an INIT-ACK that states the peer does
+not support AUTH, which causes the sctp_process_init function to clean
+up active transports and triggers the OOPS when the T1-Init timer
+expires.
 
 
