@@ -1,30 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/13/3
-Message-Id: <200807131346.15097.hanno@hboeck.de>
-Date: Sun, 13 Jul 2008 13:46:14 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/15/9
+Message-ID: <Pine.GSO.4.51.0810151506390.15058@faron.mitre.org>
+Date: Wed, 15 Oct 2008 15:07:40 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: CVE requests: crashers by zzuf
+cc: coley@...re.org
+Subject: Re: CVE Request
 Content-Type: text/plain; charset=utf-8
 
-I want to track down all of them now that are still unfixed. More cve requests 
-will follow.
-FYI:
-http://hboeck.de/archives/578-How-long-does-it-take-to-fix-a-crash-bug.html
-
-Steve, please assign cves for these:
-
-crash (unknown if exploitable) by corrupted gif in ffmpeg lavf:
-http://bugzilla.gnome.org/show_bug.cgi?id=542643
-Sample: http://sam.zoy.org/zzuf/lol-giftopnm.gif
-
-crash (unknown if exploitable) by corrupted ogg in xine.
-Sample: http://sam.zoy.org/zzuf/lol-ffplay.ogg
 
 
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+For the fence issues.
 
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+Which packages does the fence_manual issue affect?
+
+
+======================================================
+Name: CVE-2008-4579
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4579
+Reference: MISC:http://bugs.gentoo.org/show_bug.cgi?id=240576
+Reference: MLIST:[oss-security] 20081013 Re: CVE Request
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/10/13/3
+
+The (1) fence_apc and (2) fence_apc_snmp programs, as used in (a)
+fence 2.02.00-r1 and possibly (b) cman, when running in verbose mode,
+allows local users to append to arbitrary files via a symlink attack
+on the apclog temporary file.
+
+
+======================================================
+Name: CVE-2008-4580
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4580
+Reference: MLIST:[oss-security] 20081013 Re: CVE Request
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/10/13/3
+
+fence_manual in fence allows local users to modify arbitrary files via
+a symlink attack on the fence_manual.fifo temporary file.
+
+
