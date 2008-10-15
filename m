@@ -1,21 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/05/5
-Message-ID: <20081105223034.GM5796@ngolde.de>
-Date: Wed, 5 Nov 2008 23:30:34 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE id request: vlc
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/15/6
+Message-ID: <Pine.GSO.4.51.0810151422130.15058@faron.mitre.org>
+Date: Wed, 15 Oct 2008 14:28:37 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com, Jamie Strandboge <jamie@...onical.com>
+cc: jdong@...ntu.com
+Subject: Re: CVE request: jhead
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-can I get a CVE id for:
-http://www.videolan.org/security/sa0810.html
 
-Cheers
-Nico
+On Wed, 15 Oct 2008, Jamie Strandboge wrote:
 
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+> CC'ing John, as he is who found the majority of the issues and
+> coordinated with upstream.
 
-Content of type "application/pgp-signature" skipped
+So the jhead changelog only acknowledges "potential string overflows".
+
+John's comment in bug 271020 alludes to various other types of issues, but
+specifics are unknown.  And there are some references to other overflows
+that may or may not have been fixed by upstream.
+
+So, we'd need multiple CVEs, but how many is unclear.
+
+1 - long -cmd
+2 - unsafe temp file creation
+3 - "more unchecked buffers" and "unsafe buffer sized strcat's in
+    ModifyDescriptComment"  [this assumes that upstream only fixed
+    issue 1)
+4 - shell escapes
+
+
+Without knowing what exactly is being reported and fixed, it's pretty
+difficult to assign CVEs, especially with phrases like "more unchecked
+buffers" that could apply to anything.
+
+
+Use CVE-2008-4575 for the "long -cmd" ONLY - and whatever other overflows
+the upstream developer fixed.  (That is, CVE-2008-4575 is focusing on what
+was fixed by upstream, not what's in the Ubuntu bug report).
+
+
+- Steve
