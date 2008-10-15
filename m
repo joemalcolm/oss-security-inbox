@@ -1,26 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/01/2
-Message-Id: <200810011733.44646.hanno@hboeck.de>
-Date: Wed, 1 Oct 2008 17:33:44 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE req: phpmyadmin < 2.11.9.2 xss
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/15/2
+Message-ID: <20081015115929.GC25586@suse.de>
+Date: Wed, 15 Oct 2008 13:59:29 +0200
+From: Thomas Biege <thomas@...e.de>
+To: coley@...re.org, oss-security@...ts.openwall.com
+Subject: CVE request: graphviz buffer overflow while parsinf DOT file
 Content-Type: text/plain; charset=utf-8
 
-Am Dienstag 23 September 2008 schrieb Hanno Böck:
-> http://www.phpmyadmin.net/home_page/downloads.php?relnotes=1
->
-> cite:
-> - (2.11.9.2)  [security] XSS in MSIE using NUL byte
+Hi,
+was a CVE-ID assigned to the following issue already?
 
-Seems Steven forgot to answer, though CVE is assigned:
-CVE-2008-4326
+-------------------------------
+The graphviz team has just released a patch to a critical security issue
+I reported to them. 
+
+The following is the advisory (also available at
+http://roeehay.blogspot.com/2008/10/graphviz-buffer-overflow-code-execution.html):
+
+Background 
+==========
+Graphviz is an open-source multi-platform graph visualization software. It
+takes a description of graphs in a simple text format (DOT language), and
+makes diagrams out of it in several useful formats (including SVG).
+...
+-------------------------------
 
 -- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-
-http://freiheitstattangst.de/ - 11.10. Berlin gegen Überwachung
-http://x1000malquer.de/ - ab 8.11. Atomtransporte stoppen
-
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+Bye,
+     Thomas
+-- 
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+-- 
+           Hamming's Motto:
+           The purpose of computing is insight, not numbers.
+                                -- Richard W. Hamming
