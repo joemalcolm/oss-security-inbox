@@ -1,20 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/23/4
-Message-Id: <200804231228.05341.hanno@hboeck.de>
-Date: Wed, 23 Apr 2008 12:28:02 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: phpmyadmin PMASA-2008-3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/15/7
+Message-ID: <Pine.GSO.4.51.0810151432500.15058@faron.mitre.org>
+Date: Wed, 15 Oct 2008 14:34:45 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com, Jamie Strandboge <jamie@...onical.com>
+cc: jdong@...ntu.com
+Subject: Re: CVE request: jhead
 Content-Type: text/plain; charset=utf-8
 
-http://www.phpmyadmin.net/home_page/security.php?issue=PMASA-2008-3
 
-File disclosure on shared hosts via a crafted HTTP POST request.
-Fixed in 2.11.5.2.
+Here's the current writeup for CVE-2008-4575.
 
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+Jamie and John - don't feel forced to publish more specific details, just
+knowing the bug types (and whether upstream fixed *all* the overflows in
+2.84, or just some) is enough.
 
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+- Steve
+
+======================================================
+Name: CVE-2008-4575
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4575
+Reference: MLIST:[oss-security] 20081015 Re: CVE request: jhead
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/10/15/6
+Reference: CONFIRM:http://www.sentex.net/~mwandel/jhead/changes.txt
+Reference: CONFIRM:https://bugs.launchpad.net/ubuntu/+source/jhead/+bug/271020
+
+Buffer overflow in the DoCommand function in jhead before 2.84 might
+allow context-dependent attackers to cause a denial of service (crash)
+via (1) a long -cmd argument and (2) possibly other unspecified
+vectors.
+
+
