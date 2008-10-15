@@ -1,22 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/17/1
-Message-ID: <28fa9c5e0811162202r1d956ef1s469917bfb5417112@mail.gmail.com>
-Date: Mon, 17 Nov 2008 14:02:11 +0800
-From: "Eugene Teo" <eugeneteo@...nel.sg>
-To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: Notes about CVE-2008-5033
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/15/3
+Message-ID: <20081015140622.77537def@redhat.com>
+Date: Wed, 15 Oct 2008 14:06:22 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: thomas@...e.de
+Cc: oss-security@...ts.openwall.com, coley@...re.org
+Subject: Re: CVE request: graphviz buffer overflow while parsinf DOT file
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Wed, 15 Oct 2008 13:59:29 +0200 Thomas Biege <thomas@...e.de> wrote:
 
-The patch for CVE-2008-5033 should be commit 6ca2cb9 instead of
-5ba2f67. Take note.
+> was a CVE-ID assigned to the following issue already?
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2008-5033
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=01a1a3cc1e3fbe718bd06a2a5d4d1a2d0fb4d7d9
+Name: CVE-2008-4555
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4555
+Final-Decision: 
+Interim-Decision: 
+Modified: 
+Proposed: 
+Assigned: 20081014
+Category: 
+Reference: BUGTRAQ:20081008 Advisory: Graphviz Buffer Overflow Code Execution
+Reference: URL:http://www.securityfocus.com/archive/1/archive/1/497150/100/0/threaded
+Reference: MISC:http://roeehay.blogspot.com/2008/10/graphviz-buffer-overflow-code-execution.html
+Reference: CONFIRM:http://bugs.gentoo.org/show_bug.cgi?id=240636
+Reference: BID:31648
+Reference: URL:http://www.securityfocus.com/bid/31648
+Reference: SECUNIA:32186
+Reference: URL:http://secunia.com/advisories/32186
 
-Steve, you might want to update the CVE references to reflect the correct patch.
+Stack-based buffer overflow in the push_subg function in parser.y
+(lib/graph/parser.c) in Graphviz 2.20.2, and possibly earlier
+versions, allows user-assisted remote attackers to cause a denial of
+service (memory corruption) or execute arbitrary code via a DOT file
+with a large number of Agraph_t elements.
 
-Thanks, Eugene
+-- 
+Tomas Hoger / Red Hat Security Response Team
