@@ -1,41 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/14/1
-Message-ID: <20081014125400.GG17682@suse.de>
-Date: Tue, 14 Oct 2008 14:54:00 +0200
-From: Thomas Biege <thomas@...e.de>
-To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: CVE request: strongswam denial-of-service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/15/4
+Message-ID: <20081015141447.GA20064@suse.de>
+Date: Wed, 15 Oct 2008 16:14:47 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: oss-security@...ts.openwall.com, coley@...re.org
+Subject: Re: CVE request: kernel: sctp: Fix oops when INIT-ACK indicates that peer doesn't support AUTH
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-our maintainer of strongswan found this:
+On Wed, Oct 08, 2008 at 11:53:10AM +0800, Eugene Teo wrote:
+> This was committed in upstream kernel recently.
+> 
+> "[PATCH] sctp: Fix oops when INIT-ACK indicates that peer doesn't
+> support AUTH
+> 
+> If INIT-ACK is received with SupportedExtensions parameter which
+> indicates that the peer does not support AUTH, the packet will be
+> silently ignore, and sctp_process_init() do cleanup all of the
+> transports in the association. When T1-Init timer is expires, OOPS
+> happen while we try to choose a different init transport.
+> 
+> The solution is to only clean up the non-active transports, i.e
+> the ones that the peer added.  However, that introduces a problem
+> with sctp_connectx(), because we don't mark the proper state for
+> the transports provided by the user.  So, we'll simply mark
+> user-provided transports as ACTIVE.  That will allow INIT
+> retransmissions to work properly in the sctp_connectx() context
+> and prevent the crash."
+> 
+> Upstream commit: add52379dde2e5300e2d574b172e62c6cf43b3d3
+> 
+> This can be triggered if the SCTP connection between both ends have
+> mis-matched settings, i.e. one end with AUTH extensions enabled, and the
+> other end with AUTH extension disabled. This requires a CVE name.
 
-See also http://download.strongswan.org/CHANGES4.txt
-"[...]
-strongswan-4.2.7
-----------------
+Has this got a CVE id?
 
-- Fixed a Denial-of-Service vulnerability where an IKE_SA_INIT message with
-  a KE payload containing zeroes only can cause a crash of the IKEv2 charon
-  daemon due to a NULL pointer returned by the mpz_export() function of the
-  GNU Multiprecision Library (GMP). Thanks go to Mu Dynamics Research Labs
-  for making us aware of this problem.
-[...]"
-
-
-patch: http://trac.strongswan.org/changeset/4345Hi,
-
-
-
-
--- 
-Bye,
-     Thomas
--- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
--- 
-           Hamming's Motto:
-           The purpose of computing is insight, not numbers.
-                                -- Richard W. Hamming
+Ciao, Marcus
