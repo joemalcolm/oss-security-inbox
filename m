@@ -1,26 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/21/6
-Message-ID: <Pine.GSO.4.51.0805210202470.8317@faron.mitre.org>
-Date: Wed, 21 May 2008 02:06:52 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/16/1
+Message-ID: <20081016100547.5c02528a@redhat.com>
+Date: Thu, 16 Oct 2008 10:05:47 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: CVE assignments during May
+Cc: coley@...us.mitre.org, coley@...re.org
+Subject: Re: CVE Request
 Content-Type: text/plain; charset=utf-8
 
+Hi Steven!
 
-All,
+On Wed, 15 Oct 2008 15:07:40 -0400 (EDT) "Steven M. Christey"
+<coley@...us.mitre.org> wrote:
 
-I had been hoping to make this seamless, but it's not quite working out,
-so: I'm in Australia at the AusCERT conference, and network connectivity
-is periodically dicey, plus there's the time zone difference with the
-US/Europe which seems to be where most CVE requesters are located.  This
-is affecting my responsiveness more than I'd like.  We recently hired a
-new person who will share some of my CNA duties, but he just started so
-isn't ready.
+> For the fence issues.
 
-I'll arrive back in the States on May 30.  Meanwhile, I'll send off a
-couple more CVE reservation pools to Red Hat and Debian, who can take care
-of more timely assignments on this list.
+Thanks!
 
-- Steve
+> Which packages does the fence_manual issue affect?
+
+Same as the other fence_* issues.  Those tools are fencing agents used
+by Red Hat Cluster Suite (tools that can be used by a cluster to make
+sure that non-responding cluster member is really down, so shared
+resources can be taken by some other cluster member;  they usually do
+so by communicating with some remote device capable of cutting the
+system from power, or reboot it (power switches, kvm switches, remote
+consoles, ...)).
+
+In the Cluster Suite for Red Hat Enterprise Linux 4, they were packaged
+in the fence package.  Cluster Suite for Red Hat Enterprise Linux 5 has
+them in cman package (Cluster Manager).
+
+Other vendors shipping Cluster Suite are likely to have them packaged
+in packages named as fence and cman, or similar, based on the version
+they use.
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
