@@ -1,58 +1,166 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/11/4
-Message-ID: <87myo0xjvl.fsf@mid.deneb.enyo.de>
-Date: Fri, 11 Apr 2008 21:38:06 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: gcc 4.2 optimizations and integer overflow checks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/16/2
+Message-ID: <141682862.1082961224161815369.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 16 Oct 2008 08:56:55 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: coley <coley@...re.org>
+Cc: Jan Minář <rdancer@...ncer.org>, ", \"oss-security" <oss-security@...ts.openwall.com>
+Subject: CVE request - Vim netrw.plugin
 Content-Type: text/plain; charset=utf-8
 
-* Steven M. Christey:
+Hello Steve,
 
-> gcc 4.2.0 through 4.3.0 in GNU Compiler Collection, when casts are not
-> used, considers the sum of a pointer and an int to be greater than or
-> equal to the pointer, which might remove length testing code that was
-> intended as a protection mechanism against integer overflow and buffer
-> overflow attacks.
 
-Some remarks are in order, I think.
+  summarizing till today known information about the Vim netrw.vim
+plugin issues.
 
-The version range is a bit misleading.  The bug Nico unearthed affects
-additional versions, and the issue is the same from a purely
-phenomenological point of view.  The issue is not GCC-specific, either.
+1. issue:
+=========
 
-I'm also a bit at odds with the description of this issue.
+* Original advisories: http://www.rdancer.org/vulnerablevim-netrw.html
+                       http://www.rdancer.org/vulnerablevim-netrw.v2.html
 
-C defines pointer arithmetic to be valid only for pointer values that
-point within an allocated array, or one element past the last element of
-that array.  Invalid pointers result in undefined behavior immediately,
-not just when they are dereferenced.  Since behavior is undefined, a C
-implementation can essentially infer that this can never occur (even if
-the generated code is "wrong" in that case, behavior is undefined anway,
-so that it doesn't matter what the code does), and use this knowledge in
-optimizers.
+* CVE id: CVE-2008-3076 already used in rPath advisory
+          http://www.openwall.com/lists/oss-security/2008/07/10/7
 
-The shortest summary I can come up with is this:
+* Testcases: netrw.v2 (the 'mz' command issue)
+             netrw.v3 (the 'mc' command issue)
+             netrw.v4 (the "D' command issue)
 
-| The C standard permits certain optimizations that break code written
-| in a way that assumes pointers behave like machine addresses,
-| rendering certain forms of buffer overflow checks ineffective.
+* Steps to reproduce:
 
-I also have a hard time believing that this affects real-world code
-which has a reasonable claim to being correct with non-optimizing
-compilers (or some hypothetical conservative C variant from the K&R
-days).  The code might as well break when moved to a different
-architecture, with different pointer layout and comparison instructions
-used for pointers.
+  1, The 'mz' command (testcase netrw.v2)
+     a, Open directory containing a file with malicious name
+     b, Point the cursor to line with this file
+     c, In Vim shell type  ":normal mfmz" (selects this file to be compressed/decompressed)
+     d, Close Vim ":q"
 
-There's another issue involving the undefinedness of integer overflow,
-but this is nothing new and has been documented publicly for years, and
-has been the subject of fierce discussion on the GCC mailing list
-before.
+     Result: In vulnerable Vim versions file isn't (de)compressed and "pwned" file is
+             created.
 
-A somewhat related issue is the operator new[] problem (multiplication
-to get the array size is truncated, leading to an allocation which is
-too small; comparable to the calloc bugs), which is something I think
-should be fixed.  However, it seems that the C++ standard requires
-implementations to have that issue, at least for custom allocators.
-Yuck.
+     Affected Vim versions: Vim 7.2alpha+
+     Not affected Vim versions:
+       -- Vim 7.0, 7.1 affected only in case you manually reinstall
+          older version of netrw.vim via vimball.
+                            manually reinstall older (vul
+       -- Vim 6.0 not affected (netrw.vim not shipped there).
+     Affected netrw.vim plugin versions: 111 <= x <= 123
+
+     Proposed solution: Should stay as a part of CVE-2008-3076.
+
+   2, The 'mc' command (testcase netrw.v3)
+      a, Open directory containing a file with malicious name
+      b, Select some directory as move/copy target (moving via ../)
+      c, Mark this directory as move/copy target, i.e in Vim
+         shell perform command ":normal mfmt"
+         (new line containing "Copy/Move Tgt: selected_directory"
+          should appear)
+      d, In Vim return to directory containing file with malicious
+         filename
+      e, Point the cursor to line containing this filename
+      f, In Vim perform copy command, i.e. in Vim shell
+         "normal mfmc"
+      g, Close Vim ":q"
+
+      Result: Vulnerable Vim and netrw.vim versions don't copy the file,
+              "pwned" file is created.
+
+      Affected Vim versions: Vim 7.2alpha+
+      Not affected Vim versions:
+        -- Vim 7.0, Vim 7.1 affected only in case you manually reinstall
+           older version of netrv.vim via vimball.
+        -- Vim 6.0 not affected (netrw.vim not shipped there).
+      Affected netrw.vim plugin versions: 113 <= x <= 122
+
+      Proposed solution: Should stay as a part of CVE-2008-3076.
+
+   3, The 'D' command (testcase netrw.v4)
+      a, Open directory containing a file with malicious name
+      b, Point the cursor to the "executable' part of the
+         filename (i.e. "eval `echo 0:64617465203e3e2070776e6564 | xxd -r`)
+      c, Press the 'D' key
+      d, Confirm the deletion request with 'y'.
+      e, Close Vim ":q"
+
+      Result: Vulnerable Vim and netrw.vim versions don't delete the file,
+              "pwned" file is created.
+
+      Affected Vim versions: Vim 7.0, Vim 7.1 (affected every time,
+                             no manual reinstallation of older netrw.vim
+                             plugin needed).
+      Not affected Vim versions:
+        -- Vim.6.0 (netrw.vim not shipped there).
+        -- Vim 7.2 (already fixed).
+      Affected vim.netrw plugin versions: 102 <= x <= 123
+
+      Proposed solution: Should be split into a new CVE id (and possibly
+                         merged with netrw.v5 issue as it affects Vim 7.0,
+                         Vim 7.1 and is fixed in Vim 7.2 as the netrw.v5 issue).
+
+* Action: Formulate CVE-2008-3076 as covering the 'mz' and 'mc' command issues.
+          Merge the 'D' command issue with new CVE id allocated to netrw.v5
+          issue (as both of these issues affect Vim 7.0, 7.1 and are already
+          fixed in Vim 7.2).
+
+* References: http://www.rdancer.org/vulnerablevim-netrw.html
+              http://www.rdancer.org/vulnerablevim-netrw.v2.html
+
+2. issue:
+=========
+
+* Original advisory: http://www.rdancer.org/vulnerablevim-netrw.v5.html
+                     http://www.rdancer.org/vulnerablevim-netrw.v2.html (the 'D' command part)
+
+* CVE id: Still needs a new CVE id
+
+* Testcase: netrw.v5
+
+* Affected Vim versions: Vim 7.0, Vim 7.1
+  Not affected Vim versions:
+    -- Vim 6.0 (netrw.vim not shipped there)
+    -- Vim 7.2 (already fixed)
+
+* Action: Allocate a new CVE id, merge the description with the 'D' command issue
+          from the CVE-2008-3076 issue.
+
+* References: http://www.rdancer.org/vulnerablevim-netrw.v5.html
+
+3. issue:
+=========
+
+* Original advisory:  http://www.rdancer.org/vulnerablevim-netrw-credentials-dis.html
+* CVE id: Still needs a new CVE id
+
+* Testcase: Available in original advisory, part "4. EXPLOIT"
+
+* Affected Vim versions: Vim 7.1, Vim 7.2
+  Affected vim.netrw versions: <= 131
+
+* Thread disccusing this issue: http://groups.google.com/group/vim_dev/browse_thread/thread/2f6fad581a037971/a5fcf4c4981d34e6?show_docid=a5fcf4c4981d34e6
+* Proposed patch: http://mysite.verizon.net/astronaut/vim/index.html#NETRW
+
+* Action: Allocate a new CVE id describing this issue.
+
+* References:  http://www.rdancer.org/vulnerablevim-netrw-credentials-dis.html
+
+Other netrw issues:
+==================
+
+CVE-2008-3432 http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3432
+Affects: Vim 6.2, 6.3 (others not affected)
+
+Hope has answered questions from: http://www.openwall.com/lists/oss-security/2008/08/01/1
+
+Steve, could you please:  1, join netrw 'mz' and 'mc' commnad issues under CVE-2008-3076,
+                          2, allocate a new CVE id and merge the 'D' command issue and
+                             netrw.v5 issue under this new CVE (as these two both affect
+                             Vim 7.0 and 7.1) and
+                          3, allocate a new CVE id for the Vim netrw: FTP user credentials
+                             disclosure issue?
+
+Jan, your comments are appreciated.
+
+Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
