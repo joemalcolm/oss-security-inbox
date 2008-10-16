@@ -1,31 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/09/2
-Message-ID: <734638270.1993841223581968480.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 9 Oct 2008 15:52:48 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: clint.ruoho@...onicsecurity.com
-Subject: lynx lynxcgi handler flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/16/3
+Message-ID: <cfec5fb80810160940i4fb752c3veb14d573be35b417@mail.gmail.com>
+Date: Thu, 16 Oct 2008 12:40:46 -0400
+From: "John Dong" <jdong@...ntu.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com, "Jamie Strandboge" <jamie@...onical.com>
+Subject: Re: CVE request: jhead
 Content-Type: text/plain; charset=utf-8
 
-Clint Ruoho brought this to our attention, and I think there is a greater benefit
-in in sharing this than there is in keeping it embargoed.
+On Wed, Oct 15, 2008 at 2:28 PM, Steven M. Christey
+<coley@...us.mitre.org>wrote:
 
-The fix for CVE-2005-2929 only disable the lynxcgi handler when you're not in
-advanced mode.  It's considered to not be a flaw in advanced mode because it
-displays the URL that is selected.  The potential problem here though is if lynx
-is called from the command line if it's your URL handler.
+>
+> On Wed, 15 Oct 2008, Jamie Strandboge wrote:
+>
+> > CC'ing John, as he is who found the majority of the issues and
+> > coordinated with upstream.
+>
+> So the jhead changelog only acknowledges "potential string overflows".
+>
+> John's comment in bug 271020 alludes to various other types of issues, but
+> specifics are unknown.  And there are some references to other overflows
+> that may or may not have been fixed by upstream.
+>
+> So, we'd need multiple CVEs, but how many is unclear.
+>
+> 1 - long -cmd
+> 2 - unsafe temp file creation
+> 3 - "more unchecked buffers" and "unsafe buffer sized strcat's in
+>    ModifyDescriptComment"  [this assumes that upstream only fixed
+>    issue 1)
+> 4 - shell escapes
+>
+>
+> Without knowing what exactly is being reported and fixed, it's pretty
+> difficult to assign CVEs, especially with phrases like "more unchecked
+> buffers" that could apply to anything.
 
-Clint pointed out that the easiest way to fix this is to just disable CGI support
-in /etc/lynx.cfg, which I agree with, and is a wise default.
 
-Initially I thought this was an issue that should be fixed, but I'm starting to
-wonder this.  So some open discussion is in order.
+Hi Steven,
 
-Does anything allow the lynxcgi:// handler?  A user would have to have defined
-this protocol handler, which I think is quite unlikely.
+Sorry for the delay. I just had a chance to look over the diff of the new
+2.84 release. I see that the long cmd and all the unchecked buffers I found
+were resolved by use of length-checked strcat functions. In addition, unsafe
+tempfile creation was fixed by checking for existence of existing filenames,
+trying a larger variety of filenames, and erroring out if there is not an
+empty filename. However, this fix doesn't seem complete for DoCommand where
+you can trick it to unlink() a file by the name of the input file mangled
+with the last char of "z" instead of "t" or vice versa.
 
-Thanks.
+The shell escape potential for DoCommand, as far as I can tell, is also not
+resolved.
 
--- 
-    JB
+So, bottom line is I think 2.84 fixes 1 and 3 acceptably, while 2 and 4 are
+still unresolved.
+
+
+
+
+John
+
