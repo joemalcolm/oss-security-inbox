@@ -1,36 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/20/6
-Message-id: <1203535670.7392.TMDA@linsec.ca>
-Date: Wed, 20 Feb 2008 12:26:21 -0700
-From: Vincent Danen <vdanen@...sec.ca>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/19/1
+Message-ID: <48FAFB67.6050004@gentoo.org>
+Date: Sun, 19 Oct 2008 11:18:31 +0200
+From: Christian Hoffmann <hoffie@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: charter - advisories
+Subject: CVE request: mantisbt < 1.1.4: RCE
 Content-Type: text/plain; charset=utf-8
 
-* [2008-02-19 22:44:22 +0300] Solar Designer wrote:
+Heya,
 
->> It may be a better idea, if desired, to make a separate list that is a
->> fully moderated (or possibly a reject-all with exceptions) list specific
->> to carrying vendor advisories.
->
->Yes, that was my idea too.  However, now that we mention the distinction
->between two kinds of advisories (those for end-users only vs. those
->useful to others as well), I am not sure which of these we want to go to
->that other list.  Should we create a list for advisories that are useful
->for us, then change the above guideline to "no advisories" for the main
->oss-security list?  Or should we create a list for both kinds of
->advisories?  In the latter case, should we ban the useful advisories
->from the main oss-security list or should these be CC'ed to both lists?
->Or should we create two new lists?..
+has a CVE id been already assigned to the recent remote code execution
+issue in mantis < 1.1.4? If not, please do so.
 
-Hmmm... maybe we should clarify the advisories we don't want to see.  I
-guess advisories from, say, iDefense, would be valuable.  But advisories
-from Mandriva or SUSE not so much.
+References:
+http://www.mantisbt.org/bugs/view.php?id=0009704
+http://mantisbt.svn.sourceforge.net/viewvc/mantisbt/branches/BRANCH_1_1_0/mantisbt/core/utility_api.php?r1=5679&r2=5678&pathrev=5679
+http://www.milw0rm.com/exploits/6768
+https://bugs.gentoo.org/show_bug.cgi?id=242722
 
-Maybe we should indicate no *vendor* advisories, and make a second list
-specifically for that?
 
 -- 
-Vincent Danen @ http://linsec.ca/
+Christian Hoffmann
 
-Content of type "application/pgp-signature" skipped
+
+Download attachment "signature.asc" of type "application/pgp-signature" (261 bytes)
