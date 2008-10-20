@@ -1,34 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/15/7
-Message-ID: <Pine.GSO.4.51.0810151432500.15058@faron.mitre.org>
-Date: Wed, 15 Oct 2008 14:34:45 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com, Jamie Strandboge <jamie@...onical.com>
-cc: jdong@...ntu.com
-Subject: Re: CVE request: jhead
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/20/1
+Message-ID: <20081020091652.5f6e358a@redhat.com>
+Date: Mon, 20 Oct 2008 09:16:52 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: hoffie@...too.org, coley@...re.org
+Subject: Re: CVE request: mantisbt < 1.1.4: RCE
 Content-Type: text/plain; charset=utf-8
 
+On Sun, 19 Oct 2008 11:18:31 +0200 Christian Hoffmann
+<hoffie@...too.org> wrote:
 
-Here's the current writeup for CVE-2008-4575.
+> has a CVE id been already assigned to the recent remote code execution
+> issue in mantis < 1.1.4? If not, please do so.
+> 
+> References:
+> http://www.mantisbt.org/bugs/view.php?id=0009704
+> http://mantisbt.svn.sourceforge.net/viewvc/mantisbt/branches/BRANCH_1_1_0/mantisbt/core/utility_api.php?r1=5679&r2=5678&pathrev=5679
+> http://www.milw0rm.com/exploits/6768
+> https://bugs.gentoo.org/show_bug.cgi?id=242722
 
-Jamie and John - don't feel forced to publish more specific details, just
-knowing the bug types (and whether upstream fixed *all* the overflows in
-2.84, or just some) is enough.
+There's actually at least one issue fixed in 1.1.3 that probably
+deserves a CVE:
 
-- Steve
+- 0009321: [security] Users can get title and status of issues that
+they don't have access to. (vboctor) - closed.
+  http://www.mantisbt.org/bugs/view.php?id=9321
 
-======================================================
-Name: CVE-2008-4575
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4575
-Reference: MLIST:[oss-security] 20081015 Re: CVE request: jhead
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/10/15/6
-Reference: CONFIRM:http://www.sentex.net/~mwandel/jhead/changes.txt
-Reference: CONFIRM:https://bugs.launchpad.net/ubuntu/+source/jhead/+bug/271020
+Additionally, Gentoo bug:
+  http://bugs.gentoo.org/show_bug.cgi?id=241940
 
-Buffer overflow in the DoCommand function in jhead before 2.84 might
-allow context-dependent attackers to cause a denial of service (crash)
-via (1) a long -cmd argument and (2) possibly other unspecified
-vectors.
+points out another fix in 1.1.3:
 
+- 0009664: [authentication] Logout without unsetting session cookie
+(jreese) - closed.
+  http://www.mantisbt.org/bugs/view.php?id=9664
 
+Which seems to be on the edge between security fix and security
+enhancement, not sure if this kind of fixes get CVE ids assigned.
+
+Thanks!
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
