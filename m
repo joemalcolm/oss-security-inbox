@@ -1,26 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/25/1
-Message-Id: <200805251829.17276.steffen.joeris@skolelinux.de>
-Date: Sun, 25 May 2008 18:29:13 +1000
-From: Steffen Joeris <steffen.joeris@...lelinux.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE id request: xscreensaver
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/20/2
+Message-ID: <2005745326.1559101224494345903.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 20 Oct 2008 05:19:05 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: coley <coley@...re.org>
+Cc: oss-security <oss-security@...ts.openwall.com>, Jan Minář <rdancer@...ncer.org>
+Subject: CVE request (vim)
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Hello Steve,
 
-Pierre Habouzit discovered that resizing with the xrandr tool can crash 
-xscreensaver.
+  inlining short Vim CVE list reference:
 
-Debian Bug report:
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=482385
+--
+CVE-2008-3074 Vim tar.vim plugin issues (TAR-1 through TAR-5)              (1)
+CVE-2008-3075 Vim zip.vim plugin issues (ZIP-1 through ZIP-4)              (2)
+References: http://www.openwall.com/lists/oss-security/2008/08/01/1
 
-The tested version of xscreensaver is 5.05-1, but at the moment there is no 
-reason to assume that the bug did not exist in previous versions.
+--
+CVE-2008-3076 Vim netrw.vim plugin issues (netrw.v2, netrw.v3)             (3)
+Affects: Vim 7.2alpha+
+References: http://www.rdancer.org/vulnerablevim-netrw.html
+            http://www.rdancer.org/vulnerablevim-netrw.v2.html       
 
-Could I please have a CVE id for this issue?
+--
+CVE-NONE-YET Vim netrw.vim plugin issues (netrw.v4, netrw.v5)              (4)
+Affects: Vim 7.0, Vim 7.1
+Reference: http://www.rdancer.org/vulnerablevim-netrw.html     (part 3 the 'D' command)
+           http://www.rdancer.org/vulnerablevim-netrw.v2.html  (part 3 the 'D' command)
+           http://www.rdancer.org/vulnerablevim-netrw.v5.html
 
-Cheers
-Steffen
+--
+CVE-NONE-YET Vim netrw.vim plugin issue (FTP user credentials disclosure)   (5)
+Affects: Vim 7.1, Vim 7.2
+References: http://www.rdancer.org/vulnerablevim-netrw-credentials-dis.html
 
-Download attachment "signature.asc " of type "application/pgp-signature" (190 bytes)
+Could you please allocate two new CVE ids for case (4) and case (5)?
+
+Thanks in advance, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
