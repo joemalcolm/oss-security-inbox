@@ -1,22 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/26/6
-Message-Id: <1206560607.4858.31.camel@localhost.localdomain>
-Date: Wed, 26 Mar 2008 20:43:27 +0100
-From: Lubomir Kundrak <lkundrak@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request: Perlbal DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/21/6
+Message-ID: <20081021121119.GB12482@suse.de>
+Date: Tue, 21 Oct 2008 14:11:19 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: coley@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Opera 9.60 with security fixes
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Tue, Oct 21, 2008 at 11:31:31AM +0200, Marcus Meissner wrote:
+> Hi Steven,
+> 
+> http://www.opera.com/docs/changelogs/linux/960/#sec
+> 
+> It had some security fixes, were there CVE ids assigned already?
 
-Please assign a CVE name to the following:
+Oh, and for 9.61 too please. :/
 
-http://bugs.gentoo.org/show_bug.cgi?id=214784
-http://search.cpan.org/src/BRADFITZ/Perlbal-1.70/CHANGES
-https://bugzilla.redhat.com/show_bug.cgi?id=439054
+http://www.opera.com/docs/changelogs/linux/961/
 
-Thanks,
--- 
-Lubomir Kundrak (Red Hat Security Response Team)
-
+Ciao, Marcus
