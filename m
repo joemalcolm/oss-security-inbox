@@ -1,24 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/25/2
-Message-ID: <20080525152531.4ddd05dc@redhat.com>
-Date: Sun, 25 May 2008 15:25:31 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/21/3
+Message-ID: <48FD2932.2070703@redhat.com>
+Date: Tue, 21 Oct 2008 08:58:26 +0800
+From: Eugene Teo <eteo@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Mamoru Tasaka <mtasaka@....s.u-tokyo.ac.jp>, coley@...re.org
-Subject: CVE id request: cbrpager
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: sctp: Fix kernel panic while process protocol violation parameter
 Content-Type: text/plain; charset=utf-8
 
-Hi all!
+Eugene Teo wrote:
+> This was committed in upstream kernel recently.
+> 
+> "[PATCH] sctp: Fix kernel panic while process protocol violation parameter
+> 
+> Since call to function sctp_sf_abort_violation() need paramter 'arg'
+> with 'struct sctp_chunk' type, it will read the chunk type and chunk
+> length from the chunk_hdr member of chunk. But call to
+> sctp_sf_violation_paramlen() always with 'struct sctp_paramhdr' type's
+> parameter, it will be passed to sctp_sf_abort_violation(). This may
+> cause kernel panic."
+> 
+> Upstream commit: ba0166708ef4da7eeb61dd92bbba4d5a749d6561
+> 
+> This is user-triggerable.
 
-Mamoru Tasaka, cbrpager package maintainer in Fedora, discovered, that
-cbrpager is affected by command execution flaw via malicious file
-names in a similar way as comix was affected (as discussed on this list
-previously - http://www.openwall.com/lists/oss-security/2008/03/31/1 ).
+Ping Steve. This needs a CVE name too. Thanks!
 
-Mamoru's patch was accepted in the new upstream version - 0.9.17.
-
-Further details and links in:
-https://bugzilla.redhat.com/show_bug.cgi?id=448285
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+Eugene
