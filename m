@@ -1,27 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/09/8
-Message-ID: <20080709144854.GA28399@ngolde.de>
-Date: Wed, 9 Jul 2008 16:48:54 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE id request: projectl
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/21/5
+Message-ID: <20081021093131.GA13709@suse.de>
+Date: Tue, 21 Oct 2008 11:31:31 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: coley@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: CVE Request: Opera 9.60 with security fixes
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-the projectl game seems to be vulnerable to a symlink 
-attack. It writes its preferences file to the current 
-working directory to a hardcoded file name and following 
-symlinks when doing this.
+Hi Steven,
 
-http://bugs.debian.org/489988
+http://www.opera.com/docs/changelogs/linux/960/#sec
 
-Can I get a CVE identifier for this?
+It had some security fixes, were there CVE ids assigned already?
 
-Thanks!
-Nico
-
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+Ciao, Marcus
