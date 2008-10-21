@@ -1,34 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/18/2
-Message-Id: <200803181534.03725.rbu@gentoo.org>
-Date: Tue, 18 Mar 2008 15:34:03 +0100
-From: Robert Buchholz <rbu@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/21/2
+Message-ID: <48FD2868.5090408@redhat.com>
+Date: Tue, 21 Oct 2008 08:55:04 +0800
+From: Eugene Teo <eteo@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: bzip2 CERT-FI: 20469
+Subject: Re: CVE-2008-3528 Linux kernel ext[234] directory corruption DoS
 Content-Type: text/plain; charset=utf-8
 
-Hey,
+Eugene Teo wrote:
+> Eugene Teo wrote:
+>> The ext[234] filesystem code fails to properly handle corrupted data
+>> structures. With a mounted filesystem image or partition that have
+>> corrupted dir->i_size and dir->i_blocks, a user performing either a read
+>> or write operation on the mounted image or partition can lead to a
+>> possible denial of service.
+>>
+>> References:
+>> https://bugzilla.redhat.com/show_bug.cgi?id=459577
+>> http://lkml.org/lkml/2008/9/13/98
+>> http://lkml.org/lkml/2008/9/13/99
+>> http://lkml.org/lkml/2008/9/17/371
+>>
+>> The issue is not fixed upstream yet, but the patch has been added to -mm
+>>  tree. I will update this email as soon as I know the commit hashes.
+>> This issue has been allocated with CVE-2008-3528.
+> 
+> Upstream commits: cdbf6dba28e8e6268c8420857696309470009fd9 (ext3)
+> 		  bd39597cbd42a784105a04010100e27267481c67 (ext2)
 
-CERT-FI: 20469 [1] was released yesterday, and with it a new bzip2 
-release, quoting their CHANGES:
+Not forgetting 9d9f177572d9e4eba0f2e18523b44f90dd51fe74 (ext4) too.
 
-1.0.5 (10 Dec 07)
-~~~~~~~~~~~~~~~~~
-Security fix only.  Fixes CERT-FI 20469 as it applies to bzip2.
-
-
-Reading the patch [2], it's missing a boundary check that can lead to an 
-over-read on the tt/ll heap-buffer. I'd call this a DoS, did anyone 
-else review?
-
-Thanks,
-Robert
-
-
-[1] 
-https://www.cert.fi/haavoittuvuudet/joint-advisory-archive-formats.html
-[2] https://bugs.gentoo.org/attachment.cgi?id=146488&action=view
-
-
-Download attachment "signature.asc " of type "application/pgp-signature" (190 bytes)
+Thanks, Eugene
