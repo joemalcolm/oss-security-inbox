@@ -1,24 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/27/2
-Message-ID: <20080827131908.GA12859@ngolde.de>
-Date: Wed, 27 Aug 2008 15:19:08 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE id request: awstats
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/21/7
+Message-Id: <200810211821.27634.hanno@hboeck.de>
+Date: Tue, 21 Oct 2008 18:21:27 +0300
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com, coley@...re.org
+Subject: CVE req: drupal < 5.11/6.5
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-there is a new XSS issue and one remote code execution (php code)
-in awstats.
+I don't think this has a CVE yet:
+http://drupal.org/node/318706
 
-Can I get two CVE ids please?
-http://userwww.service.emory.edu/~ekenda2/EMORY-2008-01.txt
-
-Cheers
-Nico
 
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
-Content of type "application/pgp-signature" skipped
+http://x1000malquer.de/ - ab 8.11. Atomtransporte stoppen
+
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
