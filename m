@@ -1,37 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/01/4
-Message-ID: <20080901094729.GF12017@ngolde.de>
-Date: Mon, 1 Sep 2008 11:47:29 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/21/4
+Message-ID: <48FD3C21.9050507@redhat.com>
+Date: Tue, 21 Oct 2008 10:19:13 +0800
+From: Eugene Teo <eteo@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: newsbeuter
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: sctp: Fix kernel panic while process protocol violation parameter
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-newsbeuter (http://www.newsbeuter.org) 1.1 fixes a security 
-issue that was discovered by J.H.M. Dassen (Ray) and is 
-fixed in svn revision 1429.
+Eugene Teo wrote:
+> Eugene Teo wrote:
+>> This was committed in upstream kernel recently.
+>>
+>> "[PATCH] sctp: Fix kernel panic while process protocol violation parameter
+>>
+>> Since call to function sctp_sf_abort_violation() need paramter 'arg'
+>> with 'struct sctp_chunk' type, it will read the chunk type and chunk
+>> length from the chunk_hdr member of chunk. But call to
+>> sctp_sf_violation_paramlen() always with 'struct sctp_paramhdr' type's
+>> parameter, it will be passed to sctp_sf_abort_violation(). This may
+>> cause kernel panic."
+>>
+>> Upstream commit: ba0166708ef4da7eeb61dd92bbba4d5a749d6561
+>>
+>> This is user-triggerable.
+> 
+> Ping Steve. This needs a CVE name too. Thanks!
 
-The previous version allowed to execute arbitrary code by a 
-crafted feed URL that is passed as a command line parameter 
-if the URL is opened by an external browser.
+My bad. Steve assigned this with CVE-2008-4618.
 
-Upstream changelog:
- 1.1:
-        Added a line wrap for the article view's headers and the link list on the bottom (fixes Debian issue #491122)
-        Added test suite for functional tests of the user interface
-        Fixed quoting issue in open-in-browser command
-        ^^^^^
-
-This issue should affect all newsbeuter versions < 1.1.
-
-Can I get a CVE id for this please?
-
-Kind regards
-Nico
-
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+Thanks, Eugene
