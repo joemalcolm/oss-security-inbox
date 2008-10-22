@@ -1,25 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/27/2
-Message-ID: <20080727153802.GA21640@ngolde.de>
-Date: Sun, 27 Jul 2008 17:38:02 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/22/3
+Message-ID: <Pine.GSO.4.51.0810221259240.25959@faron.mitre.org>
+Date: Wed, 22 Oct 2008 13:00:23 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: horde3/turba2
+cc: "Steven M. Christey" <coley@...us.mitre.org>, Jamie Strandboge <jamie@...onical.com>
+Subject: Re: CVE request: jhead
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-there is an XSS flaw in the contact management of 
-horde3/turba2.
 
-Debian bug: http://bugs.debian.org/492578
+So there are 4 CVE's overall (CVE-2008-4575 assigned earlier), with a
+SPLIT of the fixed DoCommand issues from the remaining unfixed issues.
 
-Can someone please assign a CVE id to this issue?
+- Steve
 
-Kind regards
-Nico
 
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+======================================================
+Name: CVE-2008-4575
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4575
+Reference: MLIST:[oss-security] 20081015 Re: CVE request: jhead
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/10/15/6
+Reference: CONFIRM:http://www.sentex.net/~mwandel/jhead/changes.txt
+Reference: CONFIRM:https://bugs.launchpad.net/ubuntu/+source/jhead/+bug/271020
+Reference: BID:31770
+Reference: URL:http://www.securityfocus.com/bid/31770
 
-Content of type "application/pgp-signature" skipped
+Buffer overflow in the DoCommand function in jhead before 2.84 might
+allow context-dependent attackers to cause a denial of service (crash)
+via (1) a long -cmd argument and (2) unspecified vectors related to "a
+bunch of potential string overflows."
+
+
+======================================================
+Name: CVE-2008-4639
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4639
+Reference: MLIST:[oss-security] 20081015 CVE request: jhead
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/10/15/5
+Reference: MLIST:[oss-security] 20081015 Re: CVE request: jhead
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/10/15/6
+Reference: MLIST:[oss-security] 20081016 Re: CVE request: jhead
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/10/16/3
+Reference: CONFIRM:https://bugs.launchpad.net/ubuntu/+source/jhead/+bug/271020
+
+jhead.c in Matthias Wandel jhead before 2.84 allows local users to
+overwrite arbitrary files via a symlink attack on a temporary file.
+
+
+======================================================
+Name: CVE-2008-4640
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4640
+Reference: MLIST:[oss-security] 20081016 Re: CVE request: jhead
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/10/16/3
+Reference: CONFIRM:https://bugs.launchpad.net/ubuntu/+source/jhead/+bug/271020
+
+The DoCommand function in jhead.c in Matthias Wandel jhead 2.84 and
+earlier allows local users to delete arbitrary files via vectors
+involving a modified input filename in which (1) a final "z" character
+is replaced by a "t" character or (2) a final "t" character is
+replaced by a "z" character.
+
+
+======================================================
+Name: CVE-2008-4641
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4641
+Reference: MLIST:[oss-security] 20081015 CVE request: jhead
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/10/15/5
+Reference: MLIST:[oss-security] 20081015 Re: CVE request: jhead
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/10/15/6
+Reference: MLIST:[oss-security] 20081016 Re: CVE request: jhead
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/10/16/3
+Reference: CONFIRM:https://bugs.launchpad.net/ubuntu/+source/jhead/+bug/271020
+
+The DoCommand function in jhead.c in Matthias Wandel jhead 2.84 and
+earlier allows attackers to execute arbitrary commands via shell
+metacharacters in unspecified input.
+
+
