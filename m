@@ -1,24 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/04/15
-Message-ID: <Pine.GSO.4.51.0809041249120.29613@faron.mitre.org>
-Date: Thu, 4 Sep 2008 12:49:16 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/22/4
+Message-ID: <Pine.GSO.4.51.0810221306460.25959@faron.mitre.org>
+Date: Wed, 22 Oct 2008 13:06:55 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: dns2tcp
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: sctp: Fix kernel panic while process protocol violation parameter
 Content-Type: text/plain; charset=utf-8
 
 
 ======================================================
-Name: CVE-2008-3910
+Name: CVE-2008-4618
 Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3910
-Reference: MLIST:[oss-security] 20080904 CVE id request: dns2tcp
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/09/03/5
-Reference: CONFIRM:http://www.hsc.fr/ressources/outils/dns2tcp/index.html.en
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4618
+Reference: MLIST:[oss-security] 20081006 CVE request: kernel: sctp: Fix kernel panic while process protocol violation parameter
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/10/06/1
+Reference: CONFIRM:http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.27.y.git;a=commit;h=ba0166708ef4da7eeb61dd92bbba4d5a749d6561
+Reference: CONFIRM:http://www.kernel.org/pub/linux/kernel/v2.6/ChangeLog-2.6.27
 
-dns2tcp before 0.4.1 does not properly handle negative values in a
-certain length field in the input argument to the (1)
-dns_simple_decode or (2) dns_decode function, which allows remote
-attackers to overwrite a buffer and have unspecified other impact.
+The Stream Control Transmission Protocol (sctp) implementation in the
+Linux kernel before 2.6.27 does not properly handle a protocol
+violation in which a parameter has an invalid length, which allows
+attackers to cause a denial of service (panic) via unspecified
+vectors, related to sctp_sf_violation_paramlen,
+sctp_sf_abort_violation, sctp_make_abort_violation, and incorrect data
+types in function calls.
 
 
