@@ -1,38 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/19/15
-Message-ID: <20080219194422.GA3236@openwall.com>
-Date: Tue, 19 Feb 2008 22:44:22 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/22/1
+Message-ID: <Pine.GSO.4.51.0810221254090.25959@faron.mitre.org>
+Date: Wed, 22 Oct 2008 12:55:39 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: charter - advisories
+cc: hoffie@...too.org, coley@...re.org
+Subject: Re: CVE request: mantisbt < 1.1.4: RCE
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Feb 19, 2008 at 10:09:23AM -0700, Vincent Danen wrote:
-> Yeah, I noticed this as well.  I think advisories should be kept off the
-> list, for the same "signal-to-noise ratio" principal as bugtraq and FD.
 
-For now, I've edited the charter draft as follows:
+Here are 3 CVE's.  The cookie logout issue was a bit of a tossup.
 
-Security advisories aimed at end-users only are not welcome (e.g., those
-from a distribution vendor announcing new pre-built packages).  There has
-to be desirable information for others in the Open Source community
-(e.g., an upstream maintainer may announce a new version of their
-software with security fixes to be picked up by distributors).
+- Steve
 
-If anyone can word it better, please do.
 
-> It may be a better idea, if desired, to make a separate list that is a
-> fully moderated (or possibly a reject-all with exceptions) list specific
-> to carrying vendor advisories.
+======================================================
+Name: CVE-2008-4687
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4687
+Reference: MILW0RM:6768
+Reference: URL:http://www.milw0rm.com/exploits/6768
+Reference: MLIST:[oss-security] 20081019 CVE request: mantisbt < 1.1.4: RCE
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/10/19/1
+Reference: CONFIRM:http://mantisbt.svn.sourceforge.net/viewvc/mantisbt/branches/BRANCH_1_1_0/mantisbt/core/utility_api.php?r1=5679&r2=5678&pathrev=5679
+Reference: CONFIRM:http://www.mantisbt.org/bugs/changelog_page.php
+Reference: CONFIRM:http://www.mantisbt.org/bugs/view.php?id=0009704
+Reference: CONFIRM:https://bugs.gentoo.org/show_bug.cgi?id=242722
 
-Yes, that was my idea too.  However, now that we mention the distinction
-between two kinds of advisories (those for end-users only vs. those
-useful to others as well), I am not sure which of these we want to go to
-that other list.  Should we create a list for advisories that are useful
-for us, then change the above guideline to "no advisories" for the main
-oss-security list?  Or should we create a list for both kinds of
-advisories?  In the latter case, should we ban the useful advisories
-from the main oss-security list or should these be CC'ed to both lists?
-Or should we create two new lists?..
+manage_proj_page.php in Mantis before 1.1.4 allows remote
+authenticated users to execute arbitrary code via a sort parameter
+containing PHP sequences, which are processed by create_function
+within the multi_sort function in core/utility_api.php.
 
-Alexander
+
+======================================================
+Name: CVE-2008-4688
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4688
+Reference: MLIST:[oss-security] 20081020 Re: CVE request: mantisbt < 1.1.4: RCE
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/10/20/1
+Reference: CONFIRM:http://mantisbt.svn.sourceforge.net/viewvc/mantisbt/branches/BRANCH_1_1_0/mantisbt/core/string_api.php?r1=5285&r2=5384&pathrev=5384
+Reference: CONFIRM:http://www.mantisbt.org/bugs/changelog_page.php
+Reference: CONFIRM:http://www.mantisbt.org/bugs/view.php?id=9321
+
+core/string_api.php in Mantis before 1.1.3 does not check the
+privileges of the viewer before composing a link with issue data in
+the source anchor, which allows remote attackers to discover an
+issue's title and status via a request with a modified issue number.
+
+
+======================================================
+Name: CVE-2008-4689
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4689
+Reference: MLIST:[oss-security] 20081020 Re: CVE request: mantisbt < 1.1.4: RCE
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/10/20/1
+Reference: CONFIRM:http://www.mantisbt.org/bugs/changelog_page.php
+Reference: CONFIRM:http://www.mantisbt.org/bugs/file_download.php?file_id=1988&type=bug
+Reference: CONFIRM:http://www.mantisbt.org/bugs/view.php?id=9664
+
+Mantis before 1.1.3 does not unset the session cookie during logout,
+which makes it easier for remote attackers to hijack sessions.
+
+
