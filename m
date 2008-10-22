@@ -1,48 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/16/1
-Message-ID: <20080215223030.GA22837@openwall.com>
-Date: Sat, 16 Feb 2008 01:30:30 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/22/2
+Message-ID: <Pine.GSO.4.51.0810221256580.25959@faron.mitre.org>
+Date: Wed, 22 Oct 2008 12:57:04 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: welcome
+Subject: Re: CVE id request: vlc
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-Welcome to this new mailing list.  I took the liberty of cloning the
-xvendor subscriber list because the topic we're going to discuss
-initially would also be on-topic for xvendor, but discussing it on the
-new list right away lets anyone opt-out of this specific discussion.
+======================================================
+Name: CVE-2008-4654
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4654
+Reference: BUGTRAQ:20081020 [TKADV2008-010] VLC media player TiVo ty Processing Stack Overflow Vulnerability
+Reference: URL:http://www.securityfocus.com/archive/1/archive/1/497587/100/0/threaded
+Reference: MLIST:[oss-security] 20081019 CVE id request: vlc
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/10/19/2
+Reference: MISC:http://www.trapkit.de/advisories/TKADV2008-010.txt
+Reference: CONFIRM:http://git.videolan.org/?p=vlc.git;a=commit;h=fde9e1cc1fe1ec9635169fa071e42b3aa6436033
+Reference: CONFIRM:http://git.videolan.org/?p=vlc.git;a=commitdiff;h=26d92b87bba99b5ea2e17b7eaa39c462d65e9133
+Reference: CONFIRM:http://www.videolan.org/security/sa0809.html
+Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=502726
+Reference: BID:31813
+Reference: URL:http://www.securityfocus.com/bid/31813
+Reference: FRSIRT:ADV-2008-2856
+Reference: URL:http://www.frsirt.com/english/advisories/2008/2856
+Reference: SECUNIA:32339
+Reference: URL:http://secunia.com/advisories/32339
+Reference: XF:vlcmediaplayer-ty-bo(45960)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/45960
 
-The idea behind this mailing list is not mine, but I have offered to
-host it (and the associated website/wiki) on Openwall resources.
+Stack-based buffer overflow in the parse_master function in the Ty
+demux plugin (modules/demux/ty.c) in VLC Media Player 0.9.0 through
+0.9.4 allows remote attackers to execute arbitrary code via a TiVo TY
+media file with a header containing a crafted size value.
 
-Josh, Vincent, Jonathan - would you describe how you envision this list
-and the website/wiki?  Maybe start work on the initial list charter -
-maybe post a draft of it right away?
 
-Meanwhile, the following is my understanding:
+======================================================
+Name: CVE-2008-4686
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4686
+Reference: MLIST:[oss-security] 20081019 CVE id request: vlc
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/10/19/2
+Reference: CONFIRM:http://git.videolan.org/?p=vlc.git;a=commitdiff;h=d859e6b9537af2d7326276f70de25a840f554dc3
 
-In short, this is meant to become a public mailing list for discussing
-Open Source Software security.  The subscribers (or posting ability?)
-may (or may not?) be limited to people involved with Open Source (or
-just plain open source?) projects.
+Multiple integer overflows in ty.c in the TY demux plugin (aka the
+TiVo demuxer) in VideoLAN VLC media player, probably 0.9.4, allow
+remote attackers to have an unknown impact via a crafted .ty file, a
+different vulnerability than CVE-2008-4654.
 
-This is different from vendor-sec in that subscription is not limited to
-distribution vendors (rather, individual smaller projects are very
-welcome to join) and that the list is public (at least archives will be
-public on the web).  Any OSS project that is declined vendor-sec
-membership may join this list instead.
 
-This is different from Bugtraq in the focus on OSS and on collaboration
-between OSS projects (joint development and review of security patches,
-etc.), as well as maybe in that the list is to be discussion-only - no
-security advisories.  A separate non-discussion mailing list may be
-created for the advisories.
-
-Josh et al. - now it's your turn. :-)
-
--- 
-Alexander Peslyak <solar at openwall.com>
-GPG key ID: 5B341F15  fp: B3FB 63F4 D7A3 BCCC 6F6E  FC55 A2FC 027C 5B34 1F15
-http://www.openwall.com - bringing security into open computing environments
