@@ -1,34 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/15/2
-Message-Id: <200809152050.41925.thijs@debian.org>
-Date: Mon, 15 Sep 2008 20:50:37 +0200
-From: Thijs Kinkhorst <thijs@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/23/2
+Message-ID: <1891015626.2906441224784905538.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 23 Oct 2008 14:01:45 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: phpMyAdmin code execution (CVE request)
+Cc: coley <coley@...re.org>
+Subject: Re: CVE Request (netpbm)
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+----- "Josh Bressers" <bressers@...hat.com> wrote:
+> I've not seen this assigned yet, it is a bit old, sorry for the
+> delay.
+> 
+> We noticed this via a Fedora update:
+> https://admin.fedoraproject.org/updates/F9/FEDORA-2008-6999
+> 
+>     update to 10.35.48, fixes buffer overrun in pamperspective and
+> pngtopnm output
+>     format
+> 
 
-"- (2.11.9.1)  [security] Code execution vulnerability"
+OK, I spent some time trying to figure this one out, and mailed upstream about it.  That message from Fedora is misleading and wrong.  The commit in question fixes an OOB memory read, which we won't consider a security flaw.
 
-http://www.phpmyadmin.net/home_page/downloads.php?relnotes=1
+Sorry for sending this request before I'd done a proper investigation.
 
-"Welcome to this security update for phpMyAdmin 2.11.9.
-Details will follow on http://phpmyadmin.net."
-
-http://www.nabble.com/phpMyAdmin-2.11.9.1-is-released-td19497113.html
-
-Attached patch is the fix from upstream. Judging from that (no other 
-information is available yet), an authenticated user can supply a crafted 
-sort_by parameter to server_databases.php, which will be turned in to 
-executed PHP code because it is passed into create_function(). It is present 
-at least since 2.9.1.
-
-I would like to have a CVE id to refer to this issue.
-
-Thijs
-
-View attachment "pma_codeexecution.diff" of type "text/x-diff" (2833 bytes)
-
-Content of type "application/pgp-signature" skipped
+-- 
+    JB
