@@ -1,44 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/09/20
-Message-ID: <20080909222345.2e0cca22@redhat.com>
-Date: Tue, 9 Sep 2008 22:23:45 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/25/1
+Message-Id: <200810251511.59777.rbu@gentoo.org>
+Date: Sat, 25 Oct 2008 15:11:56 +0200
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: Re: CVE request: MySQL incomplete fix for CVE-2008-2079
+Subject: Not a security issue: htpdate "buffer overflow"
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+Hi,
 
-While we are on the MySQL, following issue should probably get CVE id
-as well...
+a user reported[1] an apparant security issue to use regarding htpdate, 
+which states in their changelog[2]:
+" - Fixed a buffer overflow when time offset gets to large
+    https://dev.openwrt.org/cgi-bin/trac.fcgi/ticket/3940 "
 
-CVE id CVE-2008-2079 was assigned to MySQL flaw that allowed attackers
-to get access to the tables created by other database users in the
-future.
+However, the diff upstream applied shows this only is an integer 
+overflow, which they also confirmed via mail:
+'Sorry for the wrong wordings, but it is indeed "only" an integer 
+overflow.'
 
-Devin Carraway of Debian noticed, that the upstream fix can be defeated
-by local users via directory symlinks:
+Since other distros also seem to ship htpdate, hopefully this helps to 
+save some time.
 
-  http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=480292#25
 
-Patch used in the DSA-1608-1 differed from the upstream fix by addition
-of realpath call to expand all symlinks in the path specified in DATA /
-INDEX DIRECTORY directives:
+Robert
 
-  http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=480292#42
+[1] https://bugs.gentoo.org/show_bug.cgi?id=243294
+[2] http://www.clevervest.com/twiki/bin/view/HTP/ChangelogC
+[3] http://bugs.gentoo.org/attachment.cgi?id=169570&action=view
 
-Which is also possible to defeat, as described by Devin in the upstream
-bug report related to the original issue:
-
-  http://bugs.mysql.com/bug.php?id=32167
-  comment dated with "[18 Jul 9:43]"
-
-Upstream addressed the problem by doing the check at open time, not
-only at creation time, and the fix is mentioned in the 5.0.70 (and
-possibly other) release notes (using original CVE id):
-
-  http://dev.mysql.com/doc/refman/5.0/en/releasenotes-es-5-0-70.html
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
