@@ -1,22 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/29/8
-Message-Id: <200810291652.03503.hanno@hboeck.de>
-Date: Wed, 29 Oct 2008 16:52:03 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com, coley@...re.org
-Subject: Re: CVE request phpmyadmin (Fwd: XSS in phpMyadmin)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/25/2
+Message-Id: <200810251520.57158.rbu@gentoo.org>
+Date: Sat, 25 Oct 2008 15:20:54 +0200
+From: Robert Buchholz <rbu@...too.org>
+To: vuln@...unia.com
+Cc: oss-security@...ts.openwall.com
+Subject: Regarding SA32329 (Smarty "_expand_quoted_text()" Security Bypass)
 Content-Type: text/plain; charset=utf-8
 
-I just re-checked this and it also works with register_globals off!
+Hi,
 
-So please change the cve description and it's much more severe than I'd 
-thought.
+unfortunately, Secunia does not list any references for SA32329 [1]. 
+Apparantly, they are refering to the last three commits to 
+libs/Smarty_Compiler.class.php, r2781:2797 [2].
+
+However, this issue is not fixed in 2.6.20, and I could not find a 
+2.6.20-1 release. I have no idea where this version information comes 
+from.
+
+It might be worthwhile to check applications that bundle smarty, like 
+tikiwiki, gallery 2 or PEAR-PhpDocumentor.
 
 
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+Robert
 
-http://x1000malquer.de/ - ab 8.11. Atomtransporte stoppen
+[1] http://secunia.com/advisories/32329/
+[2] 
+http://code.google.com/p/smarty-php/source/list?path=/trunk/libs/Smarty_Compiler.class.php&start=2797
+https://bugs.gentoo.org/attachment.cgi?id=169804&action=view
 
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+
+Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
