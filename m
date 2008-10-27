@@ -1,94 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/06/1
-Message-ID: <28fa9c5e0812051816m4d33fecbp411ccd2ca0a73516@mail.gmail.com>
-Date: Sat, 6 Dec 2008 10:16:12 +0800
-From: "Eugene Teo" <eugeneteo@...nel.sg>
-To: oss-security@...ts.openwall.com
-Subject: Fwd: CVE-2008-5079: multiple listen()s on same socket corrupts the vcc table
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/27/3
+Message-ID: <Pine.GSO.4.51.0810271235340.1641@faron.mitre.org>
+Date: Mon, 27 Oct 2008 12:35:38 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security <oss-security@...ts.openwall.com>
+cc: coley@...re.org
+Subject: Re: CVE request: lynx (old) .mailcap handling flaw
 Content-Type: text/plain; charset=utf-8
 
-Take note of this bug. You can find out more at:
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2008-5079
 
-Thanks, Eugene
+======================================================
+Name: CVE-2006-7234
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-7234
+Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=396949
+Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=214205
+Reference: MLIST:[oss-security] 20081025 CVE request: lynx (old) .mailcap handling flaw
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/10/25/3
 
----------- Forwarded message ----------
-From: Hugo Dias <hdias@...chlabs.com>
-Date: Fri, Dec 5, 2008 at 10:06 AM
-Subject: CVE-2008-5079: multiple listen()s on same socket corrupts the vcc table
-To: bugtraq@...urityfocus.com, vuln@...unia.com, ssynchron@...il.com
-
-
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-CVE-2008-5079: multiple listen()s on same socket corrupts the vcc table
-
-Release Date: 2008/12/05
-
-I. Impact
-
-Local Denial of Service on Linux kernel 2.6.x
+Untrusted search path vulnerability in Lynx before 2.8.6rel.4 allows
+local users to execute arbitrary code via malicious (1) .mailcap and
+(2) mime.types files in the current working directory.
 
 
-II. Description
-
-A vulnerabilty exists in Linux Kernel which can be exploited
-by malicious users to cause a Denial of Service.
-
-It seems that calling the svc_listen function in 'net/atm/svc.c'
-twice on same socket, will create unassigned PVC/SVC entries,
-despite returning EUNATCH.
-
-This entries are visible using proc filesystem.
-
-#cat /proc/net/atm/vc
-
-Address  Itf ...
-c7f34400 Unassigned   ...
-c7f34400 Unassigned   ...
-c7f34400 Unassigned   ...
-.......
-
-The code in 'net/atm/proc.c', responsible for displaying this info,
-can't handle the unassigned entries. Kernel will freeze with
-infinite loop in 'proc.c' if we cat '/proc/net/atm/pvc'  :
-
-
-net/atm/proc.c:
-
-074 static inline int compare_family(struct sock *sk, int family)
-073 {
-074         return !family || (sk->sk_family == family);
-075 }
-
-091 try_again:
-092         for (; sk; sk = sk_next(sk)) {
-093                 l -= compare_family(sk, family); <<<<<<<<<
-094                 if (l < 0)
-095                         goto out;
-096         }
-
-
-IV. Patch
-
-http://marc.info/?l=linux-netdev&m=122841256115780&w=2
-
-V. Credit
-
-Hugo Dias - hdias [at] synchlabs [dot] com
-
-
-VI. History
-
-2008/11/14 - Vulnerability Discovered
-2008/11/28 - Reported to vendor
-2008/12/05 - Vendor Released Patch
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.10-svn4870 (MingW32)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
-
-iEYEARECAAYFAkk4jIoACgkQE8nuJSQgUf2IawCgm6bdEkoj5DCGJPIXOob60nSM
-lTwAnRtJCDPW4d4FE7F6KpzKw46EqO7d
-=9Qis
------END PGP SIGNATURE-----
