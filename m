@@ -1,34 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/11/1
-Message-ID: <47D712AE.9030705@gentoo.org>
-Date: Wed, 12 Mar 2008 00:15:58 +0100
-From: Pierre-Yves Rofes <py@...too.org>
-To: coley@...re.org
-CC: oss-security@...ts.openwall.com
-Subject: CVE request: multiple issues in ViewVC
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/27/6
+Message-ID: <Pine.GSO.4.51.0810271924530.1641@faron.mitre.org>
+Date: Mon, 27 Oct 2008 19:30:55 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+Subject: XSS in HTML Tidy plugin used in WYSIWYG HTML editors
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-Hi,
+http://www.securityfocus.com/bid/31908 covers a claimed issue in Kayako
+eSupport that probably stems from an XSS in some plugin called HtmlTidy
+which is for some WYSIWYG HTML editor called htmlArea.  Quick Google
+searches suggest it may be in extensive use in various packages;
+squirrelmail and Dragonfly were some of the products I've heard of that
+popped up in early results.  I didn't dig deeply though.
 
- multiple security issues were fixed in the latest ViewVC release,
-apparently no CVE ids were assigned yet. Could we get some?
+This will have a CVE momentarily, but this post should be in the initial
+CVE.  Chicken and egg thing basically...
 
-Secunia advisory: http://secunia.com/advisories/29176/
-Gentoo Bug: https://bugs.gentoo.org/show_bug.cgi?id=212288
-
-Thanks in advance.
-
-- --
-Pierre-Yves Rofes
-Gentoo Linux Security Team
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.7 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
-
-iD8DBQFH1xKuuhJ+ozIKI5gRAqIgAJ9zyz2lWp6i8Ql30SmPYTNEVKs7YACfS5Hc
-xRunEvJMcfoSiDmmCawqwbs=
-=DgND
------END PGP SIGNATURE-----
+- Steve
