@@ -1,33 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/19/2
-Message-ID: <20080819141215.GA13100@suse.de>
-Date: Tue, 19 Aug 2008 16:12:15 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: swfdec 0.6.8 stable update
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/27/1
+Message-Id: <200810271758.03646.steffen.joeris@skolelinux.de>
+Date: Mon, 27 Oct 2008 17:57:58 +1100
+From: Steffen Joeris <steffen.joeris@...lelinux.de>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: coley@...re.org
+Subject: CVE id request: blender
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi
 
-Wonder if we should track updates for swfdec. The 0.6.8 announcement
-looks like it at least fixes several Denial of Service problems:
+There is a programming error in blender that can lead to arbitrary code 
+execution.
 
-http://lists.freedesktop.org/archives/swfdec/2008-July/001801.html
+Description:
+Blender's BPY_interface calls PySys_SetArgv such that Python prepends
+sys.path with an empty string.  This allows the possibility to run
+arbitrary code on the user's system if there is a python file in
+Blender's working directory named the same as one that Blender's python
+scripts try to import.
 
-	swfdec-0.6.8 ("Mario Rush")
-	http://swfdec.freedesktop.org/download/swfdec/0.6/swfdec-0.6.8.tar.gz
-	MD5: 740caf52068556ffe151703342fb634b
+Debian Bug report:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=503632
 
-	Changes:
-	- fix a crash when decoding 1x1 JPEG images
-	- fix a crash in XMLSocket.send
-	- fix crashes when FLV decoding was aborted
-	- fix a crash in exception handling code
-	- fix some infinite loops with prototype loops
-	- fix crasher when handling broken dates
-	- fix crashers with native constructors found in testing
-	- compatibility fixes: compile with gold linker, make includes work from C++
+Could I please get a CVE id for this?
 
-(SUSE at least is shipping swfdec.)
+Cheers
+Steffen
 
-Ciao, Marcus
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
