@@ -1,20 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/29/2
-Message-ID: <48B757E9.3040509@redhat.com>
-Date: Fri, 29 Aug 2008 09:59:05 +0800
-From: Eugene Teo <eteo@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2008-3525 kernel: missing capability checks in sbni_ioctl()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/27/2
+Message-Id: <1225124564.10262.15.camel@dhcp-lab-164.englab.brq.redhat.com>
+Date: Mon, 27 Oct 2008 17:22:44 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: oss-security@...ts.openwall.com, coley@...re.org
+Subject: CVE request -- Python imageop#3
 Content-Type: text/plain; charset=utf-8
 
-I reported some bogus capability checks in the SBNI WAN driver. Proper
-capability checks are required for the privileged operations.
+Hello Steve,
 
-This affects both 2.4 and 2.6 kernels. The proposed upstream commit is:
-f2455eb176ac87081bbfc9a44b21c7cd2bc1967e.
+  could you please allocate a new CVE id for the
+following Python integer / buffer overflow in imageop module -
+from commit log:
 
-I have allocated this CVE-2008-3525.
+"fix security issue 2: imageop's poor validation of arguments could
+result in segfaults"
 
-Thanks, Eugene
+Proposed patch:
+against trunk: http://svn.python.org/view?rev=66689&view=rev
+against release-25maint: http://svn.python.org/view?rev=66690&view=rev
+
+Affected Python versions: 1.5.2 through 2.5.1
+
+This issue yet different one, than two previous Python imageop
+related security issues (CVE-2007-4965 and CVE-2008-1679):
+
+CVE-2007-4965 imageop module heap overflow / corruption / infinite loop)
+its patch against trunk: http://svn.python.org/view?rev=65880&view=rev
+its patch against release-25maint: http://svn.python.org/view?rev=65878&view=rev
+
+CVE-2008-1679 (imageop integer overflow -incomplete fix of CVE-2007-4965)
+advisory: https://issues.rpath.com/browse/RPL-2424
+patch:  http://bugs.python.org/file9975/python-2.5-int-overflow-2.patch
+The patch for this issue has been in upstream included into CVE-2008-4965.patch.
+
+
+Thanks, Jan.
 -- 
-Eugene Teo / Red Hat Security Response Team
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
