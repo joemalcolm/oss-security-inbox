@@ -1,27 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/21/8
-Message-ID: <20080221185234.GC20336@openwall.com>
-Date: Thu, 21 Feb 2008 21:52:34 +0300
-From: "(GalaxyMaster)" <galaxy@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: extracting patches from SRPMs (Was: code review CVS)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/28/2
+Message-ID: <20081028084238.258e8a09@redhat.com>
+Date: Tue, 28 Oct 2008 08:42:38 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: OSS Security <oss-security@...ts.openwall.com>
+Subject: CVE-2008-4619 / milw0rm6775
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi!
 
-On Thu, Feb 21, 2008 at 08:49:52AM +0000, Mark J Cox wrote:
+Just a heads up ...  In the case you distribute rpcbind using
+(lib)tirpc as an RPC port mapper, you may be interested in the
+CVE-2008-4619.  Some more info is in our BZ, along with Steve Dickson's
+patch: https://bugzilla.redhat.com/show_bug.cgi?id=468014
 
-> Once you get a rpm then unpacking it without installing it is easy:
-> rpm2cpio fn.rpm | cpio --make-directories --extract
-
-I think that it's good to preserve original timestamps of patches
-extracted from SRPMs (at least this is what our, Openwall's, conventions
-require and what we do when borrowing patches from other distros):
-
-rpm2cpio fn.rpm | cpio --make-directories --extract --preserve-modification-time
-
-Just my $0.02.
+This is very likely the same issue as Solaris one, as tirpc is based on
+the Sun's RPC source code, and fails in the same place.
 
 -- 
-(GM)
-
+Tomas Hoger / Red Hat Security Response Team
