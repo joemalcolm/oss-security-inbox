@@ -1,41 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/19/1
-Message-Id: <1229680780.19341.7.camel@iankko.englab.brq.redhat.com>
-Date: Fri, 19 Dec 2008 10:59:40 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...re.org>
-Cc: oss-security@...ts.openwall.com
-Subject: CVE Request -- Xen (Upstream patch for CVE-2008-4405 is incomplete)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/28/7
+Message-ID: <Pine.GSO.4.51.0810281448280.7363@faron.mitre.org>
+Date: Tue, 28 Oct 2008 14:53:58 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+cc: coley@...re.org
+Subject: Re: CVE request phpmyadmin (Fwd: XSS in phpMyadmin)
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve,
 
-  originally CVE id of CVE-2008-4405 has been assigned to
-the following Xen backend issue:
+We generally assign CVE's for issues requiring register_globals because
+there are common configurations in which this is enabled, e.g. hosting
+environments or older PHP deployments. Many PHP-based worms wouldn't
+succeed without this setting.  Also, in some cases, the software requires
+it.  Finally, in some cases, a researcher CLAIMS register_globals is
+required but is erroneous (in this specific case, Secunia doesn't say
+register_globals is required, and they typically do this.)
 
-Original references:
-http://lists.xensource.com/archives/html/xen-devel/2008-09/msg00992.html
-http://lists.xensource.com/archives/html/xen-devel/2008-09/msg00994.html
-(place where was pointed out, this is a security problem -^).
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4405
+register_globals might limit the applicability to environments where the
+admin doesn't (or can't) follow solid configuration practices, but it's
+still feasible.
 
-Original patch:
-http://xenbits.xensource.com/staging/xen-3.3-testing.hg?rev/e0e17216ba70
+- Steve
 
+======================================================
+Name: CVE-2008-4775
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4775
+Reference: BUGTRAQ:20081027 XSS in phpMyadmin
+Reference: URL:http://www.securityfocus.com/archive/1/archive/1/497815/100/0/threaded
+Reference: BID:31928
+Reference: URL:http://www.securityfocus.com/bid/31928
+Reference: SECUNIA:32449
+Reference: URL:http://secunia.com/advisories/32449
 
-The problem:
+Cross-site scripting (XSS) vulnerability in pmd_pdf.php in phpMyAdmin
+3.0.0, and possibly other versions including 2.11.9.2 and 3.0.1, when
+register_globals is enabled, allows remote attackers to inject
+arbitrary web script or HTML via the db parameter, a different vector
+than CVE-2006-6942 and CVE-2007-5977.
 
-Daniel P.Berrange has discovered, this original patch is incomplete
-to fix this issue. More details here:
-
-http://lists.xensource.com/archives/html/xen-devel/2008-12/msg00842.html
-
-Credit goes to: Daniel P.Berrange 
-
-Steve, could you please allocate a new CVE id for this revised
-fix?
-
-Thanks, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
 
