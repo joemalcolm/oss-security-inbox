@@ -1,25 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/29/1
-Message-ID: <20081029090112.34b53865@redhat.com>
-Date: Wed, 29 Oct 2008 09:01:12 +0100
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/28/4
+Message-Id: <200810281050.17900.hanno@hboeck.de>
+Date: Tue, 28 Oct 2008 10:50:17 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2008-4619 / milw0rm6775
+Subject: Re: CVE request phpmyadmin (Fwd: XSS in phpMyadmin)
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 28 Oct 2008 08:42:38 +0100 Tomas Hoger <thoger@...hat.com>
-wrote:
+Am Dienstag 28 Oktober 2008 schrieb Thijs Kinkhorst:
+> Do we still call things that require register_globals to be on a
+> 'vulnerability'?
+>
+> Register_globals has been advertised (including in the PHP documentation
+> of that option) as a very bad idea for many years now, it's turned off by
+> default since years aswell. Turning it on could be considered as knowingly
+> taking the risk on a certain class of exploits.
+>
+> At least Debian doesn't provide any security support for these issues.
 
-> Just a heads up ...  In the case you distribute rpcbind using
-> (lib)tirpc as an RPC port mapper, you may be interested in the
-> CVE-2008-4619.  Some more info is in our BZ, along with Steve
-> Dickson's patch: https://bugzilla.redhat.com/show_bug.cgi?id=468014
+I'd think this is okay as a policy for a distribution and agree that it's a 
+very bad idea to enable register_globals these days (afaik it should go away 
+in php6 anyway). But anyway a register_globals issue most likely leads to at 
+least some bad programming practise (using uninitalized variables), I think 
+it's okay to still track them.
 
-Looks like this is a dupe of CVE-2007-0165 after all...
+And beside, would be worth a check but I am pretty sure there are still lot's 
+of webhosters out there having it enabled.
 
-  http://www.securityfocus.com/bid/21964/
-  http://secunia.com/advisories/23700/
-  http://secunia.com/advisories/32403/
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+
+http://x1000malquer.de/ - ab 8.11. Atomtransporte stoppen
+
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
