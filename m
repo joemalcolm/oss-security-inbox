@@ -1,59 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/21/1
-Message-ID: <Pine.GSO.4.51.0811201927190.20524@faron.mitre.org>
-Date: Thu, 20 Nov 2008 19:41:06 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...re.org>
-Subject: Re: CVE request: CUPS DoS via RSS subscriptions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/28/6
+Message-ID: <20081028112356.441e3b3a@redhat.com>
+Date: Tue, 28 Oct 2008 11:23:56 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: OSS Security <oss-security@...ts.openwall.com>
+Subject: CVE request - libgadu
 Content-Type: text/plain; charset=utf-8
 
+Hi!
 
-On Wed, 19 Nov 2008, Kees Cook wrote:
+New upstream libgadu version 1.8.2 is marked as security update and
+seems to fix a buffer over-read flaw:
 
-> I'd like to get a CVE assigned for the RSS subscription DoS mentioned
-> here[1].  It seems that CUPS upstream already fixed[2] the issue[3] in
-> their 1.3.8 release.  Prior to 1.3.8, the server can be made to crash
-> when visiting a malicious website due to CUPS general CSRF issues.
+http://toxygen.net/libgadu/releases/1.8.2.html
+https://bugzilla.redhat.com/show_bug.cgi?id=468830
+https://admin.fedoraproject.org/updates/libgadu-1.8.2-1.fc9
 
-I treated this as two CVEs, one for the CSRF-simplifying attack, and a
-separate one for the CUPS server crash (assuming that cupsd should not be
-crashable by non-root authenticated users).
-
-- Steve
-
-
-======================================================
-Name: CVE-2008-5183
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5183
-Reference: MISC:http://www.gnucitizen.org/blog/pwning-ubuntu-via-cups/
-Reference: CONFIRM:https://bugs.launchpad.net/ubuntu/+source/cups/+bug/298241
-Reference: MLIST:[oss-security] 20081119 CVE request: CUPS DoS via RSS subscriptions
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/19/3
-Reference: MLIST:[oss-security] 20081119 Re: CVE request: CUPS DoS via RSS subscriptions
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/19/4
-
-cupsd in CUPS before 1.3.8 allows local users, and possibly remote
-attackers, to cause a denial of service (daemon crash) by adding a
-large number of RSS Subscriptions, which triggers a NULL pointer
-dereference.  NOTE: this issue can be triggered remotely by leveraging
-CVE-2008-5184.
-
-
-======================================================
-Name: CVE-2008-5184
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5184
-Reference: MISC:http://www.gnucitizen.org/blog/pwning-ubuntu-via-cups/
-Reference: CONFIRM:http://www.cups.org/str.php?L2774
-Reference: MLIST:[oss-security] 20081119 CVE request: CUPS DoS via RSS subscriptions
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/19/3
-
-The web interface (cgi-bin/admin.c) in CUPS before 1.3.8 uses the
-guest username when a user is not logged on to the web server, which
-makes it easier for remote attackers to bypass intended policy and
-conduct CSRF attacks via the (1) add and (2) cancel RSS subscription
-functions.
-
-
+-- 
+Tomas Hoger / Red Hat Security Response Team
