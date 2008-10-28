@@ -1,35 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/24/4
-Message-ID: <Pine.GSO.4.51.0803241758400.27382@faron.mitre.org>
-Date: Mon, 24 Mar 2008 18:08:10 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/28/3
+Message-ID: <b47dd3ef53b551664a77712e18738441.squirrel@wm.kinkhorst.nl>
+Date: Tue, 28 Oct 2008 09:43:17 +0100 (CET)
+From: "Thijs Kinkhorst" <thijs@...ian.org>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request: xine-lib multiple buffer overflows
+Cc: coley@...re.org
+Subject: Re: CVE request phpmyadmin (Fwd: XSS in phpMyadmin)
 Content-Type: text/plain; charset=utf-8
 
+On Mon, October 27, 2008 23:28, Hanno BÃ¶ck wrote:
+> No fix yet, works also in 3.0.1.
 
-======================================================
-Name: CVE-2008-1482
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1482
-Reference: BUGTRAQ:20080320 Multiple heap overflows in xine-lib 1.1.11
-Reference: URL:http://www.securityfocus.com/archive/1/archive/1/489894/100/0/threaded
-Reference: MISC:http://aluigi.altervista.org/adv/xinehof-adv.txt
-Reference: MISC:http://aluigi.org/poc/xinehof.zip
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=438663
-Reference: BID:28370
-Reference: URL:http://www.securityfocus.com/bid/28370
+Do we still call things that require register_globals to be on a
+'vulnerability'?
 
-Multiple integer overflows in xine-lib 1.1.11 and earlier allow remote
-attackers to trigger heap-based buffer overflows and possibly execute
-arbitrary code via (1) a crafted .FLV file, which triggers an overflow
-in demuxers/demux_flv.c; (2) a crafted .MOV file, which triggers an
-overflow in demuxers/demux_qt.c; (3) a crafted .RM file, which
-triggers an overflow in demuxers/demux_real.c; (4) a crafted .MVE
-file, which triggers an overflow in demuxers/demux_wc3movie.c; (5) a
-crafted .MKV file, which triggers an overflow in demuxers/ebml.c; or
-(6) a crafted .CAK file, which triggers an overflow in
-demuxers/demux_film.c.
+Register_globals has been advertised (including in the PHP documentation
+of that option) as a very bad idea for many years now, it's turned off by
+default since years aswell. Turning it on could be considered as knowingly
+taking the risk on a certain class of exploits.
 
+At least Debian doesn't provide any security support for these issues.
+
+
+Thijs
 
