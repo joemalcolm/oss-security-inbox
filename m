@@ -1,36 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/24/3
-Message-ID: <Pine.GSO.4.51.0812241235040.12707@faron.mitre.org>
-Date: Wed, 24 Dec 2008 12:49:57 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: Re:  Re: CVE Request - roundcubemail
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/29/10
+Message-ID: <1567534965.4693091225305036881.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 29 Oct 2008 14:30:36 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: coley@...re.org
+Subject: CVE Request (dovecot)
 Content-Type: text/plain; charset=utf-8
 
+I'm not sure if this is a Red Hat specific issue, but I figured I'd mention it here:
+It seems dovecot can have an SSL key file password disclosure issue:
+https://bugzilla.redhat.com/show_bug.cgi?id=436287
 
-On Wed, 17 Dec 2008, Florian Weimer wrote:
+Basically, if your dovecot.conf file is world readable and you have your SSL key
+password in it, anyone can see it.
 
-> > I bet there's a chunk of these in various applications.  I believe Perl
-> > has similar functionality.
->
-> Not quite, the s///e operator uses a compile-time transformation for
-> the replacement expression, so it shouldn't be affected by this very
-> issue.
->
-> \Q \E pairs are an issue in the pattern, not the replacement.
-> Mistakes in this area increase the attack surface by exposing the
-> regular expression compiler to potentially hostile input, and it may
-> lead to denial-of-service vulnerabilities because some implementations
-> do not cope well with certain patterns.  Perhaps CWE-624 should be
-> split to reflect this?
-
-We'll take a closer look at it.
-
-I'm not exactly sure what you're saying here, though.  Do you mean that if
-attackers can insert a \Q or \E into the pattern, then they might be able
-to effectively modify the pattern in unexpected ways?  I could imagine how
-inserting a \E followed by something like "." would change the meaning of
-the regexp.
-
-- Steve
+-- 
+    JB
