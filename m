@@ -1,44 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/19/13
-Message-ID: <20080219172606.GA2697@openwall.com>
-Date: Tue, 19 Feb 2008 20:26:06 +0300
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: FAQ for upstream maintainers
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/29/5
+Message-ID: <20081029124557.GA13910@sdf.lonestar.org>
+Date: Wed, 29 Oct 2008 12:45:57 +0000
+From: Tavis Ormandy <taviso@....lonestar.org>
+To: Tomas Hoger <thoger@...hat.com>
+Cc: oss-security@...ts.openwall.com, coley@...re.org
+Subject: Re: CVE request: lynx (old) .mailcap handling flaw
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Feb 18, 2008 at 11:57:27AM -0900, Jonathan Smith wrote:
-> Since my main goal (I understand if your goals differ, but they
-> certainly should not conflict) for this list is to provide a way for
-> upstream to coordinate with the vendors, I'm going to start a FAQ or
-> tutorial or whatever dedicated to what upstream should do when they get
-> a report from a user about a security issue.
+On Tue, Oct 28, 2008 at 10:38:43AM +0100, Tomas Hoger wrote:
+> 2) Local social engineering attack - local attacker convinces victim to
+> run lynx in some specially crafted local directory.
 > 
-> Basic rough draft:
-> http://oss-security.openwall.org/wiki/whattodo
+> For valgrind, 1) does not seem to make much sense (or is lot less
+> likely), as if you valgrind random binary downloaded form the net,
+> you're already running attacker's code.
+
+Well obviously. The attack would be convincing someone to debug an
+application with a testcase provided in a tarball, or to debug something
+in a specific directory.
+
+If you just dumped one in /tmp on a system I use and waited a few weeks,
+there's a strong possibility you would pwn me.
+
 > 
-> I'm sure it can use some cleanup... Ideas, submissions, etc welcome!
+> Actually, gdb may be another target with its handling of .gdbinit:
+> 
+>    echo 'shell /usr/bin/id' > .gdbinit ; gdb
+> 
+> (gdb seems to have some checks in place though and refuses to open files
+> that world-writable or not owned by the user)
+> 
 
-I've just applied many minor edits to this page, as well as two
-important changes:
+Of course, guess who reported that ;-) (me).
 
-1. Added the text "... and promptly notify your users of the
-availability and importance of this new release."  This will need to be
-made more verbose later on - perhaps it deserves its own paragraph (what
-communication channels may or should exist, etc.)
+The patch to make those checks was provided by me. I'm suggesting
+valgrind should do the same thing.
 
-2. Replaced the suggestion to "... publish it during the embargo with
-no mention of any security-related impact" with a paragraph that allows
-such an action if it is absolutely necessary, but discourages it.
+Thanks, Tavis.
 
-> Also quite welcome would be someone with wiki-fu prettying up the page :-)
-
-Well, that does not apply to me, so I've only fixed the mailing lists
-link to be an internal one so far.
-
-We could also want to rename this web page to something containing the
-likely search keywords - and possibly move it to a namespace, which
-would give a keyword too, once we have a suitable one.  "whattodo" is
-not a likely keyword (or not a closely relevant one).
-
-Alexander
+-- 
+-------------------------------------
+taviso@....lonestar.org | finger me for my gpg key.
+-------------------------------------------------------
