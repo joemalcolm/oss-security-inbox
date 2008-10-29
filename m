@@ -1,78 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/04/2
-Message-ID: <20080404210858.GA23765@openwall.com>
-Date: Sat, 5 Apr 2008 01:08:58 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/29/7
+Message-ID: <20081029152825.GF6977@severus.strandboge.com>
+Date: Wed, 29 Oct 2008 10:28:25 -0500
+From: Jamie Strandboge <jamie@...onical.com>
 To: oss-security@...ts.openwall.com
-Cc: Andrea Barisani <andrea@...ersepath.com>
-Subject: Re: announcing oCERT & oss-security to Bugtraq & f-d
+Cc: jamie@...onical.com, coley <coley@...re.org>
+Subject: Re: CVE request for ecryptfs
 Content-Type: text/plain; charset=utf-8
 
-Josh, Vincent, Jonathan - thank you for commenting on this so promptly!
+On Wed, 29 Oct 2008, Tomas Hoger wrote:
 
-Andrea - it appears that the oCERT announcement should be separate, then.
-Please go ahead with it, and feel free to mention oss-security in passing
-as a group that oCERT intends to work with, as Vincent suggested.  I'm
-not sure if it's appropriate to include a link to the oss-security wiki;
-I would do it, but Vincent suggested that we make "the intelligent" use
-Google instead (and not invite the rest to our wiki just yet).
-
-> Vincent Danen wrote:
-> | I don't have a problem with it being announced at the same time, but I
-> | do think that one day is pretty short notice to draft a decent
-> | announcement (i.e. something that won't result in a "why do we need
-> | another ml like fd or bugtraq" barrage of postings),
-
-Good point, and I am sorry for the short notice.  To me, this was
-expected, but I failed to notify the oss-security group of this
-possibility earlier.  I did not expect that the press would pick oCERT
-up before the Bugtraq & f-d announcement, though - and this is now a
-reason for not delaying the announcement anymore.
-
-> | because we need to
-> | figure out the best way to do this so we don't get people like "n3td3v"
-> | coming to the list.
-
-Maybe it's OK if they come to the list, but are unable to post - or get
-kicked out.
-
-On Fri, Apr 04, 2008 at 12:08:07PM -0800, Jonathan Smith wrote:
-> I've got to agree with Vincent here. We didn't have much heads-up about
-> this. Having folks on-list who shouldn't be was my main concern with
-> oss-security to begin with, and posting the list to the masses (at this
-> point in time) isn't going to make that easier.
+> Hi Jamie!
 > 
-> That being said, we need to figure that out before oss-security can be
-> useful to a broader range of people and projects.
-
-OK, can we please start figuring this out, then?  Once there's consensus
-or an obviously prevailing opinion in this group, Openwall is going to
-re-configure the list as it will be agreed upon, and everyone can edit
-the wiki to reflect that.  Then we'll be ready for a "big announcement",
-right?  Or do we want to work on the wiki content more first?  Or maybe
-tighten up the wiki settings?
-
-Let's just not leave things undefined and non-announced forever.  If
-oss-security is successful, and it appears that it is, it will become
-known anyway - but possibly with more confusion around it if we don't
-announce it ourselves.
-
-> | I think we should activate membership moderation before we make a big
-> | public announcement for exactly this reason.  Which is why we need more
-> | than one day... this needs to be discussed amongst members and needs to
-> | be noted in the announcement (to keep the idiots from trying to
-> | subscribe and then us having to punt a bunch of them after the fact).
+> On Thu, 23 Oct 2008 16:16:28 -0500 Jamie Strandboge
+> <jamie@...onical.com> wrote:
 > 
-> Yep. But, I still think we should allow read-only memberships without
-> moderation. Having to read oss-security through rss or a web interface
-> would be frustrating.
+> > While reviewing ecryptfs, I discovered an information disclosure
+> > vulnerability in ecryptfs-setup-private and notified upstream. This
+> > helper script was known as ecryptfs-setup-confidential in earlier
+> > releases.
+> > 
+> > The problem arises when ecryptfs-setup-private invokes
+> > ecryptfs-wrap-passphrase and ecryptfs-add-passphrase with command line
+> > arguments that include the user's existing login password as well as
+> > the newly created mount password. As a result, these passwords can be
+> > snooped in the process table.
+> 
+> Well the question is whether this should be worded as
+> ecryptfs-setup-{private,confidential} issue, or more generic issue
+> affecting various ecryptfs-* command line utilities, that only accept
+> passwords as command line arguments (i.e. no interactive prompt).  So
+> even though there's not ecryptfs-setup-* script to fix in older
+> versions, steps done by ecryptfs-setup-* are likely to be performed by
+> the user manually, resulting in the same risk of leak as with helper
+> script.  Or do I miss anything?
+> 
 
-I agree with Jonathan on this.
+That's exactly right, which reminded me, documentation surrounding
+ecryptfs also should be updated. I pinged upstream about it.
 
-As to whether to enable message pre-moderation for list members before
-the announcement or only when we really have to, I am not sure.  I'll
-let others decide.
+I was also notified of an additional commit that is desirable (a bugix
+for the patch to ecryptfs-setup-private):
+http://git.kernel.org/?p=linux/kernel/git/mhalcrow/ecryptfs-utils.git;a=commit;h=2c422e6d2549f90258cddeebf105b066b598bdbb
 
-Thanks again,
+Jamie
 
-Alexander
+-- 
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (198 bytes)
