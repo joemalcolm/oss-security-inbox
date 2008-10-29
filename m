@@ -1,23 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/22/9
-Message-ID: <20080222150543.6142dec9@redhat.com>
-Date: Fri, 22 Feb 2008 15:05:43 +0100
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/29/2
+Message-ID: <20081029102236.0f77cfcf@redhat.com>
+Date: Wed, 29 Oct 2008 10:22:36 +0100
 From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: code review CVS
+Subject: Re: CVE request - libgadu
 Content-Type: text/plain; charset=utf-8
 
-Hi Kees!
+On Tue, 28 Oct 2008 11:23:56 +0100 Tomas Hoger <thoger@...hat.com>
+wrote:
 
-On Thu, 21 Feb 2008 10:41:43 -0800 Kees Cook <kees@...flux.net> wrote:
+> New upstream libgadu version 1.8.2 is marked as security update and
+> seems to fix a buffer over-read flaw:
+> 
+> http://toxygen.net/libgadu/releases/1.8.2.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=468830
+> https://admin.fedoraproject.org/updates/libgadu-1.8.2-1.fc9
 
-> I've created http://oss-security.openwall.org/wiki/distro-patches for
-> this information, and added details for Debian and Ubuntu as well as
-> some of the links (and workflows) that were sent to the mailing list.
-> Please fill this in more!  :)
+Just for the future reference:
 
-Any particular reason for not mentioning packages.(u.c|d.o) there?  I
-always considered them very useful.
+CVE-2008-4776:
+libgadu before 1.8.2 allows remote servers to cause a denial of
+service (crash) via a contact description with a large length, which
+triggers a buffer over-read.
 
 -- 
-Tomas Hoger
+Tomas Hoger / Red Hat Security Response Team
