@@ -1,29 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/03/1
-Message-ID: <20080803111248.25843627@redhat.com>
-Date: Sun, 3 Aug 2008 11:12:48 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/29/8
+Message-Id: <200810291652.03503.hanno@hboeck.de>
+Date: Wed, 29 Oct 2008 16:52:03 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com, coley@...re.org
-Subject: CVE request: OpenVPN (client) 2.1-beta14 through 2.1-rc8
+Subject: Re: CVE request phpmyadmin (Fwd: XSS in phpMyadmin)
 Content-Type: text/plain; charset=utf-8
 
-OpenVPN 2.1_rc9 changelog contains following:
+I just re-checked this and it also works with register_globals off!
 
-* Security Fix -- affects non-Windows OpenVPN clients running
-  OpenVPN 2.1-beta14 through 2.1-rc8 (OpenVPN 2.0.x clients are NOT
-  vulnerable nor are any versions of the OpenVPN server vulnerable).
-  An OpenVPN client connecting to a malicious or compromised
-  server could potentially receive an "lladdr" or "iproute" configuration
-  directive from the server which could cause arbitrary code execution on
-  the client. A successful attack requires that (a) the client has agreed
-  to allow the server to push configuration directives to it by including
-  "pull" or the macro "client" in its configuration file, (b) the client
-  succesfully authenticates the server, (c) the server is malicious or has
-  been compromised and is under the control of the attacker, and (d) the
-  client is running a non-Windows OS.  Credit: David Wagner.
+So please change the cve description and it's much more severe than I'd 
+thought.
 
-References:
-http://openvpn.net/index.php/documentation/change-log/changelog-21.html
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+
+http://x1000malquer.de/ - ab 8.11. Atomtransporte stoppen
+
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
