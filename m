@@ -1,43 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/05/11
-Message-ID: <Pine.LNX.4.64.0804051748200.15329@forced.attrition.org>
-Date: Sat, 5 Apr 2008 17:52:39 +0000 (UTC)
-From: security curmudgeon <jericho@...rition.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/29/9
+Message-ID: <20081029172226.5f460084@redhat.com>
+Date: Wed, 29 Oct 2008 17:22:26 +0100
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: wiki: vendor info & osvdb.org/vendors
+Cc: taviso@....lonestar.org, coley@...re.org
+Subject: Re: CVE request: lynx (old) .mailcap handling flaw
 Content-Type: text/plain; charset=utf-8
 
+Hi Tavis!
 
-: I am not so sure.  On our wiki, we have a separation between distro 
-: vendors and individual Open Source projects - and I like it.  I haven't 
-: found a way to extract a list of distro vendors only from osvdb.org.
+On Wed, 29 Oct 2008 12:45:57 +0000 Tavis Ormandy
+<taviso@....lonestar.org> wrote:
 
-Based on what I have seen from this list, that is a very important 
-distinction and something the Wiki may be better suited for. OSVDB aims to 
-focus more on 'where the vulnerability is' over 'who distributes' it. The 
-more I work on VDBs, the more I realize that it becomes a mess trying to 
-track some open-source packages and what products/packages use them.
+> Well obviously. The attack would be convincing someone to debug an
+> application with a testcase provided in a tarball
 
-: Also, some vendors and projects may have relevant info that just does 
-: not fit into pre-defined fields on osvdb.org - yet it may be specified 
-: in entries on the wiki.
+Correct, I should have listed that before as separate case for gdb /
+valgrind.  But is there any good way to protect against this without
+crippling this feature completely?
 
-OSVDB has a 'notes' field for each vendor to accomodate this.
+> or to debug something in a specific directory.
 
-We actually have tickets open to expand the vendor database to include a 
-rating system for vendor response, tickets open to track more dates 
-related to the disclosure of a vulnerability (and then automatically 
-generate time based statistics for vendors), and more. I know our system 
-isn't perfect by any means, but we'd love to expand and build our vendor 
-database as much as possible.
+That should be covered by previously mentioned 2).
 
-: It is a good idea to update the info at osvdb.org with whatever we have. 
-: For example, I was not able to find rPath in the osvdb.org database. 
-: Then the vendors/projects themselves would need to remember to keep 
-: those entries up to date as well...
+> If you just dumped one in /tmp on a system I use and waited a few
+> weeks, there's a strong possibility you would pwn me.
 
-Right, good chance we don't have rPath and a few other linux distros. 
-However, you or anyone else can add them in one way or another. If you 
-find a vulnerability that affects rPath, you can add them to the product 
-list on the given entry, which populates the vendor database.
+... looks like I should check whether sdf still offers free shell
+accounts ;).
 
+> Of course, guess who reported that ;-) (me).
+
+Correct, again... CVE-2005-1705
+  http://bugs.gentoo.org/show_bug.cgi?id=88398
+
+Note to self: Do more research before trying to teach old dog ^W^W
+Tavis some new ^W really really old tricks... ;)
+
+I'll shut up now...
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
