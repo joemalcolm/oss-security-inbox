@@ -1,23 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/26/2
-Message-Id: <219680AF-F1BC-4DAA-93D1-971AA2DE0A91@noxss.org>
-Date: Wed, 26 Nov 2008 09:04:59 +0100
-From: Jeremias Reith <jr@...ss.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/29/1
+Message-ID: <20081029090112.34b53865@redhat.com>
+Date: Wed, 29 Oct 2008 09:01:12 +0100
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE requset: WordPress XSS vulnerability in RSS Feed Generator
+Subject: Re: CVE-2008-4619 / milw0rm6775
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Tue, 28 Oct 2008 08:42:38 +0100 Tomas Hoger <thoger@...hat.com>
+wrote:
 
-a XSS vulnerability has been discovered in WordPress.
+> Just a heads up ...  In the case you distribute rpcbind using
+> (lib)tirpc as an RPC port mapper, you may be interested in the
+> CVE-2008-4619.  Some more info is in our BZ, along with Steve
+> Dickson's patch: https://bugzilla.redhat.com/show_bug.cgi?id=468014
 
-Vendor info:
-http://wordpress.org/development/2008/11/wordpress-265/
+Looks like this is a dupe of CVE-2007-0165 after all...
 
-Detailed information:
-http://www.securityfocus.com/archive/1/498652 (Note: It should be  
-"prior to 2.6.5" in the summary)
+  http://www.securityfocus.com/bid/21964/
+  http://secunia.com/advisories/23700/
+  http://secunia.com/advisories/32403/
 
-
-Thanks,
-Jeremias Reith
+-- 
+Tomas Hoger / Red Hat Security Response Team
