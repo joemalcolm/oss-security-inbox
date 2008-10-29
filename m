@@ -1,23 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/26/1
-Message-Id: <200805261049.30817.rbu@gentoo.org>
-Date: Mon, 26 May 2008 10:49:28 +0200
-From: Robert Buchholz <rbu@...too.org>
-To: oss-security@...ts.openwall.com
-Cc: Mamoru Tasaka <mtasaka@....s.u-tokyo.ac.jp>
-Subject: Re: CVE id request: cbrpager
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/29/3
+Message-Id: <1225276113.3524.8.camel@dhcp-lab-164.englab.brq.redhat.com>
+Date: Wed, 29 Oct 2008 11:28:33 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: coley@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: CVE Request - Python imageop
 Content-Type: text/plain; charset=utf-8
 
-On Sunday 25 May 2008, Tomas Hoger wrote:
-> Mamoru's patch was accepted in the new upstream version - 0.9.17.
->
-> Further details and links in:
-> https://bugzilla.redhat.com/show_bug.cgi?id=448285
+Hello Steve,
 
-As noted in your Bugzilla, there's an update to the patch:
-http://cvs.fedoraproject.org/viewcvs/rpms/cbrpager/devel/cbrpager-0.9.17-zip-filen-escape.patch?rev=1.1
+  could you please assign a new CVE id for the following
+Python imageop integer / buffer overflow. Advisory
+and PoC at:
 
+http://scary.beasts.org/security/CESA-2008-008.html
 
-Robert
+(The other issues from this link were addressed within
+the mega "[vendor-sec] Multiple python vulnerabilities
+(CVE-2008-2315, CVE-2008-2316)" thread.)
 
-Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
+Proposed patch:
+against trunk: http://svn.python.org/view?rev=66689&view=rev
+against release-25maint: http://svn.python.org/view?rev=66690&view=rev
+
+Affected Python versions: 1.5.2 through 2.5.1
+
+This issue different one from CVE-2007-4965 and CVE-2008-1679.
+
+Thanks!
+
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
