@@ -1,77 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/06/3
-Message-ID: <20080306210514.GA7632@pcpool00.mathematik.uni-freiburg.de>
-Date: Thu, 6 Mar 2008 22:05:14 +0100
-From: "Bernhard R. Link" <brlink@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Attack vector exploiting rxvt defaulting to :0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/30/2
+Message-Id: <200810302253.40409.rbu@gentoo.org>
+Date: Thu, 30 Oct 2008 22:53:29 +0100
+From: Robert Buchholz <rbu@...too.org>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE requests: tempfile issues for aview, mgetty, openoffice, crossfire
 Content-Type: text/plain; charset=utf-8
 
-This text is aimed to describe a possible attack vektor to show
-how an malicious user can gain privileges by this.
+Hi,
 
-- This is all limited to an user issuing rxvt directly or indirectly
-  on some host without the DISPLAY environment variable set.
-  While one could claim that people should not do this, it can easily
-  happen:
-   - issuing the command in the wrong shell happens easily[1],
-   - forgetting to give ssh an -X
-   - sshd being reinstalled or config changed to now disabling
-     X forwarding in the server. (In this setting the only fault of the
-     user is not to have checked $DISPLAY if nothing changed).
+Gentoo could need CVEs for some more of the insecure tempfile issues 
+found by Debian. For others, we have gathered a list of all the bugs 
+created at our tracker https://bugs.gentoo.org/show_bug.cgi?id=235770
 
-  While there is a fault of the user, running an rxvt in error should
-  not cause giving other people access to your account, especially not
-  in a stealth way.
+* aview
+DEBIAN: http://bugs.debian.org/496422
+GENTOO: https://bugs.gentoo.org/235808
+FILES: asciiview
+CODE: http://dev.gentoo.org/~rbu/security/debiantemp/aview
 
-- The not-very-dangerous attack-vector:
+* mgetty
+DEBIAN: http://bugs.debian.org/496403
+GENTOO: https://bugs.gentoo.org/235806
+FILES: faxspool
+CODE: http://dev.gentoo.org/~rbu/security/debiantemp/mgetty-fax
 
-  Assume above user logs in to another machine, on which an X server :0
-  is running and mistakenly runs rxvt. The user sitting before the
-  machine gets an rxvt and can do arbitrary things.
-  While this is bad, it is usually not that dangerous, as the user will
-  notice not getting any window and typing Ctrl-C before the local user
-  noticed his opportunities to do anything and the terminal vanishes.
-  It might be dangerous if someone realizes a change in sshd allowing
-  forwarded X sessions and being able to log in locally and many people
-  log in remotely, so the attacker can wait for some and issue an
-  prepared command. Or the user must issue rxvt & and then forget it.
-  Quite unlikely.
+* openoffice.org
+DEBIAN: http://bugs.debian.org/496361
+GENTOO: https://bugs.gentoo.org/235824
+http://www.securityfocus.com/bid/30925
+FILES: senddoc
+CODE: 
+http://dev.gentoo.org/~rbu/security/debiantemp/openoffice.org-common
+   [etch] - openoffice.org <not-affected> (Vulnerable code not present)
+   NOTE: also not present in 3.0.0, only in 2.4.1. Fix pending upload.
 
-- The more dangerous attack.
+* crossfire
+DEBIAN: http://bugs.debian.org/496358
+GENTOO: https://bugs.gentoo.org/236205
+FILES: combine.pl
+CODE: http://dev.gentoo.org/~rbu/security/debiantemp/crossfire-maps
 
-  Now imagine an shell-server used by many people. With enough people
-  and some graphical stuff installed, it is not that unlikely there
-  might be at least one person issuing a rxvt in mistake once a week
-  or even once a day.
 
-  Shell server usually have no local X server running, so local :0
-  i.e. the unix domain socket /tmp/.X11-unix/X0 is not yet bound by
-  anyone else. That means anyone having an account[2] or even only
-  anyone being able to get enough code executed locally - be it as
-  user nobody, daemon or www-data - can bind on that socket and
-  accept connections.
+Robert
 
-  When receiving a connection, this code simply has to speak the X
-  protocol, closing everything that does not look like an rxvt early
-  enough that people have to actually read the error message closely and
-  understand the specifics of the X protocoll to suspect something.
-  If an rxvt connects, this 'fake' X server just sends some keyboard
-  presses (it is a X server, so those keys are genuine to the terminal
-  emulator, not ditinguishable from real ones, except perhaps a bit
-  fast) issuing a command to have code running as the unsuspecting
-  user running rxvt without checking DISPLAY.
-
-  Being tricky enough the attacker can then even output the normal
-  errormessage rxvt would give about not being able to reach an X server
-  and terminate the X term, so the user sees nothing but that he run
-  rxvt on the wrong host and not suspecting someone else is now running
-  code under his uid and thus controling his account.
-
-Hochachtungsvoll,
-	Bernhard R. Link
-
-[1] Who has never shutdown'ed the wrong computer?
-[2] You would only need root to run a classic X server, accessing
-    the hardward like a graphic card or a keyboard. Which are
-    especially not needed here.
+Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
