@@ -1,38 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/04/8
-Message-ID: <4846E660.8060402@freethemallocs.com>
-Date: Wed, 04 Jun 2008 11:00:48 -0800
-From: Jonathan Smith <smithj@...ethemallocs.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSH key blacklisting
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/31/1
+Message-ID: <1050771034.5360231225480446757.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 31 Oct 2008 15:14:06 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: New net-snmp DoS
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi Everyone,
 
-The Fungi wrote:
-| Not to be argumentative, but have you installed OpenBSD lately
-| (effectively the reference platform for OpenSSH development)? For
-| years, its base install has run sshd by default, generated host keys
-| at first boot, and not prompted at the console for human interaction
-| to augment entropy for this process. I find it hard to blame this
-| *particular* behavior on Debian (unless you're suggesting that they
-| strong-armed OpenSSH upstream to integrate these changes on their
-| behalf?).
+I suspect most people will this on a Friday:
+http://sourceforge.net/forum/forum.php?forum_id=882903
 
-rPath also auto-generates keys using the initscript found in the openssh
-source. In the unpacked tarball, it is called contrib/redhat/sshd.init.
-So, presumably, Red Hat does the same. Key generation pulls random bits
-from /dev/random, though, and thus blocks until enough randomness is
-available. That actually caused me some problems once when the machine
-hung on first-boot until it got enough disk interrupts or whatever.
+Before this went public, we assigned it CVE-2008-4309.
 
-	smithj
+The fix can be found here:
+http://net-snmp.svn.sourceforge.net/viewvc/net-snmp?view=rev&revision=17272
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEAREIAAYFAkhG5mAACgkQCG91qXPaRenT1wCeOQF0FIJ4mGzu6t7kgyktngML
-AEAAn2rvxOY/txkB44bXgvMk2l1eUElA
-=ldUl
------END PGP SIGNATURE-----
+-- 
+    JB
