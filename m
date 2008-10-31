@@ -1,29 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/19/5
-Message-ID: <20080619153438.GE4263@ngolde.de>
-Date: Thu, 19 Jun 2008 17:34:38 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/31/2
+Message-ID: <Pine.GSO.4.51.0810311613570.8062@faron.mitre.org>
+Date: Fri, 31 Oct 2008 16:18:36 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: php 5.2.6 safe_mode bypass
+Subject: Re: CVE-2008-4619 / milw0rm6775
 Content-Type: text/plain; charset=utf-8
 
-Hi Hanno,
-* Hanno Böck <hanno@...eck.de> [2008-06-19 17:24]:
-> Both posted on FD
-> 
-> [PHP 5.2.6 posix_access() (posix ext) safe_mode bypass ]
-> http://securityreason.com/achievement_securityalert/54
 
-This is CVE-2008-2665.
+On Wed, 29 Oct 2008, Tomas Hoger wrote:
 
-> [PHP 5.2.6 chdir(),ftok() (standard ext) safe_mode bypass ]
-> http://securityreason.com/achievement_securityalert/55
+> Looks like this is a dupe of CVE-2007-0165 after all...
+>
+>   http://www.securityfocus.com/bid/21964/
+>   http://secunia.com/advisories/23700/
+>   http://secunia.com/advisories/32403/
 
-This is CVE-2008-2666.
-Cheers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+Nothing against these sources but in general CVE wants a solid "logic
+chain" between 2 descriptions before declaring a dupe.  In this case
+CVE-2007-0165 is anchored on a very vague description from Sun about
+something in libnsl.  CVE-2008-4619 is quite specific.  Just because it's
+the same rpcbind service is insufficient as we all know that the same
+package can contain multiple security bugs.
 
-Content of type "application/pgp-signature" skipped
+The most solid connection here, though, is SUNALERT:102713 (which
+CVE-2007-0165 is anchored on) has now been renamed to SUNALERT:200412,
+which directly references CVE-2008-4619.
+
+I'll send a quick-check email to Sun but these do appear to be dupes.  So
+then the question is which CVE to reject, and I'm not sure at this moment.
+
+- Steve
