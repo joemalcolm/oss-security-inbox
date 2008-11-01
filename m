@@ -1,16 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/06/2
-Message-ID: <87bpvpmx4c.fsf@mid.deneb.enyo.de>
-Date: Sat, 06 Dec 2008 11:11:31 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
-To: oss-security@...ts.openwall.com
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/01/1
+Message-Id: <200811012301.20834.steffen.joeris@skolelinux.de>
+Date: Sat, 1 Nov 2008 23:01:15 +1100
+From: Steffen Joeris <steffen.joeris@...lelinux.de>
+To: oss-security <oss-security@...ts.openwall.com>
 Cc: coley@...re.org
-Subject: CVE request: weak PRNG in GNU Classpath
+Subject: CVE-2008-4796: snoopy triage
 Content-Type: text/plain; charset=utf-8
 
-<http://gcc.gnu.org/bugzilla/show_bug.cgi?id=38417>
+Hi
 
-The random number generator in the gnu.java.security.util.PRNG class
-of GNU Classpath version 0.97.2 and earlier produces only a limited
-number of distinct byte streams, which may lead to guessable
-cryptographic key material and similar vulnerabilities.
+I thought I'd share the outcome of my snoopy triage for debian.
+I had a look at upstream's patch[0] and compared it with packages in debian.
+
+We had 6 packages including the file Snoopy.class.php, all were vulnerable.
+List of packages:
+ampache: /usr/share/ampache/www/modules/infotools/Snoopy.class.php
+libphp-snoopy: /usr/share/php/libphp-snoopy/Snoopy.class.php
+mahara: /usr/share/mahara/lib/snoopy/Snoopy.class.php
+mediamate: /usr/share/mediamate/Snoopy.class.php
+opendb: /usr/share/opendb/functions/Snoopy.class.php
+pixelpost: /usr/share/pixelpost/addons/_defensio/libraries/Snoopy.class.php
+
+I haven't checked, how they depend on the Snoopy.class.php file yet.
+Of course there might be more out there and included in other distributions, 
+so don't assume that this is all. The packages in debian duplicating the 
+source should just depend on the libphp-snoopy package, which in debian is 
+the snoopy upstream package.
+
+Steve, do you want to update the CVE description to reflect that the file is 
+included in several other packages?
+
+Cheers
+Steffen
+
+[0]: http://klecker.debian.org/~white/libphp-snoopy/CVE-2008-4796.patch
+
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
