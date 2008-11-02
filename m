@@ -1,55 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/25/2
-Message-ID: <Pine.GSO.4.51.0807251137410.29569@faron.mitre.org>
-Date: Fri, 25 Jul 2008 11:39:42 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/02/1
+Message-ID: <20081102120602.GA8008@ngolde.de>
+Date: Sun, 2 Nov 2008 13:06:02 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-cc: cve@...re.org
-Subject: Re: CVE id request: moodle XSS and CSRF
+Subject: CVE id request: htop
 Content-Type: text/plain; charset=utf-8
 
+Hi,
+htop doesn't filter non printable characters in process 
+names which enables processes doing evil things with the 
+display using escape sequences.
 
-Notice thewebroot disclosure in CVE-2008-3327.
+http://bugs.debian.org/504144
 
-- Steve
+Steve, can you assign a CVE id to this?
 
+Cheers
+Nico
 
-======================================================
-Name: CVE-2008-3325
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3325
-Reference: MISC:http://www.procheckup.com/Vulnerability_PR08-16.php
-Reference: CONFIRM:http://moodle.org/mod/forum/discuss.php?d=101405
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-Cross-site request forgery (CSRF) vulnerability in Moodle 1.6.x before
-1.6.7 and 1.7.x before 1.7.5 allows remote attackers to modify profile
-settings and gain privileges as other users via a link or IMG tag to
-the user edit profile page.
-
-
-======================================================
-Name: CVE-2008-3326
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3326
-Reference: MISC:http://www.procheckup.com/Vulnerability_PR08-13.php
-Reference: CONFIRM:http://moodle.org/mod/forum/discuss.php?d=101401
-
-Cross-site scripting (XSS) vulnerability in blog/edit.php in Moodle
-1.6.x before 1.6.7 and 1.7.x before 1.7.5 allows remote attackers to
-inject arbitrary web script or HTML via the etitle parameter (blog
-entry title).
-
-
-======================================================
-Name: CVE-2008-3327
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3327
-Reference: MISC:http://www.procheckup.com/Vulnerability_PR08-15.php
-Reference: CONFIRM:http://moodle.org/mod/forum/discuss.php?d=101403
-
-Moodle 1.6.5, when display_errors is enabled, allows remote attackers
-to obtain the full installation path via a direct request to (1)
-blog/blogpage.php and (2) course/report/stats/report.php, which leaks
-the path in an error message.
-
-
+Content of type "application/pgp-signature" skipped
