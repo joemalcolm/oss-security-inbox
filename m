@@ -1,52 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/05/3
-Message-ID: <20080405051233.GV45590@linsec.ca>
-Date: Fri, 4 Apr 2008 23:12:33 -0600
-From: Vincent Danen <vdanen@...sec.ca>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: "who shouldn't be on-list"
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/03/1
+Message-ID: <20081103090221.2cbab285@redhat.com>
+Date: Mon, 3 Nov 2008 09:02:21 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: coley@...us.mitre.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2008-4619 / milw0rm6775
 Content-Type: text/plain; charset=utf-8
 
-* [2008-04-04 13:46:11 -0800] Jonathan Smith wrote:
+Hi Steven!
 
-> security curmudgeon wrote:
-> | As a new subscriber who did not see specific mention of the desired list
-> | population, could you clarify who you feel the list is for, or who should
-> | not be on it?
->
-> As I see it, the list is for members of the open-source community. Thus,
-> to be admitted to the list, you either have to demonstrate that you're a
-> developer of a (at least marginally notable) open source project, that
-> you're a vendor who redistributes oss, or that you're a security
-> researcher who audits or otherwise interacts with oss.
->
-> This is, of course, only my opinion and may not reflect the rest of the
-> group's ideas.
+On Fri, 31 Oct 2008 16:18:36 -0400 (EDT) "Steven M. Christey"
+<coley@...us.mitre.org> wrote:
 
-I think this is a good definition.
+> > Looks like this is a dupe of CVE-2007-0165 after all...
+> >
+> >   http://www.securityfocus.com/bid/21964/
+> >   http://secunia.com/advisories/23700/
+> >   http://secunia.com/advisories/32403/
+> 
+> Nothing against these sources but in general CVE wants a solid "logic
+> chain" between 2 descriptions before declaring a dupe.  In this case
+> CVE-2007-0165 is anchored on a very vague description from Sun about
+> something in libnsl.  CVE-2008-4619 is quite specific.  Just because
+> it's the same rpcbind service is insufficient as we all know that the
+> same package can contain multiple security bugs.
 
-Bottom-line would be that this isn't a list for end-users.  End-users or
-sysadmins, whatever, could be read-only subscribers... heck, that's no
-different than reading web archives.
-
-But to be a "member" of the list, with posting priveleges, I think you
-need to be someone who can demonstrate an active role with some OSS --
-this does not mean you need to be on a vendor security team, or the
-apache/samba/whatever security contact.  You could be a grunt developer
-who has an interest in security-related stuff (perhaps good programming
-techniques, etc.) and as long as you're a member or developer of some
-OSS with a reasonable exposure, then I think you can have a voice on the
-list if you like.
-
-Honestly, I think a lot of people will be lurkers... so for them they
-never need to progress beyond read-only subscriber.  It's the people who
-are interested in security (be it re-active or pro-active) that will
-want to be "members" of the list.
-
-Now, having said that, I think the ml subscription can be a lot more
-open than wiki editing rights (which is a whole different ball of wax).
+Sorry for not choosing word properly here.  I probably should have used
+"looks like this *may* be a dupe of...".  My reasoning for calling it
+dupe was that CVE-2007-0165 links BID-21964, which has the same exploit
+attached as is available on milw0rm as 6775.  It's not clear when
+exploit code was added to the BID, though.
 
 -- 
-Vincent Danen @ http://linsec.ca/
-
-Content of type "application/pgp-signature" skipped
+Tomas Hoger / Red Hat Security Response Team
