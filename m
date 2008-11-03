@@ -1,31 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/10/1
-Message-ID: <Pine.GSO.4.51.0803092012570.22863@faron.mitre.org>
-Date: Sun, 9 Mar 2008 20:13:45 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/03/2
+Message-ID: <490EC9AF.2080303@redhat.com>
+Date: Mon, 03 Nov 2008 17:51:43 +0800
+From: Eugene Teo <eteo@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: dovecot unauthorized login
+CC: "Steven M. Christey" <coley@...us.mitre.org>, Greg KH <greg@...ah.com>
+Subject: CVE requests: kernel: hfsplus-related bugs
 Content-Type: text/plain; charset=utf-8
 
+These were committed in upstream kernel. Reported by Eric Sesterhenn.
 
+1) hfsplus: fix Buffer overflow with a corrupted image
+Upstream commit: efc7ffcb4237f8cb9938909041c4ed38f6e1bf40
 
-> Subject: [Dovecot-news] Security hole #6: Some passdbs allowed users
-> to log	in without a	valid password
-> Date: Sun, 09 Mar 2008 13:09:44 +0200
-> From: Timo Sirainen <tss@....fi>
-> Reply-To: dovecot@...ecot.org
-> To: Dovecot News List <dovecot-news@...ecot.org>
-> CC: Dovecot Mailing List <dovecot@...ecot.org>
->
-> ...
->
-> The main problem is that Dovecot's internal protocols use TAB character
-> as a delimiter, but passwords were sent unescaped through them. So
-> passwords containing TAB characters allowed to add new internal fields.
-> The main problem here is a new "skip_password_check" field added in
-> v1.0.11 to fix problems with master user logins. Specifying this field
-> allowed the user to skip the password check, as the name implies.
+When an hfsplus image gets corrupted it might happen that the catalog
+namelength field gets b0rked.  If we mount such an image the memcpy() in
+hfsplus_cat_build_key_uni() writes more than the 255 that fit in the
+name field.  Depending on the size of the overwritten data, we either
+only get memory corruption or also trigger an oops.
 
-Use CVE-2008-1218
+2) hfsplus: check read_mapping_page() return value
+Upstream commit: 649f1ee6c705aab644035a7998d7b574193a598a
 
-- Steve
+The return value of read_mapping_page() is passed on to kmap unchecked.
+ The bug is triggered after the first read_mapping_page() in
+hfsplus_block_allocate(), this patch fixes all three usages in this
+functions but leaves the ones further down in the file unchanged. This
+was triggered by mounting an intentionally corrupted image.
+
+These bugs need CVE names.
+
+Thanks, Eugene
