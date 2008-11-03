@@ -1,21 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/08/1
-Message-Id: <200806081940.39502.hanno@hboeck.de>
-Date: Sun, 8 Jun 2008 19:40:39 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: CVE-Request: courier-authlib sql injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/03/3
+Message-ID: <20081103151706.3c572eb2@redhat.com>
+Date: Mon, 3 Nov 2008 15:17:06 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: OSS Security <oss-security@...ts.openwall.com>, coley@...re.org
+Subject: CVE request - uw-imap
 Content-Type: text/plain; charset=utf-8
 
-courier-authlib before 0.60.6 suffers from an sql injection.
+Hi!
 
-The sourceforge webarchive is somehow broken and the gmame one isn't 
-up-to-date, so I can't post the announcement...
+uw-imap upstream released new version 2007d on friday, announcing it as
+security update fixing some issues in dmail and tmail utilities:
 
+http://mailman2.u.washington.edu/pipermail/imap-uw/2008-October/002267.html
+http://mailman2.u.washington.edu/pipermail/imap-uw/2008-October/002268.html
+
+Further digging into this, the issue seem to be a buffer overflow
+(strcpy) when handling command line arguments (overlong mailbox
+specification when utility is called with user+folder argument). This
+can have security implications in the setups where tmail is installed 
+setuid root (according to the resources I found, that's required in
+certain configurations; dmail is not expected to run under different
+user), or when one of the utilities is configured as deliver agent in
+the MTA.
+
+Some further info I managed to collect is in our BZ:
+https://bugzilla.redhat.com/show_bug.cgi?id=469667
 
 -- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+Tomas Hoger / Red Hat Security Response Team
