@@ -1,16 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/07/2
-Message-ID: <20081207100837.GB8598@galadriel.inutil.org>
-Date: Sun, 7 Dec 2008 11:08:38 +0100
-From: Moritz Muehlenhoff <jmm@...til.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/03/4
+Message-ID: <20081103144957.GD18126@ngolde.de>
+Date: Mon, 3 Nov 2008 15:49:57 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Quassel IRC client
+Cc: coley@...re.org
+Subject: Re: CVE request - uw-imap
 Content-Type: text/plain; charset=utf-8
 
-quassel IRC command injection:
+Hi,
+* Tomas Hoger <thoger@...hat.com> [2008-11-03 15:38]:
+> uw-imap upstream released new version 2007d on friday, announcing it as
+> security update fixing some issues in dmail and tmail utilities:
+> 
+> http://mailman2.u.washington.edu/pipermail/imap-uw/2008-October/002267.html
+> http://mailman2.u.washington.edu/pipermail/imap-uw/2008-October/002268.html
+> 
+> Further digging into this, the issue seem to be a buffer overflow
+> (strcpy) when handling command line arguments (overlong mailbox
+> specification when utility is called with user+folder argument). This
+> can have security implications in the setups where tmail is installed 
+> setuid root (according to the resources I found, that's required in
+> certain configurations; dmail is not expected to run under different
+> user), or when one of the utilities is configured as deliver agent in
+> the MTA.
 
-http://quassel-irc.org/node/89
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=506550
+Patch attached.
+HTH
 
-Cheers,
-        Moritz
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+View attachment "uw-imap.patch" of type "text/x-diff" (1289 bytes)
+
+Content of type "application/pgp-signature" skipped
