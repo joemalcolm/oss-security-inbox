@@ -1,28 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/17/3
-Message-ID: <1815948490.298961226956228240.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 17 Nov 2008 16:10:28 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: coley@...re.org
-Subject: CVE Request (syslog-ng)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/03/6
+Message-ID: <490F1FEF.2020704@pardus.org.tr>
+Date: Mon, 03 Nov 2008 17:59:43 +0200
+From: Pınar Yanardağ <pinar@...dus.org.tr>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request (libsamplerate)
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
+>From libsamplerate's changelog [1] (2008-07-02):
 
-I'm pretty sure this one deserves a CVE id.
+    * src/src_sinc.c
+    Fix buffer overrrun bug at extreme low conversion ratios. Thanks to Russell
+    O'Connor for the report.
 
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=505791
+I couldn't find any CVE number or request for it. If it's so, can you assign a CVE for it?
 
-syslog-ng doesn't call chdir() before calling chroot().  The chroot(2) man page is
-quite clear that if you don't call chdir() first, the process will inherit a '.'
-that is outside of the chroot.
+[1]: http://www.mega-nerd.com/SRC/ChangeLog
 
-By itself this isn't really a flaw (you'll need some other exploit to even attempt to break out of the chroot), and chroot can be broken out of various other ways.
-Typically chroot() should not be considered secure, but I suspect this should
-probably get an ID if for no other reason than avoiding future confusion.
-
-Thanks.
+Cheers,
 
 -- 
-    JB
+Pınar Yanardağ (a.k.a PINguAR)
+http://pinguar.org
+
+
