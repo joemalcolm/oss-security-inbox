@@ -1,22 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/14/7
-Message-ID: <Pine.GSO.4.51.0810141819140.1682@faron.mitre.org>
-Date: Tue, 14 Oct 2008 18:19:24 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/04/4
+Message-ID: <20081104174433.GC5796@ngolde.de>
+Date: Tue, 4 Nov 2008 18:44:33 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: vlc
+Subject: Re: CVE Request (dovecot)
 Content-Type: text/plain; charset=utf-8
 
+Hi,
+* Josh Bressers <bressers@...hat.com> [2008-10-29 19:55]:
+> I'm not sure if this is a Red Hat specific issue, but I figured I'd mention it here:
+> It seems dovecot can have an SSL key file password disclosure issue:
+> https://bugzilla.redhat.com/show_bug.cgi?id=436287
+> 
+> Basically, if your dovecot.conf file is world readable and you have your SSL key
+> password in it, anyone can see it.
 
-======================================================
-Name: CVE-2008-4558
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4558
-Reference: MISC:http://www.coresecurity.com/content/vlc-xspf-memory-corruption
+Looks like this is CVE-2008-4870.
 
-Array index error in VLC media player 0.9.2 allows remote attackers to
-overwrite arbitrary memory and execute arbitrary code via an XSPF
-playlist file with a negative identifier tag, which passes a signed
-comparison.
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-
+Content of type "application/pgp-signature" skipped
