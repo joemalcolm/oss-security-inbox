@@ -1,27 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/13/3
-Message-ID: <20081113101929.0dcbb14e@redhat.com>
-Date: Thu, 13 Nov 2008 10:19:29 +0100
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/04/2
+Message-Id: <200811042313.06873.steffen.joeris@skolelinux.de>
+Date: Tue, 4 Nov 2008 23:13:02 +1100
+From: Steffen Joeris <steffen.joeris@...lelinux.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: clamav get_unicode_name() off-by-one buffer overflow
+Cc: vuln@...unia.com, coley@...re.org
+Subject: Re: Regarding SA32329 (Smarty "_expand_quoted_text()" Security Bypass)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 13 Nov 2008 10:06:17 +0100 Thomas Biege <thomas@...e.de> wrote:
+On Sun, 26 Oct 2008 12:20:54 am Robert Buchholz wrote:
+> Hi,
+>
+> unfortunately, Secunia does not list any references for SA32329 [1].
+> Apparantly, they are refering to the last three commits to
+> libs/Smarty_Compiler.class.php, r2781:2797 [2].
+>
+> However, this issue is not fixed in 2.6.20, and I could not find a
+> 2.6.20-1 release. I have no idea where this version information comes
+> from.
+>
+> It might be worthwhile to check applications that bundle smarty, like
+> tikiwiki, gallery 2 or PEAR-PhpDocumentor.
+This issue has now been given CVE-2008-4810 and CVE-2008-4811. However, isn't 
+CVE-2008-4811 already covered by CVE-2008-4810 or could someone please 
+enlighten me?
+The latest patch I can see from upstream is an additional preg_replace() and 
+he kept the old one.
 
-> AFAIK no CVE-ID was assigned for the following issue yet.
+Cheers
+Steffen
 
-It was, see NVD site.
 
-CVE-2008-5050
-
-Off-by-one error in the get_unicode_name function
-(libclamav/vba_extract.c) in Clam Anti-Virus (ClamAV) before 0.94.1
-allows remote attackers to cause a denial of service (crash) or
-possibly execute arbitrary code via a crafted VBA project file, which
-triggers a heap-based buffer overflow.
-
-HTH
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
