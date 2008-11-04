@@ -1,25 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/26/2
-Message-ID: <20080726192733.GD3224@ngolde.de>
-Date: Sat, 26 Jul 2008 21:27:33 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Cc: vmiklos@...galware.org
-Subject: Re: CVE request: drupal issue in < 5.9
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/04/1
+Message-ID: <Pine.GSO.4.51.0811031945580.5219@faron.mitre.org>
+Date: Mon, 3 Nov 2008 19:46:54 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security <oss-security@...ts.openwall.com>
+cc: coley@...re.org
+Subject: Re: CVE-2008-4796: snoopy triage
 Content-Type: text/plain; charset=utf-8
 
-Hi Miklos,
-* Miklos Vajna <vmiklos@...galware.org> [2008-07-26 21:13]:
-> DRUPAL SA-2008-046
-> http://drupal.org/node/286417
-> 
-> Contains a session fixation.
 
-This is CVE-2008-3222.
-Cheers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+Updated, original oss-security post will be added later.  Note that we
+don't track every single product (imagine how many pages a zlib issue
+would take up!)
 
-Content of type "application/pgp-signature" skipped
+- Steve
+
+
+======================================================
+Name: CVE-2008-4796
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4796
+Reference: CONFIRM:http://sourceforge.net/forum/forum.php?forum_id=879959
+Reference: JVN:JVN#20502807
+Reference: URL:http://jvn.jp/en/jp/JVN20502807/index.html
+Reference: JVNDB:JVNDB-2008-000074
+Reference: URL:http://jvndb.jvn.jp/ja/contents/2008/JVNDB-2008-000074.html
+Reference: FRSIRT:ADV-2008-2901
+Reference: URL:http://www.frsirt.com/english/advisories/2008/2901
+Reference: SECUNIA:32361
+Reference: URL:http://secunia.com/advisories/32361
+
+The _httpsrequest function (Snoopy/Snoopy.class.php) in Snoopy 1.2.3
+and earlier, as used in (1) ampache, (2) libphp-snoopy, (3) mahara,
+(4) mediamate, (5) opendb, (6) pixelpost, and possibly other products,
+allows remote attackers to execute arbitrary commands via shell
+metacharacters in https URLs.
+
+
