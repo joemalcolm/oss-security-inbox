@@ -1,52 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/30/1
-Message-ID: <48E23DCA.9050207@gentoo.org>
-Date: Tue, 30 Sep 2008 16:55:06 +0200
-From: Christian Hoffmann <hoffie@...too.org>
-To: coley@...re.org
-CC: vendor-sec@....de, darix@...nsu.se, stbuehler@....de,  oss-security@...ts.openwall.com
-Subject: Re: CVE request: lighttpd issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/05/4
+Message-Id: <200811052317.11277.rem@videolan.org>
+Date: Wed, 5 Nov 2008 23:17:11 +0200
+From: Rémi Denis-Courmont <rem@...eolan.org>
+To: oss-security@...ts.openwall.com
+Subject: VideoLAN security advisory 0810
 Content-Type: text/plain; charset=utf-8
 
-On 2008-09-24 18:15, Christian Hoffmann wrote:
-> multiple security-related issues are going to be fixed in the
-> soon-to-be-released version 1.4.20 of lighttpd, which all seem CVE-worthy.
-1.4.20 has been released meanwhile. The issues along with their
-advisories are public now, CC'ing oss-sec as such.
-We still need CVEs for these three issues.
+Summary           : Buffer overflows in VLC RealText and CUE demuxers
+Date              : November 2008
+Affected versions : VLC media player 0.9.5 down to 0.5.0
+ID                : VideoLAN-SA-0810
+CVE reference     : None yet.
 
 
->   * Unexpected behavior of url.redirect / url.rewrite config options
-> 
->     While this is not a security issue in lighttpd, the user might
->     rely on the fact, that those options are suppoosed to be matched
->     against the urldecoded version of the URL. Depending on the
->     configuration, this would allow for unwanted access to certain
->     resources (information disclosure or even manipulation of data)
->     References: [1] [2]
->
->   * Information disclosure w/ mod_userdir on case-insensitive file
->     systems
->     References: [3] [4]
->
->   * User-controllable memory leak, possibly leading to a Denial of
->     Service
->     References: [5] [6]
-(There has been another request for a CVE for this entry on oss-sec)
+- Details -
+
+When parsing the header of an invalid CUE image file or an invalid RealText 
+subtitle file, stack-based buffer overflows might occur. 
 
 
-> [1] http://www.lighttpd.net/security/lighttpd_sa_2008_05.txt
-> [2]
-> http://www.lighttpd.net/security/lighttpd-1.4.x_rewrite_redirect_decode_url.patch
-> [3] http://www.lighttpd.net/security/lighttpd_sa_2008_06.txt
-> [4] http://www.lighttpd.net/security/lighttpd-1.4.x_userdir_lowercase.patch
-> [5] http://www.lighttpd.net/security/lighttpd_sa_2008_07.txt
-> [6]
-> http://www.lighttpd.net/security/lighttpd-1.4.x_request_header_memleak.patch
+- Impact -
 
+If successful, a malicious third party could trigger execution of arbitrary 
+code within the context of the VLC media player. 
+
+
+- Threat mitigation -
+
+Exploitation of this issue requires the user to explicitly open a specially 
+crafted file. 
+
+
+- Workarounds -
+
+The user should refrain from opening files from untrusted third parties or 
+accessing untrusted remote sites (or disable the VLC browser plugins), until 
+the patch is applied. 
+Alternatively, the VCD and Subtitles plugins (libvcd_plugin.* and 
+libsubtitle_plugin.*) can be removed manually from the VLC plugin 
+installation directory. However, this will prevent use of subtitle files and 
+Video CD altogether.
+
+
+- Solution -
+
+VLC media player 0.9.6 addresses this issue. Patches for older versions are 
+available from the official VLC source code repository 0.9-bugfix branch. 
+
+
+- Credits -
+
+These vulnerabilities were reported by Tobias Klein. 
+
+
+- References -
+
+The VideoLAN project
+	http://www.videolan.org/ 
+Tobias Klein
+	http://www.trapkit.de/advisories/ 
+
+
+- History -
+
+3 November 2008
+	Vendor notification.
+4 November 2008
+	Internal patches for VLC development version and 0.9-bugfix tree.
+5 November 2008
+	Initial security advisory.
+	VLC media player 0.9.6 released.
 
 -- 
-Christian Hoffmann
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (261 bytes)
+Rémi Denis-Courmont,
+on behalf of the VideoLAN project
