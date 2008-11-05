@@ -1,25 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/25/1
-Message-ID: <20080425130449.GA14320@suse.de>
-Date: Fri, 25 Apr 2008 15:04:49 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com, coley@...re.org
-Subject: CVE request: licq denial of service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/05/1
+Message-ID: <20081105080723.GA3188@suse.de>
+Date: Wed, 5 Nov 2008 09:07:23 +0100
+From: Thomas Biege <thomas@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: libcdaudio
 Content-Type: text/plain; charset=utf-8
 
-Hi Stephen, folks,
+Hello,
+we need a CVE-ID for a buffer overflow in libcdaudio.
+It is a remotely exploitable heap-based buffer overflow.
 
-licq can be made to crash with more than 1024 connections,
-please assign a CVE id...
+--- src/cddb.c
++++ src/cddb.c
+@@ -1679,7 +1679,7 @@ cddb_read_disc_data(int cd_desc, struct disc_data
+*outdata)
+       free(file);
 
-http://seclists.org/bugtraq/2008/Apr/0100.html
-http://www.securityfocus.com/bid/28679
+       while(!feof(cddb_data)) {
+-       fgets(inbuffer, 512, cddb_data);
++       fgets(inbuffer, 256, cddb_data);
+        cddb_process_line(inbuffer, data);
+       }
 
-Was confirmend and fixed by licq team:
-http://www.licq.org/ticket/1623
-http://www.licq.org/changeset/6146
-
-Ciao, Marcus
 -- 
-Working, but not speaking, for the following german company:
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+Bye,
+     Thomas
+-- 
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+-- 
+           Hamming's Motto:
+           The purpose of computing is insight, not numbers.
+                                -- Richard W. Hamming
