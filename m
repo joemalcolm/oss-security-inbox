@@ -1,30 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/04/10
-Message-ID: <Pine.GSO.4.51.0809041220150.29613@faron.mitre.org>
-Date: Thu, 4 Sep 2008 12:20:34 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/05/5
+Message-ID: <20081105223034.GM5796@ngolde.de>
+Date: Wed, 5 Nov 2008 23:30:34 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: Re: CVE request: mono Sys.Web header injection
+Subject: CVE id request: vlc
 Content-Type: text/plain; charset=utf-8
 
+Hi,
+can I get a CVE id for:
+http://www.videolan.org/security/sa0810.html
 
-======================================================
-Name: CVE-2008-3906
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3906
-Reference: MLIST:[oss-security] 20080827 CVE request: mono Sys.Web header injection
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/08/27/6
-Reference: CONFIRM:https://bugzilla.novell.com/show_bug.cgi?id=418620
-Reference: BID:30867
-Reference: URL:http://www.securityfocus.com/bid/30867
-Reference: FRSIRT:ADV-2008-2443
-Reference: URL:http://www.frsirt.com/english/advisories/2008/2443
-Reference: SECUNIA:31643
-Reference: URL:http://secunia.com/advisories/31643
+Cheers
+Nico
 
-CRLF injection vulnerability in Sys.Web in Mono 2.0 and earlier allows
-remote attackers to inject arbitrary HTTP headers and conduct HTTP
-response splitting attacks via CRLF sequences in the query string.
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-
+Content of type "application/pgp-signature" skipped
