@@ -1,42 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/27/5
-Message-ID: <Pine.GSO.4.51.0803271831470.14208@faron.mitre.org>
-Date: Thu, 27 Mar 2008 18:34:02 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>, Jonathan Smith <smithj@...ethemallocs.com>
-Subject: Re: firefox 2.0.0.13
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/05/2
+Message-Id: <1225883454.17904.19.camel@dhcp-lab-164.englab.brq.redhat.com>
+Date: Wed, 05 Nov 2008 12:10:54 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...re.org>, Chris Evans <scarybeasts@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: CVE Request - Python string expandtabs
 Content-Type: text/plain; charset=utf-8
 
+Hello!
 
-On Thu, 27 Mar 2008, Josh Bressers wrote:
+  yesterday looked yet at the Python issues reported
+by Chris Evans at:
 
-> > Any idea on what Mozilla means by using CVE-2008-1240 in MFSA 2008-18?
-> > They already list CVE-2008-1195, which is associated with the Sun
-> > advisory, and that seems like the only issue they're really trying to
-> > address.
-> >
->
-> That's the one I mailed you about back when I was assigning the CVE ids ;)
+http://scary.beasts.org/security/CESA-2008-008.html
 
-Oh, that was like 300 CVE's ago ;-)
+and found out, the issue:
 
-> The Mozilla advisory doesn't clarify that CVE-2008-1195 is the Sun CVE id
-> for their java advisory:
-> http://sunsolve.sun.com/search/document.do?assetkey=1-66-233326-1
+* Integer overflow in string expandtabs operation
 
-The CVE itself clarifies this, so I guess that's kind of OK.
+*  PoC: s = 't\tt\t'
+        str.expandtabs(s, 2147483647)
 
-> This flaw is now fixed in both Java and Firefox (it's debatable who is at
-> fault here, both the browser and the JRE were doing silly things).
->
->
-> As you gave me the advice that since the codebases are different, they
-> should get separate ids.  We can always yank CVE-2008-1240 if you wish and
-> I'll see about getting upstream to remove it from the advisory.
+  still lacks its own separate CVE identifier.
 
-No, I'll keep them split, given the rationale that it's arguably both
-their fault.  I'll try to clarify that in the description for
-CVE-2008-1240.
+  Different issue than CVE-2008-2315.
 
-- Steve
+  Reasoning:
+  =========
+
+  Integer overflows in stringobject.c and unicodeobject.c 
+  in Python 2.5.2 are part of CVE-2008-2315, but
+  part of CVE-2008-2315 is also mention about patch:
+  
+  http://bugs.gentoo.org/attachment.cgi?id=159418&action=view
+
+  which by itself is not sufficient to resolve this flaw.
+
+  Upstream has applied the following patch:
+  ========================================= 
+
+  http://svn.python.org/view?rev=61350&view=rev
+
+  Have checked by above PoC that applying this patch
+  solves this vulnerability.
+
+  Affected Python versions: 2.2.3 <= x <= 2.5.1
+  =========================
+
+Chris, can you confirm my investigation?
+
+Steve, could you allocate a new CVE id?
+
+Thanks, Jan.
+
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team  
+  
+
