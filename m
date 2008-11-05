@@ -1,35 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/27/2
-Message-Id: <200803270303.22209.rbu@gentoo.org>
-Date: Thu, 27 Mar 2008 03:03:22 +0100
-From: Robert Buchholz <rbu@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/05/3
+Message-ID: <72daeffd0811051127h3e8d80b2vd046add3768879a4@mail.gmail.com>
+Date: Wed, 5 Nov 2008 11:27:16 -0800
+From: "Chris Evans" <scarybeasts@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: request CVE id: insecure handling of DISPLAY in rxvt
+Cc: "Steven M. Christey" <coley@...re.org>, "Will Drewry" <redpig@...rt.org>
+Subject: Re: CVE Request - Python string expandtabs
 Content-Type: text/plain; charset=utf-8
 
-On Tuesday 04 March 2008, Nico Golde wrote:
-> It should be a good idea to check other terminal emulators
-> as well.
+Adding in Will....
 
-The same issue also exists in:
-aterm, tested 1.0.1
-eterm, tested 0.9.4
-mrxvt, tested 0.5.3
-multi-aterm, tested 0.2.1
-rxvt-unicode, tested 8.3 and 8.9
-wterm, tested with 6.2.9
+... yes, this sounds accurate. Searching through my mail, my colleague
+Will found that the original expandtabs() fix was insufficient (thanks
+for the catch Will!).
 
-This is almost half of the terminal emulators I tried. There are 
-probably tons of other X applications doing this, not all with the 
-impact of a shell, but many allow starting other programs one way or 
-another.
-
-Reading the attack vector, I would consider it a vulnerability, but 
-looking at the amount of programs that fall into this category, I'm 
-worried how many programs do this and if the low impact is really worth 
-fixing all of them.
-
-
-Robert
-
-Download attachment "signature.asc " of type "application/pgp-signature" (190 bytes)
+On Wed, Nov 5, 2008 at 3:10 AM, Jan Lieskovsky <jlieskov@...hat.com> wrote:
+> Hello!
+>
+>  yesterday looked yet at the Python issues reported
+> by Chris Evans at:
+>
+> http://scary.beasts.org/security/CESA-2008-008.html
+>
+> and found out, the issue:
+>
+> * Integer overflow in string expandtabs operation
+>
+> *  PoC: s = 't\tt\t'
+>        str.expandtabs(s, 2147483647)
+>
+>  still lacks its own separate CVE identifier.
+>
+>  Different issue than CVE-2008-2315.
+>
+>  Reasoning:
+>  =========
+>
+>  Integer overflows in stringobject.c and unicodeobject.c
+>  in Python 2.5.2 are part of CVE-2008-2315, but
+>  part of CVE-2008-2315 is also mention about patch:
+>
+>  http://bugs.gentoo.org/attachment.cgi?id=159418&action=view
+>
+>  which by itself is not sufficient to resolve this flaw.
+>
+>  Upstream has applied the following patch:
+>  =========================================
+>
+>  http://svn.python.org/view?rev=61350&view=rev
+>
+>  Have checked by above PoC that applying this patch
+>  solves this vulnerability.
+>
+>  Affected Python versions: 2.2.3 <= x <= 2.5.1
+>  =========================
+>
+> Chris, can you confirm my investigation?
+>
+> Steve, could you allocate a new CVE id?
+>
+> Thanks, Jan.
+>
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+>
+>
+>
