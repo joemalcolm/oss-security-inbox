@@ -1,31 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/27/6
-Message-Id: <200807272103.57061.rbu@gentoo.org>
-Date: Sun, 27 Jul 2008 21:03:54 +0200
-From: Robert Buchholz <rbu@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/06/1
+Message-ID: <28fa9c5e0811060612t1b17c4f1p94d102fb04a984e7@mail.gmail.com>
+Date: Thu, 6 Nov 2008 22:12:13 +0800
+From: "Eugene Teo" <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Cc: Steffen Joeris <steffen.joeris@...lelinux.de>
-Subject: Re: cups patches for CVE-2008-0597 and CVE-2008-0596
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: Unix sockets kernel panic
 Content-Type: text/plain; charset=utf-8
 
-On Sunday 27 July 2008, Steffen Joeris wrote:
-> Hi
->
-> I am working on a cups update at the moment and I am looking for two
-> missing patches. Could somebody please email me the patches for
-> CVE-2008-0596 and CVE-2008-0597 (both DoS due to crafted IPP packets
-> and a large number of requests for adding and removing printers).
-> I saw them marked as fixed in the opensuse announcement, but couldn't
-> find the patches for some reason and the novell bugzilla does not
-> grant access to the bugs to everyone :/
-> Thanks heaps in advance.
+Hi,
 
-Hi Steffen,
+We need a CVE name for this issue. This was reported in netdev today.
 
-the RedHat Bugzilla does not link the patches directly, but you can 
-easily extract them from this SRPM:
-ftp://updates.redhat.com/enterprise/3desktop/en/os/SRPMS/cups-1.1.17-13.3.51.src.rpm
+"The following code causes a kernel panic on Linux 2.6.26:
+http://darkircop.org/unix.c
 
-Robert
+I haven't investigated the bug so I'm not sure what is causing it, and
+don't know if it's exploitable.  The code passes unix sockets from one
+process to another using unix sockets.  The bug probably has to do
+with closing file descriptors."
 
-Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
+http://marc.info/?l=linux-netdev&m=122593044330973&w=2
+https://bugzilla.redhat.com/show_bug.cgi?id=470201
+
+There isn't a fix yet. Dave is working on it.
+
+Thanks, Eugene
