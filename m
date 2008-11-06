@@ -1,58 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/08/6
-Message-ID: <bBZl8Do2po3a5+T7wiqh7TIrUF8@kjaK+/sQ5DW5981v71UogZJPf/0>
-Date: Mon, 8 Dec 2008 15:16:07 +0300
-From: Eygene Ryabinkin <rea-sec@...elabs.ru>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/06/2
+Message-ID: <49131C7E.8050105@op5.se>
+Date: Thu, 06 Nov 2008 17:34:06 +0100
+From: Andreas Ericsson <ae@....se>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: Re: CVE Request (nagios)
+CC: Johannes Dagemark <jd@....se>, Ethan Galstad <egalstad@...ios.org>,  "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: Nagios (two issues)
 Content-Type: text/plain; charset=utf-8
 
-Andreas,
+We need two CVE id's for the Nagios project.
 
-Mon, Dec 08, 2008 at 01:00:18PM +0100, Andreas Ericsson wrote:
-> Eygene Ryabinkin wrote:
-> > As you see, the wrong arguments were passed to the cmd_submitf for the
-> > service comments -- argument 'service_desc' will be treated as integer
-> > and argument 'presistent_comment' (that is essentially a boolean that is
-> > simulated via 'int' type) will be treated as the pointer to a string.
-> > SEGV is likely here.
-> > 
-> 
-> Ah, right. Yes, that's true. however, it's not a vulnerability as it's
-> doing read-only access, and it can't cause DoS as it's only the CGI
-> that's affected.
+******
 
-It surely will cause SEGV:
------
-$ cat test.c
-#include <stdio.h>
+1.
+Low-privileged users can create a custom form (or use a browser
+addon) to bypass authorization and submit commands to the nagios
+process that causes other programs to be run with the privileges
+of the Nagios process.
+Fixed in Nagios 3.0.5.
 
-int main(void)
-{
-        char buffer[1024];
-        int persistent_comment = 1;
-        char *current_time = "time";
-        char *host_name = "host name";
-        char *service_desc = "service";
-        char *comment_author = "author";
-        char *comment_data = "comment";
+******
 
-        snprintf(buffer, sizeof(buffer),
-            "%s;%s;%d;%s;%s", current_time, host_name, service_desc,
-            persistent_comment, comment_author, comment_data);
-        return 0;
-}
-$ gcc -o test test.c
-$ ./test
-Segmentation fault: 11 (core dumped)
------
+2.
+Cross-Site Request Forgery allows remote attackers to submit
+commands to the nagios process, thereby causing programs to run
+on the Nagios server with the privileges of the Nagios process.
+Patch available at
+http://git.op5.org/git/?p=nagios.git;a=commit;h=814d8d4d1a73f7151eeed187c0667585d79fea18
 
-Since CGI's could dump core and core dump starvates both disk and CPU,
-then DoS for the HTTP server that hosts Nagios is still foreseeable.
-But I tend to agree that this issue is of much lower interest then the
-cmg.cgi's one ;))  So, probably, no CVE is really needed until someone
-will show how this thing can be exploited.  Remember sudo's "just one
-byte" overflow (http://packetstormsecurity.org/0211-exploits/hudo.c)?
+******
+
+TIA.
+
 -- 
-Eygene
+Andreas Ericsson                   andreas.ericsson@....se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
