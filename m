@@ -1,20 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/21/7
-Message-Id: <200810211821.27634.hanno@hboeck.de>
-Date: Tue, 21 Oct 2008 18:21:27 +0300
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com, coley@...re.org
-Subject: CVE req: drupal < 5.11/6.5
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/07/1
+Message-ID: <20081107182526.31135a20@redhat.com>
+Date: Fri, 7 Nov 2008 18:25:26 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: thomas@...e.de
+Subject: Re: CVE request: libcdaudio
 Content-Type: text/plain; charset=utf-8
 
-I don't think this has a CVE yet:
-http://drupal.org/node/318706
+On Wed, 5 Nov 2008 09:07:23 +0100 Thomas Biege <thomas@...e.de> wrote:
 
+> we need a CVE-ID for a buffer overflow in libcdaudio.
+> It is a remotely exploitable heap-based buffer overflow.
+
+If you have been using libcdaudio packages based on ATrpms / Fedora,
+you may have libcdaudio-0.99.12-buffovfl.patch, which addresses the
+same issue, it only mallocs more instead of fgetsing less.
+
+http://cvs.fedoraproject.org/viewvc/rpms/libcdaudio/devel/libcdaudio-0.99.12-buffovfl.patch
+
+This issue does not seem to affect CDDB code used by grip/gnome-vfs2,
+which may have common origin and previously had some flaws identical to
+libcdaudio (see below).
+
+Additionally, if you are shipping libcdaudio, you may be interested in
+patch for CVE-2005-0706 used by Gentoo:
+
+http://sources.gentoo.org/viewcvs.py/gentoo-x86/media-libs/libcdaudio/files/libcdaudio-0.99-CAN-2005-0706.patch
+
+According to the libcdaudio home page, upstream seems to be aware of
+this issue, as they acknowledge having security issues and even link to
+old Gentoo GLSA.
 
 -- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-
-http://x1000malquer.de/ - ab 8.11. Atomtransporte stoppen
-
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+Tomas Hoger / Red Hat Security Response Team
