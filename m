@@ -1,30 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/31/1
-Message-ID: <20080531005146.GA16885@ngolde.de>
-Date: Sat, 31 May 2008 02:51:46 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/10/1
+Message-ID: <4917C64E.8030704@redhat.com>
+Date: Mon, 10 Nov 2008 13:27:42 +0800
+From: Eugene Teo <eteo@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: joey@...ian.org
-Subject: CVE id request: ikiwiki
+CC: "Steven M. Christey" <coley@...us.mitre.org>, Greg KH <greg@...ah.com>
+Subject: Re: CVE requests: kernel: hfsplus-related bugs
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-Joey Hess discovered that if openid and passwordauth 
-plugins are both ennabled in ikiwiki which is the case in 
-the default installation anyone can log in using an openid 
-that has already been used to login into the wiki and 
-doesn't use a password.
+Eugene Teo wrote:
+> These were committed in upstream kernel. Reported by Eric Sesterhenn.
+> 
+> 1) hfsplus: fix Buffer overflow with a corrupted image
+> Upstream commit: efc7ffcb4237f8cb9938909041c4ed38f6e1bf40
+> 
+> When an hfsplus image gets corrupted it might happen that the catalog
+> namelength field gets b0rked.  If we mount such an image the memcpy() in
+> hfsplus_cat_build_key_uni() writes more than the 255 that fit in the
+> name field.  Depending on the size of the overwritten data, we either
+> only get memory corruption or also trigger an oops.
 
-This is Debian bug: http://bugs.debian.org/483770
+There's an equivalent bug for hfs. The upstream commit is d38b7aa. We
+will need a CVE name for this too.
 
-As Steven is currently on semi-vacation, Martin can you 
-assign a CVE id for this issue from the Debian pool?
+Greg, I don't recall seeing this in -stable kernel. FYI.
 
-Kind regards
-Nico
-
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+Thanks, Eugene
