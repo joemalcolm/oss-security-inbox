@@ -1,32 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/02/1
-Message-Id: <200808021759.20662.hanno@hboeck.de>
-Date: Sat, 2 Aug 2008 17:59:19 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/10/5
+Message-ID: <Pine.GSO.4.51.0811101019580.609@faron.mitre.org>
+Date: Mon, 10 Nov 2008 10:20:41 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: CVE request: Contenido < 4.8.7, < 4.6.24
+Subject: Re: CVE request: libcdaudio
 Content-Type: text/plain; charset=utf-8
 
-Upstream information is very limited. www.contenido.org
 
-From their webpage
-"Contenido in den Versionen 4.6.24 und 4.8.7 erschienen. Beide Versionen 
-beheben die relevanten Sicherheitslücken. "
-(in english something like: contenido released in version 4.6.24 and 4.8.7. 
-Both versions fix the relevant security issues.)
 
-Changelog in 4.8 is missing, changelog in 4.6.24 states:
-"- Bugfixes / Hotfixes zu u.a. CON-148, CON-150, CON-152
-- diverse Hotfixes fuer potentielle Luecken"
-(bugfixes/hotfixes for CON-148, CON-150, CON-152 and others, several hotfixes 
-for potential vulnerabilities)
+On Wed, 5 Nov 2008, Thomas Biege wrote:
 
-I think CON-xxx is some kind of internal advisory numbering, but I found 
-nowhere what CON-xxx is.
+> Hello,
+> we need a CVE-ID for a buffer overflow in libcdaudio.
+> It is a remotely exploitable heap-based buffer overflow.
 
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+Out of curiosity, what makes it remote?
 
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+Use CVE-2008-5030
+
+- Steve
+
+======================================================
+Name: CVE-2008-5030
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5030
+Reference: MLIST:[oss-security] 20081105 CVE request: libcdaudio
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/05/1
+Reference: MLIST:[oss-security] 20081107 Re: CVE request: libcdaudio
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/07/1
+Reference: MISC:http://sourceforge.net/tracker/index.php?func=detail&aid=1288043&group_id=27134&atid=389442
+Reference: BID:32122
+Reference: URL:http://www.securityfocus.com/bid/32122
+
+Heap-based buffer overflow in the cddb_read_disc_data function in
+cddb.c in libcdaudio 0.99.12p2 allows remote attackers to execute
+arbitrary code via long CDDB data.
+
+
