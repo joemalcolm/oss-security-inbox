@@ -1,25 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/28/9
-Message-ID: <Pine.GSO.4.51.0811281820110.20386@faron.mitre.org>
-Date: Fri, 28 Nov 2008 18:20:21 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/10/8
+Message-ID: <49187798.6020103@gentoo.org>
+Date: Mon, 10 Nov 2008 19:04:08 +0100
+From: Christian Hoffmann <hoffie@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE requset: WordPress XSS vulnerability in RSS Feed Generator
+CC: mail@...ianw.de
+Subject: GeSHi: Clarification about the recent security (non-)issues (SA32559)
 Content-Type: text/plain; charset=utf-8
 
+Heya,
+
+I was reading up on Secunia Advisory 32559 [1] and the related upstream
+statement [2] and ChangeLog [3] and well, it left me with some mixed
+impressions, what's true and what not, so I took a closer look.
+
+The facts:
+  * Secunia says: "unspecified error, which may allow execution of
+        arbitrary code"
+  * Upstream's ChangeLog [3] says: "Fixed a problem allowing Remote
+        Code Inclusion under certain circumstances (BenBE)"
+  * Upstream's news entry [2] says that the exploitation of
+    this issue requires that an attacker already has access to the
+    system
+
+So, with little concrete information being available, I took a look at
+the diff [4]. As I understand it, a function (set_language_path()) did
+not check the parameter, which it got passed, which made it possible to
+inject data into a string, which would later be used by "include" or a
+similar construct. This would allow for using certain stream wrappers
+like http:// or php:// to load user-supplied data as PHP code.
+So, *if* a user has the possibility to pass a crafted string to
+set_language_path(), this might allow for later remote (PHP) code execution.
+GeSHi calls this function in its constructor with the passed $path
+argument, which is not untrusted per-se. So GeSHi alone does not make
+this a vulnerability.
+Webapps could pass user-supplied data to this parameter, but this sounds
+unlikely (and not that smart...). So if at all, I'd consider this a
+vulnerability in a web app, which passes user-supplied input to this
+parameter.
+
+These are just my findings after having a quick look at the code, and I
+thought I'd shared them, just in case someone wondered (and please
+protest, if you think I'm wrong).
+
+JFYI: Dokuwiki and phpBB are examples of software packages, which bundle
+GeSHi. Dokuwiki passes a static string to the mentioned $path parameter
+and is not vulnerable as such. I haven't checked phpBB.
 
 
-======================================================
-Name: CVE-2008-5278
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5278
-Reference: BUGTRAQ:20081125 WordPress XSS vulnerability in RSS Feed Generator
-Reference: URL:http://www.securityfocus.com/archive/1/498652
-Reference: CONFIRM:http://wordpress.org/development/2008/11/wordpress-265/
-
-Cross-site scripting (XSS) vulnerability in the self_link function in
-in the RSS Feed Generator (wp-includes/feed.php) for WordPress before
-2.6.5 allows remote attackers to inject arbitrary web script or HTML
-via the Host header (HTTP_HOST variable).
+[1] http://secunia.com/advisories/32559/
+[2] http://qbnz.com/highlighter/news.php?id=119
+[3] http://sourceforge.net/project/shownotes.php?release_id=637321
+[4]
+http://geshi.svn.sourceforge.net/viewvc/geshi/trunk/geshi-1.0.X/src/geshi.php?r1=1747&r2=1750
+-- 
+Christian Hoffmann
 
 
+Download attachment "signature.asc" of type "application/pgp-signature" (261 bytes)
