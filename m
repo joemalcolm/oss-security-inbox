@@ -1,20 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/04/8
-Message-ID: <Pine.GSO.4.51.0809041125020.29613@faron.mitre.org>
-Date: Thu, 4 Sep 2008 11:25:26 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/10/6
+Message-ID: <28fa9c5e0811100734xe094309m789d9c9225dcbab5@mail.gmail.com>
+Date: Mon, 10 Nov 2008 23:34:53 +0800
+From: "Eugene Teo" <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request (gpicview)
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, "Greg KH" <greg@...ah.com>
+Subject: Re: CVE requests: kernel: hfsplus-related bugs
 Content-Type: text/plain; charset=utf-8
 
+Hi Steve,
 
-On Thu, 4 Sep 2008, Nico Golde wrote:
+On Mon, Nov 10, 2008 at 10:47 PM, Steven M. Christey
+<coley@...us.mitre.org> wrote:
+>
+> On Mon, 10 Nov 2008, Eugene Teo wrote:
+>
+>> > 1) hfsplus: fix Buffer overflow with a corrupted image
+>> > Upstream commit: efc7ffcb4237f8cb9938909041c4ed38f6e1bf40
+>> ...
+>> There's an equivalent bug for hfs. The upstream commit is d38b7aa. We
+>> will need a CVE name for this too.
+>
+> Use CVE-2008-5025
+>
+> Is the bug exactly equivalent?  Could you be more specific about existing
+> references?  "d38b7aa" doesn't look like a typical commit ID so the CVE is
+> currently marked as reserved.
 
-> > Good catch! You need to append '.jpg' at the end of the crafed filename
-> > so the rotation via jpegtran is invoked, but besides that it works ok:
-> [...]
-> Can we get a second CVE id for this then please?
+Both patches validate the catalog name length.
 
-Use CVE-2008-3904, to be filled in later.
+The following is the description of the hfs bug:
+"Fix a stack corruption caused by a corrupted hfs filesystem.  If the
+catalog name length is corrupted the memcpy overwrites the catalog
+btree structure.  Since the field is limited to HFS_NAMELEN bytes in
+the structure and the file format, we throw an error if it is too
+long."
 
-- Steve
+It is possible to use the 7-hexdigit instead of the usual 40-hexdigit
+SHA1 hash to refer to the commit ID.
+
+Thanks, Eugene
