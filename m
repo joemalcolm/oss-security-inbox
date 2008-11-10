@@ -1,45 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/09/19
-Message-ID: <20080909170129.GD11131@ngolde.de>
-Date: Tue, 9 Sep 2008 19:01:29 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/10/4
+Message-ID: <2359eed20811100717i5f9bb22w913d0bfb8e9523aa@mail.gmail.com>
+Date: Mon, 10 Nov 2008 09:17:51 -0600
+From: "Will Drewry" <redpig@...rt.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id requests: gmanedit
+Cc: "Steven M. Christey" <coley@...re.org>,  "Chris Evans" <scarybeasts@...il.com>
+Subject: Re: CVE request - Python string expandtabs
 Content-Type: text/plain; charset=utf-8
 
-Hi Steven,
-* Steven M. Christey <coley@...us.mitre.org> [2008-09-09 18:12]:
-> On Sat, 6 Sep 2008, Steffen Joeris wrote:
-> 
-> > There are two possible buffer overflows in gmanedit. One is via crafted
-> > configuration file and the other one via crafted manual page.
-> > See the Debian bug report for more information.
-> > http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=497835
-> 
-> Use CVE-2008-3971, which covers the manual page and (if it's
-> security-relevant) the configuration page.  Even though the source of
-> attack is different, the vuln type is the same.
-> 
-> Nico - I don't know the typical usage scenarios for gmanedit, but if the
-> design of the configuration file allows the user to define dangerous
-> actions (such as their own executable commands), then it's clearly not
-> intended for external influence and wouldn't count as a vuln in my book.
-> Still would be merged under CVE-2008-3971 if there's a scenario.
+On Mon, Nov 10, 2008 at 3:54 AM, Jan Lieskovsky <jlieskov@...hat.com> wrote:
+> Hello Steve,
+>
+>  could you allocate a new CVE id for the following Python issue:
+>
+> * Advisory: http://scary.beasts.org/security/CESA-2008-008.html
+>
+> * Issue: Integer overflow in string expandtabs operation
+>
+> * PoC: s = 't\tt\t'
+>       str.expandtabs(s, 2147483647)
+>
+>  Different issue than CVE-2008-2315 (CVE-2008-2315 mentions
+>  patch: http://bugs.gentoo.org/attachment.cgi?id=159418&action=view
+>  which is not sufficient to resolve this str_expandtabs issue).
+>
+> * Confirmation from Chris Evans:
+>
+>  Adding in Will....
+>
+>  ... yes, this sounds accurate. Searching through my mail, my colleague
+>  Will found that the original expandtabs() fix was insufficient (thanks
+>  for the catch Will!).
+>
+> * Upstream patch: http://svn.python.org/view?rev=61350&view=rev
 
-I share your opinion here, I'd rather see the COMMANDS thing 
-as an application bug as a user who doesn't read the 
-configuration but just uses it could also get owned with a 
-valid command. The only difference I see is that as far as I 
-understood the command is only executed after user action 
-while the configuration value is read without. The manpage 
-utf-8 conversion is the real vulnerability as it is possible 
-to exploit a victim by opening a crafted manpage in 
-gmanedit.
+This appears to be the patch for 2.6.  The 2.5 maintenance patch was
+one revision earlier:
+  http://svn.python.org/view?rev=61349&view=rev
 
-Cheers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+> * Affected Python versions: 2.2.3 <= x <= 2.5.1
 
-Content of type "application/pgp-signature" skipped
+Given that there is a patch for 2.6 as well, it might be worth
+expanding the impacted versions to include it.  (I believe 2.5.2 was
+also affected where r61349 fixed it for 2.5.3.)
+
+For patch validation purposes,
+* string poc:
+s = 'AA\t\n\tAAAAAAAA'
+len(s.expandtabs(0x7ffffffe))
+
+* unicode poc:
+s = u'AA\t\n\tAAAAAAAA'
+len(s.expandtabs(0x7ffffffe))
+
+
+cheers, will
