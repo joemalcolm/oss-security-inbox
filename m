@@ -1,55 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/23/3
-Message-ID: <20081023211628.GB7323@severus.strandboge.com>
-Date: Thu, 23 Oct 2008 16:16:28 -0500
-From: Jamie Strandboge <jamie@...onical.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: CVE request for ecryptfs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/10/13
+Message-ID: <20081110201047.GN4347@ngolde.de>
+Date: Mon, 10 Nov 2008 21:10:47 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com, coley@...re.org, rem@...eolan.org
+Subject: Re: CVE id request: vlc
 Content-Type: text/plain; charset=utf-8
 
 Hi,
+* Steven M. Christey <coley@...us.mitre.org> [2008-11-10 19:09]:
+> ======================================================
+> Name: CVE-2008-5032
+> Status: Candidate
+> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5032
+> Reference: MLIST:[oss-security] 20081105 CVE id request: vlc
+> Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/05/5
+> Reference: MLIST:[oss-security] 20081105 VideoLAN security advisory 0810
+> Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/05/4
+> Reference: MISC:http://www.trapkit.de/advisories/TKADV2008-011.txt
+> Reference: MISC:http://www.trapkit.de/advisories/TKADV2008-012.txt
+> Reference: CONFIRM:http://git.videolan.org/?p=vlc.git;a=commitdiff;h=5f63f1562d43f32331006c2c1a61742de031b84d
+> Reference: CONFIRM:http://git.videolan.org/?p=vlc.git;a=commitdiff;h=e3cef651125701a2e33a8d75b815b3e39681a447
+> Reference: CONFIRM:http://www.videolan.org/security/sa0810.html
+> 
+> Multiple stack-based buffer overflows in VideoLAN VLC media player
+> 0.5.0 through 0.9.5 allow user-assisted attackers to execute arbitrary
+> code via (1) the header of an invalid CUE image file, related to
+> modules/access/vcd/cdrom.c; or (2) an invalid RealText (rt) subtitle
+> file, related to the ParseRealText function in
+> modules/demux/subtitle.c.
 
-While reviewing ecryptfs, I discovered an information disclosure
-vulnerability in ecryptfs-setup-private and notified upstream. This
-helper script was known as ecryptfs-setup-confidential in earlier
-releases.
+Could you split that up into two CVE ids? I ask because the 
+realtext issue doesn't affect versions < 0.9.x which is the 
+case for the version we have in Debian so I can not use a 
+fixed version + not-affected for one CVE id in our security 
+tracker.
 
-The problem arises when ecryptfs-setup-private invokes
-ecryptfs-wrap-passphrase and ecryptfs-add-passphrase with command line
-arguments that include the user's existing login password as well as the
-newly created mount password. As a result, these passwords can be
-snooped in the process table.
-
-This script did not exist in ecryptfs before 45. The original script
-(ecryptfs-setup-pam-wrapped.sh) referenced in [1] that formed the basis
-for the scripts found in 45 is also vulnerable to this attack vector, so
-anyone shipping any of these scripts is affected.
-
-Upstream has fixed this in [2] (with a bugfix in [3]) by updating
-ecryptfs-add-passphrase and ecryptfs-wrap-passphrase to accept passwords
-on stdin, and adjusting ecryptfs-setup-private to use the builtin
-'printf' function of the shell to pipe to these commands. The dash and
-bash shells are known to contain the 'printf' builtin. It is my
-understanding that upstream plans to release a new version incorporating
-this fix soon.
-
-I didn't see any distributions who have released with a vulnerable
-version of ecryptfs (or ecryptfs-setup-pam-wrapped.sh). Debian and
-Ubuntu [4] do have vulnerable versions in their development releases,
-and our ecryptfs developer has contacted the Debian maintainer directly.
-
-Thanks,
-
-Jamie
-
-[1] http://ecryptfs.sourceforge.net/ecryptfs-pam-doc.txt
-[2] http://git.kernel.org/?p=linux/kernel/git/mhalcrow/ecryptfs-utils.git;a=commit;h=06de99afd53f03fe07eda0ad9d61ac6d5d4d9f53
-[3] http://git.kernel.org/?p=linux/kernel/git/mhalcrow/ecryptfs-utils.git;a=commit;h=0af27a5d514dc4bbc077f07cf33a5d5b362a9193
-[4] https://launchpad.net/bugs/287908
-
+Kind regards
+Nico
 -- 
-Ubuntu Security Engineer     | http://www.ubuntu.com/
-Canonical Ltd.               | http://www.canonical.com/
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (198 bytes)
+Content of type "application/pgp-signature" skipped
