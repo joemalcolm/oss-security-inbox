@@ -1,28 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/11/4
-Message-ID: <20081111092216.6012b9ea@redhat.com>
-Date: Tue, 11 Nov 2008 09:22:16 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: coley@...us.mitre.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: libcdaudio
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/10/7
+Message-ID: <Pine.GSO.4.51.0811101257080.6724@faron.mitre.org>
+Date: Mon, 10 Nov 2008 12:57:44 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+cc: "Steven M. Christey" <coley@...us.mitre.org>, Greg KH <greg@...ah.com>
+Subject: Re: CVE requests: kernel: hfsplus-related bugs
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 10 Nov 2008 10:20:41 -0500 (EST) "Steven M. Christey"
-<coley@...us.mitre.org> wrote:
 
-> > we need a CVE-ID for a buffer overflow in libcdaudio.
-> > It is a remotely exploitable heap-based buffer overflow.
-> 
-> Out of curiosity, what makes it remote?
-> 
-> Use CVE-2008-5030
+On Mon, 10 Nov 2008, Eugene Teo wrote:
 
-I guess this wording was used by Thomas as the affected code is used to
-talk to remote CDDB servers, from which you obtain list of tracks for
-your audio CD.  If remote CDDB server is untrusted / compromised, it
-can send you a crafted reply that can exploit libcdaudio flaw on your
-system.
+> Both patches validate the catalog name length.
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+Thanks for the clarification.
+
+Is there any reference for this issue (say, a bug ID) besides your post to
+oss-security?
+
+- Steve
