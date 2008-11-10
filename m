@@ -1,32 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/07/5
-Message-ID: <Pine.GSO.4.51.0808071642120.25461@faron.mitre.org>
-Date: Thu, 7 Aug 2008 16:42:47 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/10/11
+Message-ID: <Pine.GSO.4.51.0811101307030.6724@faron.mitre.org>
+Date: Mon, 10 Nov 2008 13:07:16 -0500 (EST)
 From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: openttd
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: Unix sockets kernel panic
 Content-Type: text/plain; charset=utf-8
 
 
-On Mon, 4 Aug 2008, Nico Golde wrote:
+======================================================
+Name: CVE-2008-5029
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5029
+Reference: MLIST:[linux-netdev] 20081106 UNIX sockets kernel panic
+Reference: URL:http://marc.info/?l=linux-netdev&m=122593044330973&w=2
+Reference: MLIST:[oss-security] 20081106 CVE request: kernel: Unix sockets kernel panic
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/06/1
+Reference: MISC:http://darkircop.org/unix.c
+Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=470201
+Reference: BID:32154
+Reference: URL:http://www.securityfocus.com/bid/32154
 
-> "OpenTTD servers of version 0.6.1 and below are susceptible to a remotely
-> exploitable buffer overflow when the server is filled with companies and
-> clients with names that are (near) the maximum allowed length for names.
-> In the worst case OpenTTD will write the following (mostly remotely
-> changable bytes) into 1460 bytes of malloc-ed memory:
-> up to 11 times (amount of players) 118 bytes
-> up to 8 times (amount of companies) 124 bytes
-> and 7 "header" bytes
-> Resulting in up to 2297 bytes being written in 1460 bytes of malloc-ed
-> memory. This makes it possible to remotely crash the game or change the
-> gamestate into an unrecoverable state.  "
->
-> This is Debian bug #493714.
+The __scm_destroy function in net/core/scm.c in the Linux kernel
+2.6.27.4, 2.6.26, and earlier makes indirect recursive calls to itself
+through calls to the fput function, which allows local users to cause
+a denial of service (panic) via vectors related to sending an
+SCM_RIGHTS message through a UNIX domain socket and closing file
+descriptors.
 
-Use CVE-2008-3547 (to be updated later) for this issue, as reported.
 
-If Secunia wound up reporting a distinct bug, that would need an
-additional CVE.
-
-- Steve
