@@ -1,41 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/22/9
-Message-ID: <87ej7ujjyj.fsf@mid.deneb.enyo.de>
-Date: Thu, 22 May 2008 20:02:28 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Root name server changes -> bind
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/10/12
+Message-ID: <Pine.GSO.4.51.0811101310070.6724@faron.mitre.org>
+Date: Mon, 10 Nov 2008 13:11:09 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Andreas Ericsson <ae@....se>
+cc: oss-security@...ts.openwall.com, Johannes Dagemark <jd@....se>, Ethan Galstad <egalstad@...ios.org>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: Nagios (two issues)
 Content-Type: text/plain; charset=utf-8
 
-* Jonathan Smith:
 
-> So, why are they running a DNS server on that IP?
 
-I can't speak for them.  Why does one run a root server?  I don't know.
 
-> | ICANN should have arranged for a longer transition period, as it was
-> | done in previous transitions (I think a few older address still respond
-> | to queries).
->
-> I think the transition period began in late 2007, but this is the first
-> I've (and, I think, many others) heard about it.
+======================================================
+Name: CVE-2008-5027
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5027
+Reference: MLIST:[nagios-devel] 20081107 Security fixes completed
+Reference: URL:http://sourceforge.net/mailarchive/forum.php?thread_name=4914396D.5010009%40op5.se&forum_name=nagios-devel
+Reference: MLIST:[oss-security] 20081106 CVE request: Nagios (two issues)
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/06/2
+Reference: MISC:http://www.nagios.org/development/history/nagios-3x.php
+Reference: CONFIRM:http://www.op5.com/support/news/389-important-security-fix-available-for-op5-monitor
+Reference: BID:32156
+Reference: URL:http://www.securityfocus.com/bid/32156
 
-A period of six months is relatively short, compared to previous
-transitions and software release cycles.
+The Nagios process in (1) Nagios before 3.0.5 and (2) op5 Monitor
+before 4.0.1 allows remote authenticated users to bypass authorization
+checks, and trigger execution of arbitrary programs by this process,
+via an (a) custom form or a (b) browser addon.
 
-> | There's no way to retire an IP address, especially if it is located in a
-> | network prefix that is still in production (which was a driving force
-> | behind most past root servers migrations).
->
-> I was under the impression that ICANN "owned" or at least "was in charge
-> of" the allocation of IPs for the root name servers.
 
-No, this is not the case.  They didn't even control fully the old L root
-prefix, which partly motivated the migration.
+======================================================
+Name: CVE-2008-5028
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5028
+Reference: MLIST:[nagios-devel] 20081107 Security fixes completed
+Reference: URL:http://sourceforge.net/mailarchive/forum.php?thread_name=4914396D.5010009%40op5.se&forum_name=nagios-devel
+Reference: MLIST:[oss-security] 20081106 CVE request: Nagios (two issues)
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/06/2
+Reference: CONFIRM:http://git.op5.org/git/?p=nagios.git;a=commit;h=814d8d4d1a73f7151eeed187c0667585d79fea18
+Reference: CONFIRM:http://www.op5.com/support/news/389-important-security-fix-available-for-op5-monitor
+Reference: SECUNIA:32610
+Reference: URL:http://secunia.com/advisories/32610
+Reference: XF:nagios-cmd-csrf(46426)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/46426
 
-> So why couldn't they just bar (via policy, not via technical means)
-> whoever owns the rest of the prefix that IP is in from using it?
+Cross-site request forgery (CSRF) vulnerability in cmd.cgi in (1)
+Nagios 3.0.5 and (2) op5 Monitor before 4.0.1 allows remote attackers
+to send commands to the Nagios process, and trigger execution of
+arbitrary programs by this process, via unspecified HTTP requests.
 
-They don't own the IP addresses.  AFAIK, only one root operator has
-entered into an agreement with ICANN.  DNS root operations are totally
-self-regulated, and as we can see, this works (sort of).
+
