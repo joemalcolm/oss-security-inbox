@@ -1,23 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/05/1
-Message-ID: <1093412844.4365021228510339728.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 5 Dec 2008 15:52:19 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: coley@...re.org
-Subject: CVE Request (nagios)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/10/9
+Message-ID: <Pine.GSO.4.51.0811101304320.6724@faron.mitre.org>
+Date: Mon, 10 Nov 2008 13:04:40 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Chris Evans <scarybeasts@...il.com>
+cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...re.org>, Will Drewry <redpig@...rt.org>
+Subject: Re: CVE Request - Python string expandtabs
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
 
-I'm not seeing a CVE id for this.  It seems the Nagios 3.0.6 release fixes a flaw:
-http://www.nagios.org/development/history/nagios-3x.php
-http://bugs.gentoo.org/show_bug.cgi?id=249876
+======================================================
+Name: CVE-2008-5031
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5031
+Reference: MLIST:[oss-security] 20081105 CVE Request - Python string expandtabs
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/05/2
+Reference: MLIST:[oss-security] 20081105 Re: CVE Request - Python string expandtabs
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/05/3
+Reference: MISC:http://scary.beasts.org/security/CESA-2008-008.html
+Reference: CONFIRM:http://svn.python.org/view/python/trunk/Objects/stringobject.c?rev=61350&view=diff&r1=61350&r2=61349&p1=python/trunk/Objects/stringobject.c&p2=/python/trunk/Objects/stringobject.c
+Reference: CONFIRM:http://svn.python.org/view/python/trunk/Objects/unicodeobject.c?rev=61350&view=diff&r1=61350&r2=61349&p1=python/trunk/Objects/unicodeobject.c&p2=/python/trunk/Objects/unicodeobject.c
+Reference: CONFIRM:http://svn.python.org/view?rev=61350&view=rev
 
-Here is the patch:
-http://sourceforge.net/mailarchive/forum.php?thread_name=E1L6mat-0001sb-RN%40fdv4jf1.ch3.sourceforge.com&forum_name=nagios-checkins
+Multiple integer overflows in Python 2.5.2 allow context-dependent
+attackers to have an unknown impact via a large integer value in the
+tabsize argument to the expandtabs method, as implemented by (1) the
+string_expandtabs function in Objects/stringobject.c and (2) the
+unicode_expandtabs function in Objects/unicodeobject.c.  NOTE: this
+vulnerability reportedly exists because of an incomplete fix for
+CVE-2008-2315.
 
-Thanks.
 
--- 
-    JB
