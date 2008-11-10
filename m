@@ -1,33 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/27/9
-Message-ID: <Pine.GSO.4.51.0807271751450.20336@faron.mitre.org>
-Date: Sun, 27 Jul 2008 17:53:53 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/10/10
+Message-ID: <Pine.GSO.4.51.0811101305110.6724@faron.mitre.org>
+Date: Mon, 10 Nov 2008 13:05:23 -0500 (EST)
 From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Links < 2.1 security issue
+Subject: Re: CVE id request: vlc
 Content-Type: text/plain; charset=utf-8
 
 
-On Sun, 27 Jul 2008, Pierre-Yves Rofes wrote:
-
-> Anyone investigated this, or even has a clue on the potential impact?
-> Not sure if a CVE can be assigned, since this is very (too?) vague...
-
-We operate on the assumption that if a developer says it's a security
-issue, it's worth assigning a CVE for.
-
-But you wind up with uninformative descriptions like the one below :-/
-
-- Steve
 
 ======================================================
-Name: CVE-2008-3329
+Name: CVE-2008-5032
 Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3329
-Reference: CONFIRM:http://links.twibright.com/download/ChangeLog
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5032
+Reference: MLIST:[oss-security] 20081105 CVE id request: vlc
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/05/5
+Reference: MLIST:[oss-security] 20081105 VideoLAN security advisory 0810
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/05/4
+Reference: MISC:http://www.trapkit.de/advisories/TKADV2008-011.txt
+Reference: MISC:http://www.trapkit.de/advisories/TKADV2008-012.txt
+Reference: CONFIRM:http://git.videolan.org/?p=vlc.git;a=commitdiff;h=5f63f1562d43f32331006c2c1a61742de031b84d
+Reference: CONFIRM:http://git.videolan.org/?p=vlc.git;a=commitdiff;h=e3cef651125701a2e33a8d75b815b3e39681a447
+Reference: CONFIRM:http://www.videolan.org/security/sa0810.html
 
-Unspecified vulnerability in Links before 2.1, when "only proxies" is
-enabled, has unknown impact and attack vectors related to providing
-"URLs to external programs."
+Multiple stack-based buffer overflows in VideoLAN VLC media player
+0.5.0 through 0.9.5 allow user-assisted attackers to execute arbitrary
+code via (1) the header of an invalid CUE image file, related to
+modules/access/vcd/cdrom.c; or (2) an invalid RealText (rt) subtitle
+file, related to the ParseRealText function in
+modules/demux/subtitle.c.
 
 
