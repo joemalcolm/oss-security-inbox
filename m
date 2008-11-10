@@ -1,59 +1,100 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/17/13
-Message-ID: <Pine.GSO.4.51.0812162129450.5724@faron.mitre.org>
-Date: Tue, 16 Dec 2008 21:30:12 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/10/14
+Message-ID: <Pine.GSO.4.51.0811101605490.6724@faron.mitre.org>
+Date: Mon, 10 Nov 2008 16:27:00 -0500 (EST)
 From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: Steven Christey <coley@...us.mitre.org>
-Subject: Re: CVE request: Four issues in PunBB
+To: Nico Golde <oss-security+ml@...lde.de>
+cc: oss-security@...ts.openwall.com, coley@...re.org, rem@...eolan.org
+Subject: Re: CVE id request: vlc
 Content-Type: text/plain; charset=utf-8
 
 
-Three CVE's are assigned because the two SQL injections also affect the
-same product versions.
+On Mon, 10 Nov 2008, Nico Golde wrote:
+
+> Could you split that up into two CVE ids? I ask because the realtext
+> issue doesn't affect versions < 0.9.x which is the case for the version
+> we have in Debian so I can not use a fixed version + not-affected for
+> one CVE id in our security tracker.
+
+The information we had available at the time of request didn't suggest
+different versions being affected.  For example, the upstream advisory
+doesn't mention anything about different versions, and both Tobias Klein
+advisories say "VLC media player < 0.9.6".
+
+So at the time of assignment, Best Available Information (the cornerstone
+of CVE analysis) was that they were the same type of issue affecting the
+same versions.
+
+This is becoming a big problem for us in CVE - requests to oss-security
+are coming in without the kind of information that we rely on heavily to
+decide when we have one CVE or multiple CVE's.  Compared to last year, the
+requests are coming in when the information's less mature, *and* public.
+So we wind up having to do some of the research ourselves, which slows us
+down.  And as you see here, we still make mistakes.
+
+Once the CVE's public, then it's hard to change, because we don't know who
+else is using it.  In the past, if something came up during a CVE request
+that triggered a split, the split could occur before the CVE ever became
+public.
+
+Anybody on this list who has suggestions for handling this, please let me
+know offline.  We've only recently begun to identify the significant
+impact that oss-security is having on our CVE process.  For the time
+being, I'll likely be asking more questions before assigning CVE ID's.
+
+Oh, the split... well in this case, I guess it's OK since the CVE only
+just went out.  But I REALLY don't like doing this because we don't know
+how many "downstream" CVE consumers are already using it, so I definitely
+don't want to make a habit of it.
+
+
+CVE-2008-5032 - CUE image file, cdrom.c
+
+CVE-2008-5036 - RealText file, subtitle.c
+
 
 - Steve
 
 ======================================================
-Name: CVE-2008-5433
+Name: CVE-2008-5032
 Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5433
-Reference: MLIST:[oss-security] 20081209 CVE request: Four issues in PunBB
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/12/09/3
-Reference: CONFIRM:http://punbb.informer.com/
-Reference: CONFIRM:http://punbb.informer.com/wiki/punbb13/bugs#possible_xss_in_login
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5032
+Reference: MLIST:[oss-security] 20081105 CVE id request: vlc
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/05/5
+Reference: MLIST:[oss-security] 20081105 VideoLAN security advisory 0810
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/05/4
+Reference: MLIST:[oss-security] 20081110 Re: CVE id request: vlc
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/10/13
+Reference: MISC:http://www.trapkit.de/advisories/TKADV2008-012.txt
+Reference: CONFIRM:http://git.videolan.org/?p=vlc.git;a=commitdiff;h=5f63f1562d43f32331006c2c1a61742de031b84d
+Reference: CONFIRM:http://www.videolan.org/security/sa0810.html
 
-Cross-site scripting (XSS) vulnerability in login.php in PunBB 1.3 and
-1.3.1 allows remote attackers to inject arbitrary web script or HTML
-via the password field.
+Stack-based buffer overflow in VideoLAN VLC media player 0.5.0 through
+0.9.5 might allow user-assisted attackers to execute arbitrary code
+via the header of an invalid CUE image file, related to
+modules/access/vcd/cdrom.c.  NOTE: this identifier originally included
+an issue related to RealText, but that issue has been assigned a
+separate identifier, CVE-2008-5036.
 
 
 ======================================================
-Name: CVE-2008-5434
+Name: CVE-2008-5036
 Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5434
-Reference: MLIST:[oss-security] 20081209 CVE request: Four issues in PunBB
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/12/09/3
-Reference: CONFIRM:http://punbb.informer.com/
-Reference: CONFIRM:http://punbb.informer.com/wiki/punbb13/bugs#potential_sql-injections_at_adminusers.php_page
-Reference: CONFIRM:http://punbb.informer.com/wiki/punbb13/bugs#potential_sql-injections_in_adminsettings.php_via_configuration_values
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5036
+Reference: MLIST:[oss-security] 20081105 CVE id request: vlc
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/05/5
+Reference: MLIST:[oss-security] 20081105 VideoLAN security advisory 0810
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/05/4
+Reference: MLIST:[oss-security] 20081110 Re: CVE id request: vlc
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/10/13
+Reference: MISC:http://www.trapkit.de/advisories/TKADV2008-011.txt
+Reference: CONFIRM:http://git.videolan.org/?p=vlc.git;a=commitdiff;h=e3cef651125701a2e33a8d75b815b3e39681a447
+Reference: CONFIRM:http://www.videolan.org/security/sa0810.html
 
-Multiple SQL injection vulnerabilities in PunBB 1.3 and 1.3.1 allow
-remote authenticated administrators to execute arbitrary SQL commands
-via the (1) order_by or (2) direction parameter to admin/users.php, or
-(3) configuration options to admin/settings.php.
-
-
-======================================================
-Name: CVE-2008-5435
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5435
-Reference: MLIST:[oss-security] 20081209 CVE request: Four issues in PunBB
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/12/09/3
-Reference: CONFIRM:http://punbb.informer.com/
-
-Cross-site scripting (XSS) vulnerability in moderate.php in PunBB
-before 1.3.1 allows remote attackers to inject arbitrary web script or
-HTML via a topic subject.
+Stack-based buffer overflow in VideoLAN VLC media player 0.9.x before
+0.9.6 might allow user-assisted attackers to execute arbitrary code
+via an an invalid RealText (rt) subtitle file, related to the
+ParseRealText function in modules/demux/subtitle.c.  NOTE: this issue
+was SPLIT from CVE-2008-5032 on 20081110.
 
 
