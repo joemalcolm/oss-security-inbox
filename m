@@ -1,18 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/04/22
-Message-ID: <Pine.GSO.4.51.0809041307120.29613@faron.mitre.org>
-Date: Thu, 4 Sep 2008 13:07:36 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/11/10
+Message-ID: <Pine.GSO.4.51.0811111531300.6724@faron.mitre.org>
+Date: Tue, 11 Nov 2008 15:48:18 -0500 (EST)
 From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: GNU ed heap overflow
+To: Rémi Denis-Courmont <rem@...eolan.org>
+cc: "Steven M. Christey" <coley@...us.mitre.org>, Nico Golde <oss-security+ml@...lde.de>, oss-security@...ts.openwall.com, coley@...re.org
+Subject: Re: CVE id request: vlc
 Content-Type: text/plain; charset=utf-8
 
 
-On Mon, 1 Sep 2008, Florian Weimer wrote:
+On Tue, 11 Nov 2008, [UTF-8] Rémi Denis-Courmont wrote:
 
-> Interesting.  But this type of command execution is not possible with
-> "red", which suffers from the same overflow.
+> CVE.mitre.org says nothing about vendor obtaining a CVE number, only
+> researchers. And typically, these guys don't do it, when dealing with
+> videolan.org anyway.
 
-Does red share the same codebase as ed?  Or is a separate CVE necessary?
+I'm sorry, I did not mean to sound critical of you or anybody on the
+oss-security mailing list.  Many consumers probably don't care if bug 1
+affects a slightly different set of versions than bug 2.  It just happens
+to be something that's important for CVE, and (indirectly) people who rely
+on it.
+
+I was using the vlc case as an example of a general challenge that we're
+facing in CVE that's arisen as a result of the creation of the
+oss-security list, which I fully support.  We certainly don't want to
+interfere with the way that open source developers handle security issues.
 
 - Steve
