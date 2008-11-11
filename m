@@ -1,47 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/18/15
-Message-ID: <20080218223236.GA528@openwall.com>
-Date: Tue, 19 Feb 2008 01:32:36 +0300
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: list archive
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/11/9
+Message-ID: <49196010.1000209@op5.se>
+Date: Tue, 11 Nov 2008 11:36:00 +0100
+From: Andreas Ericsson <ae@....se>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Johannes Dagemark <jd@....se>,  Ethan Galstad <egalstad@...ios.org>, Marc Schoenefeld <mschoene@...hat.com>
+Subject: Re: CVE request: Nagios (two issues)
 Content-Type: text/plain; charset=utf-8
 
-I wrote:
+Marc Shoenefeld represents the RedHat SRT in this, so added to Cc.
 
-> >The archive of this mailing list is now public on the web:
-> >
-> >http://www.openwall.com/lists/oss-security/
-...
+Steven M. Christey wrote:
+> 
+> 
+> ======================================================
+> Name: CVE-2008-5027
+> Status: Candidate
+> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5027
+> Reference: MLIST:[nagios-devel] 20081107 Security fixes completed
+> Reference: URL:http://sourceforge.net/mailarchive/forum.php?thread_name=4914396D.5010009%40op5.se&forum_name=nagios-devel
+> Reference: MLIST:[oss-security] 20081106 CVE request: Nagios (two issues)
+> Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/06/2
+> Reference: MISC:http://www.nagios.org/development/history/nagios-3x.php
+> Reference: CONFIRM:http://www.op5.com/support/news/389-important-security-fix-available-for-op5-monitor
+> Reference: BID:32156
+> Reference: URL:http://www.securityfocus.com/bid/32156
+> 
+> The Nagios process in (1) Nagios before 3.0.5 and (2) op5 Monitor
+> before 4.0.1 allows remote authenticated users to bypass authorization
+> checks, and trigger execution of arbitrary programs by this process,
+> via an (a) custom form or a (b) browser addon.
+> 
+> 
+> ======================================================
+> Name: CVE-2008-5028
+> Status: Candidate
+> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5028
+> Reference: MLIST:[nagios-devel] 20081107 Security fixes completed
+> Reference: URL:http://sourceforge.net/mailarchive/forum.php?thread_name=4914396D.5010009%40op5.se&forum_name=nagios-devel
+> Reference: MLIST:[oss-security] 20081106 CVE request: Nagios (two issues)
+> Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/06/2
+> Reference: CONFIRM:http://git.op5.org/git/?p=nagios.git;a=commit;h=814d8d4d1a73f7151eeed187c0667585d79fea18
+> Reference: CONFIRM:http://www.op5.com/support/news/389-important-security-fix-available-for-op5-monitor
+> Reference: SECUNIA:32610
+> Reference: URL:http://secunia.com/advisories/32610
+> Reference: XF:nagios-cmd-csrf(46426)
+> Reference: URL:http://xforce.iss.net/xforce/xfdb/46426
+> 
+> Cross-site request forgery (CSRF) vulnerability in cmd.cgi in (1)
+> Nagios 3.0.5 and (2) op5 Monitor before 4.0.1 allows remote attackers
+> to send commands to the Nagios process, and trigger execution of
+> arbitrary programs by this process, via unspecified HTTP requests.
+> 
+> 
 
-On Sun, Feb 17, 2008 at 09:17:04PM -0700, Vincent Danen wrote:
-> Have you requested any other 3rd-party archiving sites to archive the
-> list too?
+Actually, the CSRF issue is still in Nagios 3.0.5, but can no longer
+trigger execution of arbitrary programs by the Nagios process. Its
+impact is thereby reduced to disabling monitoring of the network and
+similar actions that can validly be requested from the Nagios process
+through the GUI.
 
-Not yet.
+The problem is not present in op5 Monitor 4.0.1. A tar-ball containing
+the fix is available at http://www.op5.org/src/nagios-3.0.5p1.tar.gz.
 
-I was thinking that we should get started first, with the list and the
-wiki wide open like they are now, then decide on how we want to tighten
-things up and do it, and only after that try to gain greater exposure.
+Thanks.
 
-> The reason I ask is that the archive there isn't the friendliest in
-> terms of easily scanning or viewing messages (like a mhonarc-based
-> archive or MARC or something).
-
-Yes, I am sorry about that.  This is my "blists" software that got stuck
-in an early development stage (no time), with many desirable features
-yet to be implemented.  It works off indexed mbox files, in case you're
-curious - just two files per mailing list (the mbox and its index).
-
-This list should definitely be submitted to Gmane and MARC, maybe to
-some others as well.  I am just not sure whether it's time to do that.
-
-> Just curious if anyone has done so or if I should go ahead and do it.
-
-I think I am the one to do it since I will need to provide the mbox
-with past messages - and I am willing to do it if/when the most active
-list members (including you) request that.  Just have in mind that this
-might result in us having to turn on subscription and/or message
-moderation and disallow wiki editing by new users a bit earlier.
-
-Alexander
+-- 
+Andreas Ericsson                   andreas.ericsson@....se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
