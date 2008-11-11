@@ -1,28 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/19/2
-Message-ID: <20080519202158.GK12850@outflux.net>
-Date: Mon, 19 May 2008 13:21:59 -0700
-From: Kees Cook <kees@...ntu.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/11/7
+Message-ID: <49195358.7030405@redhat.com>
+Date: Tue, 11 Nov 2008 17:41:44 +0800
+From: Eugene Teo <eteo@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSH key blacklisting
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: Unix sockets kernel panic
 Content-Type: text/plain; charset=utf-8
 
-On Sun, May 18, 2008 at 08:35:10PM +0400, Solar Designer wrote:
-> On Sun, May 18, 2008 at 09:12:16AM -0700, Kees Cook wrote:
-> > Ah, I haven't been separating it by arch, but I can certainly do that.
-> > I've been including the "full" hashes in the Debian openssh-blacklist
-> > source package and reducing them for the final files.  I can easily
-> > split up the source blacklist files by arch and combine them during the
-> > "build".
+Eugene Teo wrote:
+> We need a CVE name for this issue. This was reported in netdev today.
 > 
-> Yes, please split by {arch, key type, key size}.  That is, let's have
-> one "source" file per combination of these.
+> "The following code causes a kernel panic on Linux 2.6.26:
+> http://darkircop.org/unix.c
+> 
+> I haven't investigated the bug so I'm not sure what is causing it, and
+> don't know if it's exploitable.  The code passes unix sockets from one
+> process to another using unix sockets.  The bug probably has to do
+> with closing file descriptors."
+> 
+> http://marc.info/?l=linux-netdev&m=122593044330973&w=2
+> https://bugzilla.redhat.com/show_bug.cgi?id=470201
+> 
+> There isn't a fix yet. Dave is working on it.
 
-This has been done in the 0.2.1 upload of openssh-blacklist[1].  (I also
-dropped pid 0 and 32768, and sorted by pid, as mentioned earlier.)
+There's a fix now.
 
-[1] http://packages.qa.debian.org/o/openssh-blacklist.html
+Upstream commits: f8d570a, 3b53fbf, and 6209344.
 
--- 
-Kees Cook
-Ubuntu Security Team
+https://bugzilla.redhat.com/show_bug.cgi?id=470201#c10
+https://bugzilla.redhat.com/show_bug.cgi?id=470201#c14
+https://bugzilla.redhat.com/show_bug.cgi?id=470201#c9
+https://bugzilla.redhat.com/show_bug.cgi?id=470201#c13
+
+Thanks, Eugene
