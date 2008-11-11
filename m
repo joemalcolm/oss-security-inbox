@@ -1,25 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/03/1
-Message-Id: <200803030110.24885.rbu@gentoo.org>
-Date: Mon, 3 Mar 2008 01:10:24 +0100
-From: Robert Buchholz <rbu@...too.org>
-To: oss-security@...ts.openwall.com, coley@...re.org
-Subject: CVE request: lighttpd mod_cgi script source disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/11/5
+Message-ID: <20081111082539.GB29534@suse.de>
+Date: Tue, 11 Nov 2008 09:25:39 +0100
+From: Thomas Biege <thomas@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: libcdaudio
 Content-Type: text/plain; charset=utf-8
 
-Hey all,
+Hello Tomas,
 
-mod_cgi in lighttpd 1.4.18 (and earlier?) will send the source of a cgi 
-script if it fails to fork the cgi handler, instead of an HTTP 500. 
-mod_cgi is disabled by default.
+On Fri, Nov 07, 2008 at 06:25:26PM +0100, Tomas Hoger wrote:
+> On Wed, 5 Nov 2008 09:07:23 +0100 Thomas Biege <thomas@...e.de> wrote:
+> 
+> > we need a CVE-ID for a buffer overflow in libcdaudio.
+> > It is a remotely exploitable heap-based buffer overflow.
+...
 
-See for a patch:
-  http://trac.lighttpd.net/trac/changeset/2107
-  https://bugs.gentoo.org/show_bug.cgi?id=211956
+> Additionally, if you are shipping libcdaudio, you may be interested in
+> patch for CVE-2005-0706 used by Gentoo:
+> 
+> http://sources.gentoo.org/viewcvs.py/gentoo-x86/media-libs/libcdaudio/files/libcdaudio-0.99-CAN-2005-0706.patch
+> 
+> According to the libcdaudio home page, upstream seems to be aware of
+> this issue, as they acknowledge having security issues and even link to
+> old Gentoo GLSA.
 
-Please assign a CVE id.
+Our package contains this patch. Thanks for the references.
 
-
-Thanks, Robert
-
-Download attachment "signature.asc " of type "application/pgp-signature" (190 bytes)
+-- 
+Bye,
+     Thomas
+-- 
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+-- 
+           Hamming's Motto:
+           The purpose of computing is insight, not numbers.
+                                -- Richard W. Hamming
