@@ -1,33 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/03/2
-Message-ID: <490EC9AF.2080303@redhat.com>
-Date: Mon, 03 Nov 2008 17:51:43 +0800
-From: Eugene Teo <eteo@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/11/8
+Message-ID: <20081111105907.30820a73@redhat.com>
+Date: Tue, 11 Nov 2008 10:59:07 +0100
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>, Greg KH <greg@...ah.com>
-Subject: CVE requests: kernel: hfsplus-related bugs
+Cc: hoffie@...too.org, mail@...ianw.de
+Subject: Re: GeSHi: Clarification about the recent security (non-)issues (SA32559)
 Content-Type: text/plain; charset=utf-8
 
-These were committed in upstream kernel. Reported by Eric Sesterhenn.
+Hi Christian!
 
-1) hfsplus: fix Buffer overflow with a corrupted image
-Upstream commit: efc7ffcb4237f8cb9938909041c4ed38f6e1bf40
+On Mon, 10 Nov 2008 19:04:08 +0100 Christian Hoffmann
+<hoffie@...too.org> wrote:
 
-When an hfsplus image gets corrupted it might happen that the catalog
-namelength field gets b0rked.  If we mount such an image the memcpy() in
-hfsplus_cat_build_key_uni() writes more than the 255 that fit in the
-name field.  Depending on the size of the overwritten data, we either
-only get memory corruption or also trigger an oops.
+> These are just my findings after having a quick look at the code, and
+> I thought I'd shared them, just in case someone wondered (and please
+> protest, if you think I'm wrong).
 
-2) hfsplus: check read_mapping_page() return value
-Upstream commit: 649f1ee6c705aab644035a7998d7b574193a598a
+Thanks for posting your finding!
 
-The return value of read_mapping_page() is passed on to kmap unchecked.
- The bug is triggered after the first read_mapping_page() in
-hfsplus_block_allocate(), this patch fixes all three usages in this
-functions but leaves the ones further down in the file unchanged. This
-was triggered by mounting an intentionally corrupted image.
+> JFYI: Dokuwiki and phpBB are examples of software packages, which
+> bundle GeSHi. Dokuwiki passes a static string to the mentioned $path
+> parameter and is not vulnerable as such. I haven't checked phpBB.
 
-These bugs need CVE names.
+pgfouine too, but it does not override default language files path at
+all (set_language_path is only called with $path == '').
 
-Thanks, Eugene
+-- 
+Tomas Hoger / Red Hat Security Response Team
