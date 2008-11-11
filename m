@@ -1,35 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/25/6
-Message-ID: <20080325151545.GK30264@ngolde.de>
-Date: Tue, 25 Mar 2008 16:15:45 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Subject: was: SA29489 CenterIM URL handling flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/11/11
+Message-ID: <20081111213216.GD6123@kroah.com>
+Date: Tue, 11 Nov 2008 13:32:16 -0800
+From: Greg KH <greg@...ah.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE requests: kernel: hfsplus-related bugs
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Lubomir Kundrak <lkundrak@...hat.com> [2008-03-24 15:08]:
-> Ad SA29489 [1] "CenterIM URL Parsing Command Execution Vulnerability"
+On Mon, Nov 10, 2008 at 09:45:54AM -0500, Steven M. Christey wrote:
 > 
-> CenterIM does completely nothing with received URLs. Maybe the
-> unfortuate "exploit writer" was using XFCE Terminal [2], or a terminal
-> emulator with a similar problem.
+> > 1) hfsplus: fix Buffer overflow with a corrupted image
+> > Upstream commit: efc7ffcb4237f8cb9938909041c4ed38f6e1bf40
+> 
+> CVE-2008-4933
+> 
+> > 2) hfsplus: check read_mapping_page() return value
+> > Upstream commit: 649f1ee6c705aab644035a7998d7b574193a598a
+> 
+> CVE-2008-4934
 
-That's partly true. While centerim has no special URL 
-handler to handle incoming urls it does provide the ability 
-to list urls in a message by pressing F2. If you press enter 
-on one of these urls it tries to open it in an external 
-browser and executes the other commands as well.
+Both of these are now added to the stable queue for the next 2.6.27
+kernel release.
 
-You see the commands in the URL however so I think the 
-impact of this is like sending someone a message with 
-"please type rm -rf ~ in your shell" so the secunia rating 
-is a bit beyond the actual impact.
+thanks,
 
-Kind regards
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+greg k-h
