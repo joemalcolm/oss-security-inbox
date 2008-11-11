@@ -1,35 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/18/3
-Message-ID: <12878.1205851560@devserv.devel.redhat.com>
-Date: Tue, 18 Mar 2008 10:46:00 -0400
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com, Robert Buchholz <rbu@...too.org>
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: bzip2 CERT-FI: 20469
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/11/12
+Message-ID: <20081111213229.GE6123@kroah.com>
+Date: Tue, 11 Nov 2008 13:32:29 -0800
+From: Greg KH <greg@...ah.com>
+To: Eugene Teo <eteo@...hat.com>
+Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE requests: kernel: hfsplus-related bugs
 Content-Type: text/plain; charset=utf-8
 
+On Mon, Nov 10, 2008 at 01:27:42PM +0800, Eugene Teo wrote:
+> Eugene Teo wrote:
+> > These were committed in upstream kernel. Reported by Eric Sesterhenn.
+> > 
+> > 1) hfsplus: fix Buffer overflow with a corrupted image
+> > Upstream commit: efc7ffcb4237f8cb9938909041c4ed38f6e1bf40
+> > 
+> > When an hfsplus image gets corrupted it might happen that the catalog
+> > namelength field gets b0rked.  If we mount such an image the memcpy() in
+> > hfsplus_cat_build_key_uni() writes more than the 255 that fit in the
+> > name field.  Depending on the size of the overwritten data, we either
+> > only get memory corruption or also trigger an oops.
 > 
-> Hey,
+> There's an equivalent bug for hfs. The upstream commit is d38b7aa. We
+> will need a CVE name for this too.
 > 
-> CERT-FI: 20469 [1] was released yesterday, and with it a new bzip2=20
-> release, quoting their CHANGES:
-> 
-> 1.0.5 (10 Dec 07)
-> ~~~~~~~~~~~~~~~~~
-> Security fix only.  Fixes CERT-FI 20469 as it applies to bzip2.
-> 
-> 
-> Reading the patch [2], it's missing a boundary check that can lead to an
-> over-read on the tt/ll heap-buffer. I'd call this a DoS, did anyone
-> else review?
-> 
+> Greg, I don't recall seeing this in -stable kernel. FYI.
 
-I'm running version 1.0.4 through the bzip2 files now (it takes a long time
-to run, there are a lot of files).  If I find the reproducer, I'll let you
-know.
+Thanks, I've now added it.
 
-I saw no crashes when I ran the CERT-FI suite over bzip2 versions 1.0.1,
-1.0.2, and 1.0.3.
-
--- 
-    JB
+greg k-h
