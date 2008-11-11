@@ -1,35 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/07/4
-Message-ID: <Pine.GSO.4.51.0808071640440.25461@faron.mitre.org>
-Date: Thu, 7 Aug 2008 16:40:56 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/11/6
+Message-ID: <20081111083029.GC29534@suse.de>
+Date: Tue, 11 Nov 2008 09:30:29 +0100
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: git
+Cc: coley@...us.mitre.org
+Subject: Re: CVE request: libcdaudio
 Content-Type: text/plain; charset=utf-8
 
+On Tue, Nov 11, 2008 at 09:22:16AM +0100, Tomas Hoger wrote:
+> On Mon, 10 Nov 2008 10:20:41 -0500 (EST) "Steven M. Christey"
+> <coley@...us.mitre.org> wrote:
+> 
+> > > we need a CVE-ID for a buffer overflow in libcdaudio.
+> > > It is a remotely exploitable heap-based buffer overflow.
+> > 
+> > Out of curiosity, what makes it remote?
+> > 
+> > Use CVE-2008-5030
+> 
+> I guess this wording was used by Thomas as the affected code is used to
+> talk to remote CDDB servers, from which you obtain list of tracks for
+> your audio CD.  If remote CDDB server is untrusted / compromised, it
+> can send you a crafted reply that can exploit libcdaudio flaw on your
+> system.
+
+Yes, everybody can add CDDB entries to servers like freedb.org (honestly
+I didn't test it) or intercept the HTTP connection to a CDDB server.
 
 
-======================================================
-Name: CVE-2008-3546
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3546
-Reference: MLIST:[git] 20080716 [PATCH] Fix buffer overflow in git diff
-Reference: URL:http://kerneltrap.org/mailarchive/git/2008/7/16/2529284
-Reference: CONFIRM:http://www.kernel.org/pub/software/scm/git/docs/RelNotes-1.5.6.4.txt
-Reference: BID:30549
-Reference: URL:http://www.securityfocus.com/bid/30549
-Reference: FRSIRT:ADV-2008-2306
-Reference: URL:http://www.frsirt.com/english/advisories/2008/2306
-Reference: SECTRACK:1020627
-Reference: URL:http://www.securitytracker.com/id?1020627
-Reference: SECUNIA:31347
-Reference: URL:http://secunia.com/advisories/31347
-
-Stack-based buffer overflow in the (1) diff_addremove and (2)
-diff_change functions in GIT before 1.5.6.4 might allow local users to
-execute arbitrary code via a PATH whose length is larger than the
-system's PATH_MAX when running GIT utilities such as git-diff or
-git-grep.
-
-
-
+-- 
+Bye,
+     Thomas
+-- 
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+-- 
+           Hamming's Motto:
+           The purpose of computing is insight, not numbers.
+                                -- Richard W. Hamming
