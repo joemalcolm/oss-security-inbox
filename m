@@ -1,43 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/06/5
-Message-Id: <200810061631.55208.hanno@hboeck.de>
-Date: Mon, 6 Oct 2008 16:31:54 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/11/2
+Message-ID: <28fa9c5e0811102119u3e7fe66cv131fc2f3cfbefefb@mail.gmail.com>
+Date: Tue, 11 Nov 2008 13:19:52 +0800
+From: "Eugene Teo" <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: data-destroiny malfunction: is that a "security" issue
+Cc: coley@...re.org
+Subject: CVE request: kernel: libertas: fix buffer overrun
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-Today some question arised in my mind.
+We need a CVE name for this issue. This was committed in upstream
+kernel recently.
 
-Preface: I found a bug in obexftp. It has some option -G, which will download 
-a file and afterwards delete it. The problem is, it'll do the second step 
-even if the first failed. So if you have some connection problem on step 1, 
-your file will be gone.
+"If somebody sends an invalid beacon/probe response, that can trash
+the whole BSS descriptor. The descriptor is, luckily, large enough so
+that it cannot scribble past the end of it; it's well above 400 bytes
+long.
 
-In my case, as it's the internal memory of a mobile phone, it's probably 
-pretty much impossible to restore without some professional data rescue lab.
+Upstream commit: 48735d8d8bd701b1e0cd3d49c21e5e385ddcb077
 
+https://bugzilla.redhat.com/show_bug.cgi?id=470761
+http://article.gmane.org/gmane.linux.kernel.wireless.general/23049
 
-Now, my question: Is this a security issue? Does it deserve a CVE?
-
-While it probably does not fit in our common sense of security issues, as in 
-the normal scenario, you don't have any attacker, it is still something where 
-users should probably be warned. And it endangers the security of one's data.
-
-After thinking a bit more about it, I even thought that this might be feasible 
-for some kind of unlikely attack: An attacker could disturb the bluetooth 
-connection at the right time so the data connection fails.
-
-So, thouhgts?
-
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-
-http://freiheitstattangst.de/ - 11.10. Berlin gegen Überwachung
-http://x1000malquer.de/ - ab 8.11. Atomtransporte stoppen
-
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+Thanks, Eugene
