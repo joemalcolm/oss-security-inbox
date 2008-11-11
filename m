@@ -1,25 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/12/2
-Message-ID: <16417.1218562202@devserv.devel.redhat.com>
-Date: Tue, 12 Aug 2008 13:30:02 -0400
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: CVE Request (ipsec-tools again)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/11/4
+Message-ID: <20081111092216.6012b9ea@redhat.com>
+Date: Tue, 11 Nov 2008 09:22:16 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: coley@...us.mitre.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: libcdaudio
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
+On Mon, 10 Nov 2008 10:20:41 -0500 (EST) "Steven M. Christey"
+<coley@...us.mitre.org> wrote:
 
-So while investigating the ipsec-tools flaw I mailed you about yesterday, I
-was told of this:
-http://sourceforge.net/mailarchive/forum.php?thread_name=48a0c7a0.qPeWZAE0PY8bDDq%2B%25olel%40ans.pl&forum_name=ipsec-tools-devel
+> > we need a CVE-ID for a buffer overflow in libcdaudio.
+> > It is a remotely exploitable heap-based buffer overflow.
+> 
+> Out of curiosity, what makes it remote?
+> 
+> Use CVE-2008-5030
 
-It's essentially a pre-auth racoon DoS.
-
-You can find the patch from their CVS here:
-http://cvsweb.netbsd.org/bsdweb.cgi/src/crypto/dist/ipsec-tools/src/racoon/isakmp.c.diff?r1=1.20.6.11&r2=1.20.6.12&f=h
-
-Thanks.
+I guess this wording was used by Thomas as the affected code is used to
+talk to remote CDDB servers, from which you obtain list of tracks for
+your audio CD.  If remote CDDB server is untrusted / compromised, it
+can send you a crafted reply that can exploit libcdaudio flaw on your
+system.
 
 -- 
-    JB
+Tomas Hoger / Red Hat Security Response Team
