@@ -1,20 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/21/6
-Message-ID: <Pine.GSO.4.51.0811202036460.20524@faron.mitre.org>
-Date: Thu, 20 Nov 2008 20:37:29 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: imlib2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/12/2
+Message-Id: <1226504481.3536.40.camel@dhcp-lab-164.englab.brq.redhat.com>
+Date: Wed, 12 Nov 2008 16:41:21 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...re.org>
+Cc: oss-security@...ts.openwall.com
+Subject: CVE Request - Zope 2 - PythonScripts local DoS
 Content-Type: text/plain; charset=utf-8
 
+Hello Steve,
 
-On Thu, 20 Nov 2008, Nico Golde wrote:
+  could you please allocate a new CVE id for the following
+Zope 2 related issue:
 
-> Reference:
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=505714#15
+"PythonScripts in Zope 2 can be misused for shutting down a complete   
+ Zope 2 instance or misused for a local denial-of-service attack."    (from Hotfix-2008-08-12/README.txt)
 
-Ummmm, yeah, guess I should read followups before saying I couldn't find
-something, huh?
+References:
+http://bugs.gentoo.org/show_bug.cgi?id=246411
+http://www.zope.org/Products/Zope/Hotfix-2008-08-12/README.txt
 
-Thanks,
-Steve
+The Hotfix-2008-08-12 is available at:
+http://www.zope.org/Products/Zope/Hotfix-2008-08-12/Hotfix_20080812-1.1.0.tar.gz
+
+Affected Zope versions: Zope 2.7.0 to Zope 2.11.2 (from Hotfix-2008-08-12/README.txt)
+
+Note: This issue affects also the Zope 2 Python scripts, as shipped within the
+      Conga project (Zope 2 shipped within the luci-* rpm package). 
+       
+      Affected Conga versions: - checked conga-0.9.1-8 (contains Zope2.7.5 RC2), conga-0.12.0-7.el5 (contains Zope-2.8.4),
+                               - but older,newer Conga versions can be also vulnerable to this issue (based on Zope 2 version).
+
+
+Thanks, Jan.
+-- 
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
