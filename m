@@ -1,31 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/18/8
-Message-ID: <20080518163510.GA11435@openwall.com>
-Date: Sun, 18 May 2008 20:35:10 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: Kees Cook <kees@...ntu.com>
-Subject: Re: OpenSSH key blacklisting
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/12/3
+Message-ID: <Pine.GSO.4.51.0811121833010.2022@faron.mitre.org>
+Date: Wed, 12 Nov 2008 18:37:25 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Andreas Ericsson <ae@....se>
+cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com, Johannes Dagemark <jd@....se>, Ethan Galstad <egalstad@...ios.org>, Marc Schoenefeld <mschoene@...hat.com>
+Subject: Re: CVE request: Nagios (two issues)
 Content-Type: text/plain; charset=utf-8
 
-On Sun, May 18, 2008 at 09:12:16AM -0700, Kees Cook wrote:
-> Ah, I haven't been separating it by arch, but I can certainly do that.
-> I've been including the "full" hashes in the Debian openssh-blacklist
-> source package and reducing them for the final files.  I can easily
-> split up the source blacklist files by arch and combine them during the
-> "build".
 
-Yes, please split by {arch, key type, key size}.  That is, let's have
-one "source" file per combination of these.
+On Tue, 11 Nov 2008, Andreas Ericsson wrote:
 
-> I will probably also keep the file in PID order, and sort it during the
-> build.
+> > Name: CVE-2008-5028
+> > Status: Candidate
+> > URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5028
+> >
+> > Cross-site request forgery (CSRF) vulnerability in cmd.cgi in (1)
+> > Nagios 3.0.5 and (2) op5 Monitor before 4.0.1 allows remote attackers
+> > to send commands to the Nagios process, and trigger execution of
+> > arbitrary programs by this process, via unspecified HTTP requests.
+> >
+> >
+>
+> Actually, the CSRF issue is still in Nagios 3.0.5, but can no longer
+> trigger execution of arbitrary programs by the Nagios process. Its
+> impact is thereby reduced to disabling monitoring of the network and
+> similar actions that can validly be requested from the Nagios process
+> through the GUI.
 
-Good idea.  That way, it'd be easier for us to compare your blacklists
-against those others may have.
+What is the relationship between this CSRF issue and the one documented
+here:
 
-What about my question re: RSA keys for protocol 1 vs. protocol 2?
+  http://www.nagios.org/development/history/nagios-3x.php
 
-Thanks,
+  "Security fix for Cross Site Request Forgery (CSRF) bug reported by Tim
+   Starling."
 
-Alexander
+Are these the same CSRF issue, or are we talking about a separate problem
+that would need a separate new CVE?
+
+- Steve
