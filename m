@@ -1,32 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/01/1
-Message-ID: <20080401090208.1404c190@redhat.com>
-Date: Tue, 1 Apr 2008 09:02:08 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE id request: comix
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/12/1
+Message-Id: <1226490125.3536.12.camel@dhcp-lab-164.englab.brq.redhat.com>
+Date: Wed, 12 Nov 2008 12:42:05 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...re.org>
+Cc: oss-security@...ts.openwall.com
+Subject: CVE Request -- OptiPNG
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 31 Mar 2008 15:40:37 +0200 Nico Golde
-<oss-security+ml@...lde.de> wrote:
-> comix is vulnerable to arbitrary code execution via crafted 
-> file names.
-> 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=462840
-> 
-> I confirmed this using comix\"\;echo\ owned\>bla\;ls\ \"
-> as a simple reroducer.
+Hello Steve,
 
-According to the feedback Fedora maintainer got from new upstream,
-comix 3.x is mostly dead and upstream is focused on re-written version
-4.  See https://bugzilla.redhat.com/show_bug.cgi?id=430635#c1 for
-upstream reply.
+  OptiPNG upstream has released new version, fixing between others
+one security issue -- buffer overflow present in reader responsible
+for BMP images handling.
 
-That BZ also has some comments on the insecure temporary file usage
-reported to Debian BTS.  And also notes that comix is likely an app
-where unfixed tarfile python module may bite back.
+References:
+http://sourceforge.net/project/shownotes.php?release_id=639631&group_id=151404
+http://secunia.com/Advisories/32651/
+http://www.frsirt.com/english/advisories/2008/3108/references
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=505399
+http://optipng.sourceforge.net/
 
-As for comix vs. comicthumb, I guess once CVE id is sufficient.
+Affected versions: all prior to prior to 0.6.2. (from Secunia advisory)
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+Proposed solution:
+
+Upgrade to 0.6.2 or security patch against 0.6.1 available at:
+http://prdownloads.sourceforge.net/optipng/optipng-0.6.1.1.diff?download
+
+Impact: arbitrary code execution (from Secunia advisory)
+
+Could you please allocate a new CVE id for this issue?
+
+Thanks, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
