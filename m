@@ -1,28 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/14/1
-Message-ID: <20081214113226.76687620@redhat.com>
-Date: Sun, 14 Dec 2008 11:32:26 +0100
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/13/3
+Message-ID: <20081113101929.0dcbb14e@redhat.com>
+Date: Thu, 13 Nov 2008 10:19:29 +0100
 From: Tomas Hoger <thoger@...hat.com>
-To: OSS Security <oss-security@...ts.openwall.com>
-Cc: hdias@...chlabs.com
-Subject: Avahi daemon DoS (CVE-2008-5081)
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: clamav get_unicode_name() off-by-one buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+On Thu, 13 Nov 2008 10:06:17 +0100 Thomas Biege <thomas@...e.de> wrote:
 
-New avahi upstream release 0.6.24 was released on Friday.
-  http://avahi.org/milestone/Avahi%200.6.24
+> AFAIK no CVE-ID was assigned for the following issue yet.
 
-Security issue mentioned in the DoS flaw reported by Hugo Dias.
-Crafted mDNS packet with source port 0 can cause avahi-daemon to
-abort() due to failed assertion assert(port > 0); in
-originates_from_local_legacy_unicast_socket() function in
-avahi-core/server.c.
+It was, see NVD site.
 
-Upstream commit:
-http://git.0pointer.de/?p=avahi.git;a=commitdiff;h=3093047f1aa36bed8a37fa79004bf0ee287929f4
+CVE-2008-5050
 
-CVE CVE-2008-5081 was assigned to this issue.
+Off-by-one error in the get_unicode_name function
+(libclamav/vba_extract.c) in Clam Anti-Virus (ClamAV) before 0.94.1
+allows remote attackers to cause a denial of service (crash) or
+possibly execute arbitrary code via a crafted VBA project file, which
+triggers a heap-based buffer overflow.
+
+HTH
 
 -- 
 Tomas Hoger / Red Hat Security Response Team
