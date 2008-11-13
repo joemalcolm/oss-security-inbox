@@ -1,29 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/14/6
-Message-ID: <20080514144646.GB7902@sdf.lonestar.org>
-Date: Wed, 14 May 2008 14:46:47 +0000
-From: Tavis Ormandy <taviso@....lonestar.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE request: Emacs 21 fast-lock-mode arbitrary lips code execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/13/2
+Message-ID: <491BF0A9.7040304@op5.se>
+Date: Thu, 13 Nov 2008 10:17:29 +0100
+From: Andreas Ericsson <ae@....se>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Johannes Dagemark <jd@....se>,  Ethan Galstad <egalstad@...ios.org>, Marc Schoenefeld <mschoene@...hat.com>
+Subject: Re: CVE request: Nagios (two issues)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, May 14, 2008 at 04:03:34PM +0200, Sven Joachim wrote:
-> On 2008-05-14 15:27 +0200, Nico Golde wrote:
+Steven M. Christey wrote:
+> On Tue, 11 Nov 2008, Andreas Ericsson wrote:
 > 
-> > As I am a vim user I might have done something wrong too, 
-> > not sure. What I did after installing emacs:
+>>> Name: CVE-2008-5028
+>>> Status: Candidate
+>>> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5028
+>>>
+>>> Cross-site request forgery (CSRF) vulnerability in cmd.cgi in (1)
+>>> Nagios 3.0.5 and (2) op5 Monitor before 4.0.1 allows remote attackers
+>>> to send commands to the Nagios process, and trigger execution of
+>>> arbitrary programs by this process, via unspecified HTTP requests.
+>>>
+>>>
+>> Actually, the CSRF issue is still in Nagios 3.0.5, but can no longer
+>> trigger execution of arbitrary programs by the Nagios process. Its
+>> impact is thereby reduced to disabling monitoring of the network and
+>> similar actions that can validly be requested from the Nagios process
+>> through the GUI.
+> 
+> What is the relationship between this CSRF issue and the one documented
+> here:
+> 
+>   http://www.nagios.org/development/history/nagios-3x.php
+> 
+>   "Security fix for Cross Site Request Forgery (CSRF) bug reported by Tim
+>    Starling."
+> 
+> Are these the same CSRF issue, or are we talking about a separate problem
+> that would need a separate new CVE?
+> 
 
-Same here, so out of curiosity i ran strace -efile -o log vim, and
-edited a few files. I observed vim looking for a directory called
-$TMPDIR in the wd, and using it as you would expect. Obviously a bug,
-and perhaps some minor security implications, anyone want to
-investigate? :-)
+They're the same problem. The security fix mentioned actually consists of
+limiting its impact to prevent running arbitrary programs. I'm afraid Ethan
+got things wrong. It's the authorization check bypass (CVE-2008-5027) that's
+fixed in 3.0.5.
 
-(e.g. enter :let foo=system("/bin/ls"))
+The timeline (in version-perspective) looks something like this:
+3.0.4: Vulnerable to both issues, with the combination being that CSRF
+       attacks can trigger arbitrary programs to run.
+3.0.5: Vulnerable to CSRF attacks, but CHANGE_ commands (that can be
+       used to trigger arbitrary programs) are completely blocked. Impact
+       is thereby lowered to commands the tricked user is allowed to
+       submit (which can still be rather bad).
 
-Thanks, Tavis.
+So in essence, an orthogonal fix lowered the worst-case scenario impact
+of CVE-2008-5028 in Nagios 3.0.5, but the base issue still remains.
+
+Hope that clears things up.
 
 -- 
--------------------------------------
-taviso@....lonestar.org | finger me for my gpg key.
--------------------------------------------------------
+Andreas Ericsson                   andreas.ericsson@....se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
