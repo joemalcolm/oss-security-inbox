@@ -1,52 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/14/5
-Message-ID: <20080514144325.GG28202@ngolde.de>
-Date: Wed, 14 May 2008 16:43:25 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE request: Emacs 21 fast-lock-mode arbitrary lips code execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/13/1
+Message-ID: <20081113090617.GG5799@suse.de>
+Date: Thu, 13 Nov 2008 10:06:17 +0100
+From: Thomas Biege <thomas@...e.de>
+To: OSS-Security Mailinglist <oss-security@...ts.openwall.com>
+Cc: coley@...re.org
+Subject: CVE request: clamav get_unicode_name() off-by-one buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Hi Sven,
-* Sven Joachim <svenjoac@....de> [2008-05-14 16:12]:
-> On 2008-05-14 15:27 +0200, Nico Golde wrote:
-> > As I am a vim user I might have done something wrong too, 
-> > not sure. What I did after installing emacs:
-> > cat >> ~/.emacs << EOF
-> > (global-font-lock-mode t)
-> > (seq font-lock-support-mode 'fast-lock-mode)
-> > EOF
-> 
-> Should read setq, not seq.  You will also need to load fast-lock
-> explicitly before that, since it's obsolete and not automatically
-> loaded anymore:
+Hello,
+AFAIK no CVE-ID was assigned for the following issue yet.
 
-Where is the difference? seq was from:
-http://lists.gnu.org/archive/html/emacs-devel/2008-05/msg00645.html
+-----------------------------------------------------------------
+ClamAV get_unicode_name() off-by-one buffer overflow
 
-> (load-library "fast-lock")
-> 
-> > cat >> foobar.c << EOF
-> > /* no comment */
-> > EOF
-> >
-> > cat >> foobar.c.flc << EOF
-> > " foobar "
-> > EOF
-> 
-> Instead of " foobar ", you can put in the following which actually does
-> something visible:
-> 
-> (message "Surprise, surprise!")
+Copyright (c) 2008 Moritz Jodeit <moritz@...eit.org> (2008/11/08)
+-----------------------------------------------------------------
 
-Thanks, missed the (message...)
+Application details:
 
-> This string will be put in the echo area when you visit foobar.c.
+        From http://www.clamav.net/:
 
-Confirmed, works now as expected, not confirmation dialog though.
-Nico
+        "Clam AntiVirus is an open source (GPL) anti-virus toolkit for UNIX,
+        designed especially for e-mail scanning on mail gateways. It provides
+        a number of utilities including a flexible and scalable multi-threaded
+        daemon, a command line scanner and advanced tool for automatic
+        database updates. The core of the package is an anti-virus engine
+        available in a form of shared library."
+
+Vulnerability description:
+
+        ClamAV contains an off-by-one heap overflow vulnerability in the
+        code responsible for parsing VBA project files. Successful
+        exploitation could allow an attacker to execute arbitrary code with
+        the privileges of the `clamd' process by sending an email with a
+        prepared attachment.
+
+        The vulnerability occurs inside the get_unicode_name() function
+        in libclamav/vba_extract.c when a specific `name' buffer is passed
+        to it.
+...
+
+
+
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+Bye,
+     Thomas
+-- 
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+-- 
+           Hamming's Motto:
+           The purpose of computing is insight, not numbers.
+                                -- Richard W. Hamming
