@@ -1,23 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/06/1
-Message-ID: <0808061435350.1142@mjc.redhat.com>
-Date: Wed, 6 Aug 2008 14:41:30 +0100 (BST)
-From: Mark J Cox <mjc@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/14/1
+Message-ID: <gfiptm$jv8$1@ger.gmane.org>
+Date: Thu, 13 Nov 2008 21:05:17 -0600
+From: Raphael Geissert <atomo64+debian@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2008-2939 low severity Apache httpd XSS
+Subject: CVE request: wordpress can be subject of delayed attacks via cookies
 Content-Type: text/plain; charset=utf-8
 
-FYI as this was committed yesterday but isn't triggering a new upstream 
-release so might not get noticed much until the advisory comes out from 
-Rapid7:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-   *) SECURITY: CVE-2008-2939 (cve.mitre.org)
-      mod_proxy_ftp: Prevent XSS attacks when using wildcards in the path of
-      the FTP URL. Discovered by Marc Bevand of Rapid7. [Ruediger Pluem]
+Hi,
 
-Hence Low severity, affects 2.0.*, 2.2.*, fixes in svn:
-http://svn.apache.org/viewvc?view=rev&revision=682870
+Due to the completely incorrect usage of $_REQUEST almost all over the place 
+wordpress is subject to delayed attacks via cookies.
 
-Thanks, Mark
---
-Mark J Cox / Red Hat Security Response Team
+The attack can be performed as long as there is some way to inject a cookie 
+which is sent by the browser to the server.
+
+More info at http://bugs.debian.org/504771
+
+Could a CVE id be assigned please?
+
+Thanks in advance.
+
+Kind regards,
+- -- 
+Raphael Geissert - Debian Maintainer
+www.debian.org - get.debian.net
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkkc6u0ACgkQYy49rUbZzlrmmQCfZNQ6ZERLCODohN1+TTvUcXvs
+KHcAn1rGqXuxrvmPU70ULqeR75L3vp1X
+=pVPw
+-----END PGP SIGNATURE-----
+
