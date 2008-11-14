@@ -1,23 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/19/2
-Message-ID: <20080619135005.GB4263@ngolde.de>
-Date: Thu, 19 Jun 2008 15:50:05 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Critical vuln in Firefox 3.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/14/3
+Message-ID: <Pine.GSO.4.51.0811141224020.16900@faron.mitre.org>
+Date: Fri, 14 Nov 2008 12:35:41 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com, jlieskov@...hat.com
+Subject: Re: CVE id request: htop
 Content-Type: text/plain; charset=utf-8
 
-Hi Hanno,
-* Hanno Böck <hanno@...eck.de> [2008-06-19 11:24]:
-> Very limited information:
-> http://dvlabs.tippingpoint.com/blog/2008/06/18/vulnerability-in-mozilla-firefox-30
 
-Let's wait until they publish their advisory, having a CVE 
-id without any useful description now doesn't help anyone.
-Cheers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+Sorry Jan and Nico, I didn't follow up with you on this.  There were some
+questions about whether this deserved a CVE, since THOUSANDS of programs
+dump output without considering whether they're writing to a terminal...
+or what they're writing to a terminal.
 
-Content of type "application/pgp-signature" skipped
+For example, should the "cat" program become more terminal-aware and avoid
+sending dangerous sequences?  Which of dozens of different terminal types
+should it avoid sending these sequences to?  Should it get a new CVE every
+time it forgets about some other terminal?
+
+Not to mention "more" and "ls" and "grep" and many others.
+
+We were forced to flag Apache a number of years ago because it didn't
+filter certain dangerous characters from its logs.  I always felt a bit
+funny about that one.
+
+Hopefully you see why this is an edge case for us.
+
+In this specific case, however, apparently top performs this behavior,
+it's clearly intended to run in a terminal, *and* a vendor is stating it's
+a security issue.  So, CVE-2008-5076 has been assigned.
+
+- Steve
+
+
+======================================================
+Name: CVE-2008-5076
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5076
+Reference: MLIST:[oss-security] 20081102 CVE id request: htop
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/02/1
+Reference: CONFIRM:http://bugs.debian.org/504144
+Reference: XF:htop-processname-weak-security(46321)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/46321
+
+htop 0.7 writes process names to a terminal without sanitizing
+non-printable characters, which might allow local users to hide
+processes, modify arbitrary files, or have unspecified other impact
+via a process name with "crazy control strings."
+
+
