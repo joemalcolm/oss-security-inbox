@@ -1,27 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/15/2
-Message-ID: <20080815115550.GD31878@ngolde.de>
-Date: Fri, 15 Aug 2008 13:55:50 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/14/2
+Message-Id: <1226677707.3540.60.camel@dhcp-lab-164.englab.brq.redhat.com>
+Date: Fri, 14 Nov 2008 16:48:27 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: mktemp
+Subject: Re: CVE id request: htop
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-mktemp (not the coreutils one) from 
-ftp://ftp.mktemp.org/pub/mktemp/ is not generating fully 
-random names. Steve, can you assign a CVE id to this?
+Hello Nico,
 
-This is 
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=495193
-I wrote an explanation on why this happens, available on:
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=495193#30
+  any success when receiving the CVE id for this one?
 
-Kind regards
-Nico
+What about the reproducer? Not meaning Debian report
+based one (successfully reproduced), but rather that one issuing
+malicious escape sequences to the terminal used for displaying.
 
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+Thanks, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
-Content of type "application/pgp-signature" skipped
+
+On Sun, 2008-11-02 at 13:06 +0100, Nico Golde wrote:
+> Hi,
+> htop doesn't filter non printable characters in process 
+> names which enables processes doing evil things with the 
+> display using escape sequences.
+> 
+> http://bugs.debian.org/504144
+> 
+> Steve, can you assign a CVE id to this?
+> 
+> Cheers
+> Nico
+> 
+
