@@ -1,54 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/08/2
-Message-ID: <20080408145845.GJ27160@fuse.inversepath.com>
-Date: Tue, 8 Apr 2008 14:58:45 +0000
-From: Andrea Barisani <lcars@...rt.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/17/1
+Message-ID: <28fa9c5e0811162202r1d956ef1s469917bfb5417112@mail.gmail.com>
+Date: Mon, 17 Nov 2008 14:02:11 +0800
+From: "Eugene Teo" <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Subject: Re: announcing oCERT & oss-security to Bugtraq & f-d
+Cc: coley@...re.org
+Subject: Notes about CVE-2008-5033
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Apr 08, 2008 at 06:45:16PM +0400, Solar Designer wrote:
-> Josh,
-> 
-> Would you be able and willing to start working on the announcement text
-> for oss-security now?  We'll be able to combine it with one for oCERT
-> later if needed (that is, if it's not too late) - or you can work on it
-> with Andrea right away (on this list).  I think I'd announce both
-> projects at once at least to the Openwall announcements list.
->
+Hi,
 
-I announced yesterday on f-d, bugtraq still has to moderate it.
+The patch for CVE-2008-5033 should be commit 6ca2cb9 instead of
+5ba2f67. Take note.
 
-Despite that, a minor mention of oCERT in oss-security announcement would
-still be appreciated if there's room for it.
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2008-5033
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=01a1a3cc1e3fbe718bd06a2a5d4d1a2d0fb4d7d9
 
-Cheers!
+Steve, you might want to update the CVE references to reflect the correct patch.
 
-> FYI, here are a couple of relevant news items that are currently up on
-> the Openwall website:
-> 
-> March 1, 2008
-> A couple of weeks ago, we have setup the Open Source Software Security
-> (oss-security) Wiki, which is the counterpart to the oss-security
-> mailing list, and we have the initial content in place by now.  Both the
-> wiki and the mailing list are a product of cooperation amongst various
-> Open Source software vendors, projects, and researchers.  The purpose of
-> the oss-security group is to encourage public discussion of security
-> flaws, concepts, and practices in the Open Source community.
-> 
-> February 17, 2008
-> ...
-> oss-security is a new discussion and collaboration mailing list for
-> people involved with Open Source projects who care about security.
-> 
-> Thanks,
-> 
-> Alexander
-
--- 
-Andrea Barisani |                Founder & Project Coordinator
-          oCERT | Open Source Computer Emergency Response Team
-
-<lcars@...rt.org>                         http://www.ocert.org
- 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
-        "Pluralitas non est ponenda sine necessitate"
+Thanks, Eugene
