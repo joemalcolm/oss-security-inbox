@@ -1,25 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/21/8
-Message-ID: <Pine.GSO.4.51.0811202057190.20524@faron.mitre.org>
-Date: Thu, 20 Nov 2008 20:59:24 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/17/5
+Message-ID: <4921EAFD.6060108@op5.se>
+Date: Mon, 17 Nov 2008 23:06:53 +0100
+From: Andreas Ericsson <ae@....se>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: V4L/DVB (9621): Avoid writing outside shadow.bytes[] array
+CC: coley@...re.org
+Subject: Re: CVE Request (syslog-ng)
 Content-Type: text/plain; charset=utf-8
 
+Steven M. Christey wrote:
+> On Mon, 17 Nov 2008, Josh Bressers wrote:
+> 
+>> syslog-ng doesn't call chdir() before calling chroot().
+> 
+> This falls under the notion of "protection mechanism works less securely
+> than advertised" so is a clear case for inclusion in CVE.  Use
+> CVE-2008-5110.
+> 
+> Also - is the chdir supposed to come BEFORE or AFTER?  The CERT secure
+> coding rules here:
+> 
+> https://www.securecoding.cert.org/confluence/display/cplusplus/FIO16-CPP.+Limit+access+to+files+by+creating+a+jail
+> 
+> suggest it might be safer AFTER, not before, due to some race condition
+> possibilities.
+> 
 
-On Wed, 19 Nov 2008, Eugene Teo wrote:
+The correct sequence is:
+chdir(jail_path);
+chroot(".");
 
-> If the write operation fails, the device won't be able to decode audio
-> signals properly, so on further analysis, we probably don't need a CVE
-> name for this. Take note.
+The chroot() call will fail if the directory no longer exists, but is
+otherwise safe from "racy jail" attacks.
 
-Does this mean, roughly, that this write only occurs into a different
-portion of a larger contiguous buffer, so it affects audio processing
-(e.g. throwing an error) or parsing, but otherwise can't be used to affect
-other memory locations outside that buffer?
+Paranoid programs only accept absolute non-symlink paths to the jail
+and issue getcwd() after having entered it to make sure they ended up
+in the proper directory.
 
-Hope that made sense.
-
-- Steve
+-- 
+Andreas Ericsson                   andreas.ericsson@....se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
