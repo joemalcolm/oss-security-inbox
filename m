@@ -1,38 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/22/6
-Message-ID: <20081022173408.GD30748@ngolde.de>
-Date: Wed, 22 Oct 2008 19:34:08 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/17/6
+Message-ID: <20081117225837.GA4641@openwall.com>
+Date: Tue, 18 Nov 2008 01:58:37 +0300
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: vlc
+Subject: Re: CVE Request (syslog-ng)
 Content-Type: text/plain; charset=utf-8
 
-Hi Steven,
-* Steven M. Christey <coley@...us.mitre.org> [2008-10-22 18:57]:
+On Mon, Nov 17, 2008 at 11:06:53PM +0100, Andreas Ericsson wrote:
+> The correct sequence is:
+> chdir(jail_path);
+> chroot(".");
 
-Thanks!
+That's a correct sequence, but not the only correct one.
 
-> Name: CVE-2008-4686
-> Status: Candidate
-> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4686
-> Reference: MLIST:[oss-security] 20081019 CVE id request: vlc
-> Reference: URL:http://www.openwall.com/lists/oss-security/2008/10/19/2
-> Reference: CONFIRM:http://git.videolan.org/?p=vlc.git;a=commitdiff;h=d859e6b9537af2d7326276f70de25a840f554dc3
-> 
-> Multiple integer overflows in ty.c in the TY demux plugin (aka the
-> TiVo demuxer) in VideoLAN VLC media player, probably 0.9.4, allow
-> remote attackers to have an unknown impact via a crafted .ty file, a
-> different vulnerability than CVE-2008-4654.
+> The chroot() call will fail if the directory no longer exists,
 
-This one looks pretty much exploitable to me and the 
-description should also note that. p_sys->i_seq_table_size 
-is under user control as well as the values that are later 
-written into the allocated buffer.
+No.  I'm not sure if this is required by any standard, by the behavior
+I'm used to seeing is that the current directory for a process will sort
+of continue to exist for that process despite of being removed.  It will
+be permanently removed in the filesystem when no process "holds" it -
+much like an opened but unlinked file.  (Obviously, the same is true
+when a process holds an open fd for a directory.)
 
-Cheers
-Nico
+> Paranoid programs only accept absolute non-symlink paths to the jail
+> and issue getcwd() after having entered it to make sure they ended up
+> in the proper directory.
+
+I find this ridiculous - a program can't possibly defend itself against
+every kind of unsafe use by the sysadmin.  If a program chooses to do
+any sanity checking on the provided pathname, then a sane check would be
+to ensure that all directories in the path are only writable by root.
+Unfortunately, too many people (mostly "packagers", because they feel
+the urge to "clean things up"?) are confused and they tend to make
+directories to chroot into writable by the pseudo-user the service will
+run as.  (BTW, this is something distros could want to mass-audit their
+patches, spec files, packaging scripts, etc. for.  I expect that some
+"bad" packages will be found if a few large distros do that.)
+
+Speaking of the issue at hand, I generally prefer:
+
+	if (chroot(CHROOT_PATH) || chdir("/")) fail();
+
+or it can be written as two separate if's for clarify or if different
+error handling is needed in the two cases, although in C the second call
+will only be made if the first one returns 0 so this construct is safe.
+
+I think that this - chroot() first, chdir("/") right after it - should
+be the idiom, whereas other ways to achieve the same effect are
+allowable deviations.
+
+Besides the missing chdir(), another very common issue with "privilege
+dropping" programs is forgetting to drop or re-initialize supplementary
+groups.  Not checking return values from any of the functions involved
+is about as common...  (I have not checked syslog-ng for any of this.)
+
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+Alexander Peslyak <solar at openwall.com>
+GPG key ID: 5B341F15  fp: B3FB 63F4 D7A3 BCCC 6F6E  FC55 A2FC 027C 5B34 1F15
+http://www.openwall.com - bringing security into open computing environments
