@@ -1,23 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/12/8
-Message-ID: <Pine.GSO.4.51.0805121604210.12683@faron.mitre.org>
-Date: Mon, 12 May 2008 16:04:33 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Linux vfs: fix permission checking in sys_utimensat
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/17/3
+Message-ID: <1815948490.298961226956228240.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 17 Nov 2008 16:10:28 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: coley@...re.org
+Subject: CVE Request (syslog-ng)
 Content-Type: text/plain; charset=utf-8
 
+Hi Steve,
 
-======================================================
-Name: CVE-2008-2148
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2148
-Reference: CONFIRM:http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.25.y.git;a=commit;h=f9dfda1ad0637a89a64d001cf81478bd8d9b6306
+I'm pretty sure this one deserves a CVE id.
 
-The utimensat system call in Linux kernel 2.6.22 and other versions
-before 2.6.25.3 does not check file permissions when certain UTIME_NOW
-and UTIME_OMIT combinations are used, which allows local users to
-modify file times of arbitrary files, possibly leading to a denial of
-service.
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=505791
 
+syslog-ng doesn't call chdir() before calling chroot().  The chroot(2) man page is
+quite clear that if you don't call chdir() first, the process will inherit a '.'
+that is outside of the chroot.
 
+By itself this isn't really a flaw (you'll need some other exploit to even attempt to break out of the chroot), and chroot can be broken out of various other ways.
+Typically chroot() should not be considered secure, but I suspect this should
+probably get an ID if for no other reason than avoiding future confusion.
+
+Thanks.
+
+-- 
+    JB
