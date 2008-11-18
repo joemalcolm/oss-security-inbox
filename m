@@ -1,24 +1,93 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/13/4
-Message-ID: <Pine.GSO.4.51.0808122031570.26550@faron.mitre.org>
-Date: Tue, 12 Aug 2008 20:32:06 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/18/1
+Message-ID: <49227D7C.5050601@op5.se>
+Date: Tue, 18 Nov 2008 09:31:56 +0100
+From: Andreas Ericsson <ae@....se>
 To: oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: Re: CVE Request (ipsec-tools again)
+Subject: Re: CVE Request (syslog-ng)
 Content-Type: text/plain; charset=utf-8
 
+Solar Designer wrote:
+> On Mon, Nov 17, 2008 at 11:06:53PM +0100, Andreas Ericsson wrote:
+>> The correct sequence is:
+>> chdir(jail_path);
+>> chroot(".");
+> 
+> That's a correct sequence, but not the only correct one.
+> 
 
-======================================================
-Name: CVE-2008-3652
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3652
-Reference: MLIST:[ipsec-tools-devel] 20080811 [PATCH] Track and delete orphaned ph1s
-Reference: URL:http://sourceforge.net/mailarchive/forum.php?thread_name=48a0c7a0.qPeWZAE0PY8bDDq%2B%25olel%40ans.pl&forum_name=ipsec-tools-devel
+Well, "chroot(jail_path); chdir("/");" does effectively the same
+thing (ie, avoid re-using jail_path), so they're equally race-
+resistant, ofcourse.
 
-src/racoon/handler.c in racoon in ipsec-tools does not remove an
-"orphaned ph1" (phase 1) handle when it has been initiated remotely,
-which allows remote attackers to cause a denial of service (resource
-consumption).
+>> The chroot() call will fail if the directory no longer exists,
+> 
+> No.  I'm not sure if this is required by any standard, by the behavior
+> I'm used to seeing is that the current directory for a process will sort
+> of continue to exist for that process despite of being removed.
+
+This doesn't hold true on VMS and some Irix releases. Now that you
+say it, I haven't run into it on more recent systems, but I remember
+it happening on those about two years back at a customers site.
+
+HP dev-center used to have an (Open)VMS system, but I can't seem to
+find it now, or I would verify it there.
+
+>> Paranoid programs only accept absolute non-symlink paths to the jail
+>> and issue getcwd() after having entered it to make sure they ended up
+>> in the proper directory.
+> 
+> I find this ridiculous - a program can't possibly defend itself against
+> every kind of unsafe use by the sysadmin.  If a program chooses to do
+> any sanity checking on the provided pathname, then a sane check would be
+> to ensure that all directories in the path are only writable by root.
 
 
+That would fail with Owl's setup of per-user /tmp/.private/$USER dirs,
+even if those are absolutely safe for chroot-jail usage otherwise.
+
+Assuming no symlinks, it's enough to ensure that "." and ".." are root-
+owned and 0700 once the directory has been entered, and quite a lot
+simpler. This has been verified by at least eight separate security
+researchers in severely paranoid industries (weapons research among
+others).
+
+> 
+> Besides the missing chdir(), another very common issue with "privilege
+> dropping" programs is forgetting to drop or re-initialize supplementary
+> groups.  Not checking return values from any of the functions involved
+> is about as common...  (I have not checked syslog-ng for any of this.)
+> 
+
+It's not stellar in that respect. Here's the effective code, printable
+with "sed -n 275,297p src/main.c" from the latest syslog-ng snapshot.
+--8<--8<--8<--
+int
+setup_creds(void)
+{
+  if (chroot_dir)
+    {
+      if (chroot(chroot_dir) < 0)
+    {
+      msg_error("Error during chroot()",
+                evt_tag_errno(EVT_TAG_OSERROR, errno),
+                NULL);
+      return 0;
+    }
+    }
+
+  if (uid || gid || run_as_user)
+    {
+      setgid(gid);
+      if (run_as_user)
+        initgroups(run_as_user, gid);
+      setuid(uid);
+    }
+  return 1;
+}
+--8<--8<--8<--
+
+-- 
+Andreas Ericsson                   andreas.ericsson@....se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
