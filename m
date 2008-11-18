@@ -1,37 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/08/8
-Message-ID: <20080408203517.GU9264@openwall.com>
-Date: Wed, 9 Apr 2008 00:35:17 +0400
-From: "(GalaxyMaster)" <galaxy@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: wiki: pagemove, reconfiguration of default word separator for page names
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/18/2
+Message-Id: <1227013019.4166.41.camel@dhcp-lab-164.englab.brq.redhat.com>
+Date: Tue, 18 Nov 2008 13:56:59 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: coley@...re.org
+Cc: oss-security@...ts.openwall.com, Jamie Strandboge <jamie@...onical.com>
+Subject: CVE Request - ecryptfs-utils
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hello Steve,
 
-This is an update re: the recent changes in the Wiki configuration.
+  noticed, the following issue still lacks a separate CVE identifier:
 
-Josh had correctly pointed out that the requested pagemove functionality
-didn't work as expected, I investigated this and found out that the
-pagemove plugin was enabled to the admin group only.  I have fixed the
-issue by adding an additional ACL check for managers (those who are
-members of the editor group).
+References:
+http://secunia.com/Advisories/32382/
+http://www.openwall.com/lists/oss-security/2008/10/23/3
+http://www.openwall.com/lists/oss-security/2008/10/29/4
+http://www.openwall.com/lists/oss-security/2008/10/29/7
 
-Those of you who see the Admin button at the bottom of the Wiki can use
-the pagemove plugin from now on.  I've briefly described how to
-move/rename a page at the following URL:
+Upstream commits:
 
-http://oss-security.openwall.org/wiki/wiki/plugins/hints/editor
+http://git.kernel.org/?p=linux/kernel/git/mhalcrow/ecryptfs-utils.git;a=commit;h=06de99afd53f03fe07eda0ad9d61ac6d5d4d9f53
+http://git.kernel.org/?p=linux/kernel/git/mhalcrow/ecryptfs-utils.git;a=commit;h=0af27a5d514dc4bbc077f07cf33a5d5b362a9193
 
-Another important change is that I re-configured the Wiki to use '-'
-(dash) instead of '_' (underscore) as a word separator for page names.
-This was done per previous (unfortunately) private discussion to make
-all pages look consistent.  This change has affected one Wiki page.
-it's code-reviews.  Since that page contains a stub I thought that it's
-OK that I've simply renamed the page without placing a proper redirect
-back.  Please let me know if I was wrong and I'll put a redirection
-there.
+Affected ecryptfs-utils versions:
+  Jamie mentions ecryptfs-utils > 45 for ecryptfs-setup-private script,
+  but the upstream commit applies also for ecryptfs_{add, wrap}_passphrase.c
+  utilities present in previous versions (checked presence in ecryptfs-utils-41-1).
 
--- 
-(GM)
+Could you please allocate a new CVE id for this one?
+
+Thanks, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+
 
