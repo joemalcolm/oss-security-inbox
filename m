@@ -1,46 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/20/9
-Message-id: <1203536280.7673.TMDA@linsec.ca>
-Date: Wed, 20 Feb 2008 12:36:31 -0700
-From: Vincent Danen <vdanen@...sec.ca>
-To: oss-security@...ts.openwall.com
-Subject: Re: FAQ for upstream maintainers
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/18/3
+Message-ID: <962054141.542411227031599439.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 18 Nov 2008 13:06:39 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: coley@...re.org
+Subject: CVE Request (ssh)
 Content-Type: text/plain; charset=utf-8
 
-* [2008-02-20 08:37:31 -0500] Josh Bressers wrote:
+Hi Steve,
 
->> We could also want to rename this web page to something containing the
->> likely search keywords - and possibly move it to a namespace, which
->> would give a keyword too, once we have a suitable one.  "whattodo" is
->> not a likely keyword (or not a closely relevant one).
->> 
->
->I just created the namespace "disclosure" and added an outline I have to
->them.  I also added a note that the things in "whattodo" should be merged
->into the namespace.
->
->For the moment it's just my outlines, I've not gotten around to filling it
->out yet.  I did this, as I think it's important we have some amount of
->organized information up, as this:
->http://linsec.ca/blog/2008/02/17/new-informal-security-organization-oss-security/
->
->Was just picked up by linuxsecurity.com
+So this has been out for a few days and I've not seen a CVE id for it yet:
+http://www.cpni.gov.uk/Docs/Vulnerability_Advisory_SSH.txt
 
-Hmmm... and here I thought no one really read my blog.
-
-Oh well, we wanted exposure, right?  =)
-
->We will only get one look from a lot of people, and if they don't see
->anything of value, they will likely never look again.
-
-True, but I think the people that we really want here will see some
-value in it despite the lack of perfect organization.  The average joe
-may not, but that's ok.
-
-I'll see if I can find some time today to flush those outlines out a
-bit.
+Thanks.
 
 -- 
-Vincent Danen @ http://linsec.ca/
-
-Content of type "application/pgp-signature" skipped
+    JB
