@@ -1,52 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/26/2
-Message-Id: <1219742248.3367.20.camel@dhcp-lab-164.englab.brq.redhat.com>
-Date: Tue, 26 Aug 2008 11:17:28 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: coley@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: CVE Request (samba)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/19/1
+Message-ID: <49238C58.4030604@redhat.com>
+Date: Wed, 19 Nov 2008 11:47:36 +0800
+From: Eugene Teo <eteo@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: V4L/DVB (9621): Avoid writing outside shadow.bytes[] array
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve,
+Eugene Teo wrote:
+> This was fixed in upstream by the maintainer, Mauro Carvalho Chehab.
+> 
+> "[PATCH] V4L/DVB (9621): Avoid writing outside shadow.bytes[] array
+> 
+> There were no check about the limits of shadow.bytes array. This offers
+> a risk of writing values outside the limits, overriding other data
+> areas."
+> 
+> Upstream commit: 494264379d186bf806613d27aafb7d88d42f4212
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=471835
 
-  Sascha Herrmann has noticed a file access permissions 
-change, present by one of the critical TBD files,
-shipped within the Samba product (group_mapping.{tdb,ldb},
-mask changed from 0600 to 0666). As this file is of 
-critical importance for proper function of the Samba tool,
-it should not allow read and write access for the group
-and for others. 
+If the write operation fails, the device won't be able to decode audio
+signals properly, so on further analysis, we probably don't need a CVE
+name for this. Take note.
 
-Affected Samba versions: 3.2.0-* +
-========================
-
-Current behavior: (samba-3.2.0-2.17)
-====================================
-
-# ls -l group_mapping.ldb
--rw-rw-rw- 1 root root 77824 2008-08-25 10:56 group_mapping.ldb
-
-Expected behavior (present in all prior Samba versions): 
-========================================================
-
-# ls -l /var/lib/samba/group_mapping.tdb
--rw------- 1 root root 4096 2008-08-25 11:21 /var/lib/samba/group_mapping.tdb
-
-Public mention of this report: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=496073
-=============================
-
-For the reference and explanation of meaning of Samba *.TBD files, please see:
-==============================================================================
-
-http://wiki.samba.org/index.php/Frequently_Asked_Questions
-http://www.samba.org/samba/docs/man/Samba-HOWTO-Collection/msdfs.html
-
-Could you please allocate a CVE id for this issue?
-
-Thank you in advance.
-
-Kind regards
-Jan iankko Lieskovsky
-RH Security Response Team
-
+Thanks, Eugene
