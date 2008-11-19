@@ -1,33 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/17/8
-Message-ID: <28fa9c5e0812161810s6b7ec513lbe12cc540cc054f7@mail.gmail.com>
-Date: Wed, 17 Dec 2008 10:10:28 +0800
-From: "Eugene Teo" <eugeneteo@...nel.sg>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel: applicom: fix an unchecked user ioctl range
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/19/4
+Message-ID: <975028224.887241227125683878.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 19 Nov 2008 15:14:43 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...re.org>
+Subject: Re: CVE request: CUPS DoS via RSS subscriptions
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Dec 17, 2008 at 10:07 AM, Eugene Teo <eugeneteo@...nel.sg> wrote:
-> On Wed, Dec 17, 2008 at 9:55 AM, Steven M. Christey
-> <coley@...us.mitre.org> wrote:
->>
->> On Wed, 10 Dec 2008, Eugene Teo wrote:
->>
->>> Steve, can you please assign a CVE name. Thanks.
->>>
->>> http://bugzilla.kernel.org/show_bug.cgi?id=11408
->>> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=a7be18d
->>
->> Can the affected IOCTL be accessed by malicious attackers?  If it's
->> protected in some sense, maybe it doesn't cross privilege boundaries.
->> Although Linus does mention an "unchecked user ioctl range."
->
-> ac_ioctl() does not restrict access to only privileged users, and
-> IndexCard is user-controllable.
 
-Hmm, there's a comment in the ac_ioctl() that the device for this is
-only accessible by root, so if out of range may not matter. Hmm. So,
-maybe, maybe not.
+----- "Kees Cook" <kees@...ntu.com> wrote:
 
-Eugene
+> Hello!
+> 
+> I'd like to get a CVE assigned for the RSS subscription DoS mentioned
+> here[1].  It seems that CUPS upstream already fixed[2] the issue[3]
+> in
+> their 1.3.8 release.  Prior to 1.3.8, the server can be made to crash
+> when visiting a malicious website due to CUPS general CSRF issues.
+> 
+> Thanks,
+> 
+> -Kees
+> 
+> [1] https://bugs.launchpad.net/ubuntu/+source/cups/+bug/298241
+>     http://www.gnucitizen.org/blog/pwning-ubuntu-via-cups/
+> [2] http://www.cups.org/strfiles/2774/str2774.patch
+> [3] http://www.cups.org/str.php?L2774
+> 
+
+So from looking at cups 1.3.7 on Fedora 8, here is what I see:
+
+(gdb) bt
+#0  create_subscription (con=0xb88975c0, uri=0xb889ae00) at ipp.c:5858
+#1  0xb7facba7 in cupsdProcessIPPRequest (con=0xb88975c0) at ipp.c:615
+#2  0xb7f88bfc in cupsdReadClient (con=0xb88975c0) at client.c:2253
+#3  0xb7fc0606 in cupsdDoSelect (timeout=1) at select.c:537
+#4  0xb7f98710 in main (argc=1, argv=0xbfdd6194) at main.c:817
+(gdb) list
+5853        else if (printer)
+5854          cupsdLogMessage(CUPSD_LOG_DEBUG,
+5855                          "Added subscription %d for printer \"%s\"",
+5856                          sub->id, printer->name);
+5857        else
+5858          cupsdLogMessage(CUPSD_LOG_DEBUG, "Added subscription %d for server",
+5859                          sub->id);
+5860
+5861        sub->interval = interval;
+5862        sub->lease    = lease;
+(gdb) print sub
+$1 = (cupsd_subscription_t *) 0x0
+
+It would appear to be a NULL pointer dereference.  It seems that this call a
+few lines above the snippet shown above:
+ sub = cupsdAddSubscription(mask, printer, job, recipient, 0);
+
+will return NULL when the hardcoded value of 100 subscriptions is hit.  So really
+the issu here is a lack of error checking which results in a NULL dereference
+crash.  The upstream fix could still obviously let a local authenticated user
+crash the server.
+
+I'm not sure why yet, but this doesn't crash cups 1.2.4 for me (which it should).
+
+-- 
+    JB
