@@ -1,37 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/05/4
-Message-ID: <Pine.GSO.4.51.0805051129470.17161@faron.mitre.org>
-Date: Mon, 5 May 2008 11:30:49 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Tomas Hoger <thoger@...hat.com>
-cc: oss-security@...ts.openwall.com, coley@...re.org
-Subject: Re: CVE id request - mysql
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/19/3
+Message-ID: <20081119190745.GJ11234@outflux.net>
+Date: Wed, 19 Nov 2008 11:07:45 -0800
+From: Kees Cook <kees@...ntu.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...re.org>
+Subject: CVE request: CUPS DoS via RSS subscriptions
 Content-Type: text/plain; charset=utf-8
 
+Hello!
 
-Interesting bug.
+I'd like to get a CVE assigned for the RSS subscription DoS mentioned
+here[1].  It seems that CUPS upstream already fixed[2] the issue[3] in
+their 1.3.8 release.  Prior to 1.3.8, the server can be made to crash
+when visiting a malicious website due to CUPS general CSRF issues.
 
-I agree that the overflow enhancement does not deserve a CVE when the only
-known attacks do not cross privilege boundaries.
+Thanks,
 
-- Steve
+-Kees
 
+[1] https://bugs.launchpad.net/ubuntu/+source/cups/+bug/298241
+    http://www.gnucitizen.org/blog/pwning-ubuntu-via-cups/
+[2] http://www.cups.org/strfiles/2774/str2774.patch
+[3] http://www.cups.org/str.php?L2774
 
-======================================================
-Name: CVE-2008-2079
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2079
-Reference: CONFIRM:http://bugs.mysql.com/bug.php?id=32167
-Reference: CONFIRM:http://dev.mysql.com/doc/refman/4.1/en/news-4-1-24.html
-Reference: CONFIRM:http://dev.mysql.com/doc/refman/5.0/en/releasenotes-es-5-0-60.html
-Reference: CONFIRM:http://dev.mysql.com/doc/refman/5.1/en/news-5-1-24.html
-Reference: CONFIRM:http://dev.mysql.com/doc/refman/6.0/en/news-6-0-5.html
-
-MySQL 4.1.x before 4.1.24, 5.0.x before 5.0.60, 5.1.x before 5.1.24,
-and 6.0.x before 6.0.5 allows local users to bypass certain privilege
-checks by calling CREATE TABLE on a MyISAM table with modified (1)
-DATA DIRECTORY or (2) INDEX DIRECTORY arguments that are within the
-MySQL home data directory, which can point to tables that are created
-in the future.
-
-
+-- 
+Kees Cook
+Ubuntu Security Team
