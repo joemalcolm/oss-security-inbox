@@ -1,31 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/17/24
-Message-ID: <Pine.GSO.4.51.0812171106440.17008@faron.mitre.org>
-Date: Wed, 17 Dec 2008 11:07:45 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE id request: php-xajax
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/20/1
+Message-ID: <0+ioRXQLmlOM9tqor5B6CuqNhbk@20cDGM+8hsk/QFQ6RA5/3vpdoQo>
+Date: Thu, 20 Nov 2008 03:16:36 +0300
+From: Eygene Ryabinkin <rea-sec@...elabs.ru>
+To: oss-security@...ts.openwall.com, mike@...ysw.com
+Cc: "Steven M. Christey" <coley@...re.org>
+Subject: Re: CVE request: CUPS DoS via RSS subscriptions
 Content-Type: text/plain; charset=utf-8
 
+Josh, Mike, *, good day.
 
-On Wed, 17 Dec 2008, Steffen Joeris wrote:
+Wed, Nov 19, 2008 at 03:14:43PM -0500, Josh Bressers wrote:
+> So from looking at cups 1.3.7 on Fedora 8, here is what I see:
+> 
+> (gdb) bt
+> #0  create_subscription (con=0xb88975c0, uri=0xb889ae00) at ipp.c:5858
+> #1  0xb7facba7 in cupsdProcessIPPRequest (con=0xb88975c0) at ipp.c:615
+> #2  0xb7f88bfc in cupsdReadClient (con=0xb88975c0) at client.c:2253
+> #3  0xb7fc0606 in cupsdDoSelect (timeout=1) at select.c:537
+> #4  0xb7f98710 in main (argc=1, argv=0xbfdd6194) at main.c:817
+> (gdb) list
+> 5853        else if (printer)
+> 5854          cupsdLogMessage(CUPSD_LOG_DEBUG,
+> 5855                          "Added subscription %d for printer \"%s\"",
+> 5856                          sub->id, printer->name);
+> 5857        else
+> 5858          cupsdLogMessage(CUPSD_LOG_DEBUG, "Added subscription %d for server",
+> 5859                          sub->id);
+> 5860
+> 5861        sub->interval = interval;
+> 5862        sub->lease    = lease;
+> (gdb) print sub
+> $1 = (cupsd_subscription_t *) 0x0
+> 
+> It would appear to be a NULL pointer dereference.  It seems that this call a
+> few lines above the snippet shown above:
+>  sub = cupsdAddSubscription(mask, printer, job, recipient, 0);
+> 
+> will return NULL when the hardcoded value of 100 subscriptions is hit.
 
-> The patch for CVE-2007-2739 seems incomplete as it doesn't escape "&".
-> I recommend removing the replace call and using htmlspecialchars() instead.
+Not really hardcoded -- it is settable with the 'MaxSubscriptions'
+directive.  I had just reproduced the bug with CUPS 1.3.9 at FreeBSD.
+MaxSubscriptions was set to 3 to ease the PoC.  Just repeated
+invocations of 'lpr -m <somefile>' were crashing cups daemon
+reproducibly.
 
-This counts for a new CVE, so use CVE-2008-5623
+The attached patch fixes the things for me, but perhaps it needs
+some more polishing.  Will try to take a fresh look at this tomorrow.
 
-Will there be more details available, or should I just write the
-description up based on the oss-security post?  Which versions are
-affected?
+Mike, please, take a look at this!
+-- 
+rea
 
-> Also, I seem to be unable to find anything regarding CVE-2007-2740. Did
-> anyone manage to find a patch or even what kind of issue we are talking
-> about? I only see the XSS.
-
-CVE-2007-2740 is based on the xajax PHP and Javascript library 0.2.5
-Release Notes and Changelog, dated May 16, 2007, which states:
-"...Security vunerabilities have been patched."
-
-- Steve
+View attachment "a" of type "text/plain" (1548 bytes)
