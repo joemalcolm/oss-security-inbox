@@ -1,38 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/27/2
-Message-ID: <28fa9c5e0811270517w6f16eef8wd9c0a70f6162d408@mail.gmail.com>
-Date: Thu, 27 Nov 2008 21:17:46 +0800
-From: "Eugene Teo" <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/20/6
+Message-ID: <20081120143738.GB13324@ngolde.de>
+Date: Thu, 20 Nov 2008 15:37:38 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel: fix soft lockups/OOM issues with unix garbage collector
+Subject: Re: CVE Request: imlib2
 Content-Type: text/plain; charset=utf-8
 
-This bug is different from CVE-2008-5029, but it can be triggered by
-the same reproducers. It requires a CVE name.
+Hi,
+* P??nar Yanarda?? <pinar@...dus.org.tr> [2008-11-20 14:29]:
+> ----
+> *Description*:
+> A vulnerability has been discovered in imlib2, which can be exploited by 
+> malicious people to potentially compromise an application using the library.
+> 
+> The vulnerability is caused due to a pointer arithmetic error within the 
+> "load()" function provided by the XPM loader. This can be exploited to cause a 
+> heap-based buffer overflow via a specially crafted XPM file.
+[...] 
+Reference:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=505714#15
 
-"Reported and fixed by Dann Frazier <dannf@...com>:
-This is an implementation of David Miller's suggested fix in:
-  https://bugzilla.redhat.com/show_bug.cgi?id=470201
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-Paraphrasing the description from the above report, it makes sendmsg()
-block while UNIX garbage collection is in progress. This avoids a
-situation where child processes continue to queue new FDs over a
-AF_UNIX socket to a parent
-which is in the exit path and running garbage collection on these FDs.
-This contention can result in soft lockups and oom-killing of
-unrelated processes."
-
-Reproducers:
-https://bugzilla.redhat.com/show_bug.cgi?id=470201#c1
-https://bugzilla.redhat.com/show_bug.cgi?id=470201#c7
-
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=470201
-http://article.gmane.org/gmane.comp.security.oss.general/1223
-http://marc.info/?l=linux-netdev&m=122721862313564&w=2
-https://bugzilla.redhat.com/show_bug.cgi?id=473259
-
-Patch:
-http://marc.info/?l=linux-netdev&m=122771908731133&w=2
-
-Thanks, Eugene
+Content of type "application/pgp-signature" skipped
