@@ -1,119 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/10/5
-Message-ID: <BX8Nv7exK54M5wBgYCCzN4ZHjjE@Nv45r0f9gWT8HCu35qu0Xm2Zg98>
-Date: Wed, 10 Dec 2008 18:14:23 +0300
-From: Eygene Ryabinkin <rea-sec@...elabs.ru>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/20/4
+Message-ID: <20081120120449.GA326@ngolde.de>
+Date: Thu, 20 Nov 2008 13:04:49 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Cc: jlieskov@...hat.com, coley@...re.org
-Subject: Re: CVE Request (nagios)
+Cc: toots@...tageeks.org
+Subject: CVE id request: another geshi issue (was: GeSHi: Clarification about the recent security (non-)issues (SA32559))
 Content-Type: text/plain; charset=utf-8
 
-Andreas, thanks for answering.
+Hi,
+* Christian Hoffmann <hoffie@...too.org> [2008-11-10 19:09]:
+> I was reading up on Secunia Advisory 32559 [1] and the related upstream
+> statement [2] and ChangeLog [3] and well, it left me with some mixed
+> impressions, what's true and what not, so I took a closer look.
+[...] 
+A more important issue has been silently fixed as well. Unfortunately 
+I can not find a public reference or a changelog entry to it. 
+A user can get geshi into an infinite loop and thus causing 
+a DoS (php process will eat a lot CPU) by highlighting a 
+crafted xml sequence. As a PoC '<' works.
 
-Wed, Dec 10, 2008 at 03:53:47PM +0100, Andreas Ericsson wrote:
-> >> So
-> >>   http://nagios.cvs.sourceforge.net/viewvc/nagios/nagios/base/commands.c?r1=1.109&r2=1.110&view=patch
-> >> just completely closes the processing of these commands from the
-> >> Nagios side.  May be this was the fix for the case when the evil
-> >> contents from the command file were still floating around but the
-> >> upgraded Nagios won't process them because they could go from the
-> >> previous successful attack but are lying unprocessed?
-> > 
-> > Do you think it is really so?
-> > 
-> 
-> Umm... I can't parse the above paragraph.
+The upstream fix for this is 
+http://geshi.svn.sourceforge.net/viewvc/geshi/trunk/geshi-1.0.X/src/geshi.php?r1=1321&r2=1322&view=patch
 
-I mean that in 3.0.6 even Nagios server won't execute CHANGE_
-commands, because the diff in the above reference stops them from
-being executed.
+Let me explain a little.
+geshi.php:
+   1520         $code = "\n" . $code . "\n";
+    ..
+   1523         $length           = strlen($code);
+    ..
+   1545             for ($i = 0; $i < $length; ++$i) {
+   1546                 foreach ($this->language_data['SCRIPT_DELIMITERS'] as $delimiters) {
+   1547                     foreach ($delimiters as $open => $close) {
+   1548                         // Get the next little bit for this opening string
+   1549                         $open_strlen = strlen($open);
+   1550                         $check = substr($code, $i, $open_strlen);
+   1551                         // If it matches...
+   1552                         if ($check == $open) {
+    ..
+   1556                             $parts[$k][0] = $open;
+   1557                             $close_i = strpos($code, $close, $i + $open_strlen)  + strlen($close);
+   1558                             if ($close_i === false) {
+   1559                                 $close_i = $length - 1;
+   1560                             }
+    ..
+   1562                             $i = $close_i - 1;
+    ..
+   1569                         }
+   1570                     }
+   1571                 }
 
-> In short though, the removed
-> commands are removed *from the cgi's* because it's far too dangerous
-> to allow such things over the web.
+$this->language_data['SCRIPT_DELIMITERS'] is defined as an array of arrays that
+holds start and end tags, in the case for xml this is holds a tuple ('<', '>')
+and assigns them to $open and $close.
 
-Comment in cgi.c says:
------ function cmd_submitf
-        /*
-         * We disallow sending 'CHANGE' commands from the cgi's
-         * until we do proper session handling to prevent cross-site
-         * request forgery
-         */
-        if (!command || (strlen(command) > 6 && !memcmp("CHANGE", command, 6)))
-                return ERROR;
------
-So I presume that the danger comes from the CSRF.  This code was
-introduced in 3.0.5.
+For < in line 1557 strpos will fail resulting in false because there is no
+close tag.  Adding strlen($close) to it will result in $close_i being 1. In
+line 1562 $i will be set $close_i - 1 resulting in 1 being 0. Loop starts again
+and $i is 1 again -> infinite loop.
 
-> Nagios will still process them if
-> they are submitted to the command-pipe, but the CGI's can no longer
-> write such commands to said pipe.
+Steve, can you assign a CVE id to this? This should affect every version < 1.0.8.
 
-Not in 3.0.6, see below and above.
+Cheers
+Nico
 
-> > CVE-2008-5028 really speaks about 3.0.5 as about vulnerable to CSRF.  At
-> > least CHANGE_ commands were closed in 3.0.5 and were (presumably)
-> > additionally closed at the Nagios server side in 3.0.6.  So either 3.0.6
-> > is vulnerable too, 3.0.5 is not vulnerable to CSRF or I am missing
-> > something.  What to choose?
-> > 
-> 
-> 3.0.5 is vulnerable to CSRF. 3.0.6 (which adds in-form session tokens to
-> cmd.cgi, which processes all commands from the web-forms), is not vulnerable
-> to CSRF.
-
-If you're talking about the commit based on
-  http://git.op5.org/git/?p=nagios.git;a=commitdiff;h=9c2a418ab4f6e4ef3a53ddcde402fe4781caa764
-then I afraid that this code isn't in the 3.0.6.  Diffing 3.0.5 and
-3.0.6 yeilds some improvements, the hunk that Jan mentioned (it closes
-CHANGE_ commands processing by the Nagios server itself):
------
---- nagios-3.0.5/base/commands.c        2008-11-02 21:51:29.000000000 +0300
-+++ nagios-3.0.6/base/commands.c        2008-11-30 20:22:58.000000000 +0300
-@@ -2891,6 +2893,19 @@
-        unsigned long hattr=MODATTR_NONE;
-        unsigned long sattr=MODATTR_NONE;
-
-+
-+       /* SECURITY PATCH - disable these for the time being */
-+       switch(cmd){
-+       case CMD_CHANGE_GLOBAL_HOST_EVENT_HANDLER:
-+       case CMD_CHANGE_GLOBAL_SVC_EVENT_HANDLER:
-+       case CMD_CHANGE_HOST_EVENT_HANDLER:
-+       case CMD_CHANGE_SVC_EVENT_HANDLER:
-+       case CMD_CHANGE_HOST_CHECK_COMMAND:
-+       case CMD_CHANGE_SVC_CHECK_COMMAND:
-+               return ERROR;
-+               }
-+
-+
-        /* get the command arguments */
-        switch(cmd){
------
-
-> 3.0.5 fixes the authorization bypass discussed in CVE-2008-5027, where an
-> authenticated user can submit commands he/she was not supposed to be able
-> to submit.
-
-Yes, newlines in the comments and other places.  This is really fixed
-in 3.0.5.
-
-> However, by blocking the CHANGE_ set of commands, the worst-case
-> impact of the CSRF was drastically reduced, and the change to blocking those
-> commands was also a part of 3.0.5.
-
-Yes, I meant precisely this.  But again, no real CSRF fixes are present
-in 3.0.6.
-
-> I'm afraid Ethan (the Nagios maintainer) got it wrong in the changelog,
-> which is why, I presume, there's so much confusion right now.
-> 
-> I wrote the patches for it though, so I think it's safe to say I know what
-> patch (and version) fixed what.
-
-I understand this.  But I feel that you think of your session tokens
-work as of being committed to 3.0.6.  This seems to be wrong.
-
-Sorry for such a long letter.
 -- 
-Eygene
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
