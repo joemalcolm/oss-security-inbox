@@ -1,41 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/13/8
-Message-ID: <Pine.GSO.4.51.0808122041310.26550@faron.mitre.org>
-Date: Tue, 12 Aug 2008 20:45:58 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/20/5
+Message-ID: <49255FCC.9020704@pardus.org.tr>
+Date: Thu, 20 Nov 2008 15:02:04 +0200
+From: Pınar Yanardağ <pinar@...dus.org.tr>
 To: oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: Re: CVE request: php-5.2.6 overflow issues
+Subject: CVE Request: imlib2
 Content-Type: text/plain; charset=utf-8
 
+ From Secunia [1]
 
-On Fri, 8 Aug 2008, Christian Hoffmann wrote:
+----
+*Description*:
+A vulnerability has been discovered in imlib2, which can be exploited by 
+malicious people to potentially compromise an application using the library.
 
-> two security issues, which might possibly allow for arbitrary code
-> execution (afaik nobody has analyzed the details...), but at least DoS
-> (think of FastCGI setups), were silently fixed in PHP again:
->
->    * Overflow in ext/gd's imageloadfont() function [1] [2] [3]
+The vulnerability is caused due to a pointer arithmetic error within the 
+"load()" function provided by the XPM loader. This can be exploited to 
+cause a heap-based buffer overflow via a specially crafted XPM file.
 
-Use CVE-2008-3658, to be filled in later - I'm assuming this is a distinct
-component that doesn't just affect PHP.
+Successful exploitation may allow execution of arbitrary code.
 
->    * Overflow in php's internal memnstr() function which is exposed
->      to userspace as "explode()" [1] [2] [4] [5]
+The vulnerability is confirmed in version 1.4.2. Other versions may also 
+be affected.
+----
 
-Use CVE-2008-3659.
+[1]: http://secunia.com/Advisories/32796
 
-For the FastCGI "foo..php" issue, use CVE-2008-3660.
+Can you assign a CVE please?
 
-These will be filled in later.
+Cheers,
 
-> As those functions might take user-supplied data in certain webapps
-> (which is a valid use case at least in case of explode()), those issues
-> should probably expected to be remotely exploitable.
+-- 
+Pınar Yanardağ (a.k.a PINguAR)
+http://pinguar.org
+_____________________________
 
-We use the term "context-dependent" to cover cases where the reachability
-and remote/local nature of the issue can vary widely, depending on how the
-product is used.  This term typically applies to libraries or interpreters
-that are used by third-party applications.
+Pardus Security Team
+http://security.pardus.org.tr
 
-- Steve
+
