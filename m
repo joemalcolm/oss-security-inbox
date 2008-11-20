@@ -1,18 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/08/3
-Message-ID: <0805081042250.11471@mjc.redhat.com>
-Date: Thu, 8 May 2008 10:44:12 +0100 (BST)
-From: Mark J Cox <mjc@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2008-1615 reproducer?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/20/3
+Message-ID: <fFzD7IuxiJtsQlnzjCv3adtSisk@lQT8hxE3qgkWblPX+LcADMZfoew>
+Date: Thu, 20 Nov 2008 11:41:28 +0300
+From: Eygene Ryabinkin <rea-sec@...elabs.ru>
+To: Michael Sweet <mike@...ysw.com>
+Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...re.org>
+Subject: Re: CVE request: CUPS DoS via RSS subscriptions
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 8 May 2008, Marcus Meissner wrote:
-> The redhat bugzilla entry for CVE-2008-1615 mentions a reproducer,
-> can you share it with us please?
+Michael, good day.
 
-Yes, see the linked bug #431314 for details.
+Wed, Nov 19, 2008 at 05:54:49PM -0800, Michael Sweet wrote:
+> Eygene Ryabinkin wrote:
+> > The attached patch fixes the things for me, but perhaps it needs
+> > some more polishing.  Will try to take a fresh look at this tomorrow.
+> > 
+> > Mike, please, take a look at this!
+> 
+> You'll find a much more complete patch already in CUPS svn for both
+> 1.3.x and 1.4.x, along with a new subscription test for the
+> "make check" target.  I didn't withhold the patch since the browser
+> attack vector was closed in 1.3.8...
+> 
+> I've attached my 1.3.x patch...
 
-Thanks, Mark
---
-Mark J Cox / Red Hat Security Response Team
+Thanks!  Just a quick question: the check in add_job_subscriptions() is
+catching non-NULL result of cupsdAddSubscription, but for the failed
+subscription is does not inform user about this.  The code in
+create_subscription() returns error.  Is it intentional?  Client gets
+nothing (at least 'lpr -m file.txt' outputs no error), but subscription
+is silently dropped.
+-- 
+Eygene
