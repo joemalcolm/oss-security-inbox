@@ -1,18 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/19/1
-Message-Id: <200806191033.57812.hanno@hboeck.de>
-Date: Thu, 19 Jun 2008 10:33:54 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: CVE Request: Critical vuln in Firefox 3.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/21/13
+Message-ID: <Pine.GSO.4.51.0811202118290.20524@faron.mitre.org>
+Date: Thu, 20 Nov 2008 21:18:42 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Eugene Teo <eugeneteo@...nel.sg>
+cc: oss-security@...ts.openwall.com, coley@...re.org
+Subject: Re: CVE request: kernel: libertas: fix buffer overrun
 Content-Type: text/plain; charset=utf-8
 
-Very limited information:
-http://dvlabs.tippingpoint.com/blog/2008/06/18/vulnerability-in-mozilla-firefox-30
 
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+======================================================
+Name: CVE-2008-5134
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5134
+Reference: MLIST:[linux-wireless] 20081029 [PATCH] libertas: fix buffer overrun
+Reference: URL:http://article.gmane.org/gmane.linux.kernel.wireless.general/23049
+Reference: MLIST:[oss-security] 20081111 CVE request: kernel: libertas: fix buffer overrun
+Reference: URL:http://openwall.com/lists/oss-security/2008/11/11/2
+Reference: CONFIRM:http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.27.y.git;a=commit;h=48735d8d8bd701b1e0cd3d49c21e5e385ddcb077
+Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=470761
+
+Buffer overflow in the lbs_process_bss function in
+drivers/net/wireless/libertas/scan.c in the libertas subsystem in the
+Linux kernel before 2.6.27.5 allows remote attackers to have an
+unknown impact via an "invalid beacon/probe response."
+
+
