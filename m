@@ -1,53 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/10/12
-Message-ID: <Pine.GSO.4.51.0811101310070.6724@faron.mitre.org>
-Date: Mon, 10 Nov 2008 13:11:09 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/21/9
+Message-ID: <Pine.GSO.4.51.0811202109260.20524@faron.mitre.org>
+Date: Thu, 20 Nov 2008 21:09:29 -0500 (EST)
 From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Andreas Ericsson <ae@....se>
-cc: oss-security@...ts.openwall.com, Johannes Dagemark <jd@....se>, Ethan Galstad <egalstad@...ios.org>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: Nagios (two issues)
+To: oss-security@...ts.openwall.com
+cc: "Steven M. Christey" <coley@...re.org>
+Subject: Re: CVE Request: ruby on rails header injection
 Content-Type: text/plain; charset=utf-8
 
 
-
-
 ======================================================
-Name: CVE-2008-5027
+Name: CVE-2008-5189
 Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5027
-Reference: MLIST:[nagios-devel] 20081107 Security fixes completed
-Reference: URL:http://sourceforge.net/mailarchive/forum.php?thread_name=4914396D.5010009%40op5.se&forum_name=nagios-devel
-Reference: MLIST:[oss-security] 20081106 CVE request: Nagios (two issues)
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/06/2
-Reference: MISC:http://www.nagios.org/development/history/nagios-3x.php
-Reference: CONFIRM:http://www.op5.com/support/news/389-important-security-fix-available-for-op5-monitor
-Reference: BID:32156
-Reference: URL:http://www.securityfocus.com/bid/32156
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5189
+Reference: CONFIRM:http://github.com/rails/rails/commit/7282ed863ca7e6f928bae9162c9a63a98775a19d
+Reference: CONFIRM:http://weblog.rubyonrails.org/2008/10/19/rails-2-0-5-redirect_to-and-offset-limit-sanitizing
+Reference: CONFIRM:http://weblog.rubyonrails.org/2008/10/19/response-splitting-risk
+Reference: BID:32359
+Reference: URL:http://www.securityfocus.com/bid/32359
 
-The Nagios process in (1) Nagios before 3.0.5 and (2) op5 Monitor
-before 4.0.1 allows remote authenticated users to bypass authorization
-checks, and trigger execution of arbitrary programs by this process,
-via an (a) custom form or a (b) browser addon.
-
-
-======================================================
-Name: CVE-2008-5028
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5028
-Reference: MLIST:[nagios-devel] 20081107 Security fixes completed
-Reference: URL:http://sourceforge.net/mailarchive/forum.php?thread_name=4914396D.5010009%40op5.se&forum_name=nagios-devel
-Reference: MLIST:[oss-security] 20081106 CVE request: Nagios (two issues)
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/06/2
-Reference: CONFIRM:http://git.op5.org/git/?p=nagios.git;a=commit;h=814d8d4d1a73f7151eeed187c0667585d79fea18
-Reference: CONFIRM:http://www.op5.com/support/news/389-important-security-fix-available-for-op5-monitor
-Reference: SECUNIA:32610
-Reference: URL:http://secunia.com/advisories/32610
-Reference: XF:nagios-cmd-csrf(46426)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/46426
-
-Cross-site request forgery (CSRF) vulnerability in cmd.cgi in (1)
-Nagios 3.0.5 and (2) op5 Monitor before 4.0.1 allows remote attackers
-to send commands to the Nagios process, and trigger execution of
-arbitrary programs by this process, via unspecified HTTP requests.
+CRLF injection vulnerability in Ruby on Rails before 2.0.5 allows
+remote attackers to inject arbitrary HTTP headers and conduct HTTP
+response splitting attacks via a crafted URL to the redirect_to
+function.
 
 
