@@ -1,33 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/24/2
-Message-Id: <200811241634.08610.ludwig.nussel@suse.de>
-Date: Mon, 24 Nov 2008 16:34:07 +0100
-From: Ludwig Nussel <ludwig.nussel@...e.de>
-To: cve@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: CVE Request: VirtualBox tmp file issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/21/18
+Message-ID: <4926883C.5080505@pardus.org.tr>
+Date: Fri, 21 Nov 2008 12:06:52 +0200
+From: Pınar Yanardağ <pinar@...dus.org.tr>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: imlib2
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 11/21/2008 03:35 AM Steven M. Christey wrote:
+> SECUNIA:32796 suggests a Debian bug report, but I couldn't quickly find
+> it.
+>   
 
-http://www.virtualbox.org/wiki/Changelog:
-VirtualBox 2.0.6
-- Linux/Solaris/Darwin hosts: verify permissions in /tmp/vbox-$USER-ipc
 
-These changes match that description:
-http://www.virtualbox.org/changeset?new=trunk%2Fsrc%2Flibs%2Fxpcom18a4%2Fipc%2Fipcd%2Fdaemon%2Fsrc%2FipcdUnix.cpp%4013810&old=trunk%2Fsrc%2Flibs%2Fxpcom18a4%2Fipc%2Fipcd%2Fdaemon%2Fsrc%2FipcdUnix.cpp%407049
+It seems they've added the reference today:
 
-VirtualBox uses /tmp/vbox-$USER-ipc to store a socket and a lock
-file. The lock file is truncated after a simple open call. AFAICS
-creating /tmp/vbox-$USER-ipc before the victim starts VirtualBox
-could therefore be exploited to create files as the victim or
-truncate files of the victim.
+-----
+*Changelog*:
+2008-11-21: Added link to "Original Advisory" section.
 
-cu
-Ludwig
+*Original Advisory*:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=505714
+
+----
+
+
+
+> ======================================================
+> Name: CVE-2008-5187
+> Status: Candidate
+> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5187
+> Reference: MLIST:[oss-security] 20081120 CVE Request: imlib2
+> Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/20/5
+> Reference: SECUNIA:32796
+> Reference: URL:http://secunia.com/advisories/32796
+>
+> The load function in the XPM loader for imlib2 1.4.2, and possibly
+> other versions, allows attackers to execute arbitrary code via a
+> crafted XPM file that triggers a "pointer arithmetic error" and a
+> heap-based buffer overflow, a different vulnerability than
+> CVE-2008-2426.  NOTE: the provenance of this information is unknown;
+> the details are obtained solely from third party information.
+>
+>
+>
+>   
+
 
 -- 
- (o_   Ludwig Nussel
- //\   
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+Pınar Yanardağ (a.k.a PINguAR)
+http://pinguar.org
+_____________________________
+
+Pardus Security Team
+http://security.pardus.org.tr
+
+
