@@ -1,36 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/27/4
-Message-ID: <20080527155903.GA7699@wo.int.altlinux.org>
-Date: Tue, 27 May 2008 19:59:03 +0400
-From: "Dmitry V. Levin" <ldv@...linux.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/21/1
+Message-ID: <Pine.GSO.4.51.0811201927190.20524@faron.mitre.org>
+Date: Thu, 20 Nov 2008 19:41:06 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSH key blacklisting
+cc: "Steven M. Christey" <coley@...re.org>
+Subject: Re: CVE request: CUPS DoS via RSS subscriptions
 Content-Type: text/plain; charset=utf-8
 
-On Tue, May 27, 2008 at 07:44:35PM +0400, Solar Designer wrote:
-> On Sat, May 17, 2008 at 04:46:30PM +0200, Robert Buchholz wrote:
-> > Do you have a patch to propose, implementing your idea?
-> 
-> Dmitry V. Levin and I have completed design of the encoding scheme, and
-> Dmitry implemented it.  Now we have:
-> 
-> blacklist-encode.c - the encoder program;
-> blacklist-check.c - the "checker" program, used for testing only;
-> openssh-3.6.1p2-owl-blacklist.diff - the patch to sshd.
-> 
-> The patch is against an older version that we still have in Owl (with
-> lots of other patches), but it is trivial to forward-port.  In fact, I
-> expect that Dmitry will port it to the newer version in ALT Linux's
-> distributions very soon (if not already).  Dmitry - please announce your
-> forward-port in here when you have it.
 
-These changes for ALT Linux's openssh package can be found at
-http://git.altlinux.org/people/ldv/packages/?p=openssh.git
-It should apply to vanilla openssh-5.0p1 with trivial modifications to
-auth2-pubkey.c and servconf.c hunks.
+On Wed, 19 Nov 2008, Kees Cook wrote:
+
+> I'd like to get a CVE assigned for the RSS subscription DoS mentioned
+> here[1].  It seems that CUPS upstream already fixed[2] the issue[3] in
+> their 1.3.8 release.  Prior to 1.3.8, the server can be made to crash
+> when visiting a malicious website due to CUPS general CSRF issues.
+
+I treated this as two CVEs, one for the CSRF-simplifying attack, and a
+separate one for the CUPS server crash (assuming that cupsd should not be
+crashable by non-root authenticated users).
+
+- Steve
 
 
--- 
-ldv
+======================================================
+Name: CVE-2008-5183
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5183
+Reference: MISC:http://www.gnucitizen.org/blog/pwning-ubuntu-via-cups/
+Reference: CONFIRM:https://bugs.launchpad.net/ubuntu/+source/cups/+bug/298241
+Reference: MLIST:[oss-security] 20081119 CVE request: CUPS DoS via RSS subscriptions
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/19/3
+Reference: MLIST:[oss-security] 20081119 Re: CVE request: CUPS DoS via RSS subscriptions
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/19/4
 
-Content of type "application/pgp-signature" skipped
+cupsd in CUPS before 1.3.8 allows local users, and possibly remote
+attackers, to cause a denial of service (daemon crash) by adding a
+large number of RSS Subscriptions, which triggers a NULL pointer
+dereference.  NOTE: this issue can be triggered remotely by leveraging
+CVE-2008-5184.
+
+
+======================================================
+Name: CVE-2008-5184
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5184
+Reference: MISC:http://www.gnucitizen.org/blog/pwning-ubuntu-via-cups/
+Reference: CONFIRM:http://www.cups.org/str.php?L2774
+Reference: MLIST:[oss-security] 20081119 CVE request: CUPS DoS via RSS subscriptions
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/19/3
+
+The web interface (cgi-bin/admin.c) in CUPS before 1.3.8 uses the
+guest username when a user is not logged on to the web server, which
+makes it easier for remote attackers to bypass intended policy and
+conduct CSRF attacks via the (1) add and (2) cancel RSS subscription
+functions.
+
+
