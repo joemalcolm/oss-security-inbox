@@ -1,19 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/13/2
-Message-ID: <87wse4xml0.fsf@mid.deneb.enyo.de>
-Date: Sat, 13 Dec 2008 13:54:03 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/21/4
+Message-ID: <Pine.GSO.4.51.0811202026300.20524@faron.mitre.org>
+Date: Thu, 20 Nov 2008 20:27:25 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re:  Re: CVE Request - roundcubemail
+cc: toots@...tageeks.org
+Subject: Re: CVE id request: another geshi issue (was: GeSHi: Clarification about the recent security (non-)issues (SA32559))
 Content-Type: text/plain; charset=utf-8
 
-* Raphael Geissert:
 
-> I became aware of some sort of code execution vulnerability one day
-> before that ticket was reported. After reviewing the file I
-> determined that it isn't a vulnerability in roundcube, but in PHP
-> itself; but I'm open to be proved wrong.
+======================================================
+Name: CVE-2008-5185
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5185
+Reference: MLIST:[oss-security] 20081120 CVE id request: another geshi issue (was: [oss-security] GeSHi: Clarification about the recent security (non-)issues (SA32559))
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/20/4
+Reference: CONFIRM:http://geshi.svn.sourceforge.net/viewvc/geshi/trunk/geshi-1.0.X/src/geshi.php?r1=1321&r2=1322&view=patch
 
-I think this is a documented feature of preg_replace with the "e"
-flag, comparable to what happens when you use string concatenation to
-create SQL statements.
+The highlighting functionality in geshi.php in GeSHi before 1.0.8 allows
+remote attackers to cause a denial of service (infinite loop) via an XML
+sequence containing an opening delimiter without a closing delimiter, as
+demonstrated using "<".
+
+
