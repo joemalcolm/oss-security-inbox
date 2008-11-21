@@ -1,29 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/02/5
-Message-ID: <20081002163047.GA3002@anguilla.debian.or.at>
-Date: Thu, 2 Oct 2008 18:30:47 +0200
-From: Gerfried Fuchs <rhonda@....at>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/21/3
+Message-ID: <Pine.GSO.4.51.0811202025020.20524@faron.mitre.org>
+Date: Thu, 20 Nov 2008 20:26:25 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: blosxom XSS issue (CVE-2008-2236)
+cc: mail@...ianw.de
+Subject: Re: GeSHi: Clarification about the recent security (non-)issues (SA32559)
 Content-Type: text/plain; charset=utf-8
 
-	Hi!
 
- I'd like to inform you of a XSS issue in blosxom which was reported
-by Yoshinori Ohta of Business Architects Inc. and got assigned the IDs
-CVE-2008-2236 and JVN#03300113. The problem allowed to inject arbitrary
-output into the default error page and possibly any plugin that uses the
-$flavour variable in its output directly.
+Because it got published in other sources a CVE is needed to track it, but
+I agree that this should be regarded as a problem in web apps that use
+GeSHi.
 
- A fixed version was released today and announced on the blosxom-users
-list:
-<http://sourceforge.net/mailarchive/forum.php?thread_name=20081002155914.GL10579%40sym.noone.org&forum_name=blosxom-users>
+- Steve
 
- The Debian Bug about the issue:
-<http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=500873>
 
- The patch to fix the problem:
-<http://blosxom.cvs.sourceforge.net/viewvc/blosxom/blosxom2/blosxom.cgi?r1=1.83&r2=1.84>
+======================================================
+Name: CVE-2008-5186
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5186
+Reference: MLIST:[oss-security] 20081110 GeSHi: Clarification about the recent security (non-)issues (SA32559)
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/10/8
+Reference: CONFIRM:http://sourceforge.net/project/shownotes.php?release_id=637321
+Reference: BID:32070
+Reference: URL:http://www.securityfocus.com/bid/32070
+Reference: SECUNIA:32559
+Reference: URL:http://secunia.com/advisories/32559
+Reference: XF:geshi-unspecified-code-execution(46271)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/46271
 
- Hope that helps. :)
-Rhonda
+** DISPUTED **
+
+The set_language_path function in geshi.php in Generic Syntax
+Highlighter (GeSHi) before 1.0.8.1 might allow remote attackers to
+conduct file inclusion attacks via crafted inputs that influence the
+default language path ($path variable).  NOTE: this issue has been
+disputed by a vendor, stating that only a static value is used, so
+this is not a vulnerability in GeSHi. Separate CVE identifiers would
+be created for web applications that integrate GeSHi in a way that
+allows control of the default language path.
+
+
