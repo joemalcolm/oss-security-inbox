@@ -1,34 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/11/2
-Message-Id: <200809111125.13667.rbu@gentoo.org>
-Date: Thu, 11 Sep 2008 11:25:10 +0200
-From: Robert Buchholz <rbu@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/21/19
+Message-ID: <20081121130806.GA12690@suse.de>
+Date: Fri, 21 Nov 2008 14:08:06 +0100
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: ssmtp =2.62 unitialized memory disclosure
+Cc: coley@...re.org, Jamie Strandboge <jamie@...onical.com>
+Subject: Re: CVE Request - ecryptfs-utils
 Content-Type: text/plain; charset=utf-8
 
-On Tuesday 09 September 2008, Robert Buchholz wrote:
-> Hi,
->
-> Maurice van der Pot of Gentoo reported a bug in ssmtp 2.62:
-> The from_format() function in ssmtp.c will call strdup() on an
-> unitialized memory if the user's gecos is unset and
-> "FromLineOverride" is disabled in the configuration. This might
-> disclose memory contents by sending them off in the the "From:" field
-> of an email or cause a (client) crash.
->
-> We're handling this as bug 234391 [ https://bugs.gentoo.org/234391 ].
-> Patch: https://bugs.gentoo.org/attachment.cgi?id=165005
->
-> ssmtp 2.61 is not affected.
+On Tue, Nov 18, 2008 at 01:56:59PM +0100, Jan Lieskovsky wrote:
+> Hello Steve,
+> 
+>   noticed, the following issue still lacks a separate CVE identifier:
+> 
+> References:
+> http://secunia.com/Advisories/32382/
+> http://www.openwall.com/lists/oss-security/2008/10/23/3
+> http://www.openwall.com/lists/oss-security/2008/10/29/4
+> http://www.openwall.com/lists/oss-security/2008/10/29/7
+> 
+> Upstream commits:
+> 
+> http://git.kernel.org/?p=linux/kernel/git/mhalcrow/ecryptfs-utils.git;a=commit;h=06de99afd53f03fe07eda0ad9d61ac6d5d4d9f53
+> http://git.kernel.org/?p=linux/kernel/git/mhalcrow/ecryptfs-utils.git;a=commit;h=0af27a5d514dc4bbc077f07cf33a5d5b362a9193
 
-As Tomas Hoger pointed out on IRC, 2.61 is affected as well -- I 
-accidently checked our patched sources and not the vanilla tarball.
-We added a patch to 2.61 in 2006, and accidently dropped it when bumping 
-to 2.62.
-Back then, this was bug 127592 [ https://bugs.gentoo.org/127592 ].
+This last commit is still bad, it uses
 
-Thanks,
-Robert
+printf "$PASSPHRASE..." stuff instead of printf "%s" "$PASSPHRASE..." 
 
-Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
+So you can program format exploits in shell...
+http://git.kernel.org/?p=linux/kernel/git/mhalcrow/ecryptfs-utils.git;a=blob;f=src/utils/ecryptfs-setup-private;h=7780a4e43983dee18fd5e08318b41bccd57a7298;hb=HEAD
+
+is the current version and looks better.
+
+This script (ecryptfs-setup-private) btw allows passing passphrases on the
+commandline too. *sigh*
+
+Ciao, Marcus
