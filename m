@@ -1,24 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/14/8
-Message-ID: <20080514154442.GD24737@mandriva.com>
-Date: Wed, 14 May 2008 12:44:42 -0300
-From: "Gustavo De Nardin (spuk)" <gustavodn@...driva.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/21/5
+Message-ID: <Pine.GSO.4.51.0811202034580.20524@faron.mitre.org>
+Date: Thu, 20 Nov 2008 20:35:31 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE request: Emacs 21 fast-lock-mode arbitrary lips code execution
+Subject: Re: CVE Request: imlib2
 Content-Type: text/plain; charset=utf-8
 
-* Tavis Ormandy <taviso@....lonestar.org> [2008-05-14 14:46 +0000]:
-> On Wed, May 14, 2008 at 04:03:34PM +0200, Sven Joachim wrote:
-> > On 2008-05-14 15:27 +0200, Nico Golde wrote:
-> > 
-> > > As I am a vim user I might have done something wrong too, 
-> > > not sure. What I did after installing emacs:
-> 
-> Same here, so out of curiosity i ran strace -efile -o log vim, and
-> edited a few files. I observed vim looking for a directory called
-> $TMPDIR in the wd, and using it as you would expect. Obviously a bug,
-> and perhaps some minor security implications, anyone want to
-> investigate? :-)
 
-Check if it is not a mere package build bug. Anyway, tried something like
-that and 'grep TMP /tmp/vim.strace' shows nothing to me.
+SECUNIA:32796 suggests a Debian bug report, but I couldn't quickly find
+it.
+
+======================================================
+Name: CVE-2008-5187
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5187
+Reference: MLIST:[oss-security] 20081120 CVE Request: imlib2
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/20/5
+Reference: SECUNIA:32796
+Reference: URL:http://secunia.com/advisories/32796
+
+The load function in the XPM loader for imlib2 1.4.2, and possibly
+other versions, allows attackers to execute arbitrary code via a
+crafted XPM file that triggers a "pointer arithmetic error" and a
+heap-based buffer overflow, a different vulnerability than
+CVE-2008-2426.  NOTE: the provenance of this information is unknown;
+the details are obtained solely from third party information.
+
+
