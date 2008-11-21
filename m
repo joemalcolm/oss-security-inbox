@@ -1,44 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/27/12
-Message-ID: <Pine.GSO.4.51.0803271921500.14208@faron.mitre.org>
-Date: Thu, 27 Mar 2008 19:22:35 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/21/6
+Message-ID: <Pine.GSO.4.51.0811202036460.20524@faron.mitre.org>
+Date: Thu, 20 Nov 2008 20:37:29 -0500 (EST)
 From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Hanno Böck <hanno@...eck.de>
-cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com
-Subject: Re: Need CVEs for joomla, egroupware
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: imlib2
 Content-Type: text/plain; charset=utf-8
 
 
-Note all: these CVE's only cover the publicly disclosed issues.  The
-non-public ones that Nico requested will be handled separately in the
-normal CVE reservation process.
+On Thu, 20 Nov 2008, Nico Golde wrote:
 
+> Reference:
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=505714#15
 
-======================================================
-Name: CVE-2008-1502
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1502
-Reference: MISC:http://www.egroupware.org/viewvc/branches/1.4/phpgwapi/inc/class.kses.inc.php?r1=23625&r2=25110&pathrev=25110
-Reference: CONFIRM:http://www.egroupware.org/changelog
-Reference: SECUNIA:29491
-Reference: URL:http://secunia.com/advisories/29491
+Ummmm, yeah, guess I should read followups before saying I couldn't find
+something, huh?
 
-The _bad_protocol_once function in phpgwapi/inc/class.kses.inc.php in
-eGroupWare before 1.4.003 allows remote attackers to bypass HTML
-filtering and conduct cross-site scripting (XSS) attacks via a string
-containing crafted URL protocols.
-
-
-======================================================
-Name: CVE-2008-1533
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1533
-Reference: CONFIRM:http://www.joomla.org/content/view/4560/1/
-Reference: SECUNIA:28861
-Reference: URL:http://secunia.com/advisories/28861
-
-Unspecified vulnerability in the XML-RPC Blogger API plugin in Joomla!
-1.5 allows remote attackers to perform unauthorized article operations
-on articles via unknown vectors.
-
-
+Thanks,
+Steve
