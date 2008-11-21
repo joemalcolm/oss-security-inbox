@@ -1,42 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/13/1
-Message-Id: <200805131307.11637.hanno@hboeck.de>
-Date: Tue, 13 May 2008 13:07:11 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/21/7
+Message-ID: <Pine.GSO.4.51.0811202048180.20524@faron.mitre.org>
+Date: Thu, 20 Nov 2008 20:52:42 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: Re: CVE request: Bugzilla (Unauthorized Bug Change, XSS, Account Impersonation)
+cc: coley@...re.org, Jamie Strandboge <jamie@...onical.com>
+Subject: Re: CVE Request - ecryptfs-utils
 Content-Type: text/plain; charset=utf-8
 
-Am Mittwoch 07 Mai 2008 schrieb Steven M. Christey:
-> ======================================================
-> Name: CVE-2008-2104
-> Status: Candidate
-> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2104
-> Reference: CONFIRM:http://www.bugzilla.org/security/2.20.5/
-> Reference: CONFIRM:https://bugzilla.mozilla.org/show_bug.cgi?id=415471
-> Reference: BID:29038
-> Reference: URL:http://www.securityfocus.com/bid/29038
-> Reference: FRSIRT:ADV-2008-1428
-> Reference:
-> URL:http://www.frsirt.com/english/advisories/2008/1428/references
-> Reference: SECTRACK:1019968
-> Reference: URL:http://www.securitytracker.com/id?1019968
-> Reference: SECUNIA:30064
-> Reference: URL:http://secunia.com/advisories/30064
-> Reference: XF:bugzilla-xmlrpc-security-bypass(42218)
-> Reference: URL:http://xforce.iss.net/xforce/xfdb/42218
->
-> The WebService in Bugzilla before 3.1.3 allows remote authenticated
-> users without canconfirm privileges to create NEW or ASSIGNED bug
-> entries via a request to the XML-RPC interface, which bypasses the
-> canconfirm check.
 
-I think this should be "3.1.3 and before" ?
-As 3.1.3 is also affected according to the upstream advisory.
+CVE practice in this case is to place fault on the program that's sending
+the passwords over the command line.  Arguably it could go the other way,
+but CVE generally doesn't cover what I call "design limitations" - issues
+that are not fundamental security vulnerabilities in themselves, but which
+make it easier for others to introduce them.  THe ecryptfs-setup-private
+feature of accepting command-line password arguments isn't fundamentally
+different than strcpy()'s feature of happily writing past the end of the
+buffer if that's what it's told to do.  This line continues to get fuzzy,
+however.
 
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+- Steve
 
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+======================================================
+Name: CVE-2008-5188
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5188
+Reference: MLIST:[oss-security] 20081023 CVE request for ecryptfs
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/10/23/3
+Reference: MLIST:[oss-security] 20081029 Re: CVE request for ecryptfs
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/10/29/4
+Reference: MLIST:[oss-security] 20081029 Re: CVE request for ecryptfs
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/10/29/7
+Reference: CONFIRM:http://git.kernel.org/?p=linux/kernel/git/mhalcrow/ecryptfs-utils.git;a=commit;h=06de99afd53f03fe07eda0ad9d61ac6d5d4d9f53
+Reference: CONFIRM:https://launchpad.net/bugs/287908
+
+The (1) ecryptfs-setup-private, (2) ecryptfs-setup-confidential, and
+(3) ecryptfs-setup-pam-wrapped.sh scripts in ecryptfs-utils 45 through
+61 in eCryptfs place cleartext passwords on command lines, which
+allows local users to obtain sensitive information by listing the
+process.
+
+
