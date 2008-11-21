@@ -1,27 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/25/1
-Message-Id: <200803251305.16278.hanno@hboeck.de>
-Date: Tue, 25 Mar 2008 13:05:15 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Need CVEs for joomla, egroupware
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/21/15
+Message-ID: <gg59ds$gs5$3@ger.gmane.org>
+Date: Thu, 20 Nov 2008 21:20:17 -0600
+From: Raphael Geissert <atomo64+debian@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: no-ip DUC buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-I think this one (reason for joomla 1.5.1 release) has no cve yet? At least I 
-haven't found one.
-http://secunia.com/advisories/28861/
-http://www.securityfocus.com/bid/27719
-http://www.joomla.org/content/view/4560/1/
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
+Hello,
 
-egroupware: www.egroupware.org states this:
-eGroupWare 1.4.003 Security- and bugfix-release
-* fixed security problem reported by lukasz.pilorz@...egro.pl
+A buffer overflow has been found in no-ip DUC which can be used to execute code
+in the client. The attack relies on DNS poisoning or man in the middle attacks
+to fake the server's response.
 
+Original source of information: http://www.milw0rm.com/exploits/7151
+More/detailed information: http://bugs.debian.org/506179
 
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+Thanks in advance.
 
-Download attachment "signature.asc " of type "application/pgp-signature" (190 bytes)
+Cheers,
+- -- 
+Raphael Geissert - Debian Maintainer
+www.debian.org - get.debian.net
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkkmKPEACgkQYy49rUbZzlq4twCgirM5MAejW9PU9hbdsPPgD6k7
+gu4AmQHCTd9WJ0pJEa86ziEEE+g0kxo8
+=YBkb
+-----END PGP SIGNATURE-----
+
