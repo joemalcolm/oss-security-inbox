@@ -1,29 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/17/12
-Message-ID: <Pine.GSO.4.51.0804171720360.3756@faron.mitre.org>
-Date: Thu, 17 Apr 2008 17:20:40 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/21/8
+Message-ID: <Pine.GSO.4.51.0811202057190.20524@faron.mitre.org>
+Date: Thu, 20 Nov 2008 20:59:24 -0500 (EST)
 From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Hanno Böck <hanno@...eck.de>
-cc: oss-security@...ts.openwall.com, coley@...re.org
-Subject: Re: CVE id request: xine-lib <= 1.1.12 nsf handling
+To: oss-security@...ts.openwall.com
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: V4L/DVB (9621): Avoid writing outside shadow.bytes[] array
 Content-Type: text/plain; charset=utf-8
 
 
-======================================================
-Name: CVE-2008-1878
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1878
-Reference: BID:28816
-Reference: FRSIRT:ADV-2008-1247
-Reference: URL:http://www.frsirt.com/english/advisories/2008/1247/references
-Reference: MILW0RM:5458
-Reference: URL:http://www.milw0rm.com/exploits/5458
-Reference: SECUNIA:29850
-Reference: URL:http://secunia.com/advisories/29850
+On Wed, 19 Nov 2008, Eugene Teo wrote:
 
-Stack-based buffer overflow in the demux_nsf_send_chunk function in
-src/demuxers/demux_nsf.c in xine-lib 1.1.12 and earlier allows remote
-attackers to cause a denial of service (crash) and possibly execute
-arbitrary code via a long NSF title.
+> If the write operation fails, the device won't be able to decode audio
+> signals properly, so on further analysis, we probably don't need a CVE
+> name for this. Take note.
 
+Does this mean, roughly, that this write only occurs into a different
+portion of a larger contiguous buffer, so it affects audio processing
+(e.g. throwing an error) or parsing, but otherwise can't be used to affect
+other memory locations outside that buffer?
 
+Hope that made sense.
+
+- Steve
