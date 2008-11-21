@@ -1,32 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/09/12
-Message-ID: <87d4lnapu9.fsf@mid.deneb.enyo.de>
-Date: Wed, 09 Jul 2008 20:13:02 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/21/20
+Message-ID: <nDfOhR/OHmaw6oa8SfHbTznfpfA@ZKNbuquk3iGGXdmv9wrsaHV7Oxw>
+Date: Fri, 21 Nov 2008 16:20:44 +0300
+From: Eygene Ryabinkin <rea-sec@...elabs.ru>
 To: oss-security@...ts.openwall.com
-Subject: Re: DNS vulnerability: other relevant software
+Cc: coley@...re.org
+Subject: Re: CVE Request (ssh)
 Content-Type: text/plain; charset=utf-8
 
-* Mark J. Cox:
+Thu, Nov 20, 2008 at 09:12:42PM -0500, Steven M. Christey wrote:
+> ======================================================
+> Name: CVE-2008-5161
+> 
+> Error handling in the SSH protocol in (1) SSH Tectia Client and Server
+> and Connector 4.0 through 4.4.11, 5.0 through 5.2.4, and 5.3 through
+> 5.3.8; Client and Server and ConnectSecure 6.0 through 6.0.4; Server
+> for Linux on IBM System z 6.0.4; Server for IBM z/OS 5.5.1 and
+> earlier, 6.0.0, and 6.0.1; and Client 4.0-J through 4.3.3-J and 4.0-K
+> through 4.3.10-K; and (2) OpenSSH 4.7p1 and possibly other versions,
+> when using a block cipher algorithm in Cipher Block Chaining (CBC)
+> mode, makes it easier for remote attackers to recover certain
+> plaintext data from an arbitrary block of ciphertext in an SSH session
+> via unknown vectors.
 
->> Additionally, Debian has noted (DSA 1605-1) that the GNU libc stub
->> resolver could benefit from random query source ports as well, but
->> no patches are currently available to implement this:
->
-> Note that GNU libc stub resolver when used with a recent kernel
-> (2.6.24+) will give you random UDP source ports on each request
-> because of this Linux commit:
->
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=32c1da70810017a98aa6c431a5494a302b6b9a30
-
-Is net_random() cryptographically secure?  The paper referenced in the
-source doesn't talk about this.
-
-> Vendors may with to consider backporting that kernel patch as an
-> effective mitigation without requiring glibc changes (and with the
-> advantage of being able to be have a customized range using
-> ip_local_port_range etc)
-
-This still leaves the transaction ID generation to deal with.  It's
-rdtsc on amd64 (don't know if this is good enough), but
-gettimeofday-based on some other architectures.
+As was kindly answered to me in the freebsd-security list, OpenSSH's
+response is here: http://openssh.org/txt/cbc.adv
+-- 
+Eygene
