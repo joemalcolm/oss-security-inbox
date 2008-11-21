@@ -1,25 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/03/9
-Message-ID: <Pine.GSO.4.51.0806031804260.27244@faron.mitre.org>
-Date: Tue, 3 Jun 2008 18:08:59 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/21/14
+Message-ID: <28fa9c5e0811201826n2ff949d6l1e384a3b34a3b164@mail.gmail.com>
+Date: Fri, 21 Nov 2008 10:26:26 +0800
+From: "Eugene Teo" <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Subject: Re: tool announcements
+Cc: "Steven M. Christey" <coley@...us.mitre.org>,  "Mauro Chehab" <mchehab@...hat.com>
+Subject: Re: CVE request: kernel: V4L/DVB (9621): Avoid writing outside shadow.bytes[] array
 Content-Type: text/plain; charset=utf-8
 
+Hi Steve,
 
-On Tue, 3 Jun 2008, Pierre-Yves Rofes wrote:
+On Fri, Nov 21, 2008 at 9:59 AM, Steven M. Christey
+<coley@...us.mitre.org> wrote:
+>
+> On Wed, 19 Nov 2008, Eugene Teo wrote:
+>
+>> If the write operation fails, the device won't be able to decode audio
+>> signals properly, so on further analysis, we probably don't need a CVE
+>> name for this. Take note.
+>
+> Does this mean, roughly, that this write only occurs into a different
+> portion of a larger contiguous buffer, so it affects audio processing
+> (e.g. throwing an error) or parsing, but otherwise can't be used to affect
+> other memory locations outside that buffer?
 
-> Looking at the archives, at least half of the topics are CVE requests,
-> so maybe we should think about renaming the list "oss-CVEreq" :)
+To be honest, I'm not entirely familiar with the bug. I have Cc'ed
+Mauro who is the maintainer of the driver, and he should be able to
+share with us more about it.
 
-Until oss-security, these CVE requests were typically made either by one
-distro and included in their bug report, or through vendor-sec even if the
-issue was technically public.  When we assigned the CVE, it would often
-become the first place where the issue was more widely announced.
-Amongst the other benefits of this list, I think it provides a function
-for wider, quicker dissemination of these types of issues.  The CVE
-requests just happen to be part of the coordination function that the
-distros used to perform in less visible ways.
+Mauro, can you explain to us the implications of not including the
+"V4L/DVB (9621): Avoid writing outside shadow.bytes[] array" fix, and
+if it has a security consequence?
 
-- Steve
+Thanks, Eugene
