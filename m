@@ -1,12 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/08/4
-Message-ID: <48ED25D2.9080400@haquarter.de>
-Date: Wed, 08 Oct 2008 23:27:46 +0200
-From: "lists@...uarter.de" <lists@...uarter.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/22/1
+Message-ID: <20081121190023.GK24416@ldl.fc.hp.com>
+Date: Fri, 21 Nov 2008 12:00:24 -0700
+From: dann frazier <dannf@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2008-4324 
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: Unix sockets kernel panic
 Content-Type: text/plain; charset=utf-8
 
-Hi, the exploit from: http://www.secniche.org/moz303/index.html
-Also crashes version 3.0.1-r1 and 3.0.3 on Gentoo Linux (and probably 
-others).
+On Tue, Nov 11, 2008 at 05:41:44PM +0800, Eugene Teo wrote:
+> Eugene Teo wrote:
+> > We need a CVE name for this issue. This was reported in netdev today.
+> > 
+> > "The following code causes a kernel panic on Linux 2.6.26:
+> > http://darkircop.org/unix.c
+> > 
+> > I haven't investigated the bug so I'm not sure what is causing it, and
+> > don't know if it's exploitable.  The code passes unix sockets from one
+> > process to another using unix sockets.  The bug probably has to do
+> > with closing file descriptors."
+> > 
+> > http://marc.info/?l=linux-netdev&m=122593044330973&w=2
+> > https://bugzilla.redhat.com/show_bug.cgi?id=470201
+> > 
+> > There isn't a fix yet. Dave is working on it.
+> 
+> There's a fix now.
+> 
+> Upstream commits: f8d570a, 3b53fbf, and 6209344.
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=470201#c10
+> https://bugzilla.redhat.com/show_bug.cgi?id=470201#c14
+> https://bugzilla.redhat.com/show_bug.cgi?id=470201#c9
+> https://bugzilla.redhat.com/show_bug.cgi?id=470201#c13
+
+Thanks for following up.
+
+fyi, our testing of this fix has uncovered additional issues.
+Local/unprivileged users can cause soft lockups and take out system
+processes by triggering the OOM killer:
+  http://marc.info/?l=linux-netdev&m=122721862313564&w=2
+
+-- 
+dann frazier
+
