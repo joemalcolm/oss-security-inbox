@@ -1,32 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/04/23
-Message-ID: <20080904173203.GA18305@ngolde.de>
-Date: Thu, 4 Sep 2008 19:32:03 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: newsbeuter
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/21/21
+Message-ID: <4926D26C.50502@easysw.com>
+Date: Fri, 21 Nov 2008 07:23:24 -0800
+From: Michael Sweet <mike@...ysw.com>
+To: Eygene Ryabinkin <rea-sec@...elabs.ru>
+CC: oss-security@...ts.openwall.com,  "Steven M. Christey" <coley@...re.org>
+Subject: Re: CVE request: CUPS DoS via RSS subscriptions
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
-* Steven M. Christey <coley@...us.mitre.org> [2008-09-04 19:12]:
-> On Thu, 4 Sep 2008, Nico Golde wrote:
+Eygene Ryabinkin wrote:
+> Steve, good day.
 > 
-> > Please use version 1.2 here as the fix for 1.1 was
-> > incomplete.
+> Thu, Nov 20, 2008 at 07:41:06PM -0500, Steven M. Christey wrote:
+>> I treated this as two CVEs, one for the CSRF-simplifying attack, and a
+>> separate one for the CUPS server crash (assuming that cupsd should not be
+>> crashable by non-root authenticated users).
 > 
-> Our interpretation was that 1.1 fixes the vulnerability, but a
-> non-security bug forced the release of 1.2.  So 1.1, while perhaps
-> unusable in practice, was safe from the vuln.
+> Please note that as it was discuissed in thread started with
+>   http://www.openwall.com/lists/oss-security/2008/11/19/4
+> even 1.3.9 is crashable by non-root authenticated users by adding
+> a big number of subscriptions (don't know about RSS ones, though
+> subscription for mailing upon job completion does its job).  But
+> I imagine that CVE-2008-5184 can't be used for 1.3.9, so remote
+> attack is not feasible.
 > 
-> Was that an incorrect interpretation?
+> I expect that the fix will go into 1.3.10:
+>   http://svn.easysw.com/public/cups/trunk/CHANGES-1.3.txt
+> 
+> Adding Michael Sweet to the CC, since he can shed a bit more light on
+> this matter.  Perhaps CVE-2008-5183 should be extended or another CVE
+> can be created.
 
-Yes that is correct.
+While they are related, since half of the issue has already been
+addressed it would probably be less confusing (for tracking purposes)
+to create another CVE for the too-many-subscriptions issue (which is
+what my patch addresses...)
 
-Kind regards
-Nico
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+______________________________________________________________________
+Michael Sweet, Easy Software Products           mike at easysw dot com
