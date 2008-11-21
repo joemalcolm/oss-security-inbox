@@ -1,65 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/19/17
-Message-ID: <20080219205424.GA3811@openwall.com>
-Date: Tue, 19 Feb 2008 23:54:24 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/21/16
+Message-ID: <gg5a6c$gs5$4@ger.gmane.org>
+Date: Thu, 20 Nov 2008 21:32:53 -0600
+From: Raphael Geissert <atomo64+debian@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: subscription-request procedure?
+Subject: CVE id request: chm2pdf insecure temporary files usage
 Content-Type: text/plain; charset=utf-8
 
-I've subscribed Jim earlier today.  Welcome!
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-As to the procedure, right now subscriptions are not even moderated, so
-anyone who can figure out ezmlm's subscription address can join.
-Perhaps this will change, although I am personally unsure whether we
-want it to change (maybe message moderation is a better option), and
-whether we want it to happen before we even have the very first
-undesirable message in here.  We can apply this sort of changes quickly
-when the need arises - have other lists with pre-moderation enabled
-running nearby.
+Hello,
 
-As to the introductions, yes, those are desirable (unless we want to
-allow "read-only" members, in which case we might not care who they are -
-the list is public anyway).  For now, introductions can be sent right to
-the list address.  A possible improvement can be to setup a web form on
-the oss-security website (outside of the wiki) that would submit a
-subscription request and at the same time request other info - such as
-what project(s) the person represents and in what role(s).  This info
-may be sent to list moderator(s), once we start to do any
-pre-moderation.  If we do subscription moderation, then the info will be
-available along with subscription requests pending approval.
+Versions 0.9 and 0.9.1 of chm2pdf allow local users to overwrite arbitrary files
+via a symlink attacks on /tmp/chm2pdf
 
-Jim, Kees - thank you for introducing yourselves!
+More information at http://bugs.debian.org/501959
 
-> On Tue, Feb 19, 2008 at 11:19:29AM +0100, Jim Meyering wrote:
-> > I tend the upstream GNU coreutils and am co-maintainer of gnulib
-> > automake, autoconf, and a few others.
+Could a CVE id be assigned please?
 
-Jim - you may want to add these projects to:
+Thanks in advance.
 
-http://oss-security.openwall.org/wiki/software
+Cheers,
+- -- 
+Raphael Geissert - Debian Maintainer
+www.debian.org - get.debian.net
 
-Maybe there should be a sub-page for GNU software, if every GNU project
-has its own security contact info?
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
 
-On Tue, Feb 19, 2008 at 11:04:28AM -0800, Kees Cook wrote:
-> Among other things, I'm a member of the Ubuntu Security Team,
+iEYEARECAAYFAkkmK+YACgkQYy49rUbZzlrDlgCeOsa92d/XCpTjT0b9EikJwme0
+C6oAoJhWLgQjNn0U/8BgI3dy/s5Q1Eom
+=w0+u
+-----END PGP SIGNATURE-----
 
-Kees - would you add Ubuntu to:
-
-http://oss-security.openwall.org/wiki/vendors
-
-> the upstream security contact for Inkscape,
-
-...and Inkscape to:
-
-http://oss-security.openwall.org/wiki/software
-
-> and a kernel.org admin.
-
-Perhaps we should setup a third page for OSS-relevant infrastructure
-security contacts?  Would you do it?
-
-Thanks again,
-
-Alexander
