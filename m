@@ -1,36 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/19/4
-Message-ID: <16735.1203429843@devserv.devel.redhat.com>
-Date: Tue, 19 Feb 2008 09:04:03 -0500
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/21/17
+Message-ID: <Y2pIrweQ6eFmOgl6Pc1vZYDHUrg@PMWwoAx0nTsgMmiMyh98HjiW/Tk>
+Date: Fri, 21 Nov 2008 08:20:00 +0300
+From: Eygene Ryabinkin <rea-sec@...elabs.ru>
 To: oss-security@...ts.openwall.com
-Subject: Re: charter
+Cc: "Steven M. Christey" <coley@...re.org>, mike@...ysw.com
+Subject: Re: CVE request: CUPS DoS via RSS subscriptions
 Content-Type: text/plain; charset=utf-8
 
-> 
-> Josh Bressers wrote:
-> | I just added my current working draft charter:
-> | http://oss-security.openwall.org/wiki/mailinglists/oss-security/charter
-> 
-> Good work, thanks :)
-> 
-> What do you mean by "Please don't send working vulnerabilities"?
+Steve, good day.
 
-We don't need the heat of people posting vulnerabilities that would allow
-one to actually compromise a machine.  Ideally we want testcases the
-exercise the flaw, not tools that could be used for malicious purposes.
+Thu, Nov 20, 2008 at 07:41:06PM -0500, Steven M. Christey wrote:
+> I treated this as two CVEs, one for the CSRF-simplifying attack, and a
+> separate one for the CUPS server crash (assuming that cupsd should not be
+> crashable by non-root authenticated users).
 
-> 
-> I'd append "for non-public issues, please contact vendor-sec" to "Public
-> security issues only please"
+Please note that as it was discuissed in thread started with
+  http://www.openwall.com/lists/oss-security/2008/11/19/4
+even 1.3.9 is crashable by non-root authenticated users by adding
+a big number of subscriptions (don't know about RSS ones, though
+subscription for mailing upon job completion does its job).  But
+I imagine that CVE-2008-5184 can't be used for 1.3.9, so remote
+attack is not feasible.
 
-Done
+I expect that the fix will go into 1.3.10:
+  http://svn.easysw.com/public/cups/trunk/CHANGES-1.3.txt
 
-> 
-> "Advisories are welcome"? I thought we decided that this was
-> discussion-only?
-
-What do others think?  I can see it either way, so I put it in.
-
+Adding Michael Sweet to the CC, since he can shed a bit more light on
+this matter.  Perhaps CVE-2008-5183 should be extended or another CVE
+can be created.
 -- 
-    JB
+Eygene
