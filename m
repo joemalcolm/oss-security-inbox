@@ -1,30 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/10/5
-Message-ID: <Pine.GSO.4.51.0804101438420.18291@faron.mitre.org>
-Date: Thu, 10 Apr 2008 14:38:52 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/21/11
+Message-ID: <Pine.GSO.4.51.0811202113470.20524@faron.mitre.org>
+Date: Thu, 20 Nov 2008 21:14:15 -0500 (EST)
 From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Jonathan Smith <smithj@...ethemallocs.com>
-cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: buffer overflow in Python zlib extension module
+To: oss-security@...ts.openwall.com
+Subject: Re:  CVE request: wordpress can be subject of delayed attacks via cookies
 Content-Type: text/plain; charset=utf-8
 
 
-Cute.
-
-
 ======================================================
-Name: CVE-2008-1721
+Name: CVE-2008-5113
 Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1721
-Reference: BUGTRAQ:20080409 IOActive Security Advisory: Buffer overflow in Python zlib extension module
-Reference: URL:http://www.securityfocus.com/archive/1/archive/1/490690/100/0/threaded
-Reference: CONFIRM:http://bugs.python.org/issue2586
-Reference: BID:28715
-Reference: URL:http://www.securityfocus.com/bid/28715
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5113
+Reference: MLIST:[oss-security] 20081113 CVE request: wordpress can be subject of delayed attacks via cookies
+Reference: URL:http://openwall.com/lists/oss-security/2008/11/14/1
+Reference: CONFIRM:http://bugs.debian.org/504771
 
-Integer signedness error in the zlib extension module in Python 2.5.2
-and earlier allows remote attackers to execute arbitrary code via a
-negative signed integer, which triggers insufficient memory allocation
-and a buffer overflow.
+WordPress 2.6.3 relies on the REQUEST superglobal array in certain
+dangerous situations, which makes it easier for remote attackers to
+conduct delayed and persistent cross-site request forgery (CSRF)
+attacks via crafted cookies, as demonstrated by attacks that (1)
+delete user accounts or (2) cause a denial of service (loss of
+application access).  NOTE: this issue relies on the presence of an
+independent vulnerability that allows cookie injection.
 
 
