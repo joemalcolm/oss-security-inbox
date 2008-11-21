@@ -1,26 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/23/15
-Message-ID: <Pine.LNX.4.64.0804231840220.4890@forced.attrition.org>
-Date: Wed, 23 Apr 2008 18:40:37 +0000 (UTC)
-From: security curmudgeon <jericho@...rition.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: web archives
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/21/2
+Message-ID: <Pine.GSO.4.51.0811201943230.20524@faron.mitre.org>
+Date: Thu, 20 Nov 2008 19:43:29 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: OSS-Security Mailinglist <oss-security@...ts.openwall.com>
+cc: coley@...re.org
+Subject: Re: CVE request: clamav get_unicode_name() off-by-one buffer overflow
 Content-Type: text/plain; charset=utf-8
 
 
-This list is also archived on MARC:
+======================================================
+Name: CVE-2008-5050
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5050
+Reference: BUGTRAQ:20081108 ClamAV get_unicode_name() off-by-one buffer overflow
+Reference: URL:http://www.securityfocus.com/archive/1/archive/1/498169/100/0/threaded
+Reference: FULLDISC:20081109 ClamAV get_unicode_name() off-by-one buffer overflow
+Reference: URL:http://lists.grok.org.uk/pipermail/full-disclosure/2008-November/065530.html
+Reference: CONFIRM:http://sourceforge.net/project/shownotes.php?release_id=637952&group_id=86638
+Reference: BID:32207
+Reference: URL:http://www.securityfocus.com/bid/32207
+Reference: FRSIRT:ADV-2008-3085
+Reference: URL:http://www.frsirt.com/english/advisories/2008/3085
+Reference: SECUNIA:32663
+Reference: URL:http://secunia.com/advisories/32663
+Reference: XF:clamav-getunicodename-bo(46462)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/46462
 
-http://marc.info/?l=oss-security&r=1&w=2
+Off-by-one error in the get_unicode_name function
+(libclamav/vba_extract.c) in Clam Anti-Virus (ClamAV) before 0.94.1
+allows remote attackers to cause a denial of service (crash) or
+possibly execute arbitrary code via a crafted VBA project file, which
+triggers a heap-based buffer overflow.
 
-On Wed, 23 Apr 2008, Steven M. Christey wrote:
 
-: 
-: The archives as stored at
-: http://www.openwall.com/lists/oss-security/2008/04/ etc. only list posts
-: using sequence numbers.  Would it be easy to list these by subject line,
-: author, and/or in a threaded basis?  I find it hard to navigate when I'm
-: looking for a particular post.
-: 
-: Thanks for the consideration,
-: Steve
-: 
