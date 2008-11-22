@@ -1,30 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/28/5
-Message-Id: <200811282239.23680.steffen.joeris@skolelinux.de>
-Date: Fri, 28 Nov 2008 22:39:23 +0100
-From: Steffen Joeris <steffen.joeris@...lelinux.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/22/2
+Message-ID: <49283824.9090800@beamnet.de>
+Date: Sat, 22 Nov 2008 17:49:40 +0100
+From: Thomas Viehmann <tv@...mnet.de>
 To: oss-security@...ts.openwall.com
-Cc: Jeremias Reith <jr@...ss.org>
-Subject: Re: CVE requset: WordPress XSS vulnerability in RSS Feed Generator
+CC: 498243@...s.debian.org, xine-user@...ts.sourceforge.net,  redpig@...rt.org
+Subject: xine-lib and ocert-2008-008
 Content-Type: text/plain; charset=utf-8
 
-Hi
+[resending this with hopefully less broken CC, apologies]
 
-> a XSS vulnerability has been discovered in WordPress.
->
-> Vendor info:
-> http://wordpress.org/development/2008/11/wordpress-265/
->
-> Detailed information:
-> http://www.securityfocus.com/archive/1/498652 (Note: It should be
-> "prior to 2.6.5" in the summary)
-I might be off here, but doesn't the patch[0] create another XSS by removing 
-wp_specialchars?
+Hi,
 
-Cheers
-Steffen
+I am not quite sure whether I can agree with Will Drewry's analysis[1]
+accompanying ocert advisory 2008-008[1]. Looking at item 1A, which Will
+says is fixed in 1.1.5, attached .mov seems to fit the case description
+and will still corrupt the memory when viewed e.g. in gxine. xine-lib
+with the attached patch seems to be more successful in preventing the
+attach (note that the file is more tuned to be small than to be a valid
+.mov, but the same works by including the bad meta in an otherwise good
+file). Note that xine_xmalloc is specifically designed to allocate
+memory when passed size 0. Upstream seems to move away from it, but...
+As Will notices, demux-qt.c has loads of unfixed problems.
 
-[0]: 
-http://trac.wordpress.org/changeset?old_path=tags%2F2.6.3&old=&new_path=tags%2F2.6.5&new=
+If anyone cares to go over the xine-lib issues (primarily the unfixed
+ones from Will's section 3), I'd much appreciate a CC. In order to make
+the analysis and verification more, I would also be interested in the
+test cases mentioned in the advisory.
 
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+Kind regards
+
+T.
+
+1. http://www.ocert.org/analysis/2008-008/analysis.txt
+2. http://www.ocert.org/advisories/ocert-2008-008.html
+-- 
+Thomas Viehmann, http://thomas.viehmann.net/
+
+
+View attachment "fix-for-ocert-2008-008-1a.diff" of type "text/x-patch" (2496 bytes)
