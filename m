@@ -1,23 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/18/2
-Message-ID: <Pine.GSO.4.51.0807181144510.17955@faron.mitre.org>
-Date: Fri, 18 Jul 2008 11:44:56 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/24/4
+Message-ID: <20081124212020.GA22752@inutil.org>
+Date: Mon, 24 Nov 2008 22:20:20 +0100
+From: Moritz Muehlenhoff <jmm@...til.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: projectl
+Cc: cve@...re.org
+Subject: Re: CVE Request: VirtualBox tmp file issue
 Content-Type: text/plain; charset=utf-8
 
+Ludwig Nussel wrote:
 
-======================================================
-Name: CVE-2008-3216
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3216
-Reference: MLIST:[oss-security] 20080709 CVE id request: projectl
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/07/09/8
-Reference: CONFIRM:http://bugs.debian.org/489988
+> http://www.virtualbox.org/wiki/Changelog:
+> VirtualBox 2.0.6
+> - Linux/Solaris/Darwin hosts: verify permissions in /tmp/vbox-$USER-ipc
+> 
+> These changes match that description:
+> http://www.virtualbox.org/changeset?new=trunk%2Fsrc%2Flibs%2Fxpcom18a4%2Fipc%2Fipcd%2Fdaemon%2Fsrc%2FipcdUnix.cpp%4013810&old=trunk%2Fsrc%2Flibs%2Fxpcom18a4%2Fipc%2Fipcd%2Fdaemon%2Fsrc%2FipcdUnix.cpp%407049
+> 
+> VirtualBox uses /tmp/vbox-$USER-ipc to store a socket and a lock
+> file. The lock file is truncated after a simple open call. AFAICS
+> creating /tmp/vbox-$USER-ipc before the victim starts VirtualBox
+> could therefore be exploited to create files as the victim or
+> truncate files of the victim.
 
-The save function in br/prefmanager.d in projectl 1.001 creates a
-projectL.prf file in the current working directory, which allows local
-users to overwrite arbitrary files via a symlink attack.
+This is http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=504149
 
+(I already sent this to vendor-sec on the 7th, but the CVE
+request seems to have fallen through the crack)
 
+Cheers,
+        Moritz
