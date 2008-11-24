@@ -1,29 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/25/3
-Message-ID: <20081025202751.63fdcb54@redhat.com>
-Date: Sat, 25 Oct 2008 20:27:51 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: coley@...re.org
-Subject: CVE request: lynx (old) .mailcap handling flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/24/3
+Message-ID: <20081124152317.GH26593@suse.de>
+Date: Mon, 24 Nov 2008 16:23:17 +0100
+From: Matthias Hopf <mhopf@...e.de>
+To: oss-security@...ts.openwall.com
+Cc: 498243@...s.debian.org, xine-user@...ts.sourceforge.net, redpig@...rt.org
+Subject: Re: xine-lib and ocert-2008-008
 Content-Type: text/plain; charset=utf-8
 
-Hi Steven!
+On Nov 22, 08 17:49:40 +0100, Thomas Viehmann wrote:
+> I am not quite sure whether I can agree with Will Drewry's analysis[1]
+> accompanying ocert advisory 2008-008[1]. Looking at item 1A, which Will
+> says is fixed in 1.1.5, attached .mov seems to fit the case description
+> and will still corrupt the memory when viewed e.g. in gxine. xine-lib
+> with the attached patch seems to be more successful in preventing the
+> attach (note that the file is more tuned to be small than to be a valid
+> .mov, but the same works by including the bad meta in an otherwise good
+> file). Note that xine_xmalloc is specifically designed to allocate
+> memory when passed size 0. Upstream seems to move away from it, but...
+> As Will notices, demux-qt.c has loads of unfixed problems.
+> 
+> If anyone cares to go over the xine-lib issues (primarily the unfixed
+> ones from Will's section 3), I'd much appreciate a CC. In order to make
+> the analysis and verification more, I would also be interested in the
+> test cases mentioned in the advisory.
 
-There's one old lynx issue that seem to need a 2006 CVE id.  lynx
-browser prior to 2.8.6rel.4 tries to open mailcap and mime type
-definition files form the current directory.  If user can be convinced
-to run lynx in a specially crafted directory, an attacker controlling
-the directory may be able to run arbitrary code as the victim running
-lynx.
+I have fixed all of them (at least I believe so, but I have to verify
+your test case), and we're waiting for new ocert numbers. Given that
+this takes so long, and the issues are public anyway, I will probably
+upstream the fixes soon. If you would verify them it would be awesome.
 
-Issue was originally reported in Debian BTS:
-  http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=396949
-
-Some details can be found in our BZ as well:
-  https://bugzilla.redhat.com/show_bug.cgi?id=214205
-
-Thank you!
+Matthias
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Matthias Hopf <mhopf@...e.de>      __        __   __
+Maxfeldstr. 5 / 90409 Nuernberg   (_   | |  (_   |__          mat@...opf.de
+Phone +49-911-74053-715           __)  |_|  __)  |__  R & D   www.mshopf.de
