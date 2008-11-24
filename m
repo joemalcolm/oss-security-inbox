@@ -1,49 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/08/1
-Message-ID: <20080908093608.2e28237d@redhat.com>
-Date: Mon, 8 Sep 2008 09:36:08 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: vmiklos@...galware.org, coley@...re.org
-Subject: Re: CVE request for bitlbee
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/24/2
+Message-Id: <200811241634.08610.ludwig.nussel@suse.de>
+Date: Mon, 24 Nov 2008 16:34:07 +0100
+From: Ludwig Nussel <ludwig.nussel@...e.de>
+To: cve@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: CVE Request: VirtualBox tmp file issue
 Content-Type: text/plain; charset=utf-8
 
-On Sat, 30 Aug 2008 01:24:14 +0200 Miklos Vajna
-<vmiklos@...galware.org> wrote:
+Hi,
 
-> bitlbee-1.2.2 is released, and it comes with a NULL pointer
-> dereference fix, which allows people to hijack accounts.
-> 
-> More info:
-> 
-> http://bitlbee.org/main.php/changelog.html
+http://www.virtualbox.org/wiki/Changelog:
+VirtualBox 2.0.6
+- Linux/Solaris/Darwin hosts: verify permissions in /tmp/vbox-$USER-ipc
 
-This issue fixed in 1.2.2 was assigned CVE id CVE-2008-3920:
+These changes match that description:
+http://www.virtualbox.org/changeset?new=trunk%2Fsrc%2Flibs%2Fxpcom18a4%2Fipc%2Fipcd%2Fdaemon%2Fsrc%2FipcdUnix.cpp%4013810&old=trunk%2Fsrc%2Flibs%2Fxpcom18a4%2Fipc%2Fipcd%2Fdaemon%2Fsrc%2FipcdUnix.cpp%407049
 
-  Unspecified vulnerability in BitlBee before 1.2.2 allows remote
-  attackers to "recreate" and "hijack" existing accounts via unspecified
-  vectors.
+VirtualBox uses /tmp/vbox-$USER-ipc to store a socket and a lock
+file. The lock file is truncated after a simple open call. AFAICS
+creating /tmp/vbox-$USER-ipc before the victim starts VirtualBox
+could therefore be exploited to create files as the victim or
+truncate files of the victim.
 
-However, upstream released 1.2.3 in the meantime, fixing the incomplete
-fix in 1.2.2.  Quoting news page:
-
-  Unfortunately 1.2.2 did not fix all possible account hijacking
-  loopholes. Another very similar flaw was found by Tero Marttila. In
-  the migration to the user configuration storage abstraction layer, a
-  few safeguards that prevent overwriting existing accounts disappeared.
-  Over the week I went over all the related code to make sure that
-  everything's done in a sane, safe and consistent way.
-
-  http://www.bitlbee.org/main.php/news.r.html
-
-And changelog:
-
-  Version 1.2.3 (released 2008-09-07) hilights:
-    * Fixed a security issue similar to the previous account overwrite/hijack bug.
-
-  http://www.bitlbee.org/main.php/changelog.html
-
-This should probably get a new id.
+cu
+Ludwig
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+ (o_   Ludwig Nussel
+ //\   
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
