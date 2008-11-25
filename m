@@ -1,41 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/23/2
-Message-ID: <480EAFDC.5070909@freethemallocs.com>
-Date: Tue, 22 Apr 2008 19:41:16 -0800
-From: Jonathan Smith <smithj@...ethemallocs.com>
-To: Solar Designer <solar@...nwall.com>
-CC: oss-security@...ts.openwall.com
-Subject: Re: list: members vs. read-only subscribers
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/25/1
+Message-ID: <492BBB01.1010200@pardus.org.tr>
+Date: Tue, 25 Nov 2008 10:44:49 +0200
+From: Pinar Yanardag <pinar@...dus.org.tr>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- wireshark
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 11/24/2008 11:46 AM Jan Lieskovsky wrote:
+> Hello Steve,
+>
+>   the following remotely exploitable vulnerability in Wireshark's
+> SMTP dissector has been reported:
+>
+> References:
+> http://packetstormsecurity.org/0811-advisories/wireshark104-dos.txt
+> http://bugs.gentoo.org/show_bug.cgi?id=248425
+> https://bugzilla.redhat.com/show_bug.cgi?id=472737
+> http://www.nabble.com/-SVRT-04-08--Vulnerability-in-WireShark-1.0.4-for-DoS-Attack-td20640164.html
+> http://www.derkeiler.com/Mailing-Lists/securityfocus/bugtraq/2008-11/msg00166.html
+>
+> Proposed upstream patches:
+> http://anonsvn.wireshark.org/viewvc/trunk/epan/dissectors/packet-smtp.c?r1=24989&r2=24988&pathrev=24989&view=patch
+> http://anonsvn.wireshark.org/viewvc/trunk/epan/dissectors/packet-smtp.c?r1=24994&r2=24993&pathrev=24994&view=patch
+>   
 
-Solar Designer wrote:
-| The list should now be message-moderated for everyone except for people
-| (or rather, for their envelope-from addresses) who have subscribed or
-| posted desirable messages until today.  As more people (or addresses)
-| make desirable postings, we may be adding those to the "allow" list as
-| well (or maybe not - this is up to us).
-|
-| Let's see how this works in practice.
+They also updated the fix in the prerelease [1] Wireshark 1.0.5 [2].
 
-Spiffy. Thanks for taking the time to set this up.
+[1]: http://www.wireshark.org/download/prerelease
+[2]: 
+http://www.wireshark.org/download/prerelease/wireshark-1.0.5pre1-26829.tar.gz
 
-So, this means that anyone from this point on who subscribes to the list
-does so effectively as read-only, and messages they send will be held
-for moderation. Similarly, folks who aren't subscribed at all will be
-held for moderation, but not rejected automatically. Folks in the white
-list (whether or not they are subscribed) can post with no delay, and
-everyone who has posted a message prior to today is in the white list.
-Right?
+Cheers,
 
-	smithj
+-- 
+Pinar Yanardag (a.k.a PINguAR)
+http://pinguar.org
+_____________________________
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
+Pardus Security Team
+http://security.pardus.org.tr
 
-iEYEARECAAYFAkgOr9wACgkQCG91qXPaRekkGACdFGEJR+jLmgY2cbPyAb/9l/FC
-GBkAnjl8Kc7SDz8FDIRin0/S9flE1sv0
-=1NLA
------END PGP SIGNATURE-----
+
