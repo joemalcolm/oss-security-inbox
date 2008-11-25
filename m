@@ -1,30 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/26/1
-Message-Id: <200809262157.37804.steffen.joeris@skolelinux.de>
-Date: Fri, 26 Sep 2008 21:57:37 +1000
-From: Steffen Joeris <steffen.joeris@...lelinux.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/25/4
+Message-ID: <20081125185236.5868de90@redhat.com>
+Date: Tue, 25 Nov 2008 18:52:36 +0100
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: faad2
+Cc: rea-sec@...elabs.ru, "Steven M. Christey" <coley@...re.org>, Michael Sweet <mike@...ysw.com>
+Subject: Re: CVE request: cups - potential integer overflow in PNG image reader [was: CUPS DoS via RSS subscriptions]
 Content-Type: text/plain; charset=utf-8
 
-Hi
+On Tue, 25 Nov 2008 15:38:30 +0300 Eygene Ryabinkin
+<rea-sec@...elabs.ru> wrote:
 
-There is a heap overflow in faad2.
-Upstream announcement:
-http://www.audiocoding.com/
+> > Advisory: http://www.cups.org/str.php?L2974
+> > Patch: http://www.cups.org/strfiles/2974/str2974.patch
+> 
+> Hmm, my brains aren't in a perfect shape today, so I could be missing
+> some important point, but I don't understand how swapping 'xsize' and
+> 'ysize' can help to fix anything.  IIRC, the order of multiplication
+> isn't guaranteed and multiplication is commutative, so 'xsize' and
+> 'ysize' both are equally good or bad and one can not prefer either.
 
-Gentoo Bugreport:
-http://bugs.gentoo.org/show_bug.cgi?id=238445
+The bug suggests that xsize and ysize values use different upper
+bounds.  So ysize * 3 can overflow (upper bound 2^31-1), while xsize * 3
+can't (2^27-1).
 
-Debian Bugreport:
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=499899
-
-Upstream patch:
-http://www.audiocoding.com/patch/main_overflow.diff
-
-Could I please get a CVE id for this?
-
-Cheers
-Steffen
-
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+-- 
+Tomas Hoger / Red Hat Security Response Team
