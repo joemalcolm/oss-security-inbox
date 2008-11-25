@@ -1,50 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/03/13
-Message-ID: <Pine.GSO.4.51.0810031716100.9068@faron.mitre.org>
-Date: Fri, 3 Oct 2008 17:17:44 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/25/3
+Message-ID: <1tlcdwEPn+AOVZV4UhoZ2bNo7L8@5RY6ROcUbLuHED60eZqMyxBEGG8>
+Date: Tue, 25 Nov 2008 15:38:30 +0300
+From: Eygene Ryabinkin <rea-sec@...elabs.ru>
 To: oss-security@...ts.openwall.com
-cc: coley@...re.org, berrange@...hat.com
-Subject: Re: CVE Request (xen)
+Cc: "Steven M. Christey" <coley@...re.org>, Michael Sweet <mike@...ysw.com>
+Subject: Re: CVE request: cups - potential integer overflow in PNG image reader [was: CUPS DoS via RSS subscriptions]
 Content-Type: text/plain; charset=utf-8
 
+Jan, good day.
 
-We wrote this up as a libvirt issue, but is it really a Xen issue?
+Tue, Nov 25, 2008 at 12:39:00PM +0100, Jan Lieskovsky wrote:
+> Eygene - Thanks for the post!
 
-- Steve
+No problems ;))
 
+> Btw. this CHANGES-1.3.txt files also
+> mentions another security flaw, i.e incomplete fix for CVE-2008-1722:
+> 
+> <cite>
+> 
+> - SECURITY: The PNG image reading code did not validate the
+> 	  image size properly, leading to a potential buffer overflow
+> 	  (STR #2974)
+> 
+> </cite>
 
-======================================================
-Name: CVE-2008-4405
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4405
-Acknowledged: yes
-Announced: 20080930
-Flaw: other
-Reference: MLIST:[oss-security] 20080930 CVE Request (xen)
-Reference: URL:http://openwall.com/lists/oss-security/2008/09/30/6
-Reference: MLIST:[xen-devel] 20080930 Re: [PATCH] [Xend] Move some backend configuration
-Reference: URL:http://lists.xensource.com/archives/html/xen-devel/2008-09/msg00994.html
-Reference: MLIST:[xen-devel] 20080930 [PATCH] [Xend] Move some backend configuration
-Reference: URL:http://lists.xensource.com/archives/html/xen-devel/2008-09/msg00992.html
-Reference: MISC:https://bugzilla.redhat.com/show_bug.cgi?id=464817
-Reference: CONFIRM:http://xenbits.xensource.com/staging/xen-3.3-testing.hg?rev/e0e17216ba70
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=464818
+Oops, thanks for spotting this!
 
-libvirt 0.3.3 relies on files located under subdirectories of
-/local/domain in xenstore despite lack of protection against
-modification by Xen guest virtual machines, which allows guest OS
-users to have an unspecified impact, as demonstrated by writing to (1)
-the text console (console/tty) or (2) the VNC port for the graphical
-framebuffer.
+> The relevant upstream cups BTS post together with patch attached is
+> here:
+> 
+> Advisory: http://www.cups.org/str.php?L2974
+> Patch: http://www.cups.org/strfiles/2974/str2974.patch
 
+Hmm, my brains aren't in a perfect shape today, so I could be missing
+some important point, but I don't understand how swapping 'xsize' and
+'ysize' can help to fix anything.  IIRC, the order of multiplication
+isn't guaranteed and multiplication is commutative, so 'xsize' and
+'ysize' both are equally good or bad and one can not prefer either.
 
-Analysis:
-
-There are two perspectives on the problem. First, one can argue that the
-flaw is in libvirt, because libvirt relies on untrusted data from guest
-VMs. Second, one can argue that the flaw is in Xen, because Xen makes it
-possible for guest VMs to write the untrusted data. Because the CVE
-request is associated with a Red Hat bug report for the libvirt product,
-CVE takes the first perspective.
-
+What am I missing here?
+-- 
+Eygene
