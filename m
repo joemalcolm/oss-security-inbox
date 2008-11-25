@@ -1,40 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/01/1
-Message-Id: <1220252447.5118.8.camel@dhcp-lab-164.englab.brq.redhat.com>
-Date: Mon, 01 Sep 2008 09:00:47 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/25/2
+Message-Id: <1227613140.3602.22.camel@dhcp-lab-164.englab.brq.redhat.com>
+Date: Tue, 25 Nov 2008 12:39:00 +0100
 From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request (gpicview)
+To: "Steven M. Christey" <coley@...re.org>
+Cc: Eygene Ryabinkin <rea-sec@...elabs.ru>, Michael Sweet <mike@...ysw.com>, oss-security@...ts.openwall.com
+Subject: Re: CVE request: cups - potential integer overflow in PNG image reader [was: CUPS DoS via RSS subscriptions]
 Content-Type: text/plain; charset=utf-8
 
+Hello Steve and Eygene,
 
-Hi Nico!,
+On Fri, 2008-11-21 at 07:23 -0800, Michael Sweet wrote:
+> Eygene Ryabinkin wrote:
+> > Steve, good day.
+> > 
+> > Thu, Nov 20, 2008 at 07:41:06PM -0500, Steven M. Christey wrote:
+> >> I treated this as two CVEs, one for the CSRF-simplifying attack, and a
+> >> separate one for the CUPS server crash (assuming that cupsd should not be
+> >> crashable by non-root authenticated users).
+> > 
+> > Please note that as it was discuissed in thread started with
+> >   http://www.openwall.com/lists/oss-security/2008/11/19/4
+> > even 1.3.9 is crashable by non-root authenticated users by adding
+> > a big number of subscriptions (don't know about RSS ones, though
+> > subscription for mailing upon job completion does its job).  But
+> > I imagine that CVE-2008-5184 can't be used for 1.3.9, so remote
+> > attack is not feasible.
+> > 
+> > I expect that the fix will go into 1.3.10:
+> >   http://svn.easysw.com/public/cups/trunk/CHANGES-1.3.txt
+> > 
 
-On Sun, 2008-08-31 at 01:46 +0200, Nico Golde wrote:
-> Same piece of code main-win.c doesn't look too trustworthy 
-> to me either:
-> 
->     690     int error = jpegtran (filename, "/tmp/rot.jpg" , code);
->     691     if(error)
->     692         return error;
->     693 
->     694     //now copy /tmp/rot.jpg back to the original file
->     695     char command[strlen(filename)+50]; //this should not generate buffer owerflow
->     696     // MS: didn't know, how to make it better, maybe an own copy routine
->     697     sprintf(command,"cp /tmp/rot.jpg \"%s\"",filename);
->     698     system(command);
+Eygene - Thanks for the post! Btw. this CHANGES-1.3.txt files also
+mentions another security flaw, i.e incomplete fix for CVE-2008-1722:
 
-CVE-2008-3791 was allocated to handle the security issue related
-with this part of code. This is at least, how we have reported
-https://bugzilla.redhat.com/show_bug.cgi?id=460180 (CVE-2008-3791).
+<cite>
 
-Kind regards
-Jan iankko Lieskovsky
-RH Security Response Team
+- SECURITY: The PNG image reading code did not validate the
+	  image size properly, leading to a potential buffer overflow
+	  (STR #2974)
 
-> 
-> Anyone played with crafted file names?
-> Cheers
-> Nico
-> 
+</cite>
+
+The relevant upstream cups BTS post together with patch attached is
+here:
+
+Advisory: http://www.cups.org/str.php?L2974
+Patch: http://www.cups.org/strfiles/2974/str2974.patch
+
+This issue seems to be introduced by the fix for CVE-2008-1722, i.e:
+Advisory: http://www.cups.org/str.php?L2790
+Patch: http://www.cups.org/strfiles/2790/str2790.patch
+
+Steve, could you please allocate a new CVE identifier for this one?
+
+Thanks, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
 
