@@ -1,22 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/06/3
-Message-Id: <200810061211.34458.rbu@gentoo.org>
-Date: Mon, 6 Oct 2008 12:11:28 +0200
-From: Robert Buchholz <rbu@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/26/3
+Message-ID: <20081126095135.GD14536@fuse.inversepath.com>
+Date: Wed, 26 Nov 2008 09:51:35 +0000
+From: Andrea Barisani <lcars@...rt.org>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org, veillard@...hat.com
-Subject: Re: Re: libxml2 "ampproblem" DoS
+Cc: 498243@...s.debian.org, xine-user@...ts.sourceforge.net, redpig@...rt.org
+Subject: Re: xine-lib and ocert-2008-008
 Content-Type: text/plain; charset=utf-8
 
-On Monday 06 October 2008, Tomas Hoger wrote:
-> CVE-2008-4409 is public on NVD site, CVE-2008-4422 in Gentoo BZ and
-> here...  CVE-2008-4422 should probably be rejected.
+On Tue, Nov 25, 2008 at 07:46:19PM -0500, Steven M. Christey wrote:
+> 
+> On Sat, 22 Nov 2008, Thomas Viehmann wrote:
+> 
+> > I am not quite sure whether I can agree with Will Drewry's analysis[1]
+> > accompanying ocert advisory 2008-008[1]. Looking at item 1A, which Will
+> > says is fixed in 1.1.5, attached .mov seems to fit the case description
+> > and will still corrupt the memory when viewed e.g. in gxine.
+> 
+> This has finally prompted me to process CVE's for the issues originally
+> disclosed by Will back in August.  Our analysts didn't have a very
+> pleasant time with the volume and complexity, I'm sure.  Sorry it took so
+> long.
+>
 
-I changed the reference in our Bugzilla to CVE-2008-4409, let's go with 
-that.
+Steve, thanks for this assignment, I updated our advisory with the
+references.  We'll try to take a look at the new test case sometimes next
+week.
 
+Cheers
 
-Robert
+> CVE-2008-5234 includes two separate bugs, one of which is the item 1A you
+> mention (parse_moov_atom in demux_qt.c). If CVE-2008-5234 actually wasn't
+> fixed in 1.1.15, we might need a new CVE to handle the variant.
+> 
+> There are also some cases where an xine bug announcement includes some
+> bugs that weren't covered by Will's analysis; those won't have an OCERT
+> reference.
+> 
+> CVE-2008-5236 and CVE-2008-5237, and possibly others, don't have a
+> "CONFIRM" reference in them - which implies that, based on CVE analysis,
+> the upstream vendor didn't provide enough clear evidence of a fix.
+> 
+> My brain is too fried to process the followup comment that listed
+> individual patches.
+> 
+> - Steve
+> 
 
+-- 
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | Open Source Computer Emergency Response Team
 
-Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
+<lcars@...rt.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
