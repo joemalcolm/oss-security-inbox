@@ -1,36 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/21/15
-Message-ID: <gg59ds$gs5$3@ger.gmane.org>
-Date: Thu, 20 Nov 2008 21:20:17 -0600
-From: Raphael Geissert <atomo64+debian@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/26/2
+Message-Id: <219680AF-F1BC-4DAA-93D1-971AA2DE0A91@noxss.org>
+Date: Wed, 26 Nov 2008 09:04:59 +0100
+From: Jeremias Reith <jr@...ss.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: no-ip DUC buffer overflow
+Subject: CVE requset: WordPress XSS vulnerability in RSS Feed Generator
 Content-Type: text/plain; charset=utf-8
-
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
 Hello,
 
-A buffer overflow has been found in no-ip DUC which can be used to execute code
-in the client. The attack relies on DNS poisoning or man in the middle attacks
-to fake the server's response.
+a XSS vulnerability has been discovered in WordPress.
 
-Original source of information: http://www.milw0rm.com/exploits/7151
-More/detailed information: http://bugs.debian.org/506179
+Vendor info:
+http://wordpress.org/development/2008/11/wordpress-265/
 
-Thanks in advance.
+Detailed information:
+http://www.securityfocus.com/archive/1/498652 (Note: It should be  
+"prior to 2.6.5" in the summary)
 
-Cheers,
-- -- 
-Raphael Geissert - Debian Maintainer
-www.debian.org - get.debian.net
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkkmKPEACgkQYy49rUbZzlq4twCgirM5MAejW9PU9hbdsPPgD6k7
-gu4AmQHCTd9WJ0pJEa86ziEEE+g0kxo8
-=YBkb
------END PGP SIGNATURE-----
-
+Thanks,
+Jeremias Reith
