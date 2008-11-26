@@ -1,21 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/01/3
-Message-ID: <87od381eb8.fsf@mid.deneb.enyo.de>
-Date: Mon, 01 Sep 2008 10:05:31 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/26/4
+Message-Id: <200811270022.08443.rbu@gentoo.org>
+Date: Thu, 27 Nov 2008 00:21:54 +0100
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: GNU ed heap overflow
+Cc: Jamie Strandboge <jamie@...onical.com>
+Subject: Re: CVE request: jhead
 Content-Type: text/plain; charset=utf-8
 
-* Tavis Ormandy:
 
-> If you can specify an arbitrary filename, can't you execute commands
-> anyway?
->
-> $ ed '!ls>&2'
-> bin   dev  home  lost+found  misc  net  proc  sbin     srv  tmp  var
-> boot  etc  lib   media       mnt   opt  root  selinux  sys  usr
-> 0
+On Wednesday 22 October 2008, Steven M. Christey wrote:
+> ======================================================
+> Name: CVE-2008-4640
+...
+> The DoCommand function in jhead.c in Matthias Wandel jhead 2.84 and
+> earlier allows local users to delete arbitrary files via vectors
+> involving a modified input filename in which (1) a final "z"
+> character is replaced by a "t" character or (2) a final "t" character
+> is replaced by a "z" character.
+...
+> Name: CVE-2008-4641
+...
+> The DoCommand function in jhead.c in Matthias Wandel jhead 2.84 and
+> earlier allows attackers to execute arbitrary commands via shell
+> metacharacters in unspecified input.
 
-Interesting.  But this type of command execution is not possible with
-"red", which suffers from the same overflow.
+
+These two issues have been resolved in the current "jhead-latest.tar.gz" 
+distributed on the upstream site. Both Ubuntu and Debian have renamed 
+one version of this file to be "2.85" whereas upstream has not yet 
+released any 2.85 version. Upstream stated that they will release a 
+2.85 not before next year, so anyone who has this issue open can either 
+extract patches, package the snapshot or wait.
+
+
+Robert
+
+Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
