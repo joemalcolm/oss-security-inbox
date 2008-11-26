@@ -1,58 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/10/4
-Message-ID: <17746.1213141161@devserv.devel.redhat.com>
-Date: Tue, 10 Jun 2008 19:39:21 -0400
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: FreeType 2.3.6
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/27/1
+Message-ID: <5009DB4198%linux@youmustbejoking.demon.co.uk>
+Date: Wed, 26 Nov 2008 19:26:18 +0000
+From: Darren Salt <linux@...mustbejoking.demon.co.uk>
+To: Matthias Hopf <mhopf@...e.de>, 498243@...s.debian.org
+Cc: oss-security@...ts.openwall.com, redpig@...rt.org
+Subject: Re: Bug#498243: xine-lib and ocert-2008-008
 Content-Type: text/plain; charset=utf-8
 
-On 10 June 2008, Josh Bressers wrote:
-> So it seems FreeType 2.3.6 fixes some security issues:
-> 
->     - A  bunch of  potential security  problems have  been found.  All
->       users should update.
-> 
-> Does anyone have a freetype contact who we can try to convince to work with
-> the community in the future (or give us patches for these)?
-> 
+[xine-user dropped; should probably have been sent to xine-devel, and this
+thread doesn't seem to be appearing there anyway]
 
-After looking at the iDefense advisory, and through the Freetype changelog,
-it looks like this is the changeset we need to fix this:
+I demand that Matthias Hopf may or may not have written...
 
-2008-06-08  Werner Lemberg
+> On Nov 22, 08 17:49:40 +0100, Thomas Viehmann wrote:
+[snip]
+>> If anyone cares to go over the xine-lib issues (primarily the unfixed
+>> ones from Will's section 3), I'd much appreciate a CC. In order to make
+>> the analysis and verification more, I would also be interested in the
+>> test cases mentioned in the advisory.
 
-        * src/type1/t1parse.h (T1_ParserRec): Make `base_len' and
-        `private_len' unsigned.
+> I have fixed all of them (at least I believe so, but I have to verify your
+> test case), and we're waiting for new ocert numbers. Given that this takes
+> so long, and the issues are public anyway, I will probably upstream the
+> fixes soon. If you would verify them it would be awesome.
 
-        * src/type1/t1parse.c (read_pfb_tag): Make `asize' unsigned and
-        * read
-        it as such.
-        (T1_New_Parser, T1_Get_Private_Dict): Make `size' unsigned.
+I'd appreciate these *not* being committed to the 1.1 tip: just make sure
+that I get the patch series (no more than one CVE no. per patch), prepared so
+that I can just "hg import" each one, and I'll handle things from there.
+(Somebody, probably me, will have to backport at least some of this lot for
+etch, and separate patches should make this a bit easier.)
 
-
-        * src/base/ftstream.c (FT_Stream_Skip): Reject negative values.
-
-
-        * src/type1/t1load.c (parse_blend_design_positions): Check `n_axis'
-        for sane value.
-        Fix typo.
-
-
-        * src/psaux/psobjs.c (ps_table_add): Check `idx' correctly.
-
-
-        * src/truetype/ttinterp (Ins_SHC): Use BOUNDS() to check
-        `last_point'.
-
-
-        * src/sfnt/ttload.c (tt_face_load_max_profile): Limit
-        `maxTwilightPoints'.
-
-I'll attach the patch (with comment changes stripped).
+I'm currently not sure whether to do 1.1.15.1 or 1.1.16, mainly because
+1.1.15.1 can be uploaded to unstable and still make it into lenny; OTOH,
+that'd be a new sourceful upload. And I'm not sure that we're ready for
+1.1.16 yet anyway.
 
 -- 
-    JB
+| Darren Salt    | linux or ds at              | nr. Ashington, | Toon
+| RISC OS, Linux | youmustbejoking,demon,co,uk | Northumberland | Army
+| + Use more efficient products. Use less.          BE MORE ENERGY EFFICIENT.
 
-
-View attachment "freetype.patch" of type "text/plain" (5812 bytes)
+You will be reincarnated as a toad; and you will be much happier.
