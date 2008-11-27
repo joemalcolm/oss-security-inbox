@@ -1,32 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/22/6
-Message-ID: <47BE5219.4060300@freethemallocs.com>
-Date: Thu, 21 Feb 2008 19:39:53 -0900
-From: Jonathan Smith <smithj@...ethemallocs.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/27/2
+Message-ID: <28fa9c5e0811270517w6f16eef8wd9c0a70f6162d408@mail.gmail.com>
+Date: Thu, 27 Nov 2008 21:17:46 +0800
+From: "Eugene Teo" <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-CC: Solar Designer <solar@...nwall.com>
-Subject: Re: moderation
+Subject: CVE request: kernel: fix soft lockups/OOM issues with unix garbage collector
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+This bug is different from CVE-2008-5029, but it can be triggered by
+the same reproducers. It requires a CVE name.
 
-Josh Bressers wrote:
-| I can do this.  It's a horrible thankless job, but the more we have, the
-| better things will be.  Getting some folks scattered around the world
-would
-| be helpful.
+"Reported and fixed by Dann Frazier <dannf@...com>:
+This is an implementation of David Miller's suggested fix in:
+  https://bugzilla.redhat.com/show_bug.cgi?id=470201
 
-I'll help out as well.
+Paraphrasing the description from the above report, it makes sendmsg()
+block while UNIX garbage collection is in progress. This avoids a
+situation where child processes continue to queue new FDs over a
+AF_UNIX socket to a parent
+which is in the exit path and running garbage collection on these FDs.
+This contention can result in soft lockups and oom-killing of
+unrelated processes."
 
-	smithj
+Reproducers:
+https://bugzilla.redhat.com/show_bug.cgi?id=470201#c1
+https://bugzilla.redhat.com/show_bug.cgi?id=470201#c7
 
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=470201
+http://article.gmane.org/gmane.comp.security.oss.general/1223
+http://marc.info/?l=linux-netdev&m=122721862313564&w=2
+https://bugzilla.redhat.com/show_bug.cgi?id=473259
 
+Patch:
+http://marc.info/?l=linux-netdev&m=122771908731133&w=2
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.8 (GNU/Linux)
-
-iEYEARECAAYFAke+UhkACgkQCG91qXPaRekFigCeLau7+NxWrWHZPryDTdVZZV1D
-IRoAoKlD3Ydkggu2PA1hgY45lr921dWz
-=qyGF
------END PGP SIGNATURE-----
+Thanks, Eugene
