@@ -1,23 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/19/3
-Message-ID: <20081219191637.6f5f0bc1@redhat.com>
-Date: Fri, 19 Dec 2008 19:16:37 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: OSS Security <oss-security@...ts.openwall.com>
-Cc: coley@...re.org
-Subject: CVE request - pdfjam
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/28/6
+Message-ID: <20081128224536.GC25910@ngolde.de>
+Date: Fri, 28 Nov 2008 23:45:36 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: xine-lib and ocert-2008-008
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+Hi,
+* Steven M. Christey <coley@...us.mitre.org> [2008-11-26 09:27]:
+> On Sat, 22 Nov 2008, Thomas Viehmann wrote:
+[...] 
+> ======================================================
+> Name: CVE-2008-5244
+> Status: Candidate
+> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5244
+> Reference: CONFIRM:http://sourceforge.net/project/shownotes.php?release_id=619869
+> Reference: SECTRACK:1020703
+> Reference: URL:http://securitytracker.com/id?1020703
+> 
+> Unspecified vulnerability in xine-lib before 1.1.15 has unknown impact
+> and attack vectors related to libfaad.  NOTE: due to the lack of
+> details, it is not clear whether this is an issue in xine-lib or in
+> libfaad.
 
-Insecure temporary file handling flaw was reported for pdfjam:
+Anyone having details for this one? I can't find any fix 
+related to this in id3.c/h and the only faad change I saw is 
+http://hg.debian.org/hg/xine-lib/xine-lib?cmd=changeset;node=18c0264660b9;style=gitweb
+which talks about aac files.
 
-https://bugzilla.novell.com/show_bug.cgi?id=459031
-
-Issue affects all 3 scripts shipped in pdfjam: pdf90, pdfjoin and pdfnup
-
-They create various temporary files in tempfileDir (/var/tmp), process
-id ($$) is used for file name uniqueness.
-
+Cheers
+Nico
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
