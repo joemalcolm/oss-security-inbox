@@ -1,16 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/02/4
-Message-ID: <874pakm4nd.fsf@mid.deneb.enyo.de>
-Date: Wed, 02 Apr 2008 21:35:18 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/28/7
+Message-ID: <20081128225448.GD25910@ngolde.de>
+Date: Fri, 28 Nov 2008 23:54:48 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: openssh "ForceCommand" improperly implemented
+Cc: 498243@...s.debian.org, xine-user@...ts.sourceforge.net, redpig@...rt.org
+Subject: Re: xine-lib and ocert-2008-008
 Content-Type: text/plain; charset=utf-8
 
-* Jonathan Smith:
+Hi,
+* Steven M. Christey <coley@...us.mitre.org> [2008-11-26 09:27]:
+> ======================================================
+> Name: CVE-2008-5234
+> Status: Candidate
+> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5234
+> Reference: BUGTRAQ:20080822 [oCERT-2008-008] multiple heap overflows in xine-lib
+> Reference: URL:http://www.securityfocus.com/archive/1/archive/1/495674/100/0/threaded
+> Reference: MISC:http://www.ocert.org/analysis/2008-008/analysis.txt
+> Reference: CONFIRM:http://sourceforge.net/project/shownotes.php?release_id=619869
+> Reference: BID:30797
+> Reference: URL:http://www.securityfocus.com/bid/30797
+> Reference: FRSIRT:ADV-2008-2382
+> Reference: URL:http://www.frsirt.com/english/advisories/2008/2382
+> Reference: SECTRACK:1020703
+> Reference: URL:http://securitytracker.com/id?1020703
+> Reference: SECUNIA:31502
+> Reference: URL:http://secunia.com/advisories/31502
+> 
+> Multiple heap-based buffer overflows in xine-lib 1.1.12, and other
+> versions before 1.1.15, allow remote attackers to execute arbitrary
+> code via vectors related to (1) a crafted metadata atom size processed
+> by the parse_moov_atom function in demux_qt.c and (2) frame reading in
+> the id3v23_interp_frame function in id3.c.  NOTE: as of 20081122, it is
+> possible that vector 1 has not been fixed in 1.1.15.
+> 
+[...] 
+> ======================================================
+> Name: CVE-2008-5246
+> Status: Candidate
+> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5246
+> Reference: CONFIRM:http://sourceforge.net/project/shownotes.php?release_id=619869
+> Reference: FRSIRT:ADV-2008-2382
+> Reference: URL:http://www.frsirt.com/english/advisories/2008/2382
+> Reference: SECTRACK:1020703
+> Reference: URL:http://securitytracker.com/id?1020703
+> 
+> Multiple heap-based buffer overflows in xine-lib before 1.1.15 allow
+> remote attackers to execute arbitrary code via vectors that send ID3
+> data to the (1) id3v22_interp_frame and (2) id3v24_interp_frame
+> functions in src/demuxers/id3.c.  NOTE: the provenance of this
+> information is unknown; the details are obtained solely from third
+> party information.
 
-> It looks to be a rather minor issue since ~/.ssh/rc is usually 0600 and
-> ~/.ssh is usually 0700.
+Isn't the second part of CVE-2008-5234 the same like 
+CVE-2008-5246? About CVE-2008-5246 and the provenance of 
+this information, I can hereby confirm this.
+See http://hg.debian.org/hg/xine-lib/xine-lib?cmd=changeset;node=268c1c1639d7;style=gitweb
 
-We need to check how this interacts with scponly and rssh. 8-(
+the length is user supplied + 1 used to allocate a buffer 
+which is used for a read call later -> typical heap 
+overflow.
+
+Cheers
+Nico
+> 
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
