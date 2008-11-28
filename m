@@ -1,20 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/09/5
-Message-Id: <200812091904.12009.hanno@hboeck.de>
-Date: Tue, 9 Dec 2008 19:04:11 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/28/9
+Message-ID: <Pine.GSO.4.51.0811281820110.20386@faron.mitre.org>
+Date: Fri, 28 Nov 2008 18:20:21 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: Steven Christey <coley@...us.mitre.org>
-Subject: CVE request: phpMyAdmin < 3.1.1.0 (SQL injection through XSRF on several pages )
+Subject: Re: CVE requset: WordPress XSS vulnerability in RSS Feed Generator
 Content-Type: text/plain; charset=utf-8
 
-Published by the vendor as PMASA-2008-10:
-http://www.phpmyadmin.net/home_page/security/PMASA-2008-10.php
 
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
-http://www.jukss.de/ Jugemdumweltkongress, 27.12.-4.1.
+======================================================
+Name: CVE-2008-5278
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5278
+Reference: BUGTRAQ:20081125 WordPress XSS vulnerability in RSS Feed Generator
+Reference: URL:http://www.securityfocus.com/archive/1/498652
+Reference: CONFIRM:http://wordpress.org/development/2008/11/wordpress-265/
 
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+Cross-site scripting (XSS) vulnerability in the self_link function in
+in the RSS Feed Generator (wp-includes/feed.php) for WordPress before
+2.6.5 allows remote attackers to inject arbitrary web script or HTML
+via the Host header (HTTP_HOST variable).
+
+
