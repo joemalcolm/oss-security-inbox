@@ -1,113 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/04/3
-Message-ID: <Pine.GSO.4.51.0811041220420.12002@faron.mitre.org>
-Date: Tue, 4 Nov 2008 12:22:24 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Steffen Joeris <steffen.joeris@...lelinux.de>
-cc: oss-security@...ts.openwall.com, vuln@...unia.com, coley@...re.org
-Subject: Re: Regarding SA32329 (Smarty "_expand_quoted_text()" Security Bypass)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/28/5
+Message-Id: <200811282239.23680.steffen.joeris@skolelinux.de>
+Date: Fri, 28 Nov 2008 22:39:23 +0100
+From: Steffen Joeris <steffen.joeris@...lelinux.de>
+To: oss-security@...ts.openwall.com
+Cc: Jeremias Reith <jr@...ss.org>
+Subject: Re: CVE requset: WordPress XSS vulnerability in RSS Feed Generator
 Content-Type: text/plain; charset=utf-8
 
+Hi
 
-On Tue, 4 Nov 2008, Steffen Joeris wrote:
+> a XSS vulnerability has been discovered in WordPress.
+>
+> Vendor info:
+> http://wordpress.org/development/2008/11/wordpress-265/
+>
+> Detailed information:
+> http://www.securityfocus.com/archive/1/498652 (Note: It should be
+> "prior to 2.6.5" in the summary)
+I might be off here, but doesn't the patch[0] create another XSS by removing 
+wp_specialchars?
 
-> This issue has now been given CVE-2008-4810 and CVE-2008-4811. However, isn't
-> CVE-2008-4811 already covered by CVE-2008-4810 or could someone please
-> enlighten me?
+Cheers
+Steffen
 
-There are very minimal SVN version differences.  This was a tough call on
-our part, but basically CVE-2008-4810 is fixed and based on what we saw,
-CVE-2008-4811 was not.  Details below.
+[0]: 
+http://trac.wordpress.org/changeset?old_path=tags%2F2.6.3&old=&new_path=tags%2F2.6.5&new=
 
-- Steve
-
-======================================================
-Name: CVE-2008-4810
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4810
-Acknowledged: yes
-Announced: 20080922
-Flaw: undiag
-Reference: MLIST:[oss-security] 20081025 Regarding SA32329 (Smarty "_expand_quoted_text()" Security Bypass)
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/10/25/2
-Reference: MISC:http://securityvulns.ru/Udocument746.html
-Reference: CONFIRM:http://code.google.com/p/smarty-php/source/detail?r=2784&path=/trunk/libs/Smarty_Compiler.class.php
-Reference: CONFIRM:http://code.google.com/p/smarty-php/source/detail?r=2797&path=/trunk/libs/Smarty_Compiler.class.php
-Reference: CONFIRM:http://smarty-php.googlecode.com/svn/trunk/NEWS
-Reference: CONFIRM:https://bugs.gentoo.org/attachment.cgi?id=169804&action=view
-Reference: SECUNIA:32329
-Reference: URL:http://secunia.com/advisories/32329
-
-The _expand_quoted_text function in libs/Smarty_Compiler.class.php in
-Smarty 2.6.20 before r2797 allows remote attackers to execute
-arbitrary PHP code via vectors related to templates and (1) a
-dollar-sign character, aka "php executed in templates;" and (2) a
-double quoted literal string, aka a "function injection security
-hole." NOTE: each vector affects slightly different SVN revisions.
-
-
-Analysis:
-ACKNOWLEDGEMENT: detail?r=2797 says "patch for security, php executed
-in templates."
-
-ACKNOWLEDGEMENT: smarty-php.googlecode.com/svn/trunk/NEWS says "fix
-... function injection security hole closed (U.Tews)."
-
-ABSTRACTION: There are different patches to _expand_quoted_text in
-different SVN revisions. Because googlecode.com allows public SVN
-access, end users may have obtained any of these revisions and
-deployed it. Typically CVE would MERGE across SVN revisions, and would
-instead create a single candidate for all (otherwise MERGEable) issues
-that were fixed between two released versions. However, the situation
-here is that none of the SVN revisions are yet incorporated into any
-released version, so it is arguable that this could be SPLIT.
-
-ABSTRACTION: as of 20081025, the "\$" issue in r2797 was unfixed, so
-it is SPLIT from the others. Arguably this should have been done for
-the other two as well.
-
-INCLUSION: Admittedly, the vendor later reverted r2784. However, it is
-still a vendor announcement of a security fix, when operating from the
-perspective that end users realistically obtain the product through
-SVN.
-
-INCLUSION: Admittedly, a third party later concluded that r2797 was a
-largely ineffective patch. However, it is still a vendor announcement
-of a security fix, when operating from the perspective that end users
-realistically obtain the product through SVN.
-
-
-======================================================
-Name: CVE-2008-4811
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4811
-Acknowledged: unknown
-Announced: 20081024
-Flaw: undiag
-Reference: MLIST:[oss-security] 20081025 Regarding SA32329 (Smarty "_expand_quoted_text()" Security Bypass)
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/10/25/2
-Reference: MISC:http://securityvulns.ru/Udocument746.html
-Reference: SECUNIA:32329
-Reference: URL:http://secunia.com/advisories/32329
-
-The _expand_quoted_text function in libs/Smarty_Compiler.class.php in
-Smarty 2.6.20 r2797 and earlier allows remote attackers to execute
-arbitrary PHP code via vectors related to templates and a \
-(backslash) before a dollar-sign character.
-
-
-Analysis:
-ABSTRACTION: There are different patches to _expand_quoted_text in
-different SVN revisions. Because googlecode.com allows public SVN
-access, end users may have obtained any of these revisions and
-deployed it. Typically CVE would MERGE across SVN revisions, and would
-instead create a single candidate for all (otherwise MERGEable) issues
-that were fixed between two released versions. However, the situation
-here is that none of the SVN revisions are yet incorporated into any
-released version, so it is arguable that this could be SPLIT.
-
-ABSTRACTION: as of 20081025, the "\$" issue in r2797 was unfixed, so
-it is SPLIT from the others. Arguably this should have been done for
-the other two as well.
-
-
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
