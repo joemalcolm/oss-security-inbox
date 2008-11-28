@@ -1,26 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/28/3
-Message-ID: <b47dd3ef53b551664a77712e18738441.squirrel@wm.kinkhorst.nl>
-Date: Tue, 28 Oct 2008 09:43:17 +0100 (CET)
-From: "Thijs Kinkhorst" <thijs@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: Re: CVE request phpmyadmin (Fwd: XSS in phpMyadmin)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/28/10
+Message-Id: <200811290048.47309.steffen.joeris@skolelinux.de>
+Date: Sat, 29 Nov 2008 00:48:47 +0100
+From: Steffen Joeris <steffen.joeris@...lelinux.de>
+To: Jeremias Reith <jr@...ss.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE requset: WordPress XSS vulnerability in RSS Feed Generator
 Content-Type: text/plain; charset=utf-8
 
-On Mon, October 27, 2008 23:28, Hanno BÃ¶ck wrote:
-> No fix yet, works also in 3.0.1.
+Hi Jeremias
 
-Do we still call things that require register_globals to be on a
-'vulnerability'?
+On Fri, 28 Nov 2008 11:31:05 pm Jeremias Reith wrote:
+> On Nov 28, 2008, at 22:39 , Steffen Joeris wrote:
+> > Hi
+> >
+> >> a XSS vulnerability has been discovered in WordPress.
+> >>
+> >> Vendor info:
+> >> http://wordpress.org/development/2008/11/wordpress-265/
+> >>
+> >> Detailed information:
+> >> http://www.securityfocus.com/archive/1/498652 (Note: It should be
+> >> "prior to 2.6.5" in the summary)
+> >
+> > I might be off here, but doesn't the patch[0] create another XSS by
+> > removing
+> > wp_specialchars?
+> >
+> > Cheers
+> > Steffen
+> >
+> > [0]:
+> > http://trac.wordpress.org/changeset?old_path=tags%2F2.6.3&old=&new_path=t
+> >ags%2F2.6.5&new=
+>
+> Looks fine to me.
+>
+> You probably missed that the added clean_url() is applied on the
+> entire URL instead of wp_specialchars() to REQUSET_URI.
+Yeah you're right and it appears that clean_url takes care of all the bad 
+characters. However, I am still wondering why upstream doesn't use 
+htmlspecialchars(). :)
 
-Register_globals has been advertised (including in the PHP documentation
-of that option) as a very bad idea for many years now, it's turned off by
-default since years aswell. Turning it on could be considered as knowingly
-taking the risk on a certain class of exploits.
+Cheers
+Steffen
 
-At least Debian doesn't provide any security support for these issues.
-
-
-Thijs
-
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
