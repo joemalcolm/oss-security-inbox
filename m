@@ -1,45 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/10/3
-Message-ID: <20080610232906.GA4586@openwall.com>
-Date: Wed, 11 Jun 2008 03:29:06 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: exploitability of off-by-one in motion webserver
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/28/3
+Message-ID: <20081128171240.02a1c350@redhat.com>
+Date: Fri, 28 Nov 2008 17:12:40 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: OSS Security <oss-security@...ts.openwall.com>
+Cc: coley@...re.org
+Subject: CVE request: lcms (old issues)
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jun 10, 2008 at 06:24:33PM +0200, Nico Golde wrote:
-> 1950 static int read_client(int client_socket, void *userdata, char *auth)
-> ....
-> 1953         int ret = 1;
-> 1954         char buffer[1024] = {'\0'};
-> 1955         int length = 1024;
-...
-> Overwriting the frame pointer should be not possible since there are variables
-> on the stack before buffer.
+Hi!
 
-You're assuming that all automatic variables are allocated on the stack
-and in-order, but neither has to be the case.  The compiler is free to
-place these variables in registers (in which case it might or might not
-also allocate stack space for them), to re-order the variables that it
-does allocate stack space for, and even to optimize some variables out
-if it can.
+While digging around CVE-2007-2741, I found out that there are 2 other
+issues that were quite silently fixed in the Little CMS updates tagged
+as fixing CVE-2007-2741 as done by various vendors.
 
-This means that the frame pointer attack is not out of consideration.
-The risk is there.
+The issues are:
 
-> However it should be possible to overwrite ret with 0 which is used in line 2073 as
-> the return value of the function (normal termination returns 1).
-...
-> This is the theoretical point but I was not able to reproduce this on
-> a 64bit system. Does anyone have an idea why this could be the case or
-> is even able to reproduce this?
+The ReadEmbeddedTextTag in src/cmsio1.c did not properly check amount
+of data read from the input file to the buffer provided as one of it's
+arguments.  Value read from the file was used as an upper bound without
+any validation.
 
-I'd expect "ret" to be placed into a register, or at least cached in a
-register, which explains why you're not able to affect its value.  Of
-course, there's no guarantee that it won't be read back from the stack
-in another build, allowing for the attack in case it's also placed right
-above the buffer.  (I assume that you're on little-endian.)
+This issue was fixed upstream in 1.16.  Attached is the patch against
+1.15 lcms packages as was used in SuSE security updates (original name
+of the patch as used in SuSE and Mandriva SRPMS is
+lcms-CVE-2007-2741.patch, but it is not a fix for CVE-2007-2741,
+CVE-2007-2741 was fixed upstream in 1.15 and the correct patch for it
+is named named liblcms-<version>-icc.diff in pre-1.15 SuSE / Mandriva
+SRPMS).
 
-I hope this helps.
- 
-Alexander
+Upstream CVS commit:
+http://lcms.cvs.sourceforge.net/viewvc/lcms/lcms/src/cmsio1.c?r1=1.33&r2=1.34
+
+
+Another issue is unsigned -> signed integer cast issue in cmsAllocGamma
+in src/cmsgamma.c.  The argument to this function - nEntries - may be
+read from the file and not validated before cmsAllocGamma is called.
+As nEntries in cmsAllocGamma is signed integer, it's value may possibly
+be negative and can result in an insufficient memory allocation.
+
+This issue was fixed upstream in 1.17.  Again, attached is the patch
+extracted from SuSE security updates for 1.15.  Original name was
+lcms-gamma-overflow.patch.
+
+Upstream CVS commit:
+http://lcms.cvs.sourceforge.net/viewvc/lcms/lcms/src/cmsgamma.c?view=diff&r1=1.16&r2=1.17
+
+
+As both of these fixes date back to 2007, and were used in the security
+advisory in 2007, they may need 2007 CVE id.  Steven, can you get us
+some?  Thank you!
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
+
+View attachment "lcms-1.15-ReadEmbeddedTextTag-sizechecks.diff" of type "text/x-patch" (5529 bytes)
+
+View attachment "lcms-1.15-cmsAllocGamma-overflow.diff" of type "text/x-patch" (563 bytes)
