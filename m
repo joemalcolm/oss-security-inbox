@@ -1,94 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/18/3
-Message-ID: <Pine.GSO.4.51.0807181147040.17955@faron.mitre.org>
-Date: Fri, 18 Jul 2008 11:47:11 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/29/1
+Message-ID: <ggpudm$nqr$1@ger.gmane.org>
+Date: Fri, 28 Nov 2008 17:20:54 -0600
+From: Raphael Geissert <atomo64+debian@...il.com>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: multiple drupal issues in < 6.3,5.8
+Subject: CVE id request/update: mailscanner: many scripts allow local users to overwrite arbitrary files via symlink attacks
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-======================================================
-Name: CVE-2008-3218
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3218
-Reference: MLIST:[oss-security] 20080710 CVE request: multiple drupal issues in < 6.3,5.8
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/07/10/3
-Reference: CONFIRM:http://drupal.org/node/280571
+Hello,
 
-Multiple cross-site scripting (XSS) vulnerabilities in Drupal 6.x
-before 6.3 allow remote attackers to inject arbitrary web script or
-HTML via vectors related to (1) free tagging taxonomy terms, which are
-not properly handled on node preview pages, and (2) unspecified OpenID
-values.
+A week ago I reported some more issues in mailscanner other than those mentioned
+in CVE-2008-5140 at [1], but it looks like the mail copy sent to bugtraq was
+never really delivered or got rejected.
 
+Could the current CVE id be updated or a new one assigned please?
 
-======================================================
-Name: CVE-2008-3219
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3219
-Reference: MLIST:[oss-security] 20080710 CVE request: multiple drupal issues in < 6.3,5.8
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/07/10/3
-Reference: CONFIRM:http://drupal.org/node/280571
+Thanks in advance.
 
-The Drupal filter_xss_admin function in 5.x before 5.8 and 6.x before
-6.3 does not "prevent use of the object HTML tag in administrator
-input," which has unknown impact and attack vectors, probably related
-to an insufficient cross-site scripting (XSS) protection mechanism.
+[1] http://bugs.debian.org/506353
 
+Regards,
+- -- 
+Raphael Geissert - Debian Maintainer
+www.debian.org - get.debian.net
 
-======================================================
-Name: CVE-2008-3220
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3220
-Reference: MLIST:[oss-security] 20080710 CVE request: multiple drupal issues in < 6.3,5.8
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/07/10/3
-Reference: CONFIRM:http://drupal.org/node/280571
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
 
-Cross-site request forgery (CSRF) vulnerability in Drupal 5.x before
-5.8 and 6.x before 6.3 allows remote attackers to perform
-administrative actions via vectors involving deletion of "translated
-strings."
-
-
-======================================================
-Name: CVE-2008-3221
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3221
-Reference: MLIST:[oss-security] 20080710 CVE request: multiple drupal issues in < 6.3,5.8
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/07/10/3
-Reference: CONFIRM:http://drupal.org/node/280571
-
-Cross-site request forgery (CSRF) vulnerability in Drupal 6.x before
-6.3 allows remote attackers to perform administrative actions via
-vectors involving deletion of OpenID identities.
-
-
-======================================================
-Name: CVE-2008-3222
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3222
-Reference: MLIST:[oss-security] 20080710 CVE request: multiple drupal issues in < 6.3,5.8
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/07/10/3
-Reference: CONFIRM:http://drupal.org/node/280571
-
-Session fixation vulnerability in Drupal 5.x before 5.8 and 6.x before
-6.3, when contributed modules "terminate the current request during a
-login event," allows remote attackers to hijack web sessions via
-unknown vectors.
-
-
-======================================================
-Name: CVE-2008-3223
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3223
-Reference: MLIST:[oss-security] 20080710 CVE request: multiple drupal issues in < 6.3,5.8
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/07/10/3
-Reference: CONFIRM:http://drupal.org/node/280571
-
-SQL injection vulnerability in the Schema API in Drupal 6.x before 6.3
-allows remote attackers to execute arbitrary SQL commands via vectors
-related to "an inappropriate placeholder for 'numeric' fields."
-
+iEYEARECAAYFAkkwfNYACgkQYy49rUbZzlpLBwCfVo+ghoxKPzjYI7OCcdDhxrBt
+MHUAn1wyGHJR28rpa+TXeWIqIy2HTpdN
+=jcCS
+-----END PGP SIGNATURE-----
 
