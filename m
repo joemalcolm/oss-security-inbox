@@ -1,33 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/23/12
-Message-ID: <480F70FD.1050008@freethemallocs.com>
-Date: Wed, 23 Apr 2008 09:25:17 -0800
-From: Jonathan Smith <smithj@...ethemallocs.com>
-To: fyodor@...ecure.org
-CC: oss-security@...ts.openwall.com
-Subject: seclists.org archive request: oss-security
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/28/4
+Message-ID: <Pine.GSO.4.51.0811281358120.25518@faron.mitre.org>
+Date: Fri, 28 Nov 2008 13:58:16 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE requset: WordPress XSS vulnerability in RSS Feed Generator
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-oss-security is a relatively new mailing list dedicated to... open
-source software security. It was the offspring of vendor-sec, and is
-intended only for public information. We would appreciate being
-archived/mirrored/whatever on seclists.org.
+======================================================
+Name: CVE-2008-5278
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5278
+Reference: BUGTRAQ:20081125 WordPress XSS vulnerability in RSS Feed Generator
+Reference: URL:http://www.securityfocus.com/archive/1/498652
+Reference: CONFIRM:http://wordpress.org/development/2008/11/wordpress-265/
 
-List charter, including subscription information:
-http://oss-security.openwall.org/wiki/mailinglists/oss-security-charter
-
-Archive: http://www.openwall.com/lists/oss-security/
-
-	smithj
+Cross-site scripting (XSS) vulnerability in the self_link function in
+in the RSS Feed Generator (wp-includes/feed.php) for WordPress before
+2.6.5 allows remote attackers to inject arbitrary web script or HTML
+via the Host header (HTTP_HOST variable).
 
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEARECAAYFAkgPcP0ACgkQCG91qXPaRelWlQCffC0Pnd2tp2yOMTQNWa+Wz6VT
-DuIAoITDtihSMUtij7EtBJLN54VjlLqu
-=gjuP
------END PGP SIGNATURE-----
