@@ -1,24 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/17/21
-Message-ID: <20081217153207.GA14541@suse.de>
-Date: Wed, 17 Dec 2008 16:32:07 +0100
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/28/2
+Message-Id: <1227886150.3602.46.camel@dhcp-lab-164.englab.brq.redhat.com>
+Date: Fri, 28 Nov 2008 16:29:10 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Eugene Teo <eugeneteo@...nel.sg>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: Re: CVE request: kernel: applicom: fix an unchecked user ioctl range
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request - cups, dovecot-managesieve, perl, wireshark
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Dec 16, 2008 at 09:24:32PM -0500, Steven M. Christey wrote:
-> 
-> On Wed, 17 Dec 2008, Eugene Teo wrote:
-> 
-> > Hmm, there's a comment in the ac_ioctl() that the device for this is
-> > only accessible by root, so if out of range may not matter. Hmm. So,
-> > maybe, maybe not.
-> 
-> Our current approach would be, probably not.
+Steve,
 
-I guess the accessibility very much depends on the /dev/ac* device
-permissions here. For a multiport serial card I guess root/tty only.
+  ------------------------------------------------------------
+> 
+> perl -- perl-File-Path rmtree race condition (CVE-2005-0448 was assigned to address this)
+>      -- from below posted proposed fix: "This vulnerability was fixed in 5.8.4-7 but re-introduced in 5.8.8-1.
+>                                          It's also present in File::Path 2.xx, up to and including 2.07 which
+>                                          has only a partial fix."
+>      -- affects all upstream 5.8.8-1 based perl releases (have checked perl-5.8.8-1+ is reaffected, perl-5.8.10 already contains the fix)
+>      -- needs a new CVE id
+>      -- references: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=286922
+>                     http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=286922
+>                     http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2005-0448
+>                     http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=85;filename=etch_03_fix_file_path;att=1;bug=286905
+>                     http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=85;filename=sid_fix_file_path;att=2;bug=286905
+> 
+> ------------------------------------------------------------
 
-Ciao, Marcus
+One point yet -- this is perl-5.8.8-1+ specific issue (different than
+CVE-2004-0452, CVE-2005-0448 and even different than recently fixed
+CVE-2008-2827). Seems that upstream forgot to apply the fix for
+CVE-2005-0448 to 5.8 perl after rebase. This newly reported issue
+already fixed in perl-5.10.
+
+CVE-2008-2827 affects only perl-5.10 (and it already applies additional
+fix to CVE-2005-0448, which has been properly applied in perl-5.10).
+
+Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+
