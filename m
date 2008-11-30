@@ -1,38 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/16/7
-Message-ID: <20080716141245.GE11937@ngolde.de>
-Date: Wed, 16 Jul 2008 16:12:45 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Critical vuln in Firefox 3.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/30/2
+Message-ID: <g2BMw9g7W0GP3gxdFJTwDSUjWik@DnrfhFPe1KmBT9SMnrHVxzpiU9A>
+Date: Mon, 1 Dec 2008 02:23:21 +0300
+From: Eygene Ryabinkin <rea-sec@...elabs.ru>
+To: oss-security@...ts.openwall.com, jlieskov@...hat.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request - cups, dovecot-managesieve, perl, wireshark
 Content-Type: text/plain; charset=utf-8
 
-Hi Steven,
-* Steven M. Christey <coley@...us.mitre.org> [2008-06-19 22:09]:
-> Name: CVE-2008-2785
-> Status: Candidate
-> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2785
-> Reference: MISC:http://dvlabs.tippingpoint.com/blog/2008/06/18/vulnerability-in-mozilla-firefox-30
-> Reference: BID:29802
-> Reference: URL:http://www.securityfocus.com/bid/29802
-> Reference: FRSIRT:ADV-2008-1873
-> Reference: URL:http://www.frsirt.com/english/advisories/2008/1873
-> Reference: SECUNIA:30761
-> Reference: URL:http://secunia.com/advisories/30761
-> Reference: XF:firefox-unspecified-code-execution(43167)
-> Reference: URL:http://xforce.iss.net/xforce/xfdb/43167
+Me again.
+
+Mon, Dec 01, 2008 at 12:52:18AM +0300, Eygene Ryabinkin wrote:
 > 
-> Unspecified vulnerability in Firefox 3.0 and 2.0.x has unknown impact
-> and remote attack vectors, aka ZDI-CAN-349.
+> Fri, Nov 28, 2008 at 04:29:10PM +0100, Jan Lieskovsky wrote:
+> > One point yet -- this is perl-5.8.8-1+ specific issue (different than
+> > CVE-2004-0452, CVE-2005-0448 and even different than recently fixed
+> > CVE-2008-2827). Seems that upstream forgot to apply the fix for
+> > CVE-2005-0448 to 5.8 perl after rebase. This newly reported issue
+> > already fixed in perl-5.10.
+> > 
+> > CVE-2008-2827 affects only perl-5.10 (and it already applies additional
+> > fix to CVE-2005-0448, which has been properly applied in perl-5.10).
 
-There is a description of the vulnerability available now in 
-the mozilla security advisory on:
-http://www.mozilla.org/security/announce/2008/mfsa2008-34.html
+By the way, I had glanced over perl from 5.8.0 to 5.8.4 (the latter were
+said to be not vulnerable in the CVE-2005-0448).  But since it misses
+'if $force_writeable' on the second 'chmod', it should be vulnerable to
+the 'setuid' issue too.  And since there are no checks for
+inode/mountpoint device changes for the directory, rmtree is called for,
+I assume that it is vulnerable to the deletion issue too.
 
-Cheers
-Nico
+Any comments?
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+Eygene
