@@ -1,32 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/16/6
-Message-ID: <Pine.GSO.4.51.0809152111340.6953@faron.mitre.org>
-Date: Mon, 15 Sep 2008 21:13:32 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: [oss-list] CVE request (vim)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/01/1
+Message-Id: <1228134319.3537.17.camel@dhcp-lab-164.englab.brq.redhat.com>
+Date: Mon, 01 Dec 2008 13:25:19 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com
+Subject: (sort of urgent) CVE Request -- cups (repost)
 Content-Type: text/plain; charset=utf-8
 
+Hello Steve,
 
-On Thu, 11 Sep 2008, [UTF-8] Pınar Yanarda�^_ wrote:
+  could you please allocate a new CVE id for the following vulnerability
+(we need to have the patch backported till December the 3-rd due some
+ internal policies).
 
-> Jan Lieskovsky wrote On 09/11/2008 05:56 PM:
-> > (...)
-> >
-> > Report: http://www.rdancer.org/vulnerablevim-K.html  [1]
-> > Proposed patch: http://groups.google.com/group/vim_dev/attach/dd32ad3a84f36bb2/K-arbitrary-command-execution.patch?part=2
-> >
->
->
-> Unfortunately, this patch was incomplete and  rdancer has released
-> another patch for this issue:
->
-> http://groups.google.com/group/vim_dev/browse_thread/thread/1434d0812b5c817e/f730da13efe2dd73?hide_quotes=no#msg_9290f26f9bc11b33
+cups  -- buffer overflow in the PNG image read
+      -- incomplete fix for CVE-2008-1722
+(http://www.cups.org/strfiles/2790/str2790.patch)
+      -- advisory: http://www.cups.org/str.php?L2974
+      -- patch: http://www.cups.org/strfiles/2974/str2974.patch
+      -- affects: cups-1.1.17 <= x <= cups-1.3.9
+      -- references: http://www.cups.org/str.php?L2974
+                     http://svn.easysw.com/public/cups/trunk/CHANGES-1.3.txt (Part "- SECURITY:")
 
-It's not clear whether to merge this with CVE-2008-4101 - if the original
-incomplete patch made it into some distro or public version of vim then
-OK, but we generally don't distinguish between patches (CVE-wise) when
-they're all part of the same bug discussion and there hasn't been a
-release.
+Many thanks!
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
-- Steve
