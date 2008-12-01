@@ -1,32 +1,124 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/04/2
-Message-ID: <48BF756F.3060706@redhat.com>
-Date: Thu, 04 Sep 2008 13:43:11 +0800
-From: Eugene Teo <eteo@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: coley@...re.org
-Subject: CVE request: kernel: sunrpc: fix possible overrun on read of /proc/sys/sunrpc/transports
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/01/7
+Message-ID: <Pine.GSO.4.51.0812011132370.843@faron.mitre.org>
+Date: Mon, 1 Dec 2008 11:36:45 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: jlieskov@...hat.com, Eygene Ryabinkin <rea-sec@...elabs.ru>
+cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request - cups, dovecot-managesieve, perl, wireshark
 Content-Type: text/plain; charset=utf-8
 
-Interesting bug.
 
-This was committed in upstream kernel recently to address a regression
-introduced in commit dc9a16e49dbba3dd042e6aec5d9a7929e099a89b.
+CVE-2008-5286 - CUPS PNG overflow
 
-Summary:
-proc_do_xprt() does not check for user-side buffer size. The stack can
-be overwritten by reading /proc/sys/sunrpc/transports even when the
-length given to read() is a small value, i.e. < 38 bytes.
+CVE-2008-5301 - dovecot-managesieve directory traversal
 
-Upstream commit:
-27df6f25ff218072e0e879a96beeb398a79cdbc8
+CVE-2008-5302, CVE-2008-5303 - Perl issues (read details below)
 
-References/Reproducer:
-http://lkml.org/lkml/2008/8/30/140
-http://lkml.org/lkml/2008/8/30/184
+CVE-2008-5285 - Wireshark SMTP DoS
 
-It probably needs a CVE name. Agree?
 
-Thanks, Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
+Regarding the Perl issues: as seen in this list and elsewhere, there seems
+to be a ton of confusion about which CVE's were originally fixed (or not),
+and which CVE's have since reappeared (or not), and which versions of Perl
+and File::Path are or are not affected, plus Eygene's commentary on other
+race conditions.
+
+I've chosen to anchor the CVE descriptions based on Niko Tyni's commentary
+in http://www.gossamer-threads.com/lists/perl/porters/233695#233695 and
+have blended in some other comments, so hopefully we have a reasonable
+place to start from.
+
+- Steve
+
+======================================================
+Name: CVE-2008-5285
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5285
+Reference: BUGTRAQ:20081122 [SVRT-04-08] Vulnerability in WireShark 1.0.4 for DoS Attack
+Reference: URL:http://www.securityfocus.com/archive/1/archive/1/498562/100/0/threaded
+Reference: FULLDISC:20081122 [SVRT-04-08] Vulnerability in WireShark 1.0.4 for DoS Attack
+Reference: URL:http://lists.grok.org.uk/pipermail/full-disclosure/2008-November/065840.html
+Reference: MLIST:[oss-security] 20081124 CVE Request -- wireshark
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/24/1
+Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=472737
+Reference: FRSIRT:ADV-2008-3231
+Reference: URL:http://www.frsirt.com/english/advisories/2008/3231
+Reference: SECTRACK:1021275
+Reference: URL:http://www.securitytracker.com/id?1021275
+Reference: SECUNIA:32840
+Reference: URL:http://secunia.com/advisories/32840
+
+Wireshark 1.0.4 and earlier allows remote attackers to cause a denial
+of service via a long SMTP request, which triggers an infinite loop.
+
+
+======================================================
+Name: CVE-2008-5286
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5286
+Reference: CONFIRM:http://svn.easysw.com/public/cups/trunk/CHANGES-1.3.txt
+Reference: CONFIRM:http://www.cups.org/str.php?L2974
+Reference: MLIST:[oss-security] 20081201 (sort of urgent) CVE Request -- cups (repost)
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/12/01/1
+Reference: BID:32518
+Reference: URL:http://www.securityfocus.com/bid/32518
+
+Integer overflow in the _cupsImageReadPNG function in CUPS 1.1.17
+through 1.3.9 allows remote attackers to execute arbitrary code via a
+PNG image with a large height value, which bypasses a validation check
+and triggers a buffer overflow.
+
+
+======================================================
+Name: CVE-2008-5301
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5301
+Reference: MLIST:[Dovecot] 20081117 ManageSieve SECURITY hole: virtual users can edit scripts of other virtual users (all versions)
+Reference: URL:http://www.dovecot.org/list/dovecot/2008-November/035259.html
+Reference: FRSIRT:ADV-2008-3190
+Reference: URL:http://www.frsirt.com/english/advisories/2008/3190
+Reference: SECUNIA:32768
+Reference: URL:http://secunia.com/advisories/32768
+
+Directory traversal vulnerability in the ManageSieve implementation in
+Dovecot 1.0.15, 1.1, and 1.2 allows remote attackers to read and
+modify arbitrary .sieve files via a ".." (dot dot) in a script name.
+
+
+======================================================
+Name: CVE-2008-5302
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5302
+Reference: MLIST:[oss-security] 20081128 Re: [oss-security] CVE Request - cups, dovecot-managesieve, perl, wireshark
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/28/2
+Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=286922#36
+Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=286905
+Reference: MISC:http://www.gossamer-threads.com/lists/perl/porters/233695#233695
+
+Race condition in the rmtree function in File::Path 1.08 and 2.07
+(lib/File/Path.pm) in Perl 5.8.8 and 5.10.0 allows local users to
+create arbitrary setuid binaries via a symlink attack, a different
+vulnerability than CVE-2005-0448, CVE-2004-0452, and CVE-2008-2827.
+NOTE: this is a regression error related to CVE-2005-0448.  It is
+different from CVE-2008-5303 due to affected versions.
+
+
+======================================================
+Name: CVE-2008-5303
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5303
+Reference: MLIST:[oss-security] 20081128 Re: [oss-security] CVE Request - cups, dovecot-managesieve, perl, wireshark
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/28/2
+Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=286922#36
+Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=286905
+Reference: MISC:http://www.gossamer-threads.com/lists/perl/porters/233695#233695
+
+Race condition in the rmtree function in File::Path 1.08
+(lib/File/Path.pm) in Perl 5.8.8 allows local users to allows local
+users to delete arbitrary files via a symlink attack, a different
+vulnerability than CVE-2005-0448, CVE-2004-0452, and CVE-2008-2827.
+NOTE: this is a regression error related to CVE-2005-0448.  It is
+different from CVE-2008-5302 due to affected versions.
+
+
