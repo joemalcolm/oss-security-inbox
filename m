@@ -1,25 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/04/2
-Message-ID: <1200932270.2743761244138889553.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 4 Jun 2009 14:08:09 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: coley@...re.org
-Subject: CVE Request (gstreamer-plugins-good)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/01/5
+Message-ID: <Pine.GSO.4.51.0812010958470.843@faron.mitre.org>
+Date: Mon, 1 Dec 2008 09:59:38 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+Subject: Re:  CVE id request: chm2pdf insecure temporary files usage
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
 
-Can you give this a CVE id:
-http://secunia.com/advisories/35205/
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=531631
+The symlink attack and the static directory names were given separate CVE
+IDs, although arguably they both fall under "incomplete control of
+temporary files."
 
-The upstream patch can be found in our bug:
-https://bugzilla.redhat.com/show_bug.cgi?id=504199
+- Steve
 
-The link to the patch from Secunia doesn't seem to be working.
+======================================================
+Name: CVE-2008-5298
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5298
+Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=501959
 
-Thanks.
+chm2pdf 0.9 uses temporary files in directories with fixed names,
+which allows local users to cause a denial of service (chm2pdf
+failure) of other users by creating those directories ahead of time.
 
--- 
-    JB
+
+======================================================
+Name: CVE-2008-5299
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5299
+Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=501959
+
+chm2pdf 0.9 allows user-assisted local users to delete arbitrary files
+via a symlink attack on .chm files in the (1) /tmp/chm2pdf/work or (2)
+/tmp/chm2pdf/orig temporary directories.
+
+
