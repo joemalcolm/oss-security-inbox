@@ -1,52 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/22/2
-Message-ID: <Pine.GSO.4.51.0810221256580.25959@faron.mitre.org>
-Date: Wed, 22 Oct 2008 12:57:04 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/01/3
+Message-ID: <Pine.GSO.4.51.0812010925310.843@faron.mitre.org>
+Date: Mon, 1 Dec 2008 09:25:36 -0500 (EST)
 From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: vlc
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re:  (sort of urgent) CVE Request -- cups (repost)
 Content-Type: text/plain; charset=utf-8
 
 
-======================================================
-Name: CVE-2008-4654
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4654
-Reference: BUGTRAQ:20081020 [TKADV2008-010] VLC media player TiVo ty Processing Stack Overflow Vulnerability
-Reference: URL:http://www.securityfocus.com/archive/1/archive/1/497587/100/0/threaded
-Reference: MLIST:[oss-security] 20081019 CVE id request: vlc
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/10/19/2
-Reference: MISC:http://www.trapkit.de/advisories/TKADV2008-010.txt
-Reference: CONFIRM:http://git.videolan.org/?p=vlc.git;a=commit;h=fde9e1cc1fe1ec9635169fa071e42b3aa6436033
-Reference: CONFIRM:http://git.videolan.org/?p=vlc.git;a=commitdiff;h=26d92b87bba99b5ea2e17b7eaa39c462d65e9133
-Reference: CONFIRM:http://www.videolan.org/security/sa0809.html
-Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=502726
-Reference: BID:31813
-Reference: URL:http://www.securityfocus.com/bid/31813
-Reference: FRSIRT:ADV-2008-2856
-Reference: URL:http://www.frsirt.com/english/advisories/2008/2856
-Reference: SECUNIA:32339
-Reference: URL:http://secunia.com/advisories/32339
-Reference: XF:vlcmediaplayer-ty-bo(45960)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/45960
-
-Stack-based buffer overflow in the parse_master function in the Ty
-demux plugin (modules/demux/ty.c) in VLC Media Player 0.9.0 through
-0.9.4 allows remote attackers to execute arbitrary code via a TiVo TY
-media file with a header containing a crafted size value.
-
 
 ======================================================
-Name: CVE-2008-4686
+Name: CVE-2008-5286
 Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4686
-Reference: MLIST:[oss-security] 20081019 CVE id request: vlc
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/10/19/2
-Reference: CONFIRM:http://git.videolan.org/?p=vlc.git;a=commitdiff;h=d859e6b9537af2d7326276f70de25a840f554dc3
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5286
+Reference: CONFIRM:http://svn.easysw.com/public/cups/trunk/CHANGES-1.3.txt
+Reference: CONFIRM:http://www.cups.org/str.php?L2974
+Reference: MLIST:[oss-security] 20081201 (sort of urgent) CVE Request -- cups (repost)
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/12/01/1
+Reference: BID:32518
+Reference: URL:http://www.securityfocus.com/bid/32518
 
-Multiple integer overflows in ty.c in the TY demux plugin (aka the
-TiVo demuxer) in VideoLAN VLC media player, probably 0.9.4, allow
-remote attackers to have an unknown impact via a crafted .ty file, a
-different vulnerability than CVE-2008-4654.
+Integer overflow in the _cupsImageReadPNG function in CUPS 1.1.17
+through 1.3.9 allows remote attackers to execute arbitrary code via a
+PNG image with a large height value, which bypasses a validation check
+and triggers a buffer overflow.
 
 
