@@ -1,15 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/07/2
-Message-ID: <20081007160639.GB3486@galadriel.inutil.org>
-Date: Tue, 7 Oct 2008 18:06:39 +0200
-From: Moritz Muehlenhoff <jmm@...til.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/01/6
+Message-ID: <Pine.GSO.4.51.0812011104540.843@faron.mitre.org>
+Date: Mon, 1 Dec 2008 11:05:01 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Mozilla CVE duplicate
+Subject: Re: CVE request: kernel: fix soft lockups/OOM issues with unix garbage collector
 Content-Type: text/plain; charset=utf-8
 
-CVE-2008-4067 is a duplicate of CVE-2007-3073, both reference
-https://bugzilla.mozilla.org/show_bug.cgi?id=380994 and the
-reporter is identical.
 
-Cheers,
-        Moritz
+======================================================
+Name: CVE-2008-5300
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5300
+Reference: MLIST:[linux-netdev] 20081120 soft lockups/OOM after unix socket fixes
+Reference: URL:http://marc.info/?l=linux-netdev&m=122721862313564&w=2
+Reference: MLIST:[linux-netdev] 20081125 [PATCH] Fix soft lockups/OOM issues w/ unix garbage collector
+Reference: URL:http://marc.info/?l=linux-netdev&m=122765505415944&w=2
+Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=470201
+
+Linux kernel 2.6.28 allows local users to cause a denial of service
+("soft lockup" and process loss) via a large number of sendmsg
+function calls, which does not block during AF_UNIX garbage collection
+and triggers an OOM condition, a different vulnerability than
+CVE-2008-5029.
+
+
