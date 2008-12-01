@@ -1,22 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/19/7
-Message-ID: <20080219144835.GI20336@openwall.com>
-Date: Tue, 19 Feb 2008 17:48:35 +0300
-From: "(GalaxyMaster)" <galaxy@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: wiki - e-mail address obfuscation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/01/2
+Message-Id: <200812011329.45464.hanno@hboeck.de>
+Date: Mon, 1 Dec 2008 13:29:45 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: tikiwiki < 2.2
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Feb 19, 2008 at 05:30:22PM +0300, Solar Designer wrote:
+http://info.tikiwiki.org/tiki-read_article.php?articleId=41
 
-> Dmitry (Galaxy) - will you be able to take care of discussing this with
-> upstream - and maybe developing, contributing, and applying a patch (to
-> our install)?  Any other volunteers?
+"
+Updating to version 2.2 is highly recommended. In addition to several minor 
+fixes and enhancements, the update provides two undisclosed security fixes.
 
-Got it.  I'll try to address both things ASAP and will contact Andreas
-(he is the author of DokuWiki and he is quite open, I had submitted
-several things most of them were accepted).
+Special thanks to Emanuele Gentili for reporting one of the security issues.
+"
+
+Further information is not easy to get, the changelog lists a vast number of 
+[sec]-marked fixes, though it's not easy to see if they are "just" 
+improvements to prevent potential issues or real security issues.
 
 -- 
-(GM)
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
+http://waldbesetzung.blogsport.de/ Waldbesetzung gegen Flughafenausbau 
+Frankfurt, 28. - 30.11.
+http://www.jukss.de/ Jugemdumweltkongress, 27.12.-4.1.
+
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
