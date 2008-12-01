@@ -1,33 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/14/3
-Message-ID: <Pine.GSO.4.51.0810141448170.1682@faron.mitre.org>
-Date: Tue, 14 Oct 2008 14:48:20 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/01/4
+Message-ID: <Pine.GSO.4.51.0812010952420.843@faron.mitre.org>
+Date: Mon, 1 Dec 2008 09:52:46 -0500 (EST)
 From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: Re: CVE request: strongswam denial-of-service
+Subject: Re:  CVE request: no-ip DUC buffer overflow
 Content-Type: text/plain; charset=utf-8
 
 
 ======================================================
-Name: CVE-2008-4551
+Name: CVE-2008-5297
 Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4551
-Reference: MISC:http://labs.mudynamics.com/advisories/MU-200809-01.txt
-Reference: CONFIRM:http://download.strongswan.org/CHANGES4.txt
-Reference: BID:31291
-Reference: URL:http://www.securityfocus.com/bid/31291
-Reference: FRSIRT:ADV-2008-2660
-Reference: URL:http://www.frsirt.com/english/advisories/2008/2660
-Reference: SECTRACK:1020903
-Reference: URL:http://www.securitytracker.com/id?1020903
-Reference: SECUNIA:31963
-Reference: URL:http://secunia.com/advisories/31963
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5297
+Reference: MILW0RM:7151
+Reference: URL:http://www.milw0rm.com/exploits/7151
+Reference: MISC:http://xenomuta.tuxfamily.org/exploits/noIPwn3r.c
+Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=506179
+Reference: CONFIRM:http://git.debian.org/?p=collab-maint/no-ip.git;a=commit;h=60ed93621ff36d9731ba5d9f9336d6eb91122302
+Reference: MLIST:[oss-security] 20081120 CVE request: no-ip DUC buffer overflow
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/21/15
 
-strongSwan 4.2.6 and earlier allows remote attackers to cause a denial
-of service (daemon crash) via an IKE_SA_INIT message with a large
-number of NULL values in a Key Exchange payload, which triggers a NULL
-pointer dereference for the return value of the mpz_export function in
-the GNU Multiprecision Library (GMP).
+Buffer overflow in No-IP DUC 2.1.7 and earlier allows remote DNS
+servers to execute arbitrary code via a crafted DNS response, related
+to a missing length check in the GetNextLine function.
 
 
