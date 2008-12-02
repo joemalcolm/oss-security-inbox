@@ -1,28 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/28/1
-Message-ID: <20080428103553.GF5671@ngolde.de>
-Date: Mon, 28 Apr 2008 12:35:53 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/02/2
+Message-ID: <ncFa51czU1IMphI7W3tlfqWNjUM@Um7h9ZFcZ87Dgn/yxoqRH8ltMKU>
+Date: Tue, 2 Dec 2008 13:51:21 +0300
+From: Eygene Ryabinkin <rea-sec@...elabs.ru>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: insecure X11 handling in ltsp
+Cc: jlieskov@...hat.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request - cups, dovecot-managesieve, perl, wireshark
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
-* Steven M. Christey <coley@...us.mitre.org> [2008-03-12 21:57]:
-> On Tue, 11 Mar 2008, Nico Golde wrote:
-> > Due to passing the -ac option to the X server in ltsp it is possible for
-> > any attacker knowing the victims ip address and the display number to
-> > read keystrokes on the client and display client windows.
-> 
-> CVE will be filled in later.
-> 
-> Use CVE-2008-1293
+Steven, *, good day.
 
-This item is still on status RESERVED, is that on purpose?
-Kind regards
-Nico
+Mon, Dec 01, 2008 at 11:36:45AM -0500, Steven M. Christey wrote:
+> Regarding the Perl issues: as seen in this list and elsewhere, there seems
+> to be a ton of confusion about which CVE's were originally fixed (or not),
+> and which CVE's have since reappeared (or not), and which versions of Perl
+> and File::Path are or are not affected, plus Eygene's commentary on other
+> race conditions.
+
+It seems to me that the original issue for the 'setuid' stuff was
+not completely fixed in Perl 5.8.4: it misses the stanza 'if
+$force_writable' at the second chmod (this is from virgin perl-5.8.5):
+-----
+            chmod 0777, $root
+              or carp "Can't make directory $root writeable: $!"
+                if $force_writeable;
+            print "rmdir $root\n" if $verbose;
+            if (rmdir $root) {
+                ++$count;
+            }
+            else {
+                carp "Can't remove directory $root: $!";
+                chmod($rp, ($Is_VMS ? VMS::Filespec::fileify($root) : $root))
+                    or carp("and can't restore permissions to "
+                            . sprintf("0%o",$rp) . "\n");
+            }
+-----
+This is in line with the Niko Tyni's patch:
+  http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=36;filename=sid_fix_file_path;att=2;bug=286922
+
+So perl >= 5.8 <= 5.8.8 seems to be affected too.
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+Eygene
