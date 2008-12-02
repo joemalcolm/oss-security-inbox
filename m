@@ -1,45 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/10/13
-Message-ID: <20081110201047.GN4347@ngolde.de>
-Date: Mon, 10 Nov 2008 21:10:47 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com, coley@...re.org, rem@...eolan.org
-Subject: Re: CVE id request: vlc
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/03/1
+Message-ID: <20081202154345.42e114ec@redhat.com>
+Date: Tue, 2 Dec 2008 15:43:45 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: Michael Sweet <mike@...ysw.com>
+Cc: Eygene Ryabinkin <rea-sec@...elabs.ru>, oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...re.org>
+Subject: Re: CVE request: cups - potential integer overflow in PNG image reader [was: CUPS DoS via RSS subscriptions]
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Steven M. Christey <coley@...us.mitre.org> [2008-11-10 19:09]:
-> ======================================================
-> Name: CVE-2008-5032
-> Status: Candidate
-> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5032
-> Reference: MLIST:[oss-security] 20081105 CVE id request: vlc
-> Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/05/5
-> Reference: MLIST:[oss-security] 20081105 VideoLAN security advisory 0810
-> Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/05/4
-> Reference: MISC:http://www.trapkit.de/advisories/TKADV2008-011.txt
-> Reference: MISC:http://www.trapkit.de/advisories/TKADV2008-012.txt
-> Reference: CONFIRM:http://git.videolan.org/?p=vlc.git;a=commitdiff;h=5f63f1562d43f32331006c2c1a61742de031b84d
-> Reference: CONFIRM:http://git.videolan.org/?p=vlc.git;a=commitdiff;h=e3cef651125701a2e33a8d75b815b3e39681a447
-> Reference: CONFIRM:http://www.videolan.org/security/sa0810.html
+On Wed, 26 Nov 2008 14:20:11 -0800 Michael Sweet <mike@...ysw.com>
+wrote:
+
+> >> The range of values allowed for xsize is smaller than ysize.
+> > 
+> > OK, thanks for the clarification!  But then the first hunk is just
+> > a no-op, or I am still missing something?  And I am just curious:
+> > will it be legitimate to rewrite the second check as
+> >   (bufsize / img->xsize) / 3 != img->ysize
+> > or it is still unsafe due to the possible compiler optimizations?
 > 
-> Multiple stack-based buffer overflows in VideoLAN VLC media player
-> 0.5.0 through 0.9.5 allow user-assisted attackers to execute arbitrary
-> code via (1) the header of an invalid CUE image file, related to
-> modules/access/vcd/cdrom.c; or (2) an invalid RealText (rt) subtitle
-> file, related to the ParseRealText function in
-> modules/demux/subtitle.c.
+> That should be just fine, although I'd still use an extra set
+> of parenthesis to ensure the intended order of operations.
 
-Could you split that up into two CVE ids? I ask because the 
-realtext issue doesn't affect versions < 0.9.x which is the 
-case for the version we have in Debian so I can not use a 
-fixed version + not-affected for one CVE id in our security 
-tracker.
+Btw, this issue should not affect any system with recent libpng (in
+this case, recent seems to be at least 1.2.6rc1 from Aug 2004), as that
+versions adds (quoting CHANGES file):
 
-Kind regards
-Nico
+  Imposed default one million column, one-million row limits on the image 
+    dimensions, and added png_set_user_limits() function to override them.
+
+So if you have recent libpng with those limits unchanged and image with
+width or height over 1 million (still quite far from what you need for
+integer overflow when multiplied by 3), you will get:
+
+  libpng error: image size exceeds user limits in IHDR
+
+and libpng calls abort().  That happens before the problematic check
+is reached (_cupsImageReadPNG() in cups/filter/image-png.c calls
+png_read_info() in libpng/pngread.c and later png_handle_IHDR() and
+png_set_IHDR() get called).
+
+HTH
+
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+Tomas Hoger / Red Hat Security Response Team
