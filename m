@@ -1,20 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/17/6
-Message-ID: <Pine.GSO.4.51.0812162058390.5724@faron.mitre.org>
-Date: Tue, 16 Dec 2008 21:00:15 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/02/1
+Message-ID: <49348C3E.4020003@redhat.com>
+Date: Tue, 02 Dec 2008 09:15:42 +0800
+From: Eugene Teo <eteo@...hat.com>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: watchdog: ib700wdt.c - buffer_underflow bug
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: Unix sockets kernel panic
 Content-Type: text/plain; charset=utf-8
 
+dann frazier wrote:
+> On Tue, Nov 11, 2008 at 05:41:44PM +0800, Eugene Teo wrote:
+>> Eugene Teo wrote:
+>>> We need a CVE name for this issue. This was reported in netdev today.
+>>>
+>>> "The following code causes a kernel panic on Linux 2.6.26:
+>>> http://darkircop.org/unix.c
+>>>
+>>> I haven't investigated the bug so I'm not sure what is causing it, and
+>>> don't know if it's exploitable.  The code passes unix sockets from one
+>>> process to another using unix sockets.  The bug probably has to do
+>>> with closing file descriptors."
+>>>
+>>> http://marc.info/?l=linux-netdev&m=122593044330973&w=2
+>>> https://bugzilla.redhat.com/show_bug.cgi?id=470201
+>>>
+>>> There isn't a fix yet. Dave is working on it.
+>> There's a fix now.
+>>
+>> Upstream commits: f8d570a, 3b53fbf, and 6209344.
+>>
+>> https://bugzilla.redhat.com/show_bug.cgi?id=470201#c10
+>> https://bugzilla.redhat.com/show_bug.cgi?id=470201#c14
+>> https://bugzilla.redhat.com/show_bug.cgi?id=470201#c9
+>> https://bugzilla.redhat.com/show_bug.cgi?id=470201#c13
+> 
+> Thanks for following up.
+> 
+> fyi, our testing of this fix has uncovered additional issues.
+> Local/unprivileged users can cause soft lockups and take out system
+> processes by triggering the OOM killer:
+>   http://marc.info/?l=linux-netdev&m=122721862313564&w=2
 
-On Wed, 10 Dec 2008, Eugene Teo wrote:
+This additional bug is assigned with CVE-2008-5300.
 
-> Steve, here's another one that needs a CVE name. Thanks!
->
-> http://bugzilla.kernel.org/show_bug.cgi?id=11399
-
-Similar to the other issue, is this IOCTL reachable by anyone malicious?
-
-- Steve
+Thanks, Eugene
