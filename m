@@ -1,24 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/13/5
-Message-ID: <Pine.GSO.4.51.0808122032180.26550@faron.mitre.org>
-Date: Tue, 12 Aug 2008 20:32:26 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/03/9
+Message-ID: <20081203193613.GG21497@ngolde.de>
+Date: Wed, 3 Dec 2008 20:36:13 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: Re: CVE Request (ipsec-tools)
+Cc: redpig@...rt.org, coley@...re.org
+Subject: Re: xine-lib and ocert-2008-008
 Content-Type: text/plain; charset=utf-8
 
+Hi,
+* Steven M. Christey <coley@...us.mitre.org> [2008-11-26 09:27]:
+[...] 
+> Name: CVE-2008-5244
+> Status: Candidate
+> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5244
+> Reference: CONFIRM:http://sourceforge.net/project/shownotes.php?release_id=619869
+> Reference: SECTRACK:1020703
+> Reference: URL:http://securitytracker.com/id?1020703
+> 
+> Unspecified vulnerability in xine-lib before 1.1.15 has unknown impact
+> and attack vectors related to libfaad.  NOTE: due to the lack of
+> details, it is not clear whether this is an issue in xine-lib or in
+> libfaad.
 
-======================================================
-Name: CVE-2008-3651
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3651
-Reference: MLIST:[ipsec-tools-devel] 20080724 Ipsec-tools 0.7.1 released
-Reference: URL:http://marc.info/?l=ipsec-tools-devel&m=121688914101709&w=2
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=456660
+Checked back with upstream, this is:
+http://hg.debian.org/hg/xine-lib/xine-lib?cmd=changeset;node=18c0264660b9;style=gitweb
 
-Memory leak in racoon/proposal.c in the racoon daemon in ipsec-tools
-before 0.7.1 allows remote authenticated users to cause a denial of
-service (memory consumption) via invalid proposals.
+So no xine issue, but a libfaad one.
+Referring to upstream this is a fix for 
+http://caca.zoy.org/attachment/wiki/zzuf/bugs/lol-vlc.aac 
+which originally was CVE-2008-4610. I have no idea nor the 
+time to check the whole patch for the fix for that but I can 
+confirm that it is fixed in 2.6.1, no crash here.
 
+I contacted upstream to get more information.
 
+Steve, could you update this CVE id?
+
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
