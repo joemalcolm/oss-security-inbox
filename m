@@ -1,25 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/24/3
-Message-ID: <Pine.GSO.4.51.0809232241350.14140@faron.mitre.org>
-Date: Tue, 23 Sep 2008 22:41:43 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/03/3
+Message-ID: <Pine.GSO.4.51.0812031153290.15404@faron.mitre.org>
+Date: Wed, 3 Dec 2008 11:54:18 -0500 (EST)
 From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: pdnsd <1.2.7 Denial of Service
+cc: coley@...us.mitre.org
+Subject: Re: CVE request: clamav 0.94.2
 Content-Type: text/plain; charset=utf-8
 
 
-======================================================
-Name: CVE-2008-4194
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4194
-Reference: CONFIRM:http://www.phys.uu.nl/~rombouts/pdnsd.html
-Reference: CONFIRM:http://www.phys.uu.nl/~rombouts/pdnsd/ChangeLog
-Reference: FRSIRT:ADV-2008-2582
-Reference: URL:http://www.frsirt.com/english/advisories/2008/2582
+Note that we try to avoid the term "stack overflow" since it's often used
+for buffer overflows.
 
-The p_exec_query function in src/dns_query.c in pdnsd before 1.2.7-par
-allows remote attackers to cause a denial of service (daemon crash)
-via a long DNS reply with many entries in the answer section, related
-to a "dangling pointer bug."
+- Steve
+
+======================================================
+Name: CVE-2008-5314
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5314
+Reference: MLIST:[clamav-announce] 20081126 announcing ClamAV 0.94.2
+Reference: URL:http://lurker.clamav.net/message/20081126.150241.55b1e092.en.html
+Reference: MLIST:[oss-security] 20081201 CVE request: clamav 0.94.2
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/12/01/8
+Reference: CONFIRM:https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1266
+
+Stack consumption vulnerability in libclamav/special.c in ClamAV
+before 0.94.2 allows remote attackers to cause a denial of service
+(daemon crash) via a crafted JPEG file, related to the
+cli_check_jpeg_exploit, jpeg_check_photoshop, and
+jpeg_check_photoshop_8bim functions.
 
 
