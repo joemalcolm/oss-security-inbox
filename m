@@ -1,51 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/24/2
-Message-ID: <20080224222600.GA22001@openwall.com>
-Date: Mon, 25 Feb 2008 01:26:00 +0300
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: charter - advisories
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/03/2
+Message-ID: <Pine.GSO.4.51.0812031152550.15404@faron.mitre.org>
+Date: Wed, 3 Dec 2008 11:52:59 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: OSS Security <oss-security@...ts.openwall.com>
+cc: coley@...re.org
+Subject: Re: CVE request: lcms (old issues)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Feb 20, 2008 at 12:26:21PM -0700, Vincent Danen wrote:
-> Hmmm... maybe we should clarify the advisories we don't want to see.  I
-> guess advisories from, say, iDefense, would be valuable.  But advisories
-> from Mandriva or SUSE not so much.
-> 
-> Maybe we should indicate no *vendor* advisories,
 
-I think this is pretty much what we did already.  From the charter:
+======================================================
+Name: CVE-2008-5316
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5316
+Reference: MLIST:[oss-security] 20081128 CVE request: lcms (old issues)
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/28/3
+Reference: CONFIRM:http://lcms.cvs.sourceforge.net/viewvc/lcms/lcms/src/cmsio1.c?r1=1.33&r2=1.34
 
-Security advisories aimed at end-users only are not welcome (e.g., those
-from a distribution vendor announcing new pre-built packages).  There has
-to be desirable information for others in the Open Source community
-(e.g., an upstream maintainer may announce a new version of their
-software with security fixes to be picked up by distributors).
+Buffer overflow in the ReadEmbeddedTextTag function in src/cmsio1.c in
+Little cms color engine (aka lcms) before 1.16 allows attackers to
+have an unknown impact via vectors related to a length parameter
+inconsistency involving the contents of "the input file," a different
+vulnerability than CVE-2007-2741.
 
-If you can word this better, please go ahead and edit it on the wiki.
 
-> and make a second list specifically for that?
+======================================================
+Name: CVE-2008-5317
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5317
+Reference: MLIST:[oss-security] 20081128 CVE request: lcms (old issues)
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/28/3
+Reference: CONFIRM:http://lcms.cvs.sourceforge.net/viewvc/lcms/lcms/src/cmsgamma.c?view=diff&r1=1.16&r2=1.17
 
-I'd be happy to make such a list if there's demand - is there?  Let me
-address this question to those vendors (represented in here) who
-currently copy their advisories to Bugtraq - will you start sending them
-to this new special-purpose list?  If so, will you discontinue sending
-them to Bugtraq, suggesting that whoever wants to receive all-vendor
-advisories should subscribe the new special-purpose list?  I think this
-could help us reclaim Bugtraq as a general security discussion list.
+Integer signedness error in the cmsAllocGamma function in
+src/cmsgamma.c in Little cms color engine (aka lcms) before 1.17
+allows attackers to have an unknown impact via a file containing a
+certain "number of entries" value, which is interpreted improperly,
+leading to an allocation of insufficient memory.
 
-Note that Bugtraq will remain quite different from oss-security even if
-reclaimed as a discussion list.  oss-security is for people involved
-with OSS projects (although others are welcome to listen to our
-conversations) and for detailed discussions of source code patches, etc.
-when that is needed.  Bugtraq is for everyone, including end-users and
-closed-source folks - and it is large-scale, meaning that discussions of
-individual issues should not run for too long and get into minor detail.
 
-Also, a question to those vendors (represented in here) who don't copy
-their advisories to Bugtraq currently (too shy or polite) - will you
-start sending them to this new special-purpose list?
-
-Thanks,
-
-Alexander
