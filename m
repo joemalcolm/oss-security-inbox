@@ -1,30 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/26/5
-Message-ID: <20080226195006.GA30763@ngolde.de>
-Date: Tue, 26 Feb 2008 20:50:07 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/03/6
+Message-ID: <Pine.GSO.4.51.0812031248200.15404@faron.mitre.org>
+Date: Wed, 3 Dec 2008 12:48:24 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: vlc
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: tikiwiki < 2.2
 Content-Type: text/plain; charset=utf-8
 
-Hi Steven,
-* Steven M. Christey <coley@...us.mitre.org> [2008-02-26 20:02]:
-> The tone of the VLC advisory suggests it's not ready for public release,
-> but given the public nature of this list, I'm filling in the CVE
-> description anyway.
 
-Do you think it's not ready for public usage because of:
-"Pending
-VLC 0.8.6e bugfix release
-Public disclosure"?
+======================================================
+Name: CVE-2008-5318
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5318
+Reference: CONFIRM:http://info.tikiwiki.org/tiki-read_article.php?articleId=41
+Reference: CONFIRM:http://tikiwiki.svn.sourceforge.net/viewvc/tikiwiki/branches/2.0/changelog.txt?view=markup
+Reference: OSVDB:50058
+Reference: URL:http://www.osvdb.org/50058
+Reference: SECUNIA:32341
+Reference: URL:http://secunia.com/advisories/32341
 
-This came through our BTS so it seems to be public enough :)
-Thanks for the id!
+Unspecified vulnerability in Tikiwiki before 2.2 has unknown impact
+and attack vectors related to "size of user-provided input," a
+different issue than CVE-2008-3653.
 
-Cheers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
 
-Content of type "application/pgp-signature" skipped
+======================================================
+Name: CVE-2008-5319
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5319
+Reference: CONFIRM:http://info.tikiwiki.org/tiki-read_article.php?articleId=41
+Reference: CONFIRM:http://tikiwiki.svn.sourceforge.net/viewvc/tikiwiki/branches/2.0/changelog.txt?view=markup
+Reference: OSVDB:50058
+Reference: URL:http://www.osvdb.org/50058
+Reference: SECUNIA:32341
+Reference: URL:http://secunia.com/advisories/32341
+
+Unspecified vulnerability in Tikiwiki before 2.2 has unknown impact
+and attack vectors related to tiki-error.php, a different issue than
+CVE-2008-3653.
+
+
