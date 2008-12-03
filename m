@@ -1,35 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/06/6
-Message-ID: <20081006153943.GD24948@ngolde.de>
-Date: Mon, 6 Oct 2008 17:39:43 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/03/4
+Message-ID: <Pine.GSO.4.51.0812031154450.15404@faron.mitre.org>
+Date: Wed, 3 Dec 2008 11:56:00 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: data-destroiny malfunction: is that a "security" issue
+Subject: Re:  CVE id request/update: mailscanner: many scripts allow local users to overwrite arbitrary files via symlink attacks
 Content-Type: text/plain; charset=utf-8
 
-Hi Hanno,
-* Hanno Böck <hanno@...eck.de> [2008-10-06 17:23]:
-> Today some question arised in my mind.
-> 
-> Preface: I found a bug in obexftp. It has some option -G, which will download 
-> a file and afterwards delete it. The problem is, it'll do the second step 
-> even if the first failed. So if you have some connection problem on step 1, 
-> your file will be gone.
-> 
-> In my case, as it's the internal memory of a mobile phone, it's probably 
-> pretty much impossible to restore without some professional data rescue lab.
-> 
-> 
-> Now, my question: Is this a security issue? Does it deserve a CVE?
-[...] 
-As this is nothing that can be triggered by an attacker I 
-think it's rather a normal application bug or if not a bug 
-behaviour that should be documented.
 
-Cheers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+Different CVE's because different versions were reported affected.
 
-Content of type "application/pgp-signature" skipped
+======================================================
+Name: CVE-2008-5312
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5312
+Reference: MLIST:[oss-security] 20081128 CVE id request/update: mailscanner: many scripts allow local users to overwrite arbitrary files via symlink attacks
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/29/1
+Reference: MISC:http://bugs.debian.org/506353
+
+mailscanner 4.55.10 might allow local users to overwrite arbitrary
+files via a symlink attack on certain temporary files used by the (1)
+f-prot-autoupdate, (2) clamav-autoupdate, (3) panda-autoupdate.new,
+(4) trend-autoupdate.new, and (5) rav-autoupdate.new scripts in
+/etc/MailScanner/autoupdate/, a different vulnerability than
+CVE-2008-5140.
+
+
+======================================================
+Name: CVE-2008-5313
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5313
+Reference: MLIST:[oss-security] 20081128 CVE id request/update: mailscanner: many scripts allow local users to overwrite arbitrary files via symlink attacks
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/11/29/1
+Reference: MISC:http://bugs.debian.org/506353
+
+mailscanner 4.68.8 might allow local users to overwrite arbitrary
+files via a symlink attack on certain temporary files used by the (1)
+f-prot-autoupdate, (2) clamav-autoupdate, (3) avast-autoupdate, and
+(4) f-prot-6-autoupdate scripts in /etc/MailScanner/autoupdate/; the
+(5) bitdefender-wrapper, (6) kaspersky-wrapper, (7) clamav-wrapper,
+and (8) rav-wrapper scripts in /etc/MailScanner/wrapper/; the (9)
+Quarantine.pm, (10) TNEF.pm, (11) MessageBatch.pm, (12) WorkArea.pm,
+and (13) SA.pm scripts in /usr/share/MailScanner/MailScanner/; (14)
+/usr/sbin/MailScanner; and (15) scripts that load the
+/etc/MailScanner/mailscanner.conf.with.mcp configuration file.
+
+
