@@ -1,25 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/25/3
-Message-ID: <20080325131750.GF30264@ngolde.de>
-Date: Tue, 25 Mar 2008 14:17:50 +0100
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/03/8
+Message-ID: <20081203190307.GF21497@ngolde.de>
+Date: Wed, 3 Dec 2008 20:03:07 +0100
 From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Need CVEs for joomla, egroupware
+To: oss-security@...ts.openwall.com, coley@...re.org
+Cc: redpig@...rt.org
+Subject: Re: xine-lib and ocert-2008-008
 Content-Type: text/plain; charset=utf-8
 
-* Nico Golde <oss-security+ml@...lde.de> [2008-03-25 14:16]:
-> * Hanno Böck <hanno@...eck.de> [2008-03-25 14:03]:
-> > egroupware: www.egroupware.org states this:
-> > eGroupWare 1.4.003 Security- and bugfix-release
-> > * fixed security problem reported by lukasz.pilorz@...egro.pl
+Hi,
+* Steven M. Christey <coley@...us.mitre.org> [2008-11-26 09:27]:
+[...] 
+> ======================================================
+> Name: CVE-2008-5248
+> Status: Candidate
+> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5248
+> Reference: CONFIRM:http://sourceforge.net/project/shownotes.php?release_id=619869
 > 
-> Already requested CVE ids for this one.
+> xine-lib before 1.1.15 allows remote attackers to cause a denial of
+> service (crash) via "MP3 files with metadata consisting only of
+> separators."
 
-I have to add that I didn't post to this list because I 
-included the details for this vulnerability which seem to be 
-under embargo :/
-Kind regards
+http://hg.debian.org/hg/xine-lib/xine-lib?cmd=changeset;node=60ab5d2bdd82
+
+This is the corresponding upstream patch.
+139   i = len - 1;
+140
+141   while ((i >= 0) && ((unsigned char)str[i] <= 32)) {
+142     str[i] = 0;
+143     i--;
+144   }
+
+If len is size_t this is the problematic code if i len is 0 this will result in
+a 0 bytes written all over the memory because of integer promotion.
+
+Cheers
 Nico
+
 -- 
 Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
 For security reasons, all text in this mail is double-rot13 encrypted.
