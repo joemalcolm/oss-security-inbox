@@ -1,34 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/20/1
-Message-ID: <87y765bjug.fsf@mocca.josefsson.org>
-Date: Tue, 20 May 2008 07:55:19 +0200
-From: Simon Josefsson <simon@...efsson.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/03/7
+Message-ID: <20081203182818.GD21497@ngolde.de>
+Date: Wed, 3 Dec 2008 19:28:18 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE ID request: GNUTLS
+Cc: redpig@...rt.org, coley@...re.org
+Subject: Re: xine-lib and ocert-2008-008
 Content-Type: text/plain; charset=utf-8
 
-Jonathan Smith
-<smithj-TzNcu2uxYW0shl4onS21xdBPR1lH4CV8@...lic.gmane.org> writes:
+Hi,
+* Steven M. Christey <coley@...us.mitre.org> [2008-11-26 09:27]:
+> ======================================================
+> Name: CVE-2008-5235
+> Status: Candidate
+> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5235
+> Reference: CONFIRM:http://sourceforge.net/project/shownotes.php?release_id=619869
+> Reference: FRSIRT:ADV-2008-2382
+> Reference: URL:http://www.frsirt.com/english/advisories/2008/2382
+> Reference: SECTRACK:1020703
+> Reference: URL:http://securitytracker.com/id?1020703
+> Reference: SECUNIA:31502
+> Reference: URL:http://secunia.com/advisories/31502
+> 
+> Heap-based buffer overflow in the demux_real_send_chunk function in
+> src/demuxers/demux_real.c in xine-lib before 1.1.15 allows remote
+> attackers to execute arbitrary code via a crafted Real Media file.
+> NOTE: some of these details are obtained from third party information.
+> 
+> 
+> ======================================================
+> Name: CVE-2008-5236
+> Status: Candidate
+> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5236
+> Reference: BUGTRAQ:20080822 [oCERT-2008-008] multiple heap overflows in xine-lib
+> Reference: URL:http://www.securityfocus.com/archive/1/archive/1/495674/100/0/threaded
+> Reference: MISC:http://sourceforge.net/project/shownotes.php?release_id=619869
+> Reference: MISC:http://www.ocert.org/analysis/2008-008/analysis.txt
+> Reference: BID:30797
+> Reference: URL:http://www.securityfocus.com/bid/30797
+> Reference: FRSIRT:ADV-2008-2382
+> Reference: URL:http://www.frsirt.com/english/advisories/2008/2382
+> Reference: FRSIRT:ADV-2008-2427
+> Reference: URL:http://www.frsirt.com/english/advisories/2008/2427
+> Reference: SECUNIA:31502
+> Reference: URL:http://secunia.com/advisories/31502
+> Reference: SECUNIA:31567
+> Reference: URL:http://secunia.com/advisories/31567
+> 
+> Multiple heap-based buffer overflows in xine-lib 1.1.12, and other
+> 1.1.15 and earlier versions, allow remote attackers to execute
+> arbitrary code via vectors related to (1) a crafted EBML element
+> length processed by the parse_block_group function in
+> demux_matroska.c; (2) a certain combination of sps, w, and h values
+> processed by the real_parse_audio_specific_data and
+> demux_real_send_chunk functions in demux_real.c; and (3) an
+> unspecified combination of three values processed by the open_ra_file
+> function in demux_realaudio.c.  NOTE: vector 2 reportedly exists
+> because of an incomplete fix in 1.1.15.
 
-> Florian Weimer wrote:
-> | Several issues have been announced in GNUTLS-SA-2008-1:
->
-> Note that the fixed versions has changed. 2.2.4 didn't fix the issue, so
-> they pushed 2.2.5 today as well.
->
-> reference
-> http://permalink.gmane.org/gmane.comp.encryption.gpg.gnutls.devel/2812
+Please reject either CVE-2008-5235 or remove the part about 
+demux_real_send_chunk from CVE-2008-5236. I digged in the 
+code for quite some time now and also talked to upstream now 
+cause I couldn't see a difference. This is the same issue.
 
-Actually, v2.2.4 did fix the security issue.
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-However, the code to detect and print a debug message about the attack
-was buggy and was triggered for normal connections under some conditions
-(conditions which, alas, the self-tests did not exercise).
-
-Still, the 2.2.5 announcement is what you want to read to get the full
-picture.  Note that gmane garbles OpenPGP signed cleartext patches.  Try
-this link instead:
-
-http://lists.gnu.org/archive/html/gnutls-devel/2008-05/msg00060.html
-
-/Simon
+Content of type "application/pgp-signature" skipped
