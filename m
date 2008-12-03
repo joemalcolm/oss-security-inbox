@@ -1,44 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/02/6
-Message-ID: <1681f2df0806020729i649bc084ne73d463cf802f75d@mail.gmail.com>
-Date: Mon, 2 Jun 2008 10:29:24 -0400
-From: "Chris Rohlf" <chris.rohlf@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/03/5
+Message-ID: <Pine.GSO.4.51.0812031225441.15404@faron.mitre.org>
+Date: Wed, 3 Dec 2008 12:26:19 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: code reviews (was: ARP handler Inspection tool released)
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: Unix sockets kernel panic
 Content-Type: text/plain; charset=utf-8
 
-I have not contributed to this list yet (just signed up) but I do like
-the idea of open source projects having a public place to request code
-reviews.
 
-Chris
+current writeup for CVE-2008-5300:
 
-On Mon, Jun 2, 2008 at 10:17 AM, Andrea Barisani <lcars@...rt.org> wrote:
-> On Mon, Jun 02, 2008 at 06:10:53PM +0400, Solar Designer wrote:
->>
->> In case we do, I would not mind having such community code reviews occur
->> on this list.  I think they would be on-topic.  In fact, Sebastian
->> Krahmer even created a section on the wiki for the code reviews - but
->> neither he nor anyone else contributed to it.  Sebastian?  Anyone else?
->> Please defend yourselves. ;-)
->>
->
-> I personally think that open code reviews are a very good idea, and it's
-> something OSS projects would greatly benefit from.
->
-> That's why oCERT was also started for helping in security audits and code
-> review requests (we are already doing some). But if requestor doesn't mind a
-> public scrutiny oss-security sure feels like the good place for it.
->
-> So I wouldn't mind and I'd actually see this as a benefit for this list.
->
-> Cheers
->
-> --
-> Andrea Barisani |                Founder & Project Coordinator
->          oCERT | Open Source Computer Emergency Response Team
->
-> <lcars@...rt.org>                         http://www.ocert.org
->  0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
->        "Pluralitas non est ponenda sine necessitate"
->
+======================================================
+Name: CVE-2008-5300
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5300
+Reference: MLIST:[linux-netdev] 20081120 soft lockups/OOM after unix socket fixes
+Reference: URL:http://marc.info/?l=linux-netdev&m=122721862313564&w=2
+Reference: MLIST:[linux-netdev] 20081125 [PATCH] Fix soft lockups/OOM issues w/ unix garbage collector
+Reference: URL:http://marc.info/?l=linux-netdev&m=122765505415944&w=2
+Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=470201
+
+Linux kernel 2.6.28 allows local users to cause a denial of service
+("soft lockup" and process loss) via a large number of sendmsg
+function calls, which does not block during AF_UNIX garbage collection
+and triggers an OOM condition, a different vulnerability than
+CVE-2008-5029.
+
+
