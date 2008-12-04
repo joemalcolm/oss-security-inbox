@@ -1,23 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/10/3
-Message-ID: <Pine.GSO.4.51.0804101428290.18291@faron.mitre.org>
-Date: Thu, 10 Apr 2008 14:28:33 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Josh Bressers <bressers@...hat.com>
-cc: oss-security@...ts.openwall.com, coley@...re.org
-Subject: Re: CVE Request (rsync)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/04/2
+Message-Id: <1228405150.3608.62.camel@dhcp-lab-164.englab.brq.redhat.com>
+Date: Thu, 04 Dec 2008 16:39:10 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: oss-security@...ts.openwall.com, security@...y-lang.org
+Subject: ruby CVE-2008-4310 (Red Hat specific)
 Content-Type: text/plain; charset=utf-8
 
+Hello guys,
 
-======================================================
-Name: CVE-2008-1720
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1720
-Reference: CONFIRM:http://rsync.samba.org/ftp/rsync/security/rsync-3.0.1-xattr-alloc.diff
-Reference: CONFIRM:http://samba.anu.edu.au/rsync/security.html#s3_0_2
+This is just a heads-up to avoid confusion, as we are releasing Ruby
+updates that address one Red Hat-specific problem that was assigned
+CVE id CVE-2008-4310.
 
-Buffer overflow in rsync 2.6.9 to 3.0.1, with extended attribute
-(xattr) support enabled, might allow remote attackers to execute
-arbitrary code via unknown vectors.
+In our security update to address CVE-2008-3656 [1] we have managed to
+use incorrect patch, that did not address the flaw as was stated in the
+advisory. Therefore, we are using CVE-2008-4310 as an identifier for
+this incomplete / incorrect fix.
 
+This issue is specific to the previously released Ruby updates for Red
+Hat Enteprise Linux 4 and 5.  This is unlikely to affect anyone else
+that does not ship this packages based on these.  No new flaw was
+discovered, if you've applied correct patch, you can safely ignore this
+CVE.
+
+[1] https://rhn.redhat.com/errata/RHSA-2008-0897.html
+
+
+Thanks, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
