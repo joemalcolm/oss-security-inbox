@@ -1,39 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/05/3
-Message-ID: <20080505171603.780816a7@redhat.com>
-Date: Mon, 5 May 2008 17:16:03 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com, coley@...re.org
-Subject: CVE id request - mysql
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/04/1
+Message-ID: <87wsegs6l1.fsf@mid.deneb.enyo.de>
+Date: Thu, 04 Dec 2008 09:11:22 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request (zaptel)
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+* Josh Bressers:
 
-MySQL 4.1.24, 5.0.60, 5.1.24, and 6.0.5 fixes an issue allowing an
-authenticated attacker to gain full access to tables that will be
-created by another database user in the future, if an attacker can
-predict name of such tables (and MyISAM storage engine is used).
+> I ran across this Debian bug:
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=507459
+>
+> The upstream report is here:
+> http://bugs.digium.com/view.php?id=13954
+>
+> As best as I can tell, it's for real.
 
-References:
-http://bugs.mysql.com/bug.php?id=32167
-http://dev.mysql.com/doc/refman/4.1/en/news-4-1-24.html
-http://dev.mysql.com/doc/refman/5.0/en/releasenotes-es-5-0-60.html
-http://dev.mysql.com/doc/refman/5.1/en/news-5-1-24.html
-http://dev.mysql.com/doc/refman/6.0/en/news-6-0-5.html
-
-Steve, please assign CVE id.  Thanks!
-
-
-Release notes also mention following change:
-Security Enhancement: It was possible to force an error message of
-excessive length which could lead to a buffer overflow. This has been
-made no longer possible as a security precaution. (Bug#32707)
-http://bugs.mysql.com/bug.php?id=32707
-
-According to the upstream, there is currently no know exploitation
-vector for this issue.  Error messages are controlled by the server and
-it is believed that crafted messages can only by provided by modifying
-system files / binaries, which does not cross trust boundary.
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+Yes, we plan to release an update, once we find someone who can
+actually test the fix. 8-/
