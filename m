@@ -1,33 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/21/17
-Message-ID: <Y2pIrweQ6eFmOgl6Pc1vZYDHUrg@PMWwoAx0nTsgMmiMyh98HjiW/Tk>
-Date: Fri, 21 Nov 2008 08:20:00 +0300
-From: Eygene Ryabinkin <rea-sec@...elabs.ru>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...re.org>, mike@...ysw.com
-Subject: Re: CVE request: CUPS DoS via RSS subscriptions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/05/1
+Message-ID: <1093412844.4365021228510339728.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 5 Dec 2008 15:52:19 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: coley@...re.org
+Subject: CVE Request (nagios)
 Content-Type: text/plain; charset=utf-8
 
-Steve, good day.
+Hi Steve,
 
-Thu, Nov 20, 2008 at 07:41:06PM -0500, Steven M. Christey wrote:
-> I treated this as two CVEs, one for the CSRF-simplifying attack, and a
-> separate one for the CUPS server crash (assuming that cupsd should not be
-> crashable by non-root authenticated users).
+I'm not seeing a CVE id for this.  It seems the Nagios 3.0.6 release fixes a flaw:
+http://www.nagios.org/development/history/nagios-3x.php
+http://bugs.gentoo.org/show_bug.cgi?id=249876
 
-Please note that as it was discuissed in thread started with
-  http://www.openwall.com/lists/oss-security/2008/11/19/4
-even 1.3.9 is crashable by non-root authenticated users by adding
-a big number of subscriptions (don't know about RSS ones, though
-subscription for mailing upon job completion does its job).  But
-I imagine that CVE-2008-5184 can't be used for 1.3.9, so remote
-attack is not feasible.
+Here is the patch:
+http://sourceforge.net/mailarchive/forum.php?thread_name=E1L6mat-0001sb-RN%40fdv4jf1.ch3.sourceforge.com&forum_name=nagios-checkins
 
-I expect that the fix will go into 1.3.10:
-  http://svn.easysw.com/public/cups/trunk/CHANGES-1.3.txt
+Thanks.
 
-Adding Michael Sweet to the CC, since he can shed a bit more light on
-this matter.  Perhaps CVE-2008-5183 should be extended or another CVE
-can be created.
 -- 
-Eygene
+    JB
