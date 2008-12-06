@@ -1,26 +1,94 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/06/2
-Message-Id: <200805061846.05895.rbu@gentoo.org>
-Date: Tue, 6 May 2008 18:46:05 +0200
-From: Robert Buchholz <rbu@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/06/1
+Message-ID: <28fa9c5e0812051816m4d33fecbp411ccd2ca0a73516@mail.gmail.com>
+Date: Sat, 6 Dec 2008 10:16:12 +0800
+From: "Eugene Teo" <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE Request (PHP)
+Subject: Fwd: CVE-2008-5079: multiple listen()s on same socket corrupts the vcc table
 Content-Type: text/plain; charset=utf-8
 
-On Friday 02 May 2008, Steven M. Christey wrote:
-> > * Properly address incomplete multibyte chars inside
-> > escapeshellcmd() identified by Stefan Esser.
->
-> Use CVE-2008-2051
+Take note of this bug. You can find out more at:
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2008-5079
 
-Stefan Esser released a detailed advisory on this issue:
-http://www.sektioneins.de/advisories/SE-2008-03.txt
+Thanks, Eugene
 
-Also, we could need a CVE for the "GENERATE_SEED() Weak Random Number 
-Seed Vulnerability": 
-http://www.sektioneins.de/advisories/SE-2008-02.txt
-
-Robert
+---------- Forwarded message ----------
+From: Hugo Dias <hdias@...chlabs.com>
+Date: Fri, Dec 5, 2008 at 10:06 AM
+Subject: CVE-2008-5079: multiple listen()s on same socket corrupts the vcc table
+To: bugtraq@...urityfocus.com, vuln@...unia.com, ssynchron@...il.com
 
 
-Download attachment "signature.asc " of type "application/pgp-signature" (190 bytes)
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+CVE-2008-5079: multiple listen()s on same socket corrupts the vcc table
+
+Release Date: 2008/12/05
+
+I. Impact
+
+Local Denial of Service on Linux kernel 2.6.x
+
+
+II. Description
+
+A vulnerabilty exists in Linux Kernel which can be exploited
+by malicious users to cause a Denial of Service.
+
+It seems that calling the svc_listen function in 'net/atm/svc.c'
+twice on same socket, will create unassigned PVC/SVC entries,
+despite returning EUNATCH.
+
+This entries are visible using proc filesystem.
+
+#cat /proc/net/atm/vc
+
+Address  Itf ...
+c7f34400 Unassigned   ...
+c7f34400 Unassigned   ...
+c7f34400 Unassigned   ...
+.......
+
+The code in 'net/atm/proc.c', responsible for displaying this info,
+can't handle the unassigned entries. Kernel will freeze with
+infinite loop in 'proc.c' if we cat '/proc/net/atm/pvc'  :
+
+
+net/atm/proc.c:
+
+074 static inline int compare_family(struct sock *sk, int family)
+073 {
+074         return !family || (sk->sk_family == family);
+075 }
+
+091 try_again:
+092         for (; sk; sk = sk_next(sk)) {
+093                 l -= compare_family(sk, family); <<<<<<<<<
+094                 if (l < 0)
+095                         goto out;
+096         }
+
+
+IV. Patch
+
+http://marc.info/?l=linux-netdev&m=122841256115780&w=2
+
+V. Credit
+
+Hugo Dias - hdias [at] synchlabs [dot] com
+
+
+VI. History
+
+2008/11/14 - Vulnerability Discovered
+2008/11/28 - Reported to vendor
+2008/12/05 - Vendor Released Patch
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.10-svn4870 (MingW32)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+
+iEYEARECAAYFAkk4jIoACgkQE8nuJSQgUf2IawCgm6bdEkoj5DCGJPIXOob60nSM
+lTwAnRtJCDPW4d4FE7F6KpzKw46EqO7d
+=9Qis
+-----END PGP SIGNATURE-----
