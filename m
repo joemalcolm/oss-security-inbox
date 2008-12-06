@@ -1,22 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/04/8
-Message-ID: <Pine.GSO.4.51.0808041311530.23930@faron.mitre.org>
-Date: Mon, 4 Aug 2008 13:12:31 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Thijs Kinkhorst <thijs@...ian.org>
-cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: source for CVE feed (was: Re: CVE request: httrack buffer overflow)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/06/2
+Message-ID: <87bpvpmx4c.fsf@mid.deneb.enyo.de>
+Date: Sat, 06 Dec 2008 11:11:31 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
+To: oss-security@...ts.openwall.com
+Cc: coley@...re.org
+Subject: CVE request: weak PRNG in GNU Classpath
 Content-Type: text/plain; charset=utf-8
 
+<http://gcc.gnu.org/bugzilla/show_bug.cgi?id=38417>
 
-On Mon, 4 Aug 2008, Thijs Kinkhorst wrote:
-
-> Good to know. Here at Debian we currently import all CVEs into our own system,
-> and we use http://cve.mitre.org/data/downloads/allitems.html.gz as the source
-> for that.
-
-In recent months, this has been updated once or twice a week, but it will
-become a daily process fairly soon (we have a new content team member
-who'll be helping with the site updates).
-
-- Steve
+The random number generator in the gnu.java.security.util.PRNG class
+of GNU Classpath version 0.97.2 and earlier produces only a limited
+number of distinct byte streams, which may lead to guessable
+cryptographic key material and similar vulnerabilities.
