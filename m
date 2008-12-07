@@ -1,34 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/17/7
-Message-ID: <Pine.GSO.4.51.0804171230040.3756@faron.mitre.org>
-Date: Thu, 17 Apr 2008 12:34:26 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/07/1
+Message-ID: <20081207100426.GA8598@galadriel.inutil.org>
+Date: Sun, 7 Dec 2008 11:04:26 +0100
+From: Moritz Muehlenhoff <jmm@...til.org>
 To: oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: Re: CVE request: firefox 2.0.14 ( Crash in JavaScript garbage collector)
+Subject: CVE requests: Typo3
 Content-Type: text/plain; charset=utf-8
 
+There seem to be no CVE IDs assigned for these two Typo3 issues:
 
-On Thu, 17 Apr 2008, Hanno [utf-8] Böck wrote:
+Cross-Site Scripting vulnerability in TYPO3 Core:
+http://typo3.org/teams/security/security-bulletins/typo3-20081113-1/
 
-> And again, are pure browser crashers considered security relevant?
+Cross-Site Scripting vulnerability in TYPO3 Core:
+http://typo3.org/teams/security/security-bulletins/typo3-20081113-2/
 
-CVE chooses to include them because:
-
-1) In some cases, the crash is evidence of a more serious issue - but we
-do not have the resources to perform a deep investigation every time, and
-often, there are insufficient details.
-
-2) While many users don't think it's important, some do.  Since a typical
-browser/client is carrying multiple sessions at once, an attacker can
-cause a loss of data or loss of connectivity to unrelated sessions.
-While perhaps minor, it is technically a security problem because an
-attacker should only be able to impact the attacker's own session.
-
-3) when even NULL pointer dereferences are sometimes exploitable, it seems
-safer to include them.
-
-CVE leaves it up to vendors to decide if a crasher is important enough for
-them to post an advisory.
-
-- Steve
+Cheers,
+        Moritz
