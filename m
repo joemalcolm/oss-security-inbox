@@ -1,33 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/03/12
-Message-ID: <Pine.GSO.4.51.0810031709450.9068@faron.mitre.org>
-Date: Fri, 3 Oct 2008 17:11:03 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/07/2
+Message-ID: <20081207100837.GB8598@galadriel.inutil.org>
+Date: Sun, 7 Dec 2008 11:08:38 +0100
+From: Moritz Muehlenhoff <jmm@...til.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel: x86: Fix broken LDT access in VMI
+Subject: CVE request: Quassel IRC client
 Content-Type: text/plain; charset=utf-8
 
+quassel IRC command injection:
 
-On Fri, 3 Oct 2008, Eugene Teo wrote:
+http://quassel-irc.org/node/89
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=506550
 
-> "[PATCH] x86: Fix broken LDT access in VMI
-
-
-
-======================================================
-Name: CVE-2008-4410
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4410
-Reference: MLIST:[oss-security] 20081003 CVE request: kernel: x86: Fix broken LDT access in VMI
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/10/03/3
-Reference: CONFIRM:http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.26.y.git;a=commit;h=de59985e3a623d4d5d6207f1777398ca0606ab1c
-
-The vmi_write_ldt_entry function in arch/x86/kernel/vmi_32.c in the
-Virtual Machine Interface (VMI) in the Linux kernel 2.6.26.5 invokes
-write_idt_entry where write_ldt_entry was intended, which allows local
-users to cause a denial of service (persistent application failure)
-via crafted function calls, related to the Java Runtime Environment
-(JRE) experiencing improper LDT selector state, a different
-vulnerability than CVE-2008-3247.
-
-
+Cheers,
+        Moritz
