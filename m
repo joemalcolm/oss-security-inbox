@@ -1,39 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/11/1
-Message-ID: <20080911110633.67b7a5e7@redhat.com>
-Date: Thu, 11 Sep 2008 11:06:33 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/08/7
+Message-Id: <1228738905.3834.35.camel@dhcp-lab-164.englab.brq.redhat.com>
+Date: Mon, 08 Dec 2008 13:21:45 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: Re: CVE Request (ruby -- DNS spoofing vulnerability in resolv.rb)
+Cc: coley@...re.org
+Subject: Re: CVE Request (nagios)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 4 Sep 2008 12:01:04 -0400 (EDT) "Steven M. Christey"
-<coley@...us.mitre.org> wrote:
+Hello Andreas, Eygene,
 
-> > The transaction IDs are assigned in sequential (n+1 order) and the
-> > source ports are always the same.
+  diffing your version (3.0.5p1) and the latest upstream one (3.0.6)
+returns the following (this commit was posted on 2008-11-30):
+
+diff
+-r /tmp/3.0.5p1/nagios-3.0.5p1/base/commands.c /tmp/nagios_latest/nagios-3.0.6/base/commands.c
+5,6c5,6
+<  * Copyright (c) 1999-2008 Ethan Galstad (nagios@...ios.org)
+<  * Last Modified:   10-15-2008
+---
+>  * Copyright (c) 1999-2008 Ethan Galstad (egalstad@...ios.org)
+>  * Last Modified:   11-30-2008
+1188a1189
+>               break;
+1191a1193
+>               break;
+2893a2896,2908
 > 
-> Use CVE-2008-3905, to be filled in soon.
+>       /* SECURITY PATCH - disable these for the time being */
+>       switch(cmd){
+>       case CMD_CHANGE_GLOBAL_HOST_EVENT_HANDLER:
+>       case CMD_CHANGE_GLOBAL_SVC_EVENT_HANDLER:
+>       case CMD_CHANGE_HOST_EVENT_HANDLER:
+>       case CMD_CHANGE_SVC_EVENT_HANDLER:
+>       case CMD_CHANGE_HOST_CHECK_COMMAND:
+>       case CMD_CHANGE_SVC_CHECK_COMMAND:
+>               return ERROR;
+>               }
 > 
-> We're treating this as a distinct issue because this is *REALLY* bad
-> randomness within a particular implementation, besides the inherent
-> limitation of DNS when source ports are fixed.
+> 
 
-Applying this rule, separate id should probably be used for PyDNS [1]
-[2] and adns [3] as well, at they both suffer from the similar flaws -
-use predictable transactions ids and source port.
+The relevant upstream commit is here:
+http://nagios.cvs.sourceforge.net/viewvc/nagios/nagios/base/commands.c?r1=1.109&r2=1.110&pathrev=MAIN
 
-PyDNS should be fixed as of upstream version 2.3.2 [4], adns issue is
-rather considered a design decision as documented in the INSTALL file
-[5].
+And other vulnerability reports:
+http://www.nagios.org/news/#88
+http://secunia.com/Advisories/32909/
 
-[1] http://pydns.sourceforge.net/
-[2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=490217
-[3] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=492698
-[4]
-http://packages.debian.org/changelogs/pool/main/p/python-dns/python-dns_2.3.3-1/changelog
-[5] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=492698#15
+Andreas, could you please confirm/disprove this patch was part of recent
+CVE-2008-{5027, 5028}? 
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+Seems it wasn't, but can be wrong.
+
+Thanks, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+
+
