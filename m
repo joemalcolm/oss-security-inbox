@@ -1,46 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/28/1
-Message-ID: <20080728091555.3feddbd4@redhat.com>
-Date: Mon, 28 Jul 2008 09:15:55 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/08/4
+Message-ID: <+J1zzTxVUjIB50y+OJzyVuTPlVw@kjaK+/sQ5DW5981v71UogZJPf/0>
+Date: Mon, 8 Dec 2008 14:43:04 +0300
+From: Eygene Ryabinkin <rea-sec@...elabs.ru>
 To: oss-security@...ts.openwall.com
-Cc: rbu@...too.org, Steffen Joeris <steffen.joeris@...lelinux.de>
-Subject: Re: cups patches for CVE-2008-0597 and CVE-2008-0596
+Cc: coley@...re.org
+Subject: Re: CVE Request (nagios)
 Content-Type: text/plain; charset=utf-8
 
-Hi Steffen!
+Andreas, good day.
 
-On Sun, 27 Jul 2008 21:03:54 +0200 Robert Buchholz <rbu@...too.org>
-wrote:
+Mon, Dec 08, 2008 at 10:37:41AM +0100, Andreas Ericsson wrote:
+> > I'm not seeing a CVE id for this.  It seems the Nagios 3.0.6 release fixes a flaw:
+> > http://www.nagios.org/development/history/nagios-3x.php
+> > http://bugs.gentoo.org/show_bug.cgi?id=249876
+> > 
+> > Here is the patch:
+> > http://sourceforge.net/mailarchive/forum.php?thread_name=E1L6mat-0001sb-RN%40fdv4jf1.ch3.sourceforge.com&forum_name=nagios-checkins
+> > 
+> 
+> CVE id 2008-5028 has been assigned to this.
 
-> > I am working on a cups update at the moment and I am looking for two
-> > missing patches. Could somebody please email me the patches for
-> > CVE-2008-0596 and CVE-2008-0597 (both DoS due to crafted IPP packets
-> > and a large number of requests for adding and removing printers).
-> > I saw them marked as fixed in the opensuse announcement, but
-> > couldn't find the patches for some reason and the novell bugzilla
-> > does not grant access to the bugs to everyone :/
-> > Thanks heaps in advance.
+No, CVE-2008-5028 is a different beast -- it is about cmd.cgi's command
+injection via newlines.  Let me cite the commit Josh is referring to:
+http://nagios.cvs.sourceforge.net/viewvc/nagios/nagios/cgi/cmd.c?r1=1.45&r2=1.46&view=patch
+-----
+@@ -2015,7 +2016,7 @@
+ 		break;
+ 
+ 	case CMD_ADD_SVC_COMMENT:
+-		result = cmd_submitf(cmd,"%s;%s;%d;%s;%s",current_time,host_name,service_desc,persistent_comment,comment_author,comment_data);
++		result = cmd_submitf(cmd,"%s;%s;%d;%s;%s",host_name,service_desc,persistent_comment,comment_author,comment_data);
+ 		break;
+ 
+ 	case CMD_DEL_HOST_COMMENT:
+@@ -2249,7 +2250,7 @@
+ 	        }
+ 
+ 	/* write the command to file */
+-	fputs(cmd,fp);
++	fprintf(fp, "%s\n", cmd);
+-----
+As you see, the wrong arguments were passed to the cmd_submitf for the
+service comments -- argument 'service_desc' will be treated as integer
+and argument 'presistent_comment' (that is essentially a boolean that is
+simulated via 'int' type) will be treated as the pointer to a string.
+SEGV is likely here.
 
-[ ... ]
+And another issue is that newline seem to be missing from the resulting
+command line that was written to the cmd file.  Can't comment on this
+now, but I assume that a very long line instead of many shorter (and
+proper) ones will be in the cmd file before this fix.
 
-> the RedHat Bugzilla does not link the patches directly, but you can 
-> easily extract them from this SRPM:
-> ftp://updates.redhat.com/enterprise/3desktop/en/os/SRPMS/cups-1.1.17-13.3.51.src.rpm
-
-I've attached the patches from Red Hat Enterprise Linux 4 packages to
-our Bugzilla:
-
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2008-0596#c5
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2008-0597#c6
-
-Both issues should only affect old cups versions (rough guess is
-pre-1.2, but we haven't really investigated where exactly they got
-fixed), so as the version in Etch is 1.2.7, you probably do not need to
-care.  They were not needed for 1.2.4 in RHEL5 according to our
-maintainer.
-
-HTH
-
+By the way, I think that it is wrong to cite
+  http://sourceforge.net/mailarchive/forum.php?thread_name=4914396D.5010009%40op5.se&forum_name=nagios-devel
+at the CVE-2008-5027 -- it seem to talk about the issues after 3.0.5
+and command injection via cmd.cgi was already fixed, although it
+introduced some regressions.
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Eygene
