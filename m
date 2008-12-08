@@ -1,44 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/29/9
-Message-ID: <20081029172226.5f460084@redhat.com>
-Date: Wed, 29 Oct 2008 17:22:26 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: taviso@....lonestar.org, coley@...re.org
-Subject: Re: CVE request: lynx (old) .mailcap handling flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/08/10
+Message-Id: <1228748026.3834.72.camel@dhcp-lab-164.englab.brq.redhat.com>
+Date: Mon, 08 Dec 2008 15:53:46 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: coley@...re.org
+Cc: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request - rsyslog
 Content-Type: text/plain; charset=utf-8
 
-Hi Tavis!
+Hello Steve,
 
-On Wed, 29 Oct 2008 12:45:57 +0000 Tavis Ormandy
-<taviso@....lonestar.org> wrote:
+  the following vulnerability has been recently reported
+in rsyslog:
 
-> Well obviously. The attack would be convincing someone to debug an
-> application with a testcase provided in a tarball
+http://www.rsyslog.com/Article322.phtml
 
-Correct, I should have listed that before as separate case for gdb /
-valgrind.  But is there any good way to protect against this without
-crippling this feature completely?
+References:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=508027
+http://secunia.com/Advisories/32857/
 
-> or to debug something in a specific directory.
+Upstream patch:
+http://git.adiscon.com/?p=rsyslog.git;a=commitdiff;h=f0ddbed44c332391ae6d9bbf6b07e2f06c4dd676
 
-That should be covered by previously mentioned 2).
+The reporter mentions:
+"The versions affected are rsyslog 3.12.1 to 3.20.0, 4.1.0 and 4.1.1.    
+ The v2-stable branch is not affected."
 
-> If you just dumped one in /tmp on a system I use and waited a few
-> weeks, there's a strong possibility you would pwn me.
+Although the v2-stable part is missing the plugins/imgssapi,imtcp,imudp
+part of the patch, the affected 'clearAllowedSenders' function can be
+found in syslogd.c 
 
-... looks like I should check whether sdf still offers free shell
-accounts ;).
+ 740 static void clearAllowedSenders (struct AllowedSenders *pAllow) {
 
-> Of course, guess who reported that ;-) (me).
+and 'isAllowedSender' function from syslogd.c also lacks the check added
+by the patch:
+ 
+   1049 /* check if  a sender is allowed. The root of the the allowed sender.
+   1050  * list must be proveded by the caller. As such, this function can be
+   1051  * used to check both UDP and TCP allowed sender lists.
+   1052  * returns 1, if the sender is allowed, 0 otherwise.
+   1053  * rgerhards, 2005-09-26
+   1054  */
+   1055 int isAllowedSender(struct AllowedSenders *pAllowRoot, struct sockaddr *pFrom, const char *pszFromHost)
+   1056 {
+   1057         struct AllowedSenders *pAllow;
+   1058 
+   1059         assert(pFrom != NULL);
+   1060                                   <- no "if(setAllowRoot(&pAllowRoot, pszType) != RS_RET_OK)" from the patch
+   1061         if(pAllowRoot == NULL)
+   1062                 return 1; /* checking disabled, everything is valid! */
 
-Correct, again... CVE-2005-1705
-  http://bugs.gentoo.org/show_bug.cgi?id=88398
+so it is highly probable, rsyslog-2.0 is also affected by this issue (checking with the developers yet).
 
-Note to self: Do more research before trying to teach old dog ^W^W
-Tavis some new ^W really really old tricks... ;)
+Could you please allocate a new CVE id for this issue?
 
-I'll shut up now...
+Thanks, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
--- 
-Tomas Hoger / Red Hat Security Response Team
