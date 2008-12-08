@@ -1,32 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/21/12
-Message-ID: <830.1203631935@devserv.devel.redhat.com>
-Date: Thu, 21 Feb 2008 17:12:15 -0500
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Help (CVE request for mysql bug #22413)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/08/3
+Message-Id: <1228732067.3834.24.camel@dhcp-lab-164.englab.brq.redhat.com>
+Date: Mon, 08 Dec 2008 11:27:47 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: coley@...re.org
+Cc: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request - tor
 Content-Type: text/plain; charset=utf-8
 
-> 
-> Jamie Strandboge wrote:
-> | We have a bug report open to fix http://bugs.mysql.com/bug.php?id=22413.
-> | This is a DoS via a 'EXPLAIN SELECT FROM view with ORDER BY' statement
-> | and is fixed in 5.0.32. Can a CVE be assigned for this?
-> 
-> You'll probably want to CC Steve on such emails... I don't think he's
-> actually subscribed to the list (Steve, feel free to correct me if I'm
-> wrong here... I assumed it would be the same as vendor-sec).
-> 
+Hello Steve,
 
-Steve,
+  the new upstream 0.2.0.32 version of Tor has been released.
+It fixes between others also two security issues:
 
-I think this is a good opportunity to ask you how we can use this list to
-make your life easier.  Perhaps it's worth thinking about ways some of the
-subscribed CNAs can dish out CVE ids to reduce your load a little bit for
-these public issues that obviously lack a proper id.
+References:
+===========
+http://blog.torproject.org/blog/tor-0.2.0.32-released
+http://bugs.gentoo.org/show_bug.cgi?id=250018
+https://svn.torproject.org/cgi-bin/viewcvs.cgi?rev=17255&view=rev
+https://svn.torproject.org/cgi-bin/viewcvs.cgi?rev=17342&view=rev
 
-Thanks.
+Patches (against 0.2.0.32):
+===========================
+1, User/Group config options from Jacob Appelbaum
+and Steven Murdoch (BTS 848 and 857):
+https://svn.torproject.org/cgi-bin/viewcvs.cgi?rev=17255&view=rev
 
--- 
-    JB
+2, The "ClientDNSRejectInternalAddresses" config option:
+Backport of R17135 against 0-2-0:  https://svn.torproject.org/cgi-bin/viewcvs.cgi?rev=17342&view=rev
+Original R17135:                   https://svn.torproject.org/cgi-bin/viewcvs.cgi?rev=17135&view=rev
+
+Affected Tor versions: x <= 0.2.0.32
+======================
+Checked both vulnerabilities present also in 0.1.2.17 and possibly older versions.
+
+Could you please allocate a new CVE id(s) for these issues?
+
+Thanks, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+
+
