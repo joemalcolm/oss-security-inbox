@@ -1,52 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/29/7
-Message-ID: <20081029152825.GF6977@severus.strandboge.com>
-Date: Wed, 29 Oct 2008 10:28:25 -0500
-From: Jamie Strandboge <jamie@...onical.com>
-To: oss-security@...ts.openwall.com
-Cc: jamie@...onical.com, coley <coley@...re.org>
-Subject: Re: CVE request for ecryptfs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/08/8
+Message-ID: <qTqdb/DhtqaUyAElWqW12r9XT/k@DnrfhFPe1KmBT9SMnrHVxzpiU9A>
+Date: Mon, 8 Dec 2008 15:57:46 +0300
+From: Eygene Ryabinkin <rea-sec@...elabs.ru>
+To: oss-security@...ts.openwall.com, jlieskov@...hat.com
+Cc: coley@...re.org
+Subject: Re: CVE Request (nagios)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 29 Oct 2008, Tomas Hoger wrote:
+Jan, good day.
 
-> Hi Jamie!
+Mon, Dec 08, 2008 at 01:21:45PM +0100, Jan Lieskovsky wrote:
+>   diffing your version (3.0.5p1) and the latest upstream one (3.0.6)
+> returns the following (this commit was posted on 2008-11-30):
 > 
-> On Thu, 23 Oct 2008 16:16:28 -0500 Jamie Strandboge
-> <jamie@...onical.com> wrote:
-> 
-> > While reviewing ecryptfs, I discovered an information disclosure
-> > vulnerability in ecryptfs-setup-private and notified upstream. This
-> > helper script was known as ecryptfs-setup-confidential in earlier
-> > releases.
+> diff
+> -r /tmp/3.0.5p1/nagios-3.0.5p1/base/commands.c /tmp/nagios_latest/nagios-3.0.6/base/commands.c
+[...]
+> 2893a2896,2908
 > > 
-> > The problem arises when ecryptfs-setup-private invokes
-> > ecryptfs-wrap-passphrase and ecryptfs-add-passphrase with command line
-> > arguments that include the user's existing login password as well as
-> > the newly created mount password. As a result, these passwords can be
-> > snooped in the process table.
+> >       /* SECURITY PATCH - disable these for the time being */
+> >       switch(cmd){
+> >       case CMD_CHANGE_GLOBAL_HOST_EVENT_HANDLER:
+> >       case CMD_CHANGE_GLOBAL_SVC_EVENT_HANDLER:
+> >       case CMD_CHANGE_HOST_EVENT_HANDLER:
+> >       case CMD_CHANGE_SVC_EVENT_HANDLER:
+> >       case CMD_CHANGE_HOST_CHECK_COMMAND:
+> >       case CMD_CHANGE_SVC_CHECK_COMMAND:
+> >               return ERROR;
+> >               }
+>
+> And other vulnerability reports:
+> http://www.nagios.org/news/#88
+> http://secunia.com/Advisories/32909/
 > 
-> Well the question is whether this should be worded as
-> ecryptfs-setup-{private,confidential} issue, or more generic issue
-> affecting various ecryptfs-* command line utilities, that only accept
-> passwords as command line arguments (i.e. no interactive prompt).  So
-> even though there's not ecryptfs-setup-* script to fix in older
-> versions, steps done by ecryptfs-setup-* are likely to be performed by
-> the user manually, resulting in the same risk of leak as with helper
-> script.  Or do I miss anything?
+> Andreas, could you please confirm/disprove this patch was part of recent
+> CVE-2008-{5027, 5028}? 
 > 
+> Seems it wasn't, but can be wrong.
 
-That's exactly right, which reminded me, documentation surrounding
-ecryptfs also should be updated. I pinged upstream about it.
+Hmm, this seems to be unrelated to CVE-2008-5027, but it may be the
+upstream fix for CSRF: judging by the contents of
+  http://git.op5.org/git/?p=nagios.git;a=commitdiff;h=9c2a418ab4f6e4ef3a53ddcde402fe4781caa764
+the original patch from Tim Starling should introduce at least 'csrf' word
+into cgi/cmd.c.  And I am failing to find one in the latest version,
+  http://nagios.cvs.sourceforge.net/viewvc/nagios/nagios/cgi/cmd.c?revision=1.47&view=markup
 
-I was also notified of an additional commit that is desirable (a bugix
-for the patch to ecryptfs-setup-private):
-http://git.kernel.org/?p=linux/kernel/git/mhalcrow/ecryptfs-utils.git;a=commit;h=2c422e6d2549f90258cddeebf105b066b598bdbb
+So either it was fixed in the completely different way or it is the
+quick fix to prevent CSRFs for the eventhandler mangling commands.  It
+is a bit strange that it was done after 3.0.5 (CSRF was documented in
+3.0.5 release notes), but...  By the way, entry for CVE-2008-5028 speaks
+about 3.0.5 as about the vulnerable to the CSRF and it is inconsistent
+with the release notes at
+  http://www.nagios.org/development/history/nagios-3x.php.
 
-Jamie
-
+Clarifications are desperately needed ;))
 -- 
-Ubuntu Security Engineer     | http://www.ubuntu.com/
-Canonical Ltd.               | http://www.canonical.com/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (198 bytes)
+Eygene
