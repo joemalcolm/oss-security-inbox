@@ -1,28 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/30/1
-Message-Id: <200803301520.50053.hanno@hboeck.de>
-Date: Sun, 30 Mar 2008 15:20:48 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: phpmyadmin (PMASA-2008-2)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/08/2
+Message-ID: <493CEAE5.4090403@op5.se>
+Date: Mon, 08 Dec 2008 10:37:41 +0100
+From: Andreas Ericsson <ae@....se>
+To: oss-security@...ts.openwall.com
+CC: coley@...re.org
+Subject: Re: CVE Request (nagios)
 Content-Type: text/plain; charset=utf-8
 
-http://www.phpmyadmin.net/home_page/security.php?issue=PMASA-2008-2
+Josh Bressers wrote:
+> Hi Steve,
+> 
+> I'm not seeing a CVE id for this.  It seems the Nagios 3.0.6 release fixes a flaw:
+> http://www.nagios.org/development/history/nagios-3x.php
+> http://bugs.gentoo.org/show_bug.cgi?id=249876
+> 
+> Here is the patch:
+> http://sourceforge.net/mailarchive/forum.php?thread_name=E1L6mat-0001sb-RN%40fdv4jf1.ch3.sourceforge.com&forum_name=nagios-checkins
+> 
 
-Announcement-ID: PMASA-2008-2
-Date: 2008-03-29
+CVE id 2008-5028 has been assigned to this. I requested a CVE id through this list
+on Nov 6 2008. Fairly full details on the two issues described in my original email
+(Message-Id: <49131C7E.8050105@....se>) can be found at http://blogs.op5.org
 
-Summary:
-Credentials disclosure on shared hosts via session data
+The patch has been publicly available since Nov 7, when I announced it on the
+nagios-devel mailing list.
 
-Description:
-We received an advisory from Jim Hermann, and we wish to thank him for his 
-work. phpMyAdmin saves sensitive information like the MySQL username and 
-password and the Blowfish secret key in session data, which might be 
-unprotected on a shared host. 
+Both issues were reported to the Nagios dev team by Tim Starling on Oct 26.
 
 -- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+Andreas Ericsson                   andreas.ericsson@....se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
