@@ -1,36 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/20/2
-Message-Id: <200803201424.27773.hanno@hboeck.de>
-Date: Thu, 20 Mar 2008 14:24:27 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com
-Subject: webapp vulns with no cve
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/08/1
+Message-ID: <20081208093649.5bc12406@redhat.com>
+Date: Mon, 8 Dec 2008 09:36:49 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: OSS Security <oss-security@...ts.openwall.com>
+Cc: coley@...re.org
+Subject: CVE request: vinagre
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+vinagre upstream released new upstream versions 0.5.2 and 2.24.2 fixing format
+string issue in vinagre_utils_show_error() in src/vinagre-utils.c.
 
-I sent you this a while back, but seems it got lost (?).
+Upstream commits:
+Gnome 2.22 branch (0.5.x):
+  http://svn.gnome.org/viewvc/vinagre?view=revision&revision=528
+Gnome 2.24 branch (2.24.x):
+  http://svn.gnome.org/viewvc/vinagre?view=revision&revision=525
 
-I found a couple of web applications with vulnerabilities without a CVE-ID:
+I did not have an opportunity what attack vectors exist for this flaw.
+Upstream seems to treat is as a security flaw, so probably deserves CVE
+name.
 
-punbb:
-http://sektioneins.de/advisories/SE-2008-01.txt
-http://punbb.org/forums/viewtopic.php?id=18460
-http://www.milw0rm.com/exploits/5165
-
-
-Phorum sql injection:
-http://www.phorum.org/phorum5/read.php?64,126815,126815
-
-freewebshop (fix in 2.2.7)
-http://www.freewebshop.org/?Downloads:Fixes
-
-linpha 1.3.3 fixes xss:
-http://linpha.sourceforge.net/wiki/index.php/Release_Notes#Version_1.3.3
+Thank you!
 
 -- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-
-Download attachment "signature.asc " of type "application/pgp-signature" (190 bytes)
+Tomas Hoger / Red Hat Security Response Team
