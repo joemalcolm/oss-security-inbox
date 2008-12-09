@@ -1,22 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/13/4
-Message-ID: <874p176c3w.fsf@mid.deneb.enyo.de>
-Date: Sat, 13 Dec 2008 21:42:27 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/09/3
+Message-Id: <200812091352.16053.hanno@hboeck.de>
+Date: Tue, 9 Dec 2008 13:52:15 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re:  Re: CVE Request - roundcubemail
+Cc: Steven Christey <coley@...us.mitre.org>
+Subject: CVE request: Four issues in PunBB
 Content-Type: text/plain; charset=utf-8
 
-* Ingrid wrote:
+Hi,
 
-> Therefore, I agree with Raphael that the issue has not been found yet.
+From
+http://punbb.informer.com/
 
-It may be related to:
+Fixed in 1.3.2:
+    * an XSS vulnerability in login.php;
+    * a possible SQL-injection in the the admin settings page with permission 
+config values;
+    * a possible SQL-injection in the the admin users page.
 
-  <http://www.hardened-php.net/advisory_042006.119.html>
 
-Is there some way to turn of /e support in preg_replace (causing PHP
-to abort with an error instead), in particular if the captures contain
-one of the characters "$", "{", "}"?
+Fixed in 1.3.1:
+    * XSS vulnerability via topic subjects in moderate.php is fixed (reported 
+by PHPLizardo).
 
-Is it safe to surround the captures with '$1' instead of "$1"?
+
+
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+
+http://www.jukss.de/ Jugemdumweltkongress, 27.12.-4.1.
+
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
