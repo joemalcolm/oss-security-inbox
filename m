@@ -1,38 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/05/1
-Message-ID: <26282.1209949081@devserv.devel.redhat.com>
-Date: Sun, 04 May 2008 20:58:01 -0400
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/09/5
+Message-Id: <200812091904.12009.hanno@hboeck.de>
+Date: Tue, 9 Dec 2008 19:04:11 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: group announcement
+Cc: Steven Christey <coley@...us.mitre.org>
+Subject: CVE request: phpMyAdmin < 3.1.1.0 (SQL injection through XSRF on several pages )
 Content-Type: text/plain; charset=utf-8
 
-On 2 May 2008, Jonathan Smith wrote:
-> 
-> Now that I think about it, you should probably mention that vendor-sec
-> is the place to mention non-public issues. Or, at least, say that
-> oss-security *isn't* the place.
-> 
-
-That's covered in the wiki, and as I wish to keep things as terse as
-possible, so I'm going to leave it out.
-
-Based on the feedback of Steve Christey, I've updated the third paragraph:
-
-The purpose of oss-security is to encourage public discussion of security
-flaws, concepts, and practices in the Open Source community.  We don't want
-to simply be an information clearinghouse, or to replace any of the current
-security lists and groups.  The goal is to fill and existing vacuum by
-encouraging active participation of those interested in the ideas and
-unique challenges in securing Open Source software.  This includes
-activities such as flaw discovery, understanding, reporting, and overall
-best practices.
-
-Unless someone complains, I'm going to send this text on Tuesday to the Red
-Hat Corporate Communications people, and setup a good date for this go
-public.
-
-Thanks.
+Published by the vendor as PMASA-2008-10:
+http://www.phpmyadmin.net/home_page/security/PMASA-2008-10.php
 
 -- 
-    JB
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+
+http://www.jukss.de/ Jugemdumweltkongress, 27.12.-4.1.
+
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
