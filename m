@@ -1,20 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/30/3
-Message-ID: <Pine.GSO.4.51.0804301022100.868@faron.mitre.org>
-Date: Wed, 30 Apr 2008 10:22:41 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/09/1
+Message-ID: <28fa9c5e0812081844y27996700wa1c76d35663fc875@mail.gmail.com>
+Date: Tue, 9 Dec 2008 10:44:54 +0800
+From: "Eugene Teo" <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: insecure X11 handling in ltsp
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: MIPS: Fix potential DOS by untrusted user app
 Content-Type: text/plain; charset=utf-8
 
+Steve, can you please assign a CVE name. Thanks.
 
-On Mon, 28 Apr 2008, Nico Golde wrote:
+---
+commit e807f9574e37a3f202e677feaaad1b7c5d2c0db8
+Author: Vlad Malov <Vlad.Malov@...iumnetworks.com>
+Date:   Tue Nov 18 15:05:46 2008 -0800
 
-> > Use CVE-2008-1293
->
-> This item is still on status RESERVED, is that on purpose?
+    MIPS: Fix potential DOS by untrusted user app.
 
-No, it didn't get filled in.  It will be part of the next site update,
-later today.
+    On a 64 bit kernel if an o32 syscall was made with a syscall number less
+    than 4000, we would read the function from outside of the bounds of the
+    syscall table.  This led to non-deterministic behavior including system
+    crashes.
 
-- Steve
+    While we were at it we reworked the 32 bit version as well to use fewer
+    instructions.  Both 32 and 64 bit versions are use the same code now.
+
+    Signed-off-by: Vlad Malov <Vlad.Malov@...iumnetworks.com>
+    Signed-off-by: David Daney <ddaney@...iumnetworks.com>
+    Signed-off-by: Ralf Baechle <ralf@...ux-mips.org>
