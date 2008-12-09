@@ -1,30 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/03/5
-Message-ID: <Pine.GSO.4.51.0812031225441.15404@faron.mitre.org>
-Date: Wed, 3 Dec 2008 12:26:19 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/09/2
+Message-ID: <28fa9c5e0812082003t37acf9aex36cacbd88cb30bea@mail.gmail.com>
+Date: Tue, 9 Dec 2008 12:03:13 +0800
+From: "Eugene Teo" <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: Unix sockets kernel panic
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: enforce a minimum SG_IO timeout
 Content-Type: text/plain; charset=utf-8
 
+This requires a CVE name. Please assign one. Thanks.
 
-current writeup for CVE-2008-5300:
+Alan Cox reported that libata needs to enforce sensible minimum
+timeouts on SG_IO requests otherwise a local, unprivileged user can
+trigger long spews of errors and forces the drives into PIO run as any
+user.
 
-======================================================
-Name: CVE-2008-5300
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5300
-Reference: MLIST:[linux-netdev] 20081120 soft lockups/OOM after unix socket fixes
-Reference: URL:http://marc.info/?l=linux-netdev&m=122721862313564&w=2
-Reference: MLIST:[linux-netdev] 20081125 [PATCH] Fix soft lockups/OOM issues w/ unix garbage collector
-Reference: URL:http://marc.info/?l=linux-netdev&m=122765505415944&w=2
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=470201
+To trigger this problem, you need to be able to open the cdrom device
+(i.e. login as a normal user from the console and then access it via
+ssh) or access to /dev/sg* which is root only in all sane systems.
 
-Linux kernel 2.6.28 allows local users to cause a denial of service
-("soft lockup" and process loss) via a large number of sendmsg
-function calls, which does not block during AF_UNIX garbage collection
-and triggers an OOM condition, a different vulnerability than
-CVE-2008-5029.
+Upstream commit: f2f1fa78a155524b849edf359e42a3001ea652c0
 
+Reference: https://bugzilla.redhat.com/show_bug.cgi?id=474495
 
+Thanks, Eugene
