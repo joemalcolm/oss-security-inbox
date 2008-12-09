@@ -1,30 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/10/4
-Message-ID: <4875A771.8080803@redhat.com>
-Date: Thu, 10 Jul 2008 14:08:49 +0800
-From: Eugene Teo <eteo@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/09/4
+Message-Id: <200812091355.28895.hanno@hboeck.de>
+Date: Tue, 9 Dec 2008 13:55:28 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: DNS vulnerability: other relevant software
+Cc: Steven Christey <coley@...us.mitre.org>
+Subject: CVE request: moodle (XSS)
 Content-Type: text/plain; charset=utf-8
 
-Eugene Teo wrote:
-> Florian Weimer wrote:
->> * Mark J. Cox:
->>
->>>> Additionally, Debian has noted (DSA 1605-1) that the GNU libc stub
->>>> resolver could benefit from random query source ports as well, but
->>>> no patches are currently available to implement this:
->>> Note that GNU libc stub resolver when used with a recent kernel
->>> (2.6.24+) will give you random UDP source ports on each request
->>> because of this Linux commit:
->>>
->>> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=32c1da70810017a98aa6c431a5494a302b6b9a30
->> Is net_random() cryptographically secure?  The paper referenced in the
->> source doesn't talk about this.
-> 
-> It isn't. It's actually a 32-bit pseudo-random number generator AFAIK.
+http://moodle.org/mod/forum/discuss.php?d=108590
 
-Actually, I'm not sure. I'm checking with my colleagues who may be more
-familiar with the implementation of net_random/random32() routine.
+ 	Cross Site Scripting (XSS) possible through Wiki page titles 
 
-Thanks, Eugene
+Wiki page names were not sanitised on output, allowing for potential cross 
+site scripting (XSS) issues.
+
+Versions affected: 	< 1.6.8, < 1.7.6, < 1.8.7, < 1.9.3
+
+
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+
+http://www.jukss.de/ Jugemdumweltkongress, 27.12.-4.1.
+
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
