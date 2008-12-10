@@ -1,24 +1,119 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/13/2
-Message-Id: <200810132314.05913.steffen.joeris@skolelinux.de>
-Date: Mon, 13 Oct 2008 23:14:04 +1100
-From: Steffen Joeris <steffen.joeris@...lelinux.de>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: coley@...re.org
-Subject: CVE id request: qemu
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/10/5
+Message-ID: <BX8Nv7exK54M5wBgYCCzN4ZHjjE@Nv45r0f9gWT8HCu35qu0Xm2Zg98>
+Date: Wed, 10 Dec 2008 18:14:23 +0300
+From: Eygene Ryabinkin <rea-sec@...elabs.ru>
+To: oss-security@...ts.openwall.com
+Cc: jlieskov@...hat.com, coley@...re.org
+Subject: Re: CVE Request (nagios)
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Andreas, thanks for answering.
 
-I think this one is still unassigned.
-The qemu-make-debian-root script is prone to a symlink attack.
-I am not sure, if other vendors use it, but I guess it can't hurt to get a CVE 
-id assigned. :)
+Wed, Dec 10, 2008 at 03:53:47PM +0100, Andreas Ericsson wrote:
+> >> So
+> >>   http://nagios.cvs.sourceforge.net/viewvc/nagios/nagios/base/commands.c?r1=1.109&r2=1.110&view=patch
+> >> just completely closes the processing of these commands from the
+> >> Nagios side.  May be this was the fix for the case when the evil
+> >> contents from the command file were still floating around but the
+> >> upgraded Nagios won't process them because they could go from the
+> >> previous successful attack but are lying unprocessed?
+> > 
+> > Do you think it is really so?
+> > 
+> 
+> Umm... I can't parse the above paragraph.
 
-Debian Bugreport:
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=496394
+I mean that in 3.0.6 even Nagios server won't execute CHANGE_
+commands, because the diff in the above reference stops them from
+being executed.
 
-Cheers
-Steffen
+> In short though, the removed
+> commands are removed *from the cgi's* because it's far too dangerous
+> to allow such things over the web.
 
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+Comment in cgi.c says:
+----- function cmd_submitf
+        /*
+         * We disallow sending 'CHANGE' commands from the cgi's
+         * until we do proper session handling to prevent cross-site
+         * request forgery
+         */
+        if (!command || (strlen(command) > 6 && !memcmp("CHANGE", command, 6)))
+                return ERROR;
+-----
+So I presume that the danger comes from the CSRF.  This code was
+introduced in 3.0.5.
+
+> Nagios will still process them if
+> they are submitted to the command-pipe, but the CGI's can no longer
+> write such commands to said pipe.
+
+Not in 3.0.6, see below and above.
+
+> > CVE-2008-5028 really speaks about 3.0.5 as about vulnerable to CSRF.  At
+> > least CHANGE_ commands were closed in 3.0.5 and were (presumably)
+> > additionally closed at the Nagios server side in 3.0.6.  So either 3.0.6
+> > is vulnerable too, 3.0.5 is not vulnerable to CSRF or I am missing
+> > something.  What to choose?
+> > 
+> 
+> 3.0.5 is vulnerable to CSRF. 3.0.6 (which adds in-form session tokens to
+> cmd.cgi, which processes all commands from the web-forms), is not vulnerable
+> to CSRF.
+
+If you're talking about the commit based on
+  http://git.op5.org/git/?p=nagios.git;a=commitdiff;h=9c2a418ab4f6e4ef3a53ddcde402fe4781caa764
+then I afraid that this code isn't in the 3.0.6.  Diffing 3.0.5 and
+3.0.6 yeilds some improvements, the hunk that Jan mentioned (it closes
+CHANGE_ commands processing by the Nagios server itself):
+-----
+--- nagios-3.0.5/base/commands.c        2008-11-02 21:51:29.000000000 +0300
++++ nagios-3.0.6/base/commands.c        2008-11-30 20:22:58.000000000 +0300
+@@ -2891,6 +2893,19 @@
+        unsigned long hattr=MODATTR_NONE;
+        unsigned long sattr=MODATTR_NONE;
+
++
++       /* SECURITY PATCH - disable these for the time being */
++       switch(cmd){
++       case CMD_CHANGE_GLOBAL_HOST_EVENT_HANDLER:
++       case CMD_CHANGE_GLOBAL_SVC_EVENT_HANDLER:
++       case CMD_CHANGE_HOST_EVENT_HANDLER:
++       case CMD_CHANGE_SVC_EVENT_HANDLER:
++       case CMD_CHANGE_HOST_CHECK_COMMAND:
++       case CMD_CHANGE_SVC_CHECK_COMMAND:
++               return ERROR;
++               }
++
++
+        /* get the command arguments */
+        switch(cmd){
+-----
+
+> 3.0.5 fixes the authorization bypass discussed in CVE-2008-5027, where an
+> authenticated user can submit commands he/she was not supposed to be able
+> to submit.
+
+Yes, newlines in the comments and other places.  This is really fixed
+in 3.0.5.
+
+> However, by blocking the CHANGE_ set of commands, the worst-case
+> impact of the CSRF was drastically reduced, and the change to blocking those
+> commands was also a part of 3.0.5.
+
+Yes, I meant precisely this.  But again, no real CSRF fixes are present
+in 3.0.6.
+
+> I'm afraid Ethan (the Nagios maintainer) got it wrong in the changelog,
+> which is why, I presume, there's so much confusion right now.
+> 
+> I wrote the patches for it though, so I think it's safe to say I know what
+> patch (and version) fixed what.
+
+I understand this.  But I feel that you think of your session tokens
+work as of being committed to 3.0.6.  This seems to be wrong.
+
+Sorry for such a long letter.
+-- 
+Eygene
