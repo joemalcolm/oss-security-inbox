@@ -1,31 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/21/3
-Message-ID: <48338DFF.6070502@freethemallocs.com>
-Date: Tue, 20 May 2008 18:50:39 -0800
-From: Jonathan Smith <smithj@...ethemallocs.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/10/1
+Message-ID: <28fa9c5e0812092232m11792d2cmf5681387a41bb3db@mail.gmail.com>
+Date: Wed, 10 Dec 2008 14:32:28 +0800
+From: "Eugene Teo" <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: mtr
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: applicom: fix an unchecked user ioctl range
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Steve, can you please assign a CVE name. Thanks.
 
-Robert Buchholz wrote
-| Secunia suggests [1] that 0.73 contains a fix. Did you find any
-indication
-| to that? The advisory mentions 0.72 as vulnerable, but it is also dated
-| February 28. The last mtr was released on April 7, but it seems to me all
-| changes are unrelated.
+http://bugzilla.kernel.org/show_bug.cgi?id=11408
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=a7be18d
 
-The issue was an insecure use of sprintf in split_redraw(). In 0.73,
-uptream changed this to use snprintf, thus fixing the issue.
+---
+>From a7be18d436f0c7007794965e5af29fa1ffff1e05 Mon Sep 17 00:00:00 2001
+From: Alan Cox <alan@...hat.com>
+Date: Mon, 13 Oct 2008 10:45:17 +0100
+Subject: [PATCH] applicom: Fix an unchecked user ioctl range and an error return
 
-	smithj
+Closes bug #11408 by checking the card index range for command 0
+Fixes the ioctl to return ENOTTY which is correct for unknown ioctls
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEARECAAYFAkgzjf4ACgkQCG91qXPaRekhhACeKPMka0sknIpsV4gtS1zojRl6
-jKYAoIrwOd4pxgvxetx39dlJ4fhll2Su
-=gZQa
------END PGP SIGNATURE-----
+Signed-off-by: Alan Cox <alan@...hat.com>
+Signed-off-by: Linus Torvalds <torvalds@...ux-foundation.org>
