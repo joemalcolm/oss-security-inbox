@@ -1,37 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/02/3
-Message-ID: <Pine.GSO.4.51.0804021339330.23425@faron.mitre.org>
-Date: Wed, 2 Apr 2008 13:39:37 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Jonathan Smith <smithj@...ethemallocs.com>
-cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com
-Subject: Re: CVE request: openssh "ForceCommand" improperly implemented
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/10/3
+Message-ID: <bYzcr3rPIUFO2o4fPZ/nQ+xtMqk@keEvuTOlYdAfFUWWrDbTGrfqNd0>
+Date: Wed, 10 Dec 2008 16:48:08 +0300
+From: Eygene Ryabinkin <rea-sec@...elabs.ru>
+To: ae@....se, oss-security@...ts.openwall.com, jlieskov@...hat.com
+Cc: coley@...re.org
+Subject: Re: CVE Request (nagios)
 Content-Type: text/plain; charset=utf-8
 
+Andreas, good day.
 
-======================================================
-Name: CVE-2008-1657
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1657
-Reference: CONFIRM:http://www.openssh.com/txt/release-4.9
-Reference: CONFIRM:https://issues.rpath.com/browse/RPL-2419
-Reference: OPENBSD:[4.3] 001: SECURITY FIX: March 30, 2008
-Reference: URL:http://www.openbsd.org/errata43.html#001_openssh
-Reference: BID:28531
-Reference: URL:http://www.securityfocus.com/bid/28531
-Reference: FRSIRT:ADV-2008-1035
-Reference: URL:http://www.frsirt.com/english/advisories/2008/1035/references
-Reference: SECTRACK:1019733
-Reference: URL:http://www.securitytracker.com/id?1019733
-Reference: SECUNIA:29602
-Reference: URL:http://secunia.com/advisories/29602
-Reference: SECUNIA:29609
-Reference: URL:http://secunia.com/advisories/29609
-Reference: XF:openssh-forcecommand-command-execution(41549)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/41549
+Will you be able to clarify two things.
 
-OpenSSH before 4.9 allows remote authenticated users to bypass the
-sshd_config ForceCommand directive by modifying the .ssh/rc session
-file.
+Mon, Dec 08, 2008 at 05:19:52PM +0300, Eygene Ryabinkin wrote:
+> So
+>   http://nagios.cvs.sourceforge.net/viewvc/nagios/nagios/base/commands.c?r1=1.109&r2=1.110&view=patch
+> just completely closes the processing of these commands from the
+> Nagios side.  May be this was the fix for the case when the evil
+> contents from the command file were still floating around but the
+> upgraded Nagios won't process them because they could go from the
+> previous successful attack but are lying unprocessed?
 
+Do you think it is really so?
 
+> > It is a bit strange that it was done after 3.0.5 (CSRF was documented in
+> > 3.0.5 release notes), but...  By the way, entry for CVE-2008-5028 speaks
+> > about 3.0.5 as about the vulnerable to the CSRF and it is inconsistent
+> > with the release notes at
+> >   http://www.nagios.org/development/history/nagios-3x.php.
+> 
+> So I feel the the CSRF was "somehow closed" in 3.0.5 and CVE entry may
+> need fixing.  The remains from this bug that could migrate from 3.0.5 to
+> 3.0.6 (but not in the functional sense, only via the unprocessed command
+> file) were "fixed" in 3.0.6.
+
+CVE-2008-5028 really speaks about 3.0.5 as about vulnerable to CSRF.  At
+least CHANGE_ commands were closed in 3.0.5 and were (presumably)
+additionally closed at the Nagios server side in 3.0.6.  So either 3.0.6
+is vulnerable too, 3.0.5 is not vulnerable to CSRF or I am missing
+something.  What to choose?
+
+Thanks!
+-- 
+Eygene
