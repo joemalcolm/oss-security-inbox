@@ -1,27 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/16/11
-Message-ID: <Pine.GSO.4.51.0806161806091.16840@faron.mitre.org>
-Date: Mon, 16 Jun 2008 18:06:18 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/10/2
+Message-ID: <28fa9c5e0812092339j4f3b01d5g8a3cf5c38cdabd48@mail.gmail.com>
+Date: Wed, 10 Dec 2008 15:39:23 +0800
+From: "Eugene Teo" <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: nasm off-by-one
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: watchdog: ib700wdt.c - buffer_underflow bug
 Content-Type: text/plain; charset=utf-8
 
+Steve, here's another one that needs a CVE name. Thanks!
 
-======================================================
-Name: CVE-2008-2719
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2719
-Reference: CONFIRM:http://repo.or.cz/w/nasm.git?a=commit;h=76ec8e73db16f4cf1453a142d03bcc74d528f72f
-Reference: CONFIRM:https://sourceforge.net/tracker/?func=detail&atid=106208&aid=1942146&group_id=6208
-Reference: MLIST:[oss-security] 20080611 CVE id request: nasm off-by-one
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/06/11/4
-Reference: FRSIRT:ADV-2008-1811
-Reference: URL:http://www.frsirt.com/english/advisories/2008/1811
+http://bugzilla.kernel.org/show_bug.cgi?id=11399
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=7c2500f
 
-Off-by-one error in the ppscan function (preproc.c) in Netwide
-Assembler (NASM) 2.02 allows context-dependent attackers to cause a
-denial of service (crash) and possibly execute arbitrary code via a
-crafted file that triggers a stack-based buffer overflow.
+---
+[WATCHDOG] ib700wdt.c - fix buffer_underflow bug
 
+This fixes Bug 11399:
+if ibwdt_set_heartbeat(int t) is called with value 30 then the check
+"if ((t < 0) || (t > 30))" in ibwdt_set_heartbeat is not going to fail
+because t == 30, but in the loop, the check wd_times[i] > t is never
+going to be true because none of the wd_times are greater than the
+value of t (i.e. 30). So we are exiting the loop with i == -1 and
+therefore setting wd_margin to -1 which is wrong.
 
+Reported-by: Zvonimir Rakamaric <zrakamar@...ubc.ca>
+Signed-off-by: Wim Van Sebroeck <wim@...ana.be>
