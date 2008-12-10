@@ -1,31 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/30/5
-Message-ID: <Pine.GSO.4.51.0806301519290.13725@faron.mitre.org>
-Date: Mon, 30 Jun 2008 15:21:15 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request mercurial:Insufficient input validation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/10/4
+Message-ID: <493FD7FB.9050006@op5.se>
+Date: Wed, 10 Dec 2008 15:53:47 +0100
+From: Andreas Ericsson <ae@....se>
+To: Eygene Ryabinkin <rea-sec@...elabs.ru>
+CC: oss-security@...ts.openwall.com, jlieskov@...hat.com,  coley@...re.org
+Subject: Re: CVE Request (nagios)
 Content-Type: text/plain; charset=utf-8
 
+Eygene Ryabinkin wrote:
+> Andreas, good day.
+> 
+> Will you be able to clarify two things.
+> 
+> Mon, Dec 08, 2008 at 05:19:52PM +0300, Eygene Ryabinkin wrote:
+>> So
+>>   http://nagios.cvs.sourceforge.net/viewvc/nagios/nagios/base/commands.c?r1=1.109&r2=1.110&view=patch
+>> just completely closes the processing of these commands from the
+>> Nagios side.  May be this was the fix for the case when the evil
+>> contents from the command file were still floating around but the
+>> upgraded Nagios won't process them because they could go from the
+>> previous successful attack but are lying unprocessed?
+> 
+> Do you think it is really so?
+> 
 
-Out of curiosity, what attack scenarios exist for this issue?  If an
-attacker has control over the patch already, then code execution on the
-system already seems likely.  Or is the impact mostly limited to "compile
-farms" and limited-access user accounts?
+Umm... I can't parse the above paragraph. In short though, the removed
+commands are removed *from the cgi's* because it's far too dangerous
+to allow such things over the web. Nagios will still process them if
+they are submitted to the command-pipe, but the CGI's can no longer
+write such commands to said pipe.
 
-- Steve
+>>> It is a bit strange that it was done after 3.0.5 (CSRF was documented in
+>>> 3.0.5 release notes), but...  By the way, entry for CVE-2008-5028 speaks
+>>> about 3.0.5 as about the vulnerable to the CSRF and it is inconsistent
+>>> with the release notes at
+>>>   http://www.nagios.org/development/history/nagios-3x.php.
+>> So I feel the the CSRF was "somehow closed" in 3.0.5 and CVE entry may
+>> need fixing.  The remains from this bug that could migrate from 3.0.5 to
+>> 3.0.6 (but not in the functional sense, only via the unprocessed command
+>> file) were "fixed" in 3.0.6.
+> 
+> CVE-2008-5028 really speaks about 3.0.5 as about vulnerable to CSRF.  At
+> least CHANGE_ commands were closed in 3.0.5 and were (presumably)
+> additionally closed at the Nagios server side in 3.0.6.  So either 3.0.6
+> is vulnerable too, 3.0.5 is not vulnerable to CSRF or I am missing
+> something.  What to choose?
+> 
 
+3.0.5 is vulnerable to CSRF. 3.0.6 (which adds in-form session tokens to
+cmd.cgi, which processes all commands from the web-forms), is not vulnerable
+to CSRF.
 
-======================================================
-Name: CVE-2008-2942
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2942
-Reference: CONFIRM:http://www.selenic.com/hg/rev/87c704ac92d4
-Reference: MLIST:[oss-security] 20080630 CVE id request mercurial:Insufficient input validation
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/06/30/1
+3.0.5 fixes the authorization bypass discussed in CVE-2008-5027, where an
+authenticated user can submit commands he/she was not supposed to be able
+to submit. However, by blocking the CHANGE_ set of commands, the worst-case
+impact of the CSRF was drastically reduced, and the change to blocking those
+commands was also a part of 3.0.5.
 
-Directory traversal vulnerability in patch.py in Mercurial 1.0.1
-allows user-assisted attackers to modify arbitrary files via ".." (dot
-dot) sequences in a patch file.
+I'm afraid Ethan (the Nagios maintainer) got it wrong in the changelog,
+which is why, I presume, there's so much confusion right now.
 
+I wrote the patches for it though, so I think it's safe to say I know what
+patch (and version) fixed what.
 
+-- 
+Andreas Ericsson                   andreas.ericsson@....se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
