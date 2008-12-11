@@ -1,30 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/15/2
-Message-ID: <87hc554tlr.fsf@mid.deneb.enyo.de>
-Date: Mon, 15 Dec 2008 11:32:00 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
-To: jlieskov@...hat.com
-Cc: oss-security@...ts.openwall.com,  Raphael Geissert <atomo64+debian@...il.com>
-Subject: Re:  Re: CVE Request - roundcubemail
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/11/1
+Message-Id: <1229008955.3477.43.camel@dhcp-lab-164.englab.brq.redhat.com>
+Date: Thu, 11 Dec 2008 16:22:35 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: Andreas Ericsson <ae@....se>, Eygene Ryabinkin <rea-sec@...elabs.ru>
+Cc: oss-security@...ts.openwall.com, coley@...re.org
+Subject: Re: CVE Request (nagios)
 Content-Type: text/plain; charset=utf-8
 
-* Jan Lieskovsky:
+Hello guys,
 
->> I think this is a documented feature of preg_replace with the "e"
->> flag, comparable to what happens when you use string concatenation to
->> create SQL statements.
->
-> Yes, according to:
-> http://bugs.php.net/bug.php?id=35960
->
-> the behavior of 'e' modifier in the preg_replace function is
-> expected and well documented feature:
->
-> http://php.net/manual/en/reference.pcre.pattern.modifiers.php
+  I can't follow this. Nagios 3.0.5 should fix two issues: 
 
-Nowhere in the documentation it says that "" quotes are unsafe when
-combined with a sufficiently general capture pattern.
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5027
+Patch: ?
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5028
+Patch: http://git.op5.org/git/?p=nagios.git;a=commit;h=9c2a418ab4f6e4ef3a53ddcde402fe4781caa764
 
-Do you happen to know if it's safe in all cases to use '' quotes
-around the capture reference?  For instance, how does PHP deal with
-MBCS in the replacement string?
+So Nagios 3.0.6 Changelog: http://www.nagios.org/development/history/nagios-3x.php
+"Fix for CGI submission of external commands (writing newlines and submitting service comments)"
+is only part of CVE-2008-5027, which hasn't been committed to Nagios 3.0.5?
+
+And patch for:
+"Disabled adaptive check and eventhandler commands for security reasons" (also from 3.0.6 Changelog)
+is: http://nagios.cvs.sourceforge.net/viewvc/nagios/nagios/base/commands.c?r1=1.109&amp;r2=1.110&amp;pathrev=MAIN
+
+Is this also part of "incomplete" fix for CVE-2008-5027 in 3.0.5?
+i.e. nothing security related was fixed in 3.0.6 and all the
+changes committed are only due late upstream committing of patches
+for CVE-2008-502{7,8}?
+
+Thanks!, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+
+
