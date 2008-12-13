@@ -1,28 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/17/7
-Message-ID: <28fa9c5e0812161807l68759c64ke18cc9adc2efe1f7@mail.gmail.com>
-Date: Wed, 17 Dec 2008 10:07:11 +0800
-From: "Eugene Teo" <eugeneteo@...nel.sg>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel: applicom: fix an unchecked user ioctl range
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/13/4
+Message-ID: <874p176c3w.fsf@mid.deneb.enyo.de>
+Date: Sat, 13 Dec 2008 21:42:27 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
+To: oss-security@...ts.openwall.com
+Subject: Re:  Re: CVE Request - roundcubemail
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Dec 17, 2008 at 9:55 AM, Steven M. Christey
-<coley@...us.mitre.org> wrote:
->
-> On Wed, 10 Dec 2008, Eugene Teo wrote:
->
->> Steve, can you please assign a CVE name. Thanks.
->>
->> http://bugzilla.kernel.org/show_bug.cgi?id=11408
->> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=a7be18d
->
-> Can the affected IOCTL be accessed by malicious attackers?  If it's
-> protected in some sense, maybe it doesn't cross privilege boundaries.
-> Although Linus does mention an "unchecked user ioctl range."
+* Ingrid wrote:
 
-ac_ioctl() does not restrict access to only privileged users, and
-IndexCard is user-controllable.
+> Therefore, I agree with Raphael that the issue has not been found yet.
 
-Thanks, Eugene
+It may be related to:
+
+  <http://www.hardened-php.net/advisory_042006.119.html>
+
+Is there some way to turn of /e support in preg_replace (causing PHP
+to abort with an error instead), in particular if the captures contain
+one of the characters "$", "{", "}"?
+
+Is it safe to surround the captures with '$1' instead of "$1"?
