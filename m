@@ -1,38 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/18/2
-Message-Id: <1227013019.4166.41.camel@dhcp-lab-164.englab.brq.redhat.com>
-Date: Tue, 18 Nov 2008 13:56:59 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: coley@...re.org
-Cc: oss-security@...ts.openwall.com, Jamie Strandboge <jamie@...onical.com>
-Subject: CVE Request - ecryptfs-utils
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/13/3
+Message-ID: <87d4fw7xts.fsf@mid.deneb.enyo.de>
+Date: Sat, 13 Dec 2008 19:07:59 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
+To: oss-security@...ts.openwall.com
+Subject: Re:  Re: CVE Request - roundcubemail
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve,
+* Florian Weimer:
 
-  noticed, the following issue still lacks a separate CVE identifier:
+> * Raphael Geissert:
+>
+>> I became aware of some sort of code execution vulnerability one day
+>> before that ticket was reported. After reviewing the file I
+>> determined that it isn't a vulnerability in roundcube, but in PHP
+>> itself; but I'm open to be proved wrong.
+>
+> I think this is a documented feature of preg_replace with the "e"
+> flag, comparable to what happens when you use string concatenation to
+> create SQL statements.
 
-References:
-http://secunia.com/Advisories/32382/
-http://www.openwall.com/lists/oss-security/2008/10/23/3
-http://www.openwall.com/lists/oss-security/2008/10/29/4
-http://www.openwall.com/lists/oss-security/2008/10/29/7
+Scratch that, I had an off-by-one error in matching search/replace
+terms. 8-(
 
-Upstream commits:
-
-http://git.kernel.org/?p=linux/kernel/git/mhalcrow/ecryptfs-utils.git;a=commit;h=06de99afd53f03fe07eda0ad9d61ac6d5d4d9f53
-http://git.kernel.org/?p=linux/kernel/git/mhalcrow/ecryptfs-utils.git;a=commit;h=0af27a5d514dc4bbc077f07cf33a5d5b362a9193
-
-Affected ecryptfs-utils versions:
-  Jamie mentions ecryptfs-utils > 45 for ecryptfs-setup-private script,
-  but the upstream commit applies also for ecryptfs_{add, wrap}_passphrase.c
-  utilities present in previous versions (checked presence in ecryptfs-utils-41-1).
-
-Could you please allocate a new CVE id for this one?
-
-Thanks, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-
-
+Therefore, I agree with Raphael that the issue has not been found yet.
