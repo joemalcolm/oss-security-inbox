@@ -1,59 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/08/15
-Message-ID: <Pine.LNX.4.64.0807082206400.27940@forced.attrition.org>
-Date: Tue, 8 Jul 2008 22:09:23 +0000 (UTC)
-From: security curmudgeon <jericho@...rition.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/13/2
+Message-ID: <87wse4xml0.fsf@mid.deneb.enyo.de>
+Date: Sat, 13 Dec 2008 13:54:03 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Subject: Major DNS vulnerability announced  [CVE Question]
+Subject: Re:  Re: CVE Request - roundcubemail
 Content-Type: text/plain; charset=utf-8
 
+* Raphael Geissert:
 
-Since this is about to make VDB life complicated..
+> I became aware of some sort of code execution vulnerability one day
+> before that ticket was reported. After reviewing the file I
+> determined that it isn't a vulnerability in roundcube, but in PHP
+> itself; but I'm open to be proved wrong.
 
-Microsoft has:
-DNS Insufficient Socket Entropy Vulnerability - CVE-2008-1447
-DNS Cache Poisoning Vulnerability - CVE-2008-1454
-
-Cisco has:
-CVE-2008-1447
-
-Question: Is CVE going to keep those two identifiers for the fundamental 
-issues, and load them up with affected vendors?
-
----------- Forwarded message ----------
-
-http://www.kb.cert.org/vuls/id/800113
-
-Vulnerability Note VU#800113
-Multiple DNS implementations vulnerable to cache poisoning
-
-Overview
-
-Deficiencies in the DNS protocol and common DNS implementations facilitate 
-DNS cache poisoning attacks.
-
-I. Description
-
-The Domain Name System (DNS) is responsible for translating host names to 
-IP addresses (and vice versa) and is critical for the normal operation of 
-internet-connected systems. DNS cache poisoning (sometimes referred to as 
-cache pollution) is an attack technique that allows an attacker to 
-introduce forged DNS information into the cache of a caching nameserver. 
-DNS cache poisoning is not a new concept; in fact, there are published 
-articles that describe a number of inherent deficiencies in the DNS 
-protocol and defects in common DNS implementations that facilitate DNS 
-cache poisoning. The following are examples of these deficiencies and 
-defects:
-
-< - >
-
-II. Impact
-
-An attacker with the ability to conduct a successful cache poisoning 
-attack can cause a nameserver's clients to contact the incorrect, and 
-possibly malicious, hosts for particular services. Consequently, web 
-traffic, email, and other important network data can be redirected to 
-systems under the attacker's control.
-
-< - >
-
+I think this is a documented feature of preg_replace with the "e"
+flag, comparable to what happens when you use string concatenation to
+create SQL statements.
