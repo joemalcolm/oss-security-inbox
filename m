@@ -1,27 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/14/2
-Message-ID: <20080814150155.GA22912@falco.falcal.net>
-Date: Thu, 14 Aug 2008 17:01:55 +0200
-From: Raphael Marichez <falco@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/13/1
+Message-ID: <ghv43k$aqq$1@ger.gmane.org>
+Date: Fri, 12 Dec 2008 19:45:17 -0600
+From: Raphael Geissert <atomo64+debian@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: HAVP 0.89 fixes a crash
+Subject: Re: CVE Request - roundcubemail
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
 Hi,
 
-havp (http://www.server-side.de/) seems to fix a DoS:
+Jan Lieskovsky wrote:
 
-03.08.2008
-HAVP 0.89 released
-- Fix possible retry loop and hang (thanks to Peter Warasin @ endian.it)
-- Always send Via: header, fixes some IIS problems (e.g. MSNBC)
+> Hello Steve,
+> 
+>   this will need a new CVE identifier:
+> http://trac.roundcube.net/ticket/1485618
+> http://trac.roundcube.net/changeset/2148
+> 
 
-Original report:
+I became aware of some sort of code execution vulnerability one day before that
+ticket was reported. After reviewing the file I determined that it isn't a
+vulnerability in roundcube, but in PHP itself; but I'm open to be proved wrong.
 
-https://sourceforge.net/mailarchive/message.php?msg_name=487CDF51.5060201%40endian.com
+Note that I have not yet determined how exactly the vulnerability is being
+exploited, but am working on it.
 
+Cheers,
+- -- 
+Raphael Geissert - Debian Maintainer
+www.debian.org - get.debian.net
 
--- 
-Raphael Marichez aka Falco
-Gentoo Linux Security Team
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAklDE64ACgkQYy49rUbZzlpO+QCfWpIGeSzor9+Su4bKGB640jq/
+mp8AoJ/7u4opntkHMBIUt8KomFXSW9Ts
+=gYTB
+-----END PGP SIGNATURE-----
+
