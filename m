@@ -1,53 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/30/4
-Message-ID: <Pine.GSO.4.51.0809301427120.3627@faron.mitre.org>
-Date: Tue, 30 Sep 2008 14:28:02 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: ftpd
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/14/1
+Message-ID: <20081214113226.76687620@redhat.com>
+Date: Sun, 14 Dec 2008 11:32:26 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: OSS Security <oss-security@...ts.openwall.com>
+Cc: hdias@...chlabs.com
+Subject: Avahi daemon DoS (CVE-2008-5081)
 Content-Type: text/plain; charset=utf-8
 
+Hi!
 
-CVE-2008-4247 is for *BSD's ftpd; CVE-2008-4242 is for ProFTPD.
+New avahi upstream release 0.6.24 was released on Friday.
+  http://avahi.org/milestone/Avahi%200.6.24
 
-- Steve
+Security issue mentioned in the DoS flaw reported by Hugo Dias.
+Crafted mDNS packet with source port 0 can cause avahi-daemon to
+abort() due to failed assertion assert(port > 0); in
+originates_from_local_legacy_unicast_socket() function in
+avahi-core/server.c.
 
+Upstream commit:
+http://git.0pointer.de/?p=avahi.git;a=commitdiff;h=3093047f1aa36bed8a37fa79004bf0ee287929f4
 
-======================================================
-Name: CVE-2008-4242
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4242
-Reference: CONFIRM:http://bugs.proftpd.org/show_bug.cgi?id=3115
-Reference: BID:31289
-Reference: URL:http://www.securityfocus.com/bid/31289
-Reference: SECUNIA:31930
-Reference: URL:http://secunia.com/advisories/31930
-Reference: XF:proftpd-url-csrf(45274)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/45274
+CVE CVE-2008-5081 was assigned to this issue.
 
-ProFTPD 1.3.1 interprets long commands from an FTP client as multiple
-commands, which allows remote attackers to conduct cross-site request
-forgery (CSRF) attacks and execute arbitrary FTP commands via a long
-ftp:// URI that leverages an existing session from the FTP client
-implementation in a web browser.
-
-
-======================================================
-Name: CVE-2008-4247
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4247
-Reference: MISC:http://bugs.proftpd.org/show_bug.cgi?id=3115
-Reference: CONFIRM:http://www.openbsd.org/cgi-bin/cvsweb/src/libexec/ftpd/ftpcmd.y
-Reference: CONFIRM:http://www.openbsd.org/cgi-bin/cvsweb/src/libexec/ftpd/ftpcmd.y.diff?r1=1.51&r2=1.52&f=h
-Reference: CONFIRM:http://www.openbsd.org/cgi-bin/cvsweb/src/libexec/ftpd/ftpd.c
-Reference: CONFIRM:http://www.openbsd.org/cgi-bin/cvsweb/src/libexec/ftpd/ftpd.c.diff?r1=1.183&r2=1.184&f=h
-Reference: SECTRACK:1020946
-Reference: URL:http://www.securitytracker.com/id?1020946
-
-ftpd in OpenBSD 4.3, FreeBSD 7.0, and NetBSD 4.0 interprets long
-commands from an FTP client as multiple commands, which allows remote
-attackers to conduct cross-site request forgery (CSRF) attacks and
-execute arbitrary FTP commands via a long ftp:// URI that leverages an
-existing session from the FTP client implementation in a web browser.
-
-
+-- 
+Tomas Hoger / Red Hat Security Response Team
