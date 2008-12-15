@@ -1,25 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/16/2
-Message-ID: <20080616141828.GE7183@severus.strandboge.com>
-Date: Mon, 16 Jun 2008 10:18:28 -0400
-From: Jamie Strandboge <jamie@...onical.com>
-To: oss-security@...ts.openwall.com, coley@...re.org
-Subject: CVE Id request: vim
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/15/2
+Message-ID: <87hc554tlr.fsf@mid.deneb.enyo.de>
+Date: Mon, 15 Dec 2008 11:32:00 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
+To: jlieskov@...hat.com
+Cc: oss-security@...ts.openwall.com,  Raphael Geissert <atomo64+debian@...il.com>
+Subject: Re:  Re: CVE Request - roundcubemail
 Content-Type: text/plain; charset=utf-8
 
-vim has a number of issues in its quoting in runtime/ files, as listed
-in:
-http://www.rdancer.org/vulnerablevim.html
+* Jan Lieskovsky:
 
-These should all be fixed now according to:
-http://groups.google.com/group/vim_dev/browse_frm/month/2008-06
+>> I think this is a documented feature of preg_replace with the "e"
+>> flag, comparable to what happens when you use string concatenation to
+>> create SQL statements.
+>
+> Yes, according to:
+> http://bugs.php.net/bug.php?id=35960
+>
+> the behavior of 'e' modifier in the preg_replace function is
+> expected and well documented feature:
+>
+> http://php.net/manual/en/reference.pcre.pattern.modifiers.php
 
-Can you assign CVEs?
+Nowhere in the documentation it says that "" quotes are unsafe when
+combined with a sufficiently general capture pattern.
 
-Jamie
-
--- 
-Ubuntu Security Engineer     | http://www.ubuntu.com/
-Canonical Ltd.               | http://www.canonical.com/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (190 bytes)
+Do you happen to know if it's safe in all cases to use '' quotes
+around the capture reference?  For instance, how does PHP deal with
+MBCS in the replacement string?
