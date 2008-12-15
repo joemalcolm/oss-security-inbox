@@ -1,49 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/25/5
-Message-ID: <20080825155838.GY451@linsec.ca>
-Date: Mon, 25 Aug 2008 09:58:38 -0600
-From: Vincent Danen <vdanen@...sec.ca>
-To: oss-security@...ts.openwall.com, vendor-sec@....de
-Subject: Re: Re: libxml2 denial of service flaw (CVE-2008-3281)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/15/4
+Message-ID: <4946DFBC.1060800@gentoo.org>
+Date: Mon, 15 Dec 2008 23:52:44 +0100
+From: Christian Hoffmann <hoffie@...too.org>
+To: oss-security@...ts.openwall.com
+CC: jlieskov@...hat.com, Raphael Geissert <atomo64+debian@...il.com>
+Subject: Re:  Re: CVE Request - roundcubemail
 Content-Type: text/plain; charset=utf-8
 
-* [2008-08-24 17:16:55 +0200] Nico Golde wrote:
+On 2008-12-15 11:32, Florian Weimer wrote:
+> Nowhere in the documentation it says that "" quotes are unsafe when
+> combined with a sufficiently general capture pattern.
+Well yes, it would probably be better to have a big warning at this
+place, because this flag is very dangerous unless used properly and all
+use cases should be expressable through preg_replace_callback as well,
+which is hard to use improperly from a syntax point of view, as no
+evaluation of user-supplied data is ever going to happen. :)
+But I would not say that PHP or its docs are wrong because of this.
 
->Hi again,
->* Nico Golde <oss-security+ml@...lde.de> [2008-08-24 17:07]:
->> * Robert Buchholz <rbu@...too.org> [2008-08-23 18:06]:
->> > On Wednesday 20 August 2008, Daniel Veillard wrote:
->> > > On Wed, Aug 20, 2008 at 12:42:29PM -0400, Josh Bressers wrote:
->[...] 
->> > Our gnome maintainers pointed out that the patch (which was also pushed 
->> > upstream) breaks GDM in GNOME 2.22, as can be seen in Gentoo and 
->> > Mandriva:
->> >   https://bugs.gentoo.org/show_bug.cgi?id=235529
->> >   https://qa.mandriva.com/show_bug.cgi?id=43094
->> > 
->> > upstream bug:
->> >   http://bugzilla.gnome.org/show_bug.cgi?id=549087
->> > 
->> > Those who did not push updates yet might want to delay this, we have 
->> > been reverting the patch for now.
->> > I am CC'ing oss-security, please send follow-ups to that list.
->> 
->> Looks like rebuilding librsvg against libxml2 does solve the 
->> problem referring to our bug report:
->> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=496125#79
->
->YFYI there is a new patch which is not extending the 
->xmlEntity struct but abusing an already existing field.
->See https://bugzilla.redhat.com/show_bug.cgi?id=459830
+Of course you can still mess up your callback function in a way which
+creates issues, but this is a generic issue which might as well happen
+at different places in your code.
 
-Does anyone know if this affects anything other than librsvg?  If so,
-the patch approach to fixing libxml2 would be better.  I've just started
-looking into this today, so I'm not quite up to speed on this, but it
-looks like there are problems with the gnome menus as well.
 
-Has anyone tried this new patch?
+> Do you happen to know if it's safe in all cases to use '' quotes
+> around the capture reference?  For instance, how does PHP deal with
+> MBCS in the replacement string?
+I cannot think of a case where single quotes could be easily
+circumvented somehow, but I'd never claim to be perfectly right here.
+Upstream added a perfectly fine fix, they replaced the /e usage by
+preg_replace_callback, so I don't see a reason why you would want to
+apply a different fix.
+
 
 -- 
-Vincent Danen @ http://linsec.ca/
+Christian Hoffmann
 
-Content of type "application/pgp-signature" skipped
+
+Download attachment "signature.asc" of type "application/pgp-signature" (261 bytes)
