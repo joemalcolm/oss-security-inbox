@@ -1,76 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/05/4
-Message-Id: <200806051215.19922.rbu@gentoo.org>
-Date: Thu, 5 Jun 2008 12:15:16 +0200
-From: Robert Buchholz <rbu@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/15/1
+Message-Id: <1229336221.3431.24.camel@dhcp-lab-164.englab.brq.redhat.com>
+Date: Mon, 15 Dec 2008 11:17:01 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Python Unsafe Module Loading
+Cc: Florian Weimer <fw@...eb.enyo.de>, Raphael Geissert <atomo64+debian@...il.com>
+Subject: Re:  Re: CVE Request - roundcubemail
 Content-Type: text/plain; charset=utf-8
 
-On Thursday 05 June 2008, Ned Ludd wrote:
-> On Thu, 2008-06-05 at 10:10 +0200, Robert Buchholz wrote:
-> > On Wednesday 04 June 2008, Ned Ludd wrote:
-> > > So for nearly every python based program you can simply dump 
-> > > *.so *.py *.pyc files just about anywhere on the file system
-> > > where an admin might invoke python.
-> >
-> > As I also pointed out in our bug [1], this only happens in two
-> > cases: (1) The interactive shell is used to run python code.
-> > (2) A python script resides inside an untrusted directory.
-> >
-> > What I expect to be the most common use case, running python code
-> > from /usr, or /home, is safe. Since all out-of-the-box software
-> > would be installed in directories that are not world-writable, I am
-> > tempted call (2) an error on the user side. Changing the behaviour
-> > of python in this manner would also break existing programs.
-> >
-> >
-> > Robert
-> >
-> > [1] https://bugs.gentoo.org/show_bug.cgi?id=224925
->
-> Re: (1)
-> How this limited to interactive shells? Our portage/emerge being
-> directly not vuln is left to near sheer luck that Nick.C opted to
-> shove a path into our portage module a-long time ago.. But our tools
-> are questionable as it all depends on load order..
->
-> More examples:
->
-> solar@...ia /tmp $ touch re.so
-> solar@...ia /tmp $ cat foo.py
-> import string
-> print "foo"
->
-> solar@...ia /tmp $ python foo.py
-> Traceback (most recent call last):
->   File "foo.py", line 1, in ?
->     import string
->   File "/usr/lib/python2.4/string.py", line 83, in ?
->     import re as _re
-> ImportError: /tmp/re.so: file too short
-> solar@...ia /tmp $ ls -l re.so
-> -rw-r--r-- 1 solar solar 0 Jun  5 01:22 re.so
->
-> (2) yeah that's pretty much 50% of the problem.
+Hello guys,
 
-The problem you demonstrated above was caused by (2), running a python 
-script that is located in /tmp. Portage, and most other python 
-programs, are not installed in /tmp, and therefore they do not import 
-files from /tmp, even if they are actually called there:
+On Sat, 2008-12-13 at 13:54 +0100, Florian Weimer wrote:
+> * Raphael Geissert:
+> 
+> > I became aware of some sort of code execution vulnerability one day
+> > before that ticket was reported. After reviewing the file I
+> > determined that it isn't a vulnerability in roundcube, but in PHP
+> > itself; but I'm open to be proved wrong.
+> 
+> I think this is a documented feature of preg_replace with the "e"
+> flag, comparable to what happens when you use string concatenation to
+> create SQL statements.
 
-rbu@...nut /tmp $ touch re.so
-rbu@...nut /tmp $ cat /home/rbu/foo.py
-import string
-print "foo"
+Yes, according to:
+http://bugs.php.net/bug.php?id=35960
 
-import sys
-print sys.path
-rbu@...nut /tmp $ python /home/rbu/foo.py
-foo
-['/home/rbu', '/usr/lib64/portage/pym', '/usr/lib64/python25.zip', '/usr/lib64/python2.5', '/usr/lib64/python2.5/plat-linux2', '/usr/lib64/python2.5/lib-tk', '/usr/lib64/python2.5/lib-dynload', '/usr/lib64/python2.5/site-packages', '/usr/lib64/python2.5/site-packages/Numeric', '/usr/lib64/python2.5/site-packages/gtk-2.0']
+the behavior of 'e' modifier in the preg_replace function is
+expected and well documented feature:
+
+http://php.net/manual/en/reference.pcre.pattern.modifiers.php
+
+So the problem isn't in PHP itself, the problem is
+roundcubemail (and possibly other applications) use it
+in wrong/improper/vulnerable way.
+
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
 
-Robert
-
-Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
