@@ -1,46 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/22/1
-Message-ID: <20081121190023.GK24416@ldl.fc.hp.com>
-Date: Fri, 21 Nov 2008 12:00:24 -0700
-From: dann frazier <dannf@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/16/1
+Message-ID: <20081216152949.GA8236@steve.org.uk>
+Date: Tue, 16 Dec 2008 15:29:49 +0000
+From: Steve Kemp <steve@...ve.org.uk>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: Unix sockets kernel panic
+Cc: Steven Christey <coley@...us.mitre.org>
+Subject: CVE request: mplayer
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Nov 11, 2008 at 05:41:44PM +0800, Eugene Teo wrote:
-> Eugene Teo wrote:
-> > We need a CVE name for this issue. This was reported in netdev today.
-> > 
-> > "The following code causes a kernel panic on Linux 2.6.26:
-> > http://darkircop.org/unix.c
-> > 
-> > I haven't investigated the bug so I'm not sure what is causing it, and
-> > don't know if it's exploitable.  The code passes unix sockets from one
-> > process to another using unix sockets.  The bug probably has to do
-> > with closing file descriptors."
-> > 
-> > http://marc.info/?l=linux-netdev&m=122593044330973&w=2
-> > https://bugzilla.redhat.com/show_bug.cgi?id=470201
-> > 
-> > There isn't a fix yet. Dave is working on it.
-> 
-> There's a fix now.
-> 
-> Upstream commits: f8d570a, 3b53fbf, and 6209344.
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=470201#c10
-> https://bugzilla.redhat.com/show_bug.cgi?id=470201#c14
-> https://bugzilla.redhat.com/show_bug.cgi?id=470201#c9
-> https://bugzilla.redhat.com/show_bug.cgi?id=470201#c13
 
-Thanks for following up.
+  It looks like there's a stack overflow in the handling of
+ twinvq files:
 
-fyi, our testing of this fix has uncovered additional issues.
-Local/unprivileged users can cause soft lockups and take out system
-processes by triggering the OOM killer:
-  http://marc.info/?l=linux-netdev&m=122721862313564&w=2
+    http://trapkit.de/advisories/TKADV2008-014.txt
 
--- 
-dann frazier
+    Affected Software:      MPlayer 1.0rc2    < r28150 and 
+                            MPlayer SVN trunk < r28149
+
+Steve
+--
+Debian GNU/Linux System Administration
+http://www.debian-administration.org/
 
