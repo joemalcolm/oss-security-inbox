@@ -1,37 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/08/1
-Message-ID: <20080808093409.GD25853@ngolde.de>
-Date: Fri, 8 Aug 2008 11:34:09 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/17/26
+Message-Id: <200812171857.31297.steffen.joeris@skolelinux.de>
+Date: Wed, 17 Dec 2008 18:57:27 +0100
+From: Steffen Joeris <steffen.joeris@...lelinux.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: phpmyadmin < 2.11.8
+Cc: Nico Golde <oss-security+ml@...lde.de>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE id request: php-xajax
 Content-Type: text/plain; charset=utf-8
 
-Hi Steven,
-* Steven M. Christey <coley@...us.mitre.org> [2008-08-04 22:10]:
-> Name: CVE-2008-3457
-> Status: Candidate
-> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3457
-> Reference: MISC:http://yehg.net/lab/pr0js/advisories/XSS_inPhpMyAdmin2.11.7.pdf
-> Reference: CONFIRM:http://www.phpmyadmin.net/home_page/security.php?issue=PMASA-2008-6
-> Reference: FRSIRT:ADV-2008-2226
-> Reference: URL:http://www.frsirt.com/english/advisories/2008/2226/references
-> Reference: SECUNIA:31263
-> Reference: URL:http://secunia.com/advisories/31263
-> 
-> Cross-site scripting (XSS) vulnerability in setup.php in phpMyAdmin
-> before 2.11.8 allows user-assisted remote attackers to inject
-> arbitrary web script or HTML via crafted setup arguments.  NOTE: this
-> issue can only be exploited in limited scenarios in which the attacker
-> must be able to modify config/config.inc.php.
-
-Hmm where is the issue here? Sure the application is 
-vulnerable if an attacker can edit a file that is included 
-all over the place. I think you have way more problems than 
-an XSS in setup.php in such a case.
+On Wed, 17 Dec 2008 06:19:20 pm Nico Golde wrote:
+> Hi,
+>
+> * Steven M. Christey <coley@...us.mitre.org> [2008-12-17 17:53]:
+> > On Wed, 17 Dec 2008, Steffen Joeris wrote:
+> > > The patch for CVE-2007-2739 seems incomplete as it doesn't escape "&".
+> > > I recommend removing the replace call and using htmlspecialchars()
+> > > instead.
+> >
+> > This counts for a new CVE, so use CVE-2008-5623
+> >
+> > Will there be more details available, or should I just write the
+> > description up based on the oss-security post?  Which versions are
+> > affected?
+>
+> Please enlighten me why it is incomplete. As far as I know
+> you can't perform an XSS with & only (I'm not a webappsec
+> expert though). But the reason it behaves different from
+> htmlspecialchars should not make this patch incomplete.
+Afaik you can use & to specify values like ../foo.php&value=bar
+Thus the patch looked incomplete to me and should be extended to escape & as 
+well.
 
 Cheers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+Steffen
+
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
