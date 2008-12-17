@@ -1,29 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/22/4
-Message-ID: <Pine.GSO.4.51.0810221306460.25959@faron.mitre.org>
-Date: Wed, 22 Oct 2008 13:06:55 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/17/25
+Message-ID: <20081217171920.GE19388@ngolde.de>
+Date: Wed, 17 Dec 2008 18:19:20 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: sctp: Fix kernel panic while process protocol violation parameter
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE id request: php-xajax
 Content-Type: text/plain; charset=utf-8
 
+Hi,
+* Steven M. Christey <coley@...us.mitre.org> [2008-12-17 17:53]:
+> On Wed, 17 Dec 2008, Steffen Joeris wrote:
+> 
+> > The patch for CVE-2007-2739 seems incomplete as it doesn't escape "&".
+> > I recommend removing the replace call and using htmlspecialchars() instead.
+> 
+> This counts for a new CVE, so use CVE-2008-5623
+> 
+> Will there be more details available, or should I just write the
+> description up based on the oss-security post?  Which versions are
+> affected?
 
-======================================================
-Name: CVE-2008-4618
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4618
-Reference: MLIST:[oss-security] 20081006 CVE request: kernel: sctp: Fix kernel panic while process protocol violation parameter
-Reference: URL:http://www.openwall.com/lists/oss-security/2008/10/06/1
-Reference: CONFIRM:http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.27.y.git;a=commit;h=ba0166708ef4da7eeb61dd92bbba4d5a749d6561
-Reference: CONFIRM:http://www.kernel.org/pub/linux/kernel/v2.6/ChangeLog-2.6.27
+Please enlighten me why it is incomplete. As far as I know 
+you can't perform an XSS with & only (I'm not a webappsec 
+expert though). But the reason it behaves different from 
+htmlspecialchars should not make this patch incomplete.
 
-The Stream Control Transmission Protocol (sctp) implementation in the
-Linux kernel before 2.6.27 does not properly handle a protocol
-violation in which a parameter has an invalid length, which allows
-attackers to cause a denial of service (panic) via unspecified
-vectors, related to sctp_sf_violation_paramlen,
-sctp_sf_abort_violation, sctp_make_abort_violation, and incorrect data
-types in function calls.
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-
+Content of type "application/pgp-signature" skipped
