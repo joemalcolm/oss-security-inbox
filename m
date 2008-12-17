@@ -1,44 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/03/6
-Message-ID: <20081003154037.GA13876@pool.math.tu-berlin.de>
-Date: Fri, 3 Oct 2008 17:40:37 +0200
-From: Thomas Bläsing <thomasbl@...l.math.tu-berlin.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: proftpd
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/17/5
+Message-ID: <Pine.GSO.4.51.0812162053460.5724@faron.mitre.org>
+Date: Tue, 16 Dec 2008 20:55:24 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Eugene Teo <eugeneteo@...nel.sg>
+cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: applicom: fix an unchecked user ioctl range
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-On Thu, Oct 02, 2008 at 03:27:16PM +0200, Miklos Vajna wrote:
-> On Mon, Sep 22, 2008 at 05:57:45PM +1000, Steffen Joeris <steffen.joeris@...lelinux.de> wrote:
-> > proftpd suffers from a Cross-site request forgery. Could we please get a CVE 
-> > id for this?
-> 
-> For the reference, this is CVE-2008-4242.
+On Wed, 10 Dec 2008, Eugene Teo wrote:
 
-is this possible an issue just for *BSD systems?
+> Steve, can you please assign a CVE name. Thanks.
+>
+> http://bugzilla.kernel.org/show_bug.cgi?id=11408
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=a7be18d
 
-I've installed the vulnerable proftpd version from source on a linux system
-and was doing the following to reproduce the bug:
+Can the affected IOCTL be accessed by malicious attackers?  If it's
+protected in some sense, maybe it doesn't cross privilege boundaries.
+Although Linus does mention an "unchecked user ioctl range."
 
-$ echo "open ftp://thomasbl@....0.0.1:21" > script; python -c 'for i in range(1,5200): print "%ssyst" % ("A"*i)' >> script
-$ lftp -f script &> out
-$ grep -iv "Unknown command \`[A]*syst'." out | wc -l
-0
-
-Furthermore, I didn't found the vulnerable lines of code in the source
-where the patch for the issue is based on. As well as in the actually proftpd
-source package the vulnerable source isn't existing.
-
-So, I was wondering that the issue is still a *BSD issue and the
-description is wrong.
-
-I am right? Or did I do a mistake?
-
-The same problem I have for CVE-2008-4247. Is it also still a BSD issue?
-
-Kind regards,
-Thomas.
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (190 bytes)
+- Steve
