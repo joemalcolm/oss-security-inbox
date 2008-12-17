@@ -1,29 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/17/3
-Message-ID: <20080617081738.GB23907@suse.de>
-Date: Tue, 17 Jun 2008 10:17:38 +0200
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/17/21
+Message-ID: <20081217153207.GA14541@suse.de>
+Date: Wed, 17 Dec 2008 16:32:07 +0100
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: FreeType 2.3.6
+Cc: Eugene Teo <eugeneteo@...nel.sg>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: Re: CVE request: kernel: applicom: fix an unchecked user ioctl range
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jun 17, 2008 at 10:10:35AM +0200, Tomas Hoger wrote:
-> On Tue, 17 Jun 2008 10:05:17 +0200 Thomas Biege <thomas@...e.de> wrote:
+On Tue, Dec 16, 2008 at 09:24:32PM -0500, Steven M. Christey wrote:
 > 
-> > Are CVE-IDs assigned for this issues?
+> On Wed, 17 Dec 2008, Eugene Teo wrote:
 > 
-> Yes, CVE-2008-1806 CVE-2008-1807 CVE-2008-1808.  See NVD site or
-> iDefense advisories.
+> > Hmm, there's a comment in the ac_ioctl() that the device for this is
+> > only accessible by root, so if out of range may not matter. Hmm. So,
+> > maybe, maybe not.
+> 
+> Our current approach would be, probably not.
 
-Ah thanks. Next time I will look harder. :)
+I guess the accessibility very much depends on the /dev/ac* device
+permissions here. For a multiport serial card I guess root/tty only.
 
--- 
-Bye,
-     Thomas
--- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
--- 
-           Hamming's Motto:
-           The purpose of computing is insight, not numbers.
-                                -- Richard W. Hamming
+Ciao, Marcus
