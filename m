@@ -1,40 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/19/8
-Message-id: <1203440050.14346.TMDA@linsec.ca>
-Date: Tue, 19 Feb 2008 09:52:48 -0700
-From: Vincent Danen <vdanen@...sec.ca>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/17/6
+Message-ID: <Pine.GSO.4.51.0812162058390.5724@faron.mitre.org>
+Date: Tue, 16 Dec 2008 21:00:15 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: wiki
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: watchdog: ib700wdt.c - buffer_underflow bug
 Content-Type: text/plain; charset=utf-8
 
-* [2008-02-18 20:18:01 +0300] (GalaxyMaster) wrote:
 
->> Errr... it's been Mandriva for a few years now... =)
+On Wed, 10 Dec 2008, Eugene Teo wrote:
+
+> Steve, here's another one that needs a CVE name. Thanks!
 >
->Ouch, sorry, I know it but somehow my fingers recalled the former name :).
+> http://bugzilla.kernel.org/show_bug.cgi?id=11399
 
-That's ok... took me about 2 years too... =)
+Similar to the other issue, is this IOCTL reachable by anyone malicious?
 
->> Good to know.  I don't think we're lacking for anything (yet), but as
->> things grow, who knows?
->
->One thing you might want to see is a spell-checker (this would require
->aspell libraries on the server).  Nowadays, many browsers provide their
->own spell-checking functionality for text fields.  This is why I didn't
->bother to install aspell initially, but we might want to provide our
->authors with a spell-checker regardless of their browser (there is one
->requirement though: to be able to use the online spell-checker their
->browsers should support AJAX).
->
->All in all, we can always install it later :), and extending wiki's
->feature list could be a never ending process :)).
-
-Oh yes, you could really go to town on that.  I suppose if pages end up
-with horrible spelling in them then maybe you should add it, but I think
-it's not really necessary yet.  Of course, you could add it if you felt
-like it and I doubt anyone would complain.
-
--- 
-Vincent Danen @ http://linsec.ca/
-
-Content of type "application/pgp-signature" skipped
+- Steve
