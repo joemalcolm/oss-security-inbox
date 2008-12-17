@@ -1,39 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/21/19
-Message-ID: <20081121130806.GA12690@suse.de>
-Date: Fri, 21 Nov 2008 14:08:06 +0100
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/17/24
+Message-ID: <Pine.GSO.4.51.0812171106440.17008@faron.mitre.org>
+Date: Wed, 17 Dec 2008 11:07:45 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org, Jamie Strandboge <jamie@...onical.com>
-Subject: Re: CVE Request - ecryptfs-utils
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE id request: php-xajax
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Nov 18, 2008 at 01:56:59PM +0100, Jan Lieskovsky wrote:
-> Hello Steve,
-> 
->   noticed, the following issue still lacks a separate CVE identifier:
-> 
-> References:
-> http://secunia.com/Advisories/32382/
-> http://www.openwall.com/lists/oss-security/2008/10/23/3
-> http://www.openwall.com/lists/oss-security/2008/10/29/4
-> http://www.openwall.com/lists/oss-security/2008/10/29/7
-> 
-> Upstream commits:
-> 
-> http://git.kernel.org/?p=linux/kernel/git/mhalcrow/ecryptfs-utils.git;a=commit;h=06de99afd53f03fe07eda0ad9d61ac6d5d4d9f53
-> http://git.kernel.org/?p=linux/kernel/git/mhalcrow/ecryptfs-utils.git;a=commit;h=0af27a5d514dc4bbc077f07cf33a5d5b362a9193
 
-This last commit is still bad, it uses
+On Wed, 17 Dec 2008, Steffen Joeris wrote:
 
-printf "$PASSPHRASE..." stuff instead of printf "%s" "$PASSPHRASE..." 
+> The patch for CVE-2007-2739 seems incomplete as it doesn't escape "&".
+> I recommend removing the replace call and using htmlspecialchars() instead.
 
-So you can program format exploits in shell...
-http://git.kernel.org/?p=linux/kernel/git/mhalcrow/ecryptfs-utils.git;a=blob;f=src/utils/ecryptfs-setup-private;h=7780a4e43983dee18fd5e08318b41bccd57a7298;hb=HEAD
+This counts for a new CVE, so use CVE-2008-5623
 
-is the current version and looks better.
+Will there be more details available, or should I just write the
+description up based on the oss-security post?  Which versions are
+affected?
 
-This script (ecryptfs-setup-private) btw allows passing passphrases on the
-commandline too. *sigh*
+> Also, I seem to be unable to find anything regarding CVE-2007-2740. Did
+> anyone manage to find a patch or even what kind of issue we are talking
+> about? I only see the XSS.
 
-Ciao, Marcus
+CVE-2007-2740 is based on the xajax PHP and Javascript library 0.2.5
+Release Notes and Changelog, dated May 16, 2007, which states:
+"...Security vunerabilities have been patched."
+
+- Steve
