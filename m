@@ -1,48 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/10/7
-Message-ID: <47D5BAAD.4040702@freethemallocs.com>
-Date: Mon, 10 Mar 2008 14:48:13 -0800
-From: Jonathan Smith <smithj@...ethemallocs.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...re.org>
-Subject: Re: CVE request: dovecot unauthorized login
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/17/11
+Message-ID: <Pine.GSO.4.51.0812162121230.5724@faron.mitre.org>
+Date: Tue, 16 Dec 2008 21:24:32 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Eugene Teo <eugeneteo@...nel.sg>
+cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com
+Subject: Re: CVE request: kernel: applicom: fix an unchecked user ioctl range
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-Steven M. Christey wrote:
-| I wrote this up as 1.0.x instead of 1.0.11 (skip_password_check's
-| introduction) since (perhaps) other fields could be inserted to do
-| something bad.
-|
-| ======================================================
-| Name: CVE-2008-1271
-| Status: Candidate
-| URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1271
-| Reference: MLIST:[Dovecot-news] 20080309 v1.0.13 and v1.1.rc3 released
-| Reference:
-URL:http://www.dovecot.org/list/dovecot-news/2008-March/000065.html
-| Reference: MLIST:[Dovecot-news] 20080309 Security hole #6: Some
-passdbs allowed users to log in without a valid password
-| Reference:
-URL:http://www.dovecot.org/list/dovecot-news/2008-March/000064.html
-|
-| Argument injection vulnerability in Dovecot 1.0.x before 1.0.13, and
-| 1.1.x before 1.1.rc3, when using blocking passdbs, allows remote
-| attackers to bypass the password check via a password containing TAB
-| characters, which are treated as argument delimiters that enable the
-| skip_password_check field to be specified.
+On Wed, 17 Dec 2008, Eugene Teo wrote:
 
-So, we shouldn't be using CVE-2008-1218 for this (as you indicated
-yesterday)?
+> Hmm, there's a comment in the ac_ioctl() that the device for this is
+> only accessible by root, so if out of range may not matter. Hmm. So,
+> maybe, maybe not.
 
-	smithj
+Our current approach would be, probably not.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.8 (GNU/Linux)
+We're probably going to see an increase in issues related to IOCTLs
+(simply because we're seeing an increase in CVE, mostly in Windows
+software so far).  So the accessibility of the IOCTL matters - in some
+cases, maybe the IOCTL shouldn't be exposed to anybody untrusted at all
+(maybe you're listening on a socket that allows anyone to connect).  In
+other cases, maybe it can accept requests from untrusted users but then
+has to validate its inputs, like we're seeing with userland-to-kernel
+interfaces.
 
-iEYEARECAAYFAkfVuq0ACgkQCG91qXPaRemotgCgjfcW95noV7SulDu5UJHV0God
-xc4An2Z0lNVzyqZseVrQcO0ShNfsdiNw
-=KogG
------END PGP SIGNATURE-----
+- Steve
