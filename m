@@ -1,23 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/07/2
-Message-ID: <20080807121445.2a0004c6@redhat.com>
-Date: Thu, 7 Aug 2008 12:14:45 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/17/19
+Message-ID: <20081217154001.48e00a48@redhat.com>
+Date: Wed, 17 Dec 2008 15:40:01 +0100
 From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: oss-security+ml@...lde.de
-Subject: Re: CVE id request: git
+Cc: coley@...us.mitre.org
+Subject: Re: CVE request: phpMyAdmin < 3.1.1.0 (SQL injection through XSRF on several pages )
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 7 Aug 2008 10:41:54 +0200 Nico Golde
-<oss-security+ml@...lde.de> wrote:
+On Tue, 16 Dec 2008 20:52:42 -0500 (EST) "Steven M. Christey"
+<coley@...us.mitre.org> wrote:
 
-> Patch: 
-> http://git.kernel.org/?p=git/git.git;a=commitdiff;h=fd55a19eb1d49ae54008d932a65f79cd6fda45c9
+> Two separate CVE's are assigned, one for the original milw0rm exploit
+> and the other for the unspecified vectors implied by the implied
+> "XSRF on several pages" in the PMASA-2008-10 advisory.
 
-As it's on Secunia (SA31347), it's likely to be processed by Mitre
-soon.  Risk of duplicating ids seems fairly high here.
+Are those really separate issues?  I believe that -5622 was assigned
+because of the following mention in the upstream ChangeLog:
+  - [security] possible XSRF on several pages
 
-Btw, this should not be a big deal issue for fortify_sourced builds.
+However, that ChangeLog entry was added as a not too good description
+of the fix for the SQL injection described in milw0rm 7382.  Upstream
+commit is referenced in the PMASA-2008-10:
+http://phpmyadmin.svn.sourceforge.net/viewvc/phpmyadmin?view=rev&revision=12100
+
+I think that the wording here is bit confusing.  I think this kind of
+flaw would normally be described "privileged / logged-in user SQL
+injection".  Though as this is SQL DB management application, once you
+are logged in, you can execute SQL commands using the standard
+application features, rather than having to find some privileged user
+SQL injection flaw.   Hence this is only exploitable via CSRF-like
+methods.  Not sure if the CSRF term is right there, as this "CSRF" does
+not seem to do any harm without SQL injection flaw.
+
+Or were there any other reasons for split?
 
 -- 
 Tomas Hoger / Red Hat Security Response Team
