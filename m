@@ -1,29 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/21/20
-Message-ID: <nDfOhR/OHmaw6oa8SfHbTznfpfA@ZKNbuquk3iGGXdmv9wrsaHV7Oxw>
-Date: Fri, 21 Nov 2008 16:20:44 +0300
-From: Eygene Ryabinkin <rea-sec@...elabs.ru>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/17/30
+Message-ID: <Pine.GSO.4.51.0812171348511.17008@faron.mitre.org>
+Date: Wed, 17 Dec 2008 13:49:19 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: Re: CVE Request (ssh)
+cc: Nico Golde <oss-security+ml@...lde.de>, Steffen Joeris <steffen.joeris@...lelinux.de>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE id request: php-xajax
 Content-Type: text/plain; charset=utf-8
 
-Thu, Nov 20, 2008 at 09:12:42PM -0500, Steven M. Christey wrote:
-> ======================================================
-> Name: CVE-2008-5161
-> 
-> Error handling in the SSH protocol in (1) SSH Tectia Client and Server
-> and Connector 4.0 through 4.4.11, 5.0 through 5.2.4, and 5.3 through
-> 5.3.8; Client and Server and ConnectSecure 6.0 through 6.0.4; Server
-> for Linux on IBM System z 6.0.4; Server for IBM z/OS 5.5.1 and
-> earlier, 6.0.0, and 6.0.1; and Client 4.0-J through 4.3.3-J and 4.0-K
-> through 4.3.10-K; and (2) OpenSSH 4.7p1 and possibly other versions,
-> when using a block cipher algorithm in Cipher Block Chaining (CBC)
-> mode, makes it easier for remote attackers to recover certain
-> plaintext data from an arbitrary block of ciphertext in an SSH session
-> via unknown vectors.
 
-As was kindly answered to me in the freebsd-security list, OpenSSH's
-response is here: http://openssh.org/txt/cbc.adv
--- 
-Eygene
+On Wed, 17 Dec 2008, Nico Golde wrote:
+
+> Yes but this would be a bug, no security issue by itself.
+
+Frankly I'm just grasping at straws trying not to waste a CVE number :)
+
+- Steve
