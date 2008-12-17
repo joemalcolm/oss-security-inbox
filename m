@@ -1,24 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/18/3
-Message-Id: <200808181147.m7IBlrWO032394@core.courtesan.com>
-Date: Mon, 18 Aug 2008 07:47:53 -0400
-From: "Todd C. Miller" <Todd.Miller@...rtesan.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: mktemp 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/17/8
+Message-ID: <28fa9c5e0812161810s6b7ec513lbe12cc540cc054f7@mail.gmail.com>
+Date: Wed, 17 Dec 2008 10:10:28 +0800
+From: "Eugene Teo" <eugeneteo@...nel.sg>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: kernel: applicom: fix an unchecked user ioctl range
 Content-Type: text/plain; charset=utf-8
 
-In message <20080818085956.GB29717@...e.de>
-	so spake Sebastian Krahmer (krahmer):
+On Wed, Dec 17, 2008 at 10:07 AM, Eugene Teo <eugeneteo@...nel.sg> wrote:
+> On Wed, Dec 17, 2008 at 9:55 AM, Steven M. Christey
+> <coley@...us.mitre.org> wrote:
+>>
+>> On Wed, 10 Dec 2008, Eugene Teo wrote:
+>>
+>>> Steve, can you please assign a CVE name. Thanks.
+>>>
+>>> http://bugzilla.kernel.org/show_bug.cgi?id=11408
+>>> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=a7be18d
+>>
+>> Can the affected IOCTL be accessed by malicious attackers?  If it's
+>> protected in some sense, maybe it doesn't cross privilege boundaries.
+>> Although Linus does mention an "unchecked user ioctl range."
+>
+> ac_ioctl() does not restrict access to only privileged users, and
+> IndexCard is user-controllable.
 
-> BTW, mktemp(1) is using O_EXCL anyway, so I dont see
-> an issue. Additionally all of our scripts use
-> more than 6 X' as also shown in the
-> example section of the manpage. We are not going to
-> release updates for this non-issue.
+Hmm, there's a comment in the ac_ioctl() that the device for this is
+only accessible by root, so if out of range may not matter. Hmm. So,
+maybe, maybe not.
 
-I don't think it is a security issue either.  Vendors can also just
-configure mktemp with the --with-libc flag to use the libc
-mkstemp()/mkdtemp() functions instead of the bundled version if
-they prefer.
-
- - todd
+Eugene
