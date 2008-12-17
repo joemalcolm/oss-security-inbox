@@ -1,73 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/12/1
-Message-ID: <20080512134826.GA8103@openwall.com>
-Date: Mon, 12 May 2008 17:48:26 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/17/16
+Message-ID: <gi9qjm$vo2$2@ger.gmane.org>
+Date: Tue, 16 Dec 2008 21:10:33 -0600
+From: Raphael Geissert <atomo64+debian@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: group announcement
+Subject: CVE id request: verlihub
 Content-Type: text/plain; charset=utf-8
 
-Josh and all,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I am sorry for not commenting on this earlier.
+Hi,
 
-On Fri, May 02, 2008 at 03:26:26PM -0400, Josh Bressers wrote:
-> I have a first draft writeup, that I'm sticking at the end of this message,
+Two issues were discovered in verlihub: one allows remote commands execution,
+and the second one is a symlink attack vulnerability.
 
-It looks good, and I fully agree with the update to the third paragraph
-based on Steve's feedback.
+More information at http://bugs.debian.org/506530
 
-> and I plan to run this past the Red Hat Corporate Communications people
-> (which is where the delay came from, they are busy people).  They have
-> offered to add this announcement (presuming it conforms to their standards)
-> to the Red Hat press blog, which is well read by various people in the
-> computing press world.  This should help get a lot more attention than just
-> sending this out to a few mailing lists.  I did however explain that
-> whatever goes on the press blog needs to be cleared with this group first,
-> and they completely understand.
+Could CVE ids be assigned to those issues? thanks in advance.
 
-This sounds great.  I think that we'll need to announce on mailing lists
-as well, though.
+Cheers,
+- -- 
+Raphael Geissert - Debian Maintainer
+www.debian.org - get.debian.net
 
-> Today we announce the Open Source Software Security community
-> (oss-security) an ongoing effort to manage security information in Open
-> Source software by building on the very collaborative foundation of the
-> Open Source model.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
 
-Perhaps there should be a comma or a dash before "an ongoing ..."
+iEYEARECAAYFAklIbakACgkQYy49rUbZzlqVtACdExVg9tyyQWTbyBBh4hXhN1+o
+lSoAnRDDR6D8HUIM30Tbem1pR+w4zWu+
+=GQdg
+-----END PGP SIGNATURE-----
 
-> This community was initially founded by individuals from Foresight Linux,
-> Mandriva, Openwall, and Red Hat.  The community has since grown to include
-> contributions from many other projects and individuals.  The computing
-> resources are currently graciously donated by the Openwall Project.
-> <maybe some URLs here?>
-
-I think that it'd be nice to make the company/project names into
-hyperlinks in an HTML (or similar) version of the announcement, if one
-is to be created - however, introducing those URLs into a text version,
-where the URLs would occupy visible space and distract from the actual
-announcement text, is probably undesirable.
-
-Similarly, it'd be nice to make "Open Source Software Security community
-(oss-security)" a hyperlink.
-
-> If you have an interest in the Open Source security space, you are
-> encouraged to participate in the oss-security community by adding content
-> to the wiki, contributing to mailing list discussions, or joining us on IRC.
-
-This could have hyperlinks, too - "wiki", "mailing list".
-
-> More information can be found on the group's wiki page here:
-> http://oss-security.openwall.org
-
-We could want to include this URL near the beginning of the announcement
-text as well - in the hyperlink I suggested or otherwise.
-
-Also, maybe we should put this announcement text somewhere on our own
-wiki, where others who might want to refer to oss-security later (e.g.,
-announce it to their local community) could pick it up?  BTW, we'll be
-able to have all of the hyperlinks in that version.
-
-Thanks,
-
-Alexander
