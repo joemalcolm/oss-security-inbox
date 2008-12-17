@@ -1,23 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/27/3
-Message-ID: <17313.1214576958@devserv.devel.redhat.com>
-Date: Fri, 27 Jun 2008 10:29:18 -0400
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/17/23
+Message-Id: <200812171545.37760.steffen.joeris@skolelinux.de>
+Date: Wed, 17 Dec 2008 15:45:31 +0100
+From: Steffen Joeris <steffen.joeris@...lelinux.de>
 To: oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: CVE Request (pidgin)
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE id request: php-xajax
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
+Hi
 
-There are three pidgin flaws that could use CVE ids.
+Steven, I am not sure, if you want to assign a new CVE id for this, but since 
+we did it for several other issues where an incomplete patch was issued, I 
+guess it can be done here as well.
 
-http://marc.info/?l=bugtraq&m=121449329530282&w=4
+The patch for CVE-2007-2739 seems incomplete as it doesn't escape "&".
+I recommend removing the replace call and using htmlspecialchars() instead.
 
-And two here:
-http://crisp.cs.du.edu/?q=ca2007-1
+Also, I seem to be unable to find anything regarding CVE-2007-2740. Did anyone 
+manage to find a patch or even what kind of issue we are talking about? I 
+only see the XSS.
 
-Thanks.
+Cheers
+Steffen
 
--- 
-    JB
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
