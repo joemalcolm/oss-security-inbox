@@ -1,32 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/10/21/4
-Message-ID: <48FD3C21.9050507@redhat.com>
-Date: Tue, 21 Oct 2008 10:19:13 +0800
-From: Eugene Teo <eteo@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: sctp: Fix kernel panic while process protocol violation parameter
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/17/7
+Message-ID: <28fa9c5e0812161807l68759c64ke18cc9adc2efe1f7@mail.gmail.com>
+Date: Wed, 17 Dec 2008 10:07:11 +0800
+From: "Eugene Teo" <eugeneteo@...nel.sg>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: kernel: applicom: fix an unchecked user ioctl range
 Content-Type: text/plain; charset=utf-8
 
-Eugene Teo wrote:
-> Eugene Teo wrote:
->> This was committed in upstream kernel recently.
+On Wed, Dec 17, 2008 at 9:55 AM, Steven M. Christey
+<coley@...us.mitre.org> wrote:
+>
+> On Wed, 10 Dec 2008, Eugene Teo wrote:
+>
+>> Steve, can you please assign a CVE name. Thanks.
 >>
->> "[PATCH] sctp: Fix kernel panic while process protocol violation parameter
->>
->> Since call to function sctp_sf_abort_violation() need paramter 'arg'
->> with 'struct sctp_chunk' type, it will read the chunk type and chunk
->> length from the chunk_hdr member of chunk. But call to
->> sctp_sf_violation_paramlen() always with 'struct sctp_paramhdr' type's
->> parameter, it will be passed to sctp_sf_abort_violation(). This may
->> cause kernel panic."
->>
->> Upstream commit: ba0166708ef4da7eeb61dd92bbba4d5a749d6561
->>
->> This is user-triggerable.
-> 
-> Ping Steve. This needs a CVE name too. Thanks!
+>> http://bugzilla.kernel.org/show_bug.cgi?id=11408
+>> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=a7be18d
+>
+> Can the affected IOCTL be accessed by malicious attackers?  If it's
+> protected in some sense, maybe it doesn't cross privilege boundaries.
+> Although Linus does mention an "unchecked user ioctl range."
 
-My bad. Steve assigned this with CVE-2008-4618.
+ac_ioctl() does not restrict access to only privileged users, and
+IndexCard is user-controllable.
 
 Thanks, Eugene
