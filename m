@@ -1,55 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/28/1
-Message-ID: <20080327235843.GA26542@openwall.com>
-Date: Fri, 28 Mar 2008 02:58:43 +0300
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: using oss-security references in CVE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/17/28
+Message-ID: <Pine.GSO.4.51.0812171308050.17008@faron.mitre.org>
+Date: Wed, 17 Dec 2008 13:11:00 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Nico Golde <oss-security+ml@...lde.de>
+cc: Steffen Joeris <steffen.joeris@...lelinux.de>, oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE id request: php-xajax
 Content-Type: text/plain; charset=utf-8
 
-Steve,
 
-On Thu, Mar 27, 2008 at 06:59:27PM -0400, Steven M. Christey wrote:
-> In CVE, we try to provide "provenance" for every detail that makes its way
-> into the description.  Issues like rxvt and CenterIM have some details
-> that are only publicly documented in oss-security, and I would like to add
-> these as references.
+On Wed, 17 Dec 2008, Nico Golde wrote:
 
-That would be great.
+> > Afaik you can use & to specify values like ../foo.php&value=bar
+> > Thus the patch looked incomplete to me and should be extended to escape & as
+> > well.
+>
+> I see no problem with specifying GET variables here unless
+> this is some kind of CSRF which I don't see in this case.
 
-> However, I haven't done so yet.  If I start to add oss-security references
-> to CVEs when needed, this will be noticed by the other vuln DBs and added
-> to their watch lists.  As their response is sometimes faster than CVE's,
-> this means that new vuln reports will start showing up publicly much more
-> quickly.
+If there's CSRF then that would be a separate issue.
 
-Isn't that actually desirable?  I mean, stuff being posted to
-oss-security is supposed to be either already public or intended to be
-made public right away.
+If ";" is also allowed then there might be some possibilities for odd
+entity encodings, but I don't know if that would translate directly into
+XSS.  A simple, likely-incorrect example might be "&lt;" which would
+decode into "<" but the browser would treat it as a literal "<" instead of
+the start of a tag.
 
-> Are people OK with that?
-
-Please go for it!
-
-If you can, please use the official archive URLs, currently at:
-
-	http://www.openwall.com/lists/oss-security/
-
-In case this is moved - e.g., to the oss-security website - we'll make
-sure to put proper redirects in place, such that every message's URL
-remains valid.  While the software powering this archive is currently
-quite spartan, I think it suffices this purpose (CVE refs) well - and
-its further development was just revitalized.
-
-By the way, maybe we should also add a link to the oss-security wiki to
-page footers on that archive?  Or even to message trailers (such that
-the wiki link will be seen on third-party archives as well)?
-
-Oh, and someone should write a wiki page about getting CVE IDs.  This is
-currently mentioned as a FIXME here:
-
-	http://oss-security.openwall.org/wiki/disclosure/researcher
-
-Thanks,
-
-Alexander
+- Steve
