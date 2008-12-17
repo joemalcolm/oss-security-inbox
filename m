@@ -1,63 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/11/13/2
-Message-ID: <491BF0A9.7040304@op5.se>
-Date: Thu, 13 Nov 2008 10:17:29 +0100
-From: Andreas Ericsson <ae@....se>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, Johannes Dagemark <jd@....se>,  Ethan Galstad <egalstad@...ios.org>, Marc Schoenefeld <mschoene@...hat.com>
-Subject: Re: CVE request: Nagios (two issues)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/17/3
+Message-ID: <Pine.GSO.4.51.0812162021110.5724@faron.mitre.org>
+Date: Tue, 16 Dec 2008 20:31:51 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+cc: coley@...re.org
+Subject: Re:  Re: CVE Request - roundcubemail
 Content-Type: text/plain; charset=utf-8
 
-Steven M. Christey wrote:
-> On Tue, 11 Nov 2008, Andreas Ericsson wrote:
-> 
->>> Name: CVE-2008-5028
->>> Status: Candidate
->>> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5028
->>>
->>> Cross-site request forgery (CSRF) vulnerability in cmd.cgi in (1)
->>> Nagios 3.0.5 and (2) op5 Monitor before 4.0.1 allows remote attackers
->>> to send commands to the Nagios process, and trigger execution of
->>> arbitrary programs by this process, via unspecified HTTP requests.
->>>
->>>
->> Actually, the CSRF issue is still in Nagios 3.0.5, but can no longer
->> trigger execution of arbitrary programs by the Nagios process. Its
->> impact is thereby reduced to disabling monitoring of the network and
->> similar actions that can validly be requested from the Nagios process
->> through the GUI.
-> 
-> What is the relationship between this CSRF issue and the one documented
-> here:
-> 
->   http://www.nagios.org/development/history/nagios-3x.php
-> 
->   "Security fix for Cross Site Request Forgery (CSRF) bug reported by Tim
->    Starling."
-> 
-> Are these the same CSRF issue, or are we talking about a separate problem
-> that would need a separate new CVE?
-> 
 
-They're the same problem. The security fix mentioned actually consists of
-limiting its impact to prevent running arbitrary programs. I'm afraid Ethan
-got things wrong. It's the authorization check bypass (CVE-2008-5027) that's
-fixed in 3.0.5.
+On Sat, 13 Dec 2008, Florian Weimer wrote:
 
-The timeline (in version-perspective) looks something like this:
-3.0.4: Vulnerable to both issues, with the combination being that CSRF
-       attacks can trigger arbitrary programs to run.
-3.0.5: Vulnerable to CSRF attacks, but CHANGE_ commands (that can be
-       used to trigger arbitrary programs) are completely blocked. Impact
-       is thereby lowered to commands the tricked user is allowed to
-       submit (which can still be rather bad).
+> * Ingrid wrote:
+>
+> > Therefore, I agree with Raphael that the issue has not been found yet.
 
-So in essence, an orthogonal fix lowered the worst-case scenario impact
-of CVE-2008-5028 in Nagios 3.0.5, but the base issue still remains.
+The general issue of /e in preg_replace is covered by CWE-624 Executable
+Regular Expression Error (http://cwe.mitre.org/data/definitions/624.html)
+which has a couple other CVE examples.
 
-Hope that clears things up.
+I bet there's a chunk of these in various applications.  I believe Perl
+has similar functionality.
 
--- 
-Andreas Ericsson                   andreas.ericsson@....se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Use CVE-2008-5619 for the issue.
+
+Note there's a separate DoS issue, CVE-2008-5620.
+
+- Steve
+
+======================================================
+Name: CVE-2008-5619
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5619
+Reference: MISC:http://trac.roundcube.net/ticket/1485618
+Reference: CONFIRM:http://sourceforge.net/forum/forum.php?forum_id=898542
+Reference: CONFIRM:http://trac.roundcube.net/changeset/2148
+Reference: FEDORA:FEDORA-2008-11220
+Reference: URL:https://www.redhat.com/archives/fedora-package-announce/2008-December/msg00783.html
+Reference: FEDORA:FEDORA-2008-11234
+Reference: URL:https://www.redhat.com/archives/fedora-package-announce/2008-December/msg00802.html
+Reference: MLIST:[oss-security] 20081212 CVE Request - roundcubemail
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/12/12/1
+Reference: SECUNIA:33170
+Reference: URL:http://secunia.com/advisories/33170
+
+html2text.php in RoundCube Webmail (roundcubemail) 0.2-1.alpha and
+0.2-3.beta allows remote attackers to execute arbitrary code via
+crafted input that is processed by the preg_replace function with the
+eval switch.
+
+
+======================================================
+Name: CVE-2008-5620
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5620
+Reference: CONFIRM:http://sourceforge.net/forum/forum.php?forum_id=898542
+
+RoundCube Webmail (roundcubemail) before 0.2-beta allows remote
+attackers to cause a denial of service (memory consumption) via
+crafted size parameters that are used to create a large quota image.
+
+
