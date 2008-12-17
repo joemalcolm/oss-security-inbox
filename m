@@ -1,48 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/24/4
-Message-ID: <20080824144955.GA16647@ngolde.de>
-Date: Sun, 24 Aug 2008 16:49:55 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com, vendor-sec@....de
-Subject: Re: Re: libxml2 denial of service flaw (CVE-2008-3281)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/17/31
+Message-ID: <87d4fqo8cf.fsf@mid.deneb.enyo.de>
+Date: Wed, 17 Dec 2008 21:27:44 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
+To: oss-security@...ts.openwall.com
+Cc: coley@...re.org
+Subject: Re:  Re: CVE Request - roundcubemail
 Content-Type: text/plain; charset=utf-8
 
-Hi Robert,
-* Robert Buchholz <rbu@...too.org> [2008-08-23 18:06]:
-> On Wednesday 20 August 2008, Daniel Veillard wrote:
-> > On Wed, Aug 20, 2008 at 12:42:29PM -0400, Josh Bressers wrote:
-> > > Yes, this can be considered public.  An announcement should be
-> > > appearing on the xml list shortly:
-> > >
-> > > http://mail.gnome.org/archives/xml/
-> >
-> >   It's out:
-> >
-> >    http://mail.gnome.org/archives/xml/2008-August/msg00034.html
-> >
-> > thanks everybody !
-> 
-> Our gnome maintainers pointed out that the patch (which was also pushed 
-> upstream) breaks GDM in GNOME 2.22, as can be seen in Gentoo and 
-> Mandriva:
->   https://bugs.gentoo.org/show_bug.cgi?id=235529
->   https://qa.mandriva.com/show_bug.cgi?id=43094
-> 
-> upstream bug:
->   http://bugzilla.gnome.org/show_bug.cgi?id=549087
-> 
-> Those who did not push updates yet might want to delay this, we have 
-> been reverting the patch for now.
-> I am CC'ing oss-security, please send follow-ups to that list.
+* Steven M. Christey:
 
-Looks like rebuilding librsvg against libxml2 does solve the 
-problem referring to our bug report:
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=496125#79
+> The general issue of /e in preg_replace is covered by CWE-624 Executable
+> Regular Expression Error (http://cwe.mitre.org/data/definitions/624.html)
+> which has a couple other CVE examples.
 
-Kind regards
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+Thanks for the reference.
 
-Content of type "application/pgp-signature" skipped
+> I bet there's a chunk of these in various applications.  I believe Perl
+> has similar functionality.
+
+Not quite, the s///e operator uses a compile-time transformation for
+the replacement expression, so it shouldn't be affected by this very
+issue.
+
+\Q \E pairs are an issue in the pattern, not the replacement.
+Mistakes in this area increase the attack surface by exposing the
+regular expression compiler to potentially hostile input, and it may
+lead to denial-of-service vulnerabilities because some implementations
+do not cope well with certain patterns.  Perhaps CWE-624 should be
+split to reflect this?
