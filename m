@@ -1,27 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/27/1
-Message-Id: <200803270158.41105.rbu@gentoo.org>
-Date: Thu, 27 Mar 2008 01:58:40 +0100
-From: Robert Buchholz <rbu@...too.org>
-To: coley@...re.org
-Cc: lcars@...rt.org, oss-security@...ts.openwall.com, wk@...pg.org
-Subject: CVE request: GnuPG Import Key Memory Corruption
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/17/2
+Message-ID: <Pine.GSO.4.51.0812162012070.5724@faron.mitre.org>
+Date: Tue, 16 Dec 2008 20:12:13 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security <oss-security@...ts.openwall.com>, jlieskov@...hat.com
+Subject: Re: CVE Request - rsyslog ($allowedSender issue repost + imudp DoS)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-there's a memory corruption triggered when importing malformed keys 
-using GnuPG 1.4.8 and 2.0.8. Prior and later versions are not affected. 
-Exploitability to execute code is unknown.
+======================================================
+Name: CVE-2008-5617
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5617
+Reference: CONFIRM:http://www.rsyslog.com/Article322.phtml
+Reference: CONFIRM:http://www.rsyslog.com/Topic4.phtml
+Reference: SECUNIA:32857
+Reference: URL:http://secunia.com/advisories/32857
 
-References:
-http://www.ocert.org/advisories/ocert-2008-1.html
-https://bugs.g10code.com/gnupg/issue894
-https://bugs.gentoo.org/show_bug.cgi?id=214990
+The ACL handling in rsyslog 3.12.1 to 3.20.0, 4.1.0, and 4.1.1 does
+not follow $AllowedSender directive, which allows remote attackers to
+bypass intended access restrictions and spoof log messages or create a
+large number of spurious messages.
 
 
-Thanks,
-Robert
+======================================================
+Name: CVE-2008-5618
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5618
+Reference: CONFIRM:http://www.rsyslog.com/Topic4.phtml
+
+imudp in rsyslog 4.x before 4.1.2, 3.21 before 3.21.9 beta, and 3.20
+before 3.20.2 generates a message even when it is sent by an
+unauthorized sender, which allows remote attackers to cause a denial
+of service (disk consumption) via a large number of spurious messages.
 
 
-Download attachment "signature.asc " of type "application/pgp-signature" (190 bytes)
