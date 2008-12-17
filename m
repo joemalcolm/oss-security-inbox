@@ -1,49 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/18/1
-Message-id: <1203306644.10883.TMDA@linsec.ca>
-Date: Sun, 17 Feb 2008 20:49:34 -0700
-From: Vincent Danen <vdanen@...sec.ca>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/17/4
+Message-ID: <Pine.GSO.4.51.0812162050070.5724@faron.mitre.org>
+Date: Tue, 16 Dec 2008 20:52:42 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: wiki
+cc: Steven Christey <coley@...us.mitre.org>
+Subject: Re: CVE request: phpMyAdmin < 3.1.1.0 (SQL injection through XSRF on several pages )
 Content-Type: text/plain; charset=utf-8
 
-* [2008-02-17 00:15:10 +0300] Solar Designer wrote:
 
->Dmitry D. Khlebnikov aka (GalaxyMaster) <galaxy at openwall.com> has
->setup a wiki for this project at:
->
->http://oss-security.openwall.org/wiki/
->
->I think that you should be able to register for accounts at:
->
->http://oss-security.openwall.org/wiki/welcome?do=register
->
->and start working on the content.
->
->If there are any issues or questions on the wiki, please post in here -
->Dmitry is subscribed, so I expect that he will provide the necessary
->support for this service.
+Two separate CVE's are assigned, one for the original milw0rm exploit and
+the other for the unspecified vectors implied by the implied "XSRF on
+several pages" in the PMASA-2008-10 advisory.
 
-Thanks, GalaxyMaster, for setting that up.  Docuwiki's syntax is a
-little wierd but works well enough.  =)
+- Steve
 
-I've setup a few pages to give it some structure and content.  The only
-thing I might do is setup a redirect on
-http://oss-security.openwall.org/ so that you get bumped to /wiki/
-instead of seeing an apache directory listing.
+======================================================
+Name: CVE-2008-5621
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5621
+Reference: MILW0RM:7382
+Reference: URL:http://www.milw0rm.com/exploits/7382
+Reference: CONFIRM:http://www.phpmyadmin.net/home_page/security/PMASA-2008-10.php
+Reference: FEDORA:FEDORA-2008-11221
+Reference: URL:https://www.redhat.com/archives/fedora-package-announce/2008-December/msg00784.html
+Reference: FEDORA:FEDORA-2008-11221
+Reference: URL:https://www.redhat.com/archives/fedora-package-announce/2008-December/msg00784.html
+Reference: BID:32720
+Reference: URL:http://www.securityfocus.com/bid/32720
+Reference: SECUNIA:33076
+Reference: URL:http://secunia.com/advisories/33076
+Reference: SECUNIA:33146
+Reference: URL:http://secunia.com/advisories/33146
 
-Feel free to start adding content.  I think the structure is ok enough
-to start with, we'll see how it goes from there.  It's pretty
-straight-forward and should be easy enough to add to (I just added a few
-links, some pages, etc. but every vendor should be adding their own info
-there), and others can add content, etc.
+Cross-site request forgery (CSRF) vulnerability in phpMyAdmin 2.11.x
+before 2.11.9.4 and 3.x before 3.1.1.0 allows remote attackers to
+perform unauthorized actions as the administrator via a link or IMG
+tag to tbl_structure.php with a modified table parameter.  NOTE: this
+can be leveraged to conduct SQL injection attacks and execute
+arbitrary code.
 
-I've also registered #oss-security on Freenode for chatting.  Someone
-may want to fluff out /wiki/about with more information on what
-oss-security is all about; I added very little information there (just
-enough to get the topic started).
 
--- 
-Vincent Danen @ http://linsec.ca/
+======================================================
+Name: CVE-2008-5622
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5622
+Reference: CONFIRM:http://www.phpmyadmin.net/home_page/security/PMASA-2008-10.php
+Reference: FEDORA:FEDORA-2008-11221
+Reference: URL:https://www.redhat.com/archives/fedora-package-announce/2008-December/msg00784.html
+Reference: FEDORA:FEDORA-2008-11221
+Reference: URL:https://www.redhat.com/archives/fedora-package-announce/2008-December/msg00784.html
+Reference: SECUNIA:33146
+Reference: URL:http://secunia.com/advisories/33146
 
-Content of type "application/pgp-signature" skipped
+Multiple cross-site request forgery (CSRF) vulnerabilities in
+phpMyAdmin 2.11.x before 2.11.9.4 and 3.x before 3.1.1.0 allow remote
+attackers to conduct SQL injection attacks via unknown vectors related
+to the table parameter, a different vector than CVE-2008-5621.
+
+
