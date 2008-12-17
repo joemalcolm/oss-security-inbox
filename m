@@ -1,125 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/04/6
-Message-Id: <1217869242.27889.24.camel@iankko.englab.brq.redhat.com>
-Date: Mon, 04 Aug 2008 19:00:42 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/17/29
+Message-ID: <20081217183010.GG19388@ngolde.de>
+Date: Wed, 17 Dec 2008 19:30:10 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Cc: Alexander Konovalenko <alexkon@...il.com>
-Subject: Re: SVG vulnerability affecting Firefox, evince, eog, Gimp?
+Cc: Nico Golde <oss-security+ml@...lde.de>, Steffen Joeris <steffen.joeris@...lelinux.de>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE id request: php-xajax
 Content-Type: text/plain; charset=utf-8
 
-Hello guys,
-
-  have looked a little bit at this one.
-
-On Thu, 2008-07-31 at 21:17 -0400, Josh Bressers wrote:
-> On 1 August 2008, "Alexander Konovalenko" wrote:
-> > Does anybody know whether this [1] is a real vulnerability? I
-> > currently lack a spare machine to test it. If it is real, it probably
-> > deserves CVE number.
-> > 
-> > The SHA-256 sum of the .zip file there was
-> > 56d597cda98d796ec94723c540b967903886649412bce131eec4d232152aba3c
-> > when I fetched it.
-> > 
+Hi,
+* Steven M. Christey <coley@...us.mitre.org> [2008-12-17 19:28]:
+> On Wed, 17 Dec 2008, Nico Golde wrote:
 > 
-> I can't get this to crash anything I've tried.  Has anyone else had any
-> luck?
-
-Maybe the crash isn't the worst thing occurring there.
-
-Scenario A: (Running window manager without Gconfd support, i.e. twm in
-my case);
-
-1, The malicious SVG file is 'test.svg' in my case.
-2, root@...t] # echo "hello" > /var/log/messages
-3, from first console (as root): root@...t] # tail -f /var/log/messages >> evince_test_svg_output
-4, testuser@...t] $ evince test.svg
-5, root@...t] # cat evince_test_svg_output
-
-The output looks like this:
-
-# cat evince_test_svg_output 
-hello
-Aug  4 11:50:58 dell-pe700-01 gconfd (testuser-16434): starting (version
-2.22.0), pid 16434 user 'testuser'
-Aug  4 11:50:58 dell-pe700-01 gconfd (testuser-16434): Resolved address
-"xml:readonly:/etc/gconf/gconf.xml.mandatory" to a read-only
-configuration source at position 0
-Aug  4 11:50:58 dell-pe700-01 gconfd (testuser-16434): Resolved address
-"xml:readwrite:/home/testuser/.gconf" to a writable configuration source
-at position 1
-Aug  4 11:50:58 dell-pe700-01 gconfd (testuser-16434): Resolved address
-"xml:readonly:/etc/gconf/gconf.xml.defaults" to a read-only
-configuration source at position 2
-Aug  4 11:51:58 dell-pe700-01 gconfd (testuser-16434): GConf server is
-not in use, shutting down.
-Aug  4 11:51:58 dell-pe700-01 gconfd (testuser-16434): Exiting
-
-When I repeat the scenario for both (eog, gimp) cases, the output looks
-similar (is the same). The 'attack' appears only by the first run
-on the 'test.svg' file, e.g. when running 'evince test.svg' followed by
-'eog test.svg' the attack would appear only in the first case. In the
-second case there is no mention resolving some address.
-
-Scenario B (running window manager with Gconf support, i.e.
-gnome-session):
-
-The same scenario steps as in the A case. 
-
-1, Malicious SVG file name 'test.svg'.
-2, root@...t] # rpm -e gimp eog evince && yum install eog gimp evince
-(to ensure the attack would appear again)
-3, root@...t] # echo "hello_evince" > /var/log/messages
-4, root@...t] # tail -f /var/log/messages >> gnome_evince_test_svg_output
-5, testuser@...t] $ evince test.svg (after closing the window)
-6, root@...t] [root@...t ~]# cat gnome_evince_test_svg_output 
-
-The output looks like the following: 
-
-# cat gnome_evince_test_svg_output
-hello_evince
-Aug  4 12:32:16 hp-xw6400-01 gconfd (testuser-17504): starting (version
-2.20.1), pid 17504 user 'testuser'
-Aug  4 12:32:16 hp-xw6400-01 gconfd (testuser-17504): Resolved address
-"xml:readonly:/etc/gconf/gconf.xml.mandatory" to a read-only
-configuration source at position 0
-Aug  4 12:32:16 hp-xw6400-01 gconfd (testuser-17504): Resolved address
-"xml:readwrite:/home/testuser/.gconf" to a writable configuration source
-at position 1
-Aug  4 12:32:16 hp-xw6400-01 gconfd (testuser-17504): Resolved address
-"xml:readonly:/etc/gconf/gconf.xml.defaults" to a read-only
-configuration source at position 2
-
-So the only difference now is the Gconfd server is running, and
-it 'recognizes' some interesting patterns in the malicious 'test.svg'
-file and tries to parse them (there is no visible mention by evince,
-eog or gimp something went wrong by opening || reading the file).
-Also this time, the attack to appear once again, all the packages
-needs to be first removed, then tried the another one. By subsequent
-running of e.g. 'eog' then 'evince', the 'attack' doesn't appear.
- 
-Have tried two different versions of gnome-session
-(gnome-session-2.20.3-1.fc8, gnome-session-2.22.3-1.fc9.i386)
-and dbus (dbus-1.1.2-9.fc8, dbus-1.2.1-1.fc9.i386). Similar
-results can be seen on older systems too. 
-
-Now the question remains, how can these GConfd recognition messages
-be used to attack the system (I think these can be used as some
-'food' for the dbus-daemon to attack the system -- but this one
-only presumption). 
-
-Was unable to reproduce the behavior with the 'firefox' package.
-
-Let me know your thoughts and I will in the meantime try to
-find out the possible impact of such messages.
-
-Kind regards
-Jan iankko Lieskovsky
-RH Security Response Team
-
-
+> > > Afaik you can use & to specify values like ../foo.php&value=bar
+> > > Thus the patch looked incomplete to me and should be extended to escape & as
+> > > well.
+> >
+> > I see no problem with specifying GET variables here unless
+> > this is some kind of CSRF which I don't see in this case.
 > 
-> Thanks for the heads up.  it's appreciated.
+> If there's CSRF then that would be a separate issue.
 > 
+> If ";" is also allowed then there might be some possibilities for odd
+> entity encodings, but I don't know if that would translate directly into
+> XSS.  A simple, likely-incorrect example might be "&lt;" which would
+> decode into "<" but the browser would treat it as a literal "<" instead of
+> the start of a tag.
 
+Yes but this would be a bug, no security issue by itself.
+
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
