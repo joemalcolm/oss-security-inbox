@@ -1,33 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/23/1
-Message-ID: <20080223013429.GC15672@openwall.com>
-Date: Sat, 23 Feb 2008 04:34:29 +0300
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Help
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/17/14
+Message-ID: <Pine.GSO.4.51.0812162131200.5724@faron.mitre.org>
+Date: Tue, 16 Dec 2008 21:31:38 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security <oss-security@...ts.openwall.com>
+cc: coley@...re.org
+Subject: Re: CVE Request - tor
 Content-Type: text/plain; charset=utf-8
 
-> > Jamie Strandboge wrote:
-> > You'll probably want to CC Steve on such emails... I don't think he's
-> > actually subscribed to the list (Steve, feel free to correct me if I'm
-> > wrong here... I assumed it would be the same as vendor-sec).
 
-On Thu, Feb 21, 2008 at 05:12:15PM -0500, Josh Bressers wrote:
-> Steve,
-> 
-> I think this is a good opportunity to ask you how we can use this list to
-> make your life easier.  Perhaps it's worth thinking about ways some of the
-> subscribed CNAs can dish out CVE ids to reduce your load a little bit for
-> these public issues that obviously lack a proper id.
+======================================================
+Name: CVE-2008-5397
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5397
+Reference: CONFIRM:http://blog.torproject.org/blog/tor-0.2.0.32-released
+Reference: BID:32648
+Reference: URL:http://www.securityfocus.com/bid/32648
+Reference: SECUNIA:33025
+Reference: URL:http://secunia.com/advisories/33025
+Reference: XF:tor-user-privilege-escalation(47101)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/47101
 
-IIRC, Steve's reason for not being on vendor-sec was that he did not
-want to be exposed to more non-public security issues (and detailed info
-on them) than is necessary for assigning CVE ids.  If so, this reason
-does not apply for oss-security, because this is a public list.  Steve -
-you're welcome to join us on oss-security, although this is, of course,
-up to you. :-)
+Tor before 0.2.0.32 does not properly process the (1) User and (2)
+Group configuration options, which might allow local users to gain
+privileges by leveraging unintended supplementary group memberships of
+the Tor process.
 
-Thanks,
 
-Alexander
+======================================================
+Name: CVE-2008-5398
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5398
+Reference: CONFIRM:http://blog.torproject.org/blog/tor-0.2.0.32-released
+Reference: BID:32648
+Reference: URL:http://www.securityfocus.com/bid/32648
+Reference: SECUNIA:33025
+Reference: URL:http://secunia.com/advisories/33025
+Reference: XF:tor-clientdnsreject-security-bypass(47102)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/47102
+
+Tor before 0.2.0.32 does not properly process the
+ClientDNSRejectInternalAddresses configuration option in situations
+where an exit relay issues a policy-based refusal of a stream, which
+allows remote exit relays to have an unknown impact by mapping an
+internal IP address to the destination hostname of a refused stream.
+
+
