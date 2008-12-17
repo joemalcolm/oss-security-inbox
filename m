@@ -1,71 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/03/5
-Message-ID: <20080903222410.GF16980@ngolde.de>
-Date: Thu, 4 Sep 2008 00:24:10 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/17/1
+Message-ID: <Pine.GSO.4.51.0812161958580.5724@faron.mitre.org>
+Date: Tue, 16 Dec 2008 19:59:56 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: dns2tcp
+cc: Steven Christey <coley@...us.mitre.org>
+Subject: Re: CVE request: mplayer
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-dns2tcp fixed a buffer overflow in 0.4.1:
-http://www.hsc.fr/ressources/outils/dns2tcp/index.html.en
 
-diff -Nurad dns2tcp-0.4.dfsg/common/dns.c dns2tcp-0.4.1/common/dns.c
---- dns2tcp-0.4.dfsg/common/dns.c       2007-07-07 19:18:10.000000000 +0200
-+++ dns2tcp-0.4.1/common/dns.c  2008-09-01 14:49:08.000000000 +0200
-@@ -114,7 +114,7 @@
- 
- void           dns_simple_decode(char *input, char *output, int max_len)
- {
--  int          len;
-+  uint8_t      len;
-   char         *ptr;
-   int          total_len =0;
-   
-@@ -122,7 +122,7 @@
-   *output = 0;
-   while (*ptr)
-     {
--      len = (int) *ptr;
-+      len = (uint8_t) *ptr;
-       total_len +=len;
-       if (total_len > max_len)
-        break;
-diff -Nurad dns2tcp-0.4.dfsg/server/dns_decode.c dns2tcp-0.4.1/server/dns_decode.c
---- dns2tcp-0.4.dfsg/server/dns_decode.c        2007-07-07 19:18:10.000000000 +0200
-+++ dns2tcp-0.4.1/server/dns_decode.c   2008-09-01 14:49:08.000000000 +0200
-@@ -1,6 +1,6 @@
-@@ -79,7 +79,7 @@
- {
-   int          max_compress_depth = MAX_COMPRESS_DEPTH;
-   int          total_len = 0;
--  int          len;
-+  uint8_t      len;
-   char         *ptr;
- 
-   ptr = input;
-@@ -87,7 +87,8 @@
-   
-   while ((max_compress_depth) && (*ptr))
-     {
--      len = (int) *ptr;
-+      // Oups ...
-+      len = (uint8_t) *ptr;
-       total_len += len;
-       if ((len & COMPRESS_FLAG_CHAR) == COMPRESS_FLAG_CHAR)
-        {
+Sorry for being so long to answer everything, I was on travel and the CVE
+team is re-analyzing our process so that we can be more responsive and
+stable in the longer term.
+
+- Steve
+
+======================================================
+Name: CVE-2008-5616
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5616
+Reference: MISC:http://trapkit.de/advisories/TKADV2008-014.txt
+Reference: CONFIRM:http://svn.mplayerhq.hu/mplayer/branches/1.0rc2/libmpdemux/demux_vqf.c?r1=24723&r2=28150&pathrev=28150
+Reference: CONFIRM:http://svn.mplayerhq.hu/mplayer/branches/1.0rc2/libmpdemux/demux_vqf.c?view=log&pathrev=28150#rev28150
+Reference: BID:32822
+Reference: URL:http://www.securityfocus.com/bid/32822
+Reference: SECUNIA:33136
+Reference: URL:http://secunia.com/advisories/33136
+
+Stack-based buffer overflow in the demux_open_vqf function in
+libmpdemux/demux_vqf.c in MPlayer 1.0 rc2 before r28150 allows remote
+attackers to execute arbitrary code via a malformed TwinVQ file.
 
 
-This looks like it is possible to overwrite a buffer by passing a negative length to
-dns_simple_decode() or dns_decode().
-
-Can I get a CVE id for this please?
-
-Cheers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
