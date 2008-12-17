@@ -1,20 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/16/8
-Message-ID: <Pine.GSO.4.51.0809152124070.6953@faron.mitre.org>
-Date: Mon, 15 Sep 2008 21:24:33 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/17/22
+Message-ID: <Pine.GSO.4.51.0812171055580.17008@faron.mitre.org>
+Date: Wed, 17 Dec 2008 10:56:49 -0500 (EST)
 From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: Re: CVE request: wordpress < 2.6.2
+cc: Eugene Teo <eugeneteo@...nel.sg>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: Re: CVE request: kernel: applicom: fix an unchecked user ioctl range
 Content-Type: text/plain; charset=utf-8
 
 
-On Thu, 11 Sep 2008, Hanno [utf-8] Böck wrote:
+On Wed, 17 Dec 2008, Marcus Meissner wrote:
 
-> http://wordpress.org/development/2008/09/wordpress-262/
+> I guess the accessibility very much depends on the /dev/ac* device
+> permissions here. For a multiport serial card I guess root/tty only.
 
-SQL Column truncation - CVE-2008-4106
-
-mt_rand limitations - CVE-2008-4107
+If there are any realistic situations under which /dev/ac* might have less
+stringent permissions, then that's good enough for inclusion - either the
+default configuration, a common configuration, recommended vendor
+practice, etc.
 
 - Steve
