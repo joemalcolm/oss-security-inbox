@@ -1,38 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/25/7
-Message-ID: <25341.1203947418@devserv.devel.redhat.com>
-Date: Mon, 25 Feb 2008 08:50:18 -0500
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/17/13
+Message-ID: <Pine.GSO.4.51.0812162129450.5724@faron.mitre.org>
+Date: Tue, 16 Dec 2008 21:30:12 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: wiki page/namespace names
+cc: Steven Christey <coley@...us.mitre.org>
+Subject: Re: CVE request: Four issues in PunBB
 Content-Type: text/plain; charset=utf-8
 
-> 
-> I've just spotted a new page named 'code_reviews' (the welcome page uses
-> 'Code Reviews' as an internal link to that page, DokuWiki replaces any
-> spaces with '_').  There is also the 'distro-patches' page.  Perhaps we
-> should follow some naming convention on namespace/page names?  Moreover,
-> I suggest to create a namespace dedicated to Wiki editing (best
-> practices, conventions, etc) where new wiki authors could read some
-> hints how to create proper consistent with others pages for OSS Security
-> Wiki.
-> 
-> I'd like to create (and maintain) a subsection of this proposed
-> namespace where I will describe the current list of installed syntax
-> (and possibly other) plugins with short usage samples.
-> 
 
-So this raises a point I was wondering about the other day.  I think it
-could be useful to have a namespace called terms, or definitions, or
-something similar, where we could provide some definitions of the various
-security related terminology (things like buffer overflow, and double free
-mean very little to most people).
+Three CVE's are assigned because the two SQL injections also affect the
+same product versions.
 
-The problem I see though, is keeping track of all these terms.  Is there a
-way I could create a page called "terms:buffer_overflow", that would then
-be magically added to an index at "terms"?
+- Steve
 
-Thanks.
+======================================================
+Name: CVE-2008-5433
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5433
+Reference: MLIST:[oss-security] 20081209 CVE request: Four issues in PunBB
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/12/09/3
+Reference: CONFIRM:http://punbb.informer.com/
+Reference: CONFIRM:http://punbb.informer.com/wiki/punbb13/bugs#possible_xss_in_login
 
--- 
-    JB
+Cross-site scripting (XSS) vulnerability in login.php in PunBB 1.3 and
+1.3.1 allows remote attackers to inject arbitrary web script or HTML
+via the password field.
+
+
+======================================================
+Name: CVE-2008-5434
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5434
+Reference: MLIST:[oss-security] 20081209 CVE request: Four issues in PunBB
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/12/09/3
+Reference: CONFIRM:http://punbb.informer.com/
+Reference: CONFIRM:http://punbb.informer.com/wiki/punbb13/bugs#potential_sql-injections_at_adminusers.php_page
+Reference: CONFIRM:http://punbb.informer.com/wiki/punbb13/bugs#potential_sql-injections_in_adminsettings.php_via_configuration_values
+
+Multiple SQL injection vulnerabilities in PunBB 1.3 and 1.3.1 allow
+remote authenticated administrators to execute arbitrary SQL commands
+via the (1) order_by or (2) direction parameter to admin/users.php, or
+(3) configuration options to admin/settings.php.
+
+
+======================================================
+Name: CVE-2008-5435
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5435
+Reference: MLIST:[oss-security] 20081209 CVE request: Four issues in PunBB
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/12/09/3
+Reference: CONFIRM:http://punbb.informer.com/
+
+Cross-site scripting (XSS) vulnerability in moderate.php in PunBB
+before 1.3.1 allows remote attackers to inject arbitrary web script or
+HTML via a topic subject.
+
+
