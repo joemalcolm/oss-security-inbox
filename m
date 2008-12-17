@@ -1,35 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/04/1
-Message-ID: <48BF5EAF.301@redhat.com>
-Date: Thu, 04 Sep 2008 12:06:07 +0800
-From: Eugene Teo <eteo@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/17/15
+Message-ID: <gi9qdq$vo2$1@ger.gmane.org>
+Date: Tue, 16 Dec 2008 21:07:26 -0600
+From: Raphael Geissert <atomo64+debian@...il.com>
 To: oss-security@...ts.openwall.com
-CC: coley@...re.org
-Subject: CVE request: kernel: dio: zero struct dio with kzalloc instead of manually
+Subject: CVE id request: gpsdrive
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Is this assigned with a CVE name already? If not, please allocate one.
+Hi,
 
-This upstream commit addressed a user triggerable DoS:
-848c4dd5153c7a0de55470ce99a8e13a63b4703f
+There are more attack vectors in gpsdrive other than those mentioned in
+CVE-2008-5380. More information can be found at [1].
 
-Summary:
-[PATCH] dio: zero struct dio with kzalloc instead of manually
+Could a CVE id be assigned please? Thanks in advance.
 
-To avoid exposing ourselves to the risk of finding another field like
-.map_bh.b_state where we rely on zeroing but don't enforce it in the
-code. The fix uses kzalloc to zero all the struct dio rather than
-manually trying to track which fields we rely on being zero.
+[1]http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=508597
 
-Reproducer:
-http://lkml.org/lkml/2007/7/30/448
+Cheers,
+- -- 
+Raphael Geissert - Debian Maintainer
+www.debian.org - get.debian.net
 
-References:
-http://lkml.org/lkml/2007/7/26/88
-https://bugzilla.redhat.com/show_bug.cgi?id=461082
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
 
-Thanks, Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
+iEYEARECAAYFAklIbO8ACgkQYy49rUbZzlpOnACeLJvYLU2LiFMafj0OBfHYabl6
+7C8An0v3OLgFeFCB6GY8XzUxeLoipmQy
+=FpnV
+-----END PGP SIGNATURE-----
+
