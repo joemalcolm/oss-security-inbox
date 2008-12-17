@@ -1,25 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/17/9
-Message-ID: <28fa9c5e0812161814s21509f03r1e48bde59c8ca031@mail.gmail.com>
-Date: Wed, 17 Dec 2008 10:14:27 +0800
-From: "Eugene Teo" <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/17/17
+Message-ID: <gi9r4o$vo2$3@ger.gmane.org>
+Date: Tue, 16 Dec 2008 21:19:45 -0600
+From: Raphael Geissert <atomo64+debian@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: watchdog: ib700wdt.c - buffer_underflow bug
+Subject: Re: Re: CVE Request - roundcubemail
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Dec 17, 2008 at 10:00 AM, Steven M. Christey
-<coley@...us.mitre.org> wrote:
->
-> On Wed, 10 Dec 2008, Eugene Teo wrote:
->
->> Steve, here's another one that needs a CVE name. Thanks!
->>
->> http://bugzilla.kernel.org/show_bug.cgi?id=11399
->
-> Similar to the other issue, is this IOCTL reachable by anyone malicious?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
->From what I can see in ibwdt_ioctl(), it does not restrict access to
-unprivileged users.
+Christian Hoffmann wrote:
 
-Thanks, Eugene
+> On 2008-12-15 11:32, Florian Weimer wrote:
+>> Nowhere in the documentation it says that "" quotes are unsafe when
+>> combined with a sufficiently general capture pattern.
+> Well yes, it would probably be better to have a big warning at this
+> place, because this flag is very dangerous unless used properly and all
+> use cases should be expressable through preg_replace_callback as well,
+> which is hard to use improperly from a syntax point of view, as no
+> evaluation of user-supplied data is ever going to happen. :)
+> But I would not say that PHP or its docs are wrong because of this.
+
+IMHO the docs are lacking a very important bit of information. 
+
+> I cannot think of a case where single quotes could be easily
+> circumvented somehow, but I'd never claim to be perfectly right here.
+> Upstream added a perfectly fine fix, they replaced the /e usage by
+> preg_replace_callback, so I don't see a reason why you would want to
+> apply a different fix.
+> 
+
+Of course, no different fix was planned (on roundcube).
+We were actually looking for something in PHP itself that could be treated as
+the origin of all those security issues. We have been thinking about disabling
+support for the e modifier, but that requires collaboration with upstreams (PHP
+and script writers) and looking for incompatibilities in existing software.
+Maybe it could be dropped from PHP6, now that register_globals, safe_mode,
+magic_quotes_gpc, and friends are being dropped as well.
+
+Cheers,
+- -- 
+Raphael Geissert - Debian Maintainer
+www.debian.org - get.debian.net
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAklIb9EACgkQYy49rUbZzlp8oQCfQ8LLlThh+b018U2yENSZUqaY
+v6IAnRDzTKs0YZofI1KhsuDGe7u27VzE
+=wbnP
+-----END PGP SIGNATURE-----
+
