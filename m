@@ -1,22 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/26/2
-Message-ID: <3471.1206491730@devserv.devel.redhat.com>
-Date: Tue, 25 Mar 2008 20:35:30 -0400
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com, Jonathan Smith <smithj@...ethemallocs.com>
-Subject: Re: firefox 2.0.0.13
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/17/20
+Message-ID: <20081217153604.GB14541@suse.de>
+Date: Wed, 17 Dec 2008 16:36:04 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: watchdog: ib700wdt.c - buffer_underflow bug
 Content-Type: text/plain; charset=utf-8
 
+On Wed, Dec 17, 2008 at 10:14:27AM +0800, Eugene Teo wrote:
+> On Wed, Dec 17, 2008 at 10:00 AM, Steven M. Christey
+> <coley@...us.mitre.org> wrote:
+> >
+> > On Wed, 10 Dec 2008, Eugene Teo wrote:
+> >
+> >> Steve, here's another one that needs a CVE name. Thanks!
+> >>
+> >> http://bugzilla.kernel.org/show_bug.cgi?id=11399
+> >
+> > Similar to the other issue, is this IOCTL reachable by anyone malicious?
 > 
-> The release notes indicate .13 has security implications, but I can't
-> find them on the known vulnerabilities page. Does anyone know what they
-> are or what impact they may have, if they exist?
-> 
-> Thanks in advance,
-> 
+> From what I can see in ibwdt_ioctl(), it does not restrict access to
+> unprivileged users.
 
-The advisories should be posted soon.  It is a security update comparable
-to past ones.
+Again, depends on how the device node is created I think. Not sure
+what mode udev hands out for those.
 
--- 
-    JB
+Ciao, Marcus
