@@ -1,20 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/19/3
-Message-Id: <200809191446.07443.rbu@gentoo.org>
-Date: Fri, 19 Sep 2008 14:46:04 +0200
-From: Robert Buchholz <rbu@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: pdnsd <1.2.7 Denial of Service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/19/3
+Message-ID: <20081219191637.6f5f0bc1@redhat.com>
+Date: Fri, 19 Dec 2008 19:16:37 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: OSS Security <oss-security@...ts.openwall.com>
+Cc: coley@...re.org
+Subject: CVE request - pdfjam
 Content-Type: text/plain; charset=utf-8
 
-Hey,
+Hi!
 
-we'd like a CVE for issue (2) of SA31847:
-An error exists within the "p_exec_query()" function in src/dns_query.c 
-when processing long replies with many answer sections. This can be 
-exploited to e.g. crash the service by sending a specially crafted 
-reply.
+Insecure temporary file handling flaw was reported for pdfjam:
 
-http://secunia.com/advisories/31847/
+https://bugzilla.novell.com/show_bug.cgi?id=459031
 
-Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
+Issue affects all 3 scripts shipped in pdfjam: pdf90, pdfjoin and pdfnup
+
+They create various temporary files in tempfileDir (/var/tmp), process
+id ($$) is used for file name uniqueness.
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
