@@ -1,58 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/05/4
-Message-ID: <20080805223825.GA4437@ngolde.de>
-Date: Wed, 6 Aug 2008 00:38:25 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: openttd
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/19/2
+Message-Id: <1229693532.19341.23.camel@iankko.englab.brq.redhat.com>
+Date: Fri, 19 Dec 2008 14:32:12 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...re.org>
+Cc: oss-security@...ts.openwall.com
+Subject: CVE Request - Incomplete dahdi/zaptel tor2.c patch for CVE-2008-5396
 Content-Type: text/plain; charset=utf-8
 
-Hi Robert,
-here we go...
-* Robert Buchholz <rbu@...too.org> [2008-08-05 06:29]:
-> On Monday 04 August 2008, Nico Golde wrote:
-> > "OpenTTD servers of version 0.6.1 and below are susceptible to a
-> > remotely exploitable buffer overflow when the server is filled with
-> > companies and clients with names that are (near) the maximum allowed
-> > length for names. In the worst case OpenTTD will write the following
-> > (mostly remotely changable bytes) into 1460 bytes of malloc-ed
-> > memory:
-> > up to 11 times (amount of players) 118 bytes
-> > up to 8 times (amount of companies) 124 bytes
-> > and 7 "header" bytes
-> > Resulting in up to 2297 bytes being written in 1460 bytes of
-> > malloc-ed memory. This makes it possible to remotely crash the game
-> > or change the gamestate into an unrecoverable state.  "
-> >
-> > This is Debian bug #493714.
-> >
-> > I didn't yet have the time to check the diff between the versions.
-> 
-> Secunia interpreted [1] the "remotely exploitable buffer overflows" 
-> mentioned in the changelog [2] to be a "boundary error within 
-> the "TruncateString()" function in src/gfx.cpp". This would be the 
-> following patch [3].
+Hello Steve,
 
-This is only used when drawing the data but not for 
-communicatin between server and clients.
+  Eugene Teo has discovered the tor2 upstream
+patch for CVE-2008-5396 was incomplete.
 
-> However, this would overwrite the buffer by max. 2 
-> bytes, and does not match your bug description too well. Is this maybe 
-> r13712 [4] ?
+http://bugs.digium.com/file_download.php?file_id=20796&type=bug
 
-Not exactly, this is the length enforcement on the client 
-side. The fix on the server side is
-svn diff -c 13713 svn://svn.openttd.org/trunk.
-However the problem with this is that it does break network 
-compatibility between different versions so it might be a 
-bad idea to backport this. This way you can only proceed 
-playing with people who also use this backported fix :/
+We were checking if lc->sync is in range of 0-63
+kernel/tor2.c:#define MAX_TOR_CARDS 64, but then
+lately in the code we used:
 
-Kind regards
-Nico
+zaptel/kernel/tor2.c:
 
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+    216         /* if a sync src, put it in the proper place */
+    217         if (lc->sync) {
+    218                 p->tor->syncs[lc->sync - 1] = span->spanno;
+    219                 p->tor->psyncs[lc->sync - 1] = p->span + 1;
+    220         }
 
-Content of type "application/pgp-signature" skipped
+The problem is 'syncs/psyncs' is defined as array with only 4 items (from zaptel/kernel/tor2.c)
+
+     79 struct tor2 {
+     80         /* This structure exists one per card */
+     81         struct pci_dev *pci;            /* Pointer to PCI device */
+     82         int num;                        /* Which card we are */
+     83         int syncsrc;                    /* active sync source */
+     84         int syncs[SPANS_PER_CARD];      /* sync sources */
+     85         int psyncs[SPANS_PER_CARD];     /* span-relative sync sources */
+
+where 'SPANS_PER_CARD' is defined as:
+tor2.c:#define SPANS_PER_CARD  4
+
+so the array index would overflow.
+
+References:
+==========
+http://bugs.digium.com/view.php?id=13954
+http://bugs.digium.com/file_download.php?file_id=20796&type=bug (original tor2 CVE-2008-5396 patch)
+http://bugs.digium.com/view.php?id=13954#96700
+https://bugzilla.redhat.com/show_bug.cgi?id=475446#c4
+
+Patch: Upstream has already released patch for this issue available at:
+=====
+http://svn.digium.com/view/dahdi?view=rev&revision=5590
+
+Credit for discovering this issue goes to Eugene Teo.
+=====
+
+Could you please allocate a CVE id for this issue?
+
+Thanks, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+
