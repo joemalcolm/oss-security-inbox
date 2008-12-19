@@ -1,41 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/03/05/2
-Message-ID: <20080305101909.26941756@redhat.com>
-Date: Wed, 5 Mar 2008 10:19:09 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: request CVE id: insecure handling of DISPLAY in rxvt
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/19/1
+Message-Id: <1229680780.19341.7.camel@iankko.englab.brq.redhat.com>
+Date: Fri, 19 Dec 2008 10:59:40 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...re.org>
+Cc: oss-security@...ts.openwall.com
+Subject: CVE Request -- Xen (Upstream patch for CVE-2008-4405 is incomplete)
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 4 Mar 2008 22:34:10 +0000 Steve Kemp <steve@...ve.org.uk> wrote:
+Hello Steve,
 
->   The idea is that if you typically connect to a host with display
->  forwarding you'll be used to running rxvt and having the resulting
->  application display locally.
-> 
->   However if you forget to enable display forwarding then run
->  RXVT it will connect to :1, rather than complain there is no
->  DISPLAY set and abort.  That *could* allow a malicious local
->  server to steal keyboard, & etc.
-> 
->   However I have a hard time seeing this in practise.  It would
->  mean that locally you couldn't trust root - since it would take
->  a local root user to setup the fake X11 server on :1..
+  originally CVE id of CVE-2008-4405 has been assigned to
+the following Xen backend issue:
 
-I don't think you need root privileges to take advantage of this...
+Original references:
+http://lists.xensource.com/archives/html/xen-devel/2008-09/msg00992.html
+http://lists.xensource.com/archives/html/xen-devel/2008-09/msg00994.html
+(place where was pointed out, this is a security problem -^).
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4405
 
-Let's assume shared box where users ssh -X and run some X programs,
-e.g. rxvt.  Let's assume unprivileged user can start local X session
-which will be DISPLAY=:0 and do xhost + to allow connections from other
-users to her display (maybe Xvnc can be used instead of local X session
-too).  Now she just have to wait for some other user to ssh without X
-forwarding and start rxvt on her display.
+Original patch:
+http://xenbits.xensource.com/staging/xen-3.3-testing.hg?rev/e0e17216ba70
 
-Yes, many assumptions and ifs, but still silently assuming DISPLAY=:0
-when no DISPLAY is set does not sound like a safe default.
 
-Just my 2c.
+The problem:
 
--- 
-Tomas Hoger
-Red Hat Security Response Team
+Daniel P.Berrange has discovered, this original patch is incomplete
+to fix this issue. More details here:
+
+http://lists.xensource.com/archives/html/xen-devel/2008-12/msg00842.html
+
+Credit goes to: Daniel P.Berrange 
+
+Steve, could you please allocate a new CVE id for this revised
+fix?
+
+Thanks, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
