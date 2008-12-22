@@ -1,40 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/05/14/4
-Message-ID: <87abitnft5.fsf@gmx.de>
-Date: Wed, 14 May 2008 16:03:34 +0200
-From: Sven Joachim <svenjoac@....de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/22/1
+Message-ID: <28fa9c5e0812211745l67725a78od3bc6e1b9d6b6cd8@mail.gmail.com>
+Date: Mon, 22 Dec 2008 09:45:07 +0800
+From: "Eugene Teo" <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Emacs 21 fast-lock-mode arbitrary lips code execution
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: watchdog: ib700wdt.c - buffer_underflow bug
 Content-Type: text/plain; charset=utf-8
 
-On 2008-05-14 15:27 +0200, Nico Golde wrote:
-
-> As I am a vim user I might have done something wrong too, 
-> not sure. What I did after installing emacs:
-> cat >> ~/.emacs << EOF
-> (global-font-lock-mode t)
-> (seq font-lock-support-mode 'fast-lock-mode)
-> EOF
-
-Should read setq, not seq.  You will also need to load fast-lock
-explicitly before that, since it's obsolete and not automatically
-loaded anymore:
-
-(load-library "fast-lock")
-
-> cat >> foobar.c << EOF
-> /* no comment */
-> EOF
+On Wed, Dec 17, 2008 at 11:36 PM, Marcus Meissner <meissner@...e.de> wrote:
+> On Wed, Dec 17, 2008 at 10:14:27AM +0800, Eugene Teo wrote:
+>> On Wed, Dec 17, 2008 at 10:00 AM, Steven M. Christey
+>> <coley@...us.mitre.org> wrote:
+>> >
+>> > On Wed, 10 Dec 2008, Eugene Teo wrote:
+>> >
+>> >> Steve, here's another one that needs a CVE name. Thanks!
+>> >>
+>> >> http://bugzilla.kernel.org/show_bug.cgi?id=11399
+>> >
+>> > Similar to the other issue, is this IOCTL reachable by anyone malicious?
+>>
+>> From what I can see in ibwdt_ioctl(), it does not restrict access to
+>> unprivileged users.
 >
-> cat >> foobar.c.flc << EOF
-> " foobar "
-> EOF
+> Again, depends on how the device node is created I think. Not sure
+> what mode udev hands out for those.
 
-Instead of " foobar ", you can put in the following which actually does
-something visible:
+I discussed this with Wim, and it depends on the permissions for the
+miscdev device, /dev/watchdog. On Fedora, it's accessible by root user
+only.
 
-(message "Surprise, surprise!")
-
-This string will be put in the echo area when you visit foobar.c.
-
-Sven
+Thanks, Eugene
