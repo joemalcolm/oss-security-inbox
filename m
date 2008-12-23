@@ -1,43 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/19/3
-Message-Id: <1213887524.2316.36.camel@iankko.englab.brq.redhat.com>
-Date: Thu, 19 Jun 2008 16:58:43 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/23/1
+Message-ID: <4950AE79.7020400@redhat.com>
+Date: Tue, 23 Dec 2008 17:25:13 +0800
+From: Eugene Teo <eteo@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: query on a pppol2tp_recvmsg() fix - security relevant?
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: soft lockup occurs when network load is very high
 Content-Type: text/plain; charset=utf-8
 
-Hello guys,
+Steve, can you please assign a CVE name for the following issue:
 
-  the fix as mentioned at:
+"[NET]: Add preemption point in qdisc_run
 
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=6b6707a50c7598a83820077393f8823ab791abf8;hp=2e761e0532a784816e7e822dbaaece8c5d4be14d
+The qdisc_run loop is currently unbounded and runs entirely in a
+softirq.  This is bad as it may create an unbounded softirq run.
 
+This patch fixes this by calling need_resched and breaking out if
+necessary.
 
-is reasonable. Have investigated this issue in a little deep
-detail. Seems it could be a problem in case when the targeted
-host would run / have created the L2TP tunnel, would support
-the Point to Point protocol with the L2TP plugin enabled
-and then local, unprivileged user could potentially
-issue an PPP command / request with too long L2TP packet
-to force kernel heap corruption (DoS). But as there 
-is no testcase / exploit available till now I am aware
-of, this all is only a presumption. If this would
-be a real problem, than hopefully only with low severity
-(due the special conditions / requirements that need
-to be satisfied to trigger this issue).
+It also adds a break out if the jiffies value changes since that would
+indicate we've been transmitting for too long which starves other
+softirqs."
 
-Kind regards
-Jan iankko Lieskovsky
-RH kernel Security Response Team
+Problem is fixed upstream since 2ba2506ca7ca62c56edaa334b0fe61eb5eab6ab0
 
+Reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=477744
 
-On Wed, 2008-06-18 at 19:41 +0300, Eren Türkay wrote:
-> On 18 Jun 2008 Wed 19:18:40 Marcus Meissner wrote:
-> > A customer asks us if the following is a security problem:
-> 
-> Secunia issued an advisory for that issue. It seems that it's a security 
-> problem, but I'm not sure :)
-> 
-> http://secunia.com/advisories/30719/
+Reproducer:
+https://bugzilla.redhat.com/attachment.cgi?id=327745
 
+This can be triggered by an unprivileged user.
+
+Thanks, Eugene
