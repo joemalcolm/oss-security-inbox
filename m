@@ -1,42 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/25/9
-Message-ID: <48B2F4CB.5040106@pardus.org.tr>
-Date: Mon, 25 Aug 2008 21:07:07 +0300
-From: Pınar Yanardağ <pinar@...dus.org.tr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/24/2
+Message-ID: <Pine.GSO.4.51.0812241158430.12707@faron.mitre.org>
+Date: Wed, 24 Dec 2008 11:58:48 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-CC: Robert Buchholz <rbu@...too.org>
-Subject: Re: Pardus Bugs / Patches, Was: Re: CVE id request: vlc
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: soft lockup occurs when network load is very high
 Content-Type: text/plain; charset=utf-8
 
-Robert Buchholz wrote On 25-08-2008 12:59:
-> Hey Pınar,
->
-> I noticed Pardus is not yet listed on the 'How to steal hard work and
-> patches from others' page, aka:
->    http://oss-security.openwall.org/wiki/distro-patches
->
-> If you host your patches somewhere, please add a pointer there.
->    
 
+======================================================
+Name: CVE-2008-5713
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5713
+Reference: MLIST:[oss-security] 20081223 CVE request: kernel: soft lockup occurs when network load is very high
+Reference: URL:http://openwall.com/lists/oss-security/2008/12/23/1
+Reference: CONFIRM:http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.27.y.git;a=commit;h=2ba2506ca7ca62c56edaa334b0fe61eb5eab6ab0
+Reference: CONFIRM:http://kernel.org/pub/linux/kernel/v2.6/ChangeLog-2.6.25
+Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=477744
+Reference: BID:32985
+Reference: URL:http://www.securityfocus.com/bid/32985
 
-Hi Robert,
-
-I added where to find our source packages and a workflow. Thanks for the 
-suggestion.
-
-> Also, are you managing security bugs with Bugzilla, or somewhere else
-> where one can look up the status of an issue?
->    
-
-We have been discussing security issues on a private e-mail list, but 
-from now on we'll manage security bugs with Bugzilla [1].
-
-[1]: http://bugs.pardus.org.tr/query.cgi (Pardus-Security component)
-
-Cheers,
-
--- 
-Pınar Yanardağ
-http://pinguar.org
+The __qdisc_run function in net/sched/sch_generic.c in the Linux
+kernel before 2.6.25 on SMP machines allows local users to cause a
+denial of service (soft lockup) by sending a large amount of network
+traffic, as demonstrated by multiple simultaneous invocations of the
+Netperf benchmark application in UDP_STREAM mode.
 
 
