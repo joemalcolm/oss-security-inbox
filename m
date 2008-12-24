@@ -1,64 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/02/16/3
-Message-ID: <47B67E48.6050703@freethemallocs.com>
-Date: Fri, 15 Feb 2008 21:10:16 -0900
-From: Jonathan Smith <smithj@...ethemallocs.com>
-To: Solar Designer <solar@...nwall.com>
-CC: oss-security@...ts.openwall.com
-Subject: Re: welcome
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/24/1
+Message-ID: <Pine.GSO.4.51.0812241157590.12707@faron.mitre.org>
+Date: Wed, 24 Dec 2008 11:58:12 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+cc: "Steven M. Christey" <coley@...re.org>
+Subject: Re: CVE Request -- Xen (Upstream patch for CVE-2008-4405 is incomplete)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-Solar Designer wrote:
-| The idea behind this mailing list is not mine, but I have offered to
-| host it (and the associated website/wiki) on Openwall resources.
+======================================================
+Name: CVE-2008-5716
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5716
+Reference: MLIST:[oss-security] 20081219 CVE Request -- Xen (Upstream patch for CVE-2008-4405 is incomplete)
+Reference: URL:http://openwall.com/lists/oss-security/2008/12/19/1
+Reference: MLIST:[xen-devel] 20081218 PATCH: Actually make /local/domain/$DOMID readonly to the guest
+Reference: URL:http://lists.xensource.com/archives/html/xen-devel/2008-12/msg00842.html
+Reference: MLIST:[xen-devel] 20081218 Re: PATCH: Actually make /local/domain/$DOMID readonly to the guest
+Reference: URL:http://lists.xensource.com/archives/html/xen-devel/2008-12/msg00845.html
+Reference: MLIST:[xen-devel] 20081218 Re: PATCH: Actually make /local/domain/$DOMID readonly to the guest
+Reference: URL:http://lists.xensource.com/archives/html/xen-devel/2008-12/msg00846.html
+Reference: MLIST:[xen-devel] 20081218 Re: PATCH: Actually make /local/domain/$DOMID readonly to the guest
+Reference: URL:http://lists.xensource.com/archives/html/xen-devel/2008-12/msg00847.html
 
-One nitpick before we get too established... would it be possible to
-turn off reply-to-list? That is what "reply to all" is for in mail
-clients :-)
+xend in Xen 3.3.0 does not properly restrict a guest VM's write access
+within the /local/domain xenstore directory tree, which allows guest
+OS users to cause a denial of service and possibly have unspecified
+other impact by writing to (1) console/tty, (2) console/limit, or (3)
+image/device-model-pid.  NOTE: this issue exists because of erroneous
+set_permissions calls in the fix for CVE-2008-4405.
 
-| This is different from vendor-sec in that subscription is not limited to
-| distribution vendors (rather, individual smaller projects are very
-| welcome to join) and that the list is public (at least archives will be
-| public on the web).  Any OSS project that is declined vendor-sec
-| membership may join this list instead.
 
-I'm not sure if this is possible, but I'd like to see read-only
-subscriptions. That is, folks can "subscribe" and get the list via email
-without having to be approved to post to the list. See below for more
-discussion on this isssue.
-
-| This is different from Bugtraq in the focus on OSS and on collaboration
-| between OSS projects (joint development and review of security patches,
-| etc.)
-
-My hope is that we can get "upstream" maintainers involved at least to
-some extent in this project. That is, when some {f{,l}}oss (I guess for
-this list we're going with "oss") project encounters a security issue,
-they'll come to either oss-security or vendor-sec and communicate with
-the folks who consume their work. I hope this to be true whether or not
-they are actually on the list.
-
-So, what we'll really have are three classes of users. One is the folks
-who read the list and don't have the ability to post. Joining this group
-should require no administrative action, and it should be open to the
-public. The second is folks who can post but aren't members. I'd add
-upstream authors to this list on a case-by-case basis. The third is
-folks who read it and can post, such as (I'd imagine) many current
-vendor-sec members. These folks need to be vetted on a case-by-case
-basis as well. Can the software currently being used to host the list be
-configured for the above?
-
-	smithj
-
-PS: thanks for calling it "oss-security" and not "oss-sec" ;-)
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.8 (GNU/Linux)
-
-iEYEARECAAYFAke2fkgACgkQCG91qXPaRelSSQCcCjiGNiHATvHGT7u/BUvnuVag
-U7kAnAlRwjumt92zPEq+O04PyVppy4QS
-=YHP5
------END PGP SIGNATURE-----
