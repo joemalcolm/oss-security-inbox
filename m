@@ -1,27 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/04/10/6
-Message-Id: <200804102109.46033.hanno@hboeck.de>
-Date: Thu, 10 Apr 2008 21:09:42 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com
-Subject: CVE requests: drupal and phpbb
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/24/3
+Message-ID: <Pine.GSO.4.51.0812241235040.12707@faron.mitre.org>
+Date: Wed, 24 Dec 2008 12:49:57 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+cc: coley@...re.org
+Subject: Re:  Re: CVE Request - roundcubemail
 Content-Type: text/plain; charset=utf-8
 
-phpbb:
-Release notes of 3.0.1 mention
-"We are very pleased to announce the availability of the phpBB 3.0.1 package. 
-This version has seen numerous stability fixes, performance tweaks and 
-general bugs fixed. Additionally two minor security-related bugs were fixs."
-I couldn't find pointers to the security bugs.
 
+On Wed, 17 Dec 2008, Florian Weimer wrote:
 
-drupal:
-http://drupal.org/node/244637
-(Drupal SA-2008-026)
+> > I bet there's a chunk of these in various applications.  I believe Perl
+> > has similar functionality.
+>
+> Not quite, the s///e operator uses a compile-time transformation for
+> the replacement expression, so it shouldn't be affected by this very
+> issue.
+>
+> \Q \E pairs are an issue in the pattern, not the replacement.
+> Mistakes in this area increase the attack surface by exposing the
+> regular expression compiler to potentially hostile input, and it may
+> lead to denial-of-service vulnerabilities because some implementations
+> do not cope well with certain patterns.  Perhaps CWE-624 should be
+> split to reflect this?
 
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+We'll take a closer look at it.
 
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+I'm not exactly sure what you're saying here, though.  Do you mean that if
+attackers can insert a \Q or \E into the pattern, then they might be able
+to effectively modify the pattern in unexpected ways?  I could imagine how
+inserting a \E followed by something like "." would change the meaning of
+the regexp.
+
+- Steve
