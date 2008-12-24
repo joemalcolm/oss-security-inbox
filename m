@@ -1,26 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/09/2
-Message-ID: <28fa9c5e0812082003t37acf9aex36cacbd88cb30bea@mail.gmail.com>
-Date: Tue, 9 Dec 2008 12:03:13 +0800
-From: "Eugene Teo" <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/24/5
+Message-ID: <Pine.GSO.4.51.0812241254080.12707@faron.mitre.org>
+Date: Wed, 24 Dec 2008 12:54:14 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: enforce a minimum SG_IO timeout
+Subject: Re:  CVE id request: verlihub
 Content-Type: text/plain; charset=utf-8
 
-This requires a CVE name. Please assign one. Thanks.
 
-Alan Cox reported that libata needs to enforce sensible minimum
-timeouts on SG_IO requests otherwise a local, unprivileged user can
-trigger long spews of errors and forces the drives into PIO run as any
-user.
+======================================================
+Name: CVE-2008-5706
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5706
+Reference: MILW0RM:7183
+Reference: URL:http://www.milw0rm.com/exploits/7183
+Reference: MLIST:[oss-security] 20081216 CVE id request: verlihub
+Reference: URL:http://openwall.com/lists/oss-security/2008/12/17/16
+Reference: MISC:http://bugs.debian.org/506530
 
-To trigger this problem, you need to be able to open the cdrom device
-(i.e. login as a normal user from the console and then access it via
-ssh) or access to /dev/sg* which is root only in all sane systems.
+The cTrigger::DoIt function in src/ctrigger.cpp in the trigger
+mechanism in the daemon in Verlihub 0.9.8d-RC2 and earlier allows
+local users to overwrite arbitrary files via a symlink attack on the
+/tmp/trigger.tmp temporary file.
 
-Upstream commit: f2f1fa78a155524b849edf359e42a3001ea652c0
 
-Reference: https://bugzilla.redhat.com/show_bug.cgi?id=474495
-
-Thanks, Eugene
