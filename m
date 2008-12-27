@@ -1,80 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/07/07/3
-Message-ID: <20080707140622.GS29304@fuse.inversepath.com>
-Date: Mon, 7 Jul 2008 14:06:22 +0000
-From: Andrea Barisani <lcars@...rt.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/27/1
+Message-ID: <etHD3Mp/czHxiLYRaZZvRBspVj0@DnrfhFPe1KmBT9SMnrHVxzpiU9A>
+Date: Sun, 28 Dec 2008 00:02:51 +0300
+From: Eygene Ryabinkin <rea-sec@...elabs.ru>
 To: oss-security@...ts.openwall.com
-Subject: [oCERT-2008-007] libpoppler uninitialized pointer
+Cc: atomo64+debian@...il.com
+Subject: Re:  CVE id request: verlihub
 Content-Type: text/plain; charset=utf-8
 
+Steven, good day.
 
-2008/07/07 #2008-007 libpoppler uninitialized pointer
+Wed, Dec 24, 2008 at 12:54:14PM -0500, Steven M. Christey wrote:
+> ======================================================
+> Name: CVE-2008-5706
+> Status: Candidate
+> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5706
+> Reference: MILW0RM:7183
+> Reference: URL:http://www.milw0rm.com/exploits/7183
+> Reference: MLIST:[oss-security] 20081216 CVE id request: verlihub
+> Reference: URL:http://openwall.com/lists/oss-security/2008/12/17/16
+> Reference: MISC:http://bugs.debian.org/506530
+> 
+> The cTrigger::DoIt function in src/ctrigger.cpp in the trigger
+> mechanism in the daemon in Verlihub 0.9.8d-RC2 and earlier allows
+> local users to overwrite arbitrary files via a symlink attack on the
+> /tmp/trigger.tmp temporary file.
 
-Description:
+What about remote command execution via unsanitized user input?  It
+will work only if the server had executable triggers and 'allow_exec'
+is set to 1.  By the way, CVE-2008-5706 will be triggered ;)) only for
+this case too.
 
-The poppler PDF rendering library suffers a memory management bug which leads
-to arbitrary code execution.
-
-The vulnerability is present in the Page class constructor/destructor. The
-pageWidgets object is not initialized in the Page constructor if specific
-conditions are met, but it is deleted afterwards in the destructor regardless
-of its initialization.
-
-Specific PDF files can be crafted which allocate arbitrary memory to trigger
-the vulnerability.
-
-A new poppler version addressing the issue is scheduled to be released on
-July 30th according to maintainer.
-
-The following patch fixes the issue:
-
-
-diff --git a/poppler/Page.cc b/poppler/Page.cc
-index b28a3ee..72a706b 100644
---- a/poppler/Page.cc
-+++ b/poppler/Page.cc
-@@ -230,7 +230,7 @@ GBool PageAttrs::readBox(Dict *dict, char *key, PDFRectangle *box) {
- 
- Page::Page(XRef *xrefA, int numA, Dict *pageDict, PageAttrs *attrsA, Form *form) {
-   Object tmp;
--	
-+  pageWidgets =	NULL;  //Security fix
-   ok = gTrue;
-   xref = xrefA;
-   num = numA;
-
-
-Affected version:
-
-poppler <= 0.8.4
-
-Fixed version:
-
-poppler, N/A
-
-Credit: vulnerability report, patch and PoC code received from Felipe Andres
-Manzano <fmanzano [at] fceia [dot] unr [dot] edu [dot] ar>.
-
-CVE: CVE-2008-2950
-
-Timeline:
-2008-06-27: vulnerability report received
-2008-06-28: contacted poppler maintainers and affected vendors
-2008-06-30: maintainer confirms issue and patch
-2008-07-07: advisory release
-
-References:
-
-Links:
-http://poppler.freedesktop.org
-
-Permalink:
-http://www.ocert.org/advisories/ocert-2008-007.html
-
+If anyone is interested, I had reworked the original patch at MilW0rm.
+Original patch was mangling results of std::string.c_str() and
+sanitizing not only user-supplied part, but the whole command.  The
+result is attached and comments are very welcome.
 -- 
-Andrea Barisani |                Founder & Project Coordinator
-          oCERT | Open Source Computer Emergency Response Team
+Eygene
 
-<lcars@...rt.org>                         http://www.ocert.org
- 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
-        "Pluralitas non est ponenda sine necessitate"
+View attachment "patch-CVE-2008-5706" of type "text/plain" (2388 bytes)
