@@ -1,43 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/03/6
-Message-ID: <Pine.GSO.4.51.0812031248200.15404@faron.mitre.org>
-Date: Wed, 3 Dec 2008 12:48:24 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/28/2
+Message-ID: <87eizsa94r.fsf@mid.deneb.enyo.de>
+Date: Sun, 28 Dec 2008 11:26:12 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: tikiwiki < 2.2
+Cc: coley@...re.org
+Subject: Re:  Re: CVE Request - roundcubemail
 Content-Type: text/plain; charset=utf-8
 
+* Steven M. Christey:
 
-======================================================
-Name: CVE-2008-5318
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5318
-Reference: CONFIRM:http://info.tikiwiki.org/tiki-read_article.php?articleId=41
-Reference: CONFIRM:http://tikiwiki.svn.sourceforge.net/viewvc/tikiwiki/branches/2.0/changelog.txt?view=markup
-Reference: OSVDB:50058
-Reference: URL:http://www.osvdb.org/50058
-Reference: SECUNIA:32341
-Reference: URL:http://secunia.com/advisories/32341
+> On Wed, 17 Dec 2008, Florian Weimer wrote:
+>
+>> > I bet there's a chunk of these in various applications.  I believe Perl
+>> > has similar functionality.
+>>
+>> Not quite, the s///e operator uses a compile-time transformation for
+>> the replacement expression, so it shouldn't be affected by this very
+>> issue.
+>>
+>> \Q \E pairs are an issue in the pattern, not the replacement.
+>> Mistakes in this area increase the attack surface by exposing the
+>> regular expression compiler to potentially hostile input, and it may
+>> lead to denial-of-service vulnerabilities because some implementations
+>> do not cope well with certain patterns.  Perhaps CWE-624 should be
+>> split to reflect this?
+>
+> We'll take a closer look at it.
 
-Unspecified vulnerability in Tikiwiki before 2.2 has unknown impact
-and attack vectors related to "size of user-provided input," a
-different issue than CVE-2008-3653.
+Thanks!
 
+> I'm not exactly sure what you're saying here, though.  Do you mean that if
+> attackers can insert a \Q or \E into the pattern, then they might be able
+> to effectively modify the pattern in unexpected ways?
 
-======================================================
-Name: CVE-2008-5319
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5319
-Reference: CONFIRM:http://info.tikiwiki.org/tiki-read_article.php?articleId=41
-Reference: CONFIRM:http://tikiwiki.svn.sourceforge.net/viewvc/tikiwiki/branches/2.0/changelog.txt?view=markup
-Reference: OSVDB:50058
-Reference: URL:http://www.osvdb.org/50058
-Reference: SECUNIA:32341
-Reference: URL:http://secunia.com/advisories/32341
+What I'm trying to say is: The PHP way of implementing
+preg_replace("/$pattern/e", $expr, $subject) is something like this:
 
-Unspecified vulnerability in Tikiwiki before 2.2 has unknown impact
-and attack vectors related to tiki-error.php, a different issue than
-CVE-2008-3653.
+  my @captures = $subject =~ /$pattern/;
+  if (@captures) {
+    $expr =~ s/\$(\d+)/quotemeta($captures[$1])/ge; # expand captures
+    $result = eval "$expr"; # run code
+  } else {
+    $result = $subject;
+  }
 
+This means that capture contents can leak into $expr and be executed.
 
+Perl translates 
+
+  $subject =~ s/$pattern/$expr/e;
+
+to:
+
+  BEGIN {
+    eval "sub regexp001 {
+      \$0 = \$_[0];
+      \$1 = \$_[1];
+      ... # number of assignments depends on \$expr
+      $expr;
+    }";
+  }
+
+  if ($subject =~ /$pattern/) {
+    substr $subject, $-[0], $+[0] - $-[0], regexp001($1, $2, ...);
+  }
+
+Or something like that.  I can't find it in the source code, but it's
+possible to reveal that the replacement expression is compiled early
+by putting a BEGIN block into the replacement expression.
