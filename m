@@ -1,36 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/09/24/6
-Message-Id: <200809241747.08239.rbu@gentoo.org>
-Date: Wed, 24 Sep 2008 17:47:05 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/28/3
+Message-Id: <200812281456.07346.rbu@gentoo.org>
+Date: Sun, 28 Dec 2008 14:55:57 +0100
 From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: fraud2
+Cc: Tomas Hoger <thoger@...hat.com>, coley@...re.org
+Subject: Re: CVE request - pdfjam
 Content-Type: text/plain; charset=utf-8
 
-On Tuesday 23 September 2008, Steffen Joeris wrote:
-> Hi
+On Friday 19 December 2008, Tomas Hoger wrote:
+> Hi!
 >
-> fraad2 is affected by a heap overflow.
+> Insecure temporary file handling flaw was reported for pdfjam:
 >
-> Upstream announcement:
-> http://www.audiocoding.com/
+> https://bugzilla.novell.com/show_bug.cgi?id=459031
 >
-> Upstream patch:
-> http://www.audiocoding.com/patch/main_overflow.diff
+> Issue affects all 3 scripts shipped in pdfjam: pdf90, pdfjoin and
+> pdfnup
 >
-> Gentoo Bugreport:
-> http://bugs.gentoo.org/show_bug.cgi?id=238445
->
-> Debian Bugreport:
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=499899
->
-> Could I please get a CVE id for this?
->
-> Cheers
-> Steffen
+> They create various temporary files in tempfileDir (/var/tmp),
+> process id ($$) is used for file name uniqueness.
 
-CVE-2008-4201 states "in FAAD2 before 2.6.1", whereas the patch is based 
-on 2.6.1 -- i.e. 2.6.1 is affected. So the CVE needs to be corrected.
+Martin Väth also discovered an untrusted search path vulnerability in 
+the pdfjam scripts: They prepend . to PATH, allowing attackers to 
+execute code by preparing executables (e.g. sed) in the directory 
+pdfnup was run from or in /var/tmp (e.g. pdflatex, cp, rm).
+
+Martin also prepared a patch, see:
+https://bugs.gentoo.org/show_bug.cgi?id=252734
+
+Please assign another CVE for this issue.
 
 Robert
 
