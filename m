@@ -1,28 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/06/17/4
-Message-Id: <200806171038.13349.turkay.eren@gmail.com>
-Date: Tue, 17 Jun 2008 10:38:13 +0300
-From: Eren Türkay <turkay.eren@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: Clamav
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/28/1
+Message-ID: <20081228012241.GJ3057@ngolde.de>
+Date: Sun, 28 Dec 2008 02:22:42 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com, rea-sec@...elabs.ru
+Cc: atomo64+debian@...il.com
+Subject: Re:  CVE id request: verlihub
 Content-Type: text/plain; charset=utf-8
 
-On 15 Jun 2008 Sun 14:21:30 Steffen Joeris wrote:
-> The upstream changelog says:
-> * libclamav/petite.c: fix possible invalid memory access (bb#1000)
->                                 Reported by Damian Put
+Hi,
+* Eygene Ryabinkin <rea-sec@...elabs.ru> [2008-12-27 22:13]:
+> Wed, Dec 24, 2008 at 12:54:14PM -0500, Steven M. Christey wrote:
+> > ======================================================
+> > Name: CVE-2008-5706
+[...] 
+> > 
+> > The cTrigger::DoIt function in src/ctrigger.cpp in the trigger
+> > mechanism in the daemon in Verlihub 0.9.8d-RC2 and earlier allows
+> > local users to overwrite arbitrary files via a symlink attack on the
+> > /tmp/trigger.tmp temporary file.
+> 
+> What about remote command execution via unsanitized user input?
+[...] 
+Covered by CVE-2008-5705.
 
-Hello,
-
-Here is another upstream log, I suspect that this is a security fix too.
-
-  * libclamav/mbox.c, shared/network.c: prevent uninitialized use of hostent
-  structure (bb #1003).
-
-The bug entry says that after zip file's arriving at clamd, it suddenly dies 
-and nothing can be retrieved thereafter. Clamav developer also comfirms that 
-this happens when MailFollowURLs is enabled.
-
-Could someone take a look at this issue?
-
-https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1003
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
