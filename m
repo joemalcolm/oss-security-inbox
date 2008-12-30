@@ -1,36 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/08/18/4
-Message-ID: <20080818115720.GD27231@ngolde.de>
-Date: Mon, 18 Aug 2008 13:57:20 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2008/12/30/1
+Message-ID: <20081230153827.GA2569@ngolde.de>
+Date: Tue, 30 Dec 2008 16:38:27 +0100
 From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: mktemp
+Subject: CVE id request: audiofile
 Content-Type: text/plain; charset=utf-8
 
-Hi Todd,
-* Todd C. Miller <Todd.Miller@...rtesan.com> [2008-08-18 13:54]:
-> In message <20080818085956.GB29717@...e.de>
-> 	so spake Sebastian Krahmer (krahmer):
-> 
-> > BTW, mktemp(1) is using O_EXCL anyway, so I dont see
-> > an issue. Additionally all of our scripts use
-> > more than 6 X' as also shown in the
-> > example section of the manpage. We are not going to
-> > release updates for this non-issue.
-> 
-> I don't think it is a security issue either.  Vendors can also just
-> configure mktemp with the --with-libc flag to use the libc
-> mkstemp()/mkdtemp() functions instead of the bundled version if
-> they prefer.
+Hi,
 
-I disagree because mktemp offers the functionality of just 
-creating the file name and instantly unlinking it thus only 
-providing the generation of a random name. While I don't 
-think that many scripts rely on this it can be the case.
+there is a heap-based buffer overflow in libaudiofile in WAV 
+processing that was reported through the Debian BTS:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=510205
 
---with-libc is not used by some vendors because it limits 
-the template used for the file name. mktemp from coreutils 
-should be a better choice any way...
+
+Steve, can you assign a CVE id to this?
 
 Cheers
 Nico
