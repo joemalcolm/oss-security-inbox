@@ -1,50 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/23/8
-Message-ID: <Pine.GSO.4.64.0912231709390.21134@faron.mitre.org>
-Date: Wed, 23 Dec 2009 17:21:14 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com, Jamie Strandboge <jamie@...onical.com>
-Subject: Re: Linux/QEMU issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/03/1
+Message-ID: <20090103174153.GD4099@ngolde.de>
+Date: Sat, 3 Jan 2009 18:41:53 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE id request: audiofile
 Content-Type: text/plain; charset=utf-8
 
+Hi,
+* Nico Golde <oss-security+ml@...lde.de> [2008-12-30 16:55]:
+> there is a heap-based buffer overflow in libaudiofile in WAV 
+> processing that was reported through the Debian BTS:
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=510205
+> 
+> Steve, can you assign a CVE id to this?
 
-On Tue, 8 Dec 2009, Jamie Strandboge wrote:
+Looks like CVE-2008-5824 was assigned.
 
-> The bug is really two parts though: the qemu issue which crashes the
-> guest, and the guest kernel writing garbage to the virtio net backend.
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-There are three options for how to handle this:
-
-- create separate CVEs, one for QEMU and one for virtio net
-- create one CVE, concentrating on QEMU, with virtio net as an example
-- create one CVE, concentrating on virtio new, mentioning the impact on
-   QEMU
-
-In the discussion in http://patchwork.kernel.org/patch/56479/, I don't see 
-any clear resolution about whether it's a security problem that qemu exits 
-in situations other than an ACPI shutdown.  I don't know qemu/kvm so I 
-can't be sure; if qemu can support multiple hosts at the same time, and a 
-crash in one host triggers a qemu crash/exit that affects all the hosts, 
-then I would call this an issue in qemu.  If there's an attack angle to 
-prevent forensics analysis, then that might be a reasonable argument, too.
-
-If virtio net (whatever that is) exhibits this behavior in "normal" non-VM 
-situations, then it should get a CVE itself.  But if it's closely tied to 
-qemu, or to VMs in general, then I'm less certain.
-
-VMs can stretch our older notions about threat models, and I suspect 
-that's why this is difficult to handle.
-
-- Steve
-
-
-> We decided to fix it as a security update in qemu since a remote
-> attacker could DoS an Ubuntu 8.04 LTS guest, possibly leading to data
-> corruption within the guest. 2.6.26 and later kernels should not be
-> affected.
->
-> Jamie
->
-> -- 
-> Jamie Strandboge             | http://www.canonical.com
->
+Content of type "application/pgp-signature" skipped
