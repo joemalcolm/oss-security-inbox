@@ -1,28 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/07/5
-Message-ID: <20090407144659.GC11822@ngolde.de>
-Date: Tue, 7 Apr 2009 16:46:59 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: clamav clamd and clamscan DoS and bypass by malformated archive
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/06/1
+Message-ID: <1751635993.287111231271206088.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 6 Jan 2009 14:46:46 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: Manuel.Reimer@....de, coley@...re.org
+Subject: Fwd: Using xdg-open in /etc/mailcap causes hole in Firefox (Demonstration/Exploit included)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Thomas Biege <thomas@...e.de> [2009-04-07 15:47]:
-> These two bugs possibly need a CVE-ID.
-> 
-> Here we go:
-> 
-> https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1462
-> 
-> http://blog.zoller.lu/2009/04/clamav-094-and-below-evasion-and-bypass.html
+Here's a heads up for everyone (I've CCd the discoverer)
 
-Should be covered by CVE-2009-1241
-Cheers
-Nico
+Steve, can you assign a CVE id.
 
+Thanks.
+
+----- Forwarded Message -----
+
+Hello,
+
+as I've seen, you also seem to use xdg-open in /etc/mailcap.
+
+The problem is, that xdg-open, itself, detects the right mime-type. This allowes an attacker to deliver a dangerous file with a trustworthy mime-type to get it executed by xdg-open.
+
+I've created an example page:
+https://prefbar.mozdev.org/testxdgopen.html (With SSL)
+http://prefbar.mozdev.org/testxdgopen.html (Without SSL)
+
+This page delivers a .desktop file with the mime-type "application/pdf". In default configuration, Firefox offers to open this file with the default application, which is xdg-open. Just one click on "OK" (and most users won't have a closer look at the dialog!) and the content in the .desktop file is immediately executed!
+
+Other combinations are possible, I just got the first result with .desktop files. There may be other dangerous types, Firefox may be tricked to open with xdg-open. It's even possible to hide the real file type.
+
+See also:
+https://bugs.freedesktop.org/show_bug.cgi?id=19377
+Problem: Their security bugs are open to the public :-( Fast reaction would be required :-(
+
+Yours
+
+Manuel Reimer
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+()  ascii ribbon campaign - against html mail
+/\                        - gegen HTML-Mail
+answers as html mail will be deleted automatically!
+Antworten als HTML-Mail werden automatisch gelöscht!
 
-Content of type "application/pgp-signature" skipped
+Sensationsangebot verlängert: GMX FreeDSL - Telefonanschluss + DSL 
+für nur 16,37 Euro/mtl.!* http://dsl.gmx.de/?ac=OM.AD.PD003K1308T4569a
