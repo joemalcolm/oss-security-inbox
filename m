@@ -1,29 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/28/1
-Message-Id: <1243500490.3772.6.camel@localhost.localdomain>
-Date: Thu, 28 May 2009 10:48:10 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com
-Subject: CVE Request -- ImageMagick -- Integer overflow in XMakeImage()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/07/8
+Message-ID: <Pine.GSO.4.51.0901071346010.15738@faron.mitre.org>
+Date: Wed, 7 Jan 2009 13:46:05 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: sctp: memory overflow when FWD-TSN chunk is received with bad stream ID
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve,
 
-  latest version of ImageMagick fixes one integer overflow
-in XMakeImage().
+======================================================
+Name: CVE-2009-0065
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0065
+Reference: MLIST:[oss-security] 20090105 CVE request: kernel: sctp: memory overflow when FWD-TSN chunk is received with bad stream ID
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/01/05/1
+Reference: CONFIRM:http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=9fcb95a105758b81ef0131cd18e2db5149f13e95
+Reference: CONFIRM:http://patchwork.ozlabs.org/patch/15024/
+Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=478800
+Reference: BID:33113
+Reference: URL:http://www.securityfocus.com/bid/33113
+Reference: FRSIRT:ADV-2009-0029
+Reference: URL:http://www.frsirt.com/english/advisories/2009/0029
 
-References:
-http://secunia.com/advisories/35216/
-http://www.imagemagick.org/script/changelog.php
-http://trac.imagemagick.org/changeset/513/ImageMagick/trunk/magick/xwindow.c
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=530838
+Buffer overflow in net/sctp/sm_statefuns.c in the Stream Control
+Transmission Protocol (sctp) implementation in the Linux kernel before
+2.6.28-git8 allows remote attackers to have an unknown impact via an
+FWD-TSN (aka FORWARD-TSN) chunk with a large stream ID.
 
-Vulnerable version: 6.5.2-8 and prior
-
-Credit: Tielei Wang
-
-Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
 
