@@ -1,21 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/24/5
-Message-ID: <4A69F6E3.3030202@redhat.com>
-Date: Fri, 24 Jul 2009 20:01:07 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com
-Subject: CVE Request -- Drupal 6 Date / Calendar XSS vulnerability 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/07/6
+Message-ID: <Pine.GSO.4.51.0901071303250.15738@faron.mitre.org>
+Date: Wed, 7 Jan 2009 13:03:42 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+cc: coley@...re.org
+Subject: Re: clarification on CVE-2008-5687 (mediawiki)
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve, vendors,
 
-   a XSS flaw in Drupal's Calendar module has been reported:
+On Wed, 7 Jan 2009, Nico Golde wrote:
 
-       http://lampsecurity.org/drupal-date-xss-vulnerability
+> while the referenced upstream announce announces 1.13.3 as a
+> security update for 1.13.2. So it doesn't look like 1.13.3
+> is affected.
 
-Could you allocate a new CVE id for it?
+Fixed, in this and CVE-2008-5688.
 
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+- Steve
