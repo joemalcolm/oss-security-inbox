@@ -1,31 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/07/8
-Message-ID: <Pine.GSO.4.51.0901071346010.15738@faron.mitre.org>
-Date: Wed, 7 Jan 2009 13:46:05 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/07/1
+Message-ID: <20090107083206.GA16641@pcpool00.mathematik.uni-freiburg.de>
+Date: Wed, 7 Jan 2009 09:32:06 +0100
+From: "Bernhard R. Link" <brlink@...ian.org>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: sctp: memory overflow when FWD-TSN chunk is received with bad stream ID
+Subject: Re: Fwd: Using xdg-open in /etc/mailcap causes hole in Firefox (Demonstration/Exploit included)
 Content-Type: text/plain; charset=utf-8
 
+* Josh Bressers <bressers@...hat.com> [090106 20:47]:
+> Here's a heads up for everyone (I've CCd the discoverer)
+> ----- Forwarded Message -----
+[...]
+> This page delivers a .desktop file with the mime-type "application/pdf". In default configuration, Firefox offers to open this file with the default application, which is xdg-open. Just one click on "OK" (and most users won't have a closer look at the dialog!) and the content in the .desktop file is immediately executed!
 
-======================================================
-Name: CVE-2009-0065
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0065
-Reference: MLIST:[oss-security] 20090105 CVE request: kernel: sctp: memory overflow when FWD-TSN chunk is received with bad stream ID
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/01/05/1
-Reference: CONFIRM:http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=9fcb95a105758b81ef0131cd18e2db5149f13e95
-Reference: CONFIRM:http://patchwork.ozlabs.org/patch/15024/
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=478800
-Reference: BID:33113
-Reference: URL:http://www.securityfocus.com/bid/33113
-Reference: FRSIRT:ADV-2009-0029
-Reference: URL:http://www.frsirt.com/english/advisories/2009/0029
+I guess that is what people get for reinventing "see", they get the
+exact same security problems other browser/"generic viewer" combinations
+had years ago....
 
-Buffer overflow in net/sctp/sm_statefuns.c in the Stream Control
-Transmission Protocol (sctp) implementation in the Linux kernel before
-2.6.28-git8 allows remote attackers to have an unknown impact via an
-FWD-TSN (aka FORWARD-TSN) chunk with a large stream ID.
+And xdg-open had not even a way to specify the mime-type...
+</rant>
 
-
+	Bernhard R. Link
