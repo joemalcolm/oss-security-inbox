@@ -1,36 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/25/3
-Message-ID: <Pine.GSO.4.51.0903242102270.18572@faron.mitre.org>
-Date: Tue, 24 Mar 2009 21:05:49 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/07/7
+Message-ID: <Pine.GSO.4.51.0901071327190.15738@faron.mitre.org>
+Date: Wed, 7 Jan 2009 13:27:23 -0500 (EST)
 From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request -- ucd-snmp / net-snmp, libnss-ldapd / nss_ldap
+Subject: Re: CVE id request: audiofile
 Content-Type: text/plain; charset=utf-8
 
 
-On Tue, 24 Mar 2009, Vincent Danen wrote:
+======================================================
+Name: CVE-2008-5824
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5824
+Reference: MLIST:[oss-security] 20081230 CVE id request: audiofile
+Reference: URL:http://openwall.com/lists/oss-security/2008/12/30/1
+Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=510205
+Reference: CONFIRM:http://musicpd.org/mantis/view.php?id=1915
 
-> * [2009-03-23 13:21:42 +0100] Jan Lieskovsky wrote:
->
-> >2, libnss-ldapd / nss_ldap: LDAP service configuration file
-> >                                 shipped with world readable permissions
-> >   References:
-> >   https://bugzilla.redhat.com/show_bug.cgi?id=491623
-> >   http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=520476
->
-> On a side note, this is pretty specific to libnss-ldapd and not so much
-> nss_ldap.
+Heap-based buffer overflow in msadpcm.c in libaudiofile in audiofile
+0.2.6 allows context-dependent attackers to cause a denial of service
+(application crash) or possibly execute arbitrary code via a crafted
+WAV file.
 
-So, the various bug reports and followups list:
 
-  libnss-ldapd
-  nss_ldap
-  nss-ldapd
-  openldap
-
-Which package is actually affected and what versions might they be?
-
-Use CVE-2009-1073, to be filled in once I have some more detail.
-
-- Steve
