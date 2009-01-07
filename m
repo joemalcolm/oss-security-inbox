@@ -1,30 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/03/4
-Message-ID: <4A9FEA2F.8080501@redhat.com>
-Date: Fri, 04 Sep 2009 00:09:19 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: NULL pointer dereference in sg_build_indirect()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/07/10
+Message-ID: <Pine.GSO.4.51.0901071356180.15738@faron.mitre.org>
+Date: Wed, 7 Jan 2009 13:56:50 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security <oss-security@...ts.openwall.com>
+cc: Manuel.Reimer@....de, coley@...re.org
+Subject: Re: Fwd: Using xdg-open in /etc/mailcap causes hole in Firefox (Demonstration/Exploit included)
 Content-Type: text/plain; charset=utf-8
 
-Backtrace:
-http://lkml.org/lkml/2009/9/3/1
 
-Upstream proposed patch:
-http://lkml.org/lkml/2009/9/3/107
+======================================================
+Name: CVE-2009-0068
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0068
+Reference: MISC:https://bugs.freedesktop.org/show_bug.cgi?id=19377
+Reference: MLIST:[oss-security] 20090106 Fwd: Using xdg-open in /etc/mailcap causes hole in Firefox (Demonstration/Exploit included)
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/01/06/1
 
-Triggered by firing up "xcdroast" to duplicate a CD.
+Interaction error in xdg-open allows remote attackers to execute
+arbitrary code by sending a file with a dangerous MIME type but using
+a safe type that Firefox sends to xdg-open, which causes xdg-open to
+process the dangerous file type through automatic type detection, as
+demonstrated by overwriting the .desktop file.
 
-[...]
-  out:
-  	for (i = 0; i < k; i++)
--		__free_pages(schp->pages[k], order);
-+		__free_pages(schp->pages[i], order);
 
-When the allocation in sg_build_indirect() fails, an oops can occur 
-because of an obvious typo.
-
-This was introduced by upstream commit 10db10d1 in v2.6.28-rc1.
-
-Thanks, Eugene
