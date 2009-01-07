@@ -1,38 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/05/5
-Message-ID: <20090805183008.7fc69ca8@redhat.com>
-Date: Wed, 5 Aug 2009 18:30:08 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Cc: matthias.andree@....de
-Subject: Re: CVE request: fetchmail <= 6.3.10 SSL certificate NUL prefix verification bypass
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/07/12
+Message-ID: <20090107193313.GC18141@ngolde.de>
+Date: Wed, 7 Jan 2009 20:33:13 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CFPs on this list (was: CFP: COLSEC 2009)
 Content-Type: text/plain; charset=utf-8
 
-Hi Matthias!
+Hi,
+* Solar Designer <solar@...nwall.com> [2009-01-07 18:59]:
+> I've just approved this questionable posting primarily to let others in
+> this group see what is coming our way.
+> 
+> Do we want to let this kind of messages through to the list?  Maybe as
+> long as they're not too frequent?  Or when they're not cross-posted as
+> badly as this one was?  Or when they're of specific relevance not only
+> to security, but also to Open Source?  I'm afraid that trying to apply
+> these criteria would make moderation decisions hard.  Thoughts?
 
-Thanks for the heads-up!
+Imho they are ok if they are not badly cross-posted as I 
+guess most of us are subscribe on any of the cross-posted 
+lists anyway.
 
-On Wed, 05 Aug 2009 17:14:36 +0200 "Matthias Andree"
-<matthias.andree@....de> wrote:
-
-> Is there a global CVE ID to collect this vulnerability that is
-> supposed to be reused by applications?
-
-That's actually a pretty good question.  This problem was first
-presented for Firefox/NSS and got assigned CVE-2009-2408.
-
-Similar problem also affects GnuTLS and some changes are being
-discussed on the -devel mailing list, with some changes and tests
-already in git.  This should deserve a separate CVE.
-
-And than there is OpenSSL, which, as I've been told, expects
-applications to do name checking.  So it's probably safe to assume that
-many / majority of client applications using OpenSSL are likely to be
-affected by some variant of this problem (either via CommonNames or
-subjectAltNames).  I'm not sure if single CVE should be used here for
-all, or dozens of CVEs, one for each.  It's likely going to be mess
-either way.  I'm adding CC on Steven for advice.  Steven, at least one
-CVE has already been allocated privately for similar case.
-
+Cheers
+Nico
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
