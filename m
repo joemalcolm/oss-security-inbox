@@ -1,26 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/01/3
-Message-ID: <Pine.GSO.4.51.0907010801440.10744@faron.mitre.org>
-Date: Wed, 1 Jul 2009 08:01:51 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/07/5
+Message-ID: <20090107175742.GA3348@ngolde.de>
+Date: Wed, 7 Jan 2009 18:57:42 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-cc: oss-security+ml@...lde.de
-Subject: Re: CVE id request: compface
+Cc: coley@...re.org
+Subject: clarification on CVE-2008-5687 (mediawiki)
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-======================================================
-Name: CVE-2009-2286
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2286
-Reference: MLIST:[oss-security] 20090629 CVE id request: compface
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/06/29/2
-Reference: MLIST:[oss-security] 20090629 Re: CVE id request: compface
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/06/29/4
-Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=534973
+the CVE id descriptions says:
+"MediaWiki 1.11 through 1.13.3 does not properly protect..." 
+while the referenced upstream announce announces 1.13.3 as a 
+security update for 1.13.2. So it doesn't look like 1.13.3 
+is affected.
 
-Buffer overflow in compface 1.5.2 and earlier allows user-assisted
-attackers to cause a denial of service (crash) via a long declaration
-in a .xbm file.
+Also looking at the patch it turns out that 1.13.3 is fixing 
+this by adding an htaccess file.
 
+The CVE id description should get an update.
 
+Cheers
+Nico
+
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
