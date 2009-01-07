@@ -1,35 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/17/5
-Message-ID: <Pine.GSO.4.51.0903171538420.17171@faron.mitre.org>
-Date: Tue, 17 Mar 2009 15:51:09 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/07/4
+Message-ID: <20090107162337.GA15416@openwall.com>
+Date: Wed, 7 Jan 2009 19:23:37 +0300
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2009-0876 (VirtualBox) references
+Subject: CFPs on this list (was: CFP: COLSEC 2009)
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-On Tue, 17 Mar 2009, Nico Golde wrote:
+I've just approved this questionable posting primarily to let others in
+this group see what is coming our way.
 
-> Any reason the CVE description says "Unspecified
-> vulnerability...via unknown vectors"?
+Do we want to let this kind of messages through to the list?  Maybe as
+long as they're not too frequent?  Or when they're not cross-posted as
+badly as this one was?  Or when they're of specific relevance not only
+to security, but also to Open Source?  I'm afraid that trying to apply
+these criteria would make moderation decisions hard.  Thoughts?
 
-This was based on the original Sun alert.  I cleaned up the description
-yesterday, and the CVE web site was updated today.
+Should this one have been approved or rejected?  And what if it were not
+the very first one (which it was)?
 
-> Looking at the Gentoo bug report[0] it seems obvious to me
-> that this is caused by insecurely loading shared libraries
-> so you can inject your own shared lib code.
->
-> [0] https://bugs.gentoo.org/show_bug.cgi?id=260331#c0
+On Wed, Jan 07, 2009 at 05:11:26PM +0100, Patrice CLEMENTE wrote:
+> Apologies for multiple copies or for innapropriate targeted lists.
+...
 
-It wasn't particularly obvious to me.  I may be getting hung up on the use
-of hardlinks.
-
-Is the problem that the executable includes a "." in its library path
-(presumably DT_RPATH), and that path isn't cleansed until later during
-program execution?  If it's just that, then the use of a hardlink doesn't
-seem to be essential - the attacker could run the program from their own
-directory.  Or, is it that the executable eventually removes "." from its
-path, but not before some libraries have already been loaded?
-
-- Steve
+Alexander
