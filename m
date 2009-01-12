@@ -1,40 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/29/1
-Message-ID: <20090729092009.GB28200@ngolde.de>
-Date: Wed, 29 Jul 2009 11:20:09 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Cc: Vincent Danen <vdanen@...hat.com>
-Subject: Re: debian bug report on bind9 DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/12/4
+Message-Id: <1231767584.3228.13.camel@dhcp-lab-164.englab.brq.redhat.com>
+Date: Mon, 12 Jan 2009 14:39:44 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com
+Subject: CVE Request -- tsqllib, slurm-llnl, libnasl, libcrypt-openssl-dsa-perl, erlang, boinc-client, m2crypto
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Robert Buchholz <rbu@...too.org> [2009-07-29 00:13]:
-> On Tuesday 28 July 2009, Vincent Danen wrote:
-> > I don't think
-> > it's a huge problem with a well-secured bind9 configuration, but
-> > could be quite problematic for bind config's that allow updates
-> > without an RNDC key (typical of some dynamic DNS implementations), or
-> > on a system that has lax enough permissions that the RNDC key is
-> > exposed.
-> 
-> The crash is not limited to configurations that allow updates.
+Hello Steve,
 
-Confirmed.
+  could you please allocate CVE ids for the following OpenSSL's
+CVE-2008-5077 related issues:
 
-> The ISC advisory states so as well, and I could reproduce the DoS on a 
-> static named instance by removing the "$packet->sign_tsig(...)" line in 
-> the exploit. So the scope of this issue is wider than apparent from
-> the original report.
+tsqllib:  https://bugzilla.redhat.com/show_bug.cgi?id=479650
+          http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=511509
 
-Hmm I'd consider that a bug as well or is there a reason why 
-bind shouldn't verify update's authorization before 
-processing them?
+libnasl: https://bugzilla.redhat.com/show_bug.cgi?id=479655
+         http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=511517
 
-Cheers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
+boinc-client: https://bugzilla.redhat.com/show_bug.cgi?id=479664
+              http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=511521
 
-Content of type "application/pgp-signature" skipped
+m2crypto: https://bugzilla.redhat.com/show_bug.cgi?id=479676
+          http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=511515
+
+Other related issues (probably more to come):
+slurm-llnl:                 http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=511511
+libcrypt-openssl-dsa-perl:  http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=511519
+erlang:                     http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=511520
+                            (Lower severity issue due the fact, the output of
+                             DSA_do_verify function is further processed and
+                             sent back to the caller, where it is compared against 1:
+
+>>From lib/crypto/src/crypto.erl:
+
+dss_verify(Dgst,Signature,Key) ->
+    control(?DSS_VERIFY, [Dgst,Signature,Key]) == <<1>>.
+
+Thanks, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
