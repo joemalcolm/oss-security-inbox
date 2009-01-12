@@ -1,38 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/29/10
-Message-Id: <20091029160831.77498c26.reed@reedloden.com>
-Date: Thu, 29 Oct 2009 16:08:31 -0500
-From: Reed Loden <reed@...dloden.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/12/1
+Message-ID: <28fa9c5e0901112057g539a6305ybb5eeaf561a117d9@mail.gmail.com>
+Date: Mon, 12 Jan 2009 12:57:55 +0800
+From: "Eugene Teo" <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Subject: Re: MFSA 2009-63
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, "Greg KH" <greg@...ah.com>
+Subject: CVE-2009-0024 kernel: local privilege escalation in sys_remap_file_pages
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 29 Oct 2009 21:49:39 +0100
-Florian Weimer <fw@...eb.enyo.de> wrote:
+Nelson Elhage reported that it is possible for a local, unprivileged
+user to cause a denial of service, or gain root privileges by abusing
+a flaw in sys_remap_file_pages().
 
-> We've got a rather strict backported-security-fixes-only policy
-> because we've got a very interdependent code base, so we usually can't
-> switch upstream versions for libraries because most developers have a
-> rather lax attitude towards ABI compatibility (and even if they don't,
-> we're usually trailing behind a major version or two 8-/).
+The bug was introduced by commit 3ee6dafc, and it was fixed in
+8a459e44. This was also fixed in 2.6.24 -stable tree with 7e3c396b.
 
-Yeah, we really don't like taking full library upgrades on maintenance
-branches either (it makes our QA team very unhappy, for one thing). Our
-developers tried very hard to find the smallest fixes possible that
-could be backported to fix all the issues that were found, but it just
-wasn't really feasible in various cases due to a good number of the
-fixes being dependent on unrelated changes that had been done upstream
-since the last time we did a full library upgrade. We would have had to
-backport those changes, too, and even then, we weren't sure if we
-wouldn't be opening some other security holes because of something we
-missed in the backport. So, the decision was made to do full library
-upgrades for those libraries that we couldn't realistically backport
-fixes for. I know it sucks, but it's what happened. :(
+We have assigned CVE-2009-0024 to this issue.
 
-~reed
-Mozilla Security Group
+Take note that this does not affect the latest kernels as shipped with
+Red Hat Enterprise Linux 5, Red Hat Enterprise MRG, Fedora 8 to 10,
+Ubuntu 8.04 (Hardy) (Thanks Kees), and Debian GNU/Linux (Thanks Dann).
 
--- 
-Reed Loden - <reed@...dloden.com>
-
-Content of type "application/pgp-signature" skipped
+Thanks, Eugene
