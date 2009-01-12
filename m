@@ -1,21 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/25/4
-Message-ID: <gsvgck$f4j$1@ger.gmane.org>
-Date: Sat, 25 Apr 2009 12:14:40 -0500
-From: Raphael Geissert <atomo64+debian@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/12/3
+Message-ID: <20090112110812.GE16738@suse.de>
+Date: Mon, 12 Jan 2009 12:08:12 +0100
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2008-5619 update
+Subject: CVE request: xrdp
 Content-Type: text/plain; charset=utf-8
 
 Hi,
+this one is a bit older but seems not to have CVE-IDs assigned yet.
 
-AtMail Open (atmail.org) version 1.03 is also affected by the bug in
-html2text as described by CVE-2008-5619. Previous versions might be
-affected as well.
+http://packetstormsecurity.org/0812-advisories/VA_VD_87_08_XRDP.pdf
 
-Regards,
+-------------------------------------------------------------------------------
+Multiple vulnerabilities in xrdp 
+Discovered by: Hamid Ebadi
+CSIRT Team Member
+Amirkabir University CSIRT Laboratory (APA Laboratory)
+autcert@....ac.ir
+Introduction 
+Based on the work of rdesktop, xrdp uses the remote desktop protocol to present a
+GUI to the user. The goal of this project is to provide a fully functional Linux
+terminal server, capable of accepting connections from rdesktop and Microsoft's own 
+terminal server / remote desktop clients. (http://xrdp.sourceforge.net)
+There are multiple buffer overflow vulnerabilities in xrdp which could be used by
+malicious attackers to execute arbitary code on the system.
+Vulnerable version
+xrdp <=0.4.1
+...
+-------------------------------------------------------------------------------
+
+
 -- 
-Raphael Geissert - Debian Maintainer
-www.debian.org - get.debian.net
-
-
+Bye,
+     Thomas
+-- 
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+-- 
+           Hamming's Motto:
+           The purpose of computing is insight, not numbers.
+                                -- Richard W. Hamming
