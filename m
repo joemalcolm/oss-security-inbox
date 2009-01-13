@@ -1,30 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/28/11
-Message-Id: <200901281258.16015.steffen.joeris@skolelinux.de>
-Date: Wed, 28 Jan 2009 12:58:11 -0500
-From: Steffen Joeris <steffen.joeris@...lelinux.de>
-To: coley@...us.mitre.org
-Cc: oss-security@...ts.openwall.com
-Subject: CVE id request: php5
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/13/1
+Message-ID: <28fa9c5e0901130323gfe2af4et508bda2eb95ab263@mail.gmail.com>
+Date: Tue, 13 Jan 2009 19:23:59 +0800
+From: "Eugene Teo" <eugeneteo@...nel.sg>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE-2008-4307 kernel: local denial of service in locks_remove_flock
 Content-Type: text/plain; charset=utf-8
 
-Hi
+There is a fcntl/close race in the Linux kernel that can be abused by
+a local, unprivileged user to cause a denial of service.
 
-I don't think this has a CVE id yet.
+The issue was fixed in upstream commit c4d7c402b788b73dc24f1e54a57f89d3dc5eb7bc.
 
-Quote from the debian bugreport:
-"When an invalid key is used when calling dba_replace on a dba inifile 
-resource it leads to file truncation."
+More details can be found at:
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2008-4307
 
-References:
-Debian Bugreport: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=507101
-Security Reason: http://securityreason.com/achievement_securityalert/58
-Upstream patch:
-http://cvs.php.net/viewvc.cgi/php-src/ext/dba/libinifile/inifile.c?r1=1.14.2.1.2.4&r2=1.14.2.1.2.5
-
-Could I please get a CVE id for this?
-
-Cheers
-Steffen
-
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+Thanks, Eugene
