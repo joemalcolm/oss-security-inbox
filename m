@@ -1,29 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/04/5
-Message-ID: <20090804191618.56b6ea4b@neon>
-Date: Tue, 4 Aug 2009 19:16:18 +0200
-From: Alex Legler <a3li@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: Wordpress
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/13/2
+Message-Id: <1231857710.3439.20.camel@dhcp-lab-164.englab.brq.redhat.com>
+Date: Tue, 13 Jan 2009 15:41:50 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com
+Subject: CVE Request -- libmikmod
 Content-Type: text/plain; charset=utf-8
 
-Hey,
+Hello Steve,
 
-yet another Wordpress release:
+  could you please allocate two 2008 CVE ids for the following
+libmikmod issues:
 
-http://wordpress.org/development/2009/08/wordpress-2-8-3-security-release/
+A, 
+mikmod, libmikmod: app crash or abort when loading/playing multiple
+music files with varying number of channels
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=479829
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=461519
 
-Given the upstream statement and the changesets (see below), it looks
-like an incomplete fix for CVE-2009-2334.
+Patch:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=5;filename=mikmod.diff;att=1;bug=461519
 
-Changes:
-http://core.trac.wordpress.org/changeset/11769
-http://core.trac.wordpress.org/changeset/11769
-http://core.trac.wordpress.org/changeset/11766
-http://core.trac.wordpress.org/changeset/11765
+Affected libmikmod versions:  libmikmod-3.1.9 <= x <= libmikmod-3.2.0-3.beta2.fc9 (possibly newer too)
 
-Please assign a CVE.
+B, 
+mikmod,libmikmod: app crash when loading XM files
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=479833
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=476339
 
-Thanks, Alex
+Patch: 
+http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=5;filename=31.xm-header.patch;att=1;bug=476339
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+Affected mikmod versions: libmikmod-3.1.11 <= x libmikmod-3.2.0-3.beta2.fc9 (possibly newer too)
+
+Thanks, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+
