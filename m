@@ -1,89 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/17/9
-Message-ID: <20090917042515.GA6793@1wt.eu>
-Date: Thu, 17 Sep 2009 06:25:15 +0200
-From: Willy Tarreau <w@....eu>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com, Eugene Teo <eugene@...hat.com>
-Subject: Re: CVE request: kernel: tc: uninitialised kernel memory leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/13/3
+Message-ID: <20090113233207.GA9072@ngolde.de>
+Date: Wed, 14 Jan 2009 00:32:07 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com
+Cc: coley@...re.org
+Subject: update on CVE-2008-5718
 Content-Type: text/plain; charset=utf-8
 
-Hi Steven,
+Hi,
+I just did a security update for CVE-2008-5718 and since the 
+description is not really verbose I thought I'd share what I 
+found in case anyone else is working on that.
 
-On Wed, Sep 16, 2009 at 09:19:02PM -0400, Steven M. Christey wrote:
-(...)
-> One question, though - http://patchwork.ozlabs.org/patch/32830/ patches
-> net/sched/sch_api.c / tc_fill_tclass, but the 2005 patch includes
-> net/core/neighbour.c, net/sched/cls_api.c, and others.
-> 
-> So we have:
-> 
-> tc_fill_qdisc() - already fixed in 2.6; just fixed in 2.4
-> 
->   http://marc.info/?l=git-commits-head&m=112002138324380
->   (not sure of reference for 2.4)
->
-> multiple functions e.g. tcf_fill_node() already fixed in 2.6; unknown
-> status in 2.4.  Includes neightbl_fill_info(), neightbl_fill_param_info(),
-> and others.
-> 
->   http://marc.info/?l=git-commits-head&m=112002138324380
+This issue only affects netatalk installations that make use 
+of a pipe command to handle the print file and also use one 
+of the available variables in the piped command.
 
-This one is here in 2.4 :
+The netatalk documentation documents %F, %U and %J while 
+there is also %C which is undocumented but visible in the 
+code (and does the same as %J).
 
-   http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.4.37.y.git;a=commitdiff;h=0f3f2328f63c521fe4b435f148687452f98b2349
+These variables are expanded, %F with the content of %%From:, %J with 
+%%Title: from the PostScript stream and %U with the user 
+printing the file.
 
-> tc_fill_tclass() - just fixed in 2.6
-> 
->   http://patchwork.ozlabs.org/patch/32830/
-> 
-> 
-> So for now, we have:
-> 
->   CVE-2009-3228 - tc_fill_tclass()
+After the variable expansion (which is done in 
+pipexlate(lp.c) the specified,expanded command is passed to 
+popen() without properly escaping it before.
 
-Here in 2.4 :
+So exploiting this is pretty straight forward if you know 
+the papd configuration (which is at least world-readable on 
+Debian) just by for example preparing a ps file including 
+something like %%Title: $(yourcommand) and print it.
 
-  http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.4.37.y.git;a=commitdiff;h=096ed17f20affc2db0e307658c69b67433992a7a
+Steve, can you update the CVE id description according to 
+this information?
 
+Cheers
+Nico
+P.S. The patch I used can be found on:
+http://people.debian.org/~nion/nmu-diff/netatalk-2.0.3-11_2.0.3-11+lenny1.patch
 
->   CVE-2005-4881 - tc_fill_qdisc()  (at least)
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-in 2.4, was fixed with the other one above from 2005 (0f3f23).
-
-
-> Now we have:
-> 
->   tcf_fill_node(), neightbl_fill_info(), and others from 2005.
-> 
-> Typical practice would be to associate tcf_fill_node() and the others with
-> CVE-2005-4881, not just have it be with tc_fill_qdisc() - because they
-> were all disclosed in 2005.  Then the 2.4 fix might only apply to a
-> portion of CVE-2005-4881.  This could make it difficult to coordinate
-> low-level patches, but our "(1)" and "(2)" numbering style in the CVE
-> description could be used at that level if needed.
-> 
-> So, let's go with these two numbers.  I'll fill them out later.  (My head
-> hurts.)
-> 
-> Oh, and if anybody could give me more precise version information than
-> "2.4" and "2.6" then that would be appreciated.
-
-OK, for 2.4, all the issues mentionned here were fixed in 2.4.37.6 and present
-up to 2.4.37.5.
-
-In 2.6 now :
-
-  - tc_fill_tclass was fixed in 2.6.31-rc9 (commit 16ebb5e0)
-  - neightbl_fill_info, tcf_fill_node, tc_fill_qdisc... in 2.6.13-rc1
-    (commit 9ef1d4c7)
-
-> P.S. I chose the 2005 date in the CVE to help with distinguishing the
-> problems, but arguably this should have received a 2009, because the 2005
-> fix was so vague that the security implications weren't (apparently) known
-> until 2009.
-
-OK, thanks Steven.
-
-Willy
-
+Content of type "application/pgp-signature" skipped
