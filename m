@@ -1,31 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/18/1
-Message-ID: <4AB2D8F2.4090002@kernel.sg>
-Date: Fri, 18 Sep 2009 08:48:50 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/14/1
+Message-ID: <20090114082157.GA18040@suse.de>
+Date: Wed, 14 Jan 2009 09:21:57 +0100
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: KVM: x86: Disallow hypercalls for guest callers in rings > 0
+Subject: Re: update on CVE-2008-5718
 Content-Type: text/plain; charset=utf-8
 
-"So far unprivileged guest callers running in ring 3 can issue, e.g., 
-MMU hypercalls. Normally, such callers cannot provide any hand-crafted 
-MMU command structure as it has to be passed by its physical address, 
-but they can still crash the guest kernel by passing random addresses.
+Hello Nico,
 
-To close the hole, this patch considers hypercalls valid only if issued 
-from guest ring 0. This may still be relaxed on a per-hypercall base in 
-the future once required."
+On Wed, Jan 14, 2009 at 12:32:07AM +0100, Nico Golde wrote:
+> Hi,
+> I just did a security update for CVE-2008-5718 and since the 
+> description is not really verbose I thought I'd share what I 
+> found in case anyone else is working on that.
+...
+> Cheers
+> Nico
+> P.S. The patch I used can be found on:
+> http://people.debian.org/~nion/nmu-diff/netatalk-2.0.3-11_2.0.3-11+lenny1.patch
 
-This was introduced in v2.6.25-rc1, and fixed in 2.6.31.
+I am not very happy with the patch because it just filters a handful of
+characters, a better solution would be to replace popen().
+(I mentioned this on the netatalk-devel ML but got no answer so far.)
 
-cvss2=7.2/AV:L/AC:L/Au:N/C:C/I:C/A:C
 
-Upstream commit:
-http://git.kernel.org/linus/07708c4af1346ab1521b26a202f438366b7bcffd
 
-References:
-http://patchwork.kernel.org/patch/38926/
-https://bugzilla.redhat.com/show_bug.cgi?id=524124
-
-Thanks, Eugene
+-- 
+Bye,
+     Thomas
+-- 
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+-- 
+           Hamming's Motto:
+           The purpose of computing is insight, not numbers.
+                                -- Richard W. Hamming
