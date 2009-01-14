@@ -1,18 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/24/5
-Message-ID: <Pine.GSO.4.51.0903241804070.18572@faron.mitre.org>
-Date: Tue, 24 Mar 2009 18:10:02 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/14/3
+Message-ID: <20090114152504.GB24376@ngolde.de>
+Date: Wed, 14 Jan 2009 16:25:04 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Lua 5.1.4
+Subject: Re: update on CVE-2008-5718
 Content-Type: text/plain; charset=utf-8
 
+Hi,
+* Thomas Biege <thomas@...e.de> [2009-01-14 15:50]:
+> On Wed, Jan 14, 2009 at 12:32:07AM +0100, Nico Golde wrote:
+> > Hi,
+> > I just did a security update for CVE-2008-5718 and since the 
+> > description is not really verbose I thought I'd share what I 
+> > found in case anyone else is working on that.
+> ...
+> > Cheers
+> > Nico
+> > P.S. The patch I used can be found on:
+> > http://people.debian.org/~nion/nmu-diff/netatalk-2.0.3-11_2.0.3-11+lenny1.patch
+> 
+> I am not very happy with the patch because it just filters a handful of
+> characters, a better solution would be to replace popen().
+> (I mentioned this on the netatalk-devel ML but got no answer so far.)
 
-Note that the typical CVE criterion for flagging language-interpreter bugs
-is that they should be exploitable/reachable through the language API in
-reasonable scenarios for the application.  Otherwise, it's the application
-developer attacking himself/herself.  I know nothing about Lua so can't
-interpret items like #6 and #8, whereas you could imagine malicious input
-being processed by unpack().
+It is no full shell escape but escapes everything that 
+should be relevant for command injection. Sure, replacing 
+the popen would be the better option but I was not too happy 
+doing this as I guess it's more likely to break existing 
+functionality with it by accident.
 
-- Steve
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
