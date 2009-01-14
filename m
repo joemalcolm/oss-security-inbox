@@ -1,17 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/23/1
-Message-ID: <87wsbgommq.fsf@mid.deneb.enyo.de>
-Date: Mon, 23 Feb 2009 22:43:09 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: CVE request: mldonkey arbitrary file download vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/14/2
+Message-Id: <1231924080.7670.6.camel@dhcp-lab-164.englab.brq.redhat.com>
+Date: Wed, 14 Jan 2009 10:08:00 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com
+Subject: CVE Request -- amarok
 Content-Type: text/plain; charset=utf-8
 
-mldonkey in version 2.9.7 and earlier permits remote attackers to
-download arbitrary files accessible to the mldonkey daemon, using
-crafted requests to the HTTP console.
+Hello Steve,
 
-<https://savannah.nongnu.org/bugs/?25667>
+  multiple integer overflows (leading to heap-based overflows)
+and unchecked allocation vulnerabilities has been reported
+against Amarok multimedia player whep parsing malformed
+Audible digital audio files. Upstream has fixed
+these in latest 2.0.1.l release.
 
-(The proposed patch deals with this in a rather odd place.)
+References:
+http://www.trapkit.de/advisories/TKADV2009-002.txt
+http://amarok.kde.org/en/releases/2.0.1.1   (Fix possible buffer overflows when parsing Audible .aa files.)
+https://bugzilla.redhat.com/show_bug.cgi?id=479946
+http://bugs.gentoo.org/show_bug.cgi?id=254896
+
+Proposed solution: Upgrade to latest upstream version 2.0.1.1
+
+Affected Amarok version: amarok-1.4.10-1.fc9 <= x < latest upstream 2.0.1.1 release
+
+Attaching also diff for audibletag.cpp file between latest F10 (amarok-2.0-2.fc10)
+and latest upstream 2.0.1.1 release (see attachment).
+
+Could you please allocate a new 2009 CVE id for it?
+
+Thanks, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+Content of type "text/x-patch" skipped
