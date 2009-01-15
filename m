@@ -1,37 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/04/6
-Message-ID: <20090804174813.GF7560@ngolde.de>
-Date: Tue, 4 Aug 2009 19:48:13 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: squid DoS in external auth header parser
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/15/3
+Message-ID: <20090115213213.3dd5622a@redhat.com>
+Date: Thu, 15 Jan 2009 21:32:13 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: OSS Security <oss-security@...ts.openwall.com>
+Subject: CVE request - ganglia
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Vincent Danen <vdanen@...hat.com> [2009-08-04 17:20]:
-> * [2009-08-04 12:13:29 +0200] Nico Golde wrote:
-[...] 
-> >CVE-2009-2622
-> >CVE-2009-2621
-> 
-> Are you sure?
-> 
-> According to MITRE's descriptions, CVE-2009-2621 deals with a lack of
-> enforcing "buffer limites and related bound checks", and CVE-2009-2622
-> deals with malformed requests.  When I was looking, it didn't seem like
-> either of these were the issue noted in the Debian bug.  Bug #2704 on
-> the squid site is still UNCONFIRMED with no additional comments made to
-> it, so I don't think this is fixed in the latest upstream release (and
-> wouldn't fall under one of these CVE's).
-> 
-> I don't think a CVE has been assigned to this issue, and I don't think
-> it has been fixed.
+Hi!
 
-Oergs sorry, yes you are right. I mixed up the issues here.
-Cheers
-Nico
+A stack-based buffer overflow was reported for gmetad server part of the
+ganglia:
+http://www.mail-archive.com/ganglia-developers@lists.sourceforge.net/msg04929.html
+
+Upstream bug:
+http://bugzilla.ganglia.info/cgi-bin/bugzilla/show_bug.cgi?id=223
+
+Upstream fix:
+http://ganglia.svn.sourceforge.net/viewvc/ganglia?view=rev&revision=1946
+
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+Tomas Hoger / Red Hat Security Response Team
