@@ -1,25 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/14/1
-Message-ID: <85f64f890912140858o24568210p70a95fe4ad28e701@mail.gmail.com>
-Date: Mon, 14 Dec 2009 11:58:30 -0500
-From: Anthon Pang <anthon.pang@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/15/1
+Message-ID: <20090115062520.GA29644@suse.de>
+Date: Thu, 15 Jan 2009 07:25:20 +0100
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request - Open Flash Chart v2
+Subject: Re: update on CVE-2008-5718
 Content-Type: text/plain; charset=utf-8
 
-The Piwik project released an advisory re: the inclusion of
-ofc_upload_image.php -- a potentially exploitable file from the
-php-ofc-library offered by the Open Flash Chart project.
+> > I am not very happy with the patch because it just filters a handful of
+> > characters, a better solution would be to replace popen().
+> > (I mentioned this on the netatalk-devel ML but got no answer so far.)
+> 
+> It is no full shell escape but escapes everything that 
+> should be relevant for command injection. Sure, replacing 
+> the popen would be the better option but I was not too happy 
+> doing this as I guess it's more likely to break existing 
+> functionality with it by accident.
 
-- http://piwik.org/blog/2009/10/piwik-response-to-secunia-advisory-sa37078/
+Yes, such a patch need to come from upstream.
 
-Since Open Flash Chart is used by web sites and open source projects,
-a common CVE makes sense.
 
-Open Flash Chart:  Affected v2 Beta 1 through v2 Lug Wyrm Charmer.  Fixed: no
-Piwki:  Affected: 0.2.35 through 0.4.3.  Fixed in 0.4.4.  (Removed file)
-Open Web Analytics:  Affected: 1.2.  Fixed in svn.  (Removed file)
-
-Other web sites/projects:
-- http://www.google.com/search?q=php-ofc-library+ofc_upload_image.php+-piwik
-- http://www.google.com/codesearch?q=ofc_upload_image.php
+-- 
+Bye,
+     Thomas
+-- 
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+-- 
+           Hamming's Motto:
+           The purpose of computing is insight, not numbers.
+                                -- Richard W. Hamming
