@@ -1,40 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/26/2
-Message-Id: <20091026102702.9260a589.michael.s.gilbert@gmail.com>
-Date: Mon, 26 Oct 2009 10:27:02 -0400
-From: Michael Gilbert <michael.s.gilbert@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/15/2
+Message-ID: <87ljtcmjkn.fsf@mid.deneb.enyo.de>
+Date: Thu, 15 Jan 2009 20:54:16 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Subject: Re:  CVE-2009-3239 is a duplicate of CVE-2009-2139 and CVE-2009-2140
+Cc: coley@...us.mitre.org
+Subject: CVE request -- git
 Content-Type: text/plain; charset=utf-8
 
-On Sun, 25 Oct 2009 02:21:51 +0000 (UTC), security curmudgeon wrote:
-> 
-> : CVE-2009-3239 appears to be a duplicate of CVE-2009-2139 and 
-> : CVE-2009-2140, and should therefore be rejected.
-> 
-> CVE may abstract on these:
-> 
-> http://cve.mitre.org/cgi-bin/cvename.cgi?name=2009-3239
-> 
-> Buffer overflow in the EMF parser implementation in OpenOffice.org (OOo) 
-> in SUSE openSUSE 10.3 through 11.1, Novell Linux Desktop (NLD) 9, and 
-> SUSE Linux Enterprise (SLE) 10 and 11 has unknown impact and remote 
-> attack vectors, related to enhwmf.cxx and emfplus.cxx.
-> 
-> http://cve.mitre.org/cgi-bin/cvename.cgi?name=2009-2139
-> 
-> Heap-based buffer overflow in svtools/source/filter.vcl/wmf/enhwmf.cxx in 
-> Go-oo 2.x and 3.x before 3.0.1, previously named ooo-build and related to 
-> OpenOffice.org (OOo), allows remote attackers to execute arbitrary code 
-> via a crafted EMF file, a similar issue to CVE-2008-2238.
+Hi Steve,
 
-in past cve's, from what i've seen, when there is an issue with the same
-source code in multiple projects (i.e. embeds and forks), there is only
-one cve issued with a text something like, "buffer overflow in
-openoffice.org and go-oo...."
+could you please assign a CVE for this bug:
 
-so, i think 2009-3239 should be rejected and the text for 2009-2139
-should be updated to indicate that the problem affects both
-openoffice.org and go-oo.
+| Current gitweb has a possible local privilege escalation bug that allows a
+| malicious repository owner to run a command of his choice by specifying
+| diff.external configuration variable in his repository and running a
+| crafted gitweb query.
+|
+| [...] Maintenance release v1.6.0.6, v1.5.6.6, v1.5.5.6 and v1.5.4.7
+| are already available at k.org (see the announcement for v1.6.0.6 I
+| sent out a few minutes ago), and the master branch and others pushed
+| out tonight have the same fix. [...]
 
-mike
+<http://marc.info/?l=git&m=122975564100860&w=2>
+
+It's from 2008, so maybe it should get a 2008 number.
+
+Thanks,
+Florian
