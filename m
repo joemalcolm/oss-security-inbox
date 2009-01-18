@@ -1,21 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/05/3
-Message-ID: <0911051520390.27904@mjc.redhat.com>
-Date: Thu, 5 Nov 2009 15:24:30 +0000 (GMT)
-From: Mark J Cox <mjc@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/18/1
+Message-ID: <20090118185522.GD22628@ngolde.de>
+Date: Sun, 18 Jan 2009 19:55:22 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-2009-3555 for TLS renegotiation MITM attacks
+Subject: Re: libpng non issue
 Content-Type: text/plain; charset=utf-8
 
-http://extendedsubset.com/?p=8 
-http://www.ietf.org/mail-archive/web/tls/current/msg03948.html and so on
-https://bugzilla.redhat.com/show_bug.cgi?id=533125
+Hi,
+* Josh Bressers <bressers@...hat.com> [2009-01-10 15:41]:
+> I figured I'd put this out in the open before it gets picked up and causes
+> confusion.
+> 
+> The libpng main page (http://libpng.sourceforge.net/index.html) currently contains
+> this:
+> 
+> UPDATE 18 December 2008: The latest released versions are libpng-1.0.42 and
+> libpng-1.2.34. They fix a vulnerability to a possible double-free in
+> png_check_keyword() while writing various chunk types.
+> 
+> This isn't a double free, nor would I consider it a security bug.  Our libpng
+> maintainer Tom Lane helped out with this analysis.
+> 
+> As best as I can tell, this is the bug in question:
+> http://sourceforge.net/mailarchive/forum.php?thread_name=4B6F0239C13D0245820603C036D180BC79FBAA%40CABOTUKEXCH01.cabot.local&forum_name=png-mng-implement
 
-Marsh Ray of PhoneFactor has discovered a flaw in the TLS/SSL protocol 
-related to the handling of the session renegotiations.  In certain 
-circumstances this flaw could be used in MITM attacks, allowing an 
-attacker to inject attacker-chosen plain text prefix into a secure session 
-of the victim.
+Looking at the diff between 1.2.33 and 1.2.34 I also see no 
+fix for a double-free vulnerability. The only security 
+relevant change I can see is indeed the above issue.
 
-Thanks, Mark
+> which results in writing a NULL byte to an arbitrary location in memory.
+> 
+> Here is what Tom Lane said about this:
+> 
+>     Some poking around shows that png_check_keyword is called in subroutines
+>     that *write* PNG chunks, not ones that read them. So the problem could
+>     only manifest in programs that were creating new PNG files and trying
+>     to put illegal-per-spec content in them. Also, in typical usage the
+>     keywords being checked would be constant strings in the app, thus even
+>     less likely to trigger the overlength error. (It seems likely that this
+>     code has actually never been executed anywhere, explaining why the bug
+>     went undetected.)
+> 
+> So unless someone sees a flaw in this analysis, Red Hat has no plans to consider this a security flaw.
+
+As this function symbol is exported via the shared library 
+what about programs using this function?
+
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
