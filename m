@@ -1,40 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/10/1
-Message-ID: <har38v$92v$1@ger.gmane.org>
-Date: Sat, 10 Oct 2009 17:54:06 -0500
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/19/4
+Message-ID: <0901191135310.24393@mjc.redhat.com>
+Date: Mon, 19 Jan 2009 11:40:37 +0000 (GMT)
+From: Mark J Cox <mjc@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: django
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE-2009-0031 kernel: local denial of service in keyctl_join_session_keyring
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+According to upstream commit 0d54ee1c7850a954026deec4cd4885f331da35cc 
+"security: introduce missing kfree" there is a missing kfree in 
+keyctl_join_session_keyring.
 
-Hi,
+It looks like a local user could eventually cause a DoS by using up kernel 
+memory, so I assigned this CVE-2009-0031.
 
-A vulnerability has been found in Django's forms library that can be used to
-perform DoS attacks via certain email addresses or URLs that make the
-validation regular expressions consume CPU resources.
+http://git2.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=0d54ee1c7850a954026deec4cd4885f331da35cc
 
-The vulnerability is said to be being exploited on live installations.
-
-References:
-http://www.djangoproject.com/weblog/2009/oct/09/security/
-http://groups.google.com/group/django-users/browse_thread/thread/15df9e45118dfc51/677e54bd6c6e283b
-http://lists.debian.org/debian-security-announce/2009/msg00227.html
-
-Please assign a CVE identifier.
-
-Kind regards,
-- -- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iEYEARECAAYFAkrREJQACgkQYy49rUbZzlpwswCgjSOAiDSfYGYiE+ZjE9i6+Zmf
-3MkAoJN9qvxGAzfzsgiFW8XAuP1wan81
-=nsNz
------END PGP SIGNATURE-----
-
+Thanks, Mark
+--
+Mark J Cox / Red Hat Security Response Team
