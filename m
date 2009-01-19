@@ -1,43 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/10/2
-Message-ID: <Pine.LNX.4.64.0911100025320.13231@forced.attrition.org>
-Date: Tue, 10 Nov 2009 00:26:46 +0000 (UTC)
-From: security curmudgeon <jericho@...rition.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/19/5
+Message-ID: <87wscrdnfk.fsf@mid.deneb.enyo.de>
+Date: Mon, 19 Jan 2009 21:57:03 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: oping allows the disclosure of  arbitrary file contents
+Cc: coley@...us.mitre.org
+Subject: Re: CVE request -- git
 Content-Type: text/plain; charset=utf-8
 
+* Florian Weimer:
 
-On Mon, 9 Nov 2009, Steven M. Christey wrote:
+> could you please assign a CVE for this bug:
+>
+> | Current gitweb has a possible local privilege escalation bug that allows a
+> | malicious repository owner to run a command of his choice by specifying
+> | diff.external configuration variable in his repository and running a
+> | crafted gitweb query.
+> |
+> | [...] Maintenance release v1.6.0.6, v1.5.6.6, v1.5.5.6 and v1.5.4.7
+> | are already available at k.org (see the announcement for v1.6.0.6 I
+> | sent out a few minutes ago), and the master branch and others pushed
+> | out tonight have the same fix. [...]
+>
+> <http://marc.info/?l=git&m=122975564100860&w=2>
 
-: On Sat, 17 Oct 2009, yersinia wrote:
-: 
-: > On Fri, Oct 16, 2009 at 10:06 PM, Josh Bressers <bressers@...hat.com> wrote:
-: > > ----- "Julien Tinnes" <julien.tinnes@...il.com> wrote:
-: > >
-: > > [snip]
-: > >
-: > > I took a look in the oping source. Without another security flaw, this is just
-: > > a bug, oping doesn't do anything while still root that could be an issue. I
-: > > agree that it should be fixed, it is a serious bug, but an attacker cannot do
-: > > anything nefarious with this flaw.
-: > I think that the upstream mantainer should be have the last word
-: > http://verplant.org/liboping/
-: 
-: This says:
-: 
-:   2009-09-29 Version 1.3.3 is available. The new release fixes a serious
-:   security issue in oping: If the application is installed with the
-:   SetUID-bit, anybody on the system could use oping to read arbitrary
-:   files using the "-f" option.
-: 
-: So as stated, this sounds worthy of a CVE to me.  Thoughts?
+Nerver mind, Novell used CVE-2008-5517 for this.  Here's our bug
+summary (the CVE description is somewhat misleading, I think):
 
-Is it so different than "vulnerable if dangerous_php_option=true is 
-configured"? I guess the distinction is that we know many systems 
-configure PHP with dangerous options, while admins generally don't run 
-around slapping SUID on everything. 
+| Local users with write access to the configuration of a Git repository
+| served by gitweb could cause gitweb to execute arbitrary shell commands
+| with the permission of the web server (CVE-2008-5517).
 
-To me, it is a vuln if there is a reasonable case where it may be SUID, 
-or called with increased privileges.
+In DSA-1708-1, we use CVE-2008-5516 for these issues:
+
+  http://repo.or.cz/w/git.git?a=commitdiff;h=516381d5
+  http://repo.or.cz/w/git.git?a=commitdiff;h=c582abae
+
+These have been fixed silently quite some time ago (in 1.5.6 and
+1.5.5, respectively).
+
+(For editorial reasons, the changelog in our DSA contains the previous
+CVE assignment.)
