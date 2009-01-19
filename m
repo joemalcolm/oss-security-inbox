@@ -1,44 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/19/2
-Message-ID: <4ADC2912.3050509@kernel.sg>
-Date: Mon, 19 Oct 2009 16:53:38 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: AF_UNIX: Fix deadlock on connecting to shutdown socket
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/19/2
+Message-ID: <20090119112718.0b8cb487@redhat.com>
+Date: Mon, 19 Jan 2009 11:27:18 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: meissner@...e.de
+Cc: oss-security@...ts.openwall.com, coley@...us.mitre.org
+Subject: Re: CVE Request -- amarok
 Content-Type: text/plain; charset=utf-8
 
-Quoting from the patch submitted:
-"...a deadlock bug in UNIX domain socket, which makes able to DoS
-attack against the local machine by non-root users.
+On Mon, 19 Jan 2009 10:56:34 +0100 Marcus Meissner <meissner@...e.de>
+wrote:
 
-...
-Why this happens:
-  Error checks between unix_socket_connect() and unix_wait_for_peer() are
-  inconsistent. The former calls the latter to wait until the backlog is
-  processed. Despite the latter returns without doing anything when the
-  socket is shutdown, the former doesn't check the shutdown state and
-  just retries calling the latter forever."
+> Steve,
+> 
+> Ping?
 
-How to reproduce:
-  1. Make a listening AF_UNIX/SOCK_STREAM socket with an abstruct
-     namespace(*), and shutdown(2) it.
-  2. Repeat connect(2)ing to the listening socket from the other sockets
-     until the connection backlog is full-filled.
-  3. connect(2) takes the CPU forever. If every core is taken, the
-     system hangs.
+http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2009-0135
+http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2009-0136
 
-Reproducer:
-http://patchwork.kernel.org/patch/54678/
+HTH
 
-You will need to add in the missing header files:
-#include <string.h>
-#include <stdio.h>
-#include <sys/un.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=529626
-
-Thanks, Eugene
+-- 
+Tomas Hoger / Red Hat Security Response Team
