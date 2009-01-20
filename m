@@ -1,24 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/04/1
-Message-ID: <20090604144200.GO19961@ngolde.de>
-Date: Thu, 4 Jun 2009 16:42:00 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/20/6
+Message-ID: <Pine.GSO.4.51.0901201322010.8074@faron.mitre.org>
+Date: Tue, 20 Jan 2009 13:23:01 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: dokuwiki
+Subject: Re: CVE Request -- amarok
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-is there already a CVE id for:
-http://milw0rm.com/exploits/8781
-http://bugs.splitbrain.org/index.php?do=details&task_id=1700
 
-if not, can I get one please?
+Note that I think we're doing a slightly better job of creating CVE's
+quickly, but I'm doing a worse job of responding on the list as soon as
+the CVE has been created.  I will continue to work on this.
 
-Cheers
-Nico
+- Steve
 
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
 
-Content of type "application/pgp-signature" skipped
+On Mon, 19 Jan 2009, Marcus Meissner wrote:
+
+> On Mon, Jan 19, 2009 at 11:27:18AM +0100, Tomas Hoger wrote:
+> > On Mon, 19 Jan 2009 10:56:34 +0100 Marcus Meissner <meissner@...e.de>
+> > wrote:
+> >
+> > > Steve,
+> > >
+> > > Ping?
+> >
+> > http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2009-0135
+> > http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2009-0136
+>
+> thanks ...
+>
+> My script reading nvdcve-modified.xml did not work correctly,
+> because the pub_date was not increment remote :/
+>
+> Ciao, Marcus
+>
