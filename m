@@ -1,66 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/22/14
-Message-ID: <2359eed20905221429k1feb1wb403033fc5ad0782@mail.gmail.com>
-Date: Fri, 22 May 2009 16:29:53 -0500
-From: Will Drewry <redpig@...rt.org>
-To: oss-security@...ts.openwall.com, bugtraq@...urityfocus.com,  ocert-announce@...ts.ocert.org
-Subject: [oCERT-2009-006] Android improper package verification when using  shared uids
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/20/4
+Message-ID: <20090120094206.GC18280@suse.de>
+Date: Tue, 20 Jan 2009 10:42:06 +0100
+From: Sebastian Krahmer <krahmer@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request -- git
 Content-Type: text/plain; charset=utf-8
 
-#2009-006 Android improper package verification when using shared uids
 
-Description:
+On Tue, Jan 20, 2009 at 10:31:58AM +0100, Tomas Hoger wrote:
 
-Android, an open source mobile phone platform, improperly checks developer
-certificates when installing packages that request the shared user identifier
-(uid) permission.
+> >
+> > Only opensuse 11.0 and 11.1 were affected by diff.external
+> > issue and packages have been released for that.
+> 
+> SUSE-SR:2009:001 only mentions fix for 10.3.  I probably missed other
+> report mentioning fixes in 11.x.
+I am not the Incident Manager in charge, but AFAIR both issues
+have been tracked separately and the remote-fix has been released
+sooner, also b/c of its larger severity, which makes sense.
+Honestly, diff.external is not a very severe bug but
+it will probably be announced in the weekly report (if it
+hasnt). Additionally, the autoupdater shows exactly
+which issues have been fixed.
 
-Normally, Android applications will be allowed to share a uid if the
-packages are all signed by the same developer certificate and request
-permission to do so at install-time.  This allows for packages from the
-same author to share data.  Without enforcement of that behavior, it is
-possible for any application to be installed in such a manner that it
-gains access to another (existing) application's data.
+Sebastian
 
-A patch has been made available by Android (see references).
+-- 
+~
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+~ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
 
-
-Affected version:
-
-Android >= 1.5 CRB17 <= 1.5 CRB42
-
-
-Fixed version:
-
-Android >= 1.5 CRB43
-(Android 1.0 and 1.1 are not affected)
-
-
-Credit: Panasonic
-
-
-CVE: CVE-2009-1754
-
-
-Timeline:
-2009-05-14: Panasonic reported the issue to the Android Security Team
-2009-05-18: Android Security Team requested assistance from oCERT
-2009-05-19: oCERT requested CVE assignment
-2009-05-22: CVE assigned
-2009-05-22: advisory release
-
-
-References:
-http://android.git.kernel.org/?p=platform/frameworks/base.git;a=commit;h=5d6d773fab559fdc12e553d60d789f3991ac552c
-
-Links:
-http://android.git.kernel.org
-http://android.com
-
-Permalink:
-http://www.ocert.org/advisories/ocert-2009-006.html
-
-
---
-Will Drewry <redpig@...rt.org>
-oCERT Team :: http://ocert.org
