@@ -1,32 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/07/3
-Message-Id: <200902072121.47117.rbu@gentoo.org>
-Date: Sat, 7 Feb 2009 21:21:44 +0100
-From: Robert Buchholz <rbu@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/20/1
+Message-ID: <20090120090231.1cda36f4@redhat.com>
+Date: Tue, 20 Jan 2009 09:02:31 +0100
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Josh Bressers <bressers@...hat.com>, coley@...re.org
-Subject: Re: CVE request: Squid <2.7.6, 3.0.13, 3.1.0.5 DoS
+Cc: fw@...eb.enyo.de, coley@...us.mitre.org
+Subject: Re: CVE request -- git
 Content-Type: text/plain; charset=utf-8
 
-On Friday 06 February 2009, Josh Bressers wrote:
-> ----- "Robert Buchholz" <rbu@...too.org> wrote:
-> > Squid before 2.7.STABLE6, 3.0.STABLE13, and 3.1.0.5 is vulnerable
-> > to a
-> >
-> > Denial of Service issue:
-> >
-> > https://bugs.gentoo.org/show_bug.cgi?id=257585
-> > http://www.squid-cache.org/Advisories/SQUID-2009_1.txt
->
-> I don't think Steve Christey reads this list, you need to CC him
-> directly (I just noticed he's not on the CC).
+On Mon, 19 Jan 2009 21:57:03 +0100 Florian Weimer <fw@...eb.enyo.de>
+wrote:
 
-He responded to previous requests that were directed to the list only 
-(see "[oss-security] CVE request - ganglia"). I can't speak for him 
-whether direct CCs are handled with higher priority though.
+> Nerver mind, Novell used CVE-2008-5517 for this.
 
+No, they have not.  They fixed both -5516 (git_search) and -5517
+(git_snapshot and git_object) issues using quote_command() (in their
+git-1.5.2.4-24.4.src.rpm).  No idea why only one of the CVEs was
+mentioned in the security report...  They don't seem to include any
+patch for diff.external issue, or claim to have fixed it.
 
+So -5517 is now really used to refer to two different issues...
 
-Robert
+> (the CVE description is somewhat misleading, I think):
 
-Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
+With little further details in SuSE security report, I think the
+description is quite appropriate - unspecified remote hole related to
+shell metacharacters.  Adding the two repo.or.cz links was most likely
+a guess, not a good one though.
+
+Mitre was notified about this inconsistency in the -5517 description
+and references.
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
