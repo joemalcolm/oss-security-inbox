@@ -1,64 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/17/5
-Message-ID: <20091217162631.GP24554@inversepath.com>
-Date: Thu, 17 Dec 2009 16:26:31 +0000
-From: Andrea Barisani <lcars@...rt.org>
-To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
-Subject: [oCERT-2009-019] Ganeti path sanitization errors
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/20/5
+Message-ID: <20090120184859.2ad20489@redhat.com>
+Date: Tue, 20 Jan 2009 18:48:59 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: OSS Security <oss-security@...ts.openwall.com>
+Subject: CVE request - horde XSS
 Content-Type: text/plain; charset=utf-8
 
+Hi!
 
-#2009-019 Ganeti path sanitization errors
+It looks like IE-specific XSS issue was fixed in horde 3.2.3 and 3.3.1
+(and few other hodre-based products) was fixed back in Dec, that
+probably should have CVE id:
 
-Description:
+Release announcements:
+http://lists.horde.org/archives/announce/2008/000462.html (3.2.3)
+http://lists.horde.org/archives/announce/2008/000464.html (3.3.1)
 
-Ganeti, an open source virtualisation manager, suffers from an input
-validation bug that poses a security risk.
+Patch:
+http://cvs.horde.org/diff.php/horde/docs/CHANGES?r1=1.515.2.413.2.1&r2=1.515.2.413.2.3&ty=h
+http://cvs.horde.org/diff.php/framework/Text_Filter/Filter/xss.php?r1=1.17&r2=1.18
 
-The vulnerability applies to the commands submitted, either locally via
-gnt-* commands or remotely via the HTTP API, to the machine acting as a
-cluster master. Validation for a file path argument is missing resulting
-in arbitrary code execution, local exploitation applies to any user with
-rights to execute ganeti commands while remote exploitation applies to
-configured users authenticated over the ganeti RAPI.
-
-While the local exploitation is a non-issue for the root user, which can
-execute arbitrary commands in any case, it affects local non-root users
-which are allowed to execute gnt-* commands via sudo or other suid
-wrappers.
-
-Affected version:
-
-Ganeti >= 1.2.4 (local), >= 2.0.0 (remote)
-
-Fixed version:
-
-Ganeti >= 1.2.9, >= 2.0.5, >= 2.1.0~rc2
-
-Credit: vulnerability report, PoC and patches received from Ganeti authors
-Iustin Pop and Michael Hanselmann, Google Inc.
-
-CVE: CVE-2009-4261
-
-CVE: N/A
-
-Timeline:
-
-2009-12-07: vulnerability report received
-2009-12-08: contacted affected vendors
-2009-12-17: ganeti 1.2.9, 2.0.5, 2.1.0~rc2 released
-2009-12-17: advisory published
-
-References:
-http://groups.google.com/group/ganeti/browse_thread/thread/cbce23d89103a8d2
-
-Permalink:
-http://www.ocert.org/advisories/ocert-2009-019.html
+Test cases:
+http://cvs.horde.org/diff.php/framework/Text_Filter/tests/xss.phpt?r1=1.1.2.3&r2=1.1.2.4
+http://cvs.horde.org/framework/Text_Filter/tests/xss100.html
 
 -- 
-Andrea Barisani |                Founder & Project Coordinator
-          oCERT | Open Source Computer Emergency Response Team
-
-<lcars@...rt.org>                         http://www.ocert.org
- 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
-        "Pluralitas non est ponenda sine necessitate"
+Tomas Hoger / Red Hat Security Response Team
