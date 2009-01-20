@@ -1,24 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/16/11
-Message-ID: <Pine.GSO.4.51.0904161304150.17153@faron.mitre.org>
-Date: Thu, 16 Apr 2009 13:08:34 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com, taviso@...gle.com
-Subject: FreeType malformed compressed data issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/20/2
+Message-ID: <20090120091158.GA18280@suse.de>
+Date: Tue, 20 Jan 2009 10:11:58 +0100
+From: Sebastian Krahmer <krahmer@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request -- git
 Content-Type: text/plain; charset=utf-8
 
+On Tue, Jan 20, 2009 at 09:02:31AM +0100, Tomas Hoger wrote:
 
-I'm processing CVE-2009-0946 for the various integer overflows found by
-Tavis Ormandy for FreeType, as captured in:
+> No, they have not.  They fixed both -5516 (git_search) and -5517
+> (git_snapshot and git_object) issues using quote_command() (in their
+> git-1.5.2.4-24.4.src.rpm).  No idea why only one of the CVEs was
+> mentioned in the security report...  They don't seem to include any
+> patch for diff.external issue, or claim to have fixed it.
+Only opensuse 11.0 and 11.1 were affected by diff.external
+issue and packages have been released for that.
+opensuse 10.3 was only affected by the remote hole and
+not by diff.external. packages were already released, too.
 
-  https://bugzilla.redhat.com/show_bug.cgi?id=491384
+Sebastian
 
-But there's also this commit:
+-- 
+~
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+~ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
 
-    http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=0a05ba257b6ddd87dacf8d54b626e4b360e0a596
-
-This bug doesn't smell exactly like an integer overflow, but there's not
-enough immediate context to tell.  Is this a different bug type?  If so,
-it needs a new CVE.
-
-- Steve
