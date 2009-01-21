@@ -1,24 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/15/1
-Message-ID: <4B26EB67.3010806@redhat.com>
-Date: Tue, 15 Dec 2009 09:50:31 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/21/1
+Message-ID: <Pine.GSO.4.51.0901202007460.22454@faron.mitre.org>
+Date: Tue, 20 Jan 2009 20:09:45 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-2009-4138 kernel: firewire: ohci: handle receive packets with a data length of zero
+cc: coley@...us.mitre.org
+Subject: Re: CVE request -- git
 Content-Type: text/plain; charset=utf-8
 
-Anyone who can open any of the /dev/fw* files on recent version of the 
-new firewire stack can trigger a NULL pointer dereference with ohci 1.0 
-controllers (or ohci 1.1 controllers that are being used in ohci 1.0 
-mode because of hardware bugs) by issuing certain ioctls.
 
-On machines with non-blacklisted ohci1.1 controllers, the call does 
-nothing, which is a bug.
+CVE-2008-5916 was assigned to the diff.external issue.
 
-https://bugzilla.redhat.com/CVE-2009-4138
-http://patchwork.kernel.org/patch/66747/
+I updated the descriptions for CVE-2008-5516 and CVE-2008-5517 based on
+Tomas' description.
 
-Thanks, Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
+Sebastian - it's not clear to me whether SUSE:SUSE-SR:2009:001 is
+addressing CVE-2008-5516, CVE-2008-5517, or both.  Same question to the
+rPath maintainers...
+
+- Steve
+
+======================================================
+Name: CVE-2008-5516
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5516
+Reference: BUGTRAQ:20090113 rPSA-2009-0005-1 git gitweb
+Reference: URL:http://www.securityfocus.com/archive/1/archive/1/500008/100/0/threaded
+Reference: MISC:http://repo.or.cz/w/git.git?a=commitdiff;h=c582abae
+Reference: MLIST:[oss-security] 20090120 Re: CVE request -- git
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/01/20/1
+Reference: CONFIRM:http://wiki.rpath.com/Advisories:rPSA-2009-0005
+Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=479715
+Reference: CONFIRM:https://issues.rpath.com/browse/RPL-2936
+
+The web interface in git (gitweb) 1.5.6, and possibly other versions,
+allows remote attackers to execute arbitrary commands via shell
+metacharacters, related to (1) git_snapshot and (2) git_object.  NOTE:
+because of the lack of details, it is not clear whether CVE-2008-5516
+and CVE-2008-5517 are distinct issues on the rPath Linux 2 platform.
+
+
+======================================================
+Name: CVE-2008-5517
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5517
+Reference: BUGTRAQ:20090113 rPSA-2009-0005-1 git gitweb
+Reference: URL:http://www.securityfocus.com/archive/1/archive/1/500008/100/0/threaded
+Reference: MISC:http://repo.or.cz/w/git.git?a=commitdiff;h=516381d5
+Reference: MLIST:[oss-security] 20090120 Re: CVE request -- git
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/01/20/1
+Reference: CONFIRM:http://wiki.rpath.com/Advisories:rPSA-2009-0005
+Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=479715
+Reference: CONFIRM:https://issues.rpath.com/browse/RPL-2936
+Reference: SUSE:SUSE-SR:2009:001
+Reference: URL:http://lists.opensuse.org/opensuse-security-announce/2009-01/msg00002.html
+Reference: BID:33215
+Reference: URL:http://www.securityfocus.com/bid/33215
+
+The web interface in git (gitweb) 1.5.5 and other versions allows
+remote attackers to execute arbitrary commands via shell
+metacharacters related to git_search.
+
+
+======================================================
+Name: CVE-2008-5916
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5916
+Reference: MLIST:[git] 20081220 [Security] gitweb local privilege escalation (fix)
+Reference: URL:http://marc.info/?l=git&m=122975564100860&w=2
+Reference: MLIST:[linux-kernel] 20081220 [Security] gitweb local privilege escalation (fix)
+Reference: URL:http://marc.info/?l=linux-kernel&m=122975564100863&w=2:
+Reference: MLIST:[oss-security] 20090115 CVE request -- git
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/01/15/2
+Reference: MLIST:[oss-security] 20090120 Re: CVE request -- git
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/01/20/2
+
+gitweb/gitweb.perl in gitweb in Git 1.6.x before 1.6.0.6, 1.5.6.x
+before 1.5.6.6, 1.5.5.x before 1.5.5.6, 1.5.4.x before 1.5.4.7, and
+other versions after 1.4.3 allows local repository owners to execute
+arbitrary commands by modifying the diff.external configuration
+variable and executing a crafted gitweb query.
+
+
