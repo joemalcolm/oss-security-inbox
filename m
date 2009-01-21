@@ -1,38 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/08/1
-Message-ID: <20090408000010.GE21166@ngolde.de>
-Date: Wed, 8 Apr 2009 02:00:10 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com, Jamie Strandboge <jamie@...onical.com>
-Cc: coley@...us.mitre.org
-Subject: Re: CVE request: clamav clamd and clamscan DoS and bypass by malformated archive
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/21/4
+Message-ID: <Pine.GSO.4.51.0901202108550.22454@faron.mitre.org>
+Date: Tue, 20 Jan 2009 21:13:26 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: OSS Security <oss-security@...ts.openwall.com>
+Subject: Re: CVE request - ganglia
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Jamie Strandboge <jamie@...onical.com> [2009-04-07 22:49]:
-> On Tue, 07 Apr 2009, Nico Golde wrote:
-> > * Thomas Biege <thomas@...e.de> [2009-04-07 15:47]:
-> > > These two bugs possibly need a CVE-ID.
-> > > 
-> > > Here we go:
-> > > 
-> > > https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1462
-> > > 
-> > > http://blog.zoller.lu/2009/04/clamav-094-and-below-evasion-and-bypass.html
-> > 
-> > Should be covered by CVE-2009-1241
-> 
-> The details are scant, but I believe bug #1462[1] to be different from the
-> unrar issue discussed in the blog and CVE-2009-1241.
 
-Yes, I admit the formatting by putting that under the link I 
-meant wasn't enough. CVE-2009-1241 does only cover the 
-unrar unarchiver evasion.
+Notice the second CVE for the bandwidth/CPU consumption.  The attack
+scenario isn't completely clear to me, but since it's labeled as a DoS by
+the developer, I decided to include it.
 
-CHeers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+- Steve
 
-Content of type "application/pgp-signature" skipped
+
+======================================================
+Name: CVE-2009-0241
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0241
+Reference: MLIST:[Ganglia-developers] 20090113 patches for: [Sec] Gmetad server BoF and network overload + [Feature] multiple requests per conn on interactive port
+Reference: URL:http://www.mail-archive.com/ganglia-developers@lists.sourceforge.net/msg04929.html
+Reference: MISC:http://bugzilla.ganglia.info/cgi-bin/bugzilla/show_bug.cgi?id=223
+Reference: BID:33299
+Reference: URL:http://www.securityfocus.com/bid/33299
+Reference: SECUNIA:33506
+Reference: URL:http://secunia.com/advisories/33506
+
+Stack-based buffer overflow in the process_path function in
+gmetad/server.c in Ganglia 3.1.1 allows remote attackers to cause a
+denial of service (crash) via a request to the gmetad service with a
+long pathname.
+
+
+======================================================
+Name: CVE-2009-0242
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0242
+Reference: MLIST:[Ganglia-developers] 20090113 patches for: [Sec] Gmetad server BoF and network overload + [Feature] multiple requests per conn on interactive port
+Reference: URL:http://www.mail-archive.com/ganglia-developers@lists.sourceforge.net/msg04929.html
+
+Ganglia 3.1.1 allows remote attackers to cause a denial of service via
+a request to the gmetad service with a path does not exist, which
+causes Ganglia to (1) perform excessive CPU computation and (2) send
+the entire tree, which consumes network bandwidth.
+
+
