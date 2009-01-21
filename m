@@ -1,32 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/04/3
-Message-ID: <20090804101329.GJ1577@ngolde.de>
-Date: Tue, 4 Aug 2009 12:13:29 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/21/3
+Message-ID: <Pine.GSO.4.51.0901202051410.22454@faron.mitre.org>
+Date: Tue, 20 Jan 2009 20:53:05 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: squid DoS in external auth header parser
+Subject: Re: CVE request: WebSVN
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Vincent Danen <vdanen@...hat.com> [2009-07-20 19:48]:
-> I noticed this on Debian's bts [1] and also on upstream's bugzilla [2]
-> but no CVE has been assigned (not sure if one has been requested or not,
-> but I've not seen a request come through here).
-> 
-> By the initial looks of things, it seems to be a fairly low severity
-> issue and may not be easy to duplicate/trigger.  The reporter didn't really
-> provide much in the way of a reproducer or relevant configs (and the
-> reference to zope auths makes me not even want to touch it).
-> 
-> Has anyone taken a look at this or has a CVE been requested for it?
 
-CVE-2009-2622
-CVE-2009-2621
+Use CVE-2009-0240 for the recent authorization issue.
 
-Cheers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
+Note that CVE-2008-5918, CVE-2008-5919, and CVE-2008-5920 were assigned to
+older WebSVN issues that were disclosed in October 2008.
 
-Content of type "application/pgp-signature" skipped
+- Steve
+
+
+======================================================
+Name: CVE-2008-5918
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5918
+Reference: MILW0RM:6822
+Reference: URL:http://www.milw0rm.com/exploits/6822
+Reference: MISC:http://www.gulftech.org/?node=research&article_id=00132-10202008
+Reference: CONFIRM:http://websvn.tigris.org/issues/show_bug.cgi?id=179
+Reference: CONFIRM:http://websvn.tigris.org/servlets/NewsItemView?newsItemID=2218
+Reference: BID:31891
+Reference: URL:http://www.securityfocus.com/bid/31891
+Reference: SECUNIA:32338
+Reference: URL:http://secunia.com/advisories/32338
+Reference: XF:websvn-index-xss(46048)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/46048
+
+Cross-site scripting (XSS) vulnerability in the
+getParameterisedSelfUrl function in index.php in WebSVN 2.0 and
+earlier allows remote attackers to inject arbitrary web script or HTML
+via the PATH_INFO.
+
+
+======================================================
+Name: CVE-2008-5919
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5919
+Reference: MILW0RM:6822
+Reference: URL:http://www.milw0rm.com/exploits/6822
+Reference: MISC:http://www.gulftech.org/?node=research&article_id=00132-10202008
+Reference: CONFIRM:http://websvn.tigris.org/issues/show_bug.cgi?id=179
+Reference: CONFIRM:http://websvn.tigris.org/servlets/NewsItemView?newsItemID=2218
+Reference: BID:31891
+Reference: URL:http://www.securityfocus.com/bid/31891
+Reference: SECUNIA:32338
+Reference: URL:http://secunia.com/advisories/32338
+Reference: XF:websvn-rss-directory-traversal(46050)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/46050
+
+Directory traversal vulnerability in rss.php in WebSVN 2.0 and
+earlier, when magic_quotes_gpc is disabled, allows remote attackers to
+overwrite arbitrary files via directory traversal sequences in the rev
+parameter.
+
+
+======================================================
+Name: CVE-2008-5920
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5920
+Reference: MILW0RM:6822
+Reference: URL:http://www.milw0rm.com/exploits/6822
+Reference: MISC:http://www.gulftech.org/?node=research&article_id=00132-10202008
+Reference: BID:31891
+Reference: URL:http://www.securityfocus.com/bid/31891
+
+The create_anchors function in utils.inc in WebSVN 1.x allows remote
+attackers to execute arbitrary PHP code via a crafted username that is
+processed by the preg_replace function with the eval switch.
+
+
+======================================================
+Name: CVE-2009-0240
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0240
+Reference: MLIST:[oss-security] 20090118 CVE request: WebSVN
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/01/18/2
+Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=512191
+Reference: SECUNIA:32338
+Reference: URL:http://secunia.com/advisories/32338
+
+listing.php in WebSVN 2.0 and possibly 1.7 beta, when using an SVN
+authz file, allows remote authenticated users to read changelogs or
+diffs for restricted projects via a modified repname parameter.
+
+
