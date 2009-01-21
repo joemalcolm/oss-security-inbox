@@ -1,31 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/18/1
-Message-ID: <op.uyumoqja1e62zd@balu.cs.uni-paderborn.de>
-Date: Tue, 18 Aug 2009 10:18:16 +0200
-From: "Matthias Andree" <matthias.andree@....de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/21/5
+Message-ID: <Pine.GSO.4.51.0901202119040.22454@faron.mitre.org>
+Date: Tue, 20 Jan 2009 21:19:24 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: cve@...re.org
-Subject: Re: CVE-2007-1558 update (was: mailfilter 0.8.2 fixes CVE-2007-1558 (APOP))
+Subject: Re: CVE request: xrdp
 Content-Type: text/plain; charset=utf-8
 
-Am 15.08.2009, 11:27 Uhr, schrieb Robert Buchholz <rbu@...too.org>:
 
-> CVE-2007-1558:
->   The APOP protocol allows remote attackers to guess the first 3
->   characters of a password via man-in-the-middle (MITM) attacks that use
->   crafted message IDs and MD5 collisions. NOTE: this design-level issue
->   potentially affects all products that use APOP, including (1)
->   Thunderbird 1.x before 1.5.0.12 and 2.x before 2.0.0.4, (2) Evolution,
->   (3) mutt, (4) fetchmail, (5) SeaMonkey 1.0.x before 1.0.9 and 1.1.x
->   before 1.1.2, (6) Balsa 2.3.16 and earlier, and possibly other
->   products.
 
-Greetings,
+======================================================
+Name: CVE-2008-5902
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5902
+Reference: MLIST:[oss-security] 20090112 CVE request: xrdp
+Reference: URL:http://openwall.com/lists/oss-security/2009/01/12/3
+Reference: MISC:http://packetstormsecurity.org/0812-advisories/VA_VD_87_08_XRDP.pdf
 
-Could CVE-2007-1558 be updated to mention "fetchmail before and excluding  
-6.3.8"?
+Buffer overflow in the xrdp_bitmap_invalidate function in
+xrdp/xrdp_bitmap.c in xrdp 0.4.1 and earlier allows remote attackers
+to execute arbitrary code via a crafted request.
 
-Thanks.
 
--- 
-Matthias Andree
+======================================================
+Name: CVE-2008-5903
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5903
+Reference: MLIST:[oss-security] 20090112 CVE request: xrdp
+Reference: URL:http://openwall.com/lists/oss-security/2009/01/12/3
+Reference: MISC:http://packetstormsecurity.org/0812-advisories/VA_VD_87_08_XRDP.pdf
+
+Array index error in the xrdp_bitmap_def_proc function in xrdp/funcs.c
+in xrdp 0.4.1 and earlier allows remote attackers to execute arbitrary
+code via vectors that manipulate the value of the edit_pos structure
+member.
+
+
+======================================================
+Name: CVE-2008-5904
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5904
+Reference: MLIST:[oss-security] 20090112 CVE request: xrdp
+Reference: URL:http://openwall.com/lists/oss-security/2009/01/12/3
+Reference: MISC:http://packetstormsecurity.org/0812-advisories/VA_VD_87_08_XRDP.pdf
+
+The rdp_rdp_process_color_pointer_pdu function in rdp/rdp_rdp.c in
+xrdp 0.4.1 and earlier allows remote RDP servers to have an unknown
+impact via input data that sets crafted values for certain length
+variables, leading to a buffer overflow.
+
+
