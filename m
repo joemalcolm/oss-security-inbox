@@ -1,23 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/24/2
-Message-ID: <4A698773.1030008@redhat.com>
-Date: Fri, 24 Jul 2009 12:05:39 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com
-Subject: CVE duplicate notification (CVE-2009-2580 to be duplicate of CVE-2009-1862)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/21/7
+Message-ID: <20090121091022.78b51b95@redhat.com>
+Date: Wed, 21 Jan 2009 09:10:22 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: coley@...us.mitre.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request -- git
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve, vendors,
+Hi Steven!
 
-   this is due:
-     http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1862
-     http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2580
+On Tue, 20 Jan 2009 20:09:45 -0500 (EST) "Steven M. Christey"
+<coley@...us.mitre.org> wrote:
 
-   (CVE-2009-2580 seems to be exact duplicate of CVE-2009-1862).
+> CVE-2008-5916 was assigned to the diff.external issue.
 
-Could you please reject the CVE-2009-2580 one?
+Thank you!
 
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+> I updated the descriptions for CVE-2008-5516 and CVE-2008-5517 based
+> on Tomas' description.
+
+Looks like they got texts mixed up.  -5516 was given to git_search
+issue, and -5517 to git_snapshot and git_object issues (the idea was
+to use lower id for the issue fixed earlier).  Btw, commitdiff links are
+correct, only texts need swapping.
+
+Can you also change "in 1.5.x" to "before 1.5.x" in both descriptions?
+Wording in our BZ is probably confusing, but versions 1.5.5 and 1.5.6
+are the first versions to include the fix, not the vulnerability.
+
+> Sebastian - it's not clear to me whether SUSE:SUSE-SR:2009:001 is
+> addressing CVE-2008-5516, CVE-2008-5517, or both.
+
+I've looked into their source rpm, and this is from my previous mail:
+  "They fixed both -5516 (git_search) and -5517 (git_snapshot and
+  git_object) issues using quote_command() (in their
+  git-1.5.2.4-24.4.src.rpm)."
+  http://www.openwall.com/lists/oss-security/2009/01/20/1
+
+> Same question to the rPath maintainers...
+
+Their announcement mentions version 1.5.6.6, that should have both
+issues fixed (and -5916).  They'll probably clarify what was their
+"old" version.
+
+HTH
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
