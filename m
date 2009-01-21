@@ -1,21 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/09/5
-Message-ID: <20090409192710.GI3730@redhat.com>
-Date: Thu, 9 Apr 2009 13:27:10 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Solaris/OpenSolaris xscreensaver issue (CVE-2009-1276)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/21/2
+Message-ID: <Pine.GSO.4.51.0901202024500.22454@faron.mitre.org>
+Date: Tue, 20 Jan 2009 20:24:54 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: OSS Security <oss-security@...ts.openwall.com>
+Subject: Re: CVE request - horde XSS
 Content-Type: text/plain; charset=utf-8
 
-Is anyone familiar with Solaris or OpenSolaris at all?
 
-They've released a bulletin about a security issue with xscreensaver,
-but I don't recall seeing anything else about this issue so I'm
-wondering if it is specific to Solaris.
 
-http://sunsolve.sun.com/search/document.do?assetkey=1-66-255308-1
+======================================================
+Name: CVE-2008-5917
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5917
+Reference: MLIST:[announce] Horde 3.2.3 (final)
+Reference: URL:http://lists.horde.org/archives/announce/2008/000462.html
+Reference: MLIST:[announce] Horde 3.3.1 (final)
+Reference: URL:http://lists.horde.org/archives/announce/2008/000464.html
+Reference: CONFIRM:http://cvs.horde.org/diff.php/framework/Text_Filter/Filter/xss.php?r1=1.17&r2=1.18
 
-Does anyone know more about this?
+Cross-site scripting (XSS) vulnerability in the XSS filter
+(framework/Text_Filter/Filter/xss.php) in Horde Application Framework
+3.2.2 and 3.3, when Internet Explorer is being used, allows remote
+attackers to inject arbitrary web script or HTML via unknown vectors
+related to style attributes.
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+
