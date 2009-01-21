@@ -1,51 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/04/1
-Message-Id: <200911041539.11338.tmb@65535.com>
-Date: Wed, 4 Nov 2009 15:39:08 +0000
-From: Tim Brown <tmb@...35.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/21/10
+Message-Id: <200901211146.46617.steffen.joeris@skolelinux.de>
+Date: Wed, 21 Jan 2009 11:46:41 -0500
+From: Steffen Joeris <steffen.joeris@...lelinux.de>
 To: oss-security@...ts.openwall.com
-Subject: Re:  CVE request - asterisk, python-markdown, jetty, kde
+Cc: coley@...us.mitre.org
+Subject: mod-auth-mysql: SQL injection
 Content-Type: text/plain; charset=utf-8
 
-On Thursday 29 October 2009 22:11:32 Tim Brown wrote:
-> On Thursday 29 October 2009 20:10:27 Tomas Hoger wrote:
-> > On Thu, 29 Oct 2009 09:42:36 -0600 Raphael Geissert
-> >
-> > <geissert@...ian.org> wrote:
-> > > = kde =
-> > > Multiple missing input sanity checks in KDE
-> > > Reference:
-> > > http://www.ocert.org/advisories/ocert-2009-015.html
-> >
-> > Btw, do you have any suggestion on how many CVEs should be allocated
-> > here and what are the individual flaws?  I failed to build satisfying
-> > list form the info in the advisory.  Have you managed to tell which
-> > patch is supposed to address which vulnerability?
->
-> I've responded to Tomas off list regarding these issues since our
-> advisories have not yet been made available.  We have 4 advisories to cover
-> the individual flaws.  If anyone else wants further details in the
-> meantime, feel free to get in touch off list but I'll likely only respond
-> to people I can validate (i.e. package maintainers for the distros etc).
+Hi
 
-Our advisories are now up at http://www.portcullis-security.com/advisories:
+The following issue can now be made public. Please note that this describes 
+the software used in debian as mod-auth-mysql (binary name is 
+libapache2-mod-auth-mysql). It is different from the SF project.
 
-* Portcullis Security Advisory 09-008 Insufficient Input Validation By IO 
-Slaves
-﻿* Portcullis Security Advisory 09-004 KMail Attachment Mime Type Spoofing 
-Enables Javascript Injection
-* ﻿Portcullis Security Advisory 09-003 Form Spoofing In Konqueror Enables 
-KWallet Stored Credential Theft
-* ﻿Portcullis Security Advisory 09-002 Ark Default View Allows JavaScript 
-Injection
+Package        : mod-auth-mysql
+Vulnerability  : SQL injection vulnerability
+Problem type   : remote
+Debian-specific: no
+CVE Id         : CVE-2008-2384
 
-Note that Tomas and I had quite a long discussion off list, I'll try and 
-summarise that as an update later tonight.  The key points are that that KDE 
-determined that 09-003 would not be fixed and that KDE determined that the 
-PoCs for 09-004 and 09-002 were possible due to a same origin policy 
-violation and fixed that.
 
-Tim
--- 
-Tim Brown
-<mailto:tmb@...35.com>
+Martin Joey Schulze discovered that mod-auth-mysq, an apache 2 module
+for mysql authentication, is prone to an SQL injection due to
+insufficient escaping mechanisms, when multybite character encodings are
+used.
+
+The link[0] points to the patch. Please credit Martin Joey Schulze for writing 
+it.
+
+Cheers
+Steffen
+
+[0]: 
+http://klecker.debian.org/~white/mod-auth-mysql/CVE-2008-2384_mod-auth-mysql.patch
+
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
