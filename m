@@ -1,44 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/19/3
-Message-ID: <1466496036.594671255980376669.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 19 Oct 2009 15:26:16 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/22/4
+Message-ID: <Pine.GSO.4.51.0901221718140.27455@faron.mitre.org>
+Date: Thu, 22 Jan 2009 17:18:19 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: r128 IOCTL NULL pointer dereferences when CCE state is uninitialised
+cc: coley@...us.mitre.org
+Subject: Re: mod-auth-mysql: SQL injection
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2009-3620
 
-Thanks.
+======================================================
+Name: CVE-2008-2384
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2384
+Reference: MLIST:[oss-security] 20090121 mod-auth-mysql: SQL injection
+Reference: URL:http://openwall.com/lists/oss-security/2009/01/21/10
+Reference: CONFIRM:http://klecker.debian.org/~white/mod-auth-mysql/CVE-2008-2384_mod-auth-mysql.patch
+Reference: BID:33392
+Reference: URL:http://www.securityfocus.com/bid/33392
 
--- 
-    JB
+SQL injection vulnerability in mod_auth_mysql.c in the mod-auth-mysql
+(aka libapache2-mod-auth-mysql) module for the Apache HTTP Server 2.x
+allows remote attackers to execute arbitrary SQL commands via
+multibyte character encodings for unspecified input.
 
------ "Eugene Teo" <eugeneteo@...nel.sg> wrote:
 
-> Quoting from the upstream commit:
-> "Almost all r128's private ioctls require that the CCE state has
-> already 
-> been initialised.  However, most do not test that this has been done,
-> 
-> and will proceed to dereference a null pointer.  This may result in a
-> 
-> security vulnerability, since some ioctls are unprivileged.
-> 
-> This adds a macro for the common initialisation test and changes all 
-> ioctl implementations that require prior initialisation to use that
-> macro.
-> 
-> Also, r128_do_init_cce() does not test that the CCE state has not
-> been
-> initialised already.  Repeated initialisation may lead to a crash or 
-> resource leak.  This adds that test."
-> 
-> http://git.kernel.org/linus/7dc482dfeeeefcfd000d4271c4626937406756d7
-> 
-> Other references:
-> http://secunia.com/advisories/36707/
-> https://bugzilla.redhat.com/show_bug.cgi?id=529597
-> 
-> Thanks, Eugene
