@@ -1,16 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/16/7
-Message-ID: <1056542256.469571255716508320.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 16 Oct 2009 14:08:28 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: pidgin security flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/22/5
+Message-ID: <Pine.GSO.4.51.0901221719190.27455@faron.mitre.org>
+Date: Thu, 22 Jan 2009 17:27:52 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com, oss-security@...ts.openwall.com
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- openoffice.org (CVE-2008-4841)
 Content-Type: text/plain; charset=utf-8
 
-FYI:
-http://www.pidgin.im/news/security/?id=41
 
-I've assigned it CVE-2009-3615
+On Wed, 21 Jan 2009, Jan Lieskovsky wrote:
 
--- 
-    JB
+> What's the strategy in this case -- will we need a new CVE-2008 id
+> for this issue && the openoffice.org1 case? (And if so, could
+> you allocate one?)
+
+A new one is needed since (I assume) it's not a shared codebase between
+Microsoft and the Linux distros.  A 2009 number is being used since the
+announcement for this particular product was made in 2009.
+
+Consider buffer overflows in FTP servers with a long username - same exact
+bug, but at least 20 different implementations have been hit with it so
+far.
+
+Use CVE-2009-0259
+
+- Steve
+
+======================================================
+Name: CVE-2009-0259
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0259
+Reference: MILW0RM:6560
+Reference: URL:http://www.milw0rm.com/exploits/6560
+Reference: MISC:http://milw0rm.com/sploits/2008-crash.doc.rar
+Reference: MLIST:[oss-security] 20090121 CVE Request -- openoffice.org (CVE-2008-4841)
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/01/21/9
+
+The Word processor in OpenOffice.org 1.1.2 through 1.1.5 allows
+remnote attackers to cause a denial of service (crash) and possibly
+execute arbitrary code via a crafted (1) .doc, (2) .wri, or (3) .rtf
+Word 97 file that triggers memory corruption, as exploited in the wild
+in December 2008, as demonstrated by 2008-crash.doc.rar, and a similar
+issue to CVE-2008-4841.
+
+
