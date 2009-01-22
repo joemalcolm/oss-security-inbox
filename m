@@ -1,103 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/12/1
-Message-ID: <4555e7d1d91f32045e382a5be4d7c1fe.squirrel@wm.kinkhorst.nl>
-Date: Thu, 12 Feb 2009 12:32:32 +0100 (CET)
-From: "Thijs Kinkhorst" <thijs@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/22/1
+Message-ID: <20090122171002.GG23540@ngolde.de>
+Date: Thu, 22 Jan 2009 18:10:02 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Cc: "Steven Christey" <coley@...us.mitre.org>
-Subject: CVE-2008-5621 is a duplicate (was: Re: CVE request:  phpMyAdmin < 3.1.1.0 (SQL injection through XSRF on several pages ))
+Cc: coley@...re.org
+Subject: CVE id request: typo3 SA-2009-001
 Content-Type: text/plain; charset=utf-8
 
 Hi Steve,
-
-Sorry for responding this late, I missed the initial assignment.
-
-On Wed, December 17, 2008 02:52, Steven M. Christey wrote:
-> Two separate CVE's are assigned, one for the original milw0rm exploit and
->  the other for the unspecified vectors implied by the implied "XSRF on
-> several pages" in the PMASA-2008-10 advisory.
-
-I believe this is a misinterpretation of the advisory, and upstream has
-confirmed that to me. There is only one issue and that is the one which
-CVE-2008-5621 refers to.
-
-I suspect that this comes from a misundertanding of the text of this
-advisory:
-http://www.phpmyadmin.net/home_page/security/PMASA-2008-10.php
-The problem is in a backend function, and this function is called from
-multiple pages, which means that the issue can be exploited through
-"several pages" as mentioned in the advisory which all accept the "table"
-parameter.
-
-The patch referenced from the advisory patches one line in the backend
-function and is sufficient to resolve the things mentioned in
-PMASA-2008-10.
-
-I propose that CVE-2008-5622 gets marked as a duplicate of CVE-2008-5621
-or rejected.
+can you assign CVE ids to the issues described in the 
+following link?
+http://typo3.org/teams/security/security-bulletins/typo3-sa-2009-001/
 
 
-cheers,
-Thijs
+Cheers
+Nico
 
-> - Steve
->
->
-> ======================================================
-> Name: CVE-2008-5621
-> Status: Candidate
-> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5621
-> Reference: MILW0RM:7382
-> Reference: URL:http://www.milw0rm.com/exploits/7382
-> Reference:
-> CONFIRM:http://www.phpmyadmin.net/home_page/security/PMASA-2008-10.php
-> Reference: FEDORA:FEDORA-2008-11221
-> Reference:
-> URL:https://www.redhat.com/archives/fedora-package-announce/2008-December
-> /msg00784.html
-> Reference: FEDORA:FEDORA-2008-11221
-> Reference:
-> URL:https://www.redhat.com/archives/fedora-package-announce/2008-December
-> /msg00784.html
-> Reference: BID:32720
-> Reference: URL:http://www.securityfocus.com/bid/32720
-> Reference: SECUNIA:33076
-> Reference: URL:http://secunia.com/advisories/33076
-> Reference: SECUNIA:33146
-> Reference: URL:http://secunia.com/advisories/33146
->
->
-> Cross-site request forgery (CSRF) vulnerability in phpMyAdmin 2.11.x
-> before 2.11.9.4 and 3.x before 3.1.1.0 allows remote attackers to perform
-> unauthorized actions as the administrator via a link or IMG tag to
-> tbl_structure.php with a modified table parameter.  NOTE: this can be
-> leveraged to conduct SQL injection attacks and execute arbitrary code.
->
->
-> ======================================================
-> Name: CVE-2008-5622
-> Status: Candidate
-> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5622
-> Reference:
-> CONFIRM:http://www.phpmyadmin.net/home_page/security/PMASA-2008-10.php
-> Reference: FEDORA:FEDORA-2008-11221
-> Reference:
-> URL:https://www.redhat.com/archives/fedora-package-announce/2008-December
-> /msg00784.html
-> Reference: FEDORA:FEDORA-2008-11221
-> Reference:
-> URL:https://www.redhat.com/archives/fedora-package-announce/2008-December
-> /msg00784.html
-> Reference: SECUNIA:33146
-> Reference: URL:http://secunia.com/advisories/33146
->
->
-> Multiple cross-site request forgery (CSRF) vulnerabilities in
-> phpMyAdmin 2.11.x before 2.11.9.4 and 3.x before 3.1.1.0 allow remote
-> attackers to conduct SQL injection attacks via unknown vectors related to
-> the table parameter, a different vector than CVE-2008-5621.
->
->
->
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-
+Content of type "application/pgp-signature" skipped
