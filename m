@@ -1,62 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/16/2
-Message-ID: <Pine.GSO.4.51.0910152352440.21688@faron.mitre.org>
-Date: Thu, 15 Oct 2009 23:58:05 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/22/2
+Message-ID: <Pine.GSO.4.51.0901221711460.27455@faron.mitre.org>
+Date: Thu, 22 Jan 2009 17:11:52 -0500 (EST)
 From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-cc: thomas@...e.de
-Subject: Re: CVE request: local root via setuid VBoxNetAdpCtl
+cc: coley@...re.org
+Subject: Re: CVE id request: typo3 SA-2009-001
 Content-Type: text/plain; charset=utf-8
 
 
-On Tue, 13 Oct 2009, Tomas Hoger wrote:
+======================================================
+Name: CVE-2009-0255
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0255
+Reference: CONFIRM:http://typo3.org/teams/security/security-bulletins/typo3-sa-2009-001/
+Reference: BID:33376
+Reference: URL:http://www.securityfocus.com/bid/33376
+Reference: SECUNIA:33617
+Reference: URL:http://secunia.com/advisories/33617
+Reference: XF:typo3-installtool-weak-security(48132)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/48132
 
-> On Tue, 13 Oct 2009 08:38:40 +0200 Thomas Biege <thomas@...e.de> wrote:
->
-> > this one needs two CVE-IDs:
-> > - shell meta char injection in popen()
-> > - possible buffer overflow in strncpy()
-> >
-> > http://sunsolve.sun.com/search/document.do?assetkey=1-66-268188-1
->
-> I believe that the following got assigned for these independently of
-> this request:
->
-> CVE-2009-3692
-> Unspecified vulnerability in the VBoxNetAdpCtl configuration tool in
-> Sun VirtualBox 3.0.x before 3.0.8 on Solaris x86, Linux, and Mac OS X
-> allows local users to gain privileges via unknown vectors.
-
-OK, let's do this:
-
-CVE-2009-3692 can be "recast" so that it only addresses the shell metachar
-injection in popen.
-
-I've assigned a new CVE-2009-3704 to concentrate only on the strncpy().
-Any thoughts on exploitability might be nice.
-
-Regarding http://www.virtualbox.org/wiki/Changelog this URL is generic:
-"fixed vulnerability that allowed to execute commands with root
-privileges."  This implies only one problem, not too.  Are we sure that
-the changelog addresses both problems?
-
-- Steve
+The System extension Install tool in TYPO3 4.0.0 through 4.0.9, 4.1.0
+through 4.1.7, and 4.2.0 through 4.2.3 creates the encryption key with
+an insufficiently random seed, which makes it easier for attackers to
+crack the key.
 
 
+======================================================
+Name: CVE-2009-0256
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0256
+Reference: CONFIRM:http://typo3.org/teams/security/security-bulletins/typo3-sa-2009-001/
+Reference: BID:33376
+Reference: URL:http://www.securityfocus.com/bid/33376
+Reference: SECUNIA:33617
+Reference: URL:http://secunia.com/advisories/33617
+Reference: XF:typo3-library-session-hijacking(48133)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/48133
+
+Session fixation vulnerability in the authentication library in TYPO3
+4.0.0 through 4.0.9, 4.1.0 through 4.1.7, and 4.2.0 through 4.2.3
+allows remote attackers to hijack web sessions via unspecified vectors
+related to (1) frontend and (2) backend authentication.
 
 
-> http://www.virtualbox.org/wiki/Changelog
-> http://sunsolve.sun.com/search/document.do?assetkey=1-66-268188-1
-> http://www.securityfocus.com/bid/36604
-> http://www.osvdb.org/58652
-> http://securitytracker.com/id?1022990
-> http://secunia.com/advisories/36929
-> http://www.vupen.com/english/advisories/2009/2845
-> http://xforce.iss.net/xforce/xfdb/53671
->
-> I know this does not satisfy your request, it's rather a heads-up to
-> avoid duplicate assignment.
->
-> --
-> Tomas Hoger / Red Hat Security Response Team
->
+======================================================
+Name: CVE-2009-0257
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0257
+Reference: CONFIRM:http://typo3.org/teams/security/security-bulletins/typo3-sa-2009-001/
+Reference: BID:33376
+Reference: URL:http://www.securityfocus.com/bid/33376
+Reference: SECUNIA:33617
+Reference: URL:http://secunia.com/advisories/33617
+Reference: XF:typo3-adodb-xss(48137)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/48137
+Reference: XF:typo3-indexedsearchengine-xss(48135)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/48135
+Reference: XF:typo3-library-session-hijacking(48133)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/48133
+
+Multiple cross-site scripting (XSS) vulnerabilities in TYPO3 4.0.0
+through 4.0.9, 4.1.0 through 4.1.7, and 4.2.0 through 4.2.3 allow
+remote attackers to inject arbitrary web script or HTML via the (1)
+name and (2) content of indexed files to the (a) Indexed Search Engine
+(indexed_search) system extension; (b) unspecified test scripts in the
+ADOdb system extension; and (c) unspecified vectors in the Workspace
+module.
+
+
+======================================================
+Name: CVE-2009-0258
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0258
+Reference: CONFIRM:http://typo3.org/teams/security/security-bulletins/typo3-sa-2009-001/
+Reference: BID:33376
+Reference: URL:http://www.securityfocus.com/bid/33376
+Reference: SECUNIA:33617
+Reference: URL:http://secunia.com/advisories/33617
+Reference: XF:typo3-indexedsearch-command-execution(48138)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/48138
+
+Unspecified vulnerability in the Indexed Search Engine
+(indexed_search) system extension in TYPO3 4.0.0 through 4.0.9, 4.1.0
+through 4.1.7, and 4.2.0 through 4.2.3 allows remote attackers to
+execute arbitrary commands via unknown vectors related to the
+command-line indexer.
+
+
