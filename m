@@ -1,21 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/29/4
-Message-ID: <20090729134819.GA29121@openwall.com>
-Date: Wed, 29 Jul 2009 17:48:19 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: debian bug report on bind9 DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/23/1
+Message-Id: <1232708798.3220.16.camel@dhcp-lab-164.englab.brq.redhat.com>
+Date: Fri, 23 Jan 2009 12:06:37 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com
+Subject: CVE Request -- gstreamer-plugins-good
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jul 29, 2009 at 05:15:09PM +0400, Solar Designer wrote:
-> Confirmed on 9.3.5-P2 (removing the "$packet->sign_tsig(...)" line from
-> the exploit as above) with whatever patches we happened to have until
-> this latest fix.
+Hello Steve,
 
-It gets worse: I was also able to crash named from an IP address
-explicitly denied in "allow-query".  I did verify that non-malicious
-queries from that IP address were indeed correctly denied.
+  recently the following gstreamer-plugins-good 
+related multiple heap-based buffer overflows and
+one an array index out of bounds vulnerability
+has been reported in the GStreamers demuxer
+responsible for demuxing QuickTime *.mov files
+into raw or compressed audio/video files.
 
-It appears that BIND does too much processing too early in the code.
+References:
+http://trapkit.de/advisories/TKADV2009-003.txt [1]
+http://cgit.freedesktop.org/gstreamer/gst-plugins-good/commit/?id=bdc20b9baf13564d9a061343416395f8f9a92b53
+https://bugzilla.redhat.com/show_bug.cgi?id=481267
 
-Alexander
+
+Affected gstreamer-plugins-good versions:
+=========================================
+   all prior to latest upstream 0.10.12 version  (all three issues -- "qtdemux_parse_samples", "duration" and "mark_keyframes")
+
+Affected gstreamer-plugins versions:
+====================================
+  gstreamer-plugins-0.8.5-1.EL.1.i386 (only the "duration" heap based buffer overflow vulnerability -- (vuln #3) in [1].
+
+Steve, could you please allocate a new CVE id/ids for this issue/issues?
+
+Thanks, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+
+
