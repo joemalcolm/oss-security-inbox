@@ -1,37 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/10/2
-Message-ID: <4B215D58.4090005@gmx.net>
-Date: Thu, 10 Dec 2009 21:43:04 +0100
-From: Stefan Behte <Stefan.Behte@....net>
-To: OSS Security <oss-security@...ts.openwall.com>
-Subject: mmsclient: CVE request
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/23/2
+Message-ID: <20090123140039.054600a9@redhat.com>
+Date: Fri, 23 Jan 2009 14:00:39 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley@...us.mitre.org
+Subject: Re: CVE request -- git
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Thu, 22 Jan 2009 17:17:39 -0500 (EST) "Steven M. Christey"
+<coley@...us.mitre.org> wrote:
 
-Harald van Dijk reported a buffer overflow in mmsclient in client.c to
-Gentoo security (https://bugs.gentoo.org/show_bug.cgi?id=263413):
+> > Looks like they got texts mixed up.  -5516 was given to git_search
+> > issue, and -5517 to git_snapshot and git_object issues (the idea was
+> > to use lower id for the issue fixed earlier).  Btw, commitdiff
+> > links are correct, only texts need swapping.
+> 
+> Fixed.
 
-Line 28: #define BUF_SIZE 102400
-Line 470: char data[1024];
-Line 551: len = read (s, data, BUF_SIZE) ;
+Good, looks better.
 
-In a different Gentoo bug about the issue
-(http://bugs.gentoo.org/show_bug.cgi?id=284747), Florian Streibelt noticed:
+> > Can you also change "in 1.5.x" to "before 1.5.x" in both
+> > descriptions?
+> 
+> Done (modulo CVE style).
 
-the reason for all this is in client.c:
+Plus one extraneous version change ;).  Description for -5516 is
+supposed to say "before 1.5.5" (as 1.5.5.0, but upstream does not seem
+to use trailing ".0"s in version strings) (I have not looked whether
+only 1.5.x were affected by this, this may possibly go back to older
+versions), one for -5517 should say "before 1.5.6".  Version difference
+was the reason for split / assignment of 2 CVEs.
 
-31  #define BUF_SIZE 102400
-[...]
-473   char                 data[1024];
-[...]
-575   len = read (s, data, BUF_SIZE) ;
-[...]
-586   len = read (s, data, BUF_SIZE) ;
+> > Their announcement mentions version 1.5.6.6, that should have both
+> > issues fixed (and -5916).  They'll probably clarify what was their
+> > "old" version.
+> 
+> If they're releasing 1.5.6.6, doesn't that suggest that maybe one of
+> the issues were still present in 1.5.5?
 
-There might lurk more overflows in the (non-maintained) code.
-Can I get a CVE for the issue?
+Paragraph above should explain this.  Additionally, they probably just
+bumped to upstream version that has all three (-5516, -5517, and -5916)
+issues fixed.  Not sure what was their previous version though.
 
-Thanks,
+HTH
 
-Stefan Behte
+-- 
+Tomas Hoger / Red Hat Security Response Team
