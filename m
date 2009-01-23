@@ -1,31 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/23/18
-Message-ID: <Pine.GSO.4.51.0911231748370.20369@faron.mitre.org>
-Date: Mon, 23 Nov 2009 17:50:28 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Josh Bressers <bressers@...hat.com>
-cc: oss-security@...ts.openwall.com
-Subject: Re: CVEs for nginx
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/23/4
+Message-ID: <20090123172419.GA16477@ngolde.de>
+Date: Fri, 23 Jan 2009 18:24:20 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE id request: typo3 SA-2009-001
 Content-Type: text/plain; charset=utf-8
 
+Hi,
+* Steven M. Christey <coley@...us.mitre.org> [2009-01-23 13:09]:
+[...] 
+> ======================================================
+> Name: CVE-2009-0258
+> Status: Candidate
+> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0258
+> Reference: CONFIRM:http://typo3.org/teams/security/security-bulletins/typo3-sa-2009-001/
+> Reference: BID:33376
+> Reference: URL:http://www.securityfocus.com/bid/33376
+> Reference: SECUNIA:33617
+> Reference: URL:http://secunia.com/advisories/33617
+> Reference: XF:typo3-indexedsearch-command-execution(48138)
+> Reference: URL:http://xforce.iss.net/xforce/xfdb/48138
+> 
+> Unspecified vulnerability in the Indexed Search Engine
+> (indexed_search) system extension in TYPO3 4.0.0 through 4.0.9, 4.1.0
+> through 4.1.7, and 4.2.0 through 4.2.3 allows remote attackers to
+> execute arbitrary commands via unknown vectors related to the
+> command-line indexer.
 
-On Mon, 23 Nov 2009, Josh Bressers wrote:
+Thanks for the ids!
+I am just working on a security update for typo3. Looking at 
+the patch used for CVE-2009-0258 it is pretty obvious that 
+this is exploitable via a crafted filename which is passed 
+to various system utilities to get information of the file 
+content.
 
-> > 3.) nginx SSL Renegotiation:
-> > http://sysoev.ru/nginx/patch.cve-2009-3555.txt
-> >
-> > I know the last one contains a CVE number, nginx uses openssl and the
-> > patch will disable renegotiation, maybe this deserves an own CVE?
-> >
->
-> We'll use the same ID. mod_ssl did a similar thing and used CVE-2009-3555. I
-> think multiple IDs in this instance would actually create more confusion that
-> it would solve.
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-The same core problem could be solved any number of ways, and I don't
-think that should distract from the fact that there is just one core
-problem.  So using the same CVE is appropriate.  (Now, if an interim fix
-is later found to have its own vulns or be bypassed in a way that was not
-originally advertised, that might need its own CVE.)
-
-- Steve
+Content of type "application/pgp-signature" skipped
