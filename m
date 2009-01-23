@@ -1,20 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/17/4
-Message-ID: <Pine.GSO.4.51.0904170959540.17172@faron.mitre.org>
-Date: Fri, 17 Apr 2009 10:01:10 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: 'kill sig -1' must only apply to caller's PID namespace
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/23/3
+Message-Id: <200901231703.09899.rbu@gentoo.org>
+Date: Fri, 23 Jan 2009 17:03:04 +0100
+From: Robert Buchholz <rbu@...too.org>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE request: Tor <0.2.0.33 Heap corruption
 Content-Type: text/plain; charset=utf-8
 
+Tor claims to have fixed a platform-dependent heap corruption issue in 
+0.2.0.33, but they have not published details yet.
 
-On Thu, 16 Apr 2009, Eugene Teo wrote:
+References:
+https://blog.torproject.org/blog/tor-0.2.0.33-stable-released
 
-> http://lwn.net/Articles/259217/
-> https://bugzilla.redhat.com/show_bug.cgi?id=496031
-> http://git.kernel.org/linus/d25141a818383b3c3b09f065698c544a7a0ec6e7
-
-Use CVE-2009-1338
-
-- Steve
+Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
