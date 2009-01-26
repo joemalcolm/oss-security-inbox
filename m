@@ -1,28 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/02/1
-Message-ID: <1411451788.1386081254443874297.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 1 Oct 2009 20:37:54 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request (kernel)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/26/2
+Message-Id: <1232979990.3231.38.camel@dhcp-lab-164.englab.brq.redhat.com>
+Date: Mon, 26 Jan 2009 15:26:30 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com
+Subject: CVE request -- Python < 2.6 PySys_SetArgv issues (epiphany, csound, dia, eog, gedit, xchat, vim, nautilus-python, Gnumeric)
 Content-Type: text/plain; charset=utf-8
 
+Hello Steve,
 
------ "Josh Bressers" <bressers@...hat.com> wrote:
+  initially CVE-2008-4863 has been assigned for the Blender's 
+untrusted search path issue.
 
-> Hi Steve,
-> 
-> There is an information leak issue in the Linux Kernel:
-> http://lkml.org/lkml/2009/10/1/164
-> 
-> It seems that an ia32 process running on an ia64 machine could see
-> register contents from a previous process.
-> 
+Though this is a Python flaw (insertion of cwd at the
+beginning of the Python modules search path), according to our Python
+maintainers it can't be fixed on Python's side due the need
+of ensuring the work of other numerous packages, when loading
+Python modules. 
 
-Argh, not ia64, x86_64.
+Similar flaw, like the Blender one, has been discovered in
+the following packages:
 
-Sorry for the confusion.
+1, epiphany
+References: 
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=504363
+https://bugzilla.redhat.com/show_bug.cgi?id=481548
+http://www.nabble.com/Bug-484305%3A-bicyclerepair%3A-bike.vim-imports-untrusted-python-files-from-cwd-td18848099.html (test case, 
+mention about other affected packages, Python upstream bug rejection reasons)
+Debian patch:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=5;filename=sanitize_sys.path.diff;att=1;bug=504363
 
--- 
-    JB
+2, csound
+References:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=504359
+https://bugzilla.redhat.com/show_bug.cgi?id=481550
+http://www.nabble.com/Bug-484305%3A-bicyclerepair%3A-bike.vim-imports-untrusted-python-files-from-cwd-td18848099.html
+Debian patch: 
+http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=5;filename=1004-sanitize-sys.path.diff;att=1;bug=504359
+
+3, dia
+References:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=504251
+https://bugzilla.redhat.com/show_bug.cgi?id=481551
+http://www.nabble.com/Bug-484305%3A-bicyclerepair%3A-bike.vim-imports-untrusted-python-files-from-cwd-td18848099.html
+Debian patch: 
+http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=5;filename=pythonpath.diff;att=1;bug=504251
+
+4, eog
+References:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=504352
+https://bugzilla.redhat.com/show_bug.cgi?id=481553
+http://www.nabble.com/Bug-484305%3A-bicyclerepair%3A-bike.vim-imports-untrusted-python-files-from-cwd-td18848099.html
+Debian patch:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=5;filename=02_sanitize_sys.path.patch;att=1;bug=504352
+
+5, gedit
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=481556
+http://www.nabble.com/Bug-484305%3A-bicyclerepair%3A-bike.vim-imports-untrusted-python-files-from-cwd-td18848099.html
+
+6, xchat
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=481560
+http://www.nabble.com/Bug-484305%3A-bicyclerepair%3A-bike.vim-imports-untrusted-python-files-from-cwd-td18848099.html
+
+7, vim
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=481565
+http://www.nabble.com/Bug-484305%3A-bicyclerepair%3A-bike.vim-imports-untrusted-python-files-from-cwd-td18848099.html
+
+8, nautilus-python
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=481570
+http://www.nabble.com/Bug-484305%3A-bicyclerepair%3A-bike.vim-imports-untrusted-python-files-from-cwd-td18848099.html
+
+9, Gnumeric
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=481572
+http://www.nabble.com/Bug-484305%3A-bicyclerepair%3A-bike.vim-imports-untrusted-python-files-from-cwd-td18848099.html
+
+
+Steve, could you please allocate a new CVE ids for the above issues?
+
+Thanks, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+
+
