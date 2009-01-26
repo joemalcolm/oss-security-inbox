@@ -1,25 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/02/2
-Message-ID: <20090702122940.GC16525@suse.de>
-Date: Thu, 2 Jul 2009 14:29:40 +0200
-From: Thomas Biege <thomas@...e.de>
-To: OSS-Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: coley@...re.org
-Subject: CVE request: ruby on rails authenticate_with_http_digest bypass
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/26/1
+Message-ID: <20090126140300.23af2b17@redhat.com>
+Date: Mon, 26 Jan 2009 14:03:00 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley@...us.mitre.org
+Subject: Re: CVE request - ganglia
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-I seems this issue didn't occur in the CVE databases yet.
+On Tue, 20 Jan 2009 21:13:26 -0500 (EST) "Steven M. Christey"
+<coley@...us.mitre.org> wrote:
 
-http://weblog.rubyonrails.org/2009/6/3/security-problem-with-authenticate_with_http_digest
+> Notice the second CVE for the bandwidth/CPU consumption.  The attack
+> scenario isn't completely clear to me, but since it's labeled as a
+> DoS by the developer, I decided to include it.
+
+CVE-2009-0242 was disputed on the ganglia mailing list, even by the
+reporter:
+http://www.mail-archive.com/ganglia-developers@lists.sourceforge.net/msg04973.html
+
+The flaw should only apply to gmetad with multi-request feature
+proposal included (was part of the original mail, along with the fix
+for buffer overflow).  Though from the quick look at the issue,
+specifying invalid paths does not seem to make the issue any worse even
+there:
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-0242#c1
 
 -- 
-Bye,
-     Thomas
--- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
--- 
-           Hamming's Motto:
-           The purpose of computing is insight, not numbers.
-                                -- Richard W. Hamming
+Tomas Hoger / Red Hat Security Response Team
