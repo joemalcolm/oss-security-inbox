@@ -1,38 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/08/7
-Message-ID: <Pine.GSO.4.51.0904081359540.29367@faron.mitre.org>
-Date: Wed, 8 Apr 2009 13:59:58 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security <oss-security@...ts.openwall.com>
-cc: coley@...re.org
-Subject: Re: CVE Request (xine-lib)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/26/3
+Message-ID: <20090126200744.GP21473@genesis.frugalware.org>
+Date: Mon, 26 Jan 2009 21:07:44 +0100
+From: Miklos Vajna <vmiklos@...galware.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request -- Linux kernel irda driver buffer overflow
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-======================================================
-Name: CVE-2009-1274
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1274
-Reference: BUGTRAQ:20090404 [TKADV2009-005] xine-lib Quicktime STTS Atom Integer Overflow
-Reference: URL:http://www.securityfocus.com/archive/1/archive/1/502481/100/0/threaded
-Reference: MISC:http://www.trapkit.de/advisories/TKADV2009-005.txt
-Reference: CONFIRM:http://bugs.xine-project.org/show_bug.cgi?id=224
-Reference: CONFIRM:http://sourceforge.net/project/shownotes.php?group_id=9655&release_id=673233
-Reference: OSVDB:53288
-Reference: URL:http://osvdb.org/53288
-Reference: SECTRACK:1021989
-Reference: URL:http://www.securitytracker.com/id?1021989
-Reference: SECUNIA:34593
-Reference: URL:http://secunia.com/advisories/34593
-Reference: VUPEN:ADV-2009-0937
-Reference: URL:http://www.vupen.com/english/advisories/2009/0937
-Reference: XF:xinelib-demuxqt-bo(49714)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/49714
+A buffer overflow has been recently fixed in the Linux kernel irda
+driver.
 
-Integer overflow in the qt_error parse_trak_atom function in
-demuxers/demux_qt.c in xine-lib 1.1.16.2 and earlier allows remote
-attackers to execute arbitrary code via a Quicktime movie file with a
-large count value in an STTS atom, which triggers a heap-based buffer
-overflow.
+Upstream bug:
 
+http://bugzilla.kernel.org/show_bug.cgi?id=12397
 
+Upstream fix:
+
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=2950e952920811be465ec95c6b56f03dc66a05c0
+
+From a quick analysis it was introduced in commit
+8ef80aef118e405f2b6505f623830e6e73224f85, so versions >= 2.6.18 are
+affected.
+
+Thanks.
+
+Content of type "application/pgp-signature" skipped
