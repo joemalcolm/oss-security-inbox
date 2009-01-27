@@ -1,47 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/20/5
-Message-ID: <20091120150328.4495c235@redhat.com>
-Date: Fri, 20 Nov 2009 15:03:28 +0100
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/27/2
+Message-ID: <20090127084147.GS21473@genesis.frugalware.org>
+Date: Tue, 27 Jan 2009 09:41:47 +0100
+From: Miklos Vajna <vmiklos@...galware.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: php 5.3.1 update
+Subject: Re: CVE request -- Linux kernel irda driver buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 20 Nov 2009 10:47:35 +0000 Joe Orton <jorton@...hat.com> wrote:
-
-> > PHP was updated to version 5.3.1 and did also address security
-> > issues: http://www.php.net/releases/5_3_1.php
+On Tue, Jan 27, 2009 at 07:46:27AM +0000, Mark J Cox <mjc@...hat.com> wrote:
+> This doesn't seem to have any security implications; it's a single null 
+> byte overflow that happens all the time (not under control of an 
+> attacker), and from looking at the function that null byte isn't going to 
+> overwrite anything that would lead to a security consequence.
 > 
-> We assigned some CVE names for the new issues here; two correspond to 
-> existing issues fixed earlier in 5.2.11.  The CVE names have not made
-> it to the web site but were used in the e-mail announcement text:
+> So it looks to me like a bug, no CVE.
 
-Link to announcement mail with CVEs:
+Hrm, OK.
 
-  http://news.php.net/php.announce/79
+Thanks for the correction.
 
-> - Fixed bug #50063 (safe_mode_include_dir fails). (CVE-2009-3559,
->   Johannes, christian at elmerot dot se)
-
-Reading the upstream bug http://bugs.php.net/bug.php?id=50063 , this is
-not a security flaw, rather a safe_mode regression causing uid check to
-happen where it should not resulting in over-restrictive safe_mode.
-
-Some links for the other two issues:
-
-> - Fixed a safe_mode bypass in tempnam() identified by Grzegorz
-> Stachowiak. (CVE-2009-3557, Rasmus)
-
-  http://securityreason.com/securityalert/6601
-  http://svn.php.net/viewvc?view=revision&revision=288945
-
-> - Fixed a open_basedir bypass in posix_mkfifo() identified by Grzegorz
->   Stachowiak. (CVE-2009-3558, Rasmus)
-
-  http://securityreason.com/securityalert/6600
-  http://svn.php.net/viewvc?view=revision&revision=288943
-
-Looks like CVE-2009-3546 got fixed too.
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+Content of type "application/pgp-signature" skipped
