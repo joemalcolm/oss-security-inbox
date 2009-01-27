@@ -1,27 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/01/1
-Message-Id: <200903020017.41042.steffen.joeris@skolelinux.de>
-Date: Mon, 2 Mar 2009 00:17:40 +1100
-From: Steffen Joeris <steffen.joeris@...lelinux.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/27/1
+Message-ID: <0901270743030.16125@mjc.redhat.com>
+Date: Tue, 27 Jan 2009 07:46:27 +0000 (GMT)
+From: Mark J Cox <mjc@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: dkim-milter
+Subject: Re: CVE request -- Linux kernel irda driver buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Hi
+> A buffer overflow has been recently fixed in the Linux kernel irda
+> driver.
 
-I don't think anyone requested a CVE id for this yet.
-dkim-milter suffers is prone to a DoS attack via crafted or revoked public key 
-record in DNS.
+This doesn't seem to have any security implications; it's a single null 
+byte overflow that happens all the time (not under control of an 
+attacker), and from looking at the function that null byte isn't going to 
+overwrite anything that would lead to a security consequence.
 
-Links:
+So it looks to me like a bug, no CVE.
 
-http://sourceforge.net/tracker/index.php?func=detail&aid=2508602&group_id=139420&atid=744358
-
-http://www.debian.org/security/2009/dsa-1728
-
-Could I please get a CVE id for this?
-
-Cheers
-Steffen
-
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+Thanks, Mark
+--
+Mark J Cox / Red Hat Security Response Team
