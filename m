@@ -1,36 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/15/3
-Message-ID: <Pine.LNX.4.64.0911151042480.14563@forced.attrition.org>
-Date: Sun, 15 Nov 2009 10:43:23 +0000 (UTC)
-From: security curmudgeon <jericho@...rition.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Wordpress 2.8.6
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/27/4
+Message-ID: <20090127210241.GA8120@severus.strandboge.com>
+Date: Tue, 27 Jan 2009 15:02:41 -0600
+From: Jamie Strandboge <jamie@...onical.com>
+To: coley@...us.mitre.org
+Cc: oss-security@...ts.openwall.com
+Subject: CVE Request: MoinMoin
 Content-Type: text/plain; charset=utf-8
 
+I just now noticed this in the public MoinMoin mercurial commits:
+Fixed XSS issue in antispam
 
-On Sun, 15 Nov 2009, Alex Legler wrote:
+The commit is:
+http://hg.moinmo.in/moin/1.7/rev/89b91bf87dad
 
-: Wordpress released an update, fixing 2 issues:
-: 
-: "2.8.6 fixes two security problems that can be exploited by registered, 
-: logged in users who have posting privileges.  If you have untrusted 
-: authors on your blog, upgrading to 2.8.6 is recommended.
-: 
-: The first problem is an XSS vulnerability in Press This discovered by 
-: Benjamin Flesch.  The second problem, discovered by Dawid Golunski, is 
-: an issue with sanitizing uploaded file names that can be exploited in 
-: certain Apache configurations. Thanks to Benjamin and Dawid for finding 
-: and reporting these."
-: 
-: from
-: http://wordpress.org/development/2009/11/wordpress-2-8-6-security-release/
-: 
-: I believe these are the matching tickets:
-: Issue 1: http://core.trac.wordpress.org/ticket/11119
-: Issue 2: http://core.trac.wordpress.org/ticket/11122
+I haven't tried to reproduce it or anything, but the fix was simply to
+perform wikiutil.escape(match.group()), so it seems valid.
 
-OSVDB   Disclosure              Title
+Jamie
 
-59958 	2009-11-12 		WordPress /wp-includes/functions.php wp_check_filetype() Function File Upload Arbitrary Code Execution 
+-- 
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
 
-59959 	2009-11-12 		WordPress press-this.php Unspecified XSS
+Download attachment "signature.asc" of type "application/pgp-signature" (198 bytes)
