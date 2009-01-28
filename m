@@ -1,76 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/07/1
-Message-ID: <2359eed20905071042v2dd4be46k25d79eb35dded92@mail.gmail.com>
-Date: Thu, 7 May 2009 12:42:27 -0500
-From: Will Drewry <redpig@...rt.org>
-To: oss-security@...ts.openwall.com, bugtraq@...urityfocus.com,  ocert-announce@...ts.ocert.org
-Subject: [oCERT-2009-001] Pango integer overflow in heap allocation size  calculations
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/28/12
+Message-ID: <1388405289.2642981233169056431.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 28 Jan 2009 13:57:36 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE id request: php5
 Content-Type: text/plain; charset=utf-8
 
-#2009-001 Pango integer overflow in heap allocation size calculations
+----- "Steffen Joeris" <steffen.joeris@...lelinux.de> wrote:
+> 
+> I don't think this has a CVE id yet.
+> 
+> Quote from the debian bugreport:
+> "When an invalid key is used when calling dba_replace on a dba inifile
+> 
+> resource it leads to file truncation."
+> 
+> References:
+> Debian Bugreport:
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=507101
 
-Description:
+I may be missing something here, but this looks like an issue where a bad script
+really needs to cause this. Wouldn't it be just as easy to for the script author to
+delete the file in question via a PHP script?
 
-Pango is a library for laying out and rendering text, with an emphasis
-on internationalization.  Pango suffers from a multiplicative integer
-overflow which may lead to a potentially exploitable, heap overflow
-depending on the calling conditions.  For example, this vulnerability is
-remotely reachable in Firefox by creating an overly large
-document.location value but only results in a process-terminating,
-allocation error (denial of service).
-
-The affected function is pango_glyph_string_set_size. An overflow check
-when doubling the size neglects the overflow possible on the subsequent
-allocation:
-
-  string->glyphs = g_realloc (string->glyphs, string->space *
-                              sizeof (PangoGlyphInfo));
-
-Note that other font rendering subsystems suffer from similar issues and
-should be cross-checked by maintainers.
-
-
-Affected version:
-
-Pango < 1.24
-
-
-Fixed version:
-
-Pango >= 1.24
-(check with your package maintainer for backports)
-
-
-Credit: Will Drewry, oCERT Team | Google Security Team.
-        Special thanks to Karl Tomlinson for extended analysis of the
-        impact on Firefox.
-
-
-CVE: CVE-2009-1194
-
-
-Timeline:
-2009-02-22: attempted to contact upstream via gtk-i18n-list@...me.org
-2009-02-25: bug filed with Mozilla against firefox
-2009-03-02: Behdad Esfahbod patched Pango upstream for 1.24
-2009-04-13: vendor-sec alerted regarding backporting the silent pango fix
-2009-04-23: embargo date and CVE assigned (thanks Josh Bressers!)
-2009-05-07: advisory released
-
-
-References:
-http://www.pango.org/
-https://bugzilla.mozilla.org/show_bug.cgi?id=480134
-
-
-Links:
-http://www.mozilla.org/firefox
-
-
-Permalink:
-http://www.ocert.org/advisories/ocert-2009-001.html
-
-
---
-Will Drewry <redpig@...rt.org>
-oCERT Team :: http://ocert.org
+-- 
+    JB
