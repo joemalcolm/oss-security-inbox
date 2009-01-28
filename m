@@ -1,28 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/23/13
-Message-ID: <123617951.1000591256329579995.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 23 Oct 2009 16:26:19 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/28/13
+Message-ID: <glqdj4$l1e$1@ger.gmane.org>
+Date: Wed, 28 Jan 2009 14:00:42 -0600
+From: Raphael Geissert <atomo64+debian@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: proftpd - mod_tls - Improper SSL/TLS certificate subjectAltName verification
+Subject: Re: CVE id request: php5
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2009-3639 for this.
+Josh Bressers wrote:
+[...]
+> 
+> I may be missing something here, but this looks like an issue where a bad
+> script really needs to cause this. Wouldn't it be just as easy to for the
+> script author to delete the file in question via a PHP script?
+> 
 
-Thanks.
+No, please read carefully. If you have a script that doesn't do good input
+sanitation but takes a variable from the user's input and uses it as a key it
+will end up nuking the .ini file.
 
+Cheers,
 -- 
-    JB
+Raphael Geissert - Debian Maintainer
+www.debian.org - get.debian.net
 
------ "Oden Eriksson" <oeriksson@...driva.com> wrote:
 
-> Hello.
-> 
-> This should probably be assigned a CVE
-> 
-> http://bugs.proftpd.org/show_bug.cgi?id=3275
-> 
-> Cheers.
-> -- 
-> Regards // Oden Eriksson
