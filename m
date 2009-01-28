@@ -1,89 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/20/3
-Message-ID: <20090320180240.GY2863@inversepath.com>
-Date: Fri, 20 Mar 2009 18:02:40 +0000
-From: Andrea Barisani <lcars@...rt.org>
-To: ocert-announce@...ts.ocert.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: [oCERT-2009-003] LittleCMS integer errors
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/28/9
+Message-ID: <Pine.GSO.4.51.0901281013370.490@faron.mitre.org>
+Date: Wed, 28 Jan 2009 10:14:59 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Thomas Biege <thomas@...e.de>
+cc: oss-security@...ts.openwall.com, coley@...re.org
+Subject: Re: update on CVE-2008-5718
 Content-Type: text/plain; charset=utf-8
 
 
-#2009-003 LittleCMS integer errors
+On Wed, 28 Jan 2009, Thomas Biege wrote:
 
-Description:
+> I was thinking about that case too but it might not work because we escape
+> the space.
 
-LittleCMS, an open source color management engine, suffers from several
-integer errors, resulting in stack based buffer overflows and various heap
-errors as well as dangerous memory leaks. Decoding a specially crafted
-image file will result in unexpected process termination, Denial Of
-Service conditions or arbitrary code execution due to stack overflow.
+This would limit the impact to whatever a single command-line switch can
+do for whatever command is being invoked.  Probably some programs accept a
+"-stdin" switch and thus would hang forever waiting to read input, as an
+example.
 
-LittleCMS is used by several Open Source projects including OpenJDK,
-Firefox and GIMP.
-
-Affected version:
-
-LittleCMS <= 1.17
-
-The following packages were identified as affected as they statically
-include LittleCMS in their own packages.
-
-OpenJDK <= 7 build b48
-
-foo2zjs, N/A
-
-libmng zip archives <= 01009x
-
-Firefox <= 3.1 beta 2
-
-Fixed version:
-
-LittleCMS >= 1.18 beta 2
-
-OpenJDK, N/A
-
-foo2zjs, N/A
-
-libmng zip archives >= 01010x
-
-Firefox, N/A
-
-Credit: vulnerability report received from Chris Evans <cevans [at] google
-[dot] com>, Google Security Team.
-
-CVE: CVE-2009-0723 (integer overflows), CVE-2009-0581 (memory leak),
-CVE-2009-0733 (lack of upper-ground checks on size)
-
-Timeline:
-
-2009-02-13: vulnerability report and patch received
-2009-02-16: contacted littlecms maintainer
-2009-02-16: oCERT investigated for other potential affected projects
-2009-02-20: maintainer provides updated patch
-2009-02-20: reporter provides new patch fixing memory leak
-2009-02-21: maintainer provides fixed beta version
-2009-02-23: reporter confirms fixes
-2009-02-24: contacted affected vendors providing combined security patch
-and beta version, recommending the latter
-2009-03-02: patch found to break functionality, contacted affected vendors
-advising to use only beta version
-2009-03-03: reporter provides additional patch based on feedback, patch
-provided to vendors
-2009-03-06: Debian requests embargo lift
-2009-03-08: embargo lifted from 03-09 to 03-19, affected vendors notified
-2009-03-20: advisory release
-
-References:
-http://scarybeastsecurity.blogspot.com/2009/03/littlecms-vulnerabilities.html
-http://scary.beasts.org/security/CESA-2009-003.html
-
-Permalink:
-http://www.ocert.org/advisories/ocert-2009-003.html
-
--- 
-Andrea Barisani |                Founder & Project Coordinator
-          oCERT | Open Source Computer Emergency Response Team
-
-<lcars@...rt.org>                         http://www.ocert.org
- 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
-        "Pluralitas non est ponenda sine necessitate"
+- Steve
