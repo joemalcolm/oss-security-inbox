@@ -1,28 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/28/10
-Message-ID: <20090128160704.GD17107@ngolde.de>
-Date: Wed, 28 Jan 2009 17:07:04 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/28/6
+Message-ID: <20090128135433.GR22970@suse.de>
+Date: Wed, 28 Jan 2009 14:54:33 +0100
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
 Subject: Re: update on CVE-2008-5718
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Thomas Biege <thomas@...e.de> [2009-01-28 16:11]:
-> New patch attached, the old one was missing spaces.
-> Hope the blacklist is complete now...
 
-Nope it's not. Now I am duplicating my post to vendor-sec as 
-this is public now :)
+New patch attached, the old one was missing spaces.
+Hope the blacklist is complete now...
 
-Still some important chars like > missing, complete 
-(paranoid) patch on:
-http://people.debian.org/~nion/213_CVE-2008-5718.patch
+On Wed, Jan 14, 2009 at 09:21:57AM +0100, Thomas Biege wrote:
+> Hello Nico,
+> 
+> On Wed, Jan 14, 2009 at 12:32:07AM +0100, Nico Golde wrote:
+> > Hi,
+> > I just did a security update for CVE-2008-5718 and since the 
+> > description is not really verbose I thought I'd share what I 
+> > found in case anyone else is working on that.
+> ...
+> > Cheers
+> > Nico
+> > P.S. The patch I used can be found on:
+> > http://people.debian.org/~nion/nmu-diff/netatalk-2.0.3-11_2.0.3-11+lenny1.patch
+> 
+> I am not very happy with the patch because it just filters a handful of
+> characters, a better solution would be to replace popen().
+> (I mentioned this on the netatalk-devel ML but got no answer so far.)
+> 
+> 
+> 
+> -- 
+> Bye,
+>      Thomas
+> -- 
+>  Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+>  SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+> -- 
+>            Hamming's Motto:
+>            The purpose of computing is insight, not numbers.
+>                                 -- Richard W. Hamming
 
-Cheers
-Nico
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+Bye,
+     Thomas
+-- 
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+-- 
+           Hamming's Motto:
+           The purpose of computing is insight, not numbers.
+                                -- Richard W. Hamming
 
-Content of type "application/pgp-signature" skipped
+View attachment "netatalk-2.0.3-CVE-2008-5718.patch" of type "text/x-patch" (2293 bytes)
