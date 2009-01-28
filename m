@@ -1,20 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/23/3
-Message-ID: <4AE12734.6030909@kernel.sg>
-Date: Fri, 23 Oct 2009 11:47:00 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/28/5
+Message-Id: <200901281248.29576.rbu@gentoo.org>
+Date: Wed, 28 Jan 2009 12:48:17 +0100
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kvm: update_cr8_intercept() NULL pointer dereference when running without an apic
+Cc: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request -- Python < 2.6 PySys_SetArgv issues (epiphany, csound, dia, eog, gedit, xchat, vim, nautilus-python, Gnumeric)
 Content-Type: text/plain; charset=utf-8
 
-Quote from the upstream commit:
-"update_cr8_intercept() can be triggered from userspace while there
-is no apic present."
+On Monday 26 January 2009, Jan Lieskovsky wrote:
+> Though this is a Python flaw (insertion of cwd at the
+> beginning of the Python modules search path), according to our Python
+> maintainers it can't be fixed on Python's side due the need
+> of ensuring the work of other numerous packages, when loading
+> Python modules.
 
-http://git.kernel.org/linus/88c808fd42b53a7e01a2ac3253ef31fef74cb5af
+Your subject seems to claim that this vulnerability is fixed on the 
+Python side in 2.6 -- can you elaborate on that?
 
-This one can be triggered via kvm_vcpu_ioctl() if /dev/kvm is user 
-accessible (which is recommended...). Fixed in v2.6.32-rc1.
+James Vega in the bug report you referenced [1] wrote:
+> This problem should be solved in 2.6 since absolute imports are the
+> default.
 
-Eugene
+However, the specification of absolute imports [2] states:
+> import foo
+> 
+> refers to a top-level module or to another module inside the package.
+> [...] To resolve the ambiguity, it is proposed that foo will always be
+> a module or package reachable from sys.path. This is called an
+> absolute import.   
+
+So absolute imports do not fix situations where you (e.g.) "import re" 
+with CWD=/tmp in sys.path. Also, the test case shows that at least 
+Python 2.6.1's PySys_SetArgv behaves the same:
+$ ./484305 ""
+['']
+['', '/usr/lib64/python26.zip', '/usr/lib64/python2.6', '/usr/lib64/python2.6/plat-linux2', '/usr/lib64/python2.6/lib-tk', '/usr/lib64/python2.6/lib-old', '/usr/lib64/python2.6/lib-dynload', '/usr/lib64/python2.6/site-packages', '/usr/lib64/portage/pym']
+
+Regards,
+Robert
+
+[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=484305
+[2] 
+http://www.python.org/dev/peps/pep-0328/#rationale-for-absolute-imports
+
+Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
