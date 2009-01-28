@@ -1,26 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/12/1
-Message-ID: <Pine.GSO.4.64.0912112047520.29993@faron.mitre.org>
-Date: Fri, 11 Dec 2009 20:48:15 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/28/1
+Message-ID: <Pine.GSO.4.51.0901271917430.25454@faron.mitre.org>
+Date: Tue, 27 Jan 2009 19:17:49 -0500 (EST)
 From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Josh Bressers <bressers@...hat.com>
-cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Ruby on Rails: CSRF circumvention (from 2008)
+To: oss-security@...ts.openwall.com, Jamie Strandboge <jamie@...onical.com>
+cc: coley@...us.mitre.org
+Subject: Re: CVE Request: MoinMoin
 Content-Type: text/plain; charset=utf-8
 
 
-On Wed, 2 Dec 2009, Josh Bressers wrote:
+======================================================
+Name: CVE-2009-0312
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0312
+Reference: CONFIRM:http://hg.moinmo.in/moin/1.7/rev/89b91bf87dad
+Reference: CONFIRM:http://hg.moinmo.in/moin/1.8/rev/89b91bf87dad
+Reference: CONFIRM:http://moinmo.in/SecurityFixes#moin1.8.1
+Reference: MLIST:[oss-security] 20090127 CVE Request: MoinMoin
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/01/27/4
 
-> ----- "Alex Legler" <a3li@...too.org> wrote:
->>
->> http://weblog.rubyonrails.org/2008/11/18/potential-circumvention-of-csrf-protection-in-rails-2-1
->> http://www.rorsecurity.info/journal/2008/11/19/circumvent-rails-csrf-protection.html
->>
->
-> Steve,
->
-> Can you give this one a 2008 ID?
+Cross-site scripting (XSS) vulnerability in the antispam feature
+(security/antispam.py) in MoinMoin 1.7 and 1.8.1 allows remote
+attackers to inject arbitrary web script or HTML via crafted,
+disallowed content.
 
-Use CVE-2008-7248, to be filled in later.
 
-- Steve
