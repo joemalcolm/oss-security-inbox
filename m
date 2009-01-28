@@ -1,49 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/14/2
-Message-ID: <20090914045744.GA28320@1wt.eu>
-Date: Mon, 14 Sep 2009 06:57:44 +0200
-From: Willy Tarreau <w@....eu>
-To: Eugene Teo <eugeneteo@...nel.sg>
-Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>, Greg KH <gregkh@...e.de>
-Subject: Re: CVE-2009-2903 kernel: appletalk: denial of service when handling IP tunnelled over DDP datagrams
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/28/8
+Message-ID: <20090128145459.GS22970@suse.de>
+Date: Wed, 28 Jan 2009 15:54:59 +0100
+From: Thomas Biege <thomas@...e.de>
+To: oss-security@...ts.openwall.com
+Cc: coley@...re.org
+Subject: Re: update on CVE-2008-5718
 Content-Type: text/plain; charset=utf-8
 
-Hi Eugene,
+Hi,
 
-On Mon, Sep 14, 2009 at 08:57:02AM +0800, Eugene Teo wrote:
-> The check for the ipddpN device in the handle_ip_over_ddp() function 
-> returns -NODEV to the atalk_rcv() function when the device does not 
-> exist. The atalk_rcv() function then directly returns that value to its 
-> caller. There is a missing call to kfree_skb() in these unaccepted 
-> IP-DDP datagram that can exhaust the kernel memory eventually. It 
-> affects Linux hosts with appletalk and ipddp modules loaded, that are 
-> attached to the same link. Thanks to Mark Smith for reporting this issue 
-> to us.
->
-> net-next-2.6 commit:
-> http://git.kernel.org/?p=linux/kernel/git/davem/net-next-2.6.git;a=commit;h=ffcfb8db540ff879c2a85bf7e404954281443414 
+On Wed, Jan 28, 2009 at 09:02:45AM -0500, Steven M. Christey wrote:
 > 
+> On Wed, 28 Jan 2009, Thomas Biege wrote:
 > 
-> Possible mitigation method:
-> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-2903#c3
+> > New patch attached, the old one was missing spaces.
+> > Hope the blacklist is complete now...
 > 
-> Reference:
-> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-2903
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=blob;f=Documentation/networking/ipddp.txt;h=661a5558dd8e928f15771c07ef34b3ee9cb81e57;hb=HEAD
-> 
-> Greg, this should go to -stable.
+> Would a "-" character allow an argument injection attack by inserting
+> dangerous command-line switches?  Things like being able to add a "-rf" as
+> an argument to the rm command...
 
-Davem generally handles his own -stable queue for the net subsystem
-and submits fixes himself, but that's nice to notify about upcoming
-patches in case it gets missed !
+I was thinking about that case too but it might not work because we escape
+the space.
 
-> Willy, this affects upstream 2.4 I believe.
+> I assume there's something undesirable about quoting everything unless
+> it's alphanumeric?
 
-Indeed, it seems so. I'm queuing it up for next release. I will have
-to review it since the changes are not obvious. If you're aware of
-any reproducer, I'd be glad to get it (in private) ; I'd like to at
-least ensure I don't break the driver while trying to fix it !
+... I think I'll rewrite it and post it here again.
+Replacing popen() is still my prefered solution....
 
-Thanks!
-Willy
-
+-- 
+Bye,
+     Thomas
+-- 
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+-- 
+           Hamming's Motto:
+           The purpose of computing is insight, not numbers.
+                                -- Richard W. Hamming
