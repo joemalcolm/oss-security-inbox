@@ -1,76 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/06/3
-Message-ID: <Fsm81lMN44X1vIl54+7dGMNZAWM@W35zwFHQJD9TSf5n3XGjbHLrnqQ>
-Date: Sat, 7 Nov 2009 02:05:31 +0300
-From: Eygene Ryabinkin <rea-sec@...elabs.ru>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, tls@...f.org
-Subject: Re: CVE-2009-3555 for TLS renegotiation MITM attacks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/28/11
+Message-Id: <200901281258.16015.steffen.joeris@skolelinux.de>
+Date: Wed, 28 Jan 2009 12:58:11 -0500
+From: Steffen Joeris <steffen.joeris@...lelinux.de>
+To: coley@...us.mitre.org
+Cc: oss-security@...ts.openwall.com
+Subject: CVE id request: php5
 Content-Type: text/plain; charset=utf-8
 
-Sorry for jumping in, but I had missed the topic in the other lists,
-so I am trying to ask here.  Also CC'ing tls@...f.org -- sorry for
-such cross-posting.
+Hi
 
-Thu, Nov 05, 2009 at 03:24:30PM +0000, Mark J Cox wrote:
-> Marsh Ray of PhoneFactor has discovered a flaw in the TLS/SSL protocol
-> related to the handling of the session renegotiations.  In certain
-> circumstances this flaw could be used in MITM attacks, allowing an
-> attacker to inject attacker-chosen plain text prefix into a secure
-> session of the victim.
+I don't think this has a CVE id yet.
 
-Had anyone considered the scenario when the server requires client
-certificate from the beginning, but MITM possesses some other
-credentials that will be good for authentication (but can be of no use
-for authorization)?  In this case MITM can use this certificate to start
-the splitting request, then initiate renegotiation and proxy client's
-request through the established channel.  I see that Apache asks for the
-certificate for the second renegotiation, as well as the OpenSSL's
-s_server.  Here is the trace for s_server:
------
-$ openssl s_client -msg -key userkey.pem -cert usercert.pem -host somehost -port 8443 | grep -E '^(<<<|>>>)'
-Enter pass phrase for userkey.pem:
->>> SSL 2.0 [length 0086], CLIENT-HELLO
-<<< TLS 1.0 Handshake [length 004a], ServerHello
-<<< TLS 1.0 Handshake [length 0b01], Certificate
-depth=1 /C=RU/O=some/CN=CA
-verify error:num=19:self signed certificate in certificate chain
-verify return:0
-<<< TLS 1.0 Handshake [length 010d], ServerKeyExchange
-<<< TLS 1.0 Handshake [length 0055], CertificateRequest
-<<< TLS 1.0 Handshake [length 0004], ServerHelloDone
->>> TLS 1.0 Handshake [length 056a], Certificate
->>> TLS 1.0 Handshake [length 0046], ClientKeyExchange
->>> TLS 1.0 Handshake [length 0086], CertificateVerify
->>> TLS 1.0 ChangeCipherSpec [length 0001]
->>> TLS 1.0 Handshake [length 0010], Finished
-<<< TLS 1.0 ChangeCipherSpec [length 0001]
-<<< TLS 1.0 Handshake [length 0010], Finished
-R
-RENEGOTIATING
->>> TLS 1.0 Handshake [length 0063], ClientHello
-<<< TLS 1.0 Handshake [length 0030], ServerHello
-<<< TLS 1.0 Handshake [length 0b01], Certificate
-depth=1 /C=RU/O=some/CN=CA
-verify error:num=19:self signed certificate in certificate chain
-verify return:0
-<<< TLS 1.0 Handshake [length 010d], ServerKeyExchange
-<<< TLS 1.0 Handshake [length 0055], CertificateRequest
-<<< TLS 1.0 Handshake [length 0004], ServerHelloDone
->>> TLS 1.0 Handshake [length 056a], Certificate
->>> TLS 1.0 Handshake [length 0046], ClientKeyExchange
->>> TLS 1.0 Handshake [length 0086], CertificateVerify
->>> TLS 1.0 ChangeCipherSpec [length 0001]
->>> TLS 1.0 Handshake [length 0010], Finished
-<<< TLS 1.0 Handshake [length 060a]???
-<<< TLS 1.0 ChangeCipherSpec [length 0001]
-<<< TLS 1.0 Handshake [length 0010], Finished
------
-If the second certificate is used for the authorization and it is
-allowed to have distinct certificates during the first and second
-negotiations, then this could be the other way to trigger this attack
-against the servers that are requiring certificates from the beginning.
+Quote from the debian bugreport:
+"When an invalid key is used when calling dba_replace on a dba inifile 
+resource it leads to file truncation."
 
-Any thoughts?
--- 
-Eygene
+References:
+Debian Bugreport: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=507101
+Security Reason: http://securityreason.com/achievement_securityalert/58
+Upstream patch:
+http://cvs.php.net/viewvc.cgi/php-src/ext/dba/libinifile/inifile.c?r1=1.14.2.1.2.4&r2=1.14.2.1.2.5
+
+Could I please get a CVE id for this?
+
+Cheers
+Steffen
+
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
