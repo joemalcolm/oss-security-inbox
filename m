@@ -1,20 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/28/6
-Message-ID: <0910281253591.6938@mjc.redhat.com>
-Date: Wed, 28 Oct 2009 12:58:56 +0000 (GMT)
-From: Mark J Cox <mjc@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/28/7
+Message-ID: <Pine.GSO.4.51.0901280858500.490@faron.mitre.org>
+Date: Wed, 28 Jan 2009 09:02:45 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re:  Re: ghostscript CVE for multiple NULL dereferences in JBIG2 decoder
+Subject: Re: update on CVE-2008-5718
 Content-Type: text/plain; charset=utf-8
 
-> The same PoC crashes xpdf. I'm not aware of any CVE id being assigned for
-> this issue other than the one for Adobe Reader.
 
-So I've deliberately not allocated one because we generally do not 
-consider a crash of a user application like a PDF reader to be a security 
-issue.  However CVE does have a few cases where CVE names were allocated 
-for such cases, so if any vendor here is going to treat this as a security 
-issue let me know and I'll allocate a name for tracking purposes.
+On Wed, 28 Jan 2009, Thomas Biege wrote:
 
-Thanks, Mark
+> New patch attached, the old one was missing spaces.
+> Hope the blacklist is complete now...
 
+Would a "-" character allow an argument injection attack by inserting
+dangerous command-line switches?  Things like being able to add a "-rf" as
+an argument to the rm command...
+
+I assume there's something undesirable about quoting everything unless
+it's alphanumeric?
+
+- Steve
