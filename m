@@ -1,46 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/03/7
-Message-ID: <4AA05840.6020303@kernel.sg>
-Date: Fri, 04 Sep 2009 07:58:56 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>, Greg KH <gregkh@...e.de>
-Subject: Re: CVE request: kernel: tty: make sure to flush any pending work when halting the ldisc
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/28/4
+Message-ID: <20090128092102.56964ee1@redhat.com>
+Date: Wed, 28 Jan 2009 09:21:02 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: OSS Security <oss-security@...ts.openwall.com>
+Subject: CVE request - horde, imp
 Content-Type: text/plain; charset=utf-8
 
-Greg KH wrote:
-> On Mon, Aug 31, 2009 at 11:52:21AM +0800, Eugene Teo wrote:
->> The tty ldisc code was rewritten to use proper reference counts (commits 
->> 65b770468e98 and cbe9352fa08f) in order to avoid a race with hangup, but 
->> it also introduced another bug that can result in various problems such 
->> as a NULL pointer dereference in run_timer_softirq() or a BUG() in 
->> worker_thread. More info in the patch.
->>
->> Upstream commit:
->> http://git.kernel.org/linus/5c58ceff103d8a654f24769bb1baaf84a841b0cc
->>
->> Reproducer:
->> http://lkml.org/lkml/2009/8/20/27
->> http://lkml.org/lkml/2009/8/20/68
->>
->> Backtrace:
->> http://lkml.org/lkml/2009/8/20/21
->>
->> I believe this affects kernel versions greater than v2.6.26. The code in 
->> drivers/char/tty_ldisc.c was from drivers/char/tty_io.c before it was 
->> splitted into its own file in v2.6.27-rc1 (commit 01e1abb2). I did not 
->> investigate further.
-> 
-> Are you sure about this?  It only looks to be a problem in the 2.6.31-rc
-> tree, as both of the above referenced patches are in that tree (showed
-> up in 2.6.31-rc6).
+Hi!
 
-Right, so this was introduced between v2.6.31-rc1 and v2.6.31-rc4, with 
-commit c65c9bc3 and c8d50041. Thanks for clarifying.
+New versions of horde and imp fix few security issues:
 
-> Do you have a backported patch to 2.6.30 that you think fixes the
-> problem?
+Horde 3.2.4 and 3.3.3:
+     * SECURITY: Fix unescaped output in the tag cloud block
+     * SECURITY: Fix unvalidated Horde_Image driver name
 
-No, I did not investigate further.
+http://lists.horde.org/archives/announce/2009/000483.html
+http://lists.horde.org/archives/announce/2009/000482.html
+http://cvs.horde.org/diff.php/horde/docs/CHANGES?r1=1.515.2.413.2.3&r2=1.515.2.413.2.5&ty=h
 
-Thanks, Eugene
+Patches:
+http://cvs.horde.org/diff.php/horde/services/portal/cloud_search.php?r1=1.1.2.2&r2=1.1.2.2.4.1
+http://cvs.horde.org/diff.php/framework/Image/Image.php?r1=1.39.10.17&r2=1.39.10.17.4.1
+
+
+Further details:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=513265
+
+
+IMP 4.2.2 and 4.3.3:
+http://lists.horde.org/archives/announce/2009/000484.html
+http://lists.horde.org/archives/announce/2009/000485.html
+http://cvs.horde.org/diff.php/imp/docs/CHANGES?r1=1.699.2.301.2.1&r2=1.699.2.301.2.4&ty=h
+
+Patches:
+http://cvs.horde.org/diff.php/imp/pgp.php?r1=2.79.6.15&r2=2.79.6.15.2.1
+http://cvs.horde.org/diff.php/imp/smime.php?r1=2.48.4.12&r2=2.48.4.12.4.1
+http://cvs.horde.org/diff.php/imp/message.php?r1=2.560.4.56&r2=2.560.4.56.4.1
+
+Debian bug:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=513266
+
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
