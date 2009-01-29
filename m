@@ -1,22 +1,98 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/10/1
-Message-ID: <4A7FA4B4.3060706@kernel.sg>
-Date: Mon, 10 Aug 2009 12:40:20 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: parisc: isa-eeprom missing lower bound check
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/29/3
+Message-Id: <1233227722.4126.29.camel@dhcp-lab-164.englab.brq.redhat.com>
+Date: Thu, 29 Jan 2009 12:15:22 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com
+Subject: CVE Request -- (sort of urgent) gstreamer-plugins-good (repost) (more details about affected versions -- final version)
 Content-Type: text/plain; charset=utf-8
 
-loff_t is a signed type. If userspace passes a negative ppos, the
-"count" range check is weakened. If ppos is negative, the readb() later
-in the function will poke in random memory. Only affects if you are
-using a PA-RISC kernel with CONFIG_EISA set.
+Hello Steve,
 
-Upstream commit:
-http://git.kernel.org/linus/6b4dbcd86a9d464057fcc7abe4d0574093071fcc
+  by mistake sent my previous post too early :(. so fixing it.
 
-Reference:
-http://patchwork.kernel.org/patch/36418/
+  Wanted to provide more details about the affected versions
+for the gstreamer-plugins-good issues yet:
 
-Thanks, Eugene
+Original advisory:
+http://trapkit.de/advisories/TKADV2009-003.txt
+
+The patch:
+http://cgit.freedesktop.org/gstreamer/gst-plugins-good/commit/?id=bdc20b9baf13564d9a061343416395f8f9a92b53
+
+References:
+http://trapkit.de/advisories/TKADV2009-003.txt 
+http://cgit.freedesktop.org/gstreamer/gst-plugins-good/commit/?id=bdc20b9baf13564d9a061343416395f8f9a92b53
+https://bugzilla.redhat.com/show_bug.cgi?id=481267
+
+Three problems:
+[A] heap buffer overflow vulnerability in QuickTime 'ctts' Atom parsing (vuln #1)
+[B] the array index out of bounds vulnerability QuickTime 'stss' Atom parsing (vuln #2)
+[C] heap buffer overflow vulnerability QuickTime 'stts' Atom parsing (vuln #3)
+
+---------------------------------------------------------------------------------
+
+i, Vulnerability [A] and [B] affects gstreamer-plugins-good versions (CVE id#1):
+  gst-plugins-good-0.10.9 <= x < gst-plugins-good-0.10.12 (latest upstream)
+
+CVE desc proposal: "A heap based buffer overflow in QuickTime 'ctts' Atom
+parsing and array index out of bounds vulnerability in QuickTimes Sync
+Sample Atom was found in gstreamer-plugins-good versions from 0.10.9
+through to 0.10.11..."
+
+---------------------------------------------------------------------------------
+
+ii, Vulnerability [C] affects gstreamer-plugins and gstreamer-plugins-good versions (CVE id#2)
+  gst-plugins-good-0.10.9 <= x < gst-plugins-good-0.10.12 (latest upstream)
+  gstreamer-plugins-0.8.5
+
+CVE desc proposal: "A heap based buffer overflow in QuickTime Sync Sample
+Atom parsing has been found in gstreamer-plugins-good version from 0.10.9
+through to 0.10.11 and in gstreamer-plugins version of 0.8.5.." 
+
+----------------------------------------------------------------------------------
+
+iii, Tomas Hoger discovered the similar vulnerability like the [B] one is present
+also in upstream code of gstreamer-plugins in version (CVE id#3)
+  gstreamer-plugins-0.6.0
+
+CVE desc proposal "An array index out ouf bounds vulnerability has been found
+in gstreamer-plugins version of 0.6.0 ..."
+
+To be more exact on lines from 537 to 565 in gst-plugins-0.6.0/gst/qtdemux/qtdemux.c
+(the relevant function is "gst_qtp_trak_handler"):
+
+    556         for(i=0;i<GUINT32_FROM_BE(stsc[stsc_idx].samples_per_chunk);i++,sample++) {
+    557           guint32 size = GUINT32_FROM_BE(stsz[sample]);
+    558           track_to_be->samples[sample].offset = offset;
+    559           track_to_be->samples[sample].size = size;
+    560           track_to_be->samples[sample].timestamp =
+sample*((1000000*track_to_be->sample_duration)/track_to_be->time_scale);
+    561           track_to_be->samples[sample].track = track_to_be;
+    562
+g_tree_insert(qtdemux->samples,&(track_to_be->samples[sample].offset),&(track_to_be->samples[sample]));
+    563           offset += size;
+    564         }
+    565       }
+
+There is also missing check if "sample" is still lower than "nsamples"
+and if write attempt to e.g. track_to_be->samples[sample].size = size;
+wouldn't overflow.
+
+-----------------------------------------------------------------------------------------
+
+More explanation about all the mystical QuicTime Atom names ('stts') can
+be found for example here:
+
+http://developer.apple.com/DOCUMENTATION/QuickTime/QTFF/qtff.pdf (part Sample Table Atoms on page# 74).
+
+Could you please allocate the 3 CVE ids for the above three cases?
+
+Let me know, if I could be of any other help.
+
+Thanks && regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+
