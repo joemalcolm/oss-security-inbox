@@ -1,27 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/06/7
-Message-ID: <Pine.GSO.4.51.0905061210170.3040@faron.mitre.org>
-Date: Wed, 6 May 2009 12:10:21 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: Re: CVE id request: Debian/Ubuntu specific issue in xvfb-run (xorg)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/29/1
+Message-ID: <20090129100054.GA4095@redhat.com>
+Date: Thu, 29 Jan 2009 10:00:54 +0000
+From: Joe Orton <jorton@...hat.com>
+To: Raphael Geissert <atomo64+debian@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re:  Re: CVE id request: php5
 Content-Type: text/plain; charset=utf-8
 
+On Wed, Jan 28, 2009 at 02:00:42PM -0600, Raphael Geissert wrote:
+> Josh Bressers wrote:
+> [...]
+> > 
+> > I may be missing something here, but this looks like an issue where a bad
+> > script really needs to cause this. Wouldn't it be just as easy to for the
+> > script author to delete the file in question via a PHP script?
+> > 
+> 
+> No, please read carefully. If you have a script that doesn't do good 
+> input sanitation but takes a variable from the user's input and uses 
+> it as a key it will end up nuking the .ini file.
 
-======================================================
-Name: CVE-2009-1573
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1573
-Reference: MLIST:[oss-security] 20090505 CVE id request: Debian/Ubuntu specific issue in xvfb-run (xorg)
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/05/05/2
-Reference: MLIST:[oss-security] 20090505 Re: CVE id request: Debian/Ubuntu specific issue in xvfb-run (xorg)
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/05/05/4
-Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=526678
+If the script is taking untrusted input data and passing it unsanitized 
+as the "key" argument to a dba_replace() call, it can override arbitrary 
+keys in the ini file anyway.  Truncating the ini file to zero length 
+seems like a less severe problem than being able to write (arbitrary?) 
+data to arbitrary keys.
 
-xvfb-run 1.6.1 in Debian GNU/Linux, Ubuntu, Fedora 10, and possibly
-other operating systems place the magic cookie (MCOOKIE) on the
-command line, which allows local users to gain privileges by listing
-the process and its arguments.
-
-
+Regards, Joe
