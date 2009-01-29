@@ -1,33 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/21/1
-Message-ID: <4B07FD77.1000807@redhat.com>
-Date: Sat, 21 Nov 2009 15:47:19 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request - Dovecot - 1.2.8
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/29/5
+Message-ID: <914336965.2985431233255231152.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 29 Jan 2009 13:53:51 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: coley@...re.org
+Subject: CVE Request (trickle)
 Content-Type: text/plain; charset=utf-8
 
-Hi Josh, Steve, vendors,
+Hi Steve,
 
-   Dovecot upstream has released latest 1.2.8 version, fixing
-one security issue. Quoting from news:
+trickle has what is similar to all the RPATH flaws that got CVE ids a while back:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=513456
 
-This is mainly to fix the 0777 base_dir creation issue, which could be
-considered a security hole, exploitable by local users. An attacker
-could for example replace Dovecot's auth socket and log in as other
-users. Gaining root privileges isn't possible though.
+It seems it could set a bad LD_PRELOAD path when the trickle command is run.
 
-This affects only v1.2 users, v1.1 and older versions were creating the
-directory with 0755 permission.
+Thanks.
 
-References:
------------
-http://www.dovecot.org/list/dovecot-news/2009-November/000143.html
-http://www.dovecot.org/index.html
-
-Could you allocate a CVE id? (in case there isn't one already).
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+-- 
+    JB
