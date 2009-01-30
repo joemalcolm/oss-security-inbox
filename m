@@ -1,58 +1,118 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/16/9
-Message-ID: <20090416172432.78d35a57@redhat.com>
-Date: Thu, 16 Apr 2009 17:24:32 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: wietse@...cupine.org
-Cc: oss-security@...ts.openwall.com, coley@...us.mitre.org
-Subject: Re: Re: Some fun with tcp_wrappers
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/30/2
+Message-Id: <1233320185.3423.49.camel@dhcp-lab-164.englab.brq.redhat.com>
+Date: Fri, 30 Jan 2009 13:56:25 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>, Robert Buchholz <rbu@...too.org>
+Cc: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: CVE request -- Python < 2.6 PySys_SetArgv issues (epiphany, csound, dia, eog, gedit, xchat, vim, nautilus-python, Gnumeric)
 Content-Type: text/plain; charset=utf-8
 
-Hi Wietse!
+Hello again Steve,
 
-On Thu, 16 Apr 2009 07:59:20 -0400 (EDT) wietse@...cupine.org (Wietse
-Venema) wrote:
+  got couple of points to discuss yet:
 
-> Tomas Hoger:
-> > The good_client (tcp_wrappers wrapping function in portmap /
-> > nfs-utils / ...) problem is rather interesting too, as it creates
-> > problems due to its attempt to avoid unneeded DNS lookups
-> > (workaround for hosts_ctl limitation?) and support host aliases
-> > (tcp_wrappers limitation).  
+  1, thanks! for all the CVEs (probably more reports still
+to come, since currently still investigating all
+the F10 srpms code in Everything repo to ensure we didn't
+miss something). Recommending other distros to behave in
+similar way.
+
+  2, 
+
+> Do you have any upstream bug ID's for the Python bug itself, or some
+> Python mailing list?  I'd like to capture that issue there, if possible.
 > 
-> See my previous email. Programs such as portmappers must not look
-> up hostname information, since that would result in an infinite
-> recursion when host lookups use SUNRPC services. To state the
-> obvious: the portmapper would directly or indirectly send SUNRPC
-> calls to itself, in order to locate the NIS server.
+> I'm using CVE-2008-5983 to help track the Python bug itself.
+> 
 
-Thank you for pointing this problem out.  And my apologies for not
-digging deep enough into peculiarities of RPC and making a conclusions
-based on the code already used in the wild.  It seems that portmappers
-do name resolution, even if they should not.
+Not aware of any upstream Python bug report
+yet (there are still some obstacles with the patch :(,
+so it seems the upstream root Python issue fix can not
+be expected any time soon (that's why we reported this issue
+in most affected applications/packages at least).
 
-Current upstream portmap code has a compile-time option that enables
-name resolution (along with proper warnings):
-  http://neil.brown.name/git?p=portmap;a=commitdiff;h=b663f78b86
+Current RH status can be seen here:
 
-but the variants of this (buggy) patch without such ENABLE_DNS define
-and proper warnings are used in the wild.  Additionally, portmap also
-has an explicit check for local access and does not call tcp_wrappers
-at all in such case, probably to avoid the problem you have mentioned.
-Is there a case when even that is insufficient?
+https://bugzilla.redhat.com/show_bug.cgi?id=482814#c1 and here:
+https://bugzilla.redhat.com/show_bug.cgi?id=482814#c4 and here:
+https://bugzilla.redhat.com/show_bug.cgi?id=482814#c5
 
-> Before discussing changes to a program, it is a good investment of
-> time to find out how the program works, and why it works in the
-> specific way it works.
+For testing purposes it is possible to use Ray Strode's test case
+from:
 
-I obviously erred on this!  Though with code being copied across
-projects, getting changes that are not always correct, or copying
-special handling to projects where it is not needed, makes it rather
-complicated to not miss some whys or always distinguish correct changes
-from incorrect ones.  Nobody has perfect knowledge of everything, that's
-when objective feedback from subject experts is greatly appreciated and
-desired to not miss any gotchas and have all pros and cons to make the
-decision.
+https://bugzilla.redhat.com/show_bug.cgi?id=481556#c8
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+The Python upstream bug report will follow as soon as we will
+find a patch, which would resolve also the 'sub-modules,
+which are in more than a one file' ('import utils' example) case.
+
+3, The original CVE-2008-5983 description will need modification.
+Robert is right, this issue is still present also in Python
+2.6 (even absolute imports didn't resolve it). For more
+details please proceed to:
+
+http://www.openwall.com/lists/oss-security/2009/01/28/5 and to:
+https://bugzilla.redhat.com/show_bug.cgi?id=482814#c1
+
+So please update the text of CVE-2008-5983 to state:
+
+"... in Python prepends an empty string to sys.path ...".
+
+Thanks && regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+
+On Tue, 2009-01-27 at 21:38 -0500, Steven M. Christey wrote:
+> On Mon, 26 Jan 2009, Jan Lieskovsky wrote:
+> 
+> > Though this is a Python flaw (insertion of cwd at the
+> > beginning of the Python modules search path), according to our Python
+> > maintainers it can't be fixed on Python's side due the need
+> > of ensuring the work of other numerous packages, when loading
+> > Python modules.
+> 
+> This was a bit of a pain CVE-wise, though  I suspect it was less painful
+> than what the maintainers are going through.
+> 
+> It seems fair to label the Python bug separately as an instance of
+> CWE-684: Failure to Provide Specified Functionality (or some other "API
+> Abuse CWE-227 problem).  Then we could assign separate CVE's for the
+> others ("failure to work around a known issue in the underlying
+> interpreter").  I'm always worried about these kinds of things producing
+> mass amounts of CVE's, and it doesn't seem fair to those applications -
+> but given that Python upstream can't/won't fix the issue, this seems the
+> best approach, since the apps will have to be patched themselves.
+> 
+> Do you have any upstream bug ID's for the Python bug itself, or some
+> Python mailing list?  I'd like to capture that issue there, if possible.
+> 
+> I'm using CVE-2008-5983 to help track the Python bug itself.
+> 
+> For the individual apps:
+> 
+> CVE-2008-5984 - Dia
+> CVE-2008-5985 - Epiphany
+> CVE-2008-5986 - Csound
+> CVE-2008-5987 - eog
+> 
+> They all had 2008 CVE's because of James Vega's work in November, which
+> was "technically public" at that time.
+> 
+> The following ones are 2009 because the first disclosure seems to be from
+> Jan in the original oss-security post.
+> 
+> Does anybody have upstream version information for these?  They aren't in
+> the Red Hat bug reports, so the descriptions have no versions.
+> 
+> CVE-2009-0314 - gedit
+> CVE-2009-0315 - xchat
+> CVE-2009-0316 - vim
+> CVE-2009-0317 - Nautilus
+> CVE-2009-0318 - Gnumeric
+> 
+> 
+> - Steve
+
+
