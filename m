@@ -1,24 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/06/1
-Message-Id: <200905062132.33865.steffen.joeris@skolelinux.de>
-Date: Wed, 6 May 2009 21:32:33 +1000
-From: Steffen Joeris <steffen.joeris@...lelinux.de>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: moin
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/30/1
+Message-Id: <1233301567.3423.5.camel@dhcp-lab-164.englab.brq.redhat.com>
+Date: Fri, 30 Jan 2009 08:46:07 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request - php (PHP BZ#27421)
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Happy friday Steve,
 
-This upstream commit[0] is slightly different then the issues described in 
-CVE-2009-1482 and I think it deserves another CVE id to separate the XSS 
-issues. The debian bug[1] can also be used as a reference.
-Steve, what do you think?
+  this PHP issue looks to desire a new CVE id.
 
-Cheers
-Steffen
+References:
+http://bugs.php.net/bug.php?id=27421
+https://bugzilla.redhat.com/show_bug.cgi?id=479272
 
-[0]: http://hg.moinmo.in/moin/1.8/rev/269a1fbc3ed7
-[1]: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=526594
+Patch:
+http://www.dfoerster.de/misc/php-27421.diff
 
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+Affected PHP versions:
+Original bug report mentions php-5.2.5, 
+but versions of php-4.3.2, php-4.3.9
+and php-5.1.6 seems to be also affected (share the same code).
+
+Thanks, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
