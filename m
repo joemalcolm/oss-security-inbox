@@ -1,42 +1,162 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/21/9
-Message-ID: <Pine.GSO.4.51.0905211937340.18536@faron.mitre.org>
-Date: Thu, 21 May 2009 19:37:53 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/03/2
+Message-ID: <Pine.GSO.4.51.0902031558250.3146@faron.mitre.org>
+Date: Tue, 3 Feb 2009 15:59:43 -0500 (EST)
 From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
 cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: problem with NFS v4 client handling of MAY_EXEC in nfs_permission
+Subject: Re: CVE Request -- (sort of urgent) gstreamer-plugins-good (repost) (more details about affected versions -- final version)
 Content-Type: text/plain; charset=utf-8
 
 
-On Wed, 13 May 2009, Eugene Teo wrote:
+All in all, we have 4 distinct CVE's for the gstreamer issues, partially
+based on which bugs appear in gstreamer-plugins.
 
-> Frank Filz reported: the problem is that permission checking is skipped
-> if atomic open is possible, but when exec opens a file, it just opens it
-> O_READONLY which means EXEC permission will not be checked at that time.
+- Steve
 
 ======================================================
-Name: CVE-2009-1630
+Name: CVE-2009-0386
 Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1630
-Reference: MLIST:[linux-nfs] 20090509 [NFS] [PATCH] nfs: Fix NFS v4 client handling of MAY_EXEC in nfs_permission.
-Reference: URL:http://article.gmane.org/gmane.linux.nfs/26592
-Reference: MLIST:[nfsv4] 20061116 Status of execute permissions in NFSv4 ACLs ?
-Reference: URL:http://linux-nfs.org/pipermail/nfsv4/2006-November/005313.html
-Reference: MLIST:[nfsv4] 20061117 [Patch] Re: Status of execute permissions in NFSv4 ACLs ?
-Reference: URL:http://linux-nfs.org/pipermail/nfsv4/2006-November/005323.html
-Reference: MLIST:[oss-security] 20090513 CVE request: kernel: problem with NFS v4 client handling of MAY_EXEC in nfs_permission
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/05/13/2
-Reference: CONFIRM:http://bugzilla.linux-nfs.org/show_bug.cgi?id=131
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=500297
-Reference: BID:34934
-Reference: URL:http://www.securityfocus.com/bid/34934
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0386
+Acknowledged: yes changelog
+Announced: 20090122
+Flaw: buf
+Reference: BUGTRAQ:20090122 [TKADV2009-003] GStreamer Heap Overflow and Array Index out of Bounds Vulnerabilities
+Reference: URL:http://www.securityfocus.com/archive/1/archive/1/500317/100/0/threaded
+Reference: MLIST:[oss-security] 20090129 CVE Request -- (sort of urgent) gstreamer-plugins-good (repost) (more details about affected versions -- final version)
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/01/29/3
+Reference: MISC:http://trapkit.de/advisories/TKADV2009-003.txt
+Reference: CONFIRM:http://cgit.freedesktop.org/gstreamer/gst-plugins-good/commit/?id=bdc20b9baf13564d9a061343416395f8f9a92b53
+Reference: CONFIRM:http://gstreamer.freedesktop.org/releases/gst-plugins-good/0.10.12.html
+Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=481267
+Reference: BID:33405
+Reference: URL:http://www.securityfocus.com/bid/33405
+Reference: FRSIRT:ADV-2009-0225
+Reference: URL:http://www.frsirt.com/english/advisories/2009/0225
+Reference: SECUNIA:33650
+Reference: URL:http://secunia.com/advisories/33650
 
-The nfs_permission function in fs/nfs/dir.c in the NFS client
-implementation in the Linux kernel 2.6.29.3 and earlier, when
-atomic_open is available, does not check execute (aka EXEC or
-MAY_EXEC) permission bits, which allows local users to bypass
-permissions and execute files, as demonstrated by files on an NFSv4
-fileserver.
+Heap-based buffer overflow in the qtdemux_parse_samples function in
+gst/qtdemux/qtdemux.c in GStreamer Good Plug-ins (aka
+gst-plugins-good) 0.10.9 through 0.10.11 might allow remote attackers
+to execute arbitrary code via crafted Composition Time To Sample
+(ctts) atom data in a malformed QuickTime media .mov file.
+
+
+Analysis:
+ABSTRACTION: The researcher lists three issues in the advisory, two
+heap overflows and one array index error so these are SPLIT.
+
+ABSTRACTION: One of the heap overflows affects different products than
+the other, so they are SPLIT.
+
+ACKNOWLEDGEMENT: The vendor states in release notes for 0.10.12: "Fix
+for security advisory TKADV2009-0xx" which references the researcher,
+who states "Vendor has released an updated version" and notes the
+issue is resolved in the 0.10.12 release.
+
+
+======================================================
+Name: CVE-2009-0387
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0387
+Acknowledged: yes changelog
+Announced: 20090122
+Flaw: other
+Reference: BUGTRAQ:20090122 [TKADV2009-003] GStreamer Heap Overflow and Array Index out of Bounds Vulnerabilities
+Reference: URL:http://www.securityfocus.com/archive/1/archive/1/500317/100/0/threaded
+Reference: MLIST:[oss-security] 20090129 CVE Request -- (sort of urgent) gstreamer-plugins-good (repost) (more details about affected versions -- final version)
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/01/29/3
+Reference: MISC:http://trapkit.de/advisories/TKADV2009-003.txt
+Reference: CONFIRM:http://cgit.freedesktop.org/gstreamer/gst-plugins-good/commit/?id=bdc20b9baf13564d9a061343416395f8f9a92b53
+Reference: CONFIRM:http://gstreamer.freedesktop.org/releases/gst-plugins-good/0.10.12.html
+Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=481267
+Reference: BID:33405
+Reference: URL:http://www.securityfocus.com/bid/33405
+Reference: FRSIRT:ADV-2009-0225
+Reference: URL:http://www.frsirt.com/english/advisories/2009/0225
+Reference: SECUNIA:33650
+Reference: URL:http://secunia.com/advisories/33650
+
+Array index error in the qtdemux_parse_samples function in
+gst/qtdemux/qtdemux.c in GStreamer Good Plug-ins (aka
+gst-plugins-good) 0.10.9 through 0.10.11 allows remote attackers to
+cause a denial of service (application crash) and possibly execute
+arbitrary code via crafted Sync Sample (aka stss) atom data in a
+malformed QuickTime media .mov file, related to "mark keyframes."
+
+
+Analysis:
+ABSTRACTION: The researcher lists three issues in the advisory, two
+heap overflows and one array index error so these are SPLIT.
+
+ACKNOWLEDGEMENT: The vendor states in release notes for 0.10.12: "Fix
+for security advisory TKADV2009-0xx" which references the researcher,
+who states "Vendor has released an updated version" and notes the
+issue is resolved in the 0.10.12 release.
+
+
+======================================================
+Name: CVE-2009-0397
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0397
+Acknowledged: yes changelog
+Announced: 20090122
+Flaw: buf
+Reference: BUGTRAQ:20090122 [TKADV2009-003] GStreamer Heap Overflow and Array Index out of Bounds Vulnerabilities
+Reference: URL:http://www.securityfocus.com/archive/1/archive/1/500317/100/0/threaded
+Reference: MLIST:[oss-security] 20090129 CVE Request -- (sort of urgent) gstreamer-plugins-good (repost) (more details about affected versions -- final version)
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/01/29/3
+Reference: MISC:http://trapkit.de/advisories/TKADV2009-003.txt
+Reference: CONFIRM:http://cgit.freedesktop.org/gstreamer/gst-plugins-good/commit/?id=bdc20b9baf13564d9a061343416395f8f9a92b53
+Reference: CONFIRM:http://gstreamer.freedesktop.org/releases/gst-plugins-good/0.10.12.html
+Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=481267
+Reference: BID:33405
+Reference: URL:http://www.securityfocus.com/bid/33405
+Reference: FRSIRT:ADV-2009-0225
+Reference: URL:http://www.frsirt.com/english/advisories/2009/0225
+Reference: SECUNIA:33650
+Reference: URL:http://secunia.com/advisories/33650
+
+Heap-based buffer overflow in the qtdemux_parse_samples function in
+gst/qtdemux/qtdemux.c in GStreamer Good Plug-ins (aka
+gst-plugins-good) 0.10.9 through 0.10.11, and GStreamer Plug-ins (aka
+gstreamer-plugins) 0.8.5, might allow remote attackers to execute
+arbitrary code via crafted Time-to-sample (aka stts) atom data in a
+malformed QuickTime media .mov file.
+
+
+Analysis:
+ABSTRACTION: The researcher lists three issues in the advisory, two
+heap overflows and one array index error so these are SPLIT.
+
+ABSTRACTION: One of the heap overflows affects different products than
+the other, so they are SPLIT.
+
+ACKNOWLEDGEMENT: The vendor states in release notes for 0.10.12: "Fix
+for security advisory TKADV2009-0xx" which references the researcher,
+who states "Vendor has released an updated version" and notes the
+issue is resolved in the 0.10.12 release.
+
+WIKI: The MLIST:[oss-security] 20090129 indicates that vulnerability
+[C] is about "QuickTime 'stts' Atom parsing" but then says "QuickTime
+Sync Sample Atom parsing." This is incorrect. An stts atom is a
+"Time-to-sample atom." (An stss atom is a "Sync Sample Atom.")
+
+
+======================================================
+Name: CVE-2009-0398
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0398
+Acknowledged: unknown
+Announced: 20090129
+Flaw: other
+Reference: MLIST:[oss-security] 20090129 CVE Request -- (sort of urgent) gstreamer-plugins-good (repost) (more details about affected versions -- final version)
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/01/29/3
+
+Array index error in the gst_qtp_trak_handler function in
+gst/qtdemux/qtdemux.c in GStreamer Plug-ins (aka gstreamer-plugins)
+0.6.0 allows remote attackers to have an unknown impact via a crafted
+QuickTime media file.
 
 
