@@ -1,32 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/21/4
-Message-Id: <1240318027.3191.7.camel@dhcp-lab-164.englab.brq.redhat.com>
-Date: Tue, 21 Apr 2009 14:47:07 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request -- libmodplug
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/03/6
+Message-ID: <Pine.GSO.4.51.0902031705210.3146@faron.mitre.org>
+Date: Tue, 3 Feb 2009 17:05:26 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: CVE request: Tor <0.2.0.33 Heap corruption
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve,
 
-  could you please allocate a new CVE-2008-XXXX identifier for
-the following old libmodplug issue:
+======================================================
+Name: CVE-2009-0414
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0414
+Reference: MLIST:[or-announce] 20090122 Tor 0.2.0.33 is released
+Reference: URL:http://archives.seul.org/or/announce/Jan-2009/msg00000.html
+Reference: CONFIRM:http://blog.torproject.org/blog/tor-0.2.0.33-stable-released
+Reference: BID:33399
+Reference: URL:http://www.securityfocus.com/bid/33399
+Reference: SECUNIA:33635
+Reference: URL:http://secunia.com/advisories/33635
 
-References:
-http://bugs.gentoo.org/show_bug.cgi?id=266913
-http://www.securityfocus.com/bid/30801/info
-http://sourceforge.net/project/shownotes.php?release_id=677065&amp;group_id=1275
-https://bugzilla.redhat.com/show_bug.cgi?id=496834
-
-Affected libmodplug versions: x < 0.8.6
-
-Patch (against modplug-xmms/libmodplug):
-http://modplug-xmms.cvs.sourceforge.net/viewvc/modplug-xmms/libmodplug/src/load_med.cpp?r1=1.1&amp;r2=1.2
-
-Thanks, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
+Unspecified vulnerability in Tor before 0.2.0.33 has unspecified
+impact and remote attack vectors that trigger heap corruption.
 
 
