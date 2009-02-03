@@ -1,51 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/25/2
-Message-ID: <Pine.LNX.4.64.0910250218410.23549@forced.attrition.org>
-Date: Sun, 25 Oct 2009 02:21:51 +0000 (UTC)
-From: security curmudgeon <jericho@...rition.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/03/5
+Message-ID: <Pine.GSO.4.51.0902031639060.3146@faron.mitre.org>
+Date: Tue, 3 Feb 2009 16:39:16 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re:  CVE-2009-3239 is a duplicate of CVE-2009-2139 and CVE-2009-2140
+cc: coley@...us.mitre.org
+Subject: Re: CVE request - ganglia
 Content-Type: text/plain; charset=utf-8
 
 
-: CVE-2009-3239 appears to be a duplicate of CVE-2009-2139 and 
-: CVE-2009-2140, and should therefore be rejected.
+updated to a "reject".
 
-CVE may abstract on these:
+======================================================
+Name: CVE-2009-0242
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0242
+Reference: MLIST:[Ganglia-developers] 20090113 patches for: [Sec] Gmetad server BoF and network overload + [Feature] multiple requests per conn on interactive port
+Reference: URL:http://www.mail-archive.com/ganglia-developers@lists.sourceforge.net/msg04929.html
+Reference: MLIST:[Ganglia-developers] 20090123 Re: CVE
+Reference: URL:http://www.mail-archive.com/ganglia-developers@lists.sourceforge.net/msg04969.html
+Reference: MLIST:[Ganglia-developers] 20090123 Re: CVE
+Reference: URL:http://www.mail-archive.com/ganglia-developers@lists.sourceforge.net/msg04973.html
+Reference: MISC:https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-0242#c1
+Reference: XF:ganglia-gmetad-dos(48166)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/48166
 
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=2009-3239
+** REJECT **
 
-Buffer overflow in the EMF parser implementation in OpenOffice.org (OOo) 
-in SUSE openSUSE 10.3 through 11.1, Novell Linux Desktop (NLD) 9, and 
-SUSE Linux Enterprise (SLE) 10 and 11 has unknown impact and remote 
-attack vectors, related to enhwmf.cxx and emfplus.cxx.
+gmetad in Ganglia 3.1.1, when supporting multiple requests per
+connection on an interactive port, allows remote attackers to cause a
+denial of service via a request to the gmetad service with a path does
+not exist, which causes Ganglia to (1) perform excessive CPU
+computation and (2) send the entire tree, which consumes network
+bandwidth.  NOTE: the vendor and original researcher have disputed
+this issue, since legitimate requests can generate the same amount of
+resource consumption.  CVE concurs with the dispute, so this
+identifier should not be used.
 
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=2009-2139
-
-Heap-based buffer overflow in svtools/source/filter.vcl/wmf/enhwmf.cxx in 
-Go-oo 2.x and 3.x before 3.0.1, previously named ooo-build and related to 
-OpenOffice.org (OOo), allows remote attackers to execute arbitrary code 
-via a crafted EMF file, a similar issue to CVE-2008-2238.
-
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=2009-2140
-
-Multiple heap-based buffer overflows in 
-cppcanvas/source/mtfrenderer/emfplus.cxx in Go-oo 2.x and 3.x before 
-3.0.1, previously named ooo-build and related to OpenOffice.org (OOo), 
-allow remote attackers to execute arbitrary code via a crafted EMF+ file, 
-a similar issue to CVE-2008-2238.
-
-
-1. 2139 and 2140 were created next to each other. That is usually a strong 
-indication that CVE chose to abstract between two issues.
-
-2. 3239 is in OOo, while 2139/2140 are in Go-oo, which was "previously .. 
-related to OOo". If Go-oo represents a code fork, there are two products 
-in question now. While CVE will merge products on similar issues, I don't 
-believe it is set in stone.
-
-3. I may be totally off and they may be considered dupes. =)  OSVDB is 
-keeping them split for now, given the difference in products.
-
-Brian
 
