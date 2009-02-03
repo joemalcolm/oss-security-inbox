@@ -1,23 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/15/5
-Message-ID: <20090515172640.GK390@lackof.org>
-Date: Fri, 15 May 2009 11:26:40 -0600
-From: dann frazier <dannf@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: ptrace race CVE ID?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/03/1
+Message-ID: <20090203155152.GB6147@suse.de>
+Date: Tue, 3 Feb 2009 16:51:52 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request: sblim-sfcb genSslCert.sh temp race
 Content-Type: text/plain; charset=utf-8
 
-On Fri, May 15, 2009 at 01:24:44PM -0400, Michael K. Johnson wrote:
-> There's an exploit for the bug fixed in changeset
-> cad81bc2529ab8c62b6fdc83a1c0c7f4a87209eb
-> floating around in the wild.  I had thought it was assigned a
-> CVE ID, but I am having trouble finding a record of it.  Is
-> anyone else aware of a CVE ID for it?
-> 
-> Thanks...
+Hi folks, Steve,
 
-CVE-2009-1527, I think
+We have identified and fixed a tmp race in the genSslCert.sh helper
+script in sblim-sfcb.
 
--- 
-dann frazier
+The script is run just once as root making this a very small attack
+window.
 
+https://sourceforge.net/tracker/index.php?func=detail&aid=2561165&group_id=128809&atid=712784
+
+Can you please assign a CVE id?
+
+Ciao, Marcus
