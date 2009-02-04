@@ -1,52 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/21/5
-Message-ID: <Pine.GSO.4.51.0901202119040.22454@faron.mitre.org>
-Date: Tue, 20 Jan 2009 21:19:24 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/04/6
+Message-ID: <20090204161105.429ba421@redhat.com>
+Date: Wed, 4 Feb 2009 16:11:05 +0100
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: xrdp
+Subject: Re: CVE request: ffmpeg <r16846 Type conversion vulnerability
 Content-Type: text/plain; charset=utf-8
 
+On Wed, 4 Feb 2009 15:20:53 +0100 Robert Buchholz <rbu@...too.org>
+wrote:
 
+> ffmpeg (as used in mplayer and gst-ffmpeg) before SVN r16846 contains
+> a type conversion vulnerability:
+> 
+> https://bugs.gentoo.org/show_bug.cgi?id=257217
+> http://www.trapkit.de/advisories/TKADV2009-004.txt
 
-======================================================
-Name: CVE-2008-5902
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5902
-Reference: MLIST:[oss-security] 20090112 CVE request: xrdp
-Reference: URL:http://openwall.com/lists/oss-security/2009/01/12/3
-Reference: MISC:http://packetstormsecurity.org/0812-advisories/VA_VD_87_08_XRDP.pdf
+http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2009-0385
 
-Buffer overflow in the xrdp_bitmap_invalidate function in
-xrdp/xrdp_bitmap.c in xrdp 0.4.1 and earlier allows remote attackers
-to execute arbitrary code via a crafted request.
-
-
-======================================================
-Name: CVE-2008-5903
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5903
-Reference: MLIST:[oss-security] 20090112 CVE request: xrdp
-Reference: URL:http://openwall.com/lists/oss-security/2009/01/12/3
-Reference: MISC:http://packetstormsecurity.org/0812-advisories/VA_VD_87_08_XRDP.pdf
-
-Array index error in the xrdp_bitmap_def_proc function in xrdp/funcs.c
-in xrdp 0.4.1 and earlier allows remote attackers to execute arbitrary
-code via vectors that manipulate the value of the edit_pos structure
-member.
-
-
-======================================================
-Name: CVE-2008-5904
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5904
-Reference: MLIST:[oss-security] 20090112 CVE request: xrdp
-Reference: URL:http://openwall.com/lists/oss-security/2009/01/12/3
-Reference: MISC:http://packetstormsecurity.org/0812-advisories/VA_VD_87_08_XRDP.pdf
-
-The rdp_rdp_process_color_pointer_pdu function in rdp/rdp_rdp.c in
-xrdp 0.4.1 and earlier allows remote RDP servers to have an unknown
-impact via input data that sets crafted values for certain length
-variables, leading to a buffer overflow.
-
-
+-- 
+Tomas Hoger / Red Hat Security Response Team
