@@ -1,32 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/25/1
-Message-ID: <49F2D667.7050005@redhat.com>
-Date: Sat, 25 Apr 2009 17:22:47 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/04/3
+Message-Id: <200902041519.27870.rbu@gentoo.org>
+Date: Wed, 4 Feb 2009 15:19:25 +0100
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: missing capabilities in fs_mask
+Subject: CVE request: Openfire <3.6.3 XSS vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
+Openfire before 3.6.3 contains several reflected and persistent 
+Cross-Site Scripting vulnerabilties, also possibly leading to 
+server-side code execution, and a directory traversal.
 
-Steven M. Christey wrote:
-> On Thu, 23 Apr 2009, Eugene Teo wrote:
-> 
->> "When POSIX capabilities were introduced during the 2.1 Linux cycle, the
->> fs mask, which represents the capabilities which having fsuid==0 is
->> supposed to grant, did not include CAP_MKNOD and CAP_LINUX_IMMUTABLE.
->> However, before capabilities the privilege to call these did in fact
->> depend upon fsuid==0.
-> 
-> How is this different than CVE-2009-1072?  That CVE is based on the same
-> bug report by Igor Zhbanov, although the description doesn't mention
-> CAP_LINUX_IMMUTABLE.
+https://bugs.gentoo.org/show_bug.cgi?id=257585
+http://www.coresecurity.com/content/openfire-multiple-vulnerabilities
+http://www.igniterealtime.org/builds/openfire/docs/latest/changelog.html
+http://www.igniterealtime.org/issues/browse/JM-1506
 
-Hmm. CVE-2009-1072 refers to the missing CAP_MKNOD capability in
-CAP_NFSD_MASK, and this bug refers to the missing CAP_MKNOD and
-CAP_LINUX_IMMUTABLE capabilities in CAP_FS_MASK. Come to think about it,
-both are similar, and probably makes sense to have it part of
-CVE-2009-1072 too?
+SVN revisions r10939 r10938 r10937 r10936 on 
+http://svn.igniterealtime.org/svn/repos/openfire/trunk/ contain the 
+fixes.
 
-Thanks, Eugene
+Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
