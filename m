@@ -1,20 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/10/6
-Message-Id: <200902101325.39489.hanno@hboeck.de>
-Date: Tue, 10 Feb 2009 13:25:39 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/04/2
+Message-Id: <200902041518.46855.rbu@gentoo.org>
+Date: Wed, 4 Feb 2009 15:18:44 +0100
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: Steven Christey <coley@...us.mitre.org>
-Subject: CVE request: typo3 xss (typo3-sa-2009-002)
+Subject: CVE request: Audacity <1.3.6 Buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-TYPO3 Security Bulletin TYPO3-SA-2009-002: Information Disclosure & XSS in 
-TYPO3 Core
+Audacity before 1.3.6 contains a buffer overflow in
+String_parse::get_nonspace_quoted() in lib-src/allegro/strparse.cpp when 
+importing *.gro MIDI files.
 
-http://typo3.org/teams/security/security-bulletins/typo3-sa-2009-002
+https://bugs.gentoo.org/show_bug.cgi?id=253493
+http://www.milw0rm.com/exploits/7634
+http://n2.nabble.com/Audacity-%22String_parse::get_nonspace_quoted()%22-Buffer-Overflow-td2139537.html
+http://secunia.com/advisories/33356/
+http://www.f-secure.com/vulnerabilities/SA200900191
 
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
