@@ -1,34 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/23/2
-Message-Id: <200912231150.17184.hanno@hboeck.de>
-Date: Wed, 23 Dec 2009 11:50:16 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE request: acl 2.2.47 always follows symlinks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/04/8
+Message-Id: <200902041400.57347.steffen.joeris@skolelinux.de>
+Date: Wed, 4 Feb 2009 14:00:56 -0500
+From: Steffen Joeris <steffen.joeris@...lelinux.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE id request: mahara
 Content-Type: text/plain; charset=utf-8
 
-setfacl/getfacl (part of package acl-2.2.47) contains a bug that it ignores 
-the --physical/-P parameter that means don't follow symlinks on -R 
-(recursive).
+Hi
 
-This can lead to security problems, e.g. if there's a cron script giving a 
-user full rwX rights for a directory, he can put a symlink there pointing to / 
-or /etc or whatever.
-Another scenario would be a backup script saving the /home acls to a file, 
-every user can create an endless loop for that and prevent the script from 
-completing.
+There is an XSS issue in mahara.
+http://mahara.org/interaction/forum/topic.php?id=198
 
-http://oss.sgi.com/bugzilla/show_bug.cgi?id=790
-http://bugs.gentoo.org/show_bug.cgi?id=265425
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=499076
+I don't think this issue has a CVE id yet, could I get one for it?
 
-Fixed in upstream source, but no new release yet.
-Please assign a CVE.
+Cheers
+Steffen
 
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-
-http://schokokeks.org - professional webhosting
-
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
