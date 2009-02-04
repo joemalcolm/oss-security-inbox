@@ -1,24 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/24/4
-Message-ID: <20090324214012.GA3737@ngolde.de>
-Date: Tue, 24 Mar 2009 22:40:12 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/04/1
+Message-ID: <20090204130520.GA29045@cream.lancs.ac.uk>
+Date: Wed, 4 Feb 2009 13:05:20 +0000
+From: Dan Poltawski <talktodan@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: CVE id request: ldns
+Subject: CVS request - Moodle
 Content-Type: text/plain; charset=utf-8
 
 Hi,
-there's a heap-based buffer overflow in ldns:
-http://www.nlnetlabs.nl/bugs/show_bug.cgi?id=232
 
-Can I please get a CVE id for this?
+We have released new versions of Moodle which fixes multiple vulnerabilities 
+without CVE numbers.
 
-Cheers
-Nico
+These are detailed on: http://moodle.org/security/
 
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+MSA-09-0004 - XSS vulnerabilities in HTML blocks if "Login as" used 
+Versions affected:       < 1.9.4, < 1.8.8, < 1.7.7, < 1.6.9 
+http://cvs.moodle.org/moodle/blocks/html/config_instance.html?r1=1.6&r2=1.6.10.1
+http://cvs.moodle.org/moodle/blocks/html/block_html.php?r1=1.8.22.6&r2=1.8.22.7
 
-Content of type "application/pgp-signature" skipped
+MSA-09-0006: Calendar export may allow brute force attacks 
+Versions affected:       < 1.9.4, < 1.8.8, < 1.7.7 
+http://cvs.moodle.org/moodle/calendar/export_execute.php?r1=1.2.4.5&r2=1.2.4.6
+
+MSA-09-0007: Missing input validation in logs allows potential XSS attacks 
+Versions affected:       < 1.9.4, < 1.8.8, < 1.7.7, < 1.6.9 
+http://cvs.moodle.org/moodle/course/lib.php?r1=1.538.2.66&r2=1.538.2.67
+
+MSA-09-0008: CSRF vulnerability in forum code 
+Versions affected:       < 1.9.4, < 1.8.8, < 1.7.7 
+http://cvs.moodle.org/moodle/mod/forum/post.php?r1=1.154.2.14&r2=1.154.2.15
+http://cvs.moodle.org/moodle/mod/forum/prune.html?r1=1.8&r2=1.8.4.1
+http://cvs.moodle.org/moodle/mod/forum/post.php?r1=1.154.2.15&r2=1.154.2.16
+
+thanks,
+
+Dan Poltawski
+
+Download attachment "signature.asc" of type "application/pgp-signature" (198 bytes)
