@@ -1,35 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/26/1
-Message-ID: <20091026145236.2c9665b1@redhat.com>
-Date: Mon, 26 Oct 2009 14:52:36 +0100
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/04/5
+Message-Id: <200902041520.57780.rbu@gentoo.org>
+Date: Wed, 4 Feb 2009 15:20:53 +0100
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: More CVE-2009-2408 like issues
+Subject: CVE request: ffmpeg <r16846 Type conversion vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 23 Sep 2009 11:05:17 +0200 Tomas Hoger <thoger@...hat.com>
-wrote:
+ffmpeg (as used in mplayer and gst-ffmpeg) before SVN r16846 contains a 
+type conversion vulnerability:
 
-> On Thu, 3 Sep 2009 16:45:47 +0200 Tomas Hoger <thoger@...hat.com>
-> wrote:
-> 
-> > wget - bunch of relevant links are available in here:
-> >   https://bugzilla.redhat.com/show_bug.cgi?id=520454
-> 
-> Fixed now in upstream version 1.12:
->   http://permalink.gmane.org/gmane.comp.web.wget.general/8972
-> 
-> This and other mentioned in my previous mail (mutt 1.5.19+, possibly
-> pre-1.5.19 too, but many are likely to wontfix that; OpenLDAP with
-> openssl) should probably get CVE.
+https://bugs.gentoo.org/show_bug.cgi?id=257217
+http://www.trapkit.de/advisories/TKADV2009-004.txt
 
-For posterity:
-- wget got CVE-2009-3490
-- mutt CVE-2009-2408-like issue got CVE-2009-3765
-- mutt missing name checks in pre-1.5.19 got CVE-2009-3766 (only 1.5.16
-  is mentioned in the CVE description atm)
-- openldap got CVE-2009-3767
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
