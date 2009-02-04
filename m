@@ -1,26 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/09/7
-Message-ID: <Pine.GSO.4.51.0902091453030.9163@faron.mitre.org>
-Date: Mon, 9 Feb 2009 14:53:07 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/04/4
+Message-Id: <200902041520.18372.rbu@gentoo.org>
+Date: Wed, 4 Feb 2009 15:20:14 +0100
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request - Wicd <= 1.5.8
+Subject: CVE request: Squid <2.7.6, 3.0.13, 3.1.0.5 DoS
 Content-Type: text/plain; charset=utf-8
 
+Squid before 2.7.STABLE6, 3.0.STABLE13, and 3.1.0.5 is vulnerable to a 
+Denial of Service issue:
 
-======================================================
-Name: CVE-2009-0489
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0489
-Reference: MLIST:[oss-security] 20090206 CVE Request - Wicd <= 1.5.8
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/02/06/4
-Reference: CONFIRM:http://sourceforge.net/project/shownotes.php?group_id=194573&release_id=659059
-Reference: CONFIRM:http://bazaar.launchpad.net/~wicd-devel/wicd/trunk/revision/222
+https://bugs.gentoo.org/show_bug.cgi?id=257585
+http://www.squid-cache.org/Advisories/SQUID-2009_1.txt
 
-The DBus configuration file for Wicd before 1.5.9 allows arbitrary
-users to own org.wicd.daemon, which allows local users to receive
-messages that were intended for the Wicd daemon, possibly including
-credentials.
-
-
+Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
