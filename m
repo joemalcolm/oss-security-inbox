@@ -1,26 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/09/5
-Message-ID: <20091109162435.GH4499@patate.is-a-geek.org>
-Date: Mon, 9 Nov 2009 17:24:35 +0100
-From: Julien Cristau <jcristau@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/06/5
+Message-ID: <20090206182049.4b0dd9a4@redhat.com>
+Date: Fri, 6 Feb 2009 18:20:49 +0100
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: X server umask issue
+Subject: Re: CVE request: jhead
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Nov  9, 2009 at 16:15:47 +0000, Steve Kemp wrote:
+On Thu, 27 Nov 2008 00:21:54 +0100 Robert Buchholz <rbu@...too.org>
+wrote:
 
-> On Mon Nov 09, 2009 at 11:09:55 -0500, Josh Bressers wrote:
-> 
-> > What I am wondering though, are there other files the X server creates that could
-> > be an issue for this? I'm not aware of any, but I'm also not an expert by any
-> > stretch of the imagination. Am I missing something else?
-> 
->   /tmp/.X11-unix/* or /tmp/X0-lock might be worth checking.
-> 
-The socket is intentionally world-writable, and the lock is created with
-    lfd = open(tmp, O_CREAT | O_EXCL | O_WRONLY, 0644);
-and later
-  (void) chmod(tmp, 0444);
+> These two issues have been resolved in the current
+> "jhead-latest.tar.gz" distributed on the upstream site. Both Ubuntu
+> and Debian have renamed one version of this file to be "2.85" whereas
+> upstream has not yet released any 2.85 version. Upstream stated that
+> they will release a 2.85 not before next year, so anyone who has this
+> issue open can either extract patches, package the snapshot or wait.
 
-Cheers,
-Julien
+Looks like -latest tarball was updated again and now mentions 2.86
+inside.  In that, usage of mkstemp was replaced with mktemp (previous
+version failed to close file descriptors opened by mkstemp, probably
+causing issues when trying to use command on large pile of images at
+once).  Those the temp file seem to be created user-specified
+destination directory, probably not too likely to be /tmp (and hence
+prone to races).
+
+Anyway, can anyone help me understand what was CVE-2008-4639 assigned
+to?  I tried looking at the diff between 2.7 and 2.84 and fail to see
+any relevant change...
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
