@@ -1,45 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/23/3
-Message-ID: <87ljk51m2q.fsf@mid.deneb.enyo.de>
-Date: Wed, 23 Sep 2009 19:46:05 +0000
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/06/6
+Message-ID: <20090206182609.17112795@redhat.com>
+Date: Fri, 6 Feb 2009 18:26:09 +0100
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: Three Shibboleth issues
+Subject: Re: CVE requests: Bugzilla
 Content-Type: text/plain; charset=utf-8
 
-1)
+On Wed, 4 Feb 2009 19:13:16 +0100 Moritz Muehlenhoff <jmm@...ian.org>
+wrote:
 
-| The Shibboleth software includes code to encode and decode URL
-| information, and has been shown to crash on certain malformed
-| encoded URLs due to a buffer overrun.
+> Please assign CVE IDs for
+> 
+> http://www.bugzilla.org/security/2.22.6/ and
+> http://www.bugzilla.org/security/3.0.7/
 
-(Also potential pre-auth code execution.)
+Does this have any id assigned?
 
-<http://shibboleth.internet2.edu/secadv/secadv_20090826.txt>
+http://www.bugzilla.org/security/2.20.6/
 
-
-2)
-
-NUL injection in certificate names:
-
-<http://shibboleth.internet2.edu/secadv/secadv_20090817.txt>
-
-
-3)
-
-| The Shibboleth software supports the use of SAML metadata to
-| identify authentication and encryption keys by means of the
-| <KeyDescriptor> element. In previous versions, the software
-| was improperly ignoring the "use" attribute and treating all
-| elements as valid for both signing/TLS and encryption.
-
-<http://shibboleth.internet2.edu/secadv/secadv_20090817a.txt>
-
-Isolated patches are available here:
-
-<http://lists.alioth.debian.org/pipermail/pkg-shibboleth-devel/2009-September/001213.html>
-
-Be careful when applying them---one hunk touches an inline function in
-a header-only C++ class with virtual functions (see the mailing list
-discussion).
+-- 
+Tomas Hoger / Red Hat Security Response Team
