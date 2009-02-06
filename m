@@ -1,30 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/15/11
-Message-ID: <deb7a2310910150744j36c32728t54e9a649edc8e46e@mail.gmail.com>
-Date: Thu, 15 Oct 2009 16:44:49 +0200
-From: Julien Tinnes <julien.tinnes@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/06/1
+Message-Id: <200902061405.17732.hanno@hboeck.de>
+Date: Fri, 6 Feb 2009 14:05:17 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: oping allows the disclosure of  arbitrary file contents
+Cc: Steven Christey <coley@...us.mitre.org>
+Subject: CVE request: XSS in Phorum < 5.2.10
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Oct 15, 2009 at 4:34 PM, Josh Bressers <bressers@...hat.com> wrote:
-> ----- "Julien Tinnes" <jt@....org> wrote:
->>
->> in case anyone cares, oping also attempts to drop privileges with
->> setuid(getuid()); without checking setuid()'s return value.
->>
->> It's an obvious vulnerability, because a local attacker can make
->> setuid() fail by setting a resource limit of 0 for RLIMIT_NPROC with
->> setrlimit().
->>
->
-> Does that have any security implications though? I've not looked at the app.
-> If it's a security problem, I'll give it a CVE id.
+http://www.phorum.org/phorum5/read.php?64,136129
 
-I didn't really look either. Because of this, everything will run as
-root while it shouldn't, but an attacker might need a second bug to
-elevate privileges.
-I would still consider it a security problem.
+Cite:
+"Mark Gordon reported an XSS vulnerability. This has been fixed in 5.2.10."
 
-Julien
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
