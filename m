@@ -1,24 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/29/2
-Message-ID: <0910290855540.20989@mjc.redhat.com>
-Date: Thu, 29 Oct 2009 08:56:17 +0000 (GMT)
-From: Mark J Cox <mjc@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/06/2
+Message-Id: <200902061409.34043.hanno@hboeck.de>
+Date: Fri, 6 Feb 2009 14:09:33 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kvm: check cpl before emulating debug register access
+Cc: Steven Christey <coley@...us.mitre.org>
+Subject: CVE request: phpbb < 3.0.4
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 29 Oct 2009, Eugene Teo wrote:
-> Quote from the upstream commit:
-> "Debug registers may only be accessed from cpl 0.  Unfortunately, vmx will 
-> code to emulate the instruction even though it was issued from guest 
-> userspace, possibly leading to an unexpected trap later."
->
-> Introduced in v2.6.30-rc1; Fixed in v2.6.32-rc1.
->
-> http://bugzilla.redhat.com/531660
-> http://git.kernel.org/linus/0a79b009525b160081d75cef5dbf45817956acf2
+From release notes:
 
-Please use CVE-2009-3722
+"This release fixes some bugs introduced with the changes in 3.0.3, corrects 
+minor issues, fixes two security bugs and also increases performance 
+significantly."
 
-Mark
+"# [Sec] Fixed an issue where deactivated accounts could be re-activated 
+without the required privileges. (Reported by Jorick)
+# [Sec] Ask for forum password if post within passworded forum quoted in 
+private message. (Reported by nickvergessen)"
+
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
