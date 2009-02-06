@@ -1,22 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/04/6
-Message-ID: <20090204161105.429ba421@redhat.com>
-Date: Wed, 4 Feb 2009 16:11:05 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: ffmpeg <r16846 Type conversion vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/06/4
+Message-ID: <20090206100046.5fab6824@liberty.rlwhome.lan>
+Date: Fri, 6 Feb 2009 10:00:46 -0600
+From: Robby Workman <rw@...orkman.net>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com
+Subject: CVE Request - Wicd <= 1.5.8
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 4 Feb 2009 15:20:53 +0100 Robert Buchholz <rbu@...too.org>
-wrote:
+In Wicd <=1.5.8, the dbus configuration file's default context
+allows any user to own the org.wicd.daemon object, thus potentially
+allowing a user receive messages intended for the wicd daemon.
+These messages could include, among other things, credentials for
+secure networks.
 
-> ffmpeg (as used in mplayer and gst-ffmpeg) before SVN r16846 contains
-> a type conversion vulnerability:
-> 
-> https://bugs.gentoo.org/show_bug.cgi?id=257217
-> http://www.trapkit.de/advisories/TKADV2009-004.txt
+Typically, Wicd is used on single-user systems (such as laptops),
+and is started early in the boot process, so unless the daemon
+crashes or is stopped for some other reason, leveraging this would
+not be trivial for a malicious user, unless I'm missing something.
 
-http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2009-0385
+This is fixed in the Wicd-1.5.9 release, and is not present at all
+in the development branch leading to 1.6.0.
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+The bug was discovered by Tiziano Mueller of the Gentoo team; thanks
+to him for the report, analysis, and follow-up discussion.
+
+Here's the bzr commit with the fix:
+http://bazaar.launchpad.net/~wicd-devel/wicd/trunk/revision/222
+
+About Wicd:
+Wicd <http://wicd.net> is a wired and wireless network manager
+application.
