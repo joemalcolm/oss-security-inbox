@@ -1,32 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/10/2
-Message-ID: <20090610115038.0886f3be@redhat.com>
-Date: Wed, 10 Jun 2009 11:50:38 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: OSS Security <oss-security@...ts.openwall.com>
-Subject: Mutt 1.5.19 SSL chain verification flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/07/2
+Message-ID: <2359eed20902070845u22d09e7dq793ccef181b3b5d3@mail.gmail.com>
+Date: Sat, 7 Feb 2009 10:45:11 -0600
+From: Will Drewry <redpig@...rt.org>
+To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org,  bugtraq@...urityfocus.com
+Subject: [oCERT-2009-002] OpenCORE insufficient bounds checking during MP3  decoding
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+#2009-002 OpenCORE insufficient bounds checking during MP3 decoding
 
-Mutt version 1.5.19 introduced a support for intermediate CA certs,
-available when mutt is linked against both OpenSSL and GnuTLS, added
-via upstream commits:
+Description:
 
-http://dev.mutt.org/trac/changeset/5621:5db868a874b6/mutt_ssl.c
-http://dev.mutt.org/trac/changeset/5623:7d0583e0315d/mutt_ssl_gnutls.c
+OpenCORE, an open source multimedia decoding subsystem, suffers from an
+integer underflow during Huffman decoding resulting in improper bounds
+checking when writing to a heap allocated buffer.  Decoding a specially
+crafted mp3 file will result in unexpected process termination or,
+potentially, arbitrary code execution due to heap corruption.
 
-Miroslav Lichvar noticed that a certificate chain validation was not
-implemented properly.  Individual certificates in the chain where
-checked and accepted, but the chain as a whole as not validated
-properly.
+Patches have been made available by PacketVideo:
 
-Issue was addressed via following upstream patches:
+   http://ocert.org/patches/2009-002/opencore_mp3_dec.patch
+   http://review.source.android.com/Gerrit#change,8815
 
-http://dev.mutt.org/trac/changeset?new=5870:dc9ec900c657@mutt_ssl.c&old=5699:1238dff54a15@mutt_ssl.c
-http://dev.mutt.org/trac/changeset?new=5853:0b13183e40e0@mutt_ssl_gnutls.c&old=5699:1238dff54a15@mutt_ssl_gnutls.c
 
-CVE-2009-1390 was assigned to this issue.
+Affected version:
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+OpenCore <= 2.0
+
+(secondary affected versions)
+
+Android without change 8815
+
+
+Fixed version:
+
+OpenCore >= 2.0 with change 8815
+
+Android with change 8815
+
+
+Credit: Initial vulnerability report and sample crasher provided by
+        Owen Arden <owen@...urityevaluators.com> and
+        Charlie Miller <cmiller@...urityevaluators.com>.
+        Thanks to PacketVideo for the comprehensive analysis and
+        patching.
+
+
+CVE: CVE-2009-0475
+
+
+Timeline:
+2009-01-21: Android Security Team informed of issue
+2009-01-23: Android Security Team requested coordination aid from oCERT
+2009-01-24: oCERT investigated for other potential affected projects
+2009-02-05: vendor supplied patch
+2009-02-05: vendor indicated that no other open source projects affected
+2009-02-05: did not discover other open source projects affected
+2009-02-05: emailed vendor-sec@....de as a cross-check
+2009-02-06: supplied vulnerability analysis to upstream vendor
+2009-02-06: walked through affected code with upstream vendor
+2009-02-06: CVE assignment requested and received
+2009-02-07: advisory published
+
+
+References:
+http://review.source.android.com/Gerrit#change,8815
+http://review.source.android.com/Gerrit#change,8604
+http://android.git.kernel.org/?p=platform/external/opencore.git;a=summary
+http://android.git.kernel.org/?p=platform/external/opencore.git;a=blob;f=codecs_v2/audio/mp3/dec/src/pvmp3_huffman_parsing.cpp;h=491c0cc1b05adecb4ed2d53489c82e7fb4f46108;hb=d8b443ddaa386ed85ba31fbd663c40423a8d4ded
+http://android.git.kernel.org/?p=platform/external/opencore.git;a=blob;f=codecs_v2/audio/mp3/dec/src/pvmp3_mpeg2_stereo_proc.cpp;h=bc4c227fbd60f3f0a90355d7d52c71d46cd4a87c;hb=d8b443ddaa386ed85ba31fbd663c40423a8d4ded
+
+
+Links:
+http://www.packetvideo.com/products/core/index.html
+http://android.git.kernel.org
+http://android.com
+
+
+Permalink:
+http://www.ocert.org/advisories/ocert-2009-002.html
+
+
+--
+Will Drewry <redpig@...rt.org>
+oCERT Team :: http://ocert.org
