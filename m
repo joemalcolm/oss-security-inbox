@@ -1,29 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/17/3
-Message-ID: <Pine.GSO.4.51.0903171247580.11821@faron.mitre.org>
-Date: Tue, 17 Mar 2009 12:48:02 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/07/3
+Message-Id: <200902072121.47117.rbu@gentoo.org>
+Date: Sat, 7 Feb 2009 21:21:44 +0100
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request -- postgresql
+Cc: Josh Bressers <bressers@...hat.com>, coley@...re.org
+Subject: Re: CVE request: Squid <2.7.6, 3.0.13, 3.1.0.5 DoS
 Content-Type: text/plain; charset=utf-8
 
+On Friday 06 February 2009, Josh Bressers wrote:
+> ----- "Robert Buchholz" <rbu@...too.org> wrote:
+> > Squid before 2.7.STABLE6, 3.0.STABLE13, and 3.1.0.5 is vulnerable
+> > to a
+> >
+> > Denial of Service issue:
+> >
+> > https://bugs.gentoo.org/show_bug.cgi?id=257585
+> > http://www.squid-cache.org/Advisories/SQUID-2009_1.txt
+>
+> I don't think Steve Christey reads this list, you need to CC him
+> directly (I just noticed he's not on the CC).
 
-======================================================
-Name: CVE-2009-0922
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0922
-Reference: MLIST:[oss-security] 20090311 CVE request -- postgresql
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/03/11/4
-Reference: MLIST:[pgsql-bugs] 20090227 BUG #4680: Server crashed if using wrong (mismatch) conversion functions
-Reference: URL:http://archives.postgresql.org/pgsql-bugs/2009-02/msg00172.php
-Reference: MLIST:[pgsql-bugs] 20090227 Re: BUG #4680: Server crashed if using wrong (mismatch) conversion functions
-Reference: URL:http://archives.postgresql.org//pgsql-bugs/2009-02/msg00176.php
-Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=517405
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=488156
-
-PostgreSQL 8.3.6 allows remote authenticated users to cause a denial
-of service (stack consumption) via mismatched encoding conversion
-requests.
+He responded to previous requests that were directed to the list only 
+(see "[oss-security] CVE request - ganglia"). I can't speak for him 
+whether direct CCs are handled with higher priority though.
 
 
+
+Robert
+
+Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
