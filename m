@@ -1,22 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/06/2
-Message-Id: <200905062304.37224.steffen.joeris@skolelinux.de>
-Date: Wed, 6 May 2009 23:04:32 +1000
-From: Steffen Joeris <steffen.joeris@...lelinux.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/07/1
+Message-ID: <498D4E36.2070403@pardus.org.tr>
+Date: Sat, 07 Feb 2009 11:02:46 +0200
+From: Pinar Yanardag <pinar@...dus.org.tr>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE id request: coccinelle
+Subject: CVE Request: pycrypto
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Hi,
 
-coccinelle has an unsafe tempfile handling. I guess this changelog entry[0] 
-could be used as a reference for the CVE.
-Could I get one for this?
+There's a buffer overflow in pycrypto ARC2 module. Can you assign a CVE?
 
-Cheers
-Steffen
+Test case: http://gitweb2.dlitz.net/?p=crypto/pycrypto-2.x.git;a=commitdiff;h=fd73731dfad451a81056fbb01e09aa78ab82eb5d
+Patch: http://gitweb2.dlitz.net/?p=crypto/pycrypto-2.x.git;a=commitdiff;h=d1c4875e1f220652fe7ff8358f56dee3b2aba31b
 
-[0]: http://packages.qa.debian.org/c/coccinelle/news/20090502T001704Z.html
+Cheers,
 
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+-- 
+Pinar Yanardag
+http://pinguar.org
+_____________________________
+
+Pardus Security Team
+http://security.pardus.org.tr
+
+
