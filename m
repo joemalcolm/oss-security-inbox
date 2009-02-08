@@ -1,28 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/28/1
-Message-Id: <200910280002.45177.tmb@65535.com>
-Date: Wed, 28 Oct 2009 00:02:40 +0000
-From: Tim Brown <tmb@...35.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/08/1
+Message-ID: <20090208124846.GG4645@ngolde.de>
+Date: Sun, 8 Feb 2009 13:48:46 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Handling cases of CWE-776
+Cc: coley@...re.org
+Subject: CVE-2008-6049 is bogus
 Content-Type: text/plain; charset=utf-8
 
-All,
+Hi,
+"SQL injection vulnerability in index.php in TinyMCE 2.0.1 
+allows remote attackers to execute arbitrary SQL commands 
+via the menuID parameter."
 
-How are problems with XML bombs (the so called "billion laughs" attack) being 
-handled?  Should I be filing such bugs against the applications that exposes 
-the XML parser to user input or is it better to report the issue against the 
-parser themselves.  For example, the test case I've prepared for one affected 
-parser simply causes the CPU to spin but the system appears to stay 
-responsive (so far ;)).  Is it even fair to call such a denial of service? 
-(If the code was executed in a real application, no further processing would 
-happen within the affected process as the parser is tied up in memmove()s).  
-I'm just curious as I don't want to waste peoples time with the disclosure 
-process if others are simply filing "standard" bugs against affected parsers 
-and moving on to more interesting matters.
+I just checked this issue. As far as I can tell tinymce does 
+not ship any php code so something seems fishy with that. 
+2.0.1 did also not ship php code:
+http://prdownloads.sourceforge.net/tinymce/tinymce_2_0_1.zip?download
 
-Cheer,
-Tim
+
+Cheers
+Nico
+
 -- 
-Tim Brown
-<mailto:tmb@...35.com>
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
