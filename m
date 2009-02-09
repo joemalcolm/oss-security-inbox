@@ -1,27 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/23/3
-Message-ID: <20091223131556.439dcc19@redhat.com>
-Date: Wed, 23 Dec 2009 13:15:56 +0100
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/09/7
+Message-ID: <Pine.GSO.4.51.0902091453030.9163@faron.mitre.org>
+Date: Mon, 9 Feb 2009 14:53:07 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: meissner@...e.de
-Subject: Re: libtheora CVE-2009-3389?
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request - Wicd <= 1.5.8
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 22 Dec 2009 18:34:49 +0100 Marcus Meissner <meissner@...e.de>
-wrote:
 
-> Are there any details on CVE-2009-3389 / libtheora?
-> 
-> Redhat claims they are not vulnerable, but none of the public
-> info links to any kind of patch or better description.
-> The 2 mozilla bugs are also still closed.
+======================================================
+Name: CVE-2009-0489
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0489
+Reference: MLIST:[oss-security] 20090206 CVE Request - Wicd <= 1.5.8
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/02/06/4
+Reference: CONFIRM:http://sourceforge.net/project/shownotes.php?group_id=194573&release_id=659059
+Reference: CONFIRM:http://bazaar.launchpad.net/~wicd-devel/wicd/trunk/revision/222
 
-That statement is based on investigation using info / patches /
-reproducers from the mozilla bugs.  I did not do that work, so I can't
-give you any more details and I do not have access to the bugs, but the
-summary was that the flaws did not exist in 1.0alpha versions we ship
-and are already fixed in 1.1.0.
+The DBus configuration file for Wicd before 1.5.9 allows arbitrary
+users to own org.wicd.daemon, which allows local users to receive
+messages that were intended for the Wicd daemon, possibly including
+credentials.
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+
