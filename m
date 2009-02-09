@@ -1,24 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/23/2
-Message-ID: <20090923110517.2d302aed@redhat.com>
-Date: Wed, 23 Sep 2009 11:05:17 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: More CVE-2009-2408 like issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/09/1
+Message-ID: <1202223069.5062081234143596586.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Sun, 8 Feb 2009 20:39:56 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: coley@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: Squid <2.7.6, 3.0.13, 3.1.0.5 DoS
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 3 Sep 2009 16:45:47 +0200 Tomas Hoger <thoger@...hat.com> wrote:
 
-> wget - bunch of relevant links are available in here:
->   https://bugzilla.redhat.com/show_bug.cgi?id=520454
+----- "Steven M. Christey" <coley@...us.mitre.org> wrote:
 
-Fixed now in upstream version 1.12:
-  http://permalink.gmane.org/gmane.comp.web.wget.general/8972
+> I do subscribe to oss-security so see these emails.  Still working on the
+> best process to be able to respond more quickly.
+> 
+> The SQUID advisory doesn't state what kind of DoS it is, and it's not
+> clear from the patches either.  Is it a crash, hang, resource consumption,
+> etc.?  Not essential from a CVE perspective but probanly convenient to
+> Squid users.
 
-This and other mentioned in my previous mail (mutt 1.5.19+, possibly
-pre-1.5.19 too, but many are likely to wontfix that; OpenLDAP with
-openssl) should probably get CVE.
+I have more information in the Red Hat bug:
+https://bugzilla.redhat.com/show_bug.cgi?id=484246
+
+A remote user can trigger an assert() call, so it's a crash basically.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+    JB
