@@ -1,23 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/23/1
-Message-ID: <20091023022950.GR20229@ngolde.de>
-Date: Fri, 23 Oct 2009 04:29:50 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/09/3
+Message-ID: <20090209163051.GA9534@openwall.com>
+Date: Mon, 9 Feb 2009 19:30:51 +0300
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: typo3
+Subject: local list archive
 Content-Type: text/plain; charset=utf-8
 
 Hi,
-As I didn't see a request for this yet:
-https://typo3.org/teams/security/security-bulletins/typo3-sa-2009-016/
 
-Can someone assign CVE ids to these issues?
+I've slightly enhanced the software behind the local archive of
+oss-security at http://www.openwall.com/lists/oss-security/ over the
+weekend - now most URLs in message bodies are turned into hyperlinks
+(with rel="nofollow" to reduce the added incentive for spam), and also
+the CC header is displayed (previously, only Date/From/To/Subject were
+displayed).
 
-Cheers
-Nico
+If anyone is curious, the code may be reviewed at
+http://cvsweb.openwall.com/blists
 
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
+Correctly detected hyperlinks may be seen in my previous posting at
+http://www.openwall.com/lists/oss-security/2009/02/09/2 and in many
+others.
 
-Content of type "application/pgp-signature" skipped
+Indeed, these archives are still lacking several essential features;
+this is to be worked on.
+
+Alexander
