@@ -1,31 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/07/12
-Message-ID: <20090107193313.GC18141@ngolde.de>
-Date: Wed, 7 Jan 2009 20:33:13 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CFPs on this list (was: CFP: COLSEC 2009)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/09/8
+Message-ID: <1870016634.5360261234213755670.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 9 Feb 2009 16:09:15 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: coley <coley@...re.org>
+Cc: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request (mediawiki)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Solar Designer <solar@...nwall.com> [2009-01-07 18:59]:
-> I've just approved this questionable posting primarily to let others in
-> this group see what is coming our way.
-> 
-> Do we want to let this kind of messages through to the list?  Maybe as
-> long as they're not too frequent?  Or when they're not cross-posted as
-> badly as this one was?  Or when they're of specific relevance not only
-> to security, but also to Open Source?  I'm afraid that trying to apply
-> these criteria would make moderation decisions hard.  Thoughts?
+Hi Steve,
 
-Imho they are ok if they are not badly cross-posted as I 
-guess most of us are subscribe on any of the cross-posted 
-lists anyway.
+There is a new mediawiki out:
+http://lists.wikimedia.org/pipermail/mediawiki-announce/2009-February/000083.html
 
-Cheers
-Nico
+I presume you've seen this, but just in case.
+
+Thanks.
+
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+    JB
