@@ -1,34 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/05/8
-Message-ID: <Pine.GSO.4.51.0908051404540.28664@faron.mitre.org>
-Date: Wed, 5 Aug 2009 14:13:04 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/09/5
+Message-ID: <Pine.GSO.4.51.0902091442130.9163@faron.mitre.org>
+Date: Mon, 9 Feb 2009 14:42:19 -0500 (EST)
 From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Matthias Andree <matthias.andree@....de>
-cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: fetchmail <= 6.3.10 SSL certificate NUL prefix verification bypass
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE id request: mahara
 Content-Type: text/plain; charset=utf-8
 
 
-On Wed, 5 Aug 2009, Matthias Andree wrote:
+======================================================
+Name: CVE-2009-0487
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0487
+Reference: CONFIRM:http://mahara.org/interaction/forum/topic.php?id=198
 
-> - for this problem class (NUL in CN/subjectAltName allows impersonation of
-> other sites), add a sort of "umbrella CVE" that will reference the
-> individual application CVEs. Would this work?
+Cross-site scripting (XSS) vulnerability in Mahara before 1.0.9 allows
+remote attackers to inject arbitrary web script or HTML via a crafted
+forum post.
 
-I am generally wary of assigning umbrella CVEs for implementation bugs
-that lots of applications happen to contain at the same time.  That's like
-giving a single CVE for "FTP server buffer overflow via long USER name" -
-which has happened to at least 20 separate implementations in the past.
 
-Generally, the only time that I find umbrella CVEs "tolerable" are during
-disclosures that involve massive sets of test cases and lots of
-implementations; the PROTOS SNMP disclosures from 2002(?) are the
-canonical example.
-
-An umbrella CVE for a fundamental design problem is a different story
-because one "developer" made a mistake - the original designer.
-
-So use CVE-2009-2666 for fetchmail (I'll fill it in later) and Tomas, even
-if it results in dozens of CVEs, I suspect this is how we should go.
-
-- Steve
