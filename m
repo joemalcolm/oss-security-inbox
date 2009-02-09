@@ -1,32 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/17/13
-Message-ID: <20090917082823.GD3463@suse.de>
-Date: Thu, 17 Sep 2009 10:28:23 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/09/2
+Message-ID: <20090209162149.GA9424@openwall.com>
+Date: Mon, 9 Feb 2009 19:21:49 +0300
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: perf_counter: Fix buffer overflow in perf_copy_attr()
+Subject: Debian's list of embedded code copies
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Sep 16, 2009 at 09:32:26PM -0400, Steven M. Christey wrote:
-> 
-> ======================================================
-> Name: CVE-2009-3234
-> Status: Candidate
-> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3234
-> Reference: MLIST:[linux-kernel] 20090916 [patch 15/45] perf_counter: Fix buffer overflow in perf_copy_attr()
-> Reference: URL:http://article.gmane.org/gmane.linux.kernel/890654
-> Reference: MLIST:[oss-security] 20090916 CVE request: kernel: perf_counter: Fix buffer overflow in perf_copy_attr()
-> Reference: URL:http://www.openwall.com/lists/oss-security/2009/09/16/1
-> Reference: BID:36423
-> Reference: URL:http://www.securityfocus.com/bid/36423
-> 
-> Buffer overflow in the perf_copy_attr function in
-> kernel/perf_counter.c in the Linux kernel 2.6.31-rc1 allows local
-> users to cause a denial of service (crash) via a "big size data" to
-> the perf_counter_open system call.
+Guillem Jover posted this to the Distributions list today:
 
-I think Brad Spengler has succeeded in exploiting this for code execution,
-see his twitter timeline from yesterday http://twitter.com/spendergrsec
+On Mon, Feb 09, 2009 at 04:52:34AM +0200, Guillem Jover wrote:
+> The Debian testing security team keeps track of embedded copies of
+> sources (including static linking and forks):
+> 
+>   <http://wiki.debian.org/EmbeddedCodeCopies>.
 
-Ciao, Marcus
+I've just added a direct link to the file in the SVN repository, as well
+as the Debian Wiki link above, to the "patch-finding" section for Debian
+on the oss-security wiki here:
+
+http://oss-security.openwall.org/wiki/distro-patches
+
+This is not exactly "patch-finding", but it is closely related - and it
+may be of help to security teams of other distros as well.
+
+Thanks,
+
+Alexander
