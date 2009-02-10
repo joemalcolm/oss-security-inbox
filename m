@@ -1,36 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/12/4
-Message-ID: <Pine.GSO.4.51.0902121053330.17219@faron.mitre.org>
-Date: Thu, 12 Feb 2009 10:56:42 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/10/4
+Message-ID: <Pine.GSO.4.51.0902092011530.15993@faron.mitre.org>
+Date: Mon, 9 Feb 2009 20:12:09 -0500 (EST)
 From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security <oss-security@...ts.openwall.com>, oss-security <oss-security@...ts.openwall.com>
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- net-snmp (sensitive host information disclosure)
+To: Dan Poltawski <talktodan@...il.com>
+cc: oss-security@...ts.openwall.com
+Subject: Re: CVS request - Moodle
 Content-Type: text/plain; charset=utf-8
 
 
-I'm confused by the upstream diff being referenced by the Red Hat bug ID.
-Specifically, it looks like some sprintf's got changed, and the result is
-used for logging.  Is it certain that the attacker can bypass
-authorization, or is net-snmp just mis-reporting it?
+======================================================
+Name: CVE-2009-0499
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0499
+Reference: MLIST:[oss-security] 20090204 CVS request - Moodle
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/02/04/1
+Reference: CONFIRM:http://cvs.moodle.org/moodle/mod/forum/post.php?r1=1.154.2.14&r2=1.154.2.15
+Reference: CONFIRM:http://moodle.org/security/
 
-I'm going with authorization bypass at the moment.
+Cross-site request forgery (CSRF) vulnerability in the forum code in
+Moodle 1.7 before 1.7.7, 1.8 before 1.8.8, and 1.9 before 1.9.4 allows
+remote attackers to delete unauthorized forum posts via a link or IMG
+tag to post.php.
+
 
 ======================================================
-Name: CVE-2008-6123
+Name: CVE-2009-0500
 Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-6123
-Reference: MLIST:[oss-security] 20090212 CVE Request -- net-snmp (sensitive host information disclosure)
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/02/12/2
-Reference: CNFIRM:http://bugs.gentoo.org/show_bug.cgi?id=250429
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=485211
-Reference: CONFIRM:http://net-snmp.svn.sourceforge.net/viewvc/net-snmp?view=rev&revision=17367
-Reference: MISC:http://net-snmp.svn.sourceforge.net/viewvc/net-snmp/trunk/net-snmp/snmplib/snmpUDPDomain.c?r1=17325&r2=17367&pathrev=17367
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0500
+Reference: MLIST:[oss-security] 20090204 CVS request - Moodle
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/02/04/1
+Reference: CONFIRM:http://moodle.org/security/
 
-The netsnmp_udp_fmtaddr function (snmplib/snmpUDPDomain.c) in net-snmp
-5.0.9 through 5.4.2, when using TCP wrappers for client authorization,
-does not properly parse hosts.allow rules, which allows remote
-attackers to bypass intended access restrictions and execute SNMP
-queries, related to "source/destination IP address confusion."
+Cross-site scripting (XSS) vulnerability in course/lib.php in Moodle
+1.6 before 1.6.9, 1.7 before 1.7.7, 1.8 before 1.8.8, and 1.9 before
+1.9.4 allows remote attackers to inject arbitrary web script or HTML
+via crafted log table information that is not properly handled when it
+is displayed in a log report.
+
+
+======================================================
+Name: CVE-2009-0501
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0501
+Reference: MLIST:[oss-security] 20090204 CVS request - Moodle
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/02/04/1
+Reference: CONFIRM:http://moodle.org/security/
+
+Unspecified vulnerability in the Calendar export feature in Moodle 1.8
+before 1.8.8 and 1.9 before 1.9.4 allows attackers to obtain sensitive
+information and conduct "brute force attacks on user accounts" via
+unknown vectors.
+
+
+======================================================
+Name: CVE-2009-0502
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0502
+Reference: MLIST:[oss-security] 20090204 CVS request - Moodle
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/02/04/1
+Reference: CONFIRM:http://moodle.org/security/
+
+Cross-site scripting (XSS) vulnerability in blocks/html/block_html.php
+in Snoopy 1.2.3, as used in Moodle 1.6 before 1.6.9, 1.7 before 1.7.7,
+1.8 before 1.8.8, and 1.9 before 1.9.4, allows remote attackers to
+inject arbitrary web script or HTML via an HTML block, which is not
+properly handled when the "Login as" feature is used to visit a
+MyMoodle or Blog page.
 
 
