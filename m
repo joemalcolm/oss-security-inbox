@@ -1,38 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/25/3
-Message-ID: <20090725133124.GB15900@ngolde.de>
-Date: Sat, 25 Jul 2009 15:31:24 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- HTMLDOC
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/10/8
+Message-ID: <351576230.5682531234298710180.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 10 Feb 2009 15:45:10 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: libvirt_proxy heads up
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Jan Lieskovsky <jlieskov@...hat.com> [2009-07-18 13:27]:
-> Hello Steve, vendors,
-> 
->   a stack-based buffer overflow by processing user-supplied
-> input was found (by ANTHRAX666) in HTMLDOC's routine, used
-> to set the result page output size for custom page sizes.
-> 
-> References:
-> -----------
-> http://secunia.com/advisories/35780/2/ (Secunia advisory)
-> http://packetstormsecurity.org/0907-exploits/htmldoc-overflow.txt 
-> (original proof of concept)
-> http://bugs.gentoo.org/show_bug.cgi?id=278186 (Gentoo's BTS entry)
+We had this flaw reported to us.  I'm not sure if anyone else is using libvirt_proxy.
 
-Did you check:
-htmllib.cxx:          if (sscanf(line, "%*s%*s%*s%*s%f%*s%*s%s", &width, glyph) != 2)
-ps-pdf.cxx:   if (sscanf(line, "%*s%*s%*s%*s%d%*s%*s%s", &width, glyph) != 2)
-as well?
-Looks like a similar issue to me.
+So just in case:
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-0036
 
-Cheers
-Nico
+Thanks.
 
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+    JB
