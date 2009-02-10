@@ -1,27 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/20/2
-Message-ID: <20090720112909.GA18723@openwall.com>
-Date: Mon, 20 Jul 2009 15:29:09 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/10/3
+Message-ID: <Pine.GSO.4.51.0902091953320.15993@faron.mitre.org>
+Date: Mon, 9 Feb 2009 19:53:39 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux 2.6.30+/SELinux/RHEL5 test kernel 0day, exploiting the unexploitable
+Subject: Re: CVE request: ffmpeg <r16846 Type conversion vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Marcus,
 
-On Mon, Jul 20, 2009 at 12:01:47PM +0200, Marcus Meissner wrote:
-> - fixed the personality - PER_CLEAR_ON_SETTID inheritance issue (CVE-2009-1895)
->   to work around mmap_min_addr protection.
->   Affects 2.6.23-2.6.30.1
+======================================================
+Name: CVE-2009-0385
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0385
+Reference: BUGTRAQ:20090128 [TKADV2009-004] FFmpeg Type Conversion Vulnerability
+Reference: URL:http://www.securityfocus.com/archive/1/archive/1/500514/100/0/threaded
+Reference: MISC:http://www.trapkit.de/advisories/TKADV2009-004.txt
+Reference: CONFIRM:http://git.ffmpeg.org/?p=ffmpeg;a=commitdiff;h=72e715fb798f2cb79fd24a6d2eaeafb7c6eeda17
+Reference: CONFIRM:http://svn.mplayerhq.hu/ffmpeg/trunk/libavformat/4xm.c?r1=16838&r2=16846&pathrev=16846
+Reference: CONFIRM:http://svn.mplayerhq.hu/ffmpeg?view=rev&revision=16846
+Reference: BID:33502
+Reference: URL:http://www.securityfocus.com/bid/33502
+Reference: FRSIRT:ADV-2009-0277
+Reference: URL:http://www.frsirt.com/english/advisories/2009/0277
+Reference: OSVDB:51643
+Reference: URL:http://osvdb.org/51643
+Reference: SECUNIA:33711
+Reference: URL:http://secunia.com/advisories/33711
+Reference: XF:ffmpeg-fourxmreadheader-code-execution(48330)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/48330
 
-What makes you think this does not affect earlier kernels?  This does
-not match my analysis, but maybe I am missing something, hence I ask.
+Integer signedness error in the fourxm_read_header function in
+libavformat/4xm.c in FFmpeg before revision 16846 allows remote
+attackers to execute arbitrary code via a malformed 4X movie file with
+a large current_track value, which triggers a NULL pointer
+dereference.
 
-BTW, as you're aware, this fix is a hardening measure for/against
-SUID-root programs with a certain class of design errors in them; it is
-not exactly a fix for the kernel itself, although it should be in the
-kernel.  I do not mean to downplay the issue, but I think it is
-important that we distinguish the different types of changes that we are
-making in response to Brad's exploit.
 
-Alexander
