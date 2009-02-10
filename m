@@ -1,46 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/23/17
-Message-ID: <1728815975.612571259011593868.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 23 Nov 2009 16:26:33 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/10/6
+Message-Id: <200902101325.39489.hanno@hboeck.de>
+Date: Tue, 10 Feb 2009 13:25:39 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: Sergei Golubchik <serg@...ql.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request - MySQL - 5.0.88
+Cc: Steven Christey <coley@...us.mitre.org>
+Subject: CVE request: typo3 xss (typo3-sa-2009-002)
 Content-Type: text/plain; charset=utf-8
 
------ "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
-> 
->    MySQL upstream has released latest 5.0.88 version of their Community
->    Server, fixing one security issue:
-> 
-> * Error handling was missing for SELECT statements containing
->    subqueries in the WHERE clause and that assigned a SELECT
->    result to a user variable. The server could crash as a result.
->    (Bug#48291: http://bugs.mysql.com/48291)
-> 
-> This looks to be from adjacent network exploitable mysqld DoS.
-> 
-> * If the first argument to GeomFromWKB() function was a geometry
->    value, the function just returned its value. However, it
->    failed to preserve the argument's null_value flag, which
->    caused an unexpected NULL value to be returned to the caller,
->    resulting in a server crash.
->    (Bug#47780: http://bugs.mysql.com/47780)
-> 
-> Same case as the above, though I can't look into upstream MySQL bugs
-> to confirm or disprove it. Thus Cc-ed Sergei Golubchik on this mail.
-> 
+TYPO3 Security Bulletin TYPO3-SA-2009-002: Information Disclosure & XSS in 
+TYPO3 Core
 
-
-Let's group these two together. This also appears to affect MySQL versions
-before 5.1.41 5.0.88.
-
-CVE-2009-4019
-
-http://dev.mysql.com/doc/refman/5.1/en/news-5-1-41.html
-http://dev.mysql.com/doc/refman/5.0/en/news-5-0-88.html
-http://bugs.mysql.com/47780
-http://bugs.mysql.com/48291
+http://typo3.org/teams/security/security-bulletins/typo3-sa-2009-002
 
 -- 
-    JB
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
