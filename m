@@ -1,23 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/06/6
-Message-ID: <20090206182609.17112795@redhat.com>
-Date: Fri, 6 Feb 2009 18:26:09 +0100
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/10/1
+Message-ID: <Pine.GSO.4.51.0902091925210.15993@faron.mitre.org>
+Date: Mon, 9 Feb 2009 19:25:33 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE requests: Bugzilla
+Subject: Re: CVE request: Audacity <1.3.6 Buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 4 Feb 2009 19:13:16 +0100 Moritz Muehlenhoff <jmm@...ian.org>
-wrote:
 
-> Please assign CVE IDs for
-> 
-> http://www.bugzilla.org/security/2.22.6/ and
-> http://www.bugzilla.org/security/3.0.7/
+======================================================
+Name: CVE-2009-0490
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0490
+Reference: MILW0RM:7634
+Reference: URL:http://www.milw0rm.com/exploits/7634
+Reference: MLIST:[audacity-devel] 20090110 Audacity "String_parse::get_nonspace_quoted()" Buffer Overflow
+Reference: URL:http://n2.nabble.com/Audacity-%22String_parse::get_nonspace_quoted()%22-Buffer-Overflow-td2139537.html
+Reference: CONFIRM:http://bugs.gentoo.org/show_bug.cgi?id=253493
+Reference: BID:33090
+Reference: URL:http://www.securityfocus.com/bid/33090
+Reference: FRSIRT:ADV-2009-0008
+Reference: URL:http://www.frsirt.com/english/advisories/2009/0008
+Reference: OSVDB:51070
+Reference: URL:http://osvdb.org/51070
+Reference: SECUNIA:33356
+Reference: URL:http://secunia.com/advisories/33356
 
-Does this have any id assigned?
+Stack-based buffer overflow in the String_parse::get_nonspace_quoted
+function in lib-src/allegro/strparse.cpp in Audacity 1.2.6 and other
+versions before 1.3.6 allows remote attackers to cause a denial of
+service (crash) and possibly execute arbitrary code via a .gro file
+containing a long string.
 
-http://www.bugzilla.org/security/2.20.6/
 
--- 
-Tomas Hoger / Red Hat Security Response Team
