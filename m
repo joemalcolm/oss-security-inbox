@@ -1,22 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/31/1
-Message-ID: <Pine.GSO.4.51.0903302123090.9303@faron.mitre.org>
-Date: Mon, 30 Mar 2009 21:23:22 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com, tony@...post24.com
-Subject: Re: [Fwd: Cross-Site Scripting in Banshee DAAP Extension]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/10/7
+Message-Id: <1234291732.5831.8.camel@dhcp-lab-164.englab.brq.redhat.com>
+Date: Tue, 10 Feb 2009 19:48:52 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com
+Subject: CVE Request -- evolution
 Content-Type: text/plain; charset=utf-8
 
+Hello Steve,
 
-======================================================
-Name: CVE-2009-1175
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1175
-Reference: CONFIRM:http://bugzilla.gnome.org/show_bug.cgi?id=577270
+  the following evolution S/MIME signatures validation
+flaw (MITM) looks to desire a new CVE 2008 identifier:
 
-Cross-site scripting (XSS) vulnerability in apps/web/vs_diag.cgi in
-the DAAP extension in Banshee 1.4.2 allows remote attackers to inject
-arbitrary web script or HTML via the server parameter, which is not
-properly handled in an error message.
+References:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=508479
+https://bugzilla.redhat.com/show_bug.cgi?id=484925
+http://bugzilla.gnome.org/show_bug.cgi?id=564465
 
+Thanks, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
