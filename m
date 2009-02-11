@@ -1,56 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/28/6
-Message-ID: <20090128135433.GR22970@suse.de>
-Date: Wed, 28 Jan 2009 14:54:33 +0100
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/11/1
+Message-ID: <20090211183526.GB10133@redhat.com>
+Date: Wed, 11 Feb 2009 11:35:26 -0700
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: update on CVE-2008-5718
+Cc: coley@...us.mitre.org
+Subject: CVE request for proftpd
 Content-Type: text/plain; charset=utf-8
 
+An SQL injection vulnerability in proftpd was reported on bugtraq
+yesterday that could allow a user to login to proftpd with any password
+if they use mysql for authentication (and, presumably, postgresql).
 
-New patch attached, the old one was missing spaces.
-Hope the blacklist is complete now...
+References:
 
-On Wed, Jan 14, 2009 at 09:21:57AM +0100, Thomas Biege wrote:
-> Hello Nico,
-> 
-> On Wed, Jan 14, 2009 at 12:32:07AM +0100, Nico Golde wrote:
-> > Hi,
-> > I just did a security update for CVE-2008-5718 and since the 
-> > description is not really verbose I thought I'd share what I 
-> > found in case anyone else is working on that.
-> ...
-> > Cheers
-> > Nico
-> > P.S. The patch I used can be found on:
-> > http://people.debian.org/~nion/nmu-diff/netatalk-2.0.3-11_2.0.3-11+lenny1.patch
-> 
-> I am not very happy with the patch because it just filters a handful of
-> characters, a better solution would be to replace popen().
-> (I mentioned this on the netatalk-devel ML but got no answer so far.)
-> 
-> 
-> 
-> -- 
-> Bye,
->      Thomas
-> -- 
->  Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
->  SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
-> -- 
->            Hamming's Motto:
->            The purpose of computing is insight, not numbers.
->                                 -- Richard W. Hamming
+http://www.securityfocus.com/archive/1/500823/30/0/threaded
+http://bugs.gentoo.org/show_bug.cgi?id=258450
+http://bugs.proftpd.org/show_bug.cgi?id=3180
+https://bugzilla.redhat.com/show_bug.cgi?id=485125
+
+Could we get a CVE name assigned please?
+
+Thanks.
 
 -- 
-Bye,
-     Thomas
--- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
--- 
-           Hamming's Motto:
-           The purpose of computing is insight, not numbers.
-                                -- Richard W. Hamming
-
-View attachment "netatalk-2.0.3-CVE-2008-5718.patch" of type "text/x-patch" (2293 bytes)
+Vincent Danen / Red Hat Security Response Team 
