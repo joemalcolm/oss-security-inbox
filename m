@@ -1,63 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/26/2
-Message-ID: <Pine.GSO.4.51.0905261415100.2902@faron.mitre.org>
-Date: Tue, 26 May 2009 14:16:02 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: coley@...us.mitre.org
-Subject: Re: CVE Request for libsndfile
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/11/2
+Message-ID: <Pine.LNX.4.33.0902111057210.22221-100000@golem.castaglia.org>
+Date: Wed, 11 Feb 2009 10:58:05 -0800 (PST)
+From: TJ Saunders <tj@...taglia.org>
+To: <oss-security@...ts.openwall.com>
+cc: <coley@...us.mitre.org>
+Subject: Re: CVE request for proftpd
 Content-Type: text/plain; charset=utf-8
 
 
-Two CVEs, one for the original disclosure and one for a later disclosure,
-i.e. the extra issue that was found and fixed by the developer.
+> An SQL injection vulnerability in proftpd was reported on bugtraq
+> yesterday that could allow a user to login to proftpd with any password
+> if they use mysql for authentication (and, presumably, postgresql).
+> 
+> References:
+> 
+> http://www.securityfocus.com/archive/1/500823/30/0/threaded
+> http://bugs.gentoo.org/show_bug.cgi?id=258450
+> http://bugs.proftpd.org/show_bug.cgi?id=3180
+> https://bugzilla.redhat.com/show_bug.cgi?id=485125
 
-- Steve
+This has been reported on the ProFTPD Bugzilla:
 
-======================================================
-Name: CVE-2009-1788
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1788
-Reference: MISC:http://trapkit.de/advisories/TKADV2009-006.txt
-Reference: CONFIRM:http://www.mega-nerd.com/erikd/Blog/CodeHacking/libsndfile/
-Reference: CONFIRM:http://www.mega-nerd.com/libsndfile/
-Reference: BID:34978
-Reference: URL:http://www.securityfocus.com/bid/34978
-Reference: SECUNIA:35076
-Reference: URL:http://secunia.com/advisories/35076
-Reference: VUPEN:ADV-2009-1324
-Reference: URL:http://www.vupen.com/english/advisories/2009/1324
-Reference: VUPEN:ADV-2009-1348
-Reference: URL:http://www.vupen.com/english/advisories/2009/1348
-Reference: XF:libsndfile-aiff-voc-bo(50541)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/50541
+  http://bugs.proftpd.org/show_bug.cgi?id=3180
 
-Heap-based buffer overflow in voc_read_header in libsndfile 1.0.15
-through 1.0.19, as used in Winamp 5.552 and possibly other media
-programs, allows remote attackers to cause a denial of service
-(application crash) and possibly execute arbitrary code via a VOC file
-with an invalid header value.
+As discussed there, this is a duplicate of an earlier bug:
 
+  http://bugs.proftpd.org/show_bug.cgi?id=3124
 
-======================================================
-Name: CVE-2009-1791
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1791
-Reference: CONFIRM:http://www.mega-nerd.com/erikd/Blog/CodeHacking/libsndfile/
-Reference: CONFIRM:http://www.mega-nerd.com/libsndfile/
-Reference: BID:34978
-Reference: URL:http://www.securityfocus.com/bid/34978
-Reference: SECUNIA:35076
-Reference: URL:http://secunia.com/advisories/35076
-Reference: VUPEN:ADV-2009-1324
-Reference: URL:http://www.vupen.com/english/advisories/2009/1324
-Reference: XF:libsndfile-aiff-voc-bo(50541)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/50541
+and has been fixed in ProFTPD 1.3.2rc3 and later.
 
-Heap-based buffer overflow in aiff_read_header in libsndfile 1.0.15
-through 1.0.19, as used in Winamp 5.552 and possibly other media
-programs, allows remote attackers to cause a denial of service
-(application crash) and possibly execute arbitrary code via an AIFF
-file with an invalid header value.
+Cheers,
+TJ
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   There is a pleasure in the pathless woods,
+   There is a rapture on the lonely shore,
+   There is society, where none intrudes,
+   By the deep sea and music in its roar:
+   I love not man the less, but Nature more,
+   From these our interviews, in which I steal
+   From all I may be, or have been before,
+   To mingle with the Universe, and feel
+   What I can ne'er express, yet cannot all conceal.
+   
+   	-Lord Byron
+   
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
