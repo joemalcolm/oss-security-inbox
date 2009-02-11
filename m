@@ -1,35 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/06/1
-Message-ID: <Pine.GSO.4.51.0911060841300.15251@faron.mitre.org>
-Date: Fri, 6 Nov 2009 08:43:44 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: mjc@...hat.com
-cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request for oCERT advisory 2009-013 (yTNEF/Evolution TNEF)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/11/4
+Message-ID: <20090211191602.GD10133@redhat.com>
+Date: Wed, 11 Feb 2009 12:16:02 -0700
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request for proftpd
 Content-Type: text/plain; charset=utf-8
 
+* [2009-02-11 10:58:05 -0800] TJ Saunders wrote:
 
-On Wed, 28 Oct 2009, Mark J Cox wrote:
-
-> > I'm not sure if a CVE name has been requested for this issue; I can't
-> > see one anywhere.
-> >
-> > http://www.ocert.org/advisories/ocert-2009-013.html
-> >
-> > It's for the Evolution TNEF/yTNEF issues disclosed early last month.
-> > Could we have a CVE name assigned for this?
+>> An SQL injection vulnerability in proftpd was reported on bugtraq
+>> yesterday that could allow a user to login to proftpd with any password
+>> if they use mysql for authentication (and, presumably, postgresql).
+>> 
+>> References:
+>> 
+>> http://www.securityfocus.com/archive/1/500823/30/0/threaded
+>> http://bugs.gentoo.org/show_bug.cgi?id=258450
+>> http://bugs.proftpd.org/show_bug.cgi?id=3180
+>> https://bugzilla.redhat.com/show_bug.cgi?id=485125
 >
-> I checked and oCERT don't have a name, so use CVE-2009-3721 for this.
+>This has been reported on the ProFTPD Bugzilla:
+>
+>  http://bugs.proftpd.org/show_bug.cgi?id=3180
+>
+>As discussed there, this is a duplicate of an earlier bug:
+>
+>  http://bugs.proftpd.org/show_bug.cgi?id=3124
+>
+>and has been fixed in ProFTPD 1.3.2rc3 and later.
 
-This advisory covers both buffer overflows and path traversal in the same
-data field.  While these may stem from "input validation" (as many issues
-do), we would typically assign two separate CVE names, since the fix for a
-buffer overflow would not necessarily fix the path traversal (or vice
-versa).
+Oh, forgot to ask.  It looks like this would have been introduced in
+1.3.1.  Is that correct?  So the affected versions would be
+1.3.1 to 1.3.2rc2.
 
-Unless there's some deeper reason for using a single CVE, I think we
-should assign separate CVEs here.  If you agree Mark, we can use
-CVE-2009-3721 for the overflow, and you could assign a new CVE for the
-traversal.
+Also, as I was looking at the Gentoo report, I noticed bug #3173 which
+likely also needs a CVE name (for the "encoding-dependent SQL injection
+vulnerability").
 
-- Steve
+Thanks.
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
