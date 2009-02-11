@@ -1,26 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/08/3
-Message-ID: <4AA64ED1.8090700@redhat.com>
-Date: Tue, 08 Sep 2009 14:32:17 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request - Pidgin 2.6.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/11/5
+Message-ID: <Pine.LNX.4.33.0902111114370.22221-100000@golem.castaglia.org>
+Date: Wed, 11 Feb 2009 11:16:14 -0800 (PST)
+From: TJ Saunders <tj@...taglia.org>
+To: <oss-security@...ts.openwall.com>
+Subject: Re: CVE request for proftpd
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve, vendors,
 
-   there are three security issues [1] fixed in Pidgin 2.6.2,
-which lack a CVE identifier:
+> >As discussed there, this is a duplicate of an earlier bug:
+> >
+> >  http://bugs.proftpd.org/show_bug.cgi?id=3124
+> >
+> >and has been fixed in ProFTPD 1.3.2rc3 and later.
+> 
+> Oh, forgot to ask.  It looks like this would have been introduced in
+> 1.3.1.  Is that correct?  So the affected versions would be
+> 1.3.1 to 1.3.2rc2.
 
-* MSN partial SLP invite crash
-* MSN handwritten message crash
-* XMPP custom smiley parsing bug
+That's correct.
 
-Could you please allocate them?
+> Also, as I was looking at the Gentoo report, I noticed bug #3173 which
+> likely also needs a CVE name (for the "encoding-dependent SQL injection
+> vulnerability").
 
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Yes; I was just about to note the same thing. =)
 
-[1] http://pidgin.im/news/security/
+Cheers,
+TJ
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   The split in you is clear.  There is a part of you that knows what it
+   should do, and a part that does what it feels like doing.
+   
+   	-John Cantwell Kiley
+   
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
