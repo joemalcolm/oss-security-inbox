@@ -1,24 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/03/3
-Message-ID: <Pine.GSO.4.51.0902031612000.3146@faron.mitre.org>
-Date: Tue, 3 Feb 2009 16:13:44 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security <oss-security@...ts.openwall.com>, oss-security <oss-security@...ts.openwall.com>
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request - php (PHP BZ#27421)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/11/3
+Message-ID: <20090211191342.GC10133@redhat.com>
+Date: Wed, 11 Feb 2009 12:13:42 -0700
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request for proftpd
 Content-Type: text/plain; charset=utf-8
 
+* [2009-02-11 10:58:05 -0800] TJ Saunders wrote:
 
-On Fri, 30 Jan 2009, Jan Lieskovsky wrote:
-
->   this PHP issue looks to desire a new CVE id.
+>> An SQL injection vulnerability in proftpd was reported on bugtraq
+>> yesterday that could allow a user to login to proftpd with any password
+>> if they use mysql for authentication (and, presumably, postgresql).
+>> 
+>> References:
+>> 
+>> http://www.securityfocus.com/archive/1/500823/30/0/threaded
+>> http://bugs.gentoo.org/show_bug.cgi?id=258450
+>> http://bugs.proftpd.org/show_bug.cgi?id=3180
+>> https://bugzilla.redhat.com/show_bug.cgi?id=485125
 >
-> References:
-> http://bugs.php.net/bug.php?id=27421
-> https://bugzilla.redhat.com/show_bug.cgi?id=479272
+>This has been reported on the ProFTPD Bugzilla:
 >
+>  http://bugs.proftpd.org/show_bug.cgi?id=3180
 
-What attack scenario exists for this issue?  One virtual-host user can
-effectively DoS other virtual hosts running on the same Apache instance?
+Yeah, I noted that above.  =)
 
-- Steve
+>As discussed there, this is a duplicate of an earlier bug:
+>
+>  http://bugs.proftpd.org/show_bug.cgi?id=3124
+>
+>and has been fixed in ProFTPD 1.3.2rc3 and later.
+
+Thanks, TJ.  I just read the comments and the duplicate note a few
+minutes ago and was going to reply to it.
+
+We still need a CVE name, however.  Bug #3124 does not note any kind of
+security impact, which there clearly is, so I don't believe a CVE name
+had been assigned to this previously (at least not that I could find).
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
