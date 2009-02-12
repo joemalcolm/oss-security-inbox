@@ -1,41 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/03/2
-Message-ID: <Pine.GSO.4.51.0908031358200.1470@faron.mitre.org>
-Date: Mon, 3 Aug 2009 14:05:19 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Jan Lieskovsky <jlieskov@...hat.com>
-cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: Wireshark <1.2.1 Multiple DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/12/8
+Message-ID: <1723747197.6194581234463551282.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 12 Feb 2009 13:32:31 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: coley@...re.org
+Subject: CVE Request (ruby)
 Content-Type: text/plain; charset=utf-8
 
+Hello Steve,
 
-On Mon, 27 Jul 2009, Jan Lieskovsky wrote:
+I ran across this Debian bug:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=513528
 
->    any progress while splitting this CVE id into two different ones?
-> (or will we need to address the problem of different vulnerable
-> Wireshark versions in relevant dissectors in some other way?)
+I did some investigating in this.  It seems almost nothing uses Ruby's OpenSSL:OCSP
+library, but given this could be a problem, I'd like to fix it.
 
-Since the CVE is already out, splitting it might not be appropriate.
-I've modified the description to say that RADIUS is also affected in
-1.0.8.
+Thanks.
 
-- Steve
-
-======================================================
-Name: CVE-2009-2560
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2560
-Reference: CONFIRM:http://www.wireshark.org/security/wnpa-sec-2009-04.html
-Reference: BID:35748
-Reference: URL:http://www.securityfocus.com/bid/35748
-Reference: SECUNIA:35884
-Reference: URL:http://secunia.com/advisories/35884
-Reference: VUPEN:ADV-2009-1970
-Reference: URL:http://www.vupen.com/english/advisories/2009/1970
-
-Multiple unspecified vulnerabilities in Wireshark 1.2.0 allow remote
-attackers to cause a denial of service (crash) via unspecified vectors
-in the (1) Bluetooth L2CAP, (2) RADIUS, or (3) MIOP dissectors.  NOTE:
-the RADIUS dissector vulnerability also affects 1.0.8.
-
-
+-- 
+    JB
