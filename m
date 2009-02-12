@@ -1,71 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/29/6
-Message-ID: <20090429165658.4b14d2c0@redhat.com>
-Date: Wed, 29 Apr 2009 16:56:58 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: OSS Security <oss-security@...ts.openwall.com>
-Subject: ipsec-tools 0.7.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/12/10
+Message-ID: <0902122002230.3137@mjc.redhat.com>
+Date: Thu, 12 Feb 2009 20:05:27 +0000 (GMT)
+From: Mark J Cox <mjc@...hat.com>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: Re: http://www.securityfocus.com/bid/33672/info kernel issue
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+> http://www.securityfocus.com/bid/33672/ seems to be this commit:
+> http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.28.y.git;a=commit;h=8255fc826e58c0a59711029e01db9fcdc06ba211
+> Not sure if its exploitable though.
 
-I was wondering if anyone has been having a closer look at the new
-ipsec-tools:
+BTW that BID list of affected kernels isn't correct; the multibyte stuff 
+wasn't in <=2.6.18 at least.
 
-http://sourceforge.net/project/shownotes.php?group_id=74601&release_id=677611
-http://sourceforge.net/mailarchive/forum.php?thread_name=20090422151825.GB46988%40zeninc.net&forum_name=ipsec-tools-announce
+I didn't check exactly where since it doesn't affect RHEL and didn't look 
+into the issue any further -- but on first glance it seemed like you'd 
+have to be a console user and display/select some carefully chosen 
+characters in order to do the overflow; so it's probably a 'local attacker 
+at keyboard' flaw?
 
-Upstream announcement mentions one security fix (DoS / NULL deref
-reported by Neil Kettle), fixed in:
+Cheers, Mark
 
-http://cvsweb.netbsd.org/bsdweb.cgi/src/crypto/dist/ipsec-tools/src/racoon/isakmp_frag.c?f=h#rev1.4.6.1
-
-But the "A bunch of memory leak and possible memory corruptions" part
-of announcement made me bit curious too, so I did have a look at the
-changelog.
-
-* src/racoon/crypto_openssl.c: From Stephen Bevan: Fix a x509
-  signature verification memory leak.
-
-https://trac.ipsec-tools.net/ticket/303
-http://cvsweb.netbsd.org/bsdweb.cgi/src/crypto/dist/ipsec-tools/src/racoon/crypto_openssl.c.diff?r1=1.11.6.4&r2=1.11.6.5&f=h
-
-This leak occurs during user authentication using certificates.  It's
-possible to reach it for unauthenticated users, though certificate
-itself is validated first, which mitigates this slightly.
-
-* src/racoon/nattraversal.c: Fix a memory leak in nat-t keepalive
-  code.
-
-http://cvsweb.netbsd.org/bsdweb.cgi/src/crypto/dist/ipsec-tools/src/racoon/nattraversal.c.diff?r1=1.6&r2=1.6.6.1&f=h
-
-This can occur during phase1 too, before authentication.  Requires
-nat-t to be enabled / allowed, leaks two struct sockaddr.
-
-* src/racoon/: admin.c, racoonctl.c: Originally from Bin Li: Fix a
-  crash with racoonctl logout user.
-
-This only affects recent version (e.g. on in 0.6.5 or older), should
-be under admins control only.
-
-* src/libipsec/policy_parse.y: From Paul Moore: Fix a heap
-  corruption bug (yacc return non-null terminated buffer and sprintf
-  writes over bounds).
-
-Config file parser, not security.
-
-* src/racoon/: isakmp_inf.c, isakmp_xauth.c, plog.c: Orignally from
-  Bin Li: Fix possible memory corruption in binsanitize().
-
-I have not investigated this one too closely, as it does not affect
-versions we need to do backports for.  According to the related mailing
-list post, it can at least cause local racoon crash, when connecting to
-remote ipsec server with xauth authentication.
-
-http://sourceforge.net/mailarchive/forum.php?thread_name=4e2d6e000904020348i11843512l2f9e27badd0712d0%40mail.gmail.com&forum_name=ipsec-tools-devel
-
-Has anyone else looked into this new ipsec-tools more closely and has
-some other findings to share?
-
--- 
-Tomas Hoger / Red Hat Security Response Team
