@@ -1,48 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/08/2
-Message-ID: <Pine.GSO.4.64.0912072114420.12609@faron.mitre.org>
-Date: Mon, 7 Dec 2009 21:16:11 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/12/5
+Message-ID: <Pine.GSO.4.51.0902121106320.17219@faron.mitre.org>
+Date: Thu, 12 Feb 2009 11:07:29 -0500 (EST)
 From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: ruby on rails XSS Weakness in strip_tags
+Subject: Re: CVE Request: pycrypto
 Content-Type: text/plain; charset=utf-8
 
 
-On Mon, 7 Dec 2009, Josh Bressers wrote:
+A specific version wasn't listed and the new maintainer hasn't released
+any new versions, so I'm assuming the last version under the previous
+maintainer, which seems to be 2.0.1.
 
-> I'm sorry for the delay on this.
->
-> Please use CVE-2009-4132
-
-Josh, MITRE assigned CVE-2009-4214 earlier today.  Please verify these are 
-duplicates, and if so, we will stick with CVE-2009-4214.
+Pinguar, sorry for the delay.
 
 - Steve
 
-
 ======================================================
-Name: CVE-2009-4214
+Name: CVE-2009-0544
 Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-4214
-Reference: MLIST:[oss-security] 20091127 CVE request: ruby on rails XSS Weakness in strip_tags
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/11/27/2
-Reference: MLIST:[rubyonrails-security] 20091127 XSS Weakness in strip_tags
-Reference: URL:http://groups.google.com/group/rubyonrails-security/browse_thread/thread/4d4f71f2aef4c0ab?pli=1
-Reference: CONFIRM:http://github.com/rails/rails/commit/bfe032858077bb2946abe25e95e485ba6da86bd5
-Reference: CONFIRM:http://weblog.rubyonrails.org/2009/11/30/ruby-on-rails-2-3-5-released
-Reference: BID:37142
-Reference: URL:http://www.securityfocus.com/bid/37142
-Reference: SECTRACK:1023245
-Reference: URL:http://www.securitytracker.com/id?1023245
-Reference: SECUNIA:37446
-Reference: URL:http://secunia.com/advisories/37446
-Reference: VUPEN:ADV-2009-3352
-Reference: URL:http://www.vupen.com/english/advisories/2009/3352
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0544
+Reference: MLIST:[oss-security] 20090207 CVE Request: pycrypto
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/02/07/1
+Reference: CONFIRM:http://gitweb2.dlitz.net/?p=crypto/pycrypto-2.x.git;a=commitdiff;h=d1c4875e1f220652fe7ff8358f56dee3b2aba31b
+Reference: CONFIRM:http://gitweb2.dlitz.net/?p=crypto/pycrypto-2.x.git;a=commitdiff;h=fd73731dfad451a81056fbb01e09aa78ab82eb5d
+Reference: XF:pycrypto-arc2module-bo(48617)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/48617
 
-Cross-site scripting (XSS) vulnerability in the strip_tags function in
-Ruby on Rails before 2.2.s, and 2.3.x before 2.3.5, allows remote
-attackers to inject arbitrary web script or HTML via vectors involving
-non-printing ASCII characters, related to HTML::Tokenizer and
-actionpack/lib/action_controller/vendor/html-scanner/html/node.rb.
+Buffer overflow in the PyCrypto ARC2 module 2.0.1 allows remote
+attackers to cause a denial of service and possibly execute arbitrary
+code via a large ARC2 key length.
 
 
