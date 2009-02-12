@@ -1,45 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/20/9
-Message-ID: <20090720144432.GA9115@kroah.com>
-Date: Mon, 20 Jul 2009 07:44:32 -0700
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/12/3
+Message-ID: <Pine.GSO.4.51.0902121045180.17219@faron.mitre.org>
+Date: Thu, 12 Feb 2009 10:45:25 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: dailydave <dailydave@...ts.immunitysec.com>
-Subject: Re: Linux 2.6.30+/SELinux/RHEL5 test kernel 0day, exploiting the unexploitable
+cc: coley@...us.mitre.org
+Subject: Re: CVE request for proftpd
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jul 20, 2009 at 12:01:47PM +0200, Marcus Meissner wrote:
-> On Fri, Jul 17, 2009 at 09:23:03AM +0200, yersinia wrote:
-> > FYI, a Sprengler 0-day against Selinux null ptr dereference. Very Nice
-> > to see in action
-> > 
-> > reference ( with youtube link )
-> > 
-> > http://grsecurity.net/~spender/cheddar_bay.tgz
-> 
-> Yeah.
-> 
-> Some "minor" bugs and one larger one.
-> 
-> The Linux folks have meanwhile:
-> 
-> - Fixed the actual bug. ;) (CVE-2009-1897)
->   Only affects 2.6.30,2.6.30.1.
-> 
->   2.6.30.2 release soon.
-> 
-> - Added -fno-delete-null-pointers to their Makefiles
-> 
->   Also in 2.6.30.2 and 2.
-> 
-> - fixed the personality - PER_CLEAR_ON_SETTID inheritance issue (CVE-2009-1895)
->   to work around mmap_min_addr protection.
->   Affects 2.6.23-2.6.30.1
-> 
->   2.6.30.2 and 2.6.27.x releases soon.
 
-2.6.30.2 and 2.6.27.27 releases happened about 8 hours ago.
+======================================================
+Name: CVE-2009-0542
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0542
+Reference: BUGTRAQ:20090210 Another SQL injection in ProFTPd with mod_mysql (probably postgres as well)
+Reference: URL:http://www.securityfocus.com/archive/1/archive/1/500823/100/0/threaded
+Reference: BUGTRAQ:20090210 ProFTPd with mod_mysql Authentication Bypass Exploit
+Reference: URL:http://www.securityfocus.com/archive/1/archive/1/500851/100/0/threaded
+Reference: BUGTRAQ:20090210 Re: Another SQL injection in ProFTPd with mod_mysql (probably postgres as well)
+Reference: URL:http://www.securityfocus.com/archive/1/archive/1/500833/100/0/threaded
+Reference: BUGTRAQ:20090211 Re: Re: Another SQL injection in ProFTPd with mod_mysql (probably postgres as well)
+Reference: URL:http://www.securityfocus.com/archive/1/archive/1/500852/100/0/threaded
+Reference: MILW0RM:8037
+Reference: URL:http://www.milw0rm.com/exploits/8037
+Reference: MLIST:[oss-security] 20090211 CVE request for proftpd
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/02/11/1
+Reference: MLIST:[oss-security] 20090211 Re: CVE request for proftpd
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/02/11/5
+Reference: MLIST:[oss-security] 20090211 Re: CVE request for proftpd
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/02/11/3
+Reference: CONFIRM:http://bugs.proftpd.org/show_bug.cgi?id=3180
 
-thanks,
+SQL injection vulnerability in ProFTPD Server 1.3.1 through 1.3.2rc2
+allows remote attackers to execute arbitrary SQL commands via a "%"
+(percent) character in the username, which introduces a "'" (single
+quote) character during variable substitution by mod_sql.
 
-greg k-h
+
+======================================================
+Name: CVE-2009-0543
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0543
+Reference: MLIST:[oss-security] 20090211 CVE request for proftpd
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/02/11/4
+Reference: MLIST:[oss-security] 20090211 Re: CVE request for proftpd
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/02/11/5
+Reference: CONFIRM:http://bugs.proftpd.org/show_bug.cgi?id=3173
+
+ProFTPD Server 1.3.1, with NLS support enabled, allows remote
+attackers to bypass SQL injection protection mechanisms via invalid,
+encoded multibyte characters, which are not properly handled in (1)
+mod_sql_mysql and (2) mod_sql_postgres.
+
+
