@@ -1,22 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/04/3
-Message-Id: <200909042211.45210.hanno@hboeck.de>
-Date: Fri, 4 Sep 2009 22:11:45 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE id request: fluxbb < 1.2.22 XSS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/12/4
+Message-ID: <Pine.GSO.4.51.0902121053330.17219@faron.mitre.org>
+Date: Thu, 12 Feb 2009 10:56:42 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security <oss-security@...ts.openwall.com>, oss-security <oss-security@...ts.openwall.com>
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- net-snmp (sensitive host information disclosure)
 Content-Type: text/plain; charset=utf-8
 
-http://fluxbb.org/forums/topic/3222/fluxbb1222-released/
+
+I'm confused by the upstream diff being referenced by the Red Hat bug ID.
+Specifically, it looks like some sprintf's got changed, and the result is
+used for logging.  Is it certain that the attacker can bypass
+authorization, or is net-snmp just mis-reporting it?
+
+I'm going with authorization bypass at the moment.
+
+======================================================
+Name: CVE-2008-6123
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-6123
+Reference: MLIST:[oss-security] 20090212 CVE Request -- net-snmp (sensitive host information disclosure)
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/02/12/2
+Reference: CNFIRM:http://bugs.gentoo.org/show_bug.cgi?id=250429
+Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=485211
+Reference: CONFIRM:http://net-snmp.svn.sourceforge.net/viewvc/net-snmp?view=rev&revision=17367
+Reference: MISC:http://net-snmp.svn.sourceforge.net/viewvc/net-snmp/trunk/net-snmp/snmplib/snmpUDPDomain.c?r1=17325&r2=17367&pathrev=17367
+
+The netsnmp_udp_fmtaddr function (snmplib/snmpUDPDomain.c) in net-snmp
+5.0.9 through 5.4.2, when using TCP wrappers for client authorization,
+does not properly parse hosts.allow rules, which allows remote
+attackers to bypass intended access restrictions and execute SNMP
+queries, related to "source/destination IP address confusion."
 
 
-"Fixed a critical XSS vulnerability, reported by endeavormac."
-
-
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-
-http://schokokeks.org - professional webhosting
-
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
