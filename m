@@ -1,25 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/06/1
-Message-ID: <28fa9c5e0903060027n5b8c3facw37516b1de21ae367@mail.gmail.com>
-Date: Fri, 6 Mar 2009 16:27:39 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/12/7
+Message-Id: <1234461311.8920.9.camel@dhcp-lab-164.englab.brq.redhat.com>
+Date: Thu, 12 Feb 2009 18:55:11 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
 Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: shm: fix shmctl(SHM_INFO) lockup with  !CONFIG_SHMEM
+Subject: Re: CVE Request -- net-snmp (sensitive host information disclosure)
 Content-Type: text/plain; charset=utf-8
 
-According to the upstream commit
-a68e61e8ff2d46327a37b69056998b47745db6fa, shm_get_stat() assumes that
-the inode is a "struct shmem_inode_info", which is incorrect for
-!CONFIG_SHMEM (see fs/ramfs/inode.c: ramfs_get_inode() vs.
-mm/shmem.c: shmem_get_inode()).
+Steve,
 
-This bad assumption can cause shmctl(SHM_INFO) to lockup when
-shm_get_stat() tries to spin_lock(&info->lock).  Users of
-!CONFIG_SHMEM may encounter this lockup simply by invoking the 'ipcs'
-command.
+  thanks for the assignment!
 
-Reported by Jiri Olsa back in February 2008:
-http://lkml.org/lkml/2008/2/29/74
+On Thu, 2009-02-12 at 10:56 -0500, Steven M. Christey wrote:
+> I'm confused by the upstream diff being referenced by the Red Hat bug ID.
+> Specifically, it looks like some sprintf's got changed, and the result is
+> used for logging.  Is it certain that the attacker can bypass
+> authorization, or is net-snmp just mis-reporting it?
 
-Thanks, Eugene
+Yes, the fix looks strange, but it resolves the issue (checked for
+net-snmp-5.4.2). Looks like net-snmp is mis-reporting
+the results, so subsequent parsing performed by tcp_wrappers
+fails so hosts, for whose the snmp responses should be
+forbidden, are getting them regardless of /etc/hosts.deny
+content.
+
+More exact explanation from our pkg-maintainer:
+
+<snip>
+
+So... the bug is in net-snmp, it mixes source and destination IP 
+addresses, which renders tcp_wrappers support in snmpd completely 
+useless (it checks destination IP addr instead of source IP address).
+
+</snip>
+
+Not sure here, if the CVE description should be modified appropriately?
+
+Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+> 
+> I'm going with authorization bypass at the moment.
+> 
+> ======================================================
+> Name: CVE-2008-6123
+> Status: Candidate
+> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-6123
+> Reference: MLIST:[oss-security] 20090212 CVE Request -- net-snmp (sensitive host information disclosure)
+> Reference: URL:http://www.openwall.com/lists/oss-security/2009/02/12/2
+> Reference: CNFIRM:http://bugs.gentoo.org/show_bug.cgi?id=250429
+> Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=485211
+> Reference: CONFIRM:http://net-snmp.svn.sourceforge.net/viewvc/net-snmp?view=rev&revision=17367
+> Reference: MISC:http://net-snmp.svn.sourceforge.net/viewvc/net-snmp/trunk/net-snmp/snmplib/snmpUDPDomain.c?r1=17325&r2=17367&pathrev=17367
+> 
+> The netsnmp_udp_fmtaddr function (snmplib/snmpUDPDomain.c) in net-snmp
+> 5.0.9 through 5.4.2, when using TCP wrappers for client authorization,
+> does not properly parse hosts.allow rules, which allows remote
+> attackers to bypass intended access restrictions and execute SNMP
+> queries, related to "source/destination IP address confusion."
+> 
+> 
+
