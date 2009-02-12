@@ -1,29 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/06/12
-Message-ID: <Pine.GSO.4.51.0906061348080.28142@faron.mitre.org>
-Date: Sat, 6 Jun 2009 13:48:13 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/12/12
+Message-Id: <200902122123.47118.rbu@gentoo.org>
+Date: Thu, 12 Feb 2009 21:23:40 +0100
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: dokuwiki
+Cc: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- net-snmp (sensitive host information disclosure)
 Content-Type: text/plain; charset=utf-8
 
+On Thursday 12 February 2009, Jan Lieskovsky wrote:
+> Affected net-snmp versions:
+> net-snmp-5.0.9 (older versions probably too) <= x <= net-snmp-5.4.2 
+> (till the above upstream commit)
 
-======================================================
-Name: CVE-2009-1960
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1960
-Reference: MILW0RM:8781
-Reference: URL:http://www.milw0rm.com/exploits/8781
-Reference: MILW0RM:8812
-Reference: URL:http://www.milw0rm.com/exploits/8812
-Reference: CONFIRM:http://bugs.splitbrain.org/index.php?do=details&task_id=1700
-Reference: SECUNIA:35218
-Reference: URL:http://secunia.com/advisories/35218
-
-inc/init.php in DokuWiki 2009-02-14, rc2009-02-06, and rc2009-01-30,
-when register_globals is enabled, allows remote attackers to include
-and execute arbitrary local files via the
-config_cascade[main][default][] parameter to doku.php.  NOTE: PHP
-remote file inclusion is also possible in PHP 5 using ftp:// URLs.
+Just to avoid confusion, upstream's latest release is 5.4.2.1, which is 
+affected as well (and this could be updated in the CVE description).
 
 
+Robert
+
+Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
