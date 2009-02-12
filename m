@@ -1,20 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/15/6
-Message-ID: <4AD6D101.70001@kernel.sg>
-Date: Thu, 15 Oct 2009 15:36:33 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/12/11
+Message-ID: <20090212202259.GC25522@suse.de>
+Date: Thu, 12 Feb 2009 21:22:59 +0100
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>, Willy Tarreau <w@....eu>
-Subject: Re: CVE request kernel: flood ping cause out-of-iommu error and panic when mtu larger than 1500
+Subject: Re: http://www.securityfocus.com/bid/33672/info kernel issue
 Content-Type: text/plain; charset=utf-8
 
-Eugene Teo wrote:
-> Eugene Teo wrote:
->> Executing ping -f -s 3000 IP in a certain network setup could trigger 
->> an out-of-IOMMU error, leading to a denial of service.
+On Thu, Feb 12, 2009 at 08:05:27PM +0000, Mark J Cox wrote:
+> >http://www.securityfocus.com/bid/33672/ seems to be this commit:
+> >http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.28.y.git;a=commit;h=8255fc826e58c0a59711029e01db9fcdc06ba211
+> >Not sure if its exploitable though.
 > 
-> FYI, I rated this cvss2=8.3/AV:A/AC:L/Au:N/C:C/I:C/A:C.
+> BTW that BID list of affected kernels isn't correct; the multibyte stuff 
+> wasn't in <=2.6.18 at least.
+> 
+> I didn't check exactly where since it doesn't affect RHEL and didn't look 
+> into the issue any further -- but on first glance it seemed like you'd 
+> have to be a console user and display/select some carefully chosen 
+> characters in order to do the overflow; so it's probably a 'local attacker 
+> at keyboard' flaw?
 
-Correction: 6.1/AV:A/AC:L/Au:N/C:N/I:N/A:C.
+We backported Unicode stuff to SLES 10 I just see, but yes, 2.6.18 then.
 
-Thanks, Eugene
+Yes, console user only. And you can overflow 2 bytes over the end of kmalloced
+space, not sure how much you can do with this.
+
+ciao, Marcus
