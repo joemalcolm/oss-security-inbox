@@ -1,51 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/23/1
-Message-ID: <4AB96901.6030401@redhat.com>
-Date: Wed, 23 Sep 2009 08:17:05 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: issue with O_EXCL creates on NFSv4
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/12/2
+Message-Id: <1234445889.3238.12.camel@dhcp-lab-164.englab.brq.redhat.com>
+Date: Thu, 12 Feb 2009 14:38:09 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request -- net-snmp (sensitive host information disclosure)
 Content-Type: text/plain; charset=utf-8
 
-Steven M. Christey wrote:
-> On Mon, 21 Sep 2009, Eugene Teo wrote:
->> Upstream commits:
->> http://git.kernel.org/linus/af85852d (fixed in v2.6.19-rc6)
->> http://git.kernel.org/linus/81ac95c5 (fixed in v2.6.19-rc6)
->> http://git.kernel.org/linus/79fb54ab (fixed in v2.6.30-rc1)
-> 
-> I can't see any clear relationship between these commits and the Red Hat
-> bugzilla entry.  The implication that there were two fixes, one in 2.6.19
-> and one in 2.6.30, is also confusing because if a fix in 2.6.19 didn't
-> work, we'd normally assign a new CVE for the fix in 2.6.30.
-> 
-> CVE-2009-3286 is below, anchored on what's said in Bugzilla 524520. Since
-> 81ac95c also mentions do_open_permission, I used that as a reference.
-> This suggests the problem was fixed in 2006, but this issue doesn't have a
-> CVE identifier because security implications weren't spelled out until
-> Eugene's post (as far as I can tell.)
+Hello Steve,
 
-Hi Steve,
+  a possibility of sensitive host information disclosure
+was found in the net-snmp package, due to source/destination
+IP address confusion -- could you please allocate a new CVE-2008
+identifier for it?
 
-Sorry for the confusion.
+References:
+http://bugs.gentoo.org/show_bug.cgi?id=250429
+https://bugzilla.redhat.com/show_bug.cgi?id=485211
 
-The upstream commit should just be http://git.kernel.org/linus/79fb54ab.
+Upstream patch:
+http://net-snmp.svn.sourceforge.net/viewvc/net-snmp?view=rev&amp;revision=17367
 
-On an O_EXCL create, the kernel was passing a bogus mode to the 
-vfs_create() op, which caused the file to be created with non-sensical 
-(and possibly unsafe) permissions. The intention was to pass a mode with 
-all of the permission bits cleared, but the field wasn't necessarily 
-zeroed out.
+Affected net-snmp versions:
+net-snmp-5.0.9 (older versions probably too) <= x <= net-snmp-5.4.2  (till the above upstream commit)
 
-When the create is successful, this isn't very noticable. The client 
-will follow up the create with a SETATTR call and fix the mode and 
-permissions. Still, there was a window of opportunity where the file 
-might have "unsafe" perms even when the CREATE op returns success.
+Thanks, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
-This was a long standing problem fixed in 2.6.30 or so, seemingly 
-inadvertently as part of the merge of the NFSv4.1 code.
-
-The other two commits were for another bug that we fixed.
-
-Thanks, Eugene
