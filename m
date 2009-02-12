@@ -1,32 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/31/6
-Message-ID: <20090831193840.6d631f7d@redhat.com>
-Date: Mon, 31 Aug 2009 19:38:40 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: Steffen_Ullrich@...ua.de
-Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: Re: CVE request: perl-IO-Socket-SSL certificate hostname compare bug
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/12/9
+Message-ID: <20090212194354.GA25522@suse.de>
+Date: Thu, 12 Feb 2009 20:43:54 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: http://www.securityfocus.com/bid/33672/info kernel issue
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 31 Aug 2009 18:06:30 +0200 Steffen Ullrich
-<Steffen_Ullrich@...ua.de> wrote:
+Hi,
 
-> > Speaking of prefixes, has anyone checked IO-Socket-SSL for
-> > CVE-2009-2408-like issues?  If there is an issues, should it get fixed
-> > in IO-Socket-SSL or in Net-SSLeay?
-> 
-> I did not check it yet.
-> If there is a problem it has to be fixed in Net::SSLeay, IO::Socket::SSL
-> is perl only and perl itself has no problems with strings containing \0.
-> From the code in SSLeay.xs X509_get_subjectAltNames I would say, that
-> this part should be no problem, because it explicitly uses ASN1_STRING_length
-> to specify the length of the string. But I'm not sure about the use
-> of X509_get_subject_name where it magically converts an X509_NAME* into
-> a perl string.
-> I keep you updated once I've checked it.
+If you are wondering (like one of our customers)
+http://www.securityfocus.com/bid/33672/ seems to be this commit:
+http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.28.y.git;a=commit;h=8255fc826e58c0a59711029e01db9fcdc06ba211
 
-I ran some test on Net-SSLeay-1.35 and IO-Socket-SSL-1.30 and
-verify_hostname always returned error for NUL in both CN and SAN.
+Not sure if its exploitable though.
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+Ciao, Marcus
