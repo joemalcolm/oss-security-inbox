@@ -1,25 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/17/10
-Message-ID: <4AB1CBEE.7020703@kernel.sg>
-Date: Thu, 17 Sep 2009 13:41:02 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/12/6
+Message-Id: <200902121742.57633.rbu@gentoo.org>
+Date: Thu, 12 Feb 2009 17:42:48 +0100
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>, Willy Tarreau <w@....eu>
-Subject: Re: CVE-2009-2903 kernel: appletalk: denial of service when handling IP tunnelled over DDP datagrams
+Subject: CVE request: libpng memory leak
 Content-Type: text/plain; charset=utf-8
 
-Eugene Teo wrote:
-> The check for the ipddpN device in the handle_ip_over_ddp() function 
-> returns -NODEV to the atalk_rcv() function when the device does not 
-> exist. The atalk_rcv() function then directly returns that value to its 
-> caller. There is a missing call to kfree_skb() in these unaccepted 
-> IP-DDP datagram that can exhaust the kernel memory eventually. It 
-> affects Linux hosts with appletalk and ipddp modules loaded, that are 
-> attached to the same link. Thanks to Mark Smith for reporting this issue 
-> to us.
+Hey,
 
-Some updates and a quick analysis at: 
-https://bugzilla.redhat.com/CVE-2009-2903#c0 and 
-http://kbase.redhat.com/faq/docs/DOC-19069
+I just noticed the "png_handle_tEXt() Memory Leak Vulnerability" from 
+last october never got a CVE id:
 
-Thanks, Eugene
+http://secunia.com/advisories/32418/
+http://sourceforge.net/project/shownotes.php?release_id=635463&group_id=5624
+https://bugs.gentoo.org/show_bug.cgi?id=244808
+
+
+Robert
+
+Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
