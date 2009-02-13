@@ -1,52 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/16/3
-Message-ID: <20091016093131.5ec9dfb5@redhat.com>
-Date: Fri, 16 Oct 2009 09:31:31 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: geissert@...ian.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re:  Re: CVE Request -- PHP 5 - 5.2.11
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/13/1
+Message-ID: <49953B68.3090002@pardus.org.tr>
+Date: Fri, 13 Feb 2009 11:20:40 +0200
+From: Pinar Yanardag <pinar@...dus.org.tr>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: Poppler -Two Denial of Service Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 15 Oct 2009 18:47:15 -0500 Raphael Geissert
-<geissert@...ian.org> wrote:
+ From Secunia [1]:
 
-> > Name: CVE-2009-3291
-> > 
-> > The php_openssl_apply_verification_policy function in PHP before
-> > 5.2.11 does not properly perform certificate validation, which has
-> > unknown impact and attack vectors, probably related to an ability to
-> > spoof certificates.
-> 
-> Yes, seems to be related to an improper handling of \0 in the CN
-> field.
+--->8---
+Two vulnerabilities have been reported in Poppler, which can be 
+exploited by malicious people to cause a DoS (Denial of Service).
 
-Agree.  This change, however, seems to have a minimal impact on today's 
-real world PHP applications.  Certificate verification is not enabled by
-default and there seem to be very few applications that actually enable
-it.  I have some notes in:
+1) An uninitialised memory access error in the 
+"FormWidgetChoice::loadDefaults()" function can be exploited to cause a 
+crash via a specially crafted PDF document.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-3291
+2) An error in the "JBIG2Stream::readSymbolDictSeg()" function can be 
+exploited to cause a crash via a specially crafted PDF document.
+--->8---
 
-> > Name: CVE-2009-3292
-> >
-> > Unspecified vulnerability in PHP before 5.2.11 has unknown impact
-> > and attack vectors related to "missing sanity checks around exif
-> > processing."
-> 
-> It is related to missing sanity checks when determining the length of
-> sections of jpg headers and a missing limit on the nesting level of
-> TIFF files.
-
-There are 3 changes in the upstream path:
-- missing header length check, with similar impact as CVE-2009-2687 in
-  the worst case
-- missing nesting level checks for TIFFs, crafted file can lead to deep
-  recursion exhausting stack memory resulting in rather harmless crash
-- missing EOF checks, possibly leading to NULL deref or PHP memory
-  limit exception
-
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-3292
+[1]: http://secunia.com/Advisories/33853
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Pinar Yanardag
+http://pinguar.org
+_____________________________
+Pardus Security Team
+http://security.pardus.org.tr
+
+
