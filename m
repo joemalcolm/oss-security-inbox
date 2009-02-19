@@ -1,24 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/17/6
-Message-ID: <Pine.GSO.4.51.0903171600490.17171@faron.mitre.org>
-Date: Tue, 17 Mar 2009 16:02:44 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/19/2
+Message-ID: <20090219212536.GA11769@logo.rdu.rpath.com>
+Date: Thu, 19 Feb 2009 16:25:36 -0500
+From: "Michael K. Johnson" <johnsonm@...th.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: lxc-sshd security issues?
+Subject: Re: CVE Request: Poppler -Two Denial of Service Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
+On Fri, Feb 13, 2009 at 11:20:40AM +0200, Pinar Yanardag wrote:
+> 1) An uninitialised memory access error in the 
+> "FormWidgetChoice::loadDefaults()" function can be exploited to cause a 
+> crash via a specially crafted PDF document.
 
-On Thu, 5 Mar 2009, Michael K. Johnson wrote:
+This is changeset 1fc342eadcbbb41302f190b215c5daf23c9ec9b1 in poppler's
+git and is associated with poppler bug 19790
 
-> I finally got the right contact info upstream, and we're talking
-> about this, so expect it to not be a problem in future releases.
-> For the record, it's dummy auth data, but still could be seen as a
-> backdoor, and will probably be changed to user-configured value.
+> 2) An error in the "JBIG2Stream::readSymbolDictSeg()" function can be 
+> exploited to cause a crash via a specially crafted PDF document.
 
-By "dummy auth data," do you mean that it's replaced with real/unique
-passwords/keys before the system becomes operational?  Or do these
-pre-packaged values work unless the admin RTFM?  (If the latter, then it
-needs a CVE; if the former, then there doesn't seem to be a vuln because
-there's no impact on authentication).
+This is changeset d3f04f537fb3e963c149a7e2d8d83c7cb19da8c0 in poppler's
+git and is associated with poppler bug 19702
 
-- Steve
+These bugs were reported fixed in poppler-0.10.4.tar.gz, released on
+February 10, 2009
