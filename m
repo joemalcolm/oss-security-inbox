@@ -1,22 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/29/3
-Message-ID: <20090729131509.GA28862@openwall.com>
-Date: Wed, 29 Jul 2009 17:15:09 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: debian bug report on bind9 DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/19/1
+Message-ID: <20090219155929.GA5330@severus.strandboge.com>
+Date: Thu, 19 Feb 2009 09:59:29 -0600
+From: Jamie Strandboge <jamie@...onical.com>
+To: coley@...us.mitre.org
+Cc: oss-security@...ts.openwall.com
+Subject: CVE request for yaws
 Content-Type: text/plain; charset=utf-8
 
-Just in case anyone cares to have another confirmation:
+Yaws 1.80 contains a fix for a DoS[1]. Can we get a CVE for it?
 
-On Wed, Jul 29, 2009 at 12:04:36AM +0200, Robert Buchholz wrote:
-> The crash is not limited to configurations that allow updates.
-> The ISC advisory states so as well, and I could reproduce the DoS on a 
-> static named instance by removing the "$packet->sign_tsig(...)" line in 
-> the exploit.
+Thanks,
+Jamie
 
-Confirmed on 9.3.5-P2 (removing the "$packet->sign_tsig(...)" line from
-the exploit as above) with whatever patches we happened to have until
-this latest fix.
+[1] http://yaws.hyber.org/
 
-Alexander
+-- 
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (198 bytes)
