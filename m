@@ -1,35 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/02/1
-Message-ID: <4AEEA8FD.2050601@kernel.sg>
-Date: Mon, 02 Nov 2009 17:40:13 +0800
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/20/1
+Message-ID: <28fa9c5e0902192215v27677e83mca222e96854e9722@mail.gmail.com>
+Date: Fri, 20 Feb 2009 14:15:36 +0800
 From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: connector security bypass
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: memory disclosure in SO_BSDCOMPAT gsopt
 Content-Type: text/plain; charset=utf-8
 
-1/ uvesafb/connector: Disallow unprivileged users to send netlink packets
-upstream commit: cc44578b5a508889beb8ae3ccd4d2bbdf17bc86c
-introduced in v2.6.24-rc1; fixed in v2.6.32-rc3
+According to the upstream commit
+df0bca049d01c0ee94afb7cd5dfd959541e6c8da "net: 4 bytes kernel memory
+disclosure in SO_BSDCOMPAT gsopt try #2" in linux-2.6's git, there is
+a missing initialisation of optval v.val that can be directly returned
+to userspace when getsockopt() is called with SO_BSDCOMPAT optname
+set.
 
-2/ pohmelfs/connector: Disallow unprivileged users to configure pohmelfs
-upstream commit: 98a5783af02f4c9b87b676d7bbda6258045cfc76
-(staging/experimental)
-
-3/ dst/connector: Disallow unprivileged users to configure dst
-upstream commit: 5788c56891cfb310e419c4f9ae20427851797431
-(staging/experimental)
-
-4/ dm/connector: Only process connector packages from privileged processes
-upstream commit: 24836479a126e02be691e073c2b6cad7e7ab836a
-introduced in v2.6.31-rc1; fixed in v2.6.32-rc3
-
-2/ and 3/ are experimental; I doubt distros are supporting these.
-1/ and 4/ fixed similar issues, so perhaps we should just have one CVE 
-name for this.
-
-References:
-http://secunia.com/advisories/37113/
-http://xorl.wordpress.com/2009/10/31/linux-kernel-multiple-capabilities-missing-checks/
+http://patchwork.kernel.org/patch/6816/
+https://bugzilla.redhat.com/show_bug.cgi?id=486305
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=df0bca049d01c0ee94afb7cd5dfd959541e6c8da
 
 Thanks, Eugene
