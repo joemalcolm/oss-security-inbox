@@ -1,34 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/08/2
-Message-ID: <Pine.GSO.4.51.0902081629490.25237@faron.mitre.org>
-Date: Sun, 8 Feb 2009 16:31:00 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/20/2
+Message-ID: <28fa9c5e0902192330q3a3fe623y6b6c4c68dd6603cf@mail.gmail.com>
+Date: Fri, 20 Feb 2009 15:30:34 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-cc: Josh Bressers <bressers@...hat.com>, coley@...re.org
-Subject: Re: CVE request: Squid <2.7.6, 3.0.13, 3.1.0.5 DoS
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: skfp_ioctl inverted logic flaw
 Content-Type: text/plain; charset=utf-8
 
+According to the upstream commit
+c25b9abbc2c2c0da88e180c3933d6e773245815a "[PATCH] drivers/net/skfp: if
+!capable(CAP_NET_ADMIN): inverted logic", there is an inverted logic
+flaw in skfp_ioctl(). Non-privileged users should not be able to clear
+the driver statistics.
 
-I do subscribe to oss-security so see these emails.  Still working on the
-best process to be able to respond more quickly.
+http://lists.openwall.net/netdev/2009/01/28/90
+https://bugzilla.redhat.com/show_bug.cgi?id=486534
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=c25b9abb
 
-The SQUID advisory doesn't state what kind of DoS it is, and it's not
-clear from the patches either.  Is it a crash, hang, resource consumption,
-etc.?  Not essential from a CVE perspective but probanly convenient to
-Squid users.
-
-- Steve
-
-======================================================
-Name: CVE-2009-0478
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0478
-Reference: CONFIRM:http://www.squid-cache.org/Advisories/SQUID-2009_1.txt
-Reference: CONFIRM:http://www.squid-cache.org/Versions/v2/2.7/changesets/12432.patch
-
-Squid 2.7 to 2.7.STABLE5, 3.0 to 3.0.STABLE12, and 3.1 to 3.1.0.4
-allows remote attackers to cause a denial of service via an HTTP
-request with an invalid version number, which is not properly handled
-in (1) HttpMsg.c and (2) HttpStatusLine.c.
-
-
+Thanks, Eugene
