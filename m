@@ -1,99 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/19/1
-Message-ID: <20090119095634.GA6304@suse.de>
-Date: Mon, 19 Jan 2009 10:56:34 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com, coley@...us.mitre.org
-Subject: Re: CVE Request -- amarok
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/21/3
+Message-ID: <Pine.GSO.4.51.0902211717080.16146@faron.mitre.org>
+Date: Sat, 21 Feb 2009 17:18:33 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security <oss-security@...ts.openwall.com>
+cc: coley <coley@...re.org>, Jan Minář <rdancer@...ncer.org>
+Subject: Re: CVE request (vim)
 Content-Type: text/plain; charset=utf-8
 
-Steve,
 
-Ping?
+On Mon, 20 Oct 2008, Jan Lieskovsky wrote:
 
-Ciao, Marcus
-
-On Wed, Jan 14, 2009 at 10:08:00AM +0100, Jan Lieskovsky wrote:
-> Hello Steve,
-> 
->   multiple integer overflows (leading to heap-based overflows)
-> and unchecked allocation vulnerabilities has been reported
-> against Amarok multimedia player whep parsing malformed
-> Audible digital audio files. Upstream has fixed
-> these in latest 2.0.1.l release.
-> 
-> References:
-> http://www.trapkit.de/advisories/TKADV2009-002.txt
-> http://amarok.kde.org/en/releases/2.0.1.1   (Fix possible buffer overflows when parsing Audible .aa files.)
-> https://bugzilla.redhat.com/show_bug.cgi?id=479946
-> http://bugs.gentoo.org/show_bug.cgi?id=254896
-> 
-> Proposed solution: Upgrade to latest upstream version 2.0.1.1
-> 
-> Affected Amarok version: amarok-1.4.10-1.fc9 <= x < latest upstream 2.0.1.1 release
-> 
-> Attaching also diff for audibletag.cpp file between latest F10 (amarok-2.0-2.fc10)
-> and latest upstream 2.0.1.1 release (see attachment).
-> 
-> Could you please allocate a new 2009 CVE id for it?
-> 
-> Thanks, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
-
-> --- /root/rpmbuild/BUILD/amarok-2.0/src/metadata/audible/audibletag.cpp	2008-12-05 05:01:21.000000000 -0500
-> +++ /tmp/amarok/amarok-2.0.1.1/src/metadata/audible/audibletag.cpp	2009-01-09 13:29:30.000000000 -0500
-> @@ -139,13 +139,20 @@
->  
->  bool Audible::Tag::readTag( FILE *fp, char **name, char **value)
->  {
-> +    // arbitrary value that has to be smaller than 2^32-1 and that should be large enough for all tags
-> +    const quint32 maxtaglen = 100000;
-> +
->      quint32 nlen;
->      if ( fread(&nlen, sizeof(nlen), 1, fp) != 1 )
->          return false;
->  
->      nlen = ntohl(nlen);
->      //fprintf(stderr, "tagname len=%x\n", (unsigned)nlen);
-> +    if(nlen > maxtaglen)
-> +        return false;
->      *name = new char[nlen+1];
-> +    if (!*name)
-> +        return false;
->      (*name)[nlen] = '\0';
->  
->      quint32 vlen;
-> @@ -157,8 +164,13 @@
->      }
->  
->      vlen = ntohl(vlen);
-> +    if (vlen > maxtaglen)
-> +    {
-> +        delete [] *name;
-> +        *name = 0;
-> +        return false;
-> +    }
->      //fprintf(stderr, "tag len=%x\n", (unsigned)vlen);
-> -
->      if ( fread(*name, nlen, 1, fp) != 1 )
->      {
->          delete [] *name;
-> @@ -167,6 +179,12 @@
->      }
->  
->      *value = new char[vlen+1];
-> +    if (!*value)
-> +    {
-> +        delete [] *name;
-> +        *name = 0;
-> +        return false;
-> +    }
->      (*value)[vlen] = '\0';
->  
->      if ( fread(*value, vlen, 1, fp) != 1 )
+> CVE-NONE-YET Vim netrw.vim plugin issues (netrw.v4, netrw.v5)              (4)
+> Affects: Vim 7.0, Vim 7.1
+> Reference: http://www.rdancer.org/vulnerablevim-netrw.html     (part 3 the 'D' command)
+>            http://www.rdancer.org/vulnerablevim-netrw.v2.html  (part 3 the 'D' command)
+>            http://www.rdancer.org/vulnerablevim-netrw.v5.html
 
 
--- 
-Working, but not speaking, for the following german company:
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+Use CVE-2008-6235, see below.
+
+> CVE-NONE-YET Vim netrw.vim plugin issue (FTP user credentials disclosure)   (5)
+> Affects: Vim 7.1, Vim 7.2
+> References: http://www.rdancer.org/vulnerablevim-netrw-credentials-dis.html
+
+Assigned CVE-2008-4677 previously.
+
+With the exception of the "mx" question raised in a separate email, I
+don't think there are any outstanding issues.  I hope :-/
+
+- Steve
+
+
+======================================================
+Name: CVE-2008-4677
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4677
+Reference: MLIST:[oss-security] 20081006 CVE request - (vim : netrw plugin - ftp user credentials disclosure)
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/10/06/4
+Reference: MLIST:[oss-security] 20081016 CVE request - Vim netrw.plugin
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/10/16/2
+Reference: MLIST:[oss-security] 20081020 CVE request (vim)
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/10/20/2
+Reference: MLIST:[vim_dev] 20080817 Re: Anyone fixing SA31464?
+Reference: URL:http://groups.google.com/group/vim_dev/browse_thread/thread/2f6fad581a037971/a5fcf4c4981d34e6?show_docid=a5fcf4c4981d34e6
+Reference: MISC:http://www.rdancer.org/vulnerablevim-netrw-credentials-dis.html
+Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=461750
+Reference: SECUNIA:31464
+Reference: URL:http://secunia.com/advisories/31464
+
+autoload/netrw.vim (aka the Netrw Plugin) 109, 131, and other versions
+before 133k for Vim 7.1.266, other 7.1 versions, and 7.2 stores
+credentials for an FTP session, and sends those credentials when
+attempting to establish subsequent FTP sessions to servers on
+different hosts, which allows remote FTP servers to obtain sensitive
+information in opportunistic circumstances by logging usernames and
+passwords.  NOTE: the upstream vendor disputes a vector involving
+different ports on the same host, stating "I'm assuming that they're
+using the same id and password on that unchanged hostname,
+deliberately."
+
+
+======================================================
+Name: CVE-2008-6235
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-6235
+Reference: MLIST:[oss-security] 20081016 CVE request - Vim netrw.plugin
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/10/16/2
+Reference: MLIST:[oss-security] 20081020 CVE request (vim)
+Reference: URL:http://www.openwall.com/lists/oss-security/2008/10/20/2
+Reference: MISC:http://www.rdancer.org/vulnerablevim-netrw.html
+Reference: MISC:http://www.rdancer.org/vulnerablevim-netrw.v2.html
+Reference: MISC:http://www.rdancer.org/vulnerablevim-netrw.v5.html
+
+The Netrw plugin (netrw.vim) in Vim 7.0 and 7.1 allows user-assisted
+attackers to execute arbitrary commands via shell metacharacters in a
+filename used by the (1) "D" (delete) command or (2) b:netrw_curdir
+variable, as demonstrated using the netrw.v4 and netrw.v5 test cases.
+
+
