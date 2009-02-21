@@ -1,47 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/10/1
-Message-ID: <106755777.1035741260462270839.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 10 Dec 2009 11:24:30 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: Piwik <= 0.4.5 Cookie Unserialize() Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/21/2
+Message-ID: <Pine.GSO.4.51.0902211648250.16146@faron.mitre.org>
+Date: Sat, 21 Feb 2009 16:57:41 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: ", \"oss-security" <oss-security@...ts.openwall.com>
+cc: coley <coley@...re.org>, Jan Minář <rdancer@...ncer.org>
+Subject: Re: CVE request - Vim netrw.plugin
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2009-4137 for this.
 
-Sadly I can't find other references. Even the Piwik changelog is a bit slient
-on this.
-
-Thanks.
-
--- 
-    JB
+Second of multiple emails.
 
 
------ "Eren Türkay" <eren@...dus.org.tr> wrote:
+> * Action: Formulate CVE-2008-3076 as covering the 'mz' and 'mc' command
+> issues.
 
-> Hello,
-> 
-> Piwik is an open source web analytics software program used by various
-> 
-> sites.
-> 
-> Stefan Esser found a vulnerability in Piwik, which can allow arbitrary
-> files 
-> to be written into writable locations on the webserver. He says, it is
-> also 
-> possible to execute arbitrary PHP code directly in newer versions of
-> Piwik.
-> 
-> The original advisory is here: 
-> http://www.suspekt.org/2009/12/09/advisory-032009-piwik-cookie-
-> unserialize-vulnerability/
-> 
-> I think, it is worth assigning a CVE.
-> 
-> Regards,
-> Eren
+I did this.  However, pointing back to:
 
--- 
-    JB
+  http://www.openwall.com/lists/oss-security/2008/08/01/1
+
+What about the "mx" function?
+
+- Steve
