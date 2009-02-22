@@ -1,26 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/11/4
-Message-ID: <20090911151910.73e258df@redhat.com>
-Date: Fri, 11 Sep 2009 15:19:10 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/22/1
+Message-ID: <Pine.GSO.4.51.0902221719040.29212@faron.mitre.org>
+Date: Sun, 22 Feb 2009 17:19:09 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: Re: CVE id request: silc-toolkit
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: skfp_ioctl inverted logic flaw
 Content-Type: text/plain; charset=utf-8
 
-Hi Steven!
 
-On Fri, 11 Sep 2009 08:20:15 -0400 (EDT) "Steven M. Christey"
-<coley@...us.mitre.org> wrote:
+======================================================
+Name: CVE-2009-0675
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0675
+Reference: MLIST:[netdev] 20090128 [PATCH] drivers/net/skfp: if !capable(CAP_NET_ADMIN): inverted logic
+Reference: URL:http://lists.openwall.net/netdev/2009/01/28/90
+Reference: MLIST:[oss-security] 20090220 CVE request: kernel: skfp_ioctl inverted logic flaw
+Reference: URL:http://openwall.com/lists/oss-security/2009/02/20/2
+Reference: CONFIRM:http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=c25b9abbc2c2c0da88e180c3933d6e773245815a
+Reference: CONFIRM:http://www.kernel.org/pub/linux/kernel/v2.6/ChangeLog-2.6.28.6
+Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=486534
+Reference: SECUNIA:33938
+Reference: URL:http://secunia.com/advisories/33938
 
-> Sorry for forgetting to tell everyone about this.  One of our CVE
-> analysts did some deeper investigation and noticed that there was a
-> clear break in affected versions, so we decided that a split was
-> reasonable.  This distinction wasn't immediately obvious to me when
-> processing the initial ID request.
+The skfp_ioctl function in drivers/net/skfp/skfddi.c in the Linux
+kernel before 2.6.28.6 permits SKFP_CLR_STATS requests only when the
+CAP_NET_ADMIN capability is absent, instead of when this capability is
+present, which allows local users to reset the driver statistics,
+related to an "inverted logic" issue.
 
-No worries, I just wanted to save others some time, that can be spent
-investigating something else.
 
--- 
-Tomas Hoger / Red Hat Security Response Team
