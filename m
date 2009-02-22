@@ -1,44 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/31/13
-Message-ID: <Pine.GSO.4.51.0908311546410.21074@faron.mitre.org>
-Date: Mon, 31 Aug 2009 15:51:25 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/22/2
+Message-ID: <Pine.GSO.4.51.0902221719460.29212@faron.mitre.org>
+Date: Sun, 22 Feb 2009 17:20:02 -0500 (EST)
 From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-cc: Steffen_Ullrich@...ua.de, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: perl-IO-Socket-SSL certificate hostname compare bug
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: memory disclosure in SO_BSDCOMPAT gsopt
 Content-Type: text/plain; charset=utf-8
 
 
-Steffen said:
-
->it would probably be nice to add a note to the CVE that apps/modules
->should start to implement proper certificate checking and that it got
->easier with newer IO::Socket::SSL versions.
-
-There isn't really a place in CVE to do this.  The description is
-primarily to describe the problem in a way that allows us to distinguish
-this issue from other issues.  I've included your post as a reference,
-however.
-
-- Steve
-
-
 ======================================================
-Name: CVE-2009-3024
+Name: CVE-2009-0676
 Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3024
-Reference: MLIST:[oss-security] 20090828 CVE request: perl-IO-Socket-SSL certificate hostname compare bug
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/08/28/1
-Reference: MLIST:[oss-security] 20090829 Re: CVE request: perl-IO-Socket-SSL certificate hostname compare bug
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/08/29/1
-Reference: MLIST:[oss-security] 20090831 Re: Re: CVE request: perl-IO-Socket-SSL certificate hostname compare bug
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/08/31/4
-Reference: CONFIRM:http://cpansearch.perl.org/src/SULLR/IO-Socket-SSL-1.30/Changes
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0676
+Reference: MLIST:[linux-kernel] 20090212 [PATCH] 4 bytes kernel memory disclosure in SO_BSDCOMPAT gsopt try #2
+Reference: URL:http://lkml.org/lkml/2009/2/12/123
+Reference: MLIST:[oss-security] 20090220 CVE request: kernel: memory disclosure in SO_BSDCOMPAT gsopt
+Reference: URL:http://openwall.com/lists/oss-security/2009/02/20/1
+Reference: CONFIRM:http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=df0bca049d01c0ee94afb7cd5dfd959541e6c8da
+Reference: CONFIRM:http://patchwork.kernel.org/patch/6816/
+Reference: CONFIRM:http://www.kernel.org/pub/linux/kernel/v2.6/ChangeLog-2.6.28.6
+Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=486305
+Reference: BID:33846
+Reference: URL:http://www.securityfocus.com/bid/33846
 
-The verify_hostname_of_cert function in the certificate checking
-feature in IO-Socket-SSL (IO::Socket::SSL) 1.14 through 1.25 only
-matches the prefix of a hostname when no wildcard is used, which
-allows remote attackers to bypass the hostname check for a
-certificate.
+The sock_getsockopt function in net/core/sock.c in the Linux kernel
+before 2.6.28.6 does not initialize a certain structure member, which
+allows local users to obtain potentially sensitive information from
+kernel memory via an SO_BSDCOMPAT getsockopt request.
 
 
