@@ -1,24 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/10/7
-Message-Id: <1234291732.5831.8.camel@dhcp-lab-164.englab.brq.redhat.com>
-Date: Tue, 10 Feb 2009 19:48:52 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com
-Subject: CVE Request -- evolution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/23/1
+Message-ID: <87wsbgommq.fsf@mid.deneb.enyo.de>
+Date: Mon, 23 Feb 2009 22:43:09 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: CVE request: mldonkey arbitrary file download vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve,
+mldonkey in version 2.9.7 and earlier permits remote attackers to
+download arbitrary files accessible to the mldonkey daemon, using
+crafted requests to the HTTP console.
 
-  the following evolution S/MIME signatures validation
-flaw (MITM) looks to desire a new CVE 2008 identifier:
+<https://savannah.nongnu.org/bugs/?25667>
 
-References:
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=508479
-https://bugzilla.redhat.com/show_bug.cgi?id=484925
-http://bugzilla.gnome.org/show_bug.cgi?id=564465
-
-Thanks, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
+(The proposed patch deals with this in a rather odd place.)
