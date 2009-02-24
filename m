@@ -1,40 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/25/1
-Message-ID: <4ABCD8C1.8090409@redhat.com>
-Date: Fri, 25 Sep 2009 16:50:41 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, Michal Novotny <minovotn@...hat.com>
-Subject: CVE Request -- Xen -- PyGrub
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/24/1
+Message-ID: <49A35CCC.3090607@redhat.com>
+Date: Tue, 24 Feb 2009 10:34:52 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: memory disclosure in SO_BSDCOMPAT gsopt
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve, vendors,
+Steven M. Christey wrote:
+> ======================================================
+> Name: CVE-2009-0676
+[...]
+> The sock_getsockopt function in net/core/sock.c in the Linux kernel
+> before 2.6.28.6 does not initialize a certain structure member, which
+> allows local users to obtain potentially sensitive information from
+> kernel memory via an SO_BSDCOMPAT getsockopt request.
 
-   Xen's PyGrub, when grub.conf was configured with password protection,
-did not check for the password at host boot time. An attacker, with physical
-access to the host, could use this flaw to change the OS booting configuration.
+The fix for CVE-2009-0676 (upstream commit df0bca04) is incomplete. Note 
+that the same problem of leaking kernel memory will reappear if someone 
+on some architecture uses struct timeval with some internal padding (for 
+example tv_sec 64-bit and tv_usec 32-bit) --- then, you are going to 
+leak the padded bytes to userspace.
 
-Upstream patches:
------------------
+net: amend the fix for SO_BSDCOMPAT gsopt infoleak
+http://marc.info/?l=linux-kernel&m=123540732700371&w=2
+http://marc.info/?l=linux-netdev&m=123543237010175&w=2
 
-http://xenbits.xensource.com/xen-unstable.hg?rev/8f783adc0ee3
-http://xenbits.xensource.com/staging/xen-unstable.hg?rev/a28c9c2fa8de
-http://xenbits.xensource.com/xen-unstable.hg?rev/e513d565c8f1
-http://xenbits.xensource.com/xen-unstable.hg?rev/67f1b8b32585
-http://xenbits.xensource.com/xen-unstable.hg?rev/168f0cfeded0
-
-Affected Xen versions:
-----------------------
-Issue confirmed in Xen-3.0.3, Xen-3.3.0 and Xen-3.3.1.
-
-References:
------------
-https://bugzilla.redhat.com/show_bug.cgi?id=525740
-https://bugzilla.redhat.com/show_bug.cgi?id=525740#c1 (PoC)
-
-Could you please allocate a new CVE id?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
+Thanks, Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
