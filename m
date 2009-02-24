@@ -1,45 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/01/2
-Message-Id: <1241174923.1472.8.camel@localhost>
-Date: Fri, 01 May 2009 06:48:43 -0400
-From: Jon Oberheide <jon@...rheide.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request (sort of): Quagga BGP crasher
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/24/2
+Message-ID: <20090224160444.GA18620@suse.de>
+Date: Tue, 24 Feb 2009 17:04:44 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE request: optipng security release
 Content-Type: text/plain; charset=utf-8
 
-Florian,
+Hi,
 
-On Fri, 2009-05-01 at 11:02 +0200, Florian Weimer wrote:
-> There's a crasher bug in Quagga's bgpd which can allegedly be
-> triggered by routes present in the global table.  See:
-> 
->   <http://thread.gmane.org/gmane.network.quagga.devel/6513>
-> 
-> I think we need a CVE for that, but I don't understand the problem yet
-> (and I can't reproduce it), so I can't come up with a concise
-> vulnerability description.
+According to http://optipng.sourceforge.net/
 
-Looks like the Quagga code in bgp_aspath.c is assuming that converting
-each ASN of the AS path to a string will be 5 bytes plus a space
-(#define ASN_STR_LEN (5 + 1)).  Therefore, it allocates (ASN_STR_LEN *
-the number of ASNs in the path segment) bytes to snprintf into when
-creating the pretty-print version of the AS path.
+optipng released OptiPNG 0.6.2 fixing
+"All current OptiPNG versions are known to be vulnerable to memory reallocation attacks, due to a bug in the GIF image reader. 
 
-This is all fine and dandy until we hit an AS path with 32-bit ASNs
-whose string representation can of course be longer than 5 bytes.  The
-len += snprintf()'s will return more bytes written than expected and
-then we'll hit our assert since we've written more bytes than originally
-allocated (str_size).
+Please allocate a CVE ID.
 
-Have you tried reproducing it with an AS path containing 32-bit ASNs (of
-value at least 100000)?
-
-Regards,
-Jon Oberheide
-
--- 
-Jon Oberheide <jon@...rheide.org>
-GnuPG Key: 1024D/F47C17FE
-Fingerprint: B716 DA66 8173 6EDD 28F6  F184 5842 1C89 F47C 17FE
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+Ciao, Marcus
