@@ -1,63 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/31/2
-Message-ID: <Pine.GSO.4.51.0903302126130.9303@faron.mitre.org>
-Date: Mon, 30 Mar 2009 21:26:18 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/25/1
+Message-ID: <Pine.GSO.4.51.0902242025360.22888@faron.mitre.org>
+Date: Tue, 24 Feb 2009 20:29:03 -0500 (EST)
 From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: phpMyAdmin
+Subject: new dns2tcp buffer overflow in 0.4.2?
 Content-Type: text/plain; charset=utf-8
 
 
+Various vuln databases reported a dns2tcp issue in November, including:
 
-======================================================
-Name: CVE-2009-1148
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1148
-Reference: MISC:http://phpmyadmin.svn.sourceforge.net/viewvc/phpmyadmin/branches/MAINT_3_1_3/phpMyAdmin/bs_disp_as_mime_type.php?r1=12303&r2=12302&pathrev=12303
-Reference: CONFIRM:http://www.phpmyadmin.net/home_page/security/PMASA-2009-1.php
+  http://secunia.com/advisories/32514/
 
-Directory traversal vulnerability in bs_disp_as_mime_type.php in the
-BLOB streaming feature in phpMyAdmin before 3.1.3.1 allows remote
-attackers to read arbitrary files via directory traversal sequences in
-the file_path parameter ($filename variable).
+Specifically, a buffer overflow in dns_decode() credited to John Lampe.
 
+This does not line up with CVE-2008-3910, which was supposedly fixed in
+0.4.1.
 
-======================================================
-Name: CVE-2009-1149
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1149
-Reference: MISC:http://phpmyadmin.svn.sourceforge.net/viewvc/phpmyadmin/branches/MAINT_3_1_3/phpMyAdmin/bs_disp_as_mime_type.php?r1=12303&r2=12302&pathrev=12303
-Reference: CONFIRM:http://www.phpmyadmin.net/home_page/security/PMASA-2009-1.php
+Other databases point here:
 
-CRLF injection vulnerability in bs_disp_as_mime_type.php in the BLOB
-streaming feature in phpMyAdmin before 3.1.3.1 allows remote attackers
-to inject arbitrary HTTP headers and conduct HTTP response splitting
-attacks via the (1) c_type and possibly (2) file_type parameters.
+  http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=504468
 
+which is only a fix to a changelog.  But for 0.4.2, the information is
+"Suppressed."  For 0.4.3 there's "Fix unsigned int pb and error in
+dns_decode (John Lampe)" but may be irrelevant since the claim is that the
+issu was fixed in 0.4.2.
 
-======================================================
-Name: CVE-2009-1150
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1150
-Reference: CONFIRM:http://phpmyadmin.svn.sourceforge.net/viewvc/phpmyadmin/trunk/phpMyAdmin/libraries/display_export.lib.php?r1=11986&r2=12302&pathrev=12302
-Reference: CONFIRM:http://www.phpmyadmin.net/home_page/security/PMASA-2009-2.php
+This Debian bug ID seems the relevant one:
 
-Multiple cross-site scripting (XSS) vulnerabilities in the export page
-(display_export.lib.php) in phpMyAdmin 2.11.x before 2.11.9.5 and 3.x
-before 3.1.3.1 allow remote attackers to inject arbitrary web script
-or HTML via the pma_db_filename_template cookie.
+  http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=504121
 
+which at least says "dns_decode.c contains a security flaw fixed in
+0.4.2."
 
-======================================================
-Name: CVE-2009-1151
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1151
-Reference: CONFIRM:http://phpmyadmin.svn.sourceforge.net/viewvc/phpmyadmin/branches/MAINT_2_11_9/phpMyAdmin/scripts/setup.php?r1=11514&r2=12301&pathrev=12301
-Reference: CONFIRM:http://www.phpmyadmin.net/home_page/security/PMASA-2009-3.php
+Can anyone confirm whether this is genuinely different from CVE-2008-3910?
 
-Static code injection vulnerability in setup.php in phpMyAdmin 2.11.x
-before 2.11.9.5 and 3.x before 3.1.3.1 allows remote attackers to
-inject arbitrary PHP code into a configuration file via the save
-action.
-
-
+Thanks,
+Steve
