@@ -1,40 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/16/3
-Message-ID: <20090416124549.1cdbef9f@redhat.com>
-Date: Thu, 16 Apr 2009 12:45:49 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: wietse@...cupine.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Re: Some fun with tcp_wrappers
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/25/3
+Message-ID: <3030251.195591235570223652.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 25 Feb 2009 08:57:03 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request - php (PHP BZ#27421)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 15 Apr 2009 14:53:22 -0400 (EDT) wietse@...cupine.org (Wietse
-Venema) wrote:
 
-> Wietse Venema:
-> > > "test-hostsctl servicename unknown IP unknown" is what some
-> > > applications do expecting tcp_wrappers to resolve IP to hostname.
-> > 
-> > I think that it would be a mistake to change a documented API that
+----- "Steven M. Christey" <coley@...us.mitre.org> wrote:
+
+> On Fri, 30 Jan 2009, Jan Lieskovsky wrote:
 > 
-> On the other hand, if you could add a new function under a new name
-> that does have the expected behavior, then there would be no
-> confusion, no risk of cross-platform applications breaking, and I
-> would withdraw my objection.
+> >   this PHP issue looks to desire a new CVE id.
+> >
+> > References:
+> > http://bugs.php.net/bug.php?id=27421
+> > https://bugzilla.redhat.com/show_bug.cgi?id=479272
+> >
+> 
+> What attack scenario exists for this issue?  One virtual-host user can
+> effectively DoS other virtual hosts running on the same Apache
+> instance?
+> 
 
-That does not sound like a viable alternative and is likely to damage
-portability lot more, let me explain:
+Sorry for the delay on responding to this.
 
-- Application upstreams will not (should not) use any API that is
-  vendor-specific extension and not included upstream.  Even if there
-  is some new upstream version, it might take years to get into wide
-  enough use to applications to use new API, and result in
-  incompatibility with old systems.
-
-- Applications change would be required.  If that is done, there's
-  little reason to change to new API instead of existing hosts_access.
-
-I fail to see benefits of new API, only greater risk.  Sorry.
+Yes, if one web user sets mbstring.func_overload = 7 in a .htaccess, it will
+effectively disable any other multibyte enabled sites on the same webserver.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+    JB
