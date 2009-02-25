@@ -1,33 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/26/2
-Message-ID: <20090826040751.GA20809@openwall.com>
-Date: Wed, 26 Aug 2009 08:07:51 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/25/4
+Message-Id: <200902251719.29845.rbu@gentoo.org>
+Date: Wed, 25 Feb 2009 17:19:26 +0100
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - kernel: information leak in sigaltstack
+Cc: Marcus Meissner <meissner@...e.de>
+Subject: Re: CVE request: optipng security release
 Content-Type: text/plain; charset=utf-8
 
-Steve,
+On Tuesday 24 February 2009, Marcus Meissner wrote:
+> Hi,
+>
+> According to http://optipng.sourceforge.net/
+>
+> optipng released OptiPNG 0.6.2 fixing
+> "All current OptiPNG versions are known to be vulnerable to memory
+> reallocation attacks, due to a bug in the GIF image reader.
 
-On Tue, Aug 18, 2009 at 04:54:43PM -0400, Steven M. Christey wrote:
-> On Tue, 4 Aug 2009, Eugene Teo wrote:
-> 
-> > do_sigaltstack: avoid copying 'stack_t' as a structure to user space
-> 
-> 
-> ======================================================
-> Name: CVE-2009-2847
-[...]
-> The do_sigaltstack function in kernel/signal.c in Linux kernel 2.6
-> before 2.6.31-rc5, when running on 64-bit systems, does not clear
-> certain padding bytes from a structure, which allows local users to
-> obtain sensitive information from the kernel stack via the sigaltstack
-> function.
+Note that this is not fixed in 0.6.2, but there is a patch to apply on 
+top of 0.6.2.
+0.6.2 was the release fixing CVE-2008-5101 (bmp issue).
 
-As far as I'm aware, this also affects 2.4 (I did not actively test for
-it, but the vulnerable code is there).  I've included a fix for it in
-2.4.37.5-ow1, and I expect that Willy will fix it in his next release
-(likely 2.4.37.6).
 
-Alexander
+Robert
+
+Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
