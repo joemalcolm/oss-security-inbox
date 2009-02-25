@@ -1,16 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/23/3
-Message-Id: <200901231703.09899.rbu@gentoo.org>
-Date: Fri, 23 Jan 2009 17:03:04 +0100
-From: Robert Buchholz <rbu@...too.org>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE request: Tor <0.2.0.33 Heap corruption
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/25/2
+Message-ID: <49A4A7A4.7040800@redhat.com>
+Date: Wed, 25 Feb 2009 10:06:28 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: memory disclosure in SO_BSDCOMPAT gsopt
 Content-Type: text/plain; charset=utf-8
 
-Tor claims to have fixed a platform-dependent heap corruption issue in 
-0.2.0.33, but they have not published details yet.
+Eugene Teo wrote:
+> Steven M. Christey wrote:
+>> ======================================================
+>> Name: CVE-2009-0676
+> [...]
+>> The sock_getsockopt function in net/core/sock.c in the Linux kernel
+>> before 2.6.28.6 does not initialize a certain structure member, which
+>> allows local users to obtain potentially sensitive information from
+>> kernel memory via an SO_BSDCOMPAT getsockopt request.
+> 
+> The fix for CVE-2009-0676 (upstream commit df0bca04) is incomplete. Note 
+> that the same problem of leaking kernel memory will reappear if someone 
+> on some architecture uses struct timeval with some internal padding (for 
+> example tv_sec 64-bit and tv_usec 32-bit) --- then, you are going to 
+> leak the padded bytes to userspace.
+> 
+> net: amend the fix for SO_BSDCOMPAT gsopt infoleak
+> http://marc.info/?l=linux-kernel&m=123540732700371&w=2
+> http://marc.info/?l=linux-netdev&m=123543237010175&w=2
 
-References:
-https://blog.torproject.org/blog/tor-0.2.0.33-stable-released
+Upstream commit: 50fee1dec5d71b8a14c1b82f2f42e16adc227f8b.
 
-Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
+Thanks, Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
