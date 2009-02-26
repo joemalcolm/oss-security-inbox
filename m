@@ -1,23 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/01/5
-Message-ID: <20090501232436.GE3643@redhat.com>
-Date: Fri, 1 May 2009 17:24:36 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/26/2
+Message-ID: <20090226231047.GO6712@severus.strandboge.com>
+Date: Thu, 26 Feb 2009 17:10:47 -0600
+From: Jamie Strandboge <jamie@...onical.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: file security issue
+Subject: Added protection in KMail when accessing URLs to executables
 Content-Type: text/plain; charset=utf-8
 
-A debian bug report indicates a vulnerability in file 5.x (4.x is not
-affected) due to a boundary error within cdf_read_sat().
+Ubuntu was contacted by upstream and a public bug reported [1] regarding
+an added protection[2] in KMail for when a user clicks on a link to an
+executable in an HTML mail. Before this patch, when a user clicked on
+such a link, KMail would prompt the user on whether or not to run the
+executable. If the user chose to execute it, KMail would simply run the
+executable. With the patch, if the user chooses to execute the code, KMail
+will instead launch a helper program (or prompt the user to pick one) to
+"view" the executable. Eg, if the user clicks the following URL in an HTML
+email:
+<a href="http://www.example.com/evil.desktop">For a good time, click me</a>
 
-References:
+KMail will now open a viewer (or prompt to choose a viewer) so the user
+can read the contents of the desktop file instead of executing it. This
+probably does not warrant a CVE because the user always had to
+explicitly tell KMail to execute the file, but Ubuntu will be releasing
+new packages with this patch, and a corresponding advisory.
 
-http://secunia.com/advisories/34881/
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=525820
-https://bugzilla.redhat.com/show_bug.cgi?id=497913
+Jamie
 
-Steve, could we get a CVE name assigned to this issue please?  Thanks.
+[1] https://bugs.launchpad.net/ubuntu/+source/kdepim/+bug/332069
+[2] http://websvn.kde.org/branches/KDE/4.1/kdepim/kmail/kmcommands.cpp?r1=927289&r2=927288&pathrev=927289
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (198 bytes)
