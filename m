@@ -1,28 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/07/3
-Message-ID: <20090907085234.GH1895@suse.de>
-Date: Mon, 7 Sep 2009 10:52:34 +0200
-From: Thomas Biege <thomas@...e.de>
-To: OSS-Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: viewvc: CVE request: XSS and illegal characters while printing name-value pairs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/01/1
+Message-Id: <200903020017.41042.steffen.joeris@skolelinux.de>
+Date: Mon, 2 Mar 2009 00:17:40 +1100
+From: Steffen Joeris <steffen.joeris@...lelinux.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE id request: dkim-milter
 Content-Type: text/plain; charset=utf-8
 
-Hello,
-I do not have any further details, just this changelog entries:
+Hi
 
-Version 1.1.2 (released 11-Aug-2009)
+I don't think anyone requested a CVE id for this yet.
+dkim-milter suffers is prone to a DoS attack via crafted or revoked public key 
+record in DNS.
 
-  * security fix: validate the 'view' parameter to avoid XSS attack
-  * security fix: avoid printing illegal parameter names and values
+Links:
 
-http://viewvc.tigris.org/source/browse/*checkout*/viewvc/tags/1.1.2/CHANGES
+http://sourceforge.net/tracker/index.php?func=detail&aid=2508602&group_id=139420&atid=744358
 
--- 
-Bye,
-     Thomas
--- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
--- 
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
+http://www.debian.org/security/2009/dsa-1728
+
+Could I please get a CVE id for this?
+
+Cheers
+Steffen
+
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
