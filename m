@@ -1,46 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/17/16
-Message-ID: <20090918012109.508bf65a@mail.netloc.info>
-Date: Fri, 18 Sep 2009 01:21:09 +0200
-From: Alex Legler <a3li@...too.org>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE request: VLC -- Stack-based buffer overflows in three demuxers
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/01/3
+Message-ID: <20090301142224.GA26274@falco>
+Date: Sun, 1 Mar 2009 15:22:24 +0100
+From: Raphael Marichez <falco@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE id request: Tor <0.2.0.34 multiple DoS
 Content-Type: text/plain; charset=utf-8
 
-Hey,
 
-just caught this at Secunia [1], can we please get a CVE?
+Hi,
 
-"Some vulnerabilities have been reported in VLC Media Player, which can
-be exploited by malicious people to potentially compromise a user's
-system.
+i don't think i saw a CVE reference for this :
+http://archives.seul.org/or/announce/Feb-2009/msg00000.html
+http://secunia.com/advisories/33880/
 
-1) A boundary error exists within the "ASF_ObjectDumpDebug()" function
-in modules/demux/asf/libasf.c. This can be exploited to cause a
-stack-based buffer overflow via a specially crafted ASF file.
+cheers,
 
-2) A boundary error exists within the "AVI_ChunkDumpDebug_level()"
-function in modules/demux/avi/libavi.c. This can be exploited to cause
-a stack-based buffer overflow via a specially crafted AVI file.
+-- 
+Raphaël Marichez aka Falco
 
-3) A boundary error exists within the "__MP4_BoxDumpStructure()"
-function in modules/demux/mp4/libmp4.c. This can be exploited to cause
-a stack-based buffer overflow via a specially crafted MP4 file."
 
-Commits containing the fixes:
-
-1)
-http://git.videolan.org/?p=vlc.git;a=commit;h=dfe7084e8cc64e9b7a87cd37065b59cba2064823
-
-2)
-http://git.videolan.org/?p=vlc.git;a=commit;h=861e374d03e6c60c7d3c98428c632fe3b9e371b2
-
-3)
-http://git.videolan.org/?p=vlc.git;a=commit;h=c5b02d011b8c634d041167f4d2936b55eca4d18d
-
-Thanks,
-Alex
-
-[1] http://secunia.com/advisories/36762/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+Content of type "application/pgp-signature" skipped
