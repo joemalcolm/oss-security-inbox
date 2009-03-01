@@ -1,35 +1,14 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/23/4
-Message-ID: <4B0A7D86.90808@redhat.com>
-Date: Mon, 23 Nov 2009 13:18:14 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/01/2
+Message-ID: <87hc2d40xy.fsf@mid.deneb.enyo.de>
+Date: Sun, 01 Mar 2009 18:17:45 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-CC: Thomas Biege <thomas@...e.de>
-Subject: Re: CVE request: php 5.3.1 - "max_file_uploads" [was: Re: CVE request: php 5.3.1 update]
+Subject: CVE id request: znc
 Content-Type: text/plain; charset=utf-8
 
-Eren Türkay wrote:
-> On Friday 20 November 2009 12:41:50 pm Thomas Biege wrote:
->> * Added "max_file_uploads" INI directive, which can be set to limit the
->> number of file uploads per-request to 20 by default, to prevent possible
->> DOS via temporary file exhaustion.
-> 
-> Bogdan Calin disclosed the details about that vulnerability on full-disclosure 
-> mailing list. He didn't disclosed his script but I wrote a PoC that works like 
-> a charm. It makes DoS possible for any server that runs PHP within 1 minute 
-> with a few requests.
-> 
-> Additionally, this vulnerability affects 5.2.11. I guess all products before 
-> PHP 5.3.1 are vulnerable.
-> 
-> I think this deserves CVE Id. Any ideas?
+ZNC before version 0.066 does not properly sanitize user input in
+configuration updates, allowing authenticated users to increase their
+privileges and gain shell access using a crafted POST request.
 
-   Josh, could you please allocate one?
-
-Also changed the topic to match only 'php 5.3.1 - "max_file_uploads"' thing,
-so it isn't lost in other mails.
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
+<http://en.znc.in/wiki/ChangeLog/0.066>
