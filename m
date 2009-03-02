@@ -1,43 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/16/1
-Message-ID: <4A5ECD5E.8060901@redhat.com>
-Date: Thu, 16 Jul 2009 14:49:02 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/02/1
+Message-Id: <200903021312.12765.steffen.joeris@skolelinux.de>
+Date: Mon, 2 Mar 2009 13:12:12 +1100
+From: Steffen Joeris <steffen.joeris@...lelinux.de>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-2009-1895 kernel: personality: fix PER_CLEAR_ON_SETID
+Subject: CVE id request: avahi
 Content-Type: text/plain; charset=utf-8
 
-Reported by Julien Tinnes.
+Hi
 
-"We have found that the current PER_CLEAR_ON_SETID mask on Linux doesn't
-include neither ADDR_COMPAT_LAYOUT, nor MMAP_PAGE_ZERO.
+A potential DoS attack for avahi-daemon was reported to us.
+Please see the bugreport[0] for further information and a patch proposal.
+Could we get a CVE id for this?
 
-The current mask is READ_IMPLIES_EXEC|ADDR_NO_RANDOMIZE.
+Cheers
+Steffen
 
-We believe it is important to add MMAP_PAGE_ZERO, because by using this
-personality it is possible to have the first page mapped inside a
-process running as setuid root.  This could be used in those scenarios:
+[0]: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=517683
 
-- Exploiting a NULL pointer dereference issue in a setuid root binary
-- Bypassing the mmap_min_addr restrictions of the Linux kernel: by
-running a setuid binary that would drop privileges before giving us
-control back (for instance by loading a user-supplied library), we could
-get the first page mapped in a process we control.  By further using
-mremap and mprotect on this mapping, we can then completely bypass the
-mmap_min_addr restrictions.
-
-Less importantly, we believe ADDR_COMPAT_LAYOUT should also be added
-since on x86 32bits it will in practice disable most of the address
-space layout randomization (only the stack will remain randomized)."
-
-Upstream commit:
-http://git.kernel.org/linus/f9fabcb58a6d26d6efde842d1703ac7cfa9427b6
-
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-1895
-http://blog.cr0.org/2009/06/bypassing-linux-null-pointer.html
-http://patchwork.kernel.org/patch/32598/
-http://marc.info/?l=linux-security-module&m=124724852000951&w=2
-
-Thanks, Eugene
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
