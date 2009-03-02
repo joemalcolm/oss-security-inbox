@@ -1,25 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/12/6
-Message-ID: <1596749503.695371242152928307.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 12 May 2009 14:28:48 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request (evolution)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/02/3
+Message-ID: <28fa9c5e0903012246g8ce28fbqbcf7fbae35ace542@mail.gmail.com>
+Date: Mon, 2 Mar 2009 14:46:44 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: kernel: x86-64: syscall-audit: 32/64 syscall hole
 Content-Type: text/plain; charset=utf-8
 
-Hello everyone,
+On x86-64, a 32-bit process (TIF_IA32) can switch to 64-bit mode with
+ljmp, and then use the "syscall" instruction to make a 64-bit system
+call.  A 64-bit process make a 32-bit system call with int $0x80.
 
-So there is a public bug about how Evolution sets permissions on folders in
-~/.evolution
+In both these cases, audit_syscall_entry() will use the wrong system
+call number table and the wrong system call argument registers.  This
+could be used to circumvent a syscall audit configuration that filters
+based on the syscall numbers or argument details.
 
-The current public bugs I know of are here:
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=526409
-http://bugzilla.gnome.org/show_bug.cgi?id=581604
-https://bugzilla.redhat.com/show_bug.cgi?id=498648
+Credit: Roland McGrath.
 
-This one probably needs some discussion with upstream before it gets fixed.
-The threat is fairly minor, and we don't want to do anything rash and end up
-breaking something.
-
--- 
-    JB
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=487990
+http://scary.beasts.org/security/CESA-2009-001.html
+http://lkml.org/lkml/2009/2/27/451 summary
+http://lkml.org/lkml/2009/2/27/452 syscall-audit
+http://lkml.org/lkml/2009/2/27/453 seccomp
