@@ -1,39 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/08/7
-Message-ID: <20090908230959.GH7304@outflux.net>
-Date: Tue, 8 Sep 2009 16:09:59 -0700
-From: Kees Cook <kees@...ntu.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE request - Debian/Ubuntu PAM auth module selection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/02/6
+Message-ID: <Pine.GSO.4.51.0903021747271.26325@faron.mitre.org>
+Date: Mon, 2 Mar 2009 17:49:55 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Eugene Teo <eugene@...hat.com>
+cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: memory disclosure in SO_BSDCOMPAT gsopt
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-I'd like to request a CVE for an issue that came up in the Debian and
-Ubuntu configuration tools used on PAM.  From the USN
-http://www.ubuntu.com/usn/usn-828-1:
+On Wed, 25 Feb 2009, Eugene Teo wrote:
 
- Russell Senior discovered that the system authentication module selection
- mechanism for PAM did not safely handle an empty selection. If an
- administrator had specifically removed the default list of modules or
- failed to chose a module when operating debconf in a very unlikely
- non-default configuration, PAM would allow any authentication attempt,
- which could lead to remote attackers gaining access to a system with
- arbitrary privileges. This did not affect default Ubuntu installations.
+> Eugene Teo wrote:
+> > [...]
+> > The fix for CVE-2009-0676 (upstream commit df0bca04) is incomplete. Note
+> > that the same problem of leaking kernel memory will reappear if someone
+> > on some architecture uses struct timeval with some internal padding (for
+> > example tv_sec 64-bit and tv_usec 32-bit) --- then, you are going to
+> > leak the padded bytes to userspace.
 
-Also tracked as:
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=519927
-https://bugs.launchpad.net/bugs/410171
+Is this going to require a separate CVE identifier?  If a new minor
+version of the kernel wasn't released yet, then I'd consider the fix to be
+little more than a couple patch-discussion messages in a single Bugzilla
+entry.
 
-This was a Debian and Ubuntu specific issue, and only Ubuntu had supported
-releases with this flaw present (the issue never made it to Debian
-stable).
-
-Thanks,
-
--Kees
-
--- 
-Kees Cook
-Ubuntu Security Team
+- Steve
