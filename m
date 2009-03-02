@@ -1,37 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/22/1
-Message-ID: <Pine.GSO.4.51.0905212022020.18536@faron.mitre.org>
-Date: Thu, 21 May 2009 20:22:21 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/02/4
+Message-ID: <49ABDC04.4040102@pardus.org.tr>
+Date: Mon, 02 Mar 2009 15:15:48 +0200
+From: Pinar Yanardag <pinar@...dus.org.tr>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: ctorrent
+Subject: CVE Request: mpfr (Buffer Overflow)
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-======================================================
-Name: CVE-2009-1759
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1759
-Reference: MILW0RM:8470
-Reference: URL:http://www.milw0rm.com/exploits/8470
-Reference: MLIST:[oss-security] 20090520 CVE request: ctorrent
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/05/20/3
-Reference: CONFIRM:http://dtorrent.svn.sourceforge.net/viewvc/dtorrent/dtorrent/trunk/btfiles.cpp?r1=296&r2=301&view=patch
-Reference: CONFIRM:http://sourceforge.net/tracker/?func=detail&aid=2782875&group_id=202532&atid=981959
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=501813
-Reference: BID:34584
-Reference: URL:http://www.securityfocus.com/bid/34584
-Reference: SECUNIA:34752
-Reference: URL:http://secunia.com/advisories/34752
-Reference: VUPEN:ADV-2009-1092
-Reference: URL:http://www.vupen.com/english/advisories/2009/1092
-Reference: XF:ctorrent-btfiles-bo(49959)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/49959
+A buffer overflow vulnerability has been fixed in the latest version of 
+mpfr. From GNU mpfr changelog [1]:
 
-Stack-based buffer overflow in the btFiles::BuildFromMI function
-(trunk/btfiles.cpp) in Enhanced CTorrent (aka dTorrent) 3.3.2 and
-probably earlier, and CTorrent 1.3.4, allows remote attackers to cause
-a denial of service (crash) and possibly execute arbitrary code via a
-Torrent file containing a long path.
+--->8---
+Changes from version 2.4.0 to version 2.4.1     
+* Security fix in mpfr_snprintf and mpfr_vsnprintf (buffer overflow).
+
+--->8---
+
+[1]: http://www.mpfr.org/mpfr-2.4.1
+
+Cheers,
+
+-- 
+Pinar Yanardag
+http://pinguar.org
+_________________________________________________________
+Pardus Security Team
+http://security.pardus.org.tr
 
 
