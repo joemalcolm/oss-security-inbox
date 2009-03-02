@@ -1,29 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/09/3
-Message-ID: <20090909162315.27a4a299@redhat.com>
-Date: Wed, 9 Sep 2009 16:23:15 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/02/2
+Message-ID: <28fa9c5e0903012244m557ec963w358917b1b66a9031@mail.gmail.com>
+Date: Mon, 2 Mar 2009 14:44:05 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- PostgreSQL
+Subject: CVE request: kernel: x86-64: seccomp: 32/64 syscall hole
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 09 Sep 2009 16:08:10 +0200 Jan Lieskovsky <jlieskov@...hat.com>
-wrote:
+On x86-64, a 32-bit process (TIF_IA32) can switch to 64-bit mode with
+ljmp, and then use the "syscall" instruction to make a 64-bit system
+call.  A 64-bit process make a 32-bit system call with int $0x80.
 
->    PostgreSQL upstream is on their security page
-> mentioning three security issues, which lack CVE ids:
-> 
-> http://www.postgresql.org/support/security.html
+In both these cases under CONFIG_SECCOMP=y, secure_computing() will
+use the wrong system call number table.  The fix is simple: test
+TS_COMPAT instead of TIF_IA32.
 
-Just a note: upstream page currently says the second issue is related
-to CVE-2007-2138, but our maintainer also active upstream reports it
-should say CVE-2007-6600.
+Credit: Chris Evans.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=522085#c1
-
-I can't confirm either atm, so just a heads-up to avoid possible
-confusion related to CVE wording.
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=487255
+http://scary.beasts.org/security/CESA-2009-001.html
+http://scary.beasts.org/security/CESA-2009-004.html
+http://lkml.org/lkml/2009/2/27/451 summary
+http://lkml.org/lkml/2009/2/27/452 syscall-audit
+http://lkml.org/lkml/2009/2/27/453 seccomp
+http://lkml.org/lkml/2009/2/28/23 seccomp follow-ups
