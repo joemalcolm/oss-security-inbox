@@ -1,17 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/09/1
-Message-ID: <87y6s1d5lk.fsf@mid.deneb.enyo.de>
-Date: Tue, 09 Jun 2009 13:11:35 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/03/1
+Message-ID: <28fa9c5e0903021654t7495f475wdfa37607aa9634cc@mail.gmail.com>
+Date: Tue, 3 Mar 2009 08:54:57 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Subject: Predictable Math.random() in browsers
+Cc: Eugene Teo <eugene@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: memory disclosure in  SO_BSDCOMPAT gsopt
 Content-Type: text/plain; charset=utf-8
 
-<http://www.trusteer.com/temporary-user-tracking-in-major-browsers>
-describes what essentially is a weakness in Math.random()---it's
-predictable and its state is shared across domains.
+On Tue, Mar 3, 2009 at 6:49 AM, Steven M. Christey
+<coley@...us.mitre.org> wrote:
+>
+> On Wed, 25 Feb 2009, Eugene Teo wrote:
+>
+>> Eugene Teo wrote:
+>> > [...]
+>> > The fix for CVE-2009-0676 (upstream commit df0bca04) is incomplete. Note
+>> > that the same problem of leaking kernel memory will reappear if someone
+>> > on some architecture uses struct timeval with some internal padding (for
+>> > example tv_sec 64-bit and tv_usec 32-bit) --- then, you are going to
+>> > leak the padded bytes to userspace.
+>
+> Is this going to require a separate CVE identifier?  If a new minor
+> version of the kernel wasn't released yet, then I'd consider the fix to be
+> little more than a couple patch-discussion messages in a single Bugzilla
+> entry.
 
-Contrary to the report, I'm more worried about the general
-consequences of weak random numbers.  Browsers should probably use a
-stronger PRNG which doesn't leak its state, so that the shared state
-doesn't matter.
+No, it shouldn't. Please use the same CVE name. Thanks.
+
+Eugene
