@@ -1,39 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/02/2
-Message-ID: <0911021136010.7514@mjc.redhat.com>
-Date: Mon, 2 Nov 2009 11:37:21 +0000 (GMT)
-From: Mark J Cox <mjc@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/04/1
+Message-ID: <49AE303F.4030701@redhat.com>
+Date: Wed, 04 Mar 2009 15:39:43 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: connector security bypass
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: memory disclosure in 	SO_BSDCOMPAT gsopt
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 2 Nov 2009, Eugene Teo wrote:
+Eugene Teo wrote:
+> On Tue, Mar 3, 2009 at 6:49 AM, Steven M. Christey
+> <coley@...us.mitre.org> wrote:
+>> On Wed, 25 Feb 2009, Eugene Teo wrote:
+>>
+>>> Eugene Teo wrote:
+>>>> [...]
+>>>> The fix for CVE-2009-0676 (upstream commit df0bca04) is incomplete. Note
+>>>> that the same problem of leaking kernel memory will reappear if someone
+>>>> on some architecture uses struct timeval with some internal padding (for
+>>>> example tv_sec 64-bit and tv_usec 32-bit) --- then, you are going to
+>>>> leak the padded bytes to userspace.
+>> Is this going to require a separate CVE identifier?  If a new minor
+>> version of the kernel wasn't released yet, then I'd consider the fix to be
+>> little more than a couple patch-discussion messages in a single Bugzilla
+>> entry.
+> 
+> No, it shouldn't. Please use the same CVE name. Thanks.
 
-> 1/ uvesafb/connector: Disallow unprivileged users to send netlink packets
-> upstream commit: cc44578b5a508889beb8ae3ccd4d2bbdf17bc86c
-> introduced in v2.6.24-rc1; fixed in v2.6.32-rc3
->
-> 2/ pohmelfs/connector: Disallow unprivileged users to configure pohmelfs
-> upstream commit: 98a5783af02f4c9b87b676d7bbda6258045cfc76
-> (staging/experimental)
->
-> 3/ dst/connector: Disallow unprivileged users to configure dst
-> upstream commit: 5788c56891cfb310e419c4f9ae20427851797431
-> (staging/experimental)
->
-> 4/ dm/connector: Only process connector packages from privileged processes
-> upstream commit: 24836479a126e02be691e073c2b6cad7e7ab836a
-> introduced in v2.6.31-rc1; fixed in v2.6.32-rc3
+But you might want to add the link to the new CVE-2009-0676 patch in:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0676
 
-> References:
-> http://secunia.com/advisories/37113/
-> http://xorl.wordpress.com/2009/10/31/linux-kernel-multiple-capabilities-missing-checks/
-
-I'm going to give one name to all four issues.  (Allowed as they are all 
-of flaw type 'missing capability checks', found by the same reporter, and 
-fixed at the same time).
-
-CVE-2009-3725
-
-Mark
+Thanks, Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
