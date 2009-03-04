@@ -1,38 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/11/1
-Message-ID: <936586014.298061257961724435.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 11 Nov 2009 12:48:44 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: coley <coley@...re.org>, serg@...ql.com
-Subject: CVE assignment and second opinion needed
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/04/2
+Message-ID: <8763ip7xis.fsf@mid.deneb.enyo.de>
+Date: Wed, 04 Mar 2009 23:07:07 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: kernel: memory disclosure in 	SO_BSDCOMPAT gsopt
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
+* Eugene Teo:
 
-So this one is a bit tricky.
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=555626
+> Eugene Teo wrote:
+>> On Tue, Mar 3, 2009 at 6:49 AM, Steven M. Christey
+>> <coley@...us.mitre.org> wrote:
+>>> On Wed, 25 Feb 2009, Eugene Teo wrote:
+>>>
+>>>> Eugene Teo wrote:
+>>>>> [...]
+>>>>> The fix for CVE-2009-0676 (upstream commit df0bca04) is incomplete. Note
+>>>>> that the same problem of leaking kernel memory will reappear if someone
+>>>>> on some architecture uses struct timeval with some internal padding (for
+>>>>> example tv_sec 64-bit and tv_usec 32-bit) --- then, you are going to
+>>>>> leak the padded bytes to userspace.
+>>> Is this going to require a separate CVE identifier?  If a new minor
+>>> version of the kernel wasn't released yet, then I'd consider the fix to be
+>>> little more than a couple patch-discussion messages in a single Bugzilla
+>>> entry.
+>>
+>> No, it shouldn't. Please use the same CVE name. Thanks.
+>
+> But you might want to add the link to the new CVE-2009-0676 patch in:
+> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0676
 
-There are almost two flaws here, certainly one. The issue really boils down to
-if /var/lib/mysql is world readable, it's possible for a local user who also
-has database access, and can guess a future database table name, could ensure
-that table will be a world writable file. That's an impressive runon sentence.
-
-So The question I have with respect to CVE assignment, is which part of this
-is worth of the ID. I'm thinking the directory permissions are possibly an
-issue, but by itself, isn't really a security flaw.
-
-The CREATE TABLE not fixing permissions if the file already exists is probably
-closer to the real problem. Being able to do a select into an outfile anywhere
-by default may also be an issue.
-
-I'm CCing Sergei Golubchik from MySQL who reported this to the packagers list
-so he can weigh in if I'm wrong (which is very possible).
-
-Also, Sergei, do you folks have a fix for this yet? I'm curious to see what
-you're fixing, which may help decide CVE assignment.
-
-Thanks.
-
--- 
-    JB
+BTW, the reproducer I saw in your bug tracker doesn't initialize the
+len field.  It only worked for me after I fixed that.
