@@ -1,36 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/05/3
-Message-ID: <20090805143054.GD3008@redhat.com>
-Date: Wed, 5 Aug 2009 08:30:54 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: Re: CVE request: XEmacs Multiple Integer Overflows
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/05/1
+Message-Id: <1236246953.3159.5.camel@dhcp-lab-164.englab.brq.redhat.com>
+Date: Thu, 05 Mar 2009 10:55:53 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com, Marcus Granado <smurca@...glemail.com>
+Subject: CVE Request -- pam
 Content-Type: text/plain; charset=utf-8
 
-* [2009-08-05 13:53:50 +0200] Thomas Biege wrote:
+Hello Steve,
 
->Hello,
->was a CVE-ID allocated for this issue in the meanwhile?
+  Marcus Granado recently reported a security issue in 
+libpam related to parsing of non-ascii usernames in
+the Pam configuration files. Attaching his report for
+more details.
 
-I don't believe so.  We've not seen one, at any rate.
+Affected version: pam <= 1.0.3
 
->On Thu, Jul 16, 2009 at 09:25:41AM +0200, Alex Legler wrote:
->> Hi,
->> 
->> I don't think we have a CVE for this/these issue(s) yet, so please
->> assign one/some:
->> 
->> The {tiff,png,jpeg}_instantiate() functions in glyphs-eimage.c contain
->> an integer overflow, possibly leading to a heap-based buffer overflow.
->> 
->> References:
->> Filed upstream as: http://tracker.xemacs.org/XEmacs/its/issue534
->> 
->> http://secunia.com/advisories/35348
->> http://www.vupen.com/english/advisories/2009/1666
->> https://bugs.gentoo.org/show_bug.cgi?id=275397
->> https://bugzilla.redhat.com/show_bug.cgi?id=511994
+Link to SCM repo: http://pam.cvs.sourceforge.net/viewvc/pam/Linux-PAM/libpam/pam_misc.c?view=log
+Patch: http://pam.cvs.sourceforge.net/viewvc/pam/Linux-PAM/libpam/pam_misc.c?r1=1.9&amp;r2=1.10&amp;view=patch
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+
+Could you please allocate a new CVE id for it?
+
+Thanks && regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+View attachment "pam_misc.txt" of type "text/plain" (4302 bytes)
