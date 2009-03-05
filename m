@@ -1,41 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/23/16
-Message-ID: <518516022.608081259010531168.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 23 Nov 2009 16:08:51 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/05/2
+Message-ID: <20090305151550.GA17819@logo.rdu.rpath.com>
+Date: Thu, 5 Mar 2009 10:15:50 -0500
+From: "Michael K. Johnson" <johnsonm@...th.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: mysql-5.1.41
+Subject: Re: lxc-sshd security issues?
 Content-Type: text/plain; charset=utf-8
 
-As best as I can tell, we only need one CVE id (two issues, but one already has
-an id).
+On Wed, Mar 04, 2009 at 05:30:33PM -0500, Michael K. Johnson wrote:
+> I have not received any response to this query upstream, and I
+> was wondering if anyone else has noticed this issue, and if so,
+> if they have any plans with regard to it.  rPath isn't shipping
+> lxc at this point, so we have no plans for a security advisory.
+> But does pre-configured account information including root and
+> user passwords bother anyone else here?
 
-MySQL clients before version 5.1.41 linked against OpenSSL would not properly
-check certificates presented by a MySQL server linked against yaSSL. This could
-possibly lead to a man in the middle type of attack on the SSL connection.
-
-http://bugs.mysql.com/bug.php?id=47320
-http://dev.mysql.com/doc/refman/5.1/en/news-5-1-41.html
-
-Thanks.
-
--- 
-    JB
-
-
------ "Oden Eriksson" <oeriksson@...driva.com> wrote:
-
-> Hello.
-> 
-> The new mysql release mentions two security issues that has been
-> addressed, 
-> anyone knows more about that? I guess it would need some CVE
-> assignment as 
-> well.
-> 
-> http://dev.mysql.com/doc/refman/5.1/en/news-5-1-41.html
-> 
-> -- 
-> Regards // Oden Eriksson
-> Security team manager - Mandriva
+I finally got the right contact info upstream, and we're talking
+about this, so expect it to not be a problem in future releases.
+For the record, it's dummy auth data, but still could be seen as a
+backdoor, and will probably be changed to user-configured value.
