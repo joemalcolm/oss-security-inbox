@@ -1,19 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/23/6
-Message-ID: <Pine.GSO.4.64.0912231650420.21134@faron.mitre.org>
-Date: Wed, 23 Dec 2009 16:50:56 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: acl 2.2.47 always follows symlinks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/06/1
+Message-ID: <28fa9c5e0903060027n5b8c3facw37516b1de21ae367@mail.gmail.com>
+Date: Fri, 6 Mar 2009 16:27:39 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: shm: fix shmctl(SHM_INFO) lockup with  !CONFIG_SHMEM
 Content-Type: text/plain; charset=utf-8
 
+According to the upstream commit
+a68e61e8ff2d46327a37b69056998b47745db6fa, shm_get_stat() assumes that
+the inode is a "struct shmem_inode_info", which is incorrect for
+!CONFIG_SHMEM (see fs/ramfs/inode.c: ramfs_get_inode() vs.
+mm/shmem.c: shmem_get_inode()).
 
-On Wed, 23 Dec 2009, Hanno Böck wrote:
+This bad assumption can cause shmctl(SHM_INFO) to lockup when
+shm_get_stat() tries to spin_lock(&info->lock).  Users of
+!CONFIG_SHMEM may encounter this lockup simply by invoking the 'ipcs'
+command.
 
-> setfacl/getfacl (part of package acl-2.2.47) contains a bug that it ignores
-> the --physical/-P parameter that means don't follow symlinks on -R
-> (recursive).
+Reported by Jiri Olsa back in February 2008:
+http://lkml.org/lkml/2008/2/29/74
 
-Use CVE-2009-4411, to be filled in later.
-
-- Steve
+Thanks, Eugene
