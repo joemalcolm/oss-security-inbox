@@ -1,23 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/03/2
-Message-ID: <20090903162450.1be846b2@redhat.com>
-Date: Thu, 3 Sep 2009 16:24:50 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/07/1
+Message-Id: <1236418746.9149.2.camel@localhost>
+Date: Sat, 07 Mar 2009 10:39:06 +0100
+From: Alex Legler <a3li@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: matthias.andree@....de, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: Re: "umbrella" CVE names (was: CVE request: fetchmail <= 6.3.10 SSL certificate NUL prefix verification bypass)
+Subject: CVE Request: Opera <9.64: Execution of arbitrary code
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 21 Aug 2009 09:28:08 +0200 "Matthias Andree"
-<matthias.andree@....de> wrote:
+Hi,
 
-> Mandriva Security (I think it was them - if I recall correctly) wrote
-> in their fetchmail security advisory something along the lines of  
-> "CVE-2009-2666, [...] related to CVE-2009-2408"
+can we please get a CVE for this issue:
+http://www.opera.com/support/kb/view/926/
+https://bugs.gentoo.org/show_bug.cgi?id=261032
 
-That's likely.  It seems CVE descriptions for this kind of issues all
-end with "a related issue to CVE-2009-2408." (thanks, Steven!) and
-Mandriva often uses CVE description with little modifications.
+Thanks, Alex
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+Download attachment "signature.asc" of type "application/pgp-signature" (198 bytes)
