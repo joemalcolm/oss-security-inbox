@@ -1,29 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/29/4
-Message-ID: <Pine.GSO.4.51.0901291213500.17006@faron.mitre.org>
-Date: Thu, 29 Jan 2009 12:20:14 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: Raphael Geissert <atomo64+debian@...il.com>
-Subject: Re:  Re: CVE id request: php5
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/08/2
+Message-Id: <200903081953.26545.hanno@hboeck.de>
+Date: Sun, 8 Mar 2009 19:53:26 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com, Steven Christey <coley@...us.mitre.org>
+Subject: CVE request: nucleus cms < 3.40 (3.33 and below) directory traversal
 Content-Type: text/plain; charset=utf-8
 
+http://www.nucleuscms.org/index.php/item/3051
 
-On Thu, 29 Jan 2009, Joe Orton wrote:
+Cite:
+"Address possible directory traversal vulnerability in the media manager under 
+certain configurations."
 
-> If the script is taking untrusted input data and passing it unsanitized
-> as the "key" argument to a dba_replace() call, it can override arbitrary
-> keys in the ini file anyway.  Truncating the ini file to zero length
-> seems like a less severe problem than being able to write (arbitrary?)
-> data to arbitrary keys.
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
-We don't have any formal criteria for this kind of thing, but in general,
-we ask whether there are realistic scenarios under which an attack can
-succeed, and if any additional privileges are gained versus normal
-methods.  These questions are particularly applicable to language
-interpreters and compilers.  Given this scenario, it seems unrealistic
-that an app would perform a dba_replace() with user-controlled input - and
-if it does, then it's a vuln in the application, not PHP itself.  So it
-doesn't seem to require a CVE.
-
-- Steve
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
