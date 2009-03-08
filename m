@@ -1,29 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/24/2
-Message-Id: <200908241910.49783.steffen.joeris@skolelinux.de>
-Date: Mon, 24 Aug 2009 19:10:45 +1000
-From: Steffen Joeris <steffen.joeris@...lelinux.de>
-To: "oss-security" <oss-security@...ts.openwall.com>, coley <coley@...re.org>
-Subject: CVE id request: pidgin
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/08/1
+Message-Id: <200903081950.36551.hanno@hboeck.de>
+Date: Sun, 8 Mar 2009 19:50:36 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com, Steven Christey <coley@...us.mitre.org>
+Subject: CVE request: dotclear < 2.1.5 XSS
 Content-Type: text/plain; charset=utf-8
 
-Hi
+http://fr.dotclear.org/blog/post/2009/02/05/Dotclear-2.1.5
 
-There seems to be another issue with pidgin. It does not enforce SSL/TLS and 
-seems to connect without encryption, although the box is ticked.
+Cite:
+>Un problème de sécurité (XSS) dans l'interface d'administration a été
+>corrigé. Merci à Julien pour sa vigilance. 
 
-See Debian Bug here:
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=542891
 
-This upstream commit was pointed out to me:
-http://developer.pidgin.im/viewmtn/revision/diff/312e056d702d29379ea61aea9d27765f127bc888/with/55897c4ce0787edc1e7721b7f4a9b5cbc8357279
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
-Reporter promised to check whether gaim is affected too, so I guess the 
-bugreport will be updated.
-
-Could I please get a CVE id for this?
-
-Cheers
-Steffen
-
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
