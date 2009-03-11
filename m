@@ -1,19 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/11/1
-Message-Id: <1239483982.4075.4.camel@localhost>
-Date: Sat, 11 Apr 2009 23:06:22 +0200
-From: Alex Legler <a3li@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: mpg123 Signedness Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/11/4
+Message-ID: <20090311181642.GA16681@redhat.com>
+Date: Wed, 11 Mar 2009 12:16:42 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com
+Subject: CVE request -- postgresql
 Content-Type: text/plain; charset=utf-8
 
-Can we please get a CVE for this issue:
+A stack overflow was found in how PostgreSQL handles conversion
+encoding.  This could allow an authenticated user to kill
+connections to the PostgreSQL server for a small amount of time,
+which could interupt transactions by other users/clients.
 
-http://bugs.gentoo.org/show_bug.cgi?id=265342
-http://secunia.com/advisories/34587/
-http://sourceforge.net/project/shownotes.php?release_id=673696
+References:
 
-Thanks,
-Alex
+http://archives.postgresql.org/pgsql-bugs/2009-02/msg00172.php
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=517405
+https://bugzilla.redhat.com/show_bug.cgi?id=488156
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+Could we get a CVE name for this please?  Thanks.
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
