@@ -1,27 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/13/5
-Message-ID: <Pine.GSO.4.51.0910131232390.11167@faron.mitre.org>
-Date: Tue, 13 Oct 2009 12:33:37 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security <oss-security@...ts.openwall.com>
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: Duplicate CVE assignment notification [was: CVE id request: django]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/11/3
+Message-Id: <200903111204.26800.steffen.joeris@skolelinux.de>
+Date: Wed, 11 Mar 2009 12:04:21 +1100
+From: Steffen Joeris <steffen.joeris@...lelinux.de>
+To: oss-security@...ts.openwall.com
+Cc: Pierre-Yves Rofes <py@...too.org>
+Subject: Re: CVE Request: courier-authlib < 0.62.0 SQL Injection
 Content-Type: text/plain; charset=utf-8
 
+Hi Pierre-Yves
 
-On Tue, 13 Oct 2009, Jan Lieskovsky wrote:
-
->    two CVE ids have been assigned for this issue:
+> From Changelog:
 >
-> CVE-2009-3695 and CVE-2009-3610.
+> "0.62.0
+> 2008-12-17  Sam Varshavchik  <mrsam@...rier-mta.com>
 >
-> Will take CVE-2009-3695 as the proper one, as it has description already.
-> CVE-2009-3610 should be rejected.
+> * authpgsqllib.c: Use PQescapeStringConn() instead of removing all
+>  apostrophes from query parameters. This fixes a potential SQL injection
+>  vulnerability if the Postgres database uses a non-Latin locale."
+>
+> References:
+> http://www.courier-mta.org/authlib/changelog.html
+> http://bugs.gentoo.org/show_bug.cgi?id=252576
+This should be CVE-2008-2380.
 
-I agree with this: keep CVE-2009-3695.
 
-CVE-2009-3695 was created off a Debian advisory that didn't list a CVE.
-I assume that CVE-2009-3610 was being used for pre-disclosure coordination
-by the Red Hat CNA.
+Cheers
+Steffen
 
-- Steve
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
