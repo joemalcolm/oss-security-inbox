@@ -1,32 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/02/3
-Message-ID: <4A4CAABB.8030407@redhat.com>
-Date: Thu, 02 Jul 2009 20:40:27 +0800
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/11/1
+Message-ID: <49B70710.5010705@redhat.com>
+Date: Wed, 11 Mar 2009 08:34:24 +0800
 From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
 CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-2009-1388 kernel: do_coredump() vs ptrace_start() deadlock
+Subject: CVE-2009-0028 Linux kernel minor signal handling vulnerability
 Content-Type: text/plain; charset=utf-8
 
-The OpenVZ Linux kernel team has found deadlock between ptrace and 
-coredump code. It affects 2.6.18 but does not affect the upstream kernel.
+Reported by Chris Evans:
+It's a relatively minor signal issue where a child can send its parent 
+process an arbitrary signal, even if the parent has a totally separate 
+real and effective user id. This could be a nuisance in the case where 
+long-running root daemons spawn direct child processes owned by 
+untrusted users [*]. There may even be worse consequences if privileged 
+processes have weak signal handling code for signals not normally 
+triggerable by untrusted users.
 
-"ptrace_start() spins waiting for child->state == 
-TASK_TRACED/TASK_STOPPED. If we race with the coredumping, we have to 
-wait until it completes.
+This is fixed in upstream kernel - 2d5516cbb9d
 
-If the tracer participates in coredumping too, we deadlock. 
-do_coredump() waits for tracer to exit and report 
-complete(mm->core_startup_done), the tracer spins in an endless loop.
-
-Change ptrace_start() to abort if child->mm->core_waiters != 0."
-
-Patch:
-https://bugzilla.redhat.com/attachment.cgi?id=346742
-
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-1388
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-0028
+http://scary.beasts.org/security/CESA-2009-002.html
+http://scarybeastsecurity.blogspot.com/2009/02/linux-kernel-minor-signal-vulnerability.html
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=2d5516cbb9daf7d0e342a2e3b0fc6f8c39a81205
 
 Thanks, Eugene
---
+-- 
 Eugene Teo / Red Hat Security Response Team
