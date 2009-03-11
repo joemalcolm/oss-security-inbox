@@ -1,26 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/17/1
-Message-ID: <20091117064917.GC31762@suse.de>
-Date: Tue, 17 Nov 2009 07:49:17 +0100
-From: Thomas Biege <thomas@...e.de>
-To: OSS-Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: CVE request: virtualbox-ose guest can trigger denial of service at host, mem consumption
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/11/2
+Message-ID: <49B70D5B.5090503@redhat.com>
+Date: Wed, 11 Mar 2009 09:01:15 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE-2009-0778 kernel: rt_cache leak
 Content-Type: text/plain; charset=utf-8
 
+Reported by Hector Herrera:
+A "REJECT" route in a software router (ip_forward = 1) based on CentOS 
+5.2 will cause the kernel to lose track of cached routes.  Once the 
+number of allocated route cache objects (as indicated by the value of 
+ip_dst_cache in /proc/slabinfo) reaches the value of 
+/proc/sys/net/ipv4/route/max_size - 1, the kernel will complain with a 
+'dst cache overflow' errors for every received packet and all network 
+connectivity will cease.
 
-Hi,
-just something I found in October:
-http://thetoms-random-thoughts.blogspot.com/2009/11/virtualbox-ose-guest-can-trigger-denial.html
+But was introduced in upstream commit 8b7817f3a95. It was later fixed in 
+upstream commit 7c0ecc4c4f.
 
-The kernel module can be used to allocate an arbitrary amount of memory.
+Workaround:
+- either remove or replace the "REJECT" route with a different 
+alternative such as 'ip route add 10.10.0.0/16 via 127.0.0.1'.
+- using iptables.
 
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-0778
 
+Thanks, Eugene
 -- 
-Bye,
-     Thomas
--- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
--- 
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
+Eugene Teo / Red Hat Security Response Team
