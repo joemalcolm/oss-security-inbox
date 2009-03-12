@@ -1,30 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/02/1
-Message-Id: <200904021340.04026.rbu@gentoo.org>
-Date: Thu, 2 Apr 2009 13:40:00 +0200
-From: Robert Buchholz <rbu@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/12/1
+Message-Id: <200903121119.18721.ludwig.nussel@suse.de>
+Date: Thu, 12 Mar 2009 11:19:18 +0100
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request -- ghostscript
+Cc: "Steven M. Christey" <coley@...re.org>
+Subject: Re: CVE request - horde, imp
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday 01 April 2009, Jan Lieskovsky wrote:
-> Hello Steve,
->
->   could you please allocate new CVE ids for the following two
-> Ghostscript issues:
->
-> 1, DoS (crash) in CCITTFax decoding filter
->    References:
->    https://bugzilla.redhat.com/show_bug.cgi?id=493442
->    https://bugzilla.redhat.com/show_bug.cgi?id=229174
->    -^ original report, so CVE-2007-XXXX will be needed
->    https://bugzilla.redhat.com/show_bug.cgi?id=493442#c1 (PoC)
+Mitre was not in CC I guess the request got lost. 
 
-The Tim Waugh patch has been incorporated here:
-http://svn.ghostscript.com/viewvc?view=rev&revision=8896
+Tomas Hoger wrote:
+> Hi!
+> 
+> New versions of horde and imp fix few security issues:
+> 
+> Horde 3.2.4 and 3.3.3:
+>      * SECURITY: Fix unescaped output in the tag cloud block
+>      * SECURITY: Fix unvalidated Horde_Image driver name
+> 
+> http://lists.horde.org/archives/announce/2009/000483.html
+> http://lists.horde.org/archives/announce/2009/000482.html
+> http://cvs.horde.org/diff.php/horde/docs/CHANGES?r1=1.515.2.413.2.3&r2=1.515.2.413.2.5&ty=h
+> 
+> Patches:
+> http://cvs.horde.org/diff.php/horde/services/portal/cloud_search.php?r1=1.1.2.2&r2=1.1.2.2.4.1
+> http://cvs.horde.org/diff.php/framework/Image/Image.php?r1=1.39.10.17&r2=1.39.10.17.4.1
+> 
+> 
+> Further details:
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=513265
+> 
+> 
+> IMP 4.2.2 and 4.3.3:
+> http://lists.horde.org/archives/announce/2009/000484.html
+> http://lists.horde.org/archives/announce/2009/000485.html
+> http://cvs.horde.org/diff.php/imp/docs/CHANGES?r1=1.699.2.301.2.1&r2=1.699.2.301.2.4&ty=h
+> 
+> Patches:
+> http://cvs.horde.org/diff.php/imp/pgp.php?r1=2.79.6.15&r2=2.79.6.15.2.1
+> http://cvs.horde.org/diff.php/imp/smime.php?r1=2.48.4.12&r2=2.48.4.12.4.1
+> http://cvs.horde.org/diff.php/imp/message.php?r1=2.560.4.56&r2=2.560.4.56.4.1
+> 
+> Debian bug:
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=513266
+> 
+> 
 
-
-Robert
-
-Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
+-- 
+ (o_   Ludwig Nussel
+ //\   
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
