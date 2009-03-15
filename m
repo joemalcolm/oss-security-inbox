@@ -1,33 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/06/2
-Message-ID: <1087982932.1032701257537195439.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 6 Nov 2009 14:53:15 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/15/1
+Message-Id: <200903160036.15579.rbu@gentoo.org>
+Date: Mon, 16 Mar 2009 00:36:13 +0100
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: mjc@...hat.com, coley <coley@...re.org>
-Subject: Re: CVE request for oCERT advisory 2009-013 (yTNEF/Evolution TNEF)
+Subject: CVE-2009-0876 (VirtualBox) references
 Content-Type: text/plain; charset=utf-8
 
------ "Steven M. Christey" <coley@...us.mitre.org> wrote:
-> On Wed, 28 Oct 2009, Mark J Cox wrote:
-> 
-> >
-> > I checked and oCERT don't have a name, so use CVE-2009-3721 for this.
-> 
-> This advisory covers both buffer overflows and path traversal in the same
-> data field.  While these may stem from "input validation" (as many issues
-> do), we would typically assign two separate CVE names, since the fix for a
-> buffer overflow would not necessarily fix the path traversal (or vice
-> versa).
-> 
-> Unless there's some deeper reason for using a single CVE, I think we should
-> assign separate CVEs here.  If you agree Mark, we can use CVE-2009-3721 for
-> the overflow, and you could assign a new CVE for the traversal.
-> 
+Sun released an advisory for VirtualBox referenced for CVE-2009-0876 
+recently: 
+http://sunsolve.sun.com/search/document.do?assetkey=1-66-254568-1
 
-Let's use CVE-2009-3887 for the traversal then.
+However, details are missing and patch information is (unintentionally) 
+obfuscated due to inconsistent revision numbers in the public svn vs. 
+internal build revisions.
 
-Thanks.
+The original bug report for Gentoo and upstream were here:
+https://bugs.gentoo.org/show_bug.cgi?id=260331
+http://www.virtualbox.org/ticket/3444
 
--- 
-    JB
+where the upsteam bug contains patch information.
+
+Note that it was brought to my attention the problem has been mentioned 
+in an earlier bug report, but it has not been escalated to the security 
+team or upstream:
+https://bugs.gentoo.org/show_bug.cgi?id=236692#c5
+
+
+Robert
+
+Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
