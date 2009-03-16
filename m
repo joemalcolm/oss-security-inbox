@@ -1,42 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/03/9
-Message-ID: <Pine.GSO.4.51.0906031224140.17965@faron.mitre.org>
-Date: Wed, 3 Jun 2009 12:24:40 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: ModSecurity / apache2 mod_security 2.5.9
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/16/1
+Message-Id: <200903162014.17553.hanno@hboeck.de>
+Date: Mon, 16 Mar 2009 20:14:17 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com, Steven Christey <coley@...us.mitre.org>
+Subject: CVE request: XSS in MUC logs of ejabberd
 Content-Type: text/plain; charset=utf-8
 
+http://www.process-one.net/en/ejabberd/release_notes/release_note_ejabberd_204
 
-======================================================
-Name: CVE-2009-1902
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1902
-Reference: BUGTRAQ:20090319 [ISecAuditors Security Advisories] ModSecurity < 2.5.9 remote Denial of Service
-Reference: URL:http://www.securityfocus.com/archive/1/501968
-Reference: MILW0RM:8241
-Reference: URL:http://www.milw0rm.com/exploits/8241
-Reference: CONFIRM:http://sourceforge.net/project/shownotes.php?release_id=667542&group_id=68846
-Reference: FEDORA:FEDORA-2009-2654
-Reference: URL:https://www.redhat.com/archives/fedora-package-announce/2009-March/msg00487.html
-Reference: FEDORA:FEDORA-2009-2686
-Reference: URL:https://www.redhat.com/archives/fedora-package-announce/2009-March/msg00529.html
-Reference: BID:34096
-Reference: URL:http://www.securityfocus.com/bid/34096
-Reference: OSVDB:52553
-Reference: URL:http://www.osvdb.org/52553
-Reference: SECUNIA:34256
-Reference: URL:http://secunia.com/advisories/34256
-Reference: SECUNIA:34311
-Reference: URL:http://secunia.com/advisories/34311
-Reference: VUPEN:ADV-2009-0703
-Reference: URL:http://www.vupen.com/english/advisories/2009/0703
-Reference: XF:modsecurity-multipart-dos(49212)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/49212
+Cite:
+# MUC: Prevent XSS in MUC logs by linkifying only a few known protocols
 
-The multipart processor in ModSecurity before 2.5.9 allows remote
-attackers to cause a denial of service (crash) via a multipart form
-datapost request with a missing part header name, which triggers a
-NULL pointer dereference.
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
-
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
