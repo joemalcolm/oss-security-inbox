@@ -1,70 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/27/2
-Message-ID: <4A6DB87B.1000801@redhat.com>
-Date: Mon, 27 Jul 2009 16:23:55 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/16/2
+Message-Id: <200903170017.58197.rbu@gentoo.org>
+Date: Tue, 17 Mar 2009 00:17:50 +0100
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: Wireshark <1.2.1 Multiple DoS
+Cc: Will Drewry <redpig@...rt.org>, cve@...too.org
+Subject: Re: [oCERT-2008-015] glib and glib-predecessor heap overflows
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve,
+On Thursday 12 March 2009, Will Drewry wrote:
+> #2008-015 glib and glib-predecessors heap overflows
+>
+> Description:
+>
+> Base64 encoding and decoding functions in glib suffer from
+> vulnerabilities during memory allocation which may result in
+> arbitrary code execution when processing large strings.  A number of
+> other GNOME-related applications which predate glib are vulnerable
+> due to the commonality of this flawed code.
+...
+> (older versions affected only)
+> libsoup < 2.2.x
+> libsoup < 2.24
+> evolution-data-server < 2.24.5
 
-   any progress while splitting this CVE id into two different ones?
-(or will we need to address the problem of different vulnerable 
-Wireshark versions in relevant dissectors in some other way?)
+Evolution Data Server is not affected since version 2.21.1, as it uses 
+GLib's base64 functions. Obviously, using a vulnerable GLib with a 
+current Evolution Data Server still presents a vulnerable setup -- 
+however the advisory and CVE entry should not reflect that as a 
+vulnerability in Evolution Data Server 2.21.1 to 2.24.5.
 
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+References to changelog entries are in our bug report:
+https://bugs.gentoo.org/show_bug.cgi?id=262555
 
-Jan Lieskovsky wrote:
-> Hello Steve, vendors,
-> 
->   1, thank you for the prompt assignment. 
-> 
->   2, what's related to:
-> 
->     Name: CVE-2009-2560
->     Status: Candidate
->     URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2560
->     Final-Decision: 
->     Interim-Decision: 
->     Modified: 
->     Proposed: 
->     Assigned: 20090721
->     Category: 
->     Reference: CONFIRM:http://www.wireshark.org/security/wnpa-sec-2009-04.html
->     Reference: BID:35748
->     Reference: URL:http://www.securityfocus.com/bid/35748
->     Reference: SECUNIA:35884
->     Reference: URL:http://secunia.com/advisories/35884
->     Reference: VUPEN:ADV-2009-1970
->     Reference: URL:http://www.vupen.com/english/advisories/2009/1970
-> 
->     Multiple unspecified vulnerabilities in Wireshark 1.2.0 allow remote
->     attackers to cause a denial of service (crash) via unspecified vectors
->     in the (1) Bluetooth L2CAP, (2) RADIUS, or (3) MIOP dissectors.
-> 
->     This one will need to be split into two different ones, because:
-> 
->     a, the Bluetooth L2CAP and MIOP dissectors flaws are affecting only
->        version Wireshark 1.2.0 (as mentioned in upstream's 
->        wnpa-sec-2009-04.html)
-> 
->     b, but the RADIUS dissector issue affects also prior versions of
->        Wireshark -- issue / crash confirmed also in upstreams 
->        Wireshark-1.0.8.
-> 
->   Could you please split the CVE-2009-2560 into two CVE ids?
->   (one for the L2CAP, MIOP dissectors, other one for
->    the RADIUS).
-> 
-> Thanks && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
-> 
-> P.S.: Affected Wireshark versions in other CVE identifiers
->       assigned within this update are sane.
-> 
 
+Robert
+
+Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
