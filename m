@@ -1,37 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/17/5
-Message-ID: <20090417161901.GE19186@severus.strandboge.com>
-Date: Fri, 17 Apr 2009 11:19:01 -0500
-From: Jamie Strandboge <jamie@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/17/1
+Message-ID: <Pine.GSO.4.51.0903162104230.1541@faron.mitre.org>
+Date: Mon, 16 Mar 2009 21:04:52 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org, team@...urity.debian.org
-Subject: Re: CVE request: apt
+Subject: Re: CVE id request: tinydns crafted zone file cache poisoning vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 08 Apr 2009, Jamie Strandboge wrote:
 
-> Summary
-> -------
-> Systems in certain timezones with automatic updates enabled won't be
-> upgraded on the first day of DST and some systems in affected timezones
-> could end up with automatic updates being disabled permanently. Normal
-> usage of apt is not affected.
-> 
+======================================================
+Name: CVE-2009-0858
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0858
+Reference: BUGTRAQ:20090226 djbdns misformats some long response packets; patch and example attack
+Reference: URL:http://www.securityfocus.com/archive/1/archive/1/501294/100/0/threaded
+Reference: BUGTRAQ:20090228 Re: djbdns misformats some long response packets; patch and example attack
+Reference: URL:http://www.securityfocus.com/archive/1/archive/1/501340/100/0/threaded
+Reference: BUGTRAQ:20090305 Re: djbdns misformats some long response packets; patch and example attack
+Reference: URL:http://www.securityfocus.com/archive/1/archive/1/501479/100/0/threaded
+Reference: MLIST:[dns] 20090225 djbdns misformats some long response packets; patch and example
+Reference: URL:http://marc.info/?l=djbdns&m=123554945710038
+Reference: MLIST:[dns] 20090304 djbdns<=1.05 lets AXFRed subdomains overwrite domains
+Reference: URL:http://marc.info/?l=djbdns&m=123613000920446&w=2
+Reference: MISC:http://it.slashdot.org/article.pl?sid=09/03/05/2014249
+Reference: MISC:http://securityandthe.net/2009/03/05/security-issue-in-djbdns-confirmed/
+Reference: BID:33937
+Reference: URL:http://www.securityfocus.com/bid/33937
+Reference: XF:djbdns-response-packet-spoofing(49003)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/49003
 
-In addition to my original request, can we have one more for this bug:
-https://launchpad.net/bugs/356012
+The response_addname function in response.c in Daniel J. Bernstein
+djbdns 1.05 and earlier does not constrain offsets in the required
+manner, which allows remote attackers, with control over a third-party
+subdomain served by tinydns and axfrdns, to trigger DNS responses
+containing arbitrary records via crafted zone data for this subdomain.
 
-"APT does not properly handle expired or revoked key signatures". This
-affects apt < 0.7.21.
 
-Basically, if a repository is signed with only a revoked or expired key,
-and gpgv reports VALIDSIG, apt considers it to be properly signed. apt
-should check for GOODSIG, not VALIDSIG. Patch is in the bug and this is
-already fixed in Debian sid and Ubuntu 9.04.
-
-Jamie
-
--- 
-Jamie Strandboge             | http://www.canonical.com
-
-Download attachment "signature.asc" of type "application/pgp-signature" (198 bytes)
