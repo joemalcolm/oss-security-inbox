@@ -1,23 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/24/2
-Message-ID: <20090324144725.GA4170@redhat.com>
-Date: Tue, 24 Mar 2009 08:47:25 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/17/8
+Message-ID: <20090317202523.GA3585@galadriel.inutil.org>
+Date: Tue, 17 Mar 2009 21:25:24 +0100
+From: Moritz Muehlenhoff <jmm@...til.org>
 To: oss-security@...ts.openwall.com
 Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request -- ucd-snmp / net-snmp, libnss-ldapd / nss_ldap
+Subject: Re: CVE request -- firefox, vlc, WeeChat
 Content-Type: text/plain; charset=utf-8
 
-* [2009-03-23 13:21:42 +0100] Jan Lieskovsky wrote:
+Jan Lieskovsky wrote:
+>   3, WeeChat -- new upstream release 0.2.6.1 with one security
+>                 fix included -- DoS (crash) when receiving special 
+>                 characters in IRC messages
+> 
+>      References:
+>      http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=519940
+>      http://weechat.flashtux.org/download.php
+>      https://savannah.nongnu.org/bugs/index.php?25862
 
->2, libnss-ldapd / nss_ldap: LDAP service configuration file
->                                 shipped with world readable permissions
->   References: 
->   https://bugzilla.redhat.com/show_bug.cgi?id=491623
->   http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=520476
+This one has been assigned CVE-2009-0661 from the Debian CNA pool
+in the mean time.
 
-On a side note, this is pretty specific to libnss-ldapd and not so much
-nss_ldap.
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+Cheers,
+        Moritz
