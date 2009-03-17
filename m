@@ -1,35 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/01/6
-Message-ID: <20091201221857.GB7274@inutil.org>
-Date: Tue, 1 Dec 2009 23:18:57 +0100
-From: Moritz Muehlenhoff <jmm@...til.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/17/3
+Message-ID: <Pine.GSO.4.51.0903171247580.11821@faron.mitre.org>
+Date: Tue, 17 Mar 2009 12:48:02 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: Re: Need more information on recent poppler issues
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request -- postgresql
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Dec 01, 2009 at 08:37:54AM +0100, Tomas Hoger wrote:
-> On Mon, 30 Nov 2009 20:08:56 -0500 (EST) "Steven M. Christey"
-> <coley@...us.mitre.org> wrote:
-> 
-> > 
-> > DSA-1941 lists three reserved CVE entries for Poppler issues, but there
-> > aren't any more details, which makes it difficult to create CVE
-> > descriptions.  Specifically, CVE-2009-3906, CVE-2009-3907, and
-> > CVE-2009-3908 don't have any details as far as I can tell.
-> > 
-> > Can anybody help?
-> 
-> They look like typos to me.  That DSA lists 7 CVE-2009-390x CVEs, while
-> it should probably list CVE-2009-3*6*0x ones.  CVE-2009-390[345] are
-> public and for unrelated applications.
 
-Yes, that is correct (and has been fixed in the Debian Security Tracker
-a few days ago: http://security-tracker.debian.org/tracker/source-package/poppler)
+======================================================
+Name: CVE-2009-0922
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0922
+Reference: MLIST:[oss-security] 20090311 CVE request -- postgresql
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/03/11/4
+Reference: MLIST:[pgsql-bugs] 20090227 BUG #4680: Server crashed if using wrong (mismatch) conversion functions
+Reference: URL:http://archives.postgresql.org/pgsql-bugs/2009-02/msg00172.php
+Reference: MLIST:[pgsql-bugs] 20090227 Re: BUG #4680: Server crashed if using wrong (mismatch) conversion functions
+Reference: URL:http://archives.postgresql.org//pgsql-bugs/2009-02/msg00176.php
+Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=517405
+Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=488156
 
-I blame it on the new console mouse mode in Emacs 23 which broke copy&paste
-from a different tty with GPM ;-) (Disabling gpm-mouse-mode helps, as I
-found out later.)
+PostgreSQL 8.3.6 allows remote authenticated users to cause a denial
+of service (stack consumption) via mismatched encoding conversion
+requests.
 
-Cheers,
-        Moritz
+
