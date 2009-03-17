@@ -1,39 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/16/10
-Message-ID: <535657115.479131255721782728.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 16 Oct 2009 15:36:22 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: viewvc: CVE request: XSS and illegal characters while printing name-value pairs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/17/4
+Message-Id: <1237317823.17155.10.camel@dhcp-lab-164.englab.brq.redhat.com>
+Date: Tue, 17 Mar 2009 20:23:43 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE request -- firefox, vlc, WeeChat
 Content-Type: text/plain; charset=utf-8
 
-Plese use these ids:
+Hello Steve,
 
-CVE-2009-3618 viewvc XSS (rev 2215)
-CVE-2009-3619 viewvc print illegal parameter names unsafely (rev 2218)
+  1, the following DoS (crash) and null pointer dereference
+     has been recently reported against firefox-3.0.7
 
--- 
-    JB
+     References:
+     http://bugs.gentoo.org/show_bug.cgi?id=262704
+     https://bugzilla.mozilla.org/show_bug.cgi?id=456727
+     http://www.milw0rm.com/exploits/8219
+     https://bugzilla.mozilla.org/show_bug.cgi?id=448329
 
+  2, vlc 0.9.8a remote DoS (hang)
+     
+     References:
+     http://bugs.gentoo.org/show_bug.cgi?id=262708
+     http://milw0rm.com/exploits/8213
 
------ "Ludwig Nussel" <ludwig.nussel@...e.de> wrote:
+  3, WeeChat -- new upstream release 0.2.6.1 with one security
+                fix included -- DoS (crash) when receiving special 
+                characters in IRC messages
 
-> Thomas Biege wrote:
-> > Version 1.1.2 (released 11-Aug-2009)
-> > 
-> >   * security fix: validate the 'view' parameter to avoid XSS attack
-> >   * security fix: avoid printing illegal parameter names and values
-> > 
-> >
-> http://viewvc.tigris.org/source/browse/*checkout*/viewvc/tags/1.1.2/CHANGES
-> 
-> CVE request dropped off the radar I guess.
-> 
-> cu
-> Ludwig
-> 
-> -- 
->  (o_   Ludwig Nussel
->  //\   
->  V_/_  http://www.suse.de/
-> SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+     References:
+     http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=519940
+     http://weechat.flashtux.org/download.php
+     https://savannah.nongnu.org/bugs/index.php?25862
+
+Could you please allocate CVE identifiers for these issues?
+
+Thanks, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
