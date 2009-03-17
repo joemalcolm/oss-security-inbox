@@ -1,23 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/09/2
-Message-ID: <20090409121554.4ddabaf2@redhat.com>
-Date: Thu, 9 Apr 2009 12:15:54 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/17/5
+Message-ID: <Pine.GSO.4.51.0903171538420.17171@faron.mitre.org>
+Date: Tue, 17 Mar 2009 15:51:09 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: clamav clamd and clamscan DoS and bypass by malformated archive
+Subject: Re: CVE-2009-0876 (VirtualBox) references
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 7 Apr 2009 14:08:15 +0200 Thomas Biege <thomas@...e.de> wrote:
 
-> These two bugs possibly need a CVE-ID.
+On Tue, 17 Mar 2009, Nico Golde wrote:
 
-Upstream 0.95.1 seems to fix at least 2 other issues that may be of
-interest:
+> Any reason the CVE description says "Unspecified
+> vulnerability...via unknown vectors"?
 
-https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1552
-https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1553
+This was based on the original Sun alert.  I cleaned up the description
+yesterday, and the CVE web site was updated today.
 
-svn diff -c 5032 http://svn.clamav.net/svn/clamav-devel/
+> Looking at the Gentoo bug report[0] it seems obvious to me
+> that this is caused by insecurely loading shared libraries
+> so you can inject your own shared lib code.
+>
+> [0] https://bugs.gentoo.org/show_bug.cgi?id=260331#c0
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+It wasn't particularly obvious to me.  I may be getting hung up on the use
+of hardlinks.
+
+Is the problem that the executable includes a "." in its library path
+(presumably DT_RPATH), and that path isn't cleansed until later during
+program execution?  If it's just that, then the use of a hardlink doesn't
+seem to be essential - the attacker could run the program from their own
+directory.  Or, is it that the executable eventually removes "." from its
+path, but not before some libraries have already been loaded?
+
+- Steve
