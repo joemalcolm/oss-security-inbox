@@ -1,26 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/02/3
-Message-ID: <28fa9c5e0903012246g8ce28fbqbcf7fbae35ace542@mail.gmail.com>
-Date: Mon, 2 Mar 2009 14:46:44 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel: x86-64: syscall-audit: 32/64 syscall hole
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/17/9
+Message-ID: <Pine.GSO.4.51.0903171701180.17171@faron.mitre.org>
+Date: Tue, 17 Mar 2009 17:01:50 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Ludwig Nussel <ludwig.nussel@...e.de>
+cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...re.org>
+Subject: Re: CVE request - horde, imp
 Content-Type: text/plain; charset=utf-8
 
-On x86-64, a 32-bit process (TIF_IA32) can switch to 64-bit mode with
-ljmp, and then use the "syscall" instruction to make a 64-bit system
-call.  A 64-bit process make a 32-bit system call with int $0x80.
 
-In both these cases, audit_syscall_entry() will use the wrong system
-call number table and the wrong system call argument registers.  This
-could be used to circumvent a syscall audit configuration that filters
-based on the syscall numbers or argument details.
+======================================================
+Name: CVE-2009-0930
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0930
+Reference: MLIST:[announce] 20090127 IMP 4.2.2 (final)
+Reference: URL:http://lists.horde.org/archives/announce/2009/000484.html
+Reference: MLIST:[announce] 20090127 IMP 4.3.3 (final)
+Reference: URL:http://lists.horde.org/archives/announce/2009/000485.html
+Reference: CONFIRM:http://cvs.horde.org/co.php/imp/docs/CHANGES?r=1.699.2.301.2.3
+Reference: CONFIRM:http://cvs.horde.org/co.php/imp/docs/CHANGES?r=1.699.2.375
+Reference: BID:33492
+Reference: URL:http://www.securityfocus.com/bid/33492
+Reference: SECUNIA:33719
+Reference: URL:http://secunia.com/advisories/33719
 
-Credit: Roland McGrath.
+Multiple cross-site scripting (XSS) vulnerabilities in Horde IMP
+before 4.2.2 and 4.3.3 allow remote attackers to inject arbitrary web
+script or HTML via unspecified vectors to (1) smime.php, (2) pgp.php,
+and (3) message.php.
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=487990
-http://scary.beasts.org/security/CESA-2009-001.html
-http://lkml.org/lkml/2009/2/27/451 summary
-http://lkml.org/lkml/2009/2/27/452 syscall-audit
-http://lkml.org/lkml/2009/2/27/453 seccomp
+
+======================================================
+Name: CVE-2009-0931
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0931
+Reference: MLIST:[announce] 20090127 Horde 3.2.4 (final)
+Reference: URL:http://lists.horde.org/archives/announce/2009/000483.html
+Reference: MLIST:[announce] 20090127 Horde 3.3.3 (final)
+Reference: URL:http://lists.horde.org/archives/announce/2009/000482.html
+Reference: MLIST:[announce] 20090127 Horde Groupware 1.1.5 (final)
+Reference: URL:http://lists.horde.org/archives/announce/2009/000486.html
+Reference: CONFIRM:http://cvs.horde.org/co.php/groupware/docs/groupware/CHANGES?r=1.28.2.5
+Reference: CONFIRM:http://cvs.horde.org/co.php/horde/docs/CHANGES?r=1.515.2.413.2.5
+Reference: CONFIRM:http://cvs.horde.org/co.php/horde/docs/CHANGES?r=1.515.2.503
+Reference: BID:33491
+Reference: URL:http://www.securityfocus.com/bid/33491
+Reference: SECUNIA:33695
+Reference: URL:http://secunia.com/advisories/33695
+
+Cross-site scripting (XSS) vulnerability in the tag cloud search
+script (horde/services/portal/cloud_search.php) in Horde before 3.2.4
+and 3.3.3, and Horde Groupware before 1.1.5, allows remote attackers
+to inject arbitrary web script or HTML via unspecified vectors.
+
+
+======================================================
+Name: CVE-2009-0932
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0932
+Reference: MLIST:[announce] 20090127 Horde 3.2.4 (final)
+Reference: URL:http://lists.horde.org/archives/announce/2009/000483.html
+Reference: MLIST:[announce] 20090127 Horde 3.3.3 (final)
+Reference: URL:http://lists.horde.org/archives/announce/2009/000482.html
+Reference: MLIST:[announce] 20090127 Horde Groupware 1.1.5 (final)
+Reference: URL:http://lists.horde.org/archives/announce/2009/000486.html
+Reference: CONFIRM:http://cvs.horde.org/co.php/groupware/docs/groupware/CHANGES?r=1.28.2.5
+Reference: CONFIRM:http://cvs.horde.org/co.php/horde/docs/CHANGES?r=1.515.2.413.2.5
+Reference: CONFIRM:http://cvs.horde.org/co.php/horde/docs/CHANGES?r=1.515.2.503
+Reference: BID:33491
+Reference: URL:http://www.securityfocus.com/bid/33491
+Reference: SECUNIA:33695
+Reference: URL:http://secunia.com/advisories/33695
+
+Directory traversal vulnerability in framework/Image/Image.php in
+Horde before 3.2.4 and 3.3.3 and Horde Groupware before 1.1.5 allows
+remote attackers to include and execute arbitrary local files via
+directory traversal sequences in the Horde_Image driver name.
+
+
