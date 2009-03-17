@@ -1,29 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/26/3
-Message-ID: <20090126200744.GP21473@genesis.frugalware.org>
-Date: Mon, 26 Jan 2009 21:07:44 +0100
-From: Miklos Vajna <vmiklos@...galware.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/17/7
+Message-ID: <Pine.GSO.4.51.0903171624470.17171@faron.mitre.org>
+Date: Tue, 17 Mar 2009 16:24:54 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request -- Linux kernel irda driver buffer overflow
+cc: Steven Christey <coley@...us.mitre.org>
+Subject: Re: CVE request: nucleus cms < 3.40 (3.33 and below) directory traversal
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-A buffer overflow has been recently fixed in the Linux kernel irda
-driver.
+======================================================
+Name: CVE-2009-0929
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0929
+Reference: CONFIRM:http://www.nucleuscms.org/index.php/item/index.php/item/3051
+Reference: SECUNIA:34180
+Reference: URL:http://secunia.com/advisories/34180
+Reference: VUPEN:ADV-2009-0637
+Reference: URL:http://www.vupen.com/english/advisories/2009/0637
+Reference: XF:nucleuscms-mediamanager-directory-traversal(49142)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/49142
 
-Upstream bug:
+Directory traversal vulnerability in the media manager in Nucleus CMS
+before 3.40 allows remote attackers to read arbitrary files via
+unknown vectors.
 
-http://bugzilla.kernel.org/show_bug.cgi?id=12397
 
-Upstream fix:
-
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=2950e952920811be465ec95c6b56f03dc66a05c0
-
-From a quick analysis it was introduced in commit
-8ef80aef118e405f2b6505f623830e6e73224f85, so versions >= 2.6.18 are
-affected.
-
-Thanks.
-
-Content of type "application/pgp-signature" skipped
