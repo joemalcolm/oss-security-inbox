@@ -1,36 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/12/1
-Message-ID: <20090812133747.625a78f1@neon>
-Date: Wed, 12 Aug 2009 13:37:47 +0200
-From: Alex Legler <a3li@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/17/2
+Message-ID: <20090317152320.GJ19038@ngolde.de>
+Date: Tue, 17 Mar 2009 16:23:20 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: phpgroupware
+Subject: Re: CVE-2009-0876 (VirtualBox) references
 Content-Type: text/plain; charset=utf-8
 
-Hey,
+Hi,
+* Robert Buchholz <rbu@...too.org> [2009-03-16 01:57]:
+> Sun released an advisory for VirtualBox referenced for CVE-2009-0876 
+> recently: 
+> http://sunsolve.sun.com/search/document.do?assetkey=1-66-254568-1
+> 
+> However, details are missing and patch information is (unintentionally) 
+> obfuscated due to inconsistent revision numbers in the public svn vs. 
+> internal build revisions.
+> 
+> The original bug report for Gentoo and upstream were here:
+> https://bugs.gentoo.org/show_bug.cgi?id=260331
+[...] 
+Any reason the CVE description says "Unspecified 
+vulnerability...via unknown vectors"?
 
-can I please get a CVE/CVEs for these issues:
+Looking at the Gentoo bug report[0] it seems obvious to me
+that this is caused by insecurely loading shared libraries 
+so you can inject your own shared lib code.
 
-1) Local file disclosure via the "csvfile" parameter to
-addressbook/csv_import.php
+[0] https://bugs.gentoo.org/show_bug.cgi?id=260331#c0
 
-2) SQL injection via the "passwd" parameter to login.php -- requires
-magic_quotes_gpc=off
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-3) XSS via parameters starting with "phpgw_" in login.php
-
-4) Local file inclusion and execution via the "conv_type" parameter to
-addressbook/inc/class.uiXport.inc.php
-
-All addressed in
-http://svn.savannah.gnu.org/viewvc?view=rev&root=phpgroupware&sortby=date&revision=19117
-
-References:
-http://secunia.com/advisories/35519
-http://www.securityfocus.com/bid/35761
-http://xforce.iss.net/xforce/xfdb/51922
-
-Thanks,
-Alex
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+Content of type "application/pgp-signature" skipped
