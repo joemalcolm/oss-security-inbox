@@ -1,30 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/12/2
-Message-Id: <1242136846.3531.28.camel@localhost.localdomain>
-Date: Tue, 12 May 2009 16:00:46 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: Steven Christey <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com
-Subject: CVE Request -- kdebase4 (konqueror) -- Incomplete SSL Certificate support in KDE4
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/18/4
+Message-ID: <20090318154733.GA5708@logo.rdu.rpath.com>
+Date: Wed, 18 Mar 2009 11:47:33 -0400
+From: "Michael K. Johnson" <johnsonm@...th.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: lxc-sshd security issues?
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve,
+On Tue, Mar 17, 2009 at 04:02:44PM -0400, Steven M. Christey wrote:
+> 
+> On Thu, 5 Mar 2009, Michael K. Johnson wrote:
+> 
+> > I finally got the right contact info upstream, and we're talking
+> > about this, so expect it to not be a problem in future releases.
+> > For the record, it's dummy auth data, but still could be seen as a
+> > backdoor, and will probably be changed to user-configured value.
+> 
+> By "dummy auth data," do you mean that it's replaced with real/unique
+> passwords/keys before the system becomes operational?  Or do these
+> pre-packaged values work unless the admin RTFM?  (If the latter, then it
+> needs a CVE; if the former, then there doesn't seem to be a vuln because
+> there's no impact on authentication).
 
-  not sure if original Debian bug [1] reporter meant this insufficiency,
-but [2] might be interesting for your attention. While this is not
-direct security vulnerability, is is preventing users from using
-the functionality provided by digital certificates.
+At least for the root user, I missed (because I was glancing through
+the contents of a tarball encoded as base64 data in the script,
+not reading the script itself nor actually running it) that when
+you run the script it tells you inline that it defaults to the
+literal string "root" for the root password for the container.
+That immediate inline notification precludes any need for a CVE;
+I don't think it's a vulnerability per se.
 
-References:
-[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=526979
-[2] https://bugs.kde.org/show_bug.cgi?id=185288
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=500373
+Also, the script assumes certain specific configuration of the host
+system (specifically, a routeable bridge named br0 to which to attach
+a virtual ethernet interface) that more or less requires that you
+are familiar with what is happening under the hood in order to have
+a functioning container.
 
-This issue is present only in Konqueror web browser, as shipped
-with the K Desktop Environment 4 (kdebase-4.*). Konqueror in
-kdebase3 works fine.
-
-Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
+Sorry to have bothered everyone here...
