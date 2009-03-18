@@ -1,58 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/21/8
-Message-ID: <Pine.GSO.4.51.0905211900240.18536@faron.mitre.org>
-Date: Thu, 21 May 2009 19:03:35 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/18/3
+Message-ID: <Pine.GSO.4.51.0903172039120.17171@faron.mitre.org>
+Date: Tue, 17 Mar 2009 20:39:33 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security <oss-security@...ts.openwall.com>
+To: oss-security@...ts.openwall.com
 cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- libmodplug
+Subject: Re: CVE request: kernel: inotify local DoS
 Content-Type: text/plain; charset=utf-8
 
 
-On Tue, 21 Apr 2009, Jan Lieskovsky wrote:
-
->   could you please allocate a new CVE-2008-XXXX identifier for
-> the following old libmodplug issue:
-
-This wound up with a 2009 CVE by accident.
-
-- Steve
-
-
 ======================================================
-Name: CVE-2009-1438
+Name: CVE-2009-0935
 Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1438
-Reference: MISC:http://modplug-xmms.cvs.sourceforge.net/viewvc/modplug-xmms/libmodplug/src/load_med.cpp?r1=1.1&amp;r2=1.2
-Reference: CONFIRM:http://bugs.gentoo.org/show_bug.cgi?id=266913
-Reference: CONFIRM:http://sourceforge.net/project/shownotes.php?release_id=677065&group_id=1275
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=496834
-Reference: FEDORA:FEDORA-2009-4064
-Reference: URL:http://www.redhat.com/archives/fedora-package-announce/2009-April/msg00907.html
-Reference: FEDORA:FEDORA-2009-4068
-Reference: URL:http://www.redhat.com/archives/fedora-package-announce/2009-April/msg00908.html
-Reference: UBUNTU:USN-771-1
-Reference: URL:http://www.ubuntu.com/usn/USN-771-1
-Reference: BID:30801
-Reference: URL:http://www.securityfocus.com/bid/30801
-Reference: OSVDB:53801
-Reference: URL:http://osvdb.org/53801
-Reference: SECUNIA:34797
-Reference: URL:http://secunia.com/advisories/34797
-Reference: SECUNIA:34930
-Reference: URL:http://secunia.com/advisories/34930
-Reference: SECUNIA:35026
-Reference: URL:http://secunia.com/advisories/35026
-Reference: VUPEN:ADV-2009-1104
-Reference: URL:http://www.vupen.com/english/advisories/2009/1104
-Reference: XF:libmodplug-csoundfilereadmed-bo(50388)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/50388
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0935
+Reference: MLIST:[linux-kernel] 20090131 [patch 03/43] inotify: clean up inotify_read and fix locking
+Reference: URL:http://marc.info/?l=linux-kernel&m=123337123501681&w=2
+Reference: MLIST:[oss-security] 20090306 CVE request: kernel: inotify local DoS
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/03/06/2
+Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=488935
 
-Integer overflow in the CSoundFile::ReadMed function
-(src/load_med.cpp) in libmodplug before 0.8.6, as used in
-gstreamer-plugins, TTPlayer, and other products, allows
-context-dependent attackers to execute arbitrary code via a MED file
-with a crafted (1) song comment or (2) song name, which triggers a
-heap-based buffer overflow, as exploited in the wild in August 2008.
-
+The inotify_read function in the Linux kernel 2.6 before 2.6.29-rc3
+allows local users to cause a denial of service (OOPS) via a read with
+an invalid address to an inotify instance, which causes the device's
+event list mutex to be unlocked twice and prevents proper
+synchronization of a data structure for the inotify instance.
 
