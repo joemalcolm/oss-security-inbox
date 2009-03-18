@@ -1,21 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/22/1
-Message-ID: <20091222173449.GB24154@suse.de>
-Date: Tue, 22 Dec 2009 18:34:49 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: libtheora CVE-2009-3389?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/18/2
+Message-ID: <Pine.GSO.4.51.0903172038361.17171@faron.mitre.org>
+Date: Tue, 17 Mar 2009 20:38:51 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+cc: Steven Christey <coley@...us.mitre.org>
+Subject: Re: CVE request: XSS in MUC logs of ejabberd
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-Are there any details on CVE-2009-3389 / libtheora?
+======================================================
+Name: CVE-2009-0934
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0934
+Reference: MLIST:[oss-security] 20090316 CVE request: XSS in MUC logs of ejabberd
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/03/16/1
+Reference: CONFIRM:http://www.process-one.net/en/ejabberd/release_notes/release_note_ejabberd_204
+Reference: BID:34133
+Reference: URL:http://www.securityfocus.com/bid/34133
+Reference: SECUNIA:34340
+Reference: URL:http://secunia.com/advisories/34340
 
-Redhat claims they are not vulnerable, but none of the public
-info links to any kind of patch or better description.
-The 2 mozilla bugs are also still closed.
+Cross-site scripting (XSS) vulnerability in ejabberd before 2.0.4
+allows remote attackers to inject arbitrary web script or HTML via
+unknown vectors related to links and MUC logs.
 
-The diff between firefox 3.5.5 and 3.5.6 media/libtheora/
-also seems void of any integer overflow checking.
 
-Ciao, Marcus
