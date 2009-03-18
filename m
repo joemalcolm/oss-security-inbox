@@ -1,28 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/16/2
-Message-ID: <49E6DC10.3000302@redhat.com>
-Date: Thu, 16 Apr 2009 15:19:44 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/18/1
+Message-ID: <Pine.GSO.4.51.0903172037360.17171@faron.mitre.org>
+Date: Tue, 17 Mar 2009 20:37:50 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: 'kill sig -1' must only apply to caller's PID namespace
+Subject: Re: CVE id request: Tor <0.2.0.34 multiple DoS
 Content-Type: text/plain; charset=utf-8
 
-I came across this while reviewing some older upstream patches.
 
-Apparently, it was possible to run kill <sig> -1 to kill processes in
-all PID namespaces, and break the isolation of namespaces. The expected
-behaviour for this is to only kill processes in its own hierarchy. The
-fix uses task_pid_vnr() to check if the process is outside of the
-caller's namespace before killing.
+======================================================
+Name: CVE-2009-0936
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0936
+Reference: MLIST:[or-announce] 20090209 Tor 0.2.0.34 is released (security fixes)
+Reference: URL:http://archives.seul.org/or/announce/Feb-2009/msg00000.html
+Reference: SECUNIA:33880
+Reference: URL:http://secunia.com/advisories/33880
 
-PID namespaces was merged in 2.6.24.
+Unspecified vulnerability in Tor before 0.2.0.34 allows attackers to
+cause a denial of service (infinite loop) via "corrupt votes."
 
-References:
-http://lwn.net/Articles/259217/
-https://bugzilla.redhat.com/show_bug.cgi?id=496031
-http://git.kernel.org/linus/d25141a818383b3c3b09f065698c544a7a0ec6e7
 
-Thanks, Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
+======================================================
+Name: CVE-2009-0937
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0937
+Reference: MLIST:[or-announce] 20090209 Tor 0.2.0.34 is released (security fixes)
+Reference: URL:http://archives.seul.org/or/announce/Feb-2009/msg00000.html
+Reference: SECUNIA:33880
+Reference: URL:http://secunia.com/advisories/33880
+
+Unspecified vulnerability in Tor before 0.2.0.34 allows directory
+mirrors to cause a denial of service via unknown vectors.
+
+
+======================================================
+Name: CVE-2009-0938
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0938
+Reference: MLIST:[or-announce] 20090209 Tor 0.2.0.34 is released (security fixes)
+Reference: URL:http://archives.seul.org/or/announce/Feb-2009/msg00000.html
+Reference: SECUNIA:33880
+Reference: URL:http://secunia.com/advisories/33880
+
+Unspecified vulnerability in Tor before 0.2.0.34 allows directory
+mirrors to cause a denial of service (exit node crash) via "malformed
+input."
+
+
+======================================================
+Name: CVE-2009-0939
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0939
+Reference: MLIST:[or-announce] 20090209 Tor 0.2.0.34 is released (security fixes)
+Reference: URL:http://archives.seul.org/or/announce/Feb-2009/msg00000.html
+Reference: SECUNIA:33880
+Reference: URL:http://secunia.com/advisories/33880
+
+Tor before 0.2.0.34 treats incomplete IPv4 addresses as valid, which
+has unknown impact and attack vectors related to "Spec conformance,"
+as demonstrated using 192.168.0.
+
+
