@@ -1,19 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/10/2
-Message-ID: <20090910195955.60142d3a@redhat.com>
-Date: Thu, 10 Sep 2009 19:59:55 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/18/5
+Message-ID: <20090318174128.GB5708@logo.rdu.rpath.com>
+Date: Wed, 18 Mar 2009 13:41:28 -0400
+From: "Michael K. Johnson" <johnsonm@...th.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: OpenOffice.org CVE-2009-2139
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: inotify local DoS
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 10 Sep 2009 13:12:22 +0200 Thomas Biege <thomas@...e.de> wrote:
+On Tue, Mar 17, 2009 at 08:39:33PM -0400, Steven M. Christey wrote:
+> 
+> ======================================================
+> Name: CVE-2009-0935
+> Status: Candidate
+> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0935
+> Reference: MLIST:[linux-kernel] 20090131 [patch 03/43] inotify: clean up inotify_read and fix locking
+> Reference: URL:http://marc.info/?l=linux-kernel&m=123337123501681&w=2
+> Reference: MLIST:[oss-security] 20090306 CVE request: kernel: inotify local DoS
+> Reference: URL:http://www.openwall.com/lists/oss-security/2009/03/06/2
+> Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=488935
+> 
+> The inotify_read function in the Linux kernel 2.6 before 2.6.29-rc3
+> allows local users to cause a denial of service (OOPS) via a read with
+> an invalid address to an inotify instance, which causes the device's
+> event list mutex to be unlocked twice and prevents proper
+> synchronization of a data structure for the inotify instance.
 
-> there was a thread about it on vendor-sec some month ago.
-
-Thanks, I've been pointed to relevant info already.  Also thanks for
-posting these descriptions publicly, as they can be used by Mitre in
-CVE descriptions.
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+In the 2.6.27.y stable releases, this affects 2.6.27.13 and earlier.
+In the 2.6.28.y stable releases, this affects 2.6.28.2 and earlier.
