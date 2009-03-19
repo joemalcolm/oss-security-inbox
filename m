@@ -1,27 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/07/9
-Message-ID: <603445481.578421231354495637.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 7 Jan 2009 13:54:55 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/19/1
+Message-ID: <28fa9c5e0903182327v4766fcc8y14832f2c13de4a9e@mail.gmail.com>
+Date: Thu, 19 Mar 2009 14:27:36 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Subject: Re: CFPs on this list (was: CFP: COLSEC 2009)
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, "Michael K. Johnson" <johnsonm@...th.com>
+Subject: Re: CVE request: kernel: inotify local DoS
 Content-Type: text/plain; charset=utf-8
 
------ "Solar Designer" <solar@...nwall.com> wrote:
-> 
-> Do we want to let this kind of messages through to the list?  Maybe as
-> long as they're not too frequent?  Or when they're not cross-posted as
-> badly as this one was?  Or when they're of specific relevance not only
-> to security, but also to Open Source?  I'm afraid that trying to apply
-> these criteria would make moderation decisions hard.  Thoughts?
-> 
-> Should this one have been approved or rejected?  And what if it were not
-> the very first one (which it was)?
-> 
+On Thu, Mar 19, 2009 at 1:41 AM, Michael K. Johnson <johnsonm@...th.com> wrote:
+> On Tue, Mar 17, 2009 at 08:39:33PM -0400, Steven M. Christey wrote:
+[...]
+> In the 2.6.27.y stable releases, this affects 2.6.27.13 and earlier.
+> In the 2.6.28.y stable releases, this affects 2.6.28.2 and earlier.
 
-I'm all for these presuming they stay on the topic of Open Source Security.
+The problem occurs between upstream commits 16dbc6c96163 and 3632dee2f8b8.
 
-We can revisit letting them in if they start getting annoying.
-
--- 
-    JB
+Thanks, Eugene
