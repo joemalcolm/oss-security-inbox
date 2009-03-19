@@ -1,57 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/26/3
-Message-ID: <4A955179.8050808@ficora.fi>
-Date: Wed, 26 Aug 2009 18:15:05 +0300
-From: CERT-FI Vulnerability Coordination <vulncoord@...ora.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/19/2
+Message-ID: <20090319150303.GA13131@logo.rdu.rpath.com>
+Date: Thu, 19 Mar 2009 11:03:03 -0400
+From: "Michael K. Johnson" <johnsonm@...th.com>
 To: oss-security@...ts.openwall.com
-CC: Robert Buchholz <rbu@...too.org>
-Subject: Re: expat bug 1990430
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: inotify local DoS
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-> we have learned that expat fixed a crash issue in June 2008, but never 
-> released an update. The bug was apparantly intended to be kept private, 
-> but the bug changes were mailed to a public mailing list and Python 
-> developrs menitoned the bug fix in their public svn (including NEWS 
-> file, and reproducers):
+On Thu, Mar 19, 2009 at 02:27:36PM +0800, Eugene Teo wrote:
+> On Thu, Mar 19, 2009 at 1:41 AM, Michael K. Johnson <johnsonm@...th.com> wrote:
+> > On Tue, Mar 17, 2009 at 08:39:33PM -0400, Steven M. Christey wrote:
+> [...]
+> > In the 2.6.27.y stable releases, this affects 2.6.27.13 and earlier.
+> > In the 2.6.28.y stable releases, this affects 2.6.28.2 and earlier.
 > 
-> http://mail.python.org/pipermail/expat-bugs/2009-January/002781.html
-> http://sourceforge.net/tracker/index.php?func=detail&aid=1990430&group_id=10127&atid=110127
-> http://svn.python.org/view?view=rev&revision=74429
-> https://bugs.gentoo.org/show_bug.cgi?id=280615
-> 
-> While the expat bug was reported by Peter Valchev of Google, Python 
-> credits Ivan Krstić of Apple with the patch (submission).
-> It might also be related to CVE-2009-2625 / FICORA #245608:
-> https://www.cert.fi/en/reports/2009/vulnerability2009085.html
-> 
-> As CERT-FI never released any details or test cases, I have no idea if 
-> we need a new CVE of if those two issues are the same.
+> The problem occurs between upstream commits 16dbc6c96163 and 3632dee2f8b8.
 
-Sorry for the delay.
+Thanks, Eugene!  More interpretation for those looking at various
+kernel versions for those changes:
 
-A new CVE is not needed. These two issues (the one which was fixed in
-expat CVS in June 2008 and the one with the internal copy of expat in
-Python) are essentially the same. The issue seems to be first found by
-Peter Valchev in June 2008. As Robert mentioned, the issue has been
-fixed in expat's CVS in June 2008 but an updated release was not made
-for some reason. The issue was also present in the expat bundled with
-Python and it was reported to us independent from the original issue
-(even though the reason of the crash is the same). CERT-FI reported the
-issue to Python in July 2009. Soon after that the issue was reported to
-expat maintainers too since initially we did not know that the issue was
-already fixed in expat's CVS. Python's patch has been incorporated into
-Python 3.1.1 but there is probably more software with an affected
-internal copy of expat out there.
-
-Sauli Pahlman
-CERT-FI
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkqVUW0ACgkQ/64aC2E+yK+b8wCfcJQLpE3f1ccVgg13vzao8IqO
-Y+0AoMuuooNdFLiKKi10fVQQCDY0BDOK
-=7kag
------END PGP SIGNATURE-----
+16dbc6c96163 was introduced between 2.6.27-rc8 and 2.6.27-rc9, so
+2.6.26 and earlier are not affected.   The change represented by
+16dbc6c96163 was also not imported into the 2.6.26.y stable release
+tree during its lifetime, so no 2.6.26.y releases are affected either.
