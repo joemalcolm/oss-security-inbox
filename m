@@ -1,34 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/04/1
-Message-ID: <20090404221131.GA30528@suse.de>
-Date: Sun, 5 Apr 2009 00:11:31 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Cc: security@...nel.org, sfrench@...ibm.com
-Subject: CVE request? buffer overflow in CIFS in 2.6.*
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/20/2
+Message-ID: <Pine.GSO.4.51.0903192009040.13013@faron.mitre.org>
+Date: Thu, 19 Mar 2009 20:09:49 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+cc: Steven Christey <coley@...us.mitre.org>
+Subject: Re: CVE-2008-5621 is a duplicate (was: Re:  CVE request:      phpMyAdmin < 3.1.1.0 (SQL injection through XSRF on several pages ))
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-I guess we need a CVE for this fix:
+On Thu, 12 Feb 2009, Thijs Kinkhorst wrote:
 
-http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.29.y.git;a=commitdiff;h=15bd8021d870d2c4fbf8c16578d72d03cfddd3a7
+> I propose that CVE-2008-5622 gets marked as a duplicate of CVE-2008-5621
+> or rejected.
 
-Fixes a kmalloc area overflow in CIFS, number of overwritten bytes
-is depending on the codepage converted to.
+Agreed.  CVE-2008-5621 is preserved.
 
-The data seems to come from a remote generated reply blob even, correct
-me if I am wrong. :/
-
-Checking our enterprise distro kernels it seems to cover most of the
-2.6 kernel range...
-2.6.27 has the same code, 2.6.16 too, 2.6.5 too.
+- Steve
 
 
+======================================================
+Name: CVE-2008-5621
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5621
+Reference: MILW0RM:7382
+Reference: URL:http://www.milw0rm.com/exploits/7382
+Reference: CONFIRM:http://www.phpmyadmin.net/home_page/security/PMASA-2008-10.php
+Reference: DEBIAN:DSA-1723
+Reference: URL:http://www.debian.org/security/2009/dsa-1723
+Reference: FEDORA:FEDORA-2008-11221
+Reference: URL:https://www.redhat.com/archives/fedora-package-announce/2008-December/msg00784.html
+Reference: FEDORA:FEDORA-2008-11221
+Reference: URL:https://www.redhat.com/archives/fedora-package-announce/2008-December/msg00784.html
+Reference: SUSE:SUSE-SR:2009:003
+Reference: URL:http://lists.opensuse.org/opensuse-security-announce/2009-02/msg00000.html
+Reference: BID:32720
+Reference: URL:http://www.securityfocus.com/bid/32720
+Reference: VUPEN:ADV-2008-3402
+Reference: URL:http://www.frsirt.com/english/advisories/2008/3402
+Reference: SECUNIA:33076
+Reference: URL:http://secunia.com/advisories/33076
+Reference: SECUNIA:33146
+Reference: URL:http://secunia.com/advisories/33146
+Reference: SECUNIA:33912
+Reference: URL:http://secunia.com/advisories/33912
+Reference: SECUNIA:33822
+Reference: URL:http://secunia.com/advisories/33822
+Reference: SREASON:4753
+Reference: URL:http://securityreason.com/securityalert/4753
+Reference: XF:phpmyadmin-tblstructure-csrf(47168)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/47168
 
-And I wonder if "len*2" is sufficient, can't a UCS -> UTF8 conversion
-generate more than 2 byte utf-8 characters for 1 ucs character?
+Cross-site request forgery (CSRF) vulnerability in phpMyAdmin 2.11.x
+before 2.11.9.4 and 3.x before 3.1.1.0 allows remote attackers to
+perform unauthorized actions as the administrator via a link or IMG
+tag to tbl_structure.php with a modified table parameter.  NOTE: other
+unspecified pages are also reachable, but they have the same root
+cause.  NOTE: this can be leveraged to conduct SQL injection attacks
+and execute arbitrary code.
 
-(spotted by felix leitner, german blog entry: http://blog.fefe.de/?ts=b72905a8 )
 
-Ciao, Marcus
+======================================================
+Name: CVE-2008-5622
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5622
+
+** REJECT **
+
+DO NOT USE THIS CANDIDATE NUMBER.  ConsultIDs: CVE-2008-5621.  Reason:
+This candidate is a duplicate of CVE-2008-5621.  Notes: All CVE users
+should reference CVE-2008-5621 instead of this candidate.  All
+references and descriptions in this candidate have been removed to
+prevent accidental usage.
+
+
