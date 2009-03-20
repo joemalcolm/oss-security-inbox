@@ -1,37 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/08/4
-Message-ID: <4B1E89D5.8010407@redhat.com>
-Date: Tue, 08 Dec 2009 18:16:05 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, Jim Meyering <meyering@...hat.com>
-Subject: CVE Request -- coreutils -- unsafe temporary directory location use
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/20/1
+Message-ID: <Pine.GSO.4.51.0903191950550.13013@faron.mitre.org>
+Date: Thu, 19 Mar 2009 20:01:51 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: jhead
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve, vendors,
 
-   Jim Meyering reported a flaw in coreutils in the way, its
-"distcheck" Makefile rule used to set up a temporary directory
-location to be used later for performing its own tasks.
-This might allow local attacker to conduct symlink attacks or
-potentially execute arbitrary code under certain circumstances.
+On Fri, 6 Feb 2009, Tomas Hoger wrote:
 
-Upstream patch:
---------------
-http://git.savannah.gnu.org/cgit/coreutils.git/commit/?id=ae034822c535fa5
+> Looks like -latest tarball was updated again and now mentions 2.86
+> inside.  In that, usage of mkstemp was replaced with mktemp (previous
+> version failed to close file descriptors opened by mkstemp, probably
+> causing issues when trying to use command on large pile of images at
+> once).  Those the temp file seem to be created user-specified
+> destination directory, probably not too likely to be /tmp (and hence
+> prone to races).
+>
+> Anyway, can anyone help me understand what was CVE-2008-4639 assigned
+> to?  I tried looking at the diff between 2.7 and 2.84 and fail to see
+> any relevant change...
 
-Affected versions:
-------------------
-coreutils-5.2.1 through to coreutils-8.1
+I anchored on this:
 
-References:
------------
-https://bugzilla.redhat.com/show_bug.cgi?id=545439
-http://git.savannah.gnu.org/cgit/coreutils.git/commit/?id=ae034822c535fa5
-http://thread.gmane.org/gmane.comp.gnu.coreutils.bugs/19199
+  http://www.openwall.com/lists/oss-security/2008/10/16/3
 
-Could you allocate a CVE identifier for this issue?
+which is John Dong's answer to an inquiry I had for how many CVEs to
+create:
 
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+>> = Steve
+> = John
+>>
+>> 1 - long -cmd
+>> 2 - unsafe temp file creation
+>> 3 - "more unchecked buffers" and "unsafe buffer sized strcat's in
+>>    ModifyDescriptComment"  [this assumes that upstream only fixed
+>>    issue 1)
+>> 4 - shell escapes
+>...
+>
+>
+>So, bottom line is I think 2.84 fixes 1 and 3 acceptably, while 2 and 4
+>are still unresolved.
+
+So CVE-2008-4641 was assigned to issue 4, and CVE-2008-4639 was assigned
+to issue 2.  However, I made a mistake in CVE-2008-4639 and said "before
+2.84" instead of "2.84 and earlier."  I've since fixed the CVE-2008-4639
+description to say ""2.84 and earlier."
+
+Now what's this about 2.86?... Sounds like it may be a regression.
+
+- Steve
