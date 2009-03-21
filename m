@@ -1,61 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/22/4
-Message-ID: <4AE01340.6000702@redhat.com>
-Date: Thu, 22 Oct 2009 10:09:36 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/21/1
+Message-ID: <20090321101147.GB3848@pluto>
+Date: Sat, 21 Mar 2009 11:18:10 +0100
+From: Matti Bickel <mabi@...too.org>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Sahana
+Subject: CVE request - openfire
 Content-Type: text/plain; charset=utf-8
 
-Jan Lieskovsky wrote:
-> Hello Steve, vendors,
-> 
->   Greg Miernicki reported a security issue in Sahana disaster management
-> system:
-> 
-> Sending a specially-crafted URL (with null character included
-> in the string) to Sahana, would allow an attacker to access any
-> file on the web server.
-> 
-> More from Greg:
-> 
-> "The first issue would allow an attacker to touch/modify any file on the 
-> system.
->  Essentially the issue is that get, post, and requests aren't sanitized or
->  unescaped."
+Hi,
 
-Just small correction - above statement was mentioned by David Nalley, not by Greg
-(this correction done to be exact && not to insert statements into mouth of person(s),
-  who didn't pronounce them).
+   these are old issues, but could we get a CVE identifier for them,
+   anyway?
 
-Other bits are valid.
+   All issues are from this advisory:
+    http://www.andreas-kurtz.de/advisories/AKADV2008-001-v1.0.txt
 
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+   (1) Authentication Bypass using a special URL (possible remote code
+       execution)
+   Fixed in 3.6.1
+   References:
+    http://www.igniterealtime.org/issues/browse/JM-1489
 
+   (2) XSS in login.jsp (possible session hijacking)
+   Fixed in 3.6.0
+   References:
+    http://www.igniterealtime.org/issues/browse/JM-629
 
-> 
-> References:
-> -----------
-> https://bugzilla.redhat.com/show_bug.cgi?id=530255
-> http://sourceforge.net/mailarchive/forum.php?thread_name=5d9043b70910191044l4bb0178fs563a5128a0f5db01%40mail.gmail.com&forum_name=sahana-maindev 
-> 
-> 
-> Upstream patch:
-> ---------------
-> http://sahana.cvs.sourceforge.net/viewvc/sahana/sahana-phase2/www/index.php?r1=1.83&r2=1.84 
-> 
-> 
-> PoC:
-> ----
-> http://sahana/index.php?stream=text&mod=/../../../../../../../../../../../etc/passwd%00 
-> 
-> 
-> Could you allocate a CVE identifier?
-> 
-> Thanks && Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+   (3) SQL injection in sip plugin
+   Fixed in 3.6.1
+   References:
+    http://www.igniterealtime.org/issues/browse/JM-1488
 
+Thanks,
+  Matti
+-- 
+Encrypted/Signed Email preferred
+
+Content of type "application/pgp-signature" skipped
