@@ -1,23 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/01/3
-Message-ID: <20090301142224.GA26274@falco>
-Date: Sun, 1 Mar 2009 15:22:24 +0100
-From: Raphael Marichez <falco@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/23/1
+Message-ID: <28fa9c5e0903222108v5d6862q42894df0d05ddb4a@mail.gmail.com>
+Date: Mon, 23 Mar 2009 12:08:45 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: Tor <0.2.0.34 multiple DoS
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: nfsd did not drop CAP_MKNOD for non-root
 Content-Type: text/plain; charset=utf-8
 
+According to the upstream commit 76a67ec6, an unprivileged client can,
+for example, create a device node on a filesystem exported with
+root_squash as CAP_MKNOD is not among the capabilities dropped when an
+nfsd thread handles a request from a non-root user. I believe this
+problem was introduced in upstream commit e338d263a (follows: v2.6.24;
+precedes: v2.6.25-rc1).
 
-Hi,
+http://groups.google.com/group/fa.linux.kernel/browse_thread/thread/665b99fdc970bee3
 
-i don't think i saw a CVE reference for this :
-http://archives.seul.org/or/announce/Feb-2009/msg00000.html
-http://secunia.com/advisories/33880/
-
-cheers,
-
--- 
-Raphaël Marichez aka Falco
-
-
-Content of type "application/pgp-signature" skipped
+Thanks, Eugene
