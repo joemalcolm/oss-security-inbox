@@ -1,30 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/01/3
-Message-ID: <Pine.GSO.4.51.0909011346420.5392@faron.mitre.org>
-Date: Tue, 1 Sep 2009 13:46:46 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/23/2
+Message-Id: <200903231031.20867.hanno@hboeck.de>
+Date: Mon, 23 Mar 2009 10:31:20 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: spip
+Cc: Steven Christey <coley@...us.mitre.org>
+Subject: CVE request: API key disclosure in piwik
 Content-Type: text/plain; charset=utf-8
 
-
-======================================================
-Name: CVE-2009-3041
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3041
-Reference: MISC:http://fil.rezo.net/secu-14346-14350+14354.patch
-Reference: CONFIRM:http://www.spip-contrib.net/SPIP-Security-Alert-new-version
-Reference: BID:36008
-Reference: URL:http://www.securityfocus.com/bid/36008
-Reference: SECUNIA:36365
-Reference: URL:http://secunia.com/advisories/36365
-Reference: XF:spip-unspecified-unauth-access(52381)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/52381
-
-SPIP 1.9 before 1.9.2i and 2.0.x through 2.0.8 does not use proper
-access control for (1) ecrire/exec/install.php and (2)
-ecrire/index.php, which allows remote attackers to conduct
-unauthorized activities related to installation and backups, as
-exploited in the wild in August 2009.
+Source:
+http://marco-ziesing.de/archives/35-Schluesselloch-in-Piwik.html (german)
+http://dev.piwik.org/trac/ticket/599
 
 
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
