@@ -1,21 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/19/1
-Message-ID: <4A3C0A48.5010600@slackware.com>
-Date: Fri, 19 Jun 2009 16:59:36 -0500
-From: "Patrick J. Volkerding" <security@...ckware.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/23/4
+Message-ID: <20090323182707.GB15577@ngolde.de>
+Date: Mon, 23 Mar 2009 19:27:07 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: libpng-1.2.37 fixes a security issue
+Subject: Re: CVE request -- ucd-snmp / net-snmp, libnss-ldapd / nss_ldap
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi,
+* Jan Lieskovsky <jlieskov@...hat.com> [2009-03-23 14:26]:
+>   could you please assign CVE ids for following
+> two low security issues:
+> 
+> 1, ucd-snmp / net-snmp snmpd runs with privileges of privileged user
+>    a, Red Hat Enterprise Linux / Fedora snmpd runs with UID=0, GID=0
+>    b, Debian snmpd runs with GID=0
+>    References:
+>    https://bugzilla.redhat.com/show_bug.cgi?id=491621
+>    http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=520724
 
-libpng-1.2.37 has been released and the site says that it is a security 
-fix release (actually, 1.2.36 was as well, and 1.2.37 corrects the fix).
+I fail to see the vulnerability in this case. While it's 
+obvious that net-snmp shouldn't run with uid 0 if it doesn't 
+need it, this is no security issue per-se and would not 
+require a CVE id from my opinion.
 
-http://www.libpng.org/pub/png/libpng.html
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-I can't find a CVE on this, so somebody may need to assign one.
-
-Thanks,
-
-Pat
+Content of type "application/pgp-signature" skipped
