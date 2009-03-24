@@ -1,48 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/27/2
-Message-ID: <4A962258.9040201@kernel.sg>
-Date: Thu, 27 Aug 2009 14:06:16 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/24/2
+Message-ID: <20090324144725.GA4170@redhat.com>
+Date: Tue, 24 Mar 2009 08:47:25 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: AF_LLC getsockname 5-Byte Stack Disclosure
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request -- ucd-snmp / net-snmp, libnss-ldapd / nss_ldap
 Content-Type: text/plain; charset=utf-8
 
-Eugene Teo wrote:
-> Eugene Teo wrote:
->> sllc_arphrd member of sockaddr_llc might not be changed. Zero sllc 
->> before copying to the above layer's structure.
->>
->> Note that LLC sockets are restricted to root since v2.6.25-rc9 (see 
->> commit 3480c63b).
->>
->> Upstream commit:
->> http://git.kernel.org/linus/28e9fc592cb8c7a43e4d3147b38be6032a0e81bc
->>
->> Reproducer:
->> http://jon.oberheide.org/files/llc-getsockname-leak.c
->>
->> Reference:
->> https://bugzilla.redhat.com/show_bug.cgi?id=519305
-> 
-> There are some more fixes that addressed similar infoleaks:
-> 
-> e84b90ae5eb3c112d1f208964df1d8156a538289
->     can: Fix raw_getname() leak
-> 09384dfc76e526c3993c09c42e016372dc9dd22c
->     irda: Fix irda_getname() leak
-> 3d392475c873c10c10d6d96b94d092a34ebd4791
->     appletalk: fix atalk_getname() leak
-> f6b97b29513950bfbf621a83d85b6f86b39ec8db
->     netrom: Fix nr_getname() leak
-> 80922bbb12a105f858a8f0abb879cb4302d0ecaa
->     econet: Fix econet_getname() leak
-> 17ac2e9c58b69a1e25460a568eae1b0dc0188c25
->     rose: Fix rose_getname() leak
-> 
-> It would make sense to address these with the same CVE name as this one.
+* [2009-03-23 13:21:42 +0100] Jan Lieskovsky wrote:
 
-I summarised it here. Hope it is useful to some:
-https://bugzilla.redhat.com/show_bug.cgi?id=519305#c0
+>2, libnss-ldapd / nss_ldap: LDAP service configuration file
+>                                 shipped with world readable permissions
+>   References: 
+>   https://bugzilla.redhat.com/show_bug.cgi?id=491623
+>   http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=520476
 
-Thanks, Eugene
+On a side note, this is pretty specific to libnss-ldapd and not so much
+nss_ldap.
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
