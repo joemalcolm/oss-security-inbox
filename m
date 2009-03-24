@@ -1,57 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/23/14
-Message-ID: <259552101.599451259005888260.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 23 Nov 2009 14:51:28 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/24/4
+Message-ID: <20090324214012.GA3737@ngolde.de>
+Date: Tue, 24 Mar 2009 22:40:12 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Cc: Thomas Biege <thomas@...e.de>, coley <coley@...re.org>
-Subject: Re: CVE request: php 5.3.1 - "max_file_uploads" [was: Re: CVE request: php 5.3.1 update]
+Cc: coley@...re.org
+Subject: CVE id request: ldns
 Content-Type: text/plain; charset=utf-8
 
-CVE-2009-4017
+Hi,
+there's a heap-based buffer overflow in ldns:
+http://www.nlnetlabs.nl/bugs/show_bug.cgi?id=232
 
-PHP versions before 5.3.1 contain a flow in the way multipart/form-data
-handled file upload requests. A user making a specially crafted request could
-cause the web server to consume resources processing the request.
+Can I please get a CVE id for this?
 
-http://www.php.net/releases/5_3_1.php
-http://marc.info/?l=full-disclosure&m=125871907031725&w=2
-
-Thanks.
+Cheers
+Nico
 
 -- 
-    JB
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
------ "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
-
-> Eren Türkay wrote:
-> > On Friday 20 November 2009 12:41:50 pm Thomas Biege wrote:
-> >> * Added "max_file_uploads" INI directive, which can be set to limit
-> the
-> >> number of file uploads per-request to 20 by default, to prevent
-> possible
-> >> DOS via temporary file exhaustion.
-> > 
-> > Bogdan Calin disclosed the details about that vulnerability on
-> full-disclosure 
-> > mailing list. He didn't disclosed his script but I wrote a PoC that
-> works like 
-> > a charm. It makes DoS possible for any server that runs PHP within 1
-> minute 
-> > with a few requests.
-> > 
-> > Additionally, this vulnerability affects 5.2.11. I guess all
-> products before 
-> > PHP 5.3.1 are vulnerable.
-> > 
-> > I think this deserves CVE Id. Any ideas?
-> 
->    Josh, could you please allocate one?
-> 
-> Also changed the topic to match only 'php 5.3.1 - "max_file_uploads"'
-> thing,
-> so it isn't lost in other mails.
-> 
-> Thanks && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+Content of type "application/pgp-signature" skipped
