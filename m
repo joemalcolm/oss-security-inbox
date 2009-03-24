@@ -1,51 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/16/1
-Message-ID: <20091216115308.3941163a@redhat.com>
-Date: Wed, 16 Dec 2009 11:53:08 +0100
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/24/1
+Message-ID: <b086760e0903240208u2f378674t954c54ea146b063a@mail.gmail.com>
+Date: Tue, 24 Mar 2009 10:08:51 +0100
+From: yersinia <yersinia.spiros@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re:  Re: Some small KDE issues
+Subject: Re: CVE request -- ucd-snmp / net-snmp, libnss-ldapd /  nss_ldap
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 10 Dec 2009 22:54:57 -0600 Raphael Geissert
-<geissert@...ian.org> wrote:
+On Mon, Mar 23, 2009 at 7:27 PM, Nico Golde <oss-security+ml@...lde.de> wrote:
+> Hi,
+> * Jan Lieskovsky <jlieskov@...hat.com> [2009-03-23 14:26]:
+>>   could you please assign CVE ids for following
+>> two low security issues:
+>>
+>> 1, ucd-snmp / net-snmp snmpd runs with privileges of privileged user
+>>    a, Red Hat Enterprise Linux / Fedora snmpd runs with UID=0, GID=0
+>>    b, Debian snmpd runs with GID=0
+>>    References:
+>>    https://bugzilla.redhat.com/show_bug.cgi?id=491621
+>>    http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=520724
+>
+> I fail to see the vulnerability in this case. While it's
+> obvious that net-snmp shouldn't run with uid 0 if it doesn't
+> need it, this is no security issue per-se and would not
+> require a CVE id from my opinion.
 
-> > Our KDE maintainer alerted us to this:
-> > http://www.ocert.org/advisories/ocert-2009-015.html
-> > http://www.kde.org/info/security/advisory-20091027-1.txt
-> 
-> According to 0910291553490.22070@....redhat.com, ids were already requested.
-> 
-> Maybe somebody needs to be prodded?
+What is more net-snmp have a specific MAC selinux policy in targeted
+mode in Fedora/RHEL. So the full uid=0 is not so important if Selinux
+is in enforcing mode.
 
-I'd rather say it needs someone to do the work and clearly state what
-should get a CVE and why.  Advisory text does not really map well to
-the list of patches.
-
-One obvious candidate is "do not allow non-http and non-webdav urls in
-XMLHTTPRequests" fix, related to a not-so-ideal application of the same
-origin policy on local files.  Ark and Kmail are examples where it can
-lead to issues, but it does not seem from the upstream advisory there
-is an intention to close what was described as the source of the
-problem in Portcullis advisories (e.g. not using khtml as a default
-previewer in ark, or at least not with enabled javascript sounds
-reasonable).
-
-As for the XMLHTTPRequest fix, it should be noted that the restriction
-does not seem to be what other browsers do.  Mozilla only allows local
-files to access other local urls (with the subdir restriction in recent
-versions), even using XMLHTTPRequest, but allows no remote access.  I've
-been told WebKit has a tunable for that and the same restriction should
-be the default in recent versions (confirmed in e.g. recent chromium).
-Not restricting remote access can still allow stealing data from sites
-behind the firewall kind of attacks.
-
-As for KIO slaves issues, Tim posted his list already.  For CVE
-assignment, they should probably be grouped by the fix time, as not all
-of them seem to have been fixed at the same time / version.
-
-So taking this to an account, do you have a proposal for the list of
-issue that should get CVE?
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+Regards
