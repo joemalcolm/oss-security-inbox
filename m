@@ -1,31 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/20/6
-Message-ID: <20090720131647.GA19827@openwall.com>
-Date: Mon, 20 Jul 2009 17:16:47 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/24/5
+Message-ID: <Pine.GSO.4.51.0903241804070.18572@faron.mitre.org>
+Date: Tue, 24 Mar 2009 18:10:02 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux 2.6.30+/SELinux/RHEL5 test kernel 0day, exploiting the unexploitable
+Subject: Re: Lua 5.1.4
 Content-Type: text/plain; charset=utf-8
 
-Earlier today, I wrote:
 
-> (BTW, I'd be happy to share the mmap_min_addr back-port patch to
-> RHEL-5'ish kernels with Red Hat if there's any interest.)
+Note that the typical CVE criterion for flagging language-interpreter bugs
+is that they should be exploitable/reachable through the language API in
+reasonable scenarios for the application.  Otherwise, it's the application
+developer attacking himself/herself.  I know nothing about Lua so can't
+interpret items like #6 and #8, whereas you could imagine malicious input
+being processed by unpack().
 
-It occurred to me, from a few things I've seen/read lately, that RHEL 5
-must indeed already include a back-port of the mmap_min_addr feature,
-although somehow it is not in OpenVZ's patch-128.1.1.el5.028stab062.3
-(was added after the -128 revision?), which is why I am adding my own
-back-port of mmap_min_addr on top of that patch.  I am not using genuine
-RHEL 5 (nor CentOS), which is why I don't know.  Maybe Eugene can
-comment on this.
-
-> I am going to release 2.4.37.3-ow1 with a CVE-2009-1895 fix in it, and I
-> expect it to get into 2.4.37.4.  It's not important for systems with
-> "sane" userlands (no crappy SUID-root programs), though.
-
-Released, although I expect it to be replaced with 2.4.37.4-ow1 soon:
-
-http://www.openwall.com/linux/
-
-Alexander
+- Steve
