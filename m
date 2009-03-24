@@ -1,20 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/28/7
-Message-ID: <0910281316490.6938@mjc.redhat.com>
-Date: Wed, 28 Oct 2009 13:17:18 +0000 (GMT)
-From: Mark J Cox <mjc@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/24/3
+Message-ID: <20090324213713.GB17595@outflux.net>
+Date: Tue, 24 Mar 2009 14:37:13 -0700
+From: Kees Cook <kees@...ntu.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request for oCERT advisory 2009-013 (yTNEF/Evolution TNEF)
+Subject: Lua 5.1.4
 Content-Type: text/plain; charset=utf-8
 
-> I'm not sure if a CVE name has been requested for this issue; I can't
-> see one anywhere.
->
-> http://www.ocert.org/advisories/ocert-2009-013.html
->
-> It's for the Evolution TNEF/yTNEF issues disclosed early last month.
-> Could we have a CVE name assigned for this?
+Has anyone looked at the Lua fixes[1] in 5.1.4?  I'm not familiar with the
+codebase, but it seems that several may have security implications:
 
-I checked and oCERT don't have a name, so use CVE-2009-3721 for this.
+ 2: stack overflow  (this is the Lua stack? so... heap overflow?)
+ 3: integer overflow
+ 4: integer overflow
+ 6: stack overflow  (this is the Lua stack? so... heap overflow?)
+ 8: memory writing?
+ 9: memory reading
+10: CPU DoS
 
-Mark
+I haven't had a chance to examine it closely yet.  Has anyone looked at
+these changes?
+
+-Kees
+
+[1] http://www.lua.org/bugs.html
+
+-- 
+Kees Cook
+Ubuntu Security Team
