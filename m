@@ -1,26 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/20/6
-Message-ID: <886589536.462661258731381496.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 20 Nov 2009 10:36:21 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: coley <coley@...re.org>
-Subject: CVE Assignment nginx
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/25/6
+Message-ID: <49C9FAFB.5040709@debian.org>
+Date: Wed, 25 Mar 2009 10:35:55 +0100
+From: Thijs Kinkhorst <thijs@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE id request: phpMyAdmin
 Content-Type: text/plain; charset=utf-8
 
-I've not seen a CVE id for this one anywhere:
+Hi,
 
-CVE-2009-3896
+A number of different issues have been announced in phpMyAdmin. Can I
+please get CVE id's for these?
 
-engine x (nginx) contains a null pointer dereference flaw in versions
-0.1.0-0.8.13 before versions 0.8.14, 0.7.62, 0.6.39 and 0.5.38.
+Issues:
+http://www.phpmyadmin.net/home_page/security/PMASA-2009-1.php
+http://www.phpmyadmin.net/home_page/security/PMASA-2009-2.php
+http://www.phpmyadmin.net/home_page/security/PMASA-2009-3.php
 
-http://nginx.net/
-http://marc.info/?l=nginx&m=125692080328141&w=2
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=552035
-http://www.debian.org/security/2009/dsa-1920
+Announcement of fixed versions:
+http://sourceforge.net/mailarchive/forum.php?thread_name=49C94EC6.6050603%40cegepsherbrooke.qc.ca&forum_name=phpmyadmin-news
 
-Thanks
 
--- 
-    JB
+thanks,
+Thijs
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (545 bytes)
