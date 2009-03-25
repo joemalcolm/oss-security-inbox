@@ -1,44 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/29/2
-Message-Id: <1233224748.3218.1.camel@dhcp-lab-164.englab.brq.redhat.com>
-Date: Thu, 29 Jan 2009 11:25:48 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com
-Subject: CVE Request -- (sor of urgent) gstreamer-plugins, gstreamer-plugins-good (repost)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/25/3
+Message-ID: <Pine.GSO.4.51.0903242102270.18572@faron.mitre.org>
+Date: Tue, 24 Mar 2009 21:05:49 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request -- ucd-snmp / net-snmp, libnss-ldapd / nss_ldap
 Content-Type: text/plain; charset=utf-8
 
 
-On Fri, 2009-01-23 at 12:06 +0100, Jan Lieskovsky wrote:
-> Hello Steve,
-> 
->   recently the following gstreamer-plugins-good 
-> related multiple heap-based buffer overflows and
-> one an array index out of bounds vulnerability
-> has been reported in the GStreamers demuxer
-> responsible for demuxing QuickTime *.mov files
-> into raw or compressed audio/video files.
-> 
-> References:
-> http://trapkit.de/advisories/TKADV2009-003.txt [1]
-> http://cgit.freedesktop.org/gstreamer/gst-plugins-good/commit/?id=bdc20b9baf13564d9a061343416395f8f9a92b53
-> https://bugzilla.redhat.com/show_bug.cgi?id=481267
-> 
-> 
-> Affected gstreamer-plugins-good versions:
-> =========================================
->    all prior to latest upstream 0.10.12 version  (all three issues -- "qtdemux_parse_samples", "duration" and "mark_keyframes")
-> 
-> Affected gstreamer-plugins versions:
-> ====================================
->   gstreamer-plugins-0.8.5-1.EL.1.i386 (only the "duration" heap based buffer overflow vulnerability -- (vuln #3) in [1].
-> 
-> Steve, could you please allocate a new CVE id/ids for this issue/issues?
-> 
-> Thanks, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
-> 
-> 
-> 
+On Tue, 24 Mar 2009, Vincent Danen wrote:
 
+> * [2009-03-23 13:21:42 +0100] Jan Lieskovsky wrote:
+>
+> >2, libnss-ldapd / nss_ldap: LDAP service configuration file
+> >                                 shipped with world readable permissions
+> >   References:
+> >   https://bugzilla.redhat.com/show_bug.cgi?id=491623
+> >   http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=520476
+>
+> On a side note, this is pretty specific to libnss-ldapd and not so much
+> nss_ldap.
+
+So, the various bug reports and followups list:
+
+  libnss-ldapd
+  nss_ldap
+  nss-ldapd
+  openldap
+
+Which package is actually affected and what versions might they be?
+
+Use CVE-2009-1073, to be filled in once I have some more detail.
+
+- Steve
