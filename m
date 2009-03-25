@@ -1,66 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/18/3
-Message-ID: <hggqve$4v1$1@ger.gmane.org>
-Date: Fri, 18 Dec 2009 15:08:01 -0600
-From: Raphael Geissert <geissert@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: php5: multiple issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/25/7
+Message-Id: <1237985171.3387.36.camel@dhcp-lab-164.englab.brq.redhat.com>
+Date: Wed, 25 Mar 2009 13:46:11 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE request -- zsh, XFree86-xfs/xorg-x11-xfs, screen
 Content-Type: text/plain; charset=utf-8
 
-Joe Orton wrote:
+Hello Steve,
 
-> On Thu, Dec 17, 2009 at 01:23:33PM -0600, Raphael Geissert wrote:
->> I think a cross-vendor security support and tracking effort for php5
->> is needed. The number of issues silently fixed are a continuous risk,
->> leaving users exposed. What does the others think?
-> 
-> The problem we face is the ambiguity around the threat model for the PHP
-> interpreter.  If you assume that the PHP interpreter should be robust
-> against attack from a malicious script (or its author), then a vast
-> number of bugs can be considered a security vulnerability.
+  could you please allocate new CVE ids for the following issues?
 
-I believe the PHP interpreter should be robust against malicious scripts
-when they can expose or put other users in risk.
+1, zsh Stack-based buffer overflow due improper escaping of the '!' character
+   References: 
+   https://bugs.launchpad.net/ubuntu/+source/zsh/+bug/333722
+   http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=521108
+   https://bugzilla.redhat.com/show_bug.cgi?id=492089
 
-[...]
-> 
-> So whether or not security issues are being "silently fixed" depends a
-> lot on your frame of reference.
-> 
-> Ideally any effort to improve the lack of transparency around PHP
-> security would start by working with upstream to a) define a threat
-> model and b) improve strictness of API/quality of code in the context of
-> that model.  I wouldn't underestimate the time and effort that would
-> require ;)
+2, XFree86-xfs / xorg-x11-xfs Unsafe usage of temporary file
+   References:
+   https://bugs.launchpad.net/ubuntu/+source/xfs/+bug/299560  
+   http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=521107
+   https://bugzilla.novell.com/show_bug.cgi?id=408006
+   https://bugzilla.redhat.com/show_bug.cgi?id=492098
 
-You are right, making an effort to try to work with upstream to draw the
-line between what is and what is not a security issue should be the first
-step.
+3, screen: Unsafe usage of temporary file
+   References:
+   https://bugs.launchpad.net/ubuntu/+source/screen/+bug/315993
+   http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=521123  
+   https://bugzilla.redhat.com/show_bug.cgi?id=492104
 
-> 
-> Using this list to track and share analysis of published issues is
-> certainly helpful, but I'm not sure what more we can/should do
-> independent of upstream to improve the situation - any specific ideas
-> you had?
-> 
-
-We could encourage more people to check time by time the changes made to
-upstream code if the collaboration attempt fails, so that possible issues
-are analysed.
-Another, more important I think, idea is to share the patches used to fix
-the issues. Some issues can be fixed by the same code change made by
-upstream, but others require more backporting work. There are also times
-that finding the minimum changes required to fix the issue is very time
-consuming.
-
-Does that sound reasonable?
-
-By the way, who is supporting what PHP versions and for how long? what
-version do you plan to include on the next release?
-
-Regards,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
-
+Thanks, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
