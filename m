@@ -1,35 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/04/1
-Message-ID: <49AE303F.4030701@redhat.com>
-Date: Wed, 04 Mar 2009 15:39:43 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/25/4
+Message-ID: <20090325021952.GJ4170@redhat.com>
+Date: Tue, 24 Mar 2009 20:19:52 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: memory disclosure in 	SO_BSDCOMPAT gsopt
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request -- ucd-snmp / net-snmp, libnss-ldapd / nss_ldap
 Content-Type: text/plain; charset=utf-8
 
-Eugene Teo wrote:
-> On Tue, Mar 3, 2009 at 6:49 AM, Steven M. Christey
-> <coley@...us.mitre.org> wrote:
->> On Wed, 25 Feb 2009, Eugene Teo wrote:
+* [2009-03-24 21:05:49 -0400] Steven M. Christey wrote:
+
+>> >2, libnss-ldapd / nss_ldap: LDAP service configuration file
+>> >                                 shipped with world readable permissions
+>> >   References:
+>> >   https://bugzilla.redhat.com/show_bug.cgi?id=491623
+>> >   http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=520476
 >>
->>> Eugene Teo wrote:
->>>> [...]
->>>> The fix for CVE-2009-0676 (upstream commit df0bca04) is incomplete. Note
->>>> that the same problem of leaking kernel memory will reappear if someone
->>>> on some architecture uses struct timeval with some internal padding (for
->>>> example tv_sec 64-bit and tv_usec 32-bit) --- then, you are going to
->>>> leak the padded bytes to userspace.
->> Is this going to require a separate CVE identifier?  If a new minor
->> version of the kernel wasn't released yet, then I'd consider the fix to be
->> little more than a couple patch-discussion messages in a single Bugzilla
->> entry.
-> 
-> No, it shouldn't. Please use the same CVE name. Thanks.
+>> On a side note, this is pretty specific to libnss-ldapd and not so much
+>> nss_ldap.
+>
+>So, the various bug reports and followups list:
+>
+>  libnss-ldapd
+>  nss_ldap
+>  nss-ldapd
+>  openldap
+>
+>Which package is actually affected and what versions might they be?
 
-But you might want to add the link to the new CVE-2009-0676 patch in:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0676
+nss-ldapd is the name of the upstream package.  I suppose Debian and
+others may package it with a package name of libnss-ldapd.
 
-Thanks, Eugene
+nss-ldapd is a fork of nss_ldap... I don't know enough to say how much
+it differs, but for nss_ldap at least, /etc/ldap.conf should be
+world-readable (or at least typically is, with no real exposure since
+using non-anonymous binds to LDAP would be unusual -- at least from
+everything I've seen and done with LDAP authentication).
+
+/etc/ldap.conf has nothing to do with openldap and while the filename,
+and probably file contents are the same, it sounds like libnss-ldap may
+require more protection and/or be meant to run with a protected
+configuration file.
+
+It also, and someone correct me if I'm wrong, be due to the debian
+package allowing someone to specify a bindpw at install and then not
+protecting the file contents if someone does specify a bindpw.  With
+RHEL and Fedora, there are no mechanisms to ask a user for a bindpw
+(because it is not typical), so we would expect that an admin who puts a
+bindpw in there for a user that is meant to be protected (i.e. something
+other than an unprivileged user that suits the criteria for anonymous
+binds for the purpose of obtaining certain non-privileged user
+information), would also adequately protect the file when manually
+setting the password.
+
+And, if that is the case, then I would argue this is a debconf-specific
+issue for this package than a general nss-ldapd-specific issue.
+
+In fact, if you look here:
+
+http://ch.tudelft.nl/~arthur/nss-ldapd/news.html#20090322
+
+you'll see that this is noted as a "security problem in ... the Debian
+package configuration".
+
+>Use CVE-2009-1073, to be filled in once I have some more detail.
+
 -- 
-Eugene Teo / Red Hat Security Response Team
+Vincent Danen / Red Hat Security Response Team 
