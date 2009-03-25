@@ -1,108 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/15/4
-Message-Id: <20090415145854.AF86C1F3E9E@spike.porcupine.org>
-Date: Wed, 15 Apr 2009 10:58:54 -0400 (EDT)
-From: wietse@...cupine.org (Wietse Venema)
-To: Tomas Hoger <thoger@...hat.com>
-CC: wietse@...cupine.org, oss-security@...ts.openwall.com
-Subject: Re: Re: Some fun with tcp_wrappers
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/25/2
+Message-ID: <Pine.GSO.4.51.0903242021230.18572@faron.mitre.org>
+Date: Tue, 24 Mar 2009 20:21:27 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: nfsd did not drop CAP_MKNOD for non-root
 Content-Type: text/plain; charset=utf-8
 
-Tomas Hoger:
-> Hi Wietse!
-> 
-> On Wed, 15 Apr 2009 08:07:42 -0400 (EDT) wietse@...cupine.org (Wietse
-> Venema) wrote:
-> 
-> > >   https://bugzilla.redhat.com/show_bug.cgi?id=491095
-> > 
-> > If some applications mis-use the library API then that is really
-> > unfortunate.
-> 
-> The problem is not really limited to the applications that mis-use
-> API.  According to hosts_access(3):
-> 
->   hosts_ctl() is a wrapper around the request_init() and
->   hosts_access() routines with a perhaps more convenient interface
->   (though it does not pass on enough information to support automated
->   client username lookups).  The client host address, client host
->   name and username arguments should contain valid data or
->   STRING_UNKNOWN.  hosts_ctl() returns zero if access should be denied.
-> 
-> STRING_UNKNOWN is valid argument expected to be passed to hosts_ctl.
-> That description does not seem to be too clear to indicate that when
-> one uses hosts_ctl as:
-> 
->   hosts_ctl(svcname, STRING_UNKNOWN, client_addr, STRING_UNKNOWN)
-> 
-> all hostname-based rules are ignored.  It seems those using hosts_ctl
-> do not always realize that.
 
-That behavior is not what I implemented. It must have been introduced
-by someone else.
+======================================================
+Name: CVE-2009-1072
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1072
+Reference: MLIST:[linux-kernel] 20090311 VFS, NFS security bug? Should CAP_MKNOD and CAP_LINUX_IMMUTABLE be added to CAP_FS_MASK?
+Reference: URL:http://thread.gmane.org/gmane.linux.kernel/805280
+Reference: CONFIRM:http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=76a67ec6fb79ff3570dcb5342142c16098299911
+Reference: CONFIRM:http://www.kernel.org/pub/linux/kernel/v2.6/ChangeLog-2.6.28.9
+Reference: SECUNIA:34422
+Reference: URL:http://secunia.com/advisories/34422
+Reference: SECUNIA:34432
+Reference: URL:http://secunia.com/advisories/34432
+Reference: VUPEN:ADV-2009-0802
+Reference: URL:http://www.vupen.com/english/advisories/2009/0802
+Reference: XF:linux-kernel-capmknod-security-bypass(49356)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/49356
 
-Here is how my own tcp wrapper 7.6 release behaves, with a trivial
-hosts_ctl() test program that passes command arguments to the
-library function. The program is below the signature.
+nfsd in the Linux kernel before 2.6.28.9 does not drop the CAP_MKNOD
+capability before handling a user request in a thread, which allows
+local users to create device nodes, as demonstrated on a filesystem
+that has been exported with the root_squash option.
 
-Using the hosts_access(5) access file format:
 
-    % cat hosts.allow   
-    cat: hosts.allow: No such file or directory
-    % cat hosts.deny
-    ftpd: unknown
-    % ./test-hostsctl -d ftpd unknown 127.0.0.1 unknown
-    denied
-    % ./test-hostsctl -d ftpd other 127.0.0.1 other
-    allowed
-
-Using the hosts_options(5) access file format:
-
-    % cat hosts.allow
-    cat: hosts.allow: No such file or directory
-    % cat hosts.deny
-    ftpd: unknown: deny
-    % ./test-hostsctl -d ftpd unknown 127.0.0.1 unknown
-    denied
-    % ./test-hostsctl -d ftpd other 127.0.0.1 other
-    allowed
-
-As you see, my own code does not ignore hostname rules when
-the hostname is "unknown".
-
-	Wietse
-
-#include <stdio.h>
-#include <unistd.h>
-#include "tcpd.h"
-
-static void usage(const char *myname)
-{
-    fprintf(stderr, "usage: %s [-d] daemon hostname hostaddr username\n",
-            myname);
-    exit(1);
-}
-
-int     main(int argc, char **argv)
-{
-    int     ch;
-
-    while ((ch = getopt(argc, argv, "d")) != EOF) {
-        switch (ch) {
-        case 'd':
-            hosts_allow_table = "hosts.allow";
-            hosts_deny_table = "hosts.deny";
-            break;
-        default:
-            usage(argv[0]);
-            /* NOTREACHED */
-        }
-    }
-    if (argc != optind + 4)
-        usage(argv[0]);
-
-    printf("%s\n", hosts_ctl(argv[optind], argv[optind + 1],
-                             argv[optind + 2], argv[optind + 3]) ?
-           "allowed" : "denied");
-    exit(0);
-}
