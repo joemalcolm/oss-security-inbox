@@ -1,61 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/23/10
-Message-ID: <Pine.GSO.4.51.0904231540370.22181@faron.mitre.org>
-Date: Thu, 23 Apr 2009 15:40:48 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/26/2
+Message-ID: <Pine.GSO.4.51.0903252114130.11191@faron.mitre.org>
+Date: Wed, 25 Mar 2009 21:14:17 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Marcus Meissner <meissner@...e.de>
-cc: oss-security@...ts.openwall.com, coley@...re.org
-Subject: Re: CVE request: clamav clamd and clamscan DoS and bypass by malformated archive
+To: oss-security@...ts.openwall.com
+cc: Steven Christey <coley@...us.mitre.org>
+Subject: Re: CVE request: API key disclosure in piwik
 Content-Type: text/plain; charset=utf-8
 
 
 ======================================================
-Name: CVE-2009-1371
+Name: CVE-2009-1085
 Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1371
-Reference: CONFIRM:http://svn.clamav.net/websvn/filedetails.php?repname=clamav-devel&path=%2Ftrunk%2FChangeLog&rev=5032
-Reference: CONFIRM:https://launchpad.net/bugs/360502
-Reference: CONFIRM:https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1552
-Reference: UBUNTU:USN-756-1
-Reference: URL:http://www.ubuntu.com/usn/usn-756-1
-Reference: BID:34446
-Reference: URL:http://www.securityfocus.com/bid/34446
-Reference: OSVDB:53602
-Reference: URL:http://osvdb.org/53602
-Reference: SECTRACK:1022028
-Reference: URL:http://www.securitytracker.com/id?1022028
-Reference: SECUNIA:34612
-Reference: URL:http://secunia.com/advisories/34612
-Reference: SECUNIA:34654
-Reference: URL:http://secunia.com/advisories/34654
-Reference: VUPEN:ADV-2009-0985
-Reference: URL:http://www.vupen.com/english/advisories/2009/0985
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1085
+Reference: MLIST:[oss-security] 20090323 CVE request: API key disclosure in piwik
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/03/23/2
+Reference: MISC:http://marco-ziesing.de/archives/35-Schluesselloch-in-Piwik.html
+Reference: CONFIRM:http://dev.piwik.org/trac/ticket/599
 
-The CLI_ISCONTAINED macro in libclamav/others.h in ClamAV before
-0.95.1 allows remote attackers to cause a denial of service
-(application crash) via a malformed file with UPack encoding.
-
-
-======================================================
-Name: CVE-2009-1372
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1372
-Reference: CONFIRM:http://svn.clamav.net/websvn/filedetails.php?repname=clamav-devel&path=%2Ftrunk%2FChangeLog&rev=5032
-Reference: CONFIRM:https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1553
-Reference: BID:34446
-Reference: URL:http://www.securityfocus.com/bid/34446
-Reference: OSVDB:53603
-Reference: URL:http://osvdb.org/53603
-Reference: SECTRACK:1022028
-Reference: URL:http://www.securitytracker.com/id?1022028
-Reference: SECUNIA:34612
-Reference: URL:http://secunia.com/advisories/34612
-Reference: VUPEN:ADV-2009-0985
-Reference: URL:http://www.vupen.com/english/advisories/2009/0985
-
-Stack-based buffer overflow in the cli_url_canon function in
-libclamav/phishcheck.c in ClamAV before 0.95.1 allows remote attackers
-to cause a denial of service (application crash) and possibly execute
-arbitrary code via a crafted URL.
+Piwik 0.2.32 and earlier stores sensitive information under the web
+root with insufficient access control, which allows remote attackers
+to obtain the API key and other sensitive information via a direct
+request for misc/cron/archive.sh.
 
 
