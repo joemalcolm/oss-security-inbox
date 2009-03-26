@@ -1,28 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/13/1
-Message-ID: <20091013063840.GA8374@suse.de>
-Date: Tue, 13 Oct 2009 08:38:40 +0200
-From: Thomas Biege <thomas@...e.de>
-To: OSS-Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: CVE request: local root via setuid VBoxNetAdpCtl
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/26/1
+Message-ID: <Pine.GSO.4.51.0903252024510.11191@faron.mitre.org>
+Date: Wed, 25 Mar 2009 20:24:56 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+cc: coley@...re.org
+Subject: Re: CVE id request: ldns
 Content-Type: text/plain; charset=utf-8
 
 
-Hello,
-this one needs two CVE-IDs:
-- shell meta char injection in popen()
-- possible buffer overflow in strncpy()
+======================================================
+Name: CVE-2009-1086
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1086
+Reference: MLIST:[oss-security] 20090324 CVE id request: ldns
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/03/24/4
+Reference: MISC:http://www.nlnetlabs.nl/bugs/show_bug.cgi?id=232
 
-http://sunsolve.sun.com/search/document.do?assetkey=1-66-268188-1
+Heap-based buffer overflow in the ldns_rr_new_frm_str_internal
+function in ldns 1.4.x allows remote attackers to cause a denial of
+service (memory corruption) and possibly execute arbitrary code via a
+DNS resource record (RR) with a long (1) class field (clas variable)
+and possibly (2) TTL field.
 
 
-
--- 
-Bye,
-     Thomas
--- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
--- 
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
