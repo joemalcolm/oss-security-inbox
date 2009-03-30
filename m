@@ -1,39 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/21/1
-Message-ID: <20090321101147.GB3848@pluto>
-Date: Sat, 21 Mar 2009 11:18:10 +0100
-From: Matti Bickel <mabi@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/30/1
+Message-Id: <200903302111.33942.steffen.joeris@skolelinux.de>
+Date: Mon, 30 Mar 2009 21:11:33 +1100
+From: Steffen Joeris <steffen.joeris@...lelinux.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE request - openfire
+Subject: CVE id request: auth2db
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi
 
-   these are old issues, but could we get a CVE identifier for them,
-   anyway?
+auth2db uses addslashes() to protect against SQL injections. This should be 
+mysql_real_escape_string(), so it also works, if multibyte character 
+encodings are used.
 
-   All issues are from this advisory:
-    http://www.andreas-kurtz.de/advisories/AKADV2008-001-v1.0.txt
+Debian Bug report:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=521823
 
-   (1) Authentication Bypass using a special URL (possible remote code
-       execution)
-   Fixed in 3.6.1
-   References:
-    http://www.igniterealtime.org/issues/browse/JM-1489
+Could I please get a CVE id for this?
 
-   (2) XSS in login.jsp (possible session hijacking)
-   Fixed in 3.6.0
-   References:
-    http://www.igniterealtime.org/issues/browse/JM-629
+Cheers
+Steffen
 
-   (3) SQL injection in sip plugin
-   Fixed in 3.6.1
-   References:
-    http://www.igniterealtime.org/issues/browse/JM-1488
-
-Thanks,
-  Matti
--- 
-Encrypted/Signed Email preferred
-
-Content of type "application/pgp-signature" skipped
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
