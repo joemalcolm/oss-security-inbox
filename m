@@ -1,75 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/24/6
-Message-ID: <Pine.GSO.4.51.0904241925010.13343@faron.mitre.org>
-Date: Fri, 24 Apr 2009 19:50:57 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/31/2
+Message-ID: <Pine.GSO.4.51.0903302126130.9303@faron.mitre.org>
+Date: Mon, 30 Mar 2009 21:26:18 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-cc: security@...nel.org, sfrench@...ibm.com
-Subject: Re: CVE request? buffer overflow in CIFS in 2.6.*
+Subject: Re: CVE id request: phpMyAdmin
 Content-Type: text/plain; charset=utf-8
 
 
-On Tue, 21 Apr 2009, Eugene Teo wrote:
 
-> > Our maintainer also referenced:
-> >
-> > http://lists.samba.org/archive/linux-cifs-client/2009-April/004450.html
-> > http://lists.samba.org/archive/linux-cifs-client/2009-April/004452.html
-> >
-> > They are already in the CIFS git tree:
-> > http://git.kernel.org/?p=linux/kernel/git/sfrench/cifs-2.6.git;a=summary
-> > 	http://git.kernel.org/?p=linux/kernel/git/sfrench/cifs-2.6.git;a=commit;h=7b0c8fcff47a885743125dd843db64af41af5a61
-> > 	http://git.kernel.org/?p=linux/kernel/git/sfrench/cifs-2.6.git;a=commit;h=968460ebd8006d55661dec0fb86712b40d71c413
->
-> As discussed with Marcus, these two are unrelated to this issue, so we
-> will need new CVE names.
->
-> I spoke to Jeff Layton about this, and it looks like there are some more
-> in the pipeline (but unrelated to this issue), so stay tuned.
+======================================================
+Name: CVE-2009-1148
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1148
+Reference: MISC:http://phpmyadmin.svn.sourceforge.net/viewvc/phpmyadmin/branches/MAINT_3_1_3/phpMyAdmin/bs_disp_as_mime_type.php?r1=12303&r2=12302&pathrev=12303
+Reference: CONFIRM:http://www.phpmyadmin.net/home_page/security/PMASA-2009-1.php
 
-This ominous statement is proving prophetic.
+Directory traversal vulnerability in bs_disp_as_mime_type.php in the
+BLOB streaming feature in phpMyAdmin before 3.1.3.1 allows remote
+attackers to read arbitrary files via directory traversal sequences in
+the file_path parameter ($filename variable).
 
-CVE is not designed to track every intermediate change that's being made,
-reviewed, debugged, fixed, re-bugged, re-submitted, re-fixed, and
-refactored in multiple branches on a real-time basis.  There's an
-extensive list of changes going on at
-http://lists.samba.org/archive/linux-cifs-client/2009-April/thread.html,
-many of which don't provide any notions of attack scenarios or
-vulnerability (and neither should they - but it puts a severe analytical
-burden on CVE to reverse-engineer patches for the bowels of code that only
-a handful of people in the world fully understand).  I don't think it
-helps most people to have a dozen different CVEs for an extensive set of
-issues that are being fixed so dynamically.
 
-One approach might be to "pre-tag" this whole set of changes with a single
-CVE, then when they ultimately get merged into a single kernel version or
-some other concrete milestone, the "scope" of that CVE ends.
+======================================================
+Name: CVE-2009-1149
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1149
+Reference: MISC:http://phpmyadmin.svn.sourceforge.net/viewvc/phpmyadmin/branches/MAINT_3_1_3/phpMyAdmin/bs_disp_as_mime_type.php?r1=12303&r2=12302&pathrev=12303
+Reference: CONFIRM:http://www.phpmyadmin.net/home_page/security/PMASA-2009-1.php
 
-An alternate approach would be for the CVE requesters to provide more
-detailed explanations of what exactly is going on and what the scope of
-the bug is.  This moves the analytical burden back to the distros, but
-theoretically, the requesters are more familiar with the code than CVE
-analysts are.
+CRLF injection vulnerability in bs_disp_as_mime_type.php in the BLOB
+streaming feature in phpMyAdmin before 3.1.3.1 allows remote attackers
+to inject arbitrary HTTP headers and conduct HTTP response splitting
+attacks via the (1) c_type and possibly (2) file_type parameters.
 
-Yet another approach would be for CVE to adopt very generic descriptions
-and rely more heavily on the provided references, but that wouldn't cut
-down on the number of CVEs being assigned and it would create many
-opportunities for incorrect mappings and duplicate entries, not to mention
-confusion for consumers (this based on the experience of the past 10 years
-of CVE...)
 
-Another more radical approach would be for the Linux community to adopt a
-different mechanism for a "universal bug ID" besides CVE, where multiple
-people can file multiple bug IDs and share them across distros without
-caring about duplicates or inaccuracies or incomplete information.  The
-CVE tie-in could occur when something is mature and final enough to make
-it into a stable release, and then the CVE becomes a mechanism for the
-distros to communicate to their consumers, instead of between themselves.
+======================================================
+Name: CVE-2009-1150
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1150
+Reference: CONFIRM:http://phpmyadmin.svn.sourceforge.net/viewvc/phpmyadmin/trunk/phpMyAdmin/libraries/display_export.lib.php?r1=11986&r2=12302&pathrev=12302
+Reference: CONFIRM:http://www.phpmyadmin.net/home_page/security/PMASA-2009-2.php
 
-Any and all thoughts are welcome.  I've thought that a big win for CVE was
-as a "universal bug ID" for the Linux community, which was outside what we
-had originally envisioned for it.  But these kinds of dynamic,
-low-information disclosures really stress the CVE process, so I'm starting
-to question whether CVE is really a good fit.
+Multiple cross-site scripting (XSS) vulnerabilities in the export page
+(display_export.lib.php) in phpMyAdmin 2.11.x before 2.11.9.5 and 3.x
+before 3.1.3.1 allow remote attackers to inject arbitrary web script
+or HTML via the pma_db_filename_template cookie.
 
-- Steve
+
+======================================================
+Name: CVE-2009-1151
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1151
+Reference: CONFIRM:http://phpmyadmin.svn.sourceforge.net/viewvc/phpmyadmin/branches/MAINT_2_11_9/phpMyAdmin/scripts/setup.php?r1=11514&r2=12301&pathrev=12301
+Reference: CONFIRM:http://www.phpmyadmin.net/home_page/security/PMASA-2009-3.php
+
+Static code injection vulnerability in setup.php in phpMyAdmin 2.11.x
+before 2.11.9.5 and 3.x before 3.1.3.1 allows remote attackers to
+inject arbitrary PHP code into a configuration file via the save
+action.
+
+
