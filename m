@@ -1,71 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/10/4
-Message-ID: <Pine.GSO.4.51.0902092011530.15993@faron.mitre.org>
-Date: Mon, 9 Feb 2009 20:12:09 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/31/1
+Message-ID: <Pine.GSO.4.51.0903302123090.9303@faron.mitre.org>
+Date: Mon, 30 Mar 2009 21:23:22 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Dan Poltawski <talktodan@...il.com>
-cc: oss-security@...ts.openwall.com
-Subject: Re: CVS request - Moodle
+To: oss-security@...ts.openwall.com, tony@...post24.com
+Subject: Re: [Fwd: Cross-Site Scripting in Banshee DAAP Extension]
 Content-Type: text/plain; charset=utf-8
 
 
 ======================================================
-Name: CVE-2009-0499
+Name: CVE-2009-1175
 Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0499
-Reference: MLIST:[oss-security] 20090204 CVS request - Moodle
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/02/04/1
-Reference: CONFIRM:http://cvs.moodle.org/moodle/mod/forum/post.php?r1=1.154.2.14&r2=1.154.2.15
-Reference: CONFIRM:http://moodle.org/security/
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1175
+Reference: CONFIRM:http://bugzilla.gnome.org/show_bug.cgi?id=577270
 
-Cross-site request forgery (CSRF) vulnerability in the forum code in
-Moodle 1.7 before 1.7.7, 1.8 before 1.8.8, and 1.9 before 1.9.4 allows
-remote attackers to delete unauthorized forum posts via a link or IMG
-tag to post.php.
-
-
-======================================================
-Name: CVE-2009-0500
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0500
-Reference: MLIST:[oss-security] 20090204 CVS request - Moodle
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/02/04/1
-Reference: CONFIRM:http://moodle.org/security/
-
-Cross-site scripting (XSS) vulnerability in course/lib.php in Moodle
-1.6 before 1.6.9, 1.7 before 1.7.7, 1.8 before 1.8.8, and 1.9 before
-1.9.4 allows remote attackers to inject arbitrary web script or HTML
-via crafted log table information that is not properly handled when it
-is displayed in a log report.
-
-
-======================================================
-Name: CVE-2009-0501
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0501
-Reference: MLIST:[oss-security] 20090204 CVS request - Moodle
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/02/04/1
-Reference: CONFIRM:http://moodle.org/security/
-
-Unspecified vulnerability in the Calendar export feature in Moodle 1.8
-before 1.8.8 and 1.9 before 1.9.4 allows attackers to obtain sensitive
-information and conduct "brute force attacks on user accounts" via
-unknown vectors.
-
-
-======================================================
-Name: CVE-2009-0502
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0502
-Reference: MLIST:[oss-security] 20090204 CVS request - Moodle
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/02/04/1
-Reference: CONFIRM:http://moodle.org/security/
-
-Cross-site scripting (XSS) vulnerability in blocks/html/block_html.php
-in Snoopy 1.2.3, as used in Moodle 1.6 before 1.6.9, 1.7 before 1.7.7,
-1.8 before 1.8.8, and 1.9 before 1.9.4, allows remote attackers to
-inject arbitrary web script or HTML via an HTML block, which is not
-properly handled when the "Login as" feature is used to visit a
-MyMoodle or Blog page.
+Cross-site scripting (XSS) vulnerability in apps/web/vs_diag.cgi in
+the DAAP extension in Banshee 1.4.2 allows remote attackers to inject
+arbitrary web script or HTML via the server parameter, which is not
+properly handled in an error message.
 
 
