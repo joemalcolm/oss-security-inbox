@@ -1,30 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/15/3
-Message-Id: <1242405871.5889.5.camel@localhost.localdomain>
-Date: Fri, 15 May 2009 18:44:31 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: Steven Christey <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com
-Subject: CVE Request -- Eggdrop
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/01/4
+Message-ID: <49D2E9A8.9030000@redhat.com>
+Date: Wed, 01 Apr 2009 12:12:24 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: udp: Wrong locking code in udp seq_file infrastructure
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve,
+According to the upstream commit 30842f298, reading zero bytes from
+/proc/net/udp or other similar files which use the same seq_file udp
+infrastructure panics kernel in that way:
 
-  Thomas Sader yesterday reported, the original patch for original
-stack-based buffer overflow flaw (CVE-2007-2807) in Eggdrop is
-incomplete (might introduce another flaw). 
+=====================================
+[ BUG: bad unlock balance detected! ]
+-------------------------------------
+read/1985 is trying to release lock (&table->hash[i].lock) at:
+[<ffffffff81321d83>] udp_seq_stop+0x27/0x29
+but there are no more locks to release!
+[...]
 
-References:
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=528778
-http://www.gossamer-threads.com/lists/fulldisc/full-disclosure/68341 
-(affected versions, vulnerability details, PoC, resolution).
-http://www.eggheads.org/downloads/ (upstream page)
-http://www.eggheads.org/redirect.php?url=ftp://ftp.eggheads.org/pub/eggdrop/patches/official/1.6/eggdrop1.6.19%2Bctcpfix.patch.gz
-(patch towards the latest version).
+This bug was introduced and fixed within a short timeframe. It was
+introduced in 645ca708 (Follows: v2.6.28-rc2; Precedes: v2.6.29-rc1).
 
-Could you allocate a new CVE id for it?
+http://git.kernel.org/linus/645ca708f936b2fbeb79e52d7823e3eb2c0905f8
+http://git.kernel.org/linus/30842f2989aacfaba3ccb39829b3417be9313dbe
 
-Thanks, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
+Thanks, Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
