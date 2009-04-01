@@ -1,28 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/03/2
-Message-ID: <4A25DABE.1060703@redhat.com>
-Date: Wed, 03 Jun 2009 10:06:54 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>, Greg KH <greg@...ah.com>
-Subject: CVE-2009-1385 kernel: e1000_clean_rx_irq() denial of service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/01/10
+Message-Id: <1238615027.3309.7.camel@dhcp-lab-164.englab.brq.redhat.com>
+Date: Wed, 01 Apr 2009 21:43:47 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE request -- ghostscript
 Content-Type: text/plain; charset=utf-8
 
-e1000 has an issue in which a partial frame can leak through validation
-check on reception. This can lead to an underflow in the length
-computation of the frame which will panic the system in question.
+Hello Steve,
 
-This bug was discovered and fixed in e1000-7.5.5 since April 2007, but
-was somehow not merged in the upstream kernel...
+  could you please allocate new CVE ids for the following two 
+Ghostscript issues:
 
-http://sourceforge.net/project/shownotes.php?release_id=504022&group_id=42302
-Notes:
- * fix panic on changing MTU under stress
-[...]
+1, DoS (crash) in CCITTFax decoding filter
+   References:
+   https://bugzilla.redhat.com/show_bug.cgi?id=493442
+   https://bugzilla.redhat.com/show_bug.cgi?id=229174 
+   -^ original report, so CVE-2007-XXXX will be needed
+   https://bugzilla.redhat.com/show_bug.cgi?id=493442#c1 (PoC)
 
-References:
-http://sourceforge.net/projects/e1000
-http://git.kernel.org/linus/ea30e11970a96cfe5e32c03a29332554573b4a10
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-1385
 
-Thanks, Eugene
+2, Buffer overflow in BaseFont writer module for pdfwrite defice
+   References:
+   https://bugzilla.redhat.com/show_bug.cgi?id=493445
+   http://bugs.ghostscript.com/show_bug.cgi?id=690211
+   -^ upstream bug report, so CVE-2008-XXXX will be needed
+   http://svn.ghostscript.com/viewvc?view=rev&sortby=rev&revision=9304 (upstream patch)
+
+
+Thanks, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+
