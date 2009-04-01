@@ -1,27 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/20/10
-Message-ID: <20090720173329.GH4372@redhat.com>
-Date: Mon, 20 Jul 2009 11:33:29 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: squid DoS in external auth header parser
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/01/8
+Message-Id: <1238588997.3103.28.camel@dhcp-lab-164.englab.brq.redhat.com>
+Date: Wed, 01 Apr 2009 14:29:57 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com
+Subject: CVE request -- bibtex, pam_ssh
 Content-Type: text/plain; charset=utf-8
 
-I noticed this on Debian's bts [1] and also on upstream's bugzilla [2]
-but no CVE has been assigned (not sure if one has been requested or not,
-but I've not seen a request come through here).
+Hello Steve,
 
-By the initial looks of things, it seems to be a fairly low severity
-issue and may not be easy to duplicate/trigger.  The reporter didn't really
-provide much in the way of a reproducer or relevant configs (and the
-reference to zope auths makes me not even want to touch it).
+  could you allocate new CVE ids for the following two issues:
 
-Has anyone taken a look at this or has a CVE been requested for it?
-Upstream has done nothing with this despite it being reported two weeks
-ago.
+1, bibtex invalid reads/writes when parsing big *.bib file
+          (valgrind reports suspicious behavior)
+   References: 
+   http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=520920  (texlive-base-bin)
+   https://bugzilla.redhat.com/show_bug.cgi?id=492136 (tetex, texlive)
 
-[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=534982
-[2] http://www.squid-cache.org/bugs/show_bug.cgi?id=2704
+   The problem is in bibtex, but looks like it is shipped
+   in various packages for various vendors.
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+2, pam_ssh Password prompt varies for existent and non-existent users
+   References: 
+   http://bugs.gentoo.org/show_bug.cgi?id=263579
+   https://bugzilla.redhat.com/show_bug.cgi?id=492153
+
+   While this is not problem of pam, pam_ssh is affected.
+   Also admit this is a very low security issue (affecting
+   special configurations), but in any case the password
+   prompt should be always the same. Successfully reproduced.
+
+Thanks, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+   
+   
+
+
