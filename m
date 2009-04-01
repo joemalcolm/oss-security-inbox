@@ -1,40 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/12/3
-Message-ID: <hfukps$iqt$1@ger.gmane.org>
-Date: Fri, 11 Dec 2009 17:32:12 -0600
-From: Raphael Geissert <geissert@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: insecure usage of temporary files in docutils
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/01/1
+Message-ID: <Pine.GSO.4.51.0903312049060.1590@faron.mitre.org>
+Date: Tue, 31 Mar 2009 21:12:25 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security <oss-security@...ts.openwall.com>
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request -- zsh, XFree86-xfs/xorg-x11-xfs, screen
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-Hi,
+On Wed, 25 Mar 2009, Jan Lieskovsky wrote:
 
-Jakub Wilk found an insecure usage of temporary files with predictable names
-in the emacs mode reStructuredText (rst.el) as shipped by docutils 0.5 and
-0.6 that allows a local user to perform a symlink attack to overwrite
-arbitrary files.
+> 1, zsh Stack-based buffer overflow due improper escaping of the '!' character
+>    References:
+>    https://bugs.launchpad.net/ubuntu/+source/zsh/+bug/333722
+>    http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=521108
+>    https://bugzilla.redhat.com/show_bug.cgi?id=492089
 
-References:
-http://docutils.sourceforge.net/
-http://bugs.debian.org/560755
+This doesn't seem like a vulnerability to me.  It's only executable in
+interactive mode.  If the attacker can already type in commands, then they
+already have the privileges to execute code.
 
-Could a CVE be assigned for this issue?
+> 2, XFree86-xfs / xorg-x11-xfs Unsafe usage of temporary file
+>    References:
+>    https://bugs.launchpad.net/ubuntu/+source/xfs/+bug/299560
+>    http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=521107
+>    https://bugzilla.novell.com/show_bug.cgi?id=408006
+>    https://bugzilla.redhat.com/show_bug.cgi?id=492098
 
-Thanks in advance.
+Is this a regression of CVE-2007-3103 (DEBIAN:DSA-1342) or is there
+something else going on here?
 
-Regards,
-- -- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+> 3, screen: Unsafe usage of temporary file
+>    References:
+>    https://bugs.launchpad.net/ubuntu/+source/screen/+bug/315993
+>    http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=521123
+>    https://bugzilla.redhat.com/show_bug.cgi?id=492104
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
+CVE-2009-1214 - world-readable permissions
+CVE-2009-1215 - symlink following
 
-iEYEARECAAYFAksi1oAACgkQYy49rUbZzlqYugCfRB1FYUUUWgZzyEApDz4qiKQJ
-ewsAoJDOy+VkyB+xrtytHa4u5UgAffJJ
-=R0mm
------END PGP SIGNATURE-----
+- Steve
+
+======================================================
+Name: CVE-2009-1214
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1214
+Reference: MLIST:[oss-security] 20090325 CVE request -- zsh, XFree86-xfs/xorg-x11-xfs, screen
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/03/25/7
+Reference: MISC:http://savannah.gnu.org/bugs/?25296
+Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=521123
+Reference: CONFIRM:https://bugs.launchpad.net/ubuntu/+source/screen/+bug/315993
+Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=492104
+
+GNU screen 4.0.3 creates the /tmp/screen-exchange temporary file with
+world-readable permissions, which might allow local users to obtain
+sensitive session information.
+
+
+======================================================
+Name: CVE-2009-1215
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1215
+Reference: MLIST:[oss-security] 20090325 CVE request -- zsh, XFree86-xfs/xorg-x11-xfs, screen
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/03/25/7
+Reference: MISC:http://savannah.gnu.org/bugs/?25296
+Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=521123
+Reference: CONFIRM:https://bugs.launchpad.net/ubuntu/+source/screen/+bug/315993
+Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=492104
+
+Race condition in GNU screen 4.0.3 allows local users to create or
+overwrite arbitrary files via a symlink attack on the
+/tmp/screen-exchange temporary file.
+
 
