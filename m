@@ -1,29 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/20/5
-Message-ID: <20090120184859.2ad20489@redhat.com>
-Date: Tue, 20 Jan 2009 18:48:59 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: OSS Security <oss-security@...ts.openwall.com>
-Subject: CVE request - horde XSS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/01/11
+Message-ID: <Pine.GSO.4.51.0904011429540.17101@faron.mitre.org>
+Date: Wed, 1 Apr 2009 14:30:08 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Wireshark DoS
 Content-Type: text/plain; charset=utf-8
 
-Hi!
 
-It looks like IE-specific XSS issue was fixed in horde 3.2.3 and 3.3.1
-(and few other hodre-based products) was fixed back in Dec, that
-probably should have CVE id:
+On Wed, 1 Apr 2009, Pinar Yanardag wrote:
+>
+> Yesterday, I came upon the following Secunia advisory [1] about Wireshark 1.0.6:
 
-Release announcements:
-http://lists.horde.org/archives/announce/2008/000462.html (3.2.3)
-http://lists.horde.org/archives/announce/2008/000464.html (3.3.1)
+======================================================
+Name: CVE-2009-1210
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1210
+Reference: MILW0RM:8308
+Reference: URL:http://www.milw0rm.com/exploits/8308
+Reference: BID:34291
+Reference: URL:http://www.securityfocus.com/bid/34291
+Reference: SECUNIA:34542
+Reference: URL:http://secunia.com/advisories/34542
+Reference: XF:wireshark-pndcp-format-string(49512)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/49512
 
-Patch:
-http://cvs.horde.org/diff.php/horde/docs/CHANGES?r1=1.515.2.413.2.1&r2=1.515.2.413.2.3&ty=h
-http://cvs.horde.org/diff.php/framework/Text_Filter/Filter/xss.php?r1=1.17&r2=1.18
+Format string vulnerability in the PROFINET/DCP (PN-DCP) dissector in
+Wireshark 1.0.6 and earlier allows remote attackers to execute
+arbitrary code via a PN-DCP packet with format string specifiers in
+the station name.  NOTE: some of these details are obtained from third
+party information.
 
-Test cases:
-http://cvs.horde.org/diff.php/framework/Text_Filter/tests/xss.phpt?r1=1.1.2.3&r2=1.1.2.4
-http://cvs.horde.org/framework/Text_Filter/tests/xss100.html
 
--- 
-Tomas Hoger / Red Hat Security Response Team
