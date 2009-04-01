@@ -1,30 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/20/2
-Message-ID: <20090120091158.GA18280@suse.de>
-Date: Tue, 20 Jan 2009 10:11:58 +0100
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/01/3
+Message-ID: <49D2E85E.1030505@redhat.com>
+Date: Wed, 01 Apr 2009 12:06:54 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request -- git
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: KVM: VMX: Dont allow uninhibited access to EFER on i386
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jan 20, 2009 at 09:02:31AM +0100, Tomas Hoger wrote:
+According to the upstream commit 16175a79, vmx_set_msr() does not allow
+i386 guests to touch EFER but they can do so through the default: label.
+If does not check if they set EFER_LME, so they can oops the host. Fix
+by having EFER access through the normal channel (which will check for
+EFER_LME) even on i386.
 
-> No, they have not.  They fixed both -5516 (git_search) and -5517
-> (git_snapshot and git_object) issues using quote_command() (in their
-> git-1.5.2.4-24.4.src.rpm).  No idea why only one of the CVEs was
-> mentioned in the security report...  They don't seem to include any
-> patch for diff.external issue, or claim to have fixed it.
-Only opensuse 11.0 and 11.1 were affected by diff.external
-issue and packages have been released for that.
-opensuse 10.3 was only affected by the remote hole and
-not by diff.external. packages were already released, too.
+This bug was introduced in upstream commit 6aa8b732ca (Dec 10, 2006).
 
-Sebastian
+http://git.kernel.org/linus/6aa8b732ca01c3d7a54e93f4d701b8aabbe60fb7
+http://git.kernel.org/linus/3bab1f5dda3443043cc8fe68c5ae75530339f28f
 
+Thanks, Eugene
 -- 
-~
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-~ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
-
+Eugene Teo / Red Hat Security Response Team
