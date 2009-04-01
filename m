@@ -1,25 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/05/4
-Message-ID: <op.ux63amte1e62zd@balu.cs.uni-paderborn.de>
-Date: Wed, 05 Aug 2009 17:14:36 +0200
-From: "Matthias Andree" <matthias.andree@....de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/01/6
+Message-ID: <20090401110553.GB25996@ngolde.de>
+Date: Wed, 1 Apr 2009 13:05:53 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: fetchmail <= 6.3.10 SSL certificate NUL prefix verification bypass
+Subject: CVE id rquest: xfig insecure tmp files
 Content-Type: text/plain; charset=utf-8
 
-Greetings,
+Hi,
+it has come to our intention that the Debian package of xfig 
+fixes some insecure temporary file creations in various 
+places in xfig. I attached the patch.
 
-fetchmail <= 6.3.10 is susceptible to NUL prefix certificates such as  
-www.paypal.com\0.reknowned.site.example.
+Can I get a CVE id for this?
 
-Is there a global CVE ID to collect this vulnerability that is supposed to  
-be reused by applications?
-
-If there is, please let me know.
-
-If there is not, please assign a new CVE Id.
-
-Thanks
+Cheers
+Nico
 
 -- 
-Matthias Andree
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+View attachment "25_mkstemp.dpatch" of type "text/plain" (10379 bytes)
+
+Content of type "application/pgp-signature" skipped
