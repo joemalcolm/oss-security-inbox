@@ -1,43 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/18/7
-Message-ID: <Pine.GSO.4.51.0908181436260.17763@faron.mitre.org>
-Date: Tue, 18 Aug 2009 14:37:20 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel: flat: fix uninitialized ptr with shared libs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/01/9
+Message-ID: <20090401144555.7dddaa32@redhat.com>
+Date: Wed, 1 Apr 2009 14:45:55 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: OSS Security <oss-security@...ts.openwall.com>
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: PHP 5.2.9
 Content-Type: text/plain; charset=utf-8
 
+Hi!
 
-On Tue, 18 Aug 2009, Steven M. Christey wrote:
+PHP 5.2.9 was released some time ago, mentioning couple of security
+fixes, that do not seem to have CVEs assigned:
+  http://www.php.net/releases/5_2_9.php
 
-> Use CVE-2009-2845, to be filled in soon.
+# Fixed explode() behavior with empty string to respect negative limit.
+  (Shire)
+http://cvs.php.net/viewvc.cgi/php-src/ext/standard/string.c?r1=1.445.2.14.2.77&r2=1.445.2.14.2.78
 
-Actually, that's a duplicate (yikes).  I'll reject that one.
-
-CVE-2009-2768 was already assigned, use it instead.  See below.
-
-- Steve
-
-
-======================================================
-Name: CVE-2009-2768
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2768
-Reference: MLIST:[linux-kernel] 20090622 Fix for shared flat binary format in 2.6.30
-Reference: URL:http://lkml.org/lkml/2009/6/22/91
-Reference: MLIST:[oss-security] 20090813 CVE request: kernel: flat: fix uninitialized ptr with shared libs
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/08/13/1
-Reference: CONFIRM:http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=3440625d78711bee41a84cf29c3d8c579b522666
-Reference: CONFIRM:http://thread.gmane.org/gmane.linux.hardware.blackfin.kernel.devel/1905
-Reference: CONFIRM:http://www.kernel.org/pub/linux/kernel/v2.6/testing/ChangeLog-2.6.31-rc6
-Reference: BID:36037
-Reference: URL:http://www.securityfocus.com/bid/36037
-
-The load_flat_shared_library function in fs/binfmt_flat.c in the flat
-subsystem in the Linux kernel before 2.6.31-rc6 allows local users to
-cause a denial of service (NULL pointer dereference and system crash)
-or possibly have unspecified other impact by executing a shared flat
-binary, which triggers an access of an "uninitialized cred pointer."
+Our maintainer has asked upstream about this one, as it changes
+behavior of explode() and does not have obvious security consequences.
+Upstream security team confirmed that this one was tagged as security
+by mistake.
 
 
+# Fixed a crash on extract in zip when files or directories entry names
+  contain a relative path. (Pierre)
+http://cvs.php.net/viewvc.cgi/php-src/ext/zip/php_zip.c?r1=1.1.2.48&r2=1.1.2.49
+
+This should only affect php 5.2.7 or versions that have original fix
+for CVE-2008-5658 backported.
+
+
+# Fixed a segfault when malformed string is passed to json_decode().
+  (Scott)
+http://cvs.php.net/viewvc.cgi/php-src/ext/json/JSON_parser.c?r1=1.1.2.14&r2=1.1.2.15
+
+This is PHP 5.2.0+ only, as previous versions do not have json
+extension.
+
+Only two CVEs should be needed.  Thank you!
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
