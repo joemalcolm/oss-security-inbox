@@ -1,41 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/23/13
-Message-ID: <heejm3$a7v$2@ger.gmane.org>
-Date: Mon, 23 Nov 2009 12:04:18 -0600
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/01/5
+Message-ID: <c5dbda760903312320q3f5f51d5l4d2edf244622008@mail.gmail.com>
+Date: Wed, 1 Apr 2009 09:20:04 +0300
+From: Pinar Yanardag <pinar@...dus.org.tr>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Mail PEAR module code injection vulnerability
+Subject: CVE Request: Wireshark DoS
 Content-Type: text/plain; charset=utf-8
-
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
 Hi,
 
-A code injection vulnerability has been found in the sendmail
-(Mail/sendmail.php) method of the Mail PEAR module.
-The bug was originally reported at [1] and fixed upstream in 1.2.0b2.
-Proper sanitation is also missing for $recipients, but it wasn't addressed
-by the fix applied by upstream.
+Yesterday, I came upon the following Secunia advisory [1] about Wireshark 1.0.6:
 
-References:
-[1] http://pear.php.net/bugs/bug.php?id=16200
-http://bugs.debian.org/557121
-http://secunia.com/advisories/37410/
-http://www.debian.org/security/2009/dsa-1938
+--------8<---------
+Description:
 
-Could a CVE be assigned? thanks in advance
+A vulnerability has been discovered in Wireshark, which can
+potentially be exploited by malicious people to compromise a user's
+system.
+The vulnerability is caused due to a format string error within the
+PN-DCP dissector when processing station names containing format
+string specifiers. This can be exploited to cause a crash and
+potentially execute arbitrary code via specially crafted packets
+captured off the wire or loaded via a capture file.
+--------8<---------
 
-Regards,
-- -- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+[1]: http://secunia.com/advisories/34542
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
+I couldn't find any related CVE request, can you assign one?
 
-iEYEARECAAYFAksKzqYACgkQYy49rUbZzlpOCwCfXRy7+ZgiGHwMSAoGueOMhTgA
-dnEAn10GpLXSMiNwmY0kXRNUjW7ZGy3F
-=MZV8
------END PGP SIGNATURE-----
-
+Thanks,
+-- 
+Pinar Yanardag
+http://pinguar.org
+_____________________
+Pardus Security Team
+http://security.pardus.org.tr
