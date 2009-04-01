@@ -1,34 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/24/2
-Message-ID: <Pine.GSO.4.51.0904241824590.13343@faron.mitre.org>
-Date: Fri, 24 Apr 2009 18:28:45 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/01/2
+Message-ID: <Pine.GSO.4.51.0903312112560.1590@faron.mitre.org>
+Date: Tue, 31 Mar 2009 21:13:00 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: ipv6: null pointer dereference in __inet6_check_established()
+cc: Steven Christey <coley@...us.mitre.org>
+Subject: Re: CVE request: < tikiwiki 2.3: XSS
 Content-Type: text/plain; charset=utf-8
 
 
-On Thu, 23 Apr 2009, Eugene Teo wrote:
+======================================================
+Name: CVE-2009-1204
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1204
+Reference: BUGTRAQ:20090312 TikiWiki 2.2 XSS Vulnerability in URI
+Reference: URL:http://www.securityfocus.com/archive/1/archive/1/501702/100/0/threaded
+Reference: CONFIRM:http://dev.tikiwiki.org/tiki-view_tracker_item.php?itemId=2359&trackerId=5&show=view&reloff=3&cant=1229&status=o&trackerId=5&sort_mode=created_desc
+Reference: CONFIRM:http://info.tikiwiki.org/tiki-read_article.php?articleId=51
+Reference: CONFIRM:http://tikiwiki.svn.sourceforge.net/viewvc/tikiwiki/branches/2.0/changelog.txt?view=markup
+Reference: BID:34105
+Reference: URL:http://www.securityfocus.com/bid/34105
+Reference: BID:34106
+Reference: URL:http://www.securityfocus.com/bid/34106
+Reference: BID:34107
+Reference: URL:http://www.securityfocus.com/bid/34107
+Reference: BID:34108
+Reference: URL:http://www.securityfocus.com/bid/34108
+Reference: SECUNIA:34273
+Reference: URL:http://secunia.com/advisories/34273
 
-> > The bug exists since 2.6.27.
-> >
-> > http://git.kernel.org/linus/3f53a38131a4e7a053c0aa060aba0411242fb6b9
->
-> This was assigned with CVE-2009-1360.
->
-> Somehow http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1360
-> missed this reference even though this email was posted before
-> xorl.wordpress.com wrote about it.
+Cross-site scripting (XSS) vulnerability in TikiWiki (Tiki)
+CMS/Groupware 2.2 allows remote attackers to inject arbitrary web
+script or HTML via the PHP_SELF portion of a URI to (1)
+tiki-galleries.php, (2) tiki-list_file_gallery.php, (3)
+tiki-listpages.php, and (4) tiki-orphan_pages.php.
 
-The URL above is equivalent to the http://git.kernel.org CONFIRM that's
-currently in the CVE.
 
-We have two main input streams for CVE: incoming requests, and
-already-public information in mailing lists or vuln DBs that we monitor.
-oss-security contains incoming requests but it also becomes public
-information that's monitored by other vuln DBs.  Sometimes those VDBs pick
-up your CVE requests before we do.  That's probably what happened here.
-(I wasn't the original CVE analyst for this bug.)
-
-- Steve
