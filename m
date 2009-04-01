@@ -1,23 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/04/3
-Message-Id: <200902041519.27870.rbu@gentoo.org>
-Date: Wed, 4 Feb 2009 15:19:25 +0100
-From: Robert Buchholz <rbu@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/01/12
+Message-ID: <20090401180853.136e2d63@redhat.com>
+Date: Wed, 1 Apr 2009 18:08:53 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Openfire <3.6.3 XSS vulnerabilities
+Cc: coley@...us.mitre.org
+Subject: Re: CVE request: jhead
 Content-Type: text/plain; charset=utf-8
 
-Openfire before 3.6.3 contains several reflected and persistent 
-Cross-Site Scripting vulnerabilties, also possibly leading to 
-server-side code execution, and a directory traversal.
+On Thu, 19 Mar 2009 20:01:51 -0400 (EDT) "Steven M. Christey"
+<coley@...us.mitre.org> wrote:
 
-https://bugs.gentoo.org/show_bug.cgi?id=257585
-http://www.coresecurity.com/content/openfire-multiple-vulnerabilities
-http://www.igniterealtime.org/builds/openfire/docs/latest/changelog.html
-http://www.igniterealtime.org/issues/browse/JM-1506
+> On Fri, 6 Feb 2009, Tomas Hoger wrote:
 
-SVN revisions r10939 r10938 r10937 r10936 on 
-http://svn.igniterealtime.org/svn/repos/openfire/trunk/ contain the 
-fixes.
+Oh, my memory about this got even more rusty, so this is from quick
+re-fresh, hope I do not get this wrong...
 
-Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
+> >> 1 - long -cmd
+> >> 2 - unsafe temp file creation
+> >> 3 - "more unchecked buffers" and "unsafe buffer sized strcat's in
+> >>    ModifyDescriptComment"  [this assumes that upstream only fixed
+> >>    issue 1)
+> >> 4 - shell escapes
+> 
+> So CVE-2008-4641 was assigned to issue 4, and CVE-2008-4639 was
+> assigned to issue 2.  However, I made a mistake in CVE-2008-4639 and
+> said "before 2.84" instead of "2.84 and earlier."  I've since fixed
+> the CVE-2008-4639 description to say ""2.84 and earlier."
+
+IIRC, my confusion was about CVE-2008-4639 vs. CVE-2008-4640, the both
+seem to be just a different consequences of the same problem with odd
+way to create temporary file.  Ok, so if you create temp file by
+changing the last character of the original name, you have predictable
+temporary file name (and possibility for symlink attack, assuming jhead
+is used on files stored in world-writable directory) and also
+overwrite / remove existing file with that name stored in given
+directory.  As far as I can see, that deletion should be limited to
+files in jhead's destination directory, so not really arbitrary I'd say.
+
+> Now what's this about 2.86?... Sounds like it may be a regression.
+
+As jhead creates those temporary files in its "destination" directory,
+this (as well as the original "unsafe temp file creation") can only be
+a problem if jhead is instructed to use /tmp (or possibly run on files
+in /tmp, I don't remember exactly).  Along with not-so-easily guessable
+names and need to win a race, it sounds quite minor.
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
