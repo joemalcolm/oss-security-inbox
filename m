@@ -1,66 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/07/7
-Message-ID: <OF30417C6F.7ADF7028-ON87257591.006804C9-86257591.0068772E@us.ibm.com>
-Date: Tue, 7 Apr 2009 13:59:25 -0500
-From: Steven French <sfrench@...ibm.com>
-To: Eugene Teo <eugene@...hat.com>
-Cc: Marcus Meissner <meissner@...e.de>, oss-security@...ts.openwall.com, security@...nel.org
-Subject: Re: CVE request? buffer overflow in CIFS in 2.6.*
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/02/2
+Message-ID: <20090402165401.3334f8ff@redhat.com>
+Date: Thu, 2 Apr 2009 16:54:01 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley@...us.mitre.org
+Subject: Re: CVE request -- zsh, XFree86-xfs/xorg-x11-xfs, screen
 Content-Type: text/plain; charset=utf-8
 
-Yes - the NativeFileSystem field is part of a server generated response 
-and is typically tiny ("NTFS" for example).
+On Tue, 31 Mar 2009 21:12:25 -0400 (EDT) "Steven M. Christey"
+<coley@...us.mitre.org> wrote:
 
-As soon as Suresh (or his coworkers at  Novell) have a patch - we (Jeff 
-and I etc.) will review it.  I think fixing these conversions to be 
-cleaner is important, although the risk of exploitable overflow is small 
-in practice.
+> > 3, screen: Unsafe usage of temporary file
+> >    References:
+> >    https://bugs.launchpad.net/ubuntu/+source/screen/+bug/315993
+> >    http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=521123
+> >    https://bugzilla.redhat.com/show_bug.cgi?id=492104
 
+Based on the additional comments in the upstream bug:
+  https://savannah.gnu.org/bugs/index.php?25296
 
-Steve French
-Senior Software Engineer
-Linux Technology Center - IBM Austin
-phone: 512-838-2294
-email: sfrench at-sign us dot ibm dot com
+> CVE-2009-1214 - world-readable permissions
 
+This should be expected and intended behavior.
 
+> CVE-2009-1215 - symlink following
 
-Eugene Teo <eugene@...hat.com> 
-04/07/2009 12:41 AM
+There should be no real symlink issue for /tmp/screen-exchange in the
+upstream version.  Debian screen version seems to have a patch, that
+introduces a symlink flaw, but it does not depend on any race
+condition.  Description for this one may need to be updated.
 
-To
-Marcus Meissner <meissner@...e.de>
-cc
-oss-security@...ts.openwall.com, security@...nel.org, Steven 
-French/Austin/IBM@...US
-Subject
-Re: [oss-security] CVE request? buffer overflow in CIFS in 2.6.*
-
-
-
-
-
-
-Hi Marcus,
-
-Marcus Meissner wrote:
-> Fixes a kmalloc area overflow in CIFS, number of overwritten bytes
-> is depending on the codepage converted to.
-> 
-> The data seems to come from a remote generated reply blob even, correct
-> me if I am wrong. :/
-
-Looks like it's part of the session setup. The NativeFileSystem field is
-part of the Tree Connect response (TCon for short).
-
-> And I wonder if "len*2" is sufficient, can't a UCS -> UTF8 conversion
-> generate more than 2 byte utf-8 characters for 1 ucs character?
-
-I understand that someone from your side is working on a better patch
-for this. Do keep us updated when it goes upstream.
-
-Thanks, Eugene
 -- 
-Eugene Teo / Red Hat Security Response Team
-
-
+Tomas Hoger / Red Hat Security Response Team
