@@ -1,26 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/24/4
-Message-ID: <Pine.GSO.4.51.0904241834380.13343@faron.mitre.org>
-Date: Fri, 24 Apr 2009 18:36:04 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: PHP 5.2.9
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/02/3
+Message-Id: <1238685487.4430.3.camel@dhcp-lab-164.englab.brq.redhat.com>
+Date: Thu, 02 Apr 2009 17:18:07 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: Robert Buchholz <rbu@...too.org>
+Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request -- ghostscript
 Content-Type: text/plain; charset=utf-8
 
+Hello Robert,
 
-On Tue, 14 Apr 2009, Christian Hoffmann wrote:
+On Thu, 2009-04-02 at 13:40 +0200, Robert Buchholz wrote:
+> On Wednesday 01 April 2009, Jan Lieskovsky wrote:
+> > Hello Steve,
+> >
+> >   could you please allocate new CVE ids for the following two
+> > Ghostscript issues:
+> >
+> > 1, DoS (crash) in CCITTFax decoding filter
+> >    References:
+> >    https://bugzilla.redhat.com/show_bug.cgi?id=493442
+> >    https://bugzilla.redhat.com/show_bug.cgi?id=229174
+> >    -^ original report, so CVE-2007-XXXX will be needed
+> >    https://bugzilla.redhat.com/show_bug.cgi?id=493442#c1 (PoC)
+> 
+> The Tim Waugh patch has been incorporated here:
+> http://svn.ghostscript.com/viewvc?view=rev&revision=8896
+> 
 
-> > Use CVE-2009-1272
-> Somehow the wrong changeset URL shows up in CVE-2009-1272's list of
-> references [1] (the json decode one, instead of the zip thingy):
->
-> What shows up:
-> http://cvs.php.net/viewvc.cgi/php-src/ext/json/JSON_parser.c?r1=1.1.2.14&r2=1.1.2.15
->
-> What should show up instead:
-> http://cvs.php.net/viewvc.cgi/php-src/ext/zip/php_zip.c?r1=1.1.2.48&r2=1.1.2.49
+Currently we are waiting on review for another patch at:
 
-Thanks for catching this.  This was basically a cut-and-paste error.
+http://bugs.ghostscript.com/show_bug.cgi?id=689917#c11
 
-- Steve
+because the initial patch, you mention, was 'only workaround'.
+
+See Ralph's comment:
+
+http://bugs.ghostscript.com/show_bug.cgi?id=689917#c5
+
+Anyway, the proposed page also shows 1/2 of the page as blank :(.
+
+Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+> 
+> Robert
+
