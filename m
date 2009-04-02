@@ -1,19 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/17/3
-Message-ID: <Pine.GSO.4.51.0904170958290.17172@faron.mitre.org>
-Date: Fri, 17 Apr 2009 09:58:51 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/02/1
+Message-Id: <200904021340.04026.rbu@gentoo.org>
+Date: Thu, 2 Apr 2009 13:40:00 +0200
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>, Chris Wright <chrisw@...hat.com>, Greg KH <greg@...ah.com>
-Subject: Re: CVE request: kernel: exit_notify: kill the wrong capable(CAP_KILL) check
+Cc: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request -- ghostscript
 Content-Type: text/plain; charset=utf-8
 
+On Wednesday 01 April 2009, Jan Lieskovsky wrote:
+> Hello Steve,
+>
+>   could you please allocate new CVE ids for the following two
+> Ghostscript issues:
+>
+> 1, DoS (crash) in CCITTFax decoding filter
+>    References:
+>    https://bugzilla.redhat.com/show_bug.cgi?id=493442
+>    https://bugzilla.redhat.com/show_bug.cgi?id=229174
+>    -^ original report, so CVE-2007-XXXX will be needed
+>    https://bugzilla.redhat.com/show_bug.cgi?id=493442#c1 (PoC)
 
-On Tue, 7 Apr 2009, Eugene Teo wrote:
+The Tim Waugh patch has been incorporated here:
+http://svn.ghostscript.com/viewvc?view=rev&revision=8896
 
-> https://bugzilla.redhat.com/show_bug.cgi?id=493771
-> http://git.kernel.org/linus/432870dab85a2f69dc417022646cb9a70acf7f94
 
-Use CVE-2009-1337, to be filled in later.
+Robert
 
-- Steve
+Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
