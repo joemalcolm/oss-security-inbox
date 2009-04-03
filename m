@@ -1,52 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/02/4
-Message-ID: <Pine.GSO.4.51.0912021033570.25360@faron.mitre.org>
-Date: Wed, 2 Dec 2009 10:41:55 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Eugene Teo <eugene@...hat.com>
-cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: mac80211: fix two remote exploits
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/03/1
+Message-ID: <Pine.LNX.4.64.0904030943430.11200@forced.attrition.org>
+Date: Fri, 3 Apr 2009 09:46:09 +0000 (UTC)
+From: security curmudgeon <jericho@...rition.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request -- Linux kernel irda driver buffer
 Content-Type: text/plain; charset=utf-8
 
 
-On Wed, 2 Dec 2009, Eugene Teo wrote:
+Previous discussion: 
+http://marc.info/?l=oss-security&w=2&r=1&s=irda+driver&q=b
 
-> Actually, you can ignore this request. So what happened was that, there
-> were actually two patches for this, but Johannes combined them together
-> when he shared the fix with us. So, this is part of the fixes for
-> CVE-2009-4026: upstream commits (1) 4253119a and (2) 827d42c9.
+Mark Cox ruled "doesn't seem to have any security implications". Since 
+then, 3rd party analysis suggests it still may in a different manner:
 
-The Red Hat bug report lists both CVE-2009-4026 and CVE-2009-4027 but
-doesn't actually link these two CVEs to any specific fix/issue:
+http://xorl.wordpress.com/2009/03/11/linux-kernel-irda-sigmatel-stir421x-off-by-one/
 
-  https://bugzilla.redhat.com/show_bug.cgi?id=541149
+[..]
 
-We associated CVE-2009-4026 with commit
-827d42c9ac91ddd728e4f4a31fefb906ef2ceff7, and we associated CVE-2009-4027
-with commit d92684e66091c0f0101819619b315b4bb8b5bcc5.
+This could lead to information leak if request_firmware() gives some kind 
+of output but I havent checked this.
 
-Here is the logic chain that we had to follow in order to perform this
-association.
-
-  The History section of 541149 indicates that this "mac80211: fix
-  spurious delBA handling" bug was assigned both CVE-2009-4026 and
-  CVE-2009-4027 on 20091125. All activity in this bug is by Eugene Teo.
-  The fix for the bug is in commit
-  827d42c9ac91ddd728e4f4a31fefb906ef2ceff7. As mentioned in
-  oss-security/2009/12/01/2, the portion of this bug that was introduced
-  by the d75636ef9c1af224f1097941879d5a8db7cd04e5 commit in 2009 is
-  CVE-2009-4026. Therefore, the portion of the bug that was introduced by
-  the d92684e66091c0f0101819619b315b4bb8b5bcc5 commit in 2008 is
-  CVE-2009-4027. The 827d42c9ac91ddd728e4f4a31fefb906ef2ceff7 commit
-  message says "The first problem is that I moved a BUG_ON before various
-  checks -- thereby making it possible to hit. As the comment indicates,
-  the BUG_ON can be removed since the ampdu_action callback must already
-  exist when the state is != IDLE." However, apparently no part of the
-  diff affects any BUG_ON line in the code. Later, on 20091201, Eugene Teo
-  sent a "CVE request: kernel: mac80211: fix two remote exploits"
-  oss-security message. The fix for this additional vulnerability is in
-  commit 4253119acf412fd686ef4bd8749b5a4d70ea3a51. The entirety of the fix
-  is removal of calls to BUG_ON and WARN_ON.
+[..]
 
 
-- Steve
+Comments?
