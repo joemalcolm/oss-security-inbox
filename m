@@ -1,30 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/09/4
-Message-ID: <20090409125038.GA2951@suse.de>
-Date: Thu, 9 Apr 2009 14:50:39 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/04/1
+Message-ID: <20090404221131.GA30528@suse.de>
+Date: Sun, 5 Apr 2009 00:11:31 +0200
 From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: clamav clamd and clamscan DoS and bypass by malformated archive
+To: OSS Security List <oss-security@...ts.openwall.com>
+Cc: security@...nel.org, sfrench@...ibm.com
+Subject: CVE request? buffer overflow in CIFS in 2.6.*
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Apr 09, 2009 at 02:41:31PM +0200, Hanno Böck wrote:
-> Am Donnerstag 09 April 2009 schrieb Tomas Hoger:
-> > Upstream 0.95.1 seems to fix at least 2 other issues that may be of
-> > interest:
-> >
-> > https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1552
-> > https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1553
-> >
-> > svn diff -c 5032 http://svn.clamav.net/svn/clamav-devel/
-> 
-> Stupid question but is it common clamav policy to not mention security 
-> releases? Anyone any info about that?
-> 
-> This is a bit frightening for a "security" product (they have a menu 
-> point "security" on their website but it seems they don't tend to fill it 
-> with information...)
+Hi,
 
-I think our clamav package maintainer tried to inject some clues
-into their processes, but so far it does not seem to have helped. :/
+I guess we need a CVE for this fix:
+
+http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.29.y.git;a=commitdiff;h=15bd8021d870d2c4fbf8c16578d72d03cfddd3a7
+
+Fixes a kmalloc area overflow in CIFS, number of overwritten bytes
+is depending on the codepage converted to.
+
+The data seems to come from a remote generated reply blob even, correct
+me if I am wrong. :/
+
+Checking our enterprise distro kernels it seems to cover most of the
+2.6 kernel range...
+2.6.27 has the same code, 2.6.16 too, 2.6.5 too.
+
+
+
+And I wonder if "len*2" is sufficient, can't a UCS -> UTF8 conversion
+generate more than 2 byte utf-8 characters for 1 ucs character?
+
+(spotted by felix leitner, german blog entry: http://blog.fefe.de/?ts=b72905a8 )
 
 Ciao, Marcus
