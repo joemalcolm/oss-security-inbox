@@ -1,39 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/13/4
-Message-Id: <200905131151.44822.oeriksson@mandriva.com>
-Date: Wed, 13 May 2009 11:51:44 +0200
-From: Oden Eriksson <oeriksson@...driva.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/06/1
+Message-ID: <49D998B7.9080300@redhat.com>
+Date: Mon, 06 Apr 2009 13:52:55 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: php mb_ereg_replace()
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: NFS: Fix an Oops in encode_lookup()
 Content-Type: text/plain; charset=utf-8
 
-onsdag 13 maj 2009 09:40:20 skrev  Sebastian Krahmer:
-> Hi,
->
-> anyone aware of Bugtraq ID 34873 (http://www.securityfocus.com/bid/34873)?
-> Seems there is no CVE or anything else (not even a patch).
->
-> Sebastian
+According to the upstream commit 54af3bb543, the NFS file name limit is
+not being initialised correctly in the struct nfs_server. The problem
+can be easily triggered by a local, unprivileged user. We need to make
+sure that we limit whatever is being set in nfs_probe_fsinfo() and
+nfs_init_server(). We also need to ensure that readdirplus and
+nfs4_path_walk respect our file name limits.
 
-Got this reply from Derick Rethans asking on security@....net:
+http://git.kernel.org/linus/54af3bb543c071769141387a42deaaab5074da55
+https://bugzilla.redhat.com/show_bug.cgi?id=494074
 
-> It was brought to my attention there is a new security issue in php as shown 
-> here:
-> 
-> http://www.securityfocus.com/bid/34873
-> 
-> Could you please advice?
-
-How is this a bug, the documentation for mb_ereg_replace writes:
-
-"If e  is specified, replacement  string will be evaluated as PHP 
-expression. "
-
-In the example "e" is specified, so of course it will execute the code. 
-
-regards,
-Derick
-
+Thanks, Eugene
 -- 
-Regards // Oden Eriksson
-
+Eugene Teo / Red Hat Security Response Team
