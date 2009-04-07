@@ -1,24 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/07/1
-Message-ID: <Pine.GSO.4.51.0907071654330.14418@faron.mitre.org>
-Date: Tue, 7 Jul 2009 16:54:53 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: OSS Security <oss-security@...ts.openwall.com>
-Subject: Re: nagios: remote code execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/07/6
+Message-ID: <20090407182140.GA10312@severus.strandboge.com>
+Date: Tue, 7 Apr 2009 13:21:40 -0500
+From: Jamie Strandboge <jamie@...onical.com>
+To: coley@...us.mitre.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: clamav clamd and clamscan DoS and bypass by malformated archive
 Content-Type: text/plain; charset=utf-8
 
+On Tue, 07 Apr 2009, Nico Golde wrote:
+> * Thomas Biege <thomas@...e.de> [2009-04-07 15:47]:
+> > These two bugs possibly need a CVE-ID.
+> > 
+> > Here we go:
+> > 
+> > https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1462
+> > 
+> > http://blog.zoller.lu/2009/04/clamav-094-and-below-evasion-and-bypass.html
+> 
+> Should be covered by CVE-2009-1241
 
-======================================================
-Name: CVE-2009-2288
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2288
-Reference: CONFIRM:http://tracker.nagios.org/view.php?id=15
-Reference: CONFIRM:http://www.nagios.org/development/history/core-3x/
-Reference: SECUNIA:35543
-Reference: URL:http://secunia.com/advisories/35543
+The details are scant, but I believe bug #1462[1] to be different from the
+unrar issue discussed in the blog and CVE-2009-1241.
 
-statuswml.cgi in Nagios before 3.1.1 allows remote attackers to
-execute arbitrary commands via shell metacharacters in the (1) ping or
-(2) Traceroute parameters.
+Specifically, the patch for 1462 is svn commit r4981 to
+libclamav/untar.c to prevent a DoS (infinite loop).
 
+Also, bug 1335[2] is fixed in commit r4980 by a patch to cli_scanpe() in
+libclamav/pe.c to prevent a DoS (divide by zero).
 
+AFAICT, the unrar issue (CVE-2009-1241) is covered in Debian bug
+#484642[3] and clamav bug #1050[4].
+
+Could we get CVE identifiers for the two remaining issues?
+
+Jamie
+
+[1] https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1462
+[2] https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1335
+[3] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=484642
+[4] https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1050
+
+-- 
+Jamie Strandboge             | http://www.canonical.com
+
+Download attachment "signature.asc" of type "application/pgp-signature" (198 bytes)
