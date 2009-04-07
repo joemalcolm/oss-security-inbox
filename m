@@ -1,62 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/31/5
-Message-ID: <20090831165050.GJ11041@ngolde.de>
-Date: Mon, 31 Aug 2009 18:50:50 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/07/4
+Message-ID: <20090407120815.GA9521@suse.de>
+Date: Tue, 7 Apr 2009 14:08:15 +0200
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: silc-toolkit
+Subject: CVE request: clamav clamd and clamscan DoS and bypass by malformated archive
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-silc-toolkit upstream fixed [0] various security issues which 
-from my assessment allow an attacker arbitrary code 
-execution. I'd like to get some CVE ids for these.
 
-|    ASN1: Fix stack variable overwrite when encoding OID.
-|
-|    The call to sscanf specifies a format string of "%lu", a long unsigned
-|    int.  The pointer argument was cast to unsigned long *, but this is
-|    wrong for 64 bit systems.  On 64 bit systems, unsigned long is 64 bits,
-|    but the oid value is a SilcUInt32 on all systems.  As a result, sscanf
-|    will overwrite a neighboring variable on the stack.  Fix this by
-|    changing the format string to "%u" and removing the cast.
+These two bugs possibly need a CVE-ID.
 
-|    Fixed string format vulnerability in client entry handling.
-|
-|    Reported and patch provided by William Cummings.
+Here we go:
 
-This one allows an attacker to execute arbitrary code, tested.
+https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1462
 
-|     More string format fixes in silcd and client libary
-
-From what I see this is only a problem if full_channel_names settings is used in
-SilcClientParams and can't be triggered by an attacker but only by the victim,
-maybe I miss something, I'm not that familar with the silc protocol.
-
-|    HTTP: fix stack overwrite due to format string error.
-|    
-|    On AMD64, %lu refers to a 64-bit unsigned value, but the address passed
-|    to sscanf points to a 32-bit unsigned value.  This causes an adjoining
-|    value on the stack to be overwritten with data from the converted
-|    integer.  Fix the format string to match the size of the supplied value,
-|    and remove the pointer cast.
-
-This is only a problem if the internal http server e.g. for checking stats
-is enabled.
-
-Can I get CVE ids for the above issues?
-The upstream patch is attached.
-
-Cheers
-Nico
-
-[0] http://silcnet.org/docs/changelog/SILC%20Toolkit%201.1.10
+http://blog.zoller.lu/2009/04/clamav-094-and-below-evasion-and-bypass.html
 
 
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-View attachment "silc.patch" of type "text/x-diff" (6255 bytes)
-
-Content of type "application/pgp-signature" skipped
+Bye,
+     Thomas
+-- 
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+-- 
+           Hamming's Motto:
+           The purpose of computing is insight, not numbers.
+                                -- Richard W. Hamming
