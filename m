@@ -1,25 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/22/3
-Message-ID: <Pine.GSO.4.51.0909220319500.16381@faron.mitre.org>
-Date: Tue, 22 Sep 2009 03:20:08 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request(?): Thin: Client IP spoofing
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/07/3
+Message-ID: <20090407085215.GD21360@suse.de>
+Date: Tue, 7 Apr 2009 10:52:15 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: Eugene Teo <eugene@...hat.com>
+Cc: oss-security@...ts.openwall.com, security@...nel.org, sfrench@...ibm.com
+Subject: Re: CVE request? buffer overflow in CIFS in 2.6.*
 Content-Type: text/plain; charset=utf-8
 
+On Tue, Apr 07, 2009 at 01:41:44PM +0800, Eugene Teo wrote:
+> Hi Marcus,
+> 
+> Marcus Meissner wrote:
+> > Fixes a kmalloc area overflow in CIFS, number of overwritten bytes
+> > is depending on the codepage converted to.
+> > 
+> > The data seems to come from a remote generated reply blob even, correct
+> > me if I am wrong. :/
+> 
+> Looks like it's part of the session setup. The NativeFileSystem field is
+> part of the Tree Connect response (TCon for short).
+> 
+> > And I wonder if "len*2" is sufficient, can't a UCS -> UTF8 conversion
+> > generate more than 2 byte utf-8 characters for 1 ucs character?
+> 
+> I understand that someone from your side is working on a better patch
+> for this. Do keep us updated when it goes upstream.
 
-======================================================
-Name: CVE-2009-3287
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3287
-Reference: MLIST:[oss-security] 20090912 CVE request(?): Thin: Client IP spoofing
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/09/12/1
-Reference: CONFIRM:http://github.com/macournoyer/thin/blob/master/CHANGELOG
-Reference: CONFIRM:http://github.com/macournoyer/thin/commit/7bd027914c5ffd36bb408ef47dc749de3b6e063a
+tracked in the public bugzilla entry:
+https://bugzilla.novell.com/show_bug.cgi?id=492282
 
-lib/thin/connection.rb in Thin web server before 1.2.4 relies on the
-X-Forwarded-For header to determine the IP address of the client,
-which allows remote attackers to spoof the IP address and hide
-activities via a modified X-Forwarded-For header.
+and:
+http://lists.samba.org/archive/linux-cifs-client/2009-April/004322.html ff.
+for the cifs discussion.
 
+Ciao, Marcus
 
