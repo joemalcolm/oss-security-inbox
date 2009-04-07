@@ -1,32 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/06/1
-Message-ID: <1734991890.1677571254863674719.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 6 Oct 2009 17:14:34 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: coley <coley@...re.org>
-Subject: Kernel ecryptfs CVE id (CVE-2009-2908)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/07/7
+Message-ID: <OF30417C6F.7ADF7028-ON87257591.006804C9-86257591.0068772E@us.ibm.com>
+Date: Tue, 7 Apr 2009 13:59:25 -0500
+From: Steven French <sfrench@...ibm.com>
+To: Eugene Teo <eugene@...hat.com>
+Cc: Marcus Meissner <meissner@...e.de>, oss-security@...ts.openwall.com, security@...nel.org
+Subject: Re: CVE request? buffer overflow in CIFS in 2.6.*
 Content-Type: text/plain; charset=utf-8
 
-As some of you may have noticed, the 2.6.31.2 kernel contained this bit in the
-changelog:
-eCryptfs: Prevent lower dentry from going negative ...
+Yes - the NativeFileSystem field is part of a server generated response 
+and is typically tiny ("NTFS" for example).
 
-The commit is here:
-http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.31.y.git;a=commit;h=afc2b6932f48f200736d3e36ad66fee0ec733136
+As soon as Suresh (or his coworkers at  Novell) have a patch - we (Jeff 
+and I etc.) will review it.  I think fixing these conversions to be 
+cleaner is important, although the risk of exploitable overflow is small 
+in practice.
 
-I've assigned this CVE-2009-2908. At the very least it's a DoS as it causes an
-OOPS due to a NULL pointer dereference, it may allow arbitrary code execution
-as the structure in question does contain function pointers. If someone who
-knows more than me wants to chime in here, please do.
 
-I've filed a bug in the Red Hat Bugzilla:
-https://bugzilla.redhat.com/show_bug.cgi?id=527534
+Steve French
+Senior Software Engineer
+Linux Technology Center - IBM Austin
+phone: 512-838-2294
+email: sfrench at-sign us dot ibm dot com
 
-It doesn't really contain any additional data. If I discover anything new,
-I'll add my comments there.
 
-Thanks.
 
+Eugene Teo <eugene@...hat.com> 
+04/07/2009 12:41 AM
+
+To
+Marcus Meissner <meissner@...e.de>
+cc
+oss-security@...ts.openwall.com, security@...nel.org, Steven 
+French/Austin/IBM@...US
+Subject
+Re: [oss-security] CVE request? buffer overflow in CIFS in 2.6.*
+
+
+
+
+
+
+Hi Marcus,
+
+Marcus Meissner wrote:
+> Fixes a kmalloc area overflow in CIFS, number of overwritten bytes
+> is depending on the codepage converted to.
+> 
+> The data seems to come from a remote generated reply blob even, correct
+> me if I am wrong. :/
+
+Looks like it's part of the session setup. The NativeFileSystem field is
+part of the Tree Connect response (TCon for short).
+
+> And I wonder if "len*2" is sufficient, can't a UCS -> UTF8 conversion
+> generate more than 2 byte utf-8 characters for 1 ucs character?
+
+I understand that someone from your side is working on a better patch
+for this. Do keep us updated when it goes upstream.
+
+Thanks, Eugene
 -- 
-    JB
+Eugene Teo / Red Hat Security Response Team
+
+
