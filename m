@@ -1,37 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/01/2
-Message-ID: <4B14A1F4.3050009@kernel.sg>
-Date: Tue, 01 Dec 2009 12:56:20 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: mac80211: fix two remote exploits
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/07/2
+Message-ID: <49DAE798.8020008@redhat.com>
+Date: Tue, 07 Apr 2009 13:41:44 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: Marcus Meissner <meissner@...e.de>
+CC: oss-security@...ts.openwall.com, security@...nel.org, sfrench@...ibm.com
+Subject: Re: CVE request? buffer overflow in CIFS in 2.6.*
 Content-Type: text/plain; charset=utf-8
 
-http://git.kernel.org/linus/4253119acf412fd686ef4bd8749b5a4d70ea3a51
+Hi Marcus,
 
-"Lennert Buytenhek noticed a remotely triggerable problem in mac80211, 
-which is due to some code shuffling I did that ended up changing the 
-order in which things were done -- this was in
+Marcus Meissner wrote:
+> Fixes a kmalloc area overflow in CIFS, number of overwritten bytes
+> is depending on the codepage converted to.
+> 
+> The data seems to come from a remote generated reply blob even, correct
+> me if I am wrong. :/
 
-   commit d75636ef9c1af224f1097941879d5a8db7cd04e5
-   Author: Johannes Berg <johannes@...solutions.net>
-   Date:   Tue Feb 10 21:25:53 2009 +0100
+Looks like it's part of the session setup. The NativeFileSystem field is
+part of the Tree Connect response (TCon for short).
 
-     mac80211: RX aggregation: clean up stop session
+> And I wonder if "len*2" is sufficient, can't a UCS -> UTF8 conversion
+> generate more than 2 byte utf-8 characters for 1 ucs character?
 
-The problem is that the BUG_ON moved before the various checks, and as 
-such can be triggered.
-
-As the comment indicates, the BUG_ON can be removed since the 
-ampdu_action callback must already exist when the state is OPERATIONAL.
-
-A similar code path leads to a WARN_ON in ieee80211_stop_tx_ba_session, 
-which can also be removed."
-
-Btw, FYI, there's another issue that was also introduced by the same 
-code shuffling patch (commit d75636ef) but was fixed in another patch 
-(commit 827d42c9). It was assigned with CVE-2009-4026.
+I understand that someone from your side is working on a better patch
+for this. Do keep us updated when it goes upstream.
 
 Thanks, Eugene
 -- 
