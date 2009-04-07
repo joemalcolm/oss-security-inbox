@@ -1,21 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/28/1
-Message-ID: <20090928124510.GA17893@steve.org.uk>
-Date: Mon, 28 Sep 2009 13:45:10 +0100
-From: Steve Kemp <steve@...ve.org.uk>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/07/5
+Message-ID: <20090407144659.GC11822@ngolde.de>
+Date: Tue, 7 Apr 2009 16:46:59 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: oping allows the disclosure of arbitrary file contents
+Subject: Re: CVE request: clamav clamd and clamscan DoS and bypass by malformated archive
 Content-Type: text/plain; charset=utf-8
 
-  oping is setuid root application and one of the command line arguments allows
- a configuration file to be specified.  This file is read and *reported*
- to the console - Unless the file is lucky enough to look like a list
- of hostnames.
+Hi,
+* Thomas Biege <thomas@...e.de> [2009-04-07 15:47]:
+> These two bugs possibly need a CVE-ID.
+> 
+> Here we go:
+> 
+> https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1462
+> 
+> http://blog.zoller.lu/2009/04/clamav-094-and-below-evasion-and-bypass.html
 
-  Brief details here:
+Should be covered by CVE-2009-1241
+Cheers
+Nico
 
-        http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=548684
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-Steve
---
+Content of type "application/pgp-signature" skipped
