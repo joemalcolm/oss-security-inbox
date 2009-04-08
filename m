@@ -1,55 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/16/1
-Message-ID: <1721505702.99771258406687618.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 16 Nov 2009 16:24:47 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Wordpress 2.8.6
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/08/7
+Message-ID: <Pine.GSO.4.51.0904081359540.29367@faron.mitre.org>
+Date: Wed, 8 Apr 2009 13:59:58 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security <oss-security@...ts.openwall.com>
+cc: coley@...re.org
+Subject: Re: CVE Request (xine-lib)
 Content-Type: text/plain; charset=utf-8
 
-Let's use these:
 
-CVE-2009-3890 wordpress OSVDB 59958
-CVE-2009-3891 wordpress OSVDB 59959
+======================================================
+Name: CVE-2009-1274
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1274
+Reference: BUGTRAQ:20090404 [TKADV2009-005] xine-lib Quicktime STTS Atom Integer Overflow
+Reference: URL:http://www.securityfocus.com/archive/1/archive/1/502481/100/0/threaded
+Reference: MISC:http://www.trapkit.de/advisories/TKADV2009-005.txt
+Reference: CONFIRM:http://bugs.xine-project.org/show_bug.cgi?id=224
+Reference: CONFIRM:http://sourceforge.net/project/shownotes.php?group_id=9655&release_id=673233
+Reference: OSVDB:53288
+Reference: URL:http://osvdb.org/53288
+Reference: SECTRACK:1021989
+Reference: URL:http://www.securitytracker.com/id?1021989
+Reference: SECUNIA:34593
+Reference: URL:http://secunia.com/advisories/34593
+Reference: VUPEN:ADV-2009-0937
+Reference: URL:http://www.vupen.com/english/advisories/2009/0937
+Reference: XF:xinelib-demuxqt-bo(49714)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/49714
 
-Thanks.
+Integer overflow in the qt_error parse_trak_atom function in
+demuxers/demux_qt.c in xine-lib 1.1.16.2 and earlier allows remote
+attackers to execute arbitrary code via a Quicktime movie file with a
+large count value in an STTS atom, which triggers a heap-based buffer
+overflow.
 
--- 
-    JB
 
------ "security curmudgeon" <jericho@...rition.org> wrote:
-
-> On Sun, 15 Nov 2009, Alex Legler wrote:
-> 
-> : Wordpress released an update, fixing 2 issues:
-> : 
-> : "2.8.6 fixes two security problems that can be exploited by
-> registered, 
-> : logged in users who have posting privileges.  If you have untrusted
-> 
-> : authors on your blog, upgrading to 2.8.6 is recommended.
-> : 
-> : The first problem is an XSS vulnerability in Press This discovered
-> by 
-> : Benjamin Flesch.  The second problem, discovered by Dawid Golunski,
-> is 
-> : an issue with sanitizing uploaded file names that can be exploited
-> in 
-> : certain Apache configurations. Thanks to Benjamin and Dawid for
-> finding 
-> : and reporting these."
-> : 
-> : from
-> :
-> http://wordpress.org/development/2009/11/wordpress-2-8-6-security-release/
-> : 
-> : I believe these are the matching tickets:
-> : Issue 1: http://core.trac.wordpress.org/ticket/11119
-> : Issue 2: http://core.trac.wordpress.org/ticket/11122
-> 
-> OSVDB   Disclosure              Title
-> 
-> 59958 	2009-11-12 		WordPress /wp-includes/functions.php
-> wp_check_filetype() Function File Upload Arbitrary Code Execution 
-> 
-> 59959 	2009-11-12 		WordPress press-this.php Unspecified XSS
