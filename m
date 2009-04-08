@@ -1,18 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/20/1
-Message-ID: <4A1381B1.8010007@redhat.com>
-Date: Wed, 20 May 2009 12:06:09 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: problem with NFS v4 client handling of MAY_EXEC in nfs_permission
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/08/3
+Message-Id: <1239178420.3175.2.camel@dhcp-lab-164.englab.brq.redhat.com>
+Date: Wed, 08 Apr 2009 10:13:40 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: (Sort of urgent) CVE request -- ghostscript
 Content-Type: text/plain; charset=utf-8
 
-Eugene Teo wrote:
-> Frank Filz reported: the problem is that permission checking is skipped
-> if atomic open is possible, but when exec opens a file, it just opens it
-> O_READONLY which means EXEC permission will not be checked at that time.
+Hello Steve,
 
-Upstream commit: 7ee2cb7f32b299c2b06a31fde155457203e4b7dd
+  could you please allocate new CVE ids for the following
+two issues?
 
-Thanks, Eugene
+Thank you, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+On Wed, 2009-04-01 at 21:43 +0200, Jan Lieskovsky wrote:
+> Hello Steve,
+> 
+>   could you please allocate new CVE ids for the following two 
+> Ghostscript issues:
+> 
+> 1, DoS (crash) in CCITTFax decoding filter
+>    References:
+>    https://bugzilla.redhat.com/show_bug.cgi?id=493442
+>    https://bugzilla.redhat.com/show_bug.cgi?id=229174 
+>    -^ original report, so CVE-2007-XXXX will be needed
+>    https://bugzilla.redhat.com/show_bug.cgi?id=493442#c1 (PoC)
+> 
+> 
+> 2, Buffer overflow in BaseFont writer module for pdfwrite defice
+>    References:
+>    https://bugzilla.redhat.com/show_bug.cgi?id=493445
+>    http://bugs.ghostscript.com/show_bug.cgi?id=690211
+>    -^ upstream bug report, so CVE-2008-XXXX will be needed
+>    http://svn.ghostscript.com/viewvc?view=rev&sortby=rev&revision=9304 (upstream patch)
+> 
+> 
+> Thanks, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+> 
+> 
+
