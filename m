@@ -1,43 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/17/8
-Message-ID: <20091217203331.GA2811@redhat.com>
-Date: Thu, 17 Dec 2009 20:33:31 +0000
-From: Joe Orton <jorton@...hat.com>
-To: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/08/4
+Message-ID: <20090408080447.GD25632@1wt.eu>
+Date: Wed, 8 Apr 2009 10:04:47 +0200
+From: Willy Tarreau <w@....eu>
+To: Eugene Teo <eugene@...hat.com>
 Cc: oss-security@...ts.openwall.com
-Subject: Re:  CVE request: php5: multiple issues
+Subject: Re: CVE-2009-1265 kernel: af_rose/x25: Sanity check the maximum user frame size
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Dec 17, 2009 at 01:23:33PM -0600, Raphael Geissert wrote:
-> I think a cross-vendor security support and tracking effort for php5 
-> is needed. The number of issues silently fixed are a continuous risk, 
-> leaving users exposed. What does the others think?
+Hi Eugene,
 
-The problem we face is the ambiguity around the threat model for the PHP 
-interpreter.  If you assume that the PHP interpreter should be robust 
-against attack from a malicious script (or its author), then a vast 
-number of bugs can be considered a security vulnerability.
+On Wed, Apr 08, 2009 at 03:58:55PM +0800, Eugene Teo wrote:
+> {nr,rose,x25}_sendmsg() functions need to have sanity checks on the
+> packet size, otherwise the sizes can wrap and end up sending garbage.
+> 
+> http://bugzilla.kernel.org/show_bug.cgi?id=10423
+> http://git.kernel.org/linus/83e0bbcbe2145f160fbaa109b0439dae7f4a38a9
+> http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2009-1265
+> 
+> This affects both 2.4.x and 2.6.x if CONFIG_{NETROM,ROSE,X25} are enabled.
 
-Even if you assume that the PHP interpreter - and scripts using it - 
-should be robust only against attack from a remote user, it is often 
-still difficult to draw the line between a script bug and an 
-interpreter/extension bug.  Doing so requires interface documentation 
-which specifies API preconditions and guarantees with greater precision 
-than is usually available.
+I already have it in my queue, just did not have time to merge it yet.
+Thanks for the reminder anyway, I really appreciate it ;-)
 
-So whether or not security issues are being "silently fixed" depends a 
-lot on your frame of reference.
-
-Ideally any effort to improve the lack of transparency around PHP 
-security would start by working with upstream to a) define a threat 
-model and b) improve strictness of API/quality of code in the context of 
-that model.  I wouldn't underestimate the time and effort that would 
-require ;)
-
-Using this list to track and share analysis of published issues is 
-certainly helpful, but I'm not sure what more we can/should do 
-independent of upstream to improve the situation - any specific ideas 
-you had?
-
-Regards, Joe
+Willy
 
