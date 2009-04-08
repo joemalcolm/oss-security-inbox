@@ -1,27 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/08/4
-Message-ID: <20090408080447.GD25632@1wt.eu>
-Date: Wed, 8 Apr 2009 10:04:47 +0200
-From: Willy Tarreau <w@....eu>
-To: Eugene Teo <eugene@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2009-1265 kernel: af_rose/x25: Sanity check the maximum user frame size
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/08/5
+Message-ID: <Pine.GSO.4.51.0904081128240.25487@faron.mitre.org>
+Date: Wed, 8 Apr 2009 11:28:50 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com, oss-security@...ts.openwall.com
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: (Sort of urgent) CVE request -- ghostscript
 Content-Type: text/plain; charset=utf-8
 
-Hi Eugene,
 
-On Wed, Apr 08, 2009 at 03:58:55PM +0800, Eugene Teo wrote:
-> {nr,rose,x25}_sendmsg() functions need to have sanity checks on the
-> packet size, otherwise the sizes can wrap and end up sending garbage.
-> 
-> http://bugzilla.kernel.org/show_bug.cgi?id=10423
-> http://git.kernel.org/linus/83e0bbcbe2145f160fbaa109b0439dae7f4a38a9
-> http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2009-1265
-> 
-> This affects both 2.4.x and 2.6.x if CONFIG_{NETROM,ROSE,X25} are enabled.
+======================================================
+Name: CVE-2007-6725
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6725
+Reference: MLIST:[oss-security] 20090401 CVE request -- ghostscript
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/04/01/10
+Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=229174
+Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=493442
+Reference: FEDORA:FEDORA-2008-5699
+Reference: URL:http://www.mail-archive.com/fedora-package-announce@redhat.com/msg11830.html
 
-I already have it in my queue, just did not have time to merge it yet.
-Thanks for the reminder anyway, I really appreciate it ;-)
+The CCITTFax decoding filter in Ghostscript 8.60, 8.61, and possibly
+other versions, allows remote attackers to cause a denial of service
+(crash) and possibly execute arbitrary code via a crafted PDF file
+that triggers a buffer underflow in the cf_decode_2d function.
 
-Willy
+
+======================================================
+Name: CVE-2008-6679
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-6679
+Reference: MLIST:[oss-security] 20090401 CVE request -- ghostscript
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/04/01/10
+Reference: CONFIRM:http://bugs.ghostscript.com/show_bug.cgi?id=690211
+Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=493445
+
+Buffer overflow in the BaseFont writer module in Ghostscript 8.62, and
+possibly other versions, allows remote attackers to cause a denial of
+service (ps2pdf crash) and possibly execute arbitrary code via a
+crafted Postscript file.
+
 
