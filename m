@@ -1,37 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/22/6
-Message-ID: <Pine.GSO.4.51.0909220322330.16381@faron.mitre.org>
-Date: Tue, 22 Sep 2009 03:23:09 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/08/9
+Message-ID: <Pine.GSO.4.51.0904081401360.29367@faron.mitre.org>
+Date: Wed, 8 Apr 2009 14:02:26 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
+To: OSS Security <oss-security@...ts.openwall.com>
 cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: KVM: x86: Disallow hypercalls for guest callers in rings > 0
+Subject: Re: CVE request: PHP 5.2.9
 Content-Type: text/plain; charset=utf-8
 
 
-Eugene, you said "access" kernel memory - do you mean read, write, or
-both?
+On Wed, 1 Apr 2009, Tomas Hoger wrote:
+
+> # Fixed a crash on extract in zip when files or directories entry names
+>   contain a relative path. (Pierre)
+> http://cvs.php.net/viewvc.cgi/php-src/ext/zip/php_zip.c?r1=1.1.2.48&r2=1.1.2.49
+>
+> This should only affect php 5.2.7 or versions that have original fix
+> for CVE-2008-5658 backported.
+
+This was announced in 5.2.9 changelog though, so wouldn't 5.2.8 be
+affected?
+
+Use CVE-2009-1272
+
+> # Fixed a segfault when malformed string is passed to json_decode().
+
+Use CVE-2009-1271
 
 - Steve
 
 
 ======================================================
-Name: CVE-2009-3290
+Name: CVE-2009-1271
 Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3290
-Reference: MLIST:[oss-security] 20090918 CVE request: kernel: KVM: x86: Disallow hypercalls for guest callers in rings > 0
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/09/18/1
-Reference: MLIST:[oss-security] 20090921 Re: CVE request: kernel: KVM: x86: Disallow hypercalls for guest callers in rings > 0
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/09/21/1
-Reference: CONFIRM:http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=07708c4af1346ab1521b26a202f438366b7bcffd
-Reference: CONFIRM:http://patchwork.kernel.org/patch/38926/
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=524124
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1271
+Reference: MLIST:[oss-security] 20090401 CVE request: PHP 5.2.9
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/04/01/9
+Reference: MISC:http://cvs.php.net/viewvc.cgi/php-src/ext/json/JSON_parser.c?r1=1.1.2.14&r2=1.1.2.15
+Reference: CONFIRM:http://www.php.net/releases/5_2_9.php
 
-The kvm_emulate_hypercall function in arch/x86/kvm/x86.c in KVM in the
-Linux kernel 2.6.25-rc1, and other versions before 2.6.31, when
-running on x86 systems, does not prevent access to MMU hypercalls from
-ring 0, which allows local guest OS users to cause a denial of service
-(guest kernel crash) and read guest kernel memory via unspecified
-"random addresses."
+The JSON_parser function (ext/json/JSON_parser.c) in PHP 5.2.x before
+5.2.9 allows remote attackers to cause a denial of service
+(segmentation fault) via a malformed string to the json_decode API
+function.
 
+
+======================================================
+Name: CVE-2009-1272
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1272
+Reference: MLIST:[oss-security] 20090401 CVE request: PHP 5.2.9
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/04/01/9
+Reference: MISC:http://cvs.php.net/viewvc.cgi/php-src/ext/json/JSON_parser.c?r1=1.1.2.14&r2=1.1.2.15
+Reference: CONFIRM:http://www.php.net/releases/5_2_9.php
+
+The php_zip_make_relative_path function in php_zip.c in PHP 5.2.x
+before 5.2.9 allows context-dependent attackers to cause a denial of
+service (crash) via a ZIP file that contains filenames with relative
+paths, which is not properly handled during extraction.
 
