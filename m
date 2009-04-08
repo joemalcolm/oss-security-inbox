@@ -1,33 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/15/2
-Message-ID: <20091115114057.55e495c1@mail.netloc.info>
-Date: Sun, 15 Nov 2009 11:40:57 +0100
-From: Alex Legler <a3li@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/08/6
+Message-ID: <Pine.GSO.4.51.0904081138070.25487@faron.mitre.org>
+Date: Wed, 8 Apr 2009 11:38:35 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Wordpress 2.8.6
+Subject: Re: CVE request: clamav clamd and clamscan DoS and bypass by malformated archive
 Content-Type: text/plain; charset=utf-8
 
-Hey,
 
-Wordpress released an update, fixing 2 issues:
+======================================================
+Name: CVE-2008-6680
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-6680
+Reference: CONFIRM:https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1335
 
-"2.8.6 fixes two security problems that can be exploited by registered,
-logged in users who have posting privileges.  If you have untrusted
-authors on your blog, upgrading to 2.8.6 is recommended.
+libclamav/pe.c in ClamAV before 0.95 allows remote attackers to cause
+a denial of service (crash) via a crafted EXE file that triggers a
+divide-by-zero error.
 
-The first problem is an XSS vulnerability in Press This discovered by
-Benjamin Flesch.  The second problem, discovered by Dawid Golunski, is
-an issue with sanitizing uploaded file names that can be exploited in
-certain Apache configurations. Thanks to Benjamin and Dawid for finding
-and reporting these."
 
-from
-http://wordpress.org/development/2009/11/wordpress-2-8-6-security-release/
+======================================================
+Name: CVE-2009-1270
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1270
+Reference: CONFIRM:https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1462
 
-I believe these are the matching tickets:
-Issue 1: http://core.trac.wordpress.org/ticket/11119
-Issue 2: http://core.trac.wordpress.org/ticket/11122
+libclamav/untar.c in ClamAV before 0.95 allows remote attackers to
+cause a denial of service (infinite loop) via a crafted file that
+causes (1) clamd and (2) clamscan to hang.
 
-Thanks, Alex
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
