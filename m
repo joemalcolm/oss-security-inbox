@@ -1,27 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/01/5
-Message-Id: <20091130225231.be9c1715.michael.s.gilbert@gmail.com>
-Date: Mon, 30 Nov 2009 22:52:31 -0500
-From: Michael Gilbert <michael.s.gilbert@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: Need more information on recent poppler issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/08/8
+Message-ID: <Pine.GSO.4.51.0904081400340.29367@faron.mitre.org>
+Date: Wed, 8 Apr 2009 14:00:38 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com, oss-security@...ts.openwall.com
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request -- bibtex, pam_ssh
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 30 Nov 2009 20:08:56 -0500 (EST) Steven M. Christey wrote:
 
-> 
-> DSA-1941 lists three reserved CVE entries for Poppler issues, but there
-> aren't any more details, which makes it difficult to create CVE
-> descriptions.  Specifically, CVE-2009-3906, CVE-2009-3907, and
-> CVE-2009-3908 don't have any details as far as I can tell.
-> 
-> Can anybody help?
+======================================================
+Name: CVE-2009-1273
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1273
+Reference: CONFIRM:http://bugs.gentoo.org/show_bug.cgi?id=263579
+Reference: SECUNIA:34536
+Reference: URL:http://secunia.com/advisories/34536
 
-those appear to be typos in the DSA.  the correct CVEs are
-CVE-2009-3606, CVE-2009-3607, CVE-2009-3608, and CVE-2009-3609, which
-follow in the CVE-2009-360* series of recent xpdf flaws.  hope this
-helps.
+pam_ssh 1.92 and possibly other versions, as used when PAM is compiled
+with USE=ssh, generates different error messages depending on whether
+the username is valid or invalid, which makes it easier for remote
+attackers to enumerate usernames.
 
-best wishes,
-mike
+
