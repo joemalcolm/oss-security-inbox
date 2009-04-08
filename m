@@ -1,24 +1,97 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/25/1
-Message-ID: <4B0CE4D5.1040106@kernel.sg>
-Date: Wed, 25 Nov 2009 16:03:33 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: KVM: x86 emulator: limit instructions to 15 bytes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/08/11
+Message-ID: <20090408225236.GA653@severus.strandboge.com>
+Date: Wed, 8 Apr 2009 17:52:36 -0500
+From: Jamie Strandboge <jamie@...onical.com>
+To: coley@...us.mitre.org
+Cc: oss-security@...ts.openwall.com, team@...urity.debian.org
+Subject: CVE request: apt
 Content-Type: text/plain; charset=utf-8
 
-Quoting from the patch: "While we are never normally passed an 
-instruction that exceeds 15 bytes, smp games can cause us to attempt to 
-interpret one, which will cause large latencies in non-preempt hosts."
+Summary
+-------
+Systems in certain timezones with automatic updates enabled won't be
+upgraded on the first day of DST and some systems in affected timezones
+could end up with automatic updates being disabled permanently. Normal
+usage of apt is not affected.
 
-http://git.kernel.org/?p=linux/kernel/git/avi/kvm.git;a=commitdiff;h=e42d9b8141d1f54ff72ad3850bb110c95a5f3b88
-https://bugzilla.redhat.com/show_bug.cgi?id=541160
+Discovery credited to: Alexandre Martani
 
-I understand that a malicious guest can cause long scheduling latencies 
-in the host, resulting in a denial of service, but I have not 
-investigated this further to determine if it has more severe consequences.
+Public bug: https://launchpad.net/bugs/354793
 
-Thanks, Eugene
+The Problem
+-----------
+The problem arises because the date command errors out on dates/times
+that are invalid. Eg, DST starts at 03:00 in the Central time zone of
+the US:
+
+$ date --date="2009-03-08 02:00:00"
+date: invalid date `2009-03-08 02:00:00'
+
+This is fine and in and of itself not a problem. However,
+/etc/cron.daily/apt has:
+    stamp=$(date --date=$(date -r $stamp --iso-8601) +%s)
+    now=$(date --date=$(date --iso-8601) +%s)
+
+'--iso-8601' creates dates of the form YYYY-MM-DD. Since this is then
+fed into the date command, the hour, minute and second all default to
+0. Some timezones start their DST at midnight, with America/Sao_Paulo as
+one example. Eg, on a system configured to use the America/Sao_Paulo
+timezone:
+
+$ date --date=2009-10-18
+date: invalid date `2009-10-18'
+
+This condition causes 'delta=$(($now-$stamp))' in check_stamp() to fail
+when $stamp is empty (returning non-zero) or for when $now is empty,
+'$delta -ge $interval' evaluates to false because delta is negative
+(return non-zero). Either condition results in all or part of the
+automatic update process to not be performed.
+
+
+Affected Users
+--------------
+For users in timezones with DST starting at midnight with automatic
+updates enabled, this can lead to the following error conditions:
+
+1. /etc/cron.daily/apt is run on the first day of the DST, resulting in
+'$delta -ge $interval' being negative because 'now' is empty and the
+automatic update is not run. The timestamps are not updated, so the
+automatic update will occur normally the following day.
+
+2. /etc/cron.daily/apt is run late in the day on the day prior to DST
+(eg 23:59 on 2009-10-17) and finishes on the day of DST (eg one minute
+later, at 01:00 on 2009-10-18). This will update the stamp files to have
+the date of the DST. At this point, apt cannot recover and automatic
+updates are disabled until manually updating/removing the stamp files.
+
+3. A user using a non-affected timezone and has /etc/cron.daily/apt run
+normally on the day of the DST. Sometime after that, but before
+/etc/cron.daily/apt runs again, the user changes her timezone to an
+affected timezone. At this point, apt cannot recover and automatic
+updates are disabled until manually updating/removing the stamp files.
+
+While all users in scenario '1' are affected, they will eventually get
+their updates. Though the number of users in '2' and especially '3' are
+presumed low, the impact for these users is very high, since the
+expected, automatic security updates will never be applied.
+
+
+The Fix
+-------
+The fix is simply to check the return codes of date, and return '0' if
+the date for 'now' fails, and remove the bad stamp file and return '0'
+if the date for 'stamp' fails. A patch is attached to the Ubuntu bug,
+though I have contacted the Debian and Ubuntu maintainer directly and he
+is working on an update for the development releases of Debian and
+Ubuntu. I also filed a Debian bug[1].
+
+Thanks,
+Jamie
+
+[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=523213
+
 -- 
-Eugene Teo / Red Hat Security Response Team
+Jamie Strandboge             | http://www.canonical.com
+
+Download attachment "signature.asc" of type "application/pgp-signature" (198 bytes)
