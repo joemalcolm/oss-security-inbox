@@ -1,80 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/17/9
-Message-ID: <Pine.GSO.4.51.0903171701180.17171@faron.mitre.org>
-Date: Tue, 17 Mar 2009 17:01:50 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Ludwig Nussel <ludwig.nussel@...e.de>
-cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...re.org>
-Subject: Re: CVE request - horde, imp
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/08/10
+Message-ID: <20090408182315.GA19549@redhat.com>
+Date: Wed, 8 Apr 2009 12:23:15 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2008-5519: mod_jk session information leak vulnerability
 Content-Type: text/plain; charset=utf-8
 
+Just a heads up for those of you shipping mod_jk.  There is a session
+leak vulnerability where, in certain circumstances, client A can get the
+responses intended for client B.
 
-======================================================
-Name: CVE-2009-0930
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0930
-Reference: MLIST:[announce] 20090127 IMP 4.2.2 (final)
-Reference: URL:http://lists.horde.org/archives/announce/2009/000484.html
-Reference: MLIST:[announce] 20090127 IMP 4.3.3 (final)
-Reference: URL:http://lists.horde.org/archives/announce/2009/000485.html
-Reference: CONFIRM:http://cvs.horde.org/co.php/imp/docs/CHANGES?r=1.699.2.301.2.3
-Reference: CONFIRM:http://cvs.horde.org/co.php/imp/docs/CHANGES?r=1.699.2.375
-Reference: BID:33492
-Reference: URL:http://www.securityfocus.com/bid/33492
-Reference: SECUNIA:33719
-Reference: URL:http://secunia.com/advisories/33719
+This was fixed upstream in version 1.2.27 but the security ramifications
+weren't known at that point.
 
-Multiple cross-site scripting (XSS) vulnerabilities in Horde IMP
-before 4.2.2 and 4.3.3 allow remote attackers to inject arbitrary web
-script or HTML via unspecified vectors to (1) smime.php, (2) pgp.php,
-and (3) message.php.
+https://bugzilla.redhat.com/show_bug.cgi?id=490201
 
+Our bug has a few more details.
 
-======================================================
-Name: CVE-2009-0931
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0931
-Reference: MLIST:[announce] 20090127 Horde 3.2.4 (final)
-Reference: URL:http://lists.horde.org/archives/announce/2009/000483.html
-Reference: MLIST:[announce] 20090127 Horde 3.3.3 (final)
-Reference: URL:http://lists.horde.org/archives/announce/2009/000482.html
-Reference: MLIST:[announce] 20090127 Horde Groupware 1.1.5 (final)
-Reference: URL:http://lists.horde.org/archives/announce/2009/000486.html
-Reference: CONFIRM:http://cvs.horde.org/co.php/groupware/docs/groupware/CHANGES?r=1.28.2.5
-Reference: CONFIRM:http://cvs.horde.org/co.php/horde/docs/CHANGES?r=1.515.2.413.2.5
-Reference: CONFIRM:http://cvs.horde.org/co.php/horde/docs/CHANGES?r=1.515.2.503
-Reference: BID:33491
-Reference: URL:http://www.securityfocus.com/bid/33491
-Reference: SECUNIA:33695
-Reference: URL:http://secunia.com/advisories/33695
+http://svn.eu.apache.org/viewvc?view=rev&revision=702540
 
-Cross-site scripting (XSS) vulnerability in the tag cloud search
-script (horde/services/portal/cloud_search.php) in Horde before 3.2.4
-and 3.3.3, and Horde Groupware before 1.1.5, allows remote attackers
-to inject arbitrary web script or HTML via unspecified vectors.
+This is the upstream fix for the issue.
 
+The issue has the CVE name CVE-2008-5519.
 
-======================================================
-Name: CVE-2009-0932
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0932
-Reference: MLIST:[announce] 20090127 Horde 3.2.4 (final)
-Reference: URL:http://lists.horde.org/archives/announce/2009/000483.html
-Reference: MLIST:[announce] 20090127 Horde 3.3.3 (final)
-Reference: URL:http://lists.horde.org/archives/announce/2009/000482.html
-Reference: MLIST:[announce] 20090127 Horde Groupware 1.1.5 (final)
-Reference: URL:http://lists.horde.org/archives/announce/2009/000486.html
-Reference: CONFIRM:http://cvs.horde.org/co.php/groupware/docs/groupware/CHANGES?r=1.28.2.5
-Reference: CONFIRM:http://cvs.horde.org/co.php/horde/docs/CHANGES?r=1.515.2.413.2.5
-Reference: CONFIRM:http://cvs.horde.org/co.php/horde/docs/CHANGES?r=1.515.2.503
-Reference: BID:33491
-Reference: URL:http://www.securityfocus.com/bid/33491
-Reference: SECUNIA:33695
-Reference: URL:http://secunia.com/advisories/33695
-
-Directory traversal vulnerability in framework/Image/Image.php in
-Horde before 3.2.4 and 3.3.3 and Horde Groupware before 1.1.5 allows
-remote attackers to include and execute arbitrary local files via
-directory traversal sequences in the Horde_Image driver name.
-
-
+-- 
+Vincent Danen / Red Hat Security Response Team 
