@@ -1,44 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/24/7
-Message-ID: <971275315.695731259086917677.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 24 Nov 2009 13:21:57 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: a new bind issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/08/1
+Message-ID: <20090408000010.GE21166@ngolde.de>
+Date: Wed, 8 Apr 2009 02:00:10 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com, Jamie Strandboge <jamie@...onical.com>
+Cc: coley@...us.mitre.org
+Subject: Re: CVE request: clamav clamd and clamscan DoS and bypass by malformated archive
 Content-Type: text/plain; charset=utf-8
 
-I'm going to defer this assignment to MITRE. I suspect they've gotten a number of
-requests for this one already (I want to avoid a duplicate assignment).
+Hi,
+* Jamie Strandboge <jamie@...onical.com> [2009-04-07 22:49]:
+> On Tue, 07 Apr 2009, Nico Golde wrote:
+> > * Thomas Biege <thomas@...e.de> [2009-04-07 15:47]:
+> > > These two bugs possibly need a CVE-ID.
+> > > 
+> > > Here we go:
+> > > 
+> > > https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1462
+> > > 
+> > > http://blog.zoller.lu/2009/04/clamav-094-and-below-evasion-and-bypass.html
+> > 
+> > Should be covered by CVE-2009-1241
+> 
+> The details are scant, but I believe bug #1462[1] to be different from the
+> unrar issue discussed in the blog and CVE-2009-1241.
 
-Thanks.
+Yes, I admit the formatting by putting that under the link I 
+meant wasn't enough. CVE-2009-1241 does only cover the 
+unrar unarchiver evasion.
 
+CHeers
+Nico
 -- 
-    JB
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-
------ "Oden Eriksson" <oeriksson@...driva.com> wrote:
-
-> Hello.
-> 
-> A new bind release is out there, it mentions:
-> 
-> "It addresses a potential cache poisoning vulnerability, in which data
-> in the 
-> additional section of a response could be cached without proper DNSSEC
-> 
-> validation."
-> 
-> "2772.   [security]      When validating, track whether pending data
-> was from
->                         the additional section or not and only return
-> it if
->                         validates as secure. [RT #20438]"
-> 
-> 
-> A CVE should probably be assigned.
-> 
-> 
-> -- 
-> Regards // Oden Eriksson
-> Security team manager - Mandriva
+Content of type "application/pgp-signature" skipped
