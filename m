@@ -1,36 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/21/2
-Message-Id: <1248173806.4232.4.camel@localhost>
-Date: Tue, 21 Jul 2009 12:56:46 +0200
-From: Alex Legler <a3li@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/08/2
+Message-ID: <49DC593F.8010302@redhat.com>
+Date: Wed, 08 Apr 2009 15:58:55 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Wireshark <1.2.1 Multiple DoS
+CC: Willy Tarreau <w@....eu>
+Subject: CVE-2009-1265 kernel: af_rose/x25: Sanity check the maximum user frame size
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+{nr,rose,x25}_sendmsg() functions need to have sanity checks on the
+packet size, otherwise the sizes can wrap and end up sending garbage.
 
-in case the vendor has not already requested CVEs for this:
+http://bugzilla.kernel.org/show_bug.cgi?id=10423
+http://git.kernel.org/linus/83e0bbcbe2145f160fbaa109b0439dae7f4a38a9
+http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2009-1265
 
-"Wireshark 1.2.1 fixes the following vulnerabilities:
+This affects both 2.4.x and 2.6.x if CONFIG_{NETROM,ROSE,X25} are enabled.
 
-      * The IPMI dissector could overrun a buffer. (Bug 3559) Versions
-        affected: 1.2.0 
-      * The AFS dissector could crash. (Bug 3564) Versions affected:
-        0.9.2 to 1.2.0 
-      * The Infiniband dissector could crash on some platforms. Versions
-        affected: 1.0.6 to 1.2.0 
-      * The Bluetooth L2CAP dissector could crash. (Bug 3572) Versions
-        affected: 1.2.0 
-      * The RADIUS dissector could crash. (Bug 3578) Versions affected:
-        1.2.0 
-      * The MIOP dissector could crash. (Bug 3652) Versions affected:
-        1.2.0 
-      * The sFlow dissector could use excessive CPU and memory. (Bug
-        3570) Versions affected: 1.2.0"
-
-http://www.wireshark.org/security/wnpa-sec-2009-04.html
-
-Thanks,
-Alex
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+Thanks, Eugene
+-- 
+Eugene Teo, RHCA, RHCSS / Red Hat Security Response Team
