@@ -1,46 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/09/5
-Message-ID: <Pine.GSO.4.51.0909091329280.20782@faron.mitre.org>
-Date: Wed, 9 Sep 2009 13:40:09 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Jan Lieskovsky <jlieskov@...hat.com>
-cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security <oss-security@...ts.openwall.com>, Alan T DeKok <aland@...eradius.org>
-Subject: Re: CVE Request -- FreeRADIUS 1.1.8
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/09/3
+Message-Id: <200904091441.31960.hanno@hboeck.de>
+Date: Thu, 9 Apr 2009 14:41:31 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: clamav clamd and clamscan DoS and bypass by malformated archive
 Content-Type: text/plain; charset=utf-8
 
-
-On Wed, 9 Sep 2009, Jan Lieskovsky wrote:
-
->    short comment yet (to be exact). This flaw was further investigated based
-> on the flaws list, as mentioned in:
+Am Donnerstag 09 April 2009 schrieb Tomas Hoger:
+> Upstream 0.95.1 seems to fix at least 2 other issues that may be of
+> interest:
 >
->        http://intevydis.com/vd-list.shtml
+> https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1552
+> https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1553
+>
+> svn diff -c 5032 http://svn.clamav.net/svn/clamav-devel/
 
-How do you know that the crash you found is the one that's in VulnDisco?
-Maybe there are two distinct crashes.  (These types of vague disclosures
-can be a real duplicate headache for us in CVE... but neither do we want
-to say that a commercial 0day has been fixed when it hasn't).
+Stupid question but is it common clamav policy to not mention security 
+releases? Anyone any info about that?
 
-CVE-2009-3111 below is anchored exclusively on the FreeRADIUS patch for
-the CVE-2003-0967 regression.  If there's high confidence that this is the
-same as the intevydis.com disclosure, then I'll integrate it into the
-description/references.
+This is a bit frightening for a "security" product (they have a menu 
+point "security" on their website but it seems they don't tend to fill it 
+with information...)
 
-- Steve
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
-======================================================
-Name: CVE-2009-3111
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3111
-Reference: MLIST:[freeradius-users] 20090909 Version 1.1.8 has been released
-Reference: URL:https://lists.freeradius.org/pipermail/freeradius-users/2009-September/msg00242.html
-Reference: MLIST:[oss-security] 20090909 CVE Request -- FreeRADIUS 1.1.8
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/09/09/1
-Reference: CONFIRM:http://github.com/alandekok/freeradius-server/commit/860cad9e02ba344edb0038419e415fe05a9a01f4
-
-The rad_decode function in FreeRADIUS before 1.1.8 allows remote
-attackers to cause a denial of service (radiusd crash) via zero-length
-Tunnel-Password attributes.  NOTE: this is a regression error related
-to CVE-2003-0967.
-
-
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
