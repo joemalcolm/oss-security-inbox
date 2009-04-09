@@ -1,28 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/01/4
-Message-ID: <Pine.GSO.4.51.0907010802100.10744@faron.mitre.org>
-Date: Wed, 1 Jul 2009 08:02:30 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/09/4
+Message-ID: <20090409125038.GA2951@suse.de>
+Date: Thu, 9 Apr 2009 14:50:39 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request: kernel: kvm: failure to validate cr3 after KVM_SET_SREGS
+Subject: Re: CVE request: clamav clamd and clamscan DoS and bypass by malformated archive
 Content-Type: text/plain; charset=utf-8
 
+On Thu, Apr 09, 2009 at 02:41:31PM +0200, Hanno Böck wrote:
+> Am Donnerstag 09 April 2009 schrieb Tomas Hoger:
+> > Upstream 0.95.1 seems to fix at least 2 other issues that may be of
+> > interest:
+> >
+> > https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1552
+> > https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1553
+> >
+> > svn diff -c 5032 http://svn.clamav.net/svn/clamav-devel/
+> 
+> Stupid question but is it common clamav policy to not mention security 
+> releases? Anyone any info about that?
+> 
+> This is a bit frightening for a "security" product (they have a menu 
+> point "security" on their website but it seems they don't tend to fill it 
+> with information...)
 
-======================================================
-Name: CVE-2009-2287
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2287
-Reference: MLIST:[oss-security] 20090630 CVE Request: kernel: kvm: failure to validate cr3 after KVM_SET_SREGS
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/06/30/1
-Reference: CONFIRM:http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git;a=blob;f=queue-2.6.30/kvm-x86-check-for-cr3-validity-in-ioctl_set_sregs.patch;h=b48a47dad2cf76358b327368f80c0805e6370c68;hb=e7c45b24f298b5d9efd7d401150f64a1b51aaac4
-Reference: CONFIRM:http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=59839dfff5eabca01cc4e20b45797a60a80af8cb
-Reference: CONFIRM:http://sourceforge.net/tracker/?func=detail&atid=893831&aid=2687641&group_id=180599
+I think our clamav package maintainer tried to inject some clues
+into their processes, but so far it does not seem to have helped. :/
 
-The kvm_arch_vcpu_ioctl_set_sregs function in the KVM in Linux kernel
-2.6 before 2.6.30, when running on x86 systems, does not validate the
-page table root in a KVM_SET_SREGS call, which allows local users to
-cause a denial of service (crash or hang) via a crafted cr3 value,
-which triggers a NULL pointer dereference in the gfn_to_rmap function.
-
-
+Ciao, Marcus
