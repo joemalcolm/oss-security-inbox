@@ -1,43 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/09/1
-Message-ID: <20090809134817.GJ790@ngolde.de>
-Date: Sun, 9 Aug 2009 15:48:17 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/09/5
+Message-ID: <20090409192710.GI3730@redhat.com>
+Date: Thu, 9 Apr 2009 13:27:10 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: groff (pdfroff)
+Subject: Solaris/OpenSolaris xscreensaver issue (CVE-2009-1276)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-We got two bug reports in our BTS for groff with security 
-impact which need CVE ids.
+Is anyone familiar with Solaris or OpenSolaris at all?
 
-First one:
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=538330
-pdfroff tool of groff is creating files in a insecure manner 
-in the /tmp directory.
+They've released a bulletin about a security issue with xscreensaver,
+but I don't recall seeing anything else about this issue so I'm
+wondering if it is specific to Solaris.
 
-Second:
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=538338
-pdfroff tool of groff is calling ghostscript with the 
--dSAFER command line option. From the manpage:
+http://sunsolve.sun.com/search/document.do?assetkey=1-66-255308-1
 
-       -dSAFER
-              Disables  the  "deletefile"  and  "renamefile" operators and the
-              ability to open files in any mode other  than  read-only.   This
-              strongly  recommended  for spoolers, conversion scripts or other
-              sensitive  environments  where  a  badly  written  or  malicious
-              PostScript  program  code must be prevented from changing impor-
-              tant files.
-
-This allows an attacker to delete or rename arbitrary victim owned files.
-
-Can you allocate CVE ids for that?
-
-Cheers
-Nico
+Does anyone know more about this?
 
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+Vincent Danen / Red Hat Security Response Team 
