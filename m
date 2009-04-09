@@ -1,20 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/28/2
-Message-ID: <Pine.GSO.4.51.0911281138360.8809@faron.mitre.org>
-Date: Sat, 28 Nov 2009 11:40:37 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Josh Bressers <bressers@...hat.com>
-cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Argument injections in multiple PEAR packages
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/09/1
+Message-ID: <20090409093538.03dd08ab@redhat.com>
+Date: Thu, 9 Apr 2009 09:35:38 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley@...us.mitre.org
+Subject: Re: CVE request: PHP 5.2.9
 Content-Type: text/plain; charset=utf-8
 
+On Wed, 8 Apr 2009 14:02:26 -0400 (EDT) "Steven M. Christey"
+<coley@...us.mitre.org> wrote:
 
-All,
+> > # Fixed a crash on extract in zip when files or directories entry
+> > names contain a relative path. (Pierre)
+> > http://cvs.php.net/viewvc.cgi/php-src/ext/zip/php_zip.c?r1=1.1.2.48&r2=1.1.2.49
+> >
+> > This should only affect php 5.2.7 or versions that have original fix
+> > for CVE-2008-5658 backported.
+> 
+> This was announced in 5.2.9 changelog though, so wouldn't 5.2.8 be
+> affected?
 
-Please use CVE-2009-4023 for the $from variable in Mail only.  I just
-assigned CVE-2009-4111 for the outstanding bug for $recipient; since that
-argument was reported after $from had been fixed, we are effectively
-dealing with different downstream versions and possibly partial patches by
-some distros.
+Ah, sorry for using confusing wording.  I was only trying to say that
+the affected code was only introduced in 5.2.7, but anyone backporting
+upstream patch for CVE-2008-5658 may actually introduce this problem in
+earlier version.  I have no reason to believe 5.2.8 is not affected,
+5.2.7 was supposed to give "first affected" version.
 
-- Steve
+-- 
+Tomas Hoger / Red Hat Security Response Team
