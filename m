@@ -1,35 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/26/3
-Message-ID: <4AE5B4C5.5010909@ficora.fi>
-Date: Mon, 26 Oct 2009 16:40:05 +0200
-From: CERT-FI Vulnerability Co-ordination <vulncoord@...ora.fi>
-To: oss-security <oss-security@...ts.openwall.com>
-CC: "Steven M. Christey" <coley@...us.mitre.org>,  Josh Bressers <bressers@...hat.com>, Joe Orton <jorton@...hat.com>, Ondrej Vasik <ovasik@...hat.com>,  Roman Rakus <rrakus@...hat.com>, CERT-FI Vulnerability Co-ordination <vulncoord@...ora.fi>
-Subject: Re: CVE Request -- expat [was: Re: Regarding expat bug 1990430]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/09/2
+Message-ID: <20090409121554.4ddabaf2@redhat.com>
+Date: Thu, 9 Apr 2009 12:15:54 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: clamav clamd and clamscan DoS and bypass by malformated archive
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Tue, 7 Apr 2009 14:08:15 +0200 Thomas Biege <thomas@...e.de> wrote:
 
-Hello all,
+> These two bugs possibly need a CVE-ID.
 
-Jan Lieskovsky wrote:
-> Based on the above -^ I would vote for separate CVE identifier for expat
-> flaw
-> (and its embedded copies in dozen of packages):
-> 
-> https://bugs.gentoo.org/show_bug.cgi?id=280615#c8
-> https://bugs.gentoo.org/show_bug.cgi?id=280615#c10
+Upstream 0.95.1 seems to fix at least 2 other issues that may be of
+interest:
 
-As far as we understand, the expat flaw in question is in no way related
-to CVE-2009-2625, or other recent XML parser flaws. Therefore our take
-is that it should have a distinct CVE entry.
+https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1552
+https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1553
 
-- -Jussi / CERT-FI
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
+svn diff -c 5032 http://svn.clamav.net/svn/clamav-devel/
 
-iD8DBQFK5bTF/64aC2E+yK8RAujqAKCgFjrzN4XZJ87Cf3pBAh2/1uNl6gCfW8+v
-qlDdj1prKH23JhsVi8mv90A=
-=Vin/
------END PGP SIGNATURE-----
+-- 
+Tomas Hoger / Red Hat Security Response Team
