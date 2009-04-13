@@ -1,38 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/25/3
-Message-ID: <1084415133.30031259168372226.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 25 Nov 2009 11:59:32 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/13/1
+Message-Id: <200904131108.44531.hanno@hboeck.de>
+Date: Mon, 13 Apr 2009 11:08:44 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: KVM: x86 emulator: limit instructions to 15 bytes
+Cc: Steven Christey <coley@...us.mitre.org>
+Subject: CVE request: Ghostscript jbig2dec JBIG2 Processing Buffer Overflow
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2009-4031 for this.
-
-Thanks
+See
+http://secunia.com/secunia_research/2009-21/
+http://www.h-online.com/security/Ghostscript-comes-unstuck-with-PDFs-too--/news/113051
 
 -- 
-    JB
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
-
------ "Eugene Teo" <eugeneteo@...nel.sg> wrote:
-
-> Quoting from the patch: "While we are never normally passed an 
-> instruction that exceeds 15 bytes, smp games can cause us to attempt
-> to 
-> interpret one, which will cause large latencies in non-preempt
-> hosts."
-> 
-> http://git.kernel.org/?p=linux/kernel/git/avi/kvm.git;a=commitdiff;h=e42d9b8141d1f54ff72ad3850bb110c95a5f3b88
-> https://bugzilla.redhat.com/show_bug.cgi?id=541160
-> 
-> I understand that a malicious guest can cause long scheduling
-> latencies 
-> in the host, resulting in a denial of service, but I have not 
-> investigated this further to determine if it has more severe
-> consequences.
-> 
-> Thanks, Eugene
-> -- 
-> Eugene Teo / Red Hat Security Response Team
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
