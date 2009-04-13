@@ -1,38 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/21/1
-Message-ID: <op.uyz4c61d1e62zd@merlin.emma.line.org>
-Date: Fri, 21 Aug 2009 09:28:08 +0200
-From: "Matthias Andree" <matthias.andree@....de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/13/2
+Message-Id: <200904131120.13789.hanno@hboeck.de>
+Date: Mon, 13 Apr 2009 11:20:13 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: "umbrella" CVE names (was: CVE request: fetchmail <= 6.3.10 SSL certificate NUL prefix verification bypass)
+Cc: Steven Christey <coley@...us.mitre.org>
+Subject: CVE request: silverstripe - two sql injections
 Content-Type: text/plain; charset=utf-8
 
-Am 05.08.2009, 20:13 Uhr, schrieb Steven M. Christey  
-<coley@...us.mitre.org>:
+Versions below 2.2.2-rc2:
+http://silverstripe.org/archive/show/43794
+"AjaxUniqueTextField: fixed sql-injection "
 
-> So use CVE-2009-2666 for fetchmail (I'll fill it in later) and Tomas,  
-> even
-> if it results in dozens of CVEs, I suspect this is how we should go.
-
-Following up an earlier question of mine (umbrella CVE for a class of  
-problems, here: weak X.509 name verification that terminates early on  
-embedded NUL bytes):
-
-Mandriva Security (I think it was them - if I recall correctly) wrote in  
-their fetchmail security advisory something along the lines of  
-"CVE-2009-2666, [...] related to CVE-2009-2408" (with some more details).  
-This is probably the best way around this problem of how do we assign and  
-organize: We have the individual CVE name for the fetchmail weakness (so  
-it can be tracked), and we also have as reference the CVE name of the  
-first published issue that sort of founded a problem class, by instance of  
-Mozilla NSS.
-
-CVE-2009-2408 here turns into some dual-use: (1) to track the  
-library/Mozilla application bug, (2) to name the problem class.
-
-Perhaps this should/could be considered a pragmatic solution to the  
-"umbrella CVE" problem I posed earlier.
+More current:
+http://open.silverstripe.com/ticket/3721
+(maybe fixed in 2.3.1, but they don't tend to publish proper release notes)
 
 -- 
-Matthias Andree
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
