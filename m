@@ -1,26 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/26/1
-Message-ID: <4A94950B.6010503@kernel.sg>
-Date: Wed, 26 Aug 2009 09:51:07 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: AF_LLC getsockname 5-Byte Stack Disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/14/1
+Message-ID: <20090414084853.7d4156b1@redhat.com>
+Date: Tue, 14 Apr 2009 08:48:53 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: hanno@...eck.de
+Cc: oss-security@...ts.openwall.com, Steven Christey <coley@...us.mitre.org>
+Subject: Re: CVE request: Ghostscript jbig2dec JBIG2 Processing Buffer Overflow
 Content-Type: text/plain; charset=utf-8
 
-sllc_arphrd member of sockaddr_llc might not be changed. Zero sllc 
-before copying to the above layer's structure.
+On Mon, 13 Apr 2009 11:08:44 +0200 Hanno Böck <hanno@...eck.de> wrote:
 
-Note that LLC sockets are restricted to root since v2.6.25-rc9 (see 
-commit 3480c63b).
+> See
+> http://secunia.com/secunia_research/2009-21/
+> http://www.h-online.com/security/Ghostscript-comes-unstuck-with-PDFs-too--/news/113051
 
-Upstream commit:
-http://git.kernel.org/linus/28e9fc592cb8c7a43e4d3147b38be6032a0e81bc
+$ curl -s http://secunia.com/secunia_research/2009-21/ | grep -A3 '8) References'
+8) References
 
-Reproducer:
-http://jon.oberheide.org/files/llc-getsockname-leak.c
+The Common Vulnerabilities and Exposures (CVE) project has assigned
+CVE-2009-0196 for the vulnerability.
 
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=519305
+?
 
-Thanks, Eugene
+-- 
+Tomas Hoger / Red Hat Security Response Team
