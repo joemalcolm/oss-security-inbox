@@ -1,44 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/03/5
-Message-ID: <Pine.GSO.4.51.0909031238500.25059@faron.mitre.org>
-Date: Thu, 3 Sep 2009 12:45:46 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/14/2
+Message-ID: <49E4AE0A.4010006@gentoo.org>
+Date: Tue, 14 Apr 2009 17:38:50 +0200
+From: Christian Hoffmann <hoffie@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: silc-toolkit
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: PHP 5.2.9
 Content-Type: text/plain; charset=utf-8
 
+On 2009-04-08 20:02, Steven M. Christey wrote:
+>> # Fixed a crash on extract in zip when files or directories entry names
+>>   contain a relative path. (Pierre)
+>> http://cvs.php.net/viewvc.cgi/php-src/ext/zip/php_zip.c?r1=1.1.2.48&r2=1.1.2.49
+>>
+>> This should only affect php 5.2.7 or versions that have original fix
+>> for CVE-2008-5658 backported.
+> 
+> This was announced in 5.2.9 changelog though, so wouldn't 5.2.8 be
+> affected?
+> 
+> Use CVE-2009-1272
+Somehow the wrong changeset URL shows up in CVE-2009-1272's list of
+references [1] (the json decode one, instead of the zip thingy):
 
-On Mon, 31 Aug 2009, Nico Golde wrote:
+What shows up:
+http://cvs.php.net/viewvc.cgi/php-src/ext/json/JSON_parser.c?r1=1.1.2.14&r2=1.1.2.15
 
-> Hi,
-> silc-toolkit upstream fixed [0] various security issues which
-> from my assessment allow an attacker arbitrary code
-> execution. I'd like to get some CVE ids for these.
->
-> |    ASN1: Fix stack variable overwrite when encoding OID.
+What should show up instead:
+http://cvs.php.net/viewvc.cgi/php-src/ext/zip/php_zip.c?r1=1.1.2.48&r2=1.1.2.49
 
-This was actually fixed in 1.1.8 back in 2008:
+[1] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1272
 
-  http://silcnet.org/docs/changelog/SILC%20Toolkit%201.1.8
-
-Use CVE-2008-7159, to be filled in later.
-
-> |    Fixed string format vulnerability in client entry handling.
-> |
-> |    Reported and patch provided by William Cummings.
->
-> This one allows an attacker to execute arbitrary code, tested.
->
-> |     More string format fixes in silcd and client libary
-
-Use CVE-2009-3051 for both of these format strings, to be filled in later.
-
-> |    HTTP: fix stack overwrite due to format string error.
-
-Appears to be from
-http://silcnet.org/docs/changelog/SILC%20Toolkit%201.1.9.
-
-Use CVE-2008-7160, to be filled in later.
+-- 
+Christian Hoffmann
 
 
-- Steve
+
+Download attachment "signature.asc" of type "application/pgp-signature" (262 bytes)
