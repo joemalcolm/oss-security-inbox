@@ -1,26 +1,108 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/09/2
-Message-Id: <200912092203.56421.eren@pardus.org.tr>
-Date: Wed, 9 Dec 2009 22:03:56 +0200
-From: Eren Türkay <eren@...dus.org.tr>
-To: OSS Security <oss-security@...ts.openwall.com>
-Subject: Piwik <= 0.4.5 Cookie Unserialize() Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/15/4
+Message-Id: <20090415145854.AF86C1F3E9E@spike.porcupine.org>
+Date: Wed, 15 Apr 2009 10:58:54 -0400 (EDT)
+From: wietse@...cupine.org (Wietse Venema)
+To: Tomas Hoger <thoger@...hat.com>
+CC: wietse@...cupine.org, oss-security@...ts.openwall.com
+Subject: Re: Re: Some fun with tcp_wrappers
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Tomas Hoger:
+> Hi Wietse!
+> 
+> On Wed, 15 Apr 2009 08:07:42 -0400 (EDT) wietse@...cupine.org (Wietse
+> Venema) wrote:
+> 
+> > >   https://bugzilla.redhat.com/show_bug.cgi?id=491095
+> > 
+> > If some applications mis-use the library API then that is really
+> > unfortunate.
+> 
+> The problem is not really limited to the applications that mis-use
+> API.  According to hosts_access(3):
+> 
+>   hosts_ctl() is a wrapper around the request_init() and
+>   hosts_access() routines with a perhaps more convenient interface
+>   (though it does not pass on enough information to support automated
+>   client username lookups).  The client host address, client host
+>   name and username arguments should contain valid data or
+>   STRING_UNKNOWN.  hosts_ctl() returns zero if access should be denied.
+> 
+> STRING_UNKNOWN is valid argument expected to be passed to hosts_ctl.
+> That description does not seem to be too clear to indicate that when
+> one uses hosts_ctl as:
+> 
+>   hosts_ctl(svcname, STRING_UNKNOWN, client_addr, STRING_UNKNOWN)
+> 
+> all hostname-based rules are ignored.  It seems those using hosts_ctl
+> do not always realize that.
 
-Piwik is an open source web analytics software program used by various 
-sites.
+That behavior is not what I implemented. It must have been introduced
+by someone else.
 
-Stefan Esser found a vulnerability in Piwik, which can allow arbitrary files 
-to be written into writable locations on the webserver. He says, it is also 
-possible to execute arbitrary PHP code directly in newer versions of Piwik.
+Here is how my own tcp wrapper 7.6 release behaves, with a trivial
+hosts_ctl() test program that passes command arguments to the
+library function. The program is below the signature.
 
-The original advisory is here: 
-http://www.suspekt.org/2009/12/09/advisory-032009-piwik-cookie-
-unserialize-vulnerability/
+Using the hosts_access(5) access file format:
 
-I think, it is worth assigning a CVE.
+    % cat hosts.allow   
+    cat: hosts.allow: No such file or directory
+    % cat hosts.deny
+    ftpd: unknown
+    % ./test-hostsctl -d ftpd unknown 127.0.0.1 unknown
+    denied
+    % ./test-hostsctl -d ftpd other 127.0.0.1 other
+    allowed
 
-Regards,
-Eren
+Using the hosts_options(5) access file format:
+
+    % cat hosts.allow
+    cat: hosts.allow: No such file or directory
+    % cat hosts.deny
+    ftpd: unknown: deny
+    % ./test-hostsctl -d ftpd unknown 127.0.0.1 unknown
+    denied
+    % ./test-hostsctl -d ftpd other 127.0.0.1 other
+    allowed
+
+As you see, my own code does not ignore hostname rules when
+the hostname is "unknown".
+
+	Wietse
+
+#include <stdio.h>
+#include <unistd.h>
+#include "tcpd.h"
+
+static void usage(const char *myname)
+{
+    fprintf(stderr, "usage: %s [-d] daemon hostname hostaddr username\n",
+            myname);
+    exit(1);
+}
+
+int     main(int argc, char **argv)
+{
+    int     ch;
+
+    while ((ch = getopt(argc, argv, "d")) != EOF) {
+        switch (ch) {
+        case 'd':
+            hosts_allow_table = "hosts.allow";
+            hosts_deny_table = "hosts.deny";
+            break;
+        default:
+            usage(argv[0]);
+            /* NOTREACHED */
+        }
+    }
+    if (argc != optind + 4)
+        usage(argv[0]);
+
+    printf("%s\n", hosts_ctl(argv[optind], argv[optind + 1],
+                             argv[optind + 2], argv[optind + 3]) ?
+           "allowed" : "denied");
+    exit(0);
+}
