@@ -1,36 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/18/15
-Message-ID: <Pine.GSO.4.51.0908181652210.17763@faron.mitre.org>
-Date: Tue, 18 Aug 2009 16:54:43 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - kernel: information leak in sigaltstack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/15/6
+Message-Id: <20090415182814.36BA81F3E9E@spike.porcupine.org>
+Date: Wed, 15 Apr 2009 14:28:14 -0400 (EDT)
+From: wietse@...cupine.org (Wietse Venema)
+To: Tomas Hoger <thoger@...hat.com>
+CC: wietse@...cupine.org, oss-security@...ts.openwall.com
+Subject: Re: Re: Some fun with tcp_wrappers
 Content-Type: text/plain; charset=utf-8
 
+Tomas Hoger:
+> $ cat hosts.allow hosts.deny
+> foobar: localhost
+> foobar: ALL: DENY
+> cat: hosts.deny: No such file or directory
+> 
+> $ ./test-hostsctl -d foobar unknown 127.0.0.1 unknown
+> denied
+> 
+> (this is expected to be allowed)
 
-On Tue, 4 Aug 2009, Eugene Teo wrote:
+My software behaves exactly as documented.
 
-> do_sigaltstack: avoid copying 'stack_t' as a structure to user space
+The hostsctl is called with a name of "unknown" and an address of
+"127.0.0.1". There is no access rule that matches "unknown",
+therefore, no such access rule will fire.
 
+> $ cat hosts.allow hosts.deny
+> foobar: localhost: DENY
+> cat: hosts.deny: No such file or directory
+> 
+> $ ./test-hostsctl -d foobar unknown 127.0.0.1 unknown
+> allowed
+> 
+> (this is expected to be denied)
 
-======================================================
-Name: CVE-2009-2847
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2847
-Reference: MILW0RM:9352
-Reference: URL:http://www.milw0rm.com/exploits/9352
-Reference: MLIST:[oss-security] 20090804 CVE request - kernel: information leak in sigaltstack
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/08/04/1
-Reference: MLIST:[oss-security] 20090805 Re: CVE request - kernel: information leak in sigaltstack
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/08/05/1
-Reference: CONFIRM:http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=0083fc2c50e6c5127c2802ad323adf8143ab7856
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=515392
+Again, the software behaves exactly as documented.
 
-The do_sigaltstack function in kernel/signal.c in Linux kernel 2.6
-before 2.6.31-rc5, when running on 64-bit systems, does not clear
-certain padding bytes from a structure, which allows local users to
-obtain sensitive information from the kernel stack via the sigaltstack
-function.
+The hostsctl is called with a name of "unknown" and an address of
+"127.0.0.1". There is no access rule that matches "unknown",
+therefore, no such access rule will fire.
 
+> "test-hostsctl servicename unknown IP unknown" is what some
+> applications do expecting tcp_wrappers to resolve IP to hostname.
 
+I think that it would be a mistake to change a documented API that
+has been in use for almost 20 years, just because some people can't
+be bothered to read the API documentation.
+
+	Wietse
