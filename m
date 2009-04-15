@@ -1,22 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/13/6
-Message-ID: <Pine.GSO.4.51.0910131244240.11167@faron.mitre.org>
-Date: Tue, 13 Oct 2009 12:44:59 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-cc: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Duplicate CVE assignment notification [was: CVE id request: django]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/15/5
+Message-ID: <20090415195830.2bdfa55b@redhat.com>
+Date: Wed, 15 Apr 2009 19:58:30 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: wietse@...cupine.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Re: Some fun with tcp_wrappers
 Content-Type: text/plain; charset=utf-8
 
+On Wed, 15 Apr 2009 10:58:54 -0400 (EDT) wietse@...cupine.org (Wietse
+Venema) wrote:
 
-On Tue, 13 Oct 2009, Steven M. Christey wrote:
+> > STRING_UNKNOWN is valid argument expected to be passed to hosts_ctl.
+> > That description does not seem to be too clear to indicate that when
+> > one uses hosts_ctl as:
+> > 
+> >   hosts_ctl(svcname, STRING_UNKNOWN, client_addr, STRING_UNKNOWN)
+> > 
+> > all hostname-based rules are ignored.  It seems those using
+> > hosts_ctl do not always realize that.
+> 
+> That behavior is not what I implemented. It must have been introduced
+> by someone else.
 
-> CVE-2009-3695 was created off a Debian advisory that didn't list a CVE.
-> I assume that CVE-2009-3610 was being used for pre-disclosure coordination
-> by the Red Hat CNA.
+[ .. ]
 
-Obviously I'm not tracking oss-security closely ennough this week.
-Regardless, please still use CVE-2009-3695, and CVE-2009-3610 will be
-rejected.
+> As you see, my own code does not ignore hostname rules when
+> the hostname is "unknown".
 
-- Steve
+Your examples work as the hostname used in hosts.{allow,deny} is
+"unknown", but it should not work for any other hostname.  Can you try
+this:
+
+$ getent hosts 127.0.0.1
+127.0.0.1       localhost
+
+$ cat hosts.allow hosts.deny
+foobar: localhost
+foobar: ALL: DENY
+cat: hosts.deny: No such file or directory
+
+$ ./test-hostsctl -d foobar unknown 127.0.0.1 unknown
+denied
+
+(this is expected to be allowed)
+
+$ cat hosts.allow hosts.deny
+foobar: localhost: DENY
+cat: hosts.deny: No such file or directory
+
+$ ./test-hostsctl -d foobar unknown 127.0.0.1 unknown
+allowed
+
+(this is expected to be denied)
+
+"test-hostsctl servicename unknown IP unknown" is what some
+applications do expecting tcp_wrappers to resolve IP to hostname.
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
