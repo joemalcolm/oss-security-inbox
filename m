@@ -1,38 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/22/13
-Message-ID: <20090522212731.GD1841@lackof.org>
-Date: Fri, 22 May 2009 15:27:31 -0600
-From: dann frazier <dannf@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernels and security issues?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/15/3
+Message-ID: <20090415160835.53d31fcd@redhat.com>
+Date: Wed, 15 Apr 2009 16:08:35 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: wietse@...cupine.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Re: Some fun with tcp_wrappers
 Content-Type: text/plain; charset=utf-8
 
-On Fri, May 22, 2009 at 10:42:52PM +0200, Moritz Muehlenhoff wrote:
-> On Fri, May 22, 2009 at 12:19:53AM +0200, Hanno Böck wrote:
-> > 
-> > What I'd like to have is a short list of all security relevant changes, 
-> > including some information giving me hints if I may be affected (i.e. affects 
-> > core functionality or only a driver, filesystem, protocol I may or may not 
-> > use). Is there some place in the net providing such information?
-> > If someone (ocert?) wants to do the free software world a big favor, this 
-> > would be really a great service.
+Hi Wietse!
+
+On Wed, 15 Apr 2009 08:07:42 -0400 (EDT) wietse@...cupine.org (Wietse
+Venema) wrote:
+
+> >   https://bugzilla.redhat.com/show_bug.cgi?id=491095
 > 
-> Debian collects information on all kernel security issues in a public
-> SVN repo. It contains information on fixed versions, upstream
-> commits and external information sources (e.g. other distribution bug
-> trackers). It might be useful to you:
-> http://svn.debian.org/wsvn/kernel-sec
-> You can also subscribe to the SVN commit mailing list to get instant
-> updates.
+> If some applications mis-use the library API then that is really
+> unfortunate.
 
-Yes - and this project is open to members of upstream/other distros if
-anyone is interested.
+The problem is not really limited to the applications that mis-use
+API.  According to hosts_access(3):
 
-> However, writing verbose advisories on all kernel security issues would
-> be an Herculean task; we currently track 484 kernel security issues
-> in the kernel-sec tracker...
+  hosts_ctl() is a wrapper around the request_init() and
+  hosts_access() routines with a perhaps more convenient interface
+  (though it does not pass on enough information to support automated
+  client username lookups).  The client host address, client host
+  name and username arguments should contain valid data or
+  STRING_UNKNOWN.  hosts_ctl() returns zero if access should be denied.
 
+STRING_UNKNOWN is valid argument expected to be passed to hosts_ctl.
+That description does not seem to be too clear to indicate that when
+one uses hosts_ctl as:
+
+  hosts_ctl(svcname, STRING_UNKNOWN, client_addr, STRING_UNKNOWN)
+
+all hostname-based rules are ignored.  It seems those using hosts_ctl
+do not always realize that.
+
+> Changing the library to work around application bugs is a BAD idea.
+> It helps only one platform and complicates cross-platform software
+> that does play by the rules.
+
+It's hard to disagree with that.  Though we seem to have failed on this
+some time ago alread.  The change was done as bugfix nearly two years
+ago in Fedora / Red Hat Enterprise Linux 5 (after some discussion
+whether this is application or tcp_wrappers bug), we're now only
+introducing the change to products that are not too relevant for future
+applications development (all released 4+ years ago).
+
+> I would recommend fixing applications that mis-use the library API.
+> To encourage application developers, the library could log a warning
+> and return a DENY result for improper calls such as a zero-length
+> hostname or address argument.
+
+Is STRING_UNKNOWN as hostname a mis-use of API?  Are all applications
+not wanting to do DNS resolution when not needed expected to switch to
+request_init / hosts_access instead?  Is there any use cases where
+ignoring hostname based rules when STRING_UNKNOWN is passed as hostname
+argument to hosts_ctl is more desired than tcp_wrappers performing
+resolution when needed?
+
+Denying zero-length hostname/address sounds like a library workaround
+too, with no obvious benefits for those doing such change.
 
 -- 
-dann frazier
-
+Tomas Hoger / Red Hat Security Response Team
