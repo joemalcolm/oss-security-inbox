@@ -1,76 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/11/2
-Message-ID: <20091111181618.GA12138@janus.mylan>
-Date: Wed, 11 Nov 2009 19:16:18 +0100
-From: Sergei Golubchik <serg@...ql.com>
-To: Josh Bressers <bressers@...hat.com>
-Cc: oss-security <oss-security@...ts.openwall.com>, coley <coley@...re.org>
-Subject: Re: CVE assignment and second opinion needed
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/15/1
+Message-ID: <20090415132450.79d7257f@redhat.com>
+Date: Wed, 15 Apr 2009 13:24:50 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: OSS Security <oss-security@...ts.openwall.com>
+Cc: wietse@...cupine.org
+Subject: Some fun with tcp_wrappers
 Content-Type: text/plain; charset=utf-8
 
-Hi, Josh!
+Hi!
 
-On Nov 11, Josh Bressers wrote:
-> Hi Steve,
-> 
-> So this one is a bit tricky.
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=555626
-> 
-> There are almost two flaws here, certainly one. The issue really boils
-> down to if /var/lib/mysql is world readable, it's possible for a local
-> user who also has database access, and can guess a future database
-> table name, could ensure that table will be a world writable file.
-> That's an impressive runon sentence.
-> 
-> So The question I have with respect to CVE assignment, is which part
-> of this is worth of the ID. I'm thinking the directory permissions are
-> possibly an issue, but by itself, isn't really a security flaw.
+During the QA of our net-snmp updates for CVE-2008-6123, some more
+problems were spotted related to the use of tcp_wrappers by net-snmp.
+More specifically, any hostname based rules in hosts.{allow,deny} were
+not honored when defined for snmpd.  Further investigation showed that
+similar problem affects other applications calling hosts_ctl
+tcp_wrappers interface without providing a valid hostname.  Bug report
+for this issue is:
+  https://bugzilla.redhat.com/show_bug.cgi?id=491095
 
-Right, not really. At most, it's a minor (?) information leak - one can
-see database and table names that he would not be able otherwise.
+Even though such behavior of tcp_wrappers seems to be the intended one
+(also CCing Wietse if he wants to comment on this, but I believe
+tcp_wrappers are no longer maintained upstream), but it does not seem
+to be what applications using tcp_wrappers, or users of such
+applications are expecting.  Additionally, tcp_wrappers as shipped in
+Red Hat Enterprise Linux 5 and all current Fedora versions include
+following patch for a while:
 
-It is a problem - for example by a user demand we've added
---skip-show-databases command-line switch which basically hijacks normal
-privilege checks and does not allow normal users to see the list of
-databases (without it one can see databases he has any privileges on).
-I mean, we've added this because users repeatedly requested it.
+http://cvs.fedoraproject.org/viewvc/rpms/tcp_wrappers/devel/tcp_wrappers-7.6-220015.patch
 
-Still, I don't think it deserves a CVE ID on itself.
- 
-> The CREATE TABLE not fixing permissions if the file already exists is
-> probably closer to the real problem. Being able to do a select into an
-> outfile anywhere by default may also be an issue.
+It changes hosts_ctl to set up conversion functions to allow
+tcp_wrappers to do IP -> hostname resolution when needed.
 
-Not anywhere, it's done my mysqld daemon, as mysql user. Filesystem
-permissions still apply and limit where mysql user can write to.
-Also, SELECT ... OUTFILE never overwrite existing files.
-And in the default install only MySQL root user has FILE privilege
-necessary for SELECT ... OUTFILE.
- 
-> Also, Sergei, do you folks have a fix for this yet? I'm curious to see
-> what you're fixing, which may help decide CVE assignment.
+Therefore, even though this may not really be a tcp_wrappers flaw, we
+are planning to release updates for older RHEL versions including the
+change.  This would address the problem for all affected applications,
+and doing DNS resolution on the tcp_wrappers side actually seems to be
+a better way to go (tcp_wrappers only resolve when needed based on the
+hosts access rules configured on the system, while resolution on the
+application side would have to be done for all hosts_ctl calls).
 
-No we don't. It's considered a relatively minor issue with a simple
-workaround (fix datadir permissions, use --secure-file-priv). On a
-properly configured system it should never be an issue - I was surprised
-to know that Debian creates these directories world-readable.
-And anyway this is limited to users with MySQL FILE privilege - and
-MySQL manual explicitly says that it's a powerful privilege that can be
-easily abused and should not be granted to just anybody.
+Additionally, this fostered further research into nfs-utils'
+CVE-2008-4552.  The way nfs-utils use tcp_wrappers is quite broken,
+resulting in various cases when hosts access rules are not honored
+according to the expectations of the system administrator, possibly
+allowing access when it should be denied.  The problem should mostly
+affect (but is not limited to) setups with hostname based rules used
+(which are problematic anyway, as those are ignored during DNS
+outages).  Details with rewrite of good_client can be found in:
+  https://bugzilla.redhat.com/show_bug.cgi?id=458676
 
-We're fixing the permission problem. The desired behavior - after CREATE
-TABLE t1 all the files (t1.frm, t1.MYI, t1.MYD) have identical
-permissions, as if all the three were created anew. Even if
-some of these files existed before and had different permissions.
-
-Regards / Mit vielen Grüßen,
-Sergei
+The good_client function used by nfs-utils is copied from the portmap
+sources, so portmap is affected by the same problem too.  Additionally,
+other affected good_client copies / derived implementations can also be
+found in quota (with most problems no longer affecting current upstream
+version) and am-utils.  Upstreams were notified, but have not replied
+yet.
 
 -- 
-   __  ___     ___ ____  __
-  /  |/  /_ __/ __/ __ \/ /   Sergei Golubchik <serg@....com>
- / /|_/ / // /\ \/ /_/ / /__  Principal Software Engineer/Server Architect
-/_/  /_/\_, /___/\___\_\___/  Sun Microsystems GmbH, HRB München 161028
-       <___/                  Sonnenallee 1, 85551 Kirchheim-Heimstetten
-Geschäftsführer: Thomas Schroeder, Wolfgang Engels, Wolf Frenkel
-Vorsitzender des Aufsichtsrates: Martin Häring
+Tomas Hoger / Red Hat Security Response Team
