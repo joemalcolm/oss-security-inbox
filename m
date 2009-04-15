@@ -1,30 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/18/5
-Message-ID: <20090318174128.GB5708@logo.rdu.rpath.com>
-Date: Wed, 18 Mar 2009 13:41:28 -0400
-From: "Michael K. Johnson" <johnsonm@...th.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: inotify local DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/15/7
+Message-Id: <20090415185322.7B5A61F3E9E@spike.porcupine.org>
+Date: Wed, 15 Apr 2009 14:53:22 -0400 (EDT)
+From: wietse@...cupine.org (Wietse Venema)
+To: Wietse Venema <wietse@...cupine.org>
+CC: Tomas Hoger <thoger@...hat.com>, oss-security@...ts.openwall.com
+Subject: Re: Re: Some fun with tcp_wrappers
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Mar 17, 2009 at 08:39:33PM -0400, Steven M. Christey wrote:
+Wietse Venema:
+> > "test-hostsctl servicename unknown IP unknown" is what some
+> > applications do expecting tcp_wrappers to resolve IP to hostname.
 > 
-> ======================================================
-> Name: CVE-2009-0935
-> Status: Candidate
-> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0935
-> Reference: MLIST:[linux-kernel] 20090131 [patch 03/43] inotify: clean up inotify_read and fix locking
-> Reference: URL:http://marc.info/?l=linux-kernel&m=123337123501681&w=2
-> Reference: MLIST:[oss-security] 20090306 CVE request: kernel: inotify local DoS
-> Reference: URL:http://www.openwall.com/lists/oss-security/2009/03/06/2
-> Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=488935
-> 
-> The inotify_read function in the Linux kernel 2.6 before 2.6.29-rc3
-> allows local users to cause a denial of service (OOPS) via a read with
-> an invalid address to an inotify instance, which causes the device's
-> event list mutex to be unlocked twice and prevents proper
-> synchronization of a data structure for the inotify instance.
+> I think that it would be a mistake to change a documented API that
 
-In the 2.6.27.y stable releases, this affects 2.6.27.13 and earlier.
-In the 2.6.28.y stable releases, this affects 2.6.28.2 and earlier.
+On the other hand, if you could add a new function under a new name
+that does have the expected behavior, then there would be no
+confusion, no risk of cross-platform applications breaking, and I
+would withdraw my objection.
+
+	Wietse
