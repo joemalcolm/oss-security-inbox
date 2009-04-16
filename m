@@ -1,80 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/13/3
-Message-ID: <20090713224652.GI4038@inversepath.com>
-Date: Mon, 13 Jul 2009 23:46:52 +0100
-From: Andrea Barisani <lcars@...rt.org>
-To: ocert-announce@...ts.ocert.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: [oCERT-2009-010] mimeTeX and mathTeX buffer overflows and command injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/16/9
+Message-ID: <20090416172432.78d35a57@redhat.com>
+Date: Thu, 16 Apr 2009 17:24:32 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: wietse@...cupine.org
+Cc: oss-security@...ts.openwall.com, coley@...us.mitre.org
+Subject: Re: Re: Some fun with tcp_wrappers
 Content-Type: text/plain; charset=utf-8
 
+Hi Wietse!
 
-#2009-010 mimeTeX and mathTeX buffer overflows and command injection
+On Thu, 16 Apr 2009 07:59:20 -0400 (EDT) wietse@...cupine.org (Wietse
+Venema) wrote:
 
-Description:
+> Tomas Hoger:
+> > The good_client (tcp_wrappers wrapping function in portmap /
+> > nfs-utils / ...) problem is rather interesting too, as it creates
+> > problems due to its attempt to avoid unneeded DNS lookups
+> > (workaround for hosts_ctl limitation?) and support host aliases
+> > (tcp_wrappers limitation).  
+> 
+> See my previous email. Programs such as portmappers must not look
+> up hostname information, since that would result in an infinite
+> recursion when host lookups use SUNRPC services. To state the
+> obvious: the portmapper would directly or indirectly send SUNRPC
+> calls to itself, in order to locate the NIS server.
 
-The mimeTeX and mathTeX CGIs are widely used helper executables that allow
-mathematical equation rendering in the form of images. Both applications suffer
-from several buffer overflows as well as command injection which result in
-remote code execution.
+Thank you for pointing this problem out.  And my apologies for not
+digging deep enough into peculiarities of RPC and making a conclusions
+based on the code already used in the wild.  It seems that portmappers
+do name resolution, even if they should not.
 
-The mimeTeX application suffers from several stack-based buffer overflows which
-can be remotely triggered by passing oversized TeX expressions.  Additionally
-the \environ, \input and \counter directives may not be suitable for exposure
-to commands from the Internet.
+Current upstream portmap code has a compile-time option that enables
+name resolution (along with proper warnings):
+  http://neil.brown.name/git?p=portmap;a=commitdiff;h=b663f78b86
 
-Similarly the mathTeX application does not perform sufficient input
-sanitization and allows untrusted input, passed via HTTP query strings, to be
-used as command arguments allowing command injection. Additionally it suffers
-from several stack-based overflows as well as insecure temporary file handling.
+but the variants of this (buggy) patch without such ENABLE_DNS define
+and proper warnings are used in the wild.  Additionally, portmap also
+has an explicit check for local access and does not call tcp_wrappers
+at all in such case, probably to avoid the problem you have mentioned.
+Is there a case when even that is insufficient?
 
-Affected version:
+> Before discussing changes to a program, it is a good investment of
+> time to find out how the program works, and why it works in the
+> specific way it works.
 
-Unfortunately mimeTeX and mathTex are provided without version numbers by the
-maintainer, who releases version-less zip archives. It is therefore impossible
-to provide affected version numbers.
-
-Fixed version:
-
-At the release time for this advisory both versions available on the maintainer
-website fix the overflow and injection issues.
-
-mimeTeX, mimetex.zip (2009/07/13)
-
-mathTeX, mathtex.zip (2009/07/13)
-
-Credit: vulnerability report received from Chris Evans <cevans [at] google
-        [dot] com> (mimetex) and Damien Miller <djm [at] google [dot] com>
-        (mathtex), Google Security Team.
-
-CVE: CVE-2009-1382 (mimetex), CVE-2009-1383 (mathtex)
-
-Timeline:
-
-2009-05-22: vulnerability report received
-2009-05-25: contacted mimetex/mathtex maintainer
-2009-05-25: maintainer publicly discloses report contents
-2009-05-26: contacted affected vendors
-2009-05-26: maintainer provides updated packages
-2009-05-26: assigned CVEs
-2009-05-26: reporters indicate that the updated packages do not fix all
-            the issues
-2009-05-29: reporters find additional overflows in updated packages
-2009-06-01: maintainer contacted with updated report
-2009-07-09: reporters confirm that updated packages fixing the reported
-            issues are available
-2009-07-13: advisory release
-
-References:
-http://scary.beasts.org/security/CESA-2009-009.html
-http://groups.google.com/group/comp.text.tex/browse_thread/thread/5d56d3d744351578
-
-Permalink:
-http://www.ocert.org/advisories/ocert-2009-010.html
+I obviously erred on this!  Though with code being copied across
+projects, getting changes that are not always correct, or copying
+special handling to projects where it is not needed, makes it rather
+complicated to not miss some whys or always distinguish correct changes
+from incorrect ones.  Nobody has perfect knowledge of everything, that's
+when objective feedback from subject experts is greatly appreciated and
+desired to not miss any gotchas and have all pros and cons to make the
+decision.
 
 -- 
-Andrea Barisani |                Founder & Project Coordinator
-          oCERT | Open Source Computer Emergency Response Team
-
-<lcars@...rt.org>                         http://www.ocert.org
- 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
-        "Pluralitas non est ponenda sine necessitate"
+Tomas Hoger / Red Hat Security Response Team
