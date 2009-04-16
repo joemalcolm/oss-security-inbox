@@ -1,27 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/22/7
-Message-ID: <Pine.GSO.4.51.0905212028580.18536@faron.mitre.org>
-Date: Thu, 21 May 2009 20:29:02 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/16/5
+Message-Id: <200904161346.57264.hanno@hboeck.de>
+Date: Thu, 16 Apr 2009 13:46:56 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE id request: coccinelle
+Cc: Steven Christey <coley@...us.mitre.org>
+Subject: CVE request: phpmyadmin < 3.1.3.2
 Content-Type: text/plain; charset=utf-8
 
+http://www.phpmyadmin.net/home_page/security/PMASA-2009-4.php
 
-======================================================
-Name: CVE-2009-1753
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1753
-Reference: MLIST:[oss-security] 20090506 CVE id request: coccinelle
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/05/06/2
-Reference: CONFIRM:http://packages.debian.org/changelogs/pool/main/c/coccinelle/coccinelle_0.1.7.deb-3/changelog
-Reference: BID:34848
-Reference: URL:http://www.securityfocus.com/bid/34848
-Reference: SECUNIA:35012
-Reference: URL:http://secunia.com/advisories/35012
-
-Coccinelle 0.1.7 allows local users to overwrite arbitrary files via a
-symlink attack on an unspecified "result file."
+Insufficient output sanitizing when generating configuration file. 
 
 
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
