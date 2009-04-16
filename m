@@ -1,18 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/16/1
-Message-ID: <4AB07491.7080207@kernel.sg>
-Date: Wed, 16 Sep 2009 13:16:01 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/16/6
+Message-Id: <200904161347.58449.hanno@hboeck.de>
+Date: Thu, 16 Apr 2009 13:47:58 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: perf_counter: Fix buffer overflow in perf_copy_attr()
+Subject: Re: CVE request: phpmyadmin < 3.1.3.2
 Content-Type: text/plain; charset=utf-8
 
-kernel/perf_counter.c was introduced in commit 0793a61d (v2.6.31-rc1).
+Am Donnerstag 16 April 2009 schrieb Hanno Böck:
+> http://www.phpmyadmin.net/home_page/security/PMASA-2009-4.php
+>
+> Insufficient output sanitizing when generating configuration file.
 
-"If we pass a big size data over perf_counter_open() syscall, the kernel 
-will copy this data to a small buffer, it will cause kernel crash."
+Stupid me... I should read before...
 
-Upstream commit: b3e62e35058fc744ac794611f4e79bcd1c5a4b83
+Above page:
+Assigned CVE ids: CVE-2009-1285 
 
-Thanks, Eugene
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
