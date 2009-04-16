@@ -1,31 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/07/5
-Message-ID: <20090107175742.GA3348@ngolde.de>
-Date: Wed, 7 Jan 2009 18:57:42 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: clarification on CVE-2008-5687 (mediawiki)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/16/8
+Message-Id: <20090416115920.92A211F3E9E@spike.porcupine.org>
+Date: Thu, 16 Apr 2009 07:59:20 -0400 (EDT)
+From: wietse@...cupine.org (Wietse Venema)
+To: Tomas Hoger <thoger@...hat.com>
+CC: coley@...us.mitre.org, oss-security@...ts.openwall.com,  Wietse Venema <wietse@...cupine.org>
+Subject: Re: Re: Some fun with tcp_wrappers
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Tomas Hoger:
+> The good_client (tcp_wrappers wrapping function in portmap /
+> nfs-utils / ...) problem is rather interesting too, as it creates
+> problems due to its attempt to avoid unneeded DNS lookups (workaround
+> for hosts_ctl limitation?) and support host aliases (tcp_wrappers
+> limitation).  
 
-the CVE id descriptions says:
-"MediaWiki 1.11 through 1.13.3 does not properly protect..." 
-while the referenced upstream announce announces 1.13.3 as a 
-security update for 1.13.2. So it doesn't look like 1.13.3 
-is affected.
+See my previous email. Programs such as portmappers must not look
+up hostname information, since that would result in an infinite
+recursion when host lookups use SUNRPC services. To state the
+obvious: the portmapper would directly or indirectly send SUNRPC
+calls to itself, in order to locate the NIS server.
 
-Also looking at the patch it turns out that 1.13.3 is fixing 
-this by adding an htaccess file.
+Before discussing changes to a program, it is a good investment of
+time to find out how the program works, and why it works in the
+specific way it works.
 
-The CVE id description should get an update.
-
-Cheers
-Nico
-
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+	Wietse
