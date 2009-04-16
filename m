@@ -1,48 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/09/1
-Message-ID: <4AA7B2E1.4010300@redhat.com>
-Date: Wed, 09 Sep 2009 15:51:29 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, Alan T DeKok <aland@...eradius.org>
-Subject: CVE Request -- FreeRADIUS 1.1.8
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/16/7
+Message-Id: <20090416115150.F28A91F3E9E@spike.porcupine.org>
+Date: Thu, 16 Apr 2009 07:51:50 -0400 (EDT)
+From: wietse@...cupine.org (Wietse Venema)
+To: Tomas Hoger <thoger@...hat.com>
+CC: wietse@...cupine.org, oss-security@...ts.openwall.com
+Subject: Re: Re: Some fun with tcp_wrappers
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve, vendors,
+Tomas Hoger:
+> On Wed, 15 Apr 2009 14:53:22 -0400 (EDT) wietse@...cupine.org (Wietse
+> Venema) wrote:
+> 
+> > Wietse Venema:
+> > > > "test-hostsctl servicename unknown IP unknown" is what some
+> > > > applications do expecting tcp_wrappers to resolve IP to hostname.
+> > > 
+> > > I think that it would be a mistake to change a documented API that
+> > 
+> > On the other hand, if you could add a new function under a new name
+> > that does have the expected behavior, then there would be no
+> > confusion, no risk of cross-platform applications breaking, and I
+> > would withdraw my objection.
+> 
+> That does not sound like a viable alternative and is likely to damage
+> portability lot more, let me explain:
+> 
+> - Application upstreams will not (should not) use any API that is
+>   vendor-specific extension and not included upstream.  Even if there
+>   is some new upstream version, it might take years to get into wide
+>   enough use to applications to use new API, and result in
+>   incompatibility with old systems.
+>
+> - Applications change would be required.  If that is done, there's
+>   little reason to change to new API instead of existing hosts_access.
 
-   FreeRADIUS upstream has today released 1.1.8 version [1] [2],
-fixing one remote DoS issue in the handling of Tunnel-Password
-attributes. This was already fixed in 0.9.3 [3] version:
+Linux-specific modifications to a 20-year old API break cross-platform
+software. May I remind you that not all the world runs Linux.
 
-   FreeRADIUS 0.9.3 ; Date: 2003/11/20 20:15:48, urgency=high
-   * Fix a remote DoS and due to mis-handling of tagged attributes,
-     and Tunnel-Password attribute.
+On the other hand, no cross-platform software will break if one
+adds a Linux-specific extension to the API.
 
-as CVE-2003-0967 [4], but managed to re-appear.
+I haven't yet pointed out the problems with automatic hostname
+lookups from hosts_ctl(). One problem is that it breaks programs
+that must not do hostname lookups such as portmappers.
 
-Upstream patch:
----------------
-http://github.com/alandekok/freeradius-server/commit/860cad9e02ba344edb0038419e415fe05a9a01f4
+Programs like the portmapper should not do hostname lookups, because
+that would result in infinite recursion when host lookups involve
+SUNRPC services such as NIS.
 
-Affected versions:
-------------------
-Issue confirmed in freeradius-1.1.3 up to freeradius-1.1.7,
-older freeradius-1.1.* version might be also affected.
+Again, not all the world is Linux. Making platform-specific changes
+to a 20-year old API breaks cross-platform software in unexpected ways.
 
-Version 2.X is not affected by this issue.
-
-References:
------------
-[1] http://freeradius.org/
-[2] https://lists.freeradius.org/pipermail/freeradius-users/2009-September/msg00242.html
-[3] http://freeradius.org/radiusd/doc/ChangeLog
-[4] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2003-0967
-[5] http://github.com/alandekok/freeradius-server/commit/860cad9e02ba344edb0038419e415fe05a9a01f4
-[6] http://www.derkeiler.com/Mailing-Lists/Securiteam/2003-11/0093.html (PoC)
-[7] https://bugzilla.redhat.com/show_bug.cgi?id=521912
-
-Could you please allocate a new CVE identifier?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+	Wietse
