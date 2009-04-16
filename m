@@ -1,71 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/27/1
-Message-ID: <0904270937330.18551@mjc.redhat.com>
-Date: Mon, 27 Apr 2009 10:04:20 +0100 (BST)
-From: Mark J Cox <mjc@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request? buffer overflow in CIFS in 2.6.*
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/16/10
+Message-Id: <20090416154805.3E0351F3E9E@spike.porcupine.org>
+Date: Thu, 16 Apr 2009 11:48:05 -0400 (EDT)
+From: wietse@...cupine.org (Wietse Venema)
+To: Tomas Hoger <thoger@...hat.com>
+CC: wietse@...cupine.org, oss-security@...ts.openwall.com,  coley@...us.mitre.org
+Subject: Re: Re: Some fun with tcp_wrappers
 Content-Type: text/plain; charset=utf-8
 
-> Any and all thoughts are welcome.  I've thought that a big win for CVE was
-> as a "universal bug ID" for the Linux community, which was outside what we
-> had originally envisioned for it.  But these kinds of dynamic,
-> low-information disclosures really stress the CVE process, so I'm starting
-> to question whether CVE is really a good fit.
+Tomas Hoger:
+> Hi Wietse!
+> 
+> On Thu, 16 Apr 2009 07:59:20 -0400 (EDT) wietse@...cupine.org (Wietse
+> Venema) wrote:
+> 
+> > Tomas Hoger:
+> > > The good_client (tcp_wrappers wrapping function in portmap /
+> > > nfs-utils / ...) problem is rather interesting too, as it creates
+> > > problems due to its attempt to avoid unneeded DNS lookups
+> > > (workaround for hosts_ctl limitation?) and support host aliases
+> > > (tcp_wrappers limitation).  
+> > 
+> > See my previous email. Programs such as portmappers must not look
+> > up hostname information, since that would result in an infinite
+> > recursion when host lookups use SUNRPC services. To state the
+> > obvious: the portmapper would directly or indirectly send SUNRPC
+> > calls to itself, in order to locate the NIS server.
+> 
+> Thank you for pointing this problem out.  And my apologies for not
+> digging deep enough into peculiarities of RPC and making a conclusions
+> based on the code already used in the wild.  It seems that portmappers
+> do name resolution, even if they should not.
+> 
+> Current upstream portmap code has a compile-time option that enables
+> name resolution (along with proper warnings):
+>   http://neil.brown.name/git?p=portmap;a=commitdiff;h=b663f78b86
+> 
+> but the variants of this (buggy) patch without such ENABLE_DNS define
+> and proper warnings are used in the wild.  Additionally, portmap also
+> has an explicit check for local access and does not call tcp_wrappers
+> at all in such case, probably to avoid the problem you have mentioned.
+> Is there a case when even that is insufficient?
 
-I believe that this is a by-product of vendors moving to use the public 
-oss-security list for triaging issues.
+I worked last on this program 13 years ago. If I recall correctly
+the from_local() test will avoid certain screwups, but a full
+analysis will take time, and I am short on that.
 
-Before oss-security, vendors like Red Hat would discuss vulnerabilies both 
-public and private on the private vendor-sec list.  At the end of the 
-discussion and peer review we'd reach some conclusion about if the issue 
-was actually a security issue, and one of the Candidate Naming Authorities 
-would allocate CVE names accordingly.
+	Wietse
 
-So usually CVE names would only get allocated for things that at least one 
-of the vendors was going to fix, and therefore the CVEs had a high level 
-of confidence, and lots of metadata.
-
-For example if Red Hat fix an issue in any of our products we've got a 
-public bug with the CVE name as alias which contains the details, link to 
-first public mention, and a link to the fix or the fix itself (either the 
-upstream one or a backported one). For issues where it was likely that 
-Mitre would allocate a name by themselves (say a new version of PHP got 
-released with security issues mentioned in the announcement) we'd ping 
-Steve directly for a name to try to avoid duplicates (and in these cases 
-Steve and his team would need to do more work).
-
-However, for issues already public, using a closed list was not optimal, 
-and so to aid peer review outside of the vendor security teams and for 
-transparancy we started using oss-security.
-
-But what happens now is that all the triage work that was previously 
-hidden is now public.  So while on vendor-sec we might have used a CVE 
-name for tracking an issue through triage and later rejected it with no 
-public mentions, now it's public in the interim.
-
-In the case of the Linux kernel bug Eugene was working on, that triage 
-also includes the CVE Content Decisions to map vulnerabilities to CVE 
-names where there were multiple similar vulnerabilities or multiple 
-affected products at the same time.  If this were vendor-sec, one of the 
-CNA experts would have stepped in at that point.
-
-I don't think intermediate ids would help, and we're years past having a 
-lower-confidence CVE 'candidate' (CAN).
-
-So perhaps the solution is to have the vendor CNAs play more of a role on 
-the oss-security list in allocating and helping with content decisions 
-rather than having to have Mitre monitor the list.  Then, each time a CNA 
-gives out a CVE on oss-security they could have some requirement of a 
-mimimum set of information about the allocation they have to provide in 
-the same mail.  By having the CNA buffer we'd only have to involve Steve 
-or Mitre when something is complex.  However, that would mean Mitre would 
-have to check oss-security list before allocating any CVE names for 
-oss-issues and accept there may be more duplicate allocations.
-
-Thanks, Mark
---
-Mark J Cox / Director, Red Hat Security Response
-
+> > Before discussing changes to a program, it is a good investment of
+> > time to find out how the program works, and why it works in the
+> > specific way it works.
+> 
+> I obviously erred on this!  Though with code being copied across
+> projects, getting changes that are not always correct, or copying
+> special handling to projects where it is not needed, makes it rather
+> complicated to not miss some whys or always distinguish correct changes
+> from incorrect ones.  Nobody has perfect knowledge of everything, that's
+> when objective feedback from subject experts is greatly appreciated and
+> desired to not miss any gotchas and have all pros and cons to make the
+> decision.
 
 
