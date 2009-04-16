@@ -1,28 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/28/12
-Message-ID: <1388405289.2642981233169056431.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 28 Jan 2009 13:57:36 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/16/2
+Message-ID: <49E6DC10.3000302@redhat.com>
+Date: Thu, 16 Apr 2009 15:19:44 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: php5
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: 'kill sig -1' must only apply to caller's PID namespace
 Content-Type: text/plain; charset=utf-8
 
------ "Steffen Joeris" <steffen.joeris@...lelinux.de> wrote:
-> 
-> I don't think this has a CVE id yet.
-> 
-> Quote from the debian bugreport:
-> "When an invalid key is used when calling dba_replace on a dba inifile
-> 
-> resource it leads to file truncation."
-> 
-> References:
-> Debian Bugreport:
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=507101
+I came across this while reviewing some older upstream patches.
 
-I may be missing something here, but this looks like an issue where a bad script
-really needs to cause this. Wouldn't it be just as easy to for the script author to
-delete the file in question via a PHP script?
+Apparently, it was possible to run kill <sig> -1 to kill processes in
+all PID namespaces, and break the isolation of namespaces. The expected
+behaviour for this is to only kill processes in its own hierarchy. The
+fix uses task_pid_vnr() to check if the process is outside of the
+caller's namespace before killing.
 
+PID namespaces was merged in 2.6.24.
+
+References:
+http://lwn.net/Articles/259217/
+https://bugzilla.redhat.com/show_bug.cgi?id=496031
+http://git.kernel.org/linus/d25141a818383b3c3b09f065698c544a7a0ec6e7
+
+Thanks, Eugene
 -- 
-    JB
+Eugene Teo / Red Hat Security Response Team
