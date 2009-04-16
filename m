@@ -1,27 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/18/3
-Message-ID: <Pine.GSO.4.51.0903172039120.17171@faron.mitre.org>
-Date: Tue, 17 Mar 2009 20:39:33 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: inotify local DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/16/3
+Message-ID: <20090416124549.1cdbef9f@redhat.com>
+Date: Thu, 16 Apr 2009 12:45:49 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: wietse@...cupine.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Re: Some fun with tcp_wrappers
 Content-Type: text/plain; charset=utf-8
 
+On Wed, 15 Apr 2009 14:53:22 -0400 (EDT) wietse@...cupine.org (Wietse
+Venema) wrote:
 
-======================================================
-Name: CVE-2009-0935
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0935
-Reference: MLIST:[linux-kernel] 20090131 [patch 03/43] inotify: clean up inotify_read and fix locking
-Reference: URL:http://marc.info/?l=linux-kernel&m=123337123501681&w=2
-Reference: MLIST:[oss-security] 20090306 CVE request: kernel: inotify local DoS
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/03/06/2
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=488935
+> Wietse Venema:
+> > > "test-hostsctl servicename unknown IP unknown" is what some
+> > > applications do expecting tcp_wrappers to resolve IP to hostname.
+> > 
+> > I think that it would be a mistake to change a documented API that
+> 
+> On the other hand, if you could add a new function under a new name
+> that does have the expected behavior, then there would be no
+> confusion, no risk of cross-platform applications breaking, and I
+> would withdraw my objection.
 
-The inotify_read function in the Linux kernel 2.6 before 2.6.29-rc3
-allows local users to cause a denial of service (OOPS) via a read with
-an invalid address to an inotify instance, which causes the device's
-event list mutex to be unlocked twice and prevents proper
-synchronization of a data structure for the inotify instance.
+That does not sound like a viable alternative and is likely to damage
+portability lot more, let me explain:
 
+- Application upstreams will not (should not) use any API that is
+  vendor-specific extension and not included upstream.  Even if there
+  is some new upstream version, it might take years to get into wide
+  enough use to applications to use new API, and result in
+  incompatibility with old systems.
+
+- Applications change would be required.  If that is done, there's
+  little reason to change to new API instead of existing hosts_access.
+
+I fail to see benefits of new API, only greater risk.  Sorry.
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
