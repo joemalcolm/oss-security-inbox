@@ -1,22 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/12/8
-Message-ID: <1723747197.6194581234463551282.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 12 Feb 2009 13:32:31 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: coley@...re.org
-Subject: CVE Request (ruby)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/16/13
+Message-ID: <20090416174722.GI4100@redhat.com>
+Date: Thu, 16 Apr 2009 11:47:22 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2009-1189: invalid fix for CVE-2008-3834 (dbus)
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve,
+It came to our attention that a previous security fix for dbus
+(CVE-2008-3834) didn't actually fix the security issue in question.
 
-I ran across this Debian bug:
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=513528
+https://bugs.freedesktop.org/show_bug.cgi?id=17803
 
-I did some investigating in this.  It seems almost nothing uses Ruby's OpenSSL:OCSP
-library, but given this could be a problem, I'd like to fix it.
-
-Thanks.
+As a result, we've assigned CVE-2009-1189 to the issue.
 
 -- 
-    JB
+Vincent Danen / Red Hat Security Response Team 
