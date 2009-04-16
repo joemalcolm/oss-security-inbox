@@ -1,93 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/30/3
-Message-ID: <20091130215204.GV21038@inversepath.com>
-Date: Mon, 30 Nov 2009 21:52:04 +0000
-From: Andrea Barisani <lcars@...rt.org>
-To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
-Subject: [oCERT-2009-017] PHP multiple issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/16/1
+Message-ID: <Pine.GSO.4.51.0904152038070.17649@faron.mitre.org>
+Date: Wed, 15 Apr 2009 20:44:49 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+cc: Wietse Venema <wietse@...cupine.org>, Tomas Hoger <thoger@...hat.com>
+Subject: Re: Re: Some fun with tcp_wrappers
 Content-Type: text/plain; charset=utf-8
 
 
-#2009-017 PHP multiple issues
+I'm not sure how to handle this from a CVE perspective, except:
 
-Description:
+ - if the API functions perform as documented, as Wietse says, then
+   separate CVEs would need to be assigned for applications that misuse
+   the API.
 
-PHP, an open source scripting language, suffers from several bugs that may
-pose a security risk.
+ - If there is a separate bug that causes tcp_wrappers to
+   allow hosts in ways that are contrary to specification, then that
+   would be treated as a problem in tcp_wrappers (whether it's from
+   Wietse or some downstream modification).
 
-The reported issues have been discovered in several API functions, issues
-include buffer overflows, near null reads/writes, arbitrary memory read
-and an off-by-one issue. Some of the issues have been previously reported
-in older versions of PHP but they either have not been fixed or they were
-re-introduced in a later time. The issues have been discovered in both
-core and, in some cases, PECL functions/classes/methods.
+ - If there's a problem due to incomplete documentation, that's a
+   somewhat unique case for CVE that would require more thought (although
+   not a first occurrence since Apple had a bad-documentation bug a year
+   or two ago)
 
-The following methods have been fixed.
+Jan and Tomas - Red Hat bug 491095 mentions CVE-2009-0786 but I'm not
+clear on how to write it up given the state of the discussion at this
+point.
 
-    ibase_pconnect
-    ibase_connect
-    com_print_typeinfo
-    popen
-    mssql_connect
-    mssql_pconnect
-    SplFileObject
-    DOMImplementation->createDocumentType
-    documentation()->public_id
-    SDO_DAS_ChangeSummary->beginLogging
-    SDO_DAS_Setting->getPropertyIndex
-    SDO_SequenceImpl->getProperty
-
-The following methods have been removed in PHP 5.3, they are still
-available without fixes in 5.2.11.
-
-    msql_close
-    msql_connect
-    msql_pconnect
-    msql_select_db
-    msql_list_tables
-
-Affected version:
-
-PHP < 5.3.1
-
-Fixed version:
-
-PHP >= 5.3.1
-
-Credit: vulnerability report received from Emmanouel Kellinis, KPMG London.
-
-CVE: N/A
-
-Timeline:
-
-2009-07-10: vulnerability report received
-2009-07-15: contacted PHP security team
-2009-07-15: vendor provides initial feedback, classifies the security
-            impact as low
-2009-08-09: oCERT asks for feedback about the timescale for eventual fixes
-2009-08-24: vendor replies that most issues will not be fixed as they are
-            present in deprecated extensions or are not understood
-2009-08-25: reporter offers to clarify all the issues and provides test
-            cases
-2009-08-26: after reporter feedback vendor commits more fixes
-2009-10-05: reporter asks clarification about fixed/pending bugs
-2009-10-27: after further reporter feedback vendor commits more fixes
-2009-11-30: advisory published
-
-References:
-http://svn.php.net/viewvc?view=revision&revision=289996
-http://svn.php.net/viewvc/php/php-src/branches/PHP_5_3/ext/interbase/interbase.c?r1=272370&r284159
-http://svn.php.net/viewvc?view=revision&revision=287779
-http://svn.php.net/viewvc/php/php-src/trunk/TSRM/tsrm_win32.c?r1=287673&r2=287779
-http://www.php.net/ChangeLog-5.php#5.3.1
-
-Permalink:
-http://www.ocert.org/advisories/ocert-2009-017.html
-
--- 
-Andrea Barisani |                Founder & Project Coordinator
-          oCERT | Open Source Computer Emergency Response Team
-
-<lcars@...rt.org>                         http://www.ocert.org
- 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
-        "Pluralitas non est ponenda sine necessitate"
+- Steve
