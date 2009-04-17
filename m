@@ -1,36 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/03/3
-Message-ID: <Pine.LNX.4.64.0908032141170.29719@forced.attrition.org>
-Date: Mon, 3 Aug 2009 21:43:38 +0000 (UTC)
-From: security curmudgeon <jericho@...rition.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/17/3
+Message-ID: <Pine.GSO.4.51.0904170958290.17172@faron.mitre.org>
+Date: Fri, 17 Apr 2009 09:58:51 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: squid DoS in external auth header parser
+cc: "Steven M. Christey" <coley@...us.mitre.org>, Chris Wright <chrisw@...hat.com>, Greg KH <greg@...ah.com>
+Subject: Re: CVE request: kernel: exit_notify: kill the wrong capable(CAP_KILL) check
 Content-Type: text/plain; charset=utf-8
 
 
-: I noticed this on Debian's bts [1] and also on upstream's bugzilla [2]
-: but no CVE has been assigned (not sure if one has been requested or not,
-: but I've not seen a request come through here).
-: 
-: By the initial looks of things, it seems to be a fairly low severity
-: issue and may not be easy to duplicate/trigger.  The reporter didn't really
-: provide much in the way of a reproducer or relevant configs (and the
-: reference to zope auths makes me not even want to touch it).
-: 
-: Has anyone taken a look at this or has a CVE been requested for it?
-: Upstream has done nothing with this despite it being reported two weeks
-: ago.
-: 
-: [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=534982
-: [2] http://www.squid-cache.org/bugs/show_bug.cgi?id=2704
+On Tue, 7 Apr 2009, Eugene Teo wrote:
 
+> https://bugzilla.redhat.com/show_bug.cgi?id=493771
+> http://git.kernel.org/linus/432870dab85a2f69dc417022646cb9a70acf7f94
 
-Were these fixed with the recent release?
+Use CVE-2009-1337, to be filled in later.
 
-http://www.squid-cache.org/Advisories/SQUID-2009_2.txt
-
-The creditee section does not mention Bastian Blank (original) or Luigi 
-Gangitano (Debian, reported upstream). The related Squid bug report (2704) 
-is still marked UNCONFIRMED and has no resolution.
-
-I'm guessing this is still an outstanding issue.
+- Steve
