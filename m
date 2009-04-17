@@ -1,26 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/14/1
-Message-ID: <20090414084853.7d4156b1@redhat.com>
-Date: Tue, 14 Apr 2009 08:48:53 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: hanno@...eck.de
-Cc: oss-security@...ts.openwall.com, Steven Christey <coley@...us.mitre.org>
-Subject: Re: CVE request: Ghostscript jbig2dec JBIG2 Processing Buffer Overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/17/5
+Message-ID: <20090417161901.GE19186@severus.strandboge.com>
+Date: Fri, 17 Apr 2009 11:19:01 -0500
+From: Jamie Strandboge <jamie@...onical.com>
+To: oss-security@...ts.openwall.com
+Cc: coley@...us.mitre.org, team@...urity.debian.org
+Subject: Re: CVE request: apt
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 13 Apr 2009 11:08:44 +0200 Hanno Böck <hanno@...eck.de> wrote:
+On Wed, 08 Apr 2009, Jamie Strandboge wrote:
 
-> See
-> http://secunia.com/secunia_research/2009-21/
-> http://www.h-online.com/security/Ghostscript-comes-unstuck-with-PDFs-too--/news/113051
+> Summary
+> -------
+> Systems in certain timezones with automatic updates enabled won't be
+> upgraded on the first day of DST and some systems in affected timezones
+> could end up with automatic updates being disabled permanently. Normal
+> usage of apt is not affected.
+> 
 
-$ curl -s http://secunia.com/secunia_research/2009-21/ | grep -A3 '8) References'
-8) References
+In addition to my original request, can we have one more for this bug:
+https://launchpad.net/bugs/356012
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned
-CVE-2009-0196 for the vulnerability.
+"APT does not properly handle expired or revoked key signatures". This
+affects apt < 0.7.21.
 
-?
+Basically, if a repository is signed with only a revoked or expired key,
+and gpgv reports VALIDSIG, apt considers it to be properly signed. apt
+should check for GOODSIG, not VALIDSIG. Patch is in the bug and this is
+already fixed in Debian sid and Ubuntu 9.04.
+
+Jamie
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Jamie Strandboge             | http://www.canonical.com
+
+Download attachment "signature.asc" of type "application/pgp-signature" (198 bytes)
