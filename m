@@ -1,27 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/04/4
-Message-ID: <87r5z4h9un.fsf@mid.deneb.enyo.de>
-Date: Mon, 04 May 2009 22:49:36 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/17/2
+Message-ID: <Pine.GSO.4.51.0904170958090.17172@faron.mitre.org>
+Date: Fri, 17 Apr 2009 09:58:20 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request (sort of): Quagga BGP crasher
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: NFS: Fix an Oops in encode_lookup()
 Content-Type: text/plain; charset=utf-8
 
-* Florian Weimer:
 
-> * Jon Oberheide:
->
->> Looks like the Quagga code in bgp_aspath.c is assuming that converting
->> each ASN of the AS path to a string will be 5 bytes plus a space
->> (#define ASN_STR_LEN (5 + 1)).  Therefore, it allocates (ASN_STR_LEN *
->> the number of ASNs in the path segment) bytes to snprintf into when
->> creating the pretty-print version of the AS path.
->
-> Sure, this is the part I understand.  It's not clear why this code is
-> hit when there isn't much logging going on.  People have also run
-> "show ip bgp ROUTE" for paths with six-digit ASNs, with
-> supposedly-broken bgpd versions, and did not observe a crash.
+On Mon, 6 Apr 2009, Eugene Teo wrote:
 
-It seems that bgpd uses the textual representation of AS paths for
-hash-consing them.  That's why the crash happens even without logging
-enabled.
+> http://git.kernel.org/linus/54af3bb543c071769141387a42deaaab5074da55
+> https://bugzilla.redhat.com/show_bug.cgi?id=494074
+
+Use CVE-2009-1336, to be filled in later.
+
+- Steve
