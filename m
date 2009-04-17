@@ -1,18 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/01/1
-Message-ID: <Pine.GSO.4.51.0911302006460.14733@faron.mitre.org>
-Date: Mon, 30 Nov 2009 20:08:56 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/17/1
+Message-ID: <49E844A1.5020208@redhat.com>
+Date: Fri, 17 Apr 2009 16:58:09 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Need more information on recent poppler issues
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: 'kill sig -1' must only apply to caller's PID namespace
 Content-Type: text/plain; charset=utf-8
 
+Eugene Teo wrote:
+> I came across this while reviewing some older upstream patches.
+> 
+> Apparently, it was possible to run kill <sig> -1 to kill processes in
+> all PID namespaces, and break the isolation of namespaces. The expected
+> behaviour for this is to only kill processes in its own hierarchy. The
+> fix uses task_pid_vnr() to check if the process is outside of the
+> caller's namespace before killing.
 
-DSA-1941 lists three reserved CVE entries for Poppler issues, but there
-aren't any more details, which makes it difficult to create CVE
-descriptions.  Specifically, CVE-2009-3906, CVE-2009-3907, and
-CVE-2009-3908 don't have any details as far as I can tell.
+I am still able to reproduce the problem even after applying this
+upstream patch (commit d25141a8). I'm still figuring out what other
+patches are needed. If you know which ones, do let us know.
 
-Can anybody help?
+The expected behaviour for this is:
+# ps -e
+  PID TTY          TIME CMD
+    1 pts/0    00:00:00 bash <-- this namespace's "init"
+   10 pts/0    00:00:00 ps
+# /bin/kill -s SIGKILL -1
+kill -1: No such process
 
-- Steve
+Take note that you need to be privileged in order to create a new PID
+namespace, but to be able to kill other invisible processes outside of
+the namespace is a bypass of the intended namespaces isolation.
+
+Thanks, Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
