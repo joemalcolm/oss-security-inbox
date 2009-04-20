@@ -1,27 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/12/3
-Message-ID: <1067267236.75151255364549747.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 12 Oct 2009 12:22:29 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/20/1
+Message-ID: <49EC1580.9080408@redhat.com>
+Date: Mon, 20 Apr 2009 14:26:08 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: presumptive php sec holes
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: cifs: fix unicode string area word alignment in session setup
 Content-Type: text/plain; charset=utf-8
 
------ "Oden Eriksson" <oeriksson@...driva.com> wrote:
+According to the upstream commit 27b87fe5, "the handling of unicode
+string area alignment is wrong. decode_unicode_ssetup improperly assumes
+that it will always be preceded by a pad byte. This isn't the case if
+the string area is already word-aligned.
 
-> Hello.
-> 
-> Attached are some php patches that to me looks security related
-> (unknown 
-> impact). I hope someone with insight can classify and possible assign
-> CVE 
-> numbers. The patches were taken from their svn repo, so it's
-> "official".
-> 
+This problem, combined with the bad buffer sizing for the serverDomain
+string can cause memory corruption. The bad alignment can make it so
+that the alignment of the characters is off. This can make them
+translate to characters that are greater than 2 bytes each. If this
+happens we can overflow the allocation."
 
-Did you contact PHP upstream about these? They're usually quite on the ball
-with understanding security flaws, so they are likely the best group to help
-you determine what the impact of these are.
+This is similar to the bug Marcus posted recently.
 
+https://bugzilla.redhat.com/show_bug.cgi?id=496572
+http://git.kernel.org/linus/27b87fe52baba0a55e9723030e76fce94fabcea4
+http://lists.samba.org/archive/linux-cifs-client/2009-April/004399.html
+
+Thanks, Eugene
 -- 
-    JB
+Eugene Teo / Red Hat Security Response Team
