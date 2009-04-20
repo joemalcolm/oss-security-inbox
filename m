@@ -1,45 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/05/2
-Message-ID: <20090805115350.GC19396@suse.de>
-Date: Wed, 5 Aug 2009 13:53:50 +0200
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/20/2
+Message-ID: <49EC41C9.6010607@redhat.com>
+Date: Mon, 20 Apr 2009 17:35:05 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: Re: CVE request: XEmacs Multiple Integer Overflows
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: ipv6: null pointer dereference in __inet6_check_established()
 Content-Type: text/plain; charset=utf-8
 
-Hello,
-was a CVE-ID allocated for this issue in the meanwhile?
+According to the upstream commit 3f53a381, "we already have a valid net
+in that place, but... the tw pointer can be NULL there sometimes, thus
+causing an oops in NET_NS=y case.
 
-On Thu, Jul 16, 2009 at 09:25:41AM +0200, Alex Legler wrote:
-> Hi,
-> 
-> I don't think we have a CVE for this/these issue(s) yet, so please
-> assign one/some:
-> 
-> The {tiff,png,jpeg}_instantiate() functions in glyphs-eimage.c contain
-> an integer overflow, possibly leading to a heap-based buffer overflow.
-> 
-> References:
-> Filed upstream as: http://tracker.xemacs.org/XEmacs/its/issue534
-> 
-> http://secunia.com/advisories/35348
-> http://www.vupen.com/english/advisories/2009/1666
-> https://bugs.gentoo.org/show_bug.cgi?id=275397
-> https://bugzilla.redhat.com/show_bug.cgi?id=511994
-> 
-> Thanks,
-> Alex
+The same place in ipv4 code already works correctly using existing
+net, rather than tw's one."
 
+The bug exists since 2.6.27.
 
+http://git.kernel.org/linus/3f53a38131a4e7a053c0aa060aba0411242fb6b9
 
+Thanks, Eugene
 -- 
-Bye,
-     Thomas
--- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
--- 
-           Hamming's Motto:
-           The purpose of computing is insight, not numbers.
-                                -- Richard W. Hamming
+Eugene Teo / Red Hat Security Response Team
