@@ -1,31 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/21/1
-Message-ID: <20090521063833.GA6545@suse.de>
-Date: Thu, 21 May 2009 08:38:33 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE request: transmission <1.61 CSRF
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/21/1
+Message-ID: <49ED3294.80701@redhat.com>
+Date: Tue, 21 Apr 2009 10:42:28 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: 'kill sig -1' must only apply to caller's PID namespace
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Eugene Teo wrote:
+> Eugene Teo wrote:
+>> I came across this while reviewing some older upstream patches.
+>>
+>> Apparently, it was possible to run kill <sig> -1 to kill processes in
+>> all PID namespaces, and break the isolation of namespaces. The expected
+>> behaviour for this is to only kill processes in its own hierarchy. The
+>> fix uses task_pid_vnr() to check if the process is outside of the
+>> caller's namespace before killing.
+> 
+> I am still able to reproduce the problem even after applying this
+> upstream patch (commit d25141a8). I'm still figuring out what other
 
-spotted here:
-http://www.transmissionbt.com/index.php
+Ok, you will need to make sure you have commit 44c4e1b2 too. I have
+tested this on 2.6.24.7 with these two patches, and the problem is fixed.
 
-Transmission 1.61 Released!
-A complete list of tickets closed can be seen here. 
-Thanks to CacheFly for providing bandwidth. 
- 
- All Platforms 
- Close potential CSRF security hole for Web Client users
- ...
+https://bugzilla.redhat.com/show_bug.cgi?id=496031#c14
 
-Also fixed in previous series apparently:
-Transmission 1.53 Released!
-..
-Close potential CSRF security hole for Web Client users
-Fix locale error in the JSON parser
-...
-
-
-Ciao, Marcus
+Thanks, Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
