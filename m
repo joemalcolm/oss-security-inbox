@@ -1,48 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/23/8
-Message-ID: <20090423081118.GA17366@suse.de>
-Date: Thu, 23 Apr 2009 10:11:18 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com
-Cc: Willy Tarreau <w@....eu>
-Subject: Re: Re: CVE-2009-1265 kernel: af_rose/x25: Sanity check the maximum user frame size
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/21/4
+Message-Id: <1240318027.3191.7.camel@dhcp-lab-164.englab.brq.redhat.com>
+Date: Tue, 21 Apr 2009 14:47:07 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request -- libmodplug
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Apr 23, 2009 at 03:46:08PM +0800, Eugene Teo wrote:
-> Marcus Meissner wrote:
-> > On Thu, Apr 23, 2009 at 02:54:06PM +0800, Eugene Teo wrote:
-> >> Willy Tarreau wrote:
-> >>> Hi Eugene,
-> >>>
-> >>> On Wed, Apr 08, 2009 at 03:58:55PM +0800, Eugene Teo wrote:
-> >>>> {nr,rose,x25}_sendmsg() functions need to have sanity checks on the
-> >>>> packet size, otherwise the sizes can wrap and end up sending garbage.
-> >>>>
-> >>>> http://bugzilla.kernel.org/show_bug.cgi?id=10423
-> >>>> http://git.kernel.org/linus/83e0bbcbe2145f160fbaa109b0439dae7f4a38a9
-> >>>> http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2009-1265
-> >>>>
-> >>>> This affects both 2.4.x and 2.6.x if CONFIG_{NETROM,ROSE,X25} are enabled.
-> >>> I already have it in my queue, just did not have time to merge it yet.
-> >>> Thanks for the reminder anyway, I really appreciate it ;-)
-> >> You will need this too :)
-> >>
-> >> upstream commit: cc29c70dd581f85ee7a3e7980fb031f90b90a2ab
-> >>
-> >> Patch "af_rose/x25: Sanity check the maximum user frame size"
-> >> (commit 83e0bbcbe2145f160fbaa109b0439dae7f4a38a9) from Alan Cox got
-> >> locking wrong. If we bail out due to user frame size being too large,
-> >> we must unlock the socket beforehand.
-> > 
-> > I do not see cc29c70dd581f85ee7a3e7980fb031f90b90a2ab in mainline kernel git
-> > yet, in which git does it live?
-> 
-> Interesting.
-> 
-> http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git;a=blob;f=queue-2.6.29/net-netrom-fix-socket-locking.patch;h=146431b88a3a57c98e56570941cd5ad6aeb1498c;hb=2f87957d1eaba126d27066479f25889a4191ebe8
+Hello Steve,
 
-Ah, it is just in net-2.6 currently.
+  could you please allocate a new CVE-2008-XXXX identifier for
+the following old libmodplug issue:
 
-http://git.kernel.org/?p=linux/kernel/git/davem/net-2.6.git;a=commit;h=cc29c70dd581f85ee7a3e7980fb031f90b90a2ab
+References:
+http://bugs.gentoo.org/show_bug.cgi?id=266913
+http://www.securityfocus.com/bid/30801/info
+http://sourceforge.net/project/shownotes.php?release_id=677065&amp;group_id=1275
+https://bugzilla.redhat.com/show_bug.cgi?id=496834
 
-Ciao, Marcus
+Affected libmodplug versions: x < 0.8.6
+
+Patch (against modplug-xmms/libmodplug):
+http://modplug-xmms.cvs.sourceforge.net/viewvc/modplug-xmms/libmodplug/src/load_med.cpp?r1=1.1&amp;r2=1.2
+
+Thanks, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+
+
