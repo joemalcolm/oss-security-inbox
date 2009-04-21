@@ -1,37 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/06/8
-Message-ID: <Pine.GSO.4.51.0906061342330.28142@faron.mitre.org>
-Date: Sat, 6 Jun 2009 13:43:33 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/21/5
+Message-ID: <49EDCA33.5020703@redhat.com>
+Date: Tue, 21 Apr 2009 21:29:23 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel: splice local denial of service
+CC: security@...nel.org, sfrench@...ibm.com
+Subject: Re: CVE request? buffer overflow in CIFS in 2.6.*
 Content-Type: text/plain; charset=utf-8
 
+Marcus Meissner wrote:
+> On Tue, Apr 21, 2009 at 10:59:25AM +0800, Eugene Teo wrote:
+>> Marcus Meissner wrote:
+>>> On Tue, Apr 07, 2009 at 01:41:44PM +0800, Eugene Teo wrote:
+>>>> Hi Marcus,
+>>>>
+>>>> Marcus Meissner wrote:
+>>>>> Fixes a kmalloc area overflow in CIFS, number of overwritten bytes
+>>>>> is depending on the codepage converted to.
+>>>>>
+>>>>> The data seems to come from a remote generated reply blob even, correct
+>>>>> me if I am wrong. :/
+>>>> Looks like it's part of the session setup. The NativeFileSystem field is
+>>>> part of the Tree Connect response (TCon for short).
+>>>>
+>>>>> And I wonder if "len*2" is sufficient, can't a UCS -> UTF8 conversion
+>>>>> generate more than 2 byte utf-8 characters for 1 ucs character?
+>>>> I understand that someone from your side is working on a better patch
+>>>> for this. Do keep us updated when it goes upstream.
+>>> tracked in the public bugzilla entry:
+>>> https://bugzilla.novell.com/show_bug.cgi?id=492282
+>>>
+>>> and:
+>>> http://lists.samba.org/archive/linux-cifs-client/2009-April/004322.html ff.
+>>> for the cifs discussion.
+>> Here's an update:
+>> http://lkml.org/lkml/2009/4/20/21
+> 
+> Our maintainer also referenced:
+> 
+> http://lists.samba.org/archive/linux-cifs-client/2009-April/004450.html
+> http://lists.samba.org/archive/linux-cifs-client/2009-April/004452.html
+> 
+> They are already in the CIFS git tree:
+> http://git.kernel.org/?p=linux/kernel/git/sfrench/cifs-2.6.git;a=summary
+> 	http://git.kernel.org/?p=linux/kernel/git/sfrench/cifs-2.6.git;a=commit;h=7b0c8fcff47a885743125dd843db64af41af5a61
+> 	http://git.kernel.org/?p=linux/kernel/git/sfrench/cifs-2.6.git;a=commit;h=968460ebd8006d55661dec0fb86712b40d71c413
 
-======================================================
-Name: CVE-2009-1961
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1961
-Reference: MLIST:[oss-security] 20090529 CVE request: kernel: splice local denial of service
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/05/29/2
-Reference: MLIST:[oss-security] 20090530 Re: CVE request: kernel: splice local denial of service
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/05/30/1
-Reference: MLIST:[oss-security] 20090602 Re: CVE request: kernel: splice local denial of service
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/06/02/2
-Reference: MLIST:[oss-security] 20090603 Re: CVE request: kernel: splice local denial of service
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/06/03/1
-Reference: CONFIRM:http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=7bfac9ecf0585962fe13584f5cf526d8c8e76f17
-Reference: BID:35143
-Reference: URL:http://www.securityfocus.com/bid/35143
-Reference: SECTRACK:1022307
-Reference: URL:http://securitytracker.com/id?1022307
+As discussed with Marcus, these two are unrelated to this issue, so we
+will need new CVE names.
 
-The inode double locking code in fs/ocfs2/file.c in the Linux kernel
-2.6.30 before 2.6.30-rc3, 2.6.27 before 2.6.27.24, 2.6.29 before 2.6.29.4,
-and possibly other versions down to 2.6.19 allows local users to cause a
-denial of service (prevention of file creation and removal) via a series
-of splice system calls that trigger a deadlock between the
-generic_file_splice_write, splice_from_pipe, and ocfs2_file_splice_write
-functions.
+I spoke to Jeff Layton about this, and it looks like there are some more
+in the pipeline (but unrelated to this issue), so stay tuned.
 
-
+Thanks, Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
