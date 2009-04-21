@@ -1,40 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/23/4
-Message-ID: <20091223201713.GD12439@jenkins.home.ifup.org>
-Date: Wed, 23 Dec 2009 12:17:13 -0800
-From: Brandon Philips <brandon@...p.org>
-To: Hanno Böck <hanno@...eck.de>
-Cc: OSS Security List <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: acl 2.2.47 always follows symlinks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/21/6
+Message-ID: <Pine.GSO.4.51.0904211822510.24412@faron.mitre.org>
+Date: Tue, 21 Apr 2009 18:23:27 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Jamie Strandboge <jamie@...onical.com>
+cc: oss-security@...ts.openwall.com, coley@...us.mitre.org, team@...urity.debian.org
+Subject: Re: CVE request: apt
 Content-Type: text/plain; charset=utf-8
 
-On 11:50 Wed 23 Dec 2009, Hanno Böck wrote:
-> setfacl/getfacl (part of package acl-2.2.47) contains a bug that it ignores
-> the --physical/-P parameter that means don't follow symlinks on -R
-> (recursive).
-> 
-> This can lead to security problems, e.g. if there's a cron script giving a
-> user full rwX rights for a directory, he can put a symlink there pointing to /
-> or /etc or whatever.
-> Another scenario would be a backup script saving the /home acls to a file,
-> every user can create an endless loop for that and prevent the script from
-> completing.
-> 
-> http://oss.sgi.com/bugzilla/show_bug.cgi?id=790
-> http://bugs.gentoo.org/show_bug.cgi?id=265425
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=499076
-> 
-> Fixed in upstream source, but no new release yet.
 
-Upstream for acl and attr has moved from SGI to community hosting at
-savannah.gnu.org. The latest release is here:
+======================================================
+Name: CVE-2009-1358
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1358
+Reference: CONFIRM:https://bugs.launchpad.net/ubuntu/+source/apt/+bug/356012
 
- http://download.savannah.gnu.org/releases-noredirect/acl/acl-2.2.49.src.tar.gz
+apt-get in apt before 0.7.21 does not check for the correct error code
+from gpgv, which causes apt to treat a repository as valid even when
+it has been signed with a key that has been revoked or expired, which
+might allow remote attackers to trick apt into installing malicious
+repositories.
 
-Mailing lists, git repos, and a bug system can be found here:
- http://savannah.nongnu.org/projects/acl
- http://savannah.nongnu.org/projects/attr
 
-Thanks,
-
-	Brandon
