@@ -1,38 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/14/2
-Message-Id: <1231924080.7670.6.camel@dhcp-lab-164.englab.brq.redhat.com>
-Date: Wed, 14 Jan 2009 10:08:00 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com
-Subject: CVE Request -- amarok
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/21/2
+Message-ID: <49ED368D.5080502@redhat.com>
+Date: Tue, 21 Apr 2009 10:59:25 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: Marcus Meissner <meissner@...e.de>
+CC: oss-security@...ts.openwall.com, security@...nel.org, sfrench@...ibm.com
+Subject: Re: CVE request? buffer overflow in CIFS in 2.6.*
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve,
+Marcus Meissner wrote:
+> On Tue, Apr 07, 2009 at 01:41:44PM +0800, Eugene Teo wrote:
+>> Hi Marcus,
+>>
+>> Marcus Meissner wrote:
+>>> Fixes a kmalloc area overflow in CIFS, number of overwritten bytes
+>>> is depending on the codepage converted to.
+>>>
+>>> The data seems to come from a remote generated reply blob even, correct
+>>> me if I am wrong. :/
+>> Looks like it's part of the session setup. The NativeFileSystem field is
+>> part of the Tree Connect response (TCon for short).
+>>
+>>> And I wonder if "len*2" is sufficient, can't a UCS -> UTF8 conversion
+>>> generate more than 2 byte utf-8 characters for 1 ucs character?
+>> I understand that someone from your side is working on a better patch
+>> for this. Do keep us updated when it goes upstream.
+> 
+> tracked in the public bugzilla entry:
+> https://bugzilla.novell.com/show_bug.cgi?id=492282
+> 
+> and:
+> http://lists.samba.org/archive/linux-cifs-client/2009-April/004322.html ff.
+> for the cifs discussion.
 
-  multiple integer overflows (leading to heap-based overflows)
-and unchecked allocation vulnerabilities has been reported
-against Amarok multimedia player whep parsing malformed
-Audible digital audio files. Upstream has fixed
-these in latest 2.0.1.l release.
+Here's an update:
+http://lkml.org/lkml/2009/4/20/21
 
-References:
-http://www.trapkit.de/advisories/TKADV2009-002.txt
-http://amarok.kde.org/en/releases/2.0.1.1   (Fix possible buffer overflows when parsing Audible .aa files.)
-https://bugzilla.redhat.com/show_bug.cgi?id=479946
-http://bugs.gentoo.org/show_bug.cgi?id=254896
-
-Proposed solution: Upgrade to latest upstream version 2.0.1.1
-
-Affected Amarok version: amarok-1.4.10-1.fc9 <= x < latest upstream 2.0.1.1 release
-
-Attaching also diff for audibletag.cpp file between latest F10 (amarok-2.0-2.fc10)
-and latest upstream 2.0.1.1 release (see attachment).
-
-Could you please allocate a new 2009 CVE id for it?
-
-Thanks, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-Content of type "text/x-patch" skipped
+Thanks, Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
