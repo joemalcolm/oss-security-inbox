@@ -1,16 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/04/5
-Message-Id: <200902041520.57780.rbu@gentoo.org>
-Date: Wed, 4 Feb 2009 15:20:53 +0100
-From: Robert Buchholz <rbu@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/22/1
+Message-ID: <20090422001623.GA20940@ngolde.de>
+Date: Wed, 22 Apr 2009 02:16:23 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: ffmpeg <r16846 Type conversion vulnerability
+Cc: coley@...re.org
+Subject: CVE id request: amule
 Content-Type: text/plain; charset=utf-8
 
-ffmpeg (as used in mplayer and gst-ffmpeg) before SVN r16846 contains a 
-type conversion vulnerability:
+Hi,
+looks like amule doesn't properly filter file names when 
+opening them in mplayer:
+http://bugs.debian.org/525078
 
-https://bugs.gentoo.org/show_bug.cgi?id=257217
-http://www.trapkit.de/advisories/TKADV2009-004.txt
+Can I get a CVE id for this?
 
-Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
+I couldn't test this though as I currently have no amule nor 
+a downloaded donkey file available.
+
+Cheers
+Nico
+
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
