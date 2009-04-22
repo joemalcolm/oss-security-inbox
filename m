@@ -1,23 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/18/2
-Message-ID: <20090518145618.GA24851@ngolde.de>
-Date: Mon, 18 May 2009 16:56:19 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE id request: slim
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/22/3
+Message-ID: <20090422154335.GA30566@suse.de>
+Date: Wed, 22 Apr 2009 17:43:35 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: oss-security@...ts.openwall.com, coley@...re.org
+Subject: Re: CVE request: clamav clamd and clamscan DoS and bypass by malformated archive
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-slim insecurely generates the x authorization file:
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=529306
+Stephen,
 
-Can I get a CVE id for this one?
+These two clamav 0.95.1 issues still need CVEs I think.
 
-Cheers
-Nico
+On Thu, Apr 09, 2009 at 12:15:54PM +0200, Tomas Hoger wrote:
+> On Tue, 7 Apr 2009 14:08:15 +0200 Thomas Biege <thomas@...e.de> wrote:
+> 
+> > These two bugs possibly need a CVE-ID.
+> 
+> Upstream 0.95.1 seems to fix at least 2 other issues that may be of
+> interest:
+> 
+> https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1552
+> https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1553
+> 
+> svn diff -c 5032 http://svn.clamav.net/svn/clamav-devel/
+> 
+> -- 
+> Tomas Hoger / Red Hat Security Response Team
 
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+Working, but not speaking, for the following german company:
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
