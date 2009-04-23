@@ -1,35 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/04/2
-Message-ID: <8763ip7xis.fsf@mid.deneb.enyo.de>
-Date: Wed, 04 Mar 2009 23:07:07 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/23/3
+Message-ID: <49F00161.1030801@redhat.com>
+Date: Thu, 23 Apr 2009 13:49:21 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel: memory disclosure in 	SO_BSDCOMPAT gsopt
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: missing capabilities in fs_mask
 Content-Type: text/plain; charset=utf-8
 
-* Eugene Teo:
+Eugene Teo wrote:
+> "When POSIX capabilities were introduced during the 2.1 Linux cycle, the
+> fs mask, which represents the capabilities which having fsuid==0 is
+> supposed to grant, did not include CAP_MKNOD and CAP_LINUX_IMMUTABLE.
+> However, before capabilities the privilege to call these did in fact
+> depend upon fsuid==0.
+> 
+> This patch introduces those capabilities into the fsmask, restoring the
+> old behavior.
+> 
+> See the thread starting at http://lkml.org/lkml/2009/3/11/157 for reference.
+> 
+> Note that if this fix is deemed valid, then earlier kernel versions (2.4
+> and 2.2) ought to be fixed too.
+> 
+> Changelog:
+>  [Mar 23] Actually delete old CAP_FS_SET definition...
+>  [Mar 20] Updated against J. Bruce Fields's patch"
+> 
+> References:
+> https://bugzilla.redhat.com/show_bug.cgi?id=497047
+> http://lwn.net/Articles/328572/?format=printable
+> http://lwn.net/Articles/328594/?format=printable
+> http://git.kernel.org/linus/0ad30b8fd5fe798aae80df6344b415d8309342cc
 
-> Eugene Teo wrote:
->> On Tue, Mar 3, 2009 at 6:49 AM, Steven M. Christey
->> <coley@...us.mitre.org> wrote:
->>> On Wed, 25 Feb 2009, Eugene Teo wrote:
->>>
->>>> Eugene Teo wrote:
->>>>> [...]
->>>>> The fix for CVE-2009-0676 (upstream commit df0bca04) is incomplete. Note
->>>>> that the same problem of leaking kernel memory will reappear if someone
->>>>> on some architecture uses struct timeval with some internal padding (for
->>>>> example tv_sec 64-bit and tv_usec 32-bit) --- then, you are going to
->>>>> leak the padded bytes to userspace.
->>> Is this going to require a separate CVE identifier?  If a new minor
->>> version of the kernel wasn't released yet, then I'd consider the fix to be
->>> little more than a couple patch-discussion messages in a single Bugzilla
->>> entry.
->>
->> No, it shouldn't. Please use the same CVE name. Thanks.
->
-> But you might want to add the link to the new CVE-2009-0676 patch in:
-> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0676
+Here's the link to the kernel 2.4 patch:
+http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.4.37.y.git;a=commitdiff;h=1c06d5237647db43cb2043a19cb393f4ed4d942f
 
-BTW, the reproducer I saw in your bug tracker doesn't initialize the
-len field.  It only worked for me after I fixed that.
+Thanks, Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
