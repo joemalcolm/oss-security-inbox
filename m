@@ -1,21 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/24/2
-Message-ID: <87ocmsosjn.fsf@mid.deneb.enyo.de>
-Date: Tue, 24 Nov 2009 16:23:40 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/23/2
+Message-ID: <49EFF3B9.8020807@redhat.com>
+Date: Thu, 23 Apr 2009 12:51:05 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: BIND 9 bug involving DNSSEC and the additional section
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: missing capabilities in fs_mask
 Content-Type: text/plain; charset=utf-8
 
-Fixed in BIND 9.6.1-P2, 9.5.2-P1 and 9.4.3-P4, per recent
-announcements.
+"When POSIX capabilities were introduced during the 2.1 Linux cycle, the
+fs mask, which represents the capabilities which having fsuid==0 is
+supposed to grant, did not include CAP_MKNOD and CAP_LINUX_IMMUTABLE.
+However, before capabilities the privilege to call these did in fact
+depend upon fsuid==0.
 
-2772.	[security]	When validating, track whether pending data was from
-			the additional section or not and only return it if
-			validates as secure. [RT #20438]
+This patch introduces those capabilities into the fsmask, restoring the
+old behavior.
 
-The advisory at <https://www.isc.org/node/504> is rather unclear.  The
-way it is written, one would assume that the in-bailiwick checks are
-bypassed as well.  Is this really true?  (Based on a quick look at the
-patch, this seems to happen only for secure domains, that is, you need
-some trust anchors.)
+See the thread starting at http://lkml.org/lkml/2009/3/11/157 for reference.
+
+Note that if this fix is deemed valid, then earlier kernel versions (2.4
+and 2.2) ought to be fixed too.
+
+Changelog:
+ [Mar 23] Actually delete old CAP_FS_SET definition...
+ [Mar 20] Updated against J. Bruce Fields's patch"
+
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=497047
+http://lwn.net/Articles/328572/?format=printable
+http://lwn.net/Articles/328594/?format=printable
+http://git.kernel.org/linus/0ad30b8fd5fe798aae80df6344b415d8309342cc
+
+Thanks, Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
