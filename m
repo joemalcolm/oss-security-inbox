@@ -1,41 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/12/3
-Message-ID: <20090512161842.5f42a5e7@redhat.com>
-Date: Tue, 12 May 2009 16:18:42 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com, coley@...re.org
-Subject: Re: ipsec-tools 0.7.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/23/4
+Message-ID: <49F0108E.7060700@redhat.com>
+Date: Thu, 23 Apr 2009 14:54:06 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Willy Tarreau <w@....eu>
+Subject: Re: Re: CVE-2009-1265 kernel: af_rose/x25: Sanity check the maximum user frame size
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 29 Apr 2009 16:56:58 +0200 Tomas Hoger <thoger@...hat.com>
-wrote:
+Willy Tarreau wrote:
+> Hi Eugene,
+> 
+> On Wed, Apr 08, 2009 at 03:58:55PM +0800, Eugene Teo wrote:
+>> {nr,rose,x25}_sendmsg() functions need to have sanity checks on the
+>> packet size, otherwise the sizes can wrap and end up sending garbage.
+>>
+>> http://bugzilla.kernel.org/show_bug.cgi?id=10423
+>> http://git.kernel.org/linus/83e0bbcbe2145f160fbaa109b0439dae7f4a38a9
+>> http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2009-1265
+>>
+>> This affects both 2.4.x and 2.6.x if CONFIG_{NETROM,ROSE,X25} are enabled.
+> 
+> I already have it in my queue, just did not have time to merge it yet.
+> Thanks for the reminder anyway, I really appreciate it ;-)
 
-> * src/racoon/crypto_openssl.c: From Stephen Bevan: Fix a x509
->   signature verification memory leak.
-> 
-> https://trac.ipsec-tools.net/ticket/303
-> http://cvsweb.netbsd.org/bsdweb.cgi/src/crypto/dist/ipsec-tools/src/racoon/crypto_openssl.c.diff?r1=1.11.6.4&r2=1.11.6.5&f=h
-> 
-> This leak occurs during user authentication using certificates.  It's
-> possible to reach it for unauthenticated users, though certificate
-> itself is validated first, which mitigates this slightly.
-> 
-> * src/racoon/nattraversal.c: Fix a memory leak in nat-t keepalive
->   code.
-> 
-> http://cvsweb.netbsd.org/bsdweb.cgi/src/crypto/dist/ipsec-tools/src/racoon/nattraversal.c.diff?r1=1.6&r2=1.6.6.1&f=h
-> 
-> This can occur during phase1 too, before authentication.  Requires
-> nat-t to be enabled / allowed, leaks two struct sockaddr.
+You will need this too :)
 
-I'm bit unsure about how to treat these form CVE point of view.  These
-both happen during normal operation too.  However, attacker can cause
-these leaks in some setups (ipsec server serving road warriors) without
-being able to authenticate successfully, so this bears some exploitation
-potential.  Given the previous ipsec-tools CVE assignments
-(CVE-2008-3651/2), this may deserve CVE too.
+upstream commit: cc29c70dd581f85ee7a3e7980fb031f90b90a2ab
 
-Thoughts?
+Patch "af_rose/x25: Sanity check the maximum user frame size"
+(commit 83e0bbcbe2145f160fbaa109b0439dae7f4a38a9) from Alan Cox got
+locking wrong. If we bail out due to user frame size being too large,
+we must unlock the socket beforehand.
 
+Thanks, Eugene
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Eugene Teo / Red Hat Security Response Team
