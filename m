@@ -1,32 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/24/1
-Message-ID: <49A35CCC.3090607@redhat.com>
-Date: Tue, 24 Feb 2009 10:34:52 +0800
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/23/7
+Message-ID: <49F01CC0.20405@redhat.com>
+Date: Thu, 23 Apr 2009 15:46:08 +0800
 From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: memory disclosure in SO_BSDCOMPAT gsopt
+CC: Willy Tarreau <w@....eu>
+Subject: Re: Re: CVE-2009-1265 kernel: af_rose/x25: Sanity check the maximum user frame size
 Content-Type: text/plain; charset=utf-8
 
-Steven M. Christey wrote:
-> ======================================================
-> Name: CVE-2009-0676
-[...]
-> The sock_getsockopt function in net/core/sock.c in the Linux kernel
-> before 2.6.28.6 does not initialize a certain structure member, which
-> allows local users to obtain potentially sensitive information from
-> kernel memory via an SO_BSDCOMPAT getsockopt request.
+Marcus Meissner wrote:
+> On Thu, Apr 23, 2009 at 02:54:06PM +0800, Eugene Teo wrote:
+>> Willy Tarreau wrote:
+>>> Hi Eugene,
+>>>
+>>> On Wed, Apr 08, 2009 at 03:58:55PM +0800, Eugene Teo wrote:
+>>>> {nr,rose,x25}_sendmsg() functions need to have sanity checks on the
+>>>> packet size, otherwise the sizes can wrap and end up sending garbage.
+>>>>
+>>>> http://bugzilla.kernel.org/show_bug.cgi?id=10423
+>>>> http://git.kernel.org/linus/83e0bbcbe2145f160fbaa109b0439dae7f4a38a9
+>>>> http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2009-1265
+>>>>
+>>>> This affects both 2.4.x and 2.6.x if CONFIG_{NETROM,ROSE,X25} are enabled.
+>>> I already have it in my queue, just did not have time to merge it yet.
+>>> Thanks for the reminder anyway, I really appreciate it ;-)
+>> You will need this too :)
+>>
+>> upstream commit: cc29c70dd581f85ee7a3e7980fb031f90b90a2ab
+>>
+>> Patch "af_rose/x25: Sanity check the maximum user frame size"
+>> (commit 83e0bbcbe2145f160fbaa109b0439dae7f4a38a9) from Alan Cox got
+>> locking wrong. If we bail out due to user frame size being too large,
+>> we must unlock the socket beforehand.
+> 
+> I do not see cc29c70dd581f85ee7a3e7980fb031f90b90a2ab in mainline kernel git
+> yet, in which git does it live?
 
-The fix for CVE-2009-0676 (upstream commit df0bca04) is incomplete. Note 
-that the same problem of leaking kernel memory will reappear if someone 
-on some architecture uses struct timeval with some internal padding (for 
-example tv_sec 64-bit and tv_usec 32-bit) --- then, you are going to 
-leak the padded bytes to userspace.
+Interesting.
 
-net: amend the fix for SO_BSDCOMPAT gsopt infoleak
-http://marc.info/?l=linux-kernel&m=123540732700371&w=2
-http://marc.info/?l=linux-netdev&m=123543237010175&w=2
+http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git;a=blob;f=queue-2.6.29/net-netrom-fix-socket-locking.patch;h=146431b88a3a57c98e56570941cd5ad6aeb1498c;hb=2f87957d1eaba126d27066479f25889a4191ebe8
 
-Thanks, Eugene
+Eugene
 -- 
 Eugene Teo / Red Hat Security Response Team
