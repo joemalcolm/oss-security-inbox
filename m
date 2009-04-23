@@ -1,28 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/09/2
-Message-ID: <4AF79D01.3090305@kernel.sg>
-Date: Mon, 09 Nov 2009 12:39:29 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/23/9
+Message-ID: <20090423171122.GF4522@redhat.com>
+Date: Thu, 23 Apr 2009 11:11:22 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request - kernel: NOMMU: Dont pass NULL pointers to fput() in do_mmap_pgoff()
+Subject: CVE-2009-1191: mod_proxy_ajp information disclosure vulnerability
 Content-Type: text/plain; charset=utf-8
 
- From upstream patch:
-"Don't pass NULL pointers to fput() in the error handling paths of the 
-NOMMU do_mmap_pgoff() as it can't handle it.
+This is just a heads up about an information disclosure vulnerability in
+mod_proxy_ajp, similar to the issue in mod_jk (CVE-2008-5519).
 
-The following can be used as a test program:
-int main() { static long long a[1024 * 1024 * 20] = { 0 }; return a;}
+This only affects mod_proxy_ajp in httpd 2.2.11; prior versions do not
+have this problem.  The issue was caused by the following patch:
 
-Without the patch, the code oopses in atomic_long_dec_and_test() as 
-called by fput() after the kernel complains that it can't allocate that 
-big a chunk of memory.  With the patch, the kernel just complains about 
-the allocation size and then the program segfaults during execve() as 
-execve() can't complete the allocation of all the new ELF program segments."
+http://svn.apache.org/viewvc?view=rev&revision=711779
 
-http://git.kernel.org/linus/89a8640279f8bb78aaf778d1fc5c4a6778f18064
+The patch that will be applied to httpd 2.2.12 is here:
 
-Doesn't affect if CONFIG_MMU=y.
+http://www.apache.org/dist/httpd/patches/apply_to_2.2.11/PR46949.diff
 
-Thanks, Eugene
+More information can be found in our bugzilla:
+
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-1191
+
+This would only affect earlier versions of Apache if you had backported
+the problem patch to earlier versions.
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
