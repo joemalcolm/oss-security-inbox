@@ -1,19 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/31/8
-Message-ID: <20090831204113.12a2c619@redhat.com>
-Date: Mon, 31 Aug 2009 20:41:13 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: squirrelmail CSRF
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/23/5
+Message-ID: <20090423070805.GA17969@1wt.eu>
+Date: Thu, 23 Apr 2009 09:08:05 +0200
+From: Willy Tarreau <w@....eu>
+To: Eugene Teo <eugene@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE-2009-1265 kernel: af_rose/x25: Sanity check the maximum user frame size
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 31 Aug 2009 20:21:32 +0200 Nico Golde
-<oss-security+ml@...lde.de> wrote:
+On Thu, Apr 23, 2009 at 02:54:06PM +0800, Eugene Teo wrote:
+> Willy Tarreau wrote:
+> > Hi Eugene,
+> > 
+> > On Wed, Apr 08, 2009 at 03:58:55PM +0800, Eugene Teo wrote:
+> >> {nr,rose,x25}_sendmsg() functions need to have sanity checks on the
+> >> packet size, otherwise the sizes can wrap and end up sending garbage.
+> >>
+> >> http://bugzilla.kernel.org/show_bug.cgi?id=10423
+> >> http://git.kernel.org/linus/83e0bbcbe2145f160fbaa109b0439dae7f4a38a9
+> >> http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2009-1265
+> >>
+> >> This affects both 2.4.x and 2.6.x if CONFIG_{NETROM,ROSE,X25} are enabled.
+> > 
+> > I already have it in my queue, just did not have time to merge it yet.
+> > Thanks for the reminder anyway, I really appreciate it ;-)
+> 
+> You will need this too :)
+> 
+> upstream commit: cc29c70dd581f85ee7a3e7980fb031f90b90a2ab
+> 
+> Patch "af_rose/x25: Sanity check the maximum user frame size"
+> (commit 83e0bbcbe2145f160fbaa109b0439dae7f4a38a9) from Alan Cox got
+> locking wrong. If we bail out due to user frame size being too large,
+> we must unlock the socket beforehand.
 
-> can I get a CVE id for:
-> http://www.squirrelmail.org/security/issue/2009-08-12
+OK thanks Eugene!
+Willy
 
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2964
-
--- 
-Tomas Hoger / Red Hat Security Response Team
