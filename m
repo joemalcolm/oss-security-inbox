@@ -1,34 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/21/4
-Message-Id: <1248206648.4232.44.camel@localhost>
-Date: Tue, 21 Jul 2009 22:04:08 +0200
-From: Alex Legler <a3li@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/23/6
+Message-ID: <20090423073719.GA6783@suse.de>
+Date: Thu, 23 Apr 2009 09:37:19 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- RubyGems
+Cc: Willy Tarreau <w@....eu>
+Subject: Re: Re: CVE-2009-1265 kernel: af_rose/x25: Sanity check the maximum user frame size
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Thu, Apr 23, 2009 at 02:54:06PM +0800, Eugene Teo wrote:
+> Willy Tarreau wrote:
+> > Hi Eugene,
+> > 
+> > On Wed, Apr 08, 2009 at 03:58:55PM +0800, Eugene Teo wrote:
+> >> {nr,rose,x25}_sendmsg() functions need to have sanity checks on the
+> >> packet size, otherwise the sizes can wrap and end up sending garbage.
+> >>
+> >> http://bugzilla.kernel.org/show_bug.cgi?id=10423
+> >> http://git.kernel.org/linus/83e0bbcbe2145f160fbaa109b0439dae7f4a38a9
+> >> http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2009-1265
+> >>
+> >> This affects both 2.4.x and 2.6.x if CONFIG_{NETROM,ROSE,X25} are enabled.
+> > 
+> > I already have it in my queue, just did not have time to merge it yet.
+> > Thanks for the reminder anyway, I really appreciate it ;-)
+> 
+> You will need this too :)
+> 
+> upstream commit: cc29c70dd581f85ee7a3e7980fb031f90b90a2ab
+> 
+> Patch "af_rose/x25: Sanity check the maximum user frame size"
+> (commit 83e0bbcbe2145f160fbaa109b0439dae7f4a38a9) from Alan Cox got
+> locking wrong. If we bail out due to user frame size being too large,
+> we must unlock the socket beforehand.
 
-first a little note: I have talked to some people in the Ruby community
-and the issue is quite disputed. There is no upstream reaction that I
-know of. But since CVE-2007-0469 was assigned to a similar issue, I
-think this issue is valid, too.
+I do not see cc29c70dd581f85ee7a3e7980fb031f90b90a2ab in mainline kernel git
+yet, in which git does it live?
 
-On Di, 2009-07-21 at 20:57 +0200, Jan Lieskovsky wrote:
-> A remote attacker
-> could provide a specially-crafted Gem (POSIX tar)
-> archive, 
-
-Please note that .gem files are not neccesarily tarballs, there is at
-least a proprietary base64-based format around and I've heard about
-cpio.
-
-> which once opened by an unsuspecting
-> user, would overwrite relevant system file.
-
-The user in this context has to be a privileged user. gem will use
-~/.gem/bin if the system-wide gem binary directory is not writeable.
-
-Alex
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+CIao, Marcus
