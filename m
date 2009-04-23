@@ -1,32 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/19/1
-Message-ID: <20090519120708.GY20697@ngolde.de>
-Date: Tue, 19 May 2009 14:07:09 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/23/1
+Message-ID: <49EFD716.2010701@redhat.com>
+Date: Thu, 23 Apr 2009 10:48:54 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: nsd
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: ipv6: null pointer dereference in __inet6_check_established()
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-the nsd name server seems to have an off-by-one which at 
-least opens it up for denial of service. The advisory states 
-that code execution is highly unlikely in this case though I 
-had no time to check this.
+Eugene Teo wrote:
+> According to the upstream commit 3f53a381, "we already have a valid net
+> in that place, but... the tw pointer can be NULL there sometimes, thus
+> causing an oops in NET_NS=y case.
+> 
+> The same place in ipv4 code already works correctly using existing
+> net, rather than tw's one."
+> 
+> The bug exists since 2.6.27.
+> 
+> http://git.kernel.org/linus/3f53a38131a4e7a053c0aa060aba0411242fb6b9
 
-http://bugs.debian.org/529420
-http://bugs.debian.org/529418
+This was assigned with CVE-2009-1360.
 
-Patches:
-http://www.nlnetlabs.nl/downloads/nsd/nsd-3.2.1-vuln.patch
-http://www.nlnetlabs.nl/downloads/nsd/nsd-2.3.7-vuln.patch
+Somehow http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1360
+missed this reference even though this email was posted before
+xorl.wordpress.com wrote about it.
 
-Can I get a CVE id for this please?
-
-Cheers
-Nico
-
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+Thanks, Eugene
