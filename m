@@ -1,37 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/23/2
-Message-ID: <49EFF3B9.8020807@redhat.com>
-Date: Thu, 23 Apr 2009 12:51:05 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: missing capabilities in fs_mask
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/23/10
+Message-ID: <Pine.GSO.4.51.0904231540370.22181@faron.mitre.org>
+Date: Thu, 23 Apr 2009 15:40:48 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Marcus Meissner <meissner@...e.de>
+cc: oss-security@...ts.openwall.com, coley@...re.org
+Subject: Re: CVE request: clamav clamd and clamscan DoS and bypass by malformated archive
 Content-Type: text/plain; charset=utf-8
 
-"When POSIX capabilities were introduced during the 2.1 Linux cycle, the
-fs mask, which represents the capabilities which having fsuid==0 is
-supposed to grant, did not include CAP_MKNOD and CAP_LINUX_IMMUTABLE.
-However, before capabilities the privilege to call these did in fact
-depend upon fsuid==0.
 
-This patch introduces those capabilities into the fsmask, restoring the
-old behavior.
+======================================================
+Name: CVE-2009-1371
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1371
+Reference: CONFIRM:http://svn.clamav.net/websvn/filedetails.php?repname=clamav-devel&path=%2Ftrunk%2FChangeLog&rev=5032
+Reference: CONFIRM:https://launchpad.net/bugs/360502
+Reference: CONFIRM:https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1552
+Reference: UBUNTU:USN-756-1
+Reference: URL:http://www.ubuntu.com/usn/usn-756-1
+Reference: BID:34446
+Reference: URL:http://www.securityfocus.com/bid/34446
+Reference: OSVDB:53602
+Reference: URL:http://osvdb.org/53602
+Reference: SECTRACK:1022028
+Reference: URL:http://www.securitytracker.com/id?1022028
+Reference: SECUNIA:34612
+Reference: URL:http://secunia.com/advisories/34612
+Reference: SECUNIA:34654
+Reference: URL:http://secunia.com/advisories/34654
+Reference: VUPEN:ADV-2009-0985
+Reference: URL:http://www.vupen.com/english/advisories/2009/0985
 
-See the thread starting at http://lkml.org/lkml/2009/3/11/157 for reference.
+The CLI_ISCONTAINED macro in libclamav/others.h in ClamAV before
+0.95.1 allows remote attackers to cause a denial of service
+(application crash) via a malformed file with UPack encoding.
 
-Note that if this fix is deemed valid, then earlier kernel versions (2.4
-and 2.2) ought to be fixed too.
 
-Changelog:
- [Mar 23] Actually delete old CAP_FS_SET definition...
- [Mar 20] Updated against J. Bruce Fields's patch"
+======================================================
+Name: CVE-2009-1372
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1372
+Reference: CONFIRM:http://svn.clamav.net/websvn/filedetails.php?repname=clamav-devel&path=%2Ftrunk%2FChangeLog&rev=5032
+Reference: CONFIRM:https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1553
+Reference: BID:34446
+Reference: URL:http://www.securityfocus.com/bid/34446
+Reference: OSVDB:53603
+Reference: URL:http://osvdb.org/53603
+Reference: SECTRACK:1022028
+Reference: URL:http://www.securitytracker.com/id?1022028
+Reference: SECUNIA:34612
+Reference: URL:http://secunia.com/advisories/34612
+Reference: VUPEN:ADV-2009-0985
+Reference: URL:http://www.vupen.com/english/advisories/2009/0985
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=497047
-http://lwn.net/Articles/328572/?format=printable
-http://lwn.net/Articles/328594/?format=printable
-http://git.kernel.org/linus/0ad30b8fd5fe798aae80df6344b415d8309342cc
+Stack-based buffer overflow in the cli_url_canon function in
+libclamav/phishcheck.c in ClamAV before 0.95.1 allows remote attackers
+to cause a denial of service (application crash) and possibly execute
+arbitrary code via a crafted URL.
 
-Thanks, Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
+
