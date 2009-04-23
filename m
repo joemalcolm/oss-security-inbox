@@ -1,34 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/25/2
-Message-ID: <4B0D329E.7080006@redhat.com>
-Date: Wed, 25 Nov 2009 14:35:26 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: Alex Legler <a3li@...too.org>, oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request - Cacti - 0.8.7e
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/23/8
+Message-ID: <20090423081118.GA17366@suse.de>
+Date: Thu, 23 Apr 2009 10:11:18 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: oss-security@...ts.openwall.com
+Cc: Willy Tarreau <w@....eu>
+Subject: Re: Re: CVE-2009-1265 kernel: af_rose/x25: Sanity check the maximum user frame size
 Content-Type: text/plain; charset=utf-8
 
-Hello vendors,
+On Thu, Apr 23, 2009 at 03:46:08PM +0800, Eugene Teo wrote:
+> Marcus Meissner wrote:
+> > On Thu, Apr 23, 2009 at 02:54:06PM +0800, Eugene Teo wrote:
+> >> Willy Tarreau wrote:
+> >>> Hi Eugene,
+> >>>
+> >>> On Wed, Apr 08, 2009 at 03:58:55PM +0800, Eugene Teo wrote:
+> >>>> {nr,rose,x25}_sendmsg() functions need to have sanity checks on the
+> >>>> packet size, otherwise the sizes can wrap and end up sending garbage.
+> >>>>
+> >>>> http://bugzilla.kernel.org/show_bug.cgi?id=10423
+> >>>> http://git.kernel.org/linus/83e0bbcbe2145f160fbaa109b0439dae7f4a38a9
+> >>>> http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2009-1265
+> >>>>
+> >>>> This affects both 2.4.x and 2.6.x if CONFIG_{NETROM,ROSE,X25} are enabled.
+> >>> I already have it in my queue, just did not have time to merge it yet.
+> >>> Thanks for the reminder anyway, I really appreciate it ;-)
+> >> You will need this too :)
+> >>
+> >> upstream commit: cc29c70dd581f85ee7a3e7980fb031f90b90a2ab
+> >>
+> >> Patch "af_rose/x25: Sanity check the maximum user frame size"
+> >> (commit 83e0bbcbe2145f160fbaa109b0439dae7f4a38a9) from Alan Cox got
+> >> locking wrong. If we bail out due to user frame size being too large,
+> >> we must unlock the socket beforehand.
+> > 
+> > I do not see cc29c70dd581f85ee7a3e7980fb031f90b90a2ab in mainline kernel git
+> > yet, in which git does it live?
+> 
+> Interesting.
+> 
+> http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git;a=blob;f=queue-2.6.29/net-netrom-fix-socket-locking.patch;h=146431b88a3a57c98e56570941cd5ad6aeb1498c;hb=2f87957d1eaba126d27066479f25889a4191ebe8
 
-   Moritz Naumann reported multiple cross-site scripting flaws in
-recent version of Cacti.
+Ah, it is just in net-2.6 currently.
 
-References:
------------
-http://www.cacti.net/download_patches.php
-http://docs.cacti.net/#cross-site_scripting_fixes
-http://www.securityfocus.com/bid/37109/info
-http://bugs.gentoo.org/show_bug.cgi?id=294573
+http://git.kernel.org/?p=linux/kernel/git/davem/net-2.6.git;a=commit;h=cc29c70dd581f85ee7a3e7980fb031f90b90a2ab
 
-Upstream patch:
----------------
-http://www.cacti.net/downloads/patches/0.8.7e/cross_site_fix.patch
-
-Looks like this is different issue than CVE-2008-0783, CVE-2008-0785
-and CVE-2008-0786 were.
-
-Could you allocate a CVE id?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Ciao, Marcus
