@@ -1,26 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/08/3
-Message-ID: <1687560955.834081260288286094.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 8 Dec 2009 11:04:46 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/24/3
+Message-ID: <Pine.GSO.4.51.0904241829440.13343@faron.mitre.org>
+Date: Fri, 24 Apr 2009 18:30:26 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: ruby on rails XSS Weakness in strip_tags
+Subject: Re: CVE request: mpg123 Signedness Vulnerability
 Content-Type: text/plain; charset=utf-8
 
------ "Steven M. Christey" <coley@...us.mitre.org> wrote:
-> On Mon, 7 Dec 2009, Josh Bressers wrote:
-> 
-> > I'm sorry for the delay on this.
-> >
-> > Please use CVE-2009-4132
-> 
-> Josh, MITRE assigned CVE-2009-4214 earlier today.  Please verify these are
-> duplicates, and if so, we will stick with CVE-2009-4214.
-> 
 
-Yes, it's a dupe. Sorry for the confusion.
+======================================================
+Name: CVE-2009-1301
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1301
+Reference: MLIST:[mpg123-devel] 20090405 mpg123 1.7.2 is out -- important security fix!
+Reference: URL:http://sourceforge.net/mailarchive/message.php?msg_name=20090405211856.41696433%40sunscreen.local
+Reference: CONFIRM:http://bugs.gentoo.org/show_bug.cgi?id=265342
+Reference: CONFIRM:http://sourceforge.net/project/shownotes.php?release_id=673696
+Reference: GENTOO:GLSA-200904-15
+Reference: URL:http://www.gentoo.org/security/en/glsa/glsa-200904-15.xml
+Reference: SECUNIA:34587
+Reference: URL:http://secunia.com/advisories/34587
+Reference: SECUNIA:34748
+Reference: URL:http://secunia.com/advisories/34748
+Reference: VUPEN:ADV-2009-0936
+Reference: URL:http://www.vupen.com/english/advisories/2009/0936
 
-Thanks.
+Integer signedness error in the store_id3_text function in the ID3v2
+code in mpg123 before 1.7.2 allows remote attackers to cause a denial
+of service (out-of-bounds memory access) and possibly execute
+arbitrary code via an ID3 tag with a negative encoding value.  NOTE:
+some of these details are obtained from third party information.
 
--- 
-    JB
+
