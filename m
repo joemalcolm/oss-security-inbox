@@ -1,91 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/26/2
-Message-Id: <1232979990.3231.38.camel@dhcp-lab-164.englab.brq.redhat.com>
-Date: Mon, 26 Jan 2009 15:26:30 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com
-Subject: CVE request -- Python < 2.6 PySys_SetArgv issues (epiphany, csound, dia, eog, gedit, xchat, vim, nautilus-python, Gnumeric)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/24/1
+Message-ID: <Pine.GSO.4.51.0904241805020.13343@faron.mitre.org>
+Date: Fri, 24 Apr 2009 18:06:16 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: missing capabilities in fs_mask
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve,
 
-  initially CVE-2008-4863 has been assigned for the Blender's 
-untrusted search path issue.
+On Thu, 23 Apr 2009, Eugene Teo wrote:
 
-Though this is a Python flaw (insertion of cwd at the
-beginning of the Python modules search path), according to our Python
-maintainers it can't be fixed on Python's side due the need
-of ensuring the work of other numerous packages, when loading
-Python modules. 
+> "When POSIX capabilities were introduced during the 2.1 Linux cycle, the
+> fs mask, which represents the capabilities which having fsuid==0 is
+> supposed to grant, did not include CAP_MKNOD and CAP_LINUX_IMMUTABLE.
+> However, before capabilities the privilege to call these did in fact
+> depend upon fsuid==0.
 
-Similar flaw, like the Blender one, has been discovered in
-the following packages:
+How is this different than CVE-2009-1072?  That CVE is based on the same
+bug report by Igor Zhbanov, although the description doesn't mention
+CAP_LINUX_IMMUTABLE.
 
-1, epiphany
-References: 
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=504363
-https://bugzilla.redhat.com/show_bug.cgi?id=481548
-http://www.nabble.com/Bug-484305%3A-bicyclerepair%3A-bike.vim-imports-untrusted-python-files-from-cwd-td18848099.html (test case, 
-mention about other affected packages, Python upstream bug rejection reasons)
-Debian patch:
-http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=5;filename=sanitize_sys.path.diff;att=1;bug=504363
+- Steve
 
-2, csound
-References:
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=504359
-https://bugzilla.redhat.com/show_bug.cgi?id=481550
-http://www.nabble.com/Bug-484305%3A-bicyclerepair%3A-bike.vim-imports-untrusted-python-files-from-cwd-td18848099.html
-Debian patch: 
-http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=5;filename=1004-sanitize-sys.path.diff;att=1;bug=504359
+======================================================
+Name: CVE-2009-1072
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1072
+Reference: MLIST:[linux-kernel] 20090311 VFS, NFS security bug? Should CAP_MKNOD and CAP_LINUX_IMMUTABLE be added to CAP_FS_MASK?
+Reference: URL:http://thread.gmane.org/gmane.linux.kernel/805280
+Reference: MLIST:[oss-security] 20090323 CVE request: kernel: nfsd did not drop CAP_MKNOD for non-root
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/03/23/1
+Reference: CONFIRM:http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=76a67ec6fb79ff3570dcb5342142c16098299911
+Reference: CONFIRM:http://www.kernel.org/pub/linux/kernel/v2.6/ChangeLog-2.6.28.9
+Reference: SUSE:SUSE-SA:2009:021
+Reference: URL:http://lists.opensuse.org/opensuse-security-announce/2009-04/msg00007.html
+Reference: BID:34205
+Reference: URL:http://www.securityfocus.com/bid/34205
+Reference: SECUNIA:34422
+Reference: URL:http://secunia.com/advisories/34422
+Reference: SECUNIA:34432
+Reference: URL:http://secunia.com/advisories/34432
+Reference: SECUNIA:34786
+Reference: URL:http://secunia.com/advisories/34786
+Reference: VUPEN:ADV-2009-0802
+Reference: URL:http://www.vupen.com/english/advisories/2009/0802
+Reference: XF:linux-kernel-capmknod-security-bypass(49356)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/49356
 
-3, dia
-References:
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=504251
-https://bugzilla.redhat.com/show_bug.cgi?id=481551
-http://www.nabble.com/Bug-484305%3A-bicyclerepair%3A-bike.vim-imports-untrusted-python-files-from-cwd-td18848099.html
-Debian patch: 
-http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=5;filename=pythonpath.diff;att=1;bug=504251
-
-4, eog
-References:
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=504352
-https://bugzilla.redhat.com/show_bug.cgi?id=481553
-http://www.nabble.com/Bug-484305%3A-bicyclerepair%3A-bike.vim-imports-untrusted-python-files-from-cwd-td18848099.html
-Debian patch:
-http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=5;filename=02_sanitize_sys.path.patch;att=1;bug=504352
-
-5, gedit
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=481556
-http://www.nabble.com/Bug-484305%3A-bicyclerepair%3A-bike.vim-imports-untrusted-python-files-from-cwd-td18848099.html
-
-6, xchat
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=481560
-http://www.nabble.com/Bug-484305%3A-bicyclerepair%3A-bike.vim-imports-untrusted-python-files-from-cwd-td18848099.html
-
-7, vim
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=481565
-http://www.nabble.com/Bug-484305%3A-bicyclerepair%3A-bike.vim-imports-untrusted-python-files-from-cwd-td18848099.html
-
-8, nautilus-python
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=481570
-http://www.nabble.com/Bug-484305%3A-bicyclerepair%3A-bike.vim-imports-untrusted-python-files-from-cwd-td18848099.html
-
-9, Gnumeric
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=481572
-http://www.nabble.com/Bug-484305%3A-bicyclerepair%3A-bike.vim-imports-untrusted-python-files-from-cwd-td18848099.html
-
-
-Steve, could you please allocate a new CVE ids for the above issues?
-
-Thanks, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
+nfsd in the Linux kernel before 2.6.28.9 does not drop the CAP_MKNOD
+capability before handling a user request in a thread, which allows
+local users to create device nodes, as demonstrated on a filesystem
+that has been exported with the root_squash option.
 
 
