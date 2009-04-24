@@ -1,19 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/12/1
-Message-ID: <20090612105112.4ddfacc1@redhat.com>
-Date: Fri, 12 Jun 2009 10:51:12 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: OSS Security <oss-security@...ts.openwall.com>
-Subject: Git daemon infinite loop
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/24/5
+Message-ID: <Pine.GSO.4.51.0904241906280.13343@faron.mitre.org>
+Date: Fri, 24 Apr 2009 19:10:11 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Tomas Hoger <thoger@...hat.com>
+cc: wietse@...cupine.org, oss-security@...ts.openwall.com, coley@...us.mitre.org
+Subject: Re: Re: Some fun with tcp_wrappers
 Content-Type: text/plain; charset=utf-8
 
-Hi!
 
-One of the Fedora git packages maintainers brought this git-daemon issue
-to our attention:
+Tomas,
 
-http://thread.gmane.org/gmane.comp.version-control.git/120724
-https://www.redhat.com/archives/fedora-security-list/2009-June/msg00000.html
+Given last week's round of discussion on this list and related commentary
+in Red Hat 491095, I still don't know how to write up CVE-2009-0786.
+Should we focus it on the hosts_ctl() usage in the Fedora version of
+tcp_wrappers?
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+- Steve
