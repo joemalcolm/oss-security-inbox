@@ -1,20 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/10/7
-Message-Id: <20091110171845.429a4685.michael.s.gilbert@gmail.com>
-Date: Tue, 10 Nov 2009 17:18:45 -0500
-From: Michael Gilbert <michael.s.gilbert@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/24/4
+Message-ID: <Pine.GSO.4.51.0904241834380.13343@faron.mitre.org>
+Date: Fri, 24 Apr 2009 18:36:04 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: libjson-ruby: catastrophic backtracking
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: PHP 5.2.9
 Content-Type: text/plain; charset=utf-8
 
-hi all,
 
-should a cve id be issued for the following "catastrophic
-backtracking" issue in libjson-ruby?
+On Tue, 14 Apr 2009, Christian Hoffmann wrote:
 
-http://rubyforge.org/frs/shownotes.php?release_id=36363
-http://bugs.debian.org/555516 (note two separate issues fixed there)
+> > Use CVE-2009-1272
+> Somehow the wrong changeset URL shows up in CVE-2009-1272's list of
+> references [1] (the json decode one, instead of the zip thingy):
+>
+> What shows up:
+> http://cvs.php.net/viewvc.cgi/php-src/ext/json/JSON_parser.c?r1=1.1.2.14&r2=1.1.2.15
+>
+> What should show up instead:
+> http://cvs.php.net/viewvc.cgi/php-src/ext/zip/php_zip.c?r1=1.1.2.48&r2=1.1.2.49
 
-thanks,
-mike
+Thanks for catching this.  This was basically a cut-and-paste error.
 
+- Steve
