@@ -1,51 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/11/2
-Message-ID: <Pine.LNX.4.33.0902111057210.22221-100000@golem.castaglia.org>
-Date: Wed, 11 Feb 2009 10:58:05 -0800 (PST)
-From: TJ Saunders <tj@...taglia.org>
-To: <oss-security@...ts.openwall.com>
-cc: <coley@...us.mitre.org>
-Subject: Re: CVE request for proftpd
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/24/2
+Message-ID: <Pine.GSO.4.51.0904241824590.13343@faron.mitre.org>
+Date: Fri, 24 Apr 2009 18:28:45 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: ipv6: null pointer dereference in __inet6_check_established()
 Content-Type: text/plain; charset=utf-8
 
 
-> An SQL injection vulnerability in proftpd was reported on bugtraq
-> yesterday that could allow a user to login to proftpd with any password
-> if they use mysql for authentication (and, presumably, postgresql).
-> 
-> References:
-> 
-> http://www.securityfocus.com/archive/1/500823/30/0/threaded
-> http://bugs.gentoo.org/show_bug.cgi?id=258450
-> http://bugs.proftpd.org/show_bug.cgi?id=3180
-> https://bugzilla.redhat.com/show_bug.cgi?id=485125
+On Thu, 23 Apr 2009, Eugene Teo wrote:
 
-This has been reported on the ProFTPD Bugzilla:
+> > The bug exists since 2.6.27.
+> >
+> > http://git.kernel.org/linus/3f53a38131a4e7a053c0aa060aba0411242fb6b9
+>
+> This was assigned with CVE-2009-1360.
+>
+> Somehow http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1360
+> missed this reference even though this email was posted before
+> xorl.wordpress.com wrote about it.
 
-  http://bugs.proftpd.org/show_bug.cgi?id=3180
+The URL above is equivalent to the http://git.kernel.org CONFIRM that's
+currently in the CVE.
 
-As discussed there, this is a duplicate of an earlier bug:
+We have two main input streams for CVE: incoming requests, and
+already-public information in mailing lists or vuln DBs that we monitor.
+oss-security contains incoming requests but it also becomes public
+information that's monitored by other vuln DBs.  Sometimes those VDBs pick
+up your CVE requests before we do.  That's probably what happened here.
+(I wasn't the original CVE analyst for this bug.)
 
-  http://bugs.proftpd.org/show_bug.cgi?id=3124
-
-and has been fixed in ProFTPD 1.3.2rc3 and later.
-
-Cheers,
-TJ
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-   There is a pleasure in the pathless woods,
-   There is a rapture on the lonely shore,
-   There is society, where none intrudes,
-   By the deep sea and music in its roar:
-   I love not man the less, but Nature more,
-   From these our interviews, in which I steal
-   From all I may be, or have been before,
-   To mingle with the Universe, and feel
-   What I can ne'er express, yet cannot all conceal.
-   
-   	-Lord Byron
-   
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+- Steve
