@@ -1,36 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/30/3
-Message-ID: <20091030193534.395d6b22@redhat.com>
-Date: Fri, 30 Oct 2009 19:35:34 +0100
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/25/4
+Message-ID: <gsvgck$f4j$1@ger.gmane.org>
+Date: Sat, 25 Apr 2009 12:14:40 -0500
+From: Raphael Geissert <atomo64+debian@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: MFSA 2009-63
+Subject: CVE-2008-5619 update
 Content-Type: text/plain; charset=utf-8
 
-Hi Reed!
+Hi,
 
-On Fri, 30 Oct 2009 10:15:23 -0500 Reed Loden <reed@...dloden.com>
-wrote:
+AtMail Open (atmail.org) version 1.03 is also affected by the bug in
+html2text as described by CVE-2008-5619. Previous versions might be
+affected as well.
 
-> I think we used one CVE per library upgrade, so three in total
-> (libvorbis, liboggz, liboggplay).
-
-Correct.  And the fixes brought in as part of those updates are
-possible spread across multiple upstream versions, which is a common
-reason to do a CVE split.
-
-> Bug 499512 seems to be a liboggplay issue fixed by bug 512328.
-
-It's listed among libvorbis bugs and I wasn't able to tell if there was
-only liboggplay-side issue.
-
-> However, if you notice any issues yourself with the advisory, please
-> feel free to report any issues to me or to security@....
-
-I've only added a comment to 515889, which seems to be a dupe of one
-older vorbis CVE.
-
-Thank you!
-
+Regards,
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Raphael Geissert - Debian Maintainer
+www.debian.org - get.debian.net
+
+
