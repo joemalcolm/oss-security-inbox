@@ -1,50 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/24/8
-Message-ID: <1514102384.696821259088010479.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 24 Nov 2009 13:40:10 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/25/2
+Message-ID: <49F2DA84.4090905@redhat.com>
+Date: Sat, 25 Apr 2009 17:40:20 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: a new bind issue
+CC: security@...nel.org, sfrench@...ibm.com
+Subject: Re: CVE request? buffer overflow in CIFS in 2.6.*
 Content-Type: text/plain; charset=utf-8
 
-CVE-2009-4022
+Hi Steve,
 
-Bind versions 9.0.x, 9.1.x, 9.2.x, 9.3.x, 9.4.0 before 9.4.3-P3, 9.5.0,
-9.5.1, 9.5.2, 9.6.0, 9.6.1-P1
+> One approach might be to "pre-tag" this whole set of changes with a single
+> CVE, then when they ultimately get merged into a single kernel version or
+> some other concrete milestone, the "scope" of that CVE ends.
 
-References:
-https://www.isc.org/node/504
-http://www.kb.cert.org/vuls/id/418861
-https://bugzilla.redhat.com/show_bug.cgi?id=538744
+I'm fine with this approach. It can actually help to make it easier to
+manage this set of changes.
 
-Thanks.
-
--- 
-    JB
-
------ "Oden Eriksson" <oeriksson@...driva.com> wrote:
-
-> Hello.
-> 
-> A new bind release is out there, it mentions:
-> 
-> "It addresses a potential cache poisoning vulnerability, in which data
-> in the 
-> additional section of a response could be cached without proper DNSSEC
-> 
-> validation."
-> 
-> "2772.   [security]      When validating, track whether pending data
-> was from
->                         the additional section or not and only return
-> it if
->                         validates as secure. [RT #20438]"
-> 
-> 
-> A CVE should probably be assigned.
-> 
-> 
-> -- 
-> Regards // Oden Eriksson
-> Security team manager - Mandriva
+Thanks, Eugene
