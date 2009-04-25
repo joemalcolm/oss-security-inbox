@@ -1,29 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/27/2
-Message-ID: <hc64rp$vck$1@ger.gmane.org>
-Date: Tue, 27 Oct 2009 00:44:52 -0600
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/25/1
+Message-ID: <49F2D667.7050005@redhat.com>
+Date: Sat, 25 Apr 2009 17:22:47 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2009-3239 is a duplicate of CVE-2009-2139 and CVE-2009-2140
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: missing capabilities in fs_mask
 Content-Type: text/plain; charset=utf-8
 
-Tomas Hoger wrote:
+Hi Steve,
 
-> On Sat, 24 Oct 2009 12:35:18 -0500 Raphael Geissert wrote:
+Steven M. Christey wrote:
+> On Thu, 23 Apr 2009, Eugene Teo wrote:
 > 
->> CVE-2009-3239 appears to be a duplicate of CVE-2009-2139 and
->> CVE-2009-2140, and should therefore be rejected.
+>> "When POSIX capabilities were introduced during the 2.1 Linux cycle, the
+>> fs mask, which represents the capabilities which having fsuid==0 is
+>> supposed to grant, did not include CAP_MKNOD and CAP_LINUX_IMMUTABLE.
+>> However, before capabilities the privilege to call these did in fact
+>> depend upon fsuid==0.
 > 
-> This has been discussed here already:
-> 
-> http://thread.gmane.org/gmane.comp.security.oss.general/2091/focus=2149
-> 
+> How is this different than CVE-2009-1072?  That CVE is based on the same
+> bug report by Igor Zhbanov, although the description doesn't mention
+> CAP_LINUX_IMMUTABLE.
 
-I see, thanks (bad filtering rule marked them as read).
+Hmm. CVE-2009-1072 refers to the missing CAP_MKNOD capability in
+CAP_NFSD_MASK, and this bug refers to the missing CAP_MKNOD and
+CAP_LINUX_IMMUTABLE capabilities in CAP_FS_MASK. Come to think about it,
+both are similar, and probably makes sense to have it part of
+CVE-2009-1072 too?
 
-Regards,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
-
-
+Thanks, Eugene
