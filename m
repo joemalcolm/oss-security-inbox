@@ -1,26 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/15/2
-Message-ID: <4AD689EB.9030608@redhat.com>
-Date: Thu, 15 Oct 2009 10:33:15 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/27/1
+Message-ID: <0904270937330.18551@mjc.redhat.com>
+Date: Mon, 27 Apr 2009 10:04:20 +0100 (BST)
+From: Mark J Cox <mjc@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>, Willy Tarreau <w@....eu>
-Subject: Re: CVE request kernel: tcf_fill_node() infoleak due to typo in 9ef1d4c7
+Subject: Re: CVE request? buffer overflow in CIFS in 2.6.*
 Content-Type: text/plain; charset=utf-8
 
-Eugene Teo wrote:
-> Eugene Teo wrote:
->> [...]
->>>   CVE-2005-4881 - tc_fill_qdisc()  (at least)
->>
->> This requires http://patchwork.ozlabs.org/patch/35412/ too. There was 
->> a typo in the upstream commit 9ef1d4c7.
-> 
-> I'm not sure but perhaps this needs a new CVE name. This infoleak bug 
-> was introduced in 2005, but was discovered and fixed recently.
+> Any and all thoughts are welcome.  I've thought that a big win for CVE was
+> as a "universal bug ID" for the Linux community, which was outside what we
+> had originally envisioned for it.  But these kinds of dynamic,
+> low-information disclosures really stress the CVE process, so I'm starting
+> to question whether CVE is really a good fit.
 
-This is assigned with CVE-2009-3612 - incomplete fix for CVE-2005-4881.
+I believe that this is a by-product of vendors moving to use the public 
+oss-security list for triaging issues.
 
-Thanks, Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
+Before oss-security, vendors like Red Hat would discuss vulnerabilies both 
+public and private on the private vendor-sec list.  At the end of the 
+discussion and peer review we'd reach some conclusion about if the issue 
+was actually a security issue, and one of the Candidate Naming Authorities 
+would allocate CVE names accordingly.
+
+So usually CVE names would only get allocated for things that at least one 
+of the vendors was going to fix, and therefore the CVEs had a high level 
+of confidence, and lots of metadata.
+
+For example if Red Hat fix an issue in any of our products we've got a 
+public bug with the CVE name as alias which contains the details, link to 
+first public mention, and a link to the fix or the fix itself (either the 
+upstream one or a backported one). For issues where it was likely that 
+Mitre would allocate a name by themselves (say a new version of PHP got 
+released with security issues mentioned in the announcement) we'd ping 
+Steve directly for a name to try to avoid duplicates (and in these cases 
+Steve and his team would need to do more work).
+
+However, for issues already public, using a closed list was not optimal, 
+and so to aid peer review outside of the vendor security teams and for 
+transparancy we started using oss-security.
+
+But what happens now is that all the triage work that was previously 
+hidden is now public.  So while on vendor-sec we might have used a CVE 
+name for tracking an issue through triage and later rejected it with no 
+public mentions, now it's public in the interim.
+
+In the case of the Linux kernel bug Eugene was working on, that triage 
+also includes the CVE Content Decisions to map vulnerabilities to CVE 
+names where there were multiple similar vulnerabilities or multiple 
+affected products at the same time.  If this were vendor-sec, one of the 
+CNA experts would have stepped in at that point.
+
+I don't think intermediate ids would help, and we're years past having a 
+lower-confidence CVE 'candidate' (CAN).
+
+So perhaps the solution is to have the vendor CNAs play more of a role on 
+the oss-security list in allocating and helping with content decisions 
+rather than having to have Mitre monitor the list.  Then, each time a CNA 
+gives out a CVE on oss-security they could have some requirement of a 
+mimimum set of information about the allocation they have to provide in 
+the same mail.  By having the CNA buffer we'd only have to involve Steve 
+or Mitre when something is complex.  However, that would mean Mitre would 
+have to check oss-security list before allocating any CVE names for 
+oss-issues and accept there may be more duplicate allocations.
+
+Thanks, Mark
+--
+Mark J Cox / Director, Red Hat Security Response
+
+
+
