@@ -1,27 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/12/2
-Message-ID: <916631556.335661257988049006.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 11 Nov 2009 20:07:29 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/27/2
+Message-Id: <1240846586.13326.12.camel@dhcp-lab-164.englab.brq.redhat.com>
+Date: Mon, 27 Apr 2009 17:36:26 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: libjson-ruby: catastrophic backtracking
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Konstanty <konstanty@...il.com>
+Subject: Re: CVE Request -- libmodplug
 Content-Type: text/plain; charset=utf-8
 
+Hello Steve,
 
------ "Michael Gilbert" <michael.s.gilbert@...il.com> wrote:
+  FYI Konstanty has added more checks (for // Sample Names
+potential overflow) and also null terminations for
+relevant strings (to ensure string safety) at:
 
-> hi all,
+http://modplug-xmms.cvs.sourceforge.net/viewvc/modplug-xmms/libmodplug/src/load_med.cpp?r1=1.2&amp;amp;amp;r2=1.3&amp;amp;amp;view=patch
+
+So new 0.8.7 release of libmodplug is available.
+
+Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+On Tue, 2009-04-21 at 14:47 +0200, Jan Lieskovsky wrote:
+> Hello Steve,
 > 
-> should a cve id be issued for the following "catastrophic
-> backtracking" issue in libjson-ruby?
+>   could you please allocate a new CVE-2008-XXXX identifier for
+> the following old libmodplug issue:
 > 
-> http://rubyforge.org/frs/shownotes.php?release_id=36363
-> http://bugs.debian.org/555516 (note two separate issues fixed there)
+> References:
+> http://bugs.gentoo.org/show_bug.cgi?id=266913
+> http://www.securityfocus.com/bid/30801/info
+> http://sourceforge.net/project/shownotes.php?release_id=677065&amp;group_id=1275
+> https://bugzilla.redhat.com/show_bug.cgi?id=496834
+> 
+> Affected libmodplug versions: x < 0.8.6
+> 
+> Patch (against modplug-xmms/libmodplug):
+> http://modplug-xmms.cvs.sourceforge.net/viewvc/modplug-xmms/libmodplug/src/load_med.cpp?r1=1.1&amp;r2=1.2
+> 
+> Thanks, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+> 
+> 
 > 
 
-Can someone elaborate on what "catastrophic backtracking" means? Is this a DoS?
-
-Thanks.
-
--- 
-    JB
