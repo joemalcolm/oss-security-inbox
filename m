@@ -1,20 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/22/3
-Message-ID: <20090722143147.4f6c29a8@redhat.com>
-Date: Wed, 22 Jul 2009 14:31:47 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/28/1
+Message-ID: <20090428112253.2c0fb8e1@redhat.com>
+Date: Tue, 28 Apr 2009 11:22:53 +0200
 From: Tomas Hoger <thoger@...hat.com>
-To: OSS Security <oss-security@...ts.openwall.com>
-Subject: PHP security fix in 5.2.10
+To: coley@...us.mitre.org
+Cc: oss-security@...ts.openwall.com, wietse@...cupine.org
+Subject: Re: Re: Some fun with tcp_wrappers
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+Hi Steve!
 
-PHP 5.2.10 was release a while ago, fixing one minor buffer over-read
-issue in exif reading.  Does this already have a CVE that I've missed?
+On Fri, 24 Apr 2009 19:10:11 -0400 (EDT) "Steven M. Christey"
+<coley@...us.mitre.org> wrote:
 
-http://www.php.net/releases/5_2_10.php
-http://secunia.com/advisories/35441/
-http://www.vupen.com/english/advisories/2009/1632
+> Given last week's round of discussion on this list and related
+> commentary in Red Hat 491095, I still don't know how to write up
+> CVE-2009-0786. Should we focus it on the hosts_ctl() usage in the
+> Fedora version of tcp_wrappers?
+
+Given Wietse's (original upstream author) comments, original behavior
+is intended one, so 0786 should be rejected.  We're not adding the
+change as security fix to the product versions where it's not included
+already.
+
+Thank again to Wietse for his comments!
 
 -- 
 Tomas Hoger / Red Hat Security Response Team
