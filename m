@@ -1,38 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/17/12
-Message-ID: <20090917093632.7c11945b@redhat.com>
-Date: Thu, 17 Sep 2009 09:36:32 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: Re: CVE for recent cyrus-imap issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/29/2
+Message-ID: <OF729CA43D.0A5BA90F-ON872575A7.0007ED90-862575A7.00082929@us.ibm.com>
+Date: Tue, 28 Apr 2009 20:27:19 -0500
+From: Steven French <sfrench@...ibm.com>
+To: dann frazier <dannf@...ian.org>
+Cc: oss-security@...ts.openwall.com, security@...nel.org, jlayton@...hat.com
+Subject: Re: CVE request? buffer overflow in CIFS in 2.6.*
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 16 Sep 2009 21:31:52 -0400 (EDT) "Steven M. Christey"
-<coley@...us.mitre.org> wrote:
+Jeff (Layton) was working an additional fix (updating a proposed fix from 
+Suresh J.).  We will review it together tomorrow.
 
-> CVE-2009-3235 is the new one; CVE-2009-2632 has been updated to list
-> Dovecot.
 
-Thank you!
+Steve French
+Senior Software Engineer
+Linux Technology Center - IBM Austin
+phone: 512-838-2294
+email: sfrench at-sign us dot ibm dot com
 
-> Name: CVE-2009-3235
+
+
+dann frazier <dannf@...ian.org> 
+04/28/2009 08:12 PM
+
+To
+oss-security@...ts.openwall.com
+cc
+security@...nel.org, Steven French/Austin/IBM@...US
+Subject
+Re: [oss-security] CVE request? buffer overflow in CIFS in 2.6.*
+
+
+
+
+
+
+On Sat, Apr 25, 2009 at 05:40:20PM +0800, Eugene Teo wrote:
+> Hi Steve,
 > 
-> Multiple stack-based buffer overflows in the Sieve plugin in Dovecot
-> 1.0 before 1.0.4 and 1.1 before 1.1.7, as derived from Cyrus libsieve,
-> allow context-dependent attackers to cause a denial of service (crash)
-> and possibly execute arbitrary code via a crafted SIEVE script, as
-> demonstrated by forwarding an e-mail message to a large number of
-> recipients, a different vulnerability than CVE-2009-2632.
+> > One approach might be to "pre-tag" this whole set of changes with a 
+single
+> > CVE, then when they ultimately get merged into a single kernel version 
+or
+> > some other concrete milestone, the "scope" of that CVE ends.
+> 
+> I'm fine with this approach. It can actually help to make it easier to
+> manage this set of changes.
 
-These flaws are not specific to Dovecot and exist in cyrus-imapd too.
-Upstream already applied Dovecot fixes in their CVS:
+To summarize (and make sure I understand), the plan is to create a
+single CVE for a collection of CIFS fixes. So far, this series includes
+the following changesets, but others may be added as well:
 
-https://bugzilla.andrew.cmu.edu/cgi-bin/cvsweb.cgi/src/sieve/sieve.y.diff?r1=1.40;r2=1.41;f=h
-https://bugzilla.andrew.cmu.edu/cgi-bin/cvsweb.cgi/src/sieve/bc_eval.c.diff?r1=1.14;r2=1.15;f=h
-https://bugzilla.andrew.cmu.edu/cgi-bin/cvsweb.cgi/src/sieve/script.c.diff?r1=1.68;r2=1.69;f=h
+http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.29.y.git;a=commitdiff;h=15bd8021d870d2c4fbf8c16578d72d03cfddd3a7
 
-Sorry if my mail was confusing at that point.
+http://git.kernel.org/?p=linux/kernel/git/sfrench/cifs-2.6.git;a=commitdiff;h=f083def68f84b04fe3f97312498911afce79609e
+
+http://git.kernel.org/linus/27b87fe52baba0a55e9723030e76fce94fabcea4
+http://git.kernel.org/?p=linux/kernel/git/sfrench/cifs-2.6.git;a=commit;h=7b0c8fcff47a885743125dd843db64af41af5a61
+
+http://git.kernel.org/?p=linux/kernel/git/sfrench/cifs-2.6.git;a=commit;h=968460ebd8006d55661dec0fb86712b40d71c413
+
+
+Is that correct? If so, is there an estimate for when this set will be
+deemed complete and a CVE assigned?
+
+I think that if we wait too long to close this, we'll end up with
+distributions releasing updates with only a subset of these
+fixes, which would make this "collection" somewhat difficult to track
+by CVE ID handle. I'm otherwise quite happy with this plan, fwiw.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+dann frazier
+
+
+
