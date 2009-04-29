@@ -1,82 +1,94 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/27/2
-Message-ID: <20091127140347.GB22978@suse.de>
-Date: Fri, 27 Nov 2009 15:03:47 +0100
-From: Thomas Biege <thomas@...e.de>
-To: OSS-Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: CVE request: ruby on rails XSS Weakness in strip_tags
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/29/3
+Message-ID: <20090429052858.GD11901@lackof.org>
+Date: Tue, 28 Apr 2009 23:28:58 -0600
+From: dann frazier <dannf@...ian.org>
+To: Steven French <sfrench@...ibm.com>
+Cc: oss-security@...ts.openwall.com, security@...nel.org, jlayton@...hat.com
+Subject: Re: CVE request? buffer overflow in CIFS in 2.6.*
 Content-Type: text/plain; charset=utf-8
 
-http://groups.google.com/group/rubyonrails-security/browse_thread/thread/4d4f71f2aef4c0ab?pli=1
+On Tue, Apr 28, 2009 at 08:27:19PM -0500, Steven French wrote:
+> Jeff (Layton) was working an additional fix (updating a proposed fix from 
+> Suresh J.).  We will review it together tomorrow.
 
-Michael Koziarski   	
-Profil anzeigen   �bersetzen in die Sprache: Deutsch �bersetzt (Original anzeigen)
-	 Weitere Optionen 27 Nov., 02:44
-Von: Michael Koziarski <mich...@...iarski.com>
-Datum: Fri, 27 Nov 2009 13:44:06 +1300
-Lokal: Fr. 27 Nov. 2009 02:44
-Betreff: XSS Weakness in strip_tags
-Antworten | Antwort an Autor | Weiterleiten | Drucken | Einzelne Nachricht | Original anzeigen | Diese Nachricht melden | Nachrichten dieses Autors suchen
+Cool, thanks Steve.
 
-There is a weakness in the strip_tags function in ruby on rails.  Due to
-a bug in the parsing code inside HTML::Tokenizer regarding non-printable
-ascii characters, an attacker can include values which certain browsers
-will then evaluate.
+Also, I now notice that CVE-2009-1439 was assigned for
+the nativeFileSystem fixes, so looks like the status is:
 
-Versions Affected:  All versions prior to 2.3.4 or 2.2.s
-Not affected:       Applications which do not use strip_tags
-Fixed Versions:     2.3.5
+CVE-2009-1439:
+ http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.29.y.git;a=commitdiff;h=15bd8021d870d2c4fbf8c16578d72d03cfddd3a7
+ http://git.kernel.org/?p=linux/kernel/git/sfrench/cifs-2.6.git;a=commitdiff;h=f083def68f84b04fe3f97312498911afce79609e
 
-Impact
-------
+CVE-2009-NOT-YET-ASSIGNED:
+ http://git.kernel.org/linus/27b87fe52baba0a55e9723030e76fce94fabcea4
+ http://git.kernel.org/?p=linux/kernel/git/sfrench/cifs-2.6.git;a=commit;h=7b0c8fcff47a885743125dd843db64af41af5a61
+ http://git.kernel.org/?p=linux/kernel/git/sfrench/cifs-2.6.git;a=commit;h=968460ebd8006d55661dec0fb86712b40d71c413
+ + some others in progress
 
-Applications relying on strip_tags for XSS protection may be vulnerable
-to attacks on Internet Explorer users.
+Does that look accurate?
 
-Releases
---------
-
-The 2.3.5 releases is available at the normal locations now.
-
-Workarounds
------------
-
-Users using strip_tags can pass the resulting output to the regular
-escaping functionality:
-
-  <%= h(strip_tag(...)) %>
-
-Patches
--------
-
-To aid users who aren't able to upgrade immediately we have provided
-patches for the two supported release series.  They are in git-am format
-and consist of a single changeset updating the parser and providing an
-additional unit test.
-
-* 2-2-strip_tags.patch - Patch for 2.2 series
-* 2-3-strip_tags.patch - Patch for 2.3 series
-
-Please note that only the  2.2.x and 2.3.x series are supported at
-present.  Users of earlier unsupported releases are advised to upgrade
-at their earliest convenience.
-
-Credits
--------
-Thanks to Gabe da Silveira for reporting the vulnerability to us and
-providing the fix.
+> 
+> 
+> Steve French
+> Senior Software Engineer
+> Linux Technology Center - IBM Austin
+> phone: 512-838-2294
+> email: sfrench at-sign us dot ibm dot com
+> 
+> 
+> 
+> dann frazier <dannf@...ian.org> 
+> 04/28/2009 08:12 PM
+> 
+> To
+> oss-security@...ts.openwall.com
+> cc
+> security@...nel.org, Steven French/Austin/IBM@...US
+> Subject
+> Re: [oss-security] CVE request? buffer overflow in CIFS in 2.6.*
+> 
+> 
+> 
+> 
+> 
+> 
+> On Sat, Apr 25, 2009 at 05:40:20PM +0800, Eugene Teo wrote:
+> > Hi Steve,
+> > 
+> > > One approach might be to "pre-tag" this whole set of changes with a 
+> single
+> > > CVE, then when they ultimately get merged into a single kernel version 
+> or
+> > > some other concrete milestone, the "scope" of that CVE ends.
+> > 
+> > I'm fine with this approach. It can actually help to make it easier to
+> > manage this set of changes.
+> 
+> To summarize (and make sure I understand), the plan is to create a
+> single CVE for a collection of CIFS fixes. So far, this series includes
+> the following changesets, but others may be added as well:
+> 
+> http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.29.y.git;a=commitdiff;h=15bd8021d870d2c4fbf8c16578d72d03cfddd3a7
+> 
+> http://git.kernel.org/?p=linux/kernel/git/sfrench/cifs-2.6.git;a=commitdiff;h=f083def68f84b04fe3f97312498911afce79609e
+> 
+> http://git.kernel.org/linus/27b87fe52baba0a55e9723030e76fce94fabcea4
+> http://git.kernel.org/?p=linux/kernel/git/sfrench/cifs-2.6.git;a=commit;h=7b0c8fcff47a885743125dd843db64af41af5a61
+> 
+> http://git.kernel.org/?p=linux/kernel/git/sfrench/cifs-2.6.git;a=commit;h=968460ebd8006d55661dec0fb86712b40d71c413
+> 
+> 
+> Is that correct? If so, is there an estimate for when this set will be
+> deemed complete and a CVE assigned?
+> 
+> I think that if we wait too long to close this, we'll end up with
+> distributions releasing updates with only a subset of these
+> fixes, which would make this "collection" somewhat difficult to track
+> by CVE ID handle. I'm otherwise quite happy with this plan, fwiw.
+> 
 
 -- 
-Cheers,
+dann frazier
 
------ End forwarded message -----
-
--- 
-Bye,
-     Thomas
--- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
--- 
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
