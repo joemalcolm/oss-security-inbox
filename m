@@ -1,47 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/23/1
-Message-ID: <4B0A6871.3090500@redhat.com>
-Date: Mon, 23 Nov 2009 11:48:17 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Igor Sysoev <igor@...oev.ru>
-Subject: Re: CVEs for nginx
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/29/7
+Message-ID: <20090429200950.GC15681@kroah.com>
+Date: Wed, 29 Apr 2009 13:09:50 -0700
+From: Greg KH <greg@...ah.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com, Chris Wright <chrisw@...hat.com>
+Subject: Re: CVE request: kernel: exit_notify: kill the wrong capable(CAP_KILL) check
 Content-Type: text/plain; charset=utf-8
 
-Hi Craig, vendors,
+On Fri, Apr 17, 2009 at 09:58:51AM -0400, Steven M. Christey wrote:
+> 
+> On Tue, 7 Apr 2009, Eugene Teo wrote:
+> 
+> > https://bugzilla.redhat.com/show_bug.cgi?id=493771
+> > http://git.kernel.org/linus/432870dab85a2f69dc417022646cb9a70acf7f94
+> 
+> Use CVE-2009-1337, to be filled in later.
 
-Craig wrote:
-> Hi,
-> 
-> are the CVEs for
-> 
-> 1.) nginx webdav: http://secunia.com/advisories/36818/
+Now queued up for the next -stable releases, thanks.
 
-   I still haven't seen a CVE id for this (pls correct me
-if I overlooked it). Could one be assigned? (if there isn't one yet).
-
-Also not sure, if this one has been already addressed upstream?
-(as there has been couple of more important Nginx security issues
-  recently).
-
-Igor, could you comment on upstream status of this one? Is there
-a patch handy?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-> 
-> 2.) nginx Null Pointer dereference:
-> http://sysoev.ru/nginx/patch.null.pointer.txt
-> 
-> 3.) nginx SSL Renegotiation: http://sysoev.ru/nginx/patch.cve-2009-3555.txt
-> 
-> I know the last one contains a CVE number, nginx uses openssl and the
-> patch will disable renegotiation, maybe this deserves an own CVE?
-> 
-> 
-> Best regards,
-> 
-> Craig
-
+greg k-h
