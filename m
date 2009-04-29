@@ -1,27 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/15/9
-Message-ID: <495059406.357331255617265857.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 15 Oct 2009 10:34:25 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/29/1
+Message-ID: <20090429011239.GF6418@lackof.org>
+Date: Tue, 28 Apr 2009 19:12:39 -0600
+From: dann frazier <dannf@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: oping allows the disclosure of arbitrary file contents
+Cc: security@...nel.org, sfrench@...ibm.com
+Subject: Re: CVE request? buffer overflow in CIFS in 2.6.*
 Content-Type: text/plain; charset=utf-8
 
------ "Julien Tinnes" <jt@....org> wrote:
+On Sat, Apr 25, 2009 at 05:40:20PM +0800, Eugene Teo wrote:
+> Hi Steve,
 > 
-> in case anyone cares, oping also attempts to drop privileges with
-> setuid(getuid()); without checking setuid()'s return value.
+> > One approach might be to "pre-tag" this whole set of changes with a single
+> > CVE, then when they ultimately get merged into a single kernel version or
+> > some other concrete milestone, the "scope" of that CVE ends.
 > 
-> It's an obvious vulnerability, because a local attacker can make
-> setuid() fail by setting a resource limit of 0 for RLIMIT_NPROC with
-> setrlimit().
-> 
+> I'm fine with this approach. It can actually help to make it easier to
+> manage this set of changes.
 
-Does that have any security implications though? I've not looked at the app.
-If it's a security problem, I'll give it a CVE id.
+To summarize (and make sure I understand), the plan is to create a
+single CVE for a collection of CIFS fixes. So far, this series includes
+the following changesets, but others may be added as well:
 
-Thanks.
+http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.29.y.git;a=commitdiff;h=15bd8021d870d2c4fbf8c16578d72d03cfddd3a7
+http://git.kernel.org/?p=linux/kernel/git/sfrench/cifs-2.6.git;a=commitdiff;h=f083def68f84b04fe3f97312498911afce79609e
+http://git.kernel.org/linus/27b87fe52baba0a55e9723030e76fce94fabcea4
+http://git.kernel.org/?p=linux/kernel/git/sfrench/cifs-2.6.git;a=commit;h=7b0c8fcff47a885743125dd843db64af41af5a61
+http://git.kernel.org/?p=linux/kernel/git/sfrench/cifs-2.6.git;a=commit;h=968460ebd8006d55661dec0fb86712b40d71c413
+
+Is that correct? If so, is there an estimate for when this set will be
+deemed complete and a CVE assigned?
+
+I think that if we wait too long to close this, we'll end up with
+distributions releasing updates with only a subset of these
+fixes, which would make this "collection" somewhat difficult to track
+by CVE ID handle. I'm otherwise quite happy with this plan, fwiw.
 
 -- 
-    JB
+dann frazier
+
