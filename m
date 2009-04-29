@@ -1,39 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/08/1
-Message-Id: <E1N73M6-0002z0-5Y@wintermute01.cs.auckland.ac.nz>
-Date: Sun, 08 Nov 2009 21:42:38 +1300
-From: Peter Gutmann <pgut001@...auckland.ac.nz>
-To: marsh@...endedsubset.com, rea-sec@...elabs.ru
-Cc: coley@...us.mitre.org, oss-security@...ts.openwall.com, tls@...f.org
-Subject: Re: [TLS] CVE-2009-3555 for TLS renegotiation MITM attacks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/29/4
+Message-ID: <49F80F5D.2070300@redhat.com>
+Date: Wed, 29 Apr 2009 16:27:09 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Steven French <sfrench@...ibm.com>, security@...nel.org, jlayton@...hat.com
+Subject: Re: CVE request? buffer overflow in CIFS in 2.6.*
 Content-Type: text/plain; charset=utf-8
 
-Marsh Ray <marsh@...endedsubset.com> writes:
+Hi Dann,
 
->For one thing, browsers' behavior of allowing automatic certificate sending
->is suspect and should be reconsidered.
+> Also, I now notice that CVE-2009-1439 was assigned for
+> the nativeFileSystem fixes, so looks like the status is:
+> 
+> CVE-2009-1439:
+>  http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.29.y.git;a=commitdiff;h=15bd8021d870d2c4fbf8c16578d72d03cfddd3a7
+>  http://git.kernel.org/?p=linux/kernel/git/sfrench/cifs-2.6.git;a=commitdiff;h=f083def68f84b04fe3f97312498911afce79609e
 
-It's not actually safe to reconsider this because many servers (including some
-at very large sites) always request client auth, often without the site admins
-being aware of this or knowing how to disable it.  I became aware of this when
-I changed my code to add a roadblock until the user explicitly responded to a
-client cert request, leading to many complaints about sites that formerly
-"worked" and now didn't (I've found all sorts of other broken behaviour around
-client-auth, for example servers that send a list of 150-odd CAs, every one
-they know of, as an indication of who they'll accept certs from, and other
-strangeness).  Disabling the automatic sending of client certs would therefore
-obviously break, to the client, a number of (what I consider) broken servers.
-What my code currently does is:
+b363b3304bcf68c4541683b2eff70b29f0446a5b
+f083def68f84b04fe3f97312498911afce79609e (fix for b363b330)
+22c9d52bc03b880045ab1081890a38f11b272ae7 (remove unneeded pointer)
 
-  if( cert request received )
-      if( client cert present )
-          send cert;
-      else
-          send no-cert alert;
+> CVE-2009-NOT-YET-ASSIGNED:
+>  http://git.kernel.org/linus/27b87fe52baba0a55e9723030e76fce94fabcea4
+>  http://git.kernel.org/?p=linux/kernel/git/sfrench/cifs-2.6.git;a=commit;h=7b0c8fcff47a885743125dd843db64af41af5a61
+>  http://git.kernel.org/?p=linux/kernel/git/sfrench/cifs-2.6.git;a=commit;h=968460ebd8006d55661dec0fb86712b40d71c413
+>  + some others in progress
 
-This isn't totally safe though because there's no "tell user to make their
-cert available" option if they haven't pre-emptively done so, it "works"
-mostly because the extreme rarity of client cert use and stereotyped behaviour
-of existing clients hides all the glitches in implementations.
+Yes.
 
-Peter.
+> Does that look accurate?
+
+Yes, that's my understanding as well.
+
+Thanks, Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
