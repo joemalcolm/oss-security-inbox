@@ -1,31 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/23/12
-Message-ID: <heejkp$a7v$1@ger.gmane.org>
-Date: Mon, 23 Nov 2009 10:59:29 -0600
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/29/5
+Message-Id: <1241002707.3186.6.camel@dhcp-lab-164.englab.brq.redhat.com>
+Date: Wed, 29 Apr 2009 12:58:27 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request - asterisk, python-markdown, jetty, kde
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Konstanty <konstanty@...il.com>
+Subject: Re: CVE Request -- libmodplug
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello Steve,
 
-Mark J Cox wrote:
+  apologize for not sending these all at once, but noticed
+  the following one only today. There is another buffer
+  overflow (DoS) vulnerability in libmodplug -- this time 
+  in PAT sample loader.
+
+  Referecences:
+  http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=526084
+  http://sourceforge.net/tracker/?func=detail&aid=2777467&group_id=1275&atid=301275
+  http://secunia.com/advisories/34927
+  http://modplug-xmms.cvs.sourceforge.net/viewvc/modplug-xmms/libmodplug/src/load_pat.cpp?r1=1.3&r2=1.4 (patch)
+
+Thanks, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+> On Tue, 2009-04-21 at 14:47 +0200, Jan Lieskovsky wrote:
+> > Hello Steve,
+> > 
+> >   could you please allocate a new CVE-2008-XXXX identifier for
+> > the following old libmodplug issue:
+> > 
+> > References:
+> > http://bugs.gentoo.org/show_bug.cgi?id=266913
+> > http://www.securityfocus.com/bid/30801/info
+> > http://sourceforge.net/project/shownotes.php?release_id=677065&amp;group_id=1275
+> > https://bugzilla.redhat.com/show_bug.cgi?id=496834
+> > 
+> > Affected libmodplug versions: x < 0.8.6
+> > 
+> > Patch (against modplug-xmms/libmodplug):
+> > http://modplug-xmms.cvs.sourceforge.net/viewvc/modplug-xmms/libmodplug/src/load_med.cpp?r1=1.1&amp;r2=1.2
+> > 
+> > Thanks, Jan.
+> > --
+> > Jan iankko Lieskovsky / Red Hat Security Response Team
+> > 
+> > 
+> > 
 > 
->> = jetty =
->> Multiple vulnerabilities in jetty
->> Reference:
->> http://www.ush.it/team/ush/hack-jetty6x7x/jetty-adv.txt
-> 
-> Multiple issues will need more work to allocate; deferred.
-> 
-
-Any updates on the allocation of the ids?
-
-Thanks in advance.
-
-Regards,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
-
 
