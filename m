@@ -1,36 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/16/11
-Message-ID: <1878663959.482481255723616148.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 16 Oct 2009 16:06:56 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/01/2
+Message-Id: <1241174923.1472.8.camel@localhost>
+Date: Fri, 01 May 2009 06:48:43 -0400
+From: Jon Oberheide <jon@...rheide.org>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: oping allows the disclosure of arbitrary file contents
+Subject: Re: CVE request (sort of): Quagga BGP crasher
 Content-Type: text/plain; charset=utf-8
 
------ "Julien Tinnes" <julien.tinnes@...il.com> wrote:
-> On Thu, Oct 15, 2009 at 4:34 PM, Josh Bressers <bressers@...hat.com> wrote:
-> > ----- "Julien Tinnes" <jt@....org> wrote:
-> >>
-> >> in case anyone cares, oping also attempts to drop privileges with
-> >> setuid(getuid()); without checking setuid()'s return value.
-> >>
-> >
-> > Does that have any security implications though? I've not looked at the
-> > app.  If it's a security problem, I'll give it a CVE id.
-> 
-> I didn't really look either. Because of this, everything will run as root
-> while it shouldn't, but an attacker might need a second bug to elevate
-> privileges.  I would still consider it a security problem.
-> 
+Florian,
 
-I took a look in the oping source. Without another security flaw, this is just
-a bug, oping doesn't do anything while still root that could be an issue. I
-agree that it should be fixed, it is a serious bug, but an attacker cannot do
-anything nefarious with this flaw.
+On Fri, 2009-05-01 at 11:02 +0200, Florian Weimer wrote:
+> There's a crasher bug in Quagga's bgpd which can allegedly be
+> triggered by routes present in the global table.  See:
+> 
+>   <http://thread.gmane.org/gmane.network.quagga.devel/6513>
+> 
+> I think we need a CVE for that, but I don't understand the problem yet
+> (and I can't reproduce it), so I can't come up with a concise
+> vulnerability description.
 
-I'm happy to let Steve overrule me if he wishes, but I'm not going to assign
-this a CVE id.
+Looks like the Quagga code in bgp_aspath.c is assuming that converting
+each ASN of the AS path to a string will be 5 bytes plus a space
+(#define ASN_STR_LEN (5 + 1)).  Therefore, it allocates (ASN_STR_LEN *
+the number of ASNs in the path segment) bytes to snprintf into when
+creating the pretty-print version of the AS path.
+
+This is all fine and dandy until we hit an AS path with 32-bit ASNs
+whose string representation can of course be longer than 5 bytes.  The
+len += snprintf()'s will return more bytes written than expected and
+then we'll hit our assert since we've written more bytes than originally
+allocated (str_size).
+
+Have you tried reproducing it with an AS path containing 32-bit ASNs (of
+value at least 100000)?
+
+Regards,
+Jon Oberheide
 
 -- 
-    JB
+Jon Oberheide <jon@...rheide.org>
+GnuPG Key: 1024D/F47C17FE
+Fingerprint: B716 DA66 8173 6EDD 28F6  F184 5842 1C89 F47C 17FE
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
