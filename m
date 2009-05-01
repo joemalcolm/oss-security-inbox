@@ -1,31 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/07/2
-Message-ID: <49DAE798.8020008@redhat.com>
-Date: Tue, 07 Apr 2009 13:41:44 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: Marcus Meissner <meissner@...e.de>
-CC: oss-security@...ts.openwall.com, security@...nel.org, sfrench@...ibm.com
-Subject: Re: CVE request? buffer overflow in CIFS in 2.6.*
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/01/5
+Message-ID: <20090501232436.GE3643@redhat.com>
+Date: Fri, 1 May 2009 17:24:36 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: file security issue
 Content-Type: text/plain; charset=utf-8
 
-Hi Marcus,
+A debian bug report indicates a vulnerability in file 5.x (4.x is not
+affected) due to a boundary error within cdf_read_sat().
 
-Marcus Meissner wrote:
-> Fixes a kmalloc area overflow in CIFS, number of overwritten bytes
-> is depending on the codepage converted to.
-> 
-> The data seems to come from a remote generated reply blob even, correct
-> me if I am wrong. :/
+References:
 
-Looks like it's part of the session setup. The NativeFileSystem field is
-part of the Tree Connect response (TCon for short).
+http://secunia.com/advisories/34881/
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=525820
+https://bugzilla.redhat.com/show_bug.cgi?id=497913
 
-> And I wonder if "len*2" is sufficient, can't a UCS -> UTF8 conversion
-> generate more than 2 byte utf-8 characters for 1 ucs character?
+Steve, could we get a CVE name assigned to this issue please?  Thanks.
 
-I understand that someone from your side is working on a better patch
-for this. Do keep us updated when it goes upstream.
-
-Thanks, Eugene
 -- 
-Eugene Teo / Red Hat Security Response Team
+Vincent Danen / Red Hat Security Response Team 
