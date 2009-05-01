@@ -1,30 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/15/1
-Message-Id: <200908151127.57671.rbu@gentoo.org>
-Date: Sat, 15 Aug 2009 11:27:37 +0200
-From: Robert Buchholz <rbu@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/01/1
+Message-ID: <87my9xryav.fsf@mid.deneb.enyo.de>
+Date: Fri, 01 May 2009 11:02:16 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Subject: mailfilter 0.8.2 fixes CVE-2007-1558 (APOP)
+Subject: CVE request (sort of): Quagga BGP crasher
 Content-Type: text/plain; charset=utf-8
 
-CVE-2007-1558:
-  The APOP protocol allows remote attackers to guess the first 3 
-  characters of a password via man-in-the-middle (MITM) attacks that use
-  crafted message IDs and MD5 collisions. NOTE: this design-level issue
-  potentially affects all products that use APOP, including (1)
-  Thunderbird 1.x before 1.5.0.12 and 2.x before 2.0.0.4, (2) Evolution, 
-  (3) mutt, (4) fetchmail, (5) SeaMonkey 1.0.x before 1.0.9 and 1.1.x 
-  before 1.1.2, (6) Balsa 2.3.16 and earlier, and possibly other 
-  products.
+There's a crasher bug in Quagga's bgpd which can allegedly be
+triggered by routes present in the global table.  See:
 
-Mailfilter 0.8.2 is now out and added the mitigation mutt added a while 
-ago: http://mailfilter.sourceforge.net/NEWS
+  <http://thread.gmane.org/gmane.network.quagga.devel/6513>
 
-If you need the patch:
-http://mailfilter.svn.sourceforge.net/viewvc/mailfilter?view=rev&revision=17
-
-
-
-Robert
-
-Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
+I think we need a CVE for that, but I don't understand the problem yet
+(and I can't reproduce it), so I can't come up with a concise
+vulnerability description.
