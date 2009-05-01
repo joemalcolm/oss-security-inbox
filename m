@@ -1,33 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/23/3
-Message-Id: <1237810902.3229.15.camel@dhcp-lab-164.englab.brq.redhat.com>
-Date: Mon, 23 Mar 2009 13:21:42 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE request -- ucd-snmp / net-snmp, libnss-ldapd / nss_ldap
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/01/3
+Message-ID: <20090501141724.GC30107@severus.strandboge.com>
+Date: Fri, 1 May 2009 09:17:24 -0500
+From: Jamie Strandboge <jamie@...onical.com>
+To: coley@...us.mitre.org
+Cc: oss-security@...ts.openwall.com
+Subject: CVE Request: clamav-milter on Ubuntu
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve,
+Due to a typo, the clamav-milter initscript would change the owner of
+the current directory to clamav (or whatever User is set to in
+clamd.conf). This typically affects the '/' directory, but could affect
+any directory on the system. This is all documented in the Ubuntu bug[1].
 
-  could you please assign CVE ids for following
-two low security issues:
+This was introduced in this commit:
+http://git.debian.org/?p=pkg-clamav/clamav.git;a=commitdiff;h=c4e1bf5d98637c0219852eaac768170bf8aef2fc;hp=5a2b5013440c4b81d0eb3233072c88564a15fc5d
 
-1, ucd-snmp / net-snmp snmpd runs with privileges of privileged user
-   a, Red Hat Enterprise Linux / Fedora snmpd runs with UID=0, GID=0
-   b, Debian snmpd runs with GID=0
-   References:
-   https://bugzilla.redhat.com/show_bug.cgi?id=491621
-   http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=520724
+0.95.1+dfsg-1ubuntu1 and 0.95.1+dfsg-1ubuntu1.1 on Ubuntu 9.04 are
+affected, but earlier versions are not. It looks like Debian never
+released with this code, and version 0.95.1+dfsg-2 (in Debian/unstable)
+is not affected. Derivatives of Ubuntu 9.04 are presumably affected.
 
-2, libnss-ldapd / nss_ldap: LDAP service configuration file
-                                 shipped with world readable permissions
-   References: 
-   https://bugzilla.redhat.com/show_bug.cgi?id=491623
-   http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=520476
+Can we get a CVE for this?
 
+Jamie
 
-Thanks, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+[1] https://bugs.launchpad.net/bugs/365823
 
+-- 
+Jamie Strandboge             | http://www.canonical.com
+
+Download attachment "signature.asc" of type "application/pgp-signature" (198 bytes)
