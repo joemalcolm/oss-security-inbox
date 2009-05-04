@@ -1,62 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/02/3
-Message-ID: <4B16793C.4090705@redhat.com>
-Date: Wed, 02 Dec 2009 22:27:08 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/04/4
+Message-ID: <87r5z4h9un.fsf@mid.deneb.enyo.de>
+Date: Mon, 04 May 2009 22:49:36 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: mac80211: fix two remote exploits
+Subject: Re: CVE request (sort of): Quagga BGP crasher
 Content-Type: text/plain; charset=utf-8
 
-On 12/02/2009 09:40 PM, Josh Bressers wrote:
->
-> ----- "Eugene Teo"<eugeneteo@...nel.sg>  wrote:
->
->> http://git.kernel.org/linus/4253119acf412fd686ef4bd8749b5a4d70ea3a51
->>
->> "Lennert Buytenhek noticed a remotely triggerable problem in mac80211,
->>
->> which is due to some code shuffling I did that ended up changing the
->> order in which things were done -- this was in
->>
->>     commit d75636ef9c1af224f1097941879d5a8db7cd04e5
->>     Author: Johannes Berg<johannes@...solutions.net>
->>     Date:   Tue Feb 10 21:25:53 2009 +0100
->>
->>       mac80211: RX aggregation: clean up stop session
->>
->> The problem is that the BUG_ON moved before the various checks, and as
->>
->> such can be triggered.
->>
->> As the comment indicates, the BUG_ON can be removed since the
->> ampdu_action callback must already exist when the state is
->> OPERATIONAL.
->>
->> A similar code path leads to a WARN_ON in
->> ieee80211_stop_tx_ba_session,
->> which can also be removed."
->>
->> Btw, FYI, there's another issue that was also introduced by the same
->> code shuffling patch (commit d75636ef) but was fixed in another patch
->>
->> (commit 827d42c9). It was assigned with CVE-2009-4026.
->>
->
-> Hi Eugene,
->
-> I can't parse this. Can you help me understand.
->
-> What are the two issues the subject speaks of? Is the "similar code path"
-> paragraph of importance?
+* Florian Weimer:
 
-Actually, you can ignore this request. So what happened was that, there 
-were actually two patches for this, but Johannes combined them together 
-when he shared the fix with us. So, this is part of the fixes for 
-CVE-2009-4026: upstream commits (1) 4253119a and (2) 827d42c9.
+> * Jon Oberheide:
+>
+>> Looks like the Quagga code in bgp_aspath.c is assuming that converting
+>> each ASN of the AS path to a string will be 5 bytes plus a space
+>> (#define ASN_STR_LEN (5 + 1)).  Therefore, it allocates (ASN_STR_LEN *
+>> the number of ASNs in the path segment) bytes to snprintf into when
+>> creating the pretty-print version of the AS path.
+>
+> Sure, this is the part I understand.  It's not clear why this code is
+> hit when there isn't much logging going on.  People have also run
+> "show ip bgp ROUTE" for paths with six-digit ASNs, with
+> supposedly-broken bgpd versions, and did not observe a crash.
 
-Hope this clears up the confusion!
-
-Thanks, Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
+It seems that bgpd uses the textual representation of AS paths for
+hash-consing them.  That's why the crash happens even without logging
+enabled.
