@@ -1,33 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/22/5
-Message-ID: <Pine.GSO.4.51.0905212025390.18536@faron.mitre.org>
-Date: Thu, 21 May 2009 20:26:21 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: XEN local denial of service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/04/1
+Message-ID: <49FE56E2.8010100@redhat.com>
+Date: Mon, 04 May 2009 10:45:54 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2009-1184 selinux: skipped node/port send checks in the compat_net=1 case
 Content-Type: text/plain; charset=utf-8
 
+Not upstream in 2.6.30, as the function was removed there.
 
-More specific information on Xen's affected versions would be appreciated.
-I made a guess based on the version that was released a few days after the
-patch.
+Node and port send checks can skip in the compat_net=1 case. This bug
+was introduced in commit effad8d.
 
-- Steve
+This is fixed in 2.6.27.21[1] and 2.6.28.10[2]. I believe it will be
+fixed in 2.6.29.y soon.
 
+[1] http://lwn.net/Articles/331434/
+[2] http://lwn.net/Articles/331435/
 
-======================================================
-Name: CVE-2009-1758
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1758
-Reference: MLIST:[Xen-devel] 20090513 [PATCH] linux/i386: hypervisor_callback adjustments
-Reference: URL:http://lists.xensource.com/archives/html/xen-devel/2009-05/msg00561.html
-Reference: MLIST:[oss-security] 20090514 CVE Request: XEN local denial of service
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/05/14/2
-
-The hypervisor_callback function in Xen, possibly before 3.4.0, as
-applied to the Linux kernel 2.6.30-rc4, 2.6.18, and probably other
-versions allows guest user applications to cause a denial of service
-(kernel oops) of the guest OS by triggering a segmentation fault in
-"certain address ranges."
-
-
+Thanks, Eugene
