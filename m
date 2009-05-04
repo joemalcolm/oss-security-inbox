@@ -1,27 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/07/1
-Message-ID: <498D4E36.2070403@pardus.org.tr>
-Date: Sat, 07 Feb 2009 11:02:46 +0200
-From: Pinar Yanardag <pinar@...dus.org.tr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/04/2
+Message-ID: <49FE6F86.3040007@redhat.com>
+Date: Mon, 04 May 2009 12:31:02 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: pycrypto
+Subject: CVE request: kernel: ptrace_attach: fix the usage of ->cred_exec_mutex
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+This vulnerability was introduced in commit d84f4f99 ("CRED: Inaugurate
+COW credentials"), and was fixed in commit cad81bc2 ("ptrace:
+ptrace_attach: fix the usage of ->cred_exec_mutex").
 
-There's a buffer overflow in pycrypto ARC2 module. Can you assign a CVE?
+It affects kernel 2.6.29.
 
-Test case: http://gitweb2.dlitz.net/?p=crypto/pycrypto-2.x.git;a=commitdiff;h=fd73731dfad451a81056fbb01e09aa78ab82eb5d
-Patch: http://gitweb2.dlitz.net/?p=crypto/pycrypto-2.x.git;a=commitdiff;h=d1c4875e1f220652fe7ff8358f56dee3b2aba31b
+The patch ensured that both ptrace_attach() and the tracee are
+serialised by the tracee's cred_exec_mutex. If not, the race can be
+exploited by calling ptrace(PTRACE_ATTACH) to the task in the middle of
+exec(setuid_application). This could result in a local privilege escalation.
 
-Cheers,
-
--- 
-Pinar Yanardag
-http://pinguar.org
-_____________________________
-
-Pardus Security Team
-http://security.pardus.org.tr
-
-
+Thanks, Eugene
