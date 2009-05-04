@@ -1,37 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/06/5
-Message-ID: <Pine.GSO.4.51.0906061236220.28142@faron.mitre.org>
-Date: Sat, 6 Jun 2009 12:36:43 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: drupal
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/04/3
+Message-ID: <20090504194608.438ff636@redhat.com>
+Date: Mon, 4 May 2009 19:46:08 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: coley@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: ipsec-tools 0.7.2
 Content-Type: text/plain; charset=utf-8
 
+Hi Steve!
 
-On Thu, 28 May 2009, Nico Golde wrote:
+On Wed, 29 Apr 2009 16:56:58 +0200 Tomas Hoger <thoger@...hat.com>
+wrote:
 
-> Hi,
-> http://drupal.org/node/461886
+> http://sourceforge.net/project/shownotes.php?group_id=74601&release_id=677611
+> http://sourceforge.net/mailarchive/forum.php?thread_name=20090422151825.GB46988%40zeninc.net&forum_name=ipsec-tools-announce
+> 
+> Upstream announcement mentions one security fix (DoS / NULL deref
+> reported by Neil Kettle), fixed in:
+> 
+> http://cvsweb.netbsd.org/bsdweb.cgi/src/crypto/dist/ipsec-tools/src/racoon/isakmp_frag.c?f=h#rev1.4.6.1
 
+Can you please assign CVE to this?  This crash can happen during
+phase1 of ISAKMP.  Problem occurs when all fragments received contain
+no payload, only headers.  Few more details in:
+  https://bugzilla.redhat.com/show_bug.cgi?id=497990
 
-======================================================
-Name: CVE-2009-1844
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1844
-Reference: CONFIRM:http://drupal.org/node/461886
-Reference: DEBIAN:DSA-1808
-Reference: URL:http://www.debian.org/security/2009/dsa-1808
-Reference: SECUNIA:35282
-Reference: URL:http://secunia.com/advisories/35282
+Thank you!
 
-Multiple cross-site scripting (XSS) vulnerabilities in Drupal 5.x
-before 5.18 and 6.x before 6.12 allow (1) remote authenticated users
-to inject arbitrary web script or HTML via crafted UTF-8 byte
-sequences that are treated as UTF-7 by Internet Explorer 6 and 7,
-which are not properly handled in the "HTML exports of books" feature;
-and (2) allow remote authenticated users with administer taxonomy
-permissions to inject arbitrary web script or HTML via the help text
-of an arbitrary vocabulary.  NOTE: vector 1 exists because of an
-incomplete fix for CVE-2009-1575.
-
-
+-- 
+Tomas Hoger / Red Hat Security Response Team
