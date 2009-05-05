@@ -1,65 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/12/7
-Message-Id: <1234461311.8920.9.camel@dhcp-lab-164.englab.brq.redhat.com>
-Date: Thu, 12 Feb 2009 18:55:11 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- net-snmp (sensitive host information disclosure)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/05/4
+Message-ID: <20090505170949.GF3693@redhat.com>
+Date: Tue, 5 May 2009 11:09:49 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com, coley@...re.org
+Subject: Re: CVE id request: Debian/Ubuntu specific issue in xvfb-run (xorg)
 Content-Type: text/plain; charset=utf-8
 
-Steve,
+* [2009-05-05 17:20:22 +0200] Nico Golde wrote:
 
-  thanks for the assignment!
+>Hi,
+>* Nico Golde <oss-security+ml@...lde.de> [2009-05-05 17:18]:
+>> can I get a CVE id for http://bugs.debian.org/526678
+>> 
+>> The xvfb-run script used in Debian insecurely passes the X 
+>> magic cookie via the commandline so it's an easy thing to 
+>> grab it with system access.
+>
+>YFYI, our maintainer just told me that he thinks this is included 
+>since Fedora 10 in Fedora as well...
 
-On Thu, 2009-02-12 at 10:56 -0500, Steven M. Christey wrote:
-> I'm confused by the upstream diff being referenced by the Red Hat bug ID.
-> Specifically, it looks like some sprintf's got changed, and the result is
-> used for logging.  Is it certain that the attacker can bypass
-> authorization, or is net-snmp just mis-reporting it?
+Thanks for that.  It is in Fedora 10; I have to see if it's in older
+versions.
 
-Yes, the fix looks strange, but it resolves the issue (checked for
-net-snmp-5.4.2). Looks like net-snmp is mis-reporting
-the results, so subsequent parsing performed by tcp_wrappers
-fails so hosts, for whose the snmp responses should be
-forbidden, are getting them regardless of /etc/hosts.deny
-content.
-
-More exact explanation from our pkg-maintainer:
-
-<snip>
-
-So... the bug is in net-snmp, it mixes source and destination IP 
-addresses, which renders tcp_wrappers support in snmpd completely 
-useless (it checks destination IP addr instead of source IP address).
-
-</snip>
-
-Not sure here, if the CVE description should be modified appropriately?
-
-Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-> 
-> I'm going with authorization bypass at the moment.
-> 
-> ======================================================
-> Name: CVE-2008-6123
-> Status: Candidate
-> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-6123
-> Reference: MLIST:[oss-security] 20090212 CVE Request -- net-snmp (sensitive host information disclosure)
-> Reference: URL:http://www.openwall.com/lists/oss-security/2009/02/12/2
-> Reference: CNFIRM:http://bugs.gentoo.org/show_bug.cgi?id=250429
-> Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=485211
-> Reference: CONFIRM:http://net-snmp.svn.sourceforge.net/viewvc/net-snmp?view=rev&revision=17367
-> Reference: MISC:http://net-snmp.svn.sourceforge.net/viewvc/net-snmp/trunk/net-snmp/snmplib/snmpUDPDomain.c?r1=17325&r2=17367&pathrev=17367
-> 
-> The netsnmp_udp_fmtaddr function (snmplib/snmpUDPDomain.c) in net-snmp
-> 5.0.9 through 5.4.2, when using TCP wrappers for client authorization,
-> does not properly parse hosts.allow rules, which allows remote
-> attackers to bypass intended access restrictions and execute SNMP
-> queries, related to "source/destination IP address confusion."
-> 
-> 
-
+-- 
+Vincent Danen / Red Hat Security Response Team 
