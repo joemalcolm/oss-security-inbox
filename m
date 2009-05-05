@@ -1,71 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/23/6
-Message-ID: <788268192.590651259002647709.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 23 Nov 2009 13:57:27 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/05/3
+Message-ID: <20090505152022.GI15109@ngolde.de>
+Date: Tue, 5 May 2009 17:20:22 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: v1.2.8 released to fix the 0777 base_dir creation issue
+Cc: coley@...re.org
+Subject: Re: CVE id request: Debian/Ubuntu specific issue in xvfb-run (xorg)
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2009-3897 for this.
+Hi,
+* Nico Golde <oss-security+ml@...lde.de> [2009-05-05 17:18]:
+> can I get a CVE id for http://bugs.debian.org/526678
+> 
+> The xvfb-run script used in Debian insecurely passes the X 
+> magic cookie via the commandline so it's an easy thing to 
+> grab it with system access.
 
-Thanks.
+YFYI, our maintainer just told me that he thinks this is included 
+since Fedora 10 in Fedora as well...
 
+Cheers
+Nico
 -- 
-    JB
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-
------ "Thomas Biege" <thomas@...e.de> wrote:
-
-> Hello.
-> 
-> http://www.dovecot.org/list/dovecot-news/2009-November/000143.html
-> 
-> http://dovecot.org/releases/1.2/dovecot-1.2.8.tar.gz
-> http://dovecot.org/releases/1.2/dovecot-1.2.8.tar.gz.sig
-> 
-> This is mainly to fix the 0777 base_dir creation issue, which could
-> be
-> considered a security hole, exploitable by local users. An attacker
-> could for example replace Dovecot's auth socket and log in as other
-> users. Gaining root privileges isn't possible though.
-> 
-> This affects only v1.2 users, v1.1 and older versions were creating
-> the
-> directory with 0755 permission.
-> 
-> If your Dovecot's base_dir isn't in /var/run/dovecot/, you should
-> also
-> make sure that the $prefix/var/ and $prefix/var/run/
-> (i.e. /usr/local/var/, /usr/local/var/run/ by default) aren't 0777.
-> 
-> 	* Dovecot v1.2.x had been creating base_dir (and its parents if
-> 	  necessary) with 0777 permissions. The base_dir's permissions get
-> 	  changed to 0755 automatically at startup, but you may need to
-> 	  chmod the parent directories manually.
-> 
-> 	- acl: If user has rights from more than one group, merge them
-> instead
-> 	  of choosing one group's rights and ignoring others.
-> 	- virtual: When using a lot of mailboxes, the virtual mailbox's
-> header
-> 	  could have grown over 32 kB and caused "out of memory" crashes.
-> Also
-> 	  over 64 kB headers couldn't even be updated with existing
-> transaction
-> 	  log records. Added a new record type that gets used with >=64 kB
-> 	  headers. Older Dovecot versions don't understand this header and
-> 	  will log errors if they see it.
-> 	- FETCH BODYSTRUCTURE didn't return RFC 2231 "key*" fields correctly
-> 
-> 
-> -- 
-> Bye,
->      Thomas
-> -- 
->  Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support &
-> Auditing
->  SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
-> -- 
->   Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
->                             -- Marie von Ebner-Eschenbach
+Content of type "application/pgp-signature" skipped
