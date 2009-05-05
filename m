@@ -1,46 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/16/3
-Message-ID: <20090716083042.GA20120@suse.de>
-Date: Thu, 16 Jul 2009 10:30:42 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/05/2
+Message-ID: <20090505145905.GA27950@ngolde.de>
+Date: Tue, 5 May 2009 16:59:05 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE-2009-1895 kernel: personality: fix PER_CLEAR_ON_SETID
+Cc: coley@...re.org
+Subject: CVE id request: Debian/Ubuntu specific issue in xvfb-run (xorg)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jul 16, 2009 at 02:49:02PM +0800, Eugene Teo wrote:
-> Reported by Julien Tinnes.
-> 
-> "We have found that the current PER_CLEAR_ON_SETID mask on Linux doesn't
-> include neither ADDR_COMPAT_LAYOUT, nor MMAP_PAGE_ZERO.
-> 
-> The current mask is READ_IMPLIES_EXEC|ADDR_NO_RANDOMIZE.
-> 
-> We believe it is important to add MMAP_PAGE_ZERO, because by using this
-> personality it is possible to have the first page mapped inside a
-> process running as setuid root.  This could be used in those scenarios:
-> 
-> - Exploiting a NULL pointer dereference issue in a setuid root binary
-> - Bypassing the mmap_min_addr restrictions of the Linux kernel: by
-> running a setuid binary that would drop privileges before giving us
-> control back (for instance by loading a user-supplied library), we could
-> get the first page mapped in a process we control.  By further using
-> mremap and mprotect on this mapping, we can then completely bypass the
-> mmap_min_addr restrictions.
-> 
-> Less importantly, we believe ADDR_COMPAT_LAYOUT should also be added
-> since on x86 32bits it will in practice disable most of the address
-> space layout randomization (only the stack will remain randomized)."
-> 
-> Upstream commit:
-> http://git.kernel.org/linus/f9fabcb58a6d26d6efde842d1703ac7cfa9427b6
-> 
-> References:
-> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-1895
-> http://blog.cr0.org/2009/06/bypassing-linux-null-pointer.html
-> http://patchwork.kernel.org/patch/32598/
-> http://marc.info/?l=linux-security-module&m=124724852000951&w=2
+Hi Steve,
+can I get a CVE id for http://bugs.debian.org/526678
 
-Also http://www.securityfocus.com/bid/35647
+The xvfb-run script used in Debian insecurely passes the X 
+magic cookie via the commandline so it's an easy thing to 
+grab it with system access.
 
-Ciao, Marcus
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
