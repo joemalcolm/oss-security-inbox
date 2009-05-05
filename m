@@ -1,48 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/27/2
-Message-Id: <1240846586.13326.12.camel@dhcp-lab-164.englab.brq.redhat.com>
-Date: Mon, 27 Apr 2009 17:36:26 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Konstanty <konstanty@...il.com>
-Subject: Re: CVE Request -- libmodplug
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/05/1
+Message-ID: <20090505164513.27837ad9@redhat.com>
+Date: Tue, 5 May 2009 16:45:13 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: OSS Security <oss-security@...ts.openwall.com>
+Cc: coley@...re.org
+Subject: Old cscope buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve,
+Hi!
 
-  FYI Konstanty has added more checks (for // Sample Names
-potential overflow) and also null terminations for
-relevant strings (to ensure string safety) at:
+If you're preparing cscope updates for CVE-2009-0148 and you may still
+be shipping packages based on 15.5, you may want to have a look at:
 
-http://modplug-xmms.cvs.sourceforge.net/viewvc/modplug-xmms/libmodplug/src/load_med.cpp?r1=1.2&amp;amp;amp;r2=1.3&amp;amp;amp;view=patch
+  https://bugzilla.redhat.com/show_bug.cgi?id=499174
 
-So new 0.8.7 release of libmodplug is available.
+Steve, as the first public report for this is from 2006:
 
-Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+  https://bugzilla.redhat.com/show_bug.cgi?id=189666
 
-On Tue, 2009-04-21 at 14:47 +0200, Jan Lieskovsky wrote:
-> Hello Steve,
-> 
->   could you please allocate a new CVE-2008-XXXX identifier for
-> the following old libmodplug issue:
-> 
-> References:
-> http://bugs.gentoo.org/show_bug.cgi?id=266913
-> http://www.securityfocus.com/bid/30801/info
-> http://sourceforge.net/project/shownotes.php?release_id=677065&amp;group_id=1275
-> https://bugzilla.redhat.com/show_bug.cgi?id=496834
-> 
-> Affected libmodplug versions: x < 0.8.6
-> 
-> Patch (against modplug-xmms/libmodplug):
-> http://modplug-xmms.cvs.sourceforge.net/viewvc/modplug-xmms/libmodplug/src/load_med.cpp?r1=1.1&amp;r2=1.2
-> 
-> Thanks, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
-> 
-> 
-> 
+I believe 2006 CVE id is needed here.
 
+If you only ship 15.6 or later, you can ignore this mail.
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
