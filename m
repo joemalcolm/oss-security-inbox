@@ -1,30 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/24/1
-Message-ID: <534900250.1591256404144642.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Sat, 24 Oct 2009 13:09:04 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/06/4
+Message-ID: <Pine.GSO.4.51.0905061142050.3040@faron.mitre.org>
+Date: Wed, 6 May 2009 11:42:09 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kvm: update_cr8_intercept() NULL pointer dereference when running without an apic
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: file security issue
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2009-3640.
 
-Thanks.
+======================================================
+Name: CVE-2009-1515
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1515
+Reference: MISC:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=515603
+Reference: MISC:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=525820
+Reference: CONFIRM:ftp://ftp.astron.com/pub/file/file-5.01.tar.gz
+Reference: BID:34745
+Reference: URL:http://www.securityfocus.com/bid/34745
+Reference: OSVDB:54100
+Reference: URL:http://www.osvdb.org/54100
+Reference: SECUNIA:34881
+Reference: URL:http://secunia.com/advisories/34881
 
--- 
-    JB
+Heap-based buffer overflow in the cdf_read_sat function in src/cdf.c
+in Christos Zoulas file 5.00 allows user-assisted remote attackers to
+execute arbitrary code via a crafted compound document file, as
+demonstrated by a .msi, .doc, or .mpp file.  NOTE: some of these
+details are obtained from third party information.
 
 
------ "Eugene Teo" <eugeneteo@...nel.sg> wrote:
-
-> Quote from the upstream commit:
-> "update_cr8_intercept() can be triggered from userspace while there
-> is no apic present."
-> 
-> http://git.kernel.org/linus/88c808fd42b53a7e01a2ac3253ef31fef74cb5af
-> 
-> This one can be triggered via kvm_vcpu_ioctl() if /dev/kvm is user 
-> accessible (which is recommended...). Fixed in v2.6.32-rc1.
-> 
-> Eugene
