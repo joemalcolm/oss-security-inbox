@@ -1,31 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/17/2
-Message-ID: <4A88AAE0.5070509@redhat.com>
-Date: Mon, 17 Aug 2009 08:57:04 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/06/2
+Message-Id: <200905062304.37224.steffen.joeris@skolelinux.de>
+Date: Wed, 6 May 2009 23:04:32 +1000
+From: Steffen Joeris <steffen.joeris@...lelinux.de>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: cfg80211: missing NULL pointer checks
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE id request: coccinelle
 Content-Type: text/plain; charset=utf-8
 
-Eugene Teo wrote:
-> Jon Oberheide wrote:
->> On Fri, 2009-08-14 at 17:33 -0600, dann frazier wrote:
-> [...]
->> Also would be nice to get one for the cfg80211 issue:
->> http://patchwork.kernel.org/patch/41218/
->>
->> Reproducer:
->> http://jon.oberheide.org/files/cfg80211-remote-dos.c
-> 
-> Thanks Jon.
-> 
-> "These pointers can be NULL, the is_mesh() case isn't ever hit in the
-> current kernel, but cmp_ies() can be hit under certain conditions."
-> 
-> Upstream commit:
-> http://git.kernel.org/linus/cd3468bad96c00b5a512f551674f36776129520e
+Hi
 
-It only affects the kernels v2.6.30-rc1 onwards. FYI.
+coccinelle has an unsafe tempfile handling. I guess this changelog entry[0] 
+could be used as a reference for the CVE.
+Could I get one for this?
 
-Eugene
+Cheers
+Steffen
+
+[0]: http://packages.qa.debian.org/c/coccinelle/news/20090502T001704Z.html
+
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
