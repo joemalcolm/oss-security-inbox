@@ -1,22 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/02/1
-Message-ID: <20090702112912.GP2803@ngolde.de>
-Date: Thu, 2 Jul 2009 13:29:12 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/06/1
+Message-Id: <200905062132.33865.steffen.joeris@skolelinux.de>
+Date: Wed, 6 May 2009 21:32:33 +1000
+From: Steffen Joeris <steffen.joeris@...lelinux.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: drupal
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: moin
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-http://drupal.org/node/507572
+Hi
 
-Can I get CVE ids for the described issues?
+This upstream commit[0] is slightly different then the issues described in 
+CVE-2009-1482 and I think it deserves another CVE id to separate the XSS 
+issues. The debian bug[1] can also be used as a reference.
+Steve, what do you think?
 
 Cheers
-Nico
+Steffen
 
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
+[0]: http://hg.moinmo.in/moin/1.8/rev/269a1fbc3ed7
+[1]: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=526594
 
-Content of type "application/pgp-signature" skipped
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
