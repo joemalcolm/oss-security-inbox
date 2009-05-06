@@ -1,26 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/29/4
-Message-ID: <20090629162553.46f08744@redhat.com>
-Date: Mon, 29 Jun 2009 16:25:53 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/06/9
+Message-ID: <20090506184922.7221eda1@redhat.com>
+Date: Wed, 6 May 2009 18:49:22 +0200
 From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: oss-security+ml@...lde.de
-Subject: Re: CVE id request: compface
+Cc: coley@...re.org
+Subject: Re: Old cscope buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 29 Jun 2009 13:48:31 +0200 Nico Golde
-<oss-security+ml@...lde.de> wrote:
+On Wed, 6 May 2009 11:49:14 -0400 (EDT) "Steven M. Christey"
+<coley@...us.mitre.org> wrote:
 
-> there is a buffer overflow in compface:
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=534973
-> http://milw0rm.org/exploits/8982
+> > If you're preparing cscope updates for CVE-2009-0148 and you may
+> > still be shipping packages based on 15.5, you may want to have a
+> > look at:
+> >
+> >   https://bugzilla.redhat.com/show_bug.cgi?id=499174
+> >
+> > Steve, as the first public report for this is from 2006:
+> >
+> >   https://bugzilla.redhat.com/show_bug.cgi?id=189666
+> >
+> > I believe 2006 CVE id is needed here.
+> 
+> We recently updated CVE-2009-0148 for overflows in cscope before
+> 15.7a. Is this the same issue, or do we need a different one?
+> 
+> This seems to be distinct from CVE-2006-4262 as well...
 
-It seems that Fedora compface packages contain this patch since the
-first import to Fedora:
+Different from both.  CVE-2009-0148 is more of a dupe / re-occurrence /
+incomplete fix of even older CVE-2004-2541.  Some vendors originally
+addressed that via sprintf -> snprintf across whole sources.  Upstream
+instead preferred to use "%.*s" with bit of length math to avoid
+overflow and not harm portability.  Though the math could int
+underflow, still allowing buffer overflow.
 
-http://cvs.fedoraproject.org/viewvc/rpms/compface/devel/compface-1.5.2-stack-smashing.patch
-
-HTH
+BZ#189666 issue was fixed upstream in 15.6.
 
 -- 
 Tomas Hoger / Red Hat Security Response Team
