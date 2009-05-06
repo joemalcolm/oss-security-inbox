@@ -1,81 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/25/1
-Message-Id: <200906251112.52601.aboudreault@mapgears.com>
-Date: Thu, 25 Jun 2009 11:12:52 -0400
-From: Alan Boudreault <aboudreault@...gears.com>
-To: Nico Golde <oss-security+ml@...lde.de>
-Cc: oss-security@...ts.openwall.com, coley@...re.org, 523027@...s.debian.org
-Subject: Re: incorrect upstream fix for CVE-2009-0840 (mapserver)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/06/3
+Message-ID: <Pine.GSO.4.51.0905061129350.3040@faron.mitre.org>
+Date: Wed, 6 May 2009 11:40:16 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: oss-security CNA
 Content-Type: text/plain; charset=utf-8
 
-Hi
 
-I've reported that to the devs. They should fix that as soon as possible.
+On Mon, 27 Apr 2009, Josh Bressers wrote:
 
-ALan
+> I think having an oss-security CNA that is not MITRE would be useful, and
+> hopefully would alleviate some of the pressure MITRE currently feels. There
+> would of course be collisions from time to time, but that's likely going to
+> still cause less pain than the current model provides.
+>
+> If this idea is appealing to MITRE, we could start working out some of the
+> details.
 
-On June 22, 2009 09:24:35 am Nico Golde wrote:
-> Hi,
->
-> from the CVE description:
-> | Heap-based buffer underflow in the readPostBody function in cgiutil.c in
-> | mapserv in MapServer 4.x before 4.10.4 and 5.x before 5.2.2 allows remote
-> | attackers to have an unknown impact via a negative value in the
-> | Content-Length HTTP header.
->
-> The affected code is in cgiutil.c:
-> 41 static char *readPostBody( cgiRequestObj *request )
-> 42 {
-> 43   char *data;
-> 44   int data_max, data_len, chunk_size;
-> 45
-> 46   msIO_needBinaryStdin();
-> 47
-> 48   /*
-> -------------------------------------------------------------------- */ 49 
->  /*      If the length is provided, read in one gulp.                    */
-> 50   /*
-> -------------------------------------------------------------------- */ 51 
->  if( getenv("CONTENT_LENGTH") != NULL ) {
-> 52     data_max = atoi(getenv("CONTENT_LENGTH"));
-> 53     data = (char *) malloc(data_max+1);
-> 54     if( data == NULL ) {
-> 55       msIO_printf("Content-type: text/html%c%c",10,10);
-> 56       msIO_printf("malloc() failed, Content-Length: %d unreasonably
-> large?\n", data_max ); 57       exit( 1 );
-> 58     }
-> 59
-> 60     if( (int) msIO_fread(data, 1, data_max, stdin) < data_max ) {
->
-> There is obviously a problem in case the content-length is negative.
-> The following is the upstream patch which was used to "fix" this issue:
->  static char *readPostBody( cgiRequestObj *request )
->  {
->    char *data;
-> -  int data_max, data_len, chunk_size;
-> +  unsigned int data_max, data_len;
-> +  int chunk_size;
->
->
-> Unfortunately this doesn't fix the issue and I wonder why people always
-> think changing signed types to unsigned will fix such errors.
-> If I pass 0xffffffff as the content-length according to type conversion
-> rules in C atoi() will convert this to -1 which is again converted to
-> 0xffff when assigning it to an unsigned int. data_max+1 in line 53 will
-> then overflow and malloc is called with a parameter of 0. This causes
-> malloc to allocated the smallest possible chunk but it will _not_ return
-> NULL (well, implementation defined). So it is still possible to perform a
-> heap-based buffer overflow after the upstream fix.
->
-> I'm not sure if this should get a new CVE id but the versions in the CVE id
-> description should be adjusted and the upstream patch revised.
->
-> Cheers
-> Nico
-> P.S. @Alan, this is also the reason I have to reject your packages in our
-> security queue again.
+I agree that this idea is worth exploring in detail.  One complicating
+factor is that various vulnerability databases have started monitoring
+this list, so we might create a CVE from our internal db-monitoring stream
+at the same time that a CNA performs an assignment.
 
--- 
-Alan Boudreault
-Mapgears
-http://www.mapgears.com
+Many months ago, I privately conferred with Mark Cox on this challenge for
+MITRE, and he suggested something like a well-formed request that fills in
+details that are relevant for CVEs.  Such details are often missing from
+the oss-security requests.  (They are often missing from Bugtraq and
+milw0rm posts too, but those are usually pretty simple bug types.)
+
+I don't know if a form-like request would always work, but it would make
+things more efficient.  As one example - the distros all use their own
+local version numbering schemes, or at least they maintain different
+versions.  This sometimes make it into a CVE description (causing
+inaccuracies we might have to fix later) or otherwises forces some
+research to determine the likely upstream version.  For Linux kernel
+issues, I often have to sift through git commit logs to guess that if a
+patch was committed on date X, and a new kernel was made on X+3, that
+maybe that's the fixed kernel version - at least for the 2.6 kernel
+anyway.
+
+As Jericho said, open source poses a special challenge because there is
+often a large amount of details we may want to include in descriptions.
+Especially for things like the Linux kernel, CVE often has more specific
+details than any other data source out there.  This is expensive to
+generate, but avoiding such details when they're available potentially
+leads to duplicates or confusion.  My comments of the past few weeks are a
+reflection of the CVE team's larger efforts for defining a process that's
+efficient but still fulfills CVE's primary role for its primary
+audience(s).
+
+Thanks all,
+Steve
