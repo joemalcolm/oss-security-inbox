@@ -1,23 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/06/1
-Message-ID: <49D998B7.9080300@redhat.com>
-Date: Mon, 06 Apr 2009 13:52:55 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: NFS: Fix an Oops in encode_lookup()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/06/10
+Message-ID: <Pine.GSO.4.51.0905061253280.3040@faron.mitre.org>
+Date: Wed, 6 May 2009 12:53:51 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Tomas Hoger <thoger@...hat.com>
+cc: oss-security@...ts.openwall.com, coley@...re.org
+Subject: Re: Old cscope buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-According to the upstream commit 54af3bb543, the NFS file name limit is
-not being initialised correctly in the struct nfs_server. The problem
-can be easily triggered by a local, unprivileged user. We need to make
-sure that we limit whatever is being set in nfs_probe_fsinfo() and
-nfs_init_server(). We also need to ensure that readdirplus and
-nfs4_path_walk respect our file name limits.
 
-http://git.kernel.org/linus/54af3bb543c071769141387a42deaaab5074da55
-https://bugzilla.redhat.com/show_bug.cgi?id=494074
+On Wed, 6 May 2009, Tomas Hoger wrote:
 
-Thanks, Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
+> > We recently updated CVE-2009-0148 for overflows in cscope before
+> > 15.7a. Is this the same issue, or do we need a different one?
+> >
+> > This seems to be distinct from CVE-2006-4262 as well...
+>
+> Different from both.  CVE-2009-0148 is more of a dupe / re-occurrence /
+> incomplete fix of even older CVE-2004-2541.
+
+OK.  Use CVE-2009-1577, to be filled in later.
+
+- Steve
