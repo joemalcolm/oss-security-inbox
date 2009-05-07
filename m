@@ -1,18 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/12/9
-Message-ID: <20090212194354.GA25522@suse.de>
-Date: Thu, 12 Feb 2009 20:43:54 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: http://www.securityfocus.com/bid/33672/info kernel issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/07/1
+Message-ID: <2359eed20905071042v2dd4be46k25d79eb35dded92@mail.gmail.com>
+Date: Thu, 7 May 2009 12:42:27 -0500
+From: Will Drewry <redpig@...rt.org>
+To: oss-security@...ts.openwall.com, bugtraq@...urityfocus.com,  ocert-announce@...ts.ocert.org
+Subject: [oCERT-2009-001] Pango integer overflow in heap allocation size  calculations
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+#2009-001 Pango integer overflow in heap allocation size calculations
 
-If you are wondering (like one of our customers)
-http://www.securityfocus.com/bid/33672/ seems to be this commit:
-http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.28.y.git;a=commit;h=8255fc826e58c0a59711029e01db9fcdc06ba211
+Description:
 
-Not sure if its exploitable though.
+Pango is a library for laying out and rendering text, with an emphasis
+on internationalization.  Pango suffers from a multiplicative integer
+overflow which may lead to a potentially exploitable, heap overflow
+depending on the calling conditions.  For example, this vulnerability is
+remotely reachable in Firefox by creating an overly large
+document.location value but only results in a process-terminating,
+allocation error (denial of service).
 
-Ciao, Marcus
+The affected function is pango_glyph_string_set_size. An overflow check
+when doubling the size neglects the overflow possible on the subsequent
+allocation:
+
+  string->glyphs = g_realloc (string->glyphs, string->space *
+                              sizeof (PangoGlyphInfo));
+
+Note that other font rendering subsystems suffer from similar issues and
+should be cross-checked by maintainers.
+
+
+Affected version:
+
+Pango < 1.24
+
+
+Fixed version:
+
+Pango >= 1.24
+(check with your package maintainer for backports)
+
+
+Credit: Will Drewry, oCERT Team | Google Security Team.
+        Special thanks to Karl Tomlinson for extended analysis of the
+        impact on Firefox.
+
+
+CVE: CVE-2009-1194
+
+
+Timeline:
+2009-02-22: attempted to contact upstream via gtk-i18n-list@...me.org
+2009-02-25: bug filed with Mozilla against firefox
+2009-03-02: Behdad Esfahbod patched Pango upstream for 1.24
+2009-04-13: vendor-sec alerted regarding backporting the silent pango fix
+2009-04-23: embargo date and CVE assigned (thanks Josh Bressers!)
+2009-05-07: advisory released
+
+
+References:
+http://www.pango.org/
+https://bugzilla.mozilla.org/show_bug.cgi?id=480134
+
+
+Links:
+http://www.mozilla.org/firefox
+
+
+Permalink:
+http://www.ocert.org/advisories/ocert-2009-001.html
+
+
+--
+Will Drewry <redpig@...rt.org>
+oCERT Team :: http://ocert.org
