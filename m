@@ -1,43 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/12/4
-Message-ID: <hfvf1v$83h$1@ger.gmane.org>
-Date: Sat, 12 Dec 2009 01:00:15 -0600
-From: Raphael Geissert <geissert@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: polipo DoS via overly large "Content-Length" header
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/11/1
+Message-ID: <20090511164341.GL4350@inversepath.com>
+Date: Mon, 11 May 2009 17:43:41 +0100
+From: Andrea Barisani <lcars@...rt.org>
+To: ocert-announce@...ts.ocert.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: [oCERT-2009-004] AjaxTerm session id collision
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-Hi,
+#2009-004 AjaxTerm session id collision
 
-A vulnerability has been found in polipo that allows a remote attacker to
-crash the daemon via an overly large "Content-Length" header.
-The vulnerability is caused by connection->reqlen (in client.c:
-httpClientDiscardBody()) being a signed integer which can be overflowed
-turning it into a negative value which later leads to a segmentation fault
-in the call to memmove.
+Description:
+
+AjaxTerm, an open source web based terminal, uses a form of random session id
+generation which can lead to remote session hijacking.
+
+The ajaxterm.js script allocates session ids on the client side using the
+following method:
+
+ var sid=""+Math.round(Math.random()*1000000000);
+
+The javascript random function used in combination with round does not provide
+sufficient entropy for a unique session id, as the session id is the only
+unique identifier for the user session it is possible for an attacker to brute
+force the space of possible id values and attach an existing connection.
+
+This vulnerability also allows Denial Of Service attacks as it is possible to
+exhaust the available session ids when performing a brute force attack and,
+depending on the configured AjaxTerm child command, system resources.
+
+Affected version:
+
+AjaxTerm <= 0.10
+
+Fixed version:
+
+Unfortunately oCERT has been unable to get feedback from AjaxTerm maintainers
+and the package seems unmaintained, it's therefore suggested to avoid AjaxTerm
+usage on production or any environment where strong security is needed.
+
+Credit: Initial vulnerability report provided by Michael Greb <mgreb [at]
+linode [dot] com>.
+
+CVE: N/A
+
+Timeline:
+
+2009-03-12: vulnerability report received
+2009-03-12: contacted AjaxTerm maintainer
+2009-04-18: oCERT contacts various vendors security team seeking for
+            developers familiar with AjaxTerm
+2009-04-28: due to lack of feedback oCERT asks reporter to disclose the
+            issue
+2009-04-29: reporter agrees to disclosure
+2009-05-11: advisory release
 
 References:
-http://www.exploit-db.com/exploits/10338
-http://bugs.debian.org/560779
-http://secunia.com/advisories/37607/
 
-Could a CVE be assigned?
+Permalink:
+http://www.ocert.org/advisories/ocert-2009-004.html
 
-Thanks in advance.
+-- 
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | Open Source Computer Emergency Response Team
 
-Regards
-- -- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iEYEARECAAYFAksjP4MACgkQYy49rUbZzlqESQCdG3O9usXILnu4G6NuMmfUcQ2b
-uYMAn1Y54+xj89y3cqXrpeQHUirdrr6E
-=KUfO
------END PGP SIGNATURE-----
-
+<lcars@...rt.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
