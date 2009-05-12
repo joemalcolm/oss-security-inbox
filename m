@@ -1,52 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/10/4
-Message-ID: <Pine.GSO.4.51.0911092030480.4011@faron.mitre.org>
-Date: Mon, 9 Nov 2009 20:45:36 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Handling cases of CWE-776
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/12/2
+Message-Id: <1242136846.3531.28.camel@localhost.localdomain>
+Date: Tue, 12 May 2009 16:00:46 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: Steven Christey <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com
+Subject: CVE Request -- kdebase4 (konqueror) -- Incomplete SSL Certificate support in KDE4
 Content-Type: text/plain; charset=utf-8
 
+Hello Steve,
 
-On Wed, 28 Oct 2009, Tim Brown wrote:
+  not sure if original Debian bug [1] reporter meant this insufficiency,
+but [2] might be interesting for your attention. While this is not
+direct security vulnerability, is is preventing users from using
+the functionality provided by digital certificates.
 
-> How are problems with XML bombs (the so called "billion laughs" attack) being
-> handled?  Should I be filing such bugs against the applications that exposes
-> the XML parser to user input or is it better to report the issue against the
-> parser themselves.  For example, the test case I've prepared for one affected
-> parser simply causes the CPU to spin but the system appears to stay
-> responsive (so far ;)).  Is it even fair to call such a denial of service?
-> (If the code was executed in a real application, no further processing would
-> happen within the affected process as the parser is tied up in memmove()s).
+References:
+[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=526979
+[2] https://bugs.kde.org/show_bug.cgi?id=185288
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=500373
 
-If it's a specific parser/library, then it has a special responsibility to
-avoid DoSing its callers.  Kind of like having a library that exits the
-entire process when it encounters an error (hello libgssapi/CVE-2007-5471
-and MSVCR80.DLL/CVE-2007-0842).
+This issue is present only in Konqueror web browser, as shipped
+with the K Desktop Environment 4 (kdebase-4.*). Konqueror in
+kdebase3 works fine.
 
->From a CVE perspective, if an application uses the vulnerable library,
-then it shouldn't get its own CVE.
+Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
-In the case of XML bomb, there is very little effort required to generate
-massive consumption, so I'm comfortable with assigning CVEs to them.  The
-notion of asymmetric effort seems important to resource consumption at
-this point.
-
-However, I am nervous about resource-exhaustion DoS problems in general,
-for the long-term implications.  They are design-level problems and can be
-very difficult to fix; if you're a library, then you may require an API
-change, thus affecting all your callers; and it's not like there's a
-hard-and-fast rule about how much CPU or memory you have to consume before
-resource consumption becomes a DoS instead of just a bug or feature.
-(I'm still not sure whether trying to load the CVE XML into any browser
-should count as a DoS; it doesn't feel like a 45-meg file should require
-500+ meg and full CPU consumption to render.  Don't try this at home
-though ;-))
-
-I suspect resource exhaustion issues are everywhere, so at some time we
-may reach a tipping point where vulnerability analysts - including vendors
-and databases - get slammed with zillions of DoS issues.  Such issues
-*should* be fixed, and I'm not discouraging people from disclosing them,
-but we should try not to be too surprised if/when the deluge comes.
-
-- Steve
