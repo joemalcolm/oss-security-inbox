@@ -1,19 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/24/2
-Message-ID: <20090224160444.GA18620@suse.de>
-Date: Tue, 24 Feb 2009 17:04:44 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE request: optipng security release
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/12/6
+Message-ID: <1596749503.695371242152928307.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 12 May 2009 14:28:48 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request (evolution)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello everyone,
 
-According to http://optipng.sourceforge.net/
+So there is a public bug about how Evolution sets permissions on folders in
+~/.evolution
 
-optipng released OptiPNG 0.6.2 fixing
-"All current OptiPNG versions are known to be vulnerable to memory reallocation attacks, due to a bug in the GIF image reader. 
+The current public bugs I know of are here:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=526409
+http://bugzilla.gnome.org/show_bug.cgi?id=581604
+https://bugzilla.redhat.com/show_bug.cgi?id=498648
 
-Please allocate a CVE ID.
+This one probably needs some discussion with upstream before it gets fixed.
+The threat is fairly minor, and we don't want to do anything rash and end up
+breaking something.
 
-Ciao, Marcus
+-- 
+    JB
