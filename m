@@ -1,24 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/21/6
-Message-ID: <Pine.GSO.4.51.0904211822510.24412@faron.mitre.org>
-Date: Tue, 21 Apr 2009 18:23:27 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Jamie Strandboge <jamie@...onical.com>
-cc: oss-security@...ts.openwall.com, coley@...us.mitre.org, team@...urity.debian.org
-Subject: Re: CVE request: apt
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/12/5
+Message-Id: <200905121625.48260.hanno@hboeck.de>
+Date: Tue, 12 May 2009 16:25:48 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: Tomas Hoger <thoger@...hat.com>
+Cc: oss-security@...ts.openwall.com, Steven Christey <coley@...us.mitre.org>
+Subject: Re: CVE request: Squirrelmail < 1.4.18 XSS, session fixation, server-side code execution
 Content-Type: text/plain; charset=utf-8
 
+Am Dienstag 12 Mai 2009 schrieb Tomas Hoger:
+> Was this meant as CVE request?  Upstream changelog does mention CVEs
+> for the issues, as well as upstream SVN commits and security page:
+>   http://www.squirrelmail.org/security/
 
-======================================================
-Name: CVE-2009-1358
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1358
-Reference: CONFIRM:https://bugs.launchpad.net/ubuntu/+source/apt/+bug/356012
+Thanks for the note, the release notes didn't mention them and they were not 
+up on nvd.nist.org, so I didn't find them.
 
-apt-get in apt before 0.7.21 does not check for the correct error code
-from gpgv, which causes apt to treat a repository as valid even when
-it has been signed with a key that has been revoked or expired, which
-might allow remote attackers to trick apt into installing malicious
-repositories.
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+http://ausdenaugenausdemsinn.de - Kein Sicherheitsrabatt für CO2-Speicher
+http://tinyurl.com/dceu73 - Internetzensur stoppen!
 
+http://schokokeks.org - professional webhosting
 
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
