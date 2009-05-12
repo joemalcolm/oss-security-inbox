@@ -1,31 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/10/1
-Message-ID: <49B6EDCD.9040705@gentoo.org>
-Date: Tue, 10 Mar 2009 23:46:37 +0100
-From: Pierre-Yves Rofes <py@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/12/1
+Message-Id: <200905120943.36957.hanno@hboeck.de>
+Date: Tue, 12 May 2009 09:43:36 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: courier-authlib < 0.62.0 SQL Injection
+Cc: Steven Christey <coley@...us.mitre.org>
+Subject: CVE request: Squirrelmail < 1.4.18 XSS, session fixation, server-side code execution
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
->From Changelog:
-
-"0.62.0
-2008-12-17  Sam Varshavchik  <mrsam@...rier-mta.com>
-
-* authpgsqllib.c: Use PQescapeStringConn() instead of removing all
- apostrophes from query parameters. This fixes a potential SQL injection
- vulnerability if the Postgres database uses a non-Latin locale."
-
-References:
-http://www.courier-mta.org/authlib/changelog.html
-http://bugs.gentoo.org/show_bug.cgi?id=252576
-
-
-Thanks,
-
+From squirrelmail.org:
+The SquirrelMail Team is pleased to announce the release of SquirrelMail 
+version 1.4.18. The most notable changes for this version are several 
+security fixes, including a couple XSS exploits, a session fixation issue, 
+and an obscure but dangerous server-side code execution hole.
 
 -- 
-Pierre-Yves Rofes
-Gentoo Linux Security Team
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+http://ausdenaugenausdemsinn.de - Kein Sicherheitsrabatt für CO2-Speicher
+http://tinyurl.com/dceu73 - Internetzensur stoppen!
+
+http://schokokeks.org - professional webhosting
+
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
