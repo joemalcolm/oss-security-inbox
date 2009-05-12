@@ -1,32 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/28/2
-Message-ID: <20091028103816.GC32728@suse.de>
-Date: Wed, 28 Oct 2009 11:38:16 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Handling cases of CWE-776
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/12/3
+Message-ID: <20090512161842.5f42a5e7@redhat.com>
+Date: Tue, 12 May 2009 16:18:42 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com, coley@...re.org
+Subject: Re: ipsec-tools 0.7.2
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Oct 28, 2009 at 12:02:40AM +0000, Tim Brown wrote:
-> All,
+On Wed, 29 Apr 2009 16:56:58 +0200 Tomas Hoger <thoger@...hat.com>
+wrote:
+
+> * src/racoon/crypto_openssl.c: From Stephen Bevan: Fix a x509
+>   signature verification memory leak.
 > 
-> How are problems with XML bombs (the so called "billion laughs" attack) being 
-> handled?  Should I be filing such bugs against the applications that exposes 
-> the XML parser to user input or is it better to report the issue against the 
-> parser themselves.  For example, the test case I've prepared for one affected 
-> parser simply causes the CPU to spin but the system appears to stay 
-> responsive (so far ;)).  Is it even fair to call such a denial of service? 
-> (If the code was executed in a real application, no further processing would 
-> happen within the affected process as the parser is tied up in memmove()s).  
-> I'm just curious as I don't want to waste peoples time with the disclosure 
-> process if others are simply filing "standard" bugs against affected parsers 
-> and moving on to more interesting matters.
+> https://trac.ipsec-tools.net/ticket/303
+> http://cvsweb.netbsd.org/bsdweb.cgi/src/crypto/dist/ipsec-tools/src/racoon/crypto_openssl.c.diff?r1=1.11.6.4&r2=1.11.6.5&f=h
+> 
+> This leak occurs during user authentication using certificates.  It's
+> possible to reach it for unauthenticated users, though certificate
+> itself is validated first, which mitigates this slightly.
+> 
+> * src/racoon/nattraversal.c: Fix a memory leak in nat-t keepalive
+>   code.
+> 
+> http://cvsweb.netbsd.org/bsdweb.cgi/src/crypto/dist/ipsec-tools/src/racoon/nattraversal.c.diff?r1=1.6&r2=1.6.6.1&f=h
+> 
+> This can occur during phase1 too, before authentication.  Requires
+> nat-t to be enabled / allowed, leaks two struct sockaddr.
 
-If an application can be made unresponsive this way it would still be
-a denial of service against this app, so Yes.
+I'm bit unsure about how to treat these form CVE point of view.  These
+both happen during normal operation too.  However, attacker can cause
+these leaks in some setups (ipsec server serving road warriors) without
+being able to authenticate successfully, so this bears some exploitation
+potential.  Given the previous ipsec-tools CVE assignments
+(CVE-2008-3651/2), this may deserve CVE too.
 
-It always should however be checked if the application can get this data
-from a real life attacker or if a admin user needs to push it in. For the
-latter it is not DoS in my eyes.
+Thoughts?
 
-Ciao, Marcus
+-- 
+Tomas Hoger / Red Hat Security Response Team
