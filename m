@@ -1,47 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/06/1
-Message-ID: <1751635993.287111231271206088.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 6 Jan 2009 14:46:46 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: Manuel.Reimer@....de, coley@...re.org
-Subject: Fwd: Using xdg-open in /etc/mailcap causes hole in Firefox (Demonstration/Exploit included)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/13/6
+Message-ID: <4A0AF7D1.60303@gentoo.org>
+Date: Wed, 13 May 2009 18:39:45 +0200
+From: Christian Hoffmann <hoffie@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: php mb_ereg_replace()
 Content-Type: text/plain; charset=utf-8
 
-Here's a heads up for everyone (I've CCd the discoverer)
+On 2009-05-13 16:47, Steven M. Christey wrote:
+> We don't have a CVE for the fact that strcpy() exists - it can be used
+> safely even though it's dangerous.  My interpretation of this issue was
+> the same, so no CVE is needed.  Any PHP application that misuses
+> mb_ereg_replace(), however, is fair game.
+> 
+> (We already have a handful of CVEs for executable regexp's in PHP apps)
+While I'm fine with no CVE being assigned, I think the difference
+between those cases should be clearly noted. Writing secure preg_replace
+calls (which make use of the 'e' modifier) is one thing and rather easy
+to accomplish (that's probably what you are referring to -- apps failing
+to do that).
+In contrast to that, writing secure mb_ereg(i)_replace calls which deal
+with user data becomes probably a real mess (you have to escape the
+input string before passing it to the function, it is impossible to come
+up with an mb_ereg_replace call which can be considered secure without
+doing any escaping beforehand).
 
-Steve, can you assign a CVE id.
+Short example:
+Run the code from comment "[9 May 5:13am UTC] jani@....net" from [1].
+The result clearly shows the difference between mb_ereg_replace() and
+preg_replace() and how hard it would be to write secure code involving
+this function, the 'e' modifier and untrusted input:
 
-Thanks.
+$ php bla.php
+mb_ereg_replace()
+THIS SHOULD NOT BE SEEN!!
+string(0) ""
+string(0) ""
 
------ Forwarded Message -----
+preg_replace()
+string(12) "', test(), '"
+string(0) ""
 
-Hello,
 
-as I've seen, you also seem to use xdg-open in /etc/mailcap.
+Anyway, doesn't change anything regarding the fact that nothing has to
+be done CVE-wise, imo.
 
-The problem is, that xdg-open, itself, detects the right mime-type. This allowes an attacker to deliver a dangerous file with a trustworthy mime-type to get it executed by xdg-open.
 
-I've created an example page:
-https://prefbar.mozdev.org/testxdgopen.html (With SSL)
-http://prefbar.mozdev.org/testxdgopen.html (Without SSL)
+[1] http://bugs.php.net/bug.php?id=48180
 
-This page delivers a .desktop file with the mime-type "application/pdf". In default configuration, Firefox offers to open this file with the default application, which is xdg-open. Just one click on "OK" (and most users won't have a closer look at the dialog!) and the content in the .desktop file is immediately executed!
-
-Other combinations are possible, I just got the first result with .desktop files. There may be other dangerous types, Firefox may be tricked to open with xdg-open. It's even possible to hide the real file type.
-
-See also:
-https://bugs.freedesktop.org/show_bug.cgi?id=19377
-Problem: Their security bugs are open to the public :-( Fast reaction would be required :-(
-
-Yours
-
-Manuel Reimer
 -- 
-()  ascii ribbon campaign - against html mail
-/\                        - gegen HTML-Mail
-answers as html mail will be deleted automatically!
-Antworten als HTML-Mail werden automatisch gelöscht!
+Christian Hoffmann
+Gentoo PHP team
 
-Sensationsangebot verlängert: GMX FreeDSL - Telefonanschluss + DSL 
-für nur 16,37 Euro/mtl.!* http://dsl.gmx.de/?ac=OM.AD.PD003K1308T4569a
+
+Download attachment "signature.asc" of type "application/pgp-signature" (262 bytes)
