@@ -1,40 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/13/3
-Message-ID: <4A0ABC46.1010207@gentoo.org>
-Date: Wed, 13 May 2009 14:25:42 +0200
-From: Christian Hoffmann <hoffie@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/13/5
+Message-ID: <Pine.GSO.4.51.0905131045320.304@faron.mitre.org>
+Date: Wed, 13 May 2009 10:47:01 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
 Subject: Re: php mb_ereg_replace()
 Content-Type: text/plain; charset=utf-8
 
-Heya,
 
-On 2009-05-13 09:40, Sebastian Krahmer wrote:
-> anyone aware of Bugtraq ID 34873 (http://www.securityfocus.com/bid/34873)?
-> Seems there is no CVE or anything else (not even a patch).
-Yes, I've quickly talked to upstream about this on IRC. The outcome was
-that this cannot be fixed, both from a technical point of view (escaping
-arbitrary multibyte data in a generic way) and from a backward
-compatibility point of view (would change behavior).
-While I'm far from being confident with that, I definitely see the points.
-Related bug: http://bugs.php.net/bug.php?id=48180
-A note has been added to the docs, as the bug states, but it doesn't
-seem to be live anywhere yet.
+On Wed, 13 May 2009, Christian Hoffmann wrote:
 
-I can share the IRC conversation log if the participating persons agree,
-I'll quickly ask back.
+> Regarding CVE... I'm not sure. It is not a vulnerability in PHP. It's a
+> missing functionality which very very easily leads to severe security
+> problems in apps which make use of the affected functions. And, this
+> missing functionality is usually expected to be there, as preg_replace
+> works like that. So.. tough case, imo.
 
-Regarding CVE... I'm not sure. It is not a vulnerability in PHP. It's a
-missing functionality which very very easily leads to severe security
-problems in apps which make use of the affected functions. And, this
-missing functionality is usually expected to be there, as preg_replace
-works like that. So.. tough case, imo.
+We don't have a CVE for the fact that strcpy() exists - it can be used
+safely even though it's dangerous.  My interpretation of this issue was
+the same, so no CVE is needed.  Any PHP application that misuses
+mb_ereg_replace(), however, is fair game.
 
-Hope this helps.
+(We already have a handful of CVEs for executable regexp's in PHP apps)
 
--- 
-Christian Hoffmann
-Gentoo PHP team
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (262 bytes)
+- Steve
