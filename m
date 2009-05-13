@@ -1,66 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/07/2
-Message-ID: <1459683327.1767741254941170035.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 7 Oct 2009 14:46:10 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: coley <coley@...re.org>
-Subject: More kernel CVE info (CVE-2009-2909)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/13/1
+Message-ID: <20090513074020.GA13560@suse.de>
+Date: Wed, 13 May 2009 09:40:20 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: php mb_ereg_replace()
 Content-Type: text/plain; charset=utf-8
 
-As MITRE is already busy, I'm giving a kernel flaw another CVE id. My analysis
-is below.
+Hi,
 
-The 2.6.31.2 changelog contains these two snippets:
-    net ax25: Fix signed comparison in the sockopt handler
-    net: Make the copy length in af_packet sockopt handler unsigned
+anyone aware of Bugtraq ID 34873 (http://www.securityfocus.com/bid/34873)?
+Seems there is no CVE or anything else (not even a patch).
 
-The ax25 flaw looks real, the af_packet one is probably just a bug.
-
-I'm assigning CVE-2009-2909 to the ax25 flaw.
-
-Here is my analysis, if someone sees an issue with it, please feel free to speak
-up.
-
-ax25 (CVE-2009-2909)
-
-        http://git.kernel.org/?p=linux/kernel/git/davem/net-2.6.git;a=commit;h=b7058842c940ad2c08dd829b21e5c92ebe3b8758
-        http://article.gmane.org/gmane.linux.kernel/896907
-
-        In the file af_ax25.c there is this bit:
-            case SO_BINDTODEVICE:
-                if (optlen > IFNAMSIZ) optlen=IFNAMSIZ;
-                if (copy_from_user(devname, optval, optlen))
-                    return -EFAULT;
-
-        If a user can make the value of optlen wrap to a negative number, the
-        check should pass, but the call to copy_from_user has this check in it:
-            BUG_ON((long) n < 0);
-        Where n is optlen. I'm told this will OOPS the kernel. That means that
-        this flaw should only be a DoS.
-
-
-af_packet (No CVE id, just a bug)
-
-        http://article.gmane.org/gmane.linux.kernel/896917
-
-        I don't think the missed check in af_packet.c is an issue. The check
-                if (len < 0)
-                    return -EINVAL;
-        Will never fail, but just beneath that bit in the code, you have
-                if (len > sizeof(struct tpacket_stats))
-                    len = sizeof(struct tpacket_stats);
-        and
-                if (len > sizeof(int))
-                    len = sizeof(int);
-        As our error condition would need len to be a negative number, but the
-        sizeof check will cast it as unsigned, these checks would effectively
-        fail, resetting len to something sane. Even then, all that happens
-        with len, is a copy_to_user, which wouldn't hurt the kernel, but could
-        crash the app (which we likely don't care about in this instance).
-
-Thanks.
-
+Sebastian
 
 -- 
-    JB
+~
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+~ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+
