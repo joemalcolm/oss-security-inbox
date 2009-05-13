@@ -1,14 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/01/4
-Message-ID: <87ocwlxbmm.fsf@mid.deneb.enyo.de>
-Date: Sun, 01 Mar 2009 20:54:09 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/13/4
+Message-Id: <200905131151.44822.oeriksson@mandriva.com>
+Date: Wed, 13 May 2009 11:51:44 +0200
+From: Oden Eriksson <oeriksson@...driva.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: tinydns crafted zone file cache poisoning vulnerability
+Subject: Re: php mb_ereg_replace()
 Content-Type: text/plain; charset=utf-8
 
-tinydns from djbdns version 1.05 and earlier incorrectly implements
-DNS label compression, allowing malicious zone editors to inject
-poisonous records into the additional section.
+onsdag 13 maj 2009 09:40:20 skrev  Sebastian Krahmer:
+> Hi,
+>
+> anyone aware of Bugtraq ID 34873 (http://www.securityfocus.com/bid/34873)?
+> Seems there is no CVE or anything else (not even a patch).
+>
+> Sebastian
 
-<http://article.gmane.org/gmane.network.djbdns/13833>
+Got this reply from Derick Rethans asking on security@....net:
+
+> It was brought to my attention there is a new security issue in php as shown 
+> here:
+> 
+> http://www.securityfocus.com/bid/34873
+> 
+> Could you please advice?
+
+How is this a bug, the documentation for mb_ereg_replace writes:
+
+"If e  is specified, replacement  string will be evaluated as PHP 
+expression. "
+
+In the example "e" is specified, so of course it will execute the code. 
+
+regards,
+Derick
+
+-- 
+Regards // Oden Eriksson
+
