@@ -1,44 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/12/4
-Message-Id: <1231767584.3228.13.camel@dhcp-lab-164.englab.brq.redhat.com>
-Date: Mon, 12 Jan 2009 14:39:44 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com
-Subject: CVE Request -- tsqllib, slurm-llnl, libnasl, libcrypt-openssl-dsa-perl, erlang, boinc-client, m2crypto
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/13/3
+Message-ID: <4A0ABC46.1010207@gentoo.org>
+Date: Wed, 13 May 2009 14:25:42 +0200
+From: Christian Hoffmann <hoffie@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: php mb_ereg_replace()
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve,
+Heya,
 
-  could you please allocate CVE ids for the following OpenSSL's
-CVE-2008-5077 related issues:
+On 2009-05-13 09:40, Sebastian Krahmer wrote:
+> anyone aware of Bugtraq ID 34873 (http://www.securityfocus.com/bid/34873)?
+> Seems there is no CVE or anything else (not even a patch).
+Yes, I've quickly talked to upstream about this on IRC. The outcome was
+that this cannot be fixed, both from a technical point of view (escaping
+arbitrary multibyte data in a generic way) and from a backward
+compatibility point of view (would change behavior).
+While I'm far from being confident with that, I definitely see the points.
+Related bug: http://bugs.php.net/bug.php?id=48180
+A note has been added to the docs, as the bug states, but it doesn't
+seem to be live anywhere yet.
 
-tsqllib:  https://bugzilla.redhat.com/show_bug.cgi?id=479650
-          http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=511509
+I can share the IRC conversation log if the participating persons agree,
+I'll quickly ask back.
 
-libnasl: https://bugzilla.redhat.com/show_bug.cgi?id=479655
-         http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=511517
+Regarding CVE... I'm not sure. It is not a vulnerability in PHP. It's a
+missing functionality which very very easily leads to severe security
+problems in apps which make use of the affected functions. And, this
+missing functionality is usually expected to be there, as preg_replace
+works like that. So.. tough case, imo.
 
-boinc-client: https://bugzilla.redhat.com/show_bug.cgi?id=479664
-              http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=511521
+Hope this helps.
 
-m2crypto: https://bugzilla.redhat.com/show_bug.cgi?id=479676
-          http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=511515
+-- 
+Christian Hoffmann
+Gentoo PHP team
 
-Other related issues (probably more to come):
-slurm-llnl:                 http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=511511
-libcrypt-openssl-dsa-perl:  http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=511519
-erlang:                     http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=511520
-                            (Lower severity issue due the fact, the output of
-                             DSA_do_verify function is further processed and
-                             sent back to the caller, where it is compared against 1:
 
->>From lib/crypto/src/crypto.erl:
-
-dss_verify(Dgst,Signature,Key) ->
-    control(?DSS_VERIFY, [Dgst,Signature,Key]) == <<1>>.
-
-Thanks, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
+Download attachment "signature.asc" of type "application/pgp-signature" (262 bytes)
