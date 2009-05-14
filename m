@@ -1,55 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/31/4
-Message-ID: <20090831160630.GA23604@genua.de>
-Date: Mon, 31 Aug 2009 18:06:30 +0200
-From: Steffen Ullrich <Steffen_Ullrich@...ua.de>
-To: Tomas Hoger <thoger@...hat.com>
-Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: Re: CVE request: perl-IO-Socket-SSL certificate hostname compare bug
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/14/5
+Message-ID: <20090514183349.GA7149@suse.de>
+Date: Thu, 14 May 2009 20:33:49 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: utmp reliability?
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Aug 31, 2009 at 05:23:53PM +0200, Tomas Hoger <thoger@...hat.com> wrote:
-> On Sat, 29 Aug 2009 20:45:53 +0200 Steffen Ullrich
-> <Steffen_Ullrich@...ua.de> wrote:
-> 
-> > - the feature to help checking the hostname against the certificate is fairly new
-> 
-> Introduced in 1.14, unless I'm mistaken:
-> 
->   http://cpansearch.perl.org/src/SULLR/IO-Socket-SSL-1.14/Changes
-> 
-> It may be good to have this listed in the CVE description.
+Hi,
 
-yes, this is a good idea.
-The version 1.14 was released 2008/07/16 and the necessary Net::SSLeay
-version 1.34 (which is needed for this feature) was release 2008/07/24.
+While debugging a problem for a customer of us I found that UTMP entries
+are not generated reliably and utmp entry creation starts to fail on
+higher loads/more users or more utmp activity.
 
-> Anyway, prefix requirement is another mitigation, as one may not be
-> able to get valid certificate for a prefix of arbitrary host name
-> (though it may be easier for TLDs as .com and .net via .co and .ne).
-> 
-> Speaking of prefixes, has anyone checked IO-Socket-SSL for
-> CVE-2009-2408-like issues?  If there is an issues, should it get fixed
-> in IO-Socket-SSL or in Net-SSLeay?
+Reason is that glibc locks the UTMP file on write/read with a 1 second
+timeout, and if that 1 second timeout triggers no entry is written.
 
-I did not check it yet.
-If there is a problem it has to be fixed in Net::SSLeay, IO::Socket::SSL
-is perl only and perl itself has no problems with strings containing \0.
->From the code in SSLeay.xs X509_get_subjectAltNames I would say, that
-this part should be no problem, because it explicitly uses ASN1_STRING_length
-to specify the length of the string. But I'm not sure about the use
-of X509_get_subject_name where it magically converts an X509_NAME* into
-a perl string.
-I keep you updated once I've checked it.
-
-Regards,
-Steffen
+Sadly without any indication of failure if you use login(3) or pututline(3). :(
 
 
--- 
-GeNUA Gesellschaft für Netzwerk - und Unix-Administration mbH
-Domagkstr. 7, D-85551 Kirchheim. http://www.genua.de
-Tel: (089) 99 19 50-0, Fax: (089) 99 10 50 - 999
+I am wondering if handling UTMP should be more reliable or if at least error
+reporting should happen.
 
-Geschäftsführer: Dr. Magnus Harlander, Dr. Michaela Harlander,
-Bernhard Schneck. Amtsgericht München HRB 98238
+Making it reliable will make it possible to DoS any kind of logins / terminal
+opens of course, but make it easier on app writers using utmp.
+
+
+(Yes, I know the really reliable way is Audit, but this is not user readable.)
+
+Ciao, Marcus
