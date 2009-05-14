@@ -1,23 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/28/3
-Message-ID: <Pine.GSO.4.51.0901272138210.25454@faron.mitre.org>
-Date: Tue, 27 Jan 2009 21:38:42 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: Re: CVE Request: winetricks symlink problem
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/14/6
+Message-ID: <20090514233225.GF15455@severus.strandboge.com>
+Date: Thu, 14 May 2009 18:32:25 -0500
+From: Jamie Strandboge <jamie@...onical.com>
+To: coley@...us.mitre.org
+Cc: oss-security@...ts.openwall.com
+Subject: CVE Request for libsndfile
 Content-Type: text/plain; charset=utf-8
 
+From http://www.mega-nerd.com/erikd/Blog/CodeHacking/libsndfile/:
 
-======================================================
-Name: CVE-2009-0313
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0313
-Reference: CONFIRM:http://code.google.com/p/winezeug/source/detail?r=253
-Reference: BID:33474
-Reference: URL:http://www.securityfocus.com/bid/33474
+  There's a new release of libsndfile available in the usual place. This
+  is a security bug fix release which fixes a potential heap overflow in
+  VOC files found and reported by Tobias Klein ( http://www.trapkit.de/ )
+  and another in the AIFF file parser found by me.
 
-winetricks before 20081223 allows local users to overwrite arbitrary
-files via a symlink attack on the x_showmenu.txt temporary file.
+1.0.20 supposedly fixes it, with the author supplying patches back to
+1.0.15. Can we get a CVE for this?
 
+Jamie
 
+-- 
+Jamie Strandboge             | http://www.canonical.com
+
+Download attachment "signature.asc" of type "application/pgp-signature" (198 bytes)
