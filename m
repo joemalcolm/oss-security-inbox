@@ -1,46 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/04/3
-Message-ID: <20090304223033.GA11376@logo.rdu.rpath.com>
-Date: Wed, 4 Mar 2009 17:30:33 -0500
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/15/6
+Message-ID: <20090515173456.GB22609@logo.rdu.rpath.com>
+Date: Fri, 15 May 2009 13:34:56 -0400
 From: "Michael K. Johnson" <johnsonm@...th.com>
 To: oss-security@...ts.openwall.com
-Subject: lxc-sshd security issues?
+Subject: Re: ptrace race CVE ID?
 Content-Type: text/plain; charset=utf-8
 
-I have not received any response to this query upstream, and I
-was wondering if anyone else has noticed this issue, and if so,
-if they have any plans with regard to it.  rPath isn't shipping
-lxc at this point, so we have no plans for a security advisory.
-But does pre-configured account information including root and
-user passwords bother anyone else here?
+On Fri, May 15, 2009 at 11:26:40AM -0600, dann frazier wrote:
+> On Fri, May 15, 2009 at 01:24:44PM -0400, Michael K. Johnson wrote:
+> > There's an exploit for the bug fixed in changeset
+> > cad81bc2529ab8c62b6fdc83a1c0c7f4a87209eb
+> > floating around in the wild.  I had thought it was assigned a
+> > CVE ID, but I am having trouble finding a record of it.  Is
+> > anyone else aware of a CVE ID for it?
+> > 
+> > Thanks...
+> 
+> CVE-2009-1527, I think
 
------ Forwarded message from "Michael K. Johnson" <johnsonm@...th.com> -----
-
-Date: Thu, 12 Feb 2009 14:49:45 -0500
-From: "Michael K. Johnson" <johnsonm@...th.com>
-To: legoater@...e.fr
-Subject: lxc-sshd security issues?
-
-I'm guessing, from the contents of the tarball in lxc-sshd, that
-you might be responsible for building lxc-sshd.
-
-I noticed three potential security issues while briefly perusing
-lxc-sshd:
- o  Pre-packaged host keys instead of generating unique host keys
-    within the script or optionally copying the host keys from
-    the system on which you are running lxc-sshd
- o  Pre-packaged root password instead of setting it in the script
- o  Pre-packaged legoater password ditto
-
-Obviously, the pre-packaged passwords are a potential security
-risk for you if you are using those passwords anywhere, and
-could also be considered to be "back doors" if they actually
-enable any access by default.
-
-I haven't tested any of that -- it just seemed odd while
-inspecting the tarball contents.
-
-In addition, I noticed /root/.bash_history was packaged in the
-tarball, which I am guessing was not intended.
-
------ End forwarded message -----
+Thanks again, that's clearly it.
