@@ -1,29 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/24/4
-Message-ID: <20090724163743.20554a34@redhat.com>
-Date: Fri, 24 Jul 2009 16:37:43 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: OSS Security <oss-security@...ts.openwall.com>
-Subject: nilfs-utils privilege escalation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/15/3
+Message-Id: <1242405871.5889.5.camel@localhost.localdomain>
+Date: Fri, 15 May 2009 18:44:31 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: Steven Christey <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com
+Subject: CVE Request -- Eggdrop
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+Hello Steve,
 
-During the package review of nilfs-utils packages before their
-inclusion into Fedora, it was pointed out that upstream Makefiles
-install files in /sbin as setuid root:
+  Thomas Sader yesterday reported, the original patch for original
+stack-based buffer overflow flaw (CVE-2007-2807) in Eggdrop is
+incomplete (might introduce another flaw). 
 
-https://bugzilla.redhat.com/show_bug.cgi?id=505374
+References:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=528778
+http://www.gossamer-threads.com/lists/fulldisc/full-disclosure/68341 
+(affected versions, vulnerability details, PoC, resolution).
+http://www.eggheads.org/downloads/ (upstream page)
+http://www.eggheads.org/redirect.php?url=ftp://ftp.eggheads.org/pub/eggdrop/patches/official/1.6/eggdrop1.6.19%2Bctcpfix.patch.gz
+(patch towards the latest version).
 
-Apart from the fact that those utils most likely don't need to be
-setuid on normal installs, Steve Grubb also noticed that mkfs.nilfs2
-executes external command using system(), making it easy to elevate
-privileges.
+Could you allocate a new CVE id for it?
 
-Issue should be fixed in 2.0.14 released this Mon, with patches linked
-in the bug mentioned above.  From a quick look, this should not affect
-Debian / Ubuntu packages (thanks to dh_fixperms, it seems), Gentoo does
-not seem to have any stable version.  I've not looked at other distros.
+Thanks, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
--- 
-Tomas Hoger / Red Hat Security Response Team
