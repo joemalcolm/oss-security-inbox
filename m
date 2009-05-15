@@ -1,45 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/23/7
-Message-ID: <49F01CC0.20405@redhat.com>
-Date: Thu, 23 Apr 2009 15:46:08 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Willy Tarreau <w@....eu>
-Subject: Re: Re: CVE-2009-1265 kernel: af_rose/x25: Sanity check the maximum user frame size
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/15/1
+Message-ID: <20090515032903.5832164f@foo.fgeek.fi>
+Date: Fri, 15 May 2009 03:29:03 +0300
+From: Henri Salo <henri@...v.fi>
+To: coley@...us.mitre.org
+Cc: oss-security@...ts.openwall.com
+Subject: CVE Request for cacti
 Content-Type: text/plain; charset=utf-8
 
-Marcus Meissner wrote:
-> On Thu, Apr 23, 2009 at 02:54:06PM +0800, Eugene Teo wrote:
->> Willy Tarreau wrote:
->>> Hi Eugene,
->>>
->>> On Wed, Apr 08, 2009 at 03:58:55PM +0800, Eugene Teo wrote:
->>>> {nr,rose,x25}_sendmsg() functions need to have sanity checks on the
->>>> packet size, otherwise the sizes can wrap and end up sending garbage.
->>>>
->>>> http://bugzilla.kernel.org/show_bug.cgi?id=10423
->>>> http://git.kernel.org/linus/83e0bbcbe2145f160fbaa109b0439dae7f4a38a9
->>>> http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2009-1265
->>>>
->>>> This affects both 2.4.x and 2.6.x if CONFIG_{NETROM,ROSE,X25} are enabled.
->>> I already have it in my queue, just did not have time to merge it yet.
->>> Thanks for the reminder anyway, I really appreciate it ;-)
->> You will need this too :)
->>
->> upstream commit: cc29c70dd581f85ee7a3e7980fb031f90b90a2ab
->>
->> Patch "af_rose/x25: Sanity check the maximum user frame size"
->> (commit 83e0bbcbe2145f160fbaa109b0439dae7f4a38a9) from Alan Cox got
->> locking wrong. If we bail out due to user frame size being too large,
->> we must unlock the socket beforehand.
-> 
-> I do not see cc29c70dd581f85ee7a3e7980fb031f90b90a2ab in mainline kernel git
-> yet, in which git does it live?
+I would like to obtain CVE identifier for security bug[1] in cacti[2].
+I beleive this version of cacti is still used in some servers[3][4].
 
-Interesting.
+1: http://bugs.cacti.net/view.php?id=1245
+2: http://cacti.net/
+3: http://packages.debian.org/oldstable/cacti
+4:
+http://qa.debian.org/popcon-graph.php?packages=cacti&show_installed=on&from_date=2007-04-08&to_date=2009-02-14&hlght_date=&date_fmt=%25Y-%25m&beenhere=1
 
-http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git;a=blob;f=queue-2.6.29/net-netrom-fix-socket-locking.patch;h=146431b88a3a57c98e56570941cd5ad6aeb1498c;hb=2f87957d1eaba126d27066479f25889a4191ebe8
+Dates 2007-04-08 and 2009-02-14 are from
+http://www.debian.org/News/2007/20070408 and
+http://www.debian.org/News/2009/20090214
 
-Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
+How do I proceed with this issue to get a valid CVE identifier?
+
+---
+Henri Salo
