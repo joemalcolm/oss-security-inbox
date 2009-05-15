@@ -1,40 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/01/3
-Message-ID: <20091201083754.080e5215@redhat.com>
-Date: Tue, 1 Dec 2009 08:37:54 +0100
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/15/2
+Message-ID: <20090515150940.GA19070@suse.de>
+Date: Fri, 15 May 2009 17:09:41 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: Re: Need more information on recent poppler issues
+Cc: Eugene Teo <eugene@...hat.com>, Steven French <sfrench@...ibm.com>, security@...nel.org, jlayton@...hat.com, "Steven M. Christey" <coley@...us.mitre.org>, dann frazier <dannf@...ian.org>, Greg KH <greg@...ah.com>
+Subject: Re: Re: Update - Re: CVE request? buffer overflow in CIFS in 2.6.*
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 30 Nov 2009 20:08:56 -0500 (EST) "Steven M. Christey"
-<coley@...us.mitre.org> wrote:
-
+On Thu, May 14, 2009 at 01:01:11PM -0400, Steven M. Christey wrote:
 > 
-> DSA-1941 lists three reserved CVE entries for Poppler issues, but there
-> aren't any more details, which makes it difficult to create CVE
-> descriptions.  Specifically, CVE-2009-3906, CVE-2009-3907, and
-> CVE-2009-3908 don't have any details as far as I can tell.
+> On Thu, 14 May 2009, Eugene Teo wrote:
 > 
-> Can anybody help?
+> > >> CVE-2009-NOT-YET-ASSIGNED:
+> > >>  http://git.kernel.org/linus/27b87fe52baba0a55e9723030e76fce94fabcea4
+> > >>  http://git.kernel.org/?p=linux/kernel/git/sfrench/cifs-2.6.git;a=commit;h=7b0c8fcff47a885743125dd843db64af41af5a61
+> > >>  http://git.kernel.org/?p=linux/kernel/git/sfrench/cifs-2.6.git;a=commit;h=968460ebd8006d55661dec0fb86712b40d71c413
+> > >>  + some others in progress
+> >
+> > These fixes need to be tagged to a CVE.
+> 
+> Use CVE-2009-1633, to be filled in later.  This CVE should be anchored
+> *only* on the issue above.
+> 
+> I'm almost afraid to ask what relationship there is between the above
+> commits and the extensive list of other issues from Jeff Layton, which
+> lists the above commit and a ton of others.  Mark Cox or Josh Bressers,
+> this might be a good time for you to step in CNA-wise?
 
-They look like typos to me.  That DSA lists 7 CVE-2009-390x CVEs, while
-it should probably list CVE-2009-3*6*0x ones.  CVE-2009-390[345] are
-public and for unrelated applications.
+The string conversion code in the CIFS module handling was rewritten
+to be able to handle destination buffer sizes.
 
-Changelog seems to list correct ids:
+Its basically starting with this commit:
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=7fabf0c9479fef9fdb9528a5fbdb1cb744a744a4
+and then conversions of the code to it.
 
-+poppler (0.8.7-3) stable-security; urgency=high
-+
-+  * Non-maintainer upload by the Security Team.
-+  * Fix CVE-2009-3603 to CVE-2009-3609, CVE-2009-0755. Based on patches
-+    by Marc Deslauriers
-+  * Fix CVE-2009-3938
-+
-+ -- Moritz Muehlenhoff <jmm@...ian.org>  Tue, 24 Nov 2009 21:54:26 +0100
+I am however not sure of how much needs to be backported, I guess only
+the stuff already with CVE entries.
 
-HTH
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+Ciao, Marcus
