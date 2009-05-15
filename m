@@ -1,30 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/23/9
-Message-ID: <20090423171122.GF4522@redhat.com>
-Date: Thu, 23 Apr 2009 11:11:22 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/15/5
+Message-ID: <20090515172640.GK390@lackof.org>
+Date: Fri, 15 May 2009 11:26:40 -0600
+From: dann frazier <dannf@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2009-1191: mod_proxy_ajp information disclosure vulnerability
+Subject: Re: ptrace race CVE ID?
 Content-Type: text/plain; charset=utf-8
 
-This is just a heads up about an information disclosure vulnerability in
-mod_proxy_ajp, similar to the issue in mod_jk (CVE-2008-5519).
+On Fri, May 15, 2009 at 01:24:44PM -0400, Michael K. Johnson wrote:
+> There's an exploit for the bug fixed in changeset
+> cad81bc2529ab8c62b6fdc83a1c0c7f4a87209eb
+> floating around in the wild.  I had thought it was assigned a
+> CVE ID, but I am having trouble finding a record of it.  Is
+> anyone else aware of a CVE ID for it?
+> 
+> Thanks...
 
-This only affects mod_proxy_ajp in httpd 2.2.11; prior versions do not
-have this problem.  The issue was caused by the following patch:
-
-http://svn.apache.org/viewvc?view=rev&revision=711779
-
-The patch that will be applied to httpd 2.2.12 is here:
-
-http://www.apache.org/dist/httpd/patches/apply_to_2.2.11/PR46949.diff
-
-More information can be found in our bugzilla:
-
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-1191
-
-This would only affect earlier versions of Apache if you had backported
-the problem patch to earlier versions.
+CVE-2009-1527, I think
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+dann frazier
+
