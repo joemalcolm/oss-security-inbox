@@ -1,33 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/25/3
-Message-ID: <4AE499C4.9050404@redhat.com>
-Date: Sun, 25 Oct 2009 19:32:36 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request -- Snort - 2.8.5.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/15/7
+Message-ID: <Pine.GSO.4.51.0905151624500.6857@faron.mitre.org>
+Date: Fri, 15 May 2009 16:25:39 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: ptrace race CVE ID?
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve, vendors,
 
-   Snort upstream has released 2.8.5.1 version fixing one security issue:
+On Fri, 15 May 2009, Michael K. Johnson wrote:
 
-DoS (crash) while printing specially-crafted IPv6 packet using the -v option
+> > CVE-2009-1527, I think
+>
+> Thanks again, that's clearly it.
 
-References:
------------
-http://dl.snort.org/snort-current/release_notes_2851.txt
-http://vrt-sourcefire.blogspot.com/2009/10/snort-2851-release.html
-http://secunia.com/advisories/37135/
+The CVE-2009-1527 description doesn't have "ptrace" alone, just ptrace.c,
+which is why you wouldn't have found it if you searched on the CVE web
+site.  I've since added a keyword so it'll be found in the future.
 
-PoC:  http://seclists.org/fulldisclosure/2009/Oct/299
-----
-
-Credit:  Laurent Gaffié
--------
-
-Could you allocate a new CVE identifier?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+- Steve
