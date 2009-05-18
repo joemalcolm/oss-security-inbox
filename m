@@ -1,40 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/07/2
-Message-ID: <20090907050608.GA30290@1wt.eu>
-Date: Mon, 7 Sep 2009 07:06:08 +0200
-From: Willy Tarreau <w@....eu>
-To: Eugene Teo <eugeneteo@...nel.sg>
-Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: tc: uninitialised kernel memory leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/18/2
+Message-ID: <20090518145618.GA24851@ngolde.de>
+Date: Mon, 18 May 2009 16:56:19 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE id request: slim
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Sep 07, 2009 at 11:32:29AM +0800, Eugene Teo wrote:
-> Solar Designer wrote:
-> >On Thu, Sep 03, 2009 at 11:45:03AM +0800, Eugene Teo wrote:
-> >>Three bytes of uninitialised kernel memory are currently leaked to user.
-> >>
-> >>http://patchwork.ozlabs.org/patch/32830/
-> >>https://bugzilla.redhat.com/show_bug.cgi?id=520990
-> >
-> >2.4 kernels appear to be affected as well, and moreover they appear to
-> >require at least some of these older fixes as well:
-> >
-> >http://marc.info/?l=git-commits-head&m=112002138324380
-> 
-> This is commit 9ef1d4c7c7aca1cd436612b6ca785b726ffb8ed8.
-> 
-> And linux-2.4.37.y needs the following two patches too:
-> 
-> [NETLINK]: Clear padding in netlink messages
-> b3563c4fbff906991a1b4ef4609f99cca2a0de6a
-> 
-> [NETLINK]: Missing padding fields in dumped structures
-> 8a47077a0b5aa2649751c46e7a27884e6686ccbf
+Hi,
+slim insecurely generates the x authorization file:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=529306
 
-Thanks Eugene, that's very kind. I have merged all 4 patches and
-pushed them to the master repo. I'm not releasing right now because
-those vulns are minor and I still have other issues to fix.
+Can I get a CVE id for this one?
 
-Regards,
-Willy
+Cheers
+Nico
 
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
