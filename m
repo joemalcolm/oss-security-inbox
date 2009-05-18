@@ -1,24 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/28/3
-Message-ID: <0910281142590.6938@mjc.redhat.com>
-Date: Wed, 28 Oct 2009 11:43:26 +0000 (GMT)
-From: Mark J Cox <mjc@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-cc: "Steven M. Christey" <coley@...us.mitre.org>, Josh Bressers <bressers@...hat.com>, Joe Orton <jorton@...hat.com>, Ondrej Vasik <ovasik@...hat.com>, Roman Rakus <rrakus@...hat.com>, CERT-FI Vulnerability Co-ordination <vulncoord@...ora.fi>
-Subject: Re: CVE Request -- expat [was: Re: Regarding expat bug 1990430]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/18/5
+Message-ID: <20090518193241.6ab68ad9@foo.fgeek.fi>
+Date: Mon, 18 May 2009 19:32:41 +0300
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Cc: Robert Buchholz <rbu@...too.org>
+Subject: Re: CVE Request for cacti
 Content-Type: text/plain; charset=utf-8
 
->> Based on the above -^ I would vote for separate CVE identifier for expat
->> flaw
->> (and its embedded copies in dozen of packages):
->>
->> https://bugs.gentoo.org/show_bug.cgi?id=280615#c8
->> https://bugs.gentoo.org/show_bug.cgi?id=280615#c10
->
-> As far as we understand, the expat flaw in question is in no way related
-> to CVE-2009-2625, or other recent XML parser flaws. Therefore our take
-> is that it should have a distinct CVE entry.
+On Mon, 18 May 2009 17:16:50 +0200
+Robert Buchholz <rbu@...too.org> wrote:
 
-So use CVE-2009-3720 for this
+> Hi Henri,
+> 
+> On Friday 15 May 2009, Henri Salo wrote:
+> > I would like to obtain CVE identifier for security bug[1] in
+> > cacti[2]. I beleive this version of cacti is still used in some
+> > servers[3][4].
+> >
+> > 1: http://bugs.cacti.net/view.php?id=1245
+> 
+> The resolution indicates the bug had already been fixed at the time
+> the bug was reported, thus implying it was a duplicate report of 
+> CVE-2008-0783. The CVE-2008-0783 patch [1] explicitly validates 
+> the 'action' variable as mentioned in the bug report.
+> 
+> However, the original poster reported the 0.8.6i-3.4 Debian revision
+> as vulnerable and according to DSA 1569-2 [2], it should not have
+> been.
+> 
+> Do you have any indication this is not covered by CVE-2008-0783?
+> 
+> 
+> Robert
+> 
+> [1] 
+> http://www.cacti.net/downloads/patches/0.8.7a/multiple_vulnerabilities-0.8.7a.patch
+> [2]
+> http://lists.debian.org/debian-security-announce/2008/msg00144.html
 
-Mark
+I tested this using Cacti from Etch with security updates (0.8.6i-3.5)
+and it seems to be fixed. Good work.
+
+---
+Henri Salo
