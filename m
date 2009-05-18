@@ -1,24 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/20/8
-Message-ID: <20090720134944.GA20246@openwall.com>
-Date: Mon, 20 Jul 2009 17:49:44 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/18/1
+Message-ID: <0905180919450.20973@mjc.redhat.com>
+Date: Mon, 18 May 2009 09:32:04 +0100 (BST)
+From: Mark J Cox <mjc@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux 2.6.30+/SELinux/RHEL5 test kernel 0day, exploiting the unexploitable
+Subject: Two OpenSSL DTLS remote DoS
 Content-Type: text/plain; charset=utf-8
 
-I got to quit commenting on my own postings, here's the last one at
-least for today, as I am obviously too tired.  I wrote:
+Spotted on openssl-dev, two issues that can lead to a remote attacker 
+exhausting memory of a DTLS enabled service.  DTLS support was introduced 
+in OpenSSL 0.9.8.
 
-> It occurred to me, from a few things I've seen/read lately, that RHEL 5
-> must indeed already include a back-port of the mmap_min_addr feature,
-> although somehow it is not in OpenVZ's patch-128.1.1.el5.028stab062.3
-> (was added after the -128 revision?), which is why I am adding my own
-> back-port of mmap_min_addr on top of that patch.
+CVE-2009-1377 DTLS epoch record buffer memory DoS
 
-I had recalled incorrectly.  As Eugene reminded me off-list, the extra
-patch I was actually referring to was about making the mmap_min_addr
-support (already present in RHEL 5 kernels, including the revision
-mentioned above) available independently of CONFIG_SECURITY.
+ 	http://rt.openssl.org/Ticket/Display.html?id=1930&user=guest&pass=guest
+         http://marc.info/?l=openssl-dev&m=124247675613888&w=2
+         http://cvs.openssl.org/chngview?cn=18187
 
-Alexander
+ 	CVSSv2= 5.0/AV:N/AC:L/Au:N/C:N/I:N/A:P
+
+CVE-2009-1378 DTLS fragment handling memory DoS
+
+ 	http://rt.openssl.org/Ticket/Display.html?id=1931&user=guest&pass=guest
+         http://marc.info/?t=124250665500033&r=1&w=2
+
+ 	http://cvs.openssl.org/chngview?cn=18188
+ 	(Note doesn't have a backported 0.9.8 patch yet, follow openssl-dev)
+
+ 	CVSSv2= 5.0/AV:N/AC:L/Au:N/C:N/I:N/A:P
+
+Thanks, Mark
