@@ -1,180 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/12/2
-Message-ID: <496B15B6.8000704@syscan.org>
-Date: Mon, 12 Jan 2009 18:04:38 +0800
-From: "organiser@...can.org" <organiser@...can.org>
-To: dailydave <dailydave@...ts.immunitysec.com>,  bugtraq@...urityfocus.com, oss-security@...ts.openwall.com,  focus-ids@...urityfocus.com, webappsec@...urityfocus.org,  isn@...osecnews.org, honeypots@...urityfocus.com,  incidents@...urityfocus.com, Focus-Linux@...urityfocus.com,  pen-test@...urityfocus.com, security-basics@...urityfocus.com,  security-announce@...bus.org, linux-security@...hat.com,  sectool-list@...hat.com, compsci@...ts.free.net.ph
-CC: "organiser@...can.org" <organiser@...can.org>
-Subject: SyScan'09 Call For Paper - Shanghai, Hong Kong, Singapore, Taipei
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/18/3
+Message-Id: <200905181716.54127.rbu@gentoo.org>
+Date: Mon, 18 May 2009 17:16:50 +0200
+From: Robert Buchholz <rbu@...too.org>
+To: oss-security@...ts.openwall.com
+Cc: Henri Salo <henri@...v.fi>, coley@...us.mitre.org
+Subject: Re: CVE Request for cacti
 Content-Type: text/plain; charset=utf-8
 
-*SyScan'09 CALL FOR PAPERS/TRAINING*
+Hi Henri,
 
-*ABOUT SYSCAN'09*
-This year, SyScan'09 will be held in the 4 exciting cities of Singapore, 
-Shanghai, Taipei and Hong Kong. Details are as follows:
+On Friday 15 May 2009, Henri Salo wrote:
+> I would like to obtain CVE identifier for security bug[1] in
+> cacti[2]. I beleive this version of cacti is still used in some
+> servers[3][4].
+>
+> 1: http://bugs.cacti.net/view.php?id=1245
 
-*/SyScan'09 /**/Shanghai/**/
-/*date: 13, 14 May 2009
-venue: Ramada Plaza Hotel Shanghai
+The resolution indicates the bug had already been fixed at the time the 
+bug was reported, thus implying it was a duplicate report of 
+CVE-2008-0783. The CVE-2008-0783 patch [1] explicitly validates 
+the 'action' variable as mentioned in the bug report.
 
-*/SyScan'09 /**/Hong Kong/**/
-/*date: 19, 20 May 2009
-venue: Langham Place Hotel
+However, the original poster reported the 0.8.6i-3.4 Debian revision as 
+vulnerable and according to DSA 1569-2 [2], it should not have been.
 
-*/SyScan'09 /**/Singapore/**/
-/*date: 2, 3 July 2009
-venue: Novotel Clarke Quay Hotel
-
-*/SyScan'09 /**/Taipei/**/
-/*date: 7, 8 July 2009
-venue: NTUH International Convention Center
-
-*CFP COMMITTEE *
-The Call for Papers committee for SyScan’09 comprises of the following 
-personnel:
-
-1. Thomas Lim – Organiser of SyScan and CEO of COSEINC
-2. Dave Aitel – Founder and CTO of Immunitysec
-3. Marc Maiffret – Ex-Founder and Chief Hacking Officer of eEye
-4. Matthew “Shok” Conover – Symantec
-
-The CFP committee will review all submissions and determine the final 
-list of speakers for SyScan’09.
-
-*CONFERENCE TOPICS *
-The focus for SyScan’09 will include the following:
-
-*Operating Systems *
-• Vista
-• Linux
-*Mobile Devices/Embedded systems *
-• SmartPhones
-• PDAs
-• Game Consoles
-*Web 2.0 *
-• Web services
-• PHP
-• .Net/.asp
-• Web applications
-*Networking/Telecommunication *
-• VoIP
-• 3G/3.5G network
-• IPv6
-• WLAN/WiFi
-• GPRS
-*New Technologies*
-• Chrome
-• IE8
-• Android
-• iPhone
-*Virtualization *
-*Malware/Rootkits
-BotNets
-Security Policy/Best Practices
-Legislation*
-*Any topics that will catch the attention of the CFP committee and/or 
-the world. *
-
-*TRAINING TOPICS *
-SyScan’09 training topics will focus on the following areas:
-
-*Web Applications *
-*Networks *
-*Securing Windows/Linux Systems *
-*Databases
-Storage
-Secure Programming/Development
-*
-*PRIVILEGES *
-Speakers’ Privileges:
-• Return economy class air-ticket for one person.
-• 3 nights of accommodation.
-• Breakfast, lunch and dinner during conference.
-• After-conference party.
-• A very healthy dose of alcohol and fun.
-• S$500 cash for speakers with brand new presentations.
-
-Trainers’ Privileges:
-• 50% of net profit of class.
-• 2 nights of accommodation (conference) (applicable for Singapore only).
-• After-conference party.
-• A very healthy dose of alcohol and fun.
-
-Please note that the net profit for each class is determined by the 
-difference between the total fee collected for each class and the total 
-expenses incurred for each class. The expenses of each class would 
-include the return economy air-ticket of the trainer, 3 nights of 
-accommodation (training) and the rental of the training venue.
+Do you have any indication this is not covered by CVE-2008-0783?
 
 
-*CFP SUBMISSION*
-CFP submission must include the following information:
+Robert
 
-1) Brief biography including list of publications and papers published 
-previously or training classes conducted previously.
-2) Proposed presentation/training title, category, synopsis and 
-description.
-3) Contact Information (full name, alias, handler, e-mail, postal 
-address, phone, fax, photo, country of origin, special dietary 
-requirement).
-4) Employment and/or affiliations information.
-5) Any significant presentation and educational/training 
-experience/background.
-6) Why is your material different or innovative or significant or an 
-important tutorial?
-
-Please note that all speakers will be allocated 50 minutes of 
-presentation time. Any speakers that require more time must inform the 
-CFP committee during the CFP submission.
-
-Training classes will be 2 full days. Please inform the CFP committee if 
-your class is shorter or longer than 2 days during your CFP submission.
-
-All submissions must be in English and in PDF format only. The more 
-information you provide, the better the chance for selection. Please 
-send submission to cfp@...can.org.
+[1] 
+http://www.cacti.net/downloads/patches/0.8.7a/multiple_vulnerabilities-0.8.7a.patch
+[2] http://lists.debian.org/debian-security-announce/2008/msg00144.html
 
 
-*IMPORTANT DATES *
-*Shanghai*
-Final CFP Submission – 28th February 2009.
-Notification of Acceptance – 16th March 2009.
-Final Submission for Accepted Presentation Material (Speakers) – 15th 
-April 2009
-
-*Hong Kong*
-Final CFP Submission – 28th February 2009.
-Notification of Acceptance – 16th March 2009.
-Final Submission for Accepted Presentation Material (Speakers) – 15th 
-April 2009.
-
-*Singapore*
-Final CFP Submission – 31st March 2009.
-Notification of Acceptance – 15th April 2009.
-Final Submission for Accepted Presentation Material (Speakers) – 8th May 
-2009.
-
-*Taipei*
-Final CFP Submission – 31st March 2009.
-Notification of Acceptance – 15th April 2009.
-Final Submission for Accepted Presentation Material (Speakers) – 8th May 
-2009.
-
-
-*OTHER INFORMATION *
-Please feel free to visit SyScan website to get a feel what this 
-conference is all about – SHARE AND HAVE FUN!
-
-By agreeing to speak at the SyScan'09 you are granting Syscan Pte. Ltd. 
-the rights to reproduce, distribute, advertise and show your 
-presentation including but not limited to http://www.syscan.org, printed 
-and/or electronic advertisements, and all other mediums.
-
--- 
-Thank you
-Thomas Lim
-Organiser
-SyScan'09
-www.syscan.org
-
+Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
