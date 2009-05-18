@@ -1,40 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/21/3
-Message-Id: <1248202636.3701.16.camel@dhcp-lab164.englab.brq.redhat.com>
-Date: Tue, 21 Jul 2009 20:57:16 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com
-Subject: CVE Request -- RubyGems
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/18/4
+Message-ID: <0905181944130.23125@mjc.redhat.com>
+Date: Mon, 18 May 2009 19:50:54 +0100 (BST)
+From: Mark J Cox <mjc@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Two OpenSSL DTLS remote DoS
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve, vendors,
+Stephen Henson pointed out that there is one other DTLS issue that 
+probably has security consequences too, and that backporting DTLS issues 
+is probably not the right thing to do given the amount of change happening 
+in the DTLS code to fix protocol errors etc:
 
-  a potential system integrity violation flaw
-was found in the way RubyGems used to handle
-it's external Gem archives. A remote attacker
-could provide a specially-crafted Gem (POSIX tar)
-archive, which once opened by an unsuspecting
-user, would overwrite relevant system file.
+CVE-2009-1379 DTLS fragment read after free DoS
+http://rt.openssl.org/Ticket/Display.html?id=1923&user=guest&pass=guest
 
-References:
-----------
-http://bugs.gentoo.org/show_bug.cgi?id=278566
-http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-core/24472
-http://redmine.ruby-lang.org/issues/show/1800
-
-Credit:  Kazuhiro NISHIYAMA
--------
-
-Affected versions: Issue reported in RubyGems-1.3.4,
------------------  but confirmed also in 
-                   RubyGems-1.3.1.
-
-
-Could you please allocate a new CVE identifier for it?
-
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
+Mark
