@@ -1,45 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/17/1
-Message-ID: <20090617152227.GA30064@suse.de>
-Date: Wed, 17 Jun 2009 17:22:28 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: clamav CVE ids?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/19/1
+Message-ID: <20090519120708.GY20697@ngolde.de>
+Date: Tue, 19 May 2009 14:07:09 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE id request: nsd
 Content-Type: text/plain; charset=utf-8
 
 Hi,
+the nsd name server seems to have an off-by-one which at 
+least opens it up for denial of service. The advisory states 
+that code execution is highly unlikely in this case though I 
+had no time to check this.
 
-Clamav 0.95.2 brings some fixes for Thierry Zollers issues,
-which probably deserve (a) CVE id ...
+http://bugs.debian.org/529420
+http://bugs.debian.org/529418
 
-Are there already some assigned?
+Patches:
+http://www.nlnetlabs.nl/downloads/nsd/nsd-3.2.1-vuln.patch
+http://www.nlnetlabs.nl/downloads/nsd/nsd-2.3.7-vuln.patch
 
---- from our bug:
-( https://sourceforge.net/project/shownotes.php?release_id=688880&group_id=86638 )
+Can I get a CVE id for this please?
 
-These messages from the ChangeLog could have some security relevance, but I
-haven't yet checked the mentioned bug reports:
+Cheers
+Nico
 
- * libclamav: detect and handle archives hidden inside other files (eg.
-images),
-              which can be unpacked by WinZip, WinRAR and other tools (bb#1554)
-              Reported by ROGER Mickael and Thierry Zoller
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
 
- * libclamav/mspack.c, cab.c: don't rely on file sizes stored in CAB headers
-              (bb#1562) Reported by Thierry*Zoller <Thierry*Zoller.lu>
-
- * libclamunrar/unrarvm.c: fix handling of some broken rar files
-
- * libclamav/mbox.c: handle malformed emails with embedded \0s (bb #1573)
-
- * libclamav/readdb.c: add offset checks (bb#1615)
-
---- 
-
-And also:
-http://blog.zoller.lu/2009/05/advisory-clamav-generic-bypass.html
-http://blog.zoller.lu/2009/04/case-for-av-bypassesevasions.html
-
-http://www.heise.de/newsticker/Update-fuer-freien-Virenscanner-ClamAV-beseitigt-Sehschwaeche--/meldung/140595
-
-Ciao, Marcus
+Content of type "application/pgp-signature" skipped
