@@ -1,45 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/14/7
-Message-ID: <135494521.302651255548920952.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 14 Oct 2009 15:35:20 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/20/2
+Message-Id: <200905201112.32426.hanno@hboeck.de>
+Date: Wed, 20 May 2009 11:12:31 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request - backintime
+Cc: Steven Christey <coley@...us.mitre.org>
+Subject: CVE request: coppermine <= 1.4.22
 Content-Type: text/plain; charset=utf-8
 
-Use CVE-2009-3611 for this.
+http://milw0rm.com/exploits/8736
 
-Thanks.
+#!/usr/bin/perl
+# Coppermine Photo Gallery <= 1.4.22 Remote Exploit
+# Need register_globals = on and magic_quotes_gpc = off
+# Based on vulnerabilities discussed at http://www.milw0rm.org/exploits/8713
+# Coded by girex
+
+Quotet URL
+http://www.milw0rm.org/exploits/8713
+:
+
+Coppermine Foto Gallery suffers from different vulnerabilities.
+
+There is a Local File Inclusion and a Blind SQL Injection working with 
+register_globals = On and magic_quotes_gpc = Off
+and
+a SQL Injection working in case of registration is enabled and a user can 
+create/modify albums 
+(default setting if registration is enabled) and php.ini regardless
+and 
+a Blind SQL Injection when is enabled the ecard logging system 
+(that is not a default configuration) and php.ini regardless
+
+Let's see how do they work...
 
 -- 
-    JB
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+http://ausdenaugenausdemsinn.de - Kein Sicherheitsrabatt für CO2-Speicher
+http://tinyurl.com/dceu73 - Internetzensur stoppen!
 
+http://schokokeks.org - professional webhosting
 
------ "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
-
-> Hello Steve, vendors,
-> 
->    while this issue seem to be already silently fixed:
-> 
-> https://www.redhat.com/archives/fedora-package-announce/2009-September/msg00823.html
-> https://www.redhat.com/archives/fedora-package-announce/2009-September/msg00821.html
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=543785
-> https://bugs.launchpad.net/ubuntu/+source/backintime/+bug/434256
-> 
-> for purpose of proper tracking, it should get a CVE identifier.
-> 
-> References:
-> -----------
-> https://bugzilla.redhat.com/show_bug.cgi?id=520210
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=543785
-> https://bugs.launchpad.net/ubuntu/+source/backintime/+bug/434256
-> http://bugs.gentoo.org/show_bug.cgi?id=289047
-> 
-> Patch from Debian:
-> ------------------
-> http://ftp.debian.org/debian/pool/main/b/backintime/backintime_0.9.26-3.diff.gz
-> 
-> Thanks && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
