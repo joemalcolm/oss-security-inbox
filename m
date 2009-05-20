@@ -1,35 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/10/1
-Message-ID: <Pine.GSO.4.51.0902091925210.15993@faron.mitre.org>
-Date: Mon, 9 Feb 2009 19:25:33 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/20/3
+Message-ID: <20090520201725.GN4111@redhat.com>
+Date: Wed, 20 May 2009 14:17:25 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Audacity <1.3.6 Buffer overflow
+Subject: CVE request: ctorrent
 Content-Type: text/plain; charset=utf-8
 
+Hi there.  There was a stack-based buffer overflow issue found in
+Enhanced CTorrent (dtorrent and ctorrent) that I don't believe has received
+a CVE name.  References as noted:
 
-======================================================
-Name: CVE-2009-0490
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0490
-Reference: MILW0RM:7634
-Reference: URL:http://www.milw0rm.com/exploits/7634
-Reference: MLIST:[audacity-devel] 20090110 Audacity "String_parse::get_nonspace_quoted()" Buffer Overflow
-Reference: URL:http://n2.nabble.com/Audacity-%22String_parse::get_nonspace_quoted()%22-Buffer-Overflow-td2139537.html
-Reference: CONFIRM:http://bugs.gentoo.org/show_bug.cgi?id=253493
-Reference: BID:33090
-Reference: URL:http://www.securityfocus.com/bid/33090
-Reference: FRSIRT:ADV-2009-0008
-Reference: URL:http://www.frsirt.com/english/advisories/2009/0008
-Reference: OSVDB:51070
-Reference: URL:http://osvdb.org/51070
-Reference: SECUNIA:33356
-Reference: URL:http://secunia.com/advisories/33356
+https://bugzilla.redhat.com/show_bug.cgi?id=501813
+http://milw0rm.com/exploits/8470
+http://bugs.gentoo.org/show_bug.cgi?id=266953
+http://secunia.com/advisories/34752/
+http://sourceforge.net/tracker/?func=detail&aid=2782875&group_id=202532&atid=981959
+http://www.securityfocus.com/bid/34584
 
-Stack-based buffer overflow in the String_parse::get_nonspace_quoted
-function in lib-src/allegro/strparse.cpp in Audacity 1.2.6 and other
-versions before 1.3.6 allows remote attackers to cause a denial of
-service (crash) and possibly execute arbitrary code via a .gro file
-containing a long string.
+with the upstream fix here:
 
+http://dtorrent.svn.sourceforge.net/viewvc/dtorrent/dtorrent/trunk/btfiles.cpp?r1=296&r2=301&view=patch
 
+Thanks.
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
