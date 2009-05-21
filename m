@@ -1,22 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/25/4
-Message-ID: <20091025203849.5049a710@redhat.com>
-Date: Sun, 25 Oct 2009 20:38:49 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: geissert@...ian.org
-Subject: Re:  CVE-2009-3239 is a duplicate of CVE-2009-2139 and CVE-2009-2140
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/21/7
+Message-ID: <Pine.GSO.4.51.0905211855040.18536@faron.mitre.org>
+Date: Thu, 21 May 2009 18:55:21 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>
+cc: "Steven M. Christey" <coley@...us.mitre.org>, Konstanty <konstanty@...il.com>
+Subject: Re: CVE Request -- libmodplug
 Content-Type: text/plain; charset=utf-8
 
-On Sat, 24 Oct 2009 12:35:18 -0500 Raphael Geissert
-<geissert@...ian.org> wrote:
 
-> CVE-2009-3239 appears to be a duplicate of CVE-2009-2139 and CVE-2009-2140,
-> and should therefore be rejected.
+On Wed, 29 Apr 2009, Jan Lieskovsky wrote:
 
-This has been discussed here already:
+>   apologize for not sending these all at once, but noticed
+>   the following one only today. There is another buffer
+>   overflow (DoS) vulnerability in libmodplug -- this time
+>   in PAT sample loader.
 
-http://thread.gmane.org/gmane.comp.security.oss.general/2091/focus=2149
+======================================================
+Name: CVE-2009-1513
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1513
+Reference: CONFIRM:http://modplug-xmms.git.sourceforge.net/git/gitweb.cgi?p=modplug-xmms;a=commitdiff;h=c4ebb701be6ee9a296a44fdac5a20b7739ff0595
+Reference: CONFIRM:http://sourceforge.net/project/shownotes.php?release_id=678622&group_id=1275
+Reference: CONFIRM:http://sourceforge.net/tracker/?func=detail&aid=2777467&group_id=1275&atid=301275
+Reference: UBUNTU:USN-771-1
+Reference: URL:http://www.ubuntu.com/usn/USN-771-1
+Reference: BID:34747
+Reference: URL:http://www.securityfocus.com/bid/34747
+Reference: OSVDB:54109
+Reference: URL:http://osvdb.org/54109
+Reference: SECUNIA:34927
+Reference: URL:http://secunia.com/advisories/34927
+Reference: SECUNIA:35026
+Reference: URL:http://secunia.com/advisories/35026
+Reference: VUPEN:ADV-2009-1200
+Reference: URL:http://www.vupen.com/english/advisories/2009/1200
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+Buffer overflow in the PATinst function in src/load_pat.cpp in
+libmodplug before 0.8.7 allows user-assisted remote attackers to cause
+a denial of service and possibly execute arbitrary code via a long
+instrument name.
+
+
