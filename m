@@ -1,38 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/18/3
-Message-Id: <200905181716.54127.rbu@gentoo.org>
-Date: Mon, 18 May 2009 17:16:50 +0200
-From: Robert Buchholz <rbu@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/21/3
+Message-ID: <Pine.GSO.4.51.0905211745010.18536@faron.mitre.org>
+Date: Thu, 21 May 2009 17:52:23 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: Henri Salo <henri@...v.fi>, coley@...us.mitre.org
-Subject: Re: CVE Request for cacti
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: moin
 Content-Type: text/plain; charset=utf-8
 
-Hi Henri,
 
-On Friday 15 May 2009, Henri Salo wrote:
-> I would like to obtain CVE identifier for security bug[1] in
-> cacti[2]. I beleive this version of cacti is still used in some
-> servers[3][4].
->
-> 1: http://bugs.cacti.net/view.php?id=1245
+On Wed, 6 May 2009, Steffen Joeris wrote:
 
-The resolution indicates the bug had already been fixed at the time the 
-bug was reported, thus implying it was a duplicate report of 
-CVE-2008-0783. The CVE-2008-0783 patch [1] explicitly validates 
-the 'action' variable as mentioned in the bug report.
+> This upstream commit[0] is slightly different then the issues described in
+> CVE-2009-1482 and I think it deserves another CVE id to separate the XSS
+> issues. The debian bug[1] can also be used as a reference.
+> Steve, what do you think?
 
-However, the original poster reported the 0.8.6i-3.4 Debian revision as 
-vulnerable and according to DSA 1569-2 [2], it should not have been.
+This is a different vector that isn't directly covered by that CVE, and
+may not have been fixed entirely when CVE-2009-1482 was fixed, so a new
+CVE can be considered.
 
-Do you have any indication this is not covered by CVE-2008-0783?
+However, we generally avoid including "defense-in-depth" fixes unless they
+can be demonstrated to be exploitable - or, if a vendor plans to release
+an advisory "just to be safe."
 
+The changeset says "maybe not XSS exploitable though" so I'm not sure
+whether a CVE's needed yet.
 
-Robert
-
-[1] 
-http://www.cacti.net/downloads/patches/0.8.7a/multiple_vulnerabilities-0.8.7a.patch
-[2] http://lists.debian.org/debian-security-announce/2008/msg00144.html
-
-
-Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
+- Steve
