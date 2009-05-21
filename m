@@ -1,34 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/05/2
-Message-ID: <20090905175250.GA9500@openwall.com>
-Date: Sat, 5 Sep 2009 21:52:50 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: Willy Tarreau <w@....eu>
-Subject: Re: CVE request: kernel: tc: uninitialised kernel memory leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/21/8
+Message-ID: <Pine.GSO.4.51.0905211900240.18536@faron.mitre.org>
+Date: Thu, 21 May 2009 19:03:35 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security <oss-security@...ts.openwall.com>
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- libmodplug
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Sep 03, 2009 at 11:45:03AM +0800, Eugene Teo wrote:
-> Three bytes of uninitialised kernel memory are currently leaked to user.
-> 
-> http://patchwork.ozlabs.org/patch/32830/
-> https://bugzilla.redhat.com/show_bug.cgi?id=520990
 
-2.4 kernels appear to be affected as well, and moreover they appear to
-require at least some of these older fixes as well:
+On Tue, 21 Apr 2009, Jan Lieskovsky wrote:
 
-http://marc.info/?l=git-commits-head&m=112002138324380
+>   could you please allocate a new CVE-2008-XXXX identifier for
+> the following old libmodplug issue:
 
-Specifically, in net/sched/sch_api.c both tc_fill_qdisc() and
-tc_fill_tclass() are affected - the former was fixed in 2.6 in 2005,
-the latter is being fixed now.
+This wound up with a 2009 CVE by accident.
 
-I'm not sure what this means for CVE.  Should there be another CVE id
-for the issues fixed in 2.6 in 2005 (if one was not allocated at the
-time), and 2.4 could reference both CVE ids now?
+- Steve
 
-I did not check if any of the affected code is possibly normally only
-available to root, but even if so the issue may be relevant on systems
-with containers.
 
-Alexander
+======================================================
+Name: CVE-2009-1438
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1438
+Reference: MISC:http://modplug-xmms.cvs.sourceforge.net/viewvc/modplug-xmms/libmodplug/src/load_med.cpp?r1=1.1&amp;r2=1.2
+Reference: CONFIRM:http://bugs.gentoo.org/show_bug.cgi?id=266913
+Reference: CONFIRM:http://sourceforge.net/project/shownotes.php?release_id=677065&group_id=1275
+Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=496834
+Reference: FEDORA:FEDORA-2009-4064
+Reference: URL:http://www.redhat.com/archives/fedora-package-announce/2009-April/msg00907.html
+Reference: FEDORA:FEDORA-2009-4068
+Reference: URL:http://www.redhat.com/archives/fedora-package-announce/2009-April/msg00908.html
+Reference: UBUNTU:USN-771-1
+Reference: URL:http://www.ubuntu.com/usn/USN-771-1
+Reference: BID:30801
+Reference: URL:http://www.securityfocus.com/bid/30801
+Reference: OSVDB:53801
+Reference: URL:http://osvdb.org/53801
+Reference: SECUNIA:34797
+Reference: URL:http://secunia.com/advisories/34797
+Reference: SECUNIA:34930
+Reference: URL:http://secunia.com/advisories/34930
+Reference: SECUNIA:35026
+Reference: URL:http://secunia.com/advisories/35026
+Reference: VUPEN:ADV-2009-1104
+Reference: URL:http://www.vupen.com/english/advisories/2009/1104
+Reference: XF:libmodplug-csoundfilereadmed-bo(50388)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/50388
+
+Integer overflow in the CSoundFile::ReadMed function
+(src/load_med.cpp) in libmodplug before 0.8.6, as used in
+gstreamer-plugins, TTPlayer, and other products, allows
+context-dependent attackers to execute arbitrary code via a MED file
+with a crafted (1) song comment or (2) song name, which triggers a
+heap-based buffer overflow, as exploited in the wild in August 2008.
+
+
