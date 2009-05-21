@@ -1,28 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/17/4
-Message-ID: <Pine.GSO.4.51.0909162132180.7046@faron.mitre.org>
-Date: Wed, 16 Sep 2009 21:32:26 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/21/2
+Message-ID: <Pine.GSO.4.51.0905211056140.18536@faron.mitre.org>
+Date: Thu, 21 May 2009 10:57:30 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: perf_counter: Fix buffer overflow in perf_copy_attr()
+cc: Henri Salo <henri@...v.fi>, coley@...us.mitre.org
+Subject: Re: CVE Request for cacti
 Content-Type: text/plain; charset=utf-8
 
 
-======================================================
-Name: CVE-2009-3234
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3234
-Reference: MLIST:[linux-kernel] 20090916 [patch 15/45] perf_counter: Fix buffer overflow in perf_copy_attr()
-Reference: URL:http://article.gmane.org/gmane.linux.kernel/890654
-Reference: MLIST:[oss-security] 20090916 CVE request: kernel: perf_counter: Fix buffer overflow in perf_copy_attr()
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/09/16/1
-Reference: BID:36423
-Reference: URL:http://www.securityfocus.com/bid/36423
+On Mon, 18 May 2009, Robert Buchholz wrote:
 
-Buffer overflow in the perf_copy_attr function in
-kernel/perf_counter.c in the Linux kernel 2.6.31-rc1 allows local
-users to cause a denial of service (crash) via a "big size data" to
-the perf_counter_open system call.
+> Do you have any indication this is not covered by CVE-2008-0783?
+
+CVE-2008-0783 as intended by MITRE is only about the specific vectors that
+are listed there.  Henri's vector is "new."  I wasn't aware that Cacti
+fixed other issues - if so, we should probably assign a new CVE for "all
+the other XSS fixed in 0.8.7b" and mention Henri's vector as one of them.
+
+- Steve
 
 
+>
+> Robert
+>
+> [1]
+> http://www.cacti.net/downloads/patches/0.8.7a/multiple_vulnerabilities-0.8.7a.patch
+> [2] http://lists.debian.org/debian-security-announce/2008/msg00144.html
+>
+>
