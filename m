@@ -1,42 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/03/1
-Message-ID: <4A25D1BD.6030302@redhat.com>
-Date: Wed, 03 Jun 2009 09:28:29 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/21/9
+Message-ID: <Pine.GSO.4.51.0905211937340.18536@faron.mitre.org>
+Date: Thu, 21 May 2009 19:37:53 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel: splice local denial of service
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: problem with NFS v4 client handling of MAY_EXEC in nfs_permission
 Content-Type: text/plain; charset=utf-8
 
-Miklos Szeredi wrote:
-> On Sat, 2009-05-30 at 03:36 -0400, Jon Oberheide wrote:
->> The deadlock can be reproduced easily (you might need to fork() a few
->> times to get an pipe inode allocation ptr less than the file inode ptr):
->>
->>     pipe(pfds);
->>     snprintf(buf, sizeof(buf), "/tmp/%d", getpid());
->>     fd = open(buf, O_RDWR | O_CREAT, S_IRWXU);
->>
->>     if (fork()) {
->>         splice(pfds[0], NULL, fd, NULL, 1024, NULL);
->>     } else{
->>         sleep(1);
->>         splice(pfds[0], NULL, fd, NULL, 1024, NULL);
->>     }
->>
->> However, the deadlock only affects the task attempting to acquire the
->> inode's i_mutex, so an attacker would require write access to a file
->> that is also written (or other fs op that acquires i_mutex) by some
->> victim process.  That is, unless I've missed something. :-)
-> 
-> Some operations also take i_mutex on parent (open(O_CREAT), mkdir,
-> unlink, rmdir, rename, etc), and the order is always parent first.  This
-> means, that if some task is holding i_mutex on /tmp/foo, then doing
-> unlink("/tmp/foo") will block while holding i_mutex on /tmp.  Together
-> with the above deadlock it will prevent creation or removal of files
-> under /tmp, making the system pretty much unusable.
 
-But it does not make the box unresponsive. In this example, you can
-still ssh into the system as long as it does not create files in /tmp. I
-gave it A:P for the availability impact of the CVSSv2 vector.
+On Wed, 13 May 2009, Eugene Teo wrote:
 
-Thanks, Eugene
+> Frank Filz reported: the problem is that permission checking is skipped
+> if atomic open is possible, but when exec opens a file, it just opens it
+> O_READONLY which means EXEC permission will not be checked at that time.
+
+======================================================
+Name: CVE-2009-1630
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1630
+Reference: MLIST:[linux-nfs] 20090509 [NFS] [PATCH] nfs: Fix NFS v4 client handling of MAY_EXEC in nfs_permission.
+Reference: URL:http://article.gmane.org/gmane.linux.nfs/26592
+Reference: MLIST:[nfsv4] 20061116 Status of execute permissions in NFSv4 ACLs ?
+Reference: URL:http://linux-nfs.org/pipermail/nfsv4/2006-November/005313.html
+Reference: MLIST:[nfsv4] 20061117 [Patch] Re: Status of execute permissions in NFSv4 ACLs ?
+Reference: URL:http://linux-nfs.org/pipermail/nfsv4/2006-November/005323.html
+Reference: MLIST:[oss-security] 20090513 CVE request: kernel: problem with NFS v4 client handling of MAY_EXEC in nfs_permission
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/05/13/2
+Reference: CONFIRM:http://bugzilla.linux-nfs.org/show_bug.cgi?id=131
+Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=500297
+Reference: BID:34934
+Reference: URL:http://www.securityfocus.com/bid/34934
+
+The nfs_permission function in fs/nfs/dir.c in the NFS client
+implementation in the Linux kernel 2.6.29.3 and earlier, when
+atomic_open is available, does not check execute (aka EXEC or
+MAY_EXEC) permission bits, which allows local users to bypass
+permissions and execute files, as demonstrated by files on an NFSv4
+fileserver.
+
+
