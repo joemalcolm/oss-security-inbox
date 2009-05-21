@@ -1,105 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/08/1
-Message-ID: <825305652.791261260238181302.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 7 Dec 2009 21:09:41 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/21/4
+Message-ID: <Pine.GSO.4.51.0905211809370.18536@faron.mitre.org>
+Date: Thu, 21 May 2009 18:13:12 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: ruby on rails XSS Weakness in strip_tags
+Subject: Re: CVE Request -- kdebase4 (konqueror) -- Incomplete SSL Certificate support in KDE4
 Content-Type: text/plain; charset=utf-8
 
-I'm sorry for the delay on this.
 
-Please use CVE-2009-4132
+In CVE, we treat the inadvertent prevention of access to security
+functionality as a bug.  There is no direct way that an external attacker
+can trigger it, and the attacker gets no direct benefit by waiting for it
+to happen passively.  It's only doable by a person doing this to
+himself/herself.
 
-Thanks.
+So, this would not get a CVE.
 
--- 
-    JB
+- Steve
 
 
------ "Thomas Biege" <thomas@...e.de> wrote:
 
-> http://groups.google.com/group/rubyonrails-security/browse_thread/thread/4d4f71f2aef4c0ab?pli=1
-> 
-> Michael Koziarski   	
-> Profil anzeigen   �bersetzen in die Sprache: Deutsch �bersetzt
-> (Original anzeigen)
-> 	 Weitere Optionen 27 Nov., 02:44
-> Von: Michael Koziarski <mich...@...iarski.com>
-> Datum: Fri, 27 Nov 2009 13:44:06 +1300
-> Lokal: Fr. 27 Nov. 2009 02:44
-> Betreff: XSS Weakness in strip_tags
-> Antworten | Antwort an Autor | Weiterleiten | Drucken | Einzelne
-> Nachricht | Original anzeigen | Diese Nachricht melden | Nachrichten
-> dieses Autors suchen
-> 
-> There is a weakness in the strip_tags function in ruby on rails.  Due
-> to
-> a bug in the parsing code inside HTML::Tokenizer regarding
-> non-printable
-> ascii characters, an attacker can include values which certain
-> browsers
-> will then evaluate.
-> 
-> Versions Affected:  All versions prior to 2.3.4 or 2.2.s
-> Not affected:       Applications which do not use strip_tags
-> Fixed Versions:     2.3.5
-> 
-> Impact
-> ------
-> 
-> Applications relying on strip_tags for XSS protection may be
-> vulnerable
-> to attacks on Internet Explorer users.
-> 
-> Releases
-> --------
-> 
-> The 2.3.5 releases is available at the normal locations now.
-> 
-> Workarounds
-> -----------
-> 
-> Users using strip_tags can pass the resulting output to the regular
-> escaping functionality:
-> 
->   <%= h(strip_tag(...)) %>
-> 
-> Patches
-> -------
-> 
-> To aid users who aren't able to upgrade immediately we have provided
-> patches for the two supported release series.  They are in git-am
-> format
-> and consist of a single changeset updating the parser and providing
-> an
-> additional unit test.
-> 
-> * 2-2-strip_tags.patch - Patch for 2.2 series
-> * 2-3-strip_tags.patch - Patch for 2.3 series
-> 
-> Please note that only the  2.2.x and 2.3.x series are supported at
-> present.  Users of earlier unsupported releases are advised to
-> upgrade
-> at their earliest convenience.
-> 
-> Credits
-> -------
-> Thanks to Gabe da Silveira for reporting the vulnerability to us and
-> providing the fix.
-> 
-> -- 
-> Cheers,
-> 
-> ----- End forwarded message -----
-> 
-> -- 
-> Bye,
->      Thomas
-> -- 
->  Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support &
-> Auditing
->  SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
-> -- 
->   Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
->                             -- Marie von Ebner-Eschenbach
+On Tue, 12 May 2009, Jan Lieskovsky wrote:
+
+> Hello Steve,
+>
+>   not sure if original Debian bug [1] reporter meant this insufficiency,
+> but [2] might be interesting for your attention. While this is not
+> direct security vulnerability, is is preventing users from using
+> the functionality provided by digital certificates.
+>
+> References:
+> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=526979
+> [2] https://bugs.kde.org/show_bug.cgi?id=185288
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=500373
+>
+> This issue is present only in Konqueror web browser, as shipped
+> with the K Desktop Environment 4 (kdebase-4.*). Konqueror in
+> kdebase3 works fine.
+>
+> Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+>
+>
