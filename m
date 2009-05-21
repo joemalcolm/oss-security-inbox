@@ -1,21 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/11/5
-Message-Id: <200912111406.32621.tmb@65535.com>
-Date: Fri, 11 Dec 2009 14:06:28 +0000
-From: Tim Brown <tmb@...35.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/21/6
+Message-Id: <200905220019.53829.hanno@hboeck.de>
+Date: Fri, 22 May 2009 00:19:53 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re:  Re: Some small KDE issues
+Subject: Linux kernels and security issues?
 Content-Type: text/plain; charset=utf-8
 
-Attached is my exchange with Thomas Hoger at Redhat about these issues.  You 
-may also want to take a look at <200911041539.11338.tmb@...35.com> which 
-details our original advisories.
+Hi,
 
-Tim
+As we know, the linux kernel guys have security policies one can find 
+questionable.
+
+Though, I'm asking myself how to handle that? For 2.6.29.3, I read (here) that 
+an exploit is floating around (can be found on milw0rm) - so I pretty much 
+noted that it's probably a good idea to update.
+
+Now we have 2.6.29.4 and I don't know if I should update again - I have some 
+production servers where I'd like to avoid rebooting too often. The Changelog 
+of a kernel minor release usually consists of several dozent entries - with 
+lots of them I don't understand.
+
+What I'd like to have is a short list of all security relevant changes, 
+including some information giving me hints if I may be affected (i.e. affects 
+core functionality or only a driver, filesystem, protocol I may or may not 
+use). Is there some place in the net providing such information?
+If someone (ocert?) wants to do the free software world a big favor, this 
+would be really a great service.
+
 -- 
-Tim Brown
-<mailto:tmb@...35.com>
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+http://ausdenaugenausdemsinn.de - Kein Sicherheitsrabatt für CO2-Speicher
+http://tinyurl.com/dceu73 - Internetzensur stoppen!
 
-Download attachment "forwarded message" of type "message/rfc822" (5218 bytes)
+http://schokokeks.org - professional webhosting
 
-Download attachment "forwarded message" of type "message/rfc822" (3734 bytes)
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
