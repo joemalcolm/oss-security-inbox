@@ -1,32 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/22/1
-Message-ID: <Pine.GSO.4.51.0902221719040.29212@faron.mitre.org>
-Date: Sun, 22 Feb 2009 17:19:09 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: skfp_ioctl inverted logic flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/21/1
+Message-ID: <20090521063833.GA6545@suse.de>
+Date: Thu, 21 May 2009 08:38:33 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE request: transmission <1.61 CSRF
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-======================================================
-Name: CVE-2009-0675
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0675
-Reference: MLIST:[netdev] 20090128 [PATCH] drivers/net/skfp: if !capable(CAP_NET_ADMIN): inverted logic
-Reference: URL:http://lists.openwall.net/netdev/2009/01/28/90
-Reference: MLIST:[oss-security] 20090220 CVE request: kernel: skfp_ioctl inverted logic flaw
-Reference: URL:http://openwall.com/lists/oss-security/2009/02/20/2
-Reference: CONFIRM:http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=c25b9abbc2c2c0da88e180c3933d6e773245815a
-Reference: CONFIRM:http://www.kernel.org/pub/linux/kernel/v2.6/ChangeLog-2.6.28.6
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=486534
-Reference: SECUNIA:33938
-Reference: URL:http://secunia.com/advisories/33938
+spotted here:
+http://www.transmissionbt.com/index.php
 
-The skfp_ioctl function in drivers/net/skfp/skfddi.c in the Linux
-kernel before 2.6.28.6 permits SKFP_CLR_STATS requests only when the
-CAP_NET_ADMIN capability is absent, instead of when this capability is
-present, which allows local users to reset the driver statistics,
-related to an "inverted logic" issue.
+Transmission 1.61 Released!
+A complete list of tickets closed can be seen here. 
+Thanks to CacheFly for providing bandwidth. 
+ 
+ All Platforms 
+ Close potential CSRF security hole for Web Client users
+ ...
+
+Also fixed in previous series apparently:
+Transmission 1.53 Released!
+..
+Close potential CSRF security hole for Web Client users
+Fix locale error in the JSON parser
+...
 
 
+Ciao, Marcus
