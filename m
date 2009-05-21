@@ -1,56 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/05/6
-Message-ID: <1800165789.921061257442509766.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 5 Nov 2009 12:35:09 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request - Asterisk (AST-2009-008.html)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/21/5
+Message-ID: <Pine.GSO.4.51.0905211815080.18536@faron.mitre.org>
+Date: Thu, 21 May 2009 18:15:26 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Jamie Strandboge <jamie@...onical.com>
+cc: coley@...us.mitre.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: clamav-milter on Ubuntu
 Content-Type: text/plain; charset=utf-8
 
-CVE-2009-3727 Asterisk AST-2009-008
 
-    Asterisk Open Source 1.2.x before 1.2.35, 1.4.x before 1.4.26.3, and
-    1.6.0.x before 1.6.0.17; Asterisk Business Edition A.x.x, B.x.x before
-    B.2.5.12, C.1.x.x before C.2.x.x before C.2.4.5 and C.3.2.2; s800i 1.3.x
-    before 1.3.0.5; Generates different responses when a specially crafted
-    REGISTER message is sent twice depending on whether a SIP username is
-    valid. This allows remote attackers to enumerate valid usernames.
+Assigned a while ago, sorry...
 
-    http://downloads.asterisk.org/pub/security/AST-2009-008.html
+======================================================
+Name: CVE-2009-1601
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1601
+Reference: CONFIRM:https://launchpad.net/bugs/365823
+Reference: UBUNTU:USN-770-1
+Reference: URL:http://www.ubuntu.com/usn/USN-770-1
+Reference: BID:34818
+Reference: URL:http://www.securityfocus.com/bid/34818
+Reference: SECUNIA:35000
+Reference: URL:http://secunia.com/advisories/35000
+Reference: XF:clamav-clamavmilter-security-bypass(50311)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/50311
 
-Thanks.
+The Ubuntu clamav-milter.init script in clamav-milter before
+0.95.1+dfsg-1ubuntu1.2 in Ubuntu 9.04 sets the ownership of the
+current working directory to the clamav account, which might allow
+local users to bypass intended access restrictions via read or write
+operations involving this directory.
 
--- 
-    JB
 
------ "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
-
-> Hello Steve, vendors,
-> 
->    Asterisk upstream has recently published two security advisories:
-> 
-> a, SIP responses expose valid usernames
->     http://downloads.asterisk.org/pub/security/AST-2009-008.html
-> 
->     This is similar issue to AST-2009-003.html (CVE-2008-3903)
->     http://downloads.asterisk.org/pub/security/AST-2009-003.html
-> 
->     But according to the patches:
-> 
->     http://downloads.digium.com/pub/asa/AST-2009-003-1.6.1.diff.txt
-> (AST-2009-003) vs
->    
-> http://downloads.asterisk.org/pub/security/AST-2009-008-1.6.1.diff.txt
-> (AST-2009-003)
-> 
->     it desires a new CVE id. Could you allocate one?
-> 
-> The second issue (b,) already got an CVE id of CVE-2008-7220.
-> 
-> b, Cross-site AJAX request vulnerability (CVE-2008-7220)
->     http://downloads.asterisk.org/pub/security/AST-2009-009.html
-> 
-> Thanks && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
