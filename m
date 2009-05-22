@@ -1,43 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/20/1
-Message-ID: <20090720100147.GB12598@suse.de>
-Date: Mon, 20 Jul 2009 12:01:47 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/22/4
+Message-ID: <Pine.GSO.4.51.0905212024160.18536@faron.mitre.org>
+Date: Thu, 21 May 2009 20:24:24 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: dailydave <dailydave@...ts.immunitysec.com>
-Subject: Re: Linux 2.6.30+/SELinux/RHEL5 test kernel 0day, exploiting the unexploitable
+Subject: Re: CVE id request: slim
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jul 17, 2009 at 09:23:03AM +0200, yersinia wrote:
-> FYI, a Sprengler 0-day against Selinux null ptr dereference. Very Nice
-> to see in action
-> 
-> reference ( with youtube link )
-> 
-> http://grsecurity.net/~spender/cheddar_bay.tgz
 
-Yeah.
+======================================================
+Name: CVE-2009-1756
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1756
+Reference: MLIST:[oss-security] 20090518 CVE id request: slim
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/05/18/2
+Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=529306
+Reference: BID:35015
+Reference: URL:http://www.securityfocus.com/bid/35015
+Reference: OSVDB:54583
+Reference: URL:http://osvdb.org/54583
+Reference: SECUNIA:35132
+Reference: URL:http://secunia.com/advisories/35132
+Reference: XF:slim-xauthority-info-disclosure(50611)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/50611
 
-Some "minor" bugs and one larger one.
+SLiM Simple Login Manager 1.3.0 includes places the X authority magic
+cookie (mcookie) on the command line when invoking xauth from (1)
+app.cpp and (2) switchuser.cpp, which allows local users to access the
+X session by listing the process and its arguments.
 
-The Linux folks have meanwhile:
 
-- Fixed the actual bug. ;) (CVE-2009-1897)
-  Only affects 2.6.30,2.6.30.1.
-
-  2.6.30.2 release soon.
-
-- Added -fno-delete-null-pointers to their Makefiles
-
-  Also in 2.6.30.2 and 2.
-
-- fixed the personality - PER_CLEAR_ON_SETTID inheritance issue (CVE-2009-1895)
-  to work around mmap_min_addr protection.
-  Affects 2.6.23-2.6.30.1
-
-  2.6.30.2 and 2.6.27.x releases soon.
-
-I am not sure about the SELinux policy error he used to 
-exploit the RHEL 5.? Beta.
-
-Ciao, Marcus
