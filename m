@@ -1,20 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/19/3
-Message-Id: <200911191337.03260.oeriksson@mandriva.com>
-Date: Thu, 19 Nov 2009 13:37:03 +0100
-From: Oden Eriksson <oeriksson@...driva.com>
-To: oss-security@...ts.openwall.com
-Subject: mysql-5.1.41
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/22/14
+Message-ID: <2359eed20905221429k1feb1wb403033fc5ad0782@mail.gmail.com>
+Date: Fri, 22 May 2009 16:29:53 -0500
+From: Will Drewry <redpig@...rt.org>
+To: oss-security@...ts.openwall.com, bugtraq@...urityfocus.com,  ocert-announce@...ts.ocert.org
+Subject: [oCERT-2009-006] Android improper package verification when using  shared uids
 Content-Type: text/plain; charset=utf-8
 
-Hello.
+#2009-006 Android improper package verification when using shared uids
 
-The new mysql release mentions two security issues that has been addressed, 
-anyone knows more about that? I guess it would need some CVE assignment as 
-well.
+Description:
 
-http://dev.mysql.com/doc/refman/5.1/en/news-5-1-41.html
+Android, an open source mobile phone platform, improperly checks developer
+certificates when installing packages that request the shared user identifier
+(uid) permission.
 
--- 
-Regards // Oden Eriksson
-Security team manager - Mandriva
+Normally, Android applications will be allowed to share a uid if the
+packages are all signed by the same developer certificate and request
+permission to do so at install-time.  This allows for packages from the
+same author to share data.  Without enforcement of that behavior, it is
+possible for any application to be installed in such a manner that it
+gains access to another (existing) application's data.
+
+A patch has been made available by Android (see references).
+
+
+Affected version:
+
+Android >= 1.5 CRB17 <= 1.5 CRB42
+
+
+Fixed version:
+
+Android >= 1.5 CRB43
+(Android 1.0 and 1.1 are not affected)
+
+
+Credit: Panasonic
+
+
+CVE: CVE-2009-1754
+
+
+Timeline:
+2009-05-14: Panasonic reported the issue to the Android Security Team
+2009-05-18: Android Security Team requested assistance from oCERT
+2009-05-19: oCERT requested CVE assignment
+2009-05-22: CVE assigned
+2009-05-22: advisory release
+
+
+References:
+http://android.git.kernel.org/?p=platform/frameworks/base.git;a=commit;h=5d6d773fab559fdc12e553d60d789f3991ac552c
+
+Links:
+http://android.git.kernel.org
+http://android.com
+
+Permalink:
+http://www.ocert.org/advisories/ocert-2009-006.html
+
+
+--
+Will Drewry <redpig@...rt.org>
+oCERT Team :: http://ocert.org
