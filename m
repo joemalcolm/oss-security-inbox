@@ -1,25 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/08/5
-Message-ID: <20090908160733.GJ5941@ngolde.de>
-Date: Tue, 8 Sep 2009 18:07:33 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE for recent cyrus-imap issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/22/6
+Message-ID: <Pine.GSO.4.51.0905212027170.18536@faron.mitre.org>
+Date: Thu, 21 May 2009 20:27:26 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request (evolution)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Chad Dougherty <crd@...t.org> [2009-09-08 16:49]:
-> Thomas Biege wrote:
-> >We just received en email from CERT: CVE-2009-2628
-> 
-> No!  This CVE is for a different vulnerability.
 
-CVE-2009-2632
+======================================================
+Name: CVE-2009-1631
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1631
+Reference: MLIST:[oss-security] 20090512 CVE Request (evolution)
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/05/12/6
+Reference: MISC:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=526409
+Reference: MISC:http://bugzilla.gnome.org/show_bug.cgi?id=581604
+Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=498648
 
-Cheers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
+The Mailer component in Evolution 2.26.1 and earlier uses
+world-readable permissions for the .evolution directory, and certain
+directories and files under .evolution/ related to local mail, which
+allows local users to obtain sensitive information by reading these
+files.
 
-Content of type "application/pgp-signature" skipped
+
