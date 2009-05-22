@@ -1,26 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/26/2
-Message-ID: <Pine.GSO.4.51.0903252114130.11191@faron.mitre.org>
-Date: Wed, 25 Mar 2009 21:14:17 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/22/7
+Message-ID: <Pine.GSO.4.51.0905212028580.18536@faron.mitre.org>
+Date: Thu, 21 May 2009 20:29:02 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-cc: Steven Christey <coley@...us.mitre.org>
-Subject: Re: CVE request: API key disclosure in piwik
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE id request: coccinelle
 Content-Type: text/plain; charset=utf-8
 
 
 ======================================================
-Name: CVE-2009-1085
+Name: CVE-2009-1753
 Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1085
-Reference: MLIST:[oss-security] 20090323 CVE request: API key disclosure in piwik
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/03/23/2
-Reference: MISC:http://marco-ziesing.de/archives/35-Schluesselloch-in-Piwik.html
-Reference: CONFIRM:http://dev.piwik.org/trac/ticket/599
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1753
+Reference: MLIST:[oss-security] 20090506 CVE id request: coccinelle
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/05/06/2
+Reference: CONFIRM:http://packages.debian.org/changelogs/pool/main/c/coccinelle/coccinelle_0.1.7.deb-3/changelog
+Reference: BID:34848
+Reference: URL:http://www.securityfocus.com/bid/34848
+Reference: SECUNIA:35012
+Reference: URL:http://secunia.com/advisories/35012
 
-Piwik 0.2.32 and earlier stores sensitive information under the web
-root with insufficient access control, which allows remote attackers
-to obtain the API key and other sensitive information via a direct
-request for misc/cron/archive.sh.
+Coccinelle 0.1.7 allows local users to overwrite arbitrary files via a
+symlink attack on an unspecified "result file."
 
 
