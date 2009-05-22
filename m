@@ -1,31 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/21/1
-Message-ID: <49ED3294.80701@redhat.com>
-Date: Tue, 21 Apr 2009 10:42:28 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/22/12
+Message-ID: <20090522204252.GA18099@galadriel.inutil.org>
+Date: Fri, 22 May 2009 22:42:52 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: 'kill sig -1' must only apply to caller's PID namespace
+Subject: Re: Linux kernels and security issues?
 Content-Type: text/plain; charset=utf-8
 
-Eugene Teo wrote:
-> Eugene Teo wrote:
->> I came across this while reviewing some older upstream patches.
->>
->> Apparently, it was possible to run kill <sig> -1 to kill processes in
->> all PID namespaces, and break the isolation of namespaces. The expected
->> behaviour for this is to only kill processes in its own hierarchy. The
->> fix uses task_pid_vnr() to check if the process is outside of the
->> caller's namespace before killing.
+On Fri, May 22, 2009 at 12:19:53AM +0200, Hanno Böck wrote:
 > 
-> I am still able to reproduce the problem even after applying this
-> upstream patch (commit d25141a8). I'm still figuring out what other
+> What I'd like to have is a short list of all security relevant changes, 
+> including some information giving me hints if I may be affected (i.e. affects 
+> core functionality or only a driver, filesystem, protocol I may or may not 
+> use). Is there some place in the net providing such information?
+> If someone (ocert?) wants to do the free software world a big favor, this 
+> would be really a great service.
 
-Ok, you will need to make sure you have commit 44c4e1b2 too. I have
-tested this on 2.6.24.7 with these two patches, and the problem is fixed.
+Debian collects information on all kernel security issues in a public
+SVN repo. It contains information on fixed versions, upstream
+commits and external information sources (e.g. other distribution bug
+trackers). It might be useful to you:
+http://svn.debian.org/wsvn/kernel-sec
+You can also subscribe to the SVN commit mailing list to get instant
+updates.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=496031#c14
+However, writing verbose advisories on all kernel security issues would
+be an Herculean task; we currently track 484 kernel security issues
+in the kernel-sec tracker...
 
-Thanks, Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
+Cheers,
+        Moritz
