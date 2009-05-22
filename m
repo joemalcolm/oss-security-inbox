@@ -1,31 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/21/2
-Message-ID: <Pine.GSO.4.51.0905211056140.18536@faron.mitre.org>
-Date: Thu, 21 May 2009 10:57:30 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/22/2
+Message-ID: <Pine.GSO.4.51.0905212022550.18536@faron.mitre.org>
+Date: Thu, 21 May 2009 20:23:06 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: Henri Salo <henri@...v.fi>, coley@...us.mitre.org
-Subject: Re: CVE Request for cacti
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: Re: CVE request: transmission <1.61 CSRF
 Content-Type: text/plain; charset=utf-8
 
 
-On Mon, 18 May 2009, Robert Buchholz wrote:
+======================================================
+Name: CVE-2009-1757
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1757
+Reference: MLIST:[oss-security] 20090521 CVE request: transmission <1.61 CSRF
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/05/21/1
+Reference: CONFIRM:http://www.transmissionbt.com/index.php
 
-> Do you have any indication this is not covered by CVE-2008-0783?
-
-CVE-2008-0783 as intended by MITRE is only about the specific vectors that
-are listed there.  Henri's vector is "new."  I wasn't aware that Cacti
-fixed other issues - if so, we should probably assign a new CVE for "all
-the other XSS fixed in 0.8.7b" and mention Henri's vector as one of them.
-
-- Steve
+Cross-site request forgery (CSRF) vulnerability in Transmission 1.5
+before 1.53 and 1.6 before 1.61 allows remote attackers to hijack the
+authentication of unspecified victims via unknown vectors.
 
 
->
-> Robert
->
-> [1]
-> http://www.cacti.net/downloads/patches/0.8.7a/multiple_vulnerabilities-0.8.7a.patch
-> [2] http://lists.debian.org/debian-security-announce/2008/msg00144.html
->
->
