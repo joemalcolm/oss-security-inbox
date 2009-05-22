@@ -1,38 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/17/1
-Message-ID: <49E844A1.5020208@redhat.com>
-Date: Fri, 17 Apr 2009 16:58:09 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/22/13
+Message-ID: <20090522212731.GD1841@lackof.org>
+Date: Fri, 22 May 2009 15:27:31 -0600
+From: dann frazier <dannf@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: 'kill sig -1' must only apply to caller's PID namespace
+Subject: Re: Linux kernels and security issues?
 Content-Type: text/plain; charset=utf-8
 
-Eugene Teo wrote:
-> I came across this while reviewing some older upstream patches.
+On Fri, May 22, 2009 at 10:42:52PM +0200, Moritz Muehlenhoff wrote:
+> On Fri, May 22, 2009 at 12:19:53AM +0200, Hanno Böck wrote:
+> > 
+> > What I'd like to have is a short list of all security relevant changes, 
+> > including some information giving me hints if I may be affected (i.e. affects 
+> > core functionality or only a driver, filesystem, protocol I may or may not 
+> > use). Is there some place in the net providing such information?
+> > If someone (ocert?) wants to do the free software world a big favor, this 
+> > would be really a great service.
 > 
-> Apparently, it was possible to run kill <sig> -1 to kill processes in
-> all PID namespaces, and break the isolation of namespaces. The expected
-> behaviour for this is to only kill processes in its own hierarchy. The
-> fix uses task_pid_vnr() to check if the process is outside of the
-> caller's namespace before killing.
+> Debian collects information on all kernel security issues in a public
+> SVN repo. It contains information on fixed versions, upstream
+> commits and external information sources (e.g. other distribution bug
+> trackers). It might be useful to you:
+> http://svn.debian.org/wsvn/kernel-sec
+> You can also subscribe to the SVN commit mailing list to get instant
+> updates.
 
-I am still able to reproduce the problem even after applying this
-upstream patch (commit d25141a8). I'm still figuring out what other
-patches are needed. If you know which ones, do let us know.
+Yes - and this project is open to members of upstream/other distros if
+anyone is interested.
 
-The expected behaviour for this is:
-# ps -e
-  PID TTY          TIME CMD
-    1 pts/0    00:00:00 bash <-- this namespace's "init"
-   10 pts/0    00:00:00 ps
-# /bin/kill -s SIGKILL -1
-kill -1: No such process
+> However, writing verbose advisories on all kernel security issues would
+> be an Herculean task; we currently track 484 kernel security issues
+> in the kernel-sec tracker...
 
-Take note that you need to be privileged in order to create a new PID
-namespace, but to be able to kill other invisible processes outside of
-the namespace is a bypass of the intended namespaces isolation.
 
-Thanks, Eugene
 -- 
-Eugene Teo / Red Hat Security Response Team
+dann frazier
+
