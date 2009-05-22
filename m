@@ -1,44 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/18/14
-Message-ID: <Pine.GSO.4.51.0908181649520.17763@faron.mitre.org>
-Date: Tue, 18 Aug 2009 16:51:58 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Eugene Teo <eugene@...hat.com>
-cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - kernel: execve: must clear current->clear_child_tid
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/22/9
+Message-ID: <4A1665FB.6070506@redhat.com>
+Date: Fri, 22 May 2009 16:44:43 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request: XEN local denial of service
 Content-Type: text/plain; charset=utf-8
 
+Hi Steve,
 
-On Tue, 4 Aug 2009, Eugene Teo wrote:
+Steven M. Christey wrote:
+> More specific information on Xen's affected versions would be appreciated.
+> I made a guess based on the version that was released a few days after the
+> patch.
 
-> The integer location is a user provided pointer, provided at clone() time.
->
-> kernel keeps this pointer value into current->clear_child_tid.
->
-> At execve() time, we should make sure kernel doesnt keep this user
-> provided pointer, as full user memory is replaced by a new one.
->
->...
->
-> Patch is not in upstream kernel yet.
+I can't seem to find the fix in xen-3.4.0-xen.tar.gz but I found the
+patch in the linux-2.6.18-xen.hg repository:
+http://xenbits.xensource.com/linux-2.6.18-xen.hg?rev/9b9454800544
 
-I assumed 2.6.30-rc6 and earlier at this stage.
+In http://xenbits.xensource.com, this tree is said to be the pre-release
+of the next 3.3 version of Xen (which doesn't sound right).
 
-======================================================
-Name: CVE-2009-2848
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2848
-Reference: MLIST:[linux-kernel] 20090801 [PATCH v2] execve: must clear current->clear_child_tid
-Reference: URL:http://article.gmane.org/gmane.linux.kernel/871942
-Reference: MLIST:[oss-security] 20090804 CVE request - kernel: execve: must clear current->clear_child_tid
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/08/04/2
-Reference: MLIST:[oss-security] 20090805 Re: CVE request - kernel: execve: must clear current->clear_child_tid
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/08/05/10
+> ======================================================
+> Name: CVE-2009-1758
+> Status: Candidate
+> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1758
+> Reference: MLIST:[Xen-devel] 20090513 [PATCH] linux/i386: hypervisor_callback adjustments
+> Reference: URL:http://lists.xensource.com/archives/html/xen-devel/2009-05/msg00561.html
+> Reference: MLIST:[oss-security] 20090514 CVE Request: XEN local denial of service
+> Reference: URL:http://www.openwall.com/lists/oss-security/2009/05/14/2
+> 
+> The hypervisor_callback function in Xen, possibly before 3.4.0, as
+> applied to the Linux kernel 2.6.30-rc4, 2.6.18, and probably other
+> versions allows guest user applications to cause a denial of service
+> (kernel oops) of the guest OS by triggering a segmentation fault in
+> "certain address ranges."
 
-The execve function in the Linux kernel, possibly 2.6.30-rc6 and
-earlier, does not properly clear the current->clear_child_tid pointer,
-which allows local users to cause a denial of service (memory
-corruption) via a clone system call with CLONE_CHILD_SETTID or
-CLONE_CHILD_CLEARTID enabled, which is not properly handled during
-thread creation and exit.
+This affects a x86 32-bit Xen guest. If a 32-bit application tried to
+access a memory location between the scrit and ecrit symbols in the
+kernel, instead of receiving a SEGV it could instead crash the kernel.
+This happens because of insufficient checking in the hypervisor_callback
+path, where it was forgetting to check the CS during entry.
 
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-1758
+
+Thanks, Eugene
