@@ -1,109 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/12/2
-Message-ID: <2359eed20903120907w1dc963e9yc21cdb29049a7dca@mail.gmail.com>
-Date: Thu, 12 Mar 2009 11:07:54 -0500
-From: Will Drewry <redpig@...rt.org>
-To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org,  bugtraq@...urityfocus.com
-Subject: [oCERT-2008-015] glib and glib-predecessor heap overflows
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/22/11
+Message-ID: <Pine.GSO.4.51.0905221220350.7717@faron.mitre.org>
+Date: Fri, 22 May 2009 12:21:52 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com, rea-sec@...elabs.ru
+Subject: Re: CVE id request: slim
 Content-Type: text/plain; charset=utf-8
 
-#2008-015 glib and glib-predecessors heap overflows
 
-Description:
+On Fri, 22 May 2009, Eygene Ryabinkin wrote:
 
-Base64 encoding and decoding functions in glib suffer from
-vulnerabilities during memory allocation which may result in arbitrary
-code execution when processing large strings.  A number of other
-GNOME-related applications which predate glib are vulnerable due to the
-commonality of this flawed code.
+> > SLiM Simple Login Manager 1.3.0 includes places the X authority magic
+>                                   ^^^^^^^^^^^^^^^
 
-In all cases, heap memory is allocated using a length calculated with a
-user-supplied, platform-specifc value.  It follows the pattern below:
+Thanks, fixed to use "places" instead of "includes."  We're starting to
+see more of these kinds of issues, and a general phrasing is starting to
+emerge.
 
-  g_malloc(user_supplied_length * 3 / 4 + some_small_num)
-
-Due to the evaluation order of arithmetic operations, the length is
-multiplied by 3 prior to division by 4.  This will allow the calculated
-argument used for allocation length to overflow resulting in a region
-which is smaller than expected.
-
-
-Patches:
-glib
-  http://ocert.org/patches/2008-015/glib-CVE-2008-4316.diff
-gst-plugins-base
-  http://ocert.org/patches/2008-015/gst-plugins-base-CVE-2009-0586.diff
-evolution-data-server
-  http://ocert.org/patches/2008-015/camel-CVE-2009-0587.diff
-  http://ocert.org/patches/2008-015/evc-CVE-2009-0587.diff
-libsoup
-  http://ocert.org/patches/2008-015/libsoup-base64-CVE-2009-0585.diff
-
-
-Affected version:
-
-(actively affected)
-glib >= 2.11 unstable
-glib >= 2.12 stable
-gstreamer-plugins-base < 0.10.23
-
-(older versions affected only)
-libsoup < 2.2.x
-libsoup < 2.24
-evolution-data-server < 2.24.5
-
-
-Fixed version:
-
-glib >= 2.20 (svn revision >= 7973)
-gstreamer-plugins-base >= 0.10.23
-
-(Other identified packages are unaffected in current versions.)
-
-
-Credit: vulnerability report and initial analysis received from
-        Diego Pettenò <flameeyes (at) gmail.com> with
-        extended analysis, vulnerabilities, and patches for libsoup,
-        gst-plugins-base, and evolution-data-server from
-        Tomas Hoger <thoger (at) redhat.com>.
-
-
-CVE: CVE-2008-4316 (glib),
-     CVE-2009-0585 (libsoup),
-     CVE-2009-0586 (gstreamer-plugins-base),
-     CVE-2009-0587 (evolution-data-server)
-
-
-Timeline:
-
-2008-10-22: vulnerability report received
-2008-11-11: failed to contact gnome-upstream privately (ml, bugs)
-2008-11-27: contacted vendor-sec as gnome-upstream
-2008-11-28: thoger confirms and assigns initial CVE
-2008-11-29: flameeyes notes other potentially affected libraries
-2008-12-05: thoger supplies glib patch expands scope to include eds, gst
-2009-01-14: patch review by mclasen; thoger analysis eds, soup
-2009-01-26: gst-plugins-base detailed analysis by thoger
-2009-02-22: gstreamer upstream contacted
-2009-03-03: gst-plugins-base patch from upstream
-2009-03-04: evolution data server lead contacted
-2009-03-05: final embargo lift date settled
-2009-03-12: glib. gst upstream patches public; advisory published
-
-References:
-glib update
-  http://svn.gnome.org/viewvc/glib?view=revision&revision=7973
-gst-plugins-base update
-  http://cgit.freedesktop.org/gstreamer/gst-plugins-base/commit/?id=566583e87147f774e7fc4c78b5f7e61d427e40a9
-http://www.gtk.org/
-http://www.gstreamer.net/
-http://www.go-evolution.org/Main_Page
-http://live.gnome.org/LibSoup
-http://www.go-evolution.org/Camel
-
-Permalink:
-http://www.ocert.org/advisories/ocert-2008-015.html
-
---
-Will Drewry <redpig@...rt.org>
-oCERT Team :: http://ocert.org
+- Steve
