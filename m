@@ -1,43 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/12/3
-Message-ID: <20090112110812.GE16738@suse.de>
-Date: Mon, 12 Jan 2009 12:08:12 +0100
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/22/10
+Message-ID: <20090522093923.GB1431@suse.de>
+Date: Fri, 22 May 2009 11:39:24 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: xrdp
+Subject: Re: Linux kernels and security issues?
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-this one is a bit older but seems not to have CVE-IDs assigned yet.
+On Fri, May 22, 2009 at 12:19:53AM +0200, Hanno Böck wrote:
+> Hi,
+> 
+> As we know, the linux kernel guys have security policies one can find 
+> questionable.
+> 
+> Though, I'm asking myself how to handle that? For 2.6.29.3, I read (here) that 
+> an exploit is floating around (can be found on milw0rm) - so I pretty much 
+> noted that it's probably a good idea to update.
 
-http://packetstormsecurity.org/0812-advisories/VA_VD_87_08_XRDP.pdf
+Exact URL? Do you mean http://milw0rm.com/exploits/8678?
 
--------------------------------------------------------------------------------
-Multiple vulnerabilities in xrdp 
-Discovered by: Hamid Ebadi
-CSIRT Team Member
-Amirkabir University CSIRT Laboratory (APA Laboratory)
-autcert@....ac.ir
-Introduction 
-Based on the work of rdesktop, xrdp uses the remote desktop protocol to present a
-GUI to the user. The goal of this project is to provide a fully functional Linux
-terminal server, capable of accepting connections from rdesktop and Microsoft's own 
-terminal server / remote desktop clients. (http://xrdp.sourceforge.net)
-There are multiple buffer overflow vulnerabilities in xrdp which could be used by
-malicious attackers to execute arbitary code on the system.
-Vulnerable version
-xrdp <=0.4.1
-...
--------------------------------------------------------------------------------
+There is a ptrace exploit and studying the changelog it was fixed
+with 2.6.29.3.
+http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.29.y.git;a=commit;h=2c9ca2baf3f368a2b747124d39bf31b779eb7571
 
+So yes, update.
 
--- 
-Bye,
-     Thomas
--- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
--- 
-           Hamming's Motto:
-           The purpose of computing is insight, not numbers.
-                                -- Richard W. Hamming
+> Now we have 2.6.29.4 and I don't know if I should update again - I have some 
+> production servers where I'd like to avoid rebooting too often. The Changelog 
+> of a kernel minor release usually consists of several dozent entries - with 
+> lots of them I don't understand.
+> 
+> What I'd like to have is a short list of all security relevant changes, 
+> including some information giving me hints if I may be affected (i.e. affects 
+> core functionality or only a driver, filesystem, protocol I may or may not 
+> use). Is there some place in the net providing such information?
+> If someone (ocert?) wants to do the free software world a big favor, this 
+> would be really a great service.
+
+2.6.29.4 has fixes for CIFS potential remote overflow fixes (if you mount "cifs" kernel
+filesystems in potentially untrusted network), and some other local denial of service
+specific fixes, in splice, page_mkwrite, KVM, some small selinux things.
+
+Unless you are using CIFS mounts I guess you can postpone the update for a bit.
+
+There is no good place at this time, and CVE DB search might not be a good way here :/
+
+Ciao, Marcus
