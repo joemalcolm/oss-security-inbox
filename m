@@ -1,48 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/18/1
-Message-ID: <20091218040124.GY2987@redhat.com>
-Date: Thu, 17 Dec 2009 21:01:24 -0700
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/22/1
+Message-ID: <Pine.GSO.4.51.0905212022020.18536@faron.mitre.org>
+Date: Thu, 21 May 2009 20:22:21 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: possible vulnerability in ghostscript >= 8.64
+Subject: Re: CVE request: ctorrent
 Content-Type: text/plain; charset=utf-8
 
-We had reported to us a crash in ghostscript's gdevcups.c, and I don't
-think it can be used to do anything more than crash ghostscript,
-certainly not in our configurations (compiled with FORTIFY_SOURCE).
 
-Debug logging was added to gdevcups.c prior to the 8.64 release on Oct
-17th, 2008:
+======================================================
+Name: CVE-2009-1759
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1759
+Reference: MILW0RM:8470
+Reference: URL:http://www.milw0rm.com/exploits/8470
+Reference: MLIST:[oss-security] 20090520 CVE request: ctorrent
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/05/20/3
+Reference: CONFIRM:http://dtorrent.svn.sourceforge.net/viewvc/dtorrent/dtorrent/trunk/btfiles.cpp?r1=296&r2=301&view=patch
+Reference: CONFIRM:http://sourceforge.net/tracker/?func=detail&aid=2782875&group_id=202532&atid=981959
+Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=501813
+Reference: BID:34584
+Reference: URL:http://www.securityfocus.com/bid/34584
+Reference: SECUNIA:34752
+Reference: URL:http://secunia.com/advisories/34752
+Reference: VUPEN:ADV-2009-1092
+Reference: URL:http://www.vupen.com/english/advisories/2009/1092
+Reference: XF:ctorrent-btfiles-bo(49959)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/49959
 
-http://svn.ghostscript.com/viewvc?view=rev&revision=9165
+Stack-based buffer overflow in the btFiles::BuildFromMI function
+(trunk/btfiles.cpp) in Enhanced CTorrent (aka dTorrent) 3.3.2 and
+probably earlier, and CTorrent 1.3.4, allows remote attackers to cause
+a denial of service (crash) and possibly execute arbitrary code via a
+Torrent file containing a long path.
 
-The addition of the debug logging allowed for a MediaType string to be
-printed, which if longer than the 1024-byte buffer in errprintf would
-cause ghostscript to crash   This is due to errprintf() and outprintf()
-using vsprintf() on a fixed-length array on the stack.
 
-This issue does not affect versions of ghostscript older than 8.64; for
-8.64 and newer, if compiled using FORTIFY_SOURCE (as it is in Fedora),
-this is turned into nothing more than a crash.  On a system without
-FORTIFY_SOURCE, this _might_ be exploitable, but I cannot say for
-certain.
-
-As well, we can't see (in ghostscript 8.15 at least), any other calls to
-errprintf() or outprintf() that use the %s specifier with user-supplied
-strings (so arguably the vsprintf() calls in those functions should be
-fixed, but we don't see an immediate need to do so).
-
-I imagine that most vendors using ghostscript 8.64 or newer also have a
-newer glibc and are using FORTIFY_SOURCE protection, but I can't know
-that for certain, so this is a general notice that the issue exists.
-
-Our bug report:
-
-https://bugzilla.redhat.com/show_bug.cgi?id=540760
-
-this had also been reported previously upstream as well:
-
-http://bugs.ghostscript.com/show_bug.cgi?id=690829
-
--- 
-Vincent Danen / Red Hat Security Response Team 
