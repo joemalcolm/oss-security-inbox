@@ -1,34 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/25/2
-Message-ID: <Pine.GSO.4.51.0903242021230.18572@faron.mitre.org>
-Date: Tue, 24 Mar 2009 20:21:27 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/25/1
+Message-Id: <200905252258.07917.rbu@gentoo.org>
+Date: Mon, 25 May 2009 22:57:59 +0200
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: nfsd did not drop CAP_MKNOD for non-root
+Cc: coley@...us.mitre.org
+Subject: Re: CVE Request for libsndfile
 Content-Type: text/plain; charset=utf-8
 
+On Friday 15 May 2009, Jamie Strandboge wrote:
+> From http://www.mega-nerd.com/erikd/Blog/CodeHacking/libsndfile/:
+>
+>   There's a new release of libsndfile available in the usual place.
+> This is a security bug fix release which fixes a potential heap
+> overflow in VOC files found and reported by Tobias Klein (
+> http://www.trapkit.de/ ) and another in the AIFF file parser found by
+> me.
+>
+> 1.0.20 supposedly fixes it, with the author supplying patches back to
+> 1.0.15. Can we get a CVE for this?
 
-======================================================
-Name: CVE-2009-1072
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1072
-Reference: MLIST:[linux-kernel] 20090311 VFS, NFS security bug? Should CAP_MKNOD and CAP_LINUX_IMMUTABLE be added to CAP_FS_MASK?
-Reference: URL:http://thread.gmane.org/gmane.linux.kernel/805280
-Reference: CONFIRM:http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=76a67ec6fb79ff3570dcb5342142c16098299911
-Reference: CONFIRM:http://www.kernel.org/pub/linux/kernel/v2.6/ChangeLog-2.6.28.9
-Reference: SECUNIA:34422
-Reference: URL:http://secunia.com/advisories/34422
-Reference: SECUNIA:34432
-Reference: URL:http://secunia.com/advisories/34432
-Reference: VUPEN:ADV-2009-0802
-Reference: URL:http://www.vupen.com/english/advisories/2009/0802
-Reference: XF:linux-kernel-capmknod-security-bypass(49356)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/49356
+The trapkit.de advisory is up here:
+http://www.trapkit.de/advisories/TKADV2009-006.txt
 
-nfsd in the Linux kernel before 2.6.28.9 does not drop the CAP_MKNOD
-capability before handling a user request in a thread, which allows
-local users to create device nodes, as demonstrated on a filesystem
-that has been exported with the root_squash option.
+Secunia also has an advisory:
+http://secunia.com/advisories/35076/
+
+If one or two CVE identifiers could be reserved, that'd be great.
 
 
+Robert
+
+Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
