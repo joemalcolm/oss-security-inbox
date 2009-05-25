@@ -1,46 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/18/5
-Message-ID: <20090518193241.6ab68ad9@foo.fgeek.fi>
-Date: Mon, 18 May 2009 19:32:41 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/25/2
+Message-ID: <20090525232812.GA29640@ngolde.de>
+Date: Tue, 26 May 2009 01:28:12 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Cc: Robert Buchholz <rbu@...too.org>
-Subject: Re: CVE Request for cacti
+Subject: CVE-2009-0161 dupe of CVE-2009-0642
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 18 May 2009 17:16:50 +0200
-Robert Buchholz <rbu@...too.org> wrote:
+Hi,
+looks like CVE-2009-0161 is a dupe of the original CVE id 
+that already covered invalid return value checking of 
+OCSP_basic_verify.
 
-> Hi Henri,
-> 
-> On Friday 15 May 2009, Henri Salo wrote:
-> > I would like to obtain CVE identifier for security bug[1] in
-> > cacti[2]. I beleive this version of cacti is still used in some
-> > servers[3][4].
-> >
-> > 1: http://bugs.cacti.net/view.php?id=1245
-> 
-> The resolution indicates the bug had already been fixed at the time
-> the bug was reported, thus implying it was a duplicate report of 
-> CVE-2008-0783. The CVE-2008-0783 patch [1] explicitly validates 
-> the 'action' variable as mentioned in the bug report.
-> 
-> However, the original poster reported the 0.8.6i-3.4 Debian revision
-> as vulnerable and according to DSA 1569-2 [2], it should not have
-> been.
-> 
-> Do you have any indication this is not covered by CVE-2008-0783?
-> 
-> 
-> Robert
-> 
-> [1] 
-> http://www.cacti.net/downloads/patches/0.8.7a/multiple_vulnerabilities-0.8.7a.patch
-> [2]
-> http://lists.debian.org/debian-security-announce/2008/msg00144.html
+This is not the first time Apple products receive their own 
+CVE id for issues in the underlying oss product (e.g. webkit 
+very often). Is that on purpose or is that just because 
+Apple is lacking to provide the proper information to notice 
+that?
 
-I tested this using Cacti from Etch with security updates (0.8.6i-3.5)
-and it seems to be fixed. Good work.
+Cheers
+Nico
 
----
-Henri Salo
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
