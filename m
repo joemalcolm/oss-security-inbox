@@ -1,38 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/07/3
-Message-ID: <20090407085215.GD21360@suse.de>
-Date: Tue, 7 Apr 2009 10:52:15 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: Eugene Teo <eugene@...hat.com>
-Cc: oss-security@...ts.openwall.com, security@...nel.org, sfrench@...ibm.com
-Subject: Re: CVE request? buffer overflow in CIFS in 2.6.*
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/26/2
+Message-ID: <Pine.GSO.4.51.0905261415100.2902@faron.mitre.org>
+Date: Tue, 26 May 2009 14:16:02 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+cc: coley@...us.mitre.org
+Subject: Re: CVE Request for libsndfile
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Apr 07, 2009 at 01:41:44PM +0800, Eugene Teo wrote:
-> Hi Marcus,
-> 
-> Marcus Meissner wrote:
-> > Fixes a kmalloc area overflow in CIFS, number of overwritten bytes
-> > is depending on the codepage converted to.
-> > 
-> > The data seems to come from a remote generated reply blob even, correct
-> > me if I am wrong. :/
-> 
-> Looks like it's part of the session setup. The NativeFileSystem field is
-> part of the Tree Connect response (TCon for short).
-> 
-> > And I wonder if "len*2" is sufficient, can't a UCS -> UTF8 conversion
-> > generate more than 2 byte utf-8 characters for 1 ucs character?
-> 
-> I understand that someone from your side is working on a better patch
-> for this. Do keep us updated when it goes upstream.
 
-tracked in the public bugzilla entry:
-https://bugzilla.novell.com/show_bug.cgi?id=492282
+Two CVEs, one for the original disclosure and one for a later disclosure,
+i.e. the extra issue that was found and fixed by the developer.
 
-and:
-http://lists.samba.org/archive/linux-cifs-client/2009-April/004322.html ff.
-for the cifs discussion.
+- Steve
 
-Ciao, Marcus
+======================================================
+Name: CVE-2009-1788
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1788
+Reference: MISC:http://trapkit.de/advisories/TKADV2009-006.txt
+Reference: CONFIRM:http://www.mega-nerd.com/erikd/Blog/CodeHacking/libsndfile/
+Reference: CONFIRM:http://www.mega-nerd.com/libsndfile/
+Reference: BID:34978
+Reference: URL:http://www.securityfocus.com/bid/34978
+Reference: SECUNIA:35076
+Reference: URL:http://secunia.com/advisories/35076
+Reference: VUPEN:ADV-2009-1324
+Reference: URL:http://www.vupen.com/english/advisories/2009/1324
+Reference: VUPEN:ADV-2009-1348
+Reference: URL:http://www.vupen.com/english/advisories/2009/1348
+Reference: XF:libsndfile-aiff-voc-bo(50541)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/50541
+
+Heap-based buffer overflow in voc_read_header in libsndfile 1.0.15
+through 1.0.19, as used in Winamp 5.552 and possibly other media
+programs, allows remote attackers to cause a denial of service
+(application crash) and possibly execute arbitrary code via a VOC file
+with an invalid header value.
+
+
+======================================================
+Name: CVE-2009-1791
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1791
+Reference: CONFIRM:http://www.mega-nerd.com/erikd/Blog/CodeHacking/libsndfile/
+Reference: CONFIRM:http://www.mega-nerd.com/libsndfile/
+Reference: BID:34978
+Reference: URL:http://www.securityfocus.com/bid/34978
+Reference: SECUNIA:35076
+Reference: URL:http://secunia.com/advisories/35076
+Reference: VUPEN:ADV-2009-1324
+Reference: URL:http://www.vupen.com/english/advisories/2009/1324
+Reference: XF:libsndfile-aiff-voc-bo(50541)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/50541
+
+Heap-based buffer overflow in aiff_read_header in libsndfile 1.0.15
+through 1.0.19, as used in Winamp 5.552 and possibly other media
+programs, allows remote attackers to cause a denial of service
+(application crash) and possibly execute arbitrary code via an AIFF
+file with an invalid header value.
+
 
