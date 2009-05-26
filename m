@@ -1,40 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/23/6
-Message-ID: <20090423073719.GA6783@suse.de>
-Date: Thu, 23 Apr 2009 09:37:19 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/26/1
+Message-ID: <Pine.GSO.4.51.0905261411260.2902@faron.mitre.org>
+Date: Tue, 26 May 2009 14:14:40 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: Willy Tarreau <w@....eu>
-Subject: Re: Re: CVE-2009-1265 kernel: af_rose/x25: Sanity check the maximum user frame size
+Subject: Re: CVE-2009-0161 dupe of CVE-2009-0642
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Apr 23, 2009 at 02:54:06PM +0800, Eugene Teo wrote:
-> Willy Tarreau wrote:
-> > Hi Eugene,
-> > 
-> > On Wed, Apr 08, 2009 at 03:58:55PM +0800, Eugene Teo wrote:
-> >> {nr,rose,x25}_sendmsg() functions need to have sanity checks on the
-> >> packet size, otherwise the sizes can wrap and end up sending garbage.
-> >>
-> >> http://bugzilla.kernel.org/show_bug.cgi?id=10423
-> >> http://git.kernel.org/linus/83e0bbcbe2145f160fbaa109b0439dae7f4a38a9
-> >> http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2009-1265
-> >>
-> >> This affects both 2.4.x and 2.6.x if CONFIG_{NETROM,ROSE,X25} are enabled.
-> > 
-> > I already have it in my queue, just did not have time to merge it yet.
-> > Thanks for the reminder anyway, I really appreciate it ;-)
-> 
-> You will need this too :)
-> 
-> upstream commit: cc29c70dd581f85ee7a3e7980fb031f90b90a2ab
-> 
-> Patch "af_rose/x25: Sanity check the maximum user frame size"
-> (commit 83e0bbcbe2145f160fbaa109b0439dae7f4a38a9) from Alan Cox got
-> locking wrong. If we bail out due to user frame size being too large,
-> we must unlock the socket beforehand.
 
-I do not see cc29c70dd581f85ee7a3e7980fb031f90b90a2ab in mainline kernel git
-yet, in which git does it live?
+On Tue, 26 May 2009, Nico Golde wrote:
 
-CIao, Marcus
+> This is not the first time Apple products receive their own CVE id for
+> issues in the underlying oss product (e.g. webkit very often). Is that
+> on purpose or is that just because Apple is lacking to provide the
+> proper information to notice that?
+
+It's not intentional CVE-wise, although as you've noticed, it does happen.
+I'll work on improving this situation.
+
+- Steve
