@@ -1,33 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/05/1
-Message-ID: <4A78E903.40203@redhat.com>
-Date: Wed, 05 Aug 2009 10:05:55 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>, jon@...rheide.org
-Subject: Re: CVE request - kernel: information leak in sigaltstack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/27/1
+Message-Id: <1243418113.3637.38.camel@localhost.localdomain>
+Date: Wed, 27 May 2009 11:55:13 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com
+Subject: CVE assignment notification (pam_krb5 CVE-2009-1384)
 Content-Type: text/plain; charset=utf-8
 
-Eugene Teo wrote:
-> do_sigaltstack: avoid copying 'stack_t' as a structure to user space
-> 
-> Ulrich Drepper correctly points out that there is generally padding in
-> the structure on 64-bit hosts, and that copying the structure from
-> kernel to user space can leak information from the kernel stack in those
-> padding bytes.
-> 
-> Avoid the whole issue by just copying the three members one by one
-> instead, which also means that the function also can avoid the need for
-> a stack frame. This also happens to match how we copy the new structure
-> from user space, so it all even makes sense.
-> 
-> Upstream commit:
-> http://git.kernel.org/linus/0083fc2c50e6c5127c2802ad323adf8143ab7856
-> 
-> Reference:
-> https://bugzilla.redhat.com/show_bug.cgi?id=515392
+Hello Steve,
 
-Reproducer:
-http://milw0rm.com/exploits/9352
+  a security flaw similar to recent pam_ssh's CVE-2009-1273
+one:
 
-Thanks, Eugene
+    http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1273
+
+was found in the pam_krb5 module. From particular Red Hat
+bugzilla entry:
+
+    https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-1384
+
+<cite>
+A security flaw was found in PAM pam_krb5 module, providing user
+authentication based on Kerberos principals. A remote attacker could
+use this flaw to recognize, if some username/login belongs to set of
+user accounts, existing on the system, and subsequently perform
+dictionary based password guess attack.  
+</cite>
+
+VERSIONS INFORMATION (Red Hat pam_krb5 version numbering is used):
+=====================
+
+a, Not vulnerable - the vulnerability is not present in versions of
+                    pam_krb5 prior and including pam_krb5-2.1.17
+b, Vulnerable     - presence of the flaw is confirmed in versions of
+                    pam_krb5 starting from pam_krb5-2.2.14 and newer
+
+
+CVE:  CVE identifier of CVE-2009-1384 has been already assigned to 
+====  this flaw.
+
+
+Thanks && regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+
+
+
