@@ -1,30 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/30/1
-Message-Id: <1233301567.3423.5.camel@dhcp-lab-164.englab.brq.redhat.com>
-Date: Fri, 30 Jan 2009 08:46:07 +0100
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/28/1
+Message-Id: <1243500490.3772.6.camel@localhost.localdomain>
+Date: Thu, 28 May 2009 10:48:10 +0200
 From: Jan Lieskovsky <jlieskov@...hat.com>
 To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request - php (PHP BZ#27421)
+Cc: oss-security@...ts.openwall.com
+Subject: CVE Request -- ImageMagick -- Integer overflow in XMakeImage()
 Content-Type: text/plain; charset=utf-8
 
-Happy friday Steve,
+Hello Steve,
 
-  this PHP issue looks to desire a new CVE id.
+  latest version of ImageMagick fixes one integer overflow
+in XMakeImage().
 
 References:
-http://bugs.php.net/bug.php?id=27421
-https://bugzilla.redhat.com/show_bug.cgi?id=479272
+http://secunia.com/advisories/35216/
+http://www.imagemagick.org/script/changelog.php
+http://trac.imagemagick.org/changeset/513/ImageMagick/trunk/magick/xwindow.c
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=530838
 
-Patch:
-http://www.dfoerster.de/misc/php-27421.diff
+Vulnerable version: 6.5.2-8 and prior
 
-Affected PHP versions:
-Original bug report mentions php-5.2.5, 
-but versions of php-4.3.2, php-4.3.9
-and php-5.1.6 seems to be also affected (share the same code).
+Credit: Tielei Wang
 
-Thanks, Jan.
+Regards, Jan.
 --
 Jan iankko Lieskovsky / Red Hat Security Response Team
 
