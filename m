@@ -1,44 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/05/9
-Message-ID: <Pine.GSO.4.51.0908051456290.28664@faron.mitre.org>
-Date: Wed, 5 Aug 2009 14:59:33 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/29/4
+Message-ID: <Pine.GSO.4.51.0905291716380.29163@faron.mitre.org>
+Date: Fri, 29 May 2009 17:16:44 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: Re: CVE request: XEmacs Multiple Integer Overflows
+Subject: Re: CVE request: Wireshark 
 Content-Type: text/plain; charset=utf-8
 
 
 ======================================================
-Name: CVE-2009-2688
+Name: CVE-2009-1829
 Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2688
-Reference: MISC:http://tracker.xemacs.org/XEmacs/its/issue534
-Reference: CONFIRM:https://bugs.gentoo.org/show_bug.cgi?id=275397
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=511994
-Reference: BID:35473
-Reference: URL:http://www.securityfocus.com/bid/35473
-Reference: OSVDB:55298
-Reference: URL:http://osvdb.org/55298
-Reference: SECUNIA:35348
-Reference: URL:http://secunia.com/advisories/35348
-Reference: VUPEN:ADV-2009-1666
-Reference: URL:http://www.vupen.com/english/advisories/2009/1666
-Reference: XF:xemacs-jpeg-bo(51334)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/51334
-Reference: XF:xemacs-png-bo(51333)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/51333
-Reference: XF:xemacs-tiff-bo(51332)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/51332
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1829
+Reference: CONFIRM:http://wiki.rpath.com/wiki/Advisories:rPSA-2009-0095
+Reference: CONFIRM:http://www.wireshark.org/security/wnpa-sec-2009-03.html
+Reference: BID:35081
+Reference: URL:http://www.securityfocus.com/bid/35081
+Reference: OSVDB:54629
+Reference: URL:http://osvdb.org/54629
+Reference: SECTRACK:1022274
+Reference: URL:http://www.securitytracker.com/id?1022274
+Reference: SECUNIA:35201
+Reference: URL:http://secunia.com/advisories/35201
+Reference: VUPEN:ADV-2009-1408
+Reference: URL:http://www.vupen.com/english/advisories/2009/1408
+Reference: XF:wireshark-pcnfsd-dos(50686)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/50686
 
-Multiple integer overflows in glyphs-eimage.c in XEmacs 21.4.22, when
-running on Windows, allow remote attackers to cause a denial of
-service (crash) or execute arbitrary code via (1) the tiff_instantiate
-function processing a crafted TIFF file, (2) the png_instantiate
-function processing a crafted PNG file, and (3) the jpeg_instantiate
-function processing a crafted JPEG file, all which trigger a
-heap-based buffer overflow.  NOTE: the provenance of this information
-is unknown; the details are obtained solely from third party
-information.
+Unspecified vulnerability in the PCNFSD dissector in Wireshark 0.8.20
+through 1.0.7 allows remote attackers to cause a denial of service
+(crash) via crafted PCNFSD packets.
 
 
