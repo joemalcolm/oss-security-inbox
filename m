@@ -1,53 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/30/2
-Message-Id: <20091030101523.104182ef.reed@reedloden.com>
-Date: Fri, 30 Oct 2009 10:15:23 -0500
-From: Reed Loden <reed@...dloden.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: MFSA 2009-63
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/29/2
+Message-ID: <20090529152028.GA23110@suse.de>
+Date: Fri, 29 May 2009 17:20:29 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Cc: mszeredi@...ell.com
+Subject: CVE request: kernel: splice local denial of service
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 30 Oct 2009 10:27:22 +0100
-Tomas Hoger <thoger@...hat.com> wrote:
+Hi oss-sec,
 
-> On Thu, 29 Oct 2009 15:35:08 -0500 Reed Loden <reed@...dloden.com>
-> wrote:
-> 
-> > What type of specific information are you looking for?
-> 
-> What issues are actually referenced by a CVE, what fixes to backport
-> where rebase is not an option (as Florian already explained).
+CVE Request for a local denial kernel issue....
 
-I think we used one CVE per library upgrade, so three in total
-(libvorbis, liboggz, liboggplay). As for individual fixes, I don't
-really know if that's possible, as I mentioned earlier, due to the fact
-that fixes were dependent on other changes that you would need to
-backport, too, which all just ends badly. :(
+The splice(2) syscall has received some fixes against local deadlocks.
 
-> > I'll see if we can get those still private bugs concerning the media
-> > library fixes open sooner rather than later, though.
-> 
-> Even bugs don't make all points clear (499512, 501279#c5) in this case.
+2.6.30-rc3 is fixed,
+2.6.27.24 is fixed, and
+2.6.29.4 is fixed.
 
-Feel free to comment in the bugs asking questions. If you don't receive
-a response in a reasonable amount of time from one of the developers,
-drop me a note OOB, and I'll see about making sure somebody replies to
-you. I'm by no means the media library expert, so I don't know all of
-the details myself. Bug 499512 seems to be a liboggplay issue fixed by
-bug 512328. As for 501279#c5, you'll just have to ask the developers.
+The inode double locking code was introduced in 2.6.19, so I guess earlier
+kernel versions are not affected. (Miklos?)
 
-I think the advisory is missing a few bugs and is mislabeling a few
-others. If I get a chance, I'll edit the advisories to add a few
-other bugs (like 512328). However, if you notice any issues yourself
-with the advisory, please feel free to report any issues to me or to
-security@.... We try to be good at bug dependencies, so if you
-loop through the bug chains, you may find some bugs that help you better
-understand all the issues that were fixed by the upgrades.
+Its as far as I understand this set of changes in mainline:
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=7bfac9ecf0585962fe13584f5cf526d8c8e76f17
+(this one with description of issue)
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=b3c2d2ddd63944ef2a1e4a43077b602288107e01
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=2933970b960223076d6affcf7a77e2bc546b8102
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=eb443e5a25d43996deb62b9bcee1a4ce5dea2ead
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=328eaaba4e41a04c1dc4679d65bea3fee4349d86
 
-~reed
-Mozilla Security Group
-
--- 
-Reed Loden - <reed@...dloden.com>
-
-Content of type "application/pgp-signature" skipped
+Ciao, Marcus
