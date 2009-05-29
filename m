@@ -1,37 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/23/8
-Message-ID: <4AE1FB36.1030909@redhat.com>
-Date: Fri, 23 Oct 2009 20:51:34 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE-2009-3626 assigment notification - Perl - perl-5.10.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/29/3
+Message-ID: <456265070.2204751243628687999.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 29 May 2009 16:24:48 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: coley@...re.org
+Subject: CVE Request (irssi)
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve, vendors,
+I'm not sure if everyone has seen this yet:
 
-   Mark Martinec reported Perl crash while processing utf-8 character
-with large and invalid codepoint.
+http://xorl.wordpress.com/2009/05/28/irssi-event_wallops-off-by-one-readwrite/
+http://bugs.irssi.org/index.php?do=details&task_id=662
 
-References:
-----------
-https://issues.apache.org/SpamAssassin/show_bug.cgi?id=6225 (original source)
-http://rt.perl.org/rt3/Public/Bug/Display.html?id=69973 (perl bug)
-http://rt.perl.org/rt3/Ticket/Attachment/617489/295383/ (PoC)
+Thanks
 
-Affected versions:
-------------------
-Have checked Perl of versions perl-5.8.0, perl-5.8.5, perl-5.8.8, perl-5.10.0
-is not vulnerable to this flaw.
-
-Issue was confirmed in Perl of version perl-5.10.1, as available at:
-
-http://www.cpan.org/src/perl-5.10.1.tar.gz
-
-CVE identifier:
----------------
-CVE identifier of CVE-2009-3626 has been already assigned to this issue.
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+-- 
+    JB
