@@ -1,44 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/21/5
-Message-Id: <2D641CE0-6ABC-43F5-B0A5-0EB9EFE8D7FA@reedloden.com>
-Date: Tue, 21 Jul 2009 13:38:53 -0700
-From: Reed Loden <reed@...dloden.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/29/5
+Message-ID: <Pine.GSO.4.51.0905291722500.29163@faron.mitre.org>
+Date: Fri, 29 May 2009 17:22:59 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request -- znc
+Subject: Re: CVE Request -- Eggdrop
 Content-Type: text/plain; charset=utf-8
 
-Got a notice that a new znc (http://en.znc.in/wiki/ZNC) version had  
-been released,
-and I saw this on the homepage (http://en.znc.in/wiki/ZNC#WARNING):
-ALL ZNC versions prior to 0.072 have a path traversal bug in core.  
-Users with a valid login are able to write files to all places to  
-which ZNC has write access. This means they could upload and load new  
-modules which do anything imaginable.
 
-This bug is fixed in znc 0.072. Update as soon as possible!
+======================================================
+Name: CVE-2009-1789
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1789
+Reference: BUGTRAQ:20090515 eggdrop/windrop remote crash vulnerability
+Reference: URL:http://www.securityfocus.com/archive/1/503574
+Reference: FULLDISC:20090514 eggdrop/windrop remote crash vulnerability
+Reference: URL:http://archives.neohapsis.com/archives/fulldisclosure/2009-05/0129.html
+Reference: MILW0RM:8695
+Reference: URL:http://www.milw0rm.com/exploits/8695
+Reference: CONFIRM:http://cvs.eggheads.org/viewvc/viewvc.cgi/eggdrop1.6/doc/Changes1.6?revision=1.20&view=markup
+Reference: BID:34985
+Reference: URL:http://www.securityfocus.com/bid/34985
+Reference: OSVDB:54460
+Reference: URL:http://osvdb.org/54460
+Reference: SECUNIA:35104
+Reference: URL:http://secunia.com/advisories/35104
+Reference: VUPEN:ADV-2009-1340
+Reference: URL:http://www.vupen.com/english/advisories/2009/1340
+Reference: XF:eggdrop-servmsg-dos(50547)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/50547
 
+mod/server.mod/servmsg.c in Eggheads Eggdrop and Windrop 1.6.19 and
+earlier allows remote attackers to cause a denial of service (crash)
+via a crafted PRIVMSG that causes an empty string to trigger a
+negative string length copy.  NOTE: this issue exists because of an
+incorrect fix for CVE-2007-2807.
 
-
-SVN log (http://znc.svn.sourceforge.net/viewvc/znc?view=rev&sortby=rev&sortdir=down&revision=1570 
-) says:
-
-Fix a high-impact directory traversal bug
-You can upload files to znc via /dcc send *status. The files will be  
-saved in <datadir>/users/<user>/downloads/. The code for this didn't  
-do any checking on the file name at all and thus allowed directory  
-traversal attacks by all znc users (no admin privileges required!).
-By exploiting this bug, attackers could e.g. upload a new ssh  
-authorized_keys file or upload a znc module which lets everyone gain  
-shell access. Anything is possible.
-Again: ONLY A NORMAL USER ACCOUNT NEEDED, no admin privileges. THE  
-ATTACKER GOT WRITE ACCESS TO ALL PLACES ZNC GOT WRITE ACCESS TO.
-
-
-So, obviously bad... would like a CVE for it.
-
-Thanks,
-~reed
-
---
-Reed Loden - <reed@...dloden.com>
 
