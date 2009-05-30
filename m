@@ -1,19 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/22/1
-Message-ID: <87r5v49gy8.fsf@mid.deneb.enyo.de>
-Date: Sat, 22 Aug 2009 14:22:07 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/30/1
+Message-Id: <1243668990.14601.21.camel@localhost>
+Date: Sat, 30 May 2009 03:36:30 -0400
+From: Jon Oberheide <jon@...rheide.org>
 To: oss-security@...ts.openwall.com
-Subject: Using NSS (Netscape Security Services) in setuid programs
+Cc: mszeredi@...ell.com
+Subject: Re: CVE request: kernel: splice local denial of service
 Content-Type: text/plain; charset=utf-8
 
-NSS (the crypto library from Mozilla) uses environment variables to
-enable various dodgy features which no longer seem good ideas.
-Obviously, this is a problem when the library is used in a context
-where the attacker can set environment variables.  For instance, if a
-PAM module uses NSS to establish a TLS connection for authentication
-purposes, this allows a local attacker to enable features which make
-it easier to impersonate the authentication server.
+The deadlock can be reproduced easily (you might need to fork() a few
+times to get an pipe inode allocation ptr less than the file inode ptr):
 
-I couldn't find any programs which might suffer from such a problem,
-though.
+    pipe(pfds);
+    snprintf(buf, sizeof(buf), "/tmp/%d", getpid());
+    fd = open(buf, O_RDWR | O_CREAT, S_IRWXU);
+
+    if (fork()) {
+        splice(pfds[0], NULL, fd, NULL, 1024, NULL);
+    } else{
+        sleep(1);
+        splice(pfds[0], NULL, fd, NULL, 1024, NULL);
+    }
+
+However, the deadlock only affects the task attempting to acquire the
+inode's i_mutex, so an attacker would require write access to a file
+that is also written (or other fs op that acquires i_mutex) by some
+victim process.  That is, unless I've missed something. :-)
+
+Regards,
+Jon Oberheide
+
+On Fri, 2009-05-29 at 17:20 +0200, Marcus Meissner wrote:
+> Hi oss-sec,
+> 
+> CVE Request for a local denial kernel issue....
+> 
+> The splice(2) syscall has received some fixes against local deadlocks.
+> 
+> 2.6.30-rc3 is fixed,
+> 2.6.27.24 is fixed, and
+> 2.6.29.4 is fixed.
+> 
+> The inode double locking code was introduced in 2.6.19, so I guess earlier
+> kernel versions are not affected. (Miklos?)
+> 
+> Its as far as I understand this set of changes in mainline:
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=7bfac9ecf0585962fe13584f5cf526d8c8e76f17
+> (this one with description of issue)
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=b3c2d2ddd63944ef2a1e4a43077b602288107e01
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=2933970b960223076d6affcf7a77e2bc546b8102
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=eb443e5a25d43996deb62b9bcee1a4ce5dea2ead
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=328eaaba4e41a04c1dc4679d65bea3fee4349d86
+> 
+> Ciao, Marcus
+-- 
+Jon Oberheide <jon@...rheide.org>
+GnuPG Key: 1024D/F47C17FE
+Fingerprint: B716 DA66 8173 6EDD 28F6  F184 5842 1C89 F47C 17FE
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
