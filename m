@@ -1,19 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/10/6
-Message-ID: <20091110074646.GA15060@suse.de>
-Date: Tue, 10 Nov 2009 08:46:46 +0100
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/02/3
+Message-ID: <20090602115455.GF32173@suse.de>
+Date: Tue, 2 Jun 2009 13:54:55 +0200
 From: Thomas Biege <thomas@...e.de>
 To: OSS-Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: CVE request: libpoppler4: buffer overflow in the Abiword backend
+Subject: CVE request: two denial of service bugs in strongswan
 Content-Type: text/plain; charset=utf-8
 
-Hello everybody,
+Maybe this two bugs need a CVE-ID...
 
-does this need an CVE-ID?
+Date: Wed, 27 May 2009 14:00:37 +0200
+From: Andreas Steffen <andreas.steffen@...ongswan.org>
+Organization: Linux strongSwan
+To: strongSwan Announce <announce@...ts.strongswan.org>,
+    strongSwan Users <users@...ts.strongswan.org>
+Subject: [Announce] ANNOUNCE:  strongSwan 4.3.1 and 4.2.15 released
+Reply-To: andreas.steffen@...ongswan.org
+X-Spam-Level: 
 
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=534680
+Hi,
 
+Orange Labs IKEv2 fuzzer discovers two DoS vulnerabilities
+----------------------------------------------------------
 
+Two DoS vulnerabilities in the charon daemon were discovered by
+fuzzing techniques:
+
+1) Receiving a malformed IKE_SA_INIT request leaves an incomplete state
+   which causes a crash of the IKEv2 charon daemon while dereferencing
+   a null pointer if a subsequent CREATE_CHILD_SA request for the
+   same connection is received.
+
+2) Receiving an IKE_AUTH request with either a missing TSi or TSr
+   traffic selector payload causes a crash of the IKEv2 charon daemon
+   because the null pointer checks for TSi and TSr prior to deletion
+   were swapped by mistake.
+
+The IKEv2 fuzzer used was developed by the Orange Labs vulnerability
+research team. The tool was initially written by Gabriel Campana and
+is now maintained by Laurent Butti.
+
+All strongSwan versions from 4.1.0 up to 4.3.0 are affected. Either
+apply the two security patches
+
+http://download.strongswan.org/patches/03_invalid_ike_state_patch/
+
+http://download.strongswan.org/patches/04_swapped_ts_check_patch/
+
+or upgrade to strongSwan 4.3.1 or 4.2.15.
+[...]
 
 -- 
 Bye,
@@ -22,5 +57,6 @@ Bye,
  Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
  SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
 -- 
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
+           Hamming's Motto:
+           The purpose of computing is insight, not numbers.
+                                -- Richard W. Hamming
