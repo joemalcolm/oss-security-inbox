@@ -1,22 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/23/9
-Message-ID: <Pine.GSO.4.64.0912231809360.21134@faron.mitre.org>
-Date: Wed, 23 Dec 2009 18:10:27 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/02/1
+Message-ID: <20090602110233.26295ec8@redhat.com>
+Date: Tue, 2 Jun 2009 11:02:33 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re:  CVE request: polipo DoS via overly large "Content-Length" header
+Subject: Re: Two OpenSSL DTLS remote DoS
 Content-Type: text/plain; charset=utf-8
 
+Hi!
 
-On Sat, 12 Dec 2009, Raphael Geissert wrote:
+There are 2 more issues that cause DTLS server to crash (NULL pointer
+dereference DoS), detailed in upstream bug reports linked below.
 
-> A vulnerability has been found in polipo that allows a remote attacker to
-> crash the daemon via an overly large "Content-Length" header.
 
-Use CVE-2009-4413, to be filled in later.
+CVE-2009-1386
+DTLS: SegFault if ChangeCipherSpec is received before ClientHello
 
-Note: CVE-2009-3305 has been assigned to a separate crash using a 
-malformed Cache-Control line, as documented in 
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=547047
+http://rt.openssl.org/Ticket/Display.html?id=1679&user=guest&pass=guest
+http://cvs.openssl.org/chngview?cn=17369
 
-- Steve
+This was first fixed upstream in 0.9.8i.
+
+
+CVE-2009-1387
+DTLS fragment bug - out-of-sequence message handling
+
+http://rt.openssl.org/Ticket/Display.html?id=1838&user=guest&pass=guest
+http://cvs.openssl.org/chngview?cn=17958
+
+Here NULL pointer dereference resulting in DTLS server crash can happen in
+dtls1_retrieve_buffered_fragment() during memcpy from frag->fragment.
+
+This is fixed in 1.0.0-beta2, not yet in the latest 0.9.8 available at
+the moment - 0.9.8k.
+
+
+Both issues should be reproducible by connecting using 1.0.0-beta2
+s_client to 0.9.8 s_server.
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
