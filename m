@@ -1,27 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/25/4
-Message-Id: <200902251719.29845.rbu@gentoo.org>
-Date: Wed, 25 Feb 2009 17:19:26 +0100
-From: Robert Buchholz <rbu@...too.org>
-To: oss-security@...ts.openwall.com
-Cc: Marcus Meissner <meissner@...e.de>
-Subject: Re: CVE request: optipng security release
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/02/4
+Message-Id: <1243966060.5517.9.camel@localhost.localdomain>
+Date: Tue, 02 Jun 2009 20:07:40 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com
+Subject: CVE Request - Ghostscript -- Multiple NULL ptr dereference flaws in JBIG2 decoder proved by PoC for CVE-2009-0658
 Content-Type: text/plain; charset=utf-8
 
-On Tuesday 24 February 2009, Marcus Meissner wrote:
-> Hi,
->
-> According to http://optipng.sourceforge.net/
->
-> optipng released OptiPNG 0.6.2 fixing
-> "All current OptiPNG versions are known to be vulnerable to memory
-> reallocation attacks, due to a bug in the GIF image reader.
+Hello Steve,
 
-Note that this is not fixed in 0.6.2, but there is a patch to apply on 
-top of 0.6.2.
-0.6.2 was the release fixing CVE-2008-5101 (bmp issue).
+  multiple NULL pointer dereference flaws were identified in the 
+Ghostscript's JBIG compression format decoder (jbig2dec)
+based on the PoC for recent Adobe Reader's 9.0, Adobe Acrobat's 9.0
+(CVE-2009-0658) issue.
+
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=501710
+https://bugzilla.redhat.com/show_bug.cgi?id=503785
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0658
+
+PoC:
+http://milw0rm.com/sploits/2009-41414141.pdf
+
+Affected versions: All GPL-Ghostscript versions from ghostscript-8.10
+                   (contains initial implementation of jbig2dec) up
+                   to latest upstream 8.64 one.
+
+Could you allocate a CVE id?
+
+Thanks, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
 
-Robert
 
-Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
+
