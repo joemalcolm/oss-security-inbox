@@ -1,32 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/02/4
-Message-ID: <49ABDC04.4040102@pardus.org.tr>
-Date: Mon, 02 Mar 2009 15:15:48 +0200
-From: Pinar Yanardag <pinar@...dus.org.tr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/03/4
+Message-ID: <20090603150743.GA10860@redhat.com>
+Date: Wed, 3 Jun 2009 16:07:43 +0100
+From: Joe Orton <jorton@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: mpfr (Buffer Overflow)
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: "billion laughs" attack against Apache APR
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi, could a CVE name be allocated for this issue:
 
-A buffer overflow vulnerability has been fixed in the latest version of 
-mpfr. From GNU mpfr changelog [1]:
+The expat XML parser is vulnerable to the "billion laughs" entity 
+expansion attack.  This results in a denial of service vulnerability in 
+any network-facing service which uses the Apache "APR-util" library's 
+wrapper interface for expat to parse untrusted XML documents.  The 
+Apache httpd WebDAV module "mod_dav" is such a service.
 
---->8---
-Changes from version 2.4.0 to version 2.4.1     
-* Security fix in mpfr_snprintf and mpfr_vsnprintf (buffer overflow).
+References: 
+http://milw0rm.com/exploits/8842 
+http://marc.info/?l=apr-dev&m=124396021826125&w=2
+http://svn.apache.org/viewvc?rev=781403&view=rev
 
---->8---
-
-[1]: http://www.mpfr.org/mpfr-2.4.1
-
-Cheers,
-
--- 
-Pinar Yanardag
-http://pinguar.org
-_________________________________________________________
-Pardus Security Team
-http://security.pardus.org.tr
-
-
+Affected versions: 
+APR-util <= 1.3.4
