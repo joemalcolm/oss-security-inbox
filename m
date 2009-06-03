@@ -1,41 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/29/1
-Message-ID: <20090429011239.GF6418@lackof.org>
-Date: Tue, 28 Apr 2009 19:12:39 -0600
-From: dann frazier <dannf@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/03/1
+Message-ID: <4A25D1BD.6030302@redhat.com>
+Date: Wed, 03 Jun 2009 09:28:29 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: security@...nel.org, sfrench@...ibm.com
-Subject: Re: CVE request? buffer overflow in CIFS in 2.6.*
+Subject: Re: CVE request: kernel: splice local denial of service
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Apr 25, 2009 at 05:40:20PM +0800, Eugene Teo wrote:
-> Hi Steve,
+Miklos Szeredi wrote:
+> On Sat, 2009-05-30 at 03:36 -0400, Jon Oberheide wrote:
+>> The deadlock can be reproduced easily (you might need to fork() a few
+>> times to get an pipe inode allocation ptr less than the file inode ptr):
+>>
+>>     pipe(pfds);
+>>     snprintf(buf, sizeof(buf), "/tmp/%d", getpid());
+>>     fd = open(buf, O_RDWR | O_CREAT, S_IRWXU);
+>>
+>>     if (fork()) {
+>>         splice(pfds[0], NULL, fd, NULL, 1024, NULL);
+>>     } else{
+>>         sleep(1);
+>>         splice(pfds[0], NULL, fd, NULL, 1024, NULL);
+>>     }
+>>
+>> However, the deadlock only affects the task attempting to acquire the
+>> inode's i_mutex, so an attacker would require write access to a file
+>> that is also written (or other fs op that acquires i_mutex) by some
+>> victim process.  That is, unless I've missed something. :-)
 > 
-> > One approach might be to "pre-tag" this whole set of changes with a single
-> > CVE, then when they ultimately get merged into a single kernel version or
-> > some other concrete milestone, the "scope" of that CVE ends.
-> 
-> I'm fine with this approach. It can actually help to make it easier to
-> manage this set of changes.
+> Some operations also take i_mutex on parent (open(O_CREAT), mkdir,
+> unlink, rmdir, rename, etc), and the order is always parent first.  This
+> means, that if some task is holding i_mutex on /tmp/foo, then doing
+> unlink("/tmp/foo") will block while holding i_mutex on /tmp.  Together
+> with the above deadlock it will prevent creation or removal of files
+> under /tmp, making the system pretty much unusable.
 
-To summarize (and make sure I understand), the plan is to create a
-single CVE for a collection of CIFS fixes. So far, this series includes
-the following changesets, but others may be added as well:
+But it does not make the box unresponsive. In this example, you can
+still ssh into the system as long as it does not create files in /tmp. I
+gave it A:P for the availability impact of the CVSSv2 vector.
 
-http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.29.y.git;a=commitdiff;h=15bd8021d870d2c4fbf8c16578d72d03cfddd3a7
-http://git.kernel.org/?p=linux/kernel/git/sfrench/cifs-2.6.git;a=commitdiff;h=f083def68f84b04fe3f97312498911afce79609e
-http://git.kernel.org/linus/27b87fe52baba0a55e9723030e76fce94fabcea4
-http://git.kernel.org/?p=linux/kernel/git/sfrench/cifs-2.6.git;a=commit;h=7b0c8fcff47a885743125dd843db64af41af5a61
-http://git.kernel.org/?p=linux/kernel/git/sfrench/cifs-2.6.git;a=commit;h=968460ebd8006d55661dec0fb86712b40d71c413
-
-Is that correct? If so, is there an estimate for when this set will be
-deemed complete and a CVE assigned?
-
-I think that if we wait too long to close this, we'll end up with
-distributions releasing updates with only a subset of these
-fixes, which would make this "collection" somewhat difficult to track
-by CVE ID handle. I'm otherwise quite happy with this plan, fwiw.
-
--- 
-dann frazier
-
+Thanks, Eugene
