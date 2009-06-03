@@ -1,50 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/21/9
-Message-Id: <1232543626.3231.22.camel@dhcp-lab-164.englab.brq.redhat.com>
-Date: Wed, 21 Jan 2009 14:13:46 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com
-Subject: CVE Request -- openoffice.org (CVE-2008-4841)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/03/6
+Message-ID: <20090603155954.GC17544@suse.de>
+Date: Wed, 3 Jun 2009 17:59:54 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request: PDF XSS in ModSecurity / apache2 mod_security 2.5.8
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve,
+Hi,
 
-  CVE of CVE-2008-4841 has been assigned to 
-the following WordPad Text Converter for Word 97
-vulnerability:
+There also is a PDF XSS in ModSecurity <2.5.8
 
-The WordPad Text Converter for Word 97 files in Microsoft Windows 2000
-SP4, XP SP2, and Server 2003 SP1 and SP2 allows remote attackers to
-execute arbitrary code via a crafted (1) .doc, (2) .wri, or (3) .rtf
-Word 97 file that triggers memory corruption, as exploited in the wild
-in December 2008. NOTE: As of 20081210, it is unclear whether this
-vulnerability is related to a WordPad issue disclosed on 20080925 with
-a 2008-crash.doc.rar example, but there are insufficient details to be
-sure.
+https://sourceforge.net/project/shownotes.php?release_id=667538&group_id=68846
+http://mod-security.svn.sourceforge.net/viewvc/mod-security?view=rev&revision=1255
 
-With references:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4841
-http://www.milw0rm.com/exploits/6560
-http://milw0rm.com/sploits/2008-crash.doc.rar
-http://www.microsoft.com/technet/security/advisory/960906.mspx
-http://www.securityfocus.com/bid/31399
-http://www.securityfocus.com/bid/32718
-http://securitytracker.com/id?1021376
-http://secunia.com/advisories/32997
+"Discovered by Steve Grubb at Redhat", so perhaps there 
+already is a CVE.
 
-Found out, this issue (http://milw0rm.com/sploits/2008-crash.doc.rar)
-affects also the Word processor as shipped with OpenOffice.org.
-
-Affected OpenOffice.org versions: openoffice.org-1.1.2-38.2.0.EL3 <= x < openoffice.org-1.1.5-10.6.0.5.EL4
-Note: !! openoffice.org-2.* releases are not affected by this issue !!
-
-What's the strategy in this case -- will we need a new CVE-2008 id
-for this issue && the openoffice.org1 case? (And if so, could
-you allocate one?)
-
-Thanks, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-
+Ciao, Marcus
