@@ -1,22 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/19/1
-Message-ID: <20090219155929.GA5330@severus.strandboge.com>
-Date: Thu, 19 Feb 2009 09:59:29 -0600
-From: Jamie Strandboge <jamie@...onical.com>
-To: coley@...us.mitre.org
-Cc: oss-security@...ts.openwall.com
-Subject: CVE request for yaws
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/03/3
+Message-ID: <4A26425C.8000509@redhat.com>
+Date: Wed, 03 Jun 2009 17:29:00 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: sparc64: Fix crash with /proc/iomem
 Content-Type: text/plain; charset=utf-8
 
-Yaws 1.80 contains a fix for a DoS[1]. Can we get a CVE for it?
+This was introduced in commit 9fd8b647 (v2.6.22-rc1), and fixed in
+commit 192d7a46. The description is as follows:
 
-Thanks,
-Jamie
+From: Mikulas Patocka <mpatocka@...hat.com>
 
-[1] http://yaws.hyber.org/
+[ Upstream commit 67c6d11d1a174ec4cad9a3c5d5f9043c ]
 
--- 
-Ubuntu Security Engineer     | http://www.ubuntu.com/
-Canonical Ltd.               | http://www.canonical.com/
+When you compile kernel on Sparc64 with heap memory checking and type
+"cat /proc/iomem", you get a crash, because pointers in struct
+resource are uninitialized.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (198 bytes)
+Most code fills struct resource with zeros, so I assume that it is
+responsibility of the caller of request_resource to initialized it,
+not the responsibility of request_resource functuion.
+
+After 2.6.29 is out, there could be a check for uninitialized fields
+added to request_resource to avoid crashes like this.
