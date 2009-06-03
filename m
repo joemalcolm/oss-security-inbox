@@ -1,20 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/25/5
-Message-ID: <87tz5iovj1.fsf@mid.deneb.enyo.de>
-Date: Wed, 25 Mar 2009 09:29:22 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/03/7
+Message-ID: <20090603181605.326c0d11@redhat.com>
+Date: Wed, 3 Jun 2009 18:16:05 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Lua 5.1.4
+Subject: Re: CVE Request: PDF XSS in ModSecurity / apache2 mod_security 2.5.8
 Content-Type: text/plain; charset=utf-8
 
-* Kees Cook:
+On Wed, 3 Jun 2009 17:59:54 +0200 Marcus Meissner <meissner@...e.de>
+wrote:
 
-> Has anyone looked at the Lua fixes[1] in 5.1.4?  I'm not familiar with the
-> codebase, but it seems that several may have security implications:
+> https://sourceforge.net/project/shownotes.php?release_id=667538&group_id=68846
+> http://mod-security.svn.sourceforge.net/viewvc/mod-security?view=rev&revision=1255
+> 
+> "Discovered by Steve Grubb at Redhat", so perhaps there 
+> already is a CVE.
 
-As far as I can see, they have security implications if you run
-untrusted script code (or untrusted bytecode).  I don't think we've
-got such software in our code base, but I might be mistaken.
+Nope, we have not assigned any id to this flaw.
 
-There are additional issues if you run untrusted bytecode, these
-issues haven't been fixed (and are very difficult to fix).
+-- 
+Tomas Hoger / Red Hat Security Response Team
