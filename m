@@ -1,23 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/07/1
-Message-ID: <20090107083206.GA16641@pcpool00.mathematik.uni-freiburg.de>
-Date: Wed, 7 Jan 2009 09:32:06 +0100
-From: "Bernhard R. Link" <brlink@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Fwd: Using xdg-open in /etc/mailcap causes hole in Firefox (Demonstration/Exploit included)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/03/8
+Message-ID: <Pine.GSO.4.51.0906031223160.17965@faron.mitre.org>
+Date: Wed, 3 Jun 2009 12:24:11 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: PDF XSS in ModSecurity / apache2 mod_security 2.5.8
 Content-Type: text/plain; charset=utf-8
 
-* Josh Bressers <bressers@...hat.com> [090106 20:47]:
-> Here's a heads up for everyone (I've CCd the discoverer)
-> ----- Forwarded Message -----
-[...]
-> This page delivers a .desktop file with the mime-type "application/pdf". In default configuration, Firefox offers to open this file with the default application, which is xdg-open. Just one click on "OK" (and most users won't have a closer look at the dialog!) and the content in the .desktop file is immediately executed!
 
-I guess that is what people get for reinventing "see", they get the
-exact same security problems other browser/"generic viewer" combinations
-had years ago....
+My read is that 2.5.8 fixed this, but the version was quickly changed to
+handle the other issue.
 
-And xdg-open had not even a way to specify the mime-type...
-</rant>
+- Steve
 
-	Bernhard R. Link
+
+======================================================
+Name: CVE-2009-1903
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1903
+Reference: CONFIRM:http://sourceforge.net/project/shownotes.php?release_id=667538
+Reference: FEDORA:FEDORA-2009-2654
+Reference: URL:https://www.redhat.com/archives/fedora-package-announce/2009-March/msg00487.html
+Reference: FEDORA:FEDORA-2009-2686
+Reference: URL:https://www.redhat.com/archives/fedora-package-announce/2009-March/msg00529.html
+Reference: BID:34096
+Reference: URL:http://www.securityfocus.com/bid/34096
+Reference: OSVDB:52552
+Reference: URL:http://www.osvdb.org/52552
+Reference: SECUNIA:34256
+Reference: URL:http://secunia.com/advisories/34256
+Reference: SECUNIA:34311
+Reference: URL:http://secunia.com/advisories/34311
+Reference: VUPEN:ADV-2009-0703
+Reference: URL:http://www.vupen.com/english/advisories/2009/0703
+Reference: XF:modsecurity-pdfxss-dos(49211)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/49211
+
+The PDF XSS protection feature in ModSecurity before 2.5.8 allows
+remote attackers to cause a denial of service (Apache httpd crash) via
+a request for a PDF file that does not use the GET method.
+
+
