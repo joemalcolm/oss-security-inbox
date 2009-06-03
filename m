@@ -1,34 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/21/1
-Message-ID: <20090621172525.GA17317@ngolde.de>
-Date: Sun, 21 Jun 2009 19:25:25 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE id request: strongswan
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/03/5
+Message-ID: <20090603155725.GB17544@suse.de>
+Date: Wed, 3 Jun 2009 17:57:25 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request: ModSecurity / apache2 mod_security 2.5.9
 Content-Type: text/plain; charset=utf-8
 
 Hi,
-the latest release fixes two new denial of service issues. 
-From the changelog:
-- Applying their fuzzing tool, the Orange Labs vulnerability research team
-  found another two DoS vulnerabilities, one in the rather old ASN.1 parser
-  of Relative Distinguished Names (RDNs) and a second one in the conversion
-  of ASN.1 UTCTIME and GENERALIZEDTIME strings to a time_t value.
-  Malformed X.509 certificate RDNs or timestamps can cause the pluto IKE
-  daemon to crash and restart.
 
-Debian bug: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=533837
-Upstream patches:
-http://download.strongswan.org/patches/05_asn1_rdn_patch/
-http://download.strongswan.org/patches/06_asn1_time_patch/
+This is out for some time already, but I found no CVE:
 
-Can I get two CVE ids for this please?
+ModSecurity 2.5 module for versions < 2.5.9 
+http://www.securityfocus.com/archive/1/501968
+http://www.securityfocus.com/bid/34096
 
-Cheers
-Nico
+https://sourceforge.net/project/shownotes.php?release_id=667542&group_id=68846
 
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
+SVN rev we think:
+http://mod-security.svn.sourceforge.net/viewvc/mod-security?view=rev&revision=1265
 
-Content of type "application/pgp-signature" skipped
+Ciao, Marcus
