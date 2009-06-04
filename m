@@ -1,31 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/20/3
-Message-ID: <20090720113738.GD12598@suse.de>
-Date: Mon, 20 Jul 2009 13:37:38 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux 2.6.30+/SELinux/RHEL5 test kernel 0day, exploiting the unexploitable
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/04/2
+Message-ID: <1200932270.2743761244138889553.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 4 Jun 2009 14:08:09 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: coley@...re.org
+Subject: CVE Request (gstreamer-plugins-good)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jul 20, 2009 at 03:29:09PM +0400, Solar Designer wrote:
-> Marcus,
-> 
-> On Mon, Jul 20, 2009 at 12:01:47PM +0200, Marcus Meissner wrote:
-> > - fixed the personality - PER_CLEAR_ON_SETTID inheritance issue (CVE-2009-1895)
-> >   to work around mmap_min_addr protection.
-> >   Affects 2.6.23-2.6.30.1
-> 
-> What makes you think this does not affect earlier kernels?  This does
-> not match my analysis, but maybe I am missing something, hence I ask.
-> 
-> BTW, as you're aware, this fix is a hardening measure for/against
-> SUID-root programs with a certain class of design errors in them; it is
-> not exactly a fix for the kernel itself, although it should be in the
-> kernel.  I do not mean to downplay the issue, but I think it is
-> important that we distinguish the different types of changes that we are
-> making in response to Brad's exploit.
+Hi Steve,
 
-Foremost, the mmap_min_addr protection is not in older kernels (<2.6.23) at all,
-so its kinda "not implemented" instead of "bug".
+Can you give this a CVE id:
+http://secunia.com/advisories/35205/
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=531631
 
-Ciao, Marcus
+The upstream patch can be found in our bug:
+https://bugzilla.redhat.com/show_bug.cgi?id=504199
+
+The link to the patch from Secunia doesn't seem to be working.
+
+Thanks.
+
+-- 
+    JB
