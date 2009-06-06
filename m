@@ -1,24 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/06/10
-Message-ID: <Pine.GSO.4.51.0905061253280.3040@faron.mitre.org>
-Date: Wed, 6 May 2009 12:53:51 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/06/12
+Message-ID: <Pine.GSO.4.51.0906061348080.28142@faron.mitre.org>
+Date: Sat, 6 Jun 2009 13:48:13 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Tomas Hoger <thoger@...hat.com>
-cc: oss-security@...ts.openwall.com, coley@...re.org
-Subject: Re: Old cscope buffer overflow
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE id request: dokuwiki
 Content-Type: text/plain; charset=utf-8
 
 
-On Wed, 6 May 2009, Tomas Hoger wrote:
+======================================================
+Name: CVE-2009-1960
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1960
+Reference: MILW0RM:8781
+Reference: URL:http://www.milw0rm.com/exploits/8781
+Reference: MILW0RM:8812
+Reference: URL:http://www.milw0rm.com/exploits/8812
+Reference: CONFIRM:http://bugs.splitbrain.org/index.php?do=details&task_id=1700
+Reference: SECUNIA:35218
+Reference: URL:http://secunia.com/advisories/35218
 
-> > We recently updated CVE-2009-0148 for overflows in cscope before
-> > 15.7a. Is this the same issue, or do we need a different one?
-> >
-> > This seems to be distinct from CVE-2006-4262 as well...
->
-> Different from both.  CVE-2009-0148 is more of a dupe / re-occurrence /
-> incomplete fix of even older CVE-2004-2541.
+inc/init.php in DokuWiki 2009-02-14, rc2009-02-06, and rc2009-01-30,
+when register_globals is enabled, allows remote attackers to include
+and execute arbitrary local files via the
+config_cascade[main][default][] parameter to doku.php.  NOTE: PHP
+remote file inclusion is also possible in PHP 5 using ftp:// URLs.
 
-OK.  Use CVE-2009-1577, to be filled in later.
 
-- Steve
