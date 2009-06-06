@@ -1,21 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/19/2
-Message-ID: <1211565651.374531258646749883.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 19 Nov 2009 11:05:49 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: coley <coley@...re.org>
-Subject: CVE assignment (libexif)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/06/11
+Message-ID: <Pine.GSO.4.51.0906061347370.28142@faron.mitre.org>
+Date: Sat, 6 Jun 2009 13:47:45 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: "billion laughs" attack against Apache APR
 Content-Type: text/plain; charset=utf-8
 
-I'm giving libexif CVE-2009-3895. I've not seen an ID for this yet.
 
-Only libexif version 0.6.18 is affected, all other versions are safe.
+======================================================
+Name: CVE-2009-1955
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1955
+Reference: MILW0RM:8842
+Reference: URL:http://www.milw0rm.com/exploits/8842
+Reference: MLIST:[apr-dev] 20090602 [PATCH] prevent "billion laughs" attack against expat
+Reference: URL:http://marc.info/?l=apr-dev&m=124396021826125&w=2
+Reference: MLIST:[oss-security] 20090603 CVE request: "billion laughs" attack against Apache APR
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/06/03/4
+Reference: CONFIRM:http://svn.apache.org/viewvc?view=rev&revision=781403
+Reference: CONFIRM:http://www.apache.org/dist/apr/CHANGES-APR-UTIL-1.3
+Reference: DEBIAN:DSA-1812
+Reference: URL:http://www.debian.org/security/2009/dsa-1812
+Reference: SECUNIA:35284
+Reference: URL:http://secunia.com/advisories/35284
+Reference: SECUNIA:35360
+Reference: URL:http://secunia.com/advisories/35360
 
-http://article.gmane.org/gmane.comp.graphics.libexif.devel/806
-http://bugs.gentoo.org/show_bug.cgi?id=293190
+The expat XML parser in the apr_xml_* interface in xml/apr_xml.c in
+Apache APR-util before 1.3.7, as used in the mod_dav and mod_dav_svn
+modules in the Apache HTTP Server, allows remote attackers to cause a
+denial of service (memory consumption) via a crafted XML document
+containing a large number of nested entity references, as demonstrated
+by a PROPFIND request, a similar issue to CVE-2003-1564.
 
-Thanks.
 
--- 
-    JB
