@@ -1,41 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/15/4
-Message-ID: <4AD6BF10.90306@kernel.sg>
-Date: Thu, 15 Oct 2009 14:20:00 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request kernel: flood ping cause out-of-iommu error and panic when mtu larger than 1500
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/06/3
+Message-ID: <Pine.GSO.4.51.0906061221320.28142@faron.mitre.org>
+Date: Sat, 6 Jun 2009 12:22:01 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com, oss-security@...ts.openwall.com
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- ImageMagick -- Integer overflow in XMakeImage()
 Content-Type: text/plain; charset=utf-8
 
-Executing ping -f -s 3000 IP in a certain network setup could trigger an 
-out-of-IOMMU error, leading to a denial of service.
 
-Steps to reproduce the issue:
-https://bugzilla.redhat.com/show_bug.cgi?id=529137#c0
+======================================================
+Name: CVE-2009-1882
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1882
+Reference: CONFIRM:http://imagemagick.org/script/changelog.php
+Reference: CONFIRM:http://mirror1.smudge-it.co.uk/imagemagick/www/changelog.html
+Reference: BID:35111
+Reference: URL:http://www.securityfocus.com/bid/35111
+Reference: OSVDB:54729
+Reference: URL:http://osvdb.org/54729
+Reference: SECUNIA:35216
+Reference: URL:http://secunia.com/advisories/35216
+Reference: VUPEN:ADV-2009-1449
+Reference: URL:http://www.vupen.com/english/advisories/2009/1449
 
-Triggering the issue would result in:
-PCI-DMA: Out of IOMMU space for 7222 bytes at device 0000:03:00.0
-PCI-DMA: Out of IOMMU space for 7222 bytes at device 0000:03:00.0
-<Repeated Many Many Times>
-PCI-DMA: Out of IOMMU space for 7222 bytes at device 0000:03:00.0
-PCI-DMA: Out of IOMMU space for 7222 bytes at device 0000:03:00.0
+Integer overflow in the XMakeImage function in magick/xwindow.c in
+ImageMagick 6.5.2-8 allows remote attackers to cause a denial of
+service (crash) and possibly execute arbitrary code via a crafted TIFF
+file, which triggers a buffer overflow.  NOTE: some of these details
+are obtained from third party information.
 
-HARDWARE ERROR
-CPU 0: Machine Check Exception:                7 Bank 4: bc0000000005001b
-RIP 10:<ffffffff8006b2b0> {default_idle+0x29/0x50}
-TSC 10116da2355 ADDR 4000000 MISC c008000001000000
-This is not a software problem!
-Run through mcelog --ascii to decode and contact your hardware vendor
-Kernel panic - not syncing: Uncorrected machine check
-  <7>APIC error on CPU2: 00(08)
 
-Upstream commits:
-http://git.kernel.org/linus/a866bbf6aacf95f849810079442a20be118ce905
-http://git.kernel.org/linus/97d477a914b146e7e6722ded21afa79886ae8ccd
-
-References:
-http://bugzilla.kernel.org/show_bug.cgi?id=9468
-https://bugzilla.redhat.com/show_bug.cgi?id=529137
-
-Thanks, Eugene
