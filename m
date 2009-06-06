@@ -1,48 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/13/3
-Message-ID: <1522056838.509851258145256828.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 13 Nov 2009 15:47:36 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/06/8
+Message-ID: <Pine.GSO.4.51.0906061342330.28142@faron.mitre.org>
+Date: Sat, 6 Jun 2009 13:43:33 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - kernel: NOMMU: Dont pass NULL pointers to fput() in do_mmap_pgoff()
+Subject: Re: CVE request: kernel: splice local denial of service
 Content-Type: text/plain; charset=utf-8
 
-While this is a bit obscure, let's give it an ID anyway.
 
-CVE-2009-3888
+======================================================
+Name: CVE-2009-1961
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1961
+Reference: MLIST:[oss-security] 20090529 CVE request: kernel: splice local denial of service
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/05/29/2
+Reference: MLIST:[oss-security] 20090530 Re: CVE request: kernel: splice local denial of service
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/05/30/1
+Reference: MLIST:[oss-security] 20090602 Re: CVE request: kernel: splice local denial of service
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/06/02/2
+Reference: MLIST:[oss-security] 20090603 Re: CVE request: kernel: splice local denial of service
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/06/03/1
+Reference: CONFIRM:http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=7bfac9ecf0585962fe13584f5cf526d8c8e76f17
+Reference: BID:35143
+Reference: URL:http://www.securityfocus.com/bid/35143
+Reference: SECTRACK:1022307
+Reference: URL:http://securitytracker.com/id?1022307
 
-Thanks.
+The inode double locking code in fs/ocfs2/file.c in the Linux kernel
+2.6.30 before 2.6.30-rc3, 2.6.27 before 2.6.27.24, 2.6.29 before 2.6.29.4,
+and possibly other versions down to 2.6.19 allows local users to cause a
+denial of service (prevention of file creation and removal) via a series
+of splice system calls that trigger a deadlock between the
+generic_file_splice_write, splice_from_pipe, and ocfs2_file_splice_write
+functions.
 
--- 
-    JB
 
-
------ "Eugene Teo" <eugeneteo@...nel.sg> wrote:
-
-> From upstream patch:
-> "Don't pass NULL pointers to fput() in the error handling paths of the
-> 
-> NOMMU do_mmap_pgoff() as it can't handle it.
-> 
-> The following can be used as a test program:
-> int main() { static long long a[1024 * 1024 * 20] = { 0 }; return a;}
-> 
-> Without the patch, the code oopses in atomic_long_dec_and_test() as 
-> called by fput() after the kernel complains that it can't allocate
-> that 
-> big a chunk of memory.  With the patch, the kernel just complains
-> about 
-> the allocation size and then the program segfaults during execve() as
-> 
-> execve() can't complete the allocation of all the new ELF program
-> segments."
-> 
-> http://git.kernel.org/linus/89a8640279f8bb78aaf778d1fc5c4a6778f18064
-> 
-> Doesn't affect if CONFIG_MMU=y.
-> 
-> Thanks, Eugene
-
--- 
-    JB
