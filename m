@@ -1,92 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/21/3
-Message-ID: <Pine.GSO.4.51.0901202051410.22454@faron.mitre.org>
-Date: Tue, 20 Jan 2009 20:53:05 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/06/5
+Message-ID: <Pine.GSO.4.51.0906061236220.28142@faron.mitre.org>
+Date: Sat, 6 Jun 2009 12:36:43 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: WebSVN
+Subject: Re: CVE id request: drupal
 Content-Type: text/plain; charset=utf-8
 
 
-Use CVE-2009-0240 for the recent authorization issue.
+On Thu, 28 May 2009, Nico Golde wrote:
 
-Note that CVE-2008-5918, CVE-2008-5919, and CVE-2008-5920 were assigned to
-older WebSVN issues that were disclosed in October 2008.
-
-- Steve
+> Hi,
+> http://drupal.org/node/461886
 
 
 ======================================================
-Name: CVE-2008-5918
+Name: CVE-2009-1844
 Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5918
-Reference: MILW0RM:6822
-Reference: URL:http://www.milw0rm.com/exploits/6822
-Reference: MISC:http://www.gulftech.org/?node=research&article_id=00132-10202008
-Reference: CONFIRM:http://websvn.tigris.org/issues/show_bug.cgi?id=179
-Reference: CONFIRM:http://websvn.tigris.org/servlets/NewsItemView?newsItemID=2218
-Reference: BID:31891
-Reference: URL:http://www.securityfocus.com/bid/31891
-Reference: SECUNIA:32338
-Reference: URL:http://secunia.com/advisories/32338
-Reference: XF:websvn-index-xss(46048)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/46048
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1844
+Reference: CONFIRM:http://drupal.org/node/461886
+Reference: DEBIAN:DSA-1808
+Reference: URL:http://www.debian.org/security/2009/dsa-1808
+Reference: SECUNIA:35282
+Reference: URL:http://secunia.com/advisories/35282
 
-Cross-site scripting (XSS) vulnerability in the
-getParameterisedSelfUrl function in index.php in WebSVN 2.0 and
-earlier allows remote attackers to inject arbitrary web script or HTML
-via the PATH_INFO.
-
-
-======================================================
-Name: CVE-2008-5919
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5919
-Reference: MILW0RM:6822
-Reference: URL:http://www.milw0rm.com/exploits/6822
-Reference: MISC:http://www.gulftech.org/?node=research&article_id=00132-10202008
-Reference: CONFIRM:http://websvn.tigris.org/issues/show_bug.cgi?id=179
-Reference: CONFIRM:http://websvn.tigris.org/servlets/NewsItemView?newsItemID=2218
-Reference: BID:31891
-Reference: URL:http://www.securityfocus.com/bid/31891
-Reference: SECUNIA:32338
-Reference: URL:http://secunia.com/advisories/32338
-Reference: XF:websvn-rss-directory-traversal(46050)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/46050
-
-Directory traversal vulnerability in rss.php in WebSVN 2.0 and
-earlier, when magic_quotes_gpc is disabled, allows remote attackers to
-overwrite arbitrary files via directory traversal sequences in the rev
-parameter.
-
-
-======================================================
-Name: CVE-2008-5920
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5920
-Reference: MILW0RM:6822
-Reference: URL:http://www.milw0rm.com/exploits/6822
-Reference: MISC:http://www.gulftech.org/?node=research&article_id=00132-10202008
-Reference: BID:31891
-Reference: URL:http://www.securityfocus.com/bid/31891
-
-The create_anchors function in utils.inc in WebSVN 1.x allows remote
-attackers to execute arbitrary PHP code via a crafted username that is
-processed by the preg_replace function with the eval switch.
-
-
-======================================================
-Name: CVE-2009-0240
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0240
-Reference: MLIST:[oss-security] 20090118 CVE request: WebSVN
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/01/18/2
-Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=512191
-Reference: SECUNIA:32338
-Reference: URL:http://secunia.com/advisories/32338
-
-listing.php in WebSVN 2.0 and possibly 1.7 beta, when using an SVN
-authz file, allows remote authenticated users to read changelogs or
-diffs for restricted projects via a modified repname parameter.
+Multiple cross-site scripting (XSS) vulnerabilities in Drupal 5.x
+before 5.18 and 6.x before 6.12 allow (1) remote authenticated users
+to inject arbitrary web script or HTML via crafted UTF-8 byte
+sequences that are treated as UTF-7 by Internet Explorer 6 and 7,
+which are not properly handled in the "HTML exports of books" feature;
+and (2) allow remote authenticated users with administer taxonomy
+permissions to inject arbitrary web script or HTML via the help text
+of an arbitrary vocabulary.  NOTE: vector 1 exists because of an
+incomplete fix for CVE-2009-1575.
 
 
