@@ -1,17 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/24/1
-Message-ID: <20091224112835.GA2469@galadriel.inutil.org>
-Date: Thu, 24 Dec 2009 12:28:35 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: OpenTTD remote DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/06/6
+Message-ID: <Pine.GSO.4.51.0906061320440.28142@faron.mitre.org>
+Date: Sat, 6 Jun 2009 13:21:02 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security <oss-security@...ts.openwall.com>
+cc: coley@...re.org
+Subject: Re: CVE Request (apr-util)
 Content-Type: text/plain; charset=utf-8
 
-FYI: Debian has assigned CVE-2009-4007 for a remote DoS against
-the openttd game server:
 
-http://www.openttd.org/en/news/112
-http://binaries.openttd.org/releases/0.7.5/changelog.txt
+======================================================
+Name: CVE-2009-1956
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1956
+Reference: MLIST:[dev] 20090424 Buffer overflow in apr_brigade_vprintf() ?
+Reference: URL:http://www.mail-archive.com/dev@apr.apache.org/msg21591.html
+Reference: MLIST:[dev] 20090424 Re: Buffer overflow in apr_brigade_vprintf() ?
+Reference: URL:http://www.mail-archive.com/dev@apr.apache.org/msg21592.html
+Reference: MLIST:[oss-security] 20090605 CVE Request (apr-util)
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/06/06/1
+Reference: CONFIRM:http://svn.apache.org/viewvc?view=rev&revision=768417
+Reference: CONFIRM:http://www.apache.org/dist/apr/CHANGES-APR-UTIL-1.3
+Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=504390
 
-Cheers,
-        Moritz
+Off-by-one error in the apr_brigade_vprintf function in Apache
+APR-util before 1.3.5 on big-endian platforms allows remote attackers
+to obtain sensitive information or cause a denial of service
+(application crash) via crafted input.
+
+
