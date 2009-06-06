@@ -1,25 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/07/11
-Message-ID: <Pine.GSO.4.51.0901071357270.15738@faron.mitre.org>
-Date: Wed, 7 Jan 2009 13:57:46 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/06/4
+Message-ID: <Pine.GSO.4.51.0906061224370.28142@faron.mitre.org>
+Date: Sat, 6 Jun 2009 12:25:31 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: Tomas Hoger <thoger@...hat.com>, coley@...re.org
-Subject: Re: CVE request - pdfjam
+To: oss-security <oss-security@...ts.openwall.com>
+cc: coley@...re.org
+Subject: Re: CVE Request (gstreamer-plugins-good)
 Content-Type: text/plain; charset=utf-8
 
 
-======================================================
-Name: CVE-2008-5843
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5843
-Reference: MLIST:[oss-security] 20081228 Re: CVE request - pdfjam
-Reference: URL:http://openwall.com/lists/oss-security/2008/12/28/3
-Reference: CONFIRM:https://bugs.gentoo.org/show_bug.cgi?id=252734
+The patch link seems to be working again.
 
-Multiple untrusted search path vulnerabilities in pdfjam allow local
-users to gain privileges via a Trojan horse program in (1) the current
-working directory or (2) /var/tmp, related to the (a) pdf90, (b)
-pdfjoin, and (c) pdfnup scripts.
+
+======================================================
+Name: CVE-2009-1932
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1932
+Reference: CONFIRM:http://cgit.freedesktop.org/gstreamer/gst-plugins-good/commit/?id=d9544bcc44adcef769cbdf7f6453e140058a3adc
+Reference: BID:35172
+Reference: URL:http://www.securityfocus.com/bid/35172
+Reference: OSVDB:54827
+Reference: URL:http://osvdb.org/54827
+
+Multiple integer overflows in the (1) user_info_callback, (2)
+user_endrow_callback, and (3) gst_pngdec_task functions
+(ext/libpng/gstpngdec.c) in GStreamer Good Plug-ins (aka
+gst-plugins-good or gstreamer-plugins-good) 0.10.15 allow remote
+attackers to cause a denial of service and possibly execute arbitrary
+code via a crafted PNG file, which triggers a buffer overflow.
 
 
