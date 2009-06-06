@@ -1,36 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/02/1
-Message-ID: <Pine.GSO.4.51.0909021236110.5392@faron.mitre.org>
-Date: Wed, 2 Sep 2009 12:36:27 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/06/13
+Message-ID: <Pine.GSO.4.51.0906061349060.28142@faron.mitre.org>
+Date: Sat, 6 Jun 2009 13:49:13 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- HTMLDOC
+To: oss-security <oss-security@...ts.openwall.com>
+cc: coley@...re.org
+Subject: Re: CVE Request (irssi)
 Content-Type: text/plain; charset=utf-8
 
 
-
 ======================================================
-Name: CVE-2009-3050
+Name: CVE-2009-1959
 Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3050
-Reference: MLIST:[oss-security] 20090725 Re: CVE Request -- HTMLDOC
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/07/25/3
-Reference: MLIST:[oss-security] 20090726 Re: CVE Request -- HTMLDOC
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/07/26/2
-Reference: MLIST:[oss-security] 20090901 Re: CVE Request -- HTMLDOC
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/09/01/1
-Reference: MISC:http://packetstormsecurity.org/0907-exploits/htmldoc-overflow.txt
-Reference: CONFIRM:http://bugs.gentoo.org/show_bug.cgi?id=278186
-Reference: CONFIRM:http://www.htmldoc.org/str.php?L214
-Reference: SECUNIA:35780
-Reference: URL:http://secunia.com/advisories/35780
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1959
+Reference: MLIST:[oss-security] 20090529 CVE Request (irssi)
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/05/29/3
+Reference: MISC:http://xorl.wordpress.com/2009/05/28/irssi-event_wallops-off-by-one-readwrite/
+Reference: CONFIRM:http://bugs.irssi.org/index.php?do=details&task_id=662
+Reference: CONFIRM:http://www.irssi.org/ChangeLog
 
-Buffer overflow in the set_page_size function in util.cxx in HTMLDOC
-1.8.27 and earlier allows context-dependent attackers to execute
-arbitrary code via a long MEDIA SIZE comment.  NOTE: it was later
-reported that there were additional vectors in htmllib.cxx and
-ps-pdf.cxx using an AFM font file with a long glyph name, but these
-vectors do not cross privilege boundaries.
+Off-by-one error in the event_wallops function in
+fe-common/irc/fe-events.c in irssi 0.8.13 allows remote IRC servers to
+cause a denial of service (crash) via an empty command, which triggers
+a one-byte buffer under-read and a one-byte buffer underflow.
 
 
