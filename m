@@ -1,91 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/05/6
-Message-ID: <op.ux67y1wb1e62zd@balu.cs.uni-paderborn.de>
-Date: Wed, 05 Aug 2009 18:55:39 +0200
-From: "Matthias Andree" <matthias.andree@....de>
-To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: fetchmail <= 6.3.10 SSL certificate NUL prefix verification bypass
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/06/9
+Message-ID: <Pine.GSO.4.51.0906061345480.28142@faron.mitre.org>
+Date: Sat, 6 Jun 2009 13:45:54 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: OSS-Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: Re: CVE request: two denial of service bugs in strongswan
 Content-Type: text/plain; charset=utf-8
 
-Am 05.08.2009, 18:30 Uhr, schrieb Tomas Hoger <thoger@...hat.com>:
 
-> And than there is OpenSSL, which, as I've been told, expects
-> applications to do name checking.  So it's probably safe to assume that
-> many / majority of client applications using OpenSSL are likely to be
-> affected by some variant of this problem (either via CommonNames or
-> subjectAltNames).  I'm not sure if single CVE should be used here for
-> all, or dozens of CVEs, one for each.  It's likely going to be mess
-> either way.  I'm adding CC on Steven for advice.  Steven, at least one
-> CVE has already been allocated privately for similar case.
+======================================================
+Name: CVE-2009-1957
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1957
+Reference: CONFIRM:http://download.strongswan.org/CHANGES4.txt
+Reference: CONFIRM:http://download.strongswan.org/patches/03_invalid_ike_state_patch/strongswan-4.x.x_invalid_ike_state.patch
+Reference: CONFIRM:http://download.strongswan.org/patches/03_invalid_ike_state_patch/strongswan-4.x.x_invalid_ike_state.readme
 
-How about this:
-
-- for fetchmail, assign an individual CVE Id (as each other of the  
-affected applications)
-
-- for this problem class (NUL in CN/subjectAltName allows impersonation of  
-other sites), add a sort of "umbrella CVE" that will reference the  
-individual application CVEs. Would this work?
+charon/sa/ike_sa.c in the charon daemon in strongSWAN before 4.3.1
+allows remote attackers to cause a denial of service (NULL pointer
+dereference and crash) via an invalid IKE_SA_INIT request that
+triggers "an incomplete state," followed by a CREATE_CHILD_SA request.
 
 
+======================================================
+Name: CVE-2009-1958
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1958
+Reference: CONFIRM:http://download.strongswan.org/CHANGES4.txt
+Reference: CONFIRM:http://download.strongswan.org/patches/04_swapped_ts_check_patch/strongswan-4.x.x._swapped_ts_check.patch
+Reference: CONFIRM:http://download.strongswan.org/patches/04_swapped_ts_check_patch/strongswan-4.x.x._swapped_ts_check.readme
 
-For fetchmail which uses OpenSSL, the issue was indeed the use of  
-strcasecmp().
-
-The fix that works for the CommonName NUL checks the length returned from  
-X509_NAME_get_text_by_NID versus strlen() of the same string, and will  
-fail the certificate verification if there is a length mismatch, because  
-we then know that there is at least one NUL character that is part of the  
-string.
-
-An alternative would be making sure that we always compare at least  
-min(X509_NAME_get_text_by_NID(...), strlen(expected_name)) characters, but  
-that's actually more effort.
-
+charon/sa/tasks/child_create.c in the charon daemon in strongSWAN
+before 4.3.1 switches the NULL checks for TSi and TSr payloads, which
+allows remote attackers to cause a denial of service via an IKE_AUTH
+request without a (1) TSi or (2) TSr traffic selector.
 
 
-A separate fetchmail commit adds a "sdump()" function that allocates and  
-reformats the string to use ANSI-C \xAB-style escapes for non-printable  
-characters so that users can actually see the difference in their logs; I  
-understand that some distributors will skip that patch, so it goes like  
-this:
-
-/******************************************************************/
-char buf[257], *tt;
-
-i = X509_NAME_get_text_by_NID(..., buf, sizeof(buf) - 1);
-fprintf(dbgstream, "Common Name: \"%s\"\n", (tt = sdump(buf, i)));
-free(tt);
-/******************************************************************/
-
-If anyone cares about such a function (license: LGPL v2.1 or later), grab  
-it from
-
-http://mknod.org/svn/fetchmail/branches/BRANCH_6-3/sdump.h
-http://mknod.org/svn/fetchmail/branches/BRANCH_6-3/sdump.c
-(it uses xmalloc() which is something along the lines of void  
-*xmalloc(size_t i) { void *x=malloc(i); if (!x) abort(); return x; })
-
-Or complain that I'm missing a POSIX standard function that does the same  
-(-8
-
-
-
-FWIW, I haven't yet tested if this works for NUL in subjectAltNames, as I  
-currently don't know how to generate such a certificate (can be  
-self-signed) without writing major amounts of code.
-
-
-If someone has a certificate that has embedded NULs in subjectAltNames  
-that I can use for testing, please send it along together with its key so  
-that I can check the fix also works in that code path.
-
-Also, if someone knows a SSL/TLS server (whichever SSL version and  
-protocol) that uses subjectAltNames in a legitimate way, please let me  
-know hostname and port so I can test that there are no regressions for  
-regular servers.
-
-HTH
-
--- 
-Matthias Andree
