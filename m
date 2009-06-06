@@ -1,34 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/06/7
-Message-ID: <Pine.GSO.4.51.0906061340570.28142@faron.mitre.org>
-Date: Sat, 6 Jun 2009 13:41:43 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE id rquest: xfig insecure tmp files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/06/1
+Message-ID: <2111911638.2914301244247676607.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 5 Jun 2009 20:21:16 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: coley@...re.org
+Subject: CVE Request (apr-util)
 Content-Type: text/plain; charset=utf-8
 
+So there's another apr-util flaw. The initial mail makes it sound pretty
+scary, but it's really not that bad.
 
-Not sure of the version because it's not stated in the original request
-and the Xfig changelog doesn't list any security issues.
+You can find all the scary details here:
+https://bugzilla.redhat.com/show_bug.cgi?id=504390
 
+Thanks
 
-======================================================
-Name: CVE-2009-1962
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1962
-Reference: MLIST:[oss-security] 20090401 CVE id rquest: xfig insecure tmp files
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/04/01/6
-Reference: BID:34328
-Reference: URL:http://www.securityfocus.com/bid/34328
-Reference: XF:xfig-temp-symlink(49600)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/49600
-
-Xfig in Debian GNU/Linux, possibly 3.2.5, allows local users to read
-and write arbitrary files via a symlink attack on the (1)
-xfig-eps[PID], (2) xfig-pic[PID].pix, (3) xfig-pic[PID].err, (4)
-xfig-pcx[PID].pix, (5) xfig-xfigrc[PID], (6) xfig[PID], (7)
-xfig-print[PID], (8) xfig-export[PID].err, (9) xfig-batch[PID], (10)
-xfig-exp[PID], or (11) xfig-spell.[PID] temporary files, where [PID]
-is a process ID.
-
-
+-- 
+    JB
