@@ -1,31 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/12/2
-Message-Id: <1234445889.3238.12.camel@dhcp-lab-164.englab.brq.redhat.com>
-Date: Thu, 12 Feb 2009 14:38:09 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request -- net-snmp (sensitive host information disclosure)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/06/10
+Message-ID: <Pine.GSO.4.51.0906061346510.28142@faron.mitre.org>
+Date: Sat, 6 Jun 2009 13:46:59 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: sparc64: Fix crash with /proc/iomem
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve,
 
-  a possibility of sensitive host information disclosure
-was found in the net-snmp package, due to source/destination
-IP address confusion -- could you please allocate a new CVE-2008
-identifier for it?
+======================================================
+Name: CVE-2009-1914
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1914
+Reference: MLIST:[oss-security] 20090603 CVE request: kernel: sparc64: Fix crash with /proc/iomem
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/06/03/3
+Reference: CONFIRM:http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=192d7a4667c6d11d1a174ec4cad9a3c5d5f9043c
+Reference: CONFIRM:http://www.kernel.org/pub/linux/kernel/v2.6/ChangeLog-2.6.29
 
-References:
-http://bugs.gentoo.org/show_bug.cgi?id=250429
-https://bugzilla.redhat.com/show_bug.cgi?id=485211
+The pci_register_iommu_region function in
+arch/sparc/kernel/pci_common.c in the Linux kernel before 2.6.29 on
+the sparc64 platform allows local users to cause a denial of service
+(system crash) by reading the /proc/iomem file, related to
+uninitialized pointers and the request_resource function.
 
-Upstream patch:
-http://net-snmp.svn.sourceforge.net/viewvc/net-snmp?view=rev&amp;revision=17367
-
-Affected net-snmp versions:
-net-snmp-5.0.9 (older versions probably too) <= x <= net-snmp-5.4.2  (till the above upstream commit)
-
-Thanks, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
 
