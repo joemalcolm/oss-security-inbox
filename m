@@ -1,34 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/25/3
-Message-ID: <3030251.195591235570223652.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 25 Feb 2009 08:57:03 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/08/1
+Message-ID: <20090608082656.GA17284@suse.de>
+Date: Mon, 8 Jun 2009 10:26:56 +0200
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
 Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request - php (PHP BZ#27421)
+Subject: Re: CVE Request -- ImageMagick -- Integer overflow in XMakeImage()
 Content-Type: text/plain; charset=utf-8
 
 
------ "Steven M. Christey" <coley@...us.mitre.org> wrote:
+This also affects GraphicsMagick.
 
-> On Fri, 30 Jan 2009, Jan Lieskovsky wrote:
+On Sat, Jun 06, 2009 at 12:22:01PM -0400, Steven M. Christey wrote:
 > 
-> >   this PHP issue looks to desire a new CVE id.
-> >
-> > References:
-> > http://bugs.php.net/bug.php?id=27421
-> > https://bugzilla.redhat.com/show_bug.cgi?id=479272
-> >
+> ======================================================
+> Name: CVE-2009-1882
+> Status: Candidate
+> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1882
+> Reference: CONFIRM:http://imagemagick.org/script/changelog.php
+> Reference: CONFIRM:http://mirror1.smudge-it.co.uk/imagemagick/www/changelog.html
+> Reference: BID:35111
+> Reference: URL:http://www.securityfocus.com/bid/35111
+> Reference: OSVDB:54729
+> Reference: URL:http://osvdb.org/54729
+> Reference: SECUNIA:35216
+> Reference: URL:http://secunia.com/advisories/35216
+> Reference: VUPEN:ADV-2009-1449
+> Reference: URL:http://www.vupen.com/english/advisories/2009/1449
 > 
-> What attack scenario exists for this issue?  One virtual-host user can
-> effectively DoS other virtual hosts running on the same Apache
-> instance?
+> Integer overflow in the XMakeImage function in magick/xwindow.c in
+> ImageMagick 6.5.2-8 allows remote attackers to cause a denial of
+> service (crash) and possibly execute arbitrary code via a crafted TIFF
+> file, which triggers a buffer overflow.  NOTE: some of these details
+> are obtained from third party information.
 > 
-
-Sorry for the delay on responding to this.
-
-Yes, if one web user sets mbstring.func_overload = 7 in a .htaccess, it will
-effectively disable any other multibyte enabled sites on the same webserver.
 
 -- 
-    JB
+Bye,
+     Thomas
+-- 
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+-- 
+           Hamming's Motto:
+           The purpose of computing is insight, not numbers.
+                                -- Richard W. Hamming
