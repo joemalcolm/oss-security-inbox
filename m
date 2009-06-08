@@ -1,22 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/06/1
-Message-ID: <op.ux7sitid1e62zd@merlin.emma.line.org>
-Date: Thu, 06 Aug 2009 02:19:31 +0200
-From: "Matthias Andree" <matthias.andree@....de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/08/2
+Message-ID: <20090608104948.GA22364@suse.de>
+Date: Mon, 8 Jun 2009 12:49:48 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: fetchmail <= 6.3.10 SSL certificate NUL prefix verification bypass
+Subject: xfig-3.2.5 diff (CVE-2009-1962)
 Content-Type: text/plain; charset=utf-8
 
-Am 05.08.2009, 20:13 Uhr, schrieb Steven M. Christey  
-<coley@...us.mitre.org>:
+Hi,
 
-> So use CVE-2009-2666 for fetchmail (I'll fill it in later) and Tomas,  
-> even if it results in dozens of CVEs, I suspect this is how we should go.
+just in case you need it, our maintainer asked me to forward
+a patch for $SUBJECT which has been fixed in our xfig
+for quite some time.
 
-Thank you.
-
-http://www.fetchmail.info/fetchmail-SA-2009-01.txt
+l8er,
+Sebastian
 
 -- 
-Matthias Andree
+~
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+~ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+
+
+Download attachment "xfig-3.2.5-mkstemp.dif" of type "video/dv" (11188 bytes)
