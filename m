@@ -1,57 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/17/1
-Message-Id: <200912170103.26263.tmb@65535.com>
-Date: Thu, 17 Dec 2009 01:03:19 +0000
-From: Tim Brown <tmb@...35.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/09/1
+Message-ID: <87y6s1d5lk.fsf@mid.deneb.enyo.de>
+Date: Tue, 09 Jun 2009 13:11:35 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Subject: Re:  Re: Some small KDE issues
+Subject: Predictable Math.random() in browsers
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday 16 December 2009 10:53:08 Tomas Hoger wrote:
-> On Thu, 10 Dec 2009 22:54:57 -0600 Raphael Geissert
->
-> <geissert@...ian.org> wrote:
-> > > Our KDE maintainer alerted us to this:
-> > > http://www.ocert.org/advisories/ocert-2009-015.html
-> > > http://www.kde.org/info/security/advisory-20091027-1.txt
-> >
-> > According to 0910291553490.22070@....redhat.com, ids were already
-> > requested.
-> >
-> > Maybe somebody needs to be prodded?
->
-> I'd rather say it needs someone to do the work and clearly state what
-> should get a CVE and why.  Advisory text does not really map well to
-> the list of patches.
+<http://www.trusteer.com/temporary-user-tracking-in-major-browsers>
+describes what essentially is a weakness in Math.random()---it's
+predictable and its state is shared across domains.
 
-I think part of the underlying problem is that we're talking about blended 
-threats (in the case of Ark and KMail).  I took an agressive view regarding 
-the issues as I originally discussed them when I dealt with them but for many 
-reasons we reached a stale mate.  We ended up releasing things as they were 
-to get them into the domain where they could better be discussed and 
-discussed.  Retrospectively, I would go with CVEs for the the following:
-
-* Ark Uses KHTML For Rendering Unknown File Types
-* KMail Allows Attachment Spoofing
-* Javascript Enabled On KHTML Based Views By Default
-* KJS/KIO Slaves Enforcing Broken Same Origin Policy
-
-Note that KDE's fix for the latter has caused some complaints, something that 
-I suspect they were mindful of when we discussed the issues:  
-
-* http://forum.kde.org/viewtopic.php?f=18&t=83649
-
-On top of this we have a raft of IO slave related vulnerabilities (which KDE, 
-oCERT and Portcullis agreed about) .  I'm not sure what the status of each of 
-these is, as Thomas alluded to they were fixed at various times (I'm not even 
-100% sure they're all fixed now).  I would create another CVE for these.
-
-Finally, there is the issue with KWallet which KDE never addressed.  The 
-closest I got to an answer regarding this was that users complained too much 
-even now about the matching, so adding additional restrictions were 
-unwelcome.
-
-Tim
--- 
-Tim Brown
-<mailto:tmb@...35.com>
+Contrary to the report, I'm more worried about the general
+consequences of weak random numbers.  Browsers should probably use a
+stronger PRNG which doesn't leak its state, so that the shared state
+doesn't matter.
