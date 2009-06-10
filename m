@@ -1,53 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/22/8
-Message-ID: <660663363.905981256240879655.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 22 Oct 2009 15:47:59 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/10/1
+Message-ID: <4A2F457D.4010809@redhat.com>
+Date: Wed, 10 Jun 2009 13:32:45 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: get_instantiation_keyring() should inc the keyring refcount in all cases
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE-2009-1389 kernel: r8169: fix crash when large packets are received
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2009-3624 for this.
+"Michael Tokarev reported receiving a large packet could crash a machine 
+with RTL8169 NIC. Problem is this driver tells that NIC frames up to 
+16383 bytes can be received but provides skb to rx ring allocated with 
+smaller sizes (1536 bytes in case standard 1500 bytes MTU is used). When 
+a frame larger than what was allocated by driver is received, dma 
+transfer can occurs past the end of buffer and corrupt kernel memory.
 
--- 
-    JB
+Fix is to tell to NIC what is the maximum size a frame can be. This bug 
+is very old, (before git introduction, linux-2.6.10)."
 
+I have informed Willy (2.4 maintainer) about this.
 
------ "Eugene Teo" <eugeneteo@...nel.sg> wrote:
+Upstream 2.6 commit:
+http://git.kernel.org/linus/fdd7b4c3302c93f6833e338903ea77245eb510b4 
+(v2.6.30)
 
-> Quoting from the upstream commit:
-> "The destination keyring specified to request_key() and co. is made 
-> available to the process that instantiates the key (the slave process
-> 
-> started by /sbin/request-key typically).  This is passed in the 
-> request_key_auth struct as the dest_keyring member.
-> 
-> keyctl_instantiate_key and keyctl_negate_key() call 
-> get_instantiation_keyring() to get the keyring to attach the newly 
-> constructed key to at the end of instantiation.  This may be given a 
-> specific keyring into which a link will be made later, or it may be 
-> asked to find the keyring passed to request_key().  In the former
-> case, 
-> it returns a keyring with the refcount incremented by
-> lookup_user_key(); 
-> in the latter case, it returns the keyring from the request_key_auth 
-> struct - and does _not_ increment the refcount.
-> 
-> The latter case will eventually result in an oops when the keyring 
-> prematurely runs out of references and gets destroyed.  The effect may
-> 
-> take some time to show up as the key is destroyed lazily.
-> 
-> To fix this, the keyring returned by get_instantiation_keyring() must
-> 
-> always have its refcount incremented, no matter where it comes from."
-> 
-> This was introduced in upstream commit 8bbf4976 (v2.6.29-rc1).
-> 
-> References:
-> http://git.kernel.org/linus/8bbf4976
-> http://git.kernel.org/linus/21279cfa107af07ef985539ac0de2152b9cba5f5
-> http://twitter.com/spendergrsec/status/4916661870
-> 
-> Thanks, Eugene
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-1389
+http://marc.info/?t=123462473200002
+http://lkml.org/lkml/2009/6/8/194
+http://www.corpit.ru/mjt/r8169-mtu-oops.jpg
+http://article.gmane.org/gmane.linux.network/130114
+http://www.mail-archive.com/debian-kernel@lists.debian.org/msg45651.html
+
+Thanks, Eugene
