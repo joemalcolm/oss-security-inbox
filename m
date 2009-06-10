@@ -1,45 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/22/9
-Message-ID: <20090922154711.GC13655@suse.de>
-Date: Tue, 22 Sep 2009 17:47:11 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com
-Cc: Thomas Biege <thomas@...e.de>
-Subject: Re: OpenOffice.org CVE-2009-2139
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/10/2
+Message-ID: <20090610115038.0886f3be@redhat.com>
+Date: Wed, 10 Jun 2009 11:50:38 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: OSS Security <oss-security@...ts.openwall.com>
+Subject: Mutt 1.5.19 SSL chain verification flaw
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Sep 21, 2009 at 02:42:20PM -0400, Steven M. Christey wrote:
->
-> On Thu, 10 Sep 2009, Thomas Biege wrote:
->
-> > CVE-2009-2139
-> >
-> > Manipulated EMF files can lead to heap overflows and arbitrary code
-> > execution
-> >
-> >     * Synopsis: Manipulated EMF files can lead to heap overflows and
-> >                 arbitrary code execution
-> >     * State: Resolved
->
-> We recently created CVE-2009-3239 to address an OpenOffice overflow in
-> enhwmf.cxx/emfplus.cxx, as described in SUSE-SR:2009:015:
->
->   "This update of OpenOffice.org fixes potential buffer overflow in EMF
->    parser code (enhwmf.cxx, emfplus.cxx)."
->
-> http://lists.opensuse.org/opensuse-security-announce/2009-09/msg00001.html
->
-> Is CVE-2009-3239 a duplicate of CVE-2009-2139?
->
-> (If so, we would probably keep CVE-2009-2139 and remove CVE-2009-3239.)
+Hi!
 
+Mutt version 1.5.19 introduced a support for intermediate CA certs,
+available when mutt is linked against both OpenSSL and GnuTLS, added
+via upstream commits:
 
-Our text actually references the issues CVE-2009-2139 and CVE-2009-2140
-but did not specify them due to an oversight.
+http://dev.mutt.org/trac/changeset/5621:5db868a874b6/mutt_ssl.c
+http://dev.mutt.org/trac/changeset/5623:7d0583e0315d/mutt_ssl_gnutls.c
 
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2139
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2140
+Miroslav Lichvar noticed that a certificate chain validation was not
+implemented properly.  Individual certificates in the chain where
+checked and accepted, but the chain as a whole as not validated
+properly.
 
-Both are go-ooo.org build specific issues.
+Issue was addressed via following upstream patches:
 
-Ciao, Marcus
+http://dev.mutt.org/trac/changeset?new=5870:dc9ec900c657@mutt_ssl.c&old=5699:1238dff54a15@mutt_ssl.c
+http://dev.mutt.org/trac/changeset?new=5853:0b13183e40e0@mutt_ssl_gnutls.c&old=5699:1238dff54a15@mutt_ssl_gnutls.c
+
+CVE-2009-1390 was assigned to this issue.
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
