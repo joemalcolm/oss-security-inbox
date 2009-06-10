@@ -1,59 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/03/3
-Message-ID: <20090703200932.GF6089@inversepath.com>
-Date: Fri, 3 Jul 2009 21:09:32 +0100
-From: Andrea Barisani <lcars@...rt.org>
-To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
-Subject: [oCERT-2009-008] Dillo integer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/10/3
+Message-ID: <20090610212311.4d3ccd77@redhat.com>
+Date: Wed, 10 Jun 2009 21:23:11 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: krahmer@...e.de
+Subject: Re: xfig-3.2.5 diff (CVE-2009-1962)
 Content-Type: text/plain; charset=utf-8
 
+Hi Sebastian!
 
-#2009-008 Dillo integer overflow
+On Mon, 8 Jun 2009 12:49:48 +0200 Sebastian Krahmer <krahmer@...e.de>
+wrote:
 
-Description:
+> just in case you need it, our maintainer asked me to forward
+> a patch for $SUBJECT which has been fixed in our xfig
+> for quite some time.
 
-Dillo, an open source graphical web browser, suffers from an integer overflow
-which may lead to a potentially exploitable heap overflow and result in
-arbitrary code execution.
+Looks like the patch you attached does not differ much from what we use
+for some time too and seems to have an origin here:
 
-The vulnerability is triggered by HTML pages with embedded PNG images, the
-Png_datainfo_callback function does not properly validate the width and
-height of the image. Specific PNG images with large width and height can be
-crafted to trigger the vulnerability.
+  https://bugzilla.redhat.com/show_bug.cgi?id=67351
 
-Affected version:
+And it does not differ much from what Nico previously posted:
 
-Dillo <= 2.1
+  http://thread.gmane.org/gmane.comp.security.oss.general/1609
 
-Fixed version:
+However, Nico's patch, probably taken from Fedora XFig packages, has
+one hunk missing for:
 
-Dillo >= 2.1.1
+u_print.c:    sprintf(tmp_fig_file, "%s/%s%06d", TMPDIR, "xfig-fig", getpid());
 
-Credit: vulnerability report and PoC code received from Tielei Wang
-        <wangtielei [at] icst [dot] pku [dot] edu [dot] cn>, ICST-ERCIS.
+that seem to have been lost during 3.2.4 -> 3.2.5 patch
+forward-porting.  This code is reached e.g. when you select File ->
+Print -> Print figure to batch.
 
-CVE: CVE-2009-2294
+I've also grepped source for other obvious TMPDIR uses and here's my
+list:
 
-Timeline:
+d_text.c:  sprintf(preedit_filename, "%s/%s%06d", TMPDIR, "xfig-preedit", getpid());
 
-2009-05-21: vulnerability reported received
-2009-06-18: contacted dillo maintainer
-2009-06-18: maintainer requests PoC
-2009-06-19: PoC is supplied
-2009-06-19: maintainer provides patch
-2009-06-24: revised patch is provided after reporter feedback
-2009-06-25: patch is confirmed, maintainer requests one week of time to
-            investigate further areas of the browser
-2009-07-01: dillo developer proposes security release coordination
-2009-07-03: advisory release
+- This code if #ifdef I18N_USE_PREEDIT, though I do not see
+  I18N_USE_PREEDIT defined anywhere.  Does not seem to be used in our
+  builds.
 
-Permalink:
-http://www.ocert.org/advisories/ocert-2009-008.html
+f_util.c:     sprintf(tmpfile, "%s%s", TMPDIR, c);
+f_util.c:     sprintf(tmpfile, "%s/%s", TMPDIR, plainname);
+
+- This can be triggered if user tries to open zipped file in some
+  directory where she can not write (it is used as "gunzip -c >
+  tmpfile").  Warning is printed when TMPDIR is used, but it's still
+  possible to perform symlink attack when victim can be tricked to open
+  some attacker chosen file.
+
+u_error.c:      if (emergency_save(strcat(TMPDIR,"/SAVE.fig")) == -1)
+
+- This is emergency auto-save feature, executed when xfig is signaled
+  or detect some X error.  Current directory is tried first, TMPDIR is
+  fallback when current directory fails.
+
+The latter two are not really temp files, so mkstemp may not be the
+right fix here.
 
 -- 
-Andrea Barisani |                Founder & Project Coordinator
-          oCERT | Open Source Computer Emergency Response Team
-
-<lcars@...rt.org>                         http://www.ocert.org
- 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
-        "Pluralitas non est ponenda sine necessitate"
+Tomas Hoger / Red Hat Security Response Team
