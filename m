@@ -1,24 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/23/1
-Message-ID: <4B31BB44.6080805@redhat.com>
-Date: Wed, 23 Dec 2009 14:40:04 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Greg KH <gregkh@...e.de>
-Subject: CVE request - kernel: fuse_ioctl_copy_user() dos
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/11/1
+Message-ID: <20090611112429.GA5540@redhat.com>
+Date: Thu, 11 Jun 2009 12:24:29 +0100
+From: Joe Orton <jorton@...che.org>
+To: Eygene Ryabinkin <rea-sec@...elabs.ru>
+Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>, coley@...re.org, security@...che.org
+Subject: Re: CVE request: "billion laughs" attack against Apache APR
 Content-Type: text/plain; charset=utf-8
 
-Reported by David Shaw. There is a problem in the ioctl handler in the 
-fuse kernel code that causes a panic under some circumstances.
+On Sat, Jun 06, 2009 at 08:00:20PM +0400, Eygene Ryabinkin wrote:
+> Please, note that these two issues and CVE-2009-0023 seem to be
+> applicable to Apache 2.2.11 and Apache 2.0.63 (latest 2.x versions),
+> since they have bundled apr-util inside.  At least both have the
+> vulnerable code and I had verified the "billion laughs" attack against
+> Apache 2.2.11 with Subversion mod_dav_svn that uses internal Apache
+> libaprutil.  OS for testing was FreeBSD, but I think that others are
+> affected as well.
+> 
+> CC'ing Apache security contacts in case they aren't informed about this
+> issue yet.  Folks, may be I am wrong in my assertions?
 
-fuse_ioctl_copy_user() was introduced in 59efec7b (v2.6.29-rc1, 
-2008-11-26). This was fixed upstream but was missed in 2.6.30.y. The 
-most recent 2.6.31/32.y kernels already have this fix. So this only 
-affects distros that are still using 2.6.30.y.
+It is correct to say that installations of current releases of Apache 
+httpd - versions <= 2.0.63 and <= 2.2.11 - which are built using the 
+bundled copy of APR-util, may be affected by the three APR-util issues, 
+depending on the configuration and set of modules used.  Note that 
+Apache httpd 2.x can also be built using standalone installations of APR 
+and APR-util.
 
-http://git.kernel.org/linus/0bd87182d3ab18a32a8e9175d3f68754c58e3432
-https://bugzilla.redhat.com/show_bug.cgi?id=549400
+We're not aware of any way to trigger CVE-2009-0023 remotely using the 
+set of modules included in httpd itself.  It may be possible to trigger 
+both CVE-2009-1956 and CVE-2009-1955 if mod_dav is configured.
 
-Thanks, Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
+Regards, Joe
