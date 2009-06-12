@@ -1,24 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/12/10
-Message-ID: <0902122002230.3137@mjc.redhat.com>
-Date: Thu, 12 Feb 2009 20:05:27 +0000 (GMT)
-From: Mark J Cox <mjc@...hat.com>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: Re: http://www.securityfocus.com/bid/33672/info kernel issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/12/2
+Message-ID: <20090612124627.GJ21602@ngolde.de>
+Date: Fri, 12 Jun 2009 14:46:27 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com
+Cc: roland@...ian.org
+Subject: Re: xfig-3.2.5 diff (CVE-2009-1962)
 Content-Type: text/plain; charset=utf-8
 
-> http://www.securityfocus.com/bid/33672/ seems to be this commit:
-> http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.28.y.git;a=commit;h=8255fc826e58c0a59711029e01db9fcdc06ba211
-> Not sure if its exploitable though.
+Hi,
+* Tomas Hoger <thoger@...hat.com> [2009-06-11 11:31]:
+> On Mon, 8 Jun 2009 12:49:48 +0200 Sebastian Krahmer <krahmer@...e.de>
+> wrote:
+> 
+> > just in case you need it, our maintainer asked me to forward
+> > a patch for $SUBJECT which has been fixed in our xfig
+> > for quite some time.
+> 
+> Looks like the patch you attached does not differ much from what we use
+> for some time too and seems to have an origin here:
+> 
+>   https://bugzilla.redhat.com/show_bug.cgi?id=67351
+> 
+> And it does not differ much from what Nico previously posted:
+> 
+>   http://thread.gmane.org/gmane.comp.security.oss.general/1609
+> 
+> However, Nico's patch, probably taken from Fedora XFig packages, has
+> one hunk missing for:
 
-BTW that BID list of affected kernels isn't correct; the multibyte stuff 
-wasn't in <=2.6.18 at least.
+Yes this is the patch by the Fedora maintainer, I took it 
+from our Debian package. You are correct, it looks 
+incomplete, the hunk is as well missing in our packages.
 
-I didn't check exactly where since it doesn't affect RHEL and didn't look 
-into the issue any further -- but on first glance it seemed like you'd 
-have to be a console user and display/select some carefully chosen 
-characters in order to do the overflow; so it's probably a 'local attacker 
-at keyboard' flaw?
+Roland, can you fix that please?
 
-Cheers, Mark
+Cheers
+nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
 
+Content of type "application/pgp-signature" skipped
