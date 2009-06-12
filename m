@@ -1,24 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/16/6
-Message-Id: <200904161347.58449.hanno@hboeck.de>
-Date: Thu, 16 Apr 2009 13:47:58 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/12/3
+Message-ID: <20090612150621.5b319576@redhat.com>
+Date: Fri, 12 Jun 2009 15:06:21 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: phpmyadmin < 3.1.3.2
+Cc: oss-security+ml@...lde.de, roland@...ian.org
+Subject: Re: xfig-3.2.5 diff (CVE-2009-1962)
 Content-Type: text/plain; charset=utf-8
 
-Am Donnerstag 16 April 2009 schrieb Hanno Böck:
-> http://www.phpmyadmin.net/home_page/security/PMASA-2009-4.php
->
-> Insufficient output sanitizing when generating configuration file.
+On Fri, 12 Jun 2009 14:46:27 +0200 Nico Golde
+<oss-security+ml@...lde.de> wrote:
 
-Stupid me... I should read before...
+> > However, Nico's patch, probably taken from Fedora XFig packages, has
+> > one hunk missing for:
+> 
+> Yes this is the patch by the Fedora maintainer, I took it 
+> from our Debian package. You are correct, it looks 
+> incomplete, the hunk is as well missing in our packages.
 
-Above page:
-Assigned CVE ids: CVE-2009-1285 
+Btw, my suggestion for other cases are noted in our BZ:
+
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-1962#c2
 
 -- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+Tomas Hoger / Red Hat Security Response Team
