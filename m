@@ -1,25 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/17/1
-Message-ID: <Pine.GSO.4.51.0910162306280.9854@faron.mitre.org>
-Date: Fri, 16 Oct 2009 23:08:44 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: oping allows the disclosure of  arbitrary file contents
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/12/1
+Message-ID: <20090612105112.4ddfacc1@redhat.com>
+Date: Fri, 12 Jun 2009 10:51:12 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: OSS Security <oss-security@...ts.openwall.com>
+Subject: Git daemon infinite loop
 Content-Type: text/plain; charset=utf-8
 
+Hi!
 
-On Fri, 16 Oct 2009, Josh Bressers wrote:
+One of the Fedora git packages maintainers brought this git-daemon issue
+to our attention:
 
-> ----- "Julien Tinnes" <julien.tinnes@...il.com> wrote:
->
+http://thread.gmane.org/gmane.comp.version-control.git/120724
+https://www.redhat.com/archives/fedora-security-list/2009-June/msg00000.html
 
-> I took a look in the oping source. Without another security flaw, this
-> is just a bug, oping doesn't do anything while still root that could be
-> an issue. I agree that it should be fixed, it is a serious bug, but an
-> attacker cannot do anything nefarious with this flaw.
-
-I agree with Josh, this would argue for *not* assigning a CVE, even though
-it's a serious bug.
-
-- Steve
+-- 
+Tomas Hoger / Red Hat Security Response Team
