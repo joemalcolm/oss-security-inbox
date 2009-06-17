@@ -1,61 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/17/6
-Message-ID: <20090817233353.GD6531@severus.strandboge.com>
-Date: Mon, 17 Aug 2009 18:33:53 -0500
-From: Jamie Strandboge <jamie@...onical.com>
-To: Simon Josefsson <simon@...efsson.org>
-Cc: oss-security@...ts.openwall.com, gnutls-devel@....org
-Subject: Re: GnuTLS CVE-2009-2730 Patches
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/17/1
+Message-ID: <20090617152227.GA30064@suse.de>
+Date: Wed, 17 Jun 2009 17:22:28 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: clamav CVE ids?
 Content-Type: text/plain; charset=utf-8
 
-On Sat, 15 Aug 2009, Simon Josefsson wrote:
+Hi,
 
-> Jamie Strandboge <jamie-Z7WLFzj8eWMS+FvcfC7Uqw@...lic.gmane.org> writes:
-> 
-> > On Fri, 14 Aug 2009, Simon Josefsson wrote:
-> >
-> > Attached are preliminary patches for 2.4.1, 2.0.4 and 1.2.9 backported
-> > from the advisory[1].
-> 
-> Thank you!
-> 
-> I have applied the 2.4.x patch on the gnutls_2_4_x branch, so it will be
-> built and tested by the daily autobuilder from now on.  I've tested that
-> the nul-in-x509-names self-test works as expected with the 2.4 library.
-> So in theory, it should be easy for me to make a v2.4.4 release from
-> that branch.  I wonder if this would helps anyone, though?  I'd imagine
-> that most people concerned with older releases are distributions that
-> have to support older GnuTLS releases.  And you aren't likely to use a
-> new upstream release anyway, since you just apply the patches to your
-> version.
-> 
-> I'm also concerned that there have been plenty of _other_ serious
-> problems in these old GnuTLS releases (check the security vulnerability
-> page), and I haven't back-ported the fixes to those problems to these
-> old branches.  So if I make a release on that branch, I'd have to check
-> what other serious problems would needs to be fixed for that branch to
-> be secure -- which sounds like real work (for little gain).
-> 
-> For these two reasons, I'd prefer to help you establish trust in the
-> patches you developed rather than make releases on old branches.
-> 
+Clamav 0.95.2 brings some fixes for Thierry Zollers issues,
+which probably deserve (a) CVE id ...
 
-I'd agree with this. Vendors have likely backported all those other
-fixes. However, having a place for people to get patches for older
-releases would likely be beneficial going forward (like you are doing
-with this one). This is especially true when considering your
-aforementioned lack of resources.
+Are there already some assigned?
 
-> I also added a link to your post on
-> <http://www.gnu.org/software/gnutls/security.html> so others can find it
-> easily.
-> 
+--- from our bug:
+( https://sourceforge.net/project/shownotes.php?release_id=688880&group_id=86638 )
 
-Thanks!
+These messages from the ChangeLog could have some security relevance, but I
+haven't yet checked the mentioned bug reports:
 
-Jamie
+ * libclamav: detect and handle archives hidden inside other files (eg.
+images),
+              which can be unpacked by WinZip, WinRAR and other tools (bb#1554)
+              Reported by ROGER Mickael and Thierry Zoller
 
--- 
-Jamie Strandboge             | http://www.canonical.com
+ * libclamav/mspack.c, cab.c: don't rely on file sizes stored in CAB headers
+              (bb#1562) Reported by Thierry*Zoller <Thierry*Zoller.lu>
 
-Download attachment "signature.asc" of type "application/pgp-signature" (198 bytes)
+ * libclamunrar/unrarvm.c: fix handling of some broken rar files
+
+ * libclamav/mbox.c: handle malformed emails with embedded \0s (bb #1573)
+
+ * libclamav/readdb.c: add offset checks (bb#1615)
+
+--- 
+
+And also:
+http://blog.zoller.lu/2009/05/advisory-clamav-generic-bypass.html
+http://blog.zoller.lu/2009/04/case-for-av-bypassesevasions.html
+
+http://www.heise.de/newsticker/Update-fuer-freien-Virenscanner-ClamAV-beseitigt-Sehschwaeche--/meldung/140595
+
+Ciao, Marcus
