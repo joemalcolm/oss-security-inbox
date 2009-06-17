@@ -1,39 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/11/6
-Message-ID: <20090211195928.GF10133@redhat.com>
-Date: Wed, 11 Feb 2009 12:59:28 -0700
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/17/3
+Message-Id: <200906172306.35049.hanno@hboeck.de>
+Date: Wed, 17 Jun 2009 23:06:34 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request for proftpd
+Subject: Re: clamav CVE ids?
 Content-Type: text/plain; charset=utf-8
 
-* [2009-02-11 11:16:14 -0800] TJ Saunders wrote:
-
->> >As discussed there, this is a duplicate of an earlier bug:
->> >
->> >  http://bugs.proftpd.org/show_bug.cgi?id=3124
->> >
->> >and has been fixed in ProFTPD 1.3.2rc3 and later.
->> 
->> Oh, forgot to ask.  It looks like this would have been introduced in
->> 1.3.1.  Is that correct?  So the affected versions would be
->> 1.3.1 to 1.3.2rc2.
+Am Mittwoch 17 Juni 2009 schrieb Tavis Ormandy:
+> On Wed, Jun 17, 2009 at 05:22:28PM +0200, Marcus Meissner wrote:
+> > Hi,
+> >
+> > Clamav 0.95.2 brings some fixes for Thierry Zollers issues,
+> > which probably deserve (a) CVE id ...
 >
->That's correct.
+> Anti virus bypass? Seriously?
 
-Great.  Thanks for that clarification.
-
->> Also, as I was looking at the Gentoo report, I noticed bug #3173 which
->> likely also needs a CVE name (for the "encoding-dependent SQL injection
->> vulnerability").
->
->Yes; I was just about to note the same thing. =)
-
-Steve, can we get a second CVE name that references
-
-http://bugs.proftpd.org/show_bug.cgi?id=3173
-
-Thanks much.
+I agree that av bypass isn't a "security issue" itself, but at least the 
+cab/filesize issue sounds like it could lead to more than that.
+It's a pity clamav doesn't handle security issues in a sane way, but I think I 
+already said that recently...
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+http://ausdenaugenausdemsinn.de - Kein Sicherheitsrabatt für CO2-Speicher
+http://tinyurl.com/dceu73 - Internetzensur stoppen!
+
+http://schokokeks.org - professional webhosting
+
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
