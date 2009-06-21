@@ -1,50 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/15/6
-Message-Id: <20090415182814.36BA81F3E9E@spike.porcupine.org>
-Date: Wed, 15 Apr 2009 14:28:14 -0400 (EDT)
-From: wietse@...cupine.org (Wietse Venema)
-To: Tomas Hoger <thoger@...hat.com>
-CC: wietse@...cupine.org, oss-security@...ts.openwall.com
-Subject: Re: Re: Some fun with tcp_wrappers
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/21/1
+Message-ID: <20090621172525.GA17317@ngolde.de>
+Date: Sun, 21 Jun 2009 19:25:25 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE id request: strongswan
 Content-Type: text/plain; charset=utf-8
 
-Tomas Hoger:
-> $ cat hosts.allow hosts.deny
-> foobar: localhost
-> foobar: ALL: DENY
-> cat: hosts.deny: No such file or directory
-> 
-> $ ./test-hostsctl -d foobar unknown 127.0.0.1 unknown
-> denied
-> 
-> (this is expected to be allowed)
+Hi,
+the latest release fixes two new denial of service issues. 
+From the changelog:
+- Applying their fuzzing tool, the Orange Labs vulnerability research team
+  found another two DoS vulnerabilities, one in the rather old ASN.1 parser
+  of Relative Distinguished Names (RDNs) and a second one in the conversion
+  of ASN.1 UTCTIME and GENERALIZEDTIME strings to a time_t value.
+  Malformed X.509 certificate RDNs or timestamps can cause the pluto IKE
+  daemon to crash and restart.
 
-My software behaves exactly as documented.
+Debian bug: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=533837
+Upstream patches:
+http://download.strongswan.org/patches/05_asn1_rdn_patch/
+http://download.strongswan.org/patches/06_asn1_time_patch/
 
-The hostsctl is called with a name of "unknown" and an address of
-"127.0.0.1". There is no access rule that matches "unknown",
-therefore, no such access rule will fire.
+Can I get two CVE ids for this please?
 
-> $ cat hosts.allow hosts.deny
-> foobar: localhost: DENY
-> cat: hosts.deny: No such file or directory
-> 
-> $ ./test-hostsctl -d foobar unknown 127.0.0.1 unknown
-> allowed
-> 
-> (this is expected to be denied)
+Cheers
+Nico
 
-Again, the software behaves exactly as documented.
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-The hostsctl is called with a name of "unknown" and an address of
-"127.0.0.1". There is no access rule that matches "unknown",
-therefore, no such access rule will fire.
-
-> "test-hostsctl servicename unknown IP unknown" is what some
-> applications do expecting tcp_wrappers to resolve IP to hostname.
-
-I think that it would be a mistake to change a documented API that
-has been in use for almost 20 years, just because some people can't
-be bothered to read the API documentation.
-
-	Wietse
+Content of type "application/pgp-signature" skipped
