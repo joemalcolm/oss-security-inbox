@@ -1,43 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/29/4
-Message-ID: <hccd44$uli$1@ger.gmane.org>
-Date: Thu, 29 Oct 2009 09:42:36 -0600
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/22/1
+Message-ID: <20090622001424.GG12343@outflux.net>
+Date: Sun, 21 Jun 2009 17:14:24 -0700
+From: Kees Cook <kees@...ntu.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request - asterisk, python-markdown, jetty, kde
+Subject: libtiff buffer underflow in LZWDecodeCompat
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+A crafted TIFF can crash libtiff in LZWDecodeCompat via underflow (different
+from CVE-2008-2327).
 
-Could CVEs be assigned for the following issues?
+Based on discussions[1] and a quick analysis[2], I don't think this is
+exploitable, but it does lead to crashes in any application using libtiff.
+I've reported it upstream[3], with the attached patch.
 
-= asterisk =
-Unauthorized calls allowed on prohibited networks in asterisk
-Reference:
-Advisory: http://downloads.asterisk.org/pub/security/AST-2009-007.html
+Has anyone else looked this over?
 
-= python-markdown =
-Multiple XSS attack vectors
-References:
-http://code.google.com/p/python-markdown2/issues/detail?id=30
-http://code.google.com/p/python-markdown2/issues/detail?id=29
-http://secunia.com/advisories/37142/
+-Kees
 
-= kde =
-Multiple missing input sanity checks in KDE
-Reference:
-http://www.ocert.org/advisories/ocert-2009-015.html
+[1] http://www.lan.st/showthread.php?t=1856&page=3
+[2] https://bugs.launchpad.net/bugs/380149
+[3] http://bugzilla.maptools.org/show_bug.cgi?id=2065
 
-= jetty =
-Multiple vulnerabilities in jetty
-Reference:
-http://www.ush.it/team/ush/hack-jetty6x7x/jetty-adv.txt
-
-Thanks.
-
-Regards,
 -- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+Kees Cook
+Ubuntu Security Team
 
-
+View attachment "lzw_underflow.patch" of type "text/x-diff" (681 bytes)
