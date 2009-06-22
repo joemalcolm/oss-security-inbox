@@ -1,50 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/11/7
-Message-ID: <hfu2h1$lqh$1@ger.gmane.org>
-Date: Fri, 11 Dec 2009 12:20:13 -0600
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/22/2
+Message-ID: <20090622132435.GA20005@ngolde.de>
+Date: Mon, 22 Jun 2009 15:24:35 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Argument injections in multiple PEAR packages
+Cc: aboudreault@...gears.com, coley@...re.org, 523027@...s.debian.org, warmerdam@...ox.com
+Subject: incorrect upstream fix for CVE-2009-0840 (mapserver)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
+from the CVE description:
+| Heap-based buffer underflow in the readPostBody function in cgiutil.c in
+| mapserv in MapServer 4.x before 4.10.4 and 5.x before 5.2.2 allows remote
+| attackers to have an unknown impact via a negative value in the Content-Length
+| HTTP header.
 
-Alex Legler wrote:
-[...]
-> 2. PEAR-Net_Ping < 2.4.5 ping() Argument Injection via $host
-> 
-> Upstream writes:
-> "When input from forms are used directly, the attacker could pass
-> variables that would allow him to execute remote arbitrary command
-> injections."
-[...]
-> 3. PEAR-Net_Traceroute < 0.21.2 traceroute() Argument Injection via
-> $host
-> 
-> See above, same advisory.
+The affected code is in cgiutil.c:
+41 static char *readPostBody( cgiRequestObj *request ) 
+42 {
+43   char *data; 
+44   int data_max, data_len, chunk_size;
+45 
+46   msIO_needBinaryStdin();
+47 
+48   /* -------------------------------------------------------------------- */
+49   /*      If the length is provided, read in one gulp.                    */
+50   /* -------------------------------------------------------------------- */
+51   if( getenv("CONTENT_LENGTH") != NULL ) {
+52     data_max = atoi(getenv("CONTENT_LENGTH"));
+53     data = (char *) malloc(data_max+1);
+54     if( data == NULL ) {
+55       msIO_printf("Content-type: text/html%c%c",10,10);
+56       msIO_printf("malloc() failed, Content-Length: %d unreasonably large?\n", data_max );
+57       exit( 1 );
+58     }
+59 
+60     if( (int) msIO_fread(data, 1, data_max, stdin) < data_max ) {
 
-The fix applied by upstream in both cases is incomplete as it only prevents
-the command execution vulnerability, but doesn't address the argument
-injection vulnerability.
+There is obviously a problem in case the content-length is negative.
+The following is the upstream patch which was used to "fix" this issue:
+ static char *readPostBody( cgiRequestObj *request ) 
+ {
+   char *data; 
+-  int data_max, data_len, chunk_size;
++  unsigned int data_max, data_len; 
++  int chunk_size;
 
-The appropriate fix in both cases is to use escapeshellarg instead of
-escapeshellcmd.
 
-Please assign new ids for the incomplete fixes.
+Unfortunately this doesn't fix the issue and I wonder why people always think
+changing signed types to unsigned will fix such errors.
+If I pass 0xffffffff as the content-length according to type conversion rules
+in C atoi() will convert this to -1 which is again converted to 0xffff when
+assigning it to an unsigned int. data_max+1 in line 53 will then overflow and
+malloc is called with a parameter of 0. This causes malloc to allocated the smallest
+possible chunk but it will _not_ return NULL (well, implementation defined). So it
+is still possible to perform a heap-based buffer overflow after the upstream
+fix.
 
-Thanks in advance.
+I'm not sure if this should get a new CVE id but the versions in the CVE id
+description should be adjusted and the upstream patch revised.
 
-Regards,
-- -- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+Cheers
+Nico
+P.S. @Alan, this is also the reason I have to reject your packages in our
+security queue again.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
 
-iEYEARECAAYFAksijWIACgkQYy49rUbZzlpnqgCfcHEHuhEA68P2uLr/UvAs1mnS
-teEAn3zmAW+a8iYFn7bjsobk9w+BXy+P
-=Bshr
------END PGP SIGNATURE-----
 
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
