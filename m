@@ -1,38 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/29/4
-Message-ID: <49F80F5D.2070300@redhat.com>
-Date: Wed, 29 Apr 2009 16:27:09 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/22/3
+Message-ID: <20090622134628.GB31205@ngolde.de>
+Date: Mon, 22 Jun 2009 15:46:28 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-CC: Steven French <sfrench@...ibm.com>, security@...nel.org, jlayton@...hat.com
-Subject: Re: CVE request? buffer overflow in CIFS in 2.6.*
+Cc: aboudreault@...gears.com, coley@...re.org, 523027@...s.debian.org, warmerdam@...ox.com
+Subject: Re: incorrect upstream fix for CVE-2009-0840 (mapserver)
 Content-Type: text/plain; charset=utf-8
 
-Hi Dann,
-
-> Also, I now notice that CVE-2009-1439 was assigned for
-> the nativeFileSystem fixes, so looks like the status is:
-> 
-> CVE-2009-1439:
->  http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.29.y.git;a=commitdiff;h=15bd8021d870d2c4fbf8c16578d72d03cfddd3a7
->  http://git.kernel.org/?p=linux/kernel/git/sfrench/cifs-2.6.git;a=commitdiff;h=f083def68f84b04fe3f97312498911afce79609e
-
-b363b3304bcf68c4541683b2eff70b29f0446a5b
-f083def68f84b04fe3f97312498911afce79609e (fix for b363b330)
-22c9d52bc03b880045ab1081890a38f11b272ae7 (remove unneeded pointer)
-
-> CVE-2009-NOT-YET-ASSIGNED:
->  http://git.kernel.org/linus/27b87fe52baba0a55e9723030e76fce94fabcea4
->  http://git.kernel.org/?p=linux/kernel/git/sfrench/cifs-2.6.git;a=commit;h=7b0c8fcff47a885743125dd843db64af41af5a61
->  http://git.kernel.org/?p=linux/kernel/git/sfrench/cifs-2.6.git;a=commit;h=968460ebd8006d55661dec0fb86712b40d71c413
->  + some others in progress
-
-Yes.
-
-> Does that look accurate?
-
-Yes, that's my understanding as well.
-
-Thanks, Eugene
+Hi,
+* Nico Golde <oss-security+ml@...lde.de> [2009-06-22 15:45]:
+[...] 
+> Unfortunately this doesn't fix the issue and I wonder why people always think
+> changing signed types to unsigned will fix such errors.
+> If I pass 0xffffffff as the content-length according to type conversion rules
+> in C atoi() will convert this to -1 which is again converted to 0xffff when
+                                                            0xffffffff^^
 -- 
-Eugene Teo / Red Hat Security Response Team
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
