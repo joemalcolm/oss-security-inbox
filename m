@@ -1,64 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/18/1
-Message-ID: <Pine.GSO.4.51.0903172037360.17171@faron.mitre.org>
-Date: Tue, 17 Mar 2009 20:37:50 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/23/1
+Message-ID: <20090623231409.GA8606@redhat.com>
+Date: Tue, 23 Jun 2009 17:14:09 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: Tor <0.2.0.34 multiple DoS
+Subject: Re: libtiff buffer underflow in LZWDecodeCompat
 Content-Type: text/plain; charset=utf-8
 
+* [2009-06-21 17:14:24 -0700] Kees Cook wrote:
 
-======================================================
-Name: CVE-2009-0936
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0936
-Reference: MLIST:[or-announce] 20090209 Tor 0.2.0.34 is released (security fixes)
-Reference: URL:http://archives.seul.org/or/announce/Feb-2009/msg00000.html
-Reference: SECUNIA:33880
-Reference: URL:http://secunia.com/advisories/33880
+>A crafted TIFF can crash libtiff in LZWDecodeCompat via underflow (different
+>from CVE-2008-2327).
+>
+>Based on discussions[1] and a quick analysis[2], I don't think this is
+>exploitable, but it does lead to crashes in any application using libtiff.
+>I've reported it upstream[3], with the attached patch.
+>
+>Has anyone else looked this over?
+>
+>-Kees
+>
+>[1] http://www.lan.st/showthread.php?t=1856&page=3
+>[2] https://bugs.launchpad.net/bugs/380149
+>[3] http://bugzilla.maptools.org/show_bug.cgi?id=2065
 
-Unspecified vulnerability in Tor before 0.2.0.34 allows attackers to
-cause a denial of service (infinite loop) via "corrupt votes."
+You saw that a new comment was posted to [3] that points to an earlier
+bug and a different patch, right?  Looks like it was just updated today,
+to point to this bug report from january:
 
+https://bugzilla.redhat.com/show_bug.cgi?id=1985
 
-======================================================
-Name: CVE-2009-0937
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0937
-Reference: MLIST:[or-announce] 20090209 Tor 0.2.0.34 is released (security fixes)
-Reference: URL:http://archives.seul.org/or/announce/Feb-2009/msg00000.html
-Reference: SECUNIA:33880
-Reference: URL:http://secunia.com/advisories/33880
+Also, that report seems to agree with your quick analysis:
 
-Unspecified vulnerability in Tor before 0.2.0.34 allows directory
-mirrors to cause a denial of service via unknown vectors.
+"However, the previous patch does appear to prevent a payload of more than one distinct byte,
+making this effectively useless as a code injection vector. Nonetheless, it
+still is effective at crashing applications that use LibTIFF."
 
+In fact, I think the reporter of that bug was one of the writers in the
+lan.st forum notes you're showing, particularly based on this comment
+where he indicates it isn't exploitable and that he filed a bug:
 
-======================================================
-Name: CVE-2009-0938
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0938
-Reference: MLIST:[or-announce] 20090209 Tor 0.2.0.34 is released (security fixes)
-Reference: URL:http://archives.seul.org/or/announce/Feb-2009/msg00000.html
-Reference: SECUNIA:33880
-Reference: URL:http://secunia.com/advisories/33880
+http://www.lan.st/showpost.php?p=13094&postcount=58
 
-Unspecified vulnerability in Tor before 0.2.0.34 allows directory
-mirrors to cause a denial of service (exit node crash) via "malformed
-input."
-
-
-======================================================
-Name: CVE-2009-0939
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0939
-Reference: MLIST:[or-announce] 20090209 Tor 0.2.0.34 is released (security fixes)
-Reference: URL:http://archives.seul.org/or/announce/Feb-2009/msg00000.html
-Reference: SECUNIA:33880
-Reference: URL:http://secunia.com/advisories/33880
-
-Tor before 0.2.0.34 treats incomplete IPv4 addresses as valid, which
-has unknown impact and attack vectors related to "Spec conformance,"
-as demonstrated using 192.168.0.
-
-
+-- 
+Vincent Danen / Red Hat Security Response Team 
