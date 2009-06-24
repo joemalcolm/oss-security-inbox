@@ -1,21 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/01/4
-Message-ID: <87my9wk2ug.fsf@mid.deneb.enyo.de>
-Date: Fri, 01 May 2009 22:03:35 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/24/1
+Message-ID: <Pine.GSO.4.51.0906241028050.3530@faron.mitre.org>
+Date: Wed, 24 Jun 2009 10:29:00 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request (sort of): Quagga BGP crasher
+Subject: Re: CVE id request: strongswan
 Content-Type: text/plain; charset=utf-8
 
-* Jon Oberheide:
 
-> Looks like the Quagga code in bgp_aspath.c is assuming that converting
-> each ASN of the AS path to a string will be 5 bytes plus a space
-> (#define ASN_STR_LEN (5 + 1)).  Therefore, it allocates (ASN_STR_LEN *
-> the number of ASNs in the path segment) bytes to snprintf into when
-> creating the pretty-print version of the AS path.
+On Sun, 21 Jun 2009, Nico Golde wrote:
 
-Sure, this is the part I understand.  It's not clear why this code is
-hit when there isn't much logging going on.  People have also run
-"show ip bgp ROUTE" for paths with six-digit ASNs, with
-supposedly-broken bgpd versions, and did not observe a crash.
+> - Applying their fuzzing tool, the Orange Labs vulnerability research team
+>   found another two DoS vulnerabilities, one in the rather old ASN.1
+>   parser of Relative Distinguished Names (RDNs) and a second one in the
+>   conversion of ASN.1 UTCTIME and GENERALIZEDTIME strings to a time_t
+>   value. Malformed X.509 certificate RDNs or timestamps can cause the
+>   pluto IKE daemon to crash and restart.
+
+Use CVE-2009-2185.
+
+Note that this has already been processed internally by CVE, but the
+change hasn't been committed yet.  The CVE will show up live sometime
+later today.
+
+- Steve
