@@ -1,34 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/01/11
-Message-ID: <Pine.GSO.4.51.0904011429540.17101@faron.mitre.org>
-Date: Wed, 1 Apr 2009 14:30:08 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Wireshark DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/25/1
+Message-Id: <200906251112.52601.aboudreault@mapgears.com>
+Date: Thu, 25 Jun 2009 11:12:52 -0400
+From: Alan Boudreault <aboudreault@...gears.com>
+To: Nico Golde <oss-security+ml@...lde.de>
+Cc: oss-security@...ts.openwall.com, coley@...re.org, 523027@...s.debian.org
+Subject: Re: incorrect upstream fix for CVE-2009-0840 (mapserver)
 Content-Type: text/plain; charset=utf-8
 
+Hi
 
-On Wed, 1 Apr 2009, Pinar Yanardag wrote:
+I've reported that to the devs. They should fix that as soon as possible.
+
+ALan
+
+On June 22, 2009 09:24:35 am Nico Golde wrote:
+> Hi,
 >
-> Yesterday, I came upon the following Secunia advisory [1] about Wireshark 1.0.6:
+> from the CVE description:
+> | Heap-based buffer underflow in the readPostBody function in cgiutil.c in
+> | mapserv in MapServer 4.x before 4.10.4 and 5.x before 5.2.2 allows remote
+> | attackers to have an unknown impact via a negative value in the
+> | Content-Length HTTP header.
+>
+> The affected code is in cgiutil.c:
+> 41 static char *readPostBody( cgiRequestObj *request )
+> 42 {
+> 43   char *data;
+> 44   int data_max, data_len, chunk_size;
+> 45
+> 46   msIO_needBinaryStdin();
+> 47
+> 48   /*
+> -------------------------------------------------------------------- */ 49 
+>  /*      If the length is provided, read in one gulp.                    */
+> 50   /*
+> -------------------------------------------------------------------- */ 51 
+>  if( getenv("CONTENT_LENGTH") != NULL ) {
+> 52     data_max = atoi(getenv("CONTENT_LENGTH"));
+> 53     data = (char *) malloc(data_max+1);
+> 54     if( data == NULL ) {
+> 55       msIO_printf("Content-type: text/html%c%c",10,10);
+> 56       msIO_printf("malloc() failed, Content-Length: %d unreasonably
+> large?\n", data_max ); 57       exit( 1 );
+> 58     }
+> 59
+> 60     if( (int) msIO_fread(data, 1, data_max, stdin) < data_max ) {
+>
+> There is obviously a problem in case the content-length is negative.
+> The following is the upstream patch which was used to "fix" this issue:
+>  static char *readPostBody( cgiRequestObj *request )
+>  {
+>    char *data;
+> -  int data_max, data_len, chunk_size;
+> +  unsigned int data_max, data_len;
+> +  int chunk_size;
+>
+>
+> Unfortunately this doesn't fix the issue and I wonder why people always
+> think changing signed types to unsigned will fix such errors.
+> If I pass 0xffffffff as the content-length according to type conversion
+> rules in C atoi() will convert this to -1 which is again converted to
+> 0xffff when assigning it to an unsigned int. data_max+1 in line 53 will
+> then overflow and malloc is called with a parameter of 0. This causes
+> malloc to allocated the smallest possible chunk but it will _not_ return
+> NULL (well, implementation defined). So it is still possible to perform a
+> heap-based buffer overflow after the upstream fix.
+>
+> I'm not sure if this should get a new CVE id but the versions in the CVE id
+> description should be adjusted and the upstream patch revised.
+>
+> Cheers
+> Nico
+> P.S. @Alan, this is also the reason I have to reject your packages in our
+> security queue again.
 
-======================================================
-Name: CVE-2009-1210
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1210
-Reference: MILW0RM:8308
-Reference: URL:http://www.milw0rm.com/exploits/8308
-Reference: BID:34291
-Reference: URL:http://www.securityfocus.com/bid/34291
-Reference: SECUNIA:34542
-Reference: URL:http://secunia.com/advisories/34542
-Reference: XF:wireshark-pndcp-format-string(49512)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/49512
-
-Format string vulnerability in the PROFINET/DCP (PN-DCP) dissector in
-Wireshark 1.0.6 and earlier allows remote attackers to execute
-arbitrary code via a PN-DCP packet with format string specifiers in
-the station name.  NOTE: some of these details are obtained from third
-party information.
-
-
+-- 
+Alan Boudreault
+Mapgears
+http://www.mapgears.com
