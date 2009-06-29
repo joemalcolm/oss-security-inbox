@@ -1,26 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/24/1
-Message-ID: <Pine.GSO.4.51.0909241302430.15652@faron.mitre.org>
-Date: Thu, 24 Sep 2009 13:02:49 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/29/3
+Message-ID: <20090629122614.GM22771@ngolde.de>
+Date: Mon, 29 Jun 2009 14:26:15 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: serendipity freetag plugin
+Subject: CVE id request: nagios
 Content-Type: text/plain; charset=utf-8
 
+Hi,
+is there already a CVE id for 
+http://secunia.com/advisories/35543?
 
-======================================================
-Name: CVE-2009-3337
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3337
-Reference: CONFIRM:http://blog.s9y.org/archives/210-Security-update-for-Freetag-Plugin.html
-Reference: BID:36376
-Reference: URL:http://www.securityfocus.com/bid/36376
-Reference: SECUNIA:36706
-Reference: URL:http://secunia.com/advisories/36706
+Cheers
+Nico
 
-SQL injection vulnerability in the Freetag (serendipity_event_freetag)
-plugin before 3.09 for Serendipity (S9Y) allows remote attackers to
-execute arbitrary SQL commands via an unspecified parameter associated
-with Meta keywords in a blog entry.
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-
+Content of type "application/pgp-signature" skipped
