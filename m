@@ -1,30 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/05/1
-Message-Id: <1236246953.3159.5.camel@dhcp-lab-164.englab.brq.redhat.com>
-Date: Thu, 05 Mar 2009 10:55:53 +0100
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/29/5
+Message-Id: <1246286047.4391.3.camel@dhcp-lab164.englab.brq.redhat.com>
+Date: Mon, 29 Jun 2009 16:34:07 +0200
 From: Jan Lieskovsky <jlieskov@...hat.com>
 To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com, Marcus Granado <smurca@...glemail.com>
-Subject: CVE Request -- pam
+Cc: oss-security@...ts.openwall.com
+Subject: CVE Request -- libtiff [was: Re: libtiff buffer underflow in LZWDecodeCompat]
 Content-Type: text/plain; charset=utf-8
 
 Hello Steve,
 
-  Marcus Granado recently reported a security issue in 
-libpam related to parsing of non-ascii usernames in
-the Pam configuration files. Attaching his report for
-more details.
-
-Affected version: pam <= 1.0.3
-
-Link to SCM repo: http://pam.cvs.sourceforge.net/viewvc/pam/Linux-PAM/libpam/pam_misc.c?view=log
-Patch: http://pam.cvs.sourceforge.net/viewvc/pam/Linux-PAM/libpam/pam_misc.c?r1=1.9&amp;r2=1.10&amp;view=patch
-
-
-Could you please allocate a new CVE id for it?
+  could you please allocate a new CVE id for this buffer underwrite
+flaw? 
 
 Thanks && regards, Jan.
 --
 Jan iankko Lieskovsky / Red Hat Security Response Team
 
-View attachment "pam_misc.txt" of type "text/plain" (4302 bytes)
+On Tue, 2009-06-23 at 17:14 -0600, Vincent Danen wrote:
+> * [2009-06-21 17:14:24 -0700] Kees Cook wrote:
+> 
+> >A crafted TIFF can crash libtiff in LZWDecodeCompat via underflow (different
+> >from CVE-2008-2327).
+> >
+> >Based on discussions[1] and a quick analysis[2], I don't think this is
+> >exploitable, but it does lead to crashes in any application using libtiff.
+> >I've reported it upstream[3], with the attached patch.
+> >
+> >Has anyone else looked this over?
+> >
+> >-Kees
+> >
+> >[1] http://www.lan.st/showthread.php?t=1856&page=3
+> >[2] https://bugs.launchpad.net/bugs/380149
+> >[3] http://bugzilla.maptools.org/show_bug.cgi?id=2065
+> 
+> You saw that a new comment was posted to [3] that points to an earlier
+> bug and a different patch, right?  Looks like it was just updated today,
+> to point to this bug report from january:
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=1985
+> 
+> Also, that report seems to agree with your quick analysis:
+> 
+> "However, the previous patch does appear to prevent a payload of more than one distinct byte,
+> making this effectively useless as a code injection vector. Nonetheless, it
+> still is effective at crashing applications that use LibTIFF."
+> 
+> In fact, I think the reporter of that bug was one of the writers in the
+> lan.st forum notes you're showing, particularly based on this comment
+> where he indicates it isn't exploitable and that he filed a bug:
+> 
+> http://www.lan.st/showpost.php?p=13094&postcount=58
+> 
+
