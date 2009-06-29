@@ -1,27 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/07/4
-Message-ID: <20090907114133.6b294858@neon>
-Date: Mon, 7 Sep 2009 11:41:33 +0200
-From: Alex Legler <a3li@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: viewvc: CVE request: XSS and illegal characters while printing name-value pairs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/29/1
+Message-ID: <20090629132323.10683f9e@redhat.com>
+Date: Mon, 29 Jun 2009 13:23:23 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: OSS Security <oss-security@...ts.openwall.com>
+Subject: nagios: remote code execution
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 7 Sep 2009 10:52:34 +0200, Thomas Biege <thomas@...e.de> wrote:
+Hi!
 
-> Hello,
-> I do not have any further details, just this changelog entries:
+Just in case you missed it - nagios 3.1.1 mentions:
 
-The two commit messages have more or less detailed information:
+# Security fix for statuswml.cgi where arbitrary shell injection was
+possible 
 
->   * security fix: validate the 'view' parameter to avoid XSS attack
+( http://www.nagios.org/development/history/core-3x/ )
 
-http://viewvc.tigris.org/source/browse/viewvc?view=rev&revision=2214
+Further details in the upstream bug:
 
->   * security fix: avoid printing illegal parameter names and values
+  http://tracker.nagios.org/view.php?id=15
 
-http://viewvc.tigris.org/source/browse/viewvc?view=rev&revision=2219
-
-Alex
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+-- 
+Tomas Hoger / Red Hat Security Response Team
