@@ -1,26 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/07/10
-Message-ID: <Pine.GSO.4.51.0901071356180.15738@faron.mitre.org>
-Date: Wed, 7 Jan 2009 13:56:50 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security <oss-security@...ts.openwall.com>
-cc: Manuel.Reimer@....de, coley@...re.org
-Subject: Re: Fwd: Using xdg-open in /etc/mailcap causes hole in Firefox (Demonstration/Exploit included)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/29/2
+Message-ID: <20090629114831.GL22771@ngolde.de>
+Date: Mon, 29 Jun 2009 13:48:31 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE id request: compface
 Content-Type: text/plain; charset=utf-8
 
+Hi,
+there is a buffer overflow in compface:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=534973
+http://milw0rm.org/exploits/8982
 
-======================================================
-Name: CVE-2009-0068
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0068
-Reference: MISC:https://bugs.freedesktop.org/show_bug.cgi?id=19377
-Reference: MLIST:[oss-security] 20090106 Fwd: Using xdg-open in /etc/mailcap causes hole in Firefox (Demonstration/Exploit included)
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/01/06/1
+Can I get a CVE id for this?
 
-Interaction error in xdg-open allows remote attackers to execute
-arbitrary code by sending a file with a dangerous MIME type but using
-a safe type that Firefox sends to xdg-open, which causes xdg-open to
-process the dangerous file type through automatic type detection, as
-demonstrated by overwriting the .desktop file.
+Cheers
+Nico
 
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
 
+Content of type "application/pgp-signature" skipped
