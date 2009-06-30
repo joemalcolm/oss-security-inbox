@@ -1,31 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/01/2
-Message-ID: <Pine.GSO.4.51.0907010801160.10744@faron.mitre.org>
-Date: Wed, 1 Jul 2009 08:01:21 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com, oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- libtiff [was: Re:  libtiff buffer underflow in LZWDecodeCompat]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/30/1
+Message-ID: <4A49B690.1070703@redhat.com>
+Date: Tue, 30 Jun 2009 14:54:08 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE Request: kernel: kvm: failure to validate cr3 after KVM_SET_SREGS
 Content-Type: text/plain; charset=utf-8
 
+"This applies to kvm-84 and earlier (and possibly to the in-kernel kvm
+version too) on all x86 machines in all guest modes (32-bit, PAE, 64-bit).
 
-======================================================
-Name: CVE-2009-2285
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2285
-Reference: MLIST:[oss-security] 20090621 libtiff buffer underflow in LZWDecodeCompat
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/06/22/1
-Reference: MLIST:[oss-security] 20090623 Re: libtiff buffer underflow in LZWDecodeCompat
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/06/23/1
-Reference: MLIST:[oss-security] 20090629 CVE Request -- libtiff [was: Re: libtiff buffer underflow in LZWDecodeCompat]
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/06/29/5
-Reference: MISC:http://www.lan.st/showthread.php?t=1856&page=3
-Reference: CONFIRM:http://bugzilla.maptools.org/show_bug.cgi?id=2065
-Reference: CONFIRM:https://bugs.launchpad.net/ubuntu/+source/tiff/+bug/380149
+Userspace callers of KVM_SET_SREGS can pass a bogus value of cr3 to the
+kernel. This will trigger a NULL pointer access in gfn_to_rmap() when
+userspace next tries to call KVM_RUN on the affected VCPU and kvm 
+attempts to activate the new non-existent page table root.
 
-Buffer underflow in the LZWDecodeCompat function in libtiff 3.8.2
-allows context-dependent attackers to cause a denial of service
-(crash) via a crafted TIFF image, a different vulnerability than
-CVE-2008-2327.
+This happens since kvm only validates that cr3 points to a valid guest
+physical memory page when code *inside* the guest sets cr3. However, kvm
+currently trusts the userspace caller (e.g. QEMU) on the host machine to
+always supply a valid page table root, rather than properly validating 
+it along with the rest of the reloaded guest state."
 
+Upstream patch:
+http://git.kernel.org/linus/59839dfff5eabca01cc4e20b45797a60a80af8cb
 
+References:
+http://sourceforge.net/tracker/?func=detail&atid=893831&aid=2687641&group_id=180599
+http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git;a=blob;f=queue-2.6.30/kvm-x86-check-for-cr3-validity-in-ioctl_set_sregs.patch;h=b48a47dad2cf76358b327368f80c0805e6370c68;hb=e7c45b24f298b5d9efd7d401150f64a1b51aaac4
+
+Thanks, Eugene
