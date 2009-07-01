@@ -1,42 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/28/8
-Message-ID: <20090128145459.GS22970@suse.de>
-Date: Wed, 28 Jan 2009 15:54:59 +0100
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/01/6
+Message-ID: <20090701174105.GL2803@ngolde.de>
+Date: Wed, 1 Jul 2009 19:41:05 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: Re: update on CVE-2008-5718
+Cc: aboudreault@...gears.com, coley@...re.org, 523027@...s.debian.org, warmerdam@...ox.com
+Subject: Re: incorrect upstream fix for CVE-2009-0840 (mapserver)
 Content-Type: text/plain; charset=utf-8
 
 Hi,
-
-On Wed, Jan 28, 2009 at 09:02:45AM -0500, Steven M. Christey wrote:
+* Steven M. Christey <coley@...us.mitre.org> [2009-07-01 13:43]:
+> On Mon, 22 Jun 2009, Nico Golde wrote:
 > 
-> On Wed, 28 Jan 2009, Thomas Biege wrote:
+> > I'm not sure if this should get a new CVE id but the versions in the CVE id
+> > description should be adjusted and the upstream patch revised.
 > 
-> > New patch attached, the old one was missing spaces.
-> > Hope the blacklist is complete now...
+> This looks like even though there was a source code modification, the
+> previous issue was not fixed at all.  That is, any attack that would have
+> worked before the fix, will still work after the fix.
 > 
-> Would a "-" character allow an argument injection attack by inserting
-> dangerous command-line switches?  Things like being able to add a "-rf" as
-> an argument to the rm command...
+> However, Fedora FEDORA-2009-3383 at least claims a fix for CVE-2009-0840,
+> so a new CVE is probably in order to "signal" to admins that they have
+> another issue to handle.
+> 
+> Use CVE-2009-2281 for the "new" issue.  What versions are affected by
+> this?
 
-I was thinking about that case too but it might not work because we escape
-the space.
+Should be every currently available release, I'm currently 
+working with upstream on a better fix.
 
-> I assume there's something undesirable about quoting everything unless
-> it's alphanumeric?
-
-... I think I'll rewrite it and post it here again.
-Replacing popen() is still my prefered solution....
-
+Cheers
+Nico
 -- 
-Bye,
-     Thomas
--- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
--- 
-           Hamming's Motto:
-           The purpose of computing is insight, not numbers.
-                                -- Richard W. Hamming
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
