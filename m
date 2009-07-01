@@ -1,28 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/16/8
-Message-Id: <20090416115920.92A211F3E9E@spike.porcupine.org>
-Date: Thu, 16 Apr 2009 07:59:20 -0400 (EDT)
-From: wietse@...cupine.org (Wietse Venema)
-To: Tomas Hoger <thoger@...hat.com>
-CC: coley@...us.mitre.org, oss-security@...ts.openwall.com,  Wietse Venema <wietse@...cupine.org>
-Subject: Re: Re: Some fun with tcp_wrappers
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/01/1
+Message-ID: <Pine.GSO.4.51.0907010725060.10744@faron.mitre.org>
+Date: Wed, 1 Jul 2009 07:32:52 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+cc: aboudreault@...gears.com, coley@...re.org, 523027@...s.debian.org, warmerdam@...ox.com
+Subject: Re: incorrect upstream fix for CVE-2009-0840 (mapserver)
 Content-Type: text/plain; charset=utf-8
 
-Tomas Hoger:
-> The good_client (tcp_wrappers wrapping function in portmap /
-> nfs-utils / ...) problem is rather interesting too, as it creates
-> problems due to its attempt to avoid unneeded DNS lookups (workaround
-> for hosts_ctl limitation?) and support host aliases (tcp_wrappers
-> limitation).  
 
-See my previous email. Programs such as portmappers must not look
-up hostname information, since that would result in an infinite
-recursion when host lookups use SUNRPC services. To state the
-obvious: the portmapper would directly or indirectly send SUNRPC
-calls to itself, in order to locate the NIS server.
+On Mon, 22 Jun 2009, Nico Golde wrote:
 
-Before discussing changes to a program, it is a good investment of
-time to find out how the program works, and why it works in the
-specific way it works.
+> I'm not sure if this should get a new CVE id but the versions in the CVE id
+> description should be adjusted and the upstream patch revised.
 
-	Wietse
+This looks like even though there was a source code modification, the
+previous issue was not fixed at all.  That is, any attack that would have
+worked before the fix, will still work after the fix.
+
+However, Fedora FEDORA-2009-3383 at least claims a fix for CVE-2009-0840,
+so a new CVE is probably in order to "signal" to admins that they have
+another issue to handle.
+
+Use CVE-2009-2281 for the "new" issue.  What versions are affected by
+this?
+
+- Steve
