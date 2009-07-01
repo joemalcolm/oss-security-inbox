@@ -1,31 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/03/1
-Message-ID: <28fa9c5e0903021654t7495f475wdfa37607aa9634cc@mail.gmail.com>
-Date: Tue, 3 Mar 2009 08:54:57 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/01/4
+Message-ID: <Pine.GSO.4.51.0907010802100.10744@faron.mitre.org>
+Date: Wed, 1 Jul 2009 08:02:30 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: Eugene Teo <eugene@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: memory disclosure in  SO_BSDCOMPAT gsopt
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request: kernel: kvm: failure to validate cr3 after KVM_SET_SREGS
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Mar 3, 2009 at 6:49 AM, Steven M. Christey
-<coley@...us.mitre.org> wrote:
->
-> On Wed, 25 Feb 2009, Eugene Teo wrote:
->
->> Eugene Teo wrote:
->> > [...]
->> > The fix for CVE-2009-0676 (upstream commit df0bca04) is incomplete. Note
->> > that the same problem of leaking kernel memory will reappear if someone
->> > on some architecture uses struct timeval with some internal padding (for
->> > example tv_sec 64-bit and tv_usec 32-bit) --- then, you are going to
->> > leak the padded bytes to userspace.
->
-> Is this going to require a separate CVE identifier?  If a new minor
-> version of the kernel wasn't released yet, then I'd consider the fix to be
-> little more than a couple patch-discussion messages in a single Bugzilla
-> entry.
 
-No, it shouldn't. Please use the same CVE name. Thanks.
+======================================================
+Name: CVE-2009-2287
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2287
+Reference: MLIST:[oss-security] 20090630 CVE Request: kernel: kvm: failure to validate cr3 after KVM_SET_SREGS
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/06/30/1
+Reference: CONFIRM:http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git;a=blob;f=queue-2.6.30/kvm-x86-check-for-cr3-validity-in-ioctl_set_sregs.patch;h=b48a47dad2cf76358b327368f80c0805e6370c68;hb=e7c45b24f298b5d9efd7d401150f64a1b51aaac4
+Reference: CONFIRM:http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=59839dfff5eabca01cc4e20b45797a60a80af8cb
+Reference: CONFIRM:http://sourceforge.net/tracker/?func=detail&atid=893831&aid=2687641&group_id=180599
 
-Eugene
+The kvm_arch_vcpu_ioctl_set_sregs function in the KVM in Linux kernel
+2.6 before 2.6.30, when running on x86 systems, does not validate the
+page table root in a KVM_SET_SREGS call, which allows local users to
+cause a denial of service (crash or hang) via a crafted cr3 value,
+which triggers a NULL pointer dereference in the gfn_to_rmap function.
+
+
