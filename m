@@ -1,19 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/19/1
-Message-ID: <28fa9c5e0903182327v4766fcc8y14832f2c13de4a9e@mail.gmail.com>
-Date: Thu, 19 Mar 2009 14:27:36 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, "Michael K. Johnson" <johnsonm@...th.com>
-Subject: Re: CVE request: kernel: inotify local DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/01/2
+Message-ID: <Pine.GSO.4.51.0907010801160.10744@faron.mitre.org>
+Date: Wed, 1 Jul 2009 08:01:21 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com, oss-security@...ts.openwall.com
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- libtiff [was: Re:  libtiff buffer underflow in LZWDecodeCompat]
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Mar 19, 2009 at 1:41 AM, Michael K. Johnson <johnsonm@...th.com> wrote:
-> On Tue, Mar 17, 2009 at 08:39:33PM -0400, Steven M. Christey wrote:
-[...]
-> In the 2.6.27.y stable releases, this affects 2.6.27.13 and earlier.
-> In the 2.6.28.y stable releases, this affects 2.6.28.2 and earlier.
 
-The problem occurs between upstream commits 16dbc6c96163 and 3632dee2f8b8.
+======================================================
+Name: CVE-2009-2285
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2285
+Reference: MLIST:[oss-security] 20090621 libtiff buffer underflow in LZWDecodeCompat
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/06/22/1
+Reference: MLIST:[oss-security] 20090623 Re: libtiff buffer underflow in LZWDecodeCompat
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/06/23/1
+Reference: MLIST:[oss-security] 20090629 CVE Request -- libtiff [was: Re: libtiff buffer underflow in LZWDecodeCompat]
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/06/29/5
+Reference: MISC:http://www.lan.st/showthread.php?t=1856&page=3
+Reference: CONFIRM:http://bugzilla.maptools.org/show_bug.cgi?id=2065
+Reference: CONFIRM:https://bugs.launchpad.net/ubuntu/+source/tiff/+bug/380149
 
-Thanks, Eugene
+Buffer underflow in the LZWDecodeCompat function in libtiff 3.8.2
+allows context-dependent attackers to cause a denial of service
+(crash) via a crafted TIFF image, a different vulnerability than
+CVE-2008-2327.
+
+
