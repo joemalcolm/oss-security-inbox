@@ -1,33 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/11/4
-Message-ID: <20091211132650.GQ26756@severus.strandboge.com>
-Date: Fri, 11 Dec 2009 07:26:50 -0600
-From: Jamie Strandboge <jamie@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/01/5
+Message-ID: <Pine.GSO.4.51.0907010802570.10744@faron.mitre.org>
+Date: Wed, 1 Jul 2009 08:03:05 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re:  Re: Some small KDE issues
+Subject: Re: CVE id request: nagios
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 10 Dec 2009, Raphael Geissert wrote:
 
-> Jamie Strandboge wrote:
-> 
-> > FYI,
-> > 
-> > Our KDE maintainer alerted us to this:
-> > http://www.ocert.org/advisories/ocert-2009-015.html
-> > http://www.kde.org/info/security/advisory-20091027-1.txt
-> > 
-> 
-> According to 0910291553490.22070@....redhat.com, ids were already requested.
-> 
-> Maybe somebody needs to be prodded?
-> 
-Ah, I missed this email and couldn't find CVEs for them so I just passed
-them along. Thanks!
+======================================================
+Name: CVE-2009-2288
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2288
+Reference: CONFIRM:http://tracker.nagios.org/view.php?id=15
+Reference: CONFIRM:http://www.nagios.org/development/history/core-3x/
+Reference: SECUNIA:35543
+Reference: URL:http://secunia.com/advisories/35543
 
-Jamie
+statuswml.cgi in Nagios before 3.1.1 allows remote attackers to
+execute arbitrary commands via shell metacharacters in the (1) ping or
+(2) Traceroute parameters.
 
--- 
-Jamie Strandboge             | http://www.canonical.com
 
-Download attachment "signature.asc" of type "application/pgp-signature" (198 bytes)
