@@ -1,38 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/17/1
-Message-ID: <Pine.GSO.4.51.0903162104230.1541@faron.mitre.org>
-Date: Mon, 16 Mar 2009 21:04:52 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/02/5
+Message-Id: <200907022022.07063.rbu@gentoo.org>
+Date: Thu, 2 Jul 2009 20:22:05 +0200
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: tinydns crafted zone file cache poisoning vulnerability
+Cc: Andrea Barisani <lcars@...rt.org>, wangtielei@...t.pku.edu.cn
+Subject: Re: [oCERT-2009-009] CamlImages integer overflows
 Content-Type: text/plain; charset=utf-8
 
+Hi Andrea,
 
-======================================================
-Name: CVE-2009-0858
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0858
-Reference: BUGTRAQ:20090226 djbdns misformats some long response packets; patch and example attack
-Reference: URL:http://www.securityfocus.com/archive/1/archive/1/501294/100/0/threaded
-Reference: BUGTRAQ:20090228 Re: djbdns misformats some long response packets; patch and example attack
-Reference: URL:http://www.securityfocus.com/archive/1/archive/1/501340/100/0/threaded
-Reference: BUGTRAQ:20090305 Re: djbdns misformats some long response packets; patch and example attack
-Reference: URL:http://www.securityfocus.com/archive/1/archive/1/501479/100/0/threaded
-Reference: MLIST:[dns] 20090225 djbdns misformats some long response packets; patch and example
-Reference: URL:http://marc.info/?l=djbdns&m=123554945710038
-Reference: MLIST:[dns] 20090304 djbdns<=1.05 lets AXFRed subdomains overwrite domains
-Reference: URL:http://marc.info/?l=djbdns&m=123613000920446&w=2
-Reference: MISC:http://it.slashdot.org/article.pl?sid=09/03/05/2014249
-Reference: MISC:http://securityandthe.net/2009/03/05/security-issue-in-djbdns-confirmed/
-Reference: BID:33937
-Reference: URL:http://www.securityfocus.com/bid/33937
-Reference: XF:djbdns-response-packet-spoofing(49003)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/49003
+On Thursday 02 July 2009, Andrea Barisani wrote:
+> #2009-009 CamlImages integer overflows
+...
+> Affected version:
+>
+> CamlImages <= 2.2
 
-The response_addname function in response.c in Daniel J. Bernstein
-djbdns 1.05 and earlier does not constrain offsets in the required
-manner, which allows remote attackers, with control over a third-party
-subdomain served by tinydns and axfrdns, to trigger DNS responses
-containing arbitrary records via crafted zone data for this subdomain.
+Has the 3.0.1 version been checked that is available here:
+http://gallium.inria.fr/camlimages/    ?
 
 
+Thanks,
+
+Robert
+
+Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
