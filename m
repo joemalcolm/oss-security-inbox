@@ -1,36 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/14/6
-Message-ID: <4AD61C79.1070306@redhat.com>
-Date: Wed, 14 Oct 2009 20:46:17 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/02/3
+Message-ID: <4A4CAABB.8030407@redhat.com>
+Date: Thu, 02 Jul 2009 20:40:27 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- phpMyAdmin
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE-2009-1388 kernel: do_coredump() vs ptrace_start() deadlock
 Content-Type: text/plain; charset=utf-8
 
-Hi Hanno,
+The OpenVZ Linux kernel team has found deadlock between ptrace and 
+coredump code. It affects 2.6.18 but does not affect the upstream kernel.
 
-Hanno Böck wrote:
-> Am Mittwoch 14 Oktober 2009 schrieb Jan Lieskovsky:
->>    phpMyAdmin upstream has released 3.2.2.1 or 2.11.9.6 updates, fixing
->> one XSS and one SQL injection vulnerability.
->>
->> References:
->> -----------
->> http://www.phpmyadmin.net/home_page/security/PMASA-2009-6.php
-> 
-> Cite:
-> 
->> References
->>
->> We wish to thank Quintin Russ for informing us in a responsible manner.
->>
->> Assigned CVE ids: CVE-2009-3696 CVE-2009-3697 
+"ptrace_start() spins waiting for child->state == 
+TASK_TRACED/TASK_STOPPED. If we race with the coredumping, we have to 
+wait until it completes.
 
-Right, sorry, I am blind :(.
+If the tracer participates in coredumping too, we deadlock. 
+do_coredump() waits for tracer to exit and report 
+complete(mm->core_startup_done), the tracer spins in an endless loop.
 
-Regards, Jan.
+Change ptrace_start() to abort if child->mm->core_waiters != 0."
+
+Patch:
+https://bugzilla.redhat.com/attachment.cgi?id=346742
+
+Reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-1388
+
+Thanks, Eugene
 --
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-> 
-
+Eugene Teo / Red Hat Security Response Team
