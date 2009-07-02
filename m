@@ -1,29 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/22/1
-Message-ID: <20090622001424.GG12343@outflux.net>
-Date: Sun, 21 Jun 2009 17:14:24 -0700
-From: Kees Cook <kees@...ntu.com>
-To: oss-security@...ts.openwall.com
-Subject: libtiff buffer underflow in LZWDecodeCompat
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/02/2
+Message-ID: <20090702122940.GC16525@suse.de>
+Date: Thu, 2 Jul 2009 14:29:40 +0200
+From: Thomas Biege <thomas@...e.de>
+To: OSS-Security Mailinglist <oss-security@...ts.openwall.com>
+Cc: coley@...re.org
+Subject: CVE request: ruby on rails authenticate_with_http_digest bypass
 Content-Type: text/plain; charset=utf-8
 
-A crafted TIFF can crash libtiff in LZWDecodeCompat via underflow (different
-from CVE-2008-2327).
+Hi,
+I seems this issue didn't occur in the CVE databases yet.
 
-Based on discussions[1] and a quick analysis[2], I don't think this is
-exploitable, but it does lead to crashes in any application using libtiff.
-I've reported it upstream[3], with the attached patch.
-
-Has anyone else looked this over?
-
--Kees
-
-[1] http://www.lan.st/showthread.php?t=1856&page=3
-[2] https://bugs.launchpad.net/bugs/380149
-[3] http://bugzilla.maptools.org/show_bug.cgi?id=2065
+http://weblog.rubyonrails.org/2009/6/3/security-problem-with-authenticate_with_http_digest
 
 -- 
-Kees Cook
-Ubuntu Security Team
-
-View attachment "lzw_underflow.patch" of type "text/x-diff" (681 bytes)
+Bye,
+     Thomas
+-- 
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+-- 
+           Hamming's Motto:
+           The purpose of computing is insight, not numbers.
+                                -- Richard W. Hamming
