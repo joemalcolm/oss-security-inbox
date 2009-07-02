@@ -1,38 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/17/2
-Message-ID: <20090317152320.GJ19038@ngolde.de>
-Date: Tue, 17 Mar 2009 16:23:20 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2009-0876 (VirtualBox) references
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/02/6
+Message-ID: <20090702224224.GO6089@inversepath.com>
+Date: Thu, 2 Jul 2009 23:42:24 +0100
+From: Andrea Barisani <lcars@...rt.org>
+To: Robert Buchholz <rbu@...too.org>
+Cc: oss-security@...ts.openwall.com, wangtielei@...t.pku.edu.cn
+Subject: Re: [oCERT-2009-009] CamlImages integer overflows
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Robert Buchholz <rbu@...too.org> [2009-03-16 01:57]:
-> Sun released an advisory for VirtualBox referenced for CVE-2009-0876 
-> recently: 
-> http://sunsolve.sun.com/search/document.do?assetkey=1-66-254568-1
+On Thu, Jul 02, 2009 at 08:22:05PM +0200, Robert Buchholz wrote:
+> Hi Andrea,
 > 
-> However, details are missing and patch information is (unintentionally) 
-> obfuscated due to inconsistent revision numbers in the public svn vs. 
-> internal build revisions.
+> On Thursday 02 July 2009, Andrea Barisani wrote:
+> > #2009-009 CamlImages integer overflows
+> ...
+> > Affected version:
+> >
+> > CamlImages <= 2.2
 > 
-> The original bug report for Gentoo and upstream were here:
-> https://bugs.gentoo.org/show_bug.cgi?id=260331
-[...] 
-Any reason the CVE description says "Unspecified 
-vulnerability...via unknown vectors"?
+> Has the 3.0.1 version been checked that is available here:
+> http://gallium.inria.fr/camlimages/    ?
+>
 
-Looking at the Gentoo bug report[0] it seems obvious to me
-that this is caused by insecurely loading shared libraries 
-so you can inject your own shared lib code.
+Sadly I missed that (having two identical pages with different URL as the
+project page and google only returning the 2.2 one as the first 50 hits
+didn't help).
 
-[0] https://bugs.gentoo.org/show_bug.cgi?id=260331#c0
+Anyway the affected functions in pngread.c code are identical so they are
+both affected (though just to be sure I'm pinging original reporter as well
+and test with the PoC).
 
-Cheers
-Nico
+Thanks for the feedback.
+
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | Open Source Computer Emergency Response Team
 
-Content of type "application/pgp-signature" skipped
+<lcars@...rt.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
