@@ -1,33 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/27/3
-Message-ID: <20090827100133.3e5ebaac@redhat.com>
-Date: Thu, 27 Aug 2009 10:01:33 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/02/1
+Message-ID: <20090702112912.GP2803@ngolde.de>
+Date: Thu, 2 Jul 2009 13:29:12 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re:  Re: CVE id request: php5
+Subject: CVE id request: drupal
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 29 Jan 2009 12:20:14 -0500 (EST) "Steven M. Christey"
-<coley@...us.mitre.org> wrote:
+Hi,
+http://drupal.org/node/507572
 
-> On Thu, 29 Jan 2009, Joe Orton wrote:
-> 
-> > If the script is taking untrusted input data and passing it
-> > unsanitized as the "key" argument to a dba_replace() call, it can
-> > override arbitrary keys in the ini file anyway.  Truncating the ini
-> > file to zero length seems like a less severe problem than being
-> > able to write (arbitrary?) data to arbitrary keys.
-> 
-> We don't have any formal criteria for this kind of thing, but in
-> general, we ask whether there are realistic scenarios under which an
-> attack can succeed, and if any additional privileges are gained
-> versus normal methods.  These questions are particularly applicable
-> to language interpreters and compilers.  Given this scenario, it
-> seems unrealistic that an app would perform a dba_replace() with
-> user-controlled input - and if it does, then it's a vuln in the
-> application, not PHP itself.  So it doesn't seem to require a CVE.
+Can I get CVE ids for the described issues?
 
-Just for posterity, this got CVE-2008-7068 after all.
+Cheers
+Nico
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
