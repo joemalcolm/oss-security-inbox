@@ -1,86 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/21/4
-Message-ID: <2359eed20910211525q149fe583n45beb3483380f142@mail.gmail.com>
-Date: Wed, 21 Oct 2009 17:25:47 -0500
-From: Will Drewry <redpig@...rt.org>
-To: ocert-announce@...ts.ocert.org, bugtraq <bugtraq@...urityfocus.com>,  oss-security@...ts.openwall.com
-Subject: [oCERT-2009-016] Poppler, xpdf integer overflow during heap  allocation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/02/4
+Message-ID: <20090702130124.GW6089@inversepath.com>
+Date: Thu, 2 Jul 2009 14:01:24 +0100
+From: Andrea Barisani <lcars@...rt.org>
+To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
+Subject: [oCERT-2009-009] CamlImages integer overflows
 Content-Type: text/plain; charset=utf-8
 
-#2009-016 Poppler, Xpdf integer overflows during heap allocation
+
+#2009-009 CamlImages integer overflows
 
 Description:
 
-Poppler and Xpdf are two popular open source projects for processing PDF
-files.  Both projects are vulnerable to an integer overflow during heap
-memory allocation when processing a PDF file.  In general, this results
-in unexpected process termination.  If an application using this code is
-multi-threaded (or uses a crash signal handler), it may be possible to
-execute arbitrary code.
+CamlImages, an open source image processing library, suffers from several
+integer overflows which may lead to a potentially exploitable heap overflow and
+result in arbitrary code execution.
 
-The vulnerability resides in the object stream handler.  In particular,
-a multiplicative overflow occurs when a large number of embedded objects
-are specified.  An overflow check was in place in the code, but it only
-protected related calls to gmalloc().  The C++ object array allocation
-code (new[]) is not guarded by the upper bound check and the call to
-new[] does not result in an exception with gcc.  This results in bytes
-being written after the valid heap allocation during object
-construction.
-
-Both software packages have released fixed versions which limit the allowed
-object count to a domain specific value.
-
-A detailed analysis by the reporter can be found in the References.
-
+The vulnerability is triggered by PNG image parsing, the read_png_file and
+read_png_file_as_rgb24 functions do not properly validate the width and height
+of the image. Specific PNG images with large width and height can be crafted
+to trigger the vulnerability.
 
 Affected version:
 
-Poppler < 0.12.1
-
-Xpdf < 3.02pl4
-
+CamlImages <= 2.2
 
 Fixed version:
 
-Poppler >= 0.12.1
+Unfortunately oCERT has been unable to get feedback from CamlImages maintainers
+and the package seems unmaintained, it's therefore suggested to avoid
+CamlImages usage on production or any environment where strong security is
+needed.
 
-Xpdf >= 3.02pl4
+Credit: vulnerability report and PoC code received from Tielei Wang
+        <wangtielei [at] icst [dot] pku [dot] edu [dot] cn>, ICST-ERCIS.
 
-
-Credit: vulnerability report and PoC received from
-        Chris Rohlf <chris.rohlf@...il.com>.
-
-
-CVE: CVE-2009-3608
-
+CVE: CVE-2009-2295
 
 Timeline:
 
-2009-09-04: vulnerability report received
-2009-09-17: proof of concept received from reporter
-2009-09-21: impact reviewed
-2009-09-29: contacted poppler maintainer
-2009-09-29: vendor-sec notified
-2009-09-30: vendor-sec discussion expanded to include xpdf maintainer
-2009-10-02: final fix agreed upon by both maintainers
-2009-10-12: CVE assigned by Tomas Hoger of RedHat
-2009-10-14: fixed Xpdf released
-2009-10-18: fixed Poppler released
-2009-10-21: advisory published
-
-
-References:
-http://poppler.freedesktop.org/
-http://www.foolabs.com/xpdf/CHANGES
-http://chargen.matasano.com/chargen/2009/10/9/a-c-challenge.html
-http://chargen.matasano.com/chargen/2009/10/15/a-c-challenge-the-conclusion.html
-http://sites.google.com/site/em386cr/Home/CVE-2009-3608-explained.txt
-http://gcc.gnu.org/bugzilla/show_bug.cgi?id=19351
-
+2009-05-21: vulnerability reported received
+2009-05-21: contacted camlimages maintainers
+2009-06-30: due to lack of feedback oCERT asks reporter to disclose the issue
+2009-07-01: reporter agrees to disclosure
+2009-07-02: assigned CVE
+2009-07-02: advisory release
 
 Permalink:
-http://www.ocert.org/advisories/ocert-2009-016.html
+http://www.ocert.org/advisories/ocert-2009-009.html
 
---
-Will Drewry <redpig@...rt.org>
-http://ocert.org
+-- 
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | Open Source Computer Emergency Response Team
+
+<lcars@...rt.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
