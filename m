@@ -1,224 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/28/2
-Message-ID: <Pine.GSO.4.51.0901272033410.25454@faron.mitre.org>
-Date: Tue, 27 Jan 2009 21:38:06 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request -- Python < 2.6 PySys_SetArgv issues (epiphany, csound, dia, eog, gedit, xchat, vim, nautilus-python, Gnumeric)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/03/3
+Message-ID: <20090703200932.GF6089@inversepath.com>
+Date: Fri, 3 Jul 2009 21:09:32 +0100
+From: Andrea Barisani <lcars@...rt.org>
+To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
+Subject: [oCERT-2009-008] Dillo integer overflow
 Content-Type: text/plain; charset=utf-8
 
 
-On Mon, 26 Jan 2009, Jan Lieskovsky wrote:
+#2009-008 Dillo integer overflow
 
-> Though this is a Python flaw (insertion of cwd at the
-> beginning of the Python modules search path), according to our Python
-> maintainers it can't be fixed on Python's side due the need
-> of ensuring the work of other numerous packages, when loading
-> Python modules.
+Description:
 
-This was a bit of a pain CVE-wise, though  I suspect it was less painful
-than what the maintainers are going through.
+Dillo, an open source graphical web browser, suffers from an integer overflow
+which may lead to a potentially exploitable heap overflow and result in
+arbitrary code execution.
 
-It seems fair to label the Python bug separately as an instance of
-CWE-684: Failure to Provide Specified Functionality (or some other "API
-Abuse CWE-227 problem).  Then we could assign separate CVE's for the
-others ("failure to work around a known issue in the underlying
-interpreter").  I'm always worried about these kinds of things producing
-mass amounts of CVE's, and it doesn't seem fair to those applications -
-but given that Python upstream can't/won't fix the issue, this seems the
-best approach, since the apps will have to be patched themselves.
+The vulnerability is triggered by HTML pages with embedded PNG images, the
+Png_datainfo_callback function does not properly validate the width and
+height of the image. Specific PNG images with large width and height can be
+crafted to trigger the vulnerability.
 
-Do you have any upstream bug ID's for the Python bug itself, or some
-Python mailing list?  I'd like to capture that issue there, if possible.
+Affected version:
 
-I'm using CVE-2008-5983 to help track the Python bug itself.
+Dillo <= 2.1
 
-For the individual apps:
+Fixed version:
 
-CVE-2008-5984 - Dia
-CVE-2008-5985 - Epiphany
-CVE-2008-5986 - Csound
-CVE-2008-5987 - eog
+Dillo >= 2.1.1
 
-They all had 2008 CVE's because of James Vega's work in November, which
-was "technically public" at that time.
+Credit: vulnerability report and PoC code received from Tielei Wang
+        <wangtielei [at] icst [dot] pku [dot] edu [dot] cn>, ICST-ERCIS.
 
-The following ones are 2009 because the first disclosure seems to be from
-Jan in the original oss-security post.
+CVE: CVE-2009-2294
 
-Does anybody have upstream version information for these?  They aren't in
-the Red Hat bug reports, so the descriptions have no versions.
+Timeline:
 
-CVE-2009-0314 - gedit
-CVE-2009-0315 - xchat
-CVE-2009-0316 - vim
-CVE-2009-0317 - Nautilus
-CVE-2009-0318 - Gnumeric
+2009-05-21: vulnerability reported received
+2009-06-18: contacted dillo maintainer
+2009-06-18: maintainer requests PoC
+2009-06-19: PoC is supplied
+2009-06-19: maintainer provides patch
+2009-06-24: revised patch is provided after reporter feedback
+2009-06-25: patch is confirmed, maintainer requests one week of time to
+            investigate further areas of the browser
+2009-07-01: dillo developer proposes security release coordination
+2009-07-03: advisory release
 
+Permalink:
+http://www.ocert.org/advisories/ocert-2009-008.html
 
-- Steve
+-- 
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | Open Source Computer Emergency Response Team
 
-======================================================
-Name: CVE-2008-5983
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5983
-Reference: MLIST:[debian-bugs] 20081112 Bug#493937: [Patch] Prevent loading of Python modules in working directory
-Reference: URL:http://www.mail-archive.com/debian-bugs-dist@lists.debian.org/msg586010.html
-Reference: MLIST:[oss-security] 20090126 CVE request -- Python < 2.6 PySys_SetArgv issues (epiphany, csound, dia, eog, gedit, xchat, vim, nautilus-python, Gnumeric)
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/01/26/2
-Reference: MLIST:[debian-bugs-rc] 20080805 Bug#484305: bicyclerepair: bike.vim imports untrusted python files from cwd
-Reference: URL:http://www.nabble.com/Bug-484305%3A-bicyclerepair%3A-bike.vim-imports-untrusted-python-files-from-cwd-td18848099.html
-
-Untrusted search path vulnerability in the PySys_SetArgv API function
-in Python before 2.6 prepends an empty string to sys.path when the
-argv[0] argument does not contain a path separator, which might allow
-local users to execute arbitrary code via a Trojan horse Python file
-in the current working directory.
-
-
-======================================================
-Name: CVE-2008-5984
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5984
-Reference: MLIST:[oss-security] 20090126 CVE request -- Python < 2.6 PySys_SetArgv issues (epiphany, csound, dia, eog, gedit, xchat, vim, nautilus-python, Gnumeric)
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/01/26/2
-Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=504251
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=481551
-Reference: BID:33448
-Reference: URL:http://www.securityfocus.com/bid/33448
-Reference: SECUNIA:33672
-Reference: URL:http://secunia.com/advisories/33672
-Reference: XF:dia-pysyssetargv-privilege-escalation(48262)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/48262
-
-Untrusted search path vulnerability in the Python plugin in Dia
-0.96.1, and possibly other versions, allows local users to execute
-arbitrary code via a Trojan horse Python file in the current working
-directory, related to a vulnerability in the PySys_SetArgv function
-(CVE-2008-5983).
-
-
-======================================================
-Name: CVE-2008-5985
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5985
-Reference: MLIST:[oss-security] 20090126 CVE request -- Python < 2.6 PySys_SetArgv issues (epiphany, csound, dia, eog, gedit, xchat, vim, nautilus-python, Gnumeric)
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/01/26/2
-Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=504363
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=481548
-
-Untrusted search path vulnerability in the Python interface in
-Epiphany 2.22.3, and possibly other versions, allows local users to
-execute arbitrary code via a Trojan horse Python file in the current
-working directory, related to a vulnerability in the PySys_SetArgv
-function (CVE-2008-5983).
-
-
-======================================================
-Name: CVE-2008-5986
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5986
-Reference: MLIST:[oss-security] 20090126 CVE request -- Python < 2.6 PySys_SetArgv issues (epiphany, csound, dia, eog, gedit, xchat, vim, nautilus-python, Gnumeric)
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/01/26/2
-Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=504359
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=481550
-
-Untrusted search path vulnerability in the (1) "VST plugin with Python
-scripting" and (2) "VST plugin for writing score generators in Python"
-in Csound 5.08.2, and possibly other versions, allows local users to
-execute arbitrary code via a Trojan horse Python file in the current
-working directory, related to a vulnerability in the PySys_SetArgv
-function (CVE-2008-5983).
-
-
-======================================================
-Name: CVE-2008-5987
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5987
-Reference: MLIST:[oss-security] 20090126 CVE request -- Python < 2.6 PySys_SetArgv issues (epiphany, csound, dia, eog, gedit, xchat, vim, nautilus-python, Gnumeric)
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/01/26/2
-Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=504352
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=481553
-
-Untrusted search path vulnerability in the Python interface in eog
-2.22.3, and possibly other versions, allows local users to execute
-arbitrary code via a Trojan horse Python file in the current working
-directory, related to a vulnerability in the PySys_SetArgv function
-(CVE-2008-5983).
-
-
-======================================================
-Name: CVE-2009-0314
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0314
-Reference: MLIST:[oss-security] 20090126 CVE request -- Python < 2.6 PySys_SetArgv issues (epiphany, csound, dia, eog, gedit, xchat, vim, nautilus-python, Gnumeric)
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/01/26/2
-Reference: MISC:http://bugzilla.gnome.org/show_bug.cgi?id=569214
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=481556
-
-Untrusted search path vulnerability in the Python module in gedit
-allows local users to execute arbitrary code via a Trojan horse Python
-file in the current working directory, related to a vulnerability in
-the PySys_SetArgv function (CVE-2008-5983).
-
-
-======================================================
-Name: CVE-2009-0315
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0315
-Reference: MLIST:[oss-security] 20090126 CVE request -- Python < 2.6 PySys_SetArgv issues (epiphany, csound, dia, eog, gedit, xchat, vim, nautilus-python, Gnumeric)
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/01/26/2
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=481560
-
-Untrusted search path vulnerability in the Python module in xchat
-allows local users to execute arbitrary code via a Trojan horse Python
-file in the current working directory, related to a vulnerability in
-the PySys_SetArgv function (CVE-2008-5983).
-
-
-======================================================
-Name: CVE-2009-0316
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0316
-Reference: MLIST:[debian-bugs-rc] 20080805 Bug#484305: bicyclerepair: bike.vim imports untrusted python files from cwd
-Reference: URL:http://www.nabble.com/Bug-484305%3A-bicyclerepair%3A-bike.vim-imports-untrusted-python-files-from-cwd-td18848099.html
-Reference: MLIST:[oss-security] 20090126 CVE request -- Python < 2.6 PySys_SetArgv issues (epiphany, csound, dia, eog, gedit, xchat, vim, nautilus-python, Gnumeric)
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/01/26/2
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=481565
-
-Untrusted search path vulnerability in the Python module in vim allows
-local users to execute arbitrary code via a Trojan horse Python file
-in the current working directory, related to a vulnerability in the
-PySys_SetArgv function (CVE-2008-5983).
-
-
-======================================================
-Name: CVE-2009-0317
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0317
-Reference: MLIST:[oss-security] 20090126 CVE request -- Python < 2.6 PySys_SetArgv issues (epiphany, csound, dia, eog, gedit, xchat, vim, nautilus-python, Gnumeric)
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/01/26/2
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=481570
-
-Untrusted search path vulnerability in the Python language bindings
-for Nautilus (nautilus-python) allows local users to execute arbitrary
-code via a Trojan horse Python file in the current working directory,
-related to a vulnerability in the PySys_SetArgv function
-(CVE-2008-5983).
-
-
-======================================================
-Name: CVE-2009-0318
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0318
-Reference: MLIST:[oss-security] 20090126 CVE request -- Python < 2.6 PySys_SetArgv issues (epiphany, csound, dia, eog, gedit, xchat, vim, nautilus-python, Gnumeric)
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/01/26/2
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=481572
-
-Untrusted search path vulnerability in the GObject Python interpreter
-wrapper in Gnumeric allows local users to execute arbitrary code via a
-Trojan horse Python file in the current working directory, related to
-a vulnerability in the PySys_SetArgv function (CVE-2008-5983).
-
-
+<lcars@...rt.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
