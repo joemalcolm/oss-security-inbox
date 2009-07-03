@@ -1,26 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/19/2
-Message-ID: <20090319150303.GA13131@logo.rdu.rpath.com>
-Date: Thu, 19 Mar 2009 11:03:03 -0400
-From: "Michael K. Johnson" <johnsonm@...th.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: inotify local DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/03/2
+Message-ID: <20090703154521.GY6089@inversepath.com>
+Date: Fri, 3 Jul 2009 16:45:21 +0100
+From: Andrea Barisani <lcars@...rt.org>
+To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
+Subject: [oCERT-2009-007] FCKeditor input sanitization errors
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Mar 19, 2009 at 02:27:36PM +0800, Eugene Teo wrote:
-> On Thu, Mar 19, 2009 at 1:41 AM, Michael K. Johnson <johnsonm@...th.com> wrote:
-> > On Tue, Mar 17, 2009 at 08:39:33PM -0400, Steven M. Christey wrote:
-> [...]
-> > In the 2.6.27.y stable releases, this affects 2.6.27.13 and earlier.
-> > In the 2.6.28.y stable releases, this affects 2.6.28.2 and earlier.
-> 
-> The problem occurs between upstream commits 16dbc6c96163 and 3632dee2f8b8.
 
-Thanks, Eugene!  More interpretation for those looking at various
-kernel versions for those changes:
+#2009-007 FCKeditor input sanitization errors
 
-16dbc6c96163 was introduced between 2.6.27-rc8 and 2.6.27-rc9, so
-2.6.26 and earlier are not affected.   The change represented by
-16dbc6c96163 was also not imported into the 2.6.26.y stable release
-tree during its lifetime, so no 2.6.26.y releases are affected either.
+Description:
+
+FCKeditor, a web based open source HTML text editor, suffers from a remote
+file upload vulnerability.
+
+The input of several connector modules is not properly verified before being
+used, this leads to exposure of the contents of arbitrary directories on the
+server filesystem and allows file uploading to arbitrary locations. The
+affected code is remotely exposed before authentication. An attacker can
+exploit this vulnerability to install remote shells on the victim server
+among other things, it should be noted that this vulnerability is being
+actively exploited in the wild.
+
+Additionally several XSS vulnerabilities are present in the packaged samples
+directory.
+
+A patch and a new FCKeditor version will be made available on Monday July 6th
+16:00 CET, this advisory will be updated with detailed information about the
+issue and a security patch.
+
+In the meantime we strongly recommend to implement the following
+mitigation instructions:
+
+  * removed unused connectors from 'editor\filemanager\connectors'
+
+  * disable the file browser in config.ext
+
+  * inspect all fckeditor folders on the server for suspicious files that
+    may have been previously uploaded, as an example image directories
+    (eg. 'fckeditor/editor/images/...') are well known target locations
+    for remote php shells with extensions that match image files
+
+  * completely remove the '_samples' directory
+
+Affected version:
+
+FCKeditor <= 2.6.4
+
+(version 3.0 is unaffected as it does not have any built-in file browser)
+
+Fixed version:
+
+FCKeditor >= 2.6.4.1 (to be released on 2009-07-06 16:00 CET)
+
+Credit: vulnerability report received from Vinny Guido <bigvin [at]
+        hushmail [dot] com>.
+
+CVE: CVE-2009-2265
+
+Timeline:
+
+2009-05-03: vulnerability reported received
+2009-05-04: contacted fckeditor maintainer
+2009-05-25: maintainer denies reported issues against latest version
+2009-05-25: reporter confirms that latest version is affected
+2009-06-21: maintainer forwards report to project security maintainer
+2009-06-23: security maintainer confirms CurrentFolder vulnerability
+2009-06-24: security maintainer provides patch
+2009-06-29: assigned CVE
+2009-07-03: preliminary advisory release with mitigation instructions due to
+            wide exposure of the issue
+
+Permalink:
+http://www.ocert.org/advisories/ocert-2009-007.html
+
+-- 
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | Open Source Computer Emergency Response Team
+
+<lcars@...rt.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
