@@ -1,52 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/16/9
-Message-ID: <73739845.477241255720508131.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 16 Oct 2009 15:15:08 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/04/1
+Message-Id: <200907041239.17985.rbu@gentoo.org>
+Date: Sat, 4 Jul 2009 12:39:09 +0200
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request - aria2 - 1.6.2
+Cc: Andrea Barisani <lcars@...rt.org>
+Subject: Re: [oCERT-2009-009] CamlImages integer overflows
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2009-3617 for this.
+On Thursday 02 July 2009, Andrea Barisani wrote:
+> Unfortunately oCERT has been unable to get feedback from CamlImages
+> maintainers and the package seems unmaintained, it's therefore
+> suggested to avoid CamlImages usage on production or any environment
+> where strong security is needed.
 
-Thanks.
+Richard Jones of RedHat contributed a patch and upstream is stated plans 
+to review and incorporate it:
+http://www.nabble.com/Camlimages-integer-overflows-with-PNG-images-td24321780.html
 
--- 
-    JB
 
------ "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
 
-> Hello Steve, vendors,
-> 
->    aria2 upstream has released latest 1.6.2 release, fixing one DoS
-> issue. From
-> 1.6.2 Release Note:
-> 
-> This release fixes segmentation fault error if URI to download
-> contains printf format string and logging is enabled
-> 
-> * Fixed the bug that causes segmentation fault if
->     req->getCurrentUrl() contains printf format string such as %d.
-> The
->     statement that causes this bug is useless and removed.
-> 
-> 
-> References:
-> -----------
-> http://aria2.svn.sourceforge.net/viewvc/aria2/trunk/NEWS?revision=1586
-> https://bugzilla.redhat.com/show_bug.cgi?id=529342
-> 
-> Upstream patch:
-> ---------------
-> http://aria2.svn.sourceforge.net/viewvc/aria2/trunk/src/AbstractCommand.cc?r1=1539&r2=1572
-> 
-> Affected versions:
-> ------------------
-> aria2-1.5.x && aria2-1.6.x (aria2-1.3.x is not vulnerable)
-> 
-> Could you allocate a CVE identifier?
-> 
-> Thanks && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+Robert
+
+Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
