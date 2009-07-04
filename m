@@ -1,43 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/11/3
-Message-ID: <20090211191342.GC10133@redhat.com>
-Date: Wed, 11 Feb 2009 12:13:42 -0700
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request for proftpd
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/04/2
+Message-ID: <20090704111401.GK6089@inversepath.com>
+Date: Sat, 4 Jul 2009 12:14:01 +0100
+From: Andrea Barisani <lcars@...rt.org>
+To: Robert Buchholz <rbu@...too.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: [oCERT-2009-009] CamlImages integer overflows
 Content-Type: text/plain; charset=utf-8
 
-* [2009-02-11 10:58:05 -0800] TJ Saunders wrote:
-
->> An SQL injection vulnerability in proftpd was reported on bugtraq
->> yesterday that could allow a user to login to proftpd with any password
->> if they use mysql for authentication (and, presumably, postgresql).
->> 
->> References:
->> 
->> http://www.securityfocus.com/archive/1/500823/30/0/threaded
->> http://bugs.gentoo.org/show_bug.cgi?id=258450
->> http://bugs.proftpd.org/show_bug.cgi?id=3180
->> https://bugzilla.redhat.com/show_bug.cgi?id=485125
+On Sat, Jul 04, 2009 at 12:39:09PM +0200, Robert Buchholz wrote:
+> On Thursday 02 July 2009, Andrea Barisani wrote:
+> > Unfortunately oCERT has been unable to get feedback from CamlImages
+> > maintainers and the package seems unmaintained, it's therefore
+> > suggested to avoid CamlImages usage on production or any environment
+> > where strong security is needed.
+> 
+> Richard Jones of RedHat contributed a patch and upstream is stated plans 
+> to review and incorporate it:
+> http://www.nabble.com/Camlimages-integer-overflows-with-PNG-images-td24321780.html
 >
->This has been reported on the ProFTPD Bugzilla:
->
->  http://bugs.proftpd.org/show_bug.cgi?id=3180
 
-Yeah, I noted that above.  =)
+That's great, I'll update the advisory.
 
->As discussed there, this is a duplicate of an earlier bug:
->
->  http://bugs.proftpd.org/show_bug.cgi?id=3124
->
->and has been fixed in ProFTPD 1.3.2rc3 and later.
-
-Thanks, TJ.  I just read the comments and the duplicate note a few
-minutes ago and was going to reply to it.
-
-We still need a CVE name, however.  Bug #3124 does not note any kind of
-security impact, which there clearly is, so I don't believe a CVE name
-had been assigned to this previously (at least not that I could find).
+Thanks
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | Open Source Computer Emergency Response Team
+
+<lcars@...rt.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
