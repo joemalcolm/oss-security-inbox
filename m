@@ -1,30 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/28/1
-Message-ID: <20090828072022.GA28942@suse.de>
-Date: Fri, 28 Aug 2009 09:20:22 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/06/1
+Message-Id: <200907062109.25848.steffen.joeris@skolelinux.de>
+Date: Mon, 6 Jul 2009 21:09:25 +1000
+From: Steffen Joeris <steffen.joeris@...lelinux.de>
 To: oss-security@...ts.openwall.com
-Cc: Steffen_Ullrich@...ua.de, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: perl-IO-Socket-SSL certificate hostname compare bug
+Subject: CVE id request: xcftools
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi
 
-IO-Socket-SSL was released a while ago with a security fix:
+I'd like to request a CVE id for xcftools. I don't think the issue[0] is very 
+severe, but I guess it still deserves a CVE id.
 
-http://cpansearch.perl.org/src/SULLR/IO-Socket-SSL-1.30/Changes
-v1.26 2009.07.03
-- SECURITY BUGFIX! 
-  fix Bug in verify_hostname_of_cert where it matched only the prefix for 
-  the hostname when no wildcard was given, e.g. www.example.org matched
-  against a certificate with name www.exam in it
-  Thanks to MLEHMANN for reporting
+Cheers
+Steffen
 
-cu
-Ludwig
+[0]: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=533361
 
--- 
- (o_   Ludwig Nussel
- //\   
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
