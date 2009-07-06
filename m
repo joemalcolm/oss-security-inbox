@@ -1,19 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/13/1
-Message-Id: <200904131108.44531.hanno@hboeck.de>
-Date: Mon, 13 Apr 2009 11:08:44 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/06/2
+Message-Id: <200907062133.34766.steffen.joeris@skolelinux.de>
+Date: Mon, 6 Jul 2009 21:33:34 +1000
+From: Steffen Joeris <steffen.joeris@...lelinux.de>
 To: oss-security@...ts.openwall.com
-Cc: Steven Christey <coley@...us.mitre.org>
-Subject: CVE request: Ghostscript jbig2dec JBIG2 Processing Buffer Overflow
+Subject: Re: CVE id request: xcftools
 Content-Type: text/plain; charset=utf-8
 
-See
-http://secunia.com/secunia_research/2009-21/
-http://www.h-online.com/security/Ghostscript-comes-unstuck-with-PDFs-too--/news/113051
+On Mon, 6 Jul 2009 09:09:25 pm Steffen Joeris wrote:
+> Hi
+>
+> I'd like to request a CVE id for xcftools. I don't think the issue[0] is
+> very severe, but I guess it still deserves a CVE id.
+>
+> Cheers
+> Steffen
+>
+> [0]: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=533361
+Already covered by CVE-2009-2175, so please ignore.
 
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+Cheers
+Steffen
 
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
