@@ -1,52 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/18/10
-Message-ID: <Pine.GSO.4.51.0908181642560.17763@faron.mitre.org>
-Date: Tue, 18 Aug 2009 16:44:39 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Wordpress
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/13/1
+Message-Id: <1247479694.3384.20.camel@dhcp-lab164.englab.brq.redhat.com>
+Date: Mon, 13 Jul 2009 12:08:14 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: OSS Security <oss-security@...ts.openwall.com>
+Subject: CVE Request - MySQL <= 5.0.45
 Content-Type: text/plain; charset=utf-8
 
+Hello Steve, vendors,
 
-These pre-2.8.3 issues were SPLIT into two CVEs because they are
-effectively different flaw types, although this is splitting hairs
-somewhat.
+ a format string vulnerability in the way MySQL server
+used to handle log messages, by creation and deletion
+of database instances, has been recently reported against
+MySQL <= 5.0.45.
 
-- Steve
-
-
-======================================================
-Name: CVE-2009-2853
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2853
-Reference: MLIST:[oss-security] 20090804 CVE request: Wordpress
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/08/04/5
-Reference: CONFIRM:http://core.trac.wordpress.org/changeset/11768
-Reference: CONFIRM:http://core.trac.wordpress.org/changeset/11769
-Reference: CONFIRM:http://wordpress.org/development/2009/08/wordpress-2-8-3-security-release/
-
-Wordpress before 2.8.3 allows remote attackers to gain privileges via
-a direct request to (1) admin-footer.php, (2) edit-category-form.php,
-(3) edit-form-advanced.php, (4) edit-form-comment.php, (5)
-edit-link-category-form.php, (6) edit-link-form.php, (7)
-edit-page-form.php, and (8) edit-tag-form.php in wp-admin/.
+References:
+-----------
+    http://seclists.org/fulldisclosure/2009/Jul/0058.html
+    http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=536726
 
 
-======================================================
-Name: CVE-2009-2854
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2854
-Reference: MLIST:[oss-security] 20090804 CVE request: Wordpress
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/08/04/5
-Reference: CONFIRM:http://core.trac.wordpress.org/changeset/11765
-Reference: CONFIRM:http://core.trac.wordpress.org/changeset/11766
-Reference: CONFIRM:http://wordpress.org/development/2009/08/wordpress-2-8-3-security-release/
+Could you please allocate a CVE identifier for it?
 
-Wordpress before 2.8.3 does not check capabilities for certain
-actions, which allows remote attackers to make unauthorized edits or
-additions via a direct request to (1) edit-comments.php, (2)
-edit-pages.php, (3) edit.php, (4) edit-category-form.php, (5)
-edit-link-category-form.php, (6) edit-tag-form.php, (7) export.php,
-(8) import.php, or (9) link-add.php in wp-admin/.
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
 
 
