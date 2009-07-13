@@ -1,40 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/01/8
-Message-Id: <1238588997.3103.28.camel@dhcp-lab-164.englab.brq.redhat.com>
-Date: Wed, 01 Apr 2009 14:29:57 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com
-Subject: CVE request -- bibtex, pam_ssh
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/13/2
+Message-ID: <20090713181205.GU4038@inversepath.com>
+Date: Mon, 13 Jul 2009 19:12:05 +0100
+From: Andrea Barisani <lcars@...rt.org>
+To: ocert-announce@...ts.ocert.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: [oCERT-2009-012] libtiff tools integer overflows
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve,
 
-  could you allocate new CVE ids for the following two issues:
+#2009-012 libtiff tools integer overflows
 
-1, bibtex invalid reads/writes when parsing big *.bib file
-          (valgrind reports suspicious behavior)
-   References: 
-   http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=520920  (texlive-base-bin)
-   https://bugzilla.redhat.com/show_bug.cgi?id=492136 (tetex, texlive)
+Description:
 
-   The problem is in bibtex, but looks like it is shipped
-   in various packages for various vendors.
+The libtiff image library tools suffer from integer overflows which may lead to
+a potentially exploitable heap overflow and result in arbitrary code execution.
 
-2, pam_ssh Password prompt varies for existent and non-existent users
-   References: 
-   http://bugs.gentoo.org/show_bug.cgi?id=263579
-   https://bugzilla.redhat.com/show_bug.cgi?id=492153
+The libtiff package ships a library, for reading and writing TIFF, as well as a
+small collection of tools for manipulating TIFF images. The cvt_whole_image
+function used in the tiff2rgba tool and the tiffcvt function used in the
+rgb2ycbcr tool do not properly validate the width and height of the image.
+Specific TIFF images with large width and height can be crafted to trigger the
+vulnerability.
 
-   While this is not problem of pam, pam_ssh is affected.
-   Also admit this is a very low security issue (affecting
-   special configurations), but in any case the password
-   prompt should be always the same. Successfully reproduced.
+A patch has been made available by the maintainer and further improved by Tom
+Lane of Red Hat.
 
-Thanks, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-   
-   
+Affected version:
 
+libtiff <= 3.8.2, <= 3.9 (stable), <= 4.0 (development)
 
+Fixed version:
+
+libtiff, N/A (patch has been made available and it's expected to be committed
+to libtiff CVS)
+
+Credit: vulnerability report and PoC code received from Tielei Wang <wangtielei
+        [at] icst [dot] pku [dot] edu [dot] cn>, ICST-ERCIS.
+
+CVE: CVE-2009-2347
+
+Timeline:
+
+2009-05-22: vulnerability report received
+2009-05-22: contacted libtiff maintainer
+2009-06-30: report resent to maintainer due to lack of response
+2009-07-01: maintainer provides patch
+2009-07-04: reporter confirm fixes
+2009-07-04: oCERT requests one week embargo for vendor notification
+2009-07-04: maintainer confirms embargo
+2009-07-07: contacted affected vendors
+2009-07-07: assigned CVE
+2009-07-07: improved patch contributed by Tom Lane of Red Hat
+2009-07-04: reporter acknowledges patch
+2009-07-13: advisory release
+
+References:
+https://bugzilla.redhat.com/attachment.cgi?id=35132
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-2347
+
+Permalink:
+http://www.ocert.org/advisories/ocert-2009-012.html
+
+-- 
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | Open Source Computer Emergency Response Team
+
+<lcars@...rt.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
