@@ -1,39 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/14/3
-Message-ID: <20090114152504.GB24376@ngolde.de>
-Date: Wed, 14 Jan 2009 16:25:04 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: update on CVE-2008-5718
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/13/3
+Message-ID: <20090713224652.GI4038@inversepath.com>
+Date: Mon, 13 Jul 2009 23:46:52 +0100
+From: Andrea Barisani <lcars@...rt.org>
+To: ocert-announce@...ts.ocert.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: [oCERT-2009-010] mimeTeX and mathTeX buffer overflows and command injection
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Thomas Biege <thomas@...e.de> [2009-01-14 15:50]:
-> On Wed, Jan 14, 2009 at 12:32:07AM +0100, Nico Golde wrote:
-> > Hi,
-> > I just did a security update for CVE-2008-5718 and since the 
-> > description is not really verbose I thought I'd share what I 
-> > found in case anyone else is working on that.
-> ...
-> > Cheers
-> > Nico
-> > P.S. The patch I used can be found on:
-> > http://people.debian.org/~nion/nmu-diff/netatalk-2.0.3-11_2.0.3-11+lenny1.patch
-> 
-> I am not very happy with the patch because it just filters a handful of
-> characters, a better solution would be to replace popen().
-> (I mentioned this on the netatalk-devel ML but got no answer so far.)
 
-It is no full shell escape but escapes everything that 
-should be relevant for command injection. Sure, replacing 
-the popen would be the better option but I was not too happy 
-doing this as I guess it's more likely to break existing 
-functionality with it by accident.
+#2009-010 mimeTeX and mathTeX buffer overflows and command injection
 
-Cheers
-Nico
+Description:
+
+The mimeTeX and mathTeX CGIs are widely used helper executables that allow
+mathematical equation rendering in the form of images. Both applications suffer
+from several buffer overflows as well as command injection which result in
+remote code execution.
+
+The mimeTeX application suffers from several stack-based buffer overflows which
+can be remotely triggered by passing oversized TeX expressions.  Additionally
+the \environ, \input and \counter directives may not be suitable for exposure
+to commands from the Internet.
+
+Similarly the mathTeX application does not perform sufficient input
+sanitization and allows untrusted input, passed via HTTP query strings, to be
+used as command arguments allowing command injection. Additionally it suffers
+from several stack-based overflows as well as insecure temporary file handling.
+
+Affected version:
+
+Unfortunately mimeTeX and mathTex are provided without version numbers by the
+maintainer, who releases version-less zip archives. It is therefore impossible
+to provide affected version numbers.
+
+Fixed version:
+
+At the release time for this advisory both versions available on the maintainer
+website fix the overflow and injection issues.
+
+mimeTeX, mimetex.zip (2009/07/13)
+
+mathTeX, mathtex.zip (2009/07/13)
+
+Credit: vulnerability report received from Chris Evans <cevans [at] google
+        [dot] com> (mimetex) and Damien Miller <djm [at] google [dot] com>
+        (mathtex), Google Security Team.
+
+CVE: CVE-2009-1382 (mimetex), CVE-2009-1383 (mathtex)
+
+Timeline:
+
+2009-05-22: vulnerability report received
+2009-05-25: contacted mimetex/mathtex maintainer
+2009-05-25: maintainer publicly discloses report contents
+2009-05-26: contacted affected vendors
+2009-05-26: maintainer provides updated packages
+2009-05-26: assigned CVEs
+2009-05-26: reporters indicate that the updated packages do not fix all
+            the issues
+2009-05-29: reporters find additional overflows in updated packages
+2009-06-01: maintainer contacted with updated report
+2009-07-09: reporters confirm that updated packages fixing the reported
+            issues are available
+2009-07-13: advisory release
+
+References:
+http://scary.beasts.org/security/CESA-2009-009.html
+http://groups.google.com/group/comp.text.tex/browse_thread/thread/5d56d3d744351578
+
+Permalink:
+http://www.ocert.org/advisories/ocert-2009-010.html
+
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | Open Source Computer Emergency Response Team
 
-Content of type "application/pgp-signature" skipped
+<lcars@...rt.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
