@@ -1,24 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/26/4
-Message-ID: <20091026214655.GD3660@redhat.com>
-Date: Mon, 26 Oct 2009 15:46:55 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/14/3
+Message-ID: <873a8znigd.fsf@mid.deneb.enyo.de>
+Date: Tue, 14 Jul 2009 22:00:18 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Subject: ghostscript CVE for multiple NULL dereferences in JBIG2 decoder
+Subject: Fixing the XML signature HMAC truncation authentication bypass
 Content-Type: text/plain; charset=utf-8
 
-I'm not sure if a CVE name has ever been requested for this issue.
-Similar to Adobe's CVE-2009-0658 issue, the same PDF proof-of-concept
-was used to crash ghostscript (multiple NULL pointer dereference flaws
-found in Ghostscript's JBIG2 compression format decoder).
+Quoting from <http://www.kb.cert.org/vuls/id/466161>:
 
-If a CVE name was assigned for this, does anyone know it?  I can't find
-it.  If not, could one be assigned?  Details are available on our
-bugzilla:
+| XML Signature Syntax and Processing (XMLDsig) is a W3C
+| recommendation for providing integrity, message authentication,
+| and/or signer authentication services for data. XMLDsig is commonly
+| used by web services such as SOAP. The XMLDsig recommendation
+| includes support for HMAC truncation, as specified in RFC2014. When
+| HMAC truncation is under the control of an attacker, however, this
+| can result in an effective authentication bypass. For example, by
+| specifying an HMACOutputLength of 1, only one bit of the signature
+| is verified. This can allow an attacker to forge an XML signature
+| that will be accepted as valid.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=503785
-
-Thanks.
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+What shall we do about this?  Shall we just cap the value at 80 or 96
+bits in our implementations?
