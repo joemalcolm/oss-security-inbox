@@ -1,26 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/03/6
-Message-ID: <Pine.GSO.4.51.0902031705210.3146@faron.mitre.org>
-Date: Tue, 3 Feb 2009 17:05:26 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: Tor <0.2.0.33 Heap corruption
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/15/2
+Message-Id: <200907150251.48381.rbu@gentoo.org>
+Date: Wed, 15 Jul 2009 02:51:46 +0200
+From: Robert Buchholz <rbu@...too.org>
+To: oss-security@...ts.openwall.com
+Cc: Florian Weimer <fw@...eb.enyo.de>
+Subject: Re: Fixing the XML signature HMAC truncation authentication bypass
 Content-Type: text/plain; charset=utf-8
 
+On Wednesday 15 July 2009, Robert Buchholz wrote:
+> 1) Apache
+> Bug:
+> https://issues.apache.org/bugzilla/show_bug.cgi?id=47526
+> Patch:
+> http://svn.apache.org/viewvc?view=rev&revision=794013
+>
+> It seems they disallow HMAC truncation completely.
+> * In my personal opinion the best move (since we're dealing with XML,
+>   who cares about an additional <16 bytes?)
 
-======================================================
-Name: CVE-2009-0414
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0414
-Reference: MLIST:[or-announce] 20090122 Tor 0.2.0.33 is released
-Reference: URL:http://archives.seul.org/or/announce/Jan-2009/msg00000.html
-Reference: CONFIRM:http://blog.torproject.org/blog/tor-0.2.0.33-stable-released
-Reference: BID:33399
-Reference: URL:http://www.securityfocus.com/bid/33399
-Reference: SECUNIA:33635
-Reference: URL:http://secunia.com/advisories/33635
+This was Java only, the C++ variant has this fix:
+http://svn.apache.org/viewvc?view=rev&revision=794017
 
-Unspecified vulnerability in Tor before 0.2.0.33 has unspecified
-impact and remote attack vectors that trigger heap corruption.
+which is 80/half.
 
 
+Robert
+
+Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
