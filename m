@@ -1,45 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/01/9
-Message-ID: <20090401144555.7dddaa32@redhat.com>
-Date: Wed, 1 Apr 2009 14:45:55 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: OSS Security <oss-security@...ts.openwall.com>
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: PHP 5.2.9
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/15/3
+Message-Id: <200907150301.01689.rbu@gentoo.org>
+Date: Wed, 15 Jul 2009 03:00:58 +0200
+From: Robert Buchholz <rbu@...too.org>
+To: oss-security@...ts.openwall.com
+Cc: Florian Weimer <fw@...eb.enyo.de>
+Subject: Re: Fixing the XML signature HMAC truncation authentication bypass
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+On Wednesday 15 July 2009, Robert Buchholz wrote:
+> Florian Streibelt's analysis of the GnuTLS code indicated that is
+> also vulnerable. 
 
-PHP 5.2.9 was released some time ago, mentioning couple of security
-fixes, that do not seem to have CVEs assigned:
-  http://www.php.net/releases/5_2_9.php
-
-# Fixed explode() behavior with empty string to respect negative limit.
-  (Shire)
-http://cvs.php.net/viewvc.cgi/php-src/ext/standard/string.c?r1=1.445.2.14.2.77&r2=1.445.2.14.2.78
-
-Our maintainer has asked upstream about this one, as it changes
-behavior of explode() and does not have obvious security consequences.
-Upstream security team confirmed that this one was tagged as security
-by mistake.
+I misread his analysis. That's what happens when I try reading faster 
+than my brain follows. The analysis was for the GnuTLS related code of 
+xmlsec. Apologies.
 
 
-# Fixed a crash on extract in zip when files or directories entry names
-  contain a relative path. (Pierre)
-http://cvs.php.net/viewvc.cgi/php-src/ext/zip/php_zip.c?r1=1.1.2.48&r2=1.1.2.49
+Robert
 
-This should only affect php 5.2.7 or versions that have original fix
-for CVE-2008-5658 backported.
-
-
-# Fixed a segfault when malformed string is passed to json_decode().
-  (Scott)
-http://cvs.php.net/viewvc.cgi/php-src/ext/json/JSON_parser.c?r1=1.1.2.14&r2=1.1.2.15
-
-This is PHP 5.2.0+ only, as previous versions do not have json
-extension.
-
-Only two CVEs should be needed.  Thank you!
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
