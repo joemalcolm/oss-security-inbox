@@ -1,45 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/21/4
-Message-ID: <Pine.GSO.4.51.0905211809370.18536@faron.mitre.org>
-Date: Thu, 21 May 2009 18:13:12 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- kdebase4 (konqueror) -- Incomplete SSL Certificate support in KDE4
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/16/4
+Message-ID: <20090716142329.GN4038@inversepath.com>
+Date: Thu, 16 Jul 2009 15:23:29 +0100
+From: Andrea Barisani <lcars@...rt.org>
+To: ocert-announce@...ts.ocert.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: [oCERT-2009-011] Android improper camera and audio permission verification
 Content-Type: text/plain; charset=utf-8
 
 
-In CVE, we treat the inadvertent prevention of access to security
-functionality as a bug.  There is no direct way that an external attacker
-can trigger it, and the attacker gets no direct benefit by waiting for it
-to happen passively.  It's only doable by a person doing this to
-himself/herself.
+#2009-011 Android improper camera and audio permission verification
 
-So, this would not get a CVE.
+Description:
 
-- Steve
+Android, an open source mobile phone platform, improperly checks permissions
+when applications access the camera and audio resources.
 
+The permissions are Manifest.permission.CAMERA and
+Manifest.permission.AUDIO_RECORD respectively.
 
+Normally an Android application is allowed to access the camera and audio
+resources only if the user explicitly allows the application to do so.  However
+if the user installs an application that does not request the permissions then
+the application is implicitly allowed to use the device camera and/or
+microphone.
 
-On Tue, 12 May 2009, Jan Lieskovsky wrote:
+Affected version:
 
-> Hello Steve,
->
->   not sure if original Debian bug [1] reporter meant this insufficiency,
-> but [2] might be interesting for your attention. While this is not
-> direct security vulnerability, is is preventing users from using
-> the functionality provided by digital certificates.
->
-> References:
-> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=526979
-> [2] https://bugs.kde.org/show_bug.cgi?id=185288
-> [3] https://bugzilla.redhat.com/show_bug.cgi?id=500373
->
-> This issue is present only in Konqueror web browser, as shipped
-> with the K Desktop Environment 4 (kdebase-4.*). Konqueror in
-> kdebase3 works fine.
->
-> Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
->
->
+Android all 1.5 CRBxx versions (where xx are digits)
+
+Fixed version:
+
+Android 1.5 CBDxx, CRCxx and COCxx (where xx are digits)
+
+Credit: Chris Palmer, iSEC Partners, under contract with Google.
+
+CVE: CVE-2009-2348
+
+Timeline:
+
+2009-07-06: Android Security Team requested assistance from oCERT
+2009-07-07: assigned CVE
+2009-07-07: Android requests embargo period
+2009-07-16: advisory release
+
+References:
+http://android.git.kernel.org/?p=platform/frameworks/base.git;a=commit;h=7b7225c8fdbead25235c74811b30ff4ee690dc58
+http://android.git.kernel.org/?p=platform/frameworks/base.git;a=commit;h=4d8adefd35efdea849611b8b02d61f9517e47760
+http://android.git.kernel.org/?p=platform/packages/apps/Camera.git;a=commit;h=e655d54160e5a56d4909f2459eeae9012e9f187f
+
+Permalink:
+http://www.ocert.org/advisories/ocert-2009-011.html
+
+-- 
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | Open Source Computer Emergency Response Team
+
+<lcars@...rt.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
