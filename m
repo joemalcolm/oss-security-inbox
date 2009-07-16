@@ -1,27 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/17/5
-Message-ID: <Pine.GSO.4.51.0909162132440.7046@faron.mitre.org>
-Date: Wed, 16 Sep 2009 21:32:51 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/16/1
+Message-ID: <4A5ECD5E.8060901@redhat.com>
+Date: Thu, 16 Jul 2009 14:49:02 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: changetrack
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE-2009-1895 kernel: personality: fix PER_CLEAR_ON_SETID
 Content-Type: text/plain; charset=utf-8
 
+Reported by Julien Tinnes.
 
-======================================================
-Name: CVE-2009-3233
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3233
-Reference: MLIST:[oss-security] 20090916 CVE id request: changetrack
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/09/16/3
-Reference: CONFIRM:http://bugs.debian.org/546791
-Reference: BID:36420
-Reference: URL:http://www.securityfocus.com/bid/36420
-Reference: SECUNIA:36756
-Reference: URL:http://secunia.com/advisories/36756
+"We have found that the current PER_CLEAR_ON_SETID mask on Linux doesn't
+include neither ADDR_COMPAT_LAYOUT, nor MMAP_PAGE_ZERO.
 
-changetrack 4.3 allows local users to execute arbitrary commands via
-CRLF sequences and shell metacharacters in a filename in a directory
-that is checked by changetrack.
+The current mask is READ_IMPLIES_EXEC|ADDR_NO_RANDOMIZE.
 
+We believe it is important to add MMAP_PAGE_ZERO, because by using this
+personality it is possible to have the first page mapped inside a
+process running as setuid root.  This could be used in those scenarios:
 
+- Exploiting a NULL pointer dereference issue in a setuid root binary
+- Bypassing the mmap_min_addr restrictions of the Linux kernel: by
+running a setuid binary that would drop privileges before giving us
+control back (for instance by loading a user-supplied library), we could
+get the first page mapped in a process we control.  By further using
+mremap and mprotect on this mapping, we can then completely bypass the
+mmap_min_addr restrictions.
+
+Less importantly, we believe ADDR_COMPAT_LAYOUT should also be added
+since on x86 32bits it will in practice disable most of the address
+space layout randomization (only the stack will remain randomized)."
+
+Upstream commit:
+http://git.kernel.org/linus/f9fabcb58a6d26d6efde842d1703ac7cfa9427b6
+
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-1895
+http://blog.cr0.org/2009/06/bypassing-linux-null-pointer.html
+http://patchwork.kernel.org/patch/32598/
+http://marc.info/?l=linux-security-module&m=124724852000951&w=2
+
+Thanks, Eugene
