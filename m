@@ -1,118 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/24/4
-Message-ID: <4B0C0C80.8060800@redhat.com>
-Date: Tue, 24 Nov 2009 17:40:32 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/16/3
+Message-ID: <20090716083042.GA20120@suse.de>
+Date: Thu, 16 Jul 2009 10:30:42 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-CC: coley <coley@...re.org>, MySQL Security Team <security@...ql.com>
-Subject: Re: mysql-5.1.41
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE-2009-1895 kernel: personality: fix PER_CLEAR_ON_SETID
 Content-Type: text/plain; charset=utf-8
 
-Just small correction - CVE-2008-2079 should be listed of course in
-all occurrences below (focused on proper links) and made
-two typos :(.
+On Thu, Jul 16, 2009 at 02:49:02PM +0800, Eugene Teo wrote:
+> Reported by Julien Tinnes.
+> 
+> "We have found that the current PER_CLEAR_ON_SETID mask on Linux doesn't
+> include neither ADDR_COMPAT_LAYOUT, nor MMAP_PAGE_ZERO.
+> 
+> The current mask is READ_IMPLIES_EXEC|ADDR_NO_RANDOMIZE.
+> 
+> We believe it is important to add MMAP_PAGE_ZERO, because by using this
+> personality it is possible to have the first page mapped inside a
+> process running as setuid root.  This could be used in those scenarios:
+> 
+> - Exploiting a NULL pointer dereference issue in a setuid root binary
+> - Bypassing the mmap_min_addr restrictions of the Linux kernel: by
+> running a setuid binary that would drop privileges before giving us
+> control back (for instance by loading a user-supplied library), we could
+> get the first page mapped in a process we control.  By further using
+> mremap and mprotect on this mapping, we can then completely bypass the
+> mmap_min_addr restrictions.
+> 
+> Less importantly, we believe ADDR_COMPAT_LAYOUT should also be added
+> since on x86 32bits it will in practice disable most of the address
+> space layout randomization (only the stack will remain randomized)."
+> 
+> Upstream commit:
+> http://git.kernel.org/linus/f9fabcb58a6d26d6efde842d1703ac7cfa9427b6
+> 
+> References:
+> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-1895
+> http://blog.cr0.org/2009/06/bypassing-linux-null-pointer.html
+> http://patchwork.kernel.org/patch/32598/
+> http://marc.info/?l=linux-security-module&m=124724852000951&w=2
 
-Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Also http://www.securityfocus.com/bid/35647
 
-Jan Lieskovsky wrote:
-> Hi Josh,
-> 
->   looked further into these issues.
-> 
-> A, wrt http://bugs.mysql.com/bug.php?id=32167
-> 
-> You are right, that  CVE-2008-2079 was originally assigned to:
->    http://bugs.mysql.com/bug.php?id=32167
-> 
-> On "[6 May 2008 11:16] Sergei Golubchik" states:
-> 
-> please, note in the manual that it's CVE-2008-2079
-> 
-> But last comment on this bug mentions:
-> 
-> <quote>
-> 
-> [12 Nov 4:50] Paul DuBois
-> 
-> Noted in 5.1.41, 5.5.0, 6.0.14 changelogs.
-> 
-> Additional corrections were made for the symlink-related privilege
-> problem originally addressed in MySQL 5.1.24. The original fix did
-> not correctly handle the data directory path name if it contained
-> symlinked directories in its path, and the check was made only at
-> table-creation time, not at table-opening time later.
-> 
-> </quote>
-> 
-> Also MySQL-5.1.41 news file now contains:
-> 
-> Important Change: Security Fix: Additional
-> corrections were made for the symlink-related
-> privilege problem originally addressed in MySQL
-> 5.1.24. The original fix did not correctly handle
-> the data directory path name if it contained
-> symlinked directories in its path, and the check
-> was made only at table-creation time, not at
-> table-opening time later. (Bug#32167, CVE-2008-2079)"
-> 
-> Consequence:
-> ===========
-> 
-> So I think we will need a new CVE id as incomplete fix for CVE-2009-2079.
-> Relevant patch is here (2845 Georgi Kodinov    2009-11-03)
->   http://lists.mysql.com/commits/89940
-> 
-> Cc-ed MySQL security team to confirm this assumption.
-> 
-> B, wrt to http://bugs.mysql.com/bug.php?id=39277
-> 
->   This is potential security issue, but the proposed patch didn't
-> made it neither into 5.0.88, nor into 5.1.41 releases.
-> In fact it was committed only to 6.0.9-alpha release
-> ("Pushed into 6.0.9-alpha" comment from that bug).
-> So we will need to wait a little bit for patch "stabilization".
-> 
-> 
-> Conclusion - so two CVE ids are needed:
-> ---------------------------------------
-> 1, One for incomplete fix for CVE-2009-2079 issue) --
->    "and the check was made only at table-creation time, not at 
-> table-opening time later"
-> 
->      http://bugs.mysql.com/bug.php?id=32167
->      http://lists.mysql.com/commits/89940
-> 
-> 2, The second one for the "MySQL clients linked against OpenSSL did not 
-> check
->    server certificates presented by a server linked against yaSSL" issue
-> 
->      http://bugs.mysql.com/bug.php?id=47320
-> 
-> Sergei, please confirm / disprove the above.
-> 
-> Thanks && Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
-> 
-> 
-> Josh Bressers wrote:
->> As best as I can tell, we only need one CVE id (two issues, but one 
->> already has
->> an id).
->>
->> MySQL clients before version 5.1.41 linked against OpenSSL would not 
->> properly
->> check certificates presented by a MySQL server linked against yaSSL. 
->> This could
->> possibly lead to a man in the middle type of attack on the SSL 
->> connection.
->>
->> http://bugs.mysql.com/bug.php?id=47320
->> http://dev.mysql.com/doc/refman/5.1/en/news-5-1-41.html
->>
->> Thanks.
->>
-> 
-
+Ciao, Marcus
