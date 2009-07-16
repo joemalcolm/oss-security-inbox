@@ -1,25 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/17/8
-Message-ID: <20090317202523.GA3585@galadriel.inutil.org>
-Date: Tue, 17 Mar 2009 21:25:24 +0100
-From: Moritz Muehlenhoff <jmm@...til.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/16/2
+Message-Id: <1247729141.4227.6.camel@localhost>
+Date: Thu, 16 Jul 2009 09:25:41 +0200
+From: Alex Legler <a3li@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request -- firefox, vlc, WeeChat
+Subject: CVE request: XEmacs Multiple Integer Overflows
 Content-Type: text/plain; charset=utf-8
 
-Jan Lieskovsky wrote:
->   3, WeeChat -- new upstream release 0.2.6.1 with one security
->                 fix included -- DoS (crash) when receiving special 
->                 characters in IRC messages
-> 
->      References:
->      http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=519940
->      http://weechat.flashtux.org/download.php
->      https://savannah.nongnu.org/bugs/index.php?25862
+Hi,
 
-This one has been assigned CVE-2009-0661 from the Debian CNA pool
-in the mean time.
+I don't think we have a CVE for this/these issue(s) yet, so please
+assign one/some:
 
-Cheers,
-        Moritz
+The {tiff,png,jpeg}_instantiate() functions in glyphs-eimage.c contain
+an integer overflow, possibly leading to a heap-based buffer overflow.
+
+References:
+Filed upstream as: http://tracker.xemacs.org/XEmacs/its/issue534
+
+http://secunia.com/advisories/35348
+http://www.vupen.com/english/advisories/2009/1666
+https://bugs.gentoo.org/show_bug.cgi?id=275397
+https://bugzilla.redhat.com/show_bug.cgi?id=511994
+
+Thanks,
+Alex
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
