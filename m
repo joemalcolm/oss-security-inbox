@@ -1,16 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/03/1
-Message-ID: <4A9F3BBF.7090608@kernel.sg>
-Date: Thu, 03 Sep 2009 11:45:03 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: tc: uninitialised kernel memory leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/18/1
+Message-Id: <1247915349.3704.7.camel@dhcp-lab164.englab.brq.redhat.com>
+Date: Sat, 18 Jul 2009 13:09:09 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com
+Subject: CVE Request -- HTMLDOC
 Content-Type: text/plain; charset=utf-8
 
-Three bytes of uninitialised kernel memory are currently leaked to user.
+Hello Steve, vendors,
 
-http://patchwork.ozlabs.org/patch/32830/
-https://bugzilla.redhat.com/show_bug.cgi?id=520990
+  a stack-based buffer overflow by processing user-supplied
+input was found (by ANTHRAX666) in HTMLDOC's routine, used
+to set the result page output size for custom page sizes.
 
-Thanks, Eugene
+References:
+-----------
+http://secunia.com/advisories/35780/2/ (Secunia advisory)
+http://packetstormsecurity.org/0907-exploits/htmldoc-overflow.txt 
+(original proof of concept)
+http://bugs.gentoo.org/show_bug.cgi?id=278186 (Gentoo's BTS entry)
+
+
+Affected versions: Vulnerability confirmed in htmldoc-1.8.27
+-----------------  (other versions may be also affected).
+
+
+
+Could you please allocate a new CVE identifier for it?
+
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+
+
+
