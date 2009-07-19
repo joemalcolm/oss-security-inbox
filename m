@@ -1,31 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/25/2
-Message-Id: <200907251424.07073.rbu@gentoo.org>
-Date: Sat, 25 Jul 2009 14:24:01 +0200
-From: Robert Buchholz <rbu@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/19/1
+Message-Id: <32D438B9-EC35-4A3B-B97D-D559FF135895@reedloden.com>
+Date: Sun, 19 Jul 2009 14:58:26 -0700
+From: Reed Loden <reed@...dloden.com>
 To: oss-security@...ts.openwall.com
-Cc: Andrea Barisani <lcars@...rt.org>, cve@...re.org
-Subject: camlimages: Integer overflows in GIF and JPEG readers
+Subject: Re: CVE: Request Firefox 3.5
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Jul 14, 2009, at 12:30 AM, Stefan Behte wrote:
 
-oCERT reported integer overflows in camlimages when reading PNG images 
-earlier this month (oCERT-2009-009), CVE-2009-2295 was assigned.
+> can I get a CVE for this? http://www.milw0rm.com/exploits/9137
 
-Upstream has since incorporated the RedHat patch into their CVS:
-http://camlcvs.inria.fr/cgi-bin/cvsweb.cgi/bazar-ocaml/camlimages/src/?sortby=date
+This got assigned CVE-2009-2477 if you didn't notice.
 
-They also fixed similar integer overflows in gifread.c and jpegread.c 
-for values that are used in memory allocations and memcpy().
-At least Debian used the existing CVE identifier only for the PNG 
-vulnerabilities, so a new identifier might be needed.
+~reed
 
-A stripped down [by Alexis Ballier] version of the patch is in out BZ:
-https://bugs.gentoo.org/show_bug.cgi?id=276235
-https://bugs.gentoo.org/attachment.cgi?id=199108
+--
+Reed Loden - <reed@...dloden.com>
 
-
-Robert
-
-Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
