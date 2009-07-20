@@ -1,29 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/09/2
-Message-ID: <20090209162149.GA9424@openwall.com>
-Date: Mon, 9 Feb 2009 19:21:49 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/20/10
+Message-ID: <20090720173329.GH4372@redhat.com>
+Date: Mon, 20 Jul 2009 11:33:29 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Debian's list of embedded code copies
+Subject: squid DoS in external auth header parser
 Content-Type: text/plain; charset=utf-8
 
-Guillem Jover posted this to the Distributions list today:
+I noticed this on Debian's bts [1] and also on upstream's bugzilla [2]
+but no CVE has been assigned (not sure if one has been requested or not,
+but I've not seen a request come through here).
 
-On Mon, Feb 09, 2009 at 04:52:34AM +0200, Guillem Jover wrote:
-> The Debian testing security team keeps track of embedded copies of
-> sources (including static linking and forks):
-> 
->   <http://wiki.debian.org/EmbeddedCodeCopies>.
+By the initial looks of things, it seems to be a fairly low severity
+issue and may not be easy to duplicate/trigger.  The reporter didn't really
+provide much in the way of a reproducer or relevant configs (and the
+reference to zope auths makes me not even want to touch it).
 
-I've just added a direct link to the file in the SVN repository, as well
-as the Debian Wiki link above, to the "patch-finding" section for Debian
-on the oss-security wiki here:
+Has anyone taken a look at this or has a CVE been requested for it?
+Upstream has done nothing with this despite it being reported two weeks
+ago.
 
-http://oss-security.openwall.org/wiki/distro-patches
+[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=534982
+[2] http://www.squid-cache.org/bugs/show_bug.cgi?id=2704
 
-This is not exactly "patch-finding", but it is closely related - and it
-may be of help to security teams of other distros as well.
-
-Thanks,
-
-Alexander
+-- 
+Vincent Danen / Red Hat Security Response Team 
