@@ -1,27 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/28/1
-Message-ID: <Pine.GSO.4.51.0901271917430.25454@faron.mitre.org>
-Date: Tue, 27 Jan 2009 19:17:49 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com, Jamie Strandboge <jamie@...onical.com>
-cc: coley@...us.mitre.org
-Subject: Re: CVE Request: MoinMoin
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/20/9
+Message-ID: <20090720144432.GA9115@kroah.com>
+Date: Mon, 20 Jul 2009 07:44:32 -0700
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Cc: dailydave <dailydave@...ts.immunitysec.com>
+Subject: Re: Linux 2.6.30+/SELinux/RHEL5 test kernel 0day, exploiting the unexploitable
 Content-Type: text/plain; charset=utf-8
 
+On Mon, Jul 20, 2009 at 12:01:47PM +0200, Marcus Meissner wrote:
+> On Fri, Jul 17, 2009 at 09:23:03AM +0200, yersinia wrote:
+> > FYI, a Sprengler 0-day against Selinux null ptr dereference. Very Nice
+> > to see in action
+> > 
+> > reference ( with youtube link )
+> > 
+> > http://grsecurity.net/~spender/cheddar_bay.tgz
+> 
+> Yeah.
+> 
+> Some "minor" bugs and one larger one.
+> 
+> The Linux folks have meanwhile:
+> 
+> - Fixed the actual bug. ;) (CVE-2009-1897)
+>   Only affects 2.6.30,2.6.30.1.
+> 
+>   2.6.30.2 release soon.
+> 
+> - Added -fno-delete-null-pointers to their Makefiles
+> 
+>   Also in 2.6.30.2 and 2.
+> 
+> - fixed the personality - PER_CLEAR_ON_SETTID inheritance issue (CVE-2009-1895)
+>   to work around mmap_min_addr protection.
+>   Affects 2.6.23-2.6.30.1
+> 
+>   2.6.30.2 and 2.6.27.x releases soon.
 
-======================================================
-Name: CVE-2009-0312
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0312
-Reference: CONFIRM:http://hg.moinmo.in/moin/1.7/rev/89b91bf87dad
-Reference: CONFIRM:http://hg.moinmo.in/moin/1.8/rev/89b91bf87dad
-Reference: CONFIRM:http://moinmo.in/SecurityFixes#moin1.8.1
-Reference: MLIST:[oss-security] 20090127 CVE Request: MoinMoin
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/01/27/4
+2.6.30.2 and 2.6.27.27 releases happened about 8 hours ago.
 
-Cross-site scripting (XSS) vulnerability in the antispam feature
-(security/antispam.py) in MoinMoin 1.7 and 1.8.1 allows remote
-attackers to inject arbitrary web script or HTML via crafted,
-disallowed content.
+thanks,
 
-
+greg k-h
