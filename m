@@ -1,26 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/24/9
-Message-ID: <Pine.GSO.4.51.0911241342060.25867@faron.mitre.org>
-Date: Tue, 24 Nov 2009 13:42:40 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Josh Bressers <bressers@...hat.com>
-cc: oss-security@...ts.openwall.com
-Subject: Re: a new bind issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/20/4
+Message-ID: <20090720114957.GA18992@openwall.com>
+Date: Mon, 20 Jul 2009 15:49:57 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux 2.6.30+/SELinux/RHEL5 test kernel 0day, exploiting the unexploitable
 Content-Type: text/plain; charset=utf-8
 
+On Mon, Jul 20, 2009 at 01:37:38PM +0200, Marcus Meissner wrote:
+> Foremost, the mmap_min_addr protection is not in older kernels (<2.6.23) at all,
+> so its kinda "not implemented" instead of "bug".
 
-On Tue, 24 Nov 2009, Josh Bressers wrote:
+Oh, understood.  I did not think that way, because mmap_min_addr is
+implemented in recent 2.4 kernels, which are sort of "older", and it is
+also implemented in RHEL-5'ish OpenVZ kernels that we actually use.
+(BTW, I'd be happy to share the mmap_min_addr back-port patch to
+RHEL-5'ish kernels with Red Hat if there's any interest.)
 
-> CVE-2009-4022
->
-> Bind versions 9.0.x, 9.1.x, 9.2.x, 9.3.x, 9.4.0 before 9.4.3-P3, 9.5.0,
-> 9.5.1, 9.5.2, 9.6.0, 9.6.1-P1
->
-> References:
-> https://www.isc.org/node/504
+I am going to release 2.4.37.3-ow1 with a CVE-2009-1895 fix in it, and I
+expect it to get into 2.4.37.4.  It's not important for systems with
+"sane" userlands (no crappy SUID-root programs), though.
 
-If anybody has a direct contact to ISC, could you notify them of the new
-number?  They have a placeholder in their advisory right now.
-
-Thanks,
-Steve
+Alexander
