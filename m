@@ -1,100 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/22/3
-Message-ID: <Pine.GSO.4.51.0901221712290.27455@faron.mitre.org>
-Date: Thu, 22 Jan 2009 17:17:39 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/20/1
+Message-ID: <20090720100147.GB12598@suse.de>
+Date: Mon, 20 Jul 2009 12:01:47 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-cc: coley@...us.mitre.org
-Subject: Re: CVE request -- git
+Cc: dailydave <dailydave@...ts.immunitysec.com>
+Subject: Re: Linux 2.6.30+/SELinux/RHEL5 test kernel 0day, exploiting the unexploitable
 Content-Type: text/plain; charset=utf-8
 
+On Fri, Jul 17, 2009 at 09:23:03AM +0200, yersinia wrote:
+> FYI, a Sprengler 0-day against Selinux null ptr dereference. Very Nice
+> to see in action
+> 
+> reference ( with youtube link )
+> 
+> http://grsecurity.net/~spender/cheddar_bay.tgz
 
-On Wed, 21 Jan 2009, Tomas Hoger wrote:
+Yeah.
 
-> On Tue, 20 Jan 2009 20:09:45 -0500 (EST) "Steven M. Christey"
-> <coley@...us.mitre.org> wrote:
->
-> > I updated the descriptions for CVE-2008-5516 and CVE-2008-5517 based
-> > on Tomas' description.
->
-> Looks like they got texts mixed up.  -5516 was given to git_search
-> issue, and -5517 to git_snapshot and git_object issues (the idea was
-> to use lower id for the issue fixed earlier).  Btw, commitdiff links are
-> correct, only texts need swapping.
+Some "minor" bugs and one larger one.
 
-Fixed.
+The Linux folks have meanwhile:
 
-> Can you also change "in 1.5.x" to "before 1.5.x" in both descriptions?
+- Fixed the actual bug. ;) (CVE-2009-1897)
+  Only affects 2.6.30,2.6.30.1.
 
-Done (modulo CVE style).
+  2.6.30.2 release soon.
 
->Wording in our BZ is probably confusing, but versions 1.5.5 and 1.5.6
->are the first versions to include the fix, not the vulnerability.
+- Added -fno-delete-null-pointers to their Makefiles
 
-Changed 1.5.5 as a non-affected version, but note this:
+  Also in 2.6.30.2 and 2.
 
-> > Same question to the rPath maintainers...
->
-> Their announcement mentions version 1.5.6.6, that should have both
-> issues fixed (and -5916).  They'll probably clarify what was their
-> "old" version.
+- fixed the personality - PER_CLEAR_ON_SETTID inheritance issue (CVE-2009-1895)
+  to work around mmap_min_addr protection.
+  Affects 2.6.23-2.6.30.1
 
-If they're releasing 1.5.6.6, doesn't that suggest that maybe one of the
-issues were still present in 1.5.5?
+  2.6.30.2 and 2.6.27.x releases soon.
 
-Current descriptions below.
+I am not sure about the SELinux policy error he used to 
+exploit the RHEL 5.? Beta.
 
-- Steve
-
-======================================================
-Name: CVE-2008-5516
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5516
-Reference: BUGTRAQ:20090113 rPSA-2009-0005-1 git gitweb
-Reference: URL:http://www.securityfocus.com/archive/1/archive/1/500008/100/0/threaded
-Reference: MISC:http://repo.or.cz/w/git.git?a=commitdiff;h=c582abae
-Reference: MLIST:[oss-security] 20090120 Re: CVE request -- git
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/01/20/1
-Reference: MLIST:[oss-security] 20090121 Re: CVE request -- git
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/01/21/7
-Reference: CONFIRM:http://wiki.rpath.com/Advisories:rPSA-2009-0005
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=479715
-Reference: CONFIRM:https://issues.rpath.com/browse/RPL-2936
-Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=512330
-Reference: DEBIAN:DSA-1708
-Reference: URL:http://www.debian.org/security/2009/dsa-1708
-Reference: SUSE:SUSE-SR:2009:001
-Reference: URL:http://lists.opensuse.org/opensuse-security-announce/2009-01/msg00002.html
-
-The web interface in git (gitweb) 1.5.x before 1.5.5 allows remote
-attackers to execute arbitrary commands via shell metacharacters
-related to git_search.
-
-
-======================================================
-Name: CVE-2008-5517
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5517
-Reference: BUGTRAQ:20090113 rPSA-2009-0005-1 git gitweb
-Reference: URL:http://www.securityfocus.com/archive/1/archive/1/500008/100/0/threaded
-Reference: MISC:http://repo.or.cz/w/git.git?a=commitdiff;h=516381d5
-Reference: MLIST:[oss-security] 20090120 Re: CVE request -- git
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/01/20/1
-Reference: MLIST:[oss-security] 20090121 Re: CVE request -- git
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/01/21/7
-Reference: CONFIRM:http://wiki.rpath.com/Advisories:rPSA-2009-0005
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=479715
-Reference: CONFIRM:https://issues.rpath.com/browse/RPL-2936
-Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=512330
-Reference: DEBIAN:DSA-1708
-Reference: URL:http://www.debian.org/security/2009/dsa-1708
-Reference: SUSE:SUSE-SR:2009:001
-Reference: URL:http://lists.opensuse.org/opensuse-security-announce/2009-01/msg00002.html
-Reference: BID:33215
-Reference: URL:http://www.securityfocus.com/bid/33215
-
-The web interface in git (gitweb) 1.5.x before 1.5.5 allows remote
-attackers to execute arbitrary commands via shell metacharacters
-related to (1) git_snapshot and (2) git_object.
-
-
+Ciao, Marcus
