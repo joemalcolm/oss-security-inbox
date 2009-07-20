@@ -1,22 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/24/1
-Message-ID: <20090724082253.GA10571@suse.de>
-Date: Fri, 24 Jul 2009 10:22:53 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: md raid null ptr dereference (when sysfs is writable)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/20/6
+Message-ID: <20090720131647.GA19827@openwall.com>
+Date: Mon, 20 Jul 2009 17:16:47 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux 2.6.30+/SELinux/RHEL5 test kernel 0day, exploiting the unexploitable
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Earlier today, I wrote:
 
-http://xorl.wordpress.com/2009/07/21/linux-kernel-md-driver-null-pointer-dereference/
+> (BTW, I'd be happy to share the mmap_min_addr back-port patch to
+> RHEL-5'ish kernels with Red Hat if there's any interest.)
 
-2.6.30 stable:
-http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.30.y.git;a=commit;h=3c92900d9a4afb176d3de335dc0da0198660a244
-mainline:
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=b8d966efd9a46a9a35beac50cbff6e30565125ef
+It occurred to me, from a few things I've seen/read lately, that RHEL 5
+must indeed already include a back-port of the mmap_min_addr feature,
+although somehow it is not in OpenVZ's patch-128.1.1.el5.028stab062.3
+(was added after the -128 revision?), which is why I am adding my own
+back-port of mmap_min_addr on top of that patch.  I am not using genuine
+RHEL 5 (nor CentOS), which is why I don't know.  Maybe Eugene can
+comment on this.
 
-While not directly exploitable, its just needs write access to the sysfs files
-to get exploited, so I guess this warrants a CVE number.
+> I am going to release 2.4.37.3-ow1 with a CVE-2009-1895 fix in it, and I
+> expect it to get into 2.4.37.4.  It's not important for systems with
+> "sane" userlands (no crappy SUID-root programs), though.
 
-Ciao, Marcus
+Released, although I expect it to be replaced with 2.4.37.4-ow1 soon:
+
+http://www.openwall.com/linux/
+
+Alexander
