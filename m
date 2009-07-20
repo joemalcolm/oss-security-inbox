@@ -1,99 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/25/1
-Message-ID: <Pine.GSO.4.51.0903242019070.18572@faron.mitre.org>
-Date: Tue, 24 Mar 2009 20:19:48 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/20/11
+Message-ID: <deb7a2310907201126q16707cdbv94634ea2be0d7b87@mail.gmail.com>
+Date: Mon, 20 Jul 2009 11:26:31 -0700
+From: Julien Tinnes <jt@....org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request - openfire
+Subject: Re: Linux 2.6.30+/SELinux/RHEL5 test kernel 0day,  exploiting the unexploitable
 Content-Type: text/plain; charset=utf-8
 
+On Mon, Jul 20, 2009 at 4:29 AM, Solar Designer<solar@...nwall.com> wrote:
+> Marcus,
+>
+> On Mon, Jul 20, 2009 at 12:01:47PM +0200, Marcus Meissner wrote:
+>> - fixed the personality - PER_CLEAR_ON_SETTID inheritance issue (CVE-2009-1895)
+>>   to work around mmap_min_addr protection.
+>>   Affects 2.6.23-2.6.30.1
+>
+> What makes you think this does not affect earlier kernels?  This does
+> not match my analysis, but maybe I am missing something, hence I ask.
+>
+> BTW, as you're aware, this fix is a hardening measure for/against
+> SUID-root programs with a certain class of design errors in them; it is
+> not exactly a fix for the kernel itself, although it should be in the
+> kernel.  I do not mean to downplay the issue, but I think it is
+> important that we distinguish the different types of changes that we are
+> making in response to Brad's exploit.
 
-Notice the open redirect issue (CVE-2008-6511), which doesn't appear to
-have a vendor acknowledgement.
+Hey Alexander,
 
-- Steve
+for a SUID-root binary, dropping privileges and giving control back to
+the user without going through exec to re-set the address space is
+probably not the best idea indeed. However I still believe this was a
+kernel issue, if you (really) know what you're doing (bzero-ing your
+secrets in the address space etc..), this should not be strictly
+forbidden.
+Without this patch, you could also disable address space layout
+randomization in SUID binaries, and in some cases exploit NULL ptr
+dereferences bugs in SUID-root binaries more easily. Granted, both
+would be non issues on a sane SUID binary, but this is what security
+in-depth is about. And being able to map a page in a SUID binary just
+feels wrong anyway :)
 
+Cheers,
 
-======================================================
-Name: CVE-2008-6508
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-6508
-Reference: BUGTRAQ:20081108 [AK-ADV2008-001] Openfire Jabber-Server: Multiple Vulnerabilities (Authentication Bypass, SQL injection, ...)
-Reference: URL:http://www.securityfocus.com/archive/1/archive/1/498162/100/0/threaded
-Reference: MILW0RM:7075
-Reference: URL:http://www.milw0rm.com/exploits/7075
-Reference: MISC:http://www.andreas-kurtz.de/advisories/AKADV2008-001-v1.0.txt
-Reference: MISC:http://www.andreas-kurtz.de/archives/63
-Reference: CONFIRM:http://www.igniterealtime.org/builds/openfire/docs/latest/changelog.html
-Reference: CONFIRM:http://www.igniterealtime.org/issues/browse/JM-1489
-Reference: BID:32189
-Reference: URL:http://www.securityfocus.com/bid/32189
-Reference: OSVDB:49663
-Reference: URL:http://osvdb.org/49663
-Reference: VUPEN:ADV-2008-3061
-Reference: URL:http://www.vupen.com/english/advisories/2008/3061
-Reference: XF:openfire-authcheckfilter-security-bypass(46488)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/46488
-
-Directory traversal vulnerability in the AuthCheck filter in the Admin
-Console in Openfire 3.6.0a and earlier allows remote attackers to
-bypass authentication and access the admin interface via a .. (dot
-dot) in a URI that matches the Exclude-Strings list, as demonstrated
-by a /setup/setup-/.. sequence in a URI.
-
-
-======================================================
-Name: CVE-2008-6509
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-6509
-Reference: BUGTRAQ:20081108 [AK-ADV2008-001] Openfire Jabber-Server: Multiple Vulnerabilities (Authentication Bypass, SQL injection, ...)
-Reference: URL:http://www.securityfocus.com/archive/1/archive/1/498162/100/0/threaded
-Reference: MILW0RM:7075
-Reference: URL:http://www.milw0rm.com/exploits/7075
-Reference: MISC:http://www.andreas-kurtz.de/advisories/AKADV2008-001-v1.0.txt
-Reference: MISC:http://www.andreas-kurtz.de/archives/63
-Reference: CONFIRM:http://www.igniterealtime.org/issues/browse/JM-1488
-Reference: BID:32189
-Reference: URL:http://www.securityfocus.com/bid/32189
-Reference: OSVDB:51912
-Reference: URL:http://osvdb.org/51912
-Reference: VUPEN:ADV-2008-3061
-Reference: URL:http://www.vupen.com/english/advisories/2008/3061
-Reference: XF:openfire-siparklogsummary-sql-injection(46487)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/46487
-
-SQL injection vulnerability in CallLogDAO in SIP Plugin in Openfire
-3.6.0a and earlier allows remote attackers to execute arbitrary SQL
-commands via the type parameter to sipark-log-summary.jsp.
-
-
-======================================================
-Name: CVE-2008-6511
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-6511
-Reference: BUGTRAQ:20081108 [AK-ADV2008-001] Openfire Jabber-Server: Multiple Vulnerabilities (Authentication Bypass, SQL injection, ...)
-Reference: URL:http://www.securityfocus.com/archive/1/archive/1/498162/100/0/threaded
-Reference: MILW0RM:7075
-Reference: URL:http://www.milw0rm.com/exploits/7075
-Reference: MISC:http://www.andreas-kurtz.de/advisories/AKADV2008-001-v1.0.txt
-
-Open redirect vulnerability in login.jsp in Openfire 3.6.0a and
-earlier allows remote attackers to redirect users to arbitrary web
-sites and conduct phishing attacks via the url parameter.
-
-
-======================================================
-Name: CVE-2008-6511
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-6511
-Reference: BUGTRAQ:20081108 [AK-ADV2008-001] Openfire Jabber-Server: Multiple Vulnerabilities (Authentication Bypass, SQL injection, ...)
-Reference: URL:http://www.securityfocus.com/archive/1/archive/1/498162/100/0/threaded
-Reference: MILW0RM:7075
-Reference: URL:http://www.milw0rm.com/exploits/7075
-Reference: MISC:http://www.andreas-kurtz.de/advisories/AKADV2008-001-v1.0.txt
-
-Open redirect vulnerability in login.jsp in Openfire 3.6.0a and
-earlier allows remote attackers to redirect users to arbitrary web
-sites and conduct phishing attacks via the url parameter.
-
-
+Julien
