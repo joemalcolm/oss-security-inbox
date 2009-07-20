@@ -1,19 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/27/3
-Message-ID: <20090127124947.GB20671@suse.de>
-Date: Tue, 27 Jan 2009 13:49:47 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com, coley@...re.org
-Subject: CVE Request: winetricks symlink problem
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/20/8
+Message-ID: <20090720134944.GA20246@openwall.com>
+Date: Mon, 20 Jul 2009 17:49:44 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux 2.6.30+/SELinux/RHEL5 test kernel 0day, exploiting the unexploitable
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+I got to quit commenting on my own postings, here's the last one at
+least for today, as I am obviously too tired.  I wrote:
 
-The winetricks script (for installing windows components into
-a Wine environment) has a /tmp race when displaying a menu
-to select components to install.
+> It occurred to me, from a few things I've seen/read lately, that RHEL 5
+> must indeed already include a back-port of the mmap_min_addr feature,
+> although somehow it is not in OpenVZ's patch-128.1.1.el5.028stab062.3
+> (was added after the -128 revision?), which is why I am adding my own
+> back-port of mmap_min_addr on top of that patch.
 
-Fixed in winetricks 20081223 by this commit:
-	http://code.google.com/p/winezeug/source/detail?r=253
+I had recalled incorrectly.  As Eugene reminded me off-list, the extra
+patch I was actually referring to was about making the mmap_min_addr
+support (already present in RHEL 5 kernels, including the revision
+mentioned above) available independently of CONFIG_SECURITY.
 
-Ciao, Marcus
+Alexander
