@@ -1,21 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/16/2
-Message-ID: <4AB07889.3070508@kernel.sg>
-Date: Wed, 16 Sep 2009 13:32:57 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/20/2
+Message-ID: <20090720112909.GA18723@openwall.com>
+Date: Mon, 20 Jul 2009 15:29:09 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: cfg80211: fix looping soft lockup in find_ie()
+Subject: Re: Linux 2.6.30+/SELinux/RHEL5 test kernel 0day, exploiting the unexploitable
 Content-Type: text/plain; charset=utf-8
 
-The find_ie() function uses a size_t for the len parameter, and directly 
-uses len as a loop variable.  If any received packets are malformed, it 
-is possible for the decrease of len to overflow, and since the result is 
-unsigned, the loop will not terminate. Change it to a signed int so the 
-loop conditional works for negative values.
+Marcus,
 
-find_ie() was introduced in commit 2a519311 (v2.6.30-rc1).
+On Mon, Jul 20, 2009 at 12:01:47PM +0200, Marcus Meissner wrote:
+> - fixed the personality - PER_CLEAR_ON_SETTID inheritance issue (CVE-2009-1895)
+>   to work around mmap_min_addr protection.
+>   Affects 2.6.23-2.6.30.1
 
-Upstream commit: fcc6cb0c13555e78c2d47257b6d1b5e59b0c419a
+What makes you think this does not affect earlier kernels?  This does
+not match my analysis, but maybe I am missing something, hence I ask.
 
-Thanks, Eugene
+BTW, as you're aware, this fix is a hardening measure for/against
+SUID-root programs with a certain class of design errors in them; it is
+not exactly a fix for the kernel itself, although it should be in the
+kernel.  I do not mean to downplay the issue, but I think it is
+important that we distinguish the different types of changes that we are
+making in response to Brad's exploit.
+
+Alexander
