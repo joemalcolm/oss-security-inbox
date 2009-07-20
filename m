@@ -1,43 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/22/3
-Message-ID: <4AE01126.2010202@redhat.com>
-Date: Thu, 22 Oct 2009 10:00:38 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request -- Sahana
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/20/7
+Message-ID: <20090720133652.GA14021@grsecurity.net>
+Date: Mon, 20 Jul 2009 09:36:52 -0400
+From: spender@...ecurity.net (Brad Spengler)
+To: Marcus Meissner <meissner@...e.de>
+Cc: oss-security@...ts.openwall.com, dailydave <dailydave@...ts.immunitysec.com>
+Subject: Re: [Dailydave] Linux 2.6.30+/SELinux/RHEL5 test kernel 0day, exploiting the unexploitable
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve, vendors,
+> I am not sure about the SELinux policy error he used to 
+> exploit the RHEL 5.? Beta.
 
-   Greg Miernicki reported a security issue in Sahana disaster management
-system:
+It was a default RHEL 5.3 SELinux policy.  The same vulnerability from
+the policy exists in Fedora 10 and 11.  I haven't tested anything else,
+but I imagine lots more are vulnerable (and it doesn't matter what 
+kernel you're running).  There will be a CVE for this vulnerability as 
+well.
 
-Sending a specially-crafted URL (with null character included
-in the string) to Sahana, would allow an attacker to access any
-file on the web server.
+(Really there should have been a CVE for the lack of 
+-fno-delete-null-pointer-checks instead of pretending the only problem 
+was /dev/net/tun.  As the commit to add it showed (and at least 10 other 
+commits to the kernel this weekend) lots of other code was affected, so 
+someone not applying a fix for a CVE mentioning only /dev/net/tun 
+because they don't have the code for /dev/net/tun compiled in, is going 
+to be missing out on a number of fixes).
 
-More from Greg:
+-Brad
 
-"The first issue would allow an attacker to touch/modify any file on the system.
-  Essentially the issue is that get, post, and requests aren't sanitized or
-  unescaped."
-
-References:
------------
-https://bugzilla.redhat.com/show_bug.cgi?id=530255
-http://sourceforge.net/mailarchive/forum.php?thread_name=5d9043b70910191044l4bb0178fs563a5128a0f5db01%40mail.gmail.com&forum_name=sahana-maindev
-
-Upstream patch:
----------------
-http://sahana.cvs.sourceforge.net/viewvc/sahana/sahana-phase2/www/index.php?r1=1.83&r2=1.84
-
-PoC:
-----
-http://sahana/index.php?stream=text&mod=/../../../../../../../../../../../etc/passwd%00
-
-Could you allocate a CVE identifier?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Download attachment "signature.asc" of type "application/pgp-signature" (190 bytes)
