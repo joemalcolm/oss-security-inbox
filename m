@@ -1,20 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/23/1
-Message-ID: <28fa9c5e0903222108v5d6862q42894df0d05ddb4a@mail.gmail.com>
-Date: Mon, 23 Mar 2009 12:08:45 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/20/3
+Message-ID: <20090720113738.GD12598@suse.de>
+Date: Mon, 20 Jul 2009 13:37:38 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: nfsd did not drop CAP_MKNOD for non-root
+Subject: Re: Linux 2.6.30+/SELinux/RHEL5 test kernel 0day, exploiting the unexploitable
 Content-Type: text/plain; charset=utf-8
 
-According to the upstream commit 76a67ec6, an unprivileged client can,
-for example, create a device node on a filesystem exported with
-root_squash as CAP_MKNOD is not among the capabilities dropped when an
-nfsd thread handles a request from a non-root user. I believe this
-problem was introduced in upstream commit e338d263a (follows: v2.6.24;
-precedes: v2.6.25-rc1).
+On Mon, Jul 20, 2009 at 03:29:09PM +0400, Solar Designer wrote:
+> Marcus,
+> 
+> On Mon, Jul 20, 2009 at 12:01:47PM +0200, Marcus Meissner wrote:
+> > - fixed the personality - PER_CLEAR_ON_SETTID inheritance issue (CVE-2009-1895)
+> >   to work around mmap_min_addr protection.
+> >   Affects 2.6.23-2.6.30.1
+> 
+> What makes you think this does not affect earlier kernels?  This does
+> not match my analysis, but maybe I am missing something, hence I ask.
+> 
+> BTW, as you're aware, this fix is a hardening measure for/against
+> SUID-root programs with a certain class of design errors in them; it is
+> not exactly a fix for the kernel itself, although it should be in the
+> kernel.  I do not mean to downplay the issue, but I think it is
+> important that we distinguish the different types of changes that we are
+> making in response to Brad's exploit.
 
-http://groups.google.com/group/fa.linux.kernel/browse_thread/thread/665b99fdc970bee3
+Foremost, the mmap_min_addr protection is not in older kernels (<2.6.23) at all,
+so its kinda "not implemented" instead of "bug".
 
-Thanks, Eugene
+Ciao, Marcus
