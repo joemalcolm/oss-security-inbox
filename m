@@ -1,24 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/22/1
-Message-ID: <20090122171002.GG23540@ngolde.de>
-Date: Thu, 22 Jan 2009 18:10:02 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/21/4
+Message-Id: <1248206648.4232.44.camel@localhost>
+Date: Tue, 21 Jul 2009 22:04:08 +0200
+From: Alex Legler <a3li@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: CVE id request: typo3 SA-2009-001
+Subject: Re: CVE Request -- RubyGems
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
-can you assign CVE ids to the issues described in the 
-following link?
-http://typo3.org/teams/security/security-bulletins/typo3-sa-2009-001/
+Hi,
 
+first a little note: I have talked to some people in the Ruby community
+and the issue is quite disputed. There is no upstream reaction that I
+know of. But since CVE-2007-0469 was assigned to a similar issue, I
+think this issue is valid, too.
 
-Cheers
-Nico
+On Di, 2009-07-21 at 20:57 +0200, Jan Lieskovsky wrote:
+> A remote attacker
+> could provide a specially-crafted Gem (POSIX tar)
+> archive, 
 
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+Please note that .gem files are not neccesarily tarballs, there is at
+least a proprietary base64-based format around and I've heard about
+cpio.
 
-Content of type "application/pgp-signature" skipped
+> which once opened by an unsuspecting
+> user, would overwrite relevant system file.
+
+The user in this context has to be a privileged user. gem will use
+~/.gem/bin if the system-wide gem binary directory is not writeable.
+
+Alex
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
