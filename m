@@ -1,34 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/06/1
-Message-Id: <200909061633.45589.rbu@gentoo.org>
-Date: Sun, 6 Sep 2009 16:33:41 +0200
-From: Robert Buchholz <rbu@...too.org>
-To: coley@...us.mitre.org
-Cc: "CERT-FI Vulnerability Coordination" <vulncoord@...ora.fi>, oss-security@...ts.openwall.com
-Subject: Re: Re: expat bug 1990430
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/21/5
+Message-Id: <2D641CE0-6ABC-43F5-B0A5-0EB9EFE8D7FA@reedloden.com>
+Date: Tue, 21 Jul 2009 13:38:53 -0700
+From: Reed Loden <reed@...dloden.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request -- znc
 Content-Type: text/plain; charset=utf-8
 
-Sorry for being late in this discussion, I was absent for two weeks.
+Got a notice that a new znc (http://en.znc.in/wiki/ZNC) version had  
+been released,
+and I saw this on the homepage (http://en.znc.in/wiki/ZNC#WARNING):
+ALL ZNC versions prior to 0.072 have a path traversal bug in core.  
+Users with a valid login are able to write files to all places to  
+which ZNC has write access. This means they could upload and load new  
+modules which do anything imaginable.
 
-On Thursday 27 August 2009, CERT-FI Vulnerability Coordination wrote:
-> There probably is not a CVE for
-> the expat crash (which affected Python expat too) yet. As the
-> original issue was not handled by us and it was found already back in
-> 2008, we did not allocate a CVE for the Python expat issue. So we
-> probably need a CVE for the expat crash. I assume we could use this
-> CVE for the Python expat crash too since the root cause is the same.
-
-Hello Steven,
-
-are you going to assign a new identifier for expat updatePosition crash? 
-It seems to me the outcome of this discussion is that the issues 
-discovered in 2009 by the Codenomicon XML fuzzing and in 2008 by Peter 
-Valchev are identical, and that the CVE-2009-2625 wording is limited to 
-the infinite loop in a Java codebase. As a supporting factor, 
-CVE-2009-2625 is used by many to identify only the Java issues
-(with Mandriva being an exception).
+This bug is fixed in znc 0.072. Update as soon as possible!
 
 
-Robert
 
-Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
+SVN log (http://znc.svn.sourceforge.net/viewvc/znc?view=rev&sortby=rev&sortdir=down&revision=1570 
+) says:
+
+Fix a high-impact directory traversal bug
+You can upload files to znc via /dcc send *status. The files will be  
+saved in <datadir>/users/<user>/downloads/. The code for this didn't  
+do any checking on the file name at all and thus allowed directory  
+traversal attacks by all znc users (no admin privileges required!).
+By exploiting this bug, attackers could e.g. upload a new ssh  
+authorized_keys file or upload a znc module which lets everyone gain  
+shell access. Anything is possible.
+Again: ONLY A NORMAL USER ACCOUNT NEEDED, no admin privileges. THE  
+ATTACKER GOT WRITE ACCESS TO ALL PLACES ZNC GOT WRITE ACCESS TO.
+
+
+So, obviously bad... would like a CVE for it.
+
+Thanks,
+~reed
+
+--
+Reed Loden - <reed@...dloden.com>
+
