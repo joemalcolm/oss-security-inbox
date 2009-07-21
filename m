@@ -1,28 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/17/1
-Message-ID: <4A88A52D.5030900@kernel.sg>
-Date: Mon, 17 Aug 2009 08:32:45 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/21/2
+Message-Id: <1248173806.4232.4.camel@localhost>
+Date: Tue, 21 Jul 2009 12:56:46 +0200
+From: Alex Legler <a3li@...too.org>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: cfg80211: missing NULL pointer checks
+Subject: CVE request: Wireshark <1.2.1 Multiple DoS
 Content-Type: text/plain; charset=utf-8
 
-Jon Oberheide wrote:
-> On Fri, 2009-08-14 at 17:33 -0600, dann frazier wrote:
-[...]
-> Also would be nice to get one for the cfg80211 issue:
-> http://patchwork.kernel.org/patch/41218/
-> 
-> Reproducer:
-> http://jon.oberheide.org/files/cfg80211-remote-dos.c
+Hi,
 
-Thanks Jon.
+in case the vendor has not already requested CVEs for this:
 
-"These pointers can be NULL, the is_mesh() case isn't ever hit in the
-current kernel, but cmp_ies() can be hit under certain conditions."
+"Wireshark 1.2.1 fixes the following vulnerabilities:
 
-Upstream commit:
-http://git.kernel.org/linus/cd3468bad96c00b5a512f551674f36776129520e
+      * The IPMI dissector could overrun a buffer. (Bug 3559) Versions
+        affected: 1.2.0 
+      * The AFS dissector could crash. (Bug 3564) Versions affected:
+        0.9.2 to 1.2.0 
+      * The Infiniband dissector could crash on some platforms. Versions
+        affected: 1.0.6 to 1.2.0 
+      * The Bluetooth L2CAP dissector could crash. (Bug 3572) Versions
+        affected: 1.2.0 
+      * The RADIUS dissector could crash. (Bug 3578) Versions affected:
+        1.2.0 
+      * The MIOP dissector could crash. (Bug 3652) Versions affected:
+        1.2.0 
+      * The sFlow dissector could use excessive CPU and memory. (Bug
+        3570) Versions affected: 1.2.0"
 
-Thanks, Eugene
+http://www.wireshark.org/security/wnpa-sec-2009-04.html
+
+Thanks,
+Alex
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
