@@ -1,39 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/15/1
-Message-ID: <4AAEEA65.4010507@kernel.sg>
-Date: Tue, 15 Sep 2009 09:14:13 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-2009-1883 kernel: missing capability check in z90crypt
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/21/1
+Message-Id: <1248167776.3701.6.camel@dhcp-lab164.englab.brq.redhat.com>
+Date: Tue, 21 Jul 2009 11:16:16 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com
+Subject: CVE Request -- WordPress
 Content-Type: text/plain; charset=utf-8
 
-There is a missing capability check in the z90crypt driver in the Linux 
-kernel. This missing check could allow a local, unprivileged user to 
-bypass intended capability restrictions. Thanks to Solar Designer for 
-reporting this issue to us.
+Hello Steve, vendors,
 
-Note that this does not affect upstream anymore.
+  latest WordPress 2.8.2 version has addressed a XSS vulnerability:
 
-@@ -1887,20 +1887,21 @@ z90crypt_unlocked_ioctl(struct file *fil
-      PRINTK("No longer issuing messages about depre"
-             "cated ioctl Z90STAT_PCIXCCCOUNT.\n");
-    }
+    XSS via unescaped HTML URLs as author comments in the admin page
+    
+    References:
+    -----------
+    http://wordpress.org/development/2009/07/wordpress-2-8-2/
+    http://bugs.gentoo.org/show_bug.cgi?id=278492
 
-    tempstat = get_status_PCIXCCcount();
-    if (copy_to_user((int *)arg, &tempstat, sizeof(int)) != 0)
-     ret = -EFAULT;
-    break;
 
-   case Z90QUIESCE:
-    if (current->euid != 0) { <-- should check a capability
-     PRINTK("QUIESCE fails: euid %d\n",
-            current->euid);
-     ret = -EACCES;
-    } else {
-     PRINTK("QUIESCE device from PID %d\n", PID());
-     quiesce_z90crypt = 1;
-    }
-    break;
+Could you please allocate a CVE identifier for it?
 
-Thanks, Eugene
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+
