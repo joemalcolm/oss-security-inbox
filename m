@@ -1,43 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/13/2
-Message-Id: <1231857710.3439.20.camel@dhcp-lab-164.englab.brq.redhat.com>
-Date: Tue, 13 Jan 2009 15:41:50 +0100
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/21/3
+Message-Id: <1248202636.3701.16.camel@dhcp-lab164.englab.brq.redhat.com>
+Date: Tue, 21 Jul 2009 20:57:16 +0200
 From: Jan Lieskovsky <jlieskov@...hat.com>
 To: "Steven M. Christey" <coley@...us.mitre.org>
 Cc: oss-security@...ts.openwall.com
-Subject: CVE Request -- libmikmod
+Subject: CVE Request -- RubyGems
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve,
+Hello Steve, vendors,
 
-  could you please allocate two 2008 CVE ids for the following
-libmikmod issues:
+  a potential system integrity violation flaw
+was found in the way RubyGems used to handle
+it's external Gem archives. A remote attacker
+could provide a specially-crafted Gem (POSIX tar)
+archive, which once opened by an unsuspecting
+user, would overwrite relevant system file.
 
-A, 
-mikmod, libmikmod: app crash or abort when loading/playing multiple
-music files with varying number of channels
 References:
-https://bugzilla.redhat.com/show_bug.cgi?id=479829
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=461519
+----------
+http://bugs.gentoo.org/show_bug.cgi?id=278566
+http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-core/24472
+http://redmine.ruby-lang.org/issues/show/1800
 
-Patch:
-http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=5;filename=mikmod.diff;att=1;bug=461519
+Credit:  Kazuhiro NISHIYAMA
+-------
 
-Affected libmikmod versions:  libmikmod-3.1.9 <= x <= libmikmod-3.2.0-3.beta2.fc9 (possibly newer too)
+Affected versions: Issue reported in RubyGems-1.3.4,
+-----------------  but confirmed also in 
+                   RubyGems-1.3.1.
 
-B, 
-mikmod,libmikmod: app crash when loading XM files
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=479833
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=476339
 
-Patch: 
-http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=5;filename=31.xm-header.patch;att=1;bug=476339
+Could you please allocate a new CVE identifier for it?
 
-Affected mikmod versions: libmikmod-3.1.11 <= x libmikmod-3.2.0-3.beta2.fc9 (possibly newer too)
 
-Thanks, Jan.
+Thanks && Regards, Jan.
 --
 Jan iankko Lieskovsky / Red Hat Security Response Team
-
 
