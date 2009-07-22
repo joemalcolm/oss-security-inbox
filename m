@@ -1,53 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/20/4
-Message-ID: <20091120114107.GF621@suse.de>
-Date: Fri, 20 Nov 2009 12:41:07 +0100
-From: Thomas Biege <thomas@...e.de>
-To: OSS-Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: CVE request: v1.2.8 released to fix the 0777 base_dir creation issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/22/4
+Message-id: <m37hy0wygp.fsf@qix.qnz.org>
+Date: Wed, 22 Jul 2009 11:04:38 -0400
+From: Todd Sabin <tsabin@...online.net>
+To: spender@...ecurity.net (Brad Spengler)
+Cc: Marcus Meissner <meissner@...e.de>, oss-security@...ts.openwall.com, dailydave <dailydave@...ts.immunitysec.com>
+Subject: Re: [Dailydave] Linux 2.6.30+/SELinux/RHEL5 test	kernel 0day, exploiting the unexploitable
 Content-Type: text/plain; charset=utf-8
 
-Hello.
+spender@...ecurity.net (Brad Spengler) writes:
 
-http://www.dovecot.org/list/dovecot-news/2009-November/000143.html
+> (Really there should have been a CVE for the lack of 
+> -fno-delete-null-pointer-checks instead of pretending the only problem 
+> was /dev/net/tun....
 
-http://dovecot.org/releases/1.2/dovecot-1.2.8.tar.gz
-http://dovecot.org/releases/1.2/dovecot-1.2.8.tar.gz.sig
+Just as a side note, it seems like gcc is missing an option, to me.
+Okay, it can figure out that some NULL pointer checks seem to be
+useless, and either optimize them away or leave them in.  What about
+issuing a warning?
 
-This is mainly to fix the 0777 base_dir creation issue, which could be
-considered a security hole, exploitable by local users. An attacker
-could for example replace Dovecot's auth socket and log in as other
-users. Gaining root privileges isn't possible though.
+Where's -Wuseless-null-pointer-check?
 
-This affects only v1.2 users, v1.1 and older versions were creating the
-directory with 0755 permission.
 
-If your Dovecot's base_dir isn't in /var/run/dovecot/, you should also
-make sure that the $prefix/var/ and $prefix/var/run/
-(i.e. /usr/local/var/, /usr/local/var/run/ by default) aren't 0777.
-
-	* Dovecot v1.2.x had been creating base_dir (and its parents if
-	  necessary) with 0777 permissions. The base_dir's permissions get
-	  changed to 0755 automatically at startup, but you may need to
-	  chmod the parent directories manually.
-
-	- acl: If user has rights from more than one group, merge them instead
-	  of choosing one group's rights and ignoring others.
-	- virtual: When using a lot of mailboxes, the virtual mailbox's header
-	  could have grown over 32 kB and caused "out of memory" crashes. Also
-	  over 64 kB headers couldn't even be updated with existing transaction
-	  log records. Added a new record type that gets used with >=64 kB
-	  headers. Older Dovecot versions don't understand this header and
-	  will log errors if they see it.
-	- FETCH BODYSTRUCTURE didn't return RFC 2231 "key*" fields correctly
-
+Todd
 
 -- 
-Bye,
-     Thomas
--- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
--- 
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
+Todd Sabin                                          <tsabin@...online.net>
