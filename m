@@ -1,31 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/06/6
-Message-ID: <Pine.GSO.4.51.0906061320440.28142@faron.mitre.org>
-Date: Sat, 6 Jun 2009 13:21:02 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security <oss-security@...ts.openwall.com>
-cc: coley@...re.org
-Subject: Re: CVE Request (apr-util)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/22/1
+Message-ID: <20090722075420.GA7965@suse.de>
+Date: Wed, 22 Jul 2009 09:54:20 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: Coverity / kernel issues
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-======================================================
-Name: CVE-2009-1956
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1956
-Reference: MLIST:[dev] 20090424 Buffer overflow in apr_brigade_vprintf() ?
-Reference: URL:http://www.mail-archive.com/dev@apr.apache.org/msg21591.html
-Reference: MLIST:[dev] 20090424 Re: Buffer overflow in apr_brigade_vprintf() ?
-Reference: URL:http://www.mail-archive.com/dev@apr.apache.org/msg21592.html
-Reference: MLIST:[oss-security] 20090605 CVE Request (apr-util)
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/06/06/1
-Reference: CONFIRM:http://svn.apache.org/viewvc?view=rev&revision=768417
-Reference: CONFIRM:http://www.apache.org/dist/apr/CHANGES-APR-UTIL-1.3
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=504390
+Coverity blogging about recent kernel issue:
+http://blog.coverity.com/posts/general/would-you-like-to-know-about-0day-defects-months-in-advance
 
-Off-by-one error in the apr_brigade_vprintf function in Apache
-APR-util before 1.3.5 on big-endian platforms allows remote attackers
-to obtain sensitive information or cause a denial of service
-(application crash) via crafted input.
+Its just thats a huge amount of things it finds usually, seeing
+from the ones I review in the "Wine" module :/
 
-
+Ciao, Marcus
