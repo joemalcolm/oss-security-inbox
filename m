@@ -1,49 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/30/2
-Message-Id: <1246360320.3392.20.camel@dhcp-lab164.englab.brq.redhat.com>
-Date: Tue, 30 Jun 2009 13:12:00 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com, "Yuriy M. Kaminskiy" <yumkam@...il.com>
-Subject: CVE assignment notification -- CVE-2009-1889 Pidgin: DoS (OOM, crash) via specially-crafted ICQWebMessage
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/22/3
+Message-ID: <20090722143147.4f6c29a8@redhat.com>
+Date: Wed, 22 Jul 2009 14:31:47 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: OSS Security <oss-security@...ts.openwall.com>
+Subject: PHP security fix in 5.2.10
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve, vendors,
+Hi!
 
-  CVE-2009-1889 has been assigned to the following Pidgin DoS issue:
+PHP 5.2.10 was release a while ago, fixing one minor buffer over-read
+issue in exif reading.  Does this already have a CVE that I've missed?
 
-Pidgin background:
-------------------
+http://www.php.net/releases/5_2_10.php
+http://secunia.com/advisories/35441/
+http://www.vupen.com/english/advisories/2009/1632
 
-Pidgin is an instant messaging program which can log in to multiple
-accounts on multiple instant messaging networks simultaneously.
-Open System for CommunicAtion in Realtime (OSCAR) is AOL's flagship
-instant messaging and presence information protocol, used for AOL's two
-main instant messaging systems: ICQ and AIM.
-
-Flaw description:
------------------
-An out-of-memory denial of service flaw was found in the Pidgin's 
-OSCAR protocol implementation. If a remote ICQ user sent a web
-message to the local Pidgin user using this protocol, it would lead to
-excessive memory allocation and denial of service (Pidgin crash). 
-
-Affected Pidgin versions: 2.4.0 <= Pidgin <= 2.5.7
-------------------------  (It's possible, the AIM IM system OSCAR protocol
-                           implementation in Pidgin-1.5.* is also affected,
-                           but according to Yuriy: "AFAIK, older pidgin/gaim
-                           won't work current icq servers.")
-
-References:
------------
-  http://developer.pidgin.im/ticket/9483 (Pidgin ticket)
-  http://pidgin.im/pipermail/devel/2009-May/008227.html (original Yuriy's post) 
-  https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-1889 (Red Hat Bugzilla entry)
-  http://developer.pidgin.im/wiki/ChangeLog (Pidgin-2.5.8 Changelog)
-
-Thanks && regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-  
-
+-- 
+Tomas Hoger / Red Hat Security Response Team
