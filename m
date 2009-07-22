@@ -1,24 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/14/3
-Message-ID: <873a8znigd.fsf@mid.deneb.enyo.de>
-Date: Tue, 14 Jul 2009 22:00:18 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/22/5
+Message-ID: <b086760e0907220930j7da01917nc3556c63a4a67a2f@mail.gmail.com>
+Date: Wed, 22 Jul 2009 18:30:39 +0200
+From: yersinia <yersinia.spiros@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Fixing the XML signature HMAC truncation authentication bypass
+Cc: Brad Spengler <spender@...ecurity.net>, Marcus Meissner <meissner@...e.de>,  dailydave <dailydave@...ts.immunitysec.com>
+Subject: Re: Re: [Dailydave] Linux  2.6.30+/SELinux/RHEL5 test kernel 0day, exploiting the unexploitable
 Content-Type: text/plain; charset=utf-8
 
-Quoting from <http://www.kb.cert.org/vuls/id/466161>:
+On Wed, Jul 22, 2009 at 5:04 PM, Todd Sabin<tsabin@...online.net> wrote:
+> spender@...ecurity.net (Brad Spengler) writes:
+>
+>> (Really there should have been a CVE for the lack of
+>> -fno-delete-null-pointer-checks instead of pretending the only problem
+>> was /dev/net/tun....
+>
+> Just as a side note, it seems like gcc is missing an option, to me.
+> Okay, it can figure out that some NULL pointer checks seem to be
+> useless, and either optimize them away or leave them in.  What about
+> issuing a warning?
+>
+> Where's -Wuseless-null-pointer-check?
+>
 
-| XML Signature Syntax and Processing (XMLDsig) is a W3C
-| recommendation for providing integrity, message authentication,
-| and/or signer authentication services for data. XMLDsig is commonly
-| used by web services such as SOAP. The XMLDsig recommendation
-| includes support for HMAC truncation, as specified in RFC2014. When
-| HMAC truncation is under the control of an attacker, however, this
-| can result in an effective authentication bypass. For example, by
-| specifying an HMACOutputLength of 1, only one bit of the signature
-| is verified. This can allow an attacker to forge an XML signature
-| that will be accepted as valid.
+Coverity opinion on this specific issue
 
-What shall we do about this?  Shall we just cap the value at 80 or 96
-bits in our implementations?
+http://blog.coverity.com/posts/general/would-you-like-to-know-about-0day-defects-months-in-advance
+
+Regards
+
+>
+> Todd
+>
+> --
+> Todd Sabin                                          <tsabin@...online.net>
+>
+
