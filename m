@@ -1,51 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/05/4
-Message-ID: <90626448.919981257441819306.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 5 Nov 2009 12:23:39 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: NULL pointer dereference in nfs4_proc_lock()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/24/3
+Message-ID: <4A69BCD8.7090908@redhat.com>
+Date: Fri, 24 Jul 2009 15:53:28 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com
+Subject: CVE Request -- Ocsinventory-Agent
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2009-3726
+Hello Steve, vendors,
 
-Thanks.
+   a security issue has been found in Ocsinventory-Agent
+(Unified agent) prior 0.0.9.3 -- not sure if this already got
+an CVE identifier?
 
--- 
-    JB
+References:
+-----------
+http://www.ocsinventory-ng.org/index.php?mact=News,cntnt01,detail,0&cntnt01articleid=144&cntnt01returnid=15
+http://nana.rulezlan.org/~goneri/ocsinventory-agent/Ocsinventory-Agent-0.0.9.3.tar.gz
 
------ "Eugene Teo" <eugeneteo@...nel.sg> wrote:
-
-> Quote from upstream commit:
-> "We just had a case in which a buggy server occasionally returns the 
-> wrong attributes during an OPEN call. While the client does catch this
-> 
-> sort of condition in nfs4_open_done(), and causes the
-> nfs4_atomic_open() 
-> to return -EISDIR, the logic in nfs_atomic_lookup() is broken, since
-> it 
-> causes a fallback to an ordinary lookup instead of just returning the
-> error.
-> 
-> When the buggy server then returns a regular file for the fallback 
-> lookup, the VFS allows the open, and bad things start to happen, since
-> 
-> the open file doesn't have any associated NFSv4 state.
-> 
-> The fix is firstly to return the EISDIR/ENOTDIR errors immediately,
-> and 
-> secondly to ensure that we are always careful when dereferencing the 
-> nfs_open_context state pointer."
-> 
-> Upstream commit:
-> http://git.kernel.org/linus/d953126a28f97e (v2.6.31-rc4)
-> 
-> Steps to reproduce the issue/backtraces:
-> https://bugzilla.redhat.com/show_bug.cgi?id=529227#c0
-> 
-> References:
-> http://www.spinics.net/linux/lists/linux-nfs/msg03357.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=529227
-> 
-> Thanks, Eugene
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
