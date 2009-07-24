@@ -1,54 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/06/3
-Message-ID: <Pine.GSO.4.51.0905061129350.3040@faron.mitre.org>
-Date: Wed, 6 May 2009 11:40:16 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: oss-security CNA
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/24/5
+Message-ID: <4A69F6E3.3030202@redhat.com>
+Date: Fri, 24 Jul 2009 20:01:07 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com
+Subject: CVE Request -- Drupal 6 Date / Calendar XSS vulnerability 
 Content-Type: text/plain; charset=utf-8
 
+Hello Steve, vendors,
 
-On Mon, 27 Apr 2009, Josh Bressers wrote:
+   a XSS flaw in Drupal's Calendar module has been reported:
 
-> I think having an oss-security CNA that is not MITRE would be useful, and
-> hopefully would alleviate some of the pressure MITRE currently feels. There
-> would of course be collisions from time to time, but that's likely going to
-> still cause less pain than the current model provides.
->
-> If this idea is appealing to MITRE, we could start working out some of the
-> details.
+       http://lampsecurity.org/drupal-date-xss-vulnerability
 
-I agree that this idea is worth exploring in detail.  One complicating
-factor is that various vulnerability databases have started monitoring
-this list, so we might create a CVE from our internal db-monitoring stream
-at the same time that a CNA performs an assignment.
+Could you allocate a new CVE id for it?
 
-Many months ago, I privately conferred with Mark Cox on this challenge for
-MITRE, and he suggested something like a well-formed request that fills in
-details that are relevant for CVEs.  Such details are often missing from
-the oss-security requests.  (They are often missing from Bugtraq and
-milw0rm posts too, but those are usually pretty simple bug types.)
-
-I don't know if a form-like request would always work, but it would make
-things more efficient.  As one example - the distros all use their own
-local version numbering schemes, or at least they maintain different
-versions.  This sometimes make it into a CVE description (causing
-inaccuracies we might have to fix later) or otherwises forces some
-research to determine the likely upstream version.  For Linux kernel
-issues, I often have to sift through git commit logs to guess that if a
-patch was committed on date X, and a new kernel was made on X+3, that
-maybe that's the fixed kernel version - at least for the 2.6 kernel
-anyway.
-
-As Jericho said, open source poses a special challenge because there is
-often a large amount of details we may want to include in descriptions.
-Especially for things like the Linux kernel, CVE often has more specific
-details than any other data source out there.  This is expensive to
-generate, but avoiding such details when they're available potentially
-leads to duplicates or confusion.  My comments of the past few weeks are a
-reflection of the CVE team's larger efforts for defining a process that's
-efficient but still fulfills CVE's primary role for its primary
-audience(s).
-
-Thanks all,
-Steve
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
