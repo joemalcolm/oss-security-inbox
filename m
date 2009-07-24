@@ -1,21 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/09/2
-Message-ID: <4AA7B6CA.1000600@redhat.com>
-Date: Wed, 09 Sep 2009 16:08:10 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/24/2
+Message-ID: <4A698773.1030008@redhat.com>
+Date: Fri, 24 Jul 2009 12:05:39 +0200
 From: Jan Lieskovsky <jlieskov@...hat.com>
 To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request -- PostgreSQL
+CC: oss-security@...ts.openwall.com
+Subject: CVE duplicate notification (CVE-2009-2580 to be duplicate of CVE-2009-1862)
 Content-Type: text/plain; charset=utf-8
 
 Hello Steve, vendors,
 
-   PostgreSQL upstream is on their security page
-mentioning three security issues, which lack CVE ids:
+   this is due:
+     http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1862
+     http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2580
 
-http://www.postgresql.org/support/security.html
+   (CVE-2009-2580 seems to be exact duplicate of CVE-2009-1862).
 
-Could you allocate them?
+Could you please reject the CVE-2009-2580 one?
 
 Thanks && Regards, Jan.
 --
