@@ -1,32 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/22/3
-Message-ID: <20090422154335.GA30566@suse.de>
-Date: Wed, 22 Apr 2009 17:43:35 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com, coley@...re.org
-Subject: Re: CVE request: clamav clamd and clamscan DoS and bypass by malformated archive
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/24/4
+Message-ID: <20090724163743.20554a34@redhat.com>
+Date: Fri, 24 Jul 2009 16:37:43 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: OSS Security <oss-security@...ts.openwall.com>
+Subject: nilfs-utils privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-Stephen,
+Hi!
 
-These two clamav 0.95.1 issues still need CVEs I think.
+During the package review of nilfs-utils packages before their
+inclusion into Fedora, it was pointed out that upstream Makefiles
+install files in /sbin as setuid root:
 
-On Thu, Apr 09, 2009 at 12:15:54PM +0200, Tomas Hoger wrote:
-> On Tue, 7 Apr 2009 14:08:15 +0200 Thomas Biege <thomas@...e.de> wrote:
-> 
-> > These two bugs possibly need a CVE-ID.
-> 
-> Upstream 0.95.1 seems to fix at least 2 other issues that may be of
-> interest:
-> 
-> https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1552
-> https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1553
-> 
-> svn diff -c 5032 http://svn.clamav.net/svn/clamav-devel/
-> 
-> -- 
-> Tomas Hoger / Red Hat Security Response Team
+https://bugzilla.redhat.com/show_bug.cgi?id=505374
+
+Apart from the fact that those utils most likely don't need to be
+setuid on normal installs, Steve Grubb also noticed that mkfs.nilfs2
+executes external command using system(), making it easy to elevate
+privileges.
+
+Issue should be fixed in 2.0.14 released this Mon, with patches linked
+in the bug mentioned above.  From a quick look, this should not affect
+Debian / Ubuntu packages (thanks to dh_fixperms, it seems), Gentoo does
+not seem to have any stable version.  I've not looked at other distros.
 
 -- 
-Working, but not speaking, for the following german company:
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+Tomas Hoger / Red Hat Security Response Team
