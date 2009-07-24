@@ -1,35 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/21/3
-Message-ID: <Pine.GSO.4.51.0909211440090.23430@faron.mitre.org>
-Date: Mon, 21 Sep 2009 14:42:20 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Thomas Biege <thomas@...e.de>
-cc: oss-security@...ts.openwall.com
-Subject: Re: OpenOffice.org CVE-2009-2139
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/24/1
+Message-ID: <20090724082253.GA10571@suse.de>
+Date: Fri, 24 Jul 2009 10:22:53 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: md raid null ptr dereference (when sysfs is writable)
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-On Thu, 10 Sep 2009, Thomas Biege wrote:
+http://xorl.wordpress.com/2009/07/21/linux-kernel-md-driver-null-pointer-dereference/
 
-> CVE-2009-2139
->
-> Manipulated EMF files can lead to heap overflows and arbitrary code
-> execution
->
->     * Synopsis: Manipulated EMF files can lead to heap overflows and
->                 arbitrary code execution
->     * State: Resolved
+2.6.30 stable:
+http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.30.y.git;a=commit;h=3c92900d9a4afb176d3de335dc0da0198660a244
+mainline:
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=b8d966efd9a46a9a35beac50cbff6e30565125ef
 
-We recently created CVE-2009-3239 to address an OpenOffice overflow in
-enhwmf.cxx/emfplus.cxx, as described in SUSE-SR:2009:015:
+While not directly exploitable, its just needs write access to the sysfs files
+to get exploited, so I guess this warrants a CVE number.
 
-  "This update of OpenOffice.org fixes potential buffer overflow in EMF
-   parser code (enhwmf.cxx, emfplus.cxx)."
-
-http://lists.opensuse.org/opensuse-security-announce/2009-09/msg00001.html
-
-Is CVE-2009-3239 a duplicate of CVE-2009-2139?
-
-(If so, we would probably keep CVE-2009-2139 and remove CVE-2009-3239.)
-
-- Steve
+Ciao, Marcus
