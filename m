@@ -1,38 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/01/2
-Message-ID: <Pine.GSO.4.51.0903312112560.1590@faron.mitre.org>
-Date: Tue, 31 Mar 2009 21:13:00 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/25/2
+Message-Id: <200907251424.07073.rbu@gentoo.org>
+Date: Sat, 25 Jul 2009 14:24:01 +0200
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-cc: Steven Christey <coley@...us.mitre.org>
-Subject: Re: CVE request: < tikiwiki 2.3: XSS
+Cc: Andrea Barisani <lcars@...rt.org>, cve@...re.org
+Subject: camlimages: Integer overflows in GIF and JPEG readers
 Content-Type: text/plain; charset=utf-8
 
+Hello,
 
-======================================================
-Name: CVE-2009-1204
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1204
-Reference: BUGTRAQ:20090312 TikiWiki 2.2 XSS Vulnerability in URI
-Reference: URL:http://www.securityfocus.com/archive/1/archive/1/501702/100/0/threaded
-Reference: CONFIRM:http://dev.tikiwiki.org/tiki-view_tracker_item.php?itemId=2359&trackerId=5&show=view&reloff=3&cant=1229&status=o&trackerId=5&sort_mode=created_desc
-Reference: CONFIRM:http://info.tikiwiki.org/tiki-read_article.php?articleId=51
-Reference: CONFIRM:http://tikiwiki.svn.sourceforge.net/viewvc/tikiwiki/branches/2.0/changelog.txt?view=markup
-Reference: BID:34105
-Reference: URL:http://www.securityfocus.com/bid/34105
-Reference: BID:34106
-Reference: URL:http://www.securityfocus.com/bid/34106
-Reference: BID:34107
-Reference: URL:http://www.securityfocus.com/bid/34107
-Reference: BID:34108
-Reference: URL:http://www.securityfocus.com/bid/34108
-Reference: SECUNIA:34273
-Reference: URL:http://secunia.com/advisories/34273
+oCERT reported integer overflows in camlimages when reading PNG images 
+earlier this month (oCERT-2009-009), CVE-2009-2295 was assigned.
 
-Cross-site scripting (XSS) vulnerability in TikiWiki (Tiki)
-CMS/Groupware 2.2 allows remote attackers to inject arbitrary web
-script or HTML via the PHP_SELF portion of a URI to (1)
-tiki-galleries.php, (2) tiki-list_file_gallery.php, (3)
-tiki-listpages.php, and (4) tiki-orphan_pages.php.
+Upstream has since incorporated the RedHat patch into their CVS:
+http://camlcvs.inria.fr/cgi-bin/cvsweb.cgi/bazar-ocaml/camlimages/src/?sortby=date
+
+They also fixed similar integer overflows in gifread.c and jpegread.c 
+for values that are used in memory allocations and memcpy().
+At least Debian used the existing CVE identifier only for the PNG 
+vulnerabilities, so a new identifier might be needed.
+
+A stripped down [by Alexis Ballier] version of the patch is in out BZ:
+https://bugs.gentoo.org/show_bug.cgi?id=276235
+https://bugs.gentoo.org/attachment.cgi?id=199108
 
 
+Robert
+
+Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
