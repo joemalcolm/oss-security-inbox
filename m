@@ -1,57 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/11/2
-Message-ID: <20090911092820.3cc251bb@redhat.com>
-Date: Fri, 11 Sep 2009 09:28:20 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/25/1
+Message-ID: <20090725085817.GA4355@ngolde.de>
+Date: Sat, 25 Jul 2009 10:58:17 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: Re: CVE id request: silc-toolkit
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Ocsinventory-Agent
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 3 Sep 2009 12:45:46 -0400 (EDT) "Steven M. Christey"
-<coley@...us.mitre.org> wrote:
-
-> > |    Fixed string format vulnerability in client entry handling.
-> > |
-> > |    Reported and patch provided by William Cummings.
-> >
-> > This one allows an attacker to execute arbitrary code, tested.
-> >
-> > |     More string format fixes in silcd and client libary
+Hi,
+* Jan Lieskovsky <jlieskov@...hat.com> [2009-07-24 16:04]:
+>   a security issue has been found in Ocsinventory-Agent
+> (Unified agent) prior 0.0.9.3 -- not sure if this already got
+> an CVE identifier?
 > 
-> Use CVE-2009-3051 for both of these format strings, to be filled in
-> later.
+> References:
+> -----------
+> http://www.ocsinventory-ng.org/index.php?mact=News,cntnt01,detail,0&cntnt01articleid=144&cntnt01returnid=15
+> http://nana.rulezlan.org/~goneri/ocsinventory-agent/Ocsinventory-Agent-0.0.9.3.tar.gz
 
-Looks like this actually got split to two after all...
+This is CVE-2009-0667.
 
-CVE-2009-3051:
-Multiple format string vulnerabilities in
-lib/silcclient/client_entry.c in Secure Internet Live Conferencing
-(SILC) Toolkit before 1.1.10, and SILC Client before 1.1.8, allow
-remote attackers to execute arbitrary code via format string
-specifiers in a nickname field, related to the (1)
-silc_client_add_client, (2) silc_client_update_client, and (3)
-silc_client_nickname_format functions.
-
-Which corresponds to this commit:
-http://git.silcnet.org/gitweb/?p=silc.git;a=commitdiff;h=1598b3a51b51a434037461ccd35487bc0df3137c
-
-
-CVE-2009-3163:
-Multiple format string vulnerabilities in lib/silcclient/command.c in
-Secure Internet Live Conferencing (SILC) Toolkit before 1.1.10, and
-SILC Client 1.1.8 and earlier, allow remote attackers to execute
-arbitrary code via format string specifiers in a channel name, related
-to (1) silc_client_command_topic, (2) silc_client_command_kick, (3)
-silc_client_command_leave, and (4) silc_client_command_users.
-
-Which corresponds to (the second part of) this commit:
-http://git.silcnet.org/gitweb/?p=silc.git;a=commitdiff;h=8cb801cf6482666818e721822ce81c81ec818908
-
-
-Btw, SILC seems to implement own snprintf function, that is not only
-wrapper around system snprintf, so glibc hardening may not help here
-(I've not tried to confirm that with real PoC though).
-
+Cheers
+Nico
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
