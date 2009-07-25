@@ -1,20 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/04/2
-Message-Id: <200902041518.46855.rbu@gentoo.org>
-Date: Wed, 4 Feb 2009 15:18:44 +0100
-From: Robert Buchholz <rbu@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/25/3
+Message-ID: <20090725133124.GB15900@ngolde.de>
+Date: Sat, 25 Jul 2009 15:31:24 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Audacity <1.3.6 Buffer overflow
+Subject: Re: CVE Request -- HTMLDOC
 Content-Type: text/plain; charset=utf-8
 
-Audacity before 1.3.6 contains a buffer overflow in
-String_parse::get_nonspace_quoted() in lib-src/allegro/strparse.cpp when 
-importing *.gro MIDI files.
+Hi,
+* Jan Lieskovsky <jlieskov@...hat.com> [2009-07-18 13:27]:
+> Hello Steve, vendors,
+> 
+>   a stack-based buffer overflow by processing user-supplied
+> input was found (by ANTHRAX666) in HTMLDOC's routine, used
+> to set the result page output size for custom page sizes.
+> 
+> References:
+> -----------
+> http://secunia.com/advisories/35780/2/ (Secunia advisory)
+> http://packetstormsecurity.org/0907-exploits/htmldoc-overflow.txt 
+> (original proof of concept)
+> http://bugs.gentoo.org/show_bug.cgi?id=278186 (Gentoo's BTS entry)
 
-https://bugs.gentoo.org/show_bug.cgi?id=253493
-http://www.milw0rm.com/exploits/7634
-http://n2.nabble.com/Audacity-%22String_parse::get_nonspace_quoted()%22-Buffer-Overflow-td2139537.html
-http://secunia.com/advisories/33356/
-http://www.f-secure.com/vulnerabilities/SA200900191
+Did you check:
+htmllib.cxx:          if (sscanf(line, "%*s%*s%*s%*s%f%*s%*s%s", &width, glyph) != 2)
+ps-pdf.cxx:   if (sscanf(line, "%*s%*s%*s%*s%d%*s%*s%s", &width, glyph) != 2)
+as well?
+Looks like a similar issue to me.
 
-Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
+Cheers
+Nico
+
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
