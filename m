@@ -1,27 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/06/10
-Message-ID: <Pine.GSO.4.51.0906061346510.28142@faron.mitre.org>
-Date: Sat, 6 Jun 2009 13:46:59 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/26/2
+Message-Id: <1248593070.4204.16.camel@localhost>
+Date: Sun, 26 Jul 2009 09:24:30 +0200
+From: Alex Legler <a3li@...too.org>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: sparc64: Fix crash with /proc/iomem
+Subject: Re: CVE Request -- HTMLDOC
 Content-Type: text/plain; charset=utf-8
 
+On Sa, 2009-07-25 at 15:31 +0200, Nico Golde wrote:
+> Did you check:
+> htmllib.cxx:          if (sscanf(line, "%*s%*s%*s%*s%f%*s%*s%s", &width, glyph) != 2)
+> ps-pdf.cxx:   if (sscanf(line, "%*s%*s%*s%*s%d%*s%*s%s", &width, glyph) != 2)
+> as well?
+> Looks like a similar issue to me.
+> 
 
-======================================================
-Name: CVE-2009-1914
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1914
-Reference: MLIST:[oss-security] 20090603 CVE request: kernel: sparc64: Fix crash with /proc/iomem
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/06/03/3
-Reference: CONFIRM:http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=192d7a4667c6d11d1a174ec4cad9a3c5d5f9043c
-Reference: CONFIRM:http://www.kernel.org/pub/linux/kernel/v2.6/ChangeLog-2.6.29
+Indeed it is the same issue. I could cause an overflow with a crafted
+AFM font file.
 
-The pci_register_iommu_region function in
-arch/sparc/kernel/pci_common.c in the Linux kernel before 2.6.29 on
-the sparc64 platform allows local users to cause a denial of service
-(system crash) by reading the /proc/iomem file, related to
-uninitialized pointers and the request_resource function.
+I have added these two to the upstream bug report.
 
+Regards,
+Alex
 
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
