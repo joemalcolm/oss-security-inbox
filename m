@@ -1,30 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/25/1
-Message-ID: <20090725085817.GA4355@ngolde.de>
-Date: Sat, 25 Jul 2009 10:58:17 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/26/1
+Message-ID: <4A6BCAED.60301@redhat.com>
+Date: Sun, 26 Jul 2009 11:18:05 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Ocsinventory-Agent
+Subject: Re: md raid null ptr dereference (when sysfs is writable)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Jan Lieskovsky <jlieskov@...hat.com> [2009-07-24 16:04]:
->   a security issue has been found in Ocsinventory-Agent
-> (Unified agent) prior 0.0.9.3 -- not sure if this already got
-> an CVE identifier?
+Marcus Meissner wrote:
+> Hi,
 > 
-> References:
-> -----------
-> http://www.ocsinventory-ng.org/index.php?mact=News,cntnt01,detail,0&cntnt01articleid=144&cntnt01returnid=15
-> http://nana.rulezlan.org/~goneri/ocsinventory-agent/Ocsinventory-Agent-0.0.9.3.tar.gz
+> http://xorl.wordpress.com/2009/07/21/linux-kernel-md-driver-null-pointer-dereference/
+> 
+> 2.6.30 stable:
+> http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.30.y.git;a=commit;h=3c92900d9a4afb176d3de335dc0da0198660a244
+> mainline:
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=b8d966efd9a46a9a35beac50cbff6e30565125ef
+> 
+> While not directly exploitable, its just needs write access to the sysfs files
+> to get exploited, so I guess this warrants a CVE number.
 
-This is CVE-2009-0667.
+Note that the default permission for this sysfs file is 644. It can be
+triggered if you are a local privileged user.
 
-Cheers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+Thanks, Eugene
