@@ -1,22 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/21/2
-Message-ID: <4B2FB2FB.6030603@iuculano.it>
-Date: Mon, 21 Dec 2009 18:40:11 +0100
-From: Giuseppe Iuculano <giuseppe@...ulano.it>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/26/3
+Message-ID: <20090726154250.GG28411@ngolde.de>
+Date: Sun, 26 Jul 2009 17:42:50 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: phpLDAPadmin
+Subject: CVE id request: mediawiki
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi,
+were there ever CVE ids for:
+http://lists.wikimedia.org/pipermail/mediawiki-announce/2009-July/000087.html?
 
-a local file inclusion vulnerability has been found in phpLDAPadmin:
+Cheers
+Nico
 
-http://www.exploit-db.com/exploits/10410
-http://secunia.com/advisories/37848/
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-
-Cheers,
-Giuseppe.
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+Content of type "application/pgp-signature" skipped
