@@ -1,24 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/14/1
-Message-ID: <4A84BA14.6080305@kernel.sg>
-Date: Fri, 14 Aug 2009 09:12:52 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/27/2
+Message-ID: <4A6DB87B.1000801@redhat.com>
+Date: Mon, 27 Jul 2009 16:23:55 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2009-2692 kernel: uninit op in SOCKOPS_WRAP() leads to privesc
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: Wireshark <1.2.1 Multiple DoS
 Content-Type: text/plain; charset=utf-8
 
-Marcus Meissner wrote:
-> Apparently new root exploit from Brad, see his twitter:
-> http://twitter.com/spendergrsec
+Hello Steve,
+
+   any progress while splitting this CVE id into two different ones?
+(or will we need to address the problem of different vulnerable 
+Wireshark versions in relevant dissectors in some other way?)
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+Jan Lieskovsky wrote:
+> Hello Steve, vendors,
 > 
-> The video is a bit sick in my opinion.
+>   1, thank you for the prompt assignment. 
 > 
-> Disclosed apparently next week.
+>   2, what's related to:
+> 
+>     Name: CVE-2009-2560
+>     Status: Candidate
+>     URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2560
+>     Final-Decision: 
+>     Interim-Decision: 
+>     Modified: 
+>     Proposed: 
+>     Assigned: 20090721
+>     Category: 
+>     Reference: CONFIRM:http://www.wireshark.org/security/wnpa-sec-2009-04.html
+>     Reference: BID:35748
+>     Reference: URL:http://www.securityfocus.com/bid/35748
+>     Reference: SECUNIA:35884
+>     Reference: URL:http://secunia.com/advisories/35884
+>     Reference: VUPEN:ADV-2009-1970
+>     Reference: URL:http://www.vupen.com/english/advisories/2009/1970
+> 
+>     Multiple unspecified vulnerabilities in Wireshark 1.2.0 allow remote
+>     attackers to cause a denial of service (crash) via unspecified vectors
+>     in the (1) Bluetooth L2CAP, (2) RADIUS, or (3) MIOP dissectors.
+> 
+>     This one will need to be split into two different ones, because:
+> 
+>     a, the Bluetooth L2CAP and MIOP dissectors flaws are affecting only
+>        version Wireshark 1.2.0 (as mentioned in upstream's 
+>        wnpa-sec-2009-04.html)
+> 
+>     b, but the RADIUS dissector issue affects also prior versions of
+>        Wireshark -- issue / crash confirmed also in upstreams 
+>        Wireshark-1.0.8.
+> 
+>   Could you please split the CVE-2009-2560 into two CVE ids?
+>   (one for the L2CAP, MIOP dissectors, other one for
+>    the RADIUS).
+> 
+> Thanks && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+> 
+> P.S.: Affected Wireshark versions in other CVE identifiers
+>       assigned within this update are sane.
+> 
 
-So, the cat is out of the bag. The exploit is available, but so is the
-patch.
-
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-2692
-http://git.kernel.org/linus/e694958388c50148389b0e9b9e9e8945cf0f1b98
-
-Thanks, Eugene
