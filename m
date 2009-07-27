@@ -1,37 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/20/6
-Message-ID: <Pine.GSO.4.51.0901201322010.8074@faron.mitre.org>
-Date: Tue, 20 Jan 2009 13:23:01 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/27/4
+Message-ID: <20090727220158.GO28411@ngolde.de>
+Date: Tue, 28 Jul 2009 00:01:58 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- amarok
+Subject: CVE id request: mplayer and vlc
 Content-Type: text/plain; charset=utf-8
 
+Hi,
+Can I get a CVE id for:
+http://seclists.org/fulldisclosure/2009/Jul/0418.html?
 
-Note that I think we're doing a slightly better job of creating CVE's
-quickly, but I'm doing a worse job of responding on the list as soon as
-the CVE has been created.  I will continue to work on this.
+Cheers
+Nico
 
-- Steve
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-
-On Mon, 19 Jan 2009, Marcus Meissner wrote:
-
-> On Mon, Jan 19, 2009 at 11:27:18AM +0100, Tomas Hoger wrote:
-> > On Mon, 19 Jan 2009 10:56:34 +0100 Marcus Meissner <meissner@...e.de>
-> > wrote:
-> >
-> > > Steve,
-> > >
-> > > Ping?
-> >
-> > http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2009-0135
-> > http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2009-0136
->
-> thanks ...
->
-> My script reading nvdcve-modified.xml did not work correctly,
-> because the pub_date was not increment remote :/
->
-> Ciao, Marcus
->
+Content of type "application/pgp-signature" skipped
