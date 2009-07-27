@@ -1,26 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/21/2
-Message-ID: <4AB712FB.6080804@kernel.sg>
-Date: Mon, 21 Sep 2009 13:45:31 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/27/3
+Message-ID: <20090727161850.GB3400@redhat.com>
+Date: Mon, 27 Jul 2009 10:18:50 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: issue with O_EXCL creates on NFSv4
+Subject: squid 3.x vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-There is an issue with O_EXCL creates on NFSv4 that with enough 
-attempts, it is possible for a lingering file from a failed create that 
-is world-writable but only setuid execute as the user who is attempting 
-these creates. Fortunately, root is not susceptible to this bug, so a 
-setuid root file should not be possible. It might be possible to exploit 
-this to gain access as another user though.
+There are some security vulnerabilities in squid 3.x that have been
+fixed today:
 
-In-depth description/reproducer:
-https://bugzilla.redhat.com/show_bug.cgi?id=524520#c0
+http://www.squid-cache.org/Advisories/SQUID-2009_2.txt
 
-Upstream commits:
-http://git.kernel.org/linus/af85852d (fixed in v2.6.19-rc6)
-http://git.kernel.org/linus/81ac95c5 (fixed in v2.6.19-rc6)
-http://git.kernel.org/linus/79fb54ab (fixed in v2.6.30-rc1)
+Specifically:
 
-Thanks, Eugene
+Due to incorrect buffer limits and related bound checks Squid
+is vulnerable to a denial of service attack when processing
+specially crafted requests or responses.
+
+Due to incorrect data validation Squid is vulnerable to a denial
+of service attack when processing specially crafted responses.
+
+
+
+Patches are linked to from the advisory.
+
+No CVE names look to be assigned; can we get some?  I think we probably
+need two CVE names here.
+
+Thanks.
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
