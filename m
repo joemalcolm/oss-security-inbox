@@ -1,32 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/31/1
-Message-ID: <4A9B48F5.9010506@kernel.sg>
-Date: Mon, 31 Aug 2009 11:52:21 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/28/5
+Message-ID: <20090728180825.GE3577@redhat.com>
+Date: Tue, 28 Jul 2009 12:08:25 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>, Greg KH <gregkh@...e.de>
-Subject: CVE request: kernel: tty: make sure to flush any pending work when halting the ldisc
+Subject: debian bug report on bind9 DoS
 Content-Type: text/plain; charset=utf-8
 
-The tty ldisc code was rewritten to use proper reference counts (commits 
-65b770468e98 and cbe9352fa08f) in order to avoid a race with hangup, but 
-it also introduced another bug that can result in various problems such 
-as a NULL pointer dereference in run_timer_softirq() or a BUG() in 
-worker_thread. More info in the patch.
+There's a bind 9 DoS reported in Debian's BTS [1] that provides a
+reproducer and some interesting info on a bind9 crash.  I don't think
+it's a huge problem with a well-secured bind9 configuration, but could
+be quite problematic for bind config's that allow updates without an
+RNDC key (typical of some dynamic DNS implementations), or on a system
+that has lax enough permissions that the RNDC key is exposed.
 
-Upstream commit:
-http://git.kernel.org/linus/5c58ceff103d8a654f24769bb1baaf84a841b0cc
+We don't ship bind 8 so I cannot say whether or not it only affects bind
+9 or earlier versions.  Some further information is in our bugzilla from
+some quick testing I did [2].
 
-Reproducer:
-http://lkml.org/lkml/2009/8/20/27
-http://lkml.org/lkml/2009/8/20/68
+This probably requires a CVE name.
 
-Backtrace:
-http://lkml.org/lkml/2009/8/20/21
+[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=538975
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=514292
 
-I believe this affects kernel versions greater than v2.6.26. The code in 
-drivers/char/tty_ldisc.c was from drivers/char/tty_io.c before it was 
-splitted into its own file in v2.6.27-rc1 (commit 01e1abb2). I did not 
-investigate further.
-
-Thanks, Eugene
+-- 
+Vincent Danen / Red Hat Security Response Team 
