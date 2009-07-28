@@ -1,19 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/13/1
-Message-ID: <28fa9c5e0901130323gfe2af4et508bda2eb95ab263@mail.gmail.com>
-Date: Tue, 13 Jan 2009 19:23:59 +0800
-From: "Eugene Teo" <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/28/6
+Message-Id: <200907282209.22214.thijs@debian.org>
+Date: Tue, 28 Jul 2009 22:09:20 +0200
+From: Thijs Kinkhorst <thijs@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-2008-4307 kernel: local denial of service in locks_remove_flock
+Cc: Vincent Danen <vdanen@...hat.com>
+Subject: Re: debian bug report on bind9 DoS
 Content-Type: text/plain; charset=utf-8
 
-There is a fcntl/close race in the Linux kernel that can be abused by
-a local, unprivileged user to cause a denial of service.
+On tiisdei 28 July 2009, Vincent Danen wrote:
+> There's a bind 9 DoS reported in Debian's BTS [1] that provides a
+> reproducer and some interesting info on a bind9 crash.
 
-The issue was fixed in upstream commit c4d7c402b788b73dc24f1e54a57f89d3dc5eb7bc.
+> This probably requires a CVE name.
 
-More details can be found at:
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2008-4307
+CERT-CC have assigned CVE-2009-0696 to this.
+See: http://www.kb.cert.org/vuls/id/725188
 
-Thanks, Eugene
+
+Thijs
+
+Download attachment "signature.asc " of type "application/pgp-signature" (490 bytes)
