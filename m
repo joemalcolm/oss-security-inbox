@@ -1,32 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/15/1
-Message-ID: <20090115062520.GA29644@suse.de>
-Date: Thu, 15 Jan 2009 07:25:20 +0100
-From: Thomas Biege <thomas@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: update on CVE-2008-5718
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/28/2
+Message-ID: <4A6EEEC8.8050303@gmail.com>
+Date: Tue, 28 Jul 2009 15:27:52 +0300
+From: ithilgore <ithilgore.ryu.l@...il.com>
+To: Solar Designer <solar@...nwall.com>
+CC: oss-security@...ts.openwall.com
+Subject: Re: Apache 2.2 HTTP Basic Auth bypass
 Content-Type: text/plain; charset=utf-8
 
-> > I am not very happy with the patch because it just filters a handful of
-> > characters, a better solution would be to replace popen().
-> > (I mentioned this on the netatalk-devel ML but got no answer so far.)
+Solar Designer wrote:
+> Hi,
 > 
-> It is no full shell escape but escapes everything that 
-> should be relevant for command injection. Sure, replacing 
-> the popen would be the better option but I was not too happy 
-> doing this as I guess it's more likely to break existing 
-> functionality with it by accident.
+> This is sort of an advance heads-up.  ithilgore, an Nmap developer,
+> CC'ed on this posting, mentioned on the nmap-dev mailing list (public)
+> earlier today that he discovered an Apache HTTP Basic Auth bypass
+> vulnerability, which is yet to be fully researched and reported.
+> 
+> http://seclists.org/nmap-dev/2009/q3/0385.html
+> 
+> ithilgore - I understand that you might have wanted to have a bit more
+> time to play with this on your own, but you posted to a public list,
+> which is why I consider it appropriate to post this to oss-security
+> "without your consent" to let the distro vendors "prepare" (e.g., hold
+> off on releasing update packages fixing some minor issues in
+> anticipation of needing to add a critical fix in a matter of days - just
+> to provide an example of how such advance notification can be of use).
+> Of course, the Apache security team is represented on this list, too, so
+> you might receive questions off-list, I guess. ;-)
+> 
+> Alexander
 
-Yes, such a patch need to come from upstream.
+Hello Solar Designer,
+ I am not sure yet if this works on Apache 2.2.11 which is the latest release. I have tried
+and reproduced it on some earlier versions (e.g Apache 2.2.2). Thus I wouldn't really mark
+it as that critical yet, since up-to-date servers might not really be vulnerable. Right now only
+unpatched older versions (which have also other vulnerabilities anyway, according to the Apache 2.2
+Changelog) probably do have a problem. However, this problem wasn't mentioned in the Changelong so
+if it indeed doesn't apply to the latest versions (which is yet to be defined),
+it might have been fixed "accidentally".
 
+All in all, for now I wouldn't really make that much of an issue about it and I don't think that
+the vendors need to hold off releasing anything if they have to. Anyway, I had already mentioned
+it in the lists some days earlier and for some reason that didn't attract any attention (perhaps because
+I didn't use the word 0day there): http://seclists.org/nmap-dev/2009/q3/0305.html
 
--- 
-Bye,
-     Thomas
--- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
--- 
-           Hamming's Motto:
-           The purpose of computing is insight, not numbers.
-                                -- Richard W. Hamming
+I am in the process of further investigating the issue, however.
+Let me know how this goes.
+Regards,
+ithilgore
