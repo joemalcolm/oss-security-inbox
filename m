@@ -1,27 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/06/6
-Message-ID: <Pine.GSO.4.51.0905061209360.3040@faron.mitre.org>
-Date: Wed, 6 May 2009 12:09:40 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/28/7
+Message-ID: <20090728201455.GG3577@redhat.com>
+Date: Tue, 28 Jul 2009 14:14:55 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: Re: ipsec-tools 0.7.2
+Subject: Re: debian bug report on bind9 DoS
 Content-Type: text/plain; charset=utf-8
 
+* [2009-07-28 22:09:20 +0200] Thijs Kinkhorst wrote:
 
-======================================================
-Name: CVE-2009-1574
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1574
-Reference: MLIST:[oss-security] 20090429 ipsec-tools 0.7.2
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/04/29/6
-Reference: MLIST:[oss-security] 20090504 Re: ipsec-tools 0.7.2
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/05/04/3
-Reference: CONFIRM:http://sourceforge.net/project/shownotes.php?group_id=74601&release_id=677611
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=497990
+>On tiisdei 28 July 2009, Vincent Danen wrote:
+>> There's a bind 9 DoS reported in Debian's BTS [1] that provides a
+>> reproducer and some interesting info on a bind9 crash.
+>
+>> This probably requires a CVE name.
+>
+>CERT-CC have assigned CVE-2009-0696 to this.
+>See: http://www.kb.cert.org/vuls/id/725188
 
-racoon/isakmp_frag.c in ipsec-tools before 0.7.2 allows remote
-attackers to cause a denial of service (crash) via crafted fragmented
-packets without a payload, which triggers a NULL pointer dereference.
+Thanks for that.  I also just noticed the CERT VU with the new releases.
+The new releases only fix this issue from the looks of things (at least
+for 9.4.3-P3 which is what I looked at).
 
-
+-- 
+Vincent Danen / Red Hat Security Response Team 
