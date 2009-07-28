@@ -1,135 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/10/1
-Message-ID: <20090910111222.GC32364@suse.de>
-Date: Thu, 10 Sep 2009 13:12:22 +0200
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/28/4
+Message-ID: <Pine.GSO.4.51.0907281339450.18052@faron.mitre.org>
+Date: Tue, 28 Jul 2009 13:40:20 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: OpenOffice.org CVE-2009-2139
+Subject: Re: squid 3.x vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
 
-Hi,
-there was a thread about it on vendor-sec some month ago.
+Two CVEs were assigned given strong indications of different types of
+problems.
 
-Here are the two descriptions from Petr:
+- Steve
 
-CVE-2009-2139
+======================================================
+Name: CVE-2009-2621
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2621
+Acknowledged: yes advisory
+Announced: 20090727
+Flaw: undiag
+Reference: CONFIRM:http://www.squid-cache.org/Advisories/SQUID-2009_2.txt
+Reference: CONFIRM:http://www.squid-cache.org/Versions/v3/3.1/changesets/b9654.patch
 
-Manipulated EMF files can lead to heap overflows and arbitrary code
-execution
-
-    * Synopsis: Manipulated EMF files can lead to heap overflows and
-                arbitrary code execution
-    * State: Resolved
-
-1. Impact
-
-A security vulnerability with the way OpenOffice/Go-oo 2.x and 3.x process EMF
-files may allow a remote unprivileged user who provides an OpenOffice.org/Go-oo
-document that is opened by a local user to execute arbitrary commands on the
-system with the privileges of the user running OpenOffice.org/Go-oo. No working
-exploit is known right now.
-
-2. Affected releases
-
-The problem was introduced in OpenOffice.org release, based on ooo-build (Go-oo),
-version 2.1. It was fixed in the version 3.0.1. The original OpenOffice.org
-builds, available from http://www.openoffice.org/, were not affected.
-
-3. Symptoms
-
-There are no predictable symptoms that would indicate this issue has occurred
-
-4. Relief/Workaround
-
-There is no workaround. See "Resolution" below.
-
-5. Resolution
-
-This issue is addressed in the following release:
-
-OpenOffice.org, based on ooo-build (Go-oo), version 3.0.1
-
-Note: The original OpenOffice.org builds, available from http://www.openoffice.org/,
-were newer affected by this vulnerability.
-
-6. Comments
-
-The issue is similar to CVE-2008-2238. The ooo-build-specific variant was found and fixed by ooo-build (Go-oo) developers.
+Squid 3.0 through 3.0.STABLE16 and 3.1 through 3.1.0.11 does not
+properly enforce "buffer limits and related bound checks," which
+allows remote attackers to cause a denial of service via (1) an
+incomplete request or (2) a request with a large header size, related
+to (a) HttpMsg.cc and (b) client_side.cc.
 
 
-And:
-CVE-2009-2140
+Analysis:
+ACCURACY: some specifics were inferred from b9654.patch, especially
+the debug statements that were added.
 
-Manipulated EMF+ files can lead to heap overflows and arbitrary code
-execution
-
-    * Synopsis: Manipulated EMF+ files can lead to heap overflows and
-                arbitrary code execution
-    * State: Resolved
-
-1. Impact
-
-A security vulnerability with the way OpenOffice/Go-oo 2.x and 3.x
-process EMF+ files may allow a remote unprivileged user who provides an
-OpenOffice.org/Go-oo document that is opened by a local user to execute
-arbitrary commands on the system with the privileges of the user running
-OpenOffice.org/Go-oo. No working exploit is known right now.
+ACKNOWLEDGEMENT: SQUID-2009:2 says "Due to incorrect buffer limits and
+related bound checks Squid is vulnerable to a denial of service attack
+when processing specially crafted requests or responses."
 
 
-2. Affected releases
+======================================================
+Name: CVE-2009-2622
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2622
+Acknowledged: yes advisory
+Announced: 20090727
+Flaw: undiag
+Reference: CONFIRM:http://www.squid-cache.org/Advisories/SQUID-2009_2.txt
+Reference: CONFIRM:http://www.squid-cache.org/Versions/v3/3.1/changesets/b9661.patch
 
-The problem was introduced in OpenOffice.org release, based on ooo-build
-(Go-oo), version 2.3.1. It was fixed in the version 3.0.1. Only the builds
-supporting EMF+ import (applying EMFPlus patchset) were affected. The
-original OpenOffice.org builds, available from http://www.openoffice.org/,
-were newer affected.
-
-
-3. Symptoms
-
-There are no predictable symptoms that would indicate this issue has occurred
-
-
-4. Relief/Workaround
-
-There is no workaround. See "Resolution" below.
-
-
-5. Resolution
-
-This issue is addressed in the following release:
-
-OpenOffice.org, based on ooo-build (Go-oo), version 3.0.1
-
-Note: The original OpenOffice.org builds, available from http://www.openoffice.org/,
-were newer affected by this vulnerability.
+Squid 3.0 through 3.0.STABLE16 and 3.1 through 3.1.0.11 allows remote
+attackers to cause a denial of service via malformed requests
+including (1) "missing or mismatched protocol identifier," (2) missing
+or negative status value," (3) "missing version," or (4) "missing or
+invalid status number," related to (a) HttpMsg.cc and (b)
+HttpReply.cc.
 
 
-6. Comments
+Analysis:
+ACCURACY: some specifics were inferred from b9661.patch, especially
+the debug statements that were added.
 
-The issue is similar to CVE-2008-2238. The ooo-build-specific variant was found
-and fixed by ooo-build (Go-oo) developers.
+ACKNOWLEDGEMENT: SQUID-2009:2 says "Due to incorrect data validation
+Squid is vulnerable to a denial of service attack when processing
+specially crafted responses."
 
 
-
-
-On Wed, Sep 09, 2009 at 09:12:40PM +0200, Tomas Hoger wrote:
-> Hi!
-> 
-> Does anyone have more info on CVE-2009-2139 besides Debian advisory?
-> 
-> http://www.debian.org/security/2009/dsa-1880
-> 
-> -- 
-> Tomas Hoger / Red Hat Security Response Team
-
--- 
-Bye,
-     Thomas
--- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
--- 
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
