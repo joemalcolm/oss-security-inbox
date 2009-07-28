@@ -1,26 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/29/9
-Message-ID: <87vdhysz6k.fsf@mid.deneb.enyo.de>
-Date: Thu, 29 Oct 2009 21:49:39 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/28/3
+Message-ID: <20090728125426.GA22660@openwall.com>
+Date: Tue, 28 Jul 2009 16:54:26 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: MFSA 2009-63
+Cc: ithilgore <ithilgore.ryu.l@...il.com>
+Subject: Re: Apache 2.2 HTTP Basic Auth bypass
 Content-Type: text/plain; charset=utf-8
 
-* Reed Loden:
+On Tue, Jul 28, 2009 at 03:27:52PM +0300, ithilgore wrote:
+>  I am not sure yet if this works on Apache 2.2.11 which is the latest release. I have tried
+> and reproduced it on some earlier versions (e.g Apache 2.2.2). Thus I wouldn't really mark
+> it as that critical yet, since up-to-date servers might not really be vulnerable.
 
-> What type of specific information are you looking for? Mozilla works
-> with upstream Xiph.org to get such issues resolved upstream, and then
-> we either take a minimal fix downstream or a full library upgrade to
-> latest upstream code. Lately, we've been having to do full library
-> upgrades due to the complexity of fixes and dependencies on other
-> changes.
+I never implied it was "critical", yet it sounded "fairly important",
+and it still does, even if it only affects specific non-latest versions.
+When maintaining older distro releases / stable branches, distro vendors
+tend to back-port known security fixes, so even if an issue is no longer
+present in the latest version and even if older versions have other
+"equivalent" or "worse" vulnerabilities, that does not make your
+discovery unimportant.  In fact, this back-porting approach appears to
+be more common than updating a non-development release/branch to a new
+upstream version.  Thus, there may well be "latest" distro packages of
+older versions of Apache with all other known important security issues
+fixed.  Also, systems administrators may not be "blindly" updating to
+latest upstream releases - they may be relying on documentation of known
+important issues to decide when to upgrade.
 
-We've got a rather strict backported-security-fixes-only policy
-because we've got a very interdependent code base, so we usually can't
-switch upstream versions for libraries because most developers have a
-rather lax attitude towards ABI compatibility (and even if they don't,
-we're usually trailing behind a major version or two 8-/).
+> All in all, for now I wouldn't really make that much of an issue about it and I don't think that
+> the vendors need to hold off releasing anything if they have to.
 
-Florian
-(Debian)
+OK, thanks for sharing your opinion.  I think the vendors will decide
+for themselves.
+
+BTW, I wouldn't be too surprised if the problem turns out not to be an
+Apache bug, after all, but rather something specific to your system.
+
+> Anyway, I had already mentioned
+> it in the lists some days earlier and for some reason that didn't attract any attention (perhaps because
+> I didn't use the word 0day there): http://seclists.org/nmap-dev/2009/q3/0305.html
+
+Yes, I am "guilty" of having missed that.  I am not watching nmap-dev
+discussions closely.
+
+> I am in the process of further investigating the issue, however.
+
+Great.  I suggest that you work with Apache security folks off-list to
+get the details figured out.  Since you did not reveal anything very
+specific yet (other than that a development version of Ncrack triggers
+the problem on a system of yours), it makes sense to possibly reduce the
+window of exposure by coming up with a fix before the bug is fully
+disclosed.
+
+Thanks,
+
+Alexander
