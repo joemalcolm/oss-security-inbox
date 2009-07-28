@@ -1,43 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/19/5
-Message-ID: <87wscrdnfk.fsf@mid.deneb.enyo.de>
-Date: Mon, 19 Jan 2009 21:57:03 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/28/1
+Message-ID: <20090728114618.GA21960@openwall.com>
+Date: Tue, 28 Jul 2009 15:46:18 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: Re: CVE request -- git
+Cc: ithilgore <ithilgore.ryu.l@...il.com>
+Subject: Apache 2.2 HTTP Basic Auth bypass
 Content-Type: text/plain; charset=utf-8
 
-* Florian Weimer:
+Hi,
 
-> could you please assign a CVE for this bug:
->
-> | Current gitweb has a possible local privilege escalation bug that allows a
-> | malicious repository owner to run a command of his choice by specifying
-> | diff.external configuration variable in his repository and running a
-> | crafted gitweb query.
-> |
-> | [...] Maintenance release v1.6.0.6, v1.5.6.6, v1.5.5.6 and v1.5.4.7
-> | are already available at k.org (see the announcement for v1.6.0.6 I
-> | sent out a few minutes ago), and the master branch and others pushed
-> | out tonight have the same fix. [...]
->
-> <http://marc.info/?l=git&m=122975564100860&w=2>
+This is sort of an advance heads-up.  ithilgore, an Nmap developer,
+CC'ed on this posting, mentioned on the nmap-dev mailing list (public)
+earlier today that he discovered an Apache HTTP Basic Auth bypass
+vulnerability, which is yet to be fully researched and reported.
 
-Nerver mind, Novell used CVE-2008-5517 for this.  Here's our bug
-summary (the CVE description is somewhat misleading, I think):
+http://seclists.org/nmap-dev/2009/q3/0385.html
 
-| Local users with write access to the configuration of a Git repository
-| served by gitweb could cause gitweb to execute arbitrary shell commands
-| with the permission of the web server (CVE-2008-5517).
+ithilgore - I understand that you might have wanted to have a bit more
+time to play with this on your own, but you posted to a public list,
+which is why I consider it appropriate to post this to oss-security
+"without your consent" to let the distro vendors "prepare" (e.g., hold
+off on releasing update packages fixing some minor issues in
+anticipation of needing to add a critical fix in a matter of days - just
+to provide an example of how such advance notification can be of use).
+Of course, the Apache security team is represented on this list, too, so
+you might receive questions off-list, I guess. ;-)
 
-In DSA-1708-1, we use CVE-2008-5516 for these issues:
-
-  http://repo.or.cz/w/git.git?a=commitdiff;h=516381d5
-  http://repo.or.cz/w/git.git?a=commitdiff;h=c582abae
-
-These have been fixed silently quite some time ago (in 1.5.6 and
-1.5.5, respectively).
-
-(For editorial reasons, the changelog in our DSA contains the previous
-CVE assignment.)
+Alexander
