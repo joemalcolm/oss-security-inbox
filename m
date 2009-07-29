@@ -1,32 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/22/2
-Message-ID: <Pine.GSO.4.51.0902221719460.29212@faron.mitre.org>
-Date: Sun, 22 Feb 2009 17:20:02 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/29/3
+Message-ID: <20090729131509.GA28862@openwall.com>
+Date: Wed, 29 Jul 2009 17:15:09 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: memory disclosure in SO_BSDCOMPAT gsopt
+Subject: Re: debian bug report on bind9 DoS
 Content-Type: text/plain; charset=utf-8
 
+Just in case anyone cares to have another confirmation:
 
-======================================================
-Name: CVE-2009-0676
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0676
-Reference: MLIST:[linux-kernel] 20090212 [PATCH] 4 bytes kernel memory disclosure in SO_BSDCOMPAT gsopt try #2
-Reference: URL:http://lkml.org/lkml/2009/2/12/123
-Reference: MLIST:[oss-security] 20090220 CVE request: kernel: memory disclosure in SO_BSDCOMPAT gsopt
-Reference: URL:http://openwall.com/lists/oss-security/2009/02/20/1
-Reference: CONFIRM:http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=df0bca049d01c0ee94afb7cd5dfd959541e6c8da
-Reference: CONFIRM:http://patchwork.kernel.org/patch/6816/
-Reference: CONFIRM:http://www.kernel.org/pub/linux/kernel/v2.6/ChangeLog-2.6.28.6
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=486305
-Reference: BID:33846
-Reference: URL:http://www.securityfocus.com/bid/33846
+On Wed, Jul 29, 2009 at 12:04:36AM +0200, Robert Buchholz wrote:
+> The crash is not limited to configurations that allow updates.
+> The ISC advisory states so as well, and I could reproduce the DoS on a 
+> static named instance by removing the "$packet->sign_tsig(...)" line in 
+> the exploit.
 
-The sock_getsockopt function in net/core/sock.c in the Linux kernel
-before 2.6.28.6 does not initialize a certain structure member, which
-allows local users to obtain potentially sensitive information from
-kernel memory via an SO_BSDCOMPAT getsockopt request.
+Confirmed on 9.3.5-P2 (removing the "$packet->sign_tsig(...)" line from
+the exploit as above) with whatever patches we happened to have until
+this latest fix.
 
-
+Alexander
