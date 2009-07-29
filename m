@@ -1,80 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/17/2
-Message-ID: <Pine.GSO.4.51.0909162129470.7046@faron.mitre.org>
-Date: Wed, 16 Sep 2009 21:29:53 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security <oss-security@...ts.openwall.com>, oss-security <oss-security@...ts.openwall.com>
-cc: "Steven M. Christey" <coley@...us.mitre.org>, Alex Legler <a3li@...too.org>
-Subject: Re: CVE Request -- Horde 3.3.5
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/29/1
+Message-ID: <20090729092009.GB28200@ngolde.de>
+Date: Wed, 29 Jul 2009 11:20:09 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com
+Cc: Vincent Danen <vdanen@...hat.com>
+Subject: Re: debian bug report on bind9 DoS
 Content-Type: text/plain; charset=utf-8
 
+Hi,
+* Robert Buchholz <rbu@...too.org> [2009-07-29 00:13]:
+> On Tuesday 28 July 2009, Vincent Danen wrote:
+> > I don't think
+> > it's a huge problem with a well-secured bind9 configuration, but
+> > could be quite problematic for bind config's that allow updates
+> > without an RNDC key (typical of some dynamic DNS implementations), or
+> > on a system that has lax enough permissions that the RNDC key is
+> > exposed.
+> 
+> The crash is not limited to configurations that allow updates.
 
-======================================================
-Name: CVE-2009-3236
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3236
-Reference: MLIST:[horde-announce] 20090914 [announce] Horde Groupware 1.1.6 (final)
-Reference: URL:http://marc.info/?l=horde-announce&m=125292088004087&w=2
-Reference: MLIST:[horde-announce] 20090914 [announce] Horde Groupware 1.2.4 (final)
-Reference: URL:http://marc.info/?l=horde-announce&m=125294558611682&w=2
-Reference: MLIST:[horde-announce] 20090914 [announce] Horde Groupware Webmail Edition 1.1.6 (final)
-Reference: URL:http://marc.info/?l=horde-announce&m=125292314007049&w=2
-Reference: MLIST:[horde-announce] 20090914 [announce] Horde Groupware Webmail Edition 1.2.4 (final)
-Reference: URL:http://marc.info/?l=horde-announce&m=125295852706029&w=2
-Reference: MLIST:[horde-announce] 20090914 [announce] [SECURITY] Horde 3.2.5 (final)
-Reference: URL:http://marc.info/?l=horde-announce&m=125291625030436&w=2
-Reference: MLIST:[horde-announce] 20090914 [announce] [SECURITY] Horde 3.3.5 (final)
-Reference: URL:http://marc.info/?l=horde-announce&m=125292339907481&w=2
-Reference: OSVDB:58107
-Reference: URL:http://www.osvdb.org/58107
-Reference: SECUNIA:36665
-Reference: URL:http://secunia.com/advisories/36665
-Reference: XF:horde-application-form-file-overwrite(53202)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/53202
+Confirmed.
 
-Unspecified vulnerability in the form library in Horde Application
-Framework 3.2 before 3.2.5 and 3.3 before 3.3.5; Groupware 1.1 before
-1.1.6 and 1.2 before 1.2.4; and Groupware Webmail Edition 1.1 before
-1.1.6 and 1.2 before 1.2.4; allows remote attackers, with privileges
-to write to the address book, to overwrite arbitrary files via crafted
-"image form fields."
+> The ISC advisory states so as well, and I could reproduce the DoS on a 
+> static named instance by removing the "$packet->sign_tsig(...)" line in 
+> the exploit. So the scope of this issue is wider than apparent from
+> the original report.
 
+Hmm I'd consider that a bug as well or is there a reason why 
+bind shouldn't verify update's authorization before 
+processing them?
 
-======================================================
-Name: CVE-2009-3237
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3237
-Reference: MLIST:[horde-announce] 20090914 [announce] Horde Groupware 1.1.6 (final)
-Reference: URL:http://marc.info/?l=horde-announce&m=125292088004087&w=2
-Reference: MLIST:[horde-announce] 20090914 [announce] Horde Groupware 1.2.4 (final)
-Reference: URL:http://marc.info/?l=horde-announce&m=125294558611682&w=2
-Reference: MLIST:[horde-announce] 20090914 [announce] Horde Groupware Webmail Edition 1.1.6 (final)
-Reference: URL:http://marc.info/?l=horde-announce&m=125292314007049&w=2
-Reference: MLIST:[horde-announce] 20090914 [announce] Horde Groupware Webmail Edition 1.2.4 (final)
-Reference: URL:http://marc.info/?l=horde-announce&m=125295852706029&w=2
-Reference: MLIST:[horde-announce] 20090914 [announce] [SECURITY] Horde 3.2.5 (final)
-Reference: URL:http://marc.info/?l=horde-announce&m=125291625030436&w=2
-Reference: MLIST:[horde-announce] 20090914 [announce] [SECURITY] Horde 3.3.5 (final)
-Reference: URL:http://marc.info/?l=horde-announce&m=125292339907481&w=2
-Reference: CONFIRM:http://bugs.horde.org/ticket/?id=8311
-Reference: CONFIRM:http://bugs.horde.org/ticket/?id=8399
-Reference: OSVDB:58108
-Reference: URL:http://www.osvdb.org/58108
-Reference: OSVDB:58109
-Reference: URL:http://www.osvdb.org/58109
-Reference: SECUNIA:36665
-Reference: URL:http://secunia.com/advisories/36665
-Reference: XF:horde-mimeviewer-xss(53200)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/53202
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-Multiple cross-site scripting (XSS) vulnerabilities in Horde
-Application Framework 3.2 before 3.2.5 and 3.3 before 3.3.5; Groupware
-1.1 before 1.1.6 and 1.2 before 1.2.4; and Groupware Webmail Edition
-1.1 before 1.1.6 and 1.2 before 1.2.4; allow remote attackers to
-inject arbitrary web script or HTML via the (1) crafted number
-preferences that are not properly handled in the preference system
-(services/prefs.php), as demonstrated by the sidebar_width parameter;
-or (2) crafted unknown MIME "text parts" that are not properly handled
-in the MIME viewer library (config/mime_drivers.php).
-
-
+Content of type "application/pgp-signature" skipped
