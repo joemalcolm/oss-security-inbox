@@ -1,29 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/21/1
-Message-Id: <1248167776.3701.6.camel@dhcp-lab164.englab.brq.redhat.com>
-Date: Tue, 21 Jul 2009 11:16:16 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com
-Subject: CVE Request -- WordPress
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/29/4
+Message-ID: <20090729134819.GA29121@openwall.com>
+Date: Wed, 29 Jul 2009 17:48:19 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: debian bug report on bind9 DoS
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve, vendors,
+On Wed, Jul 29, 2009 at 05:15:09PM +0400, Solar Designer wrote:
+> Confirmed on 9.3.5-P2 (removing the "$packet->sign_tsig(...)" line from
+> the exploit as above) with whatever patches we happened to have until
+> this latest fix.
 
-  latest WordPress 2.8.2 version has addressed a XSS vulnerability:
+It gets worse: I was also able to crash named from an IP address
+explicitly denied in "allow-query".  I did verify that non-malicious
+queries from that IP address were indeed correctly denied.
 
-    XSS via unescaped HTML URLs as author comments in the admin page
-    
-    References:
-    -----------
-    http://wordpress.org/development/2009/07/wordpress-2-8-2/
-    http://bugs.gentoo.org/show_bug.cgi?id=278492
+It appears that BIND does too much processing too early in the code.
 
-
-Could you please allocate a CVE identifier for it?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-
+Alexander
