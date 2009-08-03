@@ -1,32 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/25/1
-Message-ID: <hbvdrp$tmo$1@ger.gmane.org>
-Date: Sat, 24 Oct 2009 12:35:18 -0500
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/03/1
+Message-ID: <20090803140736.GC30964@suse.de>
+Date: Mon, 3 Aug 2009 16:07:36 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2009-3239 is a duplicate of CVE-2009-2139 and CVE-2009-2140
+Subject: Re: http://www.securityfocus.com/bid/33672/info kernel issue
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Thu, Feb 12, 2009 at 09:22:59PM +0100, Marcus Meissner wrote:
+> On Thu, Feb 12, 2009 at 08:05:27PM +0000, Mark J Cox wrote:
+> > >http://www.securityfocus.com/bid/33672/ seems to be this commit:
+> > >http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.28.y.git;a=commit;h=8255fc826e58c0a59711029e01db9fcdc06ba211
+> > >Not sure if its exploitable though.
+> > 
+> > BTW that BID list of affected kernels isn't correct; the multibyte stuff 
+> > wasn't in <=2.6.18 at least.
+> > 
+> > I didn't check exactly where since it doesn't affect RHEL and didn't look 
+> > into the issue any further -- but on first glance it seemed like you'd 
+> > have to be a console user and display/select some carefully chosen 
+> > characters in order to do the overflow; so it's probably a 'local attacker 
+> > at keyboard' flaw?
+> 
+> We backported Unicode stuff to SLES 10 I just see, but yes, 2.6.18 then.
+> 
+> Yes, console user only. And you can overflow 2 bytes over the end of kmalloced
+> space, not sure how much you can do with this.
 
-Hi,
+New reference for the CVE-2009-1046 entry and a exploit:
 
-CVE-2009-3239 appears to be a duplicate of CVE-2009-2139 and CVE-2009-2140,
-and should therefore be rejected.
+http://kernelbof.blogspot.com/2009/07/even-when-one-byte-matters.html
 
-Thanks.
-
-Regards,
-- -- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iEYEARECAAYFAkrjOtoACgkQYy49rUbZzlqx0wCfcwlPAAekr+9o5VmLiwUzlZUb
-YQUAnjeePTHkuOuskX8mXKZPn3tO0u3+
-=faOk
------END PGP SIGNATURE-----
-
+Ciao, Marcus
