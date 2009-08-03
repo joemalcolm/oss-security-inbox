@@ -1,39 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/16/2
-Message-Id: <200903170017.58197.rbu@gentoo.org>
-Date: Tue, 17 Mar 2009 00:17:50 +0100
-From: Robert Buchholz <rbu@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/03/3
+Message-ID: <Pine.LNX.4.64.0908032141170.29719@forced.attrition.org>
+Date: Mon, 3 Aug 2009 21:43:38 +0000 (UTC)
+From: security curmudgeon <jericho@...rition.org>
 To: oss-security@...ts.openwall.com
-Cc: Will Drewry <redpig@...rt.org>, cve@...too.org
-Subject: Re: [oCERT-2008-015] glib and glib-predecessor heap overflows
+Subject: Re: squid DoS in external auth header parser
 Content-Type: text/plain; charset=utf-8
 
-On Thursday 12 March 2009, Will Drewry wrote:
-> #2008-015 glib and glib-predecessors heap overflows
->
-> Description:
->
-> Base64 encoding and decoding functions in glib suffer from
-> vulnerabilities during memory allocation which may result in
-> arbitrary code execution when processing large strings.  A number of
-> other GNOME-related applications which predate glib are vulnerable
-> due to the commonality of this flawed code.
-...
-> (older versions affected only)
-> libsoup < 2.2.x
-> libsoup < 2.24
-> evolution-data-server < 2.24.5
 
-Evolution Data Server is not affected since version 2.21.1, as it uses 
-GLib's base64 functions. Obviously, using a vulnerable GLib with a 
-current Evolution Data Server still presents a vulnerable setup -- 
-however the advisory and CVE entry should not reflect that as a 
-vulnerability in Evolution Data Server 2.21.1 to 2.24.5.
-
-References to changelog entries are in our bug report:
-https://bugs.gentoo.org/show_bug.cgi?id=262555
+: I noticed this on Debian's bts [1] and also on upstream's bugzilla [2]
+: but no CVE has been assigned (not sure if one has been requested or not,
+: but I've not seen a request come through here).
+: 
+: By the initial looks of things, it seems to be a fairly low severity
+: issue and may not be easy to duplicate/trigger.  The reporter didn't really
+: provide much in the way of a reproducer or relevant configs (and the
+: reference to zope auths makes me not even want to touch it).
+: 
+: Has anyone taken a look at this or has a CVE been requested for it?
+: Upstream has done nothing with this despite it being reported two weeks
+: ago.
+: 
+: [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=534982
+: [2] http://www.squid-cache.org/bugs/show_bug.cgi?id=2704
 
 
-Robert
+Were these fixed with the recent release?
 
-Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
+http://www.squid-cache.org/Advisories/SQUID-2009_2.txt
+
+The creditee section does not mention Bastian Blank (original) or Luigi 
+Gangitano (Debian, reported upstream). The related Squid bug report (2704) 
+is still marked UNCONFIRMED and has no resolution.
+
+I'm guessing this is still an outstanding issue.
