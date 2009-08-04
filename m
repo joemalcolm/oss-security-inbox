@@ -1,36 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/05/1
-Message-ID: <4AF262B4.6000500@kernel.sg>
-Date: Thu, 05 Nov 2009 13:29:24 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/04/2
+Message-ID: <4A77ECA5.9050103@redhat.com>
+Date: Tue, 04 Aug 2009 16:09:09 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
 CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: NULL pointer dereference in nfs4_proc_lock()
+Subject: CVE request - kernel: execve: must clear current->clear_child_tid
 Content-Type: text/plain; charset=utf-8
 
-Quote from upstream commit:
-"We just had a case in which a buggy server occasionally returns the 
-wrong attributes during an OPEN call. While the client does catch this 
-sort of condition in nfs4_open_done(), and causes the nfs4_atomic_open() 
-to return -EISDIR, the logic in nfs_atomic_lookup() is broken, since it 
-causes a fallback to an ordinary lookup instead of just returning the error.
+clone() syscall has special support for TID of created threads.  This
+support includes two features.
 
-When the buggy server then returns a regular file for the fallback 
-lookup, the VFS allows the open, and bad things start to happen, since 
-the open file doesn't have any associated NFSv4 state.
+One (CLONE_CHILD_SETTID) is to set an integer into user memory with the
+TID value.
 
-The fix is firstly to return the EISDIR/ENOTDIR errors immediately, and 
-secondly to ensure that we are always careful when dereferencing the 
-nfs_open_context state pointer."
+One (CLONE_CHILD_CLEARTID) is to clear this same integer once the
+created thread dies.
 
-Upstream commit:
-http://git.kernel.org/linus/d953126a28f97e (v2.6.31-rc4)
+The integer location is a user provided pointer, provided at clone() time.
 
-Steps to reproduce the issue/backtraces:
-https://bugzilla.redhat.com/show_bug.cgi?id=529227#c0
+kernel keeps this pointer value into current->clear_child_tid.
+
+At execve() time, we should make sure kernel doesnt keep this user
+provided pointer, as full user memory is replaced by a new one.
+
+As glibc fork() actually uses clone() syscall with CLONE_CHILD_SETTID
+and CLONE_CHILD_CLEARTID set, chances are high that we might corrupt
+user memory in forked processes.
+
+Following sequence could happen:
+
+1) bash (or any program) starts a new process, by a fork() call that
+glibc maps to a clone( ...  CLONE_CHILD_SETTID |
+CLONE_CHILD_CLEARTID...) syscall
+
+2) When new process starts, its current->clear_child_tid is set to a
+location that has a meaning only in bash (or initial program) context
+(&THREAD_SELF->tid)
+
+3) This new process does the execve() syscall to start a new program.
+current->clear_child_tid is left unchanged (a non NULL value)
+
+4) If this new program creates some threads, and initial thread exits,
+kernel will attempt to clear the integer pointed by
+current->clear_child_tid from mm_release() :
+
+        if (tsk->clear_child_tid
+            && !(tsk->flags & PF_SIGNALED)
+            && atomic_read(&mm->mm_users) > 1) {
+                u32 __user * tidptr = tsk->clear_child_tid;
+                tsk->clear_child_tid = NULL;
+
+                /*
+                 * We don't check the error code - if userspace has
+                 * not set up a proper pointer then tough luck.
+                 */
+<< here >>      put_user(0, tidptr);
+                sys_futex(tidptr, FUTEX_WAKE, 1, NULL, NULL, 0);
+        }
+
+5) OR : if new program is not multi-threaded, but spied by /proc/pid
+users (ps command for example), mm_users > 1, and the exiting program
+could corrupt 4 bytes in a persistent memory area (shm or memory mapped
+file)
+
+If current->clear_child_tid points to a writeable portion of memory of
+the new program, kernel happily and silently corrupts 4 bytes of memory,
+with unexpected effects.
 
 References:
-http://www.spinics.net/linux/lists/linux-nfs/msg03357.html
-https://bugzilla.redhat.com/show_bug.cgi?id=529227
+http://article.gmane.org/gmane.linux.kernel/871942
+https://bugzilla.redhat.com/show_bug.cgi?id=515423
+
+Patch is not in upstream kernel yet.
 
 Thanks, Eugene
