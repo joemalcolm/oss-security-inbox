@@ -1,66 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/10/3
-Message-ID: <20090610212311.4d3ccd77@redhat.com>
-Date: Wed, 10 Jun 2009 21:23:11 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/04/1
+Message-ID: <4A77ACDB.3040501@redhat.com>
+Date: Tue, 04 Aug 2009 11:36:59 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: krahmer@...e.de
-Subject: Re: xfig-3.2.5 diff (CVE-2009-1962)
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request - kernel: information leak in sigaltstack
 Content-Type: text/plain; charset=utf-8
 
-Hi Sebastian!
+do_sigaltstack: avoid copying 'stack_t' as a structure to user space
 
-On Mon, 8 Jun 2009 12:49:48 +0200 Sebastian Krahmer <krahmer@...e.de>
-wrote:
+Ulrich Drepper correctly points out that there is generally padding in
+the structure on 64-bit hosts, and that copying the structure from
+kernel to user space can leak information from the kernel stack in those
+padding bytes.
 
-> just in case you need it, our maintainer asked me to forward
-> a patch for $SUBJECT which has been fixed in our xfig
-> for quite some time.
+Avoid the whole issue by just copying the three members one by one
+instead, which also means that the function also can avoid the need for
+a stack frame. This also happens to match how we copy the new structure
+from user space, so it all even makes sense.
 
-Looks like the patch you attached does not differ much from what we use
-for some time too and seems to have an origin here:
+Upstream commit:
+http://git.kernel.org/linus/0083fc2c50e6c5127c2802ad323adf8143ab7856
 
-  https://bugzilla.redhat.com/show_bug.cgi?id=67351
+Reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=515392
 
-And it does not differ much from what Nico previously posted:
-
-  http://thread.gmane.org/gmane.comp.security.oss.general/1609
-
-However, Nico's patch, probably taken from Fedora XFig packages, has
-one hunk missing for:
-
-u_print.c:    sprintf(tmp_fig_file, "%s/%s%06d", TMPDIR, "xfig-fig", getpid());
-
-that seem to have been lost during 3.2.4 -> 3.2.5 patch
-forward-porting.  This code is reached e.g. when you select File ->
-Print -> Print figure to batch.
-
-I've also grepped source for other obvious TMPDIR uses and here's my
-list:
-
-d_text.c:  sprintf(preedit_filename, "%s/%s%06d", TMPDIR, "xfig-preedit", getpid());
-
-- This code if #ifdef I18N_USE_PREEDIT, though I do not see
-  I18N_USE_PREEDIT defined anywhere.  Does not seem to be used in our
-  builds.
-
-f_util.c:     sprintf(tmpfile, "%s%s", TMPDIR, c);
-f_util.c:     sprintf(tmpfile, "%s/%s", TMPDIR, plainname);
-
-- This can be triggered if user tries to open zipped file in some
-  directory where she can not write (it is used as "gunzip -c >
-  tmpfile").  Warning is printed when TMPDIR is used, but it's still
-  possible to perform symlink attack when victim can be tricked to open
-  some attacker chosen file.
-
-u_error.c:      if (emergency_save(strcat(TMPDIR,"/SAVE.fig")) == -1)
-
-- This is emergency auto-save feature, executed when xfig is signaled
-  or detect some X error.  Current directory is tried first, TMPDIR is
-  fallback when current directory fails.
-
-The latter two are not really temp files, so mkstemp may not be the
-right fix here.
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+Thanks, Eugene
