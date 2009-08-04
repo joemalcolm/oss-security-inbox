@@ -1,40 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/24/5
-Message-ID: <2099385299.694911259086011108.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 24 Nov 2009 13:06:51 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/04/5
+Message-ID: <20090804191618.56b6ea4b@neon>
+Date: Tue, 4 Aug 2009 19:16:18 +0200
+From: Alex Legler <a3li@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: fuse: prevent fuse_put_request on invalid pointer
+Subject: CVE request: Wordpress
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2009-4021
+Hey,
 
-Thanks.
+yet another Wordpress release:
 
--- 
-    JB
+http://wordpress.org/development/2009/08/wordpress-2-8-3-security-release/
 
+Given the upstream statement and the changesets (see below), it looks
+like an incomplete fix for CVE-2009-2334.
 
------ "Eugene Teo" <eugeneteo@...nel.sg> wrote:
+Changes:
+http://core.trac.wordpress.org/changeset/11769
+http://core.trac.wordpress.org/changeset/11769
+http://core.trac.wordpress.org/changeset/11766
+http://core.trac.wordpress.org/changeset/11765
 
-> "fuse_direct_io() has a loop where requests are allocated in each 
-> iteration. if allocation fails, the loop is broken out and follows
-> into 
-> an unconditional fuse_put_request() on that invalid pointer."
-> 
-> Upstream commit:
-> http://git.kernel.org/linus/f60311d5f7670d9539b424e4ed8b5c0872fc9e83
-> 
-> This can be triggered when the system is low on memory, and when the 
-> fuse_request_alloc() function called from fuse_get_req() fails. The 
-> fuse_put_request() function will then dereference the invalid pointer
-> 
-> returned, resulting in a kernel oops.
-> 
-> This was introduced in 413ef8cb (v2.6.14-rc1) and fixed in
-> v2.6.32-rc7.
-> 
-> https://bugzilla.redhat.com/538734
-> 
-> Thanks, Eugene
+Please assign a CVE.
+
+Thanks, Alex
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
