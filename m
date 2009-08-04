@@ -1,18 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/07/1
-Message-Id: <1236418746.9149.2.camel@localhost>
-Date: Sat, 07 Mar 2009 10:39:06 +0100
-From: Alex Legler <a3li@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/04/3
+Message-ID: <20090804101329.GJ1577@ngolde.de>
+Date: Tue, 4 Aug 2009 12:13:29 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: Opera <9.64: Execution of arbitrary code
+Subject: Re: squid DoS in external auth header parser
 Content-Type: text/plain; charset=utf-8
 
 Hi,
+* Vincent Danen <vdanen@...hat.com> [2009-07-20 19:48]:
+> I noticed this on Debian's bts [1] and also on upstream's bugzilla [2]
+> but no CVE has been assigned (not sure if one has been requested or not,
+> but I've not seen a request come through here).
+> 
+> By the initial looks of things, it seems to be a fairly low severity
+> issue and may not be easy to duplicate/trigger.  The reporter didn't really
+> provide much in the way of a reproducer or relevant configs (and the
+> reference to zope auths makes me not even want to touch it).
+> 
+> Has anyone taken a look at this or has a CVE been requested for it?
 
-can we please get a CVE for this issue:
-http://www.opera.com/support/kb/view/926/
-https://bugs.gentoo.org/show_bug.cgi?id=261032
+CVE-2009-2622
+CVE-2009-2621
 
-Thanks, Alex
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (198 bytes)
+Content of type "application/pgp-signature" skipped
