@@ -1,39 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/18/1
-Message-Id: <1247915349.3704.7.camel@dhcp-lab164.englab.brq.redhat.com>
-Date: Sat, 18 Jul 2009 13:09:09 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com
-Subject: CVE Request -- HTMLDOC
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/04/6
+Message-ID: <20090804174813.GF7560@ngolde.de>
+Date: Tue, 4 Aug 2009 19:48:13 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: squid DoS in external auth header parser
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve, vendors,
+Hi,
+* Vincent Danen <vdanen@...hat.com> [2009-08-04 17:20]:
+> * [2009-08-04 12:13:29 +0200] Nico Golde wrote:
+[...] 
+> >CVE-2009-2622
+> >CVE-2009-2621
+> 
+> Are you sure?
+> 
+> According to MITRE's descriptions, CVE-2009-2621 deals with a lack of
+> enforcing "buffer limites and related bound checks", and CVE-2009-2622
+> deals with malformed requests.  When I was looking, it didn't seem like
+> either of these were the issue noted in the Debian bug.  Bug #2704 on
+> the squid site is still UNCONFIRMED with no additional comments made to
+> it, so I don't think this is fixed in the latest upstream release (and
+> wouldn't fall under one of these CVE's).
+> 
+> I don't think a CVE has been assigned to this issue, and I don't think
+> it has been fixed.
 
-  a stack-based buffer overflow by processing user-supplied
-input was found (by ANTHRAX666) in HTMLDOC's routine, used
-to set the result page output size for custom page sizes.
+Oergs sorry, yes you are right. I mixed up the issues here.
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-References:
------------
-http://secunia.com/advisories/35780/2/ (Secunia advisory)
-http://packetstormsecurity.org/0907-exploits/htmldoc-overflow.txt 
-(original proof of concept)
-http://bugs.gentoo.org/show_bug.cgi?id=278186 (Gentoo's BTS entry)
-
-
-Affected versions: Vulnerability confirmed in htmldoc-1.8.27
------------------  (other versions may be also affected).
-
-
-
-Could you please allocate a new CVE identifier for it?
-
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-
-
-
+Content of type "application/pgp-signature" skipped
