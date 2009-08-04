@@ -1,34 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/24/3
-Message-ID: <Pine.GSO.4.51.0904241829440.13343@faron.mitre.org>
-Date: Fri, 24 Apr 2009 18:30:26 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/04/4
+Message-ID: <20090804151046.GA3084@redhat.com>
+Date: Tue, 4 Aug 2009 09:10:46 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: mpg123 Signedness Vulnerability
+Subject: Re: squid DoS in external auth header parser
 Content-Type: text/plain; charset=utf-8
 
+* [2009-08-04 12:13:29 +0200] Nico Golde wrote:
 
-======================================================
-Name: CVE-2009-1301
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1301
-Reference: MLIST:[mpg123-devel] 20090405 mpg123 1.7.2 is out -- important security fix!
-Reference: URL:http://sourceforge.net/mailarchive/message.php?msg_name=20090405211856.41696433%40sunscreen.local
-Reference: CONFIRM:http://bugs.gentoo.org/show_bug.cgi?id=265342
-Reference: CONFIRM:http://sourceforge.net/project/shownotes.php?release_id=673696
-Reference: GENTOO:GLSA-200904-15
-Reference: URL:http://www.gentoo.org/security/en/glsa/glsa-200904-15.xml
-Reference: SECUNIA:34587
-Reference: URL:http://secunia.com/advisories/34587
-Reference: SECUNIA:34748
-Reference: URL:http://secunia.com/advisories/34748
-Reference: VUPEN:ADV-2009-0936
-Reference: URL:http://www.vupen.com/english/advisories/2009/0936
+>* Vincent Danen <vdanen@...hat.com> [2009-07-20 19:48]:
+>> I noticed this on Debian's bts [1] and also on upstream's bugzilla [2]
+>> but no CVE has been assigned (not sure if one has been requested or not,
+>> but I've not seen a request come through here).
+>> 
+>> By the initial looks of things, it seems to be a fairly low severity
+>> issue and may not be easy to duplicate/trigger.  The reporter didn't really
+>> provide much in the way of a reproducer or relevant configs (and the
+>> reference to zope auths makes me not even want to touch it).
+>> 
+>> Has anyone taken a look at this or has a CVE been requested for it?
+>
+>CVE-2009-2622
+>CVE-2009-2621
 
-Integer signedness error in the store_id3_text function in the ID3v2
-code in mpg123 before 1.7.2 allows remote attackers to cause a denial
-of service (out-of-bounds memory access) and possibly execute
-arbitrary code via an ID3 tag with a negative encoding value.  NOTE:
-some of these details are obtained from third party information.
+Are you sure?
 
+According to MITRE's descriptions, CVE-2009-2621 deals with a lack of
+enforcing "buffer limites and related bound checks", and CVE-2009-2622
+deals with malformed requests.  When I was looking, it didn't seem like
+either of these were the issue noted in the Debian bug.  Bug #2704 on
+the squid site is still UNCONFIRMED with no additional comments made to
+it, so I don't think this is fixed in the latest upstream release (and
+wouldn't fall under one of these CVE's).
 
+I don't think a CVE has been assigned to this issue, and I don't think
+it has been fixed.
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
