@@ -1,84 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/03/2
-Message-ID: <20090703154521.GY6089@inversepath.com>
-Date: Fri, 3 Jul 2009 16:45:21 +0100
-From: Andrea Barisani <lcars@...rt.org>
-To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
-Subject: [oCERT-2009-007] FCKeditor input sanitization errors
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/05/7
+Message-ID: <829b67ee0908051012k40629d71v651c0d72bb3de3e1@mail.gmail.com>
+Date: Wed, 5 Aug 2009 20:12:51 +0300
+From: Henri Salo <hsalogeek@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: fetchmail <= 6.3.10 SSL certificate  NUL prefix verification bypass
 Content-Type: text/plain; charset=utf-8
 
+2009/8/5 Tomas Hoger <thoger@...hat.com>
 
-#2009-007 FCKeditor input sanitization errors
+> Hi Matthias!
+>
+> Thanks for the heads-up!
+>
+> On Wed, 05 Aug 2009 17:14:36 +0200 "Matthias Andree"
+> <matthias.andree@....de> wrote:
+>
+> > Is there a global CVE ID to collect this vulnerability that is
+> > supposed to be reused by applications?
+>
+> That's actually a pretty good question.  This problem was first
+> presented for Firefox/NSS and got assigned CVE-2009-2408.
+>
+> Similar problem also affects GnuTLS and some changes are being
+> discussed on the -devel mailing list, with some changes and tests
+> already in git.  This should deserve a separate CVE.
+>
+> And than there is OpenSSL, which, as I've been told, expects
+> applications to do name checking.  So it's probably safe to assume that
+> many / majority of client applications using OpenSSL are likely to be
+> affected by some variant of this problem (either via CommonNames or
+> subjectAltNames).  I'm not sure if single CVE should be used here for
+> all, or dozens of CVEs, one for each.  It's likely going to be mess
+> either way.  I'm adding CC on Steven for advice.  Steven, at least one
+> CVE has already been allocated privately for similar case.
+>
+> --
+> Tomas Hoger / Red Hat Security Response Team
+>
 
-Description:
+I think there should be one for every vulnerability so one can follow the
+process of fixing this issue in specific application.
 
-FCKeditor, a web based open source HTML text editor, suffers from a remote
-file upload vulnerability.
+---
+Henri Salo
 
-The input of several connector modules is not properly verified before being
-used, this leads to exposure of the contents of arbitrary directories on the
-server filesystem and allows file uploading to arbitrary locations. The
-affected code is remotely exposed before authentication. An attacker can
-exploit this vulnerability to install remote shells on the victim server
-among other things, it should be noted that this vulnerability is being
-actively exploited in the wild.
-
-Additionally several XSS vulnerabilities are present in the packaged samples
-directory.
-
-A patch and a new FCKeditor version will be made available on Monday July 6th
-16:00 CET, this advisory will be updated with detailed information about the
-issue and a security patch.
-
-In the meantime we strongly recommend to implement the following
-mitigation instructions:
-
-  * removed unused connectors from 'editor\filemanager\connectors'
-
-  * disable the file browser in config.ext
-
-  * inspect all fckeditor folders on the server for suspicious files that
-    may have been previously uploaded, as an example image directories
-    (eg. 'fckeditor/editor/images/...') are well known target locations
-    for remote php shells with extensions that match image files
-
-  * completely remove the '_samples' directory
-
-Affected version:
-
-FCKeditor <= 2.6.4
-
-(version 3.0 is unaffected as it does not have any built-in file browser)
-
-Fixed version:
-
-FCKeditor >= 2.6.4.1 (to be released on 2009-07-06 16:00 CET)
-
-Credit: vulnerability report received from Vinny Guido <bigvin [at]
-        hushmail [dot] com>.
-
-CVE: CVE-2009-2265
-
-Timeline:
-
-2009-05-03: vulnerability reported received
-2009-05-04: contacted fckeditor maintainer
-2009-05-25: maintainer denies reported issues against latest version
-2009-05-25: reporter confirms that latest version is affected
-2009-06-21: maintainer forwards report to project security maintainer
-2009-06-23: security maintainer confirms CurrentFolder vulnerability
-2009-06-24: security maintainer provides patch
-2009-06-29: assigned CVE
-2009-07-03: preliminary advisory release with mitigation instructions due to
-            wide exposure of the issue
-
-Permalink:
-http://www.ocert.org/advisories/ocert-2009-007.html
-
--- 
-Andrea Barisani |                Founder & Project Coordinator
-          oCERT | Open Source Computer Emergency Response Team
-
-<lcars@...rt.org>                         http://www.ocert.org
- 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
-        "Pluralitas non est ponenda sine necessitate"
