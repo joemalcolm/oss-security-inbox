@@ -1,22 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/15/6
-Message-ID: <20090515173456.GB22609@logo.rdu.rpath.com>
-Date: Fri, 15 May 2009 13:34:56 -0400
-From: "Michael K. Johnson" <johnsonm@...th.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: ptrace race CVE ID?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/05/5
+Message-ID: <20090805183008.7fc69ca8@redhat.com>
+Date: Wed, 5 Aug 2009 18:30:08 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Cc: matthias.andree@....de
+Subject: Re: CVE request: fetchmail <= 6.3.10 SSL certificate NUL prefix verification bypass
 Content-Type: text/plain; charset=utf-8
 
-On Fri, May 15, 2009 at 11:26:40AM -0600, dann frazier wrote:
-> On Fri, May 15, 2009 at 01:24:44PM -0400, Michael K. Johnson wrote:
-> > There's an exploit for the bug fixed in changeset
-> > cad81bc2529ab8c62b6fdc83a1c0c7f4a87209eb
-> > floating around in the wild.  I had thought it was assigned a
-> > CVE ID, but I am having trouble finding a record of it.  Is
-> > anyone else aware of a CVE ID for it?
-> > 
-> > Thanks...
-> 
-> CVE-2009-1527, I think
+Hi Matthias!
 
-Thanks again, that's clearly it.
+Thanks for the heads-up!
+
+On Wed, 05 Aug 2009 17:14:36 +0200 "Matthias Andree"
+<matthias.andree@....de> wrote:
+
+> Is there a global CVE ID to collect this vulnerability that is
+> supposed to be reused by applications?
+
+That's actually a pretty good question.  This problem was first
+presented for Firefox/NSS and got assigned CVE-2009-2408.
+
+Similar problem also affects GnuTLS and some changes are being
+discussed on the -devel mailing list, with some changes and tests
+already in git.  This should deserve a separate CVE.
+
+And than there is OpenSSL, which, as I've been told, expects
+applications to do name checking.  So it's probably safe to assume that
+many / majority of client applications using OpenSSL are likely to be
+affected by some variant of this problem (either via CommonNames or
+subjectAltNames).  I'm not sure if single CVE should be used here for
+all, or dozens of CVEs, one for each.  It's likely going to be mess
+either way.  I'm adding CC on Steven for advice.  Steven, at least one
+CVE has already been allocated privately for similar case.
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
