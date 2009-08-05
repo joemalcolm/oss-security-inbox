@@ -1,32 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/29/1
-Message-ID: <D76AF9B3DDF5FF49833AC0A1396549068DCF27@s554.babiel.com>
-Date: Fri, 29 May 2009 16:12:56 +0200
-From: "Stefan Behte" <s.behte@...iel.com>
-To: <oss-security@...ts.openwall.com>
-Subject: CVE request: Wireshark 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/05/4
+Message-ID: <op.ux63amte1e62zd@balu.cs.uni-paderborn.de>
+Date: Wed, 05 Aug 2009 17:14:36 +0200
+From: "Matthias Andree" <matthias.andree@....de>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: fetchmail <= 6.3.10 SSL certificate NUL prefix verification bypass
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Greetings,
 
-I think we have no CVE for http://www.wireshark.org/security/wnpa-sec-2009-03.html yet. Could you assign a CVE number to it?
+fetchmail <= 6.3.10 is susceptible to NUL prefix certificates such as  
+www.paypal.com\0.reknowned.site.example.
 
-Best regards,
+Is there a global CVE ID to collect this vulnerability that is supposed to  
+be reused by applications?
 
-Stefan Behte
+If there is, please let me know.
 
-Babiel GmbH
-Moskauer Str. 27
-D-40227 Düsseldorf
+If there is not, please assign a new CVE Id.
 
-Tel:    0211-179349 0
-Fax:    0211-179349 29
-E-Mail: s.behte@...iel.com
-Internet: http://www.babiel.com
+Thanks
 
-Geschäftsführer: Georg Babiel, Dr. Rainer Babiel, Harald Babiel
-Amtsgericht Düsseldorf HRB 38633
-
-~~~~~~~~~~~~~~ DISCLAIMER ~~~~~~~~~~~~~~~
-
-The information transmitted in this electronic mail message may contain confidential and or privileged materials. Any review, retransmission, dissemination or other use of or taking of any action in reliance upon, this information by persons or entities other than the intended recipient is prohibited. If you receive such e-mails in error, please contact the sender and delete the material from any computer.
+-- 
+Matthias Andree
