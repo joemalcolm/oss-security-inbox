@@ -1,50 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/01/12
-Message-ID: <20090401180853.136e2d63@redhat.com>
-Date: Wed, 1 Apr 2009 18:08:53 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/05/1
+Message-ID: <4A78E903.40203@redhat.com>
+Date: Wed, 05 Aug 2009 10:05:55 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: Re: CVE request: jhead
+CC: "Steven M. Christey" <coley@...us.mitre.org>, jon@...rheide.org
+Subject: Re: CVE request - kernel: information leak in sigaltstack
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 19 Mar 2009 20:01:51 -0400 (EDT) "Steven M. Christey"
-<coley@...us.mitre.org> wrote:
-
-> On Fri, 6 Feb 2009, Tomas Hoger wrote:
-
-Oh, my memory about this got even more rusty, so this is from quick
-re-fresh, hope I do not get this wrong...
-
-> >> 1 - long -cmd
-> >> 2 - unsafe temp file creation
-> >> 3 - "more unchecked buffers" and "unsafe buffer sized strcat's in
-> >>    ModifyDescriptComment"  [this assumes that upstream only fixed
-> >>    issue 1)
-> >> 4 - shell escapes
+Eugene Teo wrote:
+> do_sigaltstack: avoid copying 'stack_t' as a structure to user space
 > 
-> So CVE-2008-4641 was assigned to issue 4, and CVE-2008-4639 was
-> assigned to issue 2.  However, I made a mistake in CVE-2008-4639 and
-> said "before 2.84" instead of "2.84 and earlier."  I've since fixed
-> the CVE-2008-4639 description to say ""2.84 and earlier."
+> Ulrich Drepper correctly points out that there is generally padding in
+> the structure on 64-bit hosts, and that copying the structure from
+> kernel to user space can leak information from the kernel stack in those
+> padding bytes.
+> 
+> Avoid the whole issue by just copying the three members one by one
+> instead, which also means that the function also can avoid the need for
+> a stack frame. This also happens to match how we copy the new structure
+> from user space, so it all even makes sense.
+> 
+> Upstream commit:
+> http://git.kernel.org/linus/0083fc2c50e6c5127c2802ad323adf8143ab7856
+> 
+> Reference:
+> https://bugzilla.redhat.com/show_bug.cgi?id=515392
 
-IIRC, my confusion was about CVE-2008-4639 vs. CVE-2008-4640, the both
-seem to be just a different consequences of the same problem with odd
-way to create temporary file.  Ok, so if you create temp file by
-changing the last character of the original name, you have predictable
-temporary file name (and possibility for symlink attack, assuming jhead
-is used on files stored in world-writable directory) and also
-overwrite / remove existing file with that name stored in given
-directory.  As far as I can see, that deletion should be limited to
-files in jhead's destination directory, so not really arbitrary I'd say.
+Reproducer:
+http://milw0rm.com/exploits/9352
 
-> Now what's this about 2.86?... Sounds like it may be a regression.
-
-As jhead creates those temporary files in its "destination" directory,
-this (as well as the original "unsafe temp file creation") can only be
-a problem if jhead is instructed to use /tmp (or possibly run on files
-in /tmp, I don't remember exactly).  Along with not-so-easily guessable
-names and need to win a race, it sounds quite minor.
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+Thanks, Eugene
