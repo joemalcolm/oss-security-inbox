@@ -1,34 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/18/8
-Message-ID: <Pine.GSO.4.51.0908181620190.17763@faron.mitre.org>
-Date: Tue, 18 Aug 2009 16:20:38 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: clock_nanosleep() with CLOCK_MONOTONIC_RAW NULL pointer dereference
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/05/12
+Message-ID: <20090805220515.03fb8c0b@redhat.com>
+Date: Wed, 5 Aug 2009 22:05:15 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: matthias.andree@....de
+Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: fetchmail <= 6.3.10 SSL certificate NUL prefix verification bypass
 Content-Type: text/plain; charset=utf-8
 
+Hi Matthias!
 
-======================================================
-Name: CVE-2009-2767
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2767
-Reference: MLIST:[linux-kernel] 20090804 Re: [PATCH] posix-timers: fix oops in clock_nanosleep() with CLOCK_MONOTONIC_RAW
-Reference: URL:http://lkml.org/lkml/2009/8/4/28
-Reference: MLIST:[linux-kernel] 20090804 Re: [PATCH] posix-timers: fix oops in clock_nanosleep() with CLOCK_MONOTONIC_RAW
-Reference: URL:http://lkml.org/lkml/2009/8/4/40
-Reference: CONFIRM:http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=70d715fd0597f18528f389b5ac59102263067744
-Reference: CONFIRM:http://www.kernel.org/pub/linux/kernel/v2.6/testing/ChangeLog-2.6.31-rc6
-Reference: SECUNIA:36200
-Reference: URL:http://secunia.com/advisories/36200
-Reference: VUPEN:ADV-2009-2197
-Reference: URL:http://www.vupen.com/english/advisories/2009/2197
-Reference: XF:linux-kernel-clocknanosleep-priv-escalation(52317)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/52317
+On Wed, 05 Aug 2009 18:55:39 +0200 "Matthias Andree"
+<matthias.andree@....de> wrote:
 
-The init_posix_timers function in kernel/posix-timers.c in the Linux
-kernel before 2.6.31-rc6 allows local users to cause a denial of
-service (OOPS) or possibly gain privileges via a CLOCK_MONOTONIC_RAW
-clock_nanosleep call that triggers a NULL pointer dereference.
+> FWIW, I haven't yet tested if this works for NUL in subjectAltNames,
+> as I currently don't know how to generate such a certificate (can be  
+> self-signed) without writing major amounts of code.
+> 
+> If someone has a certificate that has embedded NULs in
+> subjectAltNames that I can use for testing, please send it along
+> together with its key so that I can check the fix also works in that
+> code path.
 
+I managed to build these, that may be helpful during the testing:
 
+  http://people.redhat.com/thoger/certs-with-nuls/
+
+Let me know if anything needed is missing there.
+
+HTH
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
