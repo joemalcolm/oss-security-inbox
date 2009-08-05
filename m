@@ -1,52 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/29/5
-Message-Id: <1241002707.3186.6.camel@dhcp-lab-164.englab.brq.redhat.com>
-Date: Wed, 29 Apr 2009 12:58:27 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/05/3
+Message-ID: <20090805143054.GD3008@redhat.com>
+Date: Wed, 5 Aug 2009 08:30:54 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Konstanty <konstanty@...il.com>
-Subject: Re: CVE Request -- libmodplug
+Cc: coley@...re.org
+Subject: Re: CVE request: XEmacs Multiple Integer Overflows
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve,
+* [2009-08-05 13:53:50 +0200] Thomas Biege wrote:
 
-  apologize for not sending these all at once, but noticed
-  the following one only today. There is another buffer
-  overflow (DoS) vulnerability in libmodplug -- this time 
-  in PAT sample loader.
+>Hello,
+>was a CVE-ID allocated for this issue in the meanwhile?
 
-  Referecences:
-  http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=526084
-  http://sourceforge.net/tracker/?func=detail&aid=2777467&group_id=1275&atid=301275
-  http://secunia.com/advisories/34927
-  http://modplug-xmms.cvs.sourceforge.net/viewvc/modplug-xmms/libmodplug/src/load_pat.cpp?r1=1.3&r2=1.4 (patch)
+I don't believe so.  We've not seen one, at any rate.
 
-Thanks, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+>On Thu, Jul 16, 2009 at 09:25:41AM +0200, Alex Legler wrote:
+>> Hi,
+>> 
+>> I don't think we have a CVE for this/these issue(s) yet, so please
+>> assign one/some:
+>> 
+>> The {tiff,png,jpeg}_instantiate() functions in glyphs-eimage.c contain
+>> an integer overflow, possibly leading to a heap-based buffer overflow.
+>> 
+>> References:
+>> Filed upstream as: http://tracker.xemacs.org/XEmacs/its/issue534
+>> 
+>> http://secunia.com/advisories/35348
+>> http://www.vupen.com/english/advisories/2009/1666
+>> https://bugs.gentoo.org/show_bug.cgi?id=275397
+>> https://bugzilla.redhat.com/show_bug.cgi?id=511994
 
-> On Tue, 2009-04-21 at 14:47 +0200, Jan Lieskovsky wrote:
-> > Hello Steve,
-> > 
-> >   could you please allocate a new CVE-2008-XXXX identifier for
-> > the following old libmodplug issue:
-> > 
-> > References:
-> > http://bugs.gentoo.org/show_bug.cgi?id=266913
-> > http://www.securityfocus.com/bid/30801/info
-> > http://sourceforge.net/project/shownotes.php?release_id=677065&amp;group_id=1275
-> > https://bugzilla.redhat.com/show_bug.cgi?id=496834
-> > 
-> > Affected libmodplug versions: x < 0.8.6
-> > 
-> > Patch (against modplug-xmms/libmodplug):
-> > http://modplug-xmms.cvs.sourceforge.net/viewvc/modplug-xmms/libmodplug/src/load_med.cpp?r1=1.1&amp;r2=1.2
-> > 
-> > Thanks, Jan.
-> > --
-> > Jan iankko Lieskovsky / Red Hat Security Response Team
-> > 
-> > 
-> > 
-> 
-
+-- 
+Vincent Danen / Red Hat Security Response Team 
