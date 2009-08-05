@@ -1,47 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/28/5
-Message-Id: <200901281248.29576.rbu@gentoo.org>
-Date: Wed, 28 Jan 2009 12:48:17 +0100
-From: Robert Buchholz <rbu@...too.org>
-To: oss-security@...ts.openwall.com
-Cc: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request -- Python < 2.6 PySys_SetArgv issues (epiphany, csound, dia, eog, gedit, xchat, vim, nautilus-python, Gnumeric)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/05/6
+Message-ID: <op.ux67y1wb1e62zd@balu.cs.uni-paderborn.de>
+Date: Wed, 05 Aug 2009 18:55:39 +0200
+From: "Matthias Andree" <matthias.andree@....de>
+To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: fetchmail <= 6.3.10 SSL certificate NUL prefix verification bypass
 Content-Type: text/plain; charset=utf-8
 
-On Monday 26 January 2009, Jan Lieskovsky wrote:
-> Though this is a Python flaw (insertion of cwd at the
-> beginning of the Python modules search path), according to our Python
-> maintainers it can't be fixed on Python's side due the need
-> of ensuring the work of other numerous packages, when loading
-> Python modules.
+Am 05.08.2009, 18:30 Uhr, schrieb Tomas Hoger <thoger@...hat.com>:
 
-Your subject seems to claim that this vulnerability is fixed on the 
-Python side in 2.6 -- can you elaborate on that?
+> And than there is OpenSSL, which, as I've been told, expects
+> applications to do name checking.  So it's probably safe to assume that
+> many / majority of client applications using OpenSSL are likely to be
+> affected by some variant of this problem (either via CommonNames or
+> subjectAltNames).  I'm not sure if single CVE should be used here for
+> all, or dozens of CVEs, one for each.  It's likely going to be mess
+> either way.  I'm adding CC on Steven for advice.  Steven, at least one
+> CVE has already been allocated privately for similar case.
 
-James Vega in the bug report you referenced [1] wrote:
-> This problem should be solved in 2.6 since absolute imports are the
-> default.
+How about this:
 
-However, the specification of absolute imports [2] states:
-> import foo
-> 
-> refers to a top-level module or to another module inside the package.
-> [...] To resolve the ambiguity, it is proposed that foo will always be
-> a module or package reachable from sys.path. This is called an
-> absolute import.   
+- for fetchmail, assign an individual CVE Id (as each other of the  
+affected applications)
 
-So absolute imports do not fix situations where you (e.g.) "import re" 
-with CWD=/tmp in sys.path. Also, the test case shows that at least 
-Python 2.6.1's PySys_SetArgv behaves the same:
-$ ./484305 ""
-['']
-['', '/usr/lib64/python26.zip', '/usr/lib64/python2.6', '/usr/lib64/python2.6/plat-linux2', '/usr/lib64/python2.6/lib-tk', '/usr/lib64/python2.6/lib-old', '/usr/lib64/python2.6/lib-dynload', '/usr/lib64/python2.6/site-packages', '/usr/lib64/portage/pym']
+- for this problem class (NUL in CN/subjectAltName allows impersonation of  
+other sites), add a sort of "umbrella CVE" that will reference the  
+individual application CVEs. Would this work?
 
-Regards,
-Robert
 
-[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=484305
-[2] 
-http://www.python.org/dev/peps/pep-0328/#rationale-for-absolute-imports
 
-Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
+For fetchmail which uses OpenSSL, the issue was indeed the use of  
+strcasecmp().
+
+The fix that works for the CommonName NUL checks the length returned from  
+X509_NAME_get_text_by_NID versus strlen() of the same string, and will  
+fail the certificate verification if there is a length mismatch, because  
+we then know that there is at least one NUL character that is part of the  
+string.
+
+An alternative would be making sure that we always compare at least  
+min(X509_NAME_get_text_by_NID(...), strlen(expected_name)) characters, but  
+that's actually more effort.
+
+
+
+A separate fetchmail commit adds a "sdump()" function that allocates and  
+reformats the string to use ANSI-C \xAB-style escapes for non-printable  
+characters so that users can actually see the difference in their logs; I  
+understand that some distributors will skip that patch, so it goes like  
+this:
+
+/******************************************************************/
+char buf[257], *tt;
+
+i = X509_NAME_get_text_by_NID(..., buf, sizeof(buf) - 1);
+fprintf(dbgstream, "Common Name: \"%s\"\n", (tt = sdump(buf, i)));
+free(tt);
+/******************************************************************/
+
+If anyone cares about such a function (license: LGPL v2.1 or later), grab  
+it from
+
+http://mknod.org/svn/fetchmail/branches/BRANCH_6-3/sdump.h
+http://mknod.org/svn/fetchmail/branches/BRANCH_6-3/sdump.c
+(it uses xmalloc() which is something along the lines of void  
+*xmalloc(size_t i) { void *x=malloc(i); if (!x) abort(); return x; })
+
+Or complain that I'm missing a POSIX standard function that does the same  
+(-8
+
+
+
+FWIW, I haven't yet tested if this works for NUL in subjectAltNames, as I  
+currently don't know how to generate such a certificate (can be  
+self-signed) without writing major amounts of code.
+
+
+If someone has a certificate that has embedded NULs in subjectAltNames  
+that I can use for testing, please send it along together with its key so  
+that I can check the fix also works in that code path.
+
+Also, if someone knows a SSL/TLS server (whichever SSL version and  
+protocol) that uses subjectAltNames in a legitimate way, please let me  
+know hostname and port so I can test that there are no regressions for  
+regular servers.
+
+HTH
+
+-- 
+Matthias Andree
