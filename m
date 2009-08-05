@@ -1,31 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/18/4
-Message-ID: <20090918132343.GB5855@ngolde.de>
-Date: Fri, 18 Sep 2009 15:23:43 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- PHP 5 - 5.2.11
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/05/8
+Message-ID: <Pine.GSO.4.51.0908051404540.28664@faron.mitre.org>
+Date: Wed, 5 Aug 2009 14:13:04 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Matthias Andree <matthias.andree@....de>
+cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: fetchmail <= 6.3.10 SSL certificate NUL prefix verification bypass
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Jan Lieskovsky <jlieskov@...hat.com> [2009-09-18 13:52]:
->   PHP has released another upstream 5.2 release, fixing
-> four security issues:
-> 
-> http://www.php.net/ChangeLog-5.php
-> http://www.php.net/downloads.php
-> 
-> Could you please allocate CVE identifiers?
 
-What is the security impact of:
-Fixed bug #44683 (popen crashes when an invalid mode is passed). (Pierre)
-?
+On Wed, 5 Aug 2009, Matthias Andree wrote:
 
-Cheers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
+> - for this problem class (NUL in CN/subjectAltName allows impersonation of
+> other sites), add a sort of "umbrella CVE" that will reference the
+> individual application CVEs. Would this work?
 
-Content of type "application/pgp-signature" skipped
+I am generally wary of assigning umbrella CVEs for implementation bugs
+that lots of applications happen to contain at the same time.  That's like
+giving a single CVE for "FTP server buffer overflow via long USER name" -
+which has happened to at least 20 separate implementations in the past.
+
+Generally, the only time that I find umbrella CVEs "tolerable" are during
+disclosures that involve massive sets of test cases and lots of
+implementations; the PROTOS SNMP disclosures from 2002(?) are the
+canonical example.
+
+An umbrella CVE for a fundamental design problem is a different story
+because one "developer" made a mistake - the original designer.
+
+So use CVE-2009-2666 for fetchmail (I'll fill it in later) and Tomas, even
+if it results in dozens of CVEs, I suspect this is how we should go.
+
+- Steve
