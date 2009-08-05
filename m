@@ -1,22 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/07/1
-Message-ID: <20091107170855.GA3566@galadriel.inutil.org>
-Date: Sat, 7 Nov 2009 18:08:55 +0100
-From: Moritz Muehlenhoff <jmm@...til.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/05/2
+Message-ID: <20090805115350.GC19396@suse.de>
+Date: Wed, 5 Aug 2009 13:53:50 +0200
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request - Asterisk (AST-2009-008.html)
+Cc: coley@...re.org
+Subject: Re: CVE request: XEmacs Multiple Integer Overflows
 Content-Type: text/plain; charset=utf-8
 
-Jan Lieskovsky wrote:
-> The second issue (b,) already got an CVE id of CVE-2008-7220.
+Hello,
+was a CVE-ID allocated for this issue in the meanwhile?
+
+On Thu, Jul 16, 2009 at 09:25:41AM +0200, Alex Legler wrote:
+> Hi,
 > 
-> b, Cross-site AJAX request vulnerability (CVE-2008-7220)
->    http://downloads.asterisk.org/pub/security/AST-2009-009.html
+> I don't think we have a CVE for this/these issue(s) yet, so please
+> assign one/some:
+> 
+> The {tiff,png,jpeg}_instantiate() functions in glyphs-eimage.c contain
+> an integer overflow, possibly leading to a heap-based buffer overflow.
+> 
+> References:
+> Filed upstream as: http://tracker.xemacs.org/XEmacs/its/issue534
+> 
+> http://secunia.com/advisories/35348
+> http://www.vupen.com/english/advisories/2009/1666
+> https://bugs.gentoo.org/show_bug.cgi?id=275397
+> https://bugzilla.redhat.com/show_bug.cgi?id=511994
+> 
+> Thanks,
+> Alex
 
-This seems to be a mistake; CVE-2008-7220 already identifies a prototypejs
-issue.
 
-Cheers,
-        Moritz
 
+-- 
+Bye,
+     Thomas
+-- 
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+-- 
+           Hamming's Motto:
+           The purpose of computing is insight, not numbers.
+                                -- Richard W. Hamming
