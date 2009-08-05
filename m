@@ -1,36 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/01/10
-Message-Id: <1238615027.3309.7.camel@dhcp-lab-164.englab.brq.redhat.com>
-Date: Wed, 01 Apr 2009 21:43:47 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE request -- ghostscript
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/05/10
+Message-ID: <20090805192621.GA20169@logo.rdu.rpath.com>
+Date: Wed, 5 Aug 2009 15:26:21 -0400
+From: "Michael K. Johnson" <johnsonm@...th.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: execve: must clear current->clear_child_tid
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve,
+This seems to me a potential security issue specifically because as
+far as I can see clear_child_tid isn't reset on exec of set{u,g}id
+executables.  (Otherwise it would just be a bug...)  Regarding a
+non-threaded setuid program, a direct attack seems hard since the
+maps and smaps files are hidden to other users.  Am I missing some
+of the potential impact here?
 
-  could you please allocate new CVE ids for the following two 
-Ghostscript issues:
-
-1, DoS (crash) in CCITTFax decoding filter
-   References:
-   https://bugzilla.redhat.com/show_bug.cgi?id=493442
-   https://bugzilla.redhat.com/show_bug.cgi?id=229174 
-   -^ original report, so CVE-2007-XXXX will be needed
-   https://bugzilla.redhat.com/show_bug.cgi?id=493442#c1 (PoC)
-
-
-2, Buffer overflow in BaseFont writer module for pdfwrite defice
-   References:
-   https://bugzilla.redhat.com/show_bug.cgi?id=493445
-   http://bugs.ghostscript.com/show_bug.cgi?id=690211
-   -^ upstream bug report, so CVE-2008-XXXX will be needed
-   http://svn.ghostscript.com/viewvc?view=rev&sortby=rev&revision=9304 (upstream patch)
-
-
-Thanks, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-
+On Tue, Aug 04, 2009 at 04:09:09PM +0800, Eugene Teo wrote:
+> clone() syscall has special support for TID of created threads.  This
+> support includes two features.
+> 
+> One (CLONE_CHILD_SETTID) is to set an integer into user memory with the
+> TID value.
+> 
+> One (CLONE_CHILD_CLEARTID) is to clear this same integer once the
+> created thread dies.
+> 
+> The integer location is a user provided pointer, provided at clone() time.
+> 
+> kernel keeps this pointer value into current->clear_child_tid.
+> 
+> At execve() time, we should make sure kernel doesnt keep this user
+> provided pointer, as full user memory is replaced by a new one.
+> 
+> As glibc fork() actually uses clone() syscall with CLONE_CHILD_SETTID
+> and CLONE_CHILD_CLEARTID set, chances are high that we might corrupt
+> user memory in forked processes.
+> 
+> Following sequence could happen:
+> 
+> 1) bash (or any program) starts a new process, by a fork() call that
+> glibc maps to a clone( ...  CLONE_CHILD_SETTID |
+> CLONE_CHILD_CLEARTID...) syscall
+> 
+> 2) When new process starts, its current->clear_child_tid is set to a
+> location that has a meaning only in bash (or initial program) context
+> (&THREAD_SELF->tid)
+> 
+> 3) This new process does the execve() syscall to start a new program.
+> current->clear_child_tid is left unchanged (a non NULL value)
+> 
+> 4) If this new program creates some threads, and initial thread exits,
+> kernel will attempt to clear the integer pointed by
+> current->clear_child_tid from mm_release() :
+> 
+>         if (tsk->clear_child_tid
+>             && !(tsk->flags & PF_SIGNALED)
+>             && atomic_read(&mm->mm_users) > 1) {
+>                 u32 __user * tidptr = tsk->clear_child_tid;
+>                 tsk->clear_child_tid = NULL;
+> 
+>                 /*
+>                  * We don't check the error code - if userspace has
+>                  * not set up a proper pointer then tough luck.
+>                  */
+> << here >>      put_user(0, tidptr);
+>                 sys_futex(tidptr, FUTEX_WAKE, 1, NULL, NULL, 0);
+>         }
+> 
+> 5) OR : if new program is not multi-threaded, but spied by /proc/pid
+> users (ps command for example), mm_users > 1, and the exiting program
+> could corrupt 4 bytes in a persistent memory area (shm or memory mapped
+> file)
+> 
+> If current->clear_child_tid points to a writeable portion of memory of
+> the new program, kernel happily and silently corrupts 4 bytes of memory,
+> with unexpected effects.
+> 
+> References:
+> http://article.gmane.org/gmane.linux.kernel/871942
+> https://bugzilla.redhat.com/show_bug.cgi?id=515423
+> 
+> Patch is not in upstream kernel yet.
+> 
+> Thanks, Eugene
