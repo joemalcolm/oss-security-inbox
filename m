@@ -1,42 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/03/6
-Message-ID: <20090903221121.GA23517@kroah.com>
-Date: Thu, 3 Sep 2009 15:11:21 -0700
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/06/2
+Message-ID: <4A7A6C79.9040707@redhat.com>
+Date: Thu, 06 Aug 2009 13:39:05 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Greg KH <gregkh@...e.de>
-Subject: Re: CVE request: kernel: tty: make sure to flush any pending work when halting the ldisc
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: clock_nanosleep() with CLOCK_MONOTONIC_RAW NULL pointer dereference
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Aug 31, 2009 at 11:52:21AM +0800, Eugene Teo wrote:
-> The tty ldisc code was rewritten to use proper reference counts (commits 
-> 65b770468e98 and cbe9352fa08f) in order to avoid a race with hangup, but 
-> it also introduced another bug that can result in various problems such 
-> as a NULL pointer dereference in run_timer_softirq() or a BUG() in 
-> worker_thread. More info in the patch.
-> 
-> Upstream commit:
-> http://git.kernel.org/linus/5c58ceff103d8a654f24769bb1baaf84a841b0cc
-> 
-> Reproducer:
-> http://lkml.org/lkml/2009/8/20/27
-> http://lkml.org/lkml/2009/8/20/68
-> 
-> Backtrace:
-> http://lkml.org/lkml/2009/8/20/21
-> 
-> I believe this affects kernel versions greater than v2.6.26. The code in 
-> drivers/char/tty_ldisc.c was from drivers/char/tty_io.c before it was 
-> splitted into its own file in v2.6.27-rc1 (commit 01e1abb2). I did not 
-> investigate further.
+Calling do_nanosleep() with clockid CLOCK_MONOTONIC_RAW can cause a NULL
+pointer dereference. Appears to be introduced after commit 2d42244a
+(v2.6.28-rc1).
 
-Are you sure about this?  It only looks to be a problem in the 2.6.31-rc
-tree, as both of the above referenced patches are in that tree (showed
-up in 2.6.31-rc6).
+Upstream commit:
+http://git.kernel.org/linus/70d715fd0597f18528f389b5ac59102263067744
 
-Do you have a backported patch to 2.6.30 that you think fixes the
-problem?
+Reproducer/backtrace:
+http://lkml.org/lkml/2009/8/4/28
 
-thanks,
+clock_nanosleep ->
+CLOCK_DISPATCH ->
+common_nsleep(arglist) ->
+hrtimer_nanosleep
+      return hrtimer_nanosleep(tsave /* &ts */, rmtp /* NULL */,
+                 flags & TIMER_ABSTIME /* turns out false */ ?
+                 HRTIMER_MODE_ABS : HRTIMER_MODE_REL,
+                 which_clock); ->
+do_nanosleep ->
+hrtimer_start_expires ->
+hrtimer_start_range_ns ->
+__hrtimer_start_range_ns ->
+lock_hrtimer_base ->
+...
 
-greg k-h
+References:
+http://lkml.org/lkml/2009/8/2/331
+http://lkml.org/lkml/2009/8/4/40
+https://bugzilla.redhat.com/show_bug.cgi?id=515867
+
+Thanks, Eugene
