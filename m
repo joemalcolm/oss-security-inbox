@@ -1,34 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/25/1
-Message-Id: <200905252258.07917.rbu@gentoo.org>
-Date: Mon, 25 May 2009 22:57:59 +0200
-From: Robert Buchholz <rbu@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/06/1
+Message-ID: <op.ux7sitid1e62zd@merlin.emma.line.org>
+Date: Thu, 06 Aug 2009 02:19:31 +0200
+From: "Matthias Andree" <matthias.andree@....de>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: Re: CVE Request for libsndfile
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: fetchmail <= 6.3.10 SSL certificate NUL prefix verification bypass
 Content-Type: text/plain; charset=utf-8
 
-On Friday 15 May 2009, Jamie Strandboge wrote:
-> From http://www.mega-nerd.com/erikd/Blog/CodeHacking/libsndfile/:
->
->   There's a new release of libsndfile available in the usual place.
-> This is a security bug fix release which fixes a potential heap
-> overflow in VOC files found and reported by Tobias Klein (
-> http://www.trapkit.de/ ) and another in the AIFF file parser found by
-> me.
->
-> 1.0.20 supposedly fixes it, with the author supplying patches back to
-> 1.0.15. Can we get a CVE for this?
+Am 05.08.2009, 20:13 Uhr, schrieb Steven M. Christey  
+<coley@...us.mitre.org>:
 
-The trapkit.de advisory is up here:
-http://www.trapkit.de/advisories/TKADV2009-006.txt
+> So use CVE-2009-2666 for fetchmail (I'll fill it in later) and Tomas,  
+> even if it results in dozens of CVEs, I suspect this is how we should go.
 
-Secunia also has an advisory:
-http://secunia.com/advisories/35076/
+Thank you.
 
-If one or two CVE identifiers could be reserved, that'd be great.
+http://www.fetchmail.info/fetchmail-SA-2009-01.txt
 
-
-Robert
-
-Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
+-- 
+Matthias Andree
