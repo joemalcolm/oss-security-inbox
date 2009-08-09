@@ -1,64 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/13/4
-Message-ID: <4AD48001.7050302@redhat.com>
-Date: Tue, 13 Oct 2009 15:26:25 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: Duplicate CVE assignment notification [was: CVE id request: django]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/09/1
+Message-ID: <20090809134817.GJ790@ngolde.de>
+Date: Sun, 9 Aug 2009 15:48:17 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE id request: groff (pdfroff)
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve, vendors,
+Hi,
+We got two bug reports in our BTS for groff with security 
+impact which need CVE ids.
 
-   two CVE ids have been assigned for this issue:
+First one:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=538330
+pdfroff tool of groff is creating files in a insecure manner 
+in the /tmp directory.
 
-CVE-2009-3695 and CVE-2009-3610.
+Second:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=538338
+pdfroff tool of groff is calling ghostscript with the 
+-dSAFER command line option. From the manpage:
 
-Will take CVE-2009-3695 as the proper one, as it has description already.
-CVE-2009-3610 should be rejected.
+       -dSAFER
+              Disables  the  "deletefile"  and  "renamefile" operators and the
+              ability to open files in any mode other  than  read-only.   This
+              strongly  recommended  for spoolers, conversion scripts or other
+              sensitive  environments  where  a  badly  written  or  malicious
+              PostScript  program  code must be prevented from changing impor-
+              tant files.
 
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+This allows an attacker to delete or rename arbitrary victim owned files.
 
-Josh Bressers wrote:
-> Please use CVE-2009-3610
-> 
-> Thanks.
-> 
-> ----- "Raphael Geissert" <geissert@...ian.org> wrote:
-> 
->> -----BEGIN PGP SIGNED MESSAGE-----
->> Hash: SHA1
->>
->> Hi,
->>
->> A vulnerability has been found in Django's forms library that can be
->> used to
->> perform DoS attacks via certain email addresses or URLs that make the
->> validation regular expressions consume CPU resources.
->>
->> The vulnerability is said to be being exploited on live
->> installations.
->>
->> References:
->> http://www.djangoproject.com/weblog/2009/oct/09/security/
->> http://groups.google.com/group/django-users/browse_thread/thread/15df9e45118dfc51/677e54bd6c6e283b
->> http://lists.debian.org/debian-security-announce/2009/msg00227.html
->>
->> Please assign a CVE identifier.
->>
->> Kind regards,
->> - -- 
->> Raphael Geissert - Debian Developer
->> www.debian.org - get.debian.net
->>
->> -----BEGIN PGP SIGNATURE-----
->> Version: GnuPG v1.4.10 (GNU/Linux)
->>
->> iEYEARECAAYFAkrREJQACgkQYy49rUbZzlpwswCgjSOAiDSfYGYiE+ZjE9i6+Zmf
->> 3MkAoJN9qvxGAzfzsgiFW8XAuP1wan81
->> =nsNz
->> -----END PGP SIGNATURE-----
-> 
+Can you allocate CVE ids for that?
 
+Cheers
+Nico
+
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
