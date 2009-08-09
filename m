@@ -1,24 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/13/1
-Message-ID: <4A83681B.7050201@kernel.sg>
-Date: Thu, 13 Aug 2009 09:10:51 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/09/2
+Message-ID: <20090809162132.GA23991@ngolde.de>
+Date: Sun, 9 Aug 2009 18:21:32 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: flat: fix uninitialized ptr with shared libs
+Subject: CVE id request: spip
 Content-Type: text/plain; charset=utf-8
 
-The new credentials code broke load_flat_shared_library() as it now uses
-an uninitialised cred pointer, leading to a NULL pointer dereference.
-This can be triggered by running a shared flat binary.
+Hi,
+http://www.spip-contrib.net/SPIP-Security-Alert-new-version
+Can I please get a CVE id for this?
 
-kernel/cred.c was introduced in v2.6.29-rc1 IIRC.
+Cheers
+Nico
 
-Upstream commit:
-http://git.kernel.org/linus/3440625d78711bee41a84cf29c3d8c579b522666
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-References:
-http://lkml.org/lkml/2009/6/22/91
-http://thread.gmane.org/gmane.linux.hardware.blackfin.kernel.devel/1905
-
-Thanks, Eugene
+Content of type "application/pgp-signature" skipped
