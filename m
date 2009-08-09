@@ -1,30 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/20/7
-Message-ID: <20090720133652.GA14021@grsecurity.net>
-Date: Mon, 20 Jul 2009 09:36:52 -0400
-From: spender@...ecurity.net (Brad Spengler)
-To: Marcus Meissner <meissner@...e.de>
-Cc: oss-security@...ts.openwall.com, dailydave <dailydave@...ts.immunitysec.com>
-Subject: Re: [Dailydave] Linux 2.6.30+/SELinux/RHEL5 test kernel 0day, exploiting the unexploitable
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/09/3
+Message-Id: <20090809130155.00f242f2.michael.s.gilbert@gmail.com>
+Date: Sun, 9 Aug 2009 13:01:55 -0400
+From: "Michael S. Gilbert" <michael.s.gilbert@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: mantis
 Content-Type: text/plain; charset=utf-8
 
-> I am not sure about the SELinux policy error he used to 
-> exploit the RHEL 5.? Beta.
+Hello,
 
-It was a default RHEL 5.3 SELinux policy.  The same vulnerability from
-the policy exists in Fedora 10 and 11.  I haven't tested anything else,
-but I imagine lots more are vulnerable (and it doesn't matter what 
-kernel you're running).  There will be a CVE for this vulnerability as 
-well.
+Debian recently updated mantis.  The description is:
 
-(Really there should have been a CVE for the lack of 
--fno-delete-null-pointer-checks instead of pretending the only problem 
-was /dev/net/tun.  As the commit to add it showed (and at least 10 other 
-commits to the kernel this weekend) lots of other code was affected, so 
-someone not applying a fix for a CVE mentioning only /dev/net/tun 
-because they don't have the code for /dev/net/tun compiled in, is going 
-to be missing out on a number of fixes).
+  It was discovered that the Debian Mantis package, a web based bug
+  tracking system, installed the database credentials in a file with
+  world-readable permissions onto the local filesystem. This allows
+  local users to acquire the credentials used to control the Mantis
+  database.
 
--Brad
+  References:
+  http://www.debian.org/security/2009/dsa-1856
+  http://bugs.debian.org/425010
 
-Download attachment "signature.asc" of type "application/pgp-signature" (190 bytes)
+Can we get a CVE id for this? Thanks!
+
+Mike
