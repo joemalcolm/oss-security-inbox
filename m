@@ -1,25 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/06/2
-Message-Id: <200907062133.34766.steffen.joeris@skolelinux.de>
-Date: Mon, 6 Jul 2009 21:33:34 +1000
-From: Steffen Joeris <steffen.joeris@...lelinux.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/10/2
+Message-ID: <20090810154743.3424fd3f@redhat.com>
+Date: Mon, 10 Aug 2009 15:47:43 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: xcftools
+Cc: oss-security+ml@...lde.de
+Subject: Re: CVE id request: groff (pdfroff)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 6 Jul 2009 09:09:25 pm Steffen Joeris wrote:
-> Hi
->
-> I'd like to request a CVE id for xcftools. I don't think the issue[0] is
-> very severe, but I guess it still deserves a CVE id.
->
-> Cheers
-> Steffen
->
-> [0]: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=533361
-Already covered by CVE-2009-2175, so please ignore.
+On Sun, 9 Aug 2009 15:48:17 +0200 Nico Golde
+<oss-security+ml@...lde.de> wrote:
 
-Cheers
-Steffen
+> First one:
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=538330
+> pdfroff tool of groff is creating files in a insecure manner 
+> in the /tmp directory.
+> 
+> Second:
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=538338
+> pdfroff tool of groff is calling ghostscript with the 
+> -dSAFER command line option.
 
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+Looking into groff's NEWS file, pdfroff was added in version 1.19.2, so
+that may be used as "first affected" in CVE description:
+
+http://cvs.savannah.gnu.org/viewvc/groff/groff/NEWS?view=markup
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
