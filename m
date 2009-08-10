@@ -1,65 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/27/1
-Message-ID: <hc63s3$t68$1@ger.gmane.org>
-Date: Tue, 27 Oct 2009 00:27:59 -0600
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/10/1
+Message-ID: <4A7FA4B4.3060706@kernel.sg>
+Date: Mon, 10 Aug 2009 12:40:20 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE Request -- PHP 5 - 5.2.11
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: parisc: isa-eeprom missing lower bound check
 Content-Type: text/plain; charset=utf-8
 
-Tomas Hoger wrote:
+loff_t is a signed type. If userspace passes a negative ppos, the
+"count" range check is weakened. If ppos is negative, the readb() later
+in the function will poke in random memory. Only affects if you are
+using a PA-RISC kernel with CONFIG_EISA set.
 
-> On Thu, 15 Oct 2009 18:47:15 -0500 Raphael Geissert wrote:
-> 
->> > Name: CVE-2009-3291
->> > 
->> > The php_openssl_apply_verification_policy function in PHP before
->> > 5.2.11 does not properly perform certificate validation, which has
->> > unknown impact and attack vectors, probably related to an ability to
->> > spoof certificates.
->> 
->> Yes, seems to be related to an improper handling of \0 in the CN
->> field.
-> 
-> Agree.  This change, however, seems to have a minimal impact on today's
-> real world PHP applications.  Certificate verification is not enabled by
-> default and there seem to be very few applications that actually enable
-> it.  I have some notes in:
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-3291
+Upstream commit:
+http://git.kernel.org/linus/6b4dbcd86a9d464057fcc7abe4d0574093071fcc
 
-I see, thanks, I had not noticed that. 
+Reference:
+http://patchwork.kernel.org/patch/36418/
 
-> 
->> > Name: CVE-2009-3292
->> >
->> > Unspecified vulnerability in PHP before 5.2.11 has unknown impact
->> > and attack vectors related to "missing sanity checks around exif
->> > processing."
->> 
->> It is related to missing sanity checks when determining the length of
->> sections of jpg headers and a missing limit on the nesting level of
->> TIFF files.
-> 
-> There are 3 changes in the upstream path:
-> - missing header length check, with similar impact as CVE-2009-2687 in
->   the worst case
-> - missing nesting level checks for TIFFs, crafted file can lead to deep
->   recursion exhausting stack memory resulting in rather harmless crash
-> - missing EOF checks, possibly leading to NULL deref or PHP memory
->   limit exception
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-3292
-> 
-
-You are right, I forgot about the missing EOF checks.
-
-It would be great if the descriptions of the CVEs were updated to make them
-reflect the known information about the issues.
-
-Regards,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
-
-
+Thanks, Eugene
