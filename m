@@ -1,49 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/23/10
-Message-ID: <1096419672.595721259004023238.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 23 Nov 2009 14:20:23 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/11/1
+Message-ID: <4A80E2B8.2090709@redhat.com>
+Date: Tue, 11 Aug 2009 11:17:12 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVEs for nginx
+CC: "Steven M. Christey" <coley@...us.mitre.org>, Kees Cook <kees@...ntu.com>
+Subject: CVE-2009-2691 kernel: /proc/$pid/maps visible during initial setuid ELF loading
 Content-Type: text/plain; charset=utf-8
 
------ "Craig" <craig@...uarter.de> wrote:
+Steve Beattie and Kees Cook noticed that the /proc/$pid/maps and smaps
+files are readable during ELF loading for processes that a user should
+not normally be able to see (for example, when launching a setuid process).
 
-> 
-> 1.) nginx webdav: http://secunia.com/advisories/36818/
+I have assigned this with CVE-2009-2691.
 
-Let's use CVE-2009-3898 for this one:
+Upstream commits:
+http://git.kernel.org/linus/13f0feafa6b8aead57a2a328e2fca6a5828bf286
+http://git.kernel.org/linus/00f89d218523b9bf6b522349c039d5ac80aa536d
+http://git.kernel.org/linus/704b836cbf19e885f8366bccb2e4b0474346c02d
 
-CVE-2009-3898
+References:
+http://lkml.org/lkml/2009/6/23/652
+http://lkml.org/lkml/2009/6/23/653
+http://marc.info/?l=linux-kernel&m=124718946021193
+http://marc.info/?l=linux-kernel&m=124718949821250
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-2691
 
-nginx versions before 0.8.17 and 0.7.63 contain a directory traversal flaw in
-the webdav component. A user who can COPY or MOVE permissions could place
-files outside the webdav root.
-
-http://archives.neohapsis.com/archives/fulldisclosure/2009-09/0379.html
-http://secunia.com/advisories/36818/
-http://marc.info/?l=oss-security&m=125900327409842&w=2
-
-> 
-> 2.) nginx Null Pointer dereference:
-> http://sysoev.ru/nginx/patch.null.pointer.txt
-
-This is CVE-2009-3896
-
-> 
-> 3.) nginx SSL Renegotiation:
-> http://sysoev.ru/nginx/patch.cve-2009-3555.txt
-> 
-> I know the last one contains a CVE number, nginx uses openssl and the
-> patch will disable renegotiation, maybe this deserves an own CVE?
-> 
-
-We'll use the same ID. mod_ssl did a similar thing and used CVE-2009-3555. I
-think multiple IDs in this instance would actually create more confusion that
-it would solve.
-
-Thanks.
-
--- 
-    JB
+Thanks, Eugene
