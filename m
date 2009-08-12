@@ -1,94 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/29/3
-Message-ID: <20090429052858.GD11901@lackof.org>
-Date: Tue, 28 Apr 2009 23:28:58 -0600
-From: dann frazier <dannf@...ian.org>
-To: Steven French <sfrench@...ibm.com>
-Cc: oss-security@...ts.openwall.com, security@...nel.org, jlayton@...hat.com
-Subject: Re: CVE request? buffer overflow in CIFS in 2.6.*
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/12/1
+Message-ID: <20090812133747.625a78f1@neon>
+Date: Wed, 12 Aug 2009 13:37:47 +0200
+From: Alex Legler <a3li@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: phpgroupware
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Apr 28, 2009 at 08:27:19PM -0500, Steven French wrote:
-> Jeff (Layton) was working an additional fix (updating a proposed fix from 
-> Suresh J.).  We will review it together tomorrow.
+Hey,
 
-Cool, thanks Steve.
+can I please get a CVE/CVEs for these issues:
 
-Also, I now notice that CVE-2009-1439 was assigned for
-the nativeFileSystem fixes, so looks like the status is:
+1) Local file disclosure via the "csvfile" parameter to
+addressbook/csv_import.php
 
-CVE-2009-1439:
- http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.29.y.git;a=commitdiff;h=15bd8021d870d2c4fbf8c16578d72d03cfddd3a7
- http://git.kernel.org/?p=linux/kernel/git/sfrench/cifs-2.6.git;a=commitdiff;h=f083def68f84b04fe3f97312498911afce79609e
+2) SQL injection via the "passwd" parameter to login.php -- requires
+magic_quotes_gpc=off
 
-CVE-2009-NOT-YET-ASSIGNED:
- http://git.kernel.org/linus/27b87fe52baba0a55e9723030e76fce94fabcea4
- http://git.kernel.org/?p=linux/kernel/git/sfrench/cifs-2.6.git;a=commit;h=7b0c8fcff47a885743125dd843db64af41af5a61
- http://git.kernel.org/?p=linux/kernel/git/sfrench/cifs-2.6.git;a=commit;h=968460ebd8006d55661dec0fb86712b40d71c413
- + some others in progress
+3) XSS via parameters starting with "phpgw_" in login.php
 
-Does that look accurate?
+4) Local file inclusion and execution via the "conv_type" parameter to
+addressbook/inc/class.uiXport.inc.php
 
-> 
-> 
-> Steve French
-> Senior Software Engineer
-> Linux Technology Center - IBM Austin
-> phone: 512-838-2294
-> email: sfrench at-sign us dot ibm dot com
-> 
-> 
-> 
-> dann frazier <dannf@...ian.org> 
-> 04/28/2009 08:12 PM
-> 
-> To
-> oss-security@...ts.openwall.com
-> cc
-> security@...nel.org, Steven French/Austin/IBM@...US
-> Subject
-> Re: [oss-security] CVE request? buffer overflow in CIFS in 2.6.*
-> 
-> 
-> 
-> 
-> 
-> 
-> On Sat, Apr 25, 2009 at 05:40:20PM +0800, Eugene Teo wrote:
-> > Hi Steve,
-> > 
-> > > One approach might be to "pre-tag" this whole set of changes with a 
-> single
-> > > CVE, then when they ultimately get merged into a single kernel version 
-> or
-> > > some other concrete milestone, the "scope" of that CVE ends.
-> > 
-> > I'm fine with this approach. It can actually help to make it easier to
-> > manage this set of changes.
-> 
-> To summarize (and make sure I understand), the plan is to create a
-> single CVE for a collection of CIFS fixes. So far, this series includes
-> the following changesets, but others may be added as well:
-> 
-> http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.29.y.git;a=commitdiff;h=15bd8021d870d2c4fbf8c16578d72d03cfddd3a7
-> 
-> http://git.kernel.org/?p=linux/kernel/git/sfrench/cifs-2.6.git;a=commitdiff;h=f083def68f84b04fe3f97312498911afce79609e
-> 
-> http://git.kernel.org/linus/27b87fe52baba0a55e9723030e76fce94fabcea4
-> http://git.kernel.org/?p=linux/kernel/git/sfrench/cifs-2.6.git;a=commit;h=7b0c8fcff47a885743125dd843db64af41af5a61
-> 
-> http://git.kernel.org/?p=linux/kernel/git/sfrench/cifs-2.6.git;a=commit;h=968460ebd8006d55661dec0fb86712b40d71c413
-> 
-> 
-> Is that correct? If so, is there an estimate for when this set will be
-> deemed complete and a CVE assigned?
-> 
-> I think that if we wait too long to close this, we'll end up with
-> distributions releasing updates with only a subset of these
-> fixes, which would make this "collection" somewhat difficult to track
-> by CVE ID handle. I'm otherwise quite happy with this plan, fwiw.
-> 
+All addressed in
+http://svn.savannah.gnu.org/viewvc?view=rev&root=phpgroupware&sortby=date&revision=19117
 
--- 
-dann frazier
+References:
+http://secunia.com/advisories/35519
+http://www.securityfocus.com/bid/35761
+http://xforce.iss.net/xforce/xfdb/51922
 
+Thanks,
+Alex
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
