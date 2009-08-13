@@ -1,85 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/22/2
-Message-Id: <1248265127.11569.21.camel@dhcp-lab164.englab.brq.redhat.com>
-Date: Wed, 22 Jul 2009 14:18:47 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Wireshark <1.2.1 Multiple DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/13/2
+Message-ID: <20090813130548.GA17522@suse.de>
+Date: Thu, 13 Aug 2009 15:05:48 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: new root exploit from Brad
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve, vendors,
+Hi,
 
-  1, thank you for the prompt assignment. 
+Apparently new root exploit from Brad, see his twitter:
+http://twitter.com/spendergrsec
 
-  2, what's related to:
+The video is a bit sick in my opinion.
 
-    Name: CVE-2009-2560
-    Status: Candidate
-    URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2560
-    Final-Decision: 
-    Interim-Decision: 
-    Modified: 
-    Proposed: 
-    Assigned: 20090721
-    Category: 
-    Reference: CONFIRM:http://www.wireshark.org/security/wnpa-sec-2009-04.html
-    Reference: BID:35748
-    Reference: URL:http://www.securityfocus.com/bid/35748
-    Reference: SECUNIA:35884
-    Reference: URL:http://secunia.com/advisories/35884
-    Reference: VUPEN:ADV-2009-1970
-    Reference: URL:http://www.vupen.com/english/advisories/2009/1970
+Disclosed apparently next week.
 
-    Multiple unspecified vulnerabilities in Wireshark 1.2.0 allow remote
-    attackers to cause a denial of service (crash) via unspecified vectors
-    in the (1) Bluetooth L2CAP, (2) RADIUS, or (3) MIOP dissectors.
-
-    This one will need to be split into two different ones, because:
-
-    a, the Bluetooth L2CAP and MIOP dissectors flaws are affecting only
-       version Wireshark 1.2.0 (as mentioned in upstream's 
-       wnpa-sec-2009-04.html)
-
-    b, but the RADIUS dissector issue affects also prior versions of
-       Wireshark -- issue / crash confirmed also in upstreams 
-       Wireshark-1.0.8.
-
-  Could you please split the CVE-2009-2560 into two CVE ids?
-  (one for the L2CAP, MIOP dissectors, other one for
-   the RADIUS).
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-P.S.: Affected Wireshark versions in other CVE identifiers
-      assigned within this update are sane.
-
-On Tue, 2009-07-21 at 12:56 +0200, Alex Legler wrote:
-> Hi,
-> 
-> in case the vendor has not already requested CVEs for this:
-> 
-> "Wireshark 1.2.1 fixes the following vulnerabilities:
-> 
->       * The IPMI dissector could overrun a buffer. (Bug 3559) Versions
->         affected: 1.2.0 
->       * The AFS dissector could crash. (Bug 3564) Versions affected:
->         0.9.2 to 1.2.0 
->       * The Infiniband dissector could crash on some platforms. Versions
->         affected: 1.0.6 to 1.2.0 
->       * The Bluetooth L2CAP dissector could crash. (Bug 3572) Versions
->         affected: 1.2.0 
->       * The RADIUS dissector could crash. (Bug 3578) Versions affected:
->         1.2.0 
->       * The MIOP dissector could crash. (Bug 3652) Versions affected:
->         1.2.0 
->       * The sFlow dissector could use excessive CPU and memory. (Bug
->         3570) Versions affected: 1.2.0"
-> 
-> http://www.wireshark.org/security/wnpa-sec-2009-04.html
-> 
-> Thanks,
-> Alex
-
+Ciao, Marcus
