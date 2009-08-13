@@ -1,39 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/24/10
-Message-ID: <269868542.697921259088889963.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 24 Nov 2009 13:54:49 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/13/1
+Message-ID: <4A83681B.7050201@kernel.sg>
+Date: Thu, 13 Aug 2009 09:10:51 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Cc: bind9-bugs@....org
-Subject: Re: a new bind issue
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: flat: fix uninitialized ptr with shared libs
 Content-Type: text/plain; charset=utf-8
 
-I'm adding the address BIND notes in their advisory to the CC.
+The new credentials code broke load_flat_shared_library() as it now uses
+an uninitialised cred pointer, leading to a NULL pointer dereference.
+This can be triggered by running a shared flat binary.
 
-Bind folks, the CVE id for your latest advisory is below.
+kernel/cred.c was introduced in v2.6.29-rc1 IIRC.
 
-Thanks.
+Upstream commit:
+http://git.kernel.org/linus/3440625d78711bee41a84cf29c3d8c579b522666
 
--- 
-    JB
+References:
+http://lkml.org/lkml/2009/6/22/91
+http://thread.gmane.org/gmane.linux.hardware.blackfin.kernel.devel/1905
 
-
------ "Steven M. Christey" <coley@...us.mitre.org> wrote:
-
-> On Tue, 24 Nov 2009, Josh Bressers wrote:
-> 
-> > CVE-2009-4022
-> >
-> > Bind versions 9.0.x, 9.1.x, 9.2.x, 9.3.x, 9.4.0 before 9.4.3-P3,
-> 9.5.0,
-> > 9.5.1, 9.5.2, 9.6.0, 9.6.1-P1
-> >
-> > References:
-> > https://www.isc.org/node/504
-> 
-> If anybody has a direct contact to ISC, could you notify them of the
-> new
-> number?  They have a placeholder in their advisory right now.
-> 
-> Thanks,
-> Steve
+Thanks, Eugene
