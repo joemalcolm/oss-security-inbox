@@ -1,25 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/22/3
-Message-ID: <Pine.GSO.4.51.0905212023320.18536@faron.mitre.org>
-Date: Thu, 21 May 2009 20:23:37 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/14/1
+Message-ID: <4A84BA14.6080305@kernel.sg>
+Date: Fri, 14 Aug 2009 09:12:52 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: nsd
+Subject: CVE-2009-2692 kernel: uninit op in SOCKOPS_WRAP() leads to privesc
 Content-Type: text/plain; charset=utf-8
 
+Marcus Meissner wrote:
+> Apparently new root exploit from Brad, see his twitter:
+> http://twitter.com/spendergrsec
+> 
+> The video is a bit sick in my opinion.
+> 
+> Disclosed apparently next week.
 
-======================================================
-Name: CVE-2009-1755
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1755
-Reference: MLIST:[oss-security] 20090519 CVE id request: nsd
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/05/19/1
-Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=529418
-Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=529420
-Reference: CONFIRM:http://www.nlnetlabs.nl/publications/NSD_vulnerability_announcement.html
+So, the cat is out of the bag. The exploit is available, but so is the
+patch.
 
-Off-by-one error in packet.c in nsd 3.2.1 and 2.3.7 allows remote
-attackers to cause a denial of service (crash) and possibly execute
-arbitrary code via unspecified vectors that trigger a buffer overflow.
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-2692
+http://git.kernel.org/linus/e694958388c50148389b0e9b9e9e8945cf0f1b98
 
-
+Thanks, Eugene
