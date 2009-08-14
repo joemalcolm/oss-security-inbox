@@ -1,31 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/20/3
-Message-ID: <20091120104735.GB3046@redhat.com>
-Date: Fri, 20 Nov 2009 10:47:35 +0000
-From: Joe Orton <jorton@...hat.com>
-To: Thomas Biege <thomas@...e.de>
-Cc: OSS-Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: php 5.3.1 update
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/14/2
+Message-ID: <20090814113836.GA23197@suse.de>
+Date: Fri, 14 Aug 2009 13:38:36 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2009-2692 kernel: uninit op in SOCKOPS_WRAP() leads to privesc
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Nov 20, 2009 at 11:41:50AM +0100, Thomas Biege wrote:
-> Hello,
+On Fri, Aug 14, 2009 at 09:12:52AM +0800, Eugene Teo wrote:
+> Marcus Meissner wrote:
+> > Apparently new root exploit from Brad, see his twitter:
+> > http://twitter.com/spendergrsec
+> > 
+> > The video is a bit sick in my opinion.
+> > 
+> > Disclosed apparently next week.
 > 
-> PHP was updated to version 5.3.1 and did also address security
-> issues: http://www.php.net/releases/5_3_1.php
+> So, the cat is out of the bag. The exploit is available, but so is the
+> patch.
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-2692
+> http://git.kernel.org/linus/e694958388c50148389b0e9b9e9e8945cf0f1b98
 
-We assigned some CVE names for the new issues here; two correspond to 
-existing issues fixed earlier in 5.2.11.  The CVE names have not made it 
-to the web site but were used in the e-mail announcement text:
+Just for the record, the other members of the affected struct were audited for
+NULL checks and found clean.
 
-- Added missing sanity checks around exif processing. (CVE-2009-3292, Ilia)
-- Fixed a safe_mode bypass in tempnam() identified by Grzegorz Stachowiak.
-  (CVE-2009-3557, Rasmus)
-- Fixed a open_basedir bypass in posix_mkfifo() identified by Grzegorz
-  Stachowiak. (CVE-2009-3558, Rasmus)
-- Fixed bug #50063 (safe_mode_include_dir fails). (CVE-2009-3559,
-  Johannes, christian at elmerot dot se)
-- Fixed bug #44683 (popen crashes when an invalid mode is passed).
-  (CVE-2009-3294, Pierre)
-
-Regards, Joe
+Ciao, Marcus
