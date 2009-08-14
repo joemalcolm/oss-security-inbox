@@ -1,84 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/21/1
-Message-ID: <Pine.GSO.4.51.0901202007460.22454@faron.mitre.org>
-Date: Tue, 20 Jan 2009 20:09:45 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: coley@...us.mitre.org
-Subject: Re: CVE request -- git
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/14/6
+Message-ID: <20090814213538.GA3469@severus.strandboge.com>
+Date: Fri, 14 Aug 2009 16:35:38 -0500
+From: Jamie Strandboge <jamie@...onical.com>
+To: gnutls-devel@....org, oss-security@...ts.openwall.com
+Cc: Jeff Cai <Jeff.Cai@....COM>, Simon Josefsson <simon@...efsson.org>
+Subject: GnuTLS CVE-2009-2730 Patches (Was Re: GnuTLS 2.8.2)
 Content-Type: text/plain; charset=utf-8
 
+On Fri, 14 Aug 2009, Simon Josefsson wrote:
 
-CVE-2008-5916 was assigned to the diff.external issue.
+> I don't have time/resources to produce releases for older branches.  If
+> someone else wants to volunteer to work on fixing older releases, that
+> would be appreciated.
+> 
 
-I updated the descriptions for CVE-2008-5516 and CVE-2008-5517 based on
-Tomas' description.
+Attached are preliminary patches for 2.4.1, 2.0.4 and 1.2.9 backported
+from the advisory[1]. This is a first pass, have only been very lightly
+tested and have not been thoroughly looked at (you've been warned). They
+are not intended for production use yet, but hopefully others will be
+able to use them and provide feedback.
 
-Sebastian - it's not clear to me whether SUSE:SUSE-SR:2009:001 is
-addressing CVE-2008-5516, CVE-2008-5517, or both.  Same question to the
-rPath maintainers...
+2.0.4 and 1.2.9 needed an additional patch[2] which adds wide wildcard
+hostname matching. Ubuntu will likely carry this patch, but it may not
+be appropriate for everyone. 2.x passes the nul-in-x509-names.c test
+mentioned in the advisory. 1.2.9 does not pass the CN test yet, though
+at first glance certtool output looks comparable to the others. These
+patches are against Ubuntu sources and not clean tarballs.
 
-- Steve
+Jamie
 
-======================================================
-Name: CVE-2008-5516
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5516
-Reference: BUGTRAQ:20090113 rPSA-2009-0005-1 git gitweb
-Reference: URL:http://www.securityfocus.com/archive/1/archive/1/500008/100/0/threaded
-Reference: MISC:http://repo.or.cz/w/git.git?a=commitdiff;h=c582abae
-Reference: MLIST:[oss-security] 20090120 Re: CVE request -- git
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/01/20/1
-Reference: CONFIRM:http://wiki.rpath.com/Advisories:rPSA-2009-0005
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=479715
-Reference: CONFIRM:https://issues.rpath.com/browse/RPL-2936
+[1] http://lists.gnu.org/archive/html/help-gnutls/2009-08/msg00011.html
+[2] http://git.savannah.gnu.org/cgit/gnutls.git/patch/?id=177e7ddb761999cd8b439e14a2bf43590756e230
 
-The web interface in git (gitweb) 1.5.6, and possibly other versions,
-allows remote attackers to execute arbitrary commands via shell
-metacharacters, related to (1) git_snapshot and (2) git_object.  NOTE:
-because of the lack of details, it is not clear whether CVE-2008-5516
-and CVE-2008-5517 are distinct issues on the rPath Linux 2 platform.
+-- 
+Jamie Strandboge             | http://www.canonical.com
 
+View attachment "CVE-2009-2730_2.4.1.patch" of type "text/x-diff" (8098 bytes)
 
-======================================================
-Name: CVE-2008-5517
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5517
-Reference: BUGTRAQ:20090113 rPSA-2009-0005-1 git gitweb
-Reference: URL:http://www.securityfocus.com/archive/1/archive/1/500008/100/0/threaded
-Reference: MISC:http://repo.or.cz/w/git.git?a=commitdiff;h=516381d5
-Reference: MLIST:[oss-security] 20090120 Re: CVE request -- git
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/01/20/1
-Reference: CONFIRM:http://wiki.rpath.com/Advisories:rPSA-2009-0005
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=479715
-Reference: CONFIRM:https://issues.rpath.com/browse/RPL-2936
-Reference: SUSE:SUSE-SR:2009:001
-Reference: URL:http://lists.opensuse.org/opensuse-security-announce/2009-01/msg00002.html
-Reference: BID:33215
-Reference: URL:http://www.securityfocus.com/bid/33215
+View attachment "CVE-2009-2730_2.0.4.patch" of type "text/x-diff" (19482 bytes)
 
-The web interface in git (gitweb) 1.5.5 and other versions allows
-remote attackers to execute arbitrary commands via shell
-metacharacters related to git_search.
+View attachment "CVE-2009-2730_1.2.9.patch" of type "text/x-diff" (7274 bytes)
 
-
-======================================================
-Name: CVE-2008-5916
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5916
-Reference: MLIST:[git] 20081220 [Security] gitweb local privilege escalation (fix)
-Reference: URL:http://marc.info/?l=git&m=122975564100860&w=2
-Reference: MLIST:[linux-kernel] 20081220 [Security] gitweb local privilege escalation (fix)
-Reference: URL:http://marc.info/?l=linux-kernel&m=122975564100863&w=2:
-Reference: MLIST:[oss-security] 20090115 CVE request -- git
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/01/15/2
-Reference: MLIST:[oss-security] 20090120 Re: CVE request -- git
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/01/20/2
-
-gitweb/gitweb.perl in gitweb in Git 1.6.x before 1.6.0.6, 1.5.6.x
-before 1.5.6.6, 1.5.5.x before 1.5.5.6, 1.5.4.x before 1.5.4.7, and
-other versions after 1.4.3 allows local repository owners to execute
-arbitrary commands by modifying the diff.external configuration
-variable and executing a crafted gitweb query.
-
-
+Download attachment "signature.asc" of type "application/pgp-signature" (198 bytes)
