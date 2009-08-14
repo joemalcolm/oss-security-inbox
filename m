@@ -1,45 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/03/4
-Message-ID: <Pine.GSO.4.51.0902031617270.3146@faron.mitre.org>
-Date: Tue, 3 Feb 2009 16:20:10 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security <oss-security@...ts.openwall.com>, oss-security <oss-security@...ts.openwall.com>
-cc: "Steven M. Christey" <coley@...us.mitre.org>, Robert Buchholz <rbu@...too.org>
-Subject: Re: CVE request -- Python < 2.6 PySys_SetArgv issues (epiphany, csound, dia, eog, gedit, xchat, vim, nautilus-python, Gnumeric)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/14/3
+Message-ID: <20090814181743.22a0812e@neon>
+Date: Fri, 14 Aug 2009 18:17:43 +0200
+From: Alex Legler <a3li@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: Common Data Format (CDF) library multiple heap-based buffer overflows
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-On Fri, 30 Jan 2009, Jan Lieskovsky wrote:
+can I please get a CVE for this:
 
-> 3, The original CVE-2008-5983 description will need modification.
-> Robert is right, this issue is still present also in Python
-> 2.6 (even absolute imports didn't resolve it).
+http://www.infigo.hr/en/in_focus/advisories/INFIGO-2009-07-09
+http://www.securityfocus.com/bid/35754
+http://cdf.gsfc.nasa.gov/html/CDF_changesnote2.html
 
-Updated.  The original desc followed James Vega's implication that the
-absolute imports default addressed this.
+Gracias,
+Alex
 
-- Steve
-
-======================================================
-Name: CVE-2008-5983
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5983
-Reference: MLIST:[debian-bugs] 20081112 Bug#493937: [Patch] Prevent loading of Python modules in working directory
-Reference: URL:http://www.mail-archive.com/debian-bugs-dist@lists.debian.org/msg586010.html
-Reference: MLIST:[debian-bugs-rc] 20080805 Bug#484305: bicyclerepair: bike.vim imports untrusted python files from cwd
-Reference: URL:http://www.nabble.com/Bug-484305%3A-bicyclerepair%3A-bike.vim-imports-untrusted-python-files-from-cwd-td18848099.html
-Reference: MLIST:[oss-security] 20090126 CVE request -- Python < 2.6 PySys_SetArgv issues (epiphany, csound, dia, eog, gedit, xchat, vim, nautilus-python, Gnumeric)
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/01/26/2
-Reference: MLIST:[oss-security] 20090128 Re: CVE request -- Python < 2.6 PySys_SetArgv issues (epiphany, csound, dia, eog, gedit, xchat, vim, nautilus-python, Gnumeric)
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/01/28/5
-Reference: MLIST:[oss-security] 20090130 Re: CVE request -- Python < 2.6 PySys_SetArgv issues (epiphany, csound, dia, eog, gedit, xchat, vim, nautilus-python, Gnumeric)
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/01/30/2
-Reference: MISC:https://bugzilla.redhat.com/show_bug.cgi?id=482814
-
-Untrusted search path vulnerability in the PySys_SetArgv API function
-in Python 2.6 and earlier, and possibly later versions, prepends an
-empty string to sys.path when the argv[0] argument does not contain a
-path separator, which might allow local users to execute arbitrary
-code via a Trojan horse Python file in the current working directory.
-
-
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
