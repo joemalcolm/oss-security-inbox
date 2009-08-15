@@ -1,22 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/19/4
-Message-ID: <0901191135310.24393@mjc.redhat.com>
-Date: Mon, 19 Jan 2009 11:40:37 +0000 (GMT)
-From: Mark J Cox <mjc@...hat.com>
-To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-2009-0031 kernel: local denial of service in keyctl_join_session_keyring
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/15/3
+Message-ID: <87ws55mr2f.fsf@mocca.josefsson.org>
+Date: Sat, 15 Aug 2009 10:14:48 +0200
+From: Simon Josefsson <simon@...efsson.org>
+To: Jamie Strandboge <jamie@...onical.com>
+Cc: gnutls-devel@....org, oss-security@...ts.openwall.com, Jeff Cai <Jeff.Cai@....COM>
+Subject: Re: GnuTLS CVE-2009-2730 Patches
 Content-Type: text/plain; charset=utf-8
 
-According to upstream commit 0d54ee1c7850a954026deec4cd4885f331da35cc 
-"security: introduce missing kfree" there is a missing kfree in 
-keyctl_join_session_keyring.
+Jamie Strandboge <jamie-Z7WLFzj8eWMS+FvcfC7Uqw@...lic.gmane.org> writes:
 
-It looks like a local user could eventually cause a DoS by using up kernel 
-memory, so I assigned this CVE-2009-0031.
+> On Fri, 14 Aug 2009, Simon Josefsson wrote:
+>
+>> I don't have time/resources to produce releases for older branches.  If
+>> someone else wants to volunteer to work on fixing older releases, that
+>> would be appreciated.
+>> 
+>
+> Attached are preliminary patches for 2.4.1, 2.0.4 and 1.2.9 backported
+> from the advisory[1].
 
-http://git2.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=0d54ee1c7850a954026deec4cd4885f331da35cc
+Thank you!
 
-Thanks, Mark
---
-Mark J Cox / Red Hat Security Response Team
+I have applied the 2.4.x patch on the gnutls_2_4_x branch, so it will be
+built and tested by the daily autobuilder from now on.  I've tested that
+the nul-in-x509-names self-test works as expected with the 2.4 library.
+So in theory, it should be easy for me to make a v2.4.4 release from
+that branch.  I wonder if this would helps anyone, though?  I'd imagine
+that most people concerned with older releases are distributions that
+have to support older GnuTLS releases.  And you aren't likely to use a
+new upstream release anyway, since you just apply the patches to your
+version.
+
+I'm also concerned that there have been plenty of _other_ serious
+problems in these old GnuTLS releases (check the security vulnerability
+page), and I haven't back-ported the fixes to those problems to these
+old branches.  So if I make a release on that branch, I'd have to check
+what other serious problems would needs to be fixed for that branch to
+be secure -- which sounds like real work (for little gain).
+
+For these two reasons, I'd prefer to help you establish trust in the
+patches you developed rather than make releases on old branches.
+
+I also added a link to your post on
+<http://www.gnu.org/software/gnutls/security.html> so others can find it
+easily.
+
+/Simon
