@@ -1,58 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/17/5
-Message-ID: <20090817232945.GC6531@severus.strandboge.com>
-Date: Mon, 17 Aug 2009 18:29:45 -0500
-From: Jamie Strandboge <jamie@...onical.com>
-To: Simon Josefsson <simon@...efsson.org>
-Cc: gnutls-devel@....org, oss-security@...ts.openwall.com
-Subject: Re: GnuTLS CVE-2009-2730 Patches (Was Re: GnuTLS 2.8.2)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/15/2
+Message-Id: <1250319453.3029.6.camel@apollo>
+Date: Sat, 15 Aug 2009 02:57:33 -0400
+From: Jon Oberheide <jon@...rheide.org>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: kernel issues pending CVE assignment
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 14 Aug 2009, Jamie Strandboge wrote:
+On Fri, 2009-08-14 at 17:33 -0600, dann frazier wrote:
+> Since I'm sure most distros are in the process of putting together
+> kernel security updates, it would be great if we could get CVE IDs
+> assigned for the following issues:
+> 
+>   http://www.openwall.com/lists/oss-security/2009/08/04/1
+>   http://www.openwall.com/lists/oss-security/2009/08/04/2
+>   http://www.openwall.com/lists/oss-security/2009/08/05/1
+>   http://www.openwall.com/lists/oss-security/2009/08/06/2
+>   http://www.openwall.com/lists/oss-security/2009/08/10/1
+>   http://www.openwall.com/lists/oss-security/2009/08/13/1
 
-> 1.2.9 does not pass the CN test yet, though
-> at first glance certtool output looks comparable to the others.
+Also would be nice to get one for the cfg80211 issue:
+http://patchwork.kernel.org/patch/41218/
 
-1.2.9 also needed:
-http://git.savannah.gnu.org/cgit/gnutls.git/patch/?id=7b80620f99f4d43f5eda692eefc5c969bb4263c0
+Reproducer:
+http://jon.oberheide.org/files/cfg80211-remote-dos.c
 
-Attached is an updated patch for 1.2.9 (still only lightly tested, but
-verified to pass the test program). This and the 2.0.4 patch previously
-posted now behave the same, but different from 2.4 and higher.
-Specifically, when using:
-
-$ certtool -i --infile /tmp/badguy-nul-cn.crt
-
-We have:
-|<1>| Found OID: '2.5.4.3' with value '13187777772e62616e6b2e636f6d002e6261646775792e636f6d'
-X.509 Certificate Information:
-	Version: 3
-	Serial Number (hex): 01
-	Issuer: C=GB,ST=Berkshire,L=Newbury,O=My Company Ltd,OU=CA,CN=NULL-friendly CA
-	Validity:
-		Not Before: Tue Aug  4 07:33:43 UTC 2009
-		Not After: Fri Aug  2 07:33:43 UTC 2019
-error: get_dn: ASN1 parser: Error in DER parsing.
-...
-
-
-This is in contrast to 2.4 and higher which has:
-X.509 Certificate Information:
-	Version: 3
-	Serial Number (hex): 01
-	Issuer: C=GB,ST=Berkshire,L=Newbury,O=My Company Ltd,OU=CA,CN=NULL-friendly CA
-	Validity:
-		Not Before: Tue Aug 04 07:33:43 UTC 2009
-		Not After: Fri Aug 02 07:33:43 UTC 2019
-	Subject: CN=#13187777772e62616e6b2e636f6d002e6261646775792e636f6
-...
-
-
-Jamie
+Regards,
+Jon Oberheide
 
 -- 
-Jamie Strandboge             | http://www.canonical.com
-
-View attachment "CVE-2009-2730_1.2.9.patch" of type "text/x-diff" (7581 bytes)
+Jon Oberheide <jon@...rheide.org>
+GnuPG Key: 1024D/F47C17FE
+Fingerprint: B716 DA66 8173 6EDD 28F6  F184 5842 1C89 F47C 17FE
 
 Download attachment "signature.asc" of type "application/pgp-signature" (198 bytes)
