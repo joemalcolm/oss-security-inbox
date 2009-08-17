@@ -1,20 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/19/1
-Message-Id: <32D438B9-EC35-4A3B-B97D-D559FF135895@reedloden.com>
-Date: Sun, 19 Jul 2009 14:58:26 -0700
-From: Reed Loden <reed@...dloden.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/17/1
+Message-ID: <4A88A52D.5030900@kernel.sg>
+Date: Mon, 17 Aug 2009 08:32:45 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE: Request Firefox 3.5
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: cfg80211: missing NULL pointer checks
 Content-Type: text/plain; charset=utf-8
 
-On Jul 14, 2009, at 12:30 AM, Stefan Behte wrote:
+Jon Oberheide wrote:
+> On Fri, 2009-08-14 at 17:33 -0600, dann frazier wrote:
+[...]
+> Also would be nice to get one for the cfg80211 issue:
+> http://patchwork.kernel.org/patch/41218/
+> 
+> Reproducer:
+> http://jon.oberheide.org/files/cfg80211-remote-dos.c
 
-> can I get a CVE for this? http://www.milw0rm.com/exploits/9137
+Thanks Jon.
 
-This got assigned CVE-2009-2477 if you didn't notice.
+"These pointers can be NULL, the is_mesh() case isn't ever hit in the
+current kernel, but cmp_ies() can be hit under certain conditions."
 
-~reed
+Upstream commit:
+http://git.kernel.org/linus/cd3468bad96c00b5a512f551674f36776129520e
 
---
-Reed Loden - <reed@...dloden.com>
-
+Thanks, Eugene
