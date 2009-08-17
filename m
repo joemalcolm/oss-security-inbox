@@ -1,27 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/03/3
-Message-ID: <4A26425C.8000509@redhat.com>
-Date: Wed, 03 Jun 2009 17:29:00 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: sparc64: Fix crash with /proc/iomem
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/17/6
+Message-ID: <20090817233353.GD6531@severus.strandboge.com>
+Date: Mon, 17 Aug 2009 18:33:53 -0500
+From: Jamie Strandboge <jamie@...onical.com>
+To: Simon Josefsson <simon@...efsson.org>
+Cc: oss-security@...ts.openwall.com, gnutls-devel@....org
+Subject: Re: GnuTLS CVE-2009-2730 Patches
 Content-Type: text/plain; charset=utf-8
 
-This was introduced in commit 9fd8b647 (v2.6.22-rc1), and fixed in
-commit 192d7a46. The description is as follows:
+On Sat, 15 Aug 2009, Simon Josefsson wrote:
 
-From: Mikulas Patocka <mpatocka@...hat.com>
+> Jamie Strandboge <jamie-Z7WLFzj8eWMS+FvcfC7Uqw@...lic.gmane.org> writes:
+> 
+> > On Fri, 14 Aug 2009, Simon Josefsson wrote:
+> >
+> > Attached are preliminary patches for 2.4.1, 2.0.4 and 1.2.9 backported
+> > from the advisory[1].
+> 
+> Thank you!
+> 
+> I have applied the 2.4.x patch on the gnutls_2_4_x branch, so it will be
+> built and tested by the daily autobuilder from now on.  I've tested that
+> the nul-in-x509-names self-test works as expected with the 2.4 library.
+> So in theory, it should be easy for me to make a v2.4.4 release from
+> that branch.  I wonder if this would helps anyone, though?  I'd imagine
+> that most people concerned with older releases are distributions that
+> have to support older GnuTLS releases.  And you aren't likely to use a
+> new upstream release anyway, since you just apply the patches to your
+> version.
+> 
+> I'm also concerned that there have been plenty of _other_ serious
+> problems in these old GnuTLS releases (check the security vulnerability
+> page), and I haven't back-ported the fixes to those problems to these
+> old branches.  So if I make a release on that branch, I'd have to check
+> what other serious problems would needs to be fixed for that branch to
+> be secure -- which sounds like real work (for little gain).
+> 
+> For these two reasons, I'd prefer to help you establish trust in the
+> patches you developed rather than make releases on old branches.
+> 
 
-[ Upstream commit 67c6d11d1a174ec4cad9a3c5d5f9043c ]
+I'd agree with this. Vendors have likely backported all those other
+fixes. However, having a place for people to get patches for older
+releases would likely be beneficial going forward (like you are doing
+with this one). This is especially true when considering your
+aforementioned lack of resources.
 
-When you compile kernel on Sparc64 with heap memory checking and type
-"cat /proc/iomem", you get a crash, because pointers in struct
-resource are uninitialized.
+> I also added a link to your post on
+> <http://www.gnu.org/software/gnutls/security.html> so others can find it
+> easily.
+> 
 
-Most code fills struct resource with zeros, so I assume that it is
-responsibility of the caller of request_resource to initialized it,
-not the responsibility of request_resource functuion.
+Thanks!
 
-After 2.6.29 is out, there could be a check for uninitialized fields
-added to request_resource to avoid crashes like this.
+Jamie
+
+-- 
+Jamie Strandboge             | http://www.canonical.com
+
+Download attachment "signature.asc" of type "application/pgp-signature" (198 bytes)
