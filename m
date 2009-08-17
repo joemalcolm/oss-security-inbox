@@ -1,25 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/21/3
-Message-Id: <200912212021.44143.hanno@hboeck.de>
-Date: Mon, 21 Dec 2009 20:21:43 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: simplemachinesforum
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/17/3
+Message-ID: <4A8954AC.6010302@redhat.com>
+Date: Mon, 17 Aug 2009 15:01:32 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com
+Subject: CVE Request -- OCS Inventory NG
 Content-Type: text/plain; charset=utf-8
 
-http://secunia.com/advisories/37557/
-CSRF
+Hello Steve, vendors,
 
-http://securityreason.com/exploitalert/7513
-Remote code execution
+   a SQL injection by machine blacklisting was reported on 2009-08-11:
 
-Probably even more:
-http://www.securityspace.com/de/smysecure/catid.html?id=100371
+http://seclists.org/fulldisclosure/2009/Aug/0143.html
+http://www.ocsinventory-ng.org/index.php?mact=News,cntnt01,detail,0&cntnt01articleid=147&cntnt01returnid=15
 
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+Could you allocate a CVE id?
 
-http://schokokeks.org - professional webhosting
-
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
