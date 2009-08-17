@@ -1,61 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/17/6
-Message-ID: <hge0fr$ldb$1@ger.gmane.org>
-Date: Thu, 17 Dec 2009 13:23:33 -0600
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/17/4
+Message-ID: <0908171653340.25831@mjc.redhat.com>
+Date: Mon, 17 Aug 2009 17:05:40 +0100 (BST)
+From: Mark J Cox <mjc@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: php5: multiple issues
+Subject: SELinux and mmap_min_addr behaviour (CVE-2009-2695)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+FYI given upstream discussions we gave CVE-2009-2695 to 'a system with 
+SELinux enabled with the default targeted policy is more permissive for 
+unconfined domains, allowing local users to map low memory areas even if 
+mmap_min_addr protection is enabled.  This could allow the exploitation of 
+NULL pointer dereference flaws'. See also http://kbase.redhat.com/faq/docs/DOC-18042
 
-Hi,
-
-Stefan Esser on his "Shocking News in PHP Exploitation"[1] presentation
-reports and analyses a couple of issues:
-
-* usort() interruption memory corruption:
-uksort() although not mentioned on the presentation is also affected. It was
-recently fixed in 5.2.12 but not considered security-relevant by upstream
-* explode() information leak
-* serialize() information leak
-
-As mentioned by the presentation all these are local vulnerabilities.
-
-[1]http://www.suspekt.org/downloads/POC2009-ShockingNewsInPHPExploitation.pdf
-
-Additionally, I've started to closely follow upstream development and found
-the following issues that were or have not been mentioned anywhere else:
-
-Null pointer dereference:
-http://svn.php.net/viewvc?view=revision&revision=292083
-
-This one looks suspicious, basically a switch from sprintf to snprintf which
-apparently already happened in the other branches at some point:
-http://svn.php.net/viewvc?view=revision&revision=291888
-
-Improper decoding, not sure what the impact could be:
-http://svn.php.net/viewvc?view=revision&revision=291586
-
-Insufficient memory allocation for unicode strings:
-http://svn.php.net/viewvc?view=revision&revision=291259
-
-I think a cross-vendor security support and tracking effort for php5 is
-needed. The number of issues silently fixed are a continuous risk, leaving
-users exposed.
-What does the others think?
-
-Regards,
-- -- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iEYEARECAAYFAksqhTsACgkQYy49rUbZzlrm4ACcC/WIYLKRJO+UMKu7fZXCOZvp
-HaoAoIVrcx8oouZ8KcJZiDon7QITQgzB
-=u60p
------END PGP SIGNATURE-----
-
+Mark
