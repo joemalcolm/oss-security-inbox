@@ -1,34 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/27/3
-Message-ID: <20090727161850.GB3400@redhat.com>
-Date: Mon, 27 Jul 2009 10:18:50 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: squid 3.x vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/17/5
+Message-ID: <20090817232945.GC6531@severus.strandboge.com>
+Date: Mon, 17 Aug 2009 18:29:45 -0500
+From: Jamie Strandboge <jamie@...onical.com>
+To: Simon Josefsson <simon@...efsson.org>
+Cc: gnutls-devel@....org, oss-security@...ts.openwall.com
+Subject: Re: GnuTLS CVE-2009-2730 Patches (Was Re: GnuTLS 2.8.2)
 Content-Type: text/plain; charset=utf-8
 
-There are some security vulnerabilities in squid 3.x that have been
-fixed today:
+On Fri, 14 Aug 2009, Jamie Strandboge wrote:
 
-http://www.squid-cache.org/Advisories/SQUID-2009_2.txt
+> 1.2.9 does not pass the CN test yet, though
+> at first glance certtool output looks comparable to the others.
 
-Specifically:
+1.2.9 also needed:
+http://git.savannah.gnu.org/cgit/gnutls.git/patch/?id=7b80620f99f4d43f5eda692eefc5c969bb4263c0
 
-Due to incorrect buffer limits and related bound checks Squid
-is vulnerable to a denial of service attack when processing
-specially crafted requests or responses.
+Attached is an updated patch for 1.2.9 (still only lightly tested, but
+verified to pass the test program). This and the 2.0.4 patch previously
+posted now behave the same, but different from 2.4 and higher.
+Specifically, when using:
 
-Due to incorrect data validation Squid is vulnerable to a denial
-of service attack when processing specially crafted responses.
+$ certtool -i --infile /tmp/badguy-nul-cn.crt
+
+We have:
+|<1>| Found OID: '2.5.4.3' with value '13187777772e62616e6b2e636f6d002e6261646775792e636f6d'
+X.509 Certificate Information:
+	Version: 3
+	Serial Number (hex): 01
+	Issuer: C=GB,ST=Berkshire,L=Newbury,O=My Company Ltd,OU=CA,CN=NULL-friendly CA
+	Validity:
+		Not Before: Tue Aug  4 07:33:43 UTC 2009
+		Not After: Fri Aug  2 07:33:43 UTC 2019
+error: get_dn: ASN1 parser: Error in DER parsing.
+...
 
 
+This is in contrast to 2.4 and higher which has:
+X.509 Certificate Information:
+	Version: 3
+	Serial Number (hex): 01
+	Issuer: C=GB,ST=Berkshire,L=Newbury,O=My Company Ltd,OU=CA,CN=NULL-friendly CA
+	Validity:
+		Not Before: Tue Aug 04 07:33:43 UTC 2009
+		Not After: Fri Aug 02 07:33:43 UTC 2019
+	Subject: CN=#13187777772e62616e6b2e636f6d002e6261646775792e636f6
+...
 
-Patches are linked to from the advisory.
 
-No CVE names look to be assigned; can we get some?  I think we probably
-need two CVE names here.
-
-Thanks.
+Jamie
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Jamie Strandboge             | http://www.canonical.com
+
+View attachment "CVE-2009-2730_1.2.9.patch" of type "text/x-diff" (7581 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (198 bytes)
