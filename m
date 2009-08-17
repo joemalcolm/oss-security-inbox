@@ -1,46 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/07/6
-Message-ID: <20090407182140.GA10312@severus.strandboge.com>
-Date: Tue, 7 Apr 2009 13:21:40 -0500
-From: Jamie Strandboge <jamie@...onical.com>
-To: coley@...us.mitre.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: clamav clamd and clamscan DoS and bypass by malformated archive
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/17/2
+Message-ID: <4A88AAE0.5070509@redhat.com>
+Date: Mon, 17 Aug 2009 08:57:04 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: cfg80211: missing NULL pointer checks
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 07 Apr 2009, Nico Golde wrote:
-> * Thomas Biege <thomas@...e.de> [2009-04-07 15:47]:
-> > These two bugs possibly need a CVE-ID.
-> > 
-> > Here we go:
-> > 
-> > https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1462
-> > 
-> > http://blog.zoller.lu/2009/04/clamav-094-and-below-evasion-and-bypass.html
+Eugene Teo wrote:
+> Jon Oberheide wrote:
+>> On Fri, 2009-08-14 at 17:33 -0600, dann frazier wrote:
+> [...]
+>> Also would be nice to get one for the cfg80211 issue:
+>> http://patchwork.kernel.org/patch/41218/
+>>
+>> Reproducer:
+>> http://jon.oberheide.org/files/cfg80211-remote-dos.c
 > 
-> Should be covered by CVE-2009-1241
+> Thanks Jon.
+> 
+> "These pointers can be NULL, the is_mesh() case isn't ever hit in the
+> current kernel, but cmp_ies() can be hit under certain conditions."
+> 
+> Upstream commit:
+> http://git.kernel.org/linus/cd3468bad96c00b5a512f551674f36776129520e
 
-The details are scant, but I believe bug #1462[1] to be different from the
-unrar issue discussed in the blog and CVE-2009-1241.
+It only affects the kernels v2.6.30-rc1 onwards. FYI.
 
-Specifically, the patch for 1462 is svn commit r4981 to
-libclamav/untar.c to prevent a DoS (infinite loop).
-
-Also, bug 1335[2] is fixed in commit r4980 by a patch to cli_scanpe() in
-libclamav/pe.c to prevent a DoS (divide by zero).
-
-AFAICT, the unrar issue (CVE-2009-1241) is covered in Debian bug
-#484642[3] and clamav bug #1050[4].
-
-Could we get CVE identifiers for the two remaining issues?
-
-Jamie
-
-[1] https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1462
-[2] https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1335
-[3] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=484642
-[4] https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1050
-
--- 
-Jamie Strandboge             | http://www.canonical.com
-
-Download attachment "signature.asc" of type "application/pgp-signature" (198 bytes)
+Eugene
