@@ -1,22 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/15/3
-Message-Id: <200907150301.01689.rbu@gentoo.org>
-Date: Wed, 15 Jul 2009 03:00:58 +0200
-From: Robert Buchholz <rbu@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/18/8
+Message-ID: <Pine.GSO.4.51.0908181620190.17763@faron.mitre.org>
+Date: Tue, 18 Aug 2009 16:20:38 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: Florian Weimer <fw@...eb.enyo.de>
-Subject: Re: Fixing the XML signature HMAC truncation authentication bypass
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: clock_nanosleep() with CLOCK_MONOTONIC_RAW NULL pointer dereference
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday 15 July 2009, Robert Buchholz wrote:
-> Florian Streibelt's analysis of the GnuTLS code indicated that is
-> also vulnerable. 
 
-I misread his analysis. That's what happens when I try reading faster 
-than my brain follows. The analysis was for the GnuTLS related code of 
-xmlsec. Apologies.
+======================================================
+Name: CVE-2009-2767
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2767
+Reference: MLIST:[linux-kernel] 20090804 Re: [PATCH] posix-timers: fix oops in clock_nanosleep() with CLOCK_MONOTONIC_RAW
+Reference: URL:http://lkml.org/lkml/2009/8/4/28
+Reference: MLIST:[linux-kernel] 20090804 Re: [PATCH] posix-timers: fix oops in clock_nanosleep() with CLOCK_MONOTONIC_RAW
+Reference: URL:http://lkml.org/lkml/2009/8/4/40
+Reference: CONFIRM:http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=70d715fd0597f18528f389b5ac59102263067744
+Reference: CONFIRM:http://www.kernel.org/pub/linux/kernel/v2.6/testing/ChangeLog-2.6.31-rc6
+Reference: SECUNIA:36200
+Reference: URL:http://secunia.com/advisories/36200
+Reference: VUPEN:ADV-2009-2197
+Reference: URL:http://www.vupen.com/english/advisories/2009/2197
+Reference: XF:linux-kernel-clocknanosleep-priv-escalation(52317)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/52317
+
+The init_posix_timers function in kernel/posix-timers.c in the Linux
+kernel before 2.6.31-rc6 allows local users to cause a denial of
+service (OOPS) or possibly gain privileges via a CLOCK_MONOTONIC_RAW
+clock_nanosleep call that triggers a NULL pointer dereference.
 
 
-Robert
-
-Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
