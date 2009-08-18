@@ -1,27 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/22/4
-Message-ID: <Pine.GSO.4.51.0901221718140.27455@faron.mitre.org>
-Date: Thu, 22 Jan 2009 17:18:19 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/18/1
+Message-ID: <op.uyumoqja1e62zd@balu.cs.uni-paderborn.de>
+Date: Tue, 18 Aug 2009 10:18:16 +0200
+From: "Matthias Andree" <matthias.andree@....de>
 To: oss-security@...ts.openwall.com
-cc: coley@...us.mitre.org
-Subject: Re: mod-auth-mysql: SQL injection
+Cc: cve@...re.org
+Subject: Re: CVE-2007-1558 update (was: mailfilter 0.8.2 fixes CVE-2007-1558 (APOP))
 Content-Type: text/plain; charset=utf-8
 
+Am 15.08.2009, 11:27 Uhr, schrieb Robert Buchholz <rbu@...too.org>:
 
-======================================================
-Name: CVE-2008-2384
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2384
-Reference: MLIST:[oss-security] 20090121 mod-auth-mysql: SQL injection
-Reference: URL:http://openwall.com/lists/oss-security/2009/01/21/10
-Reference: CONFIRM:http://klecker.debian.org/~white/mod-auth-mysql/CVE-2008-2384_mod-auth-mysql.patch
-Reference: BID:33392
-Reference: URL:http://www.securityfocus.com/bid/33392
+> CVE-2007-1558:
+>   The APOP protocol allows remote attackers to guess the first 3
+>   characters of a password via man-in-the-middle (MITM) attacks that use
+>   crafted message IDs and MD5 collisions. NOTE: this design-level issue
+>   potentially affects all products that use APOP, including (1)
+>   Thunderbird 1.x before 1.5.0.12 and 2.x before 2.0.0.4, (2) Evolution,
+>   (3) mutt, (4) fetchmail, (5) SeaMonkey 1.0.x before 1.0.9 and 1.1.x
+>   before 1.1.2, (6) Balsa 2.3.16 and earlier, and possibly other
+>   products.
 
-SQL injection vulnerability in mod_auth_mysql.c in the mod-auth-mysql
-(aka libapache2-mod-auth-mysql) module for the Apache HTTP Server 2.x
-allows remote attackers to execute arbitrary SQL commands via
-multibyte character encodings for unspecified input.
+Greetings,
 
+Could CVE-2007-1558 be updated to mention "fetchmail before and excluding  
+6.3.8"?
 
+Thanks.
+
+-- 
+Matthias Andree
