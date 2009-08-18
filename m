@@ -1,19 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/13/2
-Message-ID: <20090813130548.GA17522@suse.de>
-Date: Thu, 13 Aug 2009 15:05:48 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: new root exploit from Brad
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/18/14
+Message-ID: <Pine.GSO.4.51.0908181649520.17763@faron.mitre.org>
+Date: Tue, 18 Aug 2009 16:51:58 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Eugene Teo <eugene@...hat.com>
+cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: execve: must clear current->clear_child_tid
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-Apparently new root exploit from Brad, see his twitter:
-http://twitter.com/spendergrsec
+On Tue, 4 Aug 2009, Eugene Teo wrote:
 
-The video is a bit sick in my opinion.
+> The integer location is a user provided pointer, provided at clone() time.
+>
+> kernel keeps this pointer value into current->clear_child_tid.
+>
+> At execve() time, we should make sure kernel doesnt keep this user
+> provided pointer, as full user memory is replaced by a new one.
+>
+>...
+>
+> Patch is not in upstream kernel yet.
 
-Disclosed apparently next week.
+I assumed 2.6.30-rc6 and earlier at this stage.
 
-Ciao, Marcus
+======================================================
+Name: CVE-2009-2848
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2848
+Reference: MLIST:[linux-kernel] 20090801 [PATCH v2] execve: must clear current->clear_child_tid
+Reference: URL:http://article.gmane.org/gmane.linux.kernel/871942
+Reference: MLIST:[oss-security] 20090804 CVE request - kernel: execve: must clear current->clear_child_tid
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/08/04/2
+Reference: MLIST:[oss-security] 20090805 Re: CVE request - kernel: execve: must clear current->clear_child_tid
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/08/05/10
+
+The execve function in the Linux kernel, possibly 2.6.30-rc6 and
+earlier, does not properly clear the current->clear_child_tid pointer,
+which allows local users to cause a denial of service (memory
+corruption) via a clone system call with CLONE_CHILD_SETTID or
+CLONE_CHILD_CLEARTID enabled, which is not properly handled during
+thread creation and exit.
+
