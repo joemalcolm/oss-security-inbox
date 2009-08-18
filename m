@@ -1,91 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/22/2
-Message-ID: <Pine.GSO.4.51.0901221711460.27455@faron.mitre.org>
-Date: Thu, 22 Jan 2009 17:11:52 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/18/16
+Message-ID: <Pine.GSO.4.51.0908181656410.17763@faron.mitre.org>
+Date: Tue, 18 Aug 2009 16:58:43 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: Re: CVE id request: typo3 SA-2009-001
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: parisc: isa-eeprom missing lower bound check
 Content-Type: text/plain; charset=utf-8
 
 
-======================================================
-Name: CVE-2009-0255
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0255
-Reference: CONFIRM:http://typo3.org/teams/security/security-bulletins/typo3-sa-2009-001/
-Reference: BID:33376
-Reference: URL:http://www.securityfocus.com/bid/33376
-Reference: SECUNIA:33617
-Reference: URL:http://secunia.com/advisories/33617
-Reference: XF:typo3-installtool-weak-security(48132)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/48132
+I wasn't sure how to interpret the phrase "poke in random memory" from the
+bug comment and there wasn't enough source code context, so I guessed that
+the impact is reading unexpected memory, but maybe it's also a crash or
+whatever.
 
-The System extension Install tool in TYPO3 4.0.0 through 4.0.9, 4.1.0
-through 4.1.7, and 4.2.0 through 4.2.3 creates the encryption key with
-an insufficiently random seed, which makes it easier for attackers to
-crack the key.
+- Steve
 
 
 ======================================================
-Name: CVE-2009-0256
+Name: CVE-2009-2846
 Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0256
-Reference: CONFIRM:http://typo3.org/teams/security/security-bulletins/typo3-sa-2009-001/
-Reference: BID:33376
-Reference: URL:http://www.securityfocus.com/bid/33376
-Reference: SECUNIA:33617
-Reference: URL:http://secunia.com/advisories/33617
-Reference: XF:typo3-library-session-hijacking(48133)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/48133
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2846
+Reference: MLIST:[oss-security] 20090810 CVE request: kernel: parisc: isa-eeprom missing lower bound check
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/08/10/1
+Reference: MLIST:[oss-security] 20090818 Re: CVE request: kernel: parisc: isa-eeprom missing lower bound check
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/08/18/6
+Reference: CONFIRM:http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=6b4dbcd86a9d464057fcc7abe4d0574093071fcc
 
-Session fixation vulnerability in the authentication library in TYPO3
-4.0.0 through 4.0.9, 4.1.0 through 4.1.7, and 4.2.0 through 4.2.3
-allows remote attackers to hijack web sessions via unspecified vectors
-related to (1) frontend and (2) backend authentication.
-
-
-======================================================
-Name: CVE-2009-0257
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0257
-Reference: CONFIRM:http://typo3.org/teams/security/security-bulletins/typo3-sa-2009-001/
-Reference: BID:33376
-Reference: URL:http://www.securityfocus.com/bid/33376
-Reference: SECUNIA:33617
-Reference: URL:http://secunia.com/advisories/33617
-Reference: XF:typo3-adodb-xss(48137)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/48137
-Reference: XF:typo3-indexedsearchengine-xss(48135)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/48135
-Reference: XF:typo3-library-session-hijacking(48133)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/48133
-
-Multiple cross-site scripting (XSS) vulnerabilities in TYPO3 4.0.0
-through 4.0.9, 4.1.0 through 4.1.7, and 4.2.0 through 4.2.3 allow
-remote attackers to inject arbitrary web script or HTML via the (1)
-name and (2) content of indexed files to the (a) Indexed Search Engine
-(indexed_search) system extension; (b) unspecified test scripts in the
-ADOdb system extension; and (c) unspecified vectors in the Workspace
-module.
-
-
-======================================================
-Name: CVE-2009-0258
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0258
-Reference: CONFIRM:http://typo3.org/teams/security/security-bulletins/typo3-sa-2009-001/
-Reference: BID:33376
-Reference: URL:http://www.securityfocus.com/bid/33376
-Reference: SECUNIA:33617
-Reference: URL:http://secunia.com/advisories/33617
-Reference: XF:typo3-indexedsearch-command-execution(48138)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/48138
-
-Unspecified vulnerability in the Indexed Search Engine
-(indexed_search) system extension in TYPO3 4.0.0 through 4.0.9, 4.1.0
-through 4.1.7, and 4.2.0 through 4.2.3 allows remote attackers to
-execute arbitrary commands via unknown vectors related to the
-command-line indexer.
+The eisa_eeprom_read function in the parisc isa-eeprom component
+(drivers/parisc/eisa_eeprom.c) in the Linux kernel before 2.6.31-rc6
+allows local users to access restricted memory via a negative ppos
+argument, which bypasses a check that assumes that ppos is positive
+and causes an out-of-bounds read in the readb function.
 
 
