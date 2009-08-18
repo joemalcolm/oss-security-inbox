@@ -1,29 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/23/1
-Message-ID: <49EFD716.2010701@redhat.com>
-Date: Thu, 23 Apr 2009 10:48:54 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/18/15
+Message-ID: <Pine.GSO.4.51.0908181652210.17763@faron.mitre.org>
+Date: Tue, 18 Aug 2009 16:54:43 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: ipv6: null pointer dereference in __inet6_check_established()
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: information leak in sigaltstack
 Content-Type: text/plain; charset=utf-8
 
-Eugene Teo wrote:
-> According to the upstream commit 3f53a381, "we already have a valid net
-> in that place, but... the tw pointer can be NULL there sometimes, thus
-> causing an oops in NET_NS=y case.
-> 
-> The same place in ipv4 code already works correctly using existing
-> net, rather than tw's one."
-> 
-> The bug exists since 2.6.27.
-> 
-> http://git.kernel.org/linus/3f53a38131a4e7a053c0aa060aba0411242fb6b9
 
-This was assigned with CVE-2009-1360.
+On Tue, 4 Aug 2009, Eugene Teo wrote:
 
-Somehow http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1360
-missed this reference even though this email was posted before
-xorl.wordpress.com wrote about it.
+> do_sigaltstack: avoid copying 'stack_t' as a structure to user space
 
-Thanks, Eugene
+
+======================================================
+Name: CVE-2009-2847
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2847
+Reference: MILW0RM:9352
+Reference: URL:http://www.milw0rm.com/exploits/9352
+Reference: MLIST:[oss-security] 20090804 CVE request - kernel: information leak in sigaltstack
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/08/04/1
+Reference: MLIST:[oss-security] 20090805 Re: CVE request - kernel: information leak in sigaltstack
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/08/05/1
+Reference: CONFIRM:http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=0083fc2c50e6c5127c2802ad323adf8143ab7856
+Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=515392
+
+The do_sigaltstack function in kernel/signal.c in Linux kernel 2.6
+before 2.6.31-rc5, when running on 64-bit systems, does not clear
+certain padding bytes from a structure, which allows local users to
+obtain sensitive information from the kernel stack via the sigaltstack
+function.
+
+
