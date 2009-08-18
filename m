@@ -1,28 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/07/4
-Message-ID: <20090107162337.GA15416@openwall.com>
-Date: Wed, 7 Jan 2009 19:23:37 +0300
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: CFPs on this list (was: CFP: COLSEC 2009)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/18/13
+Message-ID: <Pine.GSO.4.51.0908181648330.17763@faron.mitre.org>
+Date: Tue, 18 Aug 2009 16:48:54 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: Re: md raid null ptr dereference (when sysfs is writable)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-I've just approved this questionable posting primarily to let others in
-this group see what is coming our way.
+On Fri, 24 Jul 2009, Marcus Meissner wrote:
 
-Do we want to let this kind of messages through to the list?  Maybe as
-long as they're not too frequent?  Or when they're not cross-posted as
-badly as this one was?  Or when they're of specific relevance not only
-to security, but also to Open Source?  I'm afraid that trying to apply
-these criteria would make moderation decisions hard.  Thoughts?
+> http://xorl.wordpress.com/2009/07/21/linux-kernel-md-driver-null-pointer-dereference/
 
-Should this one have been approved or rejected?  And what if it were not
-the very first one (which it was)?
+======================================================
+Name: CVE-2009-2849
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2849
+Reference: MLIST:[oss-security] 20090724 md raid null ptr dereference (when sysfs is writable)
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/07/24/1
+Reference: MLIST:[oss-security] 20090726 Re: md raid null ptr dereference (when sysfs is writable)
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/07/26/1
+Reference: MISC:http://xorl.wordpress.com/2009/07/21/linux-kernel-md-driver-null-pointer-dereference/
+Reference: CONFIRM:http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.30.y.git;a=commit;h=3c92900d9a4afb176d3de335dc0da0198660a244
+Reference: CONFIRM:http://www.kernel.org/pub/linux/kernel/v2.6/ChangeLog-2.6.30.2
 
-On Wed, Jan 07, 2009 at 05:11:26PM +0100, Patrice CLEMENTE wrote:
-> Apologies for multiple copies or for innapropriate targeted lists.
-...
+The md driver (drivers/md/md.c) in the Linux kernel before 2.6.30.2
+might allow local users to cause a denial of service (NULL pointer
+dereference) via vectors related to "suspend_* sysfs attributes" and
+the (1) suspend_lo_store or (2) suspend_hi_store functions.  NOTE: this
+is only a vulnerability when sysfs is writable by an attacker.
 
-Alexander
+
