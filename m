@@ -1,31 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/09/1
-Message-ID: <20090409093538.03dd08ab@redhat.com>
-Date: Thu, 9 Apr 2009 09:35:38 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/18/10
+Message-ID: <Pine.GSO.4.51.0908181642560.17763@faron.mitre.org>
+Date: Tue, 18 Aug 2009 16:44:39 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: Re: CVE request: PHP 5.2.9
+Subject: Re: CVE request: Wordpress
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 8 Apr 2009 14:02:26 -0400 (EDT) "Steven M. Christey"
-<coley@...us.mitre.org> wrote:
 
-> > # Fixed a crash on extract in zip when files or directories entry
-> > names contain a relative path. (Pierre)
-> > http://cvs.php.net/viewvc.cgi/php-src/ext/zip/php_zip.c?r1=1.1.2.48&r2=1.1.2.49
-> >
-> > This should only affect php 5.2.7 or versions that have original fix
-> > for CVE-2008-5658 backported.
-> 
-> This was announced in 5.2.9 changelog though, so wouldn't 5.2.8 be
-> affected?
+These pre-2.8.3 issues were SPLIT into two CVEs because they are
+effectively different flaw types, although this is splitting hairs
+somewhat.
 
-Ah, sorry for using confusing wording.  I was only trying to say that
-the affected code was only introduced in 5.2.7, but anyone backporting
-upstream patch for CVE-2008-5658 may actually introduce this problem in
-earlier version.  I have no reason to believe 5.2.8 is not affected,
-5.2.7 was supposed to give "first affected" version.
+- Steve
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+
+======================================================
+Name: CVE-2009-2853
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2853
+Reference: MLIST:[oss-security] 20090804 CVE request: Wordpress
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/08/04/5
+Reference: CONFIRM:http://core.trac.wordpress.org/changeset/11768
+Reference: CONFIRM:http://core.trac.wordpress.org/changeset/11769
+Reference: CONFIRM:http://wordpress.org/development/2009/08/wordpress-2-8-3-security-release/
+
+Wordpress before 2.8.3 allows remote attackers to gain privileges via
+a direct request to (1) admin-footer.php, (2) edit-category-form.php,
+(3) edit-form-advanced.php, (4) edit-form-comment.php, (5)
+edit-link-category-form.php, (6) edit-link-form.php, (7)
+edit-page-form.php, and (8) edit-tag-form.php in wp-admin/.
+
+
+======================================================
+Name: CVE-2009-2854
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2854
+Reference: MLIST:[oss-security] 20090804 CVE request: Wordpress
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/08/04/5
+Reference: CONFIRM:http://core.trac.wordpress.org/changeset/11765
+Reference: CONFIRM:http://core.trac.wordpress.org/changeset/11766
+Reference: CONFIRM:http://wordpress.org/development/2009/08/wordpress-2-8-3-security-release/
+
+Wordpress before 2.8.3 does not check capabilities for certain
+actions, which allows remote attackers to make unauthorized edits or
+additions via a direct request to (1) edit-comments.php, (2)
+edit-pages.php, (3) edit.php, (4) edit-category-form.php, (5)
+edit-link-category-form.php, (6) edit-tag-form.php, (7) export.php,
+(8) import.php, or (9) link-add.php in wp-admin/.
+
+
