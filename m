@@ -1,58 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/19/4
-Message-ID: <1707377269.594911255980451060.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 19 Oct 2009 15:27:31 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/18/12
+Message-ID: <Pine.GSO.4.51.0908181646120.17763@faron.mitre.org>
+Date: Tue, 18 Aug 2009 16:47:57 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: AF_UNIX: Fix deadlock on connecting to shutdown socket
+Subject: Re: CVE request: Common Data Format (CDF) library multiple heap-based buffer overflows
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2009-3621.
 
-Thanks.
+On Fri, 14 Aug 2009, Alex Legler wrote:
 
--- 
-    JB
+> can I please get a CVE for this:
+>
+> http://www.infigo.hr/en/in_focus/advisories/INFIGO-2009-07-09
+> http://www.securityfocus.com/bid/35754
+> http://cdf.gsfc.nasa.gov/html/CDF_changesnote2.html
 
 
------ "Eugene Teo" <eugeneteo@...nel.sg> wrote:
+Due to lack of relevant details from the researcher, it's unclear whether
+vectors 2 through 4 are also array index errors, although it's implied
+somewhat.  Arguably this could have been split into 2 separate CVES.
 
-> Quoting from the patch submitted:
-> "...a deadlock bug in UNIX domain socket, which makes able to DoS
-> attack against the local machine by non-root users.
-> 
-> ...
-> Why this happens:
->   Error checks between unix_socket_connect() and unix_wait_for_peer()
-> are
->   inconsistent. The former calls the latter to wait until the backlog
-> is
->   processed. Despite the latter returns without doing anything when
-> the
->   socket is shutdown, the former doesn't check the shutdown state and
->   just retries calling the latter forever."
-> 
-> How to reproduce:
->   1. Make a listening AF_UNIX/SOCK_STREAM socket with an abstruct
->      namespace(*), and shutdown(2) it.
->   2. Repeat connect(2)ing to the listening socket from the other
-> sockets
->      until the connection backlog is full-filled.
->   3. connect(2) takes the CPU forever. If every core is taken, the
->      system hangs.
-> 
-> Reproducer:
-> http://patchwork.kernel.org/patch/54678/
-> 
-> You will need to add in the missing header files:
-> #include <string.h>
-> #include <stdio.h>
-> #include <sys/un.h>
-> #include <sys/types.h>
-> #include <sys/socket.h>
-> 
-> Reference:
-> https://bugzilla.redhat.com/show_bug.cgi?id=529626
-> 
-> Thanks, Eugene
+======================================================
+Name: CVE-2009-2850
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2850
+Reference: BUGTRAQ:20090721 [INFIGO-2009-07-09]: NASA Common Data Format remote buffer overflow(s)
+Reference: URL:http://www.securityfocus.com/archive/1/505123/30/0/threaded
+Reference: MLIST:[oss-security] 20090814 CVE request: Common Data Format (CDF) library multiple heap-based buffer overflows
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/08/14/3
+Reference: CONFIRM:http://cdf.gsfc.nasa.gov/html/CDF_changesnote2.html
+Reference: CONFIRM:http://cdf.gsfc.nasa.gov/html/CDF_v330.html
+
+Multiple buffer overflows in NASA Common Data Format (CDF) allow
+context-dependent attackers to execute arbitrary code, as demonstrated
+using (1) an array index error in the ReadAEDRList64 function, and
+other errors in the (2) SearchForRecord_r_64, (3) LastRecord64, (4)
+CDFsel64, and other unspecified functions.
+
+
