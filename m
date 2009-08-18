@@ -1,30 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/20/1
-Message-ID: <49EC1580.9080408@redhat.com>
-Date: Mon, 20 Apr 2009 14:26:08 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: cifs: fix unicode string area word alignment in session setup
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/18/2
+Message-ID: <87y6phdy1g.fsf@mocca.josefsson.org>
+Date: Tue, 18 Aug 2009 15:58:03 +0200
+From: Simon Josefsson <simon@...efsson.org>
+To: Jamie Strandboge <jamie@...onical.com>
+Cc: oss-security@...ts.openwall.com, gnutls-devel@....org
+Subject: Re: GnuTLS CVE-2009-2730 Patches
 Content-Type: text/plain; charset=utf-8
 
-According to the upstream commit 27b87fe5, "the handling of unicode
-string area alignment is wrong. decode_unicode_ssetup improperly assumes
-that it will always be preceded by a pad byte. This isn't the case if
-the string area is already word-aligned.
+Jamie Strandboge <jamie@...onical.com> writes:
 
-This problem, combined with the bad buffer sizing for the serverDomain
-string can cause memory corruption. The bad alignment can make it so
-that the alignment of the characters is off. This can make them
-translate to characters that are greater than 2 bytes each. If this
-happens we can overflow the allocation."
+> On Sat, 15 Aug 2009, Simon Josefsson wrote:
+>
+>> Jamie Strandboge <jamie-Z7WLFzj8eWMS+FvcfC7Uqw@...lic.gmane.org> writes:
+>> 
+>> > On Fri, 14 Aug 2009, Simon Josefsson wrote:
+>> >
+>> > Attached are preliminary patches for 2.4.1, 2.0.4 and 1.2.9 backported
+>> > from the advisory[1].
+>> 
+>> Thank you!
+>> 
+>> I have applied the 2.4.x patch on the gnutls_2_4_x branch, so it will be
+>> built and tested by the daily autobuilder from now on.  I've tested that
+>> the nul-in-x509-names self-test works as expected with the 2.4 library.
+>> So in theory, it should be easy for me to make a v2.4.4 release from
+>> that branch.  I wonder if this would helps anyone, though?  I'd imagine
+>> that most people concerned with older releases are distributions that
+>> have to support older GnuTLS releases.  And you aren't likely to use a
+>> new upstream release anyway, since you just apply the patches to your
+>> version.
+>> 
+>> I'm also concerned that there have been plenty of _other_ serious
+>> problems in these old GnuTLS releases (check the security vulnerability
+>> page), and I haven't back-ported the fixes to those problems to these
+>> old branches.  So if I make a release on that branch, I'd have to check
+>> what other serious problems would needs to be fixed for that branch to
+>> be secure -- which sounds like real work (for little gain).
+>> 
+>> For these two reasons, I'd prefer to help you establish trust in the
+>> patches you developed rather than make releases on old branches.
+>> 
+>
+> I'd agree with this. Vendors have likely backported all those other
+> fixes. However, having a place for people to get patches for older
+> releases would likely be beneficial going forward (like you are doing
+> with this one). This is especially true when considering your
+> aforementioned lack of resources.
 
-This is similar to the bug Marcus posted recently.
+Right.  If you and others provide patches for older versions, I can
+apply them on the git branches.  Someone could even volunteer to become
+old-releases-maintainer and do it for me.  It would indeed be useful if
+all vendors could look into the git repository to find the recommended
+patch for any version, rather than everyone having to spend time on
+identifying and testing patches by themselves.  Alas, I don't have
+resources to do this, and I believe my time is best spent on maintaining
+the stable and development branches.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=496572
-http://git.kernel.org/linus/27b87fe52baba0a55e9723030e76fce94fabcea4
-http://lists.samba.org/archive/linux-cifs-client/2009-April/004399.html
-
-Thanks, Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
+/Simon
