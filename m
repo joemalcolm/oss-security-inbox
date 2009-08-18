@@ -1,24 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/29/1
-Message-ID: <20090629132323.10683f9e@redhat.com>
-Date: Mon, 29 Jun 2009 13:23:23 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: OSS Security <oss-security@...ts.openwall.com>
-Subject: nagios: remote code execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/18/6
+Message-ID: <Pine.GSO.4.51.0908181433250.17763@faron.mitre.org>
+Date: Tue, 18 Aug 2009 14:33:35 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: kernel: parisc: isa-eeprom missing lower bound check
 Content-Type: text/plain; charset=utf-8
 
-Hi!
 
-Just in case you missed it - nagios 3.1.1 mentions:
+Use CVE-2009-2846, to be filled in later.
 
-# Security fix for statuswml.cgi where arbitrary shell injection was
-possible 
+- Steve
 
-( http://www.nagios.org/development/history/core-3x/ )
 
-Further details in the upstream bug:
+On Mon, 10 Aug 2009, Eugene Teo wrote:
 
-  http://tracker.nagios.org/view.php?id=15
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+> loff_t is a signed type. If userspace passes a negative ppos, the
+> "count" range check is weakened. If ppos is negative, the readb() later
+> in the function will poke in random memory. Only affects if you are
+> using a PA-RISC kernel with CONFIG_EISA set.
+>
+> Upstream commit:
+> http://git.kernel.org/linus/6b4dbcd86a9d464057fcc7abe4d0574093071fcc
+>
+> Reference:
+> http://patchwork.kernel.org/patch/36418/
+>
+> Thanks, Eugene
+>
