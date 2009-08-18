@@ -1,29 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/12/11
-Message-ID: <20090212202259.GC25522@suse.de>
-Date: Thu, 12 Feb 2009 21:22:59 +0100
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/18/9
+Message-ID: <Pine.GSO.4.51.0908181642050.17763@faron.mitre.org>
+Date: Tue, 18 Aug 2009 16:42:18 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: http://www.securityfocus.com/bid/33672/info kernel issue
+Subject: Re: squid DoS in external auth header parser
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Feb 12, 2009 at 08:05:27PM +0000, Mark J Cox wrote:
-> >http://www.securityfocus.com/bid/33672/ seems to be this commit:
-> >http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.28.y.git;a=commit;h=8255fc826e58c0a59711029e01db9fcdc06ba211
-> >Not sure if its exploitable though.
-> 
-> BTW that BID list of affected kernels isn't correct; the multibyte stuff 
-> wasn't in <=2.6.18 at least.
-> 
-> I didn't check exactly where since it doesn't affect RHEL and didn't look 
-> into the issue any further -- but on first glance it seemed like you'd 
-> have to be a console user and display/select some carefully chosen 
-> characters in order to do the overflow; so it's probably a 'local attacker 
-> at keyboard' flaw?
 
-We backported Unicode stuff to SLES 10 I just see, but yes, 2.6.18 then.
+======================================================
+Name: CVE-2009-2855
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2855
+Reference: MLIST:[oss-security] 20090720 squid DoS in external auth header parser
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/07/20/10
+Reference: MLIST:[oss-security] 20090803 Re: squid DoS in external auth header parser
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/08/03/3
+Reference: MLIST:[oss-security] 20090804 Re: squid DoS in external auth header parser
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/08/04/6
+Reference: MISC:http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=31;filename=diff;att=1;bug=534982
+Reference: MISC:http://www.squid-cache.org/bugs/show_bug.cgi?id=2704
+Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=534982
 
-Yes, console user only. And you can overflow 2 bytes over the end of kmalloced
-space, not sure how much you can do with this.
+The strListGetItem function in src/HttpHeaderTools.c in Squid 2.7
+allows remote attackers to cause a denial of service via a crafted
+auth header with certain comma delimiters that trigger an infinite
+loop of calls to the strcspn function.
 
-ciao, Marcus
+
