@@ -1,155 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/14/3
-Message-ID: <20090514124439.6a741ae3@tleilax.poochiereds.net>
-Date: Thu, 14 May 2009 12:44:39 -0400
-From: Jeff Layton <jlayton@...hat.com>
-To: Eugene Teo <eugene@...hat.com>
-Cc: oss-security@...ts.openwall.com, Steven French <sfrench@...ibm.com>, security@...nel.org, "Steven M. Christey" <coley@...us.mitre.org>, dann frazier <dannf@...ian.org>, Greg KH <greg@...ah.com>
-Subject: Re: Update - Re: CVE request? buffer overflow in CIFS in 2.6.*
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/18/4
+Message-ID: <Pine.GSO.4.51.0908181428340.17763@faron.mitre.org>
+Date: Tue, 18 Aug 2009 14:28:44 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: cfg80211: missing NULL pointer checks
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 14 May 2009 10:41:14 +0800
-Eugene Teo <eugene@...hat.com> wrote:
 
-> Eugene Teo wrote:
-> >> CVE-2009-1439:
-> >>  http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.29.y.git;a=commitdiff;h=15bd8021d870d2c4fbf8c16578d72d03cfddd3a7
-> >>  http://git.kernel.org/?p=linux/kernel/git/sfrench/cifs-2.6.git;a=commitdiff;h=f083def68f84b04fe3f97312498911afce79609e
-> > 
-> > b363b3304bcf68c4541683b2eff70b29f0446a5b
-> > f083def68f84b04fe3f97312498911afce79609e (fix for b363b330)
-> > 22c9d52bc03b880045ab1081890a38f11b272ae7 (remove unneeded pointer)
-> > 
-> >> CVE-2009-NOT-YET-ASSIGNED:
-> >>  http://git.kernel.org/linus/27b87fe52baba0a55e9723030e76fce94fabcea4
-> >>  http://git.kernel.org/?p=linux/kernel/git/sfrench/cifs-2.6.git;a=commit;h=7b0c8fcff47a885743125dd843db64af41af5a61
-> >>  http://git.kernel.org/?p=linux/kernel/git/sfrench/cifs-2.6.git;a=commit;h=968460ebd8006d55661dec0fb86712b40d71c413
-> >>  + some others in progress
-> 
-> These fixes need to be tagged to a CVE.
-> 
-> From Jeff Layton:
-> The cifs code regularly has to convert strings from ucs2_le (a double
-> byte encoding scheme used on windows) to the local NLS charset. The
-> routines that do this have a very poor scheme for handling buffer lengths.
-> 
-> The string conversion routines accept only a single length parameter
-> specified in units of the number of wide characters that it should try
-> to convert. It's assumed therefore that the destination buffer will be
-> big enough. Some measures are in place now to try to ensure this, but
-> they really aren't sufficient. What's needed is a new set of conversion
-> routines that take both the source and destination buffer lengths into
-> account.
-> 
-> The patchset adds these routines and converts the appropriate callers to
-> use them. In addition, it removes a very large piece of "experimental"
-> NTLMSSP code that I found to be completely unreachable. That code was
-> using the old routines and it's simpler (and better) to just remove that
-> code rather than convert it.
-> 
-> The upstream commits are:
-> 
-> 1) [CIFS] remove cifs_strfromUCS_le
-> 341060273232a2df0d1a7fa53abc661fcf22747c
-> 
-> 2) [CIFS] Fix final user of old string conversion code
-> afe48c31ea5c74eaac58621ce1c85ae8187c4383
-> 
-> 3) cifs: fix length handling in cifs_get_name_from_search_buf
-> 18295796a30cada84e933d805072dc2248d54f98
-> 
-> 4) [CIFS] Remove unneeded QuerySymlink call and fix mapping for unmapped
-> status
-> 9e39b0ae8af46c83b85dae7ff5251911a80fce5a
-> 
-> 5) [CIFS] rename cifs_strndup to cifs_strndup_from_ucs
-> d185cda7712fd1d9e349174639d76eadc66679be
-> 
-> 6) [CIFS] NTLMSSP support moving into new file, old dead code removed
-> 2edd6c5b0517b9131ede9e74cb121898ccd73042
-> 
-> 7) [CIFS] Remove older session setup implementation
-> 20418acd6874792359b42c12d159f42f17593f34
-> 
-> 8) cifs: change cifs_get_name_from_search_buf to use new unicode helper
-> f58841666bc22e827ca0dcef7b71c7bc2758ce82
-> 
-> 9) cifs: change CIFSSMBUnixQuerySymLink to use new helpers
-> 460b96960d1946914e50316ffeefe7b41dddce91
-> 
-> 10) cifs: fix session setup unicode string saving to use new unicode helpers
-> 59140797c5817363087b0ffb46e6bb81a11fe0dc
-> 
-> 11) cifs: convert CIFSTCon to use new unicode helper functions
-> cc20c031bb067eb3280a1c4b5c42295093e24863
-> 
-> 12) cifs: rename cifs_strlcpy_to_host and make it use new functions
-> 066ce6899484d9026acd6ba3a8dbbedb33d7ae1b
-> 
-> 13) cifs: add new function to get unicode string length in bytes
-> 69f801fcaa03be83d58c564f00913b7c172808e4
-> 
-> 14) cifs: add replacement for cifs_strtoUCS_le called cifs_from_ucs2
-> 7fabf0c9479fef9fdb9528a5fbdb1cb744a744a4
-> 
-> 15) cifs: move #defines for mapchars into cifs_unicode.h
-> 66345f50f070ae7412a28543ee197cb5eff73598
-> 
-> 16) nls: add a nls_nullsize inline
-> d37dc42ab6f040b8f0f2962ab219c5b2accf748d
-> 
-> 17) cifs: Increase size of tmp_buf in cifs_readdir to avoid potential
-> overflows
-> 7b0c8fcff47a885743125dd843db64af41af5a61
-> 
-> 18) cifs: Rename cifs_strncpy_to_host and fix buffer size
-> 968460ebd8006d55661dec0fb86712b40d71c413
-> 
-> 19) cifs: fix unicode string area word alignment in session setup
-> 27b87fe52baba0a55e9723030e76fce94fabcea4
-> 
-> References:
-> https://bugzilla.redhat.com/show_bug.cgi?id=496572
-> http://git.kernel.org/linus/341060273232a2df0d1a7fa53abc661fcf22747c
-> http://git.kernel.org/linus/afe48c31ea5c74eaac58621ce1c85ae8187c4383
-> http://git.kernel.org/linus/18295796a30cada84e933d805072dc2248d54f98
-> http://git.kernel.org/linus/9e39b0ae8af46c83b85dae7ff5251911a80fce5a
-> http://git.kernel.org/linus/d185cda7712fd1d9e349174639d76eadc66679be
-> http://git.kernel.org/linus/2edd6c5b0517b9131ede9e74cb121898ccd73042
-> http://git.kernel.org/linus/20418acd6874792359b42c12d159f42f17593f34
-> http://git.kernel.org/linus/f58841666bc22e827ca0dcef7b71c7bc2758ce82
-> http://git.kernel.org/linus/460b96960d1946914e50316ffeefe7b41dddce91
-> http://git.kernel.org/linus/59140797c5817363087b0ffb46e6bb81a11fe0dc
-> http://git.kernel.org/linus/cc20c031bb067eb3280a1c4b5c42295093e24863
-> http://git.kernel.org/linus/066ce6899484d9026acd6ba3a8dbbedb33d7ae1b
-> http://git.kernel.org/linus/69f801fcaa03be83d58c564f00913b7c172808e4
-> http://git.kernel.org/linus/7fabf0c9479fef9fdb9528a5fbdb1cb744a744a4
-> http://git.kernel.org/linus/66345f50f070ae7412a28543ee197cb5eff73598
-> http://git.kernel.org/linus/d37dc42ab6f040b8f0f2962ab219c5b2accf748d
-> http://git.kernel.org/linus/7b0c8fcff47a885743125dd843db64af41af5a61
-> http://git.kernel.org/linus/968460ebd8006d55661dec0fb86712b40d71c413
-> http://git.kernel.org/linus/27b87fe52baba0a55e9723030e76fce94fabcea4
-> 
+Use CVE-2009-2844, to be filled in later.
+
+- Steve
+
+
+On Mon, 17 Aug 2009, Eugene Teo wrote:
+
+> Jon Oberheide wrote:
+> > On Fri, 2009-08-14 at 17:33 -0600, dann frazier wrote:
+> [...]
+> > Also would be nice to get one for the cfg80211 issue:
+> > http://patchwork.kernel.org/patch/41218/
+> >
+> > Reproducer:
+> > http://jon.oberheide.org/files/cfg80211-remote-dos.c
+>
+> Thanks Jon.
+>
+> "These pointers can be NULL, the is_mesh() case isn't ever hit in the
+> current kernel, but cmp_ies() can be hit under certain conditions."
+>
+> Upstream commit:
+> http://git.kernel.org/linus/cd3468bad96c00b5a512f551674f36776129520e
+>
 > Thanks, Eugene
-
-
-It probably doesn't matter, but the list of commits above is in reverse
-order (#1 is last commit, #19 is first). Also, there's another patch
-that I sent today:
-
-commit d8e2f53ac99f4ce7d63807a84f98d1b80df598cf
-Author: Jeff Layton <jlayton@...hat.com>
-Date:   Thu May 14 07:46:59 2009 -0400
-
-    cifs: fix error handling in parse_DFS_referrals
-    
-    cifs_strndup_from_ucs returns NULL on error, not an ERR_PTR
-    
-    Signed-off-by: Jeff Layton <jlayton@...hat.com>
-    Signed-off-by: Steve French <sfrench@...ibm.com>
-
-...that patch is in Steve's tree but not yet in Linus'. It should make
-its way there soon though.
-
--- 
-Jeff Layton <jlayton@...hat.com>
+>
