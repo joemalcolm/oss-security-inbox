@@ -1,91 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/17/7
-Message-ID: <Pine.GSO.4.51.0909162134120.7046@faron.mitre.org>
-Date: Wed, 16 Sep 2009 21:34:17 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/18/7
+Message-ID: <Pine.GSO.4.51.0908181436260.17763@faron.mitre.org>
+Date: Tue, 18 Aug 2009 14:37:20 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security <oss-security@...ts.openwall.com>, oss-security <oss-security@...ts.openwall.com>
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- PostgreSQL
+To: "Steven M. Christey" <coley@...us.mitre.org>
+cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: kernel: flat: fix uninitialized ptr with shared libs
 Content-Type: text/plain; charset=utf-8
 
 
-======================================================
-Name: CVE-2009-3229
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3229
-Reference: CONFIRM:http://www.postgresql.org/docs/8.3/static/release-8-3-8.html
-Reference: CONFIRM:http://www.postgresql.org/support/security.html
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=522092
-Reference: FEDORA:FEDORA-2009-9473
-Reference: URL:https://www.redhat.com/archives/fedora-package-announce/2009-September/msg00305.html
-Reference: FEDORA:FEDORA-2009-9474
-Reference: URL:https://www.redhat.com/archives/fedora-package-announce/2009-September/msg00307.html
-Reference: BID:36314
-Reference: URL:http://www.securityfocus.com/bid/36314
-Reference: SECUNIA:36660
-Reference: URL:http://secunia.com/advisories/36660
-Reference: SECUNIA:36727
-Reference: URL:http://secunia.com/advisories/36727
+On Tue, 18 Aug 2009, Steven M. Christey wrote:
 
-The core server component in PostgreSQL 8.4 before 8.4.1, 8.3 before
-8.3.8, and 8.2 before 8.2.14 allows remote authenticated users to
-cause a denial of service (backend shutdown) by "re-LOAD-ing"
-libraries from a certain plugins directory.
+> Use CVE-2009-2845, to be filled in soon.
+
+Actually, that's a duplicate (yikes).  I'll reject that one.
+
+CVE-2009-2768 was already assigned, use it instead.  See below.
+
+- Steve
 
 
 ======================================================
-Name: CVE-2009-3230
+Name: CVE-2009-2768
 Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3230
-Reference: MLIST:[pgsql-www] 20090909 Re: Incorrect CVE reference on security page
-Reference: URL:http://archives.postgresql.org/pgsql-www/2009-09/msg00024.php
-Reference: CONFIRM:http://www.postgresql.org/docs/8.3/static/release-8-3-8.html
-Reference: CONFIRM:http://www.postgresql.org/support/security.html
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=522085
-Reference: FEDORA:FEDORA-2009-9473
-Reference: URL:https://www.redhat.com/archives/fedora-package-announce/2009-September/msg00305.html
-Reference: FEDORA:FEDORA-2009-9474
-Reference: URL:https://www.redhat.com/archives/fedora-package-announce/2009-September/msg00307.html
-Reference: BID:36314
-Reference: URL:http://www.securityfocus.com/bid/36314
-Reference: SECUNIA:36660
-Reference: URL:http://secunia.com/advisories/36660
-Reference: SECUNIA:36695
-Reference: URL:http://secunia.com/advisories/36695
-Reference: SECUNIA:36727
-Reference: URL:http://secunia.com/advisories/36727
-Reference: VUPEN:ADV-2009-2602
-Reference: URL:http://www.vupen.com/english/advisories/2009/2602
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2768
+Reference: MLIST:[linux-kernel] 20090622 Fix for shared flat binary format in 2.6.30
+Reference: URL:http://lkml.org/lkml/2009/6/22/91
+Reference: MLIST:[oss-security] 20090813 CVE request: kernel: flat: fix uninitialized ptr with shared libs
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/08/13/1
+Reference: CONFIRM:http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=3440625d78711bee41a84cf29c3d8c579b522666
+Reference: CONFIRM:http://thread.gmane.org/gmane.linux.hardware.blackfin.kernel.devel/1905
+Reference: CONFIRM:http://www.kernel.org/pub/linux/kernel/v2.6/testing/ChangeLog-2.6.31-rc6
+Reference: BID:36037
+Reference: URL:http://www.securityfocus.com/bid/36037
 
-The core server component in PostgreSQL 8.4 before 8.4.1, 8.3 before
-8.3.8, 8.2 before 8.2.14, 8.1 before 8.1.18, 8.0 before 8.0.22, and
-7.4 before 7.4.26 does not use the appropriate privileges for the (1)
-RESET ROLE and (2) RESET SESSION AUTHORIZATION operations, which
-allows remote authenticated users to gain privileges.  NOTE: this is
-due to an incomplete fix for CVE-2007-6600.
-
-
-======================================================
-Name: CVE-2009-3231
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3231
-Reference: CONFIRM:http://www.postgresql.org/docs/8.3/static/release-8-3-8.html
-Reference: CONFIRM:http://www.postgresql.org/support/security.html
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=522084
-Reference: FEDORA:FEDORA-2009-9473
-Reference: URL:https://www.redhat.com/archives/fedora-package-announce/2009-September/msg00305.html
-Reference: FEDORA:FEDORA-2009-9474
-Reference: URL:https://www.redhat.com/archives/fedora-package-announce/2009-September/msg00307.html
-Reference: BID:36314
-Reference: URL:http://www.securityfocus.com/bid/36314
-Reference: SECUNIA:36660
-Reference: URL:http://secunia.com/advisories/36660
-Reference: SECUNIA:36727
-Reference: URL:http://secunia.com/advisories/36727
-
-The core server component in PostgreSQL 8.3 before 8.3.8 and 8.2
-before 8.2.14, when using LDAP authentication with anonymous binds,
-allows remote attackers to bypass authentication via an empty
-password.
+The load_flat_shared_library function in fs/binfmt_flat.c in the flat
+subsystem in the Linux kernel before 2.6.31-rc6 allows local users to
+cause a denial of service (NULL pointer dereference and system crash)
+or possibly have unspecified other impact by executing a shared flat
+binary, which triggers an access of an "uninitialized cred pointer."
 
 
