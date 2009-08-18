@@ -1,84 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/23/15
-Message-ID: <499213538.605701259009368603.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 23 Nov 2009 15:49:28 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/18/11
+Message-ID: <Pine.GSO.4.51.0908181645090.17763@faron.mitre.org>
+Date: Tue, 18 Aug 2009 16:45:45 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: Joe Orton <jorton@...hat.com>, coley <coley@...re.org>
-Subject: Re: CVE request: php 5.3.1 -  proc_open() bypass PHP Bug #49026 [was: Re: CVE request: php 5.3.1 update]
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- WordPress
 Content-Type: text/plain; charset=utf-8
 
-CVE-2009-4018
 
-PHP before 5.3.1 proc_open() can be used to bypass the
-safe_mode_protected_env_vars INI setting. This could be used to alter the
-process environment possibly executing arbitrary code.
 
-http://www.php.net/ChangeLog-5.php#5.3.1
-http://bugs.php.net/bug.php?id=49026
-http://marc.info/?l=oss-security&m=125897935330618&w=2
+On Tue, 21 Jul 2009, Jan Lieskovsky wrote:
 
-Thanks.
+>   latest WordPress 2.8.2 version has addressed a XSS vulnerability:
+>
+>     XSS via unescaped HTML URLs as author comments in the admin page
 
--- 
-    JB
 
------ "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+======================================================
+Name: CVE-2009-2851
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2851
+Reference: MLIST:[oss-security] 20090721 CVE Request -- WordPress
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/07/21/1
+Reference: CONFIRM:http://bugs.gentoo.org/show_bug.cgi?id=278492
+Reference: CONFIRM:http://wordpress.org/development/2009/07/wordpress-2-8-2/
+Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=512900
+Reference: FEDORA:FEDORA-2009-8109
+Reference: URL:https://www.redhat.com/archives/fedora-package-announce/2009-July/msg01241.html
+Reference: FEDORA:FEDORA-2009-8114
+Reference: URL:https://www.redhat.com/archives/fedora-package-announce/2009-July/msg01253.html
+Reference: SECTRACK:1022589
+Reference: URL:http://securitytracker.com/id?1022589
 
-> Hi Brian,
-> 
-> security curmudgeon wrote:
-> > On Fri, 20 Nov 2009, Thomas Biege wrote:
-> > 
-> > : PHP was updated to version 5.3.1 and did also address security
-> > : issues: http://www.php.net/releases/5_3_1.php
-> > : 
-> > : Security Enhancements and Fixes in PHP 5.3.1:
-> > : 
-> > :     * Added "max_file_uploads" INI directive, which can be set to
-> limit the number of file uploads per-request to 20 by default, to
-> prevent possible DOS via temporary file exhaustion.
-> > :     * Added missing sanity checks around exif processing.
-> > 
-> > This was previously disclosed and fixed in the 5.2.x tree. I believe
-> this 
-> > is the same as CVE-2009-3292.
-> > 
-> > :     * Fixed a safe_mode bypass in tempnam().
-> > :     * Fixed a open_basedir bypass in posix_mkfifo().
-> > :     * Fixed bug #50063 (safe_mode_include_dir fails).
-> > :     * Fixed bug #44683 (popen crashes when an invalid mode is
-> passed).
-> > 
-> > Also not flagged as 'security' up top, but from the changelog:
-> > 
-> > Fixed bug #49026 (proc_open() can bypass
-> safe_mode_protected_env_vars 
-> > restrictions). (Ilia)
-> 
->    Thank you for pointing this out.
-> 
->    Yes, further look into particular php bugzilla returns:
-> 
->      "Environment variables specified for proc_open passed without
-> check so
->       safe_mode_allowed_env_vars and safe_mode_protected_env_vars
-> settings are
->       ignored. So it become possible to use buffer overflow exploit
-> with
->       "LD_PRELOAD=evil_library.so" to bypass safe_mode restrictions
-> and get
->       access to any files acessible for apache uid."
-> 
->    So looks another CVE id is needed here. Changed subject to:
->    "CVE request: php 5.3.1 - proc_open() bypass PHP Bug #49026"
-> 
->    Could we get another CVE id for this case?
-> 
-> Thanks && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
-> 
-> > 
-> > Brian
+Cross-site scripting (XSS) vulnerability in the administrator
+interface in WordPress before 2.8.2 allows remote attackers to inject
+arbitrary web script or HTML via a comment author URL.
+
 
