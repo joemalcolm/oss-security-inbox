@@ -1,33 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/18/13
-Message-ID: <Pine.GSO.4.51.0908181648330.17763@faron.mitre.org>
-Date: Tue, 18 Aug 2009 16:48:54 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: Re: md raid null ptr dereference (when sysfs is writable)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/19/1
+Message-ID: <4A8B4519.1060203@redhat.com>
+Date: Wed, 19 Aug 2009 08:19:37 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: flat: fix uninitialized ptr with shared libs
 Content-Type: text/plain; charset=utf-8
 
+Steven M. Christey wrote:
+> Use CVE-2009-2845, to be filled in soon.
 
-On Fri, 24 Jul 2009, Marcus Meissner wrote:
+This has been assigned CVE-2009-2768. Duplicate CVE.
 
-> http://xorl.wordpress.com/2009/07/21/linux-kernel-md-driver-null-pointer-dereference/
+Thanks, Eugene
 
-======================================================
-Name: CVE-2009-2849
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2849
-Reference: MLIST:[oss-security] 20090724 md raid null ptr dereference (when sysfs is writable)
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/07/24/1
-Reference: MLIST:[oss-security] 20090726 Re: md raid null ptr dereference (when sysfs is writable)
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/07/26/1
-Reference: MISC:http://xorl.wordpress.com/2009/07/21/linux-kernel-md-driver-null-pointer-dereference/
-Reference: CONFIRM:http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.30.y.git;a=commit;h=3c92900d9a4afb176d3de335dc0da0198660a244
-Reference: CONFIRM:http://www.kernel.org/pub/linux/kernel/v2.6/ChangeLog-2.6.30.2
-
-The md driver (drivers/md/md.c) in the Linux kernel before 2.6.30.2
-might allow local users to cause a denial of service (NULL pointer
-dereference) via vectors related to "suspend_* sysfs attributes" and
-the (1) suspend_lo_store or (2) suspend_hi_store functions.  NOTE: this
-is only a vulnerability when sysfs is writable by an attacker.
-
+> On Thu, 13 Aug 2009, Eugene Teo wrote:
+> 
+>> The new credentials code broke load_flat_shared_library() as it now uses
+>> an uninitialised cred pointer, leading to a NULL pointer dereference.
+>> This can be triggered by running a shared flat binary.
+>>
+>> kernel/cred.c was introduced in v2.6.29-rc1 IIRC.
+>>
+>> Upstream commit:
+>> http://git.kernel.org/linus/3440625d78711bee41a84cf29c3d8c579b522666
+>>
+>> References:
+>> http://lkml.org/lkml/2009/6/22/91
+>> http://thread.gmane.org/gmane.linux.hardware.blackfin.kernel.devel/1905
+>>
+>> Thanks, Eugene
+>>
 
