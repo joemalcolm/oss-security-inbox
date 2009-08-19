@@ -1,21 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/11/1
-Message-ID: <20091211032503.GO26756@severus.strandboge.com>
-Date: Thu, 10 Dec 2009 21:25:03 -0600
-From: Jamie Strandboge <jamie@...onical.com>
-To: oss-security@...ts.openwall.com
-Subject: Some small KDE issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/19/2
+Message-ID: <1373320889.868441250692750430.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 19 Aug 2009 10:39:10 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: coley <coley@...re.org>
+Subject: CVE Request pidgin
 Content-Type: text/plain; charset=utf-8
 
-FYI,
+Hi Steve,
 
-Our KDE maintainer alerted us to this:
-http://www.ocert.org/advisories/ocert-2009-015.html
-http://www.kde.org/info/security/advisory-20091027-1.txt
+Can you give us an ID for pidgin. Their 2.6.1 release fixes a DoS in only 2.6.0.
 
-Jamie
+http://developer.pidgin.im/wiki/ChangeLog
+
+Thanks.
 
 -- 
-Jamie Strandboge             | http://www.canonical.com
-
-Download attachment "signature.asc" of type "application/pgp-signature" (198 bytes)
+    JB
