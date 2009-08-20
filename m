@@ -1,48 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/17/10
-Message-ID: <20090317214102.GN19038@ngolde.de>
-Date: Tue, 17 Mar 2009 22:41:02 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/20/1
+Message-ID: <20090820075641.GA4781@redhat.com>
+Date: Thu, 20 Aug 2009 08:56:41 +0100
+From: Joe Orton <jorton@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2009-0876 (VirtualBox) references
+Subject: Re: neon 0.28.6 - CVE-2009-2473, CVE-2009-2474
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Steven M. Christey <coley@...us.mitre.org> [2009-03-17 21:54]:
-> On Tue, 17 Mar 2009, Nico Golde wrote:
-> > Any reason the CVE description says "Unspecified
-> > vulnerability...via unknown vectors"?
-> 
-> This was based on the original Sun alert.  I cleaned up the description
-> yesterday, and the CVE web site was updated today.
+On Tue, Aug 18, 2009 at 04:57:01PM +0100, Joe Orton wrote:
+> * SECURITY (CVE-2009-2474): Fix handling of an embedded NUL byte in
+>   a certificate subject name with OpenSSL; could allow an undetected
+>   MITM attack against an SSL server if a trusted CA issues such a cert.
 
-Ok
+I implied here, and stated in the message to the mailing list, that neon 
+was not affected by this issue if linked against GnuTLS 2.8.2 or later, 
+rather than OpenSSL.  This was not correct.  
 
-> > Looking at the Gentoo bug report[0] it seems obvious to me
-> > that this is caused by insecurely loading shared libraries
-> > so you can inject your own shared lib code.
-> >
-> > [0] https://bugs.gentoo.org/show_bug.cgi?id=260331#c0
-> 
-> It wasn't particularly obvious to me.  I may be getting hung up on the use
-> of hardlinks.
-> 
-> Is the problem that the executable includes a "." in its library path
-> (presumably DT_RPATH), and that path isn't cleansed until later during
-> program execution?  If it's just that, then the use of a hardlink doesn't
-> seem to be essential - the attacker could run the program from their own
-> directory.  Or, is it that the executable eventually removes "." from its
-> path, but not before some libraries have already been loaded?
+Versions of neon <= 0.28.5 linked against any version of GnuTLS 
+(including >= 2.8.2) are still vulnerable to at least one type of 
+embedded-NUL issue.  
 
-From what I understood the last one is true but I am also 
-not 100% sure as the information about this is really rare. 
-The current (updated) version of the description however 
-looks fine to me.
+It is necessary to upgrade to neon 0.28.6 to fix the issue completely, 
+if built against GnuTLS.
 
-Cheers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+So far as this vulnerability affects neon, it is neither sufficient nor 
+necessary to update to GnuTLS 2.8.2.  (i.e. neon 0.28.6 will not be 
+vulnerable if linked against older versions of GnuTLS)
 
-Content of type "application/pgp-signature" skipped
+Apologies for the confusion, and hope this is clear.
+
+Regards, Joe
