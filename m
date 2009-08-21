@@ -1,24 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/12/1
-Message-ID: <28fa9c5e0901112057g539a6305ybb5eeaf561a117d9@mail.gmail.com>
-Date: Mon, 12 Jan 2009 12:57:55 +0800
-From: "Eugene Teo" <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/21/2
+Message-Id: <200908211352.11928.rbu@gentoo.org>
+Date: Fri, 21 Aug 2009 13:52:01 +0200
+From: Robert Buchholz <rbu@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, "Greg KH" <greg@...ah.com>
-Subject: CVE-2009-0024 kernel: local privilege escalation in sys_remap_file_pages
+Cc: vulncoord@...ora.fi
+Subject: expat bug 1990430
 Content-Type: text/plain; charset=utf-8
 
-Nelson Elhage reported that it is possible for a local, unprivileged
-user to cause a denial of service, or gain root privileges by abusing
-a flaw in sys_remap_file_pages().
+Hello,
 
-The bug was introduced by commit 3ee6dafc, and it was fixed in
-8a459e44. This was also fixed in 2.6.24 -stable tree with 7e3c396b.
+we have learned that expat fixed a crash issue in June 2008, but never 
+released an update. The bug was apparantly intended to be kept private, 
+but the bug changes were mailed to a public mailing list and Python 
+developrs menitoned the bug fix in their public svn (including NEWS 
+file, and reproducers):
 
-We have assigned CVE-2009-0024 to this issue.
+http://mail.python.org/pipermail/expat-bugs/2009-January/002781.html
+http://sourceforge.net/tracker/index.php?func=detail&aid=1990430&group_id=10127&atid=110127
+http://svn.python.org/view?view=rev&revision=74429
+https://bugs.gentoo.org/show_bug.cgi?id=280615
 
-Take note that this does not affect the latest kernels as shipped with
-Red Hat Enterprise Linux 5, Red Hat Enterprise MRG, Fedora 8 to 10,
-Ubuntu 8.04 (Hardy) (Thanks Kees), and Debian GNU/Linux (Thanks Dann).
+While the expat bug was reported by Peter Valchev of Google, Python 
+credits Ivan Krstić of Apple with the patch (submission).
+It might also be related to CVE-2009-2625 / FICORA #245608:
+https://www.cert.fi/en/reports/2009/vulnerability2009085.html
 
-Thanks, Eugene
+As CERT-FI never released any details or test cases, I have no idea if 
+we need a new CVE of if those two issues are the same.
+
+
+Robert
+
+Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
