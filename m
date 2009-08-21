@@ -1,34 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/12/5
-Message-ID: <Pine.GSO.4.51.0902121106320.17219@faron.mitre.org>
-Date: Thu, 12 Feb 2009 11:07:29 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/21/1
+Message-ID: <op.uyz4c61d1e62zd@merlin.emma.line.org>
+Date: Fri, 21 Aug 2009 09:28:08 +0200
+From: "Matthias Andree" <matthias.andree@....de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: pycrypto
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: "umbrella" CVE names (was: CVE request: fetchmail <= 6.3.10 SSL certificate NUL prefix verification bypass)
 Content-Type: text/plain; charset=utf-8
 
+Am 05.08.2009, 20:13 Uhr, schrieb Steven M. Christey  
+<coley@...us.mitre.org>:
 
-A specific version wasn't listed and the new maintainer hasn't released
-any new versions, so I'm assuming the last version under the previous
-maintainer, which seems to be 2.0.1.
+> So use CVE-2009-2666 for fetchmail (I'll fill it in later) and Tomas,  
+> even
+> if it results in dozens of CVEs, I suspect this is how we should go.
 
-Pinguar, sorry for the delay.
+Following up an earlier question of mine (umbrella CVE for a class of  
+problems, here: weak X.509 name verification that terminates early on  
+embedded NUL bytes):
 
-- Steve
+Mandriva Security (I think it was them - if I recall correctly) wrote in  
+their fetchmail security advisory something along the lines of  
+"CVE-2009-2666, [...] related to CVE-2009-2408" (with some more details).  
+This is probably the best way around this problem of how do we assign and  
+organize: We have the individual CVE name for the fetchmail weakness (so  
+it can be tracked), and we also have as reference the CVE name of the  
+first published issue that sort of founded a problem class, by instance of  
+Mozilla NSS.
 
-======================================================
-Name: CVE-2009-0544
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0544
-Reference: MLIST:[oss-security] 20090207 CVE Request: pycrypto
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/02/07/1
-Reference: CONFIRM:http://gitweb2.dlitz.net/?p=crypto/pycrypto-2.x.git;a=commitdiff;h=d1c4875e1f220652fe7ff8358f56dee3b2aba31b
-Reference: CONFIRM:http://gitweb2.dlitz.net/?p=crypto/pycrypto-2.x.git;a=commitdiff;h=fd73731dfad451a81056fbb01e09aa78ab82eb5d
-Reference: XF:pycrypto-arc2module-bo(48617)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/48617
+CVE-2009-2408 here turns into some dual-use: (1) to track the  
+library/Mozilla application bug, (2) to name the problem class.
 
-Buffer overflow in the PyCrypto ARC2 module 2.0.1 allows remote
-attackers to cause a denial of service and possibly execute arbitrary
-code via a large ARC2 key length.
+Perhaps this should/could be considered a pragmatic solution to the  
+"umbrella CVE" problem I posed earlier.
 
-
+-- 
+Matthias Andree
