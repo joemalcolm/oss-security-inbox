@@ -1,93 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/27/4
-Message-ID: <20091027211225.GI4925@inversepath.com>
-Date: Tue, 27 Oct 2009 21:12:25 +0000
-From: Andrea Barisani <lcars@...rt.org>
-To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
-Subject: [oCERT-2009-015] KDE multiple issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/24/2
+Message-Id: <200908241910.49783.steffen.joeris@skolelinux.de>
+Date: Mon, 24 Aug 2009 19:10:45 +1000
+From: Steffen Joeris <steffen.joeris@...lelinux.de>
+To: "oss-security" <oss-security@...ts.openwall.com>, coley <coley@...re.org>
+Subject: CVE id request: pidgin
 Content-Type: text/plain; charset=utf-8
 
+Hi
 
-#2009-015 KDE multiple issues
+There seems to be another issue with pidgin. It does not enforce SSL/TLS and 
+seems to connect without encryption, although the box is ticked.
 
-Description:
+See Debian Bug here:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=542891
 
-KDE, an open source desktop environment, suffers from several bugs that
-pose a security risk.
+This upstream commit was pointed out to me:
+http://developer.pidgin.im/viewmtn/revision/diff/312e056d702d29379ea61aea9d27765f127bc888/with/55897c4ce0787edc1e7721b7f4a9b5cbc8357279
 
-The oCERT team was contacted by Portcullis Security requesting help in
-handling a series of issues reported to the KDE project back in July 2007.
-Because of an extended period of non-disclosure Portcullis decided to
-resubmit the issues to KDE and contacted oCERT asking for assistance in
-disclosure coordination.
+Reporter promised to check whether gaim is affected too, so I guess the 
+bugreport will be updated.
 
-Ark input sanitization errors:
-The KDE archiving tool, Ark, performs insufficient validation which leads
-to specially crafted archive files, using unknown MIME types, to be
-rendered using a KHTML instance, this can trigger uncontrolled
-XMLHTTPRequests to remote sites.
+Could I please get a CVE id for this?
 
-IO Slaves input sanitization errors:
-KDE protocol handlers perform insufficient input validation, an attacker
-can craft malicious URI that would trigger JavaScript execution.
-Additionally the 'help://' protocol handler suffer from directory
-traversal. It should be noted that the scope of this issue is limited as
-the malicious URIs cannot be embedded in Internet hosted content.
+Cheers
+Steffen
 
-KMail input sanitization errors:
-The KDE mail client, KMail, performs insufficient validation which leads
-to specially crafted email attachments, using unknown MIME types, to be
-rendered using a KHTML instance, this can trigger uncontrolled
-XMLHTTPRequests to remote sites.
-
-The exploitation of these vulnerabilities is unlikely according to
-Portcullis and KDE but the execution of active content is nonetheless
-unexpected and might pose a threat.
-
-All the reported issues have been patched.
-
-Affected version:
-
-KDE < 4.3.2
-
-Fixed version:
-
-KDE >= 4.3.3
-
-Credit: Tim Brown, Portcullis Computer Security Ltd.
-
-CVE: N/A
-
-Timeline:
-
-2009-02-18: vulnerability report received
-2009-02-19: contacted KDE security team
-2009-03-05: KDE acknowledges the report, provides preliminary analysis for
-            the reported issues
-2009-03-18: Portcullis provides additional information
-2009-04-29: KDE provides preliminary patches
-2009-05-27: KDE reports that they are communicating directly with
-            Portcullis on the reported issues
-2009-06-15: Portcullis provides updated advisories for review
-2009-06-18: oCERT asks KDE review of Portcullis advisories
-2009-09-23: KDE reports that all issues have been fixed
-2009-10-02: KDE reports additional feedback about the fixes
-2009-10-15: KDE commits all outstanding fixes
-2009-10-27: advisory release
-
-References:
-http://www.davidfaure.fr/2009/xmlhttprequest_3.x.diff
-http://websvn.kde.org/?view=revision&revision=1035539
-http://websvn.kde.org/?view=revision&revision=1030579
-http://websvn.kde.org/?view=revision&revision=938003
-
-Permalink:
-http://www.ocert.org/advisories/ocert-2009-015.html
-
--- 
-Andrea Barisani |                Founder & Project Coordinator
-          oCERT | Open Source Computer Emergency Response Team
-
-<lcars@...rt.org>                         http://www.ocert.org
- 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
-        "Pluralitas non est ponenda sine necessitate"
+Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
