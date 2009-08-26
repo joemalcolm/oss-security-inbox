@@ -1,38 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/22/5
-Message-ID: <b086760e0907220930j7da01917nc3556c63a4a67a2f@mail.gmail.com>
-Date: Wed, 22 Jul 2009 18:30:39 +0200
-From: yersinia <yersinia.spiros@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/26/1
+Message-ID: <4A94950B.6010503@kernel.sg>
+Date: Wed, 26 Aug 2009 09:51:07 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Cc: Brad Spengler <spender@...ecurity.net>, Marcus Meissner <meissner@...e.de>,  dailydave <dailydave@...ts.immunitysec.com>
-Subject: Re: Re: [Dailydave] Linux  2.6.30+/SELinux/RHEL5 test kernel 0day, exploiting the unexploitable
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: AF_LLC getsockname 5-Byte Stack Disclosure
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jul 22, 2009 at 5:04 PM, Todd Sabin<tsabin@...online.net> wrote:
-> spender@...ecurity.net (Brad Spengler) writes:
->
->> (Really there should have been a CVE for the lack of
->> -fno-delete-null-pointer-checks instead of pretending the only problem
->> was /dev/net/tun....
->
-> Just as a side note, it seems like gcc is missing an option, to me.
-> Okay, it can figure out that some NULL pointer checks seem to be
-> useless, and either optimize them away or leave them in.  What about
-> issuing a warning?
->
-> Where's -Wuseless-null-pointer-check?
->
+sllc_arphrd member of sockaddr_llc might not be changed. Zero sllc 
+before copying to the above layer's structure.
 
-Coverity opinion on this specific issue
+Note that LLC sockets are restricted to root since v2.6.25-rc9 (see 
+commit 3480c63b).
 
-http://blog.coverity.com/posts/general/would-you-like-to-know-about-0day-defects-months-in-advance
+Upstream commit:
+http://git.kernel.org/linus/28e9fc592cb8c7a43e4d3147b38be6032a0e81bc
 
-Regards
+Reproducer:
+http://jon.oberheide.org/files/llc-getsockname-leak.c
 
->
-> Todd
->
-> --
-> Todd Sabin                                          <tsabin@...online.net>
->
+Reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=519305
 
+Thanks, Eugene
