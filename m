@@ -1,28 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/05/3
-Message-ID: <20090505152022.GI15109@ngolde.de>
-Date: Tue, 5 May 2009 17:20:22 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/26/3
+Message-ID: <4A955179.8050808@ficora.fi>
+Date: Wed, 26 Aug 2009 18:15:05 +0300
+From: CERT-FI Vulnerability Coordination <vulncoord@...ora.fi>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: Re: CVE id request: Debian/Ubuntu specific issue in xvfb-run (xorg)
+CC: Robert Buchholz <rbu@...too.org>
+Subject: Re: expat bug 1990430
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Nico Golde <oss-security+ml@...lde.de> [2009-05-05 17:18]:
-> can I get a CVE id for http://bugs.debian.org/526678
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+> we have learned that expat fixed a crash issue in June 2008, but never 
+> released an update. The bug was apparantly intended to be kept private, 
+> but the bug changes were mailed to a public mailing list and Python 
+> developrs menitoned the bug fix in their public svn (including NEWS 
+> file, and reproducers):
 > 
-> The xvfb-run script used in Debian insecurely passes the X 
-> magic cookie via the commandline so it's an easy thing to 
-> grab it with system access.
+> http://mail.python.org/pipermail/expat-bugs/2009-January/002781.html
+> http://sourceforge.net/tracker/index.php?func=detail&aid=1990430&group_id=10127&atid=110127
+> http://svn.python.org/view?view=rev&revision=74429
+> https://bugs.gentoo.org/show_bug.cgi?id=280615
+> 
+> While the expat bug was reported by Peter Valchev of Google, Python 
+> credits Ivan Krstić of Apple with the patch (submission).
+> It might also be related to CVE-2009-2625 / FICORA #245608:
+> https://www.cert.fi/en/reports/2009/vulnerability2009085.html
+> 
+> As CERT-FI never released any details or test cases, I have no idea if 
+> we need a new CVE of if those two issues are the same.
 
-YFYI, our maintainer just told me that he thinks this is included 
-since Fedora 10 in Fedora as well...
+Sorry for the delay.
 
-Cheers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+A new CVE is not needed. These two issues (the one which was fixed in
+expat CVS in June 2008 and the one with the internal copy of expat in
+Python) are essentially the same. The issue seems to be first found by
+Peter Valchev in June 2008. As Robert mentioned, the issue has been
+fixed in expat's CVS in June 2008 but an updated release was not made
+for some reason. The issue was also present in the expat bundled with
+Python and it was reported to us independent from the original issue
+(even though the reason of the crash is the same). CERT-FI reported the
+issue to Python in July 2009. Soon after that the issue was reported to
+expat maintainers too since initially we did not know that the issue was
+already fixed in expat's CVS. Python's patch has been incorporated into
+Python 3.1.1 but there is probably more software with an affected
+internal copy of expat out there.
 
-Content of type "application/pgp-signature" skipped
+Sauli Pahlman
+CERT-FI
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkqVUW0ACgkQ/64aC2E+yK+b8wCfcJQLpE3f1ccVgg13vzao8IqO
+Y+0AoMuuooNdFLiKKi10fVQQCDY0BDOK
+=7kag
+-----END PGP SIGNATURE-----
