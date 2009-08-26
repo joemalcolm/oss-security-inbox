@@ -1,26 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/09/3
-Message-Id: <20090809130155.00f242f2.michael.s.gilbert@gmail.com>
-Date: Sun, 9 Aug 2009 13:01:55 -0400
-From: "Michael S. Gilbert" <michael.s.gilbert@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/26/2
+Message-ID: <20090826040751.GA20809@openwall.com>
+Date: Wed, 26 Aug 2009 08:07:51 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: mantis
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: information leak in sigaltstack
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Steve,
 
-Debian recently updated mantis.  The description is:
+On Tue, Aug 18, 2009 at 04:54:43PM -0400, Steven M. Christey wrote:
+> On Tue, 4 Aug 2009, Eugene Teo wrote:
+> 
+> > do_sigaltstack: avoid copying 'stack_t' as a structure to user space
+> 
+> 
+> ======================================================
+> Name: CVE-2009-2847
+[...]
+> The do_sigaltstack function in kernel/signal.c in Linux kernel 2.6
+> before 2.6.31-rc5, when running on 64-bit systems, does not clear
+> certain padding bytes from a structure, which allows local users to
+> obtain sensitive information from the kernel stack via the sigaltstack
+> function.
 
-  It was discovered that the Debian Mantis package, a web based bug
-  tracking system, installed the database credentials in a file with
-  world-readable permissions onto the local filesystem. This allows
-  local users to acquire the credentials used to control the Mantis
-  database.
+As far as I'm aware, this also affects 2.4 (I did not actively test for
+it, but the vulnerable code is there).  I've included a fix for it in
+2.4.37.5-ow1, and I expect that Willy will fix it in his next release
+(likely 2.4.37.6).
 
-  References:
-  http://www.debian.org/security/2009/dsa-1856
-  http://bugs.debian.org/425010
-
-Can we get a CVE id for this? Thanks!
-
-Mike
+Alexander
