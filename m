@@ -1,83 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/10/2
-Message-ID: <Pine.GSO.4.51.0902091951420.15993@faron.mitre.org>
-Date: Mon, 9 Feb 2009 19:52:47 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/27/3
+Message-ID: <20090827100133.3e5ebaac@redhat.com>
+Date: Thu, 27 Aug 2009 10:01:33 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Openfire <3.6.3 XSS vulnerabilities
+Subject: Re:  Re: CVE id request: php5
 Content-Type: text/plain; charset=utf-8
 
+On Thu, 29 Jan 2009 12:20:14 -0500 (EST) "Steven M. Christey"
+<coley@...us.mitre.org> wrote:
 
-It could be argued that the code execution that's enabled by CVE-2009-0496
-is actually a distinct CSRF, but I'm not clear enough on the internals to
-be sure.
+> On Thu, 29 Jan 2009, Joe Orton wrote:
+> 
+> > If the script is taking untrusted input data and passing it
+> > unsanitized as the "key" argument to a dba_replace() call, it can
+> > override arbitrary keys in the ini file anyway.  Truncating the ini
+> > file to zero length seems like a less severe problem than being
+> > able to write (arbitrary?) data to arbitrary keys.
+> 
+> We don't have any formal criteria for this kind of thing, but in
+> general, we ask whether there are realistic scenarios under which an
+> attack can succeed, and if any additional privileges are gained
+> versus normal methods.  These questions are particularly applicable
+> to language interpreters and compilers.  Given this scenario, it
+> seems unrealistic that an app would perform a dba_replace() with
+> user-controlled input - and if it does, then it's a vuln in the
+> application, not PHP itself.  So it doesn't seem to require a CVE.
 
-- Steve
+Just for posterity, this got CVE-2008-7068 after all.
 
-
-======================================================
-Name: CVE-2009-0496
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0496
-Reference: BUGTRAQ:20090108 CORE-2008-1128: Openfire multiple vulnerabilities
-Reference: URL:http://www.securityfocus.com/archive/1/archive/1/499880/100/0/threaded
-Reference: MISC:http://www.coresecurity.com/content/openfire-multiple-vulnerabilities
-Reference: CONFIRM:http://www.igniterealtime.org/issues/browse/JM-1506
-Reference: CONFIRM:https://bugs.gentoo.org/show_bug.cgi?id=254309
-Reference: BID:32935
-Reference: URL:http://www.securityfocus.com/bid/32935
-Reference: BID:32937
-Reference: URL:http://www.securityfocus.com/bid/32937
-Reference: BID:32938
-Reference: URL:http://www.securityfocus.com/bid/32938
-Reference: BID:32939
-Reference: URL:http://www.securityfocus.com/bid/32939
-Reference: BID:32940
-Reference: URL:http://www.securityfocus.com/bid/32940
-Reference: BID:32943
-Reference: URL:http://www.securityfocus.com/bid/32943
-Reference: BID:32944
-Reference: URL:http://www.securityfocus.com/bid/32944
-Reference: SECUNIA:33452
-Reference: URL:http://secunia.com/advisories/33452
-Reference: XF:openfire-mucroomeditform-xss(47845)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/47845
-Reference: XF:openfire-multiple-scripts-xss(47834)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/47834
-Reference: XF:openfire-serverproperties-xss(47835)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/47835
-
-Multiple cross-site scripting (XSS) vulnerabilities in Ignite Realtime
-Openfire 3.6.2 allow remote attackers to inject arbitrary web script
-or HTML via the (1) log parameter to (a) logviewer.jsp and (b)
-log.jsp; (2) search parameter to (c) group-summary.jsp; (3) username
-parameter to (d) user-properties.jsp; (4) logDir, (5) maxTotalSize,
-(6) maxFileSize, (7) maxDays, and (8) logTimeout parameters to (e)
-audit-policy.jsp; (9) propName parameter to (f) server-properties.jsp;
-and the (10) roomconfig_roomname and (11) roomconfig_roomdesc
-parameters to (g) muc-room-edit-form.jsp.  NOTE: this can be leveraged
-for arbitrary code execution by using XSS to upload a malicious
-plugin.
-
-
-======================================================
-Name: CVE-2009-0497
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0497
-Reference: BUGTRAQ:20090108 CORE-2008-1128: Openfire multiple vulnerabilities
-Reference: URL:http://www.securityfocus.com/archive/1/archive/1/499880/100/0/threaded
-Reference: MISC:http://svn.igniterealtime.org/svn/repos/openfire/trunk/src/web/log.jsp
-Reference: MISC:http://www.coresecurity.com/content/openfire-multiple-vulnerabilities
-Reference: MISC:https://bugs.gentoo.org/show_bug.cgi?id=257585
-Reference: BID:32945
-Reference: URL:http://www.securityfocus.com/bid/32945
-Reference: SECUNIA:33452
-Reference: URL:http://secunia.com/advisories/33452
-Reference: XF:openfire-log-directory-traversal(47806)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/47806
-
-Directory traversal vulnerability in log.jsp in Ignite Realtime
-Openfire 3.6.2 allows remote attackers to read arbitrary files via a
-..\ (dot dot backslash) in the log parameter.
-
-
+-- 
+Tomas Hoger / Red Hat Security Response Team
