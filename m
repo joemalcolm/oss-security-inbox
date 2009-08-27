@@ -1,27 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/05/1
-Message-ID: <28fa9c5e0901042215s29e79e65o84180cf432ce58f1@mail.gmail.com>
-Date: Mon, 5 Jan 2009 14:15:56 +0800
-From: "Eugene Teo" <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/27/2
+Message-ID: <4A962258.9040201@kernel.sg>
+Date: Thu, 27 Aug 2009 14:06:16 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: sctp: memory overflow when FWD-TSN chunk is received with bad stream ID
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: AF_LLC getsockname 5-Byte Stack Disclosure
 Content-Type: text/plain; charset=utf-8
 
-This was fixed in upstream kernel recently. Can you please assign a CVE name?
+Eugene Teo wrote:
+> Eugene Teo wrote:
+>> sllc_arphrd member of sockaddr_llc might not be changed. Zero sllc 
+>> before copying to the above layer's structure.
+>>
+>> Note that LLC sockets are restricted to root since v2.6.25-rc9 (see 
+>> commit 3480c63b).
+>>
+>> Upstream commit:
+>> http://git.kernel.org/linus/28e9fc592cb8c7a43e4d3147b38be6032a0e81bc
+>>
+>> Reproducer:
+>> http://jon.oberheide.org/files/llc-getsockname-leak.c
+>>
+>> Reference:
+>> https://bugzilla.redhat.com/show_bug.cgi?id=519305
+> 
+> There are some more fixes that addressed similar infoleaks:
+> 
+> e84b90ae5eb3c112d1f208964df1d8156a538289
+>     can: Fix raw_getname() leak
+> 09384dfc76e526c3993c09c42e016372dc9dd22c
+>     irda: Fix irda_getname() leak
+> 3d392475c873c10c10d6d96b94d092a34ebd4791
+>     appletalk: fix atalk_getname() leak
+> f6b97b29513950bfbf621a83d85b6f86b39ec8db
+>     netrom: Fix nr_getname() leak
+> 80922bbb12a105f858a8f0abb879cb4302d0ecaa
+>     econet: Fix econet_getname() leak
+> 17ac2e9c58b69a1e25460a568eae1b0dc0188c25
+>     rose: Fix rose_getname() leak
+> 
+> It would make sense to address these with the same CVE name as this one.
 
-"If FWD-TSN chunk is received with bad stream ID, the sctp will not do
-the validity check, this may cause memory overflow when overwrite the
-TSN of the stream ID."
-
-Analysis:
-https://bugzilla.redhat.com/show_bug.cgi?id=478800#c3
-
-References:
-http://patchwork.ozlabs.org/patch/15024/
-https://bugzilla.redhat.com/show_bug.cgi?id=478800
-
-Upstream commit:
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=9fcb95a105758b81ef0131cd18e2db5149f13e95
+I summarised it here. Hope it is useful to some:
+https://bugzilla.redhat.com/show_bug.cgi?id=519305#c0
 
 Thanks, Eugene
