@@ -1,52 +1,97 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/15/3
-Message-ID: <20090915035141.GA24969@openwall.com>
-Date: Tue, 15 Sep 2009 07:51:41 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/27/6
+Message-ID: <4A96A0EF.7060806@ficora.fi>
+Date: Thu, 27 Aug 2009 18:06:23 +0300
+From: CERT-FI Vulnerability Coordination <vulncoord@...ora.fi>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE-2009-1883 kernel: missing capability check in z90crypt
+CC: Robert Buchholz <rbu@...too.org>, coley@...us.mitre.org
+Subject: Re: Re: expat bug 1990430
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Sep 15, 2009 at 09:56:44AM +0800, Eugene Teo wrote:
-> Eugene Teo wrote:
-> >There is a missing capability check in the z90crypt driver in the Linux 
-> >kernel. This missing check could allow a local, unprivileged user to 
-> >bypass intended capability restrictions. Thanks to Solar Designer for 
-> >reporting this issue to us.
-> >
-> >Note that this does not affect upstream anymore.
-> 
-> Reference:
-> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-1883
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Thanks.  This problem is so minor that I am surprised you want to fix it
-for older kernels.  The "report" you are referring to was a comment in a
-"pseudo patch" I submitted a long while ago.  Some of those comments were
-merely pointing out things that were better corrected upstream, but that
-did not matter for typical uses of the code.
+Steven M. Christey wrote:
+> Glad to see CERT-FI join the discussion.  A big factor in all this
+> confusion was that the original advisory did not explicitly state which
+> CVE was associated with which issue.  The scale of the effort also
+> complicates things, as happens with all PROTOS/fuzzing/test-suite projects
+> due the size and complexity of those efforts combined with lack of clarity
+> of codebase relationships and the stray coordination problem (i.e., "it
+> comes with the territory.")
 
-Anyhow, I think it is OK to keep the CVE id assignment, but I suggest
-that the description be re-worded to say "root user" or "euid 0 user" in
-place of "unprivileged user".  Indeed, on most systems this user would
-in fact be privileged, making this a non-issue.
+Sorry about that. We will make our future advisories more explicit on
+the CVE references and the details. The test-suite/fuzzing tool projects
+sometimes make it pretty complicated to handle all the separate issues
+in a proper way. I am trying to clarify some of the confusion in my
+answers here.
 
-In practice, I imagine that there could exist service processes that
-would possess uid 0 at a given moment, yet not possess root's typical
-capabilities.  If those processes are not chrooted, then, when under
-control of an attacker, they would typically be able to take over the
-system via replacing a critical system file (due to its ownership).  If
-chrooted to a tree with no suitable file that could be replaced, then
-minor kernel bugs like this could actually matter, but perhaps not this
-one because to access an ioctl one needs to open the device file first
-(and that device file would likely not exist in a chroot tree).
+[...]
+> 3) CVE-2009-1885 is for a stack consumption problem in Xerces C++
+>    involving nested parentheses and invalid byte values.  It appears that
+>    expat and Xerces are distinct libraries, i.e. they don't have any
+>    significant shared code?
 
-Then, these bugs could matter for an implementation of containers, but
-the implementation's proper control of access to device files (e.g.,
-OpenVZ's) should take care of that in case of ioctl's on "obscure"
-devices that are normally not meant to be available in a container.  Yet
-this "containers concern" was my primary reason to look for and mark
-this kind of bugs at the time (the "pseudo patch" I mentioned was
-initially against an OpenVZ kernel tree).
+The expat and/or Xerces -maintainers are probably the right people to
+give a comprehensive answer for questions 1-3. However, based on the
+code I have been reading during the coordination, I think that expat and
+Xerces do not share much code.
 
-Alexander
+> 4) CVE-2009-2625 is for Xerces Java which is used in JRE/JDK and
+>    presumably others.  The impact here is an infinite loop.  Is this
+>    really a distinct problem than whatever CVE-2009-1885 is talking about?
+
+Yes, these are two distinct issues with significantly different reproducers.
+
+> 5) CERT-FI's response to the inquiry about the Python "libexpat"
+>    being the same as the "expat" issue seemed to imply that CVE-2009-2625
+>    is about expat... since that's the CVE that was used in the inquiry.
+>    However, I thought from point 3 that expat and Xerces are distinct
+>    libraries, which means the CVEs *wouldn't* be the same, because
+>    CVE-2009-2625 explicitly names Xerces.  Also, for CVE-2009-2625, *none*
+>    of the primary sources (Fedora, Red Hat, Mandriva, Sun) mention expat
+>    in their advisories.
+
+I managed to misunderstand the only question Robert had for us. Even
+though the question was pretty clear. There probably is not a CVE for
+the expat crash (which affected Python expat too) yet. As the original
+issue was not handled by us and it was found already back in 2008, we
+did not allocate a CVE for the Python expat issue. So we probably need a
+CVE for the expat crash. I assume we could use this CVE for the Python
+expat crash too since the root cause is the same.
+
+> 6) The only recent CVE assignment that focuses on expat seems to be
+>    related to the billion laughs attack (CVE-2009-1955).  So does this
+>    mean that there weren't any other problems related to "infinite loop"
+>    or "unexpected byte values and recursive parentheses" with memory
+>    corruption?  If there were, then what are their CVEs?  (Distinct CVEs
+>    would be needed because corruption/infinite-loop/"unexpected byte
+>    values" suggest different vuln types than billion-laughs?)
+
+We are not aware of any other problems. In addition to the billion
+laughs issue with some code using expat, the only recent expat issue we
+are aware of is this segfault in expat's updatePosition -function when
+parsing multibyte characters. Our advisory does not cover any other
+expat issues than the Python expat -related part of the latter one.
+
+> bonus) Is Xerces vulnerable to the billion laughs attack?  If so, was this
+>    covered in the CERT-FI advisory and does it map to any of the
+>    previously-provided CVE names?
+
+The billion laughs attack was not covered in the CERT-FI advisory.
+
+I hope this clarifies the situation. I am sorry for the confusion for
+our part.
+
+Regards,
+
+Sauli Pahlman
+CERT-FI
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEUEARECAAYFAkqWoN8ACgkQ/64aC2E+yK8GXQCfdXn1S3+IbDqG5dY4yedRl72P
+MqMAlAtOmlxFGsnDV/v3CA3uYWYOu34=
+=VH2L
+-----END PGP SIGNATURE-----
