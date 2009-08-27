@@ -1,31 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/18/5
-Message-ID: <20090918135629.GA9298@redhat.com>
-Date: Fri, 18 Sep 2009 14:56:29 +0100
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/27/4
+Message-ID: <20090827082729.GB4385@redhat.com>
+Date: Thu, 27 Aug 2009 09:27:29 +0100
 From: Joe Orton <jorton@...hat.com>
-To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- PHP 5 - 5.2.11
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com, Robert Buchholz <rbu@...too.org>
+Subject: Re: Re: expat bug 1990430
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Sep 18, 2009 at 03:23:43PM +0200, Nico Golde wrote:
-> Hi,
-> * Jan Lieskovsky <jlieskov@...hat.com> [2009-09-18 13:52]:
-> >   PHP has released another upstream 5.2 release, fixing
-> > four security issues:
-> > 
-> > http://www.php.net/ChangeLog-5.php
-> > http://www.php.net/downloads.php
-> > 
-> > Could you please allocate CVE identifiers?
-> 
-> What is the security impact of:
-> Fixed bug #44683 (popen crashes when an invalid mode is passed). (Pierre)
-> ?
+On Wed, Aug 26, 2009 at 12:38:26PM -0400, Steven M. Christey wrote:
+> 1) neon "when expat is used" was subject to the billion laughs attack
+>    (recursion during entity expansion).  This was assigned CVE-2009-2473.
+>    The description for CVE-2009-2473 focuses on neon, and I haven't seen
+>    it used for other products.  Was this really a problem in expat?  Then
+>    we may have a dupe.
 
-This would appear to be:
+I can't find the reference now, but, the expat maintainers said 
+something like this:
 
-http://svn.php.net/viewvc?view=revision&revision=287779
+a) it's broadly expected behaviour that certain well-formed XML 
+documents can cause consumption of CPU/memory in the XML parser which is 
+disproportionate to the size of the input document.
 
-which is Windows-specific.
+b) this is a deliberate design decision for expat; it is not possible to 
+mitigate CPU/memory consumption attacks *by default* in the XML parser 
+without having expat reject some well-formed XML documents.
+
+I don't think that is an unreasonable position, especially if you 
+consider that an XML parser exists primarily for document processing, 
+rather than for decoding a network protocol.
+
+Any code using expat which parses XML documents from an untrusted source 
+will therefore be vulnerable to CPU/memory consumption attacks, unless 
+that code takes specific steps to mitigate those attacks.  The only 
+attack I'm aware of is the "billion laughs" attack, which can be 
+mitigated using a couple of expat API calls to disable entity expansion. 
+[1]
+
+So, on this basis we've treated "use of expat API to parse XML from 
+untrusted sources without taking steps to mitigate billion laughs 
+attack" as a vulnerability in the code *using* the expat API; rather 
+than in expat itself.  For apr-util this vulnerability was 
+CVE-2009-1955, for neon, it was CVE-2009-2473.
+
+Hope this makes sense.
 
 Regards, Joe
+
+[1] It is perhaps worth noting that the WebDAV RFC in fact highlights 
+the need for implementors to configure XML parsers such as to avoid 
+attacks, and indeed this specific attack:
+
+http://tools.ietf.org/html/rfc4918#section-20.6
