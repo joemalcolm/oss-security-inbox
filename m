@@ -1,53 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/21/2
-Message-ID: <4B080756.1030705@redhat.com>
-Date: Sat, 21 Nov 2009 16:29:26 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, Sergei Golubchik <serg@...ql.com>
-Subject: CVE Request - MySQL - 5.0.88
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/27/1
+Message-ID: <4A961056.40706@redhat.com>
+Date: Thu, 27 Aug 2009 12:49:26 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: AF_LLC getsockname 5-Byte Stack Disclosure
 Content-Type: text/plain; charset=utf-8
 
-Hi Josh, Steve, vendors,
+Eugene Teo wrote:
+> sllc_arphrd member of sockaddr_llc might not be changed. Zero sllc 
+> before copying to the above layer's structure.
+> 
+> Note that LLC sockets are restricted to root since v2.6.25-rc9 (see 
+> commit 3480c63b).
+> 
+> Upstream commit:
+> http://git.kernel.org/linus/28e9fc592cb8c7a43e4d3147b38be6032a0e81bc
+> 
+> Reproducer:
+> http://jon.oberheide.org/files/llc-getsockname-leak.c
+> 
+> Reference:
+> https://bugzilla.redhat.com/show_bug.cgi?id=519305
 
-   MySQL upstream has released latest 5.0.88 version of their Community Server,
-fixing one security issue:
+There are some more fixes that addressed similar infoleaks:
 
-Security Fix: MySQL clients linked against OpenSSL did not
-               check server certificates presented by a server linked against
-               yaSSL. (Bug#47320: http://bugs.mysql.com/47320)
+e84b90ae5eb3c112d1f208964df1d8156a538289
+     can: Fix raw_getname() leak
+09384dfc76e526c3993c09c42e016372dc9dd22c
+     irda: Fix irda_getname() leak
+3d392475c873c10c10d6d96b94d092a34ebd4791
+     appletalk: fix atalk_getname() leak
+f6b97b29513950bfbf621a83d85b6f86b39ec8db
+     netrom: Fix nr_getname() leak
+80922bbb12a105f858a8f0abb879cb4302d0ecaa
+     econet: Fix econet_getname() leak
+17ac2e9c58b69a1e25460a568eae1b0dc0188c25
+     rose: Fix rose_getname() leak
 
-While the other two (three issues) looks too to be security relevant:
+It would make sense to address these with the same CVE name as this one.
 
-* Error handling was missing for SELECT statements containing
-   subqueries in the WHERE clause and that assigned a SELECT
-   result to a user variable. The server could crash as a result.
-   (Bug#48291: http://bugs.mysql.com/48291)
-
-This looks to be from adjacent network exploitable mysqld DoS.
-
-* If the first argument to GeomFromWKB() function was a geometry
-   value, the function just returned its value. However, it
-   failed to preserve the argument's null_value flag, which
-   caused an unexpected NULL value to be returned to the caller,
-   resulting in a server crash.
-   (Bug#47780: http://bugs.mysql.com/47780)
-
-Same case as the above, though I can't look into upstream MySQL bugs
-to confirm or disprove it. Thus Cc-ed Sergei Golubchik on this mail.
-
-* Failure to treat BIT values as unsigned could lead to
-   unpredictable results.
-  (Bug#42803: http://bugs.mysql.com/42803)
-
-Also this one seems to be security related - upstream bug speaks about
-invalid memory access and didn't check the code if this could
-lead to heap overflow once the comparison fails.
-
-Sergei, our opinion here is appreciated.
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-
+Thanks, Eugene
