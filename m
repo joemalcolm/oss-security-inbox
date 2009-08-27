@@ -1,22 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/09/4
-Message-ID: <20091109161547.GA20522@steve.org.uk>
-Date: Mon, 9 Nov 2009 16:15:47 +0000
-From: Steve Kemp <steve@...ve.org.uk>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/27/5
+Message-ID: <Pine.GSO.4.51.0908271138290.23680@faron.mitre.org>
+Date: Thu, 27 Aug 2009 11:41:08 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: X server umask issue
+Subject: Re:  Re: CVE id request: php5
 Content-Type: text/plain; charset=utf-8
 
-On Mon Nov 09, 2009 at 11:09:55 -0500, Josh Bressers wrote:
 
-> What I am wondering though, are there other files the X server creates that could
-> be an issue for this? I'm not aware of any, but I'm also not an expert by any
-> stretch of the imagination. Am I missing something else?
+That was me.  This basically came through a separate effort to catch up on
+a backlog of CVEs from 2008, and I forgot about this discussion (that was
+literally 3,700 CVEs ago).  There is a disclaimer in the CVE desc that
+says how limited the scope is.  It's definitely on the edge of inclusion
+CVE-wise.
 
-  /tmp/.X11-unix/* or /tmp/X0-lock might be worth checking.
+- Steve
 
-Steve
---
-Debian GNU/Linux System Administration
-http://www.debian-administration.org/
 
+On Thu, 27 Aug 2009, Tomas Hoger wrote:
+
+> On Thu, 29 Jan 2009 12:20:14 -0500 (EST) "Steven M. Christey"
+> <coley@...us.mitre.org> wrote:
+>
+> > On Thu, 29 Jan 2009, Joe Orton wrote:
+> >
+> > > If the script is taking untrusted input data and passing it
+> > > unsanitized as the "key" argument to a dba_replace() call, it can
+> > > override arbitrary keys in the ini file anyway.  Truncating the ini
+> > > file to zero length seems like a less severe problem than being
+> > > able to write (arbitrary?) data to arbitrary keys.
+> >
+> > We don't have any formal criteria for this kind of thing, but in
+> > general, we ask whether there are realistic scenarios under which an
+> > attack can succeed, and if any additional privileges are gained
+> > versus normal methods.  These questions are particularly applicable
+> > to language interpreters and compilers.  Given this scenario, it
+> > seems unrealistic that an app would perform a dba_replace() with
+> > user-controlled input - and if it does, then it's a vuln in the
+> > application, not PHP itself.  So it doesn't seem to require a CVE.
+>
+> Just for posterity, this got CVE-2008-7068 after all.
+>
+> --
+> Tomas Hoger / Red Hat Security Response Team
+>
