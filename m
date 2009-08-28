@@ -1,27 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/03/1
-Message-ID: <Pine.LNX.4.64.0904030943430.11200@forced.attrition.org>
-Date: Fri, 3 Apr 2009 09:46:09 +0000 (UTC)
-From: security curmudgeon <jericho@...rition.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/28/1
+Message-ID: <20090828072022.GA28942@suse.de>
+Date: Fri, 28 Aug 2009 09:20:22 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request -- Linux kernel irda driver buffer
+Cc: Steffen_Ullrich@...ua.de, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: perl-IO-Socket-SSL certificate hostname compare bug
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-Previous discussion: 
-http://marc.info/?l=oss-security&w=2&r=1&s=irda+driver&q=b
+IO-Socket-SSL was released a while ago with a security fix:
 
-Mark Cox ruled "doesn't seem to have any security implications". Since 
-then, 3rd party analysis suggests it still may in a different manner:
+http://cpansearch.perl.org/src/SULLR/IO-Socket-SSL-1.30/Changes
+v1.26 2009.07.03
+- SECURITY BUGFIX! 
+  fix Bug in verify_hostname_of_cert where it matched only the prefix for 
+  the hostname when no wildcard was given, e.g. www.example.org matched
+  against a certificate with name www.exam in it
+  Thanks to MLEHMANN for reporting
 
-http://xorl.wordpress.com/2009/03/11/linux-kernel-irda-sigmatel-stir421x-off-by-one/
+cu
+Ludwig
 
-[..]
-
-This could lead to information leak if request_firmware() gives some kind 
-of output but I havent checked this.
-
-[..]
-
-
-Comments?
+-- 
+ (o_   Ludwig Nussel
+ //\   
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
