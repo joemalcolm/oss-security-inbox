@@ -1,31 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/09/3
-Message-ID: <1906670250.1976511255120503093.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 9 Oct 2009 16:35:03 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: Re: CVE request: Unbound
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/29/1
+Message-ID: <20090829184553.GB8650@genua.de>
+Date: Sat, 29 Aug 2009 20:45:53 +0200
+From: Steffen Ullrich <Steffen_Ullrich@...ua.de>
+To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: perl-IO-Socket-SSL certificate hostname compare bug
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
------ "Florian Weimer" <fw@...eb.enyo.de> wrote:
+Just to make you able to classify the problem a bit more:
+The fix is important but the impact of the problem is in my opinion currently minor,
+because
+- the feature to help checking the hostname against the certificate is fairly new
+- in former times the apps/modules using IO::Socket::SSL had to implement
+  the checking by itself (using the appropriate logic, which differs between
+  various protocols).
+- most did not implement any checking at all or implemented a limited or wrong check
+- therefore I added the checks, where the app only has to decide how the check
+  has to be done
+- most apps/modules don't even do this simple thing yet, so that this buggy
+  feature was not used
 
-> Unbound before 1.3.4 does not check the signatures on NSEC3 records
-> under unspecified conditions, enabling attackers who can perform DNS
-> spoofing to downgrade existing secure delegations to insecure status,
-> which then can be targeted in further spoofing attacks.
+That means, that it only impacts apps/modules which depend on this feature
+and there are only few (or none) of these apps. But it would probably be nice
+to add a note to the CVE that apps/modules should start to implement proper 
+certificate checking and that it got easier with newer IO::Socket::SSL
+versions.
+
+Regards,
+Steffen (Maintainer of IO::Socket::SSL)
+
+
+On Fri, Aug 28, 2009 at 09:20:22AM +0200, Ludwig Nussel <ludwig.nussel@...e.de> wrote:
+> Hi,
 > 
-> <http://unbound.net/pipermail/unbound-users/2009-October/000852.html>
+> IO-Socket-SSL was released a while ago with a security fix:
 > 
-> (Older versions, back to 1.0.x, are also affected.)
-
-Steve Christey asked me to assign CVE ids for oss-security requests for a bit,
-so don't think it odd when I keep replying to these.
-
-Please use CVE-2009-3602 for this.
-
-Thanks
+> http://cpansearch.perl.org/src/SULLR/IO-Socket-SSL-1.30/Changes
+> v1.26 2009.07.03
+> - SECURITY BUGFIX! 
+>   fix Bug in verify_hostname_of_cert where it matched only the prefix for 
+>   the hostname when no wildcard was given, e.g. www.example.org matched
+>   against a certificate with name www.exam in it
+>   Thanks to MLEHMANN for reporting
+> 
+> cu
+> Ludwig
+> 
+> -- 
+>  (o_   Ludwig Nussel
+>  //\   
+>  V_/_  http://www.suse.de/
+> SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
 
 -- 
-    JB
+GeNUA Gesellschaft für Netzwerk - und Unix-Administration mbH
+Domagkstr. 7, D-85551 Kirchheim. http://www.genua.de
+Tel: (089) 99 19 50-0, Fax: (089) 99 10 50 - 999
+
+Geschäftsführer: Dr. Magnus Harlander, Dr. Michaela Harlander,
+Bernhard Schneck. Amtsgericht München HRB 98238
