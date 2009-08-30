@@ -1,18 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/09/2
-Message-ID: <87fx9s8iqp.fsf@mid.deneb.enyo.de>
-Date: Fri, 09 Oct 2009 19:33:50 +0000
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/30/1
+Message-ID: <4A9A5F56.4000508@kernel.sg>
+Date: Sun, 30 Aug 2009 19:15:34 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: CVE request: Unbound
+CC: Greg KH <gregkh@...e.de>
+Subject: Re: CVE-2009-2698 kernel: udp socket NULL ptr dereference
 Content-Type: text/plain; charset=utf-8
 
-Unbound before 1.3.4 does not check the signatures on NSEC3 records
-under unspecified conditions, enabling attackers who can perform DNS
-spoofing to downgrade existing secure delegations to insecure status,
-which then can be targeted in further spoofing attacks.
+Eugene Teo wrote:
+> A flaw was found in the udp_sendmsg() implementation in the Linux kernel 
+> when using the MSG_MORE flag on UDP sockets. A local, unprivileged user 
+> could use this flaw to cause a local denial of service or escalate their 
+> privileges. This was fixed by Herbert Xu in v2.6.19-rc1, and reported by 
+> Tavis Ormandy and Julien Tinnes of the Google Security Team.
+> 
+> Upstream commits:
+> http://git.kernel.org/linus/1e0c14f49d6b393179f423abbac47f85618d3d46
+> 
+> References:
+> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-2698
+> https://rhn.redhat.com/errata/RHSA-2009-1222.html
+> https://rhn.redhat.com/errata/RHSA-2009-1223.html
 
-<http://unbound.net/pipermail/unbound-users/2009-October/000852.html>
+Related to this:
+Add a check in ip_append_data() for NULL *rtp to prevent future bugs in 
+callers from being exploitable.
+http://git.kernel.org/linus/788d908f2879a17e5f80924f3da2e23f1034482d
 
-(Older versions, back to 1.0.x, are also affected.)
+Thanks, Eugene
