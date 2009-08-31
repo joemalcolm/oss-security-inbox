@@ -1,17 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/17/1
-Message-ID: <b086760e0907170023j19dce375oa7ddbc048321c938@mail.gmail.com>
-Date: Fri, 17 Jul 2009 09:23:03 +0200
-From: yersinia <yersinia.spiros@...il.com>
-To: dailydave <dailydave@...ts.immunitysec.com>, oss-security@...ts.openwall.com
-Subject: Linux 2.6.30+/SELinux/RHEL5 test kernel 0day, exploiting the  unexploitable
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/31/2
+Message-ID: <20090831093941.GA10202@openwall.com>
+Date: Mon, 31 Aug 2009 13:39:41 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Follow oss_security on Twitter
 Content-Type: text/plain; charset=utf-8
 
-FYI, a Sprengler 0-day against Selinux null ptr dereference. Very Nice
-to see in action
+On Mon, Aug 24, 2009 at 10:57:31AM +0800, Eugene Teo wrote:
+> http://twitter.com/oss_security
+> 
+> It broadcasts tweets when there are updates in the list.
 
-reference ( with youtube link )
+I'm not using Twitter myself (and I am happy being on the list directly),
+but this sounds good to me.  I see that there are quite some followers
+already.  I've just added links to the Twitter URL above to:
 
-http://grsecurity.net/~spender/cheddar_bay.tgz
+http://oss-security.openwall.org/wiki/mailing-lists/oss-security
+http://oss-security.openwall.org/subscribe
 
-regards
+Alexander
