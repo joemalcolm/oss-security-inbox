@@ -1,49 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/13/3
-Message-ID: <20090113233207.GA9072@ngolde.de>
-Date: Wed, 14 Jan 2009 00:32:07 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: update on CVE-2008-5718
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/31/12
+Message-ID: <Pine.GSO.4.51.0908311545230.21074@faron.mitre.org>
+Date: Mon, 31 Aug 2009 15:45:38 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security <oss-security@...ts.openwall.com>
+cc: coley <coley@...re.org>
+Subject: Re: CVE Request pidgin
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-I just did a security update for CVE-2008-5718 and since the 
-description is not really verbose I thought I'd share what I 
-found in case anyone else is working on that.
 
-This issue only affects netatalk installations that make use 
-of a pipe command to handle the print file and also use one 
-of the available variables in the piped command.
+On Wed, 19 Aug 2009, Josh Bressers wrote:
 
-The netatalk documentation documents %F, %U and %J while 
-there is also %C which is undocumented but visible in the 
-code (and does the same as %J).
+> Can you give us an ID for pidgin. Their 2.6.1 release fixes a DoS in
+> only 2.6.0.
 
-These variables are expanded, %F with the content of %%From:, %J with 
-%%Title: from the PostScript stream and %U with the user 
-printing the file.
+======================================================
+Name: CVE-2009-3025
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3025
+Reference: MLIST:[oss-security] 20090819 CVE Request pidgin
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/08/19/2
+Reference: CONFIRM:http://developer.pidgin.im/wiki/ChangeLog
 
-After the variable expansion (which is done in 
-pipexlate(lp.c) the specified,expanded command is passed to 
-popen() without properly escaping it before.
+Unspecified vulnerability in Pidgin 2.6.0 allows remote attackers to
+cause a denial of service (crash) via a link in a Yahoo IM.
 
-So exploiting this is pretty straight forward if you know 
-the papd configuration (which is at least world-readable on 
-Debian) just by for example preparing a ps file including 
-something like %%Title: $(yourcommand) and print it.
 
-Steve, can you update the CVE id description according to 
-this information?
-
-Cheers
-Nico
-P.S. The patch I used can be found on:
-http://people.debian.org/~nion/nmu-diff/netatalk-2.0.3-11_2.0.3-11+lenny1.patch
-
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
