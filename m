@@ -1,32 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/16/1
-Message-ID: <Pine.GSO.4.51.0904152038070.17649@faron.mitre.org>
-Date: Wed, 15 Apr 2009 20:44:49 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/31/9
+Message-ID: <20090831184149.GP11041@ngolde.de>
+Date: Mon, 31 Aug 2009 20:41:49 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-cc: Wietse Venema <wietse@...cupine.org>, Tomas Hoger <thoger@...hat.com>
-Subject: Re: Re: Some fun with tcp_wrappers
+Subject: Re: CVE id request: squirrelmail CSRF
 Content-Type: text/plain; charset=utf-8
 
+Hi,
+* Tomas Hoger <thoger@...hat.com> [2009-08-31 20:40]:
+> On Mon, 31 Aug 2009 20:21:32 +0200 Nico Golde
+> <oss-security+ml@...lde.de> wrote:
+> 
+> > can I get a CVE id for:
+> > http://www.squirrelmail.org/security/issue/2009-08-12
+> 
+> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2964
 
-I'm not sure how to handle this from a CVE perspective, except:
+Yeah sorry, realized that after I filed our bug. Sorry for 
+the noise and thanks!
 
- - if the API functions perform as documented, as Wietse says, then
-   separate CVEs would need to be assigned for applications that misuse
-   the API.
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
 
- - If there is a separate bug that causes tcp_wrappers to
-   allow hosts in ways that are contrary to specification, then that
-   would be treated as a problem in tcp_wrappers (whether it's from
-   Wietse or some downstream modification).
-
- - If there's a problem due to incomplete documentation, that's a
-   somewhat unique case for CVE that would require more thought (although
-   not a first occurrence since Apple had a bad-documentation bug a year
-   or two ago)
-
-Jan and Tomas - Red Hat bug 491095 mentions CVE-2009-0786 but I'm not
-clear on how to write it up given the state of the discussion at this
-point.
-
-- Steve
+Content of type "application/pgp-signature" skipped
