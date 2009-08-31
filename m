@@ -1,38 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/02/4
-Message-Id: <1243966060.5517.9.camel@localhost.localdomain>
-Date: Tue, 02 Jun 2009 20:07:40 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com
-Subject: CVE Request - Ghostscript -- Multiple NULL ptr dereference flaws in JBIG2 decoder proved by PoC for CVE-2009-0658
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/31/4
+Message-ID: <20090831160630.GA23604@genua.de>
+Date: Mon, 31 Aug 2009 18:06:30 +0200
+From: Steffen Ullrich <Steffen_Ullrich@...ua.de>
+To: Tomas Hoger <thoger@...hat.com>
+Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: Re: CVE request: perl-IO-Socket-SSL certificate hostname compare bug
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve,
+On Mon, Aug 31, 2009 at 05:23:53PM +0200, Tomas Hoger <thoger@...hat.com> wrote:
+> On Sat, 29 Aug 2009 20:45:53 +0200 Steffen Ullrich
+> <Steffen_Ullrich@...ua.de> wrote:
+> 
+> > - the feature to help checking the hostname against the certificate is fairly new
+> 
+> Introduced in 1.14, unless I'm mistaken:
+> 
+>   http://cpansearch.perl.org/src/SULLR/IO-Socket-SSL-1.14/Changes
+> 
+> It may be good to have this listed in the CVE description.
 
-  multiple NULL pointer dereference flaws were identified in the 
-Ghostscript's JBIG compression format decoder (jbig2dec)
-based on the PoC for recent Adobe Reader's 9.0, Adobe Acrobat's 9.0
-(CVE-2009-0658) issue.
+yes, this is a good idea.
+The version 1.14 was released 2008/07/16 and the necessary Net::SSLeay
+version 1.34 (which is needed for this feature) was release 2008/07/24.
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=501710
-https://bugzilla.redhat.com/show_bug.cgi?id=503785
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0658
+> Anyway, prefix requirement is another mitigation, as one may not be
+> able to get valid certificate for a prefix of arbitrary host name
+> (though it may be easier for TLDs as .com and .net via .co and .ne).
+> 
+> Speaking of prefixes, has anyone checked IO-Socket-SSL for
+> CVE-2009-2408-like issues?  If there is an issues, should it get fixed
+> in IO-Socket-SSL or in Net-SSLeay?
 
-PoC:
-http://milw0rm.com/sploits/2009-41414141.pdf
+I did not check it yet.
+If there is a problem it has to be fixed in Net::SSLeay, IO::Socket::SSL
+is perl only and perl itself has no problems with strings containing \0.
+>From the code in SSLeay.xs X509_get_subjectAltNames I would say, that
+this part should be no problem, because it explicitly uses ASN1_STRING_length
+to specify the length of the string. But I'm not sure about the use
+of X509_get_subject_name where it magically converts an X509_NAME* into
+a perl string.
+I keep you updated once I've checked it.
 
-Affected versions: All GPL-Ghostscript versions from ghostscript-8.10
-                   (contains initial implementation of jbig2dec) up
-                   to latest upstream 8.64 one.
-
-Could you allocate a CVE id?
-
-Thanks, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-
+Regards,
+Steffen
 
 
+-- 
+GeNUA Gesellschaft für Netzwerk - und Unix-Administration mbH
+Domagkstr. 7, D-85551 Kirchheim. http://www.genua.de
+Tel: (089) 99 19 50-0, Fax: (089) 99 10 50 - 999
+
+Geschäftsführer: Dr. Magnus Harlander, Dr. Michaela Harlander,
+Bernhard Schneck. Amtsgericht München HRB 98238
