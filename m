@@ -1,39 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/14/2
-Message-ID: <49E4AE0A.4010006@gentoo.org>
-Date: Tue, 14 Apr 2009 17:38:50 +0200
-From: Christian Hoffmann <hoffie@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/31/13
+Message-ID: <Pine.GSO.4.51.0908311546410.21074@faron.mitre.org>
+Date: Mon, 31 Aug 2009 15:51:25 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: PHP 5.2.9
+cc: Steffen_Ullrich@...ua.de, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: perl-IO-Socket-SSL certificate hostname compare bug
 Content-Type: text/plain; charset=utf-8
 
-On 2009-04-08 20:02, Steven M. Christey wrote:
->> # Fixed a crash on extract in zip when files or directories entry names
->>   contain a relative path. (Pierre)
->> http://cvs.php.net/viewvc.cgi/php-src/ext/zip/php_zip.c?r1=1.1.2.48&r2=1.1.2.49
->>
->> This should only affect php 5.2.7 or versions that have original fix
->> for CVE-2008-5658 backported.
-> 
-> This was announced in 5.2.9 changelog though, so wouldn't 5.2.8 be
-> affected?
-> 
-> Use CVE-2009-1272
-Somehow the wrong changeset URL shows up in CVE-2009-1272's list of
-references [1] (the json decode one, instead of the zip thingy):
 
-What shows up:
-http://cvs.php.net/viewvc.cgi/php-src/ext/json/JSON_parser.c?r1=1.1.2.14&r2=1.1.2.15
+Steffen said:
 
-What should show up instead:
-http://cvs.php.net/viewvc.cgi/php-src/ext/zip/php_zip.c?r1=1.1.2.48&r2=1.1.2.49
+>it would probably be nice to add a note to the CVE that apps/modules
+>should start to implement proper certificate checking and that it got
+>easier with newer IO::Socket::SSL versions.
 
-[1] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1272
+There isn't really a place in CVE to do this.  The description is
+primarily to describe the problem in a way that allows us to distinguish
+this issue from other issues.  I've included your post as a reference,
+however.
 
--- 
-Christian Hoffmann
+- Steve
 
 
+======================================================
+Name: CVE-2009-3024
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3024
+Reference: MLIST:[oss-security] 20090828 CVE request: perl-IO-Socket-SSL certificate hostname compare bug
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/08/28/1
+Reference: MLIST:[oss-security] 20090829 Re: CVE request: perl-IO-Socket-SSL certificate hostname compare bug
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/08/29/1
+Reference: MLIST:[oss-security] 20090831 Re: Re: CVE request: perl-IO-Socket-SSL certificate hostname compare bug
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/08/31/4
+Reference: CONFIRM:http://cpansearch.perl.org/src/SULLR/IO-Socket-SSL-1.30/Changes
 
-Download attachment "signature.asc" of type "application/pgp-signature" (262 bytes)
+The verify_hostname_of_cert function in the certificate checking
+feature in IO-Socket-SSL (IO::Socket::SSL) 1.14 through 1.25 only
+matches the prefix of a hostname when no wildcard is used, which
+allows remote attackers to bypass the hostname check for a
+certificate.
+
+
