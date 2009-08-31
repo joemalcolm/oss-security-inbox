@@ -1,30 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/19/1
-Message-ID: <4ADBF1E6.7030304@kernel.sg>
-Date: Mon, 19 Oct 2009 12:58:14 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/31/7
+Message-ID: <20090831182132.GA28225@ngolde.de>
+Date: Mon, 31 Aug 2009 20:21:32 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: r128 IOCTL NULL pointer dereferences when CCE state is uninitialised
+Subject: CVE id request: squirrelmail CSRF
 Content-Type: text/plain; charset=utf-8
 
-Quoting from the upstream commit:
-"Almost all r128's private ioctls require that the CCE state has already 
-been initialised.  However, most do not test that this has been done, 
-and will proceed to dereference a null pointer.  This may result in a 
-security vulnerability, since some ioctls are unprivileged.
+Hi,
+can I get a CVE id for:
+http://www.squirrelmail.org/security/issue/2009-08-12
+please?
 
-This adds a macro for the common initialisation test and changes all 
-ioctl implementations that require prior initialisation to use that macro.
+Cheers
+Nico
 
-Also, r128_do_init_cce() does not test that the CCE state has not been
-initialised already.  Repeated initialisation may lead to a crash or 
-resource leak.  This adds that test."
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-http://git.kernel.org/linus/7dc482dfeeeefcfd000d4271c4626937406756d7
-
-Other references:
-http://secunia.com/advisories/36707/
-https://bugzilla.redhat.com/show_bug.cgi?id=529597
-
-Thanks, Eugene
+Content of type "application/pgp-signature" skipped
