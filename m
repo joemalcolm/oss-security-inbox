@@ -1,34 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/17/2
-Message-ID: <20091117082703.GE31762@suse.de>
-Date: Tue, 17 Nov 2009 09:27:03 +0100
-From: Thomas Biege <thomas@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: libpoppler4: buffer overflow in the Abiword backend
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/31/10
+Message-ID: <20090831192834.GA27137@genua.de>
+Date: Mon, 31 Aug 2009 21:28:34 +0200
+From: Steffen Ullrich <Steffen_Ullrich@...ua.de>
+To: Tomas Hoger <thoger@...hat.com>
+Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: Re: CVE request: perl-IO-Socket-SSL certificate hostname compare bug
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Nov 11, 2009 at 08:05:32PM -0500, Josh Bressers wrote:
-> ----- "Thomas Biege" <thomas@...e.de> wrote:
-> > 
-> > Hello everybody,
-> > 
-> > does this need an CVE-ID?
-> > 
-> > http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=534680
-> > 
 > 
-> I presume this does need a CVE id, but seeing as PDF related bugs are often a
-> Pandora's Box, I'd rather not assign one just yet. Has someone looked at this
-> to see what the root of the problem is?
+> I ran some test on Net-SSLeay-1.35 and IO-Socket-SSL-1.30 and
+> verify_hostname always returned error for NUL in both CN and SAN.
 
-AFAICS it just affects libpoppler. But version 4 may not be the only
-one with the bug.
+I just verified it for CN using the \0 certificate from sslsniff.
+So it looks like it's not an issue for Net::SSLeay and IO::Socket::SSL.
 
-Bye,
-     Thomas
+Regards,
+Steffen
+
 -- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
--- 
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
+GeNUA Gesellschaft für Netzwerk - und Unix-Administration mbH
+Domagkstr. 7, D-85551 Kirchheim. http://www.genua.de
+Tel: (089) 99 19 50-0, Fax: (089) 99 10 50 - 999
+
+Geschäftsführer: Dr. Magnus Harlander, Dr. Michaela Harlander,
+Bernhard Schneck. Amtsgericht München HRB 98238
