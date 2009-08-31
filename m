@@ -1,41 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/23/1
-Message-Id: <1232708798.3220.16.camel@dhcp-lab-164.englab.brq.redhat.com>
-Date: Fri, 23 Jan 2009 12:06:37 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com
-Subject: CVE Request -- gstreamer-plugins-good
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/31/3
+Message-ID: <20090831172353.66bc00fb@redhat.com>
+Date: Mon, 31 Aug 2009 17:23:53 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Steffen_Ullrich@...ua.de, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: Re: CVE request: perl-IO-Socket-SSL certificate hostname compare bug
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve,
+On Sat, 29 Aug 2009 20:45:53 +0200 Steffen Ullrich
+<Steffen_Ullrich@...ua.de> wrote:
 
-  recently the following gstreamer-plugins-good 
-related multiple heap-based buffer overflows and
-one an array index out of bounds vulnerability
-has been reported in the GStreamers demuxer
-responsible for demuxing QuickTime *.mov files
-into raw or compressed audio/video files.
+> - the feature to help checking the hostname against the certificate is fairly new
 
-References:
-http://trapkit.de/advisories/TKADV2009-003.txt [1]
-http://cgit.freedesktop.org/gstreamer/gst-plugins-good/commit/?id=bdc20b9baf13564d9a061343416395f8f9a92b53
-https://bugzilla.redhat.com/show_bug.cgi?id=481267
+Introduced in 1.14, unless I'm mistaken:
 
+  http://cpansearch.perl.org/src/SULLR/IO-Socket-SSL-1.14/Changes
 
-Affected gstreamer-plugins-good versions:
-=========================================
-   all prior to latest upstream 0.10.12 version  (all three issues -- "qtdemux_parse_samples", "duration" and "mark_keyframes")
+It may be good to have this listed in the CVE description.
 
-Affected gstreamer-plugins versions:
-====================================
-  gstreamer-plugins-0.8.5-1.EL.1.i386 (only the "duration" heap based buffer overflow vulnerability -- (vuln #3) in [1].
+Anyway, prefix requirement is another mitigation, as one may not be
+able to get valid certificate for a prefix of arbitrary host name
+(though it may be easier for TLDs as .com and .net via .co and .ne).
 
-Steve, could you please allocate a new CVE id/ids for this issue/issues?
+Speaking of prefixes, has anyone checked IO-Socket-SSL for
+CVE-2009-2408-like issues?  If there is an issues, should it get fixed
+in IO-Socket-SSL or in Net-SSLeay?
 
-Thanks, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-
-
+-- 
+Tomas Hoger / Red Hat Security Response Team
