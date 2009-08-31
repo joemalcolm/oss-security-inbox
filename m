@@ -1,35 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/20/4
-Message-ID: <20090120094206.GC18280@suse.de>
-Date: Tue, 20 Jan 2009 10:42:06 +0100
-From: Sebastian Krahmer <krahmer@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request -- git
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/31/11
+Message-ID: <Pine.GSO.4.51.0908311544320.21074@faron.mitre.org>
+Date: Mon, 31 Aug 2009 15:44:47 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security <oss-security@...ts.openwall.com>
+cc: coley <coley@...re.org>
+Subject: Re: CVE id request: pidgin
 Content-Type: text/plain; charset=utf-8
 
 
-On Tue, Jan 20, 2009 at 10:31:58AM +0100, Tomas Hoger wrote:
+======================================================
+Name: CVE-2009-3026
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3026
+Reference: MLIST:[oss-security] 20090824 CVE id request: pidgin
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/08/24/2
+Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=542891
+Reference: CONFIRM:http://developer.pidgin.im/ticket/8131
+Reference: CONFIRM:http://developer.pidgin.im/viewmtn/revision/diff/312e056d702d29379ea61aea9d27765f127bc888/with/55897c4ce0787edc1e7721b7f4a9b5cbc8357279
 
-> >
-> > Only opensuse 11.0 and 11.1 were affected by diff.external
-> > issue and packages have been released for that.
-> 
-> SUSE-SR:2009:001 only mentions fix for 10.3.  I probably missed other
-> report mentioning fixes in 11.x.
-I am not the Incident Manager in charge, but AFAIR both issues
-have been tracked separately and the remote-fix has been released
-sooner, also b/c of its larger severity, which makes sense.
-Honestly, diff.external is not a very severe bug but
-it will probably be announced in the weekly report (if it
-hasnt). Additionally, the autoupdater shows exactly
-which issues have been fixed.
+protocols/jabber/auth.c in libpurple in Pidgin 2.6.0, and possibly
+other versions, does not follow the "require TLS/SSL" preference when
+connecting to older Jabber servers that do not follow the XMPP
+specification, which causes libpurple to connect to the server without
+the expected encryption and allows remote attackers to sniff sessions.
 
-Sebastian
-
--- 
-~
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-~ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
 
