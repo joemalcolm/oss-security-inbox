@@ -1,27 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/05/1
-Message-ID: <20090505164513.27837ad9@redhat.com>
-Date: Tue, 5 May 2009 16:45:13 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: OSS Security <oss-security@...ts.openwall.com>
-Cc: coley@...re.org
-Subject: Old cscope buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/31/1
+Message-ID: <4A9B48F5.9010506@kernel.sg>
+Date: Mon, 31 Aug 2009 11:52:21 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>, Greg KH <gregkh@...e.de>
+Subject: CVE request: kernel: tty: make sure to flush any pending work when halting the ldisc
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+The tty ldisc code was rewritten to use proper reference counts (commits 
+65b770468e98 and cbe9352fa08f) in order to avoid a race with hangup, but 
+it also introduced another bug that can result in various problems such 
+as a NULL pointer dereference in run_timer_softirq() or a BUG() in 
+worker_thread. More info in the patch.
 
-If you're preparing cscope updates for CVE-2009-0148 and you may still
-be shipping packages based on 15.5, you may want to have a look at:
+Upstream commit:
+http://git.kernel.org/linus/5c58ceff103d8a654f24769bb1baaf84a841b0cc
 
-  https://bugzilla.redhat.com/show_bug.cgi?id=499174
+Reproducer:
+http://lkml.org/lkml/2009/8/20/27
+http://lkml.org/lkml/2009/8/20/68
 
-Steve, as the first public report for this is from 2006:
+Backtrace:
+http://lkml.org/lkml/2009/8/20/21
 
-  https://bugzilla.redhat.com/show_bug.cgi?id=189666
+I believe this affects kernel versions greater than v2.6.26. The code in 
+drivers/char/tty_ldisc.c was from drivers/char/tty_io.c before it was 
+splitted into its own file in v2.6.27-rc1 (commit 01e1abb2). I did not 
+investigate further.
 
-I believe 2006 CVE id is needed here.
-
-If you only ship 15.6 or later, you can ignore this mail.
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+Thanks, Eugene
