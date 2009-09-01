@@ -1,38 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/30/1
-Message-ID: <Pine.GSO.4.64.0912301753070.15266@faron.mitre.org>
-Date: Wed, 30 Dec 2009 18:14:01 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/01/1
+Message-ID: <20090901111754.1e0970fc@neon>
+Date: Tue, 1 Sep 2009 11:17:54 +0200
+From: Alex Legler <a3li@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE requests: Zabbix
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- HTMLDOC
 Content-Type: text/plain; charset=utf-8
 
+On Sat, 18 Jul 2009 13:09:09 +0200, Jan Lieskovsky
+<jlieskov@...hat.com> wrote:
 
-On Sat, 26 Dec 2009, Moritz Muehlenhoff wrote:
+> [...]
+> Could you please allocate a new CVE identifier for it?
+> 
 
-> https://support.zabbix.com/browse/ZBX-1030
+Any updates on the CVE?
 
-Use CVE-2009-4498
+Upstream has acknowledged the issues in the meantime [1] (although the
+two AFM related occurances nion found have a rather limited vector), a
+fix will be in 1.9.
 
-> https://support.zabbix.com/browse/ZBX-1031
+Thanks,
+Alex
 
-Use CVE-2009-4499
+[1] http://www.htmldoc.org/str.php?L214
 
-> https://support.zabbix.com/browse/ZBX-993
-
-Use CVE-2009-4500
-
-> https://support.zabbix.com/browse/ZBX-1355
-
-Use CVE-2009-4501
-
-
-Note: CVE-2009-4502  was also assigned for a separate Zabbix issue 
-discovered at the same time, as covered in 
-https://support.zabbix.com/browse/ZBX-1032
-and http://www.securityfocus.com/archive/1/508439
-
-
-These CVEs will be filled in later.
-
-- Steve
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
