@@ -1,22 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/03/7
-Message-ID: <20090603181605.326c0d11@redhat.com>
-Date: Wed, 3 Jun 2009 18:16:05 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/03/3
+Message-ID: <20090903164547.38b4fa40@redhat.com>
+Date: Thu, 3 Sep 2009 16:45:47 +0200
 From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: PDF XSS in ModSecurity / apache2 mod_security 2.5.8
+To: OSS Security <oss-security@...ts.openwall.com>
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: More CVE-2009-2408 like issues
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 3 Jun 2009 17:59:54 +0200 Marcus Meissner <meissner@...e.de>
-wrote:
+Hi!
 
-> https://sourceforge.net/project/shownotes.php?release_id=667538&group_id=68846
-> http://mod-security.svn.sourceforge.net/viewvc/mod-security?view=rev&revision=1255
-> 
-> "Discovered by Steve Grubb at Redhat", so perhaps there 
-> already is a CVE.
+CVE-2009-2408-like problems were identified and fixed in some more
+applications...
 
-Nope, we have not assigned any id to this flaw.
+wget - bunch of relevant links are available in here:
+  https://bugzilla.redhat.com/show_bug.cgi?id=520454
+
+mutt, when using OpenSSL, fixed via:
+  http://dev.mutt.org/trac/changeset/6016:dc09812e63a3/mutt_ssl.c
+This only applies to 1.5.19 and later, as no name check was done in
+earlier versions when OpenSSL was used for crypto, which is a problem
+by itself:
+  http://dev.mutt.org/trac/ticket/3087
+
+Qt got CVE-2009-2700, earlier versions of KDE use own crypto wrapper
+implemented in kdelibs, which is affected too:
+  https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-2702
+
+OpenLDAP upstream did some changes that addressed this in OpenSSL
+wrapping code, along with change related to handling of multiple CNs:
+  http://www.openldap.org/devel/cvsweb.cgi/libraries/libldap/tls_o.c.diff?r1=1.8&r2=1.11&f=h
+They also changed GnuTLS code to check the last CN instead of the first
+one, but this was not affected by CVE-2009-2408-like problems:
+  http://www.openldap.org/devel/cvsweb.cgi/libraries/libldap/tls_g.c.diff?r1=1.13&r2=1.14&f=h
+NSS wrapper was re-written too to do name checking itself and not rely
+on NSS (CVE-2009-2408 should likely apply here directly and patched
+NSS should be sufficient to address null prefix issue in this case;
+I've not tested though, do your own tests if you build OpenLDAP with
+NSS):
+  http://www.openldap.org/devel/cvsweb.cgi/libraries/libldap/tls_m.c.diff?r1=1.8&r2=1.11&f=h
 
 -- 
 Tomas Hoger / Red Hat Security Response Team
