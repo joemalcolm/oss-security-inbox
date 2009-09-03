@@ -1,20 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/06/1
-Message-ID: <2111911638.2914301244247676607.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 5 Jun 2009 20:21:16 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: coley@...re.org
-Subject: CVE Request (apr-util)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/03/5
+Message-ID: <Pine.GSO.4.51.0909031238500.25059@faron.mitre.org>
+Date: Thu, 3 Sep 2009 12:45:46 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE id request: silc-toolkit
 Content-Type: text/plain; charset=utf-8
 
-So there's another apr-util flaw. The initial mail makes it sound pretty
-scary, but it's really not that bad.
 
-You can find all the scary details here:
-https://bugzilla.redhat.com/show_bug.cgi?id=504390
+On Mon, 31 Aug 2009, Nico Golde wrote:
 
-Thanks
+> Hi,
+> silc-toolkit upstream fixed [0] various security issues which
+> from my assessment allow an attacker arbitrary code
+> execution. I'd like to get some CVE ids for these.
+>
+> |    ASN1: Fix stack variable overwrite when encoding OID.
 
--- 
-    JB
+This was actually fixed in 1.1.8 back in 2008:
+
+  http://silcnet.org/docs/changelog/SILC%20Toolkit%201.1.8
+
+Use CVE-2008-7159, to be filled in later.
+
+> |    Fixed string format vulnerability in client entry handling.
+> |
+> |    Reported and patch provided by William Cummings.
+>
+> This one allows an attacker to execute arbitrary code, tested.
+>
+> |     More string format fixes in silcd and client libary
+
+Use CVE-2009-3051 for both of these format strings, to be filled in later.
+
+> |    HTTP: fix stack overwrite due to format string error.
+
+Appears to be from
+http://silcnet.org/docs/changelog/SILC%20Toolkit%201.1.9.
+
+Use CVE-2008-7160, to be filled in later.
+
+
+- Steve
