@@ -1,44 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/17/4
-Message-ID: <20091217170159.3593e2af@redhat.com>
-Date: Thu, 17 Dec 2009 17:01:59 +0100
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/03/6
+Message-ID: <20090903221121.GA23517@kroah.com>
+Date: Thu, 3 Sep 2009 15:11:21 -0700
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Cc: serg@...ql.com, coley@...us.mitre.org, MySQL Security Team <security@...ql.com>
-Subject: Re: mysql-5.1.41
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Greg KH <gregkh@...e.de>
+Subject: Re: CVE request: kernel: tty: make sure to flush any pending work when halting the ldisc
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 17 Dec 2009 16:28:16 +0100 Sergei Golubchik <serg@...ql.com>
-wrote:
-
-> > > Name: CVE-2009-4030
-> > > 
-> > > MySQL 5.1.x before 5.1.41 allows local users to bypass certain
-> > > privilege checks by calling CREATE TABLE on a MyISAM table with
-> > > modified (1) DATA DIRECTORY or (2) INDEX DIRECTORY arguments that are
-> > > originally associated with pathnames without symlinks, and that can
-> > > point to tables created at a future time at which a pathname is
-> > > modified to contain a symlink to a subdirectory of the MySQL data home
-> > > directory, related to incorrect calculation of the
-> > > mysql_unpacked_real_data_home value.  NOTE: this vulnerability exists
-> > > because of an incomplete fix for CVE-2008-4098 and CVE-2008-2079.
-> > 
-> > This problem is limited to situation where --datadir gets a relative
-> > path not starting with '.' and current working directory is not
-> > --basedir, right?
+On Mon, Aug 31, 2009 at 11:52:21AM +0800, Eugene Teo wrote:
+> The tty ldisc code was rewritten to use proper reference counts (commits 
+> 65b770468e98 and cbe9352fa08f) in order to avoid a race with hangup, but 
+> it also introduced another bug that can result in various problems such 
+> as a NULL pointer dereference in run_timer_softirq() or a BUG() in 
+> worker_thread. More info in the patch.
 > 
-> You mean the last problem in the bug report ?
-> Yes.
+> Upstream commit:
+> http://git.kernel.org/linus/5c58ceff103d8a654f24769bb1baaf84a841b0cc
+> 
+> Reproducer:
+> http://lkml.org/lkml/2009/8/20/27
+> http://lkml.org/lkml/2009/8/20/68
+> 
+> Backtrace:
+> http://lkml.org/lkml/2009/8/20/21
+> 
+> I believe this affects kernel versions greater than v2.6.26. The code in 
+> drivers/char/tty_ldisc.c was from drivers/char/tty_io.c before it was 
+> splitted into its own file in v2.6.27-rc1 (commit 01e1abb2). I did not 
+> investigate further.
 
-The "Fixed a initialization order remark by Serg" fix,  problem pointed
-out in your comment dated as "[14 Jul 15:53] Sergei Golubchik".
+Are you sure about this?  It only looks to be a problem in the 2.6.31-rc
+tree, as both of the above referenced patches are in that tree (showed
+up in 2.6.31-rc6).
 
-As when you use full path for --datadir, it's correctly expanded using
-realpath.  Relative paths starting with '.' are expected to be resolved
-from CWD.  I've not checked path starting with '~', they may be
-affected by this problem too.
+Do you have a backported patch to 2.6.30 that you think fixes the
+problem?
 
-Thank you for clarifications / confirmations!
+thanks,
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+greg k-h
