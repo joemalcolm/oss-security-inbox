@@ -1,76 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/29/2
-Message-ID: <OF729CA43D.0A5BA90F-ON872575A7.0007ED90-862575A7.00082929@us.ibm.com>
-Date: Tue, 28 Apr 2009 20:27:19 -0500
-From: Steven French <sfrench@...ibm.com>
-To: dann frazier <dannf@...ian.org>
-Cc: oss-security@...ts.openwall.com, security@...nel.org, jlayton@...hat.com
-Subject: Re: CVE request? buffer overflow in CIFS in 2.6.*
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/03/4
+Message-ID: <4A9FEA2F.8080501@redhat.com>
+Date: Fri, 04 Sep 2009 00:09:19 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: NULL pointer dereference in sg_build_indirect()
 Content-Type: text/plain; charset=utf-8
 
-Jeff (Layton) was working an additional fix (updating a proposed fix from 
-Suresh J.).  We will review it together tomorrow.
+Backtrace:
+http://lkml.org/lkml/2009/9/3/1
 
+Upstream proposed patch:
+http://lkml.org/lkml/2009/9/3/107
 
-Steve French
-Senior Software Engineer
-Linux Technology Center - IBM Austin
-phone: 512-838-2294
-email: sfrench at-sign us dot ibm dot com
+Triggered by firing up "xcdroast" to duplicate a CD.
 
+[...]
+  out:
+  	for (i = 0; i < k; i++)
+-		__free_pages(schp->pages[k], order);
++		__free_pages(schp->pages[i], order);
 
+When the allocation in sg_build_indirect() fails, an oops can occur 
+because of an obvious typo.
 
-dann frazier <dannf@...ian.org> 
-04/28/2009 08:12 PM
+This was introduced by upstream commit 10db10d1 in v2.6.28-rc1.
 
-To
-oss-security@...ts.openwall.com
-cc
-security@...nel.org, Steven French/Austin/IBM@...US
-Subject
-Re: [oss-security] CVE request? buffer overflow in CIFS in 2.6.*
-
-
-
-
-
-
-On Sat, Apr 25, 2009 at 05:40:20PM +0800, Eugene Teo wrote:
-> Hi Steve,
-> 
-> > One approach might be to "pre-tag" this whole set of changes with a 
-single
-> > CVE, then when they ultimately get merged into a single kernel version 
-or
-> > some other concrete milestone, the "scope" of that CVE ends.
-> 
-> I'm fine with this approach. It can actually help to make it easier to
-> manage this set of changes.
-
-To summarize (and make sure I understand), the plan is to create a
-single CVE for a collection of CIFS fixes. So far, this series includes
-the following changesets, but others may be added as well:
-
-http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.29.y.git;a=commitdiff;h=15bd8021d870d2c4fbf8c16578d72d03cfddd3a7
-
-http://git.kernel.org/?p=linux/kernel/git/sfrench/cifs-2.6.git;a=commitdiff;h=f083def68f84b04fe3f97312498911afce79609e
-
-http://git.kernel.org/linus/27b87fe52baba0a55e9723030e76fce94fabcea4
-http://git.kernel.org/?p=linux/kernel/git/sfrench/cifs-2.6.git;a=commit;h=7b0c8fcff47a885743125dd843db64af41af5a61
-
-http://git.kernel.org/?p=linux/kernel/git/sfrench/cifs-2.6.git;a=commit;h=968460ebd8006d55661dec0fb86712b40d71c413
-
-
-Is that correct? If so, is there an estimate for when this set will be
-deemed complete and a CVE assigned?
-
-I think that if we wait too long to close this, we'll end up with
-distributions releasing updates with only a subset of these
-fixes, which would make this "collection" somewhat difficult to track
-by CVE ID handle. I'm otherwise quite happy with this plan, fwiw.
-
--- 
-dann frazier
-
-
-
+Thanks, Eugene
