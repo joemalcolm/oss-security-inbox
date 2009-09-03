@@ -1,34 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/11/1
-Message-ID: <20090611112429.GA5540@redhat.com>
-Date: Thu, 11 Jun 2009 12:24:29 +0100
-From: Joe Orton <jorton@...che.org>
-To: Eygene Ryabinkin <rea-sec@...elabs.ru>
-Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>, coley@...re.org, security@...che.org
-Subject: Re: CVE request: "billion laughs" attack against Apache APR
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/03/7
+Message-ID: <4AA05840.6020303@kernel.sg>
+Date: Fri, 04 Sep 2009 07:58:56 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>, Greg KH <gregkh@...e.de>
+Subject: Re: CVE request: kernel: tty: make sure to flush any pending work when halting the ldisc
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Jun 06, 2009 at 08:00:20PM +0400, Eygene Ryabinkin wrote:
-> Please, note that these two issues and CVE-2009-0023 seem to be
-> applicable to Apache 2.2.11 and Apache 2.0.63 (latest 2.x versions),
-> since they have bundled apr-util inside.  At least both have the
-> vulnerable code and I had verified the "billion laughs" attack against
-> Apache 2.2.11 with Subversion mod_dav_svn that uses internal Apache
-> libaprutil.  OS for testing was FreeBSD, but I think that others are
-> affected as well.
+Greg KH wrote:
+> On Mon, Aug 31, 2009 at 11:52:21AM +0800, Eugene Teo wrote:
+>> The tty ldisc code was rewritten to use proper reference counts (commits 
+>> 65b770468e98 and cbe9352fa08f) in order to avoid a race with hangup, but 
+>> it also introduced another bug that can result in various problems such 
+>> as a NULL pointer dereference in run_timer_softirq() or a BUG() in 
+>> worker_thread. More info in the patch.
+>>
+>> Upstream commit:
+>> http://git.kernel.org/linus/5c58ceff103d8a654f24769bb1baaf84a841b0cc
+>>
+>> Reproducer:
+>> http://lkml.org/lkml/2009/8/20/27
+>> http://lkml.org/lkml/2009/8/20/68
+>>
+>> Backtrace:
+>> http://lkml.org/lkml/2009/8/20/21
+>>
+>> I believe this affects kernel versions greater than v2.6.26. The code in 
+>> drivers/char/tty_ldisc.c was from drivers/char/tty_io.c before it was 
+>> splitted into its own file in v2.6.27-rc1 (commit 01e1abb2). I did not 
+>> investigate further.
 > 
-> CC'ing Apache security contacts in case they aren't informed about this
-> issue yet.  Folks, may be I am wrong in my assertions?
+> Are you sure about this?  It only looks to be a problem in the 2.6.31-rc
+> tree, as both of the above referenced patches are in that tree (showed
+> up in 2.6.31-rc6).
 
-It is correct to say that installations of current releases of Apache 
-httpd - versions <= 2.0.63 and <= 2.2.11 - which are built using the 
-bundled copy of APR-util, may be affected by the three APR-util issues, 
-depending on the configuration and set of modules used.  Note that 
-Apache httpd 2.x can also be built using standalone installations of APR 
-and APR-util.
+Right, so this was introduced between v2.6.31-rc1 and v2.6.31-rc4, with 
+commit c65c9bc3 and c8d50041. Thanks for clarifying.
 
-We're not aware of any way to trigger CVE-2009-0023 remotely using the 
-set of modules included in httpd itself.  It may be possible to trigger 
-both CVE-2009-1956 and CVE-2009-1955 if mod_dav is configured.
+> Do you have a backported patch to 2.6.30 that you think fixes the
+> problem?
 
-Regards, Joe
+No, I did not investigate further.
+
+Thanks, Eugene
