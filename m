@@ -1,40 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/13/3
-Message-ID: <20091013121427.1f4e6892@redhat.com>
-Date: Tue, 13 Oct 2009 12:14:27 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/03/2
+Message-ID: <20090903162450.1be846b2@redhat.com>
+Date: Thu, 3 Sep 2009 16:24:50 +0200
 From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: thomas@...e.de
-Subject: Re: CVE request: local root via setuid VBoxNetAdpCtl
+Cc: matthias.andree@....de, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: Re: "umbrella" CVE names (was: CVE request: fetchmail <= 6.3.10 SSL certificate NUL prefix verification bypass)
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 13 Oct 2009 08:38:40 +0200 Thomas Biege <thomas@...e.de> wrote:
+On Fri, 21 Aug 2009 09:28:08 +0200 "Matthias Andree"
+<matthias.andree@....de> wrote:
 
-> this one needs two CVE-IDs:
-> - shell meta char injection in popen()
-> - possible buffer overflow in strncpy()
-> 
-> http://sunsolve.sun.com/search/document.do?assetkey=1-66-268188-1
+> Mandriva Security (I think it was them - if I recall correctly) wrote
+> in their fetchmail security advisory something along the lines of  
+> "CVE-2009-2666, [...] related to CVE-2009-2408"
 
-I believe that the following got assigned for these independently of
-this request:
-
-CVE-2009-3692
-Unspecified vulnerability in the VBoxNetAdpCtl configuration tool in
-Sun VirtualBox 3.0.x before 3.0.8 on Solaris x86, Linux, and Mac OS X
-allows local users to gain privileges via unknown vectors.
-
-http://www.virtualbox.org/wiki/Changelog
-http://sunsolve.sun.com/search/document.do?assetkey=1-66-268188-1
-http://www.securityfocus.com/bid/36604
-http://www.osvdb.org/58652
-http://securitytracker.com/id?1022990
-http://secunia.com/advisories/36929
-http://www.vupen.com/english/advisories/2009/2845
-http://xforce.iss.net/xforce/xfdb/53671
-
-I know this does not satisfy your request, it's rather a heads-up to
-avoid duplicate assignment.
+That's likely.  It seems CVE descriptions for this kind of issues all
+end with "a related issue to CVE-2009-2408." (thanks, Steven!) and
+Mandriva often uses CVE description with little modifications.
 
 -- 
 Tomas Hoger / Red Hat Security Response Team
