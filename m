@@ -1,26 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/28/7
-Message-ID: <20090728201455.GG3577@redhat.com>
-Date: Tue, 28 Jul 2009 14:14:55 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/04/1
+Message-ID: <20090904133715.GF19058@ngolde.de>
+Date: Fri, 4 Sep 2009 15:37:15 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: debian bug report on bind9 DoS
+Subject: Re: CVE id request: silc-toolkit
 Content-Type: text/plain; charset=utf-8
 
-* [2009-07-28 22:09:20 +0200] Thijs Kinkhorst wrote:
+Hi,
+* Steven M. Christey <coley@...us.mitre.org> [2009-09-04 12:08]:
+> On Mon, 31 Aug 2009, Nico Golde wrote:
+> 
+> > silc-toolkit upstream fixed [0] various security issues which
+> > from my assessment allow an attacker arbitrary code
+> > execution. I'd like to get some CVE ids for these.
+> >
+> > |    ASN1: Fix stack variable overwrite when encoding OID.
+> 
+> This was actually fixed in 1.1.8 back in 2008:
 
->On tiisdei 28 July 2009, Vincent Danen wrote:
->> There's a bind 9 DoS reported in Debian's BTS [1] that provides a
->> reproducer and some interesting info on a bind9 crash.
->
->> This probably requires a CVE name.
->
->CERT-CC have assigned CVE-2009-0696 to this.
->See: http://www.kb.cert.org/vuls/id/725188
+Which CVE id is that? I can't find a CVE-2008- issue 
+describing this.
 
-Thanks for that.  I also just noticed the CERT VU with the new releases.
-The new releases only fix this issue from the looks of things (at least
-for 9.4.3-P3 which is what I looked at).
+>   http://silcnet.org/docs/changelog/SILC%20Toolkit%201.1.8
+> 
+> Use CVE-2008-7159, to be filled in later.
+> 
+> > |    Fixed string format vulnerability in client entry handling.
+> > |
+> > |    Reported and patch provided by William Cummings.
+> >
+> > This one allows an attacker to execute arbitrary code, tested.
+> >
+> > |     More string format fixes in silcd and client libary
+> 
+> Use CVE-2009-3051 for both of these format strings, to be filled in later.
+> 
+> > |    HTTP: fix stack overwrite due to format string error.
+> 
+> Appears to be from
+> http://silcnet.org/docs/changelog/SILC%20Toolkit%201.1.9.
+> 
+> Use CVE-2008-7160, to be filled in later.
 
+Thanks!
+
+Cheers
+Nico
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
