@@ -1,45 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/23/7
-Message-ID: <750835919.590711259002691938.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 23 Nov 2009 13:58:11 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/04/3
+Message-Id: <200909042211.45210.hanno@hboeck.de>
+Date: Fri, 4 Sep 2009 22:11:45 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request - Dovecot - 1.2.8
+Subject: CVE id request: fluxbb < 1.2.22 XSS
 Content-Type: text/plain; charset=utf-8
 
-This is CVE-2009-3897 (as noted in a previous mail), this is the second
-request for this flaw.
+http://fluxbb.org/forums/topic/3222/fluxbb1222-released/
 
-Thanks.
+
+"Fixed a critical XSS vulnerability, reported by endeavormac."
+
 
 -- 
-    JB
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
------ "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+http://schokokeks.org - professional webhosting
 
-> Hi Josh, Steve, vendors,
-> 
->    Dovecot upstream has released latest 1.2.8 version, fixing
-> one security issue. Quoting from news:
-> 
-> This is mainly to fix the 0777 base_dir creation issue, which could
-> be
-> considered a security hole, exploitable by local users. An attacker
-> could for example replace Dovecot's auth socket and log in as other
-> users. Gaining root privileges isn't possible though.
-> 
-> This affects only v1.2 users, v1.1 and older versions were creating
-> the
-> directory with 0755 permission.
-> 
-> References:
-> -----------
-> http://www.dovecot.org/list/dovecot-news/2009-November/000143.html
-> http://www.dovecot.org/index.html
-> 
-> Could you allocate a CVE id? (in case there isn't one already).
-> 
-> Thanks && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
