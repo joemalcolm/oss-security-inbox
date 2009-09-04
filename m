@@ -1,56 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/13/6
-Message-ID: <4A0AF7D1.60303@gentoo.org>
-Date: Wed, 13 May 2009 18:39:45 +0200
-From: Christian Hoffmann <hoffie@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/04/2
+Message-ID: <20090904135334.GG19058@ngolde.de>
+Date: Fri, 4 Sep 2009 15:53:34 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: php mb_ereg_replace()
+Subject: Re: CVE id request: silc-toolkit
 Content-Type: text/plain; charset=utf-8
 
-On 2009-05-13 16:47, Steven M. Christey wrote:
-> We don't have a CVE for the fact that strcpy() exists - it can be used
-> safely even though it's dangerous.  My interpretation of this issue was
-> the same, so no CVE is needed.  Any PHP application that misuses
-> mb_ereg_replace(), however, is fair game.
+Hi,
+* Nico Golde <oss-security+ml@...lde.de> [2009-09-04 15:41]:
+> * Steven M. Christey <coley@...us.mitre.org> [2009-09-04 12:08]:
+> > On Mon, 31 Aug 2009, Nico Golde wrote:
+> > 
+> > > silc-toolkit upstream fixed [0] various security issues which
+> > > from my assessment allow an attacker arbitrary code
+> > > execution. I'd like to get some CVE ids for these.
+> > >
+> > > |    ASN1: Fix stack variable overwrite when encoding OID.
+> > 
+> > This was actually fixed in 1.1.8 back in 2008:
 > 
-> (We already have a handful of CVEs for executable regexp's in PHP apps)
-While I'm fine with no CVE being assigned, I think the difference
-between those cases should be clearly noted. Writing secure preg_replace
-calls (which make use of the 'e' modifier) is one thing and rather easy
-to accomplish (that's probably what you are referring to -- apps failing
-to do that).
-In contrast to that, writing secure mb_ereg(i)_replace calls which deal
-with user data becomes probably a real mess (you have to escape the
-input string before passing it to the function, it is impossible to come
-up with an mb_ereg_replace call which can be considered secure without
-doing any escaping beforehand).
+> Which CVE id is that? I can't find a CVE-2008- issue 
+> describing this.
 
-Short example:
-Run the code from comment "[9 May 5:13am UTC] jani@....net" from [1].
-The result clearly shows the difference between mb_ereg_replace() and
-preg_replace() and how hard it would be to write secure code involving
-this function, the 'e' modifier and untrusted input:
+EMORECOFFEE, sorry
 
-$ php bla.php
-mb_ereg_replace()
-THIS SHOULD NOT BE SEEN!!
-string(0) ""
-string(0) ""
-
-preg_replace()
-string(12) "', test(), '"
-string(0) ""
-
-
-Anyway, doesn't change anything regarding the fact that nothing has to
-be done CVE-wise, imo.
-
-
-[1] http://bugs.php.net/bug.php?id=48180
+Cheers
+Nico
 
 -- 
-Christian Hoffmann
-Gentoo PHP team
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-
-Download attachment "signature.asc" of type "application/pgp-signature" (262 bytes)
+Content of type "application/pgp-signature" skipped
