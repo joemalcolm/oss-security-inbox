@@ -1,28 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/08/8
-Message-ID: <20090908231346.GI7304@outflux.net>
-Date: Tue, 8 Sep 2009 16:13:46 -0700
-From: Kees Cook <kees@...ntu.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request - glib symlink copying permission exposure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/05/2
+Message-ID: <20090905175250.GA9500@openwall.com>
+Date: Sat, 5 Sep 2009 21:52:50 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: Willy Tarreau <w@....eu>
+Subject: Re: CVE request: kernel: tc: uninitialised kernel memory leak
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Thu, Sep 03, 2009 at 11:45:03AM +0800, Eugene Teo wrote:
+> Three bytes of uninitialised kernel memory are currently leaked to user.
+> 
+> http://patchwork.ozlabs.org/patch/32830/
+> https://bugzilla.redhat.com/show_bug.cgi?id=520990
 
-I'd like to request a CVE for an issue where glib causes symlink targets
-to gain 0777 permissions when any symlink pointing at the target is
-copied.  There is no privilege escalation, but it can lead to situations
-where other users on a system could have read/write access to important
-files (e.g. .ssh/id_rsa).
+2.4 kernels appear to be affected as well, and moreover they appear to
+require at least some of these older fixes as well:
 
-https://bugs.launchpad.net/bugs/418135
-http://bugzilla.gnome.org/show_bug.cgi?id=593406
+http://marc.info/?l=git-commits-head&m=112002138324380
 
-Thanks,
+Specifically, in net/sched/sch_api.c both tc_fill_qdisc() and
+tc_fill_tclass() are affected - the former was fixed in 2.6 in 2005,
+the latter is being fixed now.
 
--Kees
+I'm not sure what this means for CVE.  Should there be another CVE id
+for the issues fixed in 2.6 in 2005 (if one was not allocated at the
+time), and 2.4 could reference both CVE ids now?
 
--- 
-Kees Cook
-Ubuntu Security Team
+I did not check if any of the affected code is possibly normally only
+available to root, but even if so the issue may be relevant on systems
+with containers.
+
+Alexander
