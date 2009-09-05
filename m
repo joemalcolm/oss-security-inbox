@@ -1,28 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/25/2
-Message-ID: <20090525232812.GA29640@ngolde.de>
-Date: Tue, 26 May 2009 01:28:12 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2009-0161 dupe of CVE-2009-0642
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/05/1
+Message-ID: <20090905114733.GH4180@inversepath.com>
+Date: Sat, 5 Sep 2009 12:47:33 +0100
+From: Andrea Barisani <lcars@...rt.org>
+To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
+Subject: [oCERT-2009-013] yTNEF/Evolution TNEF attachment decoder input sanitization errors
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-looks like CVE-2009-0161 is a dupe of the original CVE id 
-that already covered invalid return value checking of 
-OCSP_basic_verify.
+#2009-013 yTNEF/Evolution TNEF attachment decoder input sanitization errors
 
-This is not the first time Apple products receive their own 
-CVE id for issues in the underlying oss product (e.g. webkit 
-very often). Is that on purpose or is that just because 
-Apple is lacking to provide the proper information to notice 
-that?
+Description:
 
-Cheers
-Nico
+yTNEF, an open source filter program that decodes Transport Neutral
+Encapsulation Format (TNEF) e-mail attachments, and the Evolution TNEF
+attachment decoder plugin suffer from directory traversal and buffer overflow
+vulnerabilities.
+
+The vulnerabilities lead to arbitrary code execution with the privilege of the
+target user running the decoders.
+
+The directory traversal vulnerability is caused by improper sanitization of the
+file name used for saving the attachments, as it is computed directly from
+properties contained in the TNEF structure without checking for conditions that
+allow to traverse outside the temporary directory used for attachment storage.
+This leads to arbitrary code execution in case the attacker crafts an
+attachment that would overwrite a file used for execution (as an example the
+bashrc profile).
+
+Additionally buffer and heap overflow vulnerabilities can be triggered by
+passing a file name exceeding a fixed size of 256 bytes in the TNEF data
+structure. This can lead to arbitrary code execution if exploited.
+
+Affected version:
+
+yTNEF, all versions
+
+Evolution TNEF plugin, all versions
+
+Fixed version:
+
+yTNEF, N/A
+
+Evolution TNEF plugin, N/A
+
+Credit: vulnerability report and PoC code received from Yorick Koster < yorick
+[at] akitasecurity [dot] nl >.
+
+CVE: N/A
+
+Timeline:
+
+2009-07-09: vulnerability report received
+2009-07-10: contacted ytnef and evolution maintainers
+2009-07-11: former evolution plugin maintainer communicates that code is
+            unmaintained, voluntarily deletes online copy
+2009-07-21: contacted affected vendors, advising to remove or disable the
+            unmaintained code
+2009-09-05: advisory release
+
+References:
+http://www.akitasecurity.nl/advisory.php?id=AK20090601
+
+Permalink:
+http://www.ocert.org/advisories/ocert-2009-013.html
 
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | Open Source Computer Emergency Response Team
 
-Content of type "application/pgp-signature" skipped
+<lcars@...rt.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
