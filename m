@@ -1,23 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/07/1
-Message-ID: <20091007142547.GE20229@ngolde.de>
-Date: Wed, 7 Oct 2009 16:25:47 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE id request: jetty
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/06/1
+Message-Id: <200909061633.45589.rbu@gentoo.org>
+Date: Sun, 6 Sep 2009 16:33:41 +0200
+From: Robert Buchholz <rbu@...too.org>
+To: coley@...us.mitre.org
+Cc: "CERT-FI Vulnerability Coordination" <vulncoord@...ora.fi>, oss-security@...ts.openwall.com
+Subject: Re: Re: expat bug 1990430
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-core-security discovered a persistent xss in jetty:
-http://www.coresecurity.com/content/jetty-persistent-xss
+Sorry for being late in this discussion, I was absent for two weeks.
 
-Could I get a CVE id for this please?
+On Thursday 27 August 2009, CERT-FI Vulnerability Coordination wrote:
+> There probably is not a CVE for
+> the expat crash (which affected Python expat too) yet. As the
+> original issue was not handled by us and it was found already back in
+> 2008, we did not allocate a CVE for the Python expat issue. So we
+> probably need a CVE for the expat crash. I assume we could use this
+> CVE for the Python expat crash too since the root cause is the same.
 
-Cheers
-Nico
+Hello Steven,
 
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
+are you going to assign a new identifier for expat updatePosition crash? 
+It seems to me the outcome of this discussion is that the issues 
+discovered in 2009 by the Codenomicon XML fuzzing and in 2008 by Peter 
+Valchev are identical, and that the CVE-2009-2625 wording is limited to 
+the infinite loop in a Java codebase. As a supporting factor, 
+CVE-2009-2625 is used by many to identify only the Java issues
+(with Mandriva being an exception).
 
-Content of type "application/pgp-signature" skipped
+
+Robert
+
+Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
