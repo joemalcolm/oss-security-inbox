@@ -1,21 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/20/2
-Message-ID: <28fa9c5e0902192330q3a3fe623y6b6c4c68dd6603cf@mail.gmail.com>
-Date: Fri, 20 Feb 2009 15:30:34 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: skfp_ioctl inverted logic flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/06/2
+Message-ID: <20090906203350.GH9125@1wt.eu>
+Date: Sun, 6 Sep 2009 22:33:51 +0200
+From: Willy Tarreau <w@....eu>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: kernel: tc: uninitialised kernel memory leak
 Content-Type: text/plain; charset=utf-8
 
-According to the upstream commit
-c25b9abbc2c2c0da88e180c3933d6e773245815a "[PATCH] drivers/net/skfp: if
-!capable(CAP_NET_ADMIN): inverted logic", there is an inverted logic
-flaw in skfp_ioctl(). Non-privileged users should not be able to clear
-the driver statistics.
+Hi Alexander,
 
-http://lists.openwall.net/netdev/2009/01/28/90
-https://bugzilla.redhat.com/show_bug.cgi?id=486534
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=c25b9abb
+On Sat, Sep 05, 2009 at 09:52:50PM +0400, Solar Designer wrote:
+> On Thu, Sep 03, 2009 at 11:45:03AM +0800, Eugene Teo wrote:
+> > Three bytes of uninitialised kernel memory are currently leaked to user.
+> > 
+> > http://patchwork.ozlabs.org/patch/32830/
+> > https://bugzilla.redhat.com/show_bug.cgi?id=520990
+> 
+> 2.4 kernels appear to be affected as well, and moreover they appear to
+> require at least some of these older fixes as well:
+> 
+> http://marc.info/?l=git-commits-head&m=112002138324380
 
-Thanks, Eugene
+Thanks for letting me know.
+
+I'm late on fixes these days. I still have several ones to apply but
+need to find time to work on them.
+
+> Specifically, in net/sched/sch_api.c both tc_fill_qdisc() and
+> tc_fill_tclass() are affected - the former was fixed in 2.6 in 2005,
+> the latter is being fixed now.
+> 
+> I'm not sure what this means for CVE.  Should there be another CVE id
+> for the issues fixed in 2.6 in 2005 (if one was not allocated at the
+> time), and 2.4 could reference both CVE ids now?
+
+Personally I have no problem referencing an old CVE in a recent
+commit if it helps tracking common bugs. And I think we've already
+done that in the past.
+
+> I did not check if any of the affected code is possibly normally only
+> available to root, but even if so the issue may be relevant on systems
+> with containers.
+
+In general I tend to consider those "bytes leak" bugs with lower
+importance, but they need to be fixed anyway since they may eventually
+impact some random setup somewhere.
+
+Thanks,
+Willy
+
