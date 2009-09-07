@@ -1,25 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/03/4
-Message-ID: <20090603150743.GA10860@redhat.com>
-Date: Wed, 3 Jun 2009 16:07:43 +0100
-From: Joe Orton <jorton@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/07/1
+Message-ID: <4AA47ECD.1030002@kernel.sg>
+Date: Mon, 07 Sep 2009 11:32:29 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: "billion laughs" attack against Apache APR
+CC: Willy Tarreau <w@....eu>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: tc: uninitialised kernel memory leak
 Content-Type: text/plain; charset=utf-8
 
-Hi, could a CVE name be allocated for this issue:
+Solar Designer wrote:
+> On Thu, Sep 03, 2009 at 11:45:03AM +0800, Eugene Teo wrote:
+>> Three bytes of uninitialised kernel memory are currently leaked to user.
+>>
+>> http://patchwork.ozlabs.org/patch/32830/
+>> https://bugzilla.redhat.com/show_bug.cgi?id=520990
+> 
+> 2.4 kernels appear to be affected as well, and moreover they appear to
+> require at least some of these older fixes as well:
+> 
+> http://marc.info/?l=git-commits-head&m=112002138324380
 
-The expat XML parser is vulnerable to the "billion laughs" entity 
-expansion attack.  This results in a denial of service vulnerability in 
-any network-facing service which uses the Apache "APR-util" library's 
-wrapper interface for expat to parse untrusted XML documents.  The 
-Apache httpd WebDAV module "mod_dav" is such a service.
+This is commit 9ef1d4c7c7aca1cd436612b6ca785b726ffb8ed8.
 
-References: 
-http://milw0rm.com/exploits/8842 
-http://marc.info/?l=apr-dev&m=124396021826125&w=2
-http://svn.apache.org/viewvc?rev=781403&view=rev
+And linux-2.4.37.y needs the following two patches too:
 
-Affected versions: 
-APR-util <= 1.3.4
+[NETLINK]: Clear padding in netlink messages
+b3563c4fbff906991a1b4ef4609f99cca2a0de6a
+
+[NETLINK]: Missing padding fields in dumped structures
+8a47077a0b5aa2649751c46e7a27884e6686ccbf
+
+Thanks, Eugene
