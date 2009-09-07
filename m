@@ -1,28 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/31/11
-Message-ID: <Pine.GSO.4.51.0908311544320.21074@faron.mitre.org>
-Date: Mon, 31 Aug 2009 15:44:47 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security <oss-security@...ts.openwall.com>
-cc: coley <coley@...re.org>
-Subject: Re: CVE id request: pidgin
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/07/3
+Message-ID: <20090907085234.GH1895@suse.de>
+Date: Mon, 7 Sep 2009 10:52:34 +0200
+From: Thomas Biege <thomas@...e.de>
+To: OSS-Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: viewvc: CVE request: XSS and illegal characters while printing name-value pairs
 Content-Type: text/plain; charset=utf-8
 
+Hello,
+I do not have any further details, just this changelog entries:
 
-======================================================
-Name: CVE-2009-3026
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3026
-Reference: MLIST:[oss-security] 20090824 CVE id request: pidgin
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/08/24/2
-Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=542891
-Reference: CONFIRM:http://developer.pidgin.im/ticket/8131
-Reference: CONFIRM:http://developer.pidgin.im/viewmtn/revision/diff/312e056d702d29379ea61aea9d27765f127bc888/with/55897c4ce0787edc1e7721b7f4a9b5cbc8357279
+Version 1.1.2 (released 11-Aug-2009)
 
-protocols/jabber/auth.c in libpurple in Pidgin 2.6.0, and possibly
-other versions, does not follow the "require TLS/SSL" preference when
-connecting to older Jabber servers that do not follow the XMPP
-specification, which causes libpurple to connect to the server without
-the expected encryption and allows remote attackers to sniff sessions.
+  * security fix: validate the 'view' parameter to avoid XSS attack
+  * security fix: avoid printing illegal parameter names and values
 
+http://viewvc.tigris.org/source/browse/*checkout*/viewvc/tags/1.1.2/CHANGES
 
+-- 
+Bye,
+     Thomas
+-- 
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+-- 
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
