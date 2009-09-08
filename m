@@ -1,28 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/22/1
-Message-ID: <20090422001623.GA20940@ngolde.de>
-Date: Wed, 22 Apr 2009 02:16:23 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/08/6
+Message-ID: <Pine.GSO.4.51.0909081256490.13179@faron.mitre.org>
+Date: Tue, 8 Sep 2009 13:00:00 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: CVE id request: amule
+Subject: Re: CVE for recent cyrus-imap issue
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-looks like amule doesn't properly filter file names when 
-opening them in mplayer:
-http://bugs.debian.org/525078
 
-Can I get a CVE id for this?
+CVE-2009-2628 has been clearly and publicly associated with VU#444513
+which is for a VMware AVI codec heap overflow.  So it's not for cyrus-imap
+at all.  (This may have been a typo somewhere down the line, and it's not
+"live"  on the CVE site which didn't help things.)
 
-I couldn't test this though as I currently have no amule nor 
-a downloaded donkey file available.
+As Nico said, CVE-2009-2632 appears to be the proper ID for the cyrus-imap
+problem.  I am associating it with the SIEVE component overflow as
+released in DEBIAN:DSA-1881.  If there's another bug floating around,
+we'll have to use a different CVE.
 
-Cheers
-Nico
-
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+- Steve
