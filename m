@@ -1,30 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/09/3
-Message-Id: <200904091441.31960.hanno@hboeck.de>
-Date: Thu, 9 Apr 2009 14:41:31 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: clamav clamd and clamscan DoS and bypass by malformated archive
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/08/8
+Message-ID: <20090908231346.GI7304@outflux.net>
+Date: Tue, 8 Sep 2009 16:13:46 -0700
+From: Kees Cook <kees@...ntu.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request - glib symlink copying permission exposure
 Content-Type: text/plain; charset=utf-8
 
-Am Donnerstag 09 April 2009 schrieb Tomas Hoger:
-> Upstream 0.95.1 seems to fix at least 2 other issues that may be of
-> interest:
->
-> https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1552
-> https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1553
->
-> svn diff -c 5032 http://svn.clamav.net/svn/clamav-devel/
+Hi,
 
-Stupid question but is it common clamav policy to not mention security 
-releases? Anyone any info about that?
+I'd like to request a CVE for an issue where glib causes symlink targets
+to gain 0777 permissions when any symlink pointing at the target is
+copied.  There is no privilege escalation, but it can lead to situations
+where other users on a system could have read/write access to important
+files (e.g. .ssh/id_rsa).
 
-This is a bit frightening for a "security" product (they have a menu 
-point "security" on their website but it seems they don't tend to fill it 
-with information...)
+https://bugs.launchpad.net/bugs/418135
+http://bugzilla.gnome.org/show_bug.cgi?id=593406
+
+Thanks,
+
+-Kees
 
 -- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+Kees Cook
+Ubuntu Security Team
