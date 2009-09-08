@@ -1,44 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/12/2
-Message-ID: <20090612124627.GJ21602@ngolde.de>
-Date: Fri, 12 Jun 2009 14:46:27 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/08/1
+Message-ID: <20090908081532.GA25549@suse.de>
+Date: Tue, 8 Sep 2009 10:15:32 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: roland@...ian.org
-Subject: Re: xfig-3.2.5 diff (CVE-2009-1962)
+Subject: CVE for recent cyrus-imap issue
 Content-Type: text/plain; charset=utf-8
 
 Hi,
-* Tomas Hoger <thoger@...hat.com> [2009-06-11 11:31]:
-> On Mon, 8 Jun 2009 12:49:48 +0200 Sebastian Krahmer <krahmer@...e.de>
-> wrote:
-> 
-> > just in case you need it, our maintainer asked me to forward
-> > a patch for $SUBJECT which has been fixed in our xfig
-> > for quite some time.
-> 
-> Looks like the patch you attached does not differ much from what we use
-> for some time too and seems to have an origin here:
-> 
->   https://bugzilla.redhat.com/show_bug.cgi?id=67351
-> 
-> And it does not differ much from what Nico previously posted:
-> 
->   http://thread.gmane.org/gmane.comp.security.oss.general/1609
-> 
-> However, Nico's patch, probably taken from Fedora XFig packages, has
-> one hunk missing for:
 
-Yes this is the patch by the Fedora maintainer, I took it 
-from our Debian package. You are correct, it looks 
-incomplete, the hunk is as well missing in our packages.
+Anyone already successfull asking CERT for a CVE for VU#336053?
+If not, can someone assign one?
 
-Roland, can you fix that please?
+thx,
+Sebastian
 
-Cheers
-nico
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
+~
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+~ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
 
-Content of type "application/pgp-signature" skipped
