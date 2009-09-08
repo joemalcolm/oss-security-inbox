@@ -1,32 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/30/1
-Message-ID: <4A49B690.1070703@redhat.com>
-Date: Tue, 30 Jun 2009 14:54:08 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/08/2
+Message-ID: <20090908115343.GC12254@suse.de>
+Date: Tue, 8 Sep 2009 13:53:43 +0200
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE Request: kernel: kvm: failure to validate cr3 after KVM_SET_SREGS
+Subject: Re: CVE for recent cyrus-imap issue
 Content-Type: text/plain; charset=utf-8
 
-"This applies to kvm-84 and earlier (and possibly to the in-kernel kvm
-version too) on all x86 machines in all guest modes (32-bit, PAE, 64-bit).
 
-Userspace callers of KVM_SET_SREGS can pass a bogus value of cr3 to the
-kernel. This will trigger a NULL pointer access in gfn_to_rmap() when
-userspace next tries to call KVM_RUN on the affected VCPU and kvm 
-attempts to activate the new non-existent page table root.
+We just received en email from CERT: CVE-2009-2628
 
-This happens since kvm only validates that cr3 points to a valid guest
-physical memory page when code *inside* the guest sets cr3. However, kvm
-currently trusts the userspace caller (e.g. QEMU) on the host machine to
-always supply a valid page table root, rather than properly validating 
-it along with the rest of the reloaded guest state."
+On Tue, Sep 08, 2009 at 10:15:32AM +0200, Sebastian Krahmer wrote:
+> Hi,
+> 
+> Anyone already successfull asking CERT for a CVE for VU#336053?
+> If not, can someone assign one?
+> 
+> thx,
+> Sebastian
+> 
+> -- 
+> ~
+> ~ perl self.pl
+> ~ $_='print"\$_=\47$_\47;eval"';eval
+> ~ krahmer@...e.de - SuSE Security Team
+> ~ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
 
-Upstream patch:
-http://git.kernel.org/linus/59839dfff5eabca01cc4e20b45797a60a80af8cb
-
-References:
-http://sourceforge.net/tracker/?func=detail&atid=893831&aid=2687641&group_id=180599
-http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git;a=blob;f=queue-2.6.30/kvm-x86-check-for-cr3-validity-in-ioctl_set_sregs.patch;h=b48a47dad2cf76358b327368f80c0805e6370c68;hb=e7c45b24f298b5d9efd7d401150f64a1b51aaac4
-
-Thanks, Eugene
+-- 
+Bye,
+     Thomas
+-- 
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+-- 
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
