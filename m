@@ -1,33 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/15/10
-Message-ID: <493433228.357481255617401534.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 15 Oct 2009 10:36:41 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: oping allows the disclosure of arbitrary file contents
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/09/5
+Message-ID: <Pine.GSO.4.51.0909091329280.20782@faron.mitre.org>
+Date: Wed, 9 Sep 2009 13:40:09 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Jan Lieskovsky <jlieskov@...hat.com>
+cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security <oss-security@...ts.openwall.com>, Alan T DeKok <aland@...eradius.org>
+Subject: Re: CVE Request -- FreeRADIUS 1.1.8
 Content-Type: text/plain; charset=utf-8
 
 
------ "Steve Kemp" <steve@...ve.org.uk> wrote:
+On Wed, 9 Sep 2009, Jan Lieskovsky wrote:
 
-> oping is setuid root application and one of the command line arguments
-> allows
->  a configuration file to be specified.  This file is read and
-> *reported*
->  to the console - Unless the file is lucky enough to look like a list
->  of hostnames.
-> 
->   Brief details here:
-> 
->         http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=548684
-> 
+>    short comment yet (to be exact). This flaw was further investigated based
+> on the flaws list, as mentioned in:
+>
+>        http://intevydis.com/vd-list.shtml
 
-I've not found a CVE id for this anywhere, so here goes:
+How do you know that the crash you found is the one that's in VulnDisco?
+Maybe there are two distinct crashes.  (These types of vague disclosures
+can be a real duplicate headache for us in CVE... but neither do we want
+to say that a commercial 0day has been fixed when it hasn't).
 
-CVE-2009-3614 oping arbitrary local file disclosure
+CVE-2009-3111 below is anchored exclusively on the FreeRADIUS patch for
+the CVE-2003-0967 regression.  If there's high confidence that this is the
+same as the intevydis.com disclosure, then I'll integrate it into the
+description/references.
 
-Thanks.
+- Steve
 
--- 
-    JB
+======================================================
+Name: CVE-2009-3111
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3111
+Reference: MLIST:[freeradius-users] 20090909 Version 1.1.8 has been released
+Reference: URL:https://lists.freeradius.org/pipermail/freeradius-users/2009-September/msg00242.html
+Reference: MLIST:[oss-security] 20090909 CVE Request -- FreeRADIUS 1.1.8
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/09/09/1
+Reference: CONFIRM:http://github.com/alandekok/freeradius-server/commit/860cad9e02ba344edb0038419e415fe05a9a01f4
+
+The rad_decode function in FreeRADIUS before 1.1.8 allows remote
+attackers to cause a denial of service (radiusd crash) via zero-length
+Tunnel-Password attributes.  NOTE: this is a regression error related
+to CVE-2003-0967.
+
+
