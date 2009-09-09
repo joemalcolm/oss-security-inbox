@@ -1,21 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/09/8
-Message-ID: <1870016634.5360261234213755670.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 9 Feb 2009 16:09:15 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: coley <coley@...re.org>
-Cc: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request (mediawiki)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/09/6
+Message-ID: <20090909211240.75c1ccc3@redhat.com>
+Date: Wed, 9 Sep 2009 21:12:40 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: OSS Security <oss-security@...ts.openwall.com>
+Subject: OpenOffice.org CVE-2009-2139
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
+Hi!
 
-There is a new mediawiki out:
-http://lists.wikimedia.org/pipermail/mediawiki-announce/2009-February/000083.html
+Does anyone have more info on CVE-2009-2139 besides Debian advisory?
 
-I presume you've seen this, but just in case.
-
-Thanks.
+http://www.debian.org/security/2009/dsa-1880
 
 -- 
-    JB
+Tomas Hoger / Red Hat Security Response Team
