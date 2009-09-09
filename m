@@ -1,40 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/31/1
-Message-ID: <Pine.GSO.4.64.0912311436300.18891@faron.mitre.org>
-Date: Thu, 31 Dec 2009 14:37:22 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Eugene Teo <eugene@...hat.com>
-cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE requests - kernel security regressions for CVE-2009-1385/and -1389
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/09/4
+Message-ID: <4AA7E582.8070501@redhat.com>
+Date: Wed, 09 Sep 2009 19:27:30 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, Alan T DeKok <aland@...eradius.org>
+Subject: Re: CVE Request -- FreeRADIUS 1.1.8
 Content-Type: text/plain; charset=utf-8
 
+Hello Steve,
 
->>> Issue #1
->>> Fabian claimed that CVE-2009-1385 has an incorrect fix:
->>> http://git.kernel.org/linus/ea30e11970a96cfe5e32c03a29332554573b4a10.
->> [...]
+   short comment yet (to be exact). This flaw was further investigated based
+on the flaws list, as mentioned in:
 
-Use CVE-2009-4536
+       http://intevydis.com/vd-list.shtml
 
+Relevant FreeRADIUS record:
 
->>> Issue #2
->>> The fix for CVE-2009-1389 regarding the r8169 driver introduces a
->>> similar security problem as this:
->>> http://git.kernel.org/linus/fdd7b4c3302c93f6833e338903ea77245eb510b4 is
->>> a revert of this:
->>> http://git.kernel.org/linus/126fa4b9ca5d9d7cb7d46f779ad3bd3631ca387c.
->>
->> Patches update can be found here:
->> https://bugzilla.redhat.com/show_bug.cgi?id=550907#c4
+Freeradius (1)	
+Name: 	 FreeRADIUS 1.1.7 DoS
+Status: 	 0day
+Details: 	 The exploit crashes 'radiusd' daemon.Found with ProtoVer testsuite.
+Listener: 	 not necessary
+Platform: 	 Linux x86
+Vulndisco: 	 7.6
 
-Use CVE-2009-4537
+So once you assign a CVE identifier for the FreeRADIUS-1.1.8 DoS, there
+is no need to assign another one for the above (to avoid dupes).
 
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
-> Issue #3
-> I noticed that the e1000e driver also needs a similar fix as issue #1.
-> https://bugzilla.redhat.com/show_bug.cgi?id=551214
+Jan Lieskovsky wrote:
+> Hello Steve, vendors,
+> 
+>   FreeRADIUS upstream has today released 1.1.8 version [1] [2],
+> fixing one remote DoS issue in the handling of Tunnel-Password
+> attributes. This was already fixed in 0.9.3 [3] version:
+> 
+>   FreeRADIUS 0.9.3 ; Date: 2003/11/20 20:15:48, urgency=high
+>   * Fix a remote DoS and due to mis-handling of tagged attributes,
+>     and Tunnel-Password attribute.
+> 
+> as CVE-2003-0967 [4], but managed to re-appear.
+> 
+> Upstream patch:
+> ---------------
+> http://github.com/alandekok/freeradius-server/commit/860cad9e02ba344edb0038419e415fe05a9a01f4 
+> 
+> 
+> Affected versions:
+> ------------------
+> Issue confirmed in freeradius-1.1.3 up to freeradius-1.1.7,
+> older freeradius-1.1.* version might be also affected.
+> 
+> Version 2.X is not affected by this issue.
+> 
+> References:
+> -----------
+> [1] http://freeradius.org/
+> [2] 
+> https://lists.freeradius.org/pipermail/freeradius-users/2009-September/msg00242.html 
+> 
+> [3] http://freeradius.org/radiusd/doc/ChangeLog
+> [4] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2003-0967
+> [5] 
+> http://github.com/alandekok/freeradius-server/commit/860cad9e02ba344edb0038419e415fe05a9a01f4 
+> 
+> [6] http://www.derkeiler.com/Mailing-Lists/Securiteam/2003-11/0093.html 
+> (PoC)
+> [7] https://bugzilla.redhat.com/show_bug.cgi?id=521912
+> 
+> Could you please allocate a new CVE identifier?
+> 
+> Thanks && Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
 
-Use CVE-2009-4538
-
-
-- Steve
