@@ -1,31 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/14/5
-Message-ID: <20090514183349.GA7149@suse.de>
-Date: Thu, 14 May 2009 20:33:49 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: utmp reliability?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/09/3
+Message-ID: <20090909162315.27a4a299@redhat.com>
+Date: Wed, 9 Sep 2009 16:23:15 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- PostgreSQL
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Wed, 09 Sep 2009 16:08:10 +0200 Jan Lieskovsky <jlieskov@...hat.com>
+wrote:
 
-While debugging a problem for a customer of us I found that UTMP entries
-are not generated reliably and utmp entry creation starts to fail on
-higher loads/more users or more utmp activity.
+>    PostgreSQL upstream is on their security page
+> mentioning three security issues, which lack CVE ids:
+> 
+> http://www.postgresql.org/support/security.html
 
-Reason is that glibc locks the UTMP file on write/read with a 1 second
-timeout, and if that 1 second timeout triggers no entry is written.
+Just a note: upstream page currently says the second issue is related
+to CVE-2007-2138, but our maintainer also active upstream reports it
+should say CVE-2007-6600.
 
-Sadly without any indication of failure if you use login(3) or pututline(3). :(
+https://bugzilla.redhat.com/show_bug.cgi?id=522085#c1
 
+I can't confirm either atm, so just a heads-up to avoid possible
+confusion related to CVE wording.
 
-I am wondering if handling UTMP should be more reliable or if at least error
-reporting should happen.
-
-Making it reliable will make it possible to DoS any kind of logins / terminal
-opens of course, but make it easier on app writers using utmp.
-
-
-(Yes, I know the really reliable way is Audit, but this is not user readable.)
-
-Ciao, Marcus
+-- 
+Tomas Hoger / Red Hat Security Response Team
