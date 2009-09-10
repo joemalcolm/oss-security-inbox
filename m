@@ -1,33 +1,135 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/06/4
-Message-ID: <20090206100046.5fab6824@liberty.rlwhome.lan>
-Date: Fri, 6 Feb 2009 10:00:46 -0600
-From: Robby Workman <rw@...orkman.net>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com
-Subject: CVE Request - Wicd <= 1.5.8
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/10/1
+Message-ID: <20090910111222.GC32364@suse.de>
+Date: Thu, 10 Sep 2009 13:12:22 +0200
+From: Thomas Biege <thomas@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: OpenOffice.org CVE-2009-2139
 Content-Type: text/plain; charset=utf-8
 
-In Wicd <=1.5.8, the dbus configuration file's default context
-allows any user to own the org.wicd.daemon object, thus potentially
-allowing a user receive messages intended for the wicd daemon.
-These messages could include, among other things, credentials for
-secure networks.
 
-Typically, Wicd is used on single-user systems (such as laptops),
-and is started early in the boot process, so unless the daemon
-crashes or is stopped for some other reason, leveraging this would
-not be trivial for a malicious user, unless I'm missing something.
+Hi,
+there was a thread about it on vendor-sec some month ago.
 
-This is fixed in the Wicd-1.5.9 release, and is not present at all
-in the development branch leading to 1.6.0.
+Here are the two descriptions from Petr:
 
-The bug was discovered by Tiziano Mueller of the Gentoo team; thanks
-to him for the report, analysis, and follow-up discussion.
+CVE-2009-2139
 
-Here's the bzr commit with the fix:
-http://bazaar.launchpad.net/~wicd-devel/wicd/trunk/revision/222
+Manipulated EMF files can lead to heap overflows and arbitrary code
+execution
 
-About Wicd:
-Wicd <http://wicd.net> is a wired and wireless network manager
-application.
+    * Synopsis: Manipulated EMF files can lead to heap overflows and
+                arbitrary code execution
+    * State: Resolved
+
+1. Impact
+
+A security vulnerability with the way OpenOffice/Go-oo 2.x and 3.x process EMF
+files may allow a remote unprivileged user who provides an OpenOffice.org/Go-oo
+document that is opened by a local user to execute arbitrary commands on the
+system with the privileges of the user running OpenOffice.org/Go-oo. No working
+exploit is known right now.
+
+2. Affected releases
+
+The problem was introduced in OpenOffice.org release, based on ooo-build (Go-oo),
+version 2.1. It was fixed in the version 3.0.1. The original OpenOffice.org
+builds, available from http://www.openoffice.org/, were not affected.
+
+3. Symptoms
+
+There are no predictable symptoms that would indicate this issue has occurred
+
+4. Relief/Workaround
+
+There is no workaround. See "Resolution" below.
+
+5. Resolution
+
+This issue is addressed in the following release:
+
+OpenOffice.org, based on ooo-build (Go-oo), version 3.0.1
+
+Note: The original OpenOffice.org builds, available from http://www.openoffice.org/,
+were newer affected by this vulnerability.
+
+6. Comments
+
+The issue is similar to CVE-2008-2238. The ooo-build-specific variant was found and fixed by ooo-build (Go-oo) developers.
+
+
+And:
+CVE-2009-2140
+
+Manipulated EMF+ files can lead to heap overflows and arbitrary code
+execution
+
+    * Synopsis: Manipulated EMF+ files can lead to heap overflows and
+                arbitrary code execution
+    * State: Resolved
+
+1. Impact
+
+A security vulnerability with the way OpenOffice/Go-oo 2.x and 3.x
+process EMF+ files may allow a remote unprivileged user who provides an
+OpenOffice.org/Go-oo document that is opened by a local user to execute
+arbitrary commands on the system with the privileges of the user running
+OpenOffice.org/Go-oo. No working exploit is known right now.
+
+
+2. Affected releases
+
+The problem was introduced in OpenOffice.org release, based on ooo-build
+(Go-oo), version 2.3.1. It was fixed in the version 3.0.1. Only the builds
+supporting EMF+ import (applying EMFPlus patchset) were affected. The
+original OpenOffice.org builds, available from http://www.openoffice.org/,
+were newer affected.
+
+
+3. Symptoms
+
+There are no predictable symptoms that would indicate this issue has occurred
+
+
+4. Relief/Workaround
+
+There is no workaround. See "Resolution" below.
+
+
+5. Resolution
+
+This issue is addressed in the following release:
+
+OpenOffice.org, based on ooo-build (Go-oo), version 3.0.1
+
+Note: The original OpenOffice.org builds, available from http://www.openoffice.org/,
+were newer affected by this vulnerability.
+
+
+6. Comments
+
+The issue is similar to CVE-2008-2238. The ooo-build-specific variant was found
+and fixed by ooo-build (Go-oo) developers.
+
+
+
+
+On Wed, Sep 09, 2009 at 09:12:40PM +0200, Tomas Hoger wrote:
+> Hi!
+> 
+> Does anyone have more info on CVE-2009-2139 besides Debian advisory?
+> 
+> http://www.debian.org/security/2009/dsa-1880
+> 
+> -- 
+> Tomas Hoger / Red Hat Security Response Team
+
+-- 
+Bye,
+     Thomas
+-- 
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+-- 
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
