@@ -1,41 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/02/6
-Message-ID: <20090702224224.GO6089@inversepath.com>
-Date: Thu, 2 Jul 2009 23:42:24 +0100
-From: Andrea Barisani <lcars@...rt.org>
-To: Robert Buchholz <rbu@...too.org>
-Cc: oss-security@...ts.openwall.com, wangtielei@...t.pku.edu.cn
-Subject: Re: [oCERT-2009-009] CamlImages integer overflows
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/10/2
+Message-ID: <20090910195955.60142d3a@redhat.com>
+Date: Thu, 10 Sep 2009 19:59:55 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: OpenOffice.org CVE-2009-2139
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jul 02, 2009 at 08:22:05PM +0200, Robert Buchholz wrote:
-> Hi Andrea,
-> 
-> On Thursday 02 July 2009, Andrea Barisani wrote:
-> > #2009-009 CamlImages integer overflows
-> ...
-> > Affected version:
-> >
-> > CamlImages <= 2.2
-> 
-> Has the 3.0.1 version been checked that is available here:
-> http://gallium.inria.fr/camlimages/    ?
->
+On Thu, 10 Sep 2009 13:12:22 +0200 Thomas Biege <thomas@...e.de> wrote:
 
-Sadly I missed that (having two identical pages with different URL as the
-project page and google only returning the 2.2 one as the first 50 hits
-didn't help).
+> there was a thread about it on vendor-sec some month ago.
 
-Anyway the affected functions in pngread.c code are identical so they are
-both affected (though just to be sure I'm pinging original reporter as well
-and test with the PoC).
-
-Thanks for the feedback.
+Thanks, I've been pointed to relevant info already.  Also thanks for
+posting these descriptions publicly, as they can be used by Mitre in
+CVE descriptions.
 
 -- 
-Andrea Barisani |                Founder & Project Coordinator
-          oCERT | Open Source Computer Emergency Response Team
-
-<lcars@...rt.org>                         http://www.ocert.org
- 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
-        "Pluralitas non est ponenda sine necessitate"
+Tomas Hoger / Red Hat Security Response Team
