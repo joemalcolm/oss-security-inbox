@@ -1,69 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/23/2
-Message-ID: <20091123110019.GE897@rambler-co.ru>
-Date: Mon, 23 Nov 2009 14:00:19 +0300
-From: Igor Sysoev <igor@...oev.ru>
-To: Jan Lieskovsky <jlieskov@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVEs for nginx
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/11/2
+Message-ID: <20090911092820.3cc251bb@redhat.com>
+Date: Fri, 11 Sep 2009 09:28:20 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley@...us.mitre.org
+Subject: Re: CVE id request: silc-toolkit
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Nov 23, 2009 at 11:48:17AM +0100, Jan Lieskovsky wrote:
+On Thu, 3 Sep 2009 12:45:46 -0400 (EDT) "Steven M. Christey"
+<coley@...us.mitre.org> wrote:
 
-> Hi Craig, vendors,
+> > |    Fixed string format vulnerability in client entry handling.
+> > |
+> > |    Reported and patch provided by William Cummings.
+> >
+> > This one allows an attacker to execute arbitrary code, tested.
+> >
+> > |     More string format fixes in silcd and client libary
 > 
-> Craig wrote:
-> > Hi,
-> > 
-> > are the CVEs for
-> > 
-> > 1.) nginx webdav: http://secunia.com/advisories/36818/
-> 
->    I still haven't seen a CVE id for this (pls correct me
-> if I overlooked it). Could one be assigned? (if there isn't one yet).
+> Use CVE-2009-3051 for both of these format strings, to be filled in
+> later.
 
-As I far I know - no.
+Looks like this actually got split to two after all...
 
-> Also not sure, if this one has been already addressed upstream?
-> (as there has been couple of more important Nginx security issues
->   recently).
+CVE-2009-3051:
+Multiple format string vulnerabilities in
+lib/silcclient/client_entry.c in Secure Internet Live Conferencing
+(SILC) Toolkit before 1.1.10, and SILC Client before 1.1.8, allow
+remote attackers to execute arbitrary code via format string
+specifiers in a nickname field, related to the (1)
+silc_client_add_client, (2) silc_client_update_client, and (3)
+silc_client_nickname_format functions.
 
-This bug was fixed in 0.8.17 and 0.7.63:
+Which corresponds to this commit:
+http://git.silcnet.org/gitweb/?p=silc.git;a=commitdiff;h=1598b3a51b51a434037461ccd35487bc0df3137c
 
-Changes with nginx 0.8.17                                        28 Sep 2009
 
-    *) Security: now "/../" are disabled in "Destination" request header
-       line.
+CVE-2009-3163:
+Multiple format string vulnerabilities in lib/silcclient/command.c in
+Secure Internet Live Conferencing (SILC) Toolkit before 1.1.10, and
+SILC Client 1.1.8 and earlier, allow remote attackers to execute
+arbitrary code via format string specifiers in a channel name, related
+to (1) silc_client_command_topic, (2) silc_client_command_kick, (3)
+silc_client_command_leave, and (4) silc_client_command_users.
 
-Changes with nginx 0.7.63                                        26 Oct 2009
+Which corresponds to (the second part of) this commit:
+http://git.silcnet.org/gitweb/?p=silc.git;a=commitdiff;h=8cb801cf6482666818e721822ce81c81ec818908
 
-    *) Security: now "/../" are disabled in "Destination" request header
-       line.
 
-> Igor, could you comment on upstream status of this one?
-> Is there a patch handy?
-
-There is no patch, however, I can created it for you.
-
-> Thanks && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
-> 
-> > 
-> > 2.) nginx Null Pointer dereference:
-> > http://sysoev.ru/nginx/patch.null.pointer.txt
-> > 
-> > 3.) nginx SSL Renegotiation: http://sysoev.ru/nginx/patch.cve-2009-3555.txt
-> > 
-> > I know the last one contains a CVE number, nginx uses openssl and the
-> > patch will disable renegotiation, maybe this deserves an own CVE?
-> > 
-> > 
-> > Best regards,
-> > 
-> > Craig
-
+Btw, SILC seems to implement own snprintf function, that is not only
+wrapper around system snprintf, so glibc hardening may not help here
+(I've not tried to confirm that with real PoC though).
 
 -- 
-Igor Sysoev
-http://sysoev.ru/en/
+Tomas Hoger / Red Hat Security Response Team
