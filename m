@@ -1,38 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/06/11
-Message-ID: <Pine.GSO.4.51.0906061347370.28142@faron.mitre.org>
-Date: Sat, 6 Jun 2009 13:47:45 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/11/1
+Message-ID: <20090911090304.55a6506c@redhat.com>
+Date: Fri, 11 Sep 2009 09:03:04 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: "billion laughs" attack against Apache APR
+Subject: Re: OpenOffice.org CVE-2009-2139
 Content-Type: text/plain; charset=utf-8
 
+On Thu, 10 Sep 2009 19:59:55 +0200 Tomas Hoger <thoger@...hat.com>
+wrote:
 
-======================================================
-Name: CVE-2009-1955
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1955
-Reference: MILW0RM:8842
-Reference: URL:http://www.milw0rm.com/exploits/8842
-Reference: MLIST:[apr-dev] 20090602 [PATCH] prevent "billion laughs" attack against expat
-Reference: URL:http://marc.info/?l=apr-dev&m=124396021826125&w=2
-Reference: MLIST:[oss-security] 20090603 CVE request: "billion laughs" attack against Apache APR
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/06/03/4
-Reference: CONFIRM:http://svn.apache.org/viewvc?view=rev&revision=781403
-Reference: CONFIRM:http://www.apache.org/dist/apr/CHANGES-APR-UTIL-1.3
-Reference: DEBIAN:DSA-1812
-Reference: URL:http://www.debian.org/security/2009/dsa-1812
-Reference: SECUNIA:35284
-Reference: URL:http://secunia.com/advisories/35284
-Reference: SECUNIA:35360
-Reference: URL:http://secunia.com/advisories/35360
+> Thanks, I've been pointed to relevant info already.  Also thanks for
+> posting these descriptions publicly, as they can be used by Mitre in
+> CVE descriptions.
 
-The expat XML parser in the apr_xml_* interface in xml/apr_xml.c in
-Apache APR-util before 1.3.7, as used in the mod_dav and mod_dav_svn
-modules in the Apache HTTP Server, allows remote attackers to cause a
-denial of service (memory consumption) via a crafted XML document
-containing a large number of nested entity references, as demonstrated
-by a PROPFIND request, a similar issue to CVE-2003-1564.
+ooo-build git commit link for posterity:
 
+http://cgit.freedesktop.org/ooo-build/ooo-build/commit/?id=49b4e38571912a7d28c4044e5b2bd57e51c77d55
 
+-- 
+Tomas Hoger / Red Hat Security Response Team
