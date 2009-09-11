@@ -1,23 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/14/3
-Message-ID: <20090914204006.13200df6@redhat.com>
-Date: Mon, 14 Sep 2009 20:40:06 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE for recent cyrus-imap issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/11/3
+Message-ID: <Pine.GSO.4.51.0909110816440.2747@faron.mitre.org>
+Date: Fri, 11 Sep 2009 08:20:15 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Tomas Hoger <thoger@...hat.com>
+cc: oss-security@...ts.openwall.com, coley@...us.mitre.org
+Subject: Re: CVE id request: silc-toolkit
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 8 Sep 2009 18:07:33 +0200 Nico Golde
-<oss-security+ml@...lde.de> wrote:
 
-> CVE-2009-2632
+On Fri, 11 Sep 2009, Tomas Hoger wrote:
 
-Looks like few more overflows were spotted and fixed by Dovecot
-upstream while fixing this issue in their copy of CMU sieve code:
+> On Thu, 3 Sep 2009 12:45:46 -0400 (EDT) "Steven M. Christey"
+> <coley@...us.mitre.org> wrote:
+>
+> > Use CVE-2009-3051 for both of these format strings, to be filled in
+> > later.
+>
+> Looks like this actually got split to two after all...
+>
+> CVE-2009-3051:
 
-http://dovecot.org/list/dovecot-news/2009-September/000135.html
+Sorry for forgetting to tell everyone about this.  One of our CVE analysts
+did some deeper investigation and noticed that there was a clear break in
+affected versions, so we decided that a split was reasonable.  This
+distinction wasn't immediately obvious to me when processing the initial
+ID request.
 
-These seem to deserve separate CVE.
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+- Steve
