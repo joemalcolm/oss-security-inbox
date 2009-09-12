@@ -1,23 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/14/2
-Message-ID: <4AD56EE3.3060105@redhat.com>
-Date: Wed, 14 Oct 2009 14:25:39 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/12/1
+Message-ID: <20090912110305.2bbdd1bd@neon>
+Date: Sat, 12 Sep 2009 11:03:05 +0200
+From: Alex Legler <a3li@...too.org>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>, Willy Tarreau <w@....eu>
-Subject: CVE request kernel: tcf_fill_node() infoleak due to typo in 9ef1d4c7
+Subject: CVE request(?): Thin: Client IP spoofing
 Content-Type: text/plain; charset=utf-8
 
-Eugene Teo wrote:
-> [...]
->>   CVE-2005-4881 - tc_fill_qdisc()  (at least)
-> 
-> This requires http://patchwork.ozlabs.org/patch/35412/ too. There was a 
-> typo in the upstream commit 9ef1d4c7.
+Hey,
 
-I'm not sure but perhaps this needs a new CVE name. This infoleak bug 
-was introduced in 2005, but was discovered and fixed recently.
+we've stumbled upon a changelog entry in Thin [1], a ruby http server:
 
-Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
+>  * Fix Remote address spoofing vulnerability in
+> Connection#remote_address [Alexey Borzenkov]
+
+Thin uses the X-Forwarded-For header (if it is provided) to determine
+the client's IP address. That could be used to facilitate spoofing.
+
+This is the commit:
+http://github.com/macournoyer/thin/commit/7bd027914c5ffd36bb408ef47dc749de3b6e063a
+
+Not sure if it warrants a CVE, if it does, please assign one.
+
+Thanks,
+Alex
+
+[1] http://code.macournoyer.com/thin/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
