@@ -1,30 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/11/1
-Message-ID: <49B70710.5010705@redhat.com>
-Date: Wed, 11 Mar 2009 08:34:24 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/12/2
+Message-Id: <200909121154.54475.hanno@hboeck.de>
+Date: Sat, 12 Sep 2009 11:54:54 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-2009-0028 Linux kernel minor signal handling vulnerability
+Subject: CVE request: serendipity freetag plugin
 Content-Type: text/plain; charset=utf-8
 
-Reported by Chris Evans:
-It's a relatively minor signal issue where a child can send its parent 
-process an arbitrary signal, even if the parent has a totally separate 
-real and effective user id. This could be a nuisance in the case where 
-long-running root daemons spawn direct child processes owned by 
-untrusted users [*]. There may even be worse consequences if privileged 
-processes have weak signal handling code for signals not normally 
-triggerable by untrusted users.
+s9y freetag plugin before 3.09 suffers from an sql injection:
 
-This is fixed in upstream kernel - 2d5516cbb9d
+http://blog.s9y.org/archives/210-Security-update-for-Freetag-Plugin.html
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-0028
-http://scary.beasts.org/security/CESA-2009-002.html
-http://scarybeastsecurity.blogspot.com/2009/02/linux-kernel-minor-signal-vulnerability.html
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=2d5516cbb9daf7d0e342a2e3b0fc6f8c39a81205
 
-Thanks, Eugene
 -- 
-Eugene Teo / Red Hat Security Response Team
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+
+http://schokokeks.org - professional webhosting
+
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
