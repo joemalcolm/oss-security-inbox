@@ -1,44 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/23/4
-Message-ID: <20090123172419.GA16477@ngolde.de>
-Date: Fri, 23 Jan 2009 18:24:20 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/14/1
+Message-ID: <4AAD94DE.9030407@kernel.sg>
+Date: Mon, 14 Sep 2009 08:57:02 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: typo3 SA-2009-001
+CC: "Steven M. Christey" <coley@...us.mitre.org>, Greg KH <gregkh@...e.de>, Willy Tarreau <w@....eu>
+Subject: CVE-2009-2903 kernel: appletalk: denial of service when handling IP tunnelled over DDP datagrams
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Steven M. Christey <coley@...us.mitre.org> [2009-01-23 13:09]:
-[...] 
-> ======================================================
-> Name: CVE-2009-0258
-> Status: Candidate
-> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0258
-> Reference: CONFIRM:http://typo3.org/teams/security/security-bulletins/typo3-sa-2009-001/
-> Reference: BID:33376
-> Reference: URL:http://www.securityfocus.com/bid/33376
-> Reference: SECUNIA:33617
-> Reference: URL:http://secunia.com/advisories/33617
-> Reference: XF:typo3-indexedsearch-command-execution(48138)
-> Reference: URL:http://xforce.iss.net/xforce/xfdb/48138
-> 
-> Unspecified vulnerability in the Indexed Search Engine
-> (indexed_search) system extension in TYPO3 4.0.0 through 4.0.9, 4.1.0
-> through 4.1.7, and 4.2.0 through 4.2.3 allows remote attackers to
-> execute arbitrary commands via unknown vectors related to the
-> command-line indexer.
+The check for the ipddpN device in the handle_ip_over_ddp() function 
+returns -NODEV to the atalk_rcv() function when the device does not 
+exist. The atalk_rcv() function then directly returns that value to its 
+caller. There is a missing call to kfree_skb() in these unaccepted 
+IP-DDP datagram that can exhaust the kernel memory eventually. It 
+affects Linux hosts with appletalk and ipddp modules loaded, that are 
+attached to the same link. Thanks to Mark Smith for reporting this issue 
+to us.
 
-Thanks for the ids!
-I am just working on a security update for typo3. Looking at 
-the patch used for CVE-2009-0258 it is pretty obvious that 
-this is exploitable via a crafted filename which is passed 
-to various system utilities to get information of the file 
-content.
+net-next-2.6 commit:
+http://git.kernel.org/?p=linux/kernel/git/davem/net-next-2.6.git;a=commit;h=ffcfb8db540ff879c2a85bf7e404954281443414 
 
-Cheers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
 
-Content of type "application/pgp-signature" skipped
+Possible mitigation method:
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-2903#c3
+
+Reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-2903
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=blob;f=Documentation/networking/ipddp.txt;h=661a5558dd8e928f15771c07ef34b3ee9cb81e57;hb=HEAD
+
+Greg, this should go to -stable.
+
+Willy, this affects upstream 2.4 I believe.
+
+Thanks, Eugene
