@@ -1,38 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/23/3
-Message-ID: <4B0A6E35.40100@redhat.com>
-Date: Mon, 23 Nov 2009 12:12:53 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/14/3
+Message-ID: <20090914204006.13200df6@redhat.com>
+Date: Mon, 14 Sep 2009 20:40:06 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Igor Sysoev <igor@...oev.ru>
-Subject: Re: CVEs for nginx
+Subject: Re: CVE for recent cyrus-imap issue
 Content-Type: text/plain; charset=utf-8
 
-Hi Igor,
+On Tue, 8 Sep 2009 18:07:33 +0200 Nico Golde
+<oss-security+ml@...lde.de> wrote:
 
-Igor Sysoev wrote:
- > As I far I know - no.
+> CVE-2009-2632
 
-   Josh, could you allocate one then?
+Looks like few more overflows were spotted and fixed by Dovecot
+upstream while fixing this issue in their copy of CMU sieve code:
 
-  > This bug was fixed in 0.8.17 and 0.7.63:
-> 
-> Changes with nginx 0.8.17                                        28 Sep 2009
-> 
->     *) Security: now "/../" are disabled in "Destination" request header
->        line.
-> 
-> Changes with nginx 0.7.63                                        26 Oct 2009
-> 
->     *) Security: now "/../" are disabled in "Destination" request header
->        line.
-> 
-> There is no patch, however, I can created it for you.
+http://dovecot.org/list/dovecot-news/2009-September/000135.html
 
-   That would be perfect.
+These seem to deserve separate CVE.
 
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-
+-- 
+Tomas Hoger / Red Hat Security Response Team
