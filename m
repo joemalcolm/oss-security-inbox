@@ -1,29 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/15/3
-Message-ID: <20091015051106.GA29475@1wt.eu>
-Date: Thu, 15 Oct 2009 07:11:06 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/14/2
+Message-ID: <20090914045744.GA28320@1wt.eu>
+Date: Mon, 14 Sep 2009 06:57:44 +0200
 From: Willy Tarreau <w@....eu>
-To: Eugene Teo <eugene@...hat.com>
-Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request kernel: tcf_fill_node() infoleak due to typo in 9ef1d4c7
+To: Eugene Teo <eugeneteo@...nel.sg>
+Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>, Greg KH <gregkh@...e.de>
+Subject: Re: CVE-2009-2903 kernel: appletalk: denial of service when handling IP tunnelled over DDP datagrams
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Oct 15, 2009 at 10:33:15AM +0800, Eugene Teo wrote:
-> Eugene Teo wrote:
-> >Eugene Teo wrote:
-> >>[...]
-> >>>  CVE-2005-4881 - tc_fill_qdisc()  (at least)
-> >>
-> >>This requires http://patchwork.ozlabs.org/patch/35412/ too. There was 
-> >>a typo in the upstream commit 9ef1d4c7.
-> >
-> >I'm not sure but perhaps this needs a new CVE name. This infoleak bug 
-> >was introduced in 2005, but was discovered and fixed recently.
+Hi Eugene,
+
+On Mon, Sep 14, 2009 at 08:57:02AM +0800, Eugene Teo wrote:
+> The check for the ipddpN device in the handle_ip_over_ddp() function 
+> returns -NODEV to the atalk_rcv() function when the device does not 
+> exist. The atalk_rcv() function then directly returns that value to its 
+> caller. There is a missing call to kfree_skb() in these unaccepted 
+> IP-DDP datagram that can exhaust the kernel memory eventually. It 
+> affects Linux hosts with appletalk and ipddp modules loaded, that are 
+> attached to the same link. Thanks to Mark Smith for reporting this issue 
+> to us.
+>
+> net-next-2.6 commit:
+> http://git.kernel.org/?p=linux/kernel/git/davem/net-next-2.6.git;a=commit;h=ffcfb8db540ff879c2a85bf7e404954281443414 
 > 
-> This is assigned with CVE-2009-3612 - incomplete fix for CVE-2005-4881.
+> 
+> Possible mitigation method:
+> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-2903#c3
+> 
+> Reference:
+> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-2903
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=blob;f=Documentation/networking/ipddp.txt;h=661a5558dd8e928f15771c07ef34b3ee9cb81e57;hb=HEAD
+> 
+> Greg, this should go to -stable.
 
-and 2.4 has it too since the 2.6 patch applied cleanly.
+Davem generally handles his own -stable queue for the net subsystem
+and submits fixes himself, but that's nice to notify about upcoming
+patches in case it gets missed !
 
-Thanks,
+> Willy, this affects upstream 2.4 I believe.
+
+Indeed, it seems so. I'm queuing it up for next release. I will have
+to review it since the changes are not obvious. If you're aware of
+any reproducer, I'd be glad to get it (in private) ; I'd like to at
+least ensure I don't break the driver while trying to fix it !
+
+Thanks!
 Willy
 
