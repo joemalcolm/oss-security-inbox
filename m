@@ -1,34 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/29/4
-Message-ID: <Pine.GSO.4.51.0905291716380.29163@faron.mitre.org>
-Date: Fri, 29 May 2009 17:16:44 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/15/5
+Message-ID: <20090915130336.75b7248b@mail.netloc.info>
+Date: Tue, 15 Sep 2009 13:03:36 +0200
+From: Alex Legler <a3li@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Wireshark 
+Cc: jlieskov@...hat.com, "Steven M. Christey" <coley@...us.mitre.org>, vuln@...unia.com
+Subject: Re: CVE Request -- Horde 3.3.5
 Content-Type: text/plain; charset=utf-8
 
+On Tue, 15 Sep 2009 12:39:45 +0200, Jan Lieskovsky
+<jlieskov@...hat.com> wrote:
 
-======================================================
-Name: CVE-2009-1829
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1829
-Reference: CONFIRM:http://wiki.rpath.com/wiki/Advisories:rPSA-2009-0095
-Reference: CONFIRM:http://www.wireshark.org/security/wnpa-sec-2009-03.html
-Reference: BID:35081
-Reference: URL:http://www.securityfocus.com/bid/35081
-Reference: OSVDB:54629
-Reference: URL:http://osvdb.org/54629
-Reference: SECTRACK:1022274
-Reference: URL:http://www.securitytracker.com/id?1022274
-Reference: SECUNIA:35201
-Reference: URL:http://secunia.com/advisories/35201
-Reference: VUPEN:ADV-2009-1408
-Reference: URL:http://www.vupen.com/english/advisories/2009/1408
-Reference: XF:wireshark-pcnfsd-dos(50686)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/50686
+> Hello Steve, vendors,
+> 
+>    three security issues have been addressed within latest upstream
+> Horde version (3.3.5).
+> 
 
-Unspecified vulnerability in the PCNFSD dissector in Wireshark 0.8.20
-through 1.0.7 allows remote attackers to cause a denial of service
-(crash) via crafted PCNFSD packets.
+FYI: These issues also affect the Horde Groupware Edition and Horde
+Groupware Webmail Edition.
 
+Secunia has a dedicated advisory, SA369729 [1] for these. It mentions
+that the two editions are only affected by the two XSS issues. This is
+in accordance with upstream's release announcements.
 
+However, the 1.2.4 release of both editions seem to be missing in that
+advisory, both are vulnerable to all three issues, including the file
+overwrite, according to the release announcements [2, 3].
+
+Alex
+
+[1] http://secunia.com/advisories/36729/
+[2] http://marc.info/?l=horde-announce&m=125294558611682&w=2
+[3] http://marc.info/?l=horde-announce&m=125295852706029&w=2
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
