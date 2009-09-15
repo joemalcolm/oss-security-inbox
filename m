@@ -1,56 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/24/1
-Message-ID: <Pine.GSO.4.51.0904241805020.13343@faron.mitre.org>
-Date: Fri, 24 Apr 2009 18:06:16 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/15/3
+Message-ID: <20090915035141.GA24969@openwall.com>
+Date: Tue, 15 Sep 2009 07:51:41 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: missing capabilities in fs_mask
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE-2009-1883 kernel: missing capability check in z90crypt
 Content-Type: text/plain; charset=utf-8
 
+On Tue, Sep 15, 2009 at 09:56:44AM +0800, Eugene Teo wrote:
+> Eugene Teo wrote:
+> >There is a missing capability check in the z90crypt driver in the Linux 
+> >kernel. This missing check could allow a local, unprivileged user to 
+> >bypass intended capability restrictions. Thanks to Solar Designer for 
+> >reporting this issue to us.
+> >
+> >Note that this does not affect upstream anymore.
+> 
+> Reference:
+> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-1883
 
-On Thu, 23 Apr 2009, Eugene Teo wrote:
+Thanks.  This problem is so minor that I am surprised you want to fix it
+for older kernels.  The "report" you are referring to was a comment in a
+"pseudo patch" I submitted a long while ago.  Some of those comments were
+merely pointing out things that were better corrected upstream, but that
+did not matter for typical uses of the code.
 
-> "When POSIX capabilities were introduced during the 2.1 Linux cycle, the
-> fs mask, which represents the capabilities which having fsuid==0 is
-> supposed to grant, did not include CAP_MKNOD and CAP_LINUX_IMMUTABLE.
-> However, before capabilities the privilege to call these did in fact
-> depend upon fsuid==0.
+Anyhow, I think it is OK to keep the CVE id assignment, but I suggest
+that the description be re-worded to say "root user" or "euid 0 user" in
+place of "unprivileged user".  Indeed, on most systems this user would
+in fact be privileged, making this a non-issue.
 
-How is this different than CVE-2009-1072?  That CVE is based on the same
-bug report by Igor Zhbanov, although the description doesn't mention
-CAP_LINUX_IMMUTABLE.
+In practice, I imagine that there could exist service processes that
+would possess uid 0 at a given moment, yet not possess root's typical
+capabilities.  If those processes are not chrooted, then, when under
+control of an attacker, they would typically be able to take over the
+system via replacing a critical system file (due to its ownership).  If
+chrooted to a tree with no suitable file that could be replaced, then
+minor kernel bugs like this could actually matter, but perhaps not this
+one because to access an ioctl one needs to open the device file first
+(and that device file would likely not exist in a chroot tree).
 
-- Steve
+Then, these bugs could matter for an implementation of containers, but
+the implementation's proper control of access to device files (e.g.,
+OpenVZ's) should take care of that in case of ioctl's on "obscure"
+devices that are normally not meant to be available in a container.  Yet
+this "containers concern" was my primary reason to look for and mark
+this kind of bugs at the time (the "pseudo patch" I mentioned was
+initially against an OpenVZ kernel tree).
 
-======================================================
-Name: CVE-2009-1072
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1072
-Reference: MLIST:[linux-kernel] 20090311 VFS, NFS security bug? Should CAP_MKNOD and CAP_LINUX_IMMUTABLE be added to CAP_FS_MASK?
-Reference: URL:http://thread.gmane.org/gmane.linux.kernel/805280
-Reference: MLIST:[oss-security] 20090323 CVE request: kernel: nfsd did not drop CAP_MKNOD for non-root
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/03/23/1
-Reference: CONFIRM:http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=76a67ec6fb79ff3570dcb5342142c16098299911
-Reference: CONFIRM:http://www.kernel.org/pub/linux/kernel/v2.6/ChangeLog-2.6.28.9
-Reference: SUSE:SUSE-SA:2009:021
-Reference: URL:http://lists.opensuse.org/opensuse-security-announce/2009-04/msg00007.html
-Reference: BID:34205
-Reference: URL:http://www.securityfocus.com/bid/34205
-Reference: SECUNIA:34422
-Reference: URL:http://secunia.com/advisories/34422
-Reference: SECUNIA:34432
-Reference: URL:http://secunia.com/advisories/34432
-Reference: SECUNIA:34786
-Reference: URL:http://secunia.com/advisories/34786
-Reference: VUPEN:ADV-2009-0802
-Reference: URL:http://www.vupen.com/english/advisories/2009/0802
-Reference: XF:linux-kernel-capmknod-security-bypass(49356)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/49356
-
-nfsd in the Linux kernel before 2.6.28.9 does not drop the CAP_MKNOD
-capability before handling a user request in a thread, which allows
-local users to create device nodes, as demonstrated on a filesystem
-that has been exported with the root_squash option.
-
-
+Alexander
