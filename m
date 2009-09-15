@@ -1,23 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/03/5
-Message-ID: <20090603155725.GB17544@suse.de>
-Date: Wed, 3 Jun 2009 17:57:25 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Request: ModSecurity / apache2 mod_security 2.5.9
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/15/1
+Message-ID: <4AAEEA65.4010507@kernel.sg>
+Date: Tue, 15 Sep 2009 09:14:13 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE-2009-1883 kernel: missing capability check in z90crypt
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+There is a missing capability check in the z90crypt driver in the Linux 
+kernel. This missing check could allow a local, unprivileged user to 
+bypass intended capability restrictions. Thanks to Solar Designer for 
+reporting this issue to us.
 
-This is out for some time already, but I found no CVE:
+Note that this does not affect upstream anymore.
 
-ModSecurity 2.5 module for versions < 2.5.9 
-http://www.securityfocus.com/archive/1/501968
-http://www.securityfocus.com/bid/34096
+@@ -1887,20 +1887,21 @@ z90crypt_unlocked_ioctl(struct file *fil
+      PRINTK("No longer issuing messages about depre"
+             "cated ioctl Z90STAT_PCIXCCCOUNT.\n");
+    }
 
-https://sourceforge.net/project/shownotes.php?release_id=667542&group_id=68846
+    tempstat = get_status_PCIXCCcount();
+    if (copy_to_user((int *)arg, &tempstat, sizeof(int)) != 0)
+     ret = -EFAULT;
+    break;
 
-SVN rev we think:
-http://mod-security.svn.sourceforge.net/viewvc/mod-security?view=rev&revision=1265
+   case Z90QUIESCE:
+    if (current->euid != 0) { <-- should check a capability
+     PRINTK("QUIESCE fails: euid %d\n",
+            current->euid);
+     ret = -EACCES;
+    } else {
+     PRINTK("QUIESCE device from PID %d\n", PID());
+     quiesce_z90crypt = 1;
+    }
+    break;
 
-Ciao, Marcus
+Thanks, Eugene
