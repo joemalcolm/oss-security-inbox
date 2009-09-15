@@ -1,39 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/29/5
-Message-ID: <Pine.GSO.4.51.0905291722500.29163@faron.mitre.org>
-Date: Fri, 29 May 2009 17:22:59 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/15/2
+Message-ID: <4AAEF45C.2080007@kernel.sg>
+Date: Tue, 15 Sep 2009 09:56:44 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- Eggdrop
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE-2009-1883 kernel: missing capability check in z90crypt
 Content-Type: text/plain; charset=utf-8
 
+Eugene Teo wrote:
+> There is a missing capability check in the z90crypt driver in the Linux 
+> kernel. This missing check could allow a local, unprivileged user to 
+> bypass intended capability restrictions. Thanks to Solar Designer for 
+> reporting this issue to us.
+> 
+> Note that this does not affect upstream anymore.
 
-======================================================
-Name: CVE-2009-1789
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1789
-Reference: BUGTRAQ:20090515 eggdrop/windrop remote crash vulnerability
-Reference: URL:http://www.securityfocus.com/archive/1/503574
-Reference: FULLDISC:20090514 eggdrop/windrop remote crash vulnerability
-Reference: URL:http://archives.neohapsis.com/archives/fulldisclosure/2009-05/0129.html
-Reference: MILW0RM:8695
-Reference: URL:http://www.milw0rm.com/exploits/8695
-Reference: CONFIRM:http://cvs.eggheads.org/viewvc/viewvc.cgi/eggdrop1.6/doc/Changes1.6?revision=1.20&view=markup
-Reference: BID:34985
-Reference: URL:http://www.securityfocus.com/bid/34985
-Reference: OSVDB:54460
-Reference: URL:http://osvdb.org/54460
-Reference: SECUNIA:35104
-Reference: URL:http://secunia.com/advisories/35104
-Reference: VUPEN:ADV-2009-1340
-Reference: URL:http://www.vupen.com/english/advisories/2009/1340
-Reference: XF:eggdrop-servmsg-dos(50547)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/50547
+Reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-1883
 
-mod/server.mod/servmsg.c in Eggheads Eggdrop and Windrop 1.6.19 and
-earlier allows remote attackers to cause a denial of service (crash)
-via a crafted PRIVMSG that causes an empty string to trigger a
-negative string length copy.  NOTE: this issue exists because of an
-incorrect fix for CVE-2007-2807.
-
-
+Thanks, Eugene
