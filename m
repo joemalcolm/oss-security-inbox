@@ -1,38 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/06/9
-Message-ID: <Pine.GSO.4.51.0906061345480.28142@faron.mitre.org>
-Date: Sat, 6 Jun 2009 13:45:54 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: OSS-Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: two denial of service bugs in strongswan
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/16/2
+Message-ID: <4AB07889.3070508@kernel.sg>
+Date: Wed, 16 Sep 2009 13:32:57 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: cfg80211: fix looping soft lockup in find_ie()
 Content-Type: text/plain; charset=utf-8
 
+The find_ie() function uses a size_t for the len parameter, and directly 
+uses len as a loop variable.  If any received packets are malformed, it 
+is possible for the decrease of len to overflow, and since the result is 
+unsigned, the loop will not terminate. Change it to a signed int so the 
+loop conditional works for negative values.
 
-======================================================
-Name: CVE-2009-1957
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1957
-Reference: CONFIRM:http://download.strongswan.org/CHANGES4.txt
-Reference: CONFIRM:http://download.strongswan.org/patches/03_invalid_ike_state_patch/strongswan-4.x.x_invalid_ike_state.patch
-Reference: CONFIRM:http://download.strongswan.org/patches/03_invalid_ike_state_patch/strongswan-4.x.x_invalid_ike_state.readme
+find_ie() was introduced in commit 2a519311 (v2.6.30-rc1).
 
-charon/sa/ike_sa.c in the charon daemon in strongSWAN before 4.3.1
-allows remote attackers to cause a denial of service (NULL pointer
-dereference and crash) via an invalid IKE_SA_INIT request that
-triggers "an incomplete state," followed by a CREATE_CHILD_SA request.
+Upstream commit: fcc6cb0c13555e78c2d47257b6d1b5e59b0c419a
 
-
-======================================================
-Name: CVE-2009-1958
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1958
-Reference: CONFIRM:http://download.strongswan.org/CHANGES4.txt
-Reference: CONFIRM:http://download.strongswan.org/patches/04_swapped_ts_check_patch/strongswan-4.x.x._swapped_ts_check.patch
-Reference: CONFIRM:http://download.strongswan.org/patches/04_swapped_ts_check_patch/strongswan-4.x.x._swapped_ts_check.readme
-
-charon/sa/tasks/child_create.c in the charon daemon in strongSWAN
-before 4.3.1 switches the NULL checks for TSi and TSr payloads, which
-allows remote attackers to cause a denial of service via an IKE_AUTH
-request without a (1) TSi or (2) TSr traffic selector.
-
-
+Thanks, Eugene
