@@ -1,30 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/24/3
-Message-ID: <20090324213713.GB17595@outflux.net>
-Date: Tue, 24 Mar 2009 14:37:13 -0700
-From: Kees Cook <kees@...ntu.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/16/3
+Message-ID: <20090916131342.GA28074@ngolde.de>
+Date: Wed, 16 Sep 2009 15:13:42 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Lua 5.1.4
+Subject: CVE id request: changetrack
 Content-Type: text/plain; charset=utf-8
 
-Has anyone looked at the Lua fixes[1] in 5.1.4?  I'm not familiar with the
-codebase, but it seems that several may have security implications:
+Hi,
+there is an insecure use of file names in changetrack, a 
+service that checks the filesystem for changes. It is 
+possible to execute arbitrary commands as root via this bug.
+Looking at the code this seems to happen as the filename is 
+passed to a system call to track the changes with an rcs.
 
- 2: stack overflow  (this is the Lua stack? so... heap overflow?)
- 3: integer overflow
- 4: integer overflow
- 6: stack overflow  (this is the Lua stack? so... heap overflow?)
- 8: memory writing?
- 9: memory reading
-10: CPU DoS
+Details here: http://bugs.debian.org/546791
 
-I haven't had a chance to examine it closely yet.  Has anyone looked at
-these changes?
+Can I please get a CVE id for this issue?
 
--Kees
-
-[1] http://www.lua.org/bugs.html
+Cheers
+Nico
 
 -- 
-Kees Cook
-Ubuntu Security Team
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
