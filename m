@@ -1,67 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/15/3
-Message-ID: <20090415160835.53d31fcd@redhat.com>
-Date: Wed, 15 Apr 2009 16:08:35 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: wietse@...cupine.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Re: Some fun with tcp_wrappers
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/16/5
+Message-ID: <20090916202646.GA6169@1wt.eu>
+Date: Wed, 16 Sep 2009 22:26:46 +0200
+From: Willy Tarreau <w@....eu>
+To: Marcus Meissner <meissner@...e.de>
+Cc: OSS Security List <oss-security@...ts.openwall.com>, security@...nel.org, davem@...emloft.net
+Subject: Re: [Security] CVE-2008-4609 / Outpost24 TCP issues
 Content-Type: text/plain; charset=utf-8
 
-Hi Wietse!
+Hi Marcus,
 
-On Wed, 15 Apr 2009 08:07:42 -0400 (EDT) wietse@...cupine.org (Wietse
-Venema) wrote:
-
-> >   https://bugzilla.redhat.com/show_bug.cgi?id=491095
+On Wed, Sep 16, 2009 at 03:50:56PM +0200, Marcus Meissner wrote:
+> Hi folks,
 > 
-> If some applications mis-use the library API then that is really
-> unfortunate.
+> I get customer queries on whether and how the Linux kernel is affected
+> to the CVE-2008-4609 TCP denial of service problems ...
+> 
+> This seems to a large degree to be a kernel issue.
+> Also how are applications involved in the whole picture?
+> 
+> To my own not so deep knowledge this issue seems to affect us
+> even today.
+> 
+> Has anyone insights to that?
 
-The problem is not really limited to the applications that mis-use
-API.  According to hosts_access(3):
+Well, I've just read the PDF from the outpost24 site, and it appears
+as TCP for dummies. It basically explains how to create connections
+without using connect().
 
-  hosts_ctl() is a wrapper around the request_init() and
-  hosts_access() routines with a perhaps more convenient interface
-  (though it does not pass on enough information to support automated
-  client username lookups).  The client host address, client host
-  name and username arguments should contain valid data or
-  STRING_UNKNOWN.  hosts_ctl() returns zero if access should be denied.
+  1) everyone knows how to change ulimit -n + bind() to establish
+     hundreds of thousands of connections from a client to a server
+     using source IP ranges, without even having to fiddle with raw
+     sockets.
 
-STRING_UNKNOWN is valid argument expected to be passed to hosts_ctl.
-That description does not seem to be too clear to indicate that when
-one uses hosts_ctl as:
+  2) I don't see what is new in his stateless SYN/SYN-ACK/ACK method.
+     To the best of my knowledge it's been used for ages in network
+     testing. I even have a modified Netfilter TARPIT module designed
+     to do that to stress network equipments with millions of
+     connections when associated with a standard SYN flooder.
 
-  hosts_ctl(svcname, STRING_UNKNOWN, client_addr, STRING_UNKNOWN)
+I think these guys are just trying once again to get all the lights
+on them before revealing trivial things, as it's becoming more and
+more common. It's fantastic to see press journalists speculate on
+what the isue might be !
 
-all hostname-based rules are ignored.  It seems those using hosts_ctl
-do not always realize that.
+So unless they reveal anything serious, right now it looks like
+pure fantasy. Or maybe I wasn't able to find relevant information
+on the subject :-/
 
-> Changing the library to work around application bugs is a BAD idea.
-> It helps only one platform and complicates cross-platform software
-> that does play by the rules.
+Regards,
+Willy
 
-It's hard to disagree with that.  Though we seem to have failed on this
-some time ago alread.  The change was done as bugfix nearly two years
-ago in Fedora / Red Hat Enterprise Linux 5 (after some discussion
-whether this is application or tcp_wrappers bug), we're now only
-introducing the change to products that are not too relevant for future
-applications development (all released 4+ years ago).
-
-> I would recommend fixing applications that mis-use the library API.
-> To encourage application developers, the library could log a warning
-> and return a DENY result for improper calls such as a zero-length
-> hostname or address argument.
-
-Is STRING_UNKNOWN as hostname a mis-use of API?  Are all applications
-not wanting to do DNS resolution when not needed expected to switch to
-request_init / hosts_access instead?  Is there any use cases where
-ignoring hostname based rules when STRING_UNKNOWN is passed as hostname
-argument to hosts_ctl is more desired than tcp_wrappers performing
-resolution when needed?
-
-Denying zero-length hostname/address sounds like a library workaround
-too, with no obvious benefits for those doing such change.
-
--- 
-Tomas Hoger / Red Hat Security Response Team
