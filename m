@@ -1,26 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/26/1
-Message-ID: <Pine.GSO.4.51.0903252024510.11191@faron.mitre.org>
-Date: Wed, 25 Mar 2009 20:24:56 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/17/10
+Message-ID: <4AB1CBEE.7020703@kernel.sg>
+Date: Thu, 17 Sep 2009 13:41:02 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-cc: coley@...re.org
-Subject: Re: CVE id request: ldns
+CC: "Steven M. Christey" <coley@...us.mitre.org>, Willy Tarreau <w@....eu>
+Subject: Re: CVE-2009-2903 kernel: appletalk: denial of service when handling IP tunnelled over DDP datagrams
 Content-Type: text/plain; charset=utf-8
 
+Eugene Teo wrote:
+> The check for the ipddpN device in the handle_ip_over_ddp() function 
+> returns -NODEV to the atalk_rcv() function when the device does not 
+> exist. The atalk_rcv() function then directly returns that value to its 
+> caller. There is a missing call to kfree_skb() in these unaccepted 
+> IP-DDP datagram that can exhaust the kernel memory eventually. It 
+> affects Linux hosts with appletalk and ipddp modules loaded, that are 
+> attached to the same link. Thanks to Mark Smith for reporting this issue 
+> to us.
 
-======================================================
-Name: CVE-2009-1086
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1086
-Reference: MLIST:[oss-security] 20090324 CVE id request: ldns
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/03/24/4
-Reference: MISC:http://www.nlnetlabs.nl/bugs/show_bug.cgi?id=232
+Some updates and a quick analysis at: 
+https://bugzilla.redhat.com/CVE-2009-2903#c0 and 
+http://kbase.redhat.com/faq/docs/DOC-19069
 
-Heap-based buffer overflow in the ldns_rr_new_frm_str_internal
-function in ldns 1.4.x allows remote attackers to cause a denial of
-service (memory corruption) and possibly execute arbitrary code via a
-DNS resource record (RR) with a long (1) class field (clas variable)
-and possibly (2) TTL field.
-
-
+Thanks, Eugene
