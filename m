@@ -1,17 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/01/1
-Message-ID: <87my9xryav.fsf@mid.deneb.enyo.de>
-Date: Fri, 01 May 2009 11:02:16 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE request (sort of): Quagga BGP crasher
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/17/16
+Message-ID: <20090918012109.508bf65a@mail.netloc.info>
+Date: Fri, 18 Sep 2009 01:21:09 +0200
+From: Alex Legler <a3li@...too.org>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE request: VLC -- Stack-based buffer overflows in three demuxers
 Content-Type: text/plain; charset=utf-8
 
-There's a crasher bug in Quagga's bgpd which can allegedly be
-triggered by routes present in the global table.  See:
+Hey,
 
-  <http://thread.gmane.org/gmane.network.quagga.devel/6513>
+just caught this at Secunia [1], can we please get a CVE?
 
-I think we need a CVE for that, but I don't understand the problem yet
-(and I can't reproduce it), so I can't come up with a concise
-vulnerability description.
+"Some vulnerabilities have been reported in VLC Media Player, which can
+be exploited by malicious people to potentially compromise a user's
+system.
+
+1) A boundary error exists within the "ASF_ObjectDumpDebug()" function
+in modules/demux/asf/libasf.c. This can be exploited to cause a
+stack-based buffer overflow via a specially crafted ASF file.
+
+2) A boundary error exists within the "AVI_ChunkDumpDebug_level()"
+function in modules/demux/avi/libavi.c. This can be exploited to cause
+a stack-based buffer overflow via a specially crafted AVI file.
+
+3) A boundary error exists within the "__MP4_BoxDumpStructure()"
+function in modules/demux/mp4/libmp4.c. This can be exploited to cause
+a stack-based buffer overflow via a specially crafted MP4 file."
+
+Commits containing the fixes:
+
+1)
+http://git.videolan.org/?p=vlc.git;a=commit;h=dfe7084e8cc64e9b7a87cd37065b59cba2064823
+
+2)
+http://git.videolan.org/?p=vlc.git;a=commit;h=861e374d03e6c60c7d3c98428c632fe3b9e371b2
+
+3)
+http://git.videolan.org/?p=vlc.git;a=commit;h=c5b02d011b8c634d041167f4d2936b55eca4d18d
+
+Thanks,
+Alex
+
+[1] http://secunia.com/advisories/36762/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
