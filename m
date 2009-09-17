@@ -1,20 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/03/6
-Message-ID: <20090603155954.GC17544@suse.de>
-Date: Wed, 3 Jun 2009 17:59:54 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Request: PDF XSS in ModSecurity / apache2 mod_security 2.5.8
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/17/8
+Message-ID: <4AB1B70C.5050007@redhat.com>
+Date: Thu, 17 Sep 2009 12:11:56 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Willy Tarreau <w@....eu>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: tc: uninitialised kernel memory leak
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+> So for now, we have:
+> 
+>   CVE-2009-3228 - tc_fill_tclass()
 
-There also is a PDF XSS in ModSecurity <2.5.8
+Fixed in v2.6.31-rc9, v2.4.37.6 (096ed17f).
 
-https://sourceforge.net/project/shownotes.php?release_id=667538&group_id=68846
-http://mod-security.svn.sourceforge.net/viewvc/mod-security?view=rev&revision=1255
+>   CVE-2005-4881 - tc_fill_qdisc()  (at least)
 
-"Discovered by Steve Grubb at Redhat", so perhaps there 
-already is a CVE.
+Fixed in v2.6.13-rc1, v2.4.37.6 too (all three patches).
 
-Ciao, Marcus
+> So, let's go with these two numbers.  I'll fill them out later.  (My head
+> hurts.)
+
+Wow, my head hurts too... ;)
+
+Eugene
