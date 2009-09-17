@@ -1,38 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/01/6
-Message-ID: <20090701174105.GL2803@ngolde.de>
-Date: Wed, 1 Jul 2009 19:41:05 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/17/13
+Message-ID: <20090917082823.GD3463@suse.de>
+Date: Thu, 17 Sep 2009 10:28:23 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: aboudreault@...gears.com, coley@...re.org, 523027@...s.debian.org, warmerdam@...ox.com
-Subject: Re: incorrect upstream fix for CVE-2009-0840 (mapserver)
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: perf_counter: Fix buffer overflow in perf_copy_attr()
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Steven M. Christey <coley@...us.mitre.org> [2009-07-01 13:43]:
-> On Mon, 22 Jun 2009, Nico Golde wrote:
+On Wed, Sep 16, 2009 at 09:32:26PM -0400, Steven M. Christey wrote:
 > 
-> > I'm not sure if this should get a new CVE id but the versions in the CVE id
-> > description should be adjusted and the upstream patch revised.
+> ======================================================
+> Name: CVE-2009-3234
+> Status: Candidate
+> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3234
+> Reference: MLIST:[linux-kernel] 20090916 [patch 15/45] perf_counter: Fix buffer overflow in perf_copy_attr()
+> Reference: URL:http://article.gmane.org/gmane.linux.kernel/890654
+> Reference: MLIST:[oss-security] 20090916 CVE request: kernel: perf_counter: Fix buffer overflow in perf_copy_attr()
+> Reference: URL:http://www.openwall.com/lists/oss-security/2009/09/16/1
+> Reference: BID:36423
+> Reference: URL:http://www.securityfocus.com/bid/36423
 > 
-> This looks like even though there was a source code modification, the
-> previous issue was not fixed at all.  That is, any attack that would have
-> worked before the fix, will still work after the fix.
-> 
-> However, Fedora FEDORA-2009-3383 at least claims a fix for CVE-2009-0840,
-> so a new CVE is probably in order to "signal" to admins that they have
-> another issue to handle.
-> 
-> Use CVE-2009-2281 for the "new" issue.  What versions are affected by
-> this?
+> Buffer overflow in the perf_copy_attr function in
+> kernel/perf_counter.c in the Linux kernel 2.6.31-rc1 allows local
+> users to cause a denial of service (crash) via a "big size data" to
+> the perf_counter_open system call.
 
-Should be every currently available release, I'm currently 
-working with upstream on a better fix.
+I think Brad Spengler has succeeded in exploiting this for code execution,
+see his twitter timeline from yesterday http://twitter.com/spendergrsec
 
-Cheers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+Ciao, Marcus
