@@ -1,29 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/08/1
-Message-ID: <20090208124846.GG4645@ngolde.de>
-Date: Sun, 8 Feb 2009 13:48:46 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/17/1
+Message-ID: <Pine.GSO.4.51.0909162050220.7046@faron.mitre.org>
+Date: Wed, 16 Sep 2009 21:19:02 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: CVE-2008-6049 is bogus
+cc: Willy Tarreau <w@....eu>, Eugene Teo <eugene@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: tc: uninitialised kernel memory leak
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-"SQL injection vulnerability in index.php in TinyMCE 2.0.1 
-allows remote attackers to execute arbitrary SQL commands 
-via the menuID parameter."
 
-I just checked this issue. As far as I can tell tinymce does 
-not ship any php code so something seems fishy with that. 
-2.0.1 did also not ship php code:
-http://prdownloads.sourceforge.net/tinymce/tinymce_2_0_1.zip?download
+On Sat, 5 Sep 2009, Solar Designer wrote:
+
+> On Thu, Sep 03, 2009 at 11:45:03AM +0800, Eugene Teo wrote:
+> > Three bytes of uninitialised kernel memory are currently leaked to user.
+> >
+> > http://patchwork.ozlabs.org/patch/32830/
+> > https://bugzilla.redhat.com/show_bug.cgi?id=520990
+>
+> 2.4 kernels appear to be affected as well, and moreover they appear to
+> require at least some of these older fixes as well:
+>
+> http://marc.info/?l=git-commits-head&m=112002138324380
+>
+> Specifically, in net/sched/sch_api.c both tc_fill_qdisc() and
+> tc_fill_tclass() are affected - the former was fixed in 2.6 in 2005,
+> the latter is being fixed now.
+>
+> I'm not sure what this means for CVE.  Should there be another CVE id
+> for the issues fixed in 2.6 in 2005 (if one was not allocated at the
+> time), and 2.4 could reference both CVE ids now?
+
+This would be the typical practice.  We weren't tracking kernel bugs at
+the function-name level back then, though - we were using more mature (and
+more general) advisory descriptions - so I can't be absolutely sure
+whether there's a CVE for this or not.
+
+However, a search for "netlink" turned up empty for this type of problem
+in that time frame, so we probably don't have a CVE for it yet.
+
+One question, though - http://patchwork.ozlabs.org/patch/32830/ patches
+net/sched/sch_api.c / tc_fill_tclass, but the 2005 patch includes
+net/core/neighbour.c, net/sched/cls_api.c, and others.
+
+So we have:
+
+tc_fill_qdisc() - already fixed in 2.6; just fixed in 2.4
+
+  http://marc.info/?l=git-commits-head&m=112002138324380
+  (not sure of reference for 2.4)
+
+multiple functions e.g. tcf_fill_node() already fixed in 2.6; unknown
+status in 2.4.  Includes neightbl_fill_info(), neightbl_fill_param_info(),
+and others.
+
+  http://marc.info/?l=git-commits-head&m=112002138324380
+
+tc_fill_tclass() - just fixed in 2.6
+
+  http://patchwork.ozlabs.org/patch/32830/
 
 
-Cheers
-Nico
+So for now, we have:
 
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+  CVE-2009-3228 - tc_fill_tclass()
 
-Content of type "application/pgp-signature" skipped
+  CVE-2005-4881 - tc_fill_qdisc()  (at least)
+
+Now we have:
+
+  tcf_fill_node(), neightbl_fill_info(), and others from 2005.
+
+Typical practice would be to associate tcf_fill_node() and the others with
+CVE-2005-4881, not just have it be with tc_fill_qdisc() - because they
+were all disclosed in 2005.  Then the 2.4 fix might only apply to a
+portion of CVE-2005-4881.  This could make it difficult to coordinate
+low-level patches, but our "(1)" and "(2)" numbering style in the CVE
+description could be used at that level if needed.
+
+So, let's go with these two numbers.  I'll fill them out later.  (My head
+hurts.)
+
+Oh, and if anybody could give me more precise version information than
+"2.4" and "2.6" then that would be appreciated.
+
+- Steve
+
+
+P.S. I chose the 2005 date in the CVE to help with distinguishing the
+problems, but arguably this should have received a 2009, because the 2005
+fix was so vague that the security implications weren't (apparently) known
+until 2009.
