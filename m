@@ -1,30 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/29/1
-Message-ID: <4B3965A7.7070504@kernel.sg>
-Date: Tue, 29 Dec 2009 10:12:55 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/17/11
+Message-ID: <4AB1DF4C.2020609@redhat.com>
+Date: Thu, 17 Sep 2009 15:03:40 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE requests - kernel security regressions for CVE-2009-1385/and -1389
+CC: "Steven M. Christey" <coley@...us.mitre.org>, Willy Tarreau <w@....eu>
+Subject: Re: CVE-2009-2903 kernel: appletalk: denial of service when handling IP tunnelled over DDP datagrams
 Content-Type: text/plain; charset=utf-8
 
-On 12/28/2009 03:47 PM, Eugene Teo wrote:
-> http://events.ccc.de/congress/2009/Fahrplan//events/3596.en.html
->
-> In Fabian's talk, he describes two kernel NIC driver issues:
->
-> Issue #1
-> Fabian claimed that CVE-2009-1385 has an incorrect fix:
-> http://git.kernel.org/linus/ea30e11970a96cfe5e32c03a29332554573b4a10.
-[...]
-> Issue #2
-> The fix for CVE-2009-1389 regarding the r8169 driver introduces a
-> similar security problem as this:
-> http://git.kernel.org/linus/fdd7b4c3302c93f6833e338903ea77245eb510b4 is
-> a revert of this:
-> http://git.kernel.org/linus/126fa4b9ca5d9d7cb7d46f779ad3bd3631ca387c.
+Eugene Teo wrote:
+> Eugene Teo wrote:
+>> The check for the ipddpN device in the handle_ip_over_ddp() function 
+>> returns -NODEV to the atalk_rcv() function when the device does not 
+>> exist. The atalk_rcv() function then directly returns that value to 
+>> its caller. There is a missing call to kfree_skb() in these unaccepted 
+>> IP-DDP datagram that can exhaust the kernel memory eventually. It 
+>> affects Linux hosts with appletalk and ipddp modules loaded, that are 
+>> attached to the same link. Thanks to Mark Smith for reporting this 
+>> issue to us.
+> 
+> Some updates and a quick analysis at: 
+> https://bugzilla.redhat.com/CVE-2009-2903#c0 and 
+> http://kbase.redhat.com/faq/docs/DOC-19069
 
-Patches update can be found here:
-https://bugzilla.redhat.com/show_bug.cgi?id=550907#c4
+Should be http://kbase.redhat.com/faq/docs/DOC-19077.
 
 Thanks, Eugene
