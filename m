@@ -1,27 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/01/4
-Message-ID: <1259632338.3696.17.camel@mdlinux.technorage.com>
-Date: Mon, 30 Nov 2009 20:52:18 -0500
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Need more information on recent poppler issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/17/15
+Message-ID: <4AB2595A.8090102@redhat.com>
+Date: Thu, 17 Sep 2009 17:44:26 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: Gerald Combs <gerald@...eshark.org>
+CC: "Steven M. Christey" <coley@...us.mitre.org>, oss-security <oss-security@...ts.openwall.com>
+Subject: Wireshark - wnpa-sec-2009-05.html && wnpa-sec-2009-06.html -- CVE confirmation and CVE Request
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 2009-11-30 at 20:08 -0500, Steven M. Christey wrote:
-> DSA-1941 lists three reserved CVE entries for Poppler issues, but there
-> aren't any more details, which makes it difficult to create CVE
-> descriptions.  Specifically, CVE-2009-3906, CVE-2009-3907, and
-> CVE-2009-3908 don't have any details as far as I can tell.
-> 
-> Can anybody help?
+Hello Gerald, Steve, vendors,
 
-That's supposed to be CVE-2009-3603 to CVE-2009-3609.
+   this is due:
 
-Marc.
+     http://www.wireshark.org/security/wnpa-sec-2009-05.html
+     http://www.wireshark.org/security/wnpa-sec-2009-06.html
+
+   Gerald, could you please confirm, that:
+
+     A, The AFS dissector could crash.   (Bug 3564)
+        Versions affected: 0.9.2 to 1.0.8, 1.2.0
+
+       is already assigned http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2562 and
+
+     B, The Infiniband dissector could crash on some platforms.
+        Versions affected: 0.9.2 to 1.0.8, 1.2.0
+
+        is already assigned http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2563  ?
+
+   Steve, once confirmed, could you please allocate CVE ids for
+   the remaining three issues:
+
+   * The OpcUa dissector could use excessive CPU and memory.   (Bug 3986)
+     Versions affected: 0.99.6 to 1.0.8, 1.2.0 to 1.2.1
+
+     Upstream bug: https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=3986
+     Upstream patch: http://anonsvn.wireshark.org/viewvc?view=rev&revision=29813
+
+   * The GSM A RR dissector could crash.   (Bug 3893)
+     Versions affected: 1.2.0 to 1.2.1
+
+     Upstream bug: https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=3893
+     Upstream patch: http://anonsvn.wireshark.org/viewvc/trunk/epan/dissectors/packet-gsm_a_rr.c?view=log&pathrev=29403
+
+    * The TLS dissector could crash on some platforms.   (Bug 4008)
+      Versions affected: 1.2.0 to 1.2.1
+
+      Upstream bug: https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=4008
+      Upstream patch: http://anonsvn.wireshark.org/viewvc/trunk/epan/dissectors/packet-dtls.c?view=log&pathrev=29906
 
 
--- 
-Marc Deslauriers
-Ubuntu Security Engineer     | http://www.ubuntu.com/
-Canonical Ltd.               | http://www.canonical.com/
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+
+
 
