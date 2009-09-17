@@ -1,29 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/04/1
-Message-ID: <4A77ACDB.3040501@redhat.com>
-Date: Tue, 04 Aug 2009 11:36:59 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request - kernel: information leak in sigaltstack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/17/2
+Message-ID: <Pine.GSO.4.51.0909162129470.7046@faron.mitre.org>
+Date: Wed, 16 Sep 2009 21:29:53 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security <oss-security@...ts.openwall.com>, oss-security <oss-security@...ts.openwall.com>
+cc: "Steven M. Christey" <coley@...us.mitre.org>, Alex Legler <a3li@...too.org>
+Subject: Re: CVE Request -- Horde 3.3.5
 Content-Type: text/plain; charset=utf-8
 
-do_sigaltstack: avoid copying 'stack_t' as a structure to user space
 
-Ulrich Drepper correctly points out that there is generally padding in
-the structure on 64-bit hosts, and that copying the structure from
-kernel to user space can leak information from the kernel stack in those
-padding bytes.
+======================================================
+Name: CVE-2009-3236
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3236
+Reference: MLIST:[horde-announce] 20090914 [announce] Horde Groupware 1.1.6 (final)
+Reference: URL:http://marc.info/?l=horde-announce&m=125292088004087&w=2
+Reference: MLIST:[horde-announce] 20090914 [announce] Horde Groupware 1.2.4 (final)
+Reference: URL:http://marc.info/?l=horde-announce&m=125294558611682&w=2
+Reference: MLIST:[horde-announce] 20090914 [announce] Horde Groupware Webmail Edition 1.1.6 (final)
+Reference: URL:http://marc.info/?l=horde-announce&m=125292314007049&w=2
+Reference: MLIST:[horde-announce] 20090914 [announce] Horde Groupware Webmail Edition 1.2.4 (final)
+Reference: URL:http://marc.info/?l=horde-announce&m=125295852706029&w=2
+Reference: MLIST:[horde-announce] 20090914 [announce] [SECURITY] Horde 3.2.5 (final)
+Reference: URL:http://marc.info/?l=horde-announce&m=125291625030436&w=2
+Reference: MLIST:[horde-announce] 20090914 [announce] [SECURITY] Horde 3.3.5 (final)
+Reference: URL:http://marc.info/?l=horde-announce&m=125292339907481&w=2
+Reference: OSVDB:58107
+Reference: URL:http://www.osvdb.org/58107
+Reference: SECUNIA:36665
+Reference: URL:http://secunia.com/advisories/36665
+Reference: XF:horde-application-form-file-overwrite(53202)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/53202
 
-Avoid the whole issue by just copying the three members one by one
-instead, which also means that the function also can avoid the need for
-a stack frame. This also happens to match how we copy the new structure
-from user space, so it all even makes sense.
+Unspecified vulnerability in the form library in Horde Application
+Framework 3.2 before 3.2.5 and 3.3 before 3.3.5; Groupware 1.1 before
+1.1.6 and 1.2 before 1.2.4; and Groupware Webmail Edition 1.1 before
+1.1.6 and 1.2 before 1.2.4; allows remote attackers, with privileges
+to write to the address book, to overwrite arbitrary files via crafted
+"image form fields."
 
-Upstream commit:
-http://git.kernel.org/linus/0083fc2c50e6c5127c2802ad323adf8143ab7856
 
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=515392
+======================================================
+Name: CVE-2009-3237
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3237
+Reference: MLIST:[horde-announce] 20090914 [announce] Horde Groupware 1.1.6 (final)
+Reference: URL:http://marc.info/?l=horde-announce&m=125292088004087&w=2
+Reference: MLIST:[horde-announce] 20090914 [announce] Horde Groupware 1.2.4 (final)
+Reference: URL:http://marc.info/?l=horde-announce&m=125294558611682&w=2
+Reference: MLIST:[horde-announce] 20090914 [announce] Horde Groupware Webmail Edition 1.1.6 (final)
+Reference: URL:http://marc.info/?l=horde-announce&m=125292314007049&w=2
+Reference: MLIST:[horde-announce] 20090914 [announce] Horde Groupware Webmail Edition 1.2.4 (final)
+Reference: URL:http://marc.info/?l=horde-announce&m=125295852706029&w=2
+Reference: MLIST:[horde-announce] 20090914 [announce] [SECURITY] Horde 3.2.5 (final)
+Reference: URL:http://marc.info/?l=horde-announce&m=125291625030436&w=2
+Reference: MLIST:[horde-announce] 20090914 [announce] [SECURITY] Horde 3.3.5 (final)
+Reference: URL:http://marc.info/?l=horde-announce&m=125292339907481&w=2
+Reference: CONFIRM:http://bugs.horde.org/ticket/?id=8311
+Reference: CONFIRM:http://bugs.horde.org/ticket/?id=8399
+Reference: OSVDB:58108
+Reference: URL:http://www.osvdb.org/58108
+Reference: OSVDB:58109
+Reference: URL:http://www.osvdb.org/58109
+Reference: SECUNIA:36665
+Reference: URL:http://secunia.com/advisories/36665
+Reference: XF:horde-mimeviewer-xss(53200)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/53202
 
-Thanks, Eugene
+Multiple cross-site scripting (XSS) vulnerabilities in Horde
+Application Framework 3.2 before 3.2.5 and 3.3 before 3.3.5; Groupware
+1.1 before 1.1.6 and 1.2 before 1.2.4; and Groupware Webmail Edition
+1.1 before 1.1.6 and 1.2 before 1.2.4; allow remote attackers to
+inject arbitrary web script or HTML via the (1) crafted number
+preferences that are not properly handled in the preference system
+(services/prefs.php), as demonstrated by the sidebar_width parameter;
+or (2) crafted unknown MIME "text parts" that are not properly handled
+in the MIME viewer library (config/mime_drivers.php).
+
+
