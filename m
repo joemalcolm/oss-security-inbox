@@ -1,19 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/17/2
-Message-ID: <Pine.GSO.4.51.0904170958090.17172@faron.mitre.org>
-Date: Fri, 17 Apr 2009 09:58:20 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/17/4
+Message-ID: <Pine.GSO.4.51.0909162132180.7046@faron.mitre.org>
+Date: Wed, 16 Sep 2009 21:32:26 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
 cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: NFS: Fix an Oops in encode_lookup()
+Subject: Re: CVE request: kernel: perf_counter: Fix buffer overflow in perf_copy_attr()
 Content-Type: text/plain; charset=utf-8
 
 
-On Mon, 6 Apr 2009, Eugene Teo wrote:
+======================================================
+Name: CVE-2009-3234
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3234
+Reference: MLIST:[linux-kernel] 20090916 [patch 15/45] perf_counter: Fix buffer overflow in perf_copy_attr()
+Reference: URL:http://article.gmane.org/gmane.linux.kernel/890654
+Reference: MLIST:[oss-security] 20090916 CVE request: kernel: perf_counter: Fix buffer overflow in perf_copy_attr()
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/09/16/1
+Reference: BID:36423
+Reference: URL:http://www.securityfocus.com/bid/36423
 
-> http://git.kernel.org/linus/54af3bb543c071769141387a42deaaab5074da55
-> https://bugzilla.redhat.com/show_bug.cgi?id=494074
+Buffer overflow in the perf_copy_attr function in
+kernel/perf_counter.c in the Linux kernel 2.6.31-rc1 allows local
+users to cause a denial of service (crash) via a "big size data" to
+the perf_counter_open system call.
 
-Use CVE-2009-1336, to be filled in later.
 
-- Steve
