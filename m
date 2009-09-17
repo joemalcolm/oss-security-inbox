@@ -1,28 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/20/3
-Message-ID: <20090520201725.GN4111@redhat.com>
-Date: Wed, 20 May 2009 14:17:25 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/17/5
+Message-ID: <Pine.GSO.4.51.0909162132440.7046@faron.mitre.org>
+Date: Wed, 16 Sep 2009 21:32:51 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: ctorrent
+Subject: Re: CVE id request: changetrack
 Content-Type: text/plain; charset=utf-8
 
-Hi there.  There was a stack-based buffer overflow issue found in
-Enhanced CTorrent (dtorrent and ctorrent) that I don't believe has received
-a CVE name.  References as noted:
 
-https://bugzilla.redhat.com/show_bug.cgi?id=501813
-http://milw0rm.com/exploits/8470
-http://bugs.gentoo.org/show_bug.cgi?id=266953
-http://secunia.com/advisories/34752/
-http://sourceforge.net/tracker/?func=detail&aid=2782875&group_id=202532&atid=981959
-http://www.securityfocus.com/bid/34584
+======================================================
+Name: CVE-2009-3233
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3233
+Reference: MLIST:[oss-security] 20090916 CVE id request: changetrack
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/09/16/3
+Reference: CONFIRM:http://bugs.debian.org/546791
+Reference: BID:36420
+Reference: URL:http://www.securityfocus.com/bid/36420
+Reference: SECUNIA:36756
+Reference: URL:http://secunia.com/advisories/36756
 
-with the upstream fix here:
+changetrack 4.3 allows local users to execute arbitrary commands via
+CRLF sequences and shell metacharacters in a filename in a directory
+that is checked by changetrack.
 
-http://dtorrent.svn.sourceforge.net/viewvc/dtorrent/dtorrent/trunk/btfiles.cpp?r1=296&r2=301&view=patch
 
-Thanks.
-
--- 
-Vincent Danen / Red Hat Security Response Team 
