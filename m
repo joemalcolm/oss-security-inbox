@@ -1,30 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/21/3
-Message-ID: <Pine.GSO.4.51.0905211745010.18536@faron.mitre.org>
-Date: Thu, 21 May 2009 17:52:23 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/17/6
+Message-ID: <Pine.GSO.4.51.0909162133170.7046@faron.mitre.org>
+Date: Wed, 16 Sep 2009 21:33:22 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
+To: oss-security <oss-security@...ts.openwall.com>
 cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: moin
+Subject: Re: CVE request - Debian/Ubuntu PAM auth module selection
 Content-Type: text/plain; charset=utf-8
 
 
-On Wed, 6 May 2009, Steffen Joeris wrote:
+======================================================
+Name: CVE-2009-3232
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3232
+Reference: MLIST:[oss-security] 20090908 CVE request - Debian/Ubuntu PAM auth module selection
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/09/08/7
+Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=519927
+Reference: CONFIRM:https://launchpad.net/bugs/410171
+Reference: UBUNTU:USN-828-1
+Reference: URL:http://www.ubuntulinux.org/support/documentation/usn/usn-828-1
+Reference: BID:36306
+Reference: URL:http://www.securityfocus.com/bid/36306
+Reference: SECUNIA:36620
+Reference: URL:http://secunia.com/advisories/36620
 
-> This upstream commit[0] is slightly different then the issues described in
-> CVE-2009-1482 and I think it deserves another CVE id to separate the XSS
-> issues. The debian bug[1] can also be used as a reference.
-> Steve, what do you think?
+pam-auth-update for PAM, as used in Ubuntu 8.10 and 9.4, and Debian
+GNU/Linux, does not properly handle an "empty selection" for system
+authentication modules in certain rare configurations, which causes
+any attempt to be successful and allows remote attackers to bypass
+authentication.
 
-This is a different vector that isn't directly covered by that CVE, and
-may not have been fixed entirely when CVE-2009-1482 was fixed, so a new
-CVE can be considered.
 
-However, we generally avoid including "defense-in-depth" fixes unless they
-can be demonstrated to be exploitable - or, if a vendor plans to release
-an advisory "just to be safe."
-
-The changeset says "maybe not XSS exploitable though" so I'm not sure
-whether a CVE's needed yet.
-
-- Steve
