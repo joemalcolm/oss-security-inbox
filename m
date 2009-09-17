@@ -1,42 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/22/8
-Message-ID: <4AB8BE68.9070800@redhat.com>
-Date: Tue, 22 Sep 2009 20:09:12 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/17/12
+Message-ID: <20090917093632.7c11945b@redhat.com>
+Date: Thu, 17 Sep 2009 09:36:32 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: KVM: x86: Disallow hypercalls for guest callers in rings > 0
+Cc: coley@...us.mitre.org
+Subject: Re: CVE for recent cyrus-imap issue
 Content-Type: text/plain; charset=utf-8
 
-Steven M. Christey wrote:
-> Eugene, you said "access" kernel memory - do you mean read, write, or
-> both?
+On Wed, 16 Sep 2009 21:31:52 -0400 (EDT) "Steven M. Christey"
+<coley@...us.mitre.org> wrote:
 
-I meant both. Thanks.
+> CVE-2009-3235 is the new one; CVE-2009-2632 has been updated to list
+> Dovecot.
 
-Eugene
+Thank you!
 
-> - Steve
+> Name: CVE-2009-3235
 > 
-> 
-> ======================================================
-> Name: CVE-2009-3290
-> Status: Candidate
-> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3290
-> Reference: MLIST:[oss-security] 20090918 CVE request: kernel: KVM: x86: Disallow hypercalls for guest callers in rings > 0
-> Reference: URL:http://www.openwall.com/lists/oss-security/2009/09/18/1
-> Reference: MLIST:[oss-security] 20090921 Re: CVE request: kernel: KVM: x86: Disallow hypercalls for guest callers in rings > 0
-> Reference: URL:http://www.openwall.com/lists/oss-security/2009/09/21/1
-> Reference: CONFIRM:http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=07708c4af1346ab1521b26a202f438366b7bcffd
-> Reference: CONFIRM:http://patchwork.kernel.org/patch/38926/
-> Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=524124
-> 
-> The kvm_emulate_hypercall function in arch/x86/kvm/x86.c in KVM in the
-> Linux kernel 2.6.25-rc1, and other versions before 2.6.31, when
-> running on x86 systems, does not prevent access to MMU hypercalls from
-> ring 0, which allows local guest OS users to cause a denial of service
-> (guest kernel crash) and read guest kernel memory via unspecified
-> "random addresses."
-> 
-> 
+> Multiple stack-based buffer overflows in the Sieve plugin in Dovecot
+> 1.0 before 1.0.4 and 1.1 before 1.1.7, as derived from Cyrus libsieve,
+> allow context-dependent attackers to cause a denial of service (crash)
+> and possibly execute arbitrary code via a crafted SIEVE script, as
+> demonstrated by forwarding an e-mail message to a large number of
+> recipients, a different vulnerability than CVE-2009-2632.
 
+These flaws are not specific to Dovecot and exist in cyrus-imapd too.
+Upstream already applied Dovecot fixes in their CVS:
+
+https://bugzilla.andrew.cmu.edu/cgi-bin/cvsweb.cgi/src/sieve/sieve.y.diff?r1=1.40;r2=1.41;f=h
+https://bugzilla.andrew.cmu.edu/cgi-bin/cvsweb.cgi/src/sieve/bc_eval.c.diff?r1=1.14;r2=1.15;f=h
+https://bugzilla.andrew.cmu.edu/cgi-bin/cvsweb.cgi/src/sieve/script.c.diff?r1=1.68;r2=1.69;f=h
+
+Sorry if my mail was confusing at that point.
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
