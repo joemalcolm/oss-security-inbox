@@ -1,16 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/14/1
-Message-ID: <4A5C3423.6070309@gmx.net>
-Date: Tue, 14 Jul 2009 09:30:43 +0200
-From: Stefan Behte <Stefan.Behte@....net>
-To: OSS Security <oss-security@...ts.openwall.com>
-Subject: CVE: Request Firefox 3.5
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/18/2
+Message-ID: <4AB2CD51.9060303@wireshark.org>
+Date: Thu, 17 Sep 2009 16:59:13 -0700
+From: Gerald Combs <gerald@...eshark.org>
+To: jlieskov@...hat.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>,  oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Wireshark - wnpa-sec-2009-05.html && wnpa-sec-2009-06.html -- CVE confirmation and CVE Request
 Content-Type: text/plain; charset=utf-8
 
-Hello everyone,
+Jan Lieskovsky wrote:
+> Hello Gerald, Steve, vendors,
+> 
+>   this is due:
+> 
+>     http://www.wireshark.org/security/wnpa-sec-2009-05.html
+>     http://www.wireshark.org/security/wnpa-sec-2009-06.html
+> 
+>   Gerald, could you please confirm, that:
+> 
+>     A, The AFS dissector could crash.   (Bug 3564)
+>        Versions affected: 0.9.2 to 1.0.8, 1.2.0
+> 
+>       is already assigned
+> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2562 and
 
-can I get a CVE for this? http://www.milw0rm.com/exploits/9137
+That's correct.
 
-Best regards & happy patching
+> 
+>     B, The Infiniband dissector could crash on some platforms.
+>        Versions affected: 0.9.2 to 1.0.8, 1.2.0
+> 
+>        is already assigned
+> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2563  ?
 
-Stefan Behte
+Correct.
+
+
