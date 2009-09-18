@@ -1,35 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/14/3
-Message-ID: <4AD5F75C.90901@redhat.com>
-Date: Wed, 14 Oct 2009 18:07:56 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request - backintime
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/18/4
+Message-ID: <20090918132343.GB5855@ngolde.de>
+Date: Fri, 18 Sep 2009 15:23:43 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- PHP 5 - 5.2.11
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve, vendors,
+Hi,
+* Jan Lieskovsky <jlieskov@...hat.com> [2009-09-18 13:52]:
+>   PHP has released another upstream 5.2 release, fixing
+> four security issues:
+> 
+> http://www.php.net/ChangeLog-5.php
+> http://www.php.net/downloads.php
+> 
+> Could you please allocate CVE identifiers?
 
-   while this issue seem to be already silently fixed:
+What is the security impact of:
+Fixed bug #44683 (popen crashes when an invalid mode is passed). (Pierre)
+?
 
-https://www.redhat.com/archives/fedora-package-announce/2009-September/msg00823.html
-https://www.redhat.com/archives/fedora-package-announce/2009-September/msg00821.html
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=543785
-https://bugs.launchpad.net/ubuntu/+source/backintime/+bug/434256
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-for purpose of proper tracking, it should get a CVE identifier.
-
-References:
------------
-https://bugzilla.redhat.com/show_bug.cgi?id=520210
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=543785
-https://bugs.launchpad.net/ubuntu/+source/backintime/+bug/434256
-http://bugs.gentoo.org/show_bug.cgi?id=289047
-
-Patch from Debian:
-------------------
-http://ftp.debian.org/debian/pool/main/b/backintime/backintime_0.9.26-3.diff.gz
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Content of type "application/pgp-signature" skipped
