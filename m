@@ -1,22 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/22/1
-Message-ID: <4B08948C.20908@haquarter.de>
-Date: Sun, 22 Nov 2009 02:31:56 +0100
-From: Craig <craig@...uarter.de>
-To: OSS Security <oss-security@...ts.openwall.com>
-Subject: CVE request: awstats
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/18/5
+Message-ID: <20090918135629.GA9298@redhat.com>
+Date: Fri, 18 Sep 2009 14:56:29 +0100
+From: Joe Orton <jorton@...hat.com>
+To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- PHP 5 - 5.2.11
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Fri, Sep 18, 2009 at 03:23:43PM +0200, Nico Golde wrote:
+> Hi,
+> * Jan Lieskovsky <jlieskov@...hat.com> [2009-09-18 13:52]:
+> >   PHP has released another upstream 5.2 release, fixing
+> > four security issues:
+> > 
+> > http://www.php.net/ChangeLog-5.php
+> > http://www.php.net/downloads.php
+> > 
+> > Could you please allocate CVE identifiers?
+> 
+> What is the security impact of:
+> Fixed bug #44683 (popen crashes when an invalid mode is passed). (Pierre)
+> ?
 
-I think there isn't a CVE for this issues - which was fixed in 6.95 -
-yet (quote from http://awstats.sourceforge.net/docs/awstats_changelog.txt):
+This would appear to be:
 
-- Fix security in awredir.pl script by adding a security key required by
-  default.
-- Enhance security of parameter sanitizing function
+http://svn.php.net/viewvc?view=revision&revision=287779
 
+which is Windows-specific.
 
-best regards,
-
-Craig
+Regards, Joe
