@@ -1,30 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/12/1
-Message-ID: <20090912110305.2bbdd1bd@neon>
-Date: Sat, 12 Sep 2009 11:03:05 +0200
-From: Alex Legler <a3li@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE request(?): Thin: Client IP spoofing
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/18/3
+Message-ID: <4AB36ED8.3020809@redhat.com>
+Date: Fri, 18 Sep 2009 13:28:24 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request -- PHP 5 - 5.2.11
 Content-Type: text/plain; charset=utf-8
 
-Hey,
+Hello Steve, vendors,
 
-we've stumbled upon a changelog entry in Thin [1], a ruby http server:
+   PHP has released another upstream 5.2 release, fixing
+four security issues:
 
->  * Fix Remote address spoofing vulnerability in
-> Connection#remote_address [Alexey Borzenkov]
+http://www.php.net/ChangeLog-5.php
+http://www.php.net/downloads.php
 
-Thin uses the X-Forwarded-For header (if it is provided) to determine
-the client's IP address. That could be used to facilitate spoofing.
+Could you please allocate CVE identifiers?
 
-This is the commit:
-http://github.com/macournoyer/thin/commit/7bd027914c5ffd36bb408ef47dc749de3b6e063a
-
-Not sure if it warrants a CVE, if it does, please assign one.
-
-Thanks,
-Alex
-
-[1] http://code.macournoyer.com/thin/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
