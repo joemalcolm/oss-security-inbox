@@ -1,47 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/08/6
-Message-ID: <1989820797.872961260304519281.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 8 Dec 2009 15:35:19 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/18/6
+Message-ID: <20090918192516.GE4643@severus.strandboge.com>
+Date: Fri, 18 Sep 2009 14:25:16 -0500
+From: Jamie Strandboge <jamie@...onical.com>
 To: oss-security@...ts.openwall.com
-Cc: Jim Meyering <meyering@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- coreutils -- unsafe temporary directory location use
+Cc: coley@...us.mitre.org
+Subject: Insecure pid directory permissions for postfix on Debian / Ubuntu
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2009-4135 for this.
+Wietse Venema discovered that Debian and Ubuntu set the permissions of
+/var/spool/postfix/pid to be postfix:root 0755. This allows the postfix
+user to manipulate pid files and overwrite arbitrary files via symlink
+attacks. Arbitrary file overwrites are somewhat mitigated when using
+chroot, which is the default on Debian and Ubuntu.
 
-Thanks.
+Currently supported versions of Debian and Ubuntu that are affected are
+(earlier versions are likely affected, but not checked):
+Debian: 4.0 (Etch) and later
+Ubuntu: 6.06 LTS (Dapper) and later
+
+The patch is attached. This is CVE-2009-2939.
+
+Jamie
 
 -- 
-    JB
+Jamie Strandboge             | http://www.canonical.com
 
+View attachment "postfix.diff" of type "text/x-diff" (473 bytes)
 
------ "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
-
-> Hi Steve, vendors,
-> 
->    Jim Meyering reported a flaw in coreutils in the way, its
-> "distcheck" Makefile rule used to set up a temporary directory
-> location to be used later for performing its own tasks.
-> This might allow local attacker to conduct symlink attacks or
-> potentially execute arbitrary code under certain circumstances.
-> 
-> Upstream patch:
-> --------------
-> http://git.savannah.gnu.org/cgit/coreutils.git/commit/?id=ae034822c535fa5
-> 
-> Affected versions:
-> ------------------
-> coreutils-5.2.1 through to coreutils-8.1
-> 
-> References:
-> -----------
-> https://bugzilla.redhat.com/show_bug.cgi?id=545439
-> http://git.savannah.gnu.org/cgit/coreutils.git/commit/?id=ae034822c535fa5
-> http://thread.gmane.org/gmane.comp.gnu.coreutils.bugs/19199
-> 
-> Could you allocate a CVE identifier for this issue?
-> 
-> Thanks && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+Download attachment "signature.asc" of type "application/pgp-signature" (198 bytes)
