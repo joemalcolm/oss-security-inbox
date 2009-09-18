@@ -1,68 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/28/4
-Message-ID: <Pine.GSO.4.51.0907281339450.18052@faron.mitre.org>
-Date: Tue, 28 Jul 2009 13:40:20 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/18/1
+Message-ID: <4AB2D8F2.4090002@kernel.sg>
+Date: Fri, 18 Sep 2009 08:48:50 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Subject: Re: squid 3.x vulnerabilities
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: KVM: x86: Disallow hypercalls for guest callers in rings > 0
 Content-Type: text/plain; charset=utf-8
 
+"So far unprivileged guest callers running in ring 3 can issue, e.g., 
+MMU hypercalls. Normally, such callers cannot provide any hand-crafted 
+MMU command structure as it has to be passed by its physical address, 
+but they can still crash the guest kernel by passing random addresses.
 
-Two CVEs were assigned given strong indications of different types of
-problems.
+To close the hole, this patch considers hypercalls valid only if issued 
+from guest ring 0. This may still be relaxed on a per-hypercall base in 
+the future once required."
 
-- Steve
+This was introduced in v2.6.25-rc1, and fixed in 2.6.31.
 
-======================================================
-Name: CVE-2009-2621
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2621
-Acknowledged: yes advisory
-Announced: 20090727
-Flaw: undiag
-Reference: CONFIRM:http://www.squid-cache.org/Advisories/SQUID-2009_2.txt
-Reference: CONFIRM:http://www.squid-cache.org/Versions/v3/3.1/changesets/b9654.patch
+cvss2=7.2/AV:L/AC:L/Au:N/C:C/I:C/A:C
 
-Squid 3.0 through 3.0.STABLE16 and 3.1 through 3.1.0.11 does not
-properly enforce "buffer limits and related bound checks," which
-allows remote attackers to cause a denial of service via (1) an
-incomplete request or (2) a request with a large header size, related
-to (a) HttpMsg.cc and (b) client_side.cc.
+Upstream commit:
+http://git.kernel.org/linus/07708c4af1346ab1521b26a202f438366b7bcffd
 
+References:
+http://patchwork.kernel.org/patch/38926/
+https://bugzilla.redhat.com/show_bug.cgi?id=524124
 
-Analysis:
-ACCURACY: some specifics were inferred from b9654.patch, especially
-the debug statements that were added.
-
-ACKNOWLEDGEMENT: SQUID-2009:2 says "Due to incorrect buffer limits and
-related bound checks Squid is vulnerable to a denial of service attack
-when processing specially crafted requests or responses."
-
-
-======================================================
-Name: CVE-2009-2622
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2622
-Acknowledged: yes advisory
-Announced: 20090727
-Flaw: undiag
-Reference: CONFIRM:http://www.squid-cache.org/Advisories/SQUID-2009_2.txt
-Reference: CONFIRM:http://www.squid-cache.org/Versions/v3/3.1/changesets/b9661.patch
-
-Squid 3.0 through 3.0.STABLE16 and 3.1 through 3.1.0.11 allows remote
-attackers to cause a denial of service via malformed requests
-including (1) "missing or mismatched protocol identifier," (2) missing
-or negative status value," (3) "missing version," or (4) "missing or
-invalid status number," related to (a) HttpMsg.cc and (b)
-HttpReply.cc.
-
-
-Analysis:
-ACCURACY: some specifics were inferred from b9661.patch, especially
-the debug statements that were added.
-
-ACKNOWLEDGEMENT: SQUID-2009:2 says "Due to incorrect data validation
-Squid is vulnerable to a denial of service attack when processing
-specially crafted responses."
-
-
+Thanks, Eugene
