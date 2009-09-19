@@ -1,30 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/26/1
-Message-ID: <4B0E14F8.6030009@moritz-naumann.com>
-Date: Thu, 26 Nov 2009 06:41:12 +0100
-From: oss-security@...itz-naumann.com
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request - Cacti - 0.8.7e
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/19/1
+Message-ID: <20090919223058.GH5855@ngolde.de>
+Date: Sun, 20 Sep 2009 00:30:58 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- PHP 5 - 5.2.11
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
-
-Josh Bressers wrote:
-> As best as I can tell, one ID will suffice.
+Hi,
+* Joe Orton <jorton@...hat.com> [2009-09-18 16:11]:
+> On Fri, Sep 18, 2009 at 03:23:43PM +0200, Nico Golde wrote:
+> > * Jan Lieskovsky <jlieskov@...hat.com> [2009-09-18 13:52]:
+> > >   PHP has released another upstream 5.2 release, fixing
+> > > four security issues:
+> > > 
+> > > http://www.php.net/ChangeLog-5.php
+> > > http://www.php.net/downloads.php
+> > > 
+> > > Could you please allocate CVE identifiers?
+> > 
+> > What is the security impact of:
+> > Fixed bug #44683 (popen crashes when an invalid mode is passed). (Pierre)
+> > ?
 > 
-> Please use CVE-2009-4032.
+> This would appear to be:
+> 
+> http://svn.php.net/viewvc?view=revision&revision=287779
+> 
+> which is Windows-specific.
 
-It's 4 XSS issues (one of them persistent) and 1 priviledge escalation
-issue. An advisory is coming to a full disclosure mailing list near you
-any minute.
+I was more wondering why this is a security issue rather 
+than a bug.
 
-If there's a way I can make things easier for you in the future please
-let me know.
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-iEYEAREKAAYFAksOFPgACgkQn6GkvSd/BgzjiwCfeLSgTSggcK6ilQ+RHRz+qePW
-LrYAnRocMkcDwWtDZ4kXsBOIO4U5qZU+
-=9hsx
------END PGP SIGNATURE-----
+Content of type "application/pgp-signature" skipped
