@@ -1,34 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/22/2
-Message-ID: <Pine.LNX.4.64.0911220526140.27016@forced.attrition.org>
-Date: Sun, 22 Nov 2009 05:27:54 +0000 (UTC)
-From: security curmudgeon <jericho@...rition.org>
-To: OSS-Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: php 5.3.1 update
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/20/1
+Message-ID: <b086760e0909200627y44a3fb9bx5d859f67e953f5c1@mail.gmail.com>
+Date: Sun, 20 Sep 2009 15:27:46 +0200
+From: yersinia <yersinia.spiros@...il.com>
+To: oss-security@...ts.openwall.com,  "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- PHP 5 - 5.2.11
 Content-Type: text/plain; charset=utf-8
 
+On Sun, Sep 20, 2009 at 12:30 AM, Nico Golde
+<oss-security+ml@...lde.de<oss-security%2Bml@...lde.de>
+> wrote:
 
-On Fri, 20 Nov 2009, Thomas Biege wrote:
+> Hi,
+> * Joe Orton <jorton@...hat.com> [2009-09-18 16:11]:
+> > On Fri, Sep 18, 2009 at 03:23:43PM +0200, Nico Golde wrote:
+> > > * Jan Lieskovsky <jlieskov@...hat.com> [2009-09-18 13:52]:
+> > > >   PHP has released another upstream 5.2 release, fixing
+> > > > four security issues:
+> > > >
+> > > > http://www.php.net/ChangeLog-5.php
+> > > > http://www.php.net/downloads.php
+> > > >
+> > > > Could you please allocate CVE identifiers?
+> > >
+> > > What is the security impact of:
+> > > Fixed bug #44683 (popen crashes when an invalid mode is passed).
+> (Pierre)
+> > > ?
+> >
+> > This would appear to be:
+> >
+> > http://svn.php.net/viewvc?view=revision&revision=287779
+> >
+> > which is Windows-specific.
+>
+> I was more wondering why this is a security issue rather
+> than a bug.
 
-: PHP was updated to version 5.3.1 and did also address security
-: issues: http://www.php.net/releases/5_3_1.php
-: 
-: Security Enhancements and Fixes in PHP 5.3.1:
-: 
-:     * Added "max_file_uploads" INI directive, which can be set to limit the number of file uploads per-request to 20 by default, to prevent possible DOS via temporary file exhaustion.
-:     * Added missing sanity checks around exif processing.
+http://securityvulns.com/Vdocument145.html
 
-This was previously disclosed and fixed in the 5.2.x tree. I believe this 
-is the same as CVE-2009-3292.
+> Cheers
+> Nico
+> --
+> Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+> For security reasons, all text in this mail is double-rot13 encrypted.
+>
 
-:     * Fixed a safe_mode bypass in tempnam().
-:     * Fixed a open_basedir bypass in posix_mkfifo().
-:     * Fixed bug #50063 (safe_mode_include_dir fails).
-:     * Fixed bug #44683 (popen crashes when an invalid mode is passed).
-
-Also not flagged as 'security' up top, but from the changelog:
-
-Fixed bug #49026 (proc_open() can bypass safe_mode_protected_env_vars 
-restrictions). (Ilia)
-
-Brian
