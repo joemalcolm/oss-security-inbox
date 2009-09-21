@@ -1,36 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/23/9
-Message-ID: <4AE1FD20.6070802@redhat.com>
-Date: Fri, 23 Oct 2009 20:59:44 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE-2009-3627 assignment notification - HTML-Parser-3.63
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/21/1
+Message-ID: <4AB6E6DE.7030909@redhat.com>
+Date: Mon, 21 Sep 2009 10:37:18 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: KVM: x86: Disallow hypercalls for guest callers in rings > 0
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve, vendors,
+Eugene Teo wrote:
+> "So far unprivileged guest callers running in ring 3 can issue, e.g., 
+> MMU hypercalls. Normally, such callers cannot provide any hand-crafted 
+> MMU command structure as it has to be passed by its physical address, 
+> but they can still crash the guest kernel by passing random addresses.
+> 
+> To close the hole, this patch considers hypercalls valid only if issued 
+> from guest ring 0. This may still be relaxed on a per-hypercall base in 
+> the future once required."
 
-   Mark Martinec reported a denial of service flaw ((infinite loop),
-present in HTML-Parser in versions prior to 3.63,  while parsing
-HTML entity with invalid UTF-8 character.
+So, besides the crash, users in the guest can access the guest kernel 
+memory, so the impact is actually more serious than what was noted in 
+the commit changelog. Take note.
 
-References:
------------
-https://issues.apache.org/SpamAssassin/show_bug.cgi?id=6225
-http://search.cpan.org/CPAN/authors/id/G/GA/GAAS/HTML-Parser-3.63.tar.gz
-
-Upstream patch:
----------------
-http://github.com/gisle/html-parser/commit/b9aae1e43eb2c8e989510187cff0ba3e996f9a4c
-
-Affected versions:
-------------------
-Issue was confirmed in 3.55 version of perl HTML-Parser module.
-
-CVE identifier:
----------------
-CVE identifier of CVE-2009-3627 has been already assigned to this issue.
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Eugene
