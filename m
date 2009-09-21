@@ -1,21 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/29/3
-Message-ID: <20090629122614.GM22771@ngolde.de>
-Date: Mon, 29 Jun 2009 14:26:15 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE id request: nagios
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/21/3
+Message-ID: <Pine.GSO.4.51.0909211440090.23430@faron.mitre.org>
+Date: Mon, 21 Sep 2009 14:42:20 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Thomas Biege <thomas@...e.de>
+cc: oss-security@...ts.openwall.com
+Subject: Re: OpenOffice.org CVE-2009-2139
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-is there already a CVE id for 
-http://secunia.com/advisories/35543?
 
-Cheers
-Nico
+On Thu, 10 Sep 2009, Thomas Biege wrote:
 
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
+> CVE-2009-2139
+>
+> Manipulated EMF files can lead to heap overflows and arbitrary code
+> execution
+>
+>     * Synopsis: Manipulated EMF files can lead to heap overflows and
+>                 arbitrary code execution
+>     * State: Resolved
 
-Content of type "application/pgp-signature" skipped
+We recently created CVE-2009-3239 to address an OpenOffice overflow in
+enhwmf.cxx/emfplus.cxx, as described in SUSE-SR:2009:015:
+
+  "This update of OpenOffice.org fixes potential buffer overflow in EMF
+   parser code (enhwmf.cxx, emfplus.cxx)."
+
+http://lists.opensuse.org/opensuse-security-announce/2009-09/msg00001.html
+
+Is CVE-2009-3239 a duplicate of CVE-2009-2139?
+
+(If so, we would probably keep CVE-2009-2139 and remove CVE-2009-3239.)
+
+- Steve
