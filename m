@@ -1,58 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/23/5
-Message-ID: <4B0A8036.2040408@redhat.com>
-Date: Mon, 23 Nov 2009 13:29:42 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Joe Orton <jorton@...hat.com>
-Subject: Re: CVE request: php 5.3.1 -  proc_open() bypass PHP Bug #49026 [was: Re: CVE request: php 5.3.1 update]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/22/5
+Message-ID: <Pine.GSO.4.51.0909220321400.16381@faron.mitre.org>
+Date: Tue, 22 Sep 2009 03:22:03 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security <oss-security@...ts.openwall.com>
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request - glib symlink copying permission exposure
 Content-Type: text/plain; charset=utf-8
 
-Hi Brian,
 
-security curmudgeon wrote:
-> On Fri, 20 Nov 2009, Thomas Biege wrote:
-> 
-> : PHP was updated to version 5.3.1 and did also address security
-> : issues: http://www.php.net/releases/5_3_1.php
-> : 
-> : Security Enhancements and Fixes in PHP 5.3.1:
-> : 
-> :     * Added "max_file_uploads" INI directive, which can be set to limit the number of file uploads per-request to 20 by default, to prevent possible DOS via temporary file exhaustion.
-> :     * Added missing sanity checks around exif processing.
-> 
-> This was previously disclosed and fixed in the 5.2.x tree. I believe this 
-> is the same as CVE-2009-3292.
-> 
-> :     * Fixed a safe_mode bypass in tempnam().
-> :     * Fixed a open_basedir bypass in posix_mkfifo().
-> :     * Fixed bug #50063 (safe_mode_include_dir fails).
-> :     * Fixed bug #44683 (popen crashes when an invalid mode is passed).
-> 
-> Also not flagged as 'security' up top, but from the changelog:
-> 
-> Fixed bug #49026 (proc_open() can bypass safe_mode_protected_env_vars 
-> restrictions). (Ilia)
+======================================================
+Name: CVE-2009-3289
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3289
+Reference: MLIST:[oss-security] 20090908 CVE Request - glib symlink copying permission exposure
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/09/08/8
+Reference: MISC:https://bugzilla.gnome.org/show_bug.cgi?id=593406
+Reference: CONFIRM:https://bugs.launchpad.net/ubuntu/+source/glib2.0/+bug/418135
 
-   Thank you for pointing this out.
+The g_file_copy function in glib 2.0 sets the permissions of a target
+file to the permissions of a symbolic link (777), which allows
+user-assisted local users to modify files of other users, as
+demonstrated by using Nautilus to modify the permissions of the user
+home directory.
 
-   Yes, further look into particular php bugzilla returns:
-
-     "Environment variables specified for proc_open passed without check so
-      safe_mode_allowed_env_vars and safe_mode_protected_env_vars settings are
-      ignored. So it become possible to use buffer overflow exploit with
-      "LD_PRELOAD=evil_library.so" to bypass safe_mode restrictions and get
-      access to any files acessible for apache uid."
-
-   So looks another CVE id is needed here. Changed subject to:
-   "CVE request: php 5.3.1 - proc_open() bypass PHP Bug #49026"
-
-   Could we get another CVE id for this case?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-> 
-> Brian
 
