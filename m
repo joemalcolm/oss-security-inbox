@@ -1,30 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/10/2
-Message-ID: <20090810154743.3424fd3f@redhat.com>
-Date: Mon, 10 Aug 2009 15:47:43 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/22/1
+Message-ID: <Pine.GSO.4.51.0909220130450.16381@faron.mitre.org>
+Date: Tue, 22 Sep 2009 01:49:40 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: oss-security+ml@...lde.de
-Subject: Re: CVE id request: groff (pdfroff)
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- PHP 5 - 5.2.11
 Content-Type: text/plain; charset=utf-8
 
-On Sun, 9 Aug 2009 15:48:17 +0200 Nico Golde
-<oss-security+ml@...lde.de> wrote:
 
-> First one:
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=538330
-> pdfroff tool of groff is creating files in a insecure manner 
-> in the /tmp directory.
-> 
-> Second:
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=538338
-> pdfroff tool of groff is calling ghostscript with the 
-> -dSAFER command line option.
+On Sun, 20 Sep 2009, yersinia wrote:
 
-Looking into groff's NEWS file, pdfroff was added in version 1.19.2, so
-that may be used as "first affected" in CVE description:
+> > > This would appear to be:
+> > >
+> > > http://svn.php.net/viewvc?view=revision&revision=287779
+> > >
+> > > which is Windows-specific.
+> >
+> > I was more wondering why this is a security issue rather
+> > than a bug.
+>
+> http://securityvulns.com/Vdocument145.html
 
-http://cvs.savannah.gnu.org/viewvc/groff/groff/NEWS?view=markup
+Vdocument145.html appears to be about a buffer overflow in the second
+argument to popen.
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+PHP bug 44683, which is part of the 5.2.11 PHP announcement, focuses on an
+"e" or "er" value in the second argument.  It also suggests the core
+problem is in the Microsoft C function _fdopen.
+
+The Vdocument145.html issue may well be the same - maybe _fdopen doesn't
+handle *any* invalid mode string, and the exploit has "A" as the first
+character, which is invalid.  The actual behavior of _fdopen is not
+immediately clear to me.  Maybe there's really a buffer overflow going on.
+
+Vdocument145.html also doesn't seem to mention anything about Windows, so
+maybe this applies to other OSes.
+
+The scope of PHP bug #44683 may be very limited, but since the vendor is
+trying to communicate that it's a security problem to its customers, it's
+still reasonable to assign a CVE to it (momentarily).
+
+- Steve
