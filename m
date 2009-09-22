@@ -1,57 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/28/3
-Message-ID: <20090728125426.GA22660@openwall.com>
-Date: Tue, 28 Jul 2009 16:54:26 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/22/3
+Message-ID: <Pine.GSO.4.51.0909220319500.16381@faron.mitre.org>
+Date: Tue, 22 Sep 2009 03:20:08 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: ithilgore <ithilgore.ryu.l@...il.com>
-Subject: Re: Apache 2.2 HTTP Basic Auth bypass
+Subject: Re: CVE request(?): Thin: Client IP spoofing
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jul 28, 2009 at 03:27:52PM +0300, ithilgore wrote:
->  I am not sure yet if this works on Apache 2.2.11 which is the latest release. I have tried
-> and reproduced it on some earlier versions (e.g Apache 2.2.2). Thus I wouldn't really mark
-> it as that critical yet, since up-to-date servers might not really be vulnerable.
 
-I never implied it was "critical", yet it sounded "fairly important",
-and it still does, even if it only affects specific non-latest versions.
-When maintaining older distro releases / stable branches, distro vendors
-tend to back-port known security fixes, so even if an issue is no longer
-present in the latest version and even if older versions have other
-"equivalent" or "worse" vulnerabilities, that does not make your
-discovery unimportant.  In fact, this back-porting approach appears to
-be more common than updating a non-development release/branch to a new
-upstream version.  Thus, there may well be "latest" distro packages of
-older versions of Apache with all other known important security issues
-fixed.  Also, systems administrators may not be "blindly" updating to
-latest upstream releases - they may be relying on documentation of known
-important issues to decide when to upgrade.
+======================================================
+Name: CVE-2009-3287
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3287
+Reference: MLIST:[oss-security] 20090912 CVE request(?): Thin: Client IP spoofing
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/09/12/1
+Reference: CONFIRM:http://github.com/macournoyer/thin/blob/master/CHANGELOG
+Reference: CONFIRM:http://github.com/macournoyer/thin/commit/7bd027914c5ffd36bb408ef47dc749de3b6e063a
 
-> All in all, for now I wouldn't really make that much of an issue about it and I don't think that
-> the vendors need to hold off releasing anything if they have to.
+lib/thin/connection.rb in Thin web server before 1.2.4 relies on the
+X-Forwarded-For header to determine the IP address of the client,
+which allows remote attackers to spoof the IP address and hide
+activities via a modified X-Forwarded-For header.
 
-OK, thanks for sharing your opinion.  I think the vendors will decide
-for themselves.
 
-BTW, I wouldn't be too surprised if the problem turns out not to be an
-Apache bug, after all, but rather something specific to your system.
-
-> Anyway, I had already mentioned
-> it in the lists some days earlier and for some reason that didn't attract any attention (perhaps because
-> I didn't use the word 0day there): http://seclists.org/nmap-dev/2009/q3/0305.html
-
-Yes, I am "guilty" of having missed that.  I am not watching nmap-dev
-discussions closely.
-
-> I am in the process of further investigating the issue, however.
-
-Great.  I suggest that you work with Apache security folks off-list to
-get the details figured out.  Since you did not reveal anything very
-specific yet (other than that a development version of Ncrack triggers
-the problem on a system of yours), it makes sense to possibly reduce the
-window of exposure by coming up with a fix before the bug is fully
-disclosed.
-
-Thanks,
-
-Alexander
