@@ -1,19 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/16/1
-Message-Id: <200903162014.17553.hanno@hboeck.de>
-Date: Mon, 16 Mar 2009 20:14:17 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com, Steven Christey <coley@...us.mitre.org>
-Subject: CVE request: XSS in MUC logs of ejabberd
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/22/6
+Message-ID: <Pine.GSO.4.51.0909220322330.16381@faron.mitre.org>
+Date: Tue, 22 Sep 2009 03:23:09 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: KVM: x86: Disallow hypercalls for guest callers in rings > 0
 Content-Type: text/plain; charset=utf-8
 
-http://www.process-one.net/en/ejabberd/release_notes/release_note_ejabberd_204
 
-Cite:
-# MUC: Prevent XSS in MUC logs by linkifying only a few known protocols
+Eugene, you said "access" kernel memory - do you mean read, write, or
+both?
 
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+- Steve
 
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+
+======================================================
+Name: CVE-2009-3290
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3290
+Reference: MLIST:[oss-security] 20090918 CVE request: kernel: KVM: x86: Disallow hypercalls for guest callers in rings > 0
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/09/18/1
+Reference: MLIST:[oss-security] 20090921 Re: CVE request: kernel: KVM: x86: Disallow hypercalls for guest callers in rings > 0
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/09/21/1
+Reference: CONFIRM:http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=07708c4af1346ab1521b26a202f438366b7bcffd
+Reference: CONFIRM:http://patchwork.kernel.org/patch/38926/
+Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=524124
+
+The kvm_emulate_hypercall function in arch/x86/kvm/x86.c in KVM in the
+Linux kernel 2.6.25-rc1, and other versions before 2.6.31, when
+running on x86 systems, does not prevent access to MMU hypercalls from
+ring 0, which allows local guest OS users to cause a denial of service
+(guest kernel crash) and read guest kernel memory via unspecified
+"random addresses."
+
+
