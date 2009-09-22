@@ -1,22 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/12/12
-Message-Id: <200902122123.47118.rbu@gentoo.org>
-Date: Thu, 12 Feb 2009 21:23:40 +0100
-From: Robert Buchholz <rbu@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/22/4
+Message-ID: <Pine.GSO.4.51.0909220321110.16381@faron.mitre.org>
+Date: Tue, 22 Sep 2009 03:21:19 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- net-snmp (sensitive host information disclosure)
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: NULL pointer dereference in sg_build_indirect()
 Content-Type: text/plain; charset=utf-8
 
-On Thursday 12 February 2009, Jan Lieskovsky wrote:
-> Affected net-snmp versions:
-> net-snmp-5.0.9 (older versions probably too) <= x <= net-snmp-5.4.2 
-> (till the above upstream commit)
 
-Just to avoid confusion, upstream's latest release is 5.4.2.1, which is 
-affected as well (and this could be updated in the CVE description).
+======================================================
+Name: CVE-2009-3288
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3288
+Reference: MLIST:[linux-kernel] 20090902 [BUG] 2.6.31-rc8 readcd Oops
+Reference: URL:http://lkml.org/lkml/2009/9/3/1
+Reference: MLIST:[linux-kernel] 20090903 [PATCH] sg: fix oops in the error path in sg_build_indirect()
+Reference: URL:http://lkml.org/lkml/2009/9/3/107
+Reference: MLIST:[oss-security] 20090904 CVE request: kernel: NULL pointer dereference in sg_build_indirect()
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/09/03/4
+
+The sg_build_indirect function in drivers/scsi/sg.c in Linux kernel
+2.6.28-rc1 through 2.6.31-rc8 uses an incorrect variable when
+accessing an array, which allows local users to cause a denial of
+service (kernel OOPS and NULL pointer dereference), as demonstrated by
+using xcdroast to duplicate a CD.  NOTE: this is only exploitable by
+users who can open the cdrom device.
 
 
-Robert
-
-Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
