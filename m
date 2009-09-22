@@ -1,29 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/10/5
-Message-ID: <Pine.GSO.4.51.0911092047530.4011@faron.mitre.org>
-Date: Mon, 9 Nov 2009 20:49:33 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/22/7
+Message-ID: <Pine.GSO.4.51.0909220324130.16381@faron.mitre.org>
+Date: Tue, 22 Sep 2009 03:24:34 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Josh Bressers <bressers@...hat.com>
-cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: oping allows the disclosure of  arbitrary file contents
+To: oss-security <oss-security@...ts.openwall.com>, oss-security <oss-security@...ts.openwall.com>
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- PHP 5 - 5.2.11
 Content-Type: text/plain; charset=utf-8
 
 
-On Mon, 9 Nov 2009, Josh Bressers wrote:
+======================================================
+Name: CVE-2009-3291
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3291
+Reference: CONFIRM:http://www.php.net/ChangeLog-5.php#5.2.11
+Reference: CONFIRM:http://www.php.net/releases/5_2_11.php
+Reference: OSVDB:58185
+Reference: URL:http://www.osvdb.org/58185
+Reference: SECUNIA:36791
+Reference: URL:http://secunia.com/advisories/36791
+Reference: XF:php-certificate-unspecified(53334)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/53334
 
-> That issue has a CVE id. I gave it CVE-2009-3614 quite some time ago.
-> http://marc.info/?l=oss-security&m=125561742729846&w=2
+The php_openssl_apply_verification_policy function in PHP before
+5.2.11 does not properly perform certificate validation, which has
+unknown impact and attack vectors, probably related to an ability to
+spoof certificates.
 
-A "feature" in our oss-security list monitor prevented me from noticing
-this post.  Apologies.
 
-> The discussion then branched out into if an unchecked call to setuid to
-> drop permissions is a security flaw (as a user could cause it to fail,
-> preventing oping from dropping privs). I saw nothing in the code that
-> showed it to be anything but a bug, as oping doesn't do anything
-> exciting after the call could fail.
+======================================================
+Name: CVE-2009-3292
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3292
+Reference: CONFIRM:http://www.php.net/ChangeLog-5.php#5.2.11
+Reference: CONFIRM:http://www.php.net/releases/5_2_11.php
+Reference: OSVDB:58186
+Reference: URL:http://www.osvdb.org/58186
+Reference: SECUNIA:36791
+Reference: URL:http://secunia.com/advisories/36791
 
-OK, in this context I would agree (just to be consistent with my Oct 16
-post.)
+Unspecified vulnerability in PHP before 5.2.11 has unknown impact and
+attack vectors related to "missing sanity checks around exif
+processing."
 
-- Steve
+
+======================================================
+Name: CVE-2009-3293
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3293
+Reference: CONFIRM:http://www.php.net/ChangeLog-5.php#5.2.11
+Reference: CONFIRM:http://www.php.net/releases/5_2_11.php
+Reference: OSVDB:58187
+Reference: URL:http://www.osvdb.org/58187
+Reference: SECUNIA:36791
+Reference: URL:http://secunia.com/advisories/36791
+
+Unspecified vulnerability in the imagecolortransparent function in PHP
+before 5.2.11 has unknown impact and attack vectors related to an
+incorrect "sanity check for the color index."
+
+
+======================================================
+Name: CVE-2009-3294
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3294
+Reference: MLIST:[oss-security] 20090920 Re: CVE Request -- PHP 5 - 5.2.11
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/09/20/1
+Reference: CONFIRM:http://bugs.php.net/bug.php?id=44683
+Reference: CONFIRM:http://svn.php.net/viewvc?view=revision&revision=287779
+Reference: CONFIRM:http://www.php.net/ChangeLog-5.php#5.2.11
+Reference: CONFIRM:http://www.php.net/releases/5_2_11.php
+Reference: OSVDB:58188
+Reference: URL:http://www.osvdb.org/58188
+
+The popen API function in TSRM/tsrm_win32.c in PHP before 5.2.11, when
+running on certain Windows operating systems, allows context-dependent
+attackers to cause a denial of service (crash) via a crafted (1) "e"
+or (2) "er" string in the second argument (aka mode), possibly related
+to the _fdopen function in the Microsoft C runtime library.  NOTE: this
+might not cross privilege boundaries except in rare cases in which the
+mode argument is accessible to an attacker outside of an application
+that uses the popen function.
+
+
