@@ -1,29 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/31/9
-Message-ID: <20090831184149.GP11041@ngolde.de>
-Date: Mon, 31 Aug 2009 20:41:49 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/22/9
+Message-ID: <20090922154711.GC13655@suse.de>
+Date: Tue, 22 Sep 2009 17:47:11 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: squirrelmail CSRF
+Cc: Thomas Biege <thomas@...e.de>
+Subject: Re: OpenOffice.org CVE-2009-2139
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Tomas Hoger <thoger@...hat.com> [2009-08-31 20:40]:
-> On Mon, 31 Aug 2009 20:21:32 +0200 Nico Golde
-> <oss-security+ml@...lde.de> wrote:
-> 
-> > can I get a CVE id for:
-> > http://www.squirrelmail.org/security/issue/2009-08-12
-> 
-> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2964
+On Mon, Sep 21, 2009 at 02:42:20PM -0400, Steven M. Christey wrote:
+>
+> On Thu, 10 Sep 2009, Thomas Biege wrote:
+>
+> > CVE-2009-2139
+> >
+> > Manipulated EMF files can lead to heap overflows and arbitrary code
+> > execution
+> >
+> >     * Synopsis: Manipulated EMF files can lead to heap overflows and
+> >                 arbitrary code execution
+> >     * State: Resolved
+>
+> We recently created CVE-2009-3239 to address an OpenOffice overflow in
+> enhwmf.cxx/emfplus.cxx, as described in SUSE-SR:2009:015:
+>
+>   "This update of OpenOffice.org fixes potential buffer overflow in EMF
+>    parser code (enhwmf.cxx, emfplus.cxx)."
+>
+> http://lists.opensuse.org/opensuse-security-announce/2009-09/msg00001.html
+>
+> Is CVE-2009-3239 a duplicate of CVE-2009-2139?
+>
+> (If so, we would probably keep CVE-2009-2139 and remove CVE-2009-3239.)
 
-Yeah sorry, realized that after I filed our bug. Sorry for 
-the noise and thanks!
 
-Cheers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
+Our text actually references the issues CVE-2009-2139 and CVE-2009-2140
+but did not specify them due to an oversight.
 
-Content of type "application/pgp-signature" skipped
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2139
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2140
+
+Both are go-ooo.org build specific issues.
+
+Ciao, Marcus
