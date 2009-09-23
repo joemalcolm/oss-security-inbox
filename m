@@ -1,17 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/09/6
-Message-ID: <20090909211240.75c1ccc3@redhat.com>
-Date: Wed, 9 Sep 2009 21:12:40 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: OSS Security <oss-security@...ts.openwall.com>
-Subject: OpenOffice.org CVE-2009-2139
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/23/3
+Message-ID: <87ljk51m2q.fsf@mid.deneb.enyo.de>
+Date: Wed, 23 Sep 2009 19:46:05 +0000
+From: Florian Weimer <fw@...eb.enyo.de>
+To: oss-security@...ts.openwall.com
+Cc: coley@...us.mitre.org
+Subject: Three Shibboleth issues
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+1)
 
-Does anyone have more info on CVE-2009-2139 besides Debian advisory?
+| The Shibboleth software includes code to encode and decode URL
+| information, and has been shown to crash on certain malformed
+| encoded URLs due to a buffer overrun.
 
-http://www.debian.org/security/2009/dsa-1880
+(Also potential pre-auth code execution.)
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+<http://shibboleth.internet2.edu/secadv/secadv_20090826.txt>
+
+
+2)
+
+NUL injection in certificate names:
+
+<http://shibboleth.internet2.edu/secadv/secadv_20090817.txt>
+
+
+3)
+
+| The Shibboleth software supports the use of SAML metadata to
+| identify authentication and encryption keys by means of the
+| <KeyDescriptor> element. In previous versions, the software
+| was improperly ignoring the "use" attribute and treating all
+| elements as valid for both signing/TLS and encryption.
+
+<http://shibboleth.internet2.edu/secadv/secadv_20090817a.txt>
+
+Isolated patches are available here:
+
+<http://lists.alioth.debian.org/pipermail/pkg-shibboleth-devel/2009-September/001213.html>
+
+Be careful when applying them---one hunk touches an inline function in
+a header-only C++ class with virtual functions (see the mailing list
+discussion).
