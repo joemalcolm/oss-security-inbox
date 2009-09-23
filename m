@@ -1,33 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/22/1
-Message-ID: <4ADFE66D.6080401@kernel.sg>
-Date: Thu, 22 Oct 2009 12:58:21 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/23/1
+Message-ID: <4AB96901.6030401@redhat.com>
+Date: Wed, 23 Sep 2009 08:17:05 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
 CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: nfsd4: fix null dereference creating nfsv4 callback client
+Subject: Re: CVE request: kernel: issue with O_EXCL creates on NFSv4
 Content-Type: text/plain; charset=utf-8
 
-Quoting from upstream patch:
-"On setting up the callback to the client, we attempt to use the same
-authentication flavor the client did.  We find an rpc cred to use by 
-calling rpcauth_lookup_credcache(), which assumes that the given 
-authentication flavor has a credentials cache.  However, this is not 
-required to be true--in particular, auth_null does not use one. Instead, 
-we should call the auth's lookup_cred() method.
+Steven M. Christey wrote:
+> On Mon, 21 Sep 2009, Eugene Teo wrote:
+>> Upstream commits:
+>> http://git.kernel.org/linus/af85852d (fixed in v2.6.19-rc6)
+>> http://git.kernel.org/linus/81ac95c5 (fixed in v2.6.19-rc6)
+>> http://git.kernel.org/linus/79fb54ab (fixed in v2.6.30-rc1)
+> 
+> I can't see any clear relationship between these commits and the Red Hat
+> bugzilla entry.  The implication that there were two fixes, one in 2.6.19
+> and one in 2.6.30, is also confusing because if a fix in 2.6.19 didn't
+> work, we'd normally assign a new CVE for the fix in 2.6.30.
+> 
+> CVE-2009-3286 is below, anchored on what's said in Bugzilla 524520. Since
+> 81ac95c also mentions do_open_permission, I used that as a reference.
+> This suggests the problem was fixed in 2006, but this issue doesn't have a
+> CVE identifier because security implications weren't spelled out until
+> Eugene's post (as far as I can tell.)
 
-Without this, a client attempting to mount using nfsv4 and auth_null 
-triggers a null dereference."
+Hi Steve,
 
-The code was introduced in upstream commit 3cef9ab2 (v2.6.31-rc1), fixed 
-in 886e3b7f (v2.6.32-rc1), and was later replaced by 80fc015b in the 
-same version.
+Sorry for the confusion.
 
-References:
-http://article.gmane.org/gmane.linux.nfs/26513
-https://bugzilla.redhat.com/show_bug.cgi?id=530269
-http://git.kernel.org/linus/3cef9ab266a932899e756f7e1ea7a988a97bf3b2
-http://git.kernel.org/linus/886e3b7fe6054230c89ae078a09565ed183ecc73
-http://git.kernel.org/linus/80fc015bdfe1f5b870c1e1ee02d78e709523fee7
+The upstream commit should just be http://git.kernel.org/linus/79fb54ab.
+
+On an O_EXCL create, the kernel was passing a bogus mode to the 
+vfs_create() op, which caused the file to be created with non-sensical 
+(and possibly unsafe) permissions. The intention was to pass a mode with 
+all of the permission bits cleared, but the field wasn't necessarily 
+zeroed out.
+
+When the create is successful, this isn't very noticable. The client 
+will follow up the create with a SETATTR call and fix the mode and 
+permissions. Still, there was a window of opportunity where the file 
+might have "unsafe" perms even when the CREATE op returns success.
+
+This was a long standing problem fixed in 2.6.30 or so, seemingly 
+inadvertently as part of the merge of the NFSv4.1 code.
+
+The other two commits were for another bug that we fixed.
 
 Thanks, Eugene
