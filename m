@@ -1,61 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/15/5
-Message-ID: <20090415195830.2bdfa55b@redhat.com>
-Date: Wed, 15 Apr 2009 19:58:30 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/23/2
+Message-ID: <20090923110517.2d302aed@redhat.com>
+Date: Wed, 23 Sep 2009 11:05:17 +0200
 From: Tomas Hoger <thoger@...hat.com>
-To: wietse@...cupine.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Re: Some fun with tcp_wrappers
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: More CVE-2009-2408 like issues
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 15 Apr 2009 10:58:54 -0400 (EDT) wietse@...cupine.org (Wietse
-Venema) wrote:
+On Thu, 3 Sep 2009 16:45:47 +0200 Tomas Hoger <thoger@...hat.com> wrote:
 
-> > STRING_UNKNOWN is valid argument expected to be passed to hosts_ctl.
-> > That description does not seem to be too clear to indicate that when
-> > one uses hosts_ctl as:
-> > 
-> >   hosts_ctl(svcname, STRING_UNKNOWN, client_addr, STRING_UNKNOWN)
-> > 
-> > all hostname-based rules are ignored.  It seems those using
-> > hosts_ctl do not always realize that.
-> 
-> That behavior is not what I implemented. It must have been introduced
-> by someone else.
+> wget - bunch of relevant links are available in here:
+>   https://bugzilla.redhat.com/show_bug.cgi?id=520454
 
-[ .. ]
+Fixed now in upstream version 1.12:
+  http://permalink.gmane.org/gmane.comp.web.wget.general/8972
 
-> As you see, my own code does not ignore hostname rules when
-> the hostname is "unknown".
-
-Your examples work as the hostname used in hosts.{allow,deny} is
-"unknown", but it should not work for any other hostname.  Can you try
-this:
-
-$ getent hosts 127.0.0.1
-127.0.0.1       localhost
-
-$ cat hosts.allow hosts.deny
-foobar: localhost
-foobar: ALL: DENY
-cat: hosts.deny: No such file or directory
-
-$ ./test-hostsctl -d foobar unknown 127.0.0.1 unknown
-denied
-
-(this is expected to be allowed)
-
-$ cat hosts.allow hosts.deny
-foobar: localhost: DENY
-cat: hosts.deny: No such file or directory
-
-$ ./test-hostsctl -d foobar unknown 127.0.0.1 unknown
-allowed
-
-(this is expected to be denied)
-
-"test-hostsctl servicename unknown IP unknown" is what some
-applications do expecting tcp_wrappers to resolve IP to hostname.
+This and other mentioned in my previous mail (mutt 1.5.19+, possibly
+pre-1.5.19 too, but many are likely to wontfix that; OpenLDAP with
+openssl) should probably get CVE.
 
 -- 
 Tomas Hoger / Red Hat Security Response Team
