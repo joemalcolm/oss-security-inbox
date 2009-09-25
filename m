@@ -1,45 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/17/14
-Message-ID: <b086760e0909170228l2cb2b00bw9d7c2c3236a69eef@mail.gmail.com>
-Date: Thu, 17 Sep 2009 11:28:13 +0200
-From: yersinia <yersinia.spiros@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: watch for LDAP anonymous binds and empty passwords
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/25/1
+Message-ID: <4ABCD8C1.8090409@redhat.com>
+Date: Fri, 25 Sep 2009 16:50:41 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, Michal Novotny <minovotn@...hat.com>
+Subject: CVE Request -- Xen -- PyGrub
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Sep 17, 2009 at 12:54 AM, Steven M. Christey
-<coley@...us.mitre.org>wrote:
+Hello Steve, vendors,
 
->
-> FYI, we've seen "LDAP anonymous binds and empty passwords" a couple times
-> in CVE, the latest being PostgreSQL (IDs forthcoming).  This smells like a
-> general vuln class to me, so developers may want to re-examine their LDAP
-> support.  CVE-2009-1905 and CVE-2007-6714 are examples.
->
-> I haven't investigated closely but the pattern may be that a blank
-> password can return successful authentication when anonymous binds are
-> allowed.  There's a relatively rare history of LDAP-specific vulns, which
-> suggests to me that not a lot of people have been looking for this.
->
-> I yes, because i am a LDAP expert (or so) and have worked with 4 different
-Directory Server.
-Vulnerabilities as this, but only for some proprietary product, are leading
-some security scanners like nessus, but not only,  to signal vulnerability
-for LDAP bind null, LDAP null base SEARCH and so. For this many LDAP
-administrators are forced by their security deparment,who are ignorant of
-these details but follow what they say the tools without understanding the
-implications, to configure their LDAP server by disabling the anonymous bind
-in general, also to the LDAP root DSE. But this is in direct violation of
-RFC LDAP and subsequently causing a large quantity of issues with other
-products that follow the RFC.
+   Xen's PyGrub, when grub.conf was configured with password protection,
+did not check for the password at host boot time. An attacker, with physical
+access to the host, could use this flaw to change the OS booting configuration.
 
-Free to ask if you want more details.
+Upstream patches:
+-----------------
 
-Best Regards
+http://xenbits.xensource.com/xen-unstable.hg?rev/8f783adc0ee3
+http://xenbits.xensource.com/staging/xen-unstable.hg?rev/a28c9c2fa8de
+http://xenbits.xensource.com/xen-unstable.hg?rev/e513d565c8f1
+http://xenbits.xensource.com/xen-unstable.hg?rev/67f1b8b32585
+http://xenbits.xensource.com/xen-unstable.hg?rev/168f0cfeded0
 
-Elia
+Affected Xen versions:
+----------------------
+Issue confirmed in Xen-3.0.3, Xen-3.3.0 and Xen-3.3.1.
 
+References:
+-----------
+https://bugzilla.redhat.com/show_bug.cgi?id=525740
+https://bugzilla.redhat.com/show_bug.cgi?id=525740#c1 (PoC)
 
-- Steve
->
+Could you please allocate a new CVE id?
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
