@@ -1,115 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/23/10
-Message-ID: <1343121332.999291256328537337.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 23 Oct 2009 16:08:57 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/30/1
+Message-ID: <4AC31FD9.5050507@redhat.com>
+Date: Wed, 30 Sep 2009 11:07:37 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE id request: typo3
+CC: "Steven M. Christey" <coley@...us.mitre.org>, Michal Novotny <minovotn@...hat.com>
+Subject: Re: CVE Request (Sort of urgent) -- Xen -- PyGrub
 Content-Type: text/plain; charset=utf-8
 
+Hello Steve,
 
------ "Nico Golde" <oss-security+ml@...lde.de> wrote:
+   any progress while reviewing the issue and assigning a CVE?
 
-> Hi,
-> As I didn't see a request for this yet:
-> https://typo3.org/teams/security/security-bulletins/typo3-sa-2009-016/
+Reformulated flaw details can be found here:
+     https://bugzilla.redhat.com/show_bug.cgi?id=525740#c0
+
+And further explanation of it's security implications here:
+     https://bugzilla.redhat.com/show_bug.cgi?id=525740#c3
+
+Thanks, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+Jan Lieskovsky wrote:
+> Hello Steve, vendors,
 > 
-> Can someone assign CVE ids to these issues?
+>   Xen's PyGrub, when grub.conf was configured with password protection,
+> did not check for the password at host boot time. An attacker, with 
+> physical
+> access to the host, could use this flaw to change the OS booting 
+> configuration.
+> 
+> Upstream patches:
+> -----------------
+> 
+> http://xenbits.xensource.com/xen-unstable.hg?rev/8f783adc0ee3
+> http://xenbits.xensource.com/staging/xen-unstable.hg?rev/a28c9c2fa8de
+> http://xenbits.xensource.com/xen-unstable.hg?rev/e513d565c8f1
+> http://xenbits.xensource.com/xen-unstable.hg?rev/67f1b8b32585
+> http://xenbits.xensource.com/xen-unstable.hg?rev/168f0cfeded0
+> 
+> Affected Xen versions:
+> ----------------------
+> Issue confirmed in Xen-3.0.3, Xen-3.3.0 and Xen-3.3.1.
+> 
+> References:
+> -----------
+> https://bugzilla.redhat.com/show_bug.cgi?id=525740
+> https://bugzilla.redhat.com/show_bug.cgi?id=525740#c1 (PoC)
+> 
+> Could you please allocate a new CVE id?
+> 
+> Thanks && Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
 > 
 
-This is a big one. Let me know if I've screwed any of these up.
-
-CVE-2009-3628 TYPO3 Information disclosure
-
-    TYPO3 versions 4.0.13 and below, 4.1.12 and below, 4.2.9 and below,
-    4.3.0beta1 and below contain an information disclosure flaw where if
-    malcious content was entered into a tt_content form element, a backend
-    user could recalculate the encryption key
-
-    References:
-    http://marc.info/?l=oss-security&m=125626536616052&w=2
-    https://typo3.org/teams/security/security-bulletins/typo3-sa-2009-016/
-
-CVE-2009-3629 TYPO3 Cross-site scripting
-
-    TYPO3 versions 4.0.13 and below, 4.1.12 and below, 4.2.9 and below,
-    4.3.0beta1 and below contain a cross-site scripting flaw where the TYPO3
-    backend failed to properly sanitize user input.
-
-    http://marc.info/?l=oss-security&m=125626536616052&w=2
-    https://typo3.org/teams/security/security-bulletins/typo3-sa-2009-016/
-
-CVE-2009-3630 TYPO3 Frame hijacking
-
-    TYPO3 versions 4.0.13 and below, 4.1.12 and below, 4.2.9 and below,
-    4.3.0beta1 and below contain a flaw where by manipulating URL parameters
-    it is possible to include arbitrary websites in the TYPO3 backend
-    framesets.
-
-    http://marc.info/?l=oss-security&m=125626536616052&w=2
-    https://typo3.org/teams/security/security-bulletins/typo3-sa-2009-016/
-
-CVE-2009-3631 TYPO3 Remote shell command execution
-
-    TYPO3 versions 4.0.13 and below, 4.1.12 and below, 4.2.9 and below,
-    4.3.0beta1 and below when using certain third party file upload extension
-    could allow a file with a crafted name to execute arbitrary commands on
-    the TYPO3 server.
-
-    http://marc.info/?l=oss-security&m=125626536616052&w=2
-    https://typo3.org/teams/security/security-bulletins/typo3-sa-2009-016/
-
-CVE-2009-3632 TYPO3 SQL injection
-
-    TYPO3 versions 4.0.13 and below, 4.1.12 and below, 4.2.9 and below,
-    4.3.0beta1 and below contain an SQL injection flaw where a logged in user
-    could execute arbitrary SQL by sending the server a specially crafted URL.
-
-    http://marc.info/?l=oss-security&m=125626536616052&w=2
-    https://typo3.org/teams/security/security-bulletins/typo3-sa-2009-016/
-
-CVE-2009-3633 TYPO3 API function t3lib_div::quoteJSvalue XSS
-
-    TYPO3 versions 4.0.13 and below, 4.1.12 and below, 4.2.9 and below,
-    4.3.0beta1 and below contain an unauthenticated cross-site scripting flaw
-    in its API function t3lib_div::quoteJSvalue.
-
-    http://marc.info/?l=oss-security&m=125626536616052&w=2
-    https://typo3.org/teams/security/security-bulletins/typo3-sa-2009-016/
-
-CVE-2009-3634 TYPO3 Frontend Login Box (felogin) XSS
-
-    TYPO3 versions 4.2.0 to 4.2.6 contian contain a cross-site scripting flaw
-    where the URL parameters of Frontend Login Box were not properly
-    sanitized.
-
-    http://marc.info/?l=oss-security&m=125626536616052&w=2
-    https://typo3.org/teams/security/security-bulletins/typo3-sa-2009-016/
-
-CVE-2009-3635 TYPO3 Insecure Authentication and Session Handling
-
-    TYPO3 versions 4.0.13 and below, 4.1.12 and below, 4.2.9 and below,
-    4.3.0beta1 and below contain an insecure authentication and session
-    handling flaw. If an attacker knows the md5 hash of the Install Tool
-    password, they can gain access to the Install Tool.
-
-    http://marc.info/?l=oss-security&m=125626536616052&w=2
-    https://typo3.org/teams/security/security-bulletins/typo3-sa-2009-016/
-
-CVE-2009-3636 TYPO3 Install Tool XSS
-
-    TYPO3 versions 4.0.13 and below, 4.1.12 and below, 4.2.9 and below,
-    4.3.0beta1 and below contain a cross-site scripting flaw in the Install
-    Tool. The Install Tool does not properly sanitize URL parameters leading
-    to this attack.
-
-    Note: The Install Tool is not meant to be activated in production
-    environments.
-
-    http://marc.info/?l=oss-security&m=125626536616052&w=2
-    https://typo3.org/teams/security/security-bulletins/typo3-sa-2009-016/
-
-
--- 
-    JB
