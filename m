@@ -1,34 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/05/12
-Message-ID: <20090805220515.03fb8c0b@redhat.com>
-Date: Wed, 5 Aug 2009 22:05:15 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: matthias.andree@....de
-Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: fetchmail <= 6.3.10 SSL certificate NUL prefix verification bypass
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/01/1
+Message-ID: <Pine.GSO.4.51.0910011309460.3284@faron.mitre.org>
+Date: Thu, 1 Oct 2009 13:09:58 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security <oss-security@...ts.openwall.com>, oss-security <oss-security@...ts.openwall.com>
+cc: "Steven M. Christey" <coley@...us.mitre.org>, Michal Novotny <minovotn@...hat.com>
+Subject: Re: CVE Request -- Xen -- PyGrub
 Content-Type: text/plain; charset=utf-8
 
-Hi Matthias!
 
-On Wed, 05 Aug 2009 18:55:39 +0200 "Matthias Andree"
-<matthias.andree@....de> wrote:
+On Fri, 25 Sep 2009, Jan Lieskovsky wrote:
 
-> FWIW, I haven't yet tested if this works for NUL in subjectAltNames,
-> as I currently don't know how to generate such a certificate (can be  
-> self-signed) without writing major amounts of code.
-> 
-> If someone has a certificate that has embedded NULs in
-> subjectAltNames that I can use for testing, please send it along
-> together with its key so that I can check the fix also works in that
-> code path.
+>    Xen's PyGrub, when grub.conf was configured with password protection,
+> did not check for the password at host boot time. An attacker, with physical
+> access to the host, could use this flaw to change the OS booting configuration.
 
-I managed to build these, that may be helpful during the testing:
+Use CVE-2009-3525, to be filled in later.
 
-  http://people.redhat.com/thoger/certs-with-nuls/
-
-Let me know if anything needed is missing there.
-
-HTH
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+- Steve
