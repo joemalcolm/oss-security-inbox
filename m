@@ -1,20 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/04/8
-Message-Id: <200902041400.57347.steffen.joeris@skolelinux.de>
-Date: Wed, 4 Feb 2009 14:00:56 -0500
-From: Steffen Joeris <steffen.joeris@...lelinux.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/02/1
+Message-ID: <1411451788.1386081254443874297.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 1 Oct 2009 20:37:54 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: mahara
+Cc: coley <coley@...re.org>
+Subject: Re: CVE Request (kernel)
 Content-Type: text/plain; charset=utf-8
 
-Hi
 
-There is an XSS issue in mahara.
-http://mahara.org/interaction/forum/topic.php?id=198
+----- "Josh Bressers" <bressers@...hat.com> wrote:
 
-I don't think this issue has a CVE id yet, could I get one for it?
+> Hi Steve,
+> 
+> There is an information leak issue in the Linux Kernel:
+> http://lkml.org/lkml/2009/10/1/164
+> 
+> It seems that an ia32 process running on an ia64 machine could see
+> register contents from a previous process.
+> 
 
-Cheers
-Steffen
+Argh, not ia64, x86_64.
 
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+Sorry for the confusion.
+
+-- 
+    JB
