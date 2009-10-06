@@ -1,20 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/23/2
-Message-Id: <200903231031.20867.hanno@hboeck.de>
-Date: Mon, 23 Mar 2009 10:31:20 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Cc: Steven Christey <coley@...us.mitre.org>
-Subject: CVE request: API key disclosure in piwik
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/06/1
+Message-ID: <1734991890.1677571254863674719.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 6 Oct 2009 17:14:34 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: coley <coley@...re.org>
+Subject: Kernel ecryptfs CVE id (CVE-2009-2908)
 Content-Type: text/plain; charset=utf-8
 
-Source:
-http://marco-ziesing.de/archives/35-Schluesselloch-in-Piwik.html (german)
-http://dev.piwik.org/trac/ticket/599
+As some of you may have noticed, the 2.6.31.2 kernel contained this bit in the
+changelog:
+eCryptfs: Prevent lower dentry from going negative ...
 
+The commit is here:
+http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.31.y.git;a=commit;h=afc2b6932f48f200736d3e36ad66fee0ec733136
+
+I've assigned this CVE-2009-2908. At the very least it's a DoS as it causes an
+OOPS due to a NULL pointer dereference, it may allow arbitrary code execution
+as the structure in question does contain function pointers. If someone who
+knows more than me wants to chime in here, please do.
+
+I've filed a bug in the Red Hat Bugzilla:
+https://bugzilla.redhat.com/show_bug.cgi?id=527534
+
+It doesn't really contain any additional data. If I discover anything new,
+I'll add my comments there.
+
+Thanks.
 
 -- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+    JB
