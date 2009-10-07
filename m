@@ -1,32 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/22/4
-Message-ID: <Pine.GSO.4.51.0905212024160.18536@faron.mitre.org>
-Date: Thu, 21 May 2009 20:24:24 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: slim
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/07/2
+Message-ID: <1459683327.1767741254941170035.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 7 Oct 2009 14:46:10 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: coley <coley@...re.org>
+Subject: More kernel CVE info (CVE-2009-2909)
 Content-Type: text/plain; charset=utf-8
 
+As MITRE is already busy, I'm giving a kernel flaw another CVE id. My analysis
+is below.
 
-======================================================
-Name: CVE-2009-1756
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1756
-Reference: MLIST:[oss-security] 20090518 CVE id request: slim
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/05/18/2
-Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=529306
-Reference: BID:35015
-Reference: URL:http://www.securityfocus.com/bid/35015
-Reference: OSVDB:54583
-Reference: URL:http://osvdb.org/54583
-Reference: SECUNIA:35132
-Reference: URL:http://secunia.com/advisories/35132
-Reference: XF:slim-xauthority-info-disclosure(50611)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/50611
+The 2.6.31.2 changelog contains these two snippets:
+    net ax25: Fix signed comparison in the sockopt handler
+    net: Make the copy length in af_packet sockopt handler unsigned
 
-SLiM Simple Login Manager 1.3.0 includes places the X authority magic
-cookie (mcookie) on the command line when invoking xauth from (1)
-app.cpp and (2) switchuser.cpp, which allows local users to access the
-X session by listing the process and its arguments.
+The ax25 flaw looks real, the af_packet one is probably just a bug.
+
+I'm assigning CVE-2009-2909 to the ax25 flaw.
+
+Here is my analysis, if someone sees an issue with it, please feel free to speak
+up.
+
+ax25 (CVE-2009-2909)
+
+        http://git.kernel.org/?p=linux/kernel/git/davem/net-2.6.git;a=commit;h=b7058842c940ad2c08dd829b21e5c92ebe3b8758
+        http://article.gmane.org/gmane.linux.kernel/896907
+
+        In the file af_ax25.c there is this bit:
+            case SO_BINDTODEVICE:
+                if (optlen > IFNAMSIZ) optlen=IFNAMSIZ;
+                if (copy_from_user(devname, optval, optlen))
+                    return -EFAULT;
+
+        If a user can make the value of optlen wrap to a negative number, the
+        check should pass, but the call to copy_from_user has this check in it:
+            BUG_ON((long) n < 0);
+        Where n is optlen. I'm told this will OOPS the kernel. That means that
+        this flaw should only be a DoS.
 
 
+af_packet (No CVE id, just a bug)
+
+        http://article.gmane.org/gmane.linux.kernel/896917
+
+        I don't think the missed check in af_packet.c is an issue. The check
+                if (len < 0)
+                    return -EINVAL;
+        Will never fail, but just beneath that bit in the code, you have
+                if (len > sizeof(struct tpacket_stats))
+                    len = sizeof(struct tpacket_stats);
+        and
+                if (len > sizeof(int))
+                    len = sizeof(int);
+        As our error condition would need len to be a negative number, but the
+        sizeof check will cast it as unsigned, these checks would effectively
+        fail, resetting len to something sane. Even then, all that happens
+        with len, is a copy_to_user, which wouldn't hurt the kernel, but could
+        crash the app (which we likely don't care about in this instance).
+
+Thanks.
+
+
+-- 
+    JB
