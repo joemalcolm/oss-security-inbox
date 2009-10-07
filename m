@@ -1,35 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/25/2
-Message-ID: <49A4A7A4.7040800@redhat.com>
-Date: Wed, 25 Feb 2009 10:06:28 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/07/3
+Message-ID: <Pine.GSO.4.51.0910071754350.1485@faron.mitre.org>
+Date: Wed, 7 Oct 2009 17:54:44 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: memory disclosure in SO_BSDCOMPAT gsopt
+Subject: Re: CVE id request: jetty
 Content-Type: text/plain; charset=utf-8
 
-Eugene Teo wrote:
-> Steven M. Christey wrote:
->> ======================================================
->> Name: CVE-2009-0676
-> [...]
->> The sock_getsockopt function in net/core/sock.c in the Linux kernel
->> before 2.6.28.6 does not initialize a certain structure member, which
->> allows local users to obtain potentially sensitive information from
->> kernel memory via an SO_BSDCOMPAT getsockopt request.
-> 
-> The fix for CVE-2009-0676 (upstream commit df0bca04) is incomplete. Note 
-> that the same problem of leaking kernel memory will reappear if someone 
-> on some architecture uses struct timeval with some internal padding (for 
-> example tv_sec 64-bit and tv_usec 32-bit) --- then, you are going to 
-> leak the padded bytes to userspace.
-> 
-> net: amend the fix for SO_BSDCOMPAT gsopt infoleak
-> http://marc.info/?l=linux-kernel&m=123540732700371&w=2
-> http://marc.info/?l=linux-netdev&m=123543237010175&w=2
 
-Upstream commit: 50fee1dec5d71b8a14c1b82f2f42e16adc227f8b.
+======================================================
+Name: CVE-2009-3579
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3579
+Reference: BUGTRAQ:20091006 CORE-2009-0922: Jetty Persistent XSS in Sample Cookies Application
+Reference: URL:http://www.securityfocus.com/archive/1/archive/1/507013/100/0/threaded
+Reference: MISC:http://www.coresecurity.com/content/jetty-persistent-xss
 
-Thanks, Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
+Cross-site scripting (XSS) vulnerability in the CookieDump.java sample
+application in Mort Bay Jetty 6.1.19 and 6.1.20 allows remote
+attackers to inject arbitrary web script or HTML via the Value
+parameter in a GET request to cookie/.
+
+
