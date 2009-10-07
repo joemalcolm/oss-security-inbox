@@ -1,33 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/07/2
-Message-ID: <20091107190449.1da5932c@mail.netloc.info>
-Date: Sat, 7 Nov 2009 19:04:49 +0100
-From: Alex Legler <a3li@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/07/1
+Message-ID: <20091007142547.GE20229@ngolde.de>
+Date: Wed, 7 Oct 2009 16:25:47 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Cc: jmm@...til.org, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request - Asterisk (AST-2009-008.html)
+Subject: CVE id request: jetty
 Content-Type: text/plain; charset=utf-8
 
-On Sat, 7 Nov 2009 18:08:55 +0100, Moritz Muehlenhoff <jmm@...til.org>
-wrote:
+Hi,
+core-security discovered a persistent xss in jetty:
+http://www.coresecurity.com/content/jetty-persistent-xss
 
-> Jan Lieskovsky wrote:
-> > The second issue (b,) already got an CVE id of CVE-2008-7220.
-> > 
-> > b, Cross-site AJAX request vulnerability (CVE-2008-7220)
-> >    http://downloads.asterisk.org/pub/security/AST-2009-009.html
-> 
-> This seems to be a mistake; CVE-2008-7220 already identifies a
-> prototypejs issue.
-> 
+Could I get a CVE id for this please?
 
-This is correct. Asterisk ships a copy of prototype.js.
+Cheers
+Nico
 
-From the Asterisk advisory:
-> Asterisk includes a demonstration AJAX based manager interface,
-> ajamdemo.html which uses the prototype.js framework. 
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-Alex
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+Content of type "application/pgp-signature" skipped
