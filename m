@@ -1,16 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/17/4
-Message-ID: <0908171653340.25831@mjc.redhat.com>
-Date: Mon, 17 Aug 2009 17:05:40 +0100 (BST)
-From: Mark J Cox <mjc@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/08/1
+Message-ID: <20091008171322.GC3282@redhat.com>
+Date: Thu, 8 Oct 2009 11:13:22 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: SELinux and mmap_min_addr behaviour (CVE-2009-2695)
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request for planet
 Content-Type: text/plain; charset=utf-8
 
-FYI given upstream discussions we gave CVE-2009-2695 to 'a system with 
-SELinux enabled with the default targeted policy is more permissive for 
-unconfined domains, allowing local users to map low memory areas even if 
-mmap_min_addr protection is enabled.  This could allow the exploitation of 
-NULL pointer dereference flaws'. See also http://kbase.redhat.com/faq/docs/DOC-18042
+A second vulnerability was found by Secunia in planet, that differs from
+CVE-2009-2937.  Details are available here:
 
-Mark
+https://bugzilla.redhat.com/show_bug.cgi?id=525772
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=546178#30
+
+There is a bit of confusion surrounding the two issues, but it seems as
+though they are, in fact, two separate issues.  The first
+(CVE-2009-2937) deals with insufficient escaping of input feeds, while
+the second deals with some CDATA filtering problems as well.
+
+Steve, does this warrant a second CVE or should the CDATA filtering fall
+under CVE-2009-2937 as well?
+
+Thanks.
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
