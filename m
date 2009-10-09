@@ -1,49 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/15/3
-Message-ID: <87ws55mr2f.fsf@mocca.josefsson.org>
-Date: Sat, 15 Aug 2009 10:14:48 +0200
-From: Simon Josefsson <simon@...efsson.org>
-To: Jamie Strandboge <jamie@...onical.com>
-Cc: gnutls-devel@....org, oss-security@...ts.openwall.com, Jeff Cai <Jeff.Cai@....COM>
-Subject: Re: GnuTLS CVE-2009-2730 Patches
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/09/2
+Message-ID: <87fx9s8iqp.fsf@mid.deneb.enyo.de>
+Date: Fri, 09 Oct 2009 19:33:50 +0000
+From: Florian Weimer <fw@...eb.enyo.de>
+To: oss-security@...ts.openwall.com
+Cc: coley@...us.mitre.org
+Subject: CVE request: Unbound
 Content-Type: text/plain; charset=utf-8
 
-Jamie Strandboge <jamie-Z7WLFzj8eWMS+FvcfC7Uqw@...lic.gmane.org> writes:
+Unbound before 1.3.4 does not check the signatures on NSEC3 records
+under unspecified conditions, enabling attackers who can perform DNS
+spoofing to downgrade existing secure delegations to insecure status,
+which then can be targeted in further spoofing attacks.
 
-> On Fri, 14 Aug 2009, Simon Josefsson wrote:
->
->> I don't have time/resources to produce releases for older branches.  If
->> someone else wants to volunteer to work on fixing older releases, that
->> would be appreciated.
->> 
->
-> Attached are preliminary patches for 2.4.1, 2.0.4 and 1.2.9 backported
-> from the advisory[1].
+<http://unbound.net/pipermail/unbound-users/2009-October/000852.html>
 
-Thank you!
-
-I have applied the 2.4.x patch on the gnutls_2_4_x branch, so it will be
-built and tested by the daily autobuilder from now on.  I've tested that
-the nul-in-x509-names self-test works as expected with the 2.4 library.
-So in theory, it should be easy for me to make a v2.4.4 release from
-that branch.  I wonder if this would helps anyone, though?  I'd imagine
-that most people concerned with older releases are distributions that
-have to support older GnuTLS releases.  And you aren't likely to use a
-new upstream release anyway, since you just apply the patches to your
-version.
-
-I'm also concerned that there have been plenty of _other_ serious
-problems in these old GnuTLS releases (check the security vulnerability
-page), and I haven't back-ported the fixes to those problems to these
-old branches.  So if I make a release on that branch, I'd have to check
-what other serious problems would needs to be fixed for that branch to
-be secure -- which sounds like real work (for little gain).
-
-For these two reasons, I'd prefer to help you establish trust in the
-patches you developed rather than make releases on old branches.
-
-I also added a link to your post on
-<http://www.gnu.org/software/gnutls/security.html> so others can find it
-easily.
-
-/Simon
+(Older versions, back to 1.0.x, are also affected.)
