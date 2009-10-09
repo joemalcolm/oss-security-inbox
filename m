@@ -1,35 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/21/3
-Message-ID: <1904751084.781261256145888558.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 21 Oct 2009 13:24:48 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/09/1
+Message-ID: <704536015.1970541255116323210.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 9 Oct 2009 15:25:23 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Steven Christey <coley@...us.mitre.org>
-Subject: Re: CVE request: Wordpress Trackback DoS
+Cc: coley <coley@...re.org>
+Subject: Re: CVE Request (kernel)
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2009-3622
 
-Thanks.
+----- "Josh Bressers" <bressers@...hat.com> wrote:
+
+> 
+> There is an information leak issue in the Linux Kernel:
+> http://lkml.org/lkml/2009/10/1/164
+> 
+> It seems that an ia32 process running on an x86_64 machine could see
+> register contents from a previous process.
+> 
+
+I'm assigning CVE-2009-2910 to this.
 
 -- 
     JB
-
-
------ "Hanno Böck" <hanno@...eck.de> wrote:
-
-> http://seclists.org/fulldisclosure/2009/Oct/263
-> http://security-sh3ll.blogspot.com/2009/10/wordpress-resource-exhaustion-
-> denial-of.html
-> 
-> Original post (and credits to) seems to be this, it's not english:
-> http://rooibo.wordpress.com/2009/10/17/agujero-de-seguridad-en-wordpress/
-> 
-> Upstream recognized and fixed in 2.8.5:
-> http://wordpress.org/development/2009/10/wordpress-2-8-5-hardening-release/
-> 
-> -- 
-> Hanno Böck		Blog:		http://www.hboeck.de/
-> GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-> 
-> http://schokokeks.org - professional webhosting
