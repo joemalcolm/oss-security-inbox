@@ -1,16 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/04/4
-Message-Id: <200902041520.18372.rbu@gentoo.org>
-Date: Wed, 4 Feb 2009 15:20:14 +0100
-From: Robert Buchholz <rbu@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/09/3
+Message-ID: <1906670250.1976511255120503093.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 9 Oct 2009 16:35:03 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Squid <2.7.6, 3.0.13, 3.1.0.5 DoS
+Cc: coley@...us.mitre.org
+Subject: Re: CVE request: Unbound
 Content-Type: text/plain; charset=utf-8
 
-Squid before 2.7.STABLE6, 3.0.STABLE13, and 3.1.0.5 is vulnerable to a 
-Denial of Service issue:
 
-https://bugs.gentoo.org/show_bug.cgi?id=257585
-http://www.squid-cache.org/Advisories/SQUID-2009_1.txt
+----- "Florian Weimer" <fw@...eb.enyo.de> wrote:
 
-Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
+> Unbound before 1.3.4 does not check the signatures on NSEC3 records
+> under unspecified conditions, enabling attackers who can perform DNS
+> spoofing to downgrade existing secure delegations to insecure status,
+> which then can be targeted in further spoofing attacks.
+> 
+> <http://unbound.net/pipermail/unbound-users/2009-October/000852.html>
+> 
+> (Older versions, back to 1.0.x, are also affected.)
+
+Steve Christey asked me to assign CVE ids for oss-security requests for a bit,
+so don't think it odd when I keep replying to these.
+
+Please use CVE-2009-3602 for this.
+
+Thanks
+
+-- 
+    JB
