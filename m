@@ -1,31 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/13/1
-Message-Id: <1247479694.3384.20.camel@dhcp-lab164.englab.brq.redhat.com>
-Date: Mon, 13 Jul 2009 12:08:14 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: OSS Security <oss-security@...ts.openwall.com>
-Subject: CVE Request - MySQL <= 5.0.45
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/10/1
+Message-ID: <har38v$92v$1@ger.gmane.org>
+Date: Sat, 10 Oct 2009 17:54:06 -0500
+From: Raphael Geissert <geissert@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE id request: django
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve, vendors,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
- a format string vulnerability in the way MySQL server
-used to handle log messages, by creation and deletion
-of database instances, has been recently reported against
-MySQL <= 5.0.45.
+Hi,
+
+A vulnerability has been found in Django's forms library that can be used to
+perform DoS attacks via certain email addresses or URLs that make the
+validation regular expressions consume CPU resources.
+
+The vulnerability is said to be being exploited on live installations.
 
 References:
------------
-    http://seclists.org/fulldisclosure/2009/Jul/0058.html
-    http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=536726
+http://www.djangoproject.com/weblog/2009/oct/09/security/
+http://groups.google.com/group/django-users/browse_thread/thread/15df9e45118dfc51/677e54bd6c6e283b
+http://lists.debian.org/debian-security-announce/2009/msg00227.html
 
+Please assign a CVE identifier.
 
-Could you please allocate a CVE identifier for it?
+Kind regards,
+- -- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
 
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
 
-
+iEYEARECAAYFAkrREJQACgkQYy49rUbZzlpwswCgjSOAiDSfYGYiE+ZjE9i6+Zmf
+3MkAoJN9qvxGAzfzsgiFW8XAuP1wan81
+=nsNz
+-----END PGP SIGNATURE-----
 
