@@ -1,32 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/15/1
-Message-Id: <200903160036.15579.rbu@gentoo.org>
-Date: Mon, 16 Mar 2009 00:36:13 +0100
-From: Robert Buchholz <rbu@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/12/3
+Message-ID: <1067267236.75151255364549747.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 12 Oct 2009 12:22:29 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2009-0876 (VirtualBox) references
+Subject: Re: presumptive php sec holes
 Content-Type: text/plain; charset=utf-8
 
-Sun released an advisory for VirtualBox referenced for CVE-2009-0876 
-recently: 
-http://sunsolve.sun.com/search/document.do?assetkey=1-66-254568-1
+----- "Oden Eriksson" <oeriksson@...driva.com> wrote:
 
-However, details are missing and patch information is (unintentionally) 
-obfuscated due to inconsistent revision numbers in the public svn vs. 
-internal build revisions.
+> Hello.
+> 
+> Attached are some php patches that to me looks security related
+> (unknown 
+> impact). I hope someone with insight can classify and possible assign
+> CVE 
+> numbers. The patches were taken from their svn repo, so it's
+> "official".
+> 
 
-The original bug report for Gentoo and upstream were here:
-https://bugs.gentoo.org/show_bug.cgi?id=260331
-http://www.virtualbox.org/ticket/3444
+Did you contact PHP upstream about these? They're usually quite on the ball
+with understanding security flaws, so they are likely the best group to help
+you determine what the impact of these are.
 
-where the upsteam bug contains patch information.
-
-Note that it was brought to my attention the problem has been mentioned 
-in an earlier bug report, but it has not been escalated to the security 
-team or upstream:
-https://bugs.gentoo.org/show_bug.cgi?id=236692#c5
-
-
-Robert
-
-Download attachment "signature.asc " of type "application/pgp-signature" (836 bytes)
+-- 
+    JB
