@@ -1,63 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/29/1
-Message-ID: <20090829184553.GB8650@genua.de>
-Date: Sat, 29 Aug 2009 20:45:53 +0200
-From: Steffen Ullrich <Steffen_Ullrich@...ua.de>
-To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: perl-IO-Socket-SSL certificate hostname compare bug
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/12/2
+Message-ID: <164904189.73421255363891311.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 12 Oct 2009 12:11:31 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley@...re.org
+Subject: Re:  CVE id request: django
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Please use CVE-2009-3610
 
-Just to make you able to classify the problem a bit more:
-The fix is important but the impact of the problem is in my opinion currently minor,
-because
-- the feature to help checking the hostname against the certificate is fairly new
-- in former times the apps/modules using IO::Socket::SSL had to implement
-  the checking by itself (using the appropriate logic, which differs between
-  various protocols).
-- most did not implement any checking at all or implemented a limited or wrong check
-- therefore I added the checks, where the app only has to decide how the check
-  has to be done
-- most apps/modules don't even do this simple thing yet, so that this buggy
-  feature was not used
+Thanks.
 
-That means, that it only impacts apps/modules which depend on this feature
-and there are only few (or none) of these apps. But it would probably be nice
-to add a note to the CVE that apps/modules should start to implement proper 
-certificate checking and that it got easier with newer IO::Socket::SSL
-versions.
+----- "Raphael Geissert" <geissert@...ian.org> wrote:
 
-Regards,
-Steffen (Maintainer of IO::Socket::SSL)
-
-
-On Fri, Aug 28, 2009 at 09:20:22AM +0200, Ludwig Nussel <ludwig.nussel@...e.de> wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
 > Hi,
 > 
-> IO-Socket-SSL was released a while ago with a security fix:
+> A vulnerability has been found in Django's forms library that can be
+> used to
+> perform DoS attacks via certain email addresses or URLs that make the
+> validation regular expressions consume CPU resources.
 > 
-> http://cpansearch.perl.org/src/SULLR/IO-Socket-SSL-1.30/Changes
-> v1.26 2009.07.03
-> - SECURITY BUGFIX! 
->   fix Bug in verify_hostname_of_cert where it matched only the prefix for 
->   the hostname when no wildcard was given, e.g. www.example.org matched
->   against a certificate with name www.exam in it
->   Thanks to MLEHMANN for reporting
+> The vulnerability is said to be being exploited on live
+> installations.
 > 
-> cu
-> Ludwig
+> References:
+> http://www.djangoproject.com/weblog/2009/oct/09/security/
+> http://groups.google.com/group/django-users/browse_thread/thread/15df9e45118dfc51/677e54bd6c6e283b
+> http://lists.debian.org/debian-security-announce/2009/msg00227.html
 > 
-> -- 
->  (o_   Ludwig Nussel
->  //\   
->  V_/_  http://www.suse.de/
-> SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+> Please assign a CVE identifier.
+> 
+> Kind regards,
+> - -- 
+> Raphael Geissert - Debian Developer
+> www.debian.org - get.debian.net
+> 
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.10 (GNU/Linux)
+> 
+> iEYEARECAAYFAkrREJQACgkQYy49rUbZzlpwswCgjSOAiDSfYGYiE+ZjE9i6+Zmf
+> 3MkAoJN9qvxGAzfzsgiFW8XAuP1wan81
+> =nsNz
+> -----END PGP SIGNATURE-----
 
 -- 
-GeNUA Gesellschaft für Netzwerk - und Unix-Administration mbH
-Domagkstr. 7, D-85551 Kirchheim. http://www.genua.de
-Tel: (089) 99 19 50-0, Fax: (089) 99 10 50 - 999
-
-Geschäftsführer: Dr. Magnus Harlander, Dr. Michaela Harlander,
-Bernhard Schneck. Amtsgericht München HRB 98238
+    JB
