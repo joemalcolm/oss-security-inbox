@@ -1,27 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/15/1
-Message-Id: <200906152145.31126.sf@sfritsch.de>
-Date: Mon, 15 Jun 2009 21:45:30 +0200
-From: Stefan Fritsch <sf@...itsch.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/12/1
+Message-Id: <200910121057.04097.oeriksson@mandriva.com>
+Date: Mon, 12 Oct 2009 10:57:03 +0200
+From: Oden Eriksson <oeriksson@...driva.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request for old Apache 2.2 issue
+Subject: presumptive php sec holes
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello.
 
-in Apache 2.2.x before 2.2.9, there was a issue very similar to 
-CVE-2009-1195 that allowed local users to override all options in 
-.htaccess, even if only one option was allowed by the AllowOverride 
-directive. It was fixed as PR 44262 in 2.2.9 in June 2008, but the 
-security relevance was not made clear.
+Attached are some php patches that to me looks security related (unknown 
+impact). I hope someone with insight can classify and possible assign CVE 
+numbers. The patches were taken from their svn repo, so it's "official".
 
-Bugzilla.
-https://issues.apache.org/bugzilla/show_bug.cgi?id=44262
+Cheers.
+-- 
+Regards // Oden Eriksson
 
-For Apache before 2.2.9, it does not make sense to fix CVE-2009-1195 
-without fixing PR 44262, too. Therefore I think this issue should get 
-a separate CVE id.
+View attachment "php-5.3.x-safe_mode_bypass_fix.diff" of type "text/x-patch" (444 bytes)
 
-Cheers,
-Stefan
+View attachment "php-5.2.x-safe_mode_bypass_fix.diff" of type "text/x-patch" (516 bytes)
 
+View attachment "php-5.2.x-open_basedir_bypass_fix.diff" of type "text/x-patch" (510 bytes)
+
+View attachment "php-5.3.x-open_basedir_bypass_fix.diff" of type "text/x-patch" (511 bytes)
