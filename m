@@ -1,21 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/04/1
-Message-ID: <49FE56E2.8010100@redhat.com>
-Date: Mon, 04 May 2009 10:45:54 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2009-1184 selinux: skipped node/port send checks in the compat_net=1 case
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/13/4
+Message-ID: <4AD48001.7050302@redhat.com>
+Date: Tue, 13 Oct 2009 15:26:25 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: Duplicate CVE assignment notification [was: CVE id request: django]
 Content-Type: text/plain; charset=utf-8
 
-Not upstream in 2.6.30, as the function was removed there.
+Hello Steve, vendors,
 
-Node and port send checks can skip in the compat_net=1 case. This bug
-was introduced in commit effad8d.
+   two CVE ids have been assigned for this issue:
 
-This is fixed in 2.6.27.21[1] and 2.6.28.10[2]. I believe it will be
-fixed in 2.6.29.y soon.
+CVE-2009-3695 and CVE-2009-3610.
 
-[1] http://lwn.net/Articles/331434/
-[2] http://lwn.net/Articles/331435/
+Will take CVE-2009-3695 as the proper one, as it has description already.
+CVE-2009-3610 should be rejected.
 
-Thanks, Eugene
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+Josh Bressers wrote:
+> Please use CVE-2009-3610
+> 
+> Thanks.
+> 
+> ----- "Raphael Geissert" <geissert@...ian.org> wrote:
+> 
+>> -----BEGIN PGP SIGNED MESSAGE-----
+>> Hash: SHA1
+>>
+>> Hi,
+>>
+>> A vulnerability has been found in Django's forms library that can be
+>> used to
+>> perform DoS attacks via certain email addresses or URLs that make the
+>> validation regular expressions consume CPU resources.
+>>
+>> The vulnerability is said to be being exploited on live
+>> installations.
+>>
+>> References:
+>> http://www.djangoproject.com/weblog/2009/oct/09/security/
+>> http://groups.google.com/group/django-users/browse_thread/thread/15df9e45118dfc51/677e54bd6c6e283b
+>> http://lists.debian.org/debian-security-announce/2009/msg00227.html
+>>
+>> Please assign a CVE identifier.
+>>
+>> Kind regards,
+>> - -- 
+>> Raphael Geissert - Debian Developer
+>> www.debian.org - get.debian.net
+>>
+>> -----BEGIN PGP SIGNATURE-----
+>> Version: GnuPG v1.4.10 (GNU/Linux)
+>>
+>> iEYEARECAAYFAkrREJQACgkQYy49rUbZzlpwswCgjSOAiDSfYGYiE+ZjE9i6+Zmf
+>> 3MkAoJN9qvxGAzfzsgiFW8XAuP1wan81
+>> =nsNz
+>> -----END PGP SIGNATURE-----
+> 
+
