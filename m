@@ -1,39 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/29/2
-Message-ID: <4B3A104D.6030102@redhat.com>
-Date: Tue, 29 Dec 2009 22:21:01 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE requests - kernel security regressions for CVE-2009-1385/and -1389
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/13/6
+Message-ID: <Pine.GSO.4.51.0910131244240.11167@faron.mitre.org>
+Date: Tue, 13 Oct 2009 12:44:59 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+cc: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Duplicate CVE assignment notification [was: CVE id request: django]
 Content-Type: text/plain; charset=utf-8
 
-On 12/29/2009 10:12 AM, Eugene Teo wrote:
-> On 12/28/2009 03:47 PM, Eugene Teo wrote:
->> http://events.ccc.de/congress/2009/Fahrplan//events/3596.en.html
->>
->> In Fabian's talk, he describes two kernel NIC driver issues:
->>
->> Issue #1
->> Fabian claimed that CVE-2009-1385 has an incorrect fix:
->> http://git.kernel.org/linus/ea30e11970a96cfe5e32c03a29332554573b4a10.
-> [...]
->> Issue #2
->> The fix for CVE-2009-1389 regarding the r8169 driver introduces a
->> similar security problem as this:
->> http://git.kernel.org/linus/fdd7b4c3302c93f6833e338903ea77245eb510b4 is
->> a revert of this:
->> http://git.kernel.org/linus/126fa4b9ca5d9d7cb7d46f779ad3bd3631ca387c.
->
-> Patches update can be found here:
-> https://bugzilla.redhat.com/show_bug.cgi?id=550907#c4
 
-Issue #3
-I noticed that the e1000e driver also needs a similar fix as issue #1.
-https://bugzilla.redhat.com/show_bug.cgi?id=551214
+On Tue, 13 Oct 2009, Steven M. Christey wrote:
 
-Progress on the patches can be found in either of the two bugs.
+> CVE-2009-3695 was created off a Debian advisory that didn't list a CVE.
+> I assume that CVE-2009-3610 was being used for pre-disclosure coordination
+> by the Red Hat CNA.
 
-Thanks, Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
+Obviously I'm not tracking oss-security closely ennough this week.
+Regardless, please still use CVE-2009-3695, and CVE-2009-3610 will be
+rejected.
+
+- Steve
