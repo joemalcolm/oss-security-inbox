@@ -1,26 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/16/3
-Message-ID: <1939320429.72621260997962453.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 16 Dec 2009 16:12:42 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>, Dan Williams <dcbw@...hat.com>
-Cc: coley <coley@...re.org>
-Subject: NetworkManager CVE assignment
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/13/3
+Message-ID: <20091013121427.1f4e6892@redhat.com>
+Date: Tue, 13 Oct 2009 12:14:27 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: thomas@...e.de
+Subject: Re: CVE request: local root via setuid VBoxNetAdpCtl
 Content-Type: text/plain; charset=utf-8
 
-I just assigned two CVE ids for NetworkManager:
+On Tue, 13 Oct 2009 08:38:40 +0200 Thomas Biege <thomas@...e.de> wrote:
 
-CVE-2009-4144 Possible connections to spoofed WPA Enterprise networks without validating network certificate
-https://bugzilla.redhat.com/show_bug.cgi?id=546795
+> this one needs two CVE-IDs:
+> - shell meta char injection in popen()
+> - possible buffer overflow in strncpy()
+> 
+> http://sunsolve.sun.com/search/document.do?assetkey=1-66-268188-1
 
+I believe that the following got assigned for these independently of
+this request:
 
-CVE-2009-4145 Information disclosure by nm-connection-editor
-https://bugzilla.redhat.com/show_bug.cgi?id=546117
+CVE-2009-3692
+Unspecified vulnerability in the VBoxNetAdpCtl configuration tool in
+Sun VirtualBox 3.0.x before 3.0.8 on Solaris x86, Linux, and Mac OS X
+allows local users to gain privileges via unknown vectors.
 
+http://www.virtualbox.org/wiki/Changelog
+http://sunsolve.sun.com/search/document.do?assetkey=1-66-268188-1
+http://www.securityfocus.com/bid/36604
+http://www.osvdb.org/58652
+http://securitytracker.com/id?1022990
+http://secunia.com/advisories/36929
+http://www.vupen.com/english/advisories/2009/2845
+http://xforce.iss.net/xforce/xfdb/53671
 
-These were somewhat public before now.
-
-Thanks.
+I know this does not satisfy your request, it's rather a heads-up to
+avoid duplicate assignment.
 
 -- 
-    JB
+Tomas Hoger / Red Hat Security Response Team
