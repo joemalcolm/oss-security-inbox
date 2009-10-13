@@ -1,28 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/21/2
-Message-Id: <200910211318.14126.hanno@hboeck.de>
-Date: Wed, 21 Oct 2009 13:18:13 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: "oss-security" <oss-security@...ts.openwall.com>
-Cc: Steven Christey <coley@...us.mitre.org>
-Subject: CVE request: Wordpress Trackback DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/13/1
+Message-ID: <20091013063840.GA8374@suse.de>
+Date: Tue, 13 Oct 2009 08:38:40 +0200
+From: Thomas Biege <thomas@...e.de>
+To: OSS-Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: CVE request: local root via setuid VBoxNetAdpCtl
 Content-Type: text/plain; charset=utf-8
 
 
-http://seclists.org/fulldisclosure/2009/Oct/263
-http://security-sh3ll.blogspot.com/2009/10/wordpress-resource-exhaustion-
-denial-of.html
+Hello,
+this one needs two CVE-IDs:
+- shell meta char injection in popen()
+- possible buffer overflow in strncpy()
 
-Original post (and credits to) seems to be this, it's not english:
-http://rooibo.wordpress.com/2009/10/17/agujero-de-seguridad-en-wordpress/
+http://sunsolve.sun.com/search/document.do?assetkey=1-66-268188-1
 
-Upstream recognized and fixed in 2.8.5:
-http://wordpress.org/development/2009/10/wordpress-2-8-5-hardening-release/
+
 
 -- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-
-http://schokokeks.org - professional webhosting
-
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+Bye,
+     Thomas
+-- 
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+-- 
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
