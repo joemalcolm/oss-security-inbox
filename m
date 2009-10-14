@@ -1,28 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/03/2
-Message-ID: <4B17BF2B.2090608@redhat.com>
-Date: Thu, 03 Dec 2009 14:37:47 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request -- xfig
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/14/7
+Message-ID: <135494521.302651255548920952.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 14 Oct 2009 15:35:20 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request - backintime
 Content-Type: text/plain; charset=utf-8
 
-Hi Josh, Steve, vendors,
+Use CVE-2009-3611 for this.
 
-   PEDAMACHEPHEPTOLIONES reported [1] a stack-based buffer overflow present
-in Xfig by loading malformed .FIG files.
+Thanks.
 
- From what I can tell, xfig-3.2.d doesn't seem to be affected by this,
-but xfig-3.2.4 && xfig-3.2.5 clearly are.
+-- 
+    JB
 
-Also, the reporter claims about arbitrary code execution possibility,
-but I don't think this is possible due the non-executable stack protection.
 
-Anyway, could you allocate a CVE identifier?
+----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
 
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=559274
+> Hello Steve, vendors,
+> 
+>    while this issue seem to be already silently fixed:
+> 
+> https://www.redhat.com/archives/fedora-package-announce/2009-September/msg00823.html
+> https://www.redhat.com/archives/fedora-package-announce/2009-September/msg00821.html
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=543785
+> https://bugs.launchpad.net/ubuntu/+source/backintime/+bug/434256
+> 
+> for purpose of proper tracking, it should get a CVE identifier.
+> 
+> References:
+> -----------
+> https://bugzilla.redhat.com/show_bug.cgi?id=520210
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=543785
+> https://bugs.launchpad.net/ubuntu/+source/backintime/+bug/434256
+> http://bugs.gentoo.org/show_bug.cgi?id=289047
+> 
+> Patch from Debian:
+> ------------------
+> http://ftp.debian.org/debian/pool/main/b/backintime/backintime_0.9.26-3.diff.gz
+> 
+> Thanks && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
