@@ -1,22 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/30/2
-Message-ID: <Pine.GSO.4.51.0911301330550.14733@faron.mitre.org>
-Date: Mon, 30 Nov 2009 13:31:25 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/14/2
+Message-ID: <4AD56EE3.3060105@redhat.com>
+Date: Wed, 14 Oct 2009 14:25:39 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request - Cacti - 0.8.7e
+CC: "Steven M. Christey" <coley@...us.mitre.org>, Willy Tarreau <w@....eu>
+Subject: CVE request kernel: tcf_fill_node() infoleak due to typo in 9ef1d4c7
 Content-Type: text/plain; charset=utf-8
 
+Eugene Teo wrote:
+> [...]
+>>   CVE-2005-4881 - tc_fill_qdisc()  (at least)
+> 
+> This requires http://patchwork.ozlabs.org/patch/35412/ too. There was a 
+> typo in the upstream commit 9ef1d4c7.
 
-On Thu, 26 Nov 2009 oss-security@...itz-naumann.com wrote:
+I'm not sure but perhaps this needs a new CVE name. This infoleak bug 
+was introduced in 2005, but was discovered and fixed recently.
 
-> It's 4 XSS issues (one of them persistent) and 1 priviledge escalation
-> issue. An advisory is coming to a full disclosure mailing list near you
-> any minute.
-
-Use CVE-2009-4112 for the privilege escalation issue.
-
-The CVEs will be updated based on
-http://archives.neohapsis.com/archives/fulldisclosure/2009-11/0292.html
-
-- Steve
+Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
