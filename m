@@ -1,58 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/02/4
-Message-ID: <20090702130124.GW6089@inversepath.com>
-Date: Thu, 2 Jul 2009 14:01:24 +0100
-From: Andrea Barisani <lcars@...rt.org>
-To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
-Subject: [oCERT-2009-009] CamlImages integer overflows
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/14/5
+Message-Id: <200910142040.29461.hanno@hboeck.de>
+Date: Wed, 14 Oct 2009 20:40:29 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- phpMyAdmin
 Content-Type: text/plain; charset=utf-8
 
+Am Mittwoch 14 Oktober 2009 schrieb Jan Lieskovsky:
+>    phpMyAdmin upstream has released 3.2.2.1 or 2.11.9.6 updates, fixing
+> one XSS and one SQL injection vulnerability.
+> 
+> References:
+> -----------
+> http://www.phpmyadmin.net/home_page/security/PMASA-2009-6.php
 
-#2009-009 CamlImages integer overflows
+Cite:
 
-Description:
-
-CamlImages, an open source image processing library, suffers from several
-integer overflows which may lead to a potentially exploitable heap overflow and
-result in arbitrary code execution.
-
-The vulnerability is triggered by PNG image parsing, the read_png_file and
-read_png_file_as_rgb24 functions do not properly validate the width and height
-of the image. Specific PNG images with large width and height can be crafted
-to trigger the vulnerability.
-
-Affected version:
-
-CamlImages <= 2.2
-
-Fixed version:
-
-Unfortunately oCERT has been unable to get feedback from CamlImages maintainers
-and the package seems unmaintained, it's therefore suggested to avoid
-CamlImages usage on production or any environment where strong security is
-needed.
-
-Credit: vulnerability report and PoC code received from Tielei Wang
-        <wangtielei [at] icst [dot] pku [dot] edu [dot] cn>, ICST-ERCIS.
-
-CVE: CVE-2009-2295
-
-Timeline:
-
-2009-05-21: vulnerability reported received
-2009-05-21: contacted camlimages maintainers
-2009-06-30: due to lack of feedback oCERT asks reporter to disclose the issue
-2009-07-01: reporter agrees to disclosure
-2009-07-02: assigned CVE
-2009-07-02: advisory release
-
-Permalink:
-http://www.ocert.org/advisories/ocert-2009-009.html
+>References
+>
+>We wish to thank Quintin Russ for informing us in a responsible manner.
+>
+>Assigned CVE ids: CVE-2009-3696 CVE-2009-3697 
 
 -- 
-Andrea Barisani |                Founder & Project Coordinator
-          oCERT | Open Source Computer Emergency Response Team
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
-<lcars@...rt.org>                         http://www.ocert.org
- 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
-        "Pluralitas non est ponenda sine necessitate"
+http://schokokeks.org - professional webhosting
+
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
