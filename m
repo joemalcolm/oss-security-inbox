@@ -1,24 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/24/3
-Message-ID: <4A69BCD8.7090908@redhat.com>
-Date: Fri, 24 Jul 2009 15:53:28 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/14/6
+Message-ID: <4AD61C79.1070306@redhat.com>
+Date: Wed, 14 Oct 2009 20:46:17 +0200
 From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com
-Subject: CVE Request -- Ocsinventory-Agent
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- phpMyAdmin
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve, vendors,
+Hi Hanno,
 
-   a security issue has been found in Ocsinventory-Agent
-(Unified agent) prior 0.0.9.3 -- not sure if this already got
-an CVE identifier?
+Hanno Böck wrote:
+> Am Mittwoch 14 Oktober 2009 schrieb Jan Lieskovsky:
+>>    phpMyAdmin upstream has released 3.2.2.1 or 2.11.9.6 updates, fixing
+>> one XSS and one SQL injection vulnerability.
+>>
+>> References:
+>> -----------
+>> http://www.phpmyadmin.net/home_page/security/PMASA-2009-6.php
+> 
+> Cite:
+> 
+>> References
+>>
+>> We wish to thank Quintin Russ for informing us in a responsible manner.
+>>
+>> Assigned CVE ids: CVE-2009-3696 CVE-2009-3697 
 
-References:
------------
-http://www.ocsinventory-ng.org/index.php?mact=News,cntnt01,detail,0&cntnt01articleid=144&cntnt01returnid=15
-http://nana.rulezlan.org/~goneri/ocsinventory-agent/Ocsinventory-Agent-0.0.9.3.tar.gz
+Right, sorry, I am blind :(.
 
-Thanks && Regards, Jan.
+Regards, Jan.
 --
 Jan iankko Lieskovsky / Red Hat Security Response Team
+
+> 
+
