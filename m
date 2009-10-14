@@ -1,39 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/21/6
-Message-Id: <200905220019.53829.hanno@hboeck.de>
-Date: Fri, 22 May 2009 00:19:53 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Linux kernels and security issues?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/14/3
+Message-ID: <4AD5F75C.90901@redhat.com>
+Date: Wed, 14 Oct 2009 18:07:56 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request - backintime
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello Steve, vendors,
 
-As we know, the linux kernel guys have security policies one can find 
-questionable.
+   while this issue seem to be already silently fixed:
 
-Though, I'm asking myself how to handle that? For 2.6.29.3, I read (here) that 
-an exploit is floating around (can be found on milw0rm) - so I pretty much 
-noted that it's probably a good idea to update.
+https://www.redhat.com/archives/fedora-package-announce/2009-September/msg00823.html
+https://www.redhat.com/archives/fedora-package-announce/2009-September/msg00821.html
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=543785
+https://bugs.launchpad.net/ubuntu/+source/backintime/+bug/434256
 
-Now we have 2.6.29.4 and I don't know if I should update again - I have some 
-production servers where I'd like to avoid rebooting too often. The Changelog 
-of a kernel minor release usually consists of several dozent entries - with 
-lots of them I don't understand.
+for purpose of proper tracking, it should get a CVE identifier.
 
-What I'd like to have is a short list of all security relevant changes, 
-including some information giving me hints if I may be affected (i.e. affects 
-core functionality or only a driver, filesystem, protocol I may or may not 
-use). Is there some place in the net providing such information?
-If someone (ocert?) wants to do the free software world a big favor, this 
-would be really a great service.
+References:
+-----------
+https://bugzilla.redhat.com/show_bug.cgi?id=520210
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=543785
+https://bugs.launchpad.net/ubuntu/+source/backintime/+bug/434256
+http://bugs.gentoo.org/show_bug.cgi?id=289047
 
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-http://ausdenaugenausdemsinn.de - Kein Sicherheitsrabatt für CO2-Speicher
-http://tinyurl.com/dceu73 - Internetzensur stoppen!
+Patch from Debian:
+------------------
+http://ftp.debian.org/debian/pool/main/b/backintime/backintime_0.9.26-3.diff.gz
 
-http://schokokeks.org - professional webhosting
-
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
