@@ -1,24 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/16/2
-Message-ID: <20091116225116.2b6a9a03@redhat.com>
-Date: Mon, 16 Nov 2009 22:51:16 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: jt@....org
-Subject: Re: CVE request: oping allows the disclosure of  arbitrary file contents
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/14/1
+Message-ID: <4AD569BE.2010209@redhat.com>
+Date: Wed, 14 Oct 2009 14:03:42 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Willy Tarreau <w@....eu>
+Subject: Re: CVE request: kernel: tc: uninitialised kernel memory leak
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 15 Oct 2009 15:15:57 +0200 Julien Tinnes <jt@....org> wrote:
+[...]
+>   CVE-2005-4881 - tc_fill_qdisc()  (at least)
 
-> in case anyone cares, oping also attempts to drop privileges with
-> setuid(getuid()); without checking setuid()'s return value.
-> 
-> It's an obvious vulnerability, because a local attacker can make
-> setuid() fail by setting a resource limit of 0 for RLIMIT_NPROC with
-> setrlimit().
+This requires http://patchwork.ozlabs.org/patch/35412/ too. There was a 
+typo in the upstream commit 9ef1d4c7.
 
-Does the RLIMIT_NPROC trick work against oping, or any setuid app that
-calls setuid(getuid())?
-
+Thanks, Eugene
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Eugene Teo / Red Hat Security Response Team
