@@ -1,41 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/19/1
-Message-ID: <20090919223058.GH5855@ngolde.de>
-Date: Sun, 20 Sep 2009 00:30:58 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- PHP 5 - 5.2.11
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/14/4
+Message-ID: <4AD5FA9B.10102@redhat.com>
+Date: Wed, 14 Oct 2009 18:21:47 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request -- phpMyAdmin
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Joe Orton <jorton@...hat.com> [2009-09-18 16:11]:
-> On Fri, Sep 18, 2009 at 03:23:43PM +0200, Nico Golde wrote:
-> > * Jan Lieskovsky <jlieskov@...hat.com> [2009-09-18 13:52]:
-> > >   PHP has released another upstream 5.2 release, fixing
-> > > four security issues:
-> > > 
-> > > http://www.php.net/ChangeLog-5.php
-> > > http://www.php.net/downloads.php
-> > > 
-> > > Could you please allocate CVE identifiers?
-> > 
-> > What is the security impact of:
-> > Fixed bug #44683 (popen crashes when an invalid mode is passed). (Pierre)
-> > ?
-> 
-> This would appear to be:
-> 
-> http://svn.php.net/viewvc?view=revision&revision=287779
-> 
-> which is Windows-specific.
+Hello Steve, vendors,
 
-I was more wondering why this is a security issue rather 
-than a bug.
+   phpMyAdmin upstream has released 3.2.2.1 or 2.11.9.6 updates, fixing
+one XSS and one SQL injection vulnerability.
 
-Cheers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
+References:
+-----------
+http://www.phpmyadmin.net/home_page/security/PMASA-2009-6.php
+http://www.phpmyadmin.net/home_page/news.php
+https://bugzilla.redhat.com/show_bug.cgi?id=528769
+http://bugs.gentoo.org/show_bug.cgi?id=288899
+http://www.mandriva.com/en/security/advisories?name=MDVSA-2009:274
 
-Content of type "application/pgp-signature" skipped
+Could you allocate new CVE id?
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Resposne Team
