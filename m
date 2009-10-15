@@ -1,50 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/21/3
-Message-ID: <20090421082503.GB21923@suse.de>
-Date: Tue, 21 Apr 2009 10:25:03 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: Eugene Teo <eugene@...hat.com>
-Cc: oss-security@...ts.openwall.com, security@...nel.org, sfrench@...ibm.com
-Subject: Re: CVE request? buffer overflow in CIFS in 2.6.*
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/15/9
+Message-ID: <495059406.357331255617265857.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 15 Oct 2009 10:34:25 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: oping allows the disclosure of arbitrary file contents
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Apr 21, 2009 at 10:59:25AM +0800, Eugene Teo wrote:
-> Marcus Meissner wrote:
-> > On Tue, Apr 07, 2009 at 01:41:44PM +0800, Eugene Teo wrote:
-> >> Hi Marcus,
-> >>
-> >> Marcus Meissner wrote:
-> >>> Fixes a kmalloc area overflow in CIFS, number of overwritten bytes
-> >>> is depending on the codepage converted to.
-> >>>
-> >>> The data seems to come from a remote generated reply blob even, correct
-> >>> me if I am wrong. :/
-> >> Looks like it's part of the session setup. The NativeFileSystem field is
-> >> part of the Tree Connect response (TCon for short).
-> >>
-> >>> And I wonder if "len*2" is sufficient, can't a UCS -> UTF8 conversion
-> >>> generate more than 2 byte utf-8 characters for 1 ucs character?
-> >> I understand that someone from your side is working on a better patch
-> >> for this. Do keep us updated when it goes upstream.
-> > 
-> > tracked in the public bugzilla entry:
-> > https://bugzilla.novell.com/show_bug.cgi?id=492282
-> > 
-> > and:
-> > http://lists.samba.org/archive/linux-cifs-client/2009-April/004322.html ff.
-> > for the cifs discussion.
+----- "Julien Tinnes" <jt@....org> wrote:
 > 
-> Here's an update:
-> http://lkml.org/lkml/2009/4/20/21
+> in case anyone cares, oping also attempts to drop privileges with
+> setuid(getuid()); without checking setuid()'s return value.
+> 
+> It's an obvious vulnerability, because a local attacker can make
+> setuid() fail by setting a resource limit of 0 for RLIMIT_NPROC with
+> setrlimit().
+> 
 
-Our maintainer also referenced:
+Does that have any security implications though? I've not looked at the app.
+If it's a security problem, I'll give it a CVE id.
 
-http://lists.samba.org/archive/linux-cifs-client/2009-April/004450.html
-http://lists.samba.org/archive/linux-cifs-client/2009-April/004452.html
+Thanks.
 
-They are already in the CIFS git tree:
-http://git.kernel.org/?p=linux/kernel/git/sfrench/cifs-2.6.git;a=summary
-	http://git.kernel.org/?p=linux/kernel/git/sfrench/cifs-2.6.git;a=commit;h=7b0c8fcff47a885743125dd843db64af41af5a61
-	http://git.kernel.org/?p=linux/kernel/git/sfrench/cifs-2.6.git;a=commit;h=968460ebd8006d55661dec0fb86712b40d71c413
-
-Ciao, Marcus
+-- 
+    JB
