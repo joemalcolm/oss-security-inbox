@@ -1,30 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/15/2
-Message-Id: <200907150251.48381.rbu@gentoo.org>
-Date: Wed, 15 Jul 2009 02:51:46 +0200
-From: Robert Buchholz <rbu@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/15/5
+Message-ID: <4AD6C118.3020103@kernel.sg>
+Date: Thu, 15 Oct 2009 14:28:40 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Cc: Florian Weimer <fw@...eb.enyo.de>
-Subject: Re: Fixing the XML signature HMAC truncation authentication bypass
+CC: "Steven M. Christey" <coley@...us.mitre.org>, Willy Tarreau <w@....eu>
+Subject: Re: CVE request kernel: flood ping cause out-of-iommu error and panic when mtu larger than 1500
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday 15 July 2009, Robert Buchholz wrote:
-> 1) Apache
-> Bug:
-> https://issues.apache.org/bugzilla/show_bug.cgi?id=47526
-> Patch:
-> http://svn.apache.org/viewvc?view=rev&revision=794013
->
-> It seems they disallow HMAC truncation completely.
-> * In my personal opinion the best move (since we're dealing with XML,
->   who cares about an additional <16 bytes?)
+Eugene Teo wrote:
+> Executing ping -f -s 3000 IP in a certain network setup could trigger an 
+> out-of-IOMMU error, leading to a denial of service.
 
-This was Java only, the C++ variant has this fix:
-http://svn.apache.org/viewvc?view=rev&revision=794017
+FYI, I rated this cvss2=8.3/AV:A/AC:L/Au:N/C:C/I:C/A:C.
 
-which is 80/half.
-
-
-Robert
-
-Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
+Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
