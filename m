@@ -1,18 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/25/5
-Message-ID: <0910251934370.28522@mjc.redhat.com>
-Date: Sun, 25 Oct 2009 19:38:36 +0000 (GMT)
-From: Mark J Cox <mjc@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-cc: "Steven M. Christey" <coley@...us.mitre.org>, laurent.gaffie@...il.com, roesch@...rcefire.com
-Subject: SANS: Security Thought LeadersRe: CVE Request -- Snort - 2.8.5.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/15/12
+Message-ID: <Pine.GSO.4.51.0910151115380.1548@faron.mitre.org>
+Date: Thu, 15 Oct 2009 11:16:03 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- phpMyAdmin
 Content-Type: text/plain; charset=utf-8
 
-> Snort upstream released 2.8.5.1 version fixing one security issue:
-> DoS (crash) while printing specially-crafted IPv6 packet using the -v option
-> http://dl.snort.org/snort-current/release_notes_2851.txt
-> Could you allocate a new CVE identifier?
 
-Use CVE-2009-3641
+For those who need to know which CVE goes with which issue:
 
-Mark
+XSS - CVE-2009-3696
+SQL inject - CVE-2009-3697
+
+
+- Steve
