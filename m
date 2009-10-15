@@ -1,26 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/14/6
-Message-ID: <20090514233225.GF15455@severus.strandboge.com>
-Date: Thu, 14 May 2009 18:32:25 -0500
-From: Jamie Strandboge <jamie@...onical.com>
-To: coley@...us.mitre.org
-Cc: oss-security@...ts.openwall.com
-Subject: CVE Request for libsndfile
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/15/6
+Message-ID: <4AD6D101.70001@kernel.sg>
+Date: Thu, 15 Oct 2009 15:36:33 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>, Willy Tarreau <w@....eu>
+Subject: Re: CVE request kernel: flood ping cause out-of-iommu error and panic when mtu larger than 1500
 Content-Type: text/plain; charset=utf-8
 
-From http://www.mega-nerd.com/erikd/Blog/CodeHacking/libsndfile/:
+Eugene Teo wrote:
+> Eugene Teo wrote:
+>> Executing ping -f -s 3000 IP in a certain network setup could trigger 
+>> an out-of-IOMMU error, leading to a denial of service.
+> 
+> FYI, I rated this cvss2=8.3/AV:A/AC:L/Au:N/C:C/I:C/A:C.
 
-  There's a new release of libsndfile available in the usual place. This
-  is a security bug fix release which fixes a potential heap overflow in
-  VOC files found and reported by Tobias Klein ( http://www.trapkit.de/ )
-  and another in the AIFF file parser found by me.
+Correction: 6.1/AV:A/AC:L/Au:N/C:N/I:N/A:C.
 
-1.0.20 supposedly fixes it, with the author supplying patches back to
-1.0.15. Can we get a CVE for this?
-
-Jamie
-
--- 
-Jamie Strandboge             | http://www.canonical.com
-
-Download attachment "signature.asc" of type "application/pgp-signature" (198 bytes)
+Thanks, Eugene
