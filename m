@@ -1,29 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/09/3
-Message-ID: <20090209163051.GA9534@openwall.com>
-Date: Mon, 9 Feb 2009 19:30:51 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/15/2
+Message-ID: <4AD689EB.9030608@redhat.com>
+Date: Thu, 15 Oct 2009 10:33:15 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: local list archive
+CC: "Steven M. Christey" <coley@...us.mitre.org>, Willy Tarreau <w@....eu>
+Subject: Re: CVE request kernel: tcf_fill_node() infoleak due to typo in 9ef1d4c7
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Eugene Teo wrote:
+> Eugene Teo wrote:
+>> [...]
+>>>   CVE-2005-4881 - tc_fill_qdisc()  (at least)
+>>
+>> This requires http://patchwork.ozlabs.org/patch/35412/ too. There was 
+>> a typo in the upstream commit 9ef1d4c7.
+> 
+> I'm not sure but perhaps this needs a new CVE name. This infoleak bug 
+> was introduced in 2005, but was discovered and fixed recently.
 
-I've slightly enhanced the software behind the local archive of
-oss-security at http://www.openwall.com/lists/oss-security/ over the
-weekend - now most URLs in message bodies are turned into hyperlinks
-(with rel="nofollow" to reduce the added incentive for spam), and also
-the CC header is displayed (previously, only Date/From/To/Subject were
-displayed).
+This is assigned with CVE-2009-3612 - incomplete fix for CVE-2005-4881.
 
-If anyone is curious, the code may be reviewed at
-http://cvsweb.openwall.com/blists
-
-Correctly detected hyperlinks may be seen in my previous posting at
-http://www.openwall.com/lists/oss-security/2009/02/09/2 and in many
-others.
-
-Indeed, these archives are still lacking several essential features;
-this is to be worked on.
-
-Alexander
+Thanks, Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
