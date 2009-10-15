@@ -1,27 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/28/5
-Message-ID: <20090728180825.GE3577@redhat.com>
-Date: Tue, 28 Jul 2009 12:08:25 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: debian bug report on bind9 DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/15/3
+Message-ID: <20091015051106.GA29475@1wt.eu>
+Date: Thu, 15 Oct 2009 07:11:06 +0200
+From: Willy Tarreau <w@....eu>
+To: Eugene Teo <eugene@...hat.com>
+Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request kernel: tcf_fill_node() infoleak due to typo in 9ef1d4c7
 Content-Type: text/plain; charset=utf-8
 
-There's a bind 9 DoS reported in Debian's BTS [1] that provides a
-reproducer and some interesting info on a bind9 crash.  I don't think
-it's a huge problem with a well-secured bind9 configuration, but could
-be quite problematic for bind config's that allow updates without an
-RNDC key (typical of some dynamic DNS implementations), or on a system
-that has lax enough permissions that the RNDC key is exposed.
+On Thu, Oct 15, 2009 at 10:33:15AM +0800, Eugene Teo wrote:
+> Eugene Teo wrote:
+> >Eugene Teo wrote:
+> >>[...]
+> >>>  CVE-2005-4881 - tc_fill_qdisc()  (at least)
+> >>
+> >>This requires http://patchwork.ozlabs.org/patch/35412/ too. There was 
+> >>a typo in the upstream commit 9ef1d4c7.
+> >
+> >I'm not sure but perhaps this needs a new CVE name. This infoleak bug 
+> >was introduced in 2005, but was discovered and fixed recently.
+> 
+> This is assigned with CVE-2009-3612 - incomplete fix for CVE-2005-4881.
 
-We don't ship bind 8 so I cannot say whether or not it only affects bind
-9 or earlier versions.  Some further information is in our bugzilla from
-some quick testing I did [2].
+and 2.4 has it too since the 2.6 patch applied cleanly.
 
-This probably requires a CVE name.
+Thanks,
+Willy
 
-[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=538975
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=514292
-
--- 
-Vincent Danen / Red Hat Security Response Team 
