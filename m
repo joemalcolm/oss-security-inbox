@@ -1,41 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/06/2
-Message-ID: <4A7A6C79.9040707@redhat.com>
-Date: Thu, 06 Aug 2009 13:39:05 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/15/1
+Message-ID: <1853108659.325051255573857001.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 14 Oct 2009 22:30:57 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: clock_nanosleep() with CLOCK_MONOTONIC_RAW NULL pointer dereference
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Willy Tarreau <w@....eu>
+Subject: Re: CVE request kernel: tcf_fill_node() infoleak due to typo in 9ef1d4c7
 Content-Type: text/plain; charset=utf-8
 
-Calling do_nanosleep() with clockid CLOCK_MONOTONIC_RAW can cause a NULL
-pointer dereference. Appears to be introduced after commit 2d42244a
-(v2.6.28-rc1).
 
-Upstream commit:
-http://git.kernel.org/linus/70d715fd0597f18528f389b5ac59102263067744
+----- "Eugene Teo" <eugene@...hat.com> wrote:
 
-Reproducer/backtrace:
-http://lkml.org/lkml/2009/8/4/28
+> Eugene Teo wrote:
+> > [...]
+> >>   CVE-2005-4881 - tc_fill_qdisc()  (at least)
+> > 
+> > This requires http://patchwork.ozlabs.org/patch/35412/ too. There
+> was a 
+> > typo in the upstream commit 9ef1d4c7.
+> 
+> I'm not sure but perhaps this needs a new CVE name. This infoleak bug
+> was introduced in 2005, but was discovered and fixed recently.
+> 
 
-clock_nanosleep ->
-CLOCK_DISPATCH ->
-common_nsleep(arglist) ->
-hrtimer_nanosleep
-      return hrtimer_nanosleep(tsave /* &ts */, rmtp /* NULL */,
-                 flags & TIMER_ABSTIME /* turns out false */ ?
-                 HRTIMER_MODE_ABS : HRTIMER_MODE_REL,
-                 which_clock); ->
-do_nanosleep ->
-hrtimer_start_expires ->
-hrtimer_start_range_ns ->
-__hrtimer_start_range_ns ->
-lock_hrtimer_base ->
-...
+I'm naming this as such:
+CVE-2009-3612 incomplete fix for CVE-2005-4881
 
-References:
-http://lkml.org/lkml/2009/8/2/331
-http://lkml.org/lkml/2009/8/4/40
-https://bugzilla.redhat.com/show_bug.cgi?id=515867
+So please use CVE-2009-3612.
 
-Thanks, Eugene
+Sorry for the delay.
+
+-- 
+    JB
