@@ -1,32 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/23/11
-Message-ID: <891439954.596821259004627925.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 23 Nov 2009 14:30:27 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/15/11
+Message-ID: <deb7a2310910150744j36c32728t54e9a649edc8e46e@mail.gmail.com>
+Date: Thu, 15 Oct 2009 16:44:49 +0200
+From: Julien Tinnes <julien.tinnes@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: eldy@...rs.sourceforge.net
-Subject: Re: CVE request: awstats
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: oping allows the disclosure of  arbitrary file contents
 Content-Type: text/plain; charset=utf-8
 
------ "Craig" <craig@...uarter.de> wrote:
-> 
-> I think there isn't a CVE for this issues - which was fixed in 6.95 - yet
-> (quote from
-> http://awstats.sourceforge.net/docs/awstats_changelog.txt):
-> 
-> - Fix security in awredir.pl script by adding a security key required by
->   default.
-> - Enhance security of parameter sanitizing function
-> 
+On Thu, Oct 15, 2009 at 4:34 PM, Josh Bressers <bressers@...hat.com> wrote:
+> ----- "Julien Tinnes" <jt@....org> wrote:
+>>
+>> in case anyone cares, oping also attempts to drop privileges with
+>> setuid(getuid()); without checking setuid()'s return value.
+>>
+>> It's an obvious vulnerability, because a local attacker can make
+>> setuid() fail by setting a resource limit of 0 for RLIMIT_NPROC with
+>> setrlimit().
+>>
+>
+> Does that have any security implications though? I've not looked at the app.
+> If it's a security problem, I'll give it a CVE id.
 
-I'm adding AWStats upstream to this reply. Can someone elaborate on those
-fixes? Are they security flaws, or just proactive security measures.
+I didn't really look either. Because of this, everything will run as
+root while it shouldn't, but an attacker might need a second bug to
+elevate privileges.
+I would still consider it a security problem.
 
-If they're flaws that need CVE ids, I presume upstream will add them to their
-security page:
-http://awstats.sourceforge.net/awstats_security_news.php
-
-Thanks.
-
--- 
-    JB
+Julien
