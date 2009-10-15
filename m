@@ -1,46 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/23/1
-Message-ID: <20090623231409.GA8606@redhat.com>
-Date: Tue, 23 Jun 2009 17:14:09 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/16/1
+Message-ID: <hb8c8c$bdk$1@ger.gmane.org>
+Date: Thu, 15 Oct 2009 18:47:15 -0500
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: libtiff buffer underflow in LZWDecodeCompat
+Subject: Re: CVE Request -- PHP 5 - 5.2.11
 Content-Type: text/plain; charset=utf-8
 
-* [2009-06-21 17:14:24 -0700] Kees Cook wrote:
+Steven M. Christey wrote:
 
->A crafted TIFF can crash libtiff in LZWDecodeCompat via underflow (different
->from CVE-2008-2327).
+> 
+> ======================================================
+> Name: CVE-2009-3291
+> 
+> The php_openssl_apply_verification_policy function in PHP before
+> 5.2.11 does not properly perform certificate validation, which has
+> unknown impact and attack vectors, probably related to an ability to
+> spoof certificates.
+> 
+
+Yes, seems to be related to an improper handling of \0 in the CN field.
+
+> 
+> ======================================================
+> Name: CVE-2009-3292
 >
->Based on discussions[1] and a quick analysis[2], I don't think this is
->exploitable, but it does lead to crashes in any application using libtiff.
->I've reported it upstream[3], with the attached patch.
+> Unspecified vulnerability in PHP before 5.2.11 has unknown impact and
+> attack vectors related to "missing sanity checks around exif
+> processing."
 >
->Has anyone else looked this over?
->
->-Kees
->
->[1] http://www.lan.st/showthread.php?t=1856&page=3
->[2] https://bugs.launchpad.net/bugs/380149
->[3] http://bugzilla.maptools.org/show_bug.cgi?id=2065
 
-You saw that a new comment was posted to [3] that points to an earlier
-bug and a different patch, right?  Looks like it was just updated today,
-to point to this bug report from january:
+It is related to missing sanity checks when determining the length of
+sections of jpg headers and a missing limit on the nesting level of TIFF
+files.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1985
-
-Also, that report seems to agree with your quick analysis:
-
-"However, the previous patch does appear to prevent a payload of more than one distinct byte,
-making this effectively useless as a code injection vector. Nonetheless, it
-still is effective at crashing applications that use LibTIFF."
-
-In fact, I think the reporter of that bug was one of the writers in the
-lan.st forum notes you're showing, particularly based on this comment
-where he indicates it isn't exploitable and that he filed a bug:
-
-http://www.lan.st/showpost.php?p=13094&postcount=58
-
+Regards,
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
+
+
