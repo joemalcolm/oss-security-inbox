@@ -1,35 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/10/1
-Message-ID: <Pine.GSO.4.51.0911091900020.4011@faron.mitre.org>
-Date: Mon, 9 Nov 2009 19:01:40 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/15/7
+Message-ID: <deb7a2310910150615u7c70fcd5k13b611af19d062da@mail.gmail.com>
+Date: Thu, 15 Oct 2009 15:15:57 +0200
+From: Julien Tinnes <jt@....org>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
 Subject: Re: CVE request: oping allows the disclosure of  arbitrary file contents
 Content-Type: text/plain; charset=utf-8
 
+On Mon, Sep 28, 2009 at 2:45 PM, Steve Kemp <steve@...ve.org.uk> wrote:
+>  oping is setuid root application and one of the command line arguments allows
+>  a configuration file to be specified.  This file is read and *reported*
+>  to the console - Unless the file is lucky enough to look like a list
+>  of hostnames.
+>
+>  Brief details here:
+>
+>        http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=548684
 
-On Sat, 17 Oct 2009, yersinia wrote:
+Hi,
 
-> On Fri, Oct 16, 2009 at 10:06 PM, Josh Bressers <bressers@...hat.com> wrote:
-> > ----- "Julien Tinnes" <julien.tinnes@...il.com> wrote:
-> >
-> > [snip]
-> >
-> > I took a look in the oping source. Without another security flaw, this is just
-> > a bug, oping doesn't do anything while still root that could be an issue. I
-> > agree that it should be fixed, it is a serious bug, but an attacker cannot do
-> > anything nefarious with this flaw.
-> I think that the upstream mantainer should be have the last word
-> http://verplant.org/liboping/
+in case anyone cares, oping also attempts to drop privileges with
+setuid(getuid()); without checking setuid()'s return value.
 
-This says:
+It's an obvious vulnerability, because a local attacker can make
+setuid() fail by setting a resource limit of 0 for RLIMIT_NPROC with
+setrlimit().
 
-  2009-09-29 Version 1.3.3 is available. The new release fixes a serious
-  security issue in oping: If the application is installed with the
-  SetUID-bit, anybody on the system could use oping to read arbitrary
-  files using the "-f" option.
-
-So as stated, this sounds worthy of a CVE to me.  Thoughts?
-
-- Steve
+Julien
