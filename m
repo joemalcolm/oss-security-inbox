@@ -1,40 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/29/8
-Message-Id: <20091029153508.1e3009d1.reed@reedloden.com>
-Date: Thu, 29 Oct 2009 15:35:08 -0500
-From: Reed Loden <reed@...dloden.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/15/10
+Message-ID: <493433228.357481255617401534.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 15 Oct 2009 10:36:41 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: MFSA 2009-63
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: oping allows the disclosure of arbitrary file contents
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 29 Oct 2009 21:22:44 +0100
-Tomas Hoger <thoger@...hat.com> wrote:
 
-> Has anyone been looking into MFSA 2009-63 already trying to figure out
-> what really got fixed?  We have some notes in:
+----- "Steve Kemp" <steve@...ve.org.uk> wrote:
+
+> oping is setuid root application and one of the command line arguments
+> allows
+>  a configuration file to be specified.  This file is read and
+> *reported*
+>  to the console - Unless the file is lucky enough to look like a list
+>  of hostnames.
 > 
->   https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-3379
->   https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-3377
+>   Brief details here:
 > 
-> but I'm still not quite convinced we have a full list of upstream
-> commits that need backporting.  Has anyone got any further already?
+>         http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=548684
+> 
 
-What type of specific information are you looking for? Mozilla works
-with upstream Xiph.org to get such issues resolved upstream, and then
-we either take a minimal fix downstream or a full library upgrade to
-latest upstream code. Lately, we've been having to do full library
-upgrades due to the complexity of fixes and dependencies on other
-changes.
+I've not found a CVE id for this anywhere, so here goes:
 
-I'll see if we can get those still private bugs concerning the media
-library fixes open sooner rather than later, though. I can probably CC
-you (and possibly others) to the bugs quicker than that, if it would
-help.
+CVE-2009-3614 oping arbitrary local file disclosure
 
-~reed
-Mozilla Security Group
+Thanks.
 
 -- 
-Reed Loden - <reed@...dloden.com>
-
-Content of type "application/pgp-signature" skipped
+    JB
