@@ -1,16 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/15/4
-Message-ID: <20090515172444.GA22609@logo.rdu.rpath.com>
-Date: Fri, 15 May 2009 13:24:44 -0400
-From: "Michael K. Johnson" <johnsonm@...th.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/15/13
+Message-ID: <20091015173822.084de220@redhat.com>
+Date: Thu, 15 Oct 2009 17:38:22 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: ptrace race CVE ID?
+Cc: coley@...us.mitre.org
+Subject: Re: CVE Request -- PHP 5 - 5.2.11
 Content-Type: text/plain; charset=utf-8
 
-There's an exploit for the bug fixed in changeset
-cad81bc2529ab8c62b6fdc83a1c0c7f4a87209eb
-floating around in the wild.  I had thought it was assigned a
-CVE ID, but I am having trouble finding a record of it.  Is
-anyone else aware of a CVE ID for it?
+On Tue, 22 Sep 2009 03:24:34 -0400 (EDT) "Steven M. Christey"
+<coley@...us.mitre.org> wrote:
 
-Thanks...
+> Name: CVE-2009-3293
+> 
+> Unspecified vulnerability in the imagecolortransparent function in PHP
+> before 5.2.11 has unknown impact and attack vectors related to an
+> incorrect "sanity check for the color index."
+
+While looking into this one, I spotted few interesting things.
+
+Patch for this is:
+- if (color > -1 && color<im->colorsTotal && color<=gdMaxColors) {
++ if (color > -1 && color < im->colorsTotal && color < gdMaxColors) {
+
+Besides "color<=gdMaxColors" check, there is also "color<im->colorsTotal"
+check.  GD code also assumes that im->colorsTotal is <= gdMaxColors, as
+it is used as an upper bound in multiple cases when accessing arrays of
+gdMaxColors size.  You can see "im->colorsTotal<=gdMaxColors" enforced in
+e.g.  gdImageColorAllocateAlpha(), which is called for PHP function
+imagecolorallocate().
+
+Hence:
+  color<im->colorsTotal (from the check)
+and
+  im->colorsTotal<=gdMaxColors (assumed in the rest of the code)
+implies
+  color < gdMaxColor
+
+So the change should not really introduce any extra protection for current
+PHP versions.
+
+This change is relevant for pre-4.3.5 PHP versions, which do not have
+"color<im->colorsTotal" part of the check.  It is possible to trigger
+im->alpha[] off-by-one over-write in those versions.  This changes
+neighbor member of the gdImageStruct structure - trueColor.  If that
+happens, gd will believe that previously non-TrueColor image is now
+TrueColor, which can lead to buffer over-reads or over-writes in
+subsequent gd operations (due to a different storage space needed for
+pixels of TrueColor and non-TrueColor images).
+
+But there is also concern for current PHP versions, as im->colorsTotal may
+be initialized with a value greater than gdMaxColors when using
+imagecreatefromgd() PHP function on a specially crafted GD file.  Value
+read from file is not properly checked in _gdGetColors() (gd_gd.c),
+possibly allowing previously mentioned over-reads or over-writes on
+various places (e.g. colorsTotal is used in _gdGetColors()
+when initializing im->open[] with 0s).  CVE-2009-3546 was assigned to
+this problem and the fix is now committed in PHP SVN:
+  http://svn.php.net/viewvc?view=revision&revision=289557
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
