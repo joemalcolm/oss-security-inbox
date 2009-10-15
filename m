@@ -1,46 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/27/5
-Message-ID: <Pine.GSO.4.51.0908271138290.23680@faron.mitre.org>
-Date: Thu, 27 Aug 2009 11:41:08 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/15/8
+Message-ID: <1961813405.357071255617098297.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 15 Oct 2009 10:31:38 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re:  Re: CVE id request: php5
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request kernel: flood ping cause out-of-iommu error and panic when mtu larger than 1500
 Content-Type: text/plain; charset=utf-8
 
+Use CVE-2009-3613 for this.
 
-That was me.  This basically came through a separate effort to catch up on
-a backlog of CVEs from 2008, and I forgot about this discussion (that was
-literally 3,700 CVEs ago).  There is a disclaimer in the CVE desc that
-says how limited the scope is.  It's definitely on the edge of inclusion
-CVE-wise.
+Thanks.
 
-- Steve
+-- 
+    JB
 
 
-On Thu, 27 Aug 2009, Tomas Hoger wrote:
+----- "Eugene Teo" <eugeneteo@...nel.sg> wrote:
 
-> On Thu, 29 Jan 2009 12:20:14 -0500 (EST) "Steven M. Christey"
-> <coley@...us.mitre.org> wrote:
->
-> > On Thu, 29 Jan 2009, Joe Orton wrote:
-> >
-> > > If the script is taking untrusted input data and passing it
-> > > unsanitized as the "key" argument to a dba_replace() call, it can
-> > > override arbitrary keys in the ini file anyway.  Truncating the ini
-> > > file to zero length seems like a less severe problem than being
-> > > able to write (arbitrary?) data to arbitrary keys.
-> >
-> > We don't have any formal criteria for this kind of thing, but in
-> > general, we ask whether there are realistic scenarios under which an
-> > attack can succeed, and if any additional privileges are gained
-> > versus normal methods.  These questions are particularly applicable
-> > to language interpreters and compilers.  Given this scenario, it
-> > seems unrealistic that an app would perform a dba_replace() with
-> > user-controlled input - and if it does, then it's a vuln in the
-> > application, not PHP itself.  So it doesn't seem to require a CVE.
->
-> Just for posterity, this got CVE-2008-7068 after all.
->
-> --
-> Tomas Hoger / Red Hat Security Response Team
->
+> Executing ping -f -s 3000 IP in a certain network setup could trigger
+> an 
+> out-of-IOMMU error, leading to a denial of service.
+> 
+> Steps to reproduce the issue:
+> https://bugzilla.redhat.com/show_bug.cgi?id=529137#c0
+> 
+> Triggering the issue would result in:
+> PCI-DMA: Out of IOMMU space for 7222 bytes at device 0000:03:00.0
+> PCI-DMA: Out of IOMMU space for 7222 bytes at device 0000:03:00.0
+> <Repeated Many Many Times>
+> PCI-DMA: Out of IOMMU space for 7222 bytes at device 0000:03:00.0
+> PCI-DMA: Out of IOMMU space for 7222 bytes at device 0000:03:00.0
+> 
+> HARDWARE ERROR
+> CPU 0: Machine Check Exception:                7 Bank 4:
+> bc0000000005001b
+> RIP 10:<ffffffff8006b2b0> {default_idle+0x29/0x50}
+> TSC 10116da2355 ADDR 4000000 MISC c008000001000000
+> This is not a software problem!
+> Run through mcelog --ascii to decode and contact your hardware vendor
+> Kernel panic - not syncing: Uncorrected machine check
+>   <7>APIC error on CPU2: 00(08)
+> 
+> Upstream commits:
+> http://git.kernel.org/linus/a866bbf6aacf95f849810079442a20be118ce905
+> http://git.kernel.org/linus/97d477a914b146e7e6722ded21afa79886ae8ccd
+> 
+> References:
+> http://bugzilla.kernel.org/show_bug.cgi?id=9468
+> https://bugzilla.redhat.com/show_bug.cgi?id=529137
+> 
+> Thanks, Eugene
+
+-- 
+    JB
