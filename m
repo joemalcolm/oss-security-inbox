@@ -1,26 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/17/8
-Message-ID: <4AB1B70C.5050007@redhat.com>
-Date: Thu, 17 Sep 2009 12:11:56 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/15/4
+Message-ID: <4AD6BF10.90306@kernel.sg>
+Date: Thu, 15 Oct 2009 14:20:00 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-CC: Willy Tarreau <w@....eu>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: tc: uninitialised kernel memory leak
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request kernel: flood ping cause out-of-iommu error and panic when mtu larger than 1500
 Content-Type: text/plain; charset=utf-8
 
-> So for now, we have:
-> 
->   CVE-2009-3228 - tc_fill_tclass()
+Executing ping -f -s 3000 IP in a certain network setup could trigger an 
+out-of-IOMMU error, leading to a denial of service.
 
-Fixed in v2.6.31-rc9, v2.4.37.6 (096ed17f).
+Steps to reproduce the issue:
+https://bugzilla.redhat.com/show_bug.cgi?id=529137#c0
 
->   CVE-2005-4881 - tc_fill_qdisc()  (at least)
+Triggering the issue would result in:
+PCI-DMA: Out of IOMMU space for 7222 bytes at device 0000:03:00.0
+PCI-DMA: Out of IOMMU space for 7222 bytes at device 0000:03:00.0
+<Repeated Many Many Times>
+PCI-DMA: Out of IOMMU space for 7222 bytes at device 0000:03:00.0
+PCI-DMA: Out of IOMMU space for 7222 bytes at device 0000:03:00.0
 
-Fixed in v2.6.13-rc1, v2.4.37.6 too (all three patches).
+HARDWARE ERROR
+CPU 0: Machine Check Exception:                7 Bank 4: bc0000000005001b
+RIP 10:<ffffffff8006b2b0> {default_idle+0x29/0x50}
+TSC 10116da2355 ADDR 4000000 MISC c008000001000000
+This is not a software problem!
+Run through mcelog --ascii to decode and contact your hardware vendor
+Kernel panic - not syncing: Uncorrected machine check
+  <7>APIC error on CPU2: 00(08)
 
-> So, let's go with these two numbers.  I'll fill them out later.  (My head
-> hurts.)
+Upstream commits:
+http://git.kernel.org/linus/a866bbf6aacf95f849810079442a20be118ce905
+http://git.kernel.org/linus/97d477a914b146e7e6722ded21afa79886ae8ccd
 
-Wow, my head hurts too... ;)
+References:
+http://bugzilla.kernel.org/show_bug.cgi?id=9468
+https://bugzilla.redhat.com/show_bug.cgi?id=529137
 
-Eugene
+Thanks, Eugene
