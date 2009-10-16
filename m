@@ -1,33 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/06/5
-Message-ID: <20090206182049.4b0dd9a4@redhat.com>
-Date: Fri, 6 Feb 2009 18:20:49 +0100
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/16/8
+Message-ID: <565172377.476791255720212930.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 16 Oct 2009 15:10:12 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: jhead
+Subject: Re: QEMU VNC use-after-free
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 27 Nov 2008 00:21:54 +0100 Robert Buchholz <rbu@...too.org>
-wrote:
+Use CVE-2009-3616 for this.
 
-> These two issues have been resolved in the current
-> "jhead-latest.tar.gz" distributed on the upstream site. Both Ubuntu
-> and Debian have renamed one version of this file to be "2.85" whereas
-> upstream has not yet released any 2.85 version. Upstream stated that
-> they will release a 2.85 not before next year, so anyone who has this
-> issue open can either extract patches, package the snapshot or wait.
-
-Looks like -latest tarball was updated again and now mentions 2.86
-inside.  In that, usage of mkstemp was replaced with mktemp (previous
-version failed to close file descriptors opened by mkstemp, probably
-causing issues when trying to use command on large pile of images at
-once).  Those the temp file seem to be created user-specified
-destination directory, probably not too likely to be /tmp (and hence
-prone to races).
-
-Anyway, can anyone help me understand what was CVE-2008-4639 assigned
-to?  I tried looking at the diff between 2.7 and 2.84 and fail to see
-any relevant change...
+Thanks.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+    JB
+
+
+----- "Tomas Hoger" <thoger@...hat.com> wrote:
+
+> Hi!
+> 
+> Use-after-free / double-free problems were reported for QEMU's VNC
+> server:
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=501131
+> https://bugzilla.redhat.com/show_bug.cgi?id=505641
+> 
+> Problem can cause QEMU process (and hence virtual machine) to crash
+> (which is not security in most use cases, as VNC access means console
+> access for the virtual machine), but if used for code execution, it
+> can
+> mean guest -> host escape.
+> 
+> Versions in between the following two commits are affected:
+> 
+> http://git.savannah.gnu.org/cgit/qemu.git/commit/?id=753b405331
+> http://git.savannah.gnu.org/cgit/qemu.git/commit/?id=198a0039c5
+> 
+> -- 
+> Tomas Hoger / Red Hat Security Response Team
