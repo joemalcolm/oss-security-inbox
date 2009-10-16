@@ -1,47 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/05/7
-Message-ID: <829b67ee0908051012k40629d71v651c0d72bb3de3e1@mail.gmail.com>
-Date: Wed, 5 Aug 2009 20:12:51 +0300
-From: Henri Salo <hsalogeek@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: fetchmail <= 6.3.10 SSL certificate  NUL prefix verification bypass
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/16/6
+Message-ID: <4AD840CD.7090400@redhat.com>
+Date: Fri, 16 Oct 2009 11:45:49 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request - aria2 - 1.6.2
 Content-Type: text/plain; charset=utf-8
 
-2009/8/5 Tomas Hoger <thoger@...hat.com>
+Hello Steve, vendors,
 
-> Hi Matthias!
->
-> Thanks for the heads-up!
->
-> On Wed, 05 Aug 2009 17:14:36 +0200 "Matthias Andree"
-> <matthias.andree@....de> wrote:
->
-> > Is there a global CVE ID to collect this vulnerability that is
-> > supposed to be reused by applications?
->
-> That's actually a pretty good question.  This problem was first
-> presented for Firefox/NSS and got assigned CVE-2009-2408.
->
-> Similar problem also affects GnuTLS and some changes are being
-> discussed on the -devel mailing list, with some changes and tests
-> already in git.  This should deserve a separate CVE.
->
-> And than there is OpenSSL, which, as I've been told, expects
-> applications to do name checking.  So it's probably safe to assume that
-> many / majority of client applications using OpenSSL are likely to be
-> affected by some variant of this problem (either via CommonNames or
-> subjectAltNames).  I'm not sure if single CVE should be used here for
-> all, or dozens of CVEs, one for each.  It's likely going to be mess
-> either way.  I'm adding CC on Steven for advice.  Steven, at least one
-> CVE has already been allocated privately for similar case.
->
-> --
-> Tomas Hoger / Red Hat Security Response Team
->
+   aria2 upstream has released latest 1.6.2 release, fixing one DoS issue. From
+1.6.2 Release Note:
 
-I think there should be one for every vulnerability so one can follow the
-process of fixing this issue in specific application.
+This release fixes segmentation fault error if URI to download
+contains printf format string and logging is enabled
 
----
-Henri Salo
+* Fixed the bug that causes segmentation fault if
+    req->getCurrentUrl() contains printf format string such as %d. The
+    statement that causes this bug is useless and removed.
 
+
+References:
+-----------
+http://aria2.svn.sourceforge.net/viewvc/aria2/trunk/NEWS?revision=1586
+https://bugzilla.redhat.com/show_bug.cgi?id=529342
+
+Upstream patch:
+---------------
+http://aria2.svn.sourceforge.net/viewvc/aria2/trunk/src/AbstractCommand.cc?r1=1539&r2=1572
+
+Affected versions:
+------------------
+aria2-1.5.x && aria2-1.6.x (aria2-1.3.x is not vulnerable)
+
+Could you allocate a CVE identifier?
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
