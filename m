@@ -1,21 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/29/5
-Message-ID: <914336965.2985431233255231152.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 29 Jan 2009 13:53:51 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/16/9
+Message-ID: <73739845.477241255720508131.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 16 Oct 2009 15:15:08 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: coley@...re.org
-Subject: CVE Request (trickle)
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request - aria2 - 1.6.2
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
-
-trickle has what is similar to all the RPATH flaws that got CVE ids a while back:
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=513456
-
-It seems it could set a bad LD_PRELOAD path when the trickle command is run.
+Please use CVE-2009-3617 for this.
 
 Thanks.
 
 -- 
     JB
+
+----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+
+> Hello Steve, vendors,
+> 
+>    aria2 upstream has released latest 1.6.2 release, fixing one DoS
+> issue. From
+> 1.6.2 Release Note:
+> 
+> This release fixes segmentation fault error if URI to download
+> contains printf format string and logging is enabled
+> 
+> * Fixed the bug that causes segmentation fault if
+>     req->getCurrentUrl() contains printf format string such as %d.
+> The
+>     statement that causes this bug is useless and removed.
+> 
+> 
+> References:
+> -----------
+> http://aria2.svn.sourceforge.net/viewvc/aria2/trunk/NEWS?revision=1586
+> https://bugzilla.redhat.com/show_bug.cgi?id=529342
+> 
+> Upstream patch:
+> ---------------
+> http://aria2.svn.sourceforge.net/viewvc/aria2/trunk/src/AbstractCommand.cc?r1=1539&r2=1572
+> 
+> Affected versions:
+> ------------------
+> aria2-1.5.x && aria2-1.6.x (aria2-1.3.x is not vulnerable)
+> 
+> Could you allocate a CVE identifier?
+> 
+> Thanks && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
