@@ -1,41 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/23/3
-Message-ID: <49F00161.1030801@redhat.com>
-Date: Thu, 23 Apr 2009 13:49:21 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: missing capabilities in fs_mask
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/16/5
+Message-ID: <20091016105823.03fed81f@redhat.com>
+Date: Fri, 16 Oct 2009 10:58:23 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: OSS Security <oss-security@...ts.openwall.com>
+Subject: QEMU VNC use-after-free
 Content-Type: text/plain; charset=utf-8
 
-Eugene Teo wrote:
-> "When POSIX capabilities were introduced during the 2.1 Linux cycle, the
-> fs mask, which represents the capabilities which having fsuid==0 is
-> supposed to grant, did not include CAP_MKNOD and CAP_LINUX_IMMUTABLE.
-> However, before capabilities the privilege to call these did in fact
-> depend upon fsuid==0.
-> 
-> This patch introduces those capabilities into the fsmask, restoring the
-> old behavior.
-> 
-> See the thread starting at http://lkml.org/lkml/2009/3/11/157 for reference.
-> 
-> Note that if this fix is deemed valid, then earlier kernel versions (2.4
-> and 2.2) ought to be fixed too.
-> 
-> Changelog:
->  [Mar 23] Actually delete old CAP_FS_SET definition...
->  [Mar 20] Updated against J. Bruce Fields's patch"
-> 
-> References:
-> https://bugzilla.redhat.com/show_bug.cgi?id=497047
-> http://lwn.net/Articles/328572/?format=printable
-> http://lwn.net/Articles/328594/?format=printable
-> http://git.kernel.org/linus/0ad30b8fd5fe798aae80df6344b415d8309342cc
+Hi!
 
-Here's the link to the kernel 2.4 patch:
-http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.4.37.y.git;a=commitdiff;h=1c06d5237647db43cb2043a19cb393f4ed4d942f
+Use-after-free / double-free problems were reported for QEMU's VNC
+server:
 
-Thanks, Eugene
+https://bugzilla.redhat.com/show_bug.cgi?id=501131
+https://bugzilla.redhat.com/show_bug.cgi?id=505641
+
+Problem can cause QEMU process (and hence virtual machine) to crash
+(which is not security in most use cases, as VNC access means console
+access for the virtual machine), but if used for code execution, it can
+mean guest -> host escape.
+
+Versions in between the following two commits are affected:
+
+http://git.savannah.gnu.org/cgit/qemu.git/commit/?id=753b405331
+http://git.savannah.gnu.org/cgit/qemu.git/commit/?id=198a0039c5
+
 -- 
-Eugene Teo / Red Hat Security Response Team
+Tomas Hoger / Red Hat Security Response Team
