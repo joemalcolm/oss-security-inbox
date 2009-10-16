@@ -1,55 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/12/3
-Message-ID: <Pine.GSO.4.51.0902121045180.17219@faron.mitre.org>
-Date: Thu, 12 Feb 2009 10:45:25 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/16/2
+Message-ID: <Pine.GSO.4.51.0910152352440.21688@faron.mitre.org>
+Date: Thu, 15 Oct 2009 23:58:05 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-cc: coley@...us.mitre.org
-Subject: Re: CVE request for proftpd
+cc: thomas@...e.de
+Subject: Re: CVE request: local root via setuid VBoxNetAdpCtl
 Content-Type: text/plain; charset=utf-8
 
 
-======================================================
-Name: CVE-2009-0542
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0542
-Reference: BUGTRAQ:20090210 Another SQL injection in ProFTPd with mod_mysql (probably postgres as well)
-Reference: URL:http://www.securityfocus.com/archive/1/archive/1/500823/100/0/threaded
-Reference: BUGTRAQ:20090210 ProFTPd with mod_mysql Authentication Bypass Exploit
-Reference: URL:http://www.securityfocus.com/archive/1/archive/1/500851/100/0/threaded
-Reference: BUGTRAQ:20090210 Re: Another SQL injection in ProFTPd with mod_mysql (probably postgres as well)
-Reference: URL:http://www.securityfocus.com/archive/1/archive/1/500833/100/0/threaded
-Reference: BUGTRAQ:20090211 Re: Re: Another SQL injection in ProFTPd with mod_mysql (probably postgres as well)
-Reference: URL:http://www.securityfocus.com/archive/1/archive/1/500852/100/0/threaded
-Reference: MILW0RM:8037
-Reference: URL:http://www.milw0rm.com/exploits/8037
-Reference: MLIST:[oss-security] 20090211 CVE request for proftpd
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/02/11/1
-Reference: MLIST:[oss-security] 20090211 Re: CVE request for proftpd
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/02/11/5
-Reference: MLIST:[oss-security] 20090211 Re: CVE request for proftpd
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/02/11/3
-Reference: CONFIRM:http://bugs.proftpd.org/show_bug.cgi?id=3180
+On Tue, 13 Oct 2009, Tomas Hoger wrote:
 
-SQL injection vulnerability in ProFTPD Server 1.3.1 through 1.3.2rc2
-allows remote attackers to execute arbitrary SQL commands via a "%"
-(percent) character in the username, which introduces a "'" (single
-quote) character during variable substitution by mod_sql.
+> On Tue, 13 Oct 2009 08:38:40 +0200 Thomas Biege <thomas@...e.de> wrote:
+>
+> > this one needs two CVE-IDs:
+> > - shell meta char injection in popen()
+> > - possible buffer overflow in strncpy()
+> >
+> > http://sunsolve.sun.com/search/document.do?assetkey=1-66-268188-1
+>
+> I believe that the following got assigned for these independently of
+> this request:
+>
+> CVE-2009-3692
+> Unspecified vulnerability in the VBoxNetAdpCtl configuration tool in
+> Sun VirtualBox 3.0.x before 3.0.8 on Solaris x86, Linux, and Mac OS X
+> allows local users to gain privileges via unknown vectors.
 
+OK, let's do this:
 
-======================================================
-Name: CVE-2009-0543
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0543
-Reference: MLIST:[oss-security] 20090211 CVE request for proftpd
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/02/11/4
-Reference: MLIST:[oss-security] 20090211 Re: CVE request for proftpd
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/02/11/5
-Reference: CONFIRM:http://bugs.proftpd.org/show_bug.cgi?id=3173
+CVE-2009-3692 can be "recast" so that it only addresses the shell metachar
+injection in popen.
 
-ProFTPD Server 1.3.1, with NLS support enabled, allows remote
-attackers to bypass SQL injection protection mechanisms via invalid,
-encoded multibyte characters, which are not properly handled in (1)
-mod_sql_mysql and (2) mod_sql_postgres.
+I've assigned a new CVE-2009-3704 to concentrate only on the strncpy().
+Any thoughts on exploitability might be nice.
+
+Regarding http://www.virtualbox.org/wiki/Changelog this URL is generic:
+"fixed vulnerability that allowed to execute commands with root
+privileges."  This implies only one problem, not too.  Are we sure that
+the changelog addresses both problems?
+
+- Steve
 
 
+
+
+> http://www.virtualbox.org/wiki/Changelog
+> http://sunsolve.sun.com/search/document.do?assetkey=1-66-268188-1
+> http://www.securityfocus.com/bid/36604
+> http://www.osvdb.org/58652
+> http://securitytracker.com/id?1022990
+> http://secunia.com/advisories/36929
+> http://www.vupen.com/english/advisories/2009/2845
+> http://xforce.iss.net/xforce/xfdb/53671
+>
+> I know this does not satisfy your request, it's rather a heads-up to
+> avoid duplicate assignment.
+>
+> --
+> Tomas Hoger / Red Hat Security Response Team
+>
