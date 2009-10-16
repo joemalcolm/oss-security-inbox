@@ -1,27 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/20/1
-Message-ID: <4B05F19D.6010207@haquarter.de>
-Date: Fri, 20 Nov 2009 02:32:13 +0100
-From: Craig <craig@...uarter.de>
-To: OSS Security <oss-security@...ts.openwall.com>
-Subject: CVEs for nginx
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/16/10
+Message-ID: <535657115.479131255721782728.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 16 Oct 2009 15:36:22 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: viewvc: CVE request: XSS and illegal characters while printing name-value pairs
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Plese use these ids:
 
-are the CVEs for
+CVE-2009-3618 viewvc XSS (rev 2215)
+CVE-2009-3619 viewvc print illegal parameter names unsafely (rev 2218)
 
-1.) nginx webdav: http://secunia.com/advisories/36818/
-
-2.) nginx Null Pointer dereference:
-http://sysoev.ru/nginx/patch.null.pointer.txt
-
-3.) nginx SSL Renegotiation: http://sysoev.ru/nginx/patch.cve-2009-3555.txt
-
-I know the last one contains a CVE number, nginx uses openssl and the
-patch will disable renegotiation, maybe this deserves an own CVE?
+-- 
+    JB
 
 
-Best regards,
+----- "Ludwig Nussel" <ludwig.nussel@...e.de> wrote:
 
-Craig
+> Thomas Biege wrote:
+> > Version 1.1.2 (released 11-Aug-2009)
+> > 
+> >   * security fix: validate the 'view' parameter to avoid XSS attack
+> >   * security fix: avoid printing illegal parameter names and values
+> > 
+> >
+> http://viewvc.tigris.org/source/browse/*checkout*/viewvc/tags/1.1.2/CHANGES
+> 
+> CVE request dropped off the radar I guess.
+> 
+> cu
+> Ludwig
+> 
+> -- 
+>  (o_   Ludwig Nussel
+>  //\   
+>  V_/_  http://www.suse.de/
+> SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
