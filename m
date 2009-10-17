@@ -1,49 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/23/2
-Message-ID: <20090123140039.054600a9@redhat.com>
-Date: Fri, 23 Jan 2009 14:00:39 +0100
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/17/2
+Message-ID: <b086760e0910170120m52be908en24b8fe314c1ab97f@mail.gmail.com>
+Date: Sat, 17 Oct 2009 10:20:38 +0200
+From: yersinia <yersinia.spiros@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: Re: CVE request -- git
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: oping allows the disclosure of  arbitrary file contents
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 22 Jan 2009 17:17:39 -0500 (EST) "Steven M. Christey"
-<coley@...us.mitre.org> wrote:
-
-> > Looks like they got texts mixed up.  -5516 was given to git_search
-> > issue, and -5517 to git_snapshot and git_object issues (the idea was
-> > to use lower id for the issue fixed earlier).  Btw, commitdiff
-> > links are correct, only texts need swapping.
-> 
-> Fixed.
-
-Good, looks better.
-
-> > Can you also change "in 1.5.x" to "before 1.5.x" in both
-> > descriptions?
-> 
-> Done (modulo CVE style).
-
-Plus one extraneous version change ;).  Description for -5516 is
-supposed to say "before 1.5.5" (as 1.5.5.0, but upstream does not seem
-to use trailing ".0"s in version strings) (I have not looked whether
-only 1.5.x were affected by this, this may possibly go back to older
-versions), one for -5517 should say "before 1.5.6".  Version difference
-was the reason for split / assignment of 2 CVEs.
-
-> > Their announcement mentions version 1.5.6.6, that should have both
-> > issues fixed (and -5916).  They'll probably clarify what was their
-> > "old" version.
-> 
-> If they're releasing 1.5.6.6, doesn't that suggest that maybe one of
-> the issues were still present in 1.5.5?
-
-Paragraph above should explain this.  Additionally, they probably just
-bumped to upstream version that has all three (-5516, -5517, and -5916)
-issues fixed.  Not sure what was their previous version though.
-
-HTH
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+On Fri, Oct 16, 2009 at 10:06 PM, Josh Bressers <bressers@...hat.com> wrote:
+> ----- "Julien Tinnes" <julien.tinnes@...il.com> wrote:
+>> On Thu, Oct 15, 2009 at 4:34 PM, Josh Bressers <bressers@...hat.com> wrote:
+>> > ----- "Julien Tinnes" <jt@....org> wrote:
+>> >>
+>> >> in case anyone cares, oping also attempts to drop privileges with
+>> >> setuid(getuid()); without checking setuid()'s return value.
+>> >>
+>> >
+>> > Does that have any security implications though? I've not looked at the
+>> > app.  If it's a security problem, I'll give it a CVE id.
+>>
+>> I didn't really look either. Because of this, everything will run as root
+>> while it shouldn't, but an attacker might need a second bug to elevate
+>> privileges.  I would still consider it a security problem.
+>>
+>
+> I took a look in the oping source. Without another security flaw, this is just
+> a bug, oping doesn't do anything while still root that could be an issue. I
+> agree that it should be fixed, it is a serious bug, but an attacker cannot do
+> anything nefarious with this flaw.
+I think that the upstream mantainer should be have the last word
+http://verplant.org/liboping/
+>
+> I'm happy to let Steve overrule me if he wishes, but I'm not going to assign
+> this a CVE id.
+>
+> --
+>    JB
+>
