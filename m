@@ -1,39 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/23/5
-Message-ID: <20090423070805.GA17969@1wt.eu>
-Date: Thu, 23 Apr 2009 09:08:05 +0200
-From: Willy Tarreau <w@....eu>
-To: Eugene Teo <eugene@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE-2009-1265 kernel: af_rose/x25: Sanity check the maximum user frame size
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/17/1
+Message-ID: <Pine.GSO.4.51.0910162306280.9854@faron.mitre.org>
+Date: Fri, 16 Oct 2009 23:08:44 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: oping allows the disclosure of  arbitrary file contents
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Apr 23, 2009 at 02:54:06PM +0800, Eugene Teo wrote:
-> Willy Tarreau wrote:
-> > Hi Eugene,
-> > 
-> > On Wed, Apr 08, 2009 at 03:58:55PM +0800, Eugene Teo wrote:
-> >> {nr,rose,x25}_sendmsg() functions need to have sanity checks on the
-> >> packet size, otherwise the sizes can wrap and end up sending garbage.
-> >>
-> >> http://bugzilla.kernel.org/show_bug.cgi?id=10423
-> >> http://git.kernel.org/linus/83e0bbcbe2145f160fbaa109b0439dae7f4a38a9
-> >> http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2009-1265
-> >>
-> >> This affects both 2.4.x and 2.6.x if CONFIG_{NETROM,ROSE,X25} are enabled.
-> > 
-> > I already have it in my queue, just did not have time to merge it yet.
-> > Thanks for the reminder anyway, I really appreciate it ;-)
-> 
-> You will need this too :)
-> 
-> upstream commit: cc29c70dd581f85ee7a3e7980fb031f90b90a2ab
-> 
-> Patch "af_rose/x25: Sanity check the maximum user frame size"
-> (commit 83e0bbcbe2145f160fbaa109b0439dae7f4a38a9) from Alan Cox got
-> locking wrong. If we bail out due to user frame size being too large,
-> we must unlock the socket beforehand.
 
-OK thanks Eugene!
-Willy
+On Fri, 16 Oct 2009, Josh Bressers wrote:
 
+> ----- "Julien Tinnes" <julien.tinnes@...il.com> wrote:
+>
+
+> I took a look in the oping source. Without another security flaw, this
+> is just a bug, oping doesn't do anything while still root that could be
+> an issue. I agree that it should be fixed, it is a serious bug, but an
+> attacker cannot do anything nefarious with this flaw.
+
+I agree with Josh, this would argue for *not* assigning a CVE, even though
+it's a serious bug.
+
+- Steve
