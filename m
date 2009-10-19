@@ -1,22 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/31/2
-Message-ID: <20090831093941.GA10202@openwall.com>
-Date: Mon, 31 Aug 2009 13:39:41 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/19/4
+Message-ID: <1707377269.594911255980451060.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 19 Oct 2009 15:27:31 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Follow oss_security on Twitter
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: AF_UNIX: Fix deadlock on connecting to shutdown socket
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Aug 24, 2009 at 10:57:31AM +0800, Eugene Teo wrote:
-> http://twitter.com/oss_security
+Please use CVE-2009-3621.
+
+Thanks.
+
+-- 
+    JB
+
+
+----- "Eugene Teo" <eugeneteo@...nel.sg> wrote:
+
+> Quoting from the patch submitted:
+> "...a deadlock bug in UNIX domain socket, which makes able to DoS
+> attack against the local machine by non-root users.
 > 
-> It broadcasts tweets when there are updates in the list.
-
-I'm not using Twitter myself (and I am happy being on the list directly),
-but this sounds good to me.  I see that there are quite some followers
-already.  I've just added links to the Twitter URL above to:
-
-http://oss-security.openwall.org/wiki/mailing-lists/oss-security
-http://oss-security.openwall.org/subscribe
-
-Alexander
+> ...
+> Why this happens:
+>   Error checks between unix_socket_connect() and unix_wait_for_peer()
+> are
+>   inconsistent. The former calls the latter to wait until the backlog
+> is
+>   processed. Despite the latter returns without doing anything when
+> the
+>   socket is shutdown, the former doesn't check the shutdown state and
+>   just retries calling the latter forever."
+> 
+> How to reproduce:
+>   1. Make a listening AF_UNIX/SOCK_STREAM socket with an abstruct
+>      namespace(*), and shutdown(2) it.
+>   2. Repeat connect(2)ing to the listening socket from the other
+> sockets
+>      until the connection backlog is full-filled.
+>   3. connect(2) takes the CPU forever. If every core is taken, the
+>      system hangs.
+> 
+> Reproducer:
+> http://patchwork.kernel.org/patch/54678/
+> 
+> You will need to add in the missing header files:
+> #include <string.h>
+> #include <stdio.h>
+> #include <sys/un.h>
+> #include <sys/types.h>
+> #include <sys/socket.h>
+> 
+> Reference:
+> https://bugzilla.redhat.com/show_bug.cgi?id=529626
+> 
+> Thanks, Eugene
