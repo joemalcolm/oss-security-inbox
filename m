@@ -1,40 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/18/11
-Message-ID: <Pine.GSO.4.51.0908181645090.17763@faron.mitre.org>
-Date: Tue, 18 Aug 2009 16:45:45 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/19/1
+Message-ID: <4ADBF1E6.7030304@kernel.sg>
+Date: Mon, 19 Oct 2009 12:58:14 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- WordPress
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: r128 IOCTL NULL pointer dereferences when CCE state is uninitialised
 Content-Type: text/plain; charset=utf-8
 
+Quoting from the upstream commit:
+"Almost all r128's private ioctls require that the CCE state has already 
+been initialised.  However, most do not test that this has been done, 
+and will proceed to dereference a null pointer.  This may result in a 
+security vulnerability, since some ioctls are unprivileged.
 
+This adds a macro for the common initialisation test and changes all 
+ioctl implementations that require prior initialisation to use that macro.
 
-On Tue, 21 Jul 2009, Jan Lieskovsky wrote:
+Also, r128_do_init_cce() does not test that the CCE state has not been
+initialised already.  Repeated initialisation may lead to a crash or 
+resource leak.  This adds that test."
 
->   latest WordPress 2.8.2 version has addressed a XSS vulnerability:
->
->     XSS via unescaped HTML URLs as author comments in the admin page
+http://git.kernel.org/linus/7dc482dfeeeefcfd000d4271c4626937406756d7
 
+Other references:
+http://secunia.com/advisories/36707/
+https://bugzilla.redhat.com/show_bug.cgi?id=529597
 
-======================================================
-Name: CVE-2009-2851
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2851
-Reference: MLIST:[oss-security] 20090721 CVE Request -- WordPress
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/07/21/1
-Reference: CONFIRM:http://bugs.gentoo.org/show_bug.cgi?id=278492
-Reference: CONFIRM:http://wordpress.org/development/2009/07/wordpress-2-8-2/
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=512900
-Reference: FEDORA:FEDORA-2009-8109
-Reference: URL:https://www.redhat.com/archives/fedora-package-announce/2009-July/msg01241.html
-Reference: FEDORA:FEDORA-2009-8114
-Reference: URL:https://www.redhat.com/archives/fedora-package-announce/2009-July/msg01253.html
-Reference: SECTRACK:1022589
-Reference: URL:http://securitytracker.com/id?1022589
-
-Cross-site scripting (XSS) vulnerability in the administrator
-interface in WordPress before 2.8.2 allows remote attackers to inject
-arbitrary web script or HTML via a comment author URL.
-
-
+Thanks, Eugene
