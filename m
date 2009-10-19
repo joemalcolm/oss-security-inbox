@@ -1,23 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/27/1
-Message-Id: <200907271440.41569.ludwig.nussel@suse.de>
-Date: Mon, 27 Jul 2009 14:40:39 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com
-Subject: CVE id request: strongswan
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/19/3
+Message-ID: <1466496036.594671255980376669.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 19 Oct 2009 15:26:16 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: r128 IOCTL NULL pointer dereferences when CCE state is uninitialised
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Please use CVE-2009-3620
 
-Previous fix for the ASN.1 vulnerability was incomplete:
-https://lists.strongswan.org/pipermail/announce/2009-July/000056.html
-
-cu
-Ludwig
+Thanks.
 
 -- 
- (o_   Ludwig Nussel
- //\   
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+    JB
+
+----- "Eugene Teo" <eugeneteo@...nel.sg> wrote:
+
+> Quoting from the upstream commit:
+> "Almost all r128's private ioctls require that the CCE state has
+> already 
+> been initialised.  However, most do not test that this has been done,
+> 
+> and will proceed to dereference a null pointer.  This may result in a
+> 
+> security vulnerability, since some ioctls are unprivileged.
+> 
+> This adds a macro for the common initialisation test and changes all 
+> ioctl implementations that require prior initialisation to use that
+> macro.
+> 
+> Also, r128_do_init_cce() does not test that the CCE state has not
+> been
+> initialised already.  Repeated initialisation may lead to a crash or 
+> resource leak.  This adds that test."
+> 
+> http://git.kernel.org/linus/7dc482dfeeeefcfd000d4271c4626937406756d7
+> 
+> Other references:
+> http://secunia.com/advisories/36707/
+> https://bugzilla.redhat.com/show_bug.cgi?id=529597
+> 
+> Thanks, Eugene
