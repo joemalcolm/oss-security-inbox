@@ -1,30 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/29/1
-Message-ID: <20090129100054.GA4095@redhat.com>
-Date: Thu, 29 Jan 2009 10:00:54 +0000
-From: Joe Orton <jorton@...hat.com>
-To: Raphael Geissert <atomo64+debian@...il.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re:  Re: CVE id request: php5
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/19/2
+Message-ID: <4ADC2912.3050509@kernel.sg>
+Date: Mon, 19 Oct 2009 16:53:38 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: AF_UNIX: Fix deadlock on connecting to shutdown socket
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jan 28, 2009 at 02:00:42PM -0600, Raphael Geissert wrote:
-> Josh Bressers wrote:
-> [...]
-> > 
-> > I may be missing something here, but this looks like an issue where a bad
-> > script really needs to cause this. Wouldn't it be just as easy to for the
-> > script author to delete the file in question via a PHP script?
-> > 
-> 
-> No, please read carefully. If you have a script that doesn't do good 
-> input sanitation but takes a variable from the user's input and uses 
-> it as a key it will end up nuking the .ini file.
+Quoting from the patch submitted:
+"...a deadlock bug in UNIX domain socket, which makes able to DoS
+attack against the local machine by non-root users.
 
-If the script is taking untrusted input data and passing it unsanitized 
-as the "key" argument to a dba_replace() call, it can override arbitrary 
-keys in the ini file anyway.  Truncating the ini file to zero length 
-seems like a less severe problem than being able to write (arbitrary?) 
-data to arbitrary keys.
+...
+Why this happens:
+  Error checks between unix_socket_connect() and unix_wait_for_peer() are
+  inconsistent. The former calls the latter to wait until the backlog is
+  processed. Despite the latter returns without doing anything when the
+  socket is shutdown, the former doesn't check the shutdown state and
+  just retries calling the latter forever."
 
-Regards, Joe
+How to reproduce:
+  1. Make a listening AF_UNIX/SOCK_STREAM socket with an abstruct
+     namespace(*), and shutdown(2) it.
+  2. Repeat connect(2)ing to the listening socket from the other sockets
+     until the connection backlog is full-filled.
+  3. connect(2) takes the CPU forever. If every core is taken, the
+     system hangs.
+
+Reproducer:
+http://patchwork.kernel.org/patch/54678/
+
+You will need to add in the missing header files:
+#include <string.h>
+#include <stdio.h>
+#include <sys/un.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+
+Reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=529626
+
+Thanks, Eugene
