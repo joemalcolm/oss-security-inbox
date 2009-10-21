@@ -1,24 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/11/6
-Message-ID: <hftv9k$aos$1@ger.gmane.org>
-Date: Fri, 11 Dec 2009 11:25:14 -0600
-From: Raphael Geissert <geissert@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: Some small KDE issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/21/1
+Message-ID: <4ADEE7C9.5010004@redhat.com>
+Date: Wed, 21 Oct 2009 12:51:53 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE assignment notification -- CVE-2009-2911 - Three SystemTap-1.0 DoS issues
 Content-Type: text/plain; charset=utf-8
 
-Tim Brown wrote:
+Hello Steve, vendors,
 
-> Attached is my exchange with Thomas Hoger at Redhat about these issues. 
-> You may also want to take a look at <200911041539.11338.tmb@...35.com>
-> which details our original advisories.
-> 
+   three DoS issues were found in SystemTap instrumentation system of version 1.0,
+when the --unprivileged mode (introduced in 1.0) was activated:
 
-Great, thanks for sharing more details. 
-
-Cheers,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+References:
+-----------
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-2911 (summary report)
 
 
+Patches:
+--------
+https://bugzilla.redhat.com/attachment.cgi?id=365293
+https://bugzilla.redhat.com/attachment.cgi?id=365294
+https://bugzilla.redhat.com/attachment.cgi?id=365413
+
+CVE identifier of CVE-2009-2911 has been already assigned to these issues.
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
