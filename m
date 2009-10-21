@@ -1,42 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/22/7
-Message-ID: <886176164.905141256240340575.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 22 Oct 2009 15:39:00 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/21/3
+Message-ID: <1904751084.781261256145888558.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 21 Oct 2009 13:24:48 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: nfsd4: fix null dereference creating nfsv4 callback client
+Cc: Steven Christey <coley@...us.mitre.org>
+Subject: Re: CVE request: Wordpress Trackback DoS
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2009-3623 for this.
+Please use CVE-2009-3622
+
+Thanks.
 
 -- 
     JB
 
------ "Eugene Teo" <eugeneteo@...nel.sg> wrote:
 
-> Quoting from upstream patch:
-> "On setting up the callback to the client, we attempt to use the same
-> authentication flavor the client did.  We find an rpc cred to use by 
-> calling rpcauth_lookup_credcache(), which assumes that the given 
-> authentication flavor has a credentials cache.  However, this is not 
-> required to be true--in particular, auth_null does not use one.
-> Instead, 
-> we should call the auth's lookup_cred() method.
+----- "Hanno Böck" <hanno@...eck.de> wrote:
+
+> http://seclists.org/fulldisclosure/2009/Oct/263
+> http://security-sh3ll.blogspot.com/2009/10/wordpress-resource-exhaustion-
+> denial-of.html
 > 
-> Without this, a client attempting to mount using nfsv4 and auth_null 
-> triggers a null dereference."
+> Original post (and credits to) seems to be this, it's not english:
+> http://rooibo.wordpress.com/2009/10/17/agujero-de-seguridad-en-wordpress/
 > 
-> The code was introduced in upstream commit 3cef9ab2 (v2.6.31-rc1),
-> fixed 
-> in 886e3b7f (v2.6.32-rc1), and was later replaced by 80fc015b in the 
-> same version.
+> Upstream recognized and fixed in 2.8.5:
+> http://wordpress.org/development/2009/10/wordpress-2-8-5-hardening-release/
 > 
-> References:
-> http://article.gmane.org/gmane.linux.nfs/26513
-> https://bugzilla.redhat.com/show_bug.cgi?id=530269
-> http://git.kernel.org/linus/3cef9ab266a932899e756f7e1ea7a988a97bf3b2
-> http://git.kernel.org/linus/886e3b7fe6054230c89ae078a09565ed183ecc73
-> http://git.kernel.org/linus/80fc015bdfe1f5b870c1e1ee02d78e709523fee7
+> -- 
+> Hanno Böck		Blog:		http://www.hboeck.de/
+> GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 > 
-> Thanks, Eugene
+> http://schokokeks.org - professional webhosting
