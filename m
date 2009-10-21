@@ -1,31 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/31/3
-Message-ID: <20090831172353.66bc00fb@redhat.com>
-Date: Mon, 31 Aug 2009 17:23:53 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Steffen_Ullrich@...ua.de, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: Re: CVE request: perl-IO-Socket-SSL certificate hostname compare bug
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/21/2
+Message-Id: <200910211318.14126.hanno@hboeck.de>
+Date: Wed, 21 Oct 2009 13:18:13 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: "oss-security" <oss-security@...ts.openwall.com>
+Cc: Steven Christey <coley@...us.mitre.org>
+Subject: CVE request: Wordpress Trackback DoS
 Content-Type: text/plain; charset=utf-8
 
-On Sat, 29 Aug 2009 20:45:53 +0200 Steffen Ullrich
-<Steffen_Ullrich@...ua.de> wrote:
 
-> - the feature to help checking the hostname against the certificate is fairly new
+http://seclists.org/fulldisclosure/2009/Oct/263
+http://security-sh3ll.blogspot.com/2009/10/wordpress-resource-exhaustion-
+denial-of.html
 
-Introduced in 1.14, unless I'm mistaken:
+Original post (and credits to) seems to be this, it's not english:
+http://rooibo.wordpress.com/2009/10/17/agujero-de-seguridad-en-wordpress/
 
-  http://cpansearch.perl.org/src/SULLR/IO-Socket-SSL-1.14/Changes
-
-It may be good to have this listed in the CVE description.
-
-Anyway, prefix requirement is another mitigation, as one may not be
-able to get valid certificate for a prefix of arbitrary host name
-(though it may be easier for TLDs as .com and .net via .co and .ne).
-
-Speaking of prefixes, has anyone checked IO-Socket-SSL for
-CVE-2009-2408-like issues?  If there is an issues, should it get fixed
-in IO-Socket-SSL or in Net-SSLeay?
+Upstream recognized and fixed in 2.8.5:
+http://wordpress.org/development/2009/10/wordpress-2-8-5-hardening-release/
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+
+http://schokokeks.org - professional webhosting
+
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
