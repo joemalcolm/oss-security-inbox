@@ -1,19 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/27/1
-Message-Id: <200903272054.35949.hanno@hboeck.de>
-Date: Fri, 27 Mar 2009 20:54:35 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Cc: Steven Christey <coley@...us.mitre.org>
-Subject: CVE request: < tikiwiki 2.3: XSS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/21/4
+Message-ID: <2359eed20910211525q149fe583n45beb3483380f142@mail.gmail.com>
+Date: Wed, 21 Oct 2009 17:25:47 -0500
+From: Will Drewry <redpig@...rt.org>
+To: ocert-announce@...ts.ocert.org, bugtraq <bugtraq@...urityfocus.com>,  oss-security@...ts.openwall.com
+Subject: [oCERT-2009-016] Poppler, xpdf integer overflow during heap  allocation
 Content-Type: text/plain; charset=utf-8
 
+#2009-016 Poppler, Xpdf integer overflows during heap allocation
+
+Description:
+
+Poppler and Xpdf are two popular open source projects for processing PDF
+files.  Both projects are vulnerable to an integer overflow during heap
+memory allocation when processing a PDF file.  In general, this results
+in unexpected process termination.  If an application using this code is
+multi-threaded (or uses a crash signal handler), it may be possible to
+execute arbitrary code.
+
+The vulnerability resides in the object stream handler.  In particular,
+a multiplicative overflow occurs when a large number of embedded objects
+are specified.  An overflow check was in place in the code, but it only
+protected related calls to gmalloc().  The C++ object array allocation
+code (new[]) is not guarded by the upper bound check and the call to
+new[] does not result in an exception with gcc.  This results in bytes
+being written after the valid heap allocation during object
+construction.
+
+Both software packages have released fixed versions which limit the allowed
+object count to a domain specific value.
+
+A detailed analysis by the reporter can be found in the References.
+
+
+Affected version:
+
+Poppler < 0.12.1
+
+Xpdf < 3.02pl4
+
+
+Fixed version:
+
+Poppler >= 0.12.1
+
+Xpdf >= 3.02pl4
+
+
+Credit: vulnerability report and PoC received from
+        Chris Rohlf <chris.rohlf@...il.com>.
+
+
+CVE: CVE-2009-3608
+
+
+Timeline:
+
+2009-09-04: vulnerability report received
+2009-09-17: proof of concept received from reporter
+2009-09-21: impact reviewed
+2009-09-29: contacted poppler maintainer
+2009-09-29: vendor-sec notified
+2009-09-30: vendor-sec discussion expanded to include xpdf maintainer
+2009-10-02: final fix agreed upon by both maintainers
+2009-10-12: CVE assigned by Tomas Hoger of RedHat
+2009-10-14: fixed Xpdf released
+2009-10-18: fixed Poppler released
+2009-10-21: advisory published
+
+
 References:
-http://dev.tikiwiki.org/tiki-view_tracker_item.php?itemId=2359&trackerId=5&show=view&reloff=3&cant=1229&status=o&trackerId=5&sort_mode=created_desc
-http://info.tikiwiki.org/tiki-read_article.php?articleId=51
+http://poppler.freedesktop.org/
+http://www.foolabs.com/xpdf/CHANGES
+http://chargen.matasano.com/chargen/2009/10/9/a-c-challenge.html
+http://chargen.matasano.com/chargen/2009/10/15/a-c-challenge-the-conclusion.html
+http://sites.google.com/site/em386cr/Home/CVE-2009-3608-explained.txt
+http://gcc.gnu.org/bugzilla/show_bug.cgi?id=19351
 
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+Permalink:
+http://www.ocert.org/advisories/ocert-2009-016.html
+
+--
+Will Drewry <redpig@...rt.org>
+http://ocert.org
