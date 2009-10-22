@@ -1,27 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/02/2
-Message-ID: <1288474658.367881259762587862.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 2 Dec 2009 09:03:07 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/22/7
+Message-ID: <886176164.905141256240340575.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 22 Oct 2009 15:39:00 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: Ruby on Rails: CSRF circumvention (from 2008)
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: nfsd4: fix null dereference creating nfsv4 callback client
 Content-Type: text/plain; charset=utf-8
 
------ "Alex Legler" <a3li@...too.org> wrote:
-> 
-> a little blast from the past, I think this issue does not have a CVE
-> yet. If that is true, please assign a -2008 ID.
-> 
-> http://weblog.rubyonrails.org/2008/11/18/potential-circumvention-of-csrf-protection-in-rails-2-1
-> http://www.rorsecurity.info/journal/2008/11/19/circumvent-rails-csrf-protection.html
-> 
-
-Steve,
-
-Can you give this one a 2008 ID?
-
-Thanks.
+Please use CVE-2009-3623 for this.
 
 -- 
     JB
+
+----- "Eugene Teo" <eugeneteo@...nel.sg> wrote:
+
+> Quoting from upstream patch:
+> "On setting up the callback to the client, we attempt to use the same
+> authentication flavor the client did.  We find an rpc cred to use by 
+> calling rpcauth_lookup_credcache(), which assumes that the given 
+> authentication flavor has a credentials cache.  However, this is not 
+> required to be true--in particular, auth_null does not use one.
+> Instead, 
+> we should call the auth's lookup_cred() method.
+> 
+> Without this, a client attempting to mount using nfsv4 and auth_null 
+> triggers a null dereference."
+> 
+> The code was introduced in upstream commit 3cef9ab2 (v2.6.31-rc1),
+> fixed 
+> in 886e3b7f (v2.6.32-rc1), and was later replaced by 80fc015b in the 
+> same version.
+> 
+> References:
+> http://article.gmane.org/gmane.linux.nfs/26513
+> https://bugzilla.redhat.com/show_bug.cgi?id=530269
+> http://git.kernel.org/linus/3cef9ab266a932899e756f7e1ea7a988a97bf3b2
+> http://git.kernel.org/linus/886e3b7fe6054230c89ae078a09565ed183ecc73
+> http://git.kernel.org/linus/80fc015bdfe1f5b870c1e1ee02d78e709523fee7
+> 
+> Thanks, Eugene
