@@ -1,40 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/16/8
-Message-ID: <565172377.476791255720212930.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 16 Oct 2009 15:10:12 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/22/4
+Message-ID: <4AE01340.6000702@redhat.com>
+Date: Thu, 22 Oct 2009 10:09:36 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: QEMU VNC use-after-free
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Sahana
 Content-Type: text/plain; charset=utf-8
 
-Use CVE-2009-3616 for this.
+Jan Lieskovsky wrote:
+> Hello Steve, vendors,
+> 
+>   Greg Miernicki reported a security issue in Sahana disaster management
+> system:
+> 
+> Sending a specially-crafted URL (with null character included
+> in the string) to Sahana, would allow an attacker to access any
+> file on the web server.
+> 
+> More from Greg:
+> 
+> "The first issue would allow an attacker to touch/modify any file on the 
+> system.
+>  Essentially the issue is that get, post, and requests aren't sanitized or
+>  unescaped."
 
-Thanks.
+Just small correction - above statement was mentioned by David Nalley, not by Greg
+(this correction done to be exact && not to insert statements into mouth of person(s),
+  who didn't pronounce them).
 
--- 
-    JB
+Other bits are valid.
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
 
------ "Tomas Hoger" <thoger@...hat.com> wrote:
-
-> Hi!
 > 
-> Use-after-free / double-free problems were reported for QEMU's VNC
-> server:
+> References:
+> -----------
+> https://bugzilla.redhat.com/show_bug.cgi?id=530255
+> http://sourceforge.net/mailarchive/forum.php?thread_name=5d9043b70910191044l4bb0178fs563a5128a0f5db01%40mail.gmail.com&forum_name=sahana-maindev 
 > 
-> https://bugzilla.redhat.com/show_bug.cgi?id=501131
-> https://bugzilla.redhat.com/show_bug.cgi?id=505641
 > 
-> Problem can cause QEMU process (and hence virtual machine) to crash
-> (which is not security in most use cases, as VNC access means console
-> access for the virtual machine), but if used for code execution, it
-> can
-> mean guest -> host escape.
+> Upstream patch:
+> ---------------
+> http://sahana.cvs.sourceforge.net/viewvc/sahana/sahana-phase2/www/index.php?r1=1.83&r2=1.84 
 > 
-> Versions in between the following two commits are affected:
 > 
-> http://git.savannah.gnu.org/cgit/qemu.git/commit/?id=753b405331
-> http://git.savannah.gnu.org/cgit/qemu.git/commit/?id=198a0039c5
+> PoC:
+> ----
+> http://sahana/index.php?stream=text&mod=/../../../../../../../../../../../etc/passwd%00 
 > 
+> 
+> Could you allocate a CVE identifier?
+> 
+> Thanks && Regards, Jan.
 > -- 
-> Tomas Hoger / Red Hat Security Response Team
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+
