@@ -1,27 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/19/1
-Message-ID: <4B050A45.6070804@kernel.sg>
-Date: Thu, 19 Nov 2009 17:05:09 +0800
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/22/2
+Message-ID: <4AE00083.5040504@kernel.sg>
+Date: Thu, 22 Oct 2009 14:49:39 +0800
 From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
 CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: fuse: prevent fuse_put_request on invalid pointer
+Subject: CVE request: kernel: get_instantiation_keyring() should inc the keyring refcount in all cases
 Content-Type: text/plain; charset=utf-8
 
-"fuse_direct_io() has a loop where requests are allocated in each 
-iteration. if allocation fails, the loop is broken out and follows into 
-an unconditional fuse_put_request() on that invalid pointer."
+Quoting from the upstream commit:
+"The destination keyring specified to request_key() and co. is made 
+available to the process that instantiates the key (the slave process 
+started by /sbin/request-key typically).  This is passed in the 
+request_key_auth struct as the dest_keyring member.
 
-Upstream commit:
-http://git.kernel.org/linus/f60311d5f7670d9539b424e4ed8b5c0872fc9e83
+keyctl_instantiate_key and keyctl_negate_key() call 
+get_instantiation_keyring() to get the keyring to attach the newly 
+constructed key to at the end of instantiation.  This may be given a 
+specific keyring into which a link will be made later, or it may be 
+asked to find the keyring passed to request_key().  In the former case, 
+it returns a keyring with the refcount incremented by lookup_user_key(); 
+in the latter case, it returns the keyring from the request_key_auth 
+struct - and does _not_ increment the refcount.
 
-This can be triggered when the system is low on memory, and when the 
-fuse_request_alloc() function called from fuse_get_req() fails. The 
-fuse_put_request() function will then dereference the invalid pointer 
-returned, resulting in a kernel oops.
+The latter case will eventually result in an oops when the keyring 
+prematurely runs out of references and gets destroyed.  The effect may 
+take some time to show up as the key is destroyed lazily.
 
-This was introduced in 413ef8cb (v2.6.14-rc1) and fixed in v2.6.32-rc7.
+To fix this, the keyring returned by get_instantiation_keyring() must 
+always have its refcount incremented, no matter where it comes from."
 
-https://bugzilla.redhat.com/538734
+This was introduced in upstream commit 8bbf4976 (v2.6.29-rc1).
+
+References:
+http://git.kernel.org/linus/8bbf4976
+http://git.kernel.org/linus/21279cfa107af07ef985539ac0de2152b9cba5f5
+http://twitter.com/spendergrsec/status/4916661870
 
 Thanks, Eugene
