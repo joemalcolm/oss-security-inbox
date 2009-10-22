@@ -1,72 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/24/11
-Message-ID: <613167753.705191259093159954.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 24 Nov 2009 15:05:59 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/22/1
+Message-ID: <4ADFE66D.6080401@kernel.sg>
+Date: Thu, 22 Oct 2009 12:58:21 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: Argument injections in multiple PEAR packages
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: nfsd4: fix null dereference creating nfsv4 callback client
 Content-Type: text/plain; charset=utf-8
 
-> 
-> here are a couple of issues in PEAR packages that do not yet have a CVE
-> afaik:
-> 
-> 1. PEAR-Mail Mail::Send() Argument Injection when using Sendmail
+Quoting from upstream patch:
+"On setting up the callback to the client, we attempt to use the same
+authentication flavor the client did.  We find an rpc cred to use by 
+calling rpcauth_lookup_credcache(), which assumes that the given 
+authentication flavor has a credentials cache.  However, this is not 
+required to be true--in particular, auth_null does not use one. Instead, 
+we should call the auth's lookup_cred() method.
 
-Use CVE-2009-4023 for this.
+Without this, a client attempting to mount using nfsv4 and auth_null 
+triggers a null dereference."
 
-> 
-> Secunia writes:
-> "The sendmail implementation of the "Mail::Send()" method does not
-> properly sanitise the "from" parameter before invoking sendmail,
-> which can be exploited to pass arbitrary arguments to the sendmail
-> command."
-> 
-> Contrary to Secunia, this does not seem to be completely fixed yet
-> (see
-> Raphael Geissert's comment in the upstream bug)
-> 
-> http://secunia.com/advisories/37410/
-> Upstream bug:
-> http://pear.php.net/bugs/bug.php?id=16200
-> First commit:
-> http://svn.php.net/viewvc/pear/packages/Mail/trunk/Mail/sendmail.php?r1=243717&r2=280134
-> Gentoo bug:
-> https://bugs.gentoo.org/show_bug.cgi?id=294256
-> 
-> 2. PEAR-Net_Ping < 2.4.5 ping() Argument Injection via $host
+The code was introduced in upstream commit 3cef9ab2 (v2.6.31-rc1), fixed 
+in 886e3b7f (v2.6.32-rc1), and was later replaced by 80fc015b in the 
+same version.
 
-Use CVE-2009-4024
+References:
+http://article.gmane.org/gmane.linux.nfs/26513
+https://bugzilla.redhat.com/show_bug.cgi?id=530269
+http://git.kernel.org/linus/3cef9ab266a932899e756f7e1ea7a988a97bf3b2
+http://git.kernel.org/linus/886e3b7fe6054230c89ae078a09565ed183ecc73
+http://git.kernel.org/linus/80fc015bdfe1f5b870c1e1ee02d78e709523fee7
 
-> 
-> Upstream writes:
-> "When input from forms are used directly, the attacker could pass
-> variables that would allow him to execute remote arbitrary command
-> injections."
-> 
-> Upstream advisory:
-> http://pear.php.net/advisory20091114-01.txt
-> Commit:
-> http://svn.php.net/viewvc/pear/packages/Net_Ping/trunk/Ping.php?r1=274728&r2=290669
-> Gentoo bug:
-> https://bugs.gentoo.org/show_bug.cgi?id=294258
-> 
-> 3. PEAR-Net_Traceroute < 0.21.2 traceroute() Argument Injection via
-> $host
-
-Use CVE-2009-4025
-
-> 
-> See above, same advisory.
-> 
-> Commit:
-> http://svn.php.net/viewvc/pear/packages/Net_Traceroute/trunk/Traceroute.php?r1=232735&r2=290749
-> Gentoo bug:
-> https://bugs.gentoo.org/show_bug.cgi?id=294264
-> 
-
-Thanks
-
--- 
-    JB
+Thanks, Eugene
