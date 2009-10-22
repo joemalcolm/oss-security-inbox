@@ -1,24 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/05/5
-Message-ID: <873a4sj35y.fsf@mid.deneb.enyo.de>
-Date: Thu, 05 Nov 2009 18:24:09 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/22/6
+Message-ID: <576836652.904621256240153269.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 22 Oct 2009 15:35:53 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2009-3555 for TLS renegotiation MITM attacks
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Sahana
 Content-Type: text/plain; charset=utf-8
 
-* Mark J. Cox:
+Please use CVE-2009-3625 for this.
 
-> http://extendedsubset.com/?p=8
-> http://www.ietf.org/mail-archive/web/tls/current/msg03948.html and so
-> on
-> https://bugzilla.redhat.com/show_bug.cgi?id=533125
->
-> Marsh Ray of PhoneFactor has discovered a flaw in the TLS/SSL protocol
-> related to the handling of the session renegotiations.
+-- 
+    JB
 
-Shouldn't this be credited to Martin Rex from SAP?  He's the first one
-who publicly comitted to this vulnerability.  (And I'm slightly
-surprised by the rapid me-too-ing that's going on here.)
 
-Anyway, is the CVE just for HTTP over TLS, or more?
+----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+
+> Hello Steve, vendors,
+> 
+>    Greg Miernicki reported a security issue in Sahana disaster
+> management
+> system:
+> 
+> Sending a specially-crafted URL (with null character included
+> in the string) to Sahana, would allow an attacker to access any
+> file on the web server.
+> 
+> More from Greg:
+> 
+> "The first issue would allow an attacker to touch/modify any file on
+> the system.
+>   Essentially the issue is that get, post, and requests aren't
+> sanitized or
+>   unescaped."
+> 
+> References:
+> -----------
+> https://bugzilla.redhat.com/show_bug.cgi?id=530255
+> http://sourceforge.net/mailarchive/forum.php?thread_name=5d9043b70910191044l4bb0178fs563a5128a0f5db01%40mail.gmail.com&forum_name=sahana-maindev
+> 
+> Upstream patch:
+> ---------------
+> http://sahana.cvs.sourceforge.net/viewvc/sahana/sahana-phase2/www/index.php?r1=1.83&r2=1.84
+> 
+> PoC:
+> ----
+> http://sahana/index.php?stream=text&mod=/../../../../../../../../../../../etc/passwd%00
+> 
+> Could you allocate a CVE identifier?
+> 
+> Thanks && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
