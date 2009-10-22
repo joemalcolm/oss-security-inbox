@@ -1,38 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/21/10
-Message-Id: <200901211146.46617.steffen.joeris@skolelinux.de>
-Date: Wed, 21 Jan 2009 11:46:41 -0500
-From: Steffen Joeris <steffen.joeris@...lelinux.de>
-To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: mod-auth-mysql: SQL injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/22/9
+Message-ID: <4AE06675.8030704@redhat.com>
+Date: Thu, 22 Oct 2009 16:04:37 +0200
+From: Marc Schoenefeld <mschoene@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+CC: "Steven M. Christey" <coley@...us.mitre.org>, Joe Orton <jorton@...hat.com>, Ondrej Vasik <ovasik@...hat.com>, Roman Rakus <rrakus@...hat.com>, CERT-FI Vulnerability Co-ordination <vulncoord@...ora.fi>
+Subject: Re: Regarding expat bug 1990430
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Jan Lieskovsky wrote:
+> Hello Steve, vendors,
+>
+> [...]
+>
+>    a, Does Apache Xerces2 Java contain embedded copy ot the expat
+> library (i.e. it's
+>       completely the same issue as in expat, w3c-libwww, PyXML and
+> others) - Marc
+>       could you help to reply this question?
+>
+Hi,
+the upstream patch for CVE-2009-2625 for xerces-j2 is  java-only [1] and
+unrelated to fixes in other native C parsing libraries.
 
-The following issue can now be made public. Please note that this describes 
-the software used in debian as mod-auth-mysql (binary name is 
-libapache2-mod-auth-mysql). It is different from the SF project.
+Regards
+Marc
 
-Package        : mod-auth-mysql
-Vulnerability  : SQL injection vulnerability
-Problem type   : remote
-Debian-specific: no
-CVE Id         : CVE-2008-2384
+[1]
+http://svn.apache.org/viewvc/xerces/java/trunk/src/org/apache/xerces/impl/XMLScanner.java?r1=572055&r2=787352&pathrev=787353&diff_format=h
 
 
-Martin Joey Schulze discovered that mod-auth-mysq, an apache 2 module
-for mysql authentication, is prone to an SQL injection due to
-insufficient escaping mechanisms, when multybite character encodings are
-used.
+-- 
+Marc Schoenefeld / Red Hat Security Response Team
 
-The link[0] points to the patch. Please credit Martin Joey Schulze for writing 
-it.
-
-Cheers
-Steffen
-
-[0]: 
-http://klecker.debian.org/~white/mod-auth-mysql/CVE-2008-2384_mod-auth-mysql.patch
-
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
