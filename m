@@ -1,30 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/28/1
-Message-ID: <20090728114618.GA21960@openwall.com>
-Date: Tue, 28 Jul 2009 15:46:18 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/22/8
+Message-ID: <660663363.905981256240879655.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 22 Oct 2009 15:47:59 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: ithilgore <ithilgore.ryu.l@...il.com>
-Subject: Apache 2.2 HTTP Basic Auth bypass
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: get_instantiation_keyring() should inc the keyring refcount in all cases
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Please use CVE-2009-3624 for this.
 
-This is sort of an advance heads-up.  ithilgore, an Nmap developer,
-CC'ed on this posting, mentioned on the nmap-dev mailing list (public)
-earlier today that he discovered an Apache HTTP Basic Auth bypass
-vulnerability, which is yet to be fully researched and reported.
+-- 
+    JB
 
-http://seclists.org/nmap-dev/2009/q3/0385.html
 
-ithilgore - I understand that you might have wanted to have a bit more
-time to play with this on your own, but you posted to a public list,
-which is why I consider it appropriate to post this to oss-security
-"without your consent" to let the distro vendors "prepare" (e.g., hold
-off on releasing update packages fixing some minor issues in
-anticipation of needing to add a critical fix in a matter of days - just
-to provide an example of how such advance notification can be of use).
-Of course, the Apache security team is represented on this list, too, so
-you might receive questions off-list, I guess. ;-)
+----- "Eugene Teo" <eugeneteo@...nel.sg> wrote:
 
-Alexander
+> Quoting from the upstream commit:
+> "The destination keyring specified to request_key() and co. is made 
+> available to the process that instantiates the key (the slave process
+> 
+> started by /sbin/request-key typically).  This is passed in the 
+> request_key_auth struct as the dest_keyring member.
+> 
+> keyctl_instantiate_key and keyctl_negate_key() call 
+> get_instantiation_keyring() to get the keyring to attach the newly 
+> constructed key to at the end of instantiation.  This may be given a 
+> specific keyring into which a link will be made later, or it may be 
+> asked to find the keyring passed to request_key().  In the former
+> case, 
+> it returns a keyring with the refcount incremented by
+> lookup_user_key(); 
+> in the latter case, it returns the keyring from the request_key_auth 
+> struct - and does _not_ increment the refcount.
+> 
+> The latter case will eventually result in an oops when the keyring 
+> prematurely runs out of references and gets destroyed.  The effect may
+> 
+> take some time to show up as the key is destroyed lazily.
+> 
+> To fix this, the keyring returned by get_instantiation_keyring() must
+> 
+> always have its refcount incremented, no matter where it comes from."
+> 
+> This was introduced in upstream commit 8bbf4976 (v2.6.29-rc1).
+> 
+> References:
+> http://git.kernel.org/linus/8bbf4976
+> http://git.kernel.org/linus/21279cfa107af07ef985539ac0de2152b9cba5f5
+> http://twitter.com/spendergrsec/status/4916661870
+> 
+> Thanks, Eugene
