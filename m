@@ -1,28 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/14/4
-Message-ID: <4AD5FA9B.10102@redhat.com>
-Date: Wed, 14 Oct 2009 18:21:47 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/23/9
+Message-ID: <4AE1FD20.6070802@redhat.com>
+Date: Fri, 23 Oct 2009 20:59:44 +0200
 From: Jan Lieskovsky <jlieskov@...hat.com>
 To: "Steven M. Christey" <coley@...us.mitre.org>
 CC: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request -- phpMyAdmin
+Subject: CVE-2009-3627 assignment notification - HTML-Parser-3.63
 Content-Type: text/plain; charset=utf-8
 
 Hello Steve, vendors,
 
-   phpMyAdmin upstream has released 3.2.2.1 or 2.11.9.6 updates, fixing
-one XSS and one SQL injection vulnerability.
+   Mark Martinec reported a denial of service flaw ((infinite loop),
+present in HTML-Parser in versions prior to 3.63,  while parsing
+HTML entity with invalid UTF-8 character.
 
 References:
 -----------
-http://www.phpmyadmin.net/home_page/security/PMASA-2009-6.php
-http://www.phpmyadmin.net/home_page/news.php
-https://bugzilla.redhat.com/show_bug.cgi?id=528769
-http://bugs.gentoo.org/show_bug.cgi?id=288899
-http://www.mandriva.com/en/security/advisories?name=MDVSA-2009:274
+https://issues.apache.org/SpamAssassin/show_bug.cgi?id=6225
+http://search.cpan.org/CPAN/authors/id/G/GA/GAAS/HTML-Parser-3.63.tar.gz
 
-Could you allocate new CVE id?
+Upstream patch:
+---------------
+http://github.com/gisle/html-parser/commit/b9aae1e43eb2c8e989510187cff0ba3e996f9a4c
+
+Affected versions:
+------------------
+Issue was confirmed in 3.55 version of perl HTML-Parser module.
+
+CVE identifier:
+---------------
+CVE identifier of CVE-2009-3627 has been already assigned to this issue.
 
 Thanks && Regards, Jan.
 --
-Jan iankko Lieskovsky / Red Hat Security Resposne Team
+Jan iankko Lieskovsky / Red Hat Security Response Team
