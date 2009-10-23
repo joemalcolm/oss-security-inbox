@@ -1,21 +1,115 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/16/6
-Message-ID: <Pine.GSO.4.51.0909161848210.7046@faron.mitre.org>
-Date: Wed, 16 Sep 2009 18:54:51 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/23/10
+Message-ID: <1343121332.999291256328537337.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 23 Oct 2009 16:08:57 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: watch for LDAP anonymous binds and empty passwords
+Cc: coley <coley@...re.org>
+Subject: Re: CVE id request: typo3
 Content-Type: text/plain; charset=utf-8
 
 
-FYI, we've seen "LDAP anonymous binds and empty passwords" a couple times
-in CVE, the latest being PostgreSQL (IDs forthcoming).  This smells like a
-general vuln class to me, so developers may want to re-examine their LDAP
-support.  CVE-2009-1905 and CVE-2007-6714 are examples.
+----- "Nico Golde" <oss-security+ml@...lde.de> wrote:
 
-I haven't investigated closely but the pattern may be that a blank
-password can return successful authentication when anonymous binds are
-allowed.  There's a relatively rare history of LDAP-specific vulns, which
-suggests to me that not a lot of people have been looking for this.
+> Hi,
+> As I didn't see a request for this yet:
+> https://typo3.org/teams/security/security-bulletins/typo3-sa-2009-016/
+> 
+> Can someone assign CVE ids to these issues?
+> 
 
-- Steve
+This is a big one. Let me know if I've screwed any of these up.
+
+CVE-2009-3628 TYPO3 Information disclosure
+
+    TYPO3 versions 4.0.13 and below, 4.1.12 and below, 4.2.9 and below,
+    4.3.0beta1 and below contain an information disclosure flaw where if
+    malcious content was entered into a tt_content form element, a backend
+    user could recalculate the encryption key
+
+    References:
+    http://marc.info/?l=oss-security&m=125626536616052&w=2
+    https://typo3.org/teams/security/security-bulletins/typo3-sa-2009-016/
+
+CVE-2009-3629 TYPO3 Cross-site scripting
+
+    TYPO3 versions 4.0.13 and below, 4.1.12 and below, 4.2.9 and below,
+    4.3.0beta1 and below contain a cross-site scripting flaw where the TYPO3
+    backend failed to properly sanitize user input.
+
+    http://marc.info/?l=oss-security&m=125626536616052&w=2
+    https://typo3.org/teams/security/security-bulletins/typo3-sa-2009-016/
+
+CVE-2009-3630 TYPO3 Frame hijacking
+
+    TYPO3 versions 4.0.13 and below, 4.1.12 and below, 4.2.9 and below,
+    4.3.0beta1 and below contain a flaw where by manipulating URL parameters
+    it is possible to include arbitrary websites in the TYPO3 backend
+    framesets.
+
+    http://marc.info/?l=oss-security&m=125626536616052&w=2
+    https://typo3.org/teams/security/security-bulletins/typo3-sa-2009-016/
+
+CVE-2009-3631 TYPO3 Remote shell command execution
+
+    TYPO3 versions 4.0.13 and below, 4.1.12 and below, 4.2.9 and below,
+    4.3.0beta1 and below when using certain third party file upload extension
+    could allow a file with a crafted name to execute arbitrary commands on
+    the TYPO3 server.
+
+    http://marc.info/?l=oss-security&m=125626536616052&w=2
+    https://typo3.org/teams/security/security-bulletins/typo3-sa-2009-016/
+
+CVE-2009-3632 TYPO3 SQL injection
+
+    TYPO3 versions 4.0.13 and below, 4.1.12 and below, 4.2.9 and below,
+    4.3.0beta1 and below contain an SQL injection flaw where a logged in user
+    could execute arbitrary SQL by sending the server a specially crafted URL.
+
+    http://marc.info/?l=oss-security&m=125626536616052&w=2
+    https://typo3.org/teams/security/security-bulletins/typo3-sa-2009-016/
+
+CVE-2009-3633 TYPO3 API function t3lib_div::quoteJSvalue XSS
+
+    TYPO3 versions 4.0.13 and below, 4.1.12 and below, 4.2.9 and below,
+    4.3.0beta1 and below contain an unauthenticated cross-site scripting flaw
+    in its API function t3lib_div::quoteJSvalue.
+
+    http://marc.info/?l=oss-security&m=125626536616052&w=2
+    https://typo3.org/teams/security/security-bulletins/typo3-sa-2009-016/
+
+CVE-2009-3634 TYPO3 Frontend Login Box (felogin) XSS
+
+    TYPO3 versions 4.2.0 to 4.2.6 contian contain a cross-site scripting flaw
+    where the URL parameters of Frontend Login Box were not properly
+    sanitized.
+
+    http://marc.info/?l=oss-security&m=125626536616052&w=2
+    https://typo3.org/teams/security/security-bulletins/typo3-sa-2009-016/
+
+CVE-2009-3635 TYPO3 Insecure Authentication and Session Handling
+
+    TYPO3 versions 4.0.13 and below, 4.1.12 and below, 4.2.9 and below,
+    4.3.0beta1 and below contain an insecure authentication and session
+    handling flaw. If an attacker knows the md5 hash of the Install Tool
+    password, they can gain access to the Install Tool.
+
+    http://marc.info/?l=oss-security&m=125626536616052&w=2
+    https://typo3.org/teams/security/security-bulletins/typo3-sa-2009-016/
+
+CVE-2009-3636 TYPO3 Install Tool XSS
+
+    TYPO3 versions 4.0.13 and below, 4.1.12 and below, 4.2.9 and below,
+    4.3.0beta1 and below contain a cross-site scripting flaw in the Install
+    Tool. The Install Tool does not properly sanitize URL parameters leading
+    to this attack.
+
+    Note: The Install Tool is not meant to be activated in production
+    environments.
+
+    http://marc.info/?l=oss-security&m=125626536616052&w=2
+    https://typo3.org/teams/security/security-bulletins/typo3-sa-2009-016/
+
+
+-- 
+    JB
