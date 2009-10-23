@@ -1,29 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/01/1
-Message-ID: <20090901111754.1e0970fc@neon>
-Date: Tue, 1 Sep 2009 11:17:54 +0200
-From: Alex Legler <a3li@...too.org>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- HTMLDOC
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/23/4
+Message-ID: <4AE16FF1.3030308@redhat.com>
+Date: Fri, 23 Oct 2009 10:57:21 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request -- alienarena - 7.31
 Content-Type: text/plain; charset=utf-8
 
-On Sat, 18 Jul 2009 13:09:09 +0200, Jan Lieskovsky
-<jlieskov@...hat.com> wrote:
+Hello Steve, vendors,
 
-> [...]
-> Could you please allocate a new CVE identifier for it?
-> 
+   remotely exploitable buffer overflow flaw by processing specially-crafted UDP reply from game
+server (leading to arbitrary code execution) was fixed in latest upstream alienarena-7.31
+release.
 
-Any updates on the CVE?
+References:
+-----------
+http://www.ngssoftware.com/brochures/Anonymous.Remote.Arbitrary.Code.Execution.in.Alien.Arena.pdf (More descriptive issue details)
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=552038 (Original source)
+http://icculus.org/alienarena/changelogs/7.31.txt (Revisions 1390 and 1391).
 
-Upstream has acknowledged the issues in the meantime [1] (although the
-two AFM related occurances nion found have a rather limited vector), a
-fix will be in 1.9.
+Upstream patch:
+---------------
+http://svn.icculus.org/alienarena/trunk/source/client/menu.c?r1=1383&r2=1391 (Merged change of 1390 and 1391)
 
-Thanks,
-Alex
+Could you allocate a CVE identifier?
 
-[1] http://www.htmldoc.org/str.php?L214
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
