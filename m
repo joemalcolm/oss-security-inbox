@@ -1,35 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/22/9
-Message-ID: <4AE06675.8030704@redhat.com>
-Date: Thu, 22 Oct 2009 16:04:37 +0200
-From: Marc Schoenefeld <mschoene@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-CC: "Steven M. Christey" <coley@...us.mitre.org>, Joe Orton <jorton@...hat.com>, Ondrej Vasik <ovasik@...hat.com>, Roman Rakus <rrakus@...hat.com>, CERT-FI Vulnerability Co-ordination <vulncoord@...ora.fi>
-Subject: Re: Regarding expat bug 1990430
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/23/3
+Message-ID: <4AE12734.6030909@kernel.sg>
+Date: Fri, 23 Oct 2009 11:47:00 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kvm: update_cr8_intercept() NULL pointer dereference when running without an apic
 Content-Type: text/plain; charset=utf-8
 
-Jan Lieskovsky wrote:
-> Hello Steve, vendors,
->
-> [...]
->
->    a, Does Apache Xerces2 Java contain embedded copy ot the expat
-> library (i.e. it's
->       completely the same issue as in expat, w3c-libwww, PyXML and
-> others) - Marc
->       could you help to reply this question?
->
-Hi,
-the upstream patch for CVE-2009-2625 for xerces-j2 is  java-only [1] and
-unrelated to fixes in other native C parsing libraries.
+Quote from the upstream commit:
+"update_cr8_intercept() can be triggered from userspace while there
+is no apic present."
 
-Regards
-Marc
+http://git.kernel.org/linus/88c808fd42b53a7e01a2ac3253ef31fef74cb5af
 
-[1]
-http://svn.apache.org/viewvc/xerces/java/trunk/src/org/apache/xerces/impl/XMLScanner.java?r1=572055&r2=787352&pathrev=787353&diff_format=h
+This one can be triggered via kvm_vcpu_ioctl() if /dev/kvm is user 
+accessible (which is recommended...). Fixed in v2.6.32-rc1.
 
-
--- 
-Marc Schoenefeld / Red Hat Security Response Team
-
+Eugene
