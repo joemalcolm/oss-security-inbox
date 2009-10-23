@@ -1,19 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/23/7
-Message-ID: <Pine.GSO.4.64.0912231701580.21134@faron.mitre.org>
-Date: Wed, 23 Dec 2009 17:02:08 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/23/14
+Message-ID: <Pine.GSO.4.51.0910231648320.2774@faron.mitre.org>
+Date: Fri, 23 Oct 2009 17:06:06 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Serendipity < 1.5 upload of files with *.php.* possible
+cc: coley <coley@...re.org>
+Subject: Re: CVE id request: typo3
 Content-Type: text/plain; charset=utf-8
 
 
-On Mon, 21 Dec 2009, Hanno Böck wrote:
+On Fri, 23 Oct 2009, Josh Bressers wrote:
 
-> From 1.5 release notes:
-> # Disallow uploading any files that contain ".php." in the filename for extra
-> security with Apache MimeMagic-Modules
+> This is a big one. Let me know if I've screwed any of these up.
 
-Use CVE-2009-4412, to be filled in later.
+In traditional CVE, it would have been appropriate to combine the
+following three issues, because they are the same flaw type (XSS) and
+affected versions, even though they are clearly distinct bugs:
+
+> CVE-2009-3629 TYPO3 Cross-site scripting
+>
+>     TYPO3 versions 4.0.13 and below, 4.1.12 and below, 4.2.9 and below,
+>     4.3.0beta1 and below contain a cross-site scripting flaw where the TYPO3
+>     backend failed to properly sanitize user input.
+>
+>     http://marc.info/?l=oss-security&m=125626536616052&w=2
+>     https://typo3.org/teams/security/security-bulletins/typo3-sa-2009-016/
+>
+> CVE-2009-3633 TYPO3 API function t3lib_div::quoteJSvalue XSS
+>
+>     TYPO3 versions 4.0.13 and below, 4.1.12 and below, 4.2.9 and below,
+>     4.3.0beta1 and below contain an unauthenticated cross-site scripting flaw
+>     in its API function t3lib_div::quoteJSvalue.
+>
+>     http://marc.info/?l=oss-security&m=125626536616052&w=2
+>     https://typo3.org/teams/security/security-bulletins/typo3-sa-2009-016/
+>
+> CVE-2009-3636 TYPO3 Install Tool XSS
+>
+>     TYPO3 versions 4.0.13 and below, 4.1.12 and below, 4.2.9 and below,
+>     4.3.0beta1 and below contain a cross-site scripting flaw in the Install
+>     Tool. The Install Tool does not properly sanitize URL parameters leading
+>     to this attack.
+>
+>     Note: The Install Tool is not meant to be activated in production
+>     environments.
+>
+>     http://marc.info/?l=oss-security&m=125626536616052&w=2
+>     https://typo3.org/teams/security/security-bulletins/typo3-sa-2009-016/
+
+Within the CVE team, we've started applying an additional consistency rule
+where we will even split issues with the same vuln-type and version *if*
+the finder/discloser/researcher/creditee is different.  In this case, none
+of these three CVEs have exactly the same finder, so it's OK to let them
+remain split. (I'm somewhat nervous about the implications of this rule
+process-wise - and CVE assignment is already "weird enough" - but I'm
+continuing with this anyway.)
+
+Note that the TYPO3 advisory doesn't explicitly state which bug is present
+in the 4.0.x series.
+
+> CVE-2009-3634 TYPO3 Frontend Login Box (felogin) XSS
+>
+>     TYPO3 versions 4.2.0 to 4.2.6 contian contain a cross-site scripting flaw
+>     where the URL parameters of Frontend Login Box were not properly
+>     sanitized.
+>
+>     http://marc.info/?l=oss-security&m=125626536616052&w=2
+>     https://typo3.org/teams/security/security-bulletins/typo3-sa-2009-016/
+
+This would still remain distinct from the other XSS because the affected
+versions are different.
 
 - Steve
