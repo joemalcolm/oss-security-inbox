@@ -1,26 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/09/1
-Message-ID: <4AF746E5.7020905@extendedsubset.com>
-Date: Sun, 08 Nov 2009 16:32:05 -0600
-From: Marsh Ray <marsh@...endedsubset.com>
-To: ArkanoiD <ark@...ex.net>
-CC: oss-security@...ts.openwall.com, tls@...f.org
-Subject: Re: [TLS] CVE-2009-3555 for TLS renegotiation MITM attacks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/23/12
+Message-ID: <293784971.999861256328961039.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 23 Oct 2009 16:16:01 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kvm: integer overflow in kvm_dev_ioctl_get_supported_cpuid()
 Content-Type: text/plain; charset=utf-8
 
-ArkanoiD wrote:
-> BTW renegotiation handshake looks quite similar to initial handshake from
-> the client point of view;
+Please use CVE-2009-3638 for this.
 
-Yeah, currently it looks identical.
+Thanks.
 
-> is there a way to detect the attack on client side
-> and drop the connection?
+-- 
+    JB
 
-With draft-rescorla-tls-renegotiate, the new header comes back to the
-client on Server Hello, and this notifies the client that the server
-believes it's a re-negotation. Even better, it ties it strongly to the
-previous session, so legit renegotiations are protected, too.
 
-- Marsh
+----- "Eugene Teo" <eugeneteo@...nel.sg> wrote:
 
+> Quote from the upstream commit:
+> "The number of entries is multiplied by the entry size, which can 
+> overflow on 32-bit hosts.  Bound the entry count instead."
+> 
+>    if (cpuid->nent < 1)
+>     goto out;
+> + if (cpuid->nent > KVM_MAX_CPUID_ENTRIES)
+> +  cpuid->nent = KVM_MAX_CPUID_ENTRIES;
+>    r = -ENOMEM;
+>    cpuid_entries = vmalloc(sizeof(struct kvm_cpuid_entry2) *
+> cpuid->nent);
+>    if (!cpuid_entries)
+> 
+> This one can be triggered if /dev/kvm is user accessible (which is
+> recommended...). This was introduced in v2.6.25-rc1, and fixed in 
+> v2.6.32-rc4. Only on 32-bit host.
+> 
+> References:
+> http://git.kernel.org/linus/0771671749b59a507b6da4efb931c44d9691e248
+> http://git.kernel.org/linus/6a54435560efdab1a08f429a954df4d6c740bddf
+> https://bugzilla.redhat.com/show_bug.cgi?id=530515
+> 
+> Thanks, Eugene
