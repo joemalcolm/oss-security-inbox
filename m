@@ -1,22 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/11/1
-Message-ID: <20090911090304.55a6506c@redhat.com>
-Date: Fri, 11 Sep 2009 09:03:04 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/23/2
+Message-Id: <20091022222340.b49fa09f.michael.s.gilbert@gmail.com>
+Date: Thu, 22 Oct 2009 22:23:40 -0400
+From: Michael Gilbert <michael.s.gilbert@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: OpenOffice.org CVE-2009-2139
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, CERT-FI Vulnerability Co-ordination <vulncoord@...ora.fi>
+Subject: Re: Re: Regarding expat bug 1990430
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 10 Sep 2009 19:59:55 +0200 Tomas Hoger <thoger@...hat.com>
-wrote:
+On Thu, 22 Oct 2009 16:04:37 +0200 Marc Schoenefeld wrote:
 
-> Thanks, I've been pointed to relevant info already.  Also thanks for
-> posting these descriptions publicly, as they can be used by Mitre in
-> CVE descriptions.
+> Jan Lieskovsky wrote:
+> > Hello Steve, vendors,
+> >
+> > [...]
+> >
+> >    a, Does Apache Xerces2 Java contain embedded copy ot the expat
+> > library (i.e. it's
+> >       completely the same issue as in expat, w3c-libwww, PyXML and
+> > others) - Marc
+> >       could you help to reply this question?
+> >
+> Hi,
+> the upstream patch for CVE-2009-2625 for xerces-j2 is  java-only [1] and
+> unrelated to fixes in other native C parsing libraries.
 
-ooo-build git commit link for posterity:
+hi,
 
-http://cgit.freedesktop.org/ooo-build/ooo-build/commit/?id=49b4e38571912a7d28c4044e5b2bd57e51c77d55
+mandriva and gentoo used CVE-2009-2625 as their reference CVE for the
+expat fixes.  debian is also currently tracking the issue with this
+CVE for the time being.  however, we have not yet released fixed
+packages.
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+mike
