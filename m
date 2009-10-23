@@ -1,33 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/23/4
-Message-ID: <20090323182707.GB15577@ngolde.de>
-Date: Mon, 23 Mar 2009 19:27:07 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/23/13
+Message-ID: <123617951.1000591256329579995.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 23 Oct 2009 16:26:19 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request -- ucd-snmp / net-snmp, libnss-ldapd / nss_ldap
+Cc: coley <coley@...re.org>
+Subject: Re: proftpd - mod_tls - Improper SSL/TLS certificate subjectAltName verification
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Jan Lieskovsky <jlieskov@...hat.com> [2009-03-23 14:26]:
->   could you please assign CVE ids for following
-> two low security issues:
-> 
-> 1, ucd-snmp / net-snmp snmpd runs with privileges of privileged user
->    a, Red Hat Enterprise Linux / Fedora snmpd runs with UID=0, GID=0
->    b, Debian snmpd runs with GID=0
->    References:
->    https://bugzilla.redhat.com/show_bug.cgi?id=491621
->    http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=520724
+Please use CVE-2009-3639 for this.
 
-I fail to see the vulnerability in this case. While it's 
-obvious that net-snmp shouldn't run with uid 0 if it doesn't 
-need it, this is no security issue per-se and would not 
-require a CVE id from my opinion.
+Thanks.
 
-Cheers
-Nico
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+    JB
 
-Content of type "application/pgp-signature" skipped
+----- "Oden Eriksson" <oeriksson@...driva.com> wrote:
+
+> Hello.
+> 
+> This should probably be assigned a CVE
+> 
+> http://bugs.proftpd.org/show_bug.cgi?id=3275
+> 
+> Cheers.
+> -- 
+> Regards // Oden Eriksson
