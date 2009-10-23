@@ -1,24 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/07/3
-Message-ID: <Pine.GSO.4.51.0910071754350.1485@faron.mitre.org>
-Date: Wed, 7 Oct 2009 17:54:44 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/23/5
+Message-ID: <4AE17377.6050909@kernel.sg>
+Date: Fri, 23 Oct 2009 17:12:23 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: jetty
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kvm: integer overflow in kvm_dev_ioctl_get_supported_cpuid()
 Content-Type: text/plain; charset=utf-8
 
+Quote from the upstream commit:
+"The number of entries is multiplied by the entry size, which can 
+overflow on 32-bit hosts.  Bound the entry count instead."
 
-======================================================
-Name: CVE-2009-3579
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3579
-Reference: BUGTRAQ:20091006 CORE-2009-0922: Jetty Persistent XSS in Sample Cookies Application
-Reference: URL:http://www.securityfocus.com/archive/1/archive/1/507013/100/0/threaded
-Reference: MISC:http://www.coresecurity.com/content/jetty-persistent-xss
+   if (cpuid->nent < 1)
+    goto out;
++ if (cpuid->nent > KVM_MAX_CPUID_ENTRIES)
++  cpuid->nent = KVM_MAX_CPUID_ENTRIES;
+   r = -ENOMEM;
+   cpuid_entries = vmalloc(sizeof(struct kvm_cpuid_entry2) * cpuid->nent);
+   if (!cpuid_entries)
 
-Cross-site scripting (XSS) vulnerability in the CookieDump.java sample
-application in Mort Bay Jetty 6.1.19 and 6.1.20 allows remote
-attackers to inject arbitrary web script or HTML via the Value
-parameter in a GET request to cookie/.
+This one can be triggered if /dev/kvm is user accessible (which is
+recommended...). This was introduced in v2.6.25-rc1, and fixed in 
+v2.6.32-rc4. Only on 32-bit host.
 
+References:
+http://git.kernel.org/linus/0771671749b59a507b6da4efb931c44d9691e248
+http://git.kernel.org/linus/6a54435560efdab1a08f429a954df4d6c740bddf
+https://bugzilla.redhat.com/show_bug.cgi?id=530515
 
+Thanks, Eugene
