@@ -1,20 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/22/11
-Message-ID: <Pine.GSO.4.51.0905221220350.7717@faron.mitre.org>
-Date: Fri, 22 May 2009 12:21:52 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com, rea-sec@...elabs.ru
-Subject: Re: CVE id request: slim
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/23/1
+Message-ID: <20091023022950.GR20229@ngolde.de>
+Date: Fri, 23 Oct 2009 04:29:50 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE id request: typo3
 Content-Type: text/plain; charset=utf-8
 
+Hi,
+As I didn't see a request for this yet:
+https://typo3.org/teams/security/security-bulletins/typo3-sa-2009-016/
 
-On Fri, 22 May 2009, Eygene Ryabinkin wrote:
+Can someone assign CVE ids to these issues?
 
-> > SLiM Simple Login Manager 1.3.0 includes places the X authority magic
->                                   ^^^^^^^^^^^^^^^
+Cheers
+Nico
 
-Thanks, fixed to use "places" instead of "includes."  We're starting to
-see more of these kinds of issues, and a general phrasing is starting to
-emerge.
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-- Steve
+Content of type "application/pgp-signature" skipped
