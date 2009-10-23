@@ -1,24 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/05/2
-Message-ID: <20090505145905.GA27950@ngolde.de>
-Date: Tue, 5 May 2009 16:59:05 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: CVE id request: Debian/Ubuntu specific issue in xvfb-run (xorg)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/23/8
+Message-ID: <4AE1FB36.1030909@redhat.com>
+Date: Fri, 23 Oct 2009 20:51:34 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE-2009-3626 assigment notification - Perl - perl-5.10.1
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
-can I get a CVE id for http://bugs.debian.org/526678
+Hello Steve, vendors,
 
-The xvfb-run script used in Debian insecurely passes the X 
-magic cookie via the commandline so it's an easy thing to 
-grab it with system access.
+   Mark Martinec reported Perl crash while processing utf-8 character
+with large and invalid codepoint.
 
-Cheers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+References:
+----------
+https://issues.apache.org/SpamAssassin/show_bug.cgi?id=6225 (original source)
+http://rt.perl.org/rt3/Public/Bug/Display.html?id=69973 (perl bug)
+http://rt.perl.org/rt3/Ticket/Attachment/617489/295383/ (PoC)
 
-Content of type "application/pgp-signature" skipped
+Affected versions:
+------------------
+Have checked Perl of versions perl-5.8.0, perl-5.8.5, perl-5.8.8, perl-5.10.0
+is not vulnerable to this flaw.
+
+Issue was confirmed in Perl of version perl-5.10.1, as available at:
+
+http://www.cpan.org/src/perl-5.10.1.tar.gz
+
+CVE identifier:
+---------------
+CVE identifier of CVE-2009-3626 has been already assigned to this issue.
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
