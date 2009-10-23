@@ -1,29 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/28/1
-Message-ID: <20090428112253.2c0fb8e1@redhat.com>
-Date: Tue, 28 Apr 2009 11:22:53 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: coley@...us.mitre.org
-Cc: oss-security@...ts.openwall.com, wietse@...cupine.org
-Subject: Re: Re: Some fun with tcp_wrappers
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/23/7
+Message-Id: <200910231645.40844.oeriksson@mandriva.com>
+Date: Fri, 23 Oct 2009 16:45:40 +0200
+From: Oden Eriksson <oeriksson@...driva.com>
+To: oss-security@...ts.openwall.com
+Subject: proftpd - mod_tls - Improper SSL/TLS certificate subjectAltName verification
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve!
+Hello.
 
-On Fri, 24 Apr 2009 19:10:11 -0400 (EDT) "Steven M. Christey"
-<coley@...us.mitre.org> wrote:
+This should probably be assigned a CVE
 
-> Given last week's round of discussion on this list and related
-> commentary in Red Hat 491095, I still don't know how to write up
-> CVE-2009-0786. Should we focus it on the hosts_ctl() usage in the
-> Fedora version of tcp_wrappers?
+http://bugs.proftpd.org/show_bug.cgi?id=3275
 
-Given Wietse's (original upstream author) comments, original behavior
-is intended one, so 0786 should be rejected.  We're not adding the
-change as security fix to the product versions where it's not included
-already.
-
-Thank again to Wietse for his comments!
-
+Cheers.
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Regards // Oden Eriksson
+
