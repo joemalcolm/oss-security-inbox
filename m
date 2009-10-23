@@ -1,41 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/02/2
-Message-Id: <1243936444.6148.31.camel@tucsk>
-Date: Tue, 02 Jun 2009 11:54:04 +0200
-From: Miklos Szeredi <mszeredi@...e.cz>
-To: Jon Oberheide <jon@...rheide.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel: splice local denial of service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/23/11
+Message-ID: <1917268567.999661256328718470.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 23 Oct 2009 16:11:58 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- alienarena - 7.31
 Content-Type: text/plain; charset=utf-8
 
-On Sat, 2009-05-30 at 03:36 -0400, Jon Oberheide wrote:
-> The deadlock can be reproduced easily (you might need to fork() a few
-> times to get an pipe inode allocation ptr less than the file inode ptr):
+Please use CVE-2009-3637.
+
+Thanks.
+
+-- 
+    JB
+
+
+----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+
+> Hello Steve, vendors,
 > 
->     pipe(pfds);
->     snprintf(buf, sizeof(buf), "/tmp/%d", getpid());
->     fd = open(buf, O_RDWR | O_CREAT, S_IRWXU);
+>    remotely exploitable buffer overflow flaw by processing
+> specially-crafted UDP reply from game
+> server (leading to arbitrary code execution) was fixed in latest
+> upstream alienarena-7.31
+> release.
 > 
->     if (fork()) {
->         splice(pfds[0], NULL, fd, NULL, 1024, NULL);
->     } else{
->         sleep(1);
->         splice(pfds[0], NULL, fd, NULL, 1024, NULL);
->     }
+> References:
+> -----------
+> http://www.ngssoftware.com/brochures/Anonymous.Remote.Arbitrary.Code.Execution.in.Alien.Arena.pdf
+> (More descriptive issue details)
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=552038 (Original
+> source)
+> http://icculus.org/alienarena/changelogs/7.31.txt (Revisions 1390 and
+> 1391).
 > 
-> However, the deadlock only affects the task attempting to acquire the
-> inode's i_mutex, so an attacker would require write access to a file
-> that is also written (or other fs op that acquires i_mutex) by some
-> victim process.  That is, unless I've missed something. :-)
-
-Some operations also take i_mutex on parent (open(O_CREAT), mkdir,
-unlink, rmdir, rename, etc), and the order is always parent first.  This
-means, that if some task is holding i_mutex on /tmp/foo, then doing
-unlink("/tmp/foo") will block while holding i_mutex on /tmp.  Together
-with the above deadlock it will prevent creation or removal of files
-under /tmp, making the system pretty much unusable.
-
-Thanks,
-Miklos
-
-
+> Upstream patch:
+> ---------------
+> http://svn.icculus.org/alienarena/trunk/source/client/menu.c?r1=1383&r2=1391
+> (Merged change of 1390 and 1391)
+> 
+> Could you allocate a CVE identifier?
+> 
+> Thanks && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
