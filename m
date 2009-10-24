@@ -1,34 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/27/3
-Message-ID: <1114596597.888381240851391111.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 27 Apr 2009 12:56:31 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/24/1
+Message-ID: <534900250.1591256404144642.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Sat, 24 Oct 2009 13:09:04 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: oss-security CNA
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kvm: update_cr8_intercept() NULL pointer dereference when running without an apic
 Content-Type: text/plain; charset=utf-8
 
------ "Mark J Cox" <mjc@...hat.com> wrote:
-> 
-> So perhaps the solution is to have the vendor CNAs play more of a role on
-> the oss-security list in allocating and helping with content decisions
-> rather than having to have Mitre monitor the list.  Then, each time a CNA
-> gives out a CVE on oss-security they could have some requirement of a
-> mimimum set of information about the allocation they have to provide in the
-> same mail.  By having the CNA buffer we'd only have to involve Steve or
-> Mitre when something is complex.  However, that would mean Mitre would have
-> to check oss-security list before allocating any CVE names for oss-issues
-> and accept there may be more duplicate allocations.
-> 
+Please use CVE-2009-3640.
 
-I've been thinking about this lately, it's likely a good idea.
-
-I think having an oss-security CNA that is not MITRE would be useful, and
-hopefully would alleviate some of the pressure MITRE currently feels. There
-would of course be collisions from time to time, but that's likely going to
-still cause less pain than the current model provides.
-
-If this idea is appealing to MITRE, we could start working out some of the
-details.
+Thanks.
 
 -- 
     JB
+
+
+----- "Eugene Teo" <eugeneteo@...nel.sg> wrote:
+
+> Quote from the upstream commit:
+> "update_cr8_intercept() can be triggered from userspace while there
+> is no apic present."
+> 
+> http://git.kernel.org/linus/88c808fd42b53a7e01a2ac3253ef31fef74cb5af
+> 
+> This one can be triggered via kvm_vcpu_ioctl() if /dev/kvm is user 
+> accessible (which is recommended...). Fixed in v2.6.32-rc1.
+> 
+> Eugene
