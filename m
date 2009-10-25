@@ -1,22 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/27/1
-Message-ID: <0901270743030.16125@mjc.redhat.com>
-Date: Tue, 27 Jan 2009 07:46:27 +0000 (GMT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/25/5
+Message-ID: <0910251934370.28522@mjc.redhat.com>
+Date: Sun, 25 Oct 2009 19:38:36 +0000 (GMT)
 From: Mark J Cox <mjc@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request -- Linux kernel irda driver buffer overflow
+To: oss-security <oss-security@...ts.openwall.com>
+cc: "Steven M. Christey" <coley@...us.mitre.org>, laurent.gaffie@...il.com, roesch@...rcefire.com
+Subject: SANS: Security Thought LeadersRe: CVE Request -- Snort - 2.8.5.1
 Content-Type: text/plain; charset=utf-8
 
-> A buffer overflow has been recently fixed in the Linux kernel irda
-> driver.
+> Snort upstream released 2.8.5.1 version fixing one security issue:
+> DoS (crash) while printing specially-crafted IPv6 packet using the -v option
+> http://dl.snort.org/snort-current/release_notes_2851.txt
+> Could you allocate a new CVE identifier?
 
-This doesn't seem to have any security implications; it's a single null 
-byte overflow that happens all the time (not under control of an 
-attacker), and from looking at the function that null byte isn't going to 
-overwrite anything that would lead to a security consequence.
+Use CVE-2009-3641
 
-So it looks to me like a bug, no CVE.
-
-Thanks, Mark
---
-Mark J Cox / Red Hat Security Response Team
+Mark
