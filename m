@@ -1,25 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/04/1
-Message-Id: <200907041239.17985.rbu@gentoo.org>
-Date: Sat, 4 Jul 2009 12:39:09 +0200
-From: Robert Buchholz <rbu@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/25/2
+Message-ID: <Pine.LNX.4.64.0910250218410.23549@forced.attrition.org>
+Date: Sun, 25 Oct 2009 02:21:51 +0000 (UTC)
+From: security curmudgeon <jericho@...rition.org>
 To: oss-security@...ts.openwall.com
-Cc: Andrea Barisani <lcars@...rt.org>
-Subject: Re: [oCERT-2009-009] CamlImages integer overflows
+Subject: Re:  CVE-2009-3239 is a duplicate of CVE-2009-2139 and CVE-2009-2140
 Content-Type: text/plain; charset=utf-8
 
-On Thursday 02 July 2009, Andrea Barisani wrote:
-> Unfortunately oCERT has been unable to get feedback from CamlImages
-> maintainers and the package seems unmaintained, it's therefore
-> suggested to avoid CamlImages usage on production or any environment
-> where strong security is needed.
 
-Richard Jones of RedHat contributed a patch and upstream is stated plans 
-to review and incorporate it:
-http://www.nabble.com/Camlimages-integer-overflows-with-PNG-images-td24321780.html
+: CVE-2009-3239 appears to be a duplicate of CVE-2009-2139 and 
+: CVE-2009-2140, and should therefore be rejected.
+
+CVE may abstract on these:
+
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=2009-3239
+
+Buffer overflow in the EMF parser implementation in OpenOffice.org (OOo) 
+in SUSE openSUSE 10.3 through 11.1, Novell Linux Desktop (NLD) 9, and 
+SUSE Linux Enterprise (SLE) 10 and 11 has unknown impact and remote 
+attack vectors, related to enhwmf.cxx and emfplus.cxx.
+
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=2009-2139
+
+Heap-based buffer overflow in svtools/source/filter.vcl/wmf/enhwmf.cxx in 
+Go-oo 2.x and 3.x before 3.0.1, previously named ooo-build and related to 
+OpenOffice.org (OOo), allows remote attackers to execute arbitrary code 
+via a crafted EMF file, a similar issue to CVE-2008-2238.
+
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=2009-2140
+
+Multiple heap-based buffer overflows in 
+cppcanvas/source/mtfrenderer/emfplus.cxx in Go-oo 2.x and 3.x before 
+3.0.1, previously named ooo-build and related to OpenOffice.org (OOo), 
+allow remote attackers to execute arbitrary code via a crafted EMF+ file, 
+a similar issue to CVE-2008-2238.
 
 
+1. 2139 and 2140 were created next to each other. That is usually a strong 
+indication that CVE chose to abstract between two issues.
 
-Robert
+2. 3239 is in OOo, while 2139/2140 are in Go-oo, which was "previously .. 
+related to OOo". If Go-oo represents a code fork, there are two products 
+in question now. While CVE will merge products on similar issues, I don't 
+believe it is set in stone.
 
-Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
+3. I may be totally off and they may be considered dupes. =)  OSVDB is 
+keeping them split for now, given the difference in products.
+
+Brian
+
