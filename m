@@ -1,33 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/29/11
-Message-Id: <200910292211.33848.tmb@65535.com>
-Date: Thu, 29 Oct 2009 22:11:32 +0000
-From: Tim Brown <tmb@...35.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/25/4
+Message-ID: <20091025203849.5049a710@redhat.com>
+Date: Sun, 25 Oct 2009 20:38:49 +0100
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re:  CVE request - asterisk, python-markdown, jetty, kde
+Cc: geissert@...ian.org
+Subject: Re:  CVE-2009-3239 is a duplicate of CVE-2009-2139 and CVE-2009-2140
 Content-Type: text/plain; charset=utf-8
 
-On Thursday 29 October 2009 20:10:27 Tomas Hoger wrote:
-> On Thu, 29 Oct 2009 09:42:36 -0600 Raphael Geissert
->
-> <geissert@...ian.org> wrote:
-> > = kde =
-> > Multiple missing input sanity checks in KDE
-> > Reference:
-> > http://www.ocert.org/advisories/ocert-2009-015.html
->
-> Btw, do you have any suggestion on how many CVEs should be allocated
-> here and what are the individual flaws?  I failed to build satisfying
-> list form the info in the advisory.  Have you managed to tell which
-> patch is supposed to address which vulnerability?
+On Sat, 24 Oct 2009 12:35:18 -0500 Raphael Geissert
+<geissert@...ian.org> wrote:
 
-I've responded to Tomas off list regarding these issues since our advisories 
-have not yet been made available.  We have 4 advisories to cover the 
-individual flaws.  If anyone else wants further details in the meantime, feel 
-free to get in touch off list but I'll likely only respond to people I can 
-validate (i.e. package maintainers for the distros etc).
+> CVE-2009-3239 appears to be a duplicate of CVE-2009-2139 and CVE-2009-2140,
+> and should therefore be rejected.
 
-Tim
+This has been discussed here already:
+
+http://thread.gmane.org/gmane.comp.security.oss.general/2091/focus=2149
+
 -- 
-Tim Brown
-<mailto:tmb@...35.com>
+Tomas Hoger / Red Hat Security Response Team
