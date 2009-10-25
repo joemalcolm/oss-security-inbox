@@ -1,33 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/16/3
-Message-ID: <391273470.108201258411170607.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 16 Nov 2009 17:39:30 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: jt@....org
-Subject: Re: CVE request: oping allows the disclosure of arbitrary file contents
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/25/3
+Message-ID: <4AE499C4.9050404@redhat.com>
+Date: Sun, 25 Oct 2009 19:32:36 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request -- Snort - 2.8.5.1
 Content-Type: text/plain; charset=utf-8
 
------ "Tomas Hoger" <thoger@...hat.com> wrote:
-> On Thu, 15 Oct 2009 15:15:57 +0200 Julien Tinnes <jt@....org> wrote:
-> 
-> > in case anyone cares, oping also attempts to drop privileges with
-> > setuid(getuid()); without checking setuid()'s return value.
-> > 
-> > It's an obvious vulnerability, because a local attacker can make setuid()
-> > fail by setting a resource limit of 0 for RLIMIT_NPROC with setrlimit().
-> 
-> Does the RLIMIT_NPROC trick work against oping, or any setuid app that calls
-> setuid(getuid())?
-> 
+Hello Steve, vendors,
 
-This should work for everything that calls setuid()
+   Snort upstream has released 2.8.5.1 version fixing one security issue:
 
-I have a little bit about this here:
-http://www.bress.net/blog/archives/34-setuid-madness.html
+DoS (crash) while printing specially-crafted IPv6 packet using the -v option
 
-The short story is that if you call setuid(), you need to check the return
-code.
+References:
+-----------
+http://dl.snort.org/snort-current/release_notes_2851.txt
+http://vrt-sourcefire.blogspot.com/2009/10/snort-2851-release.html
+http://secunia.com/advisories/37135/
 
--- 
-    JB
+PoC:  http://seclists.org/fulldisclosure/2009/Oct/299
+----
+
+Credit:  Laurent Gaffié
+-------
+
+Could you allocate a new CVE identifier?
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
