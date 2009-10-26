@@ -1,17 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/06/2
-Message-ID: <1576213249.1047861239030084411.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 6 Apr 2009 11:01:24 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: coley@...re.org
-Subject: CVE Request (xine-lib)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/26/2
+Message-Id: <20091026102702.9260a589.michael.s.gilbert@gmail.com>
+Date: Mon, 26 Oct 2009 10:27:02 -0400
+From: Michael Gilbert <michael.s.gilbert@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re:  CVE-2009-3239 is a duplicate of CVE-2009-2139 and CVE-2009-2140
 Content-Type: text/plain; charset=utf-8
 
-I don't see a request or ID for this one yet:
-http://trapkit.de/advisories/TKADV2009-005.txt
+On Sun, 25 Oct 2009 02:21:51 +0000 (UTC), security curmudgeon wrote:
+> 
+> : CVE-2009-3239 appears to be a duplicate of CVE-2009-2139 and 
+> : CVE-2009-2140, and should therefore be rejected.
+> 
+> CVE may abstract on these:
+> 
+> http://cve.mitre.org/cgi-bin/cvename.cgi?name=2009-3239
+> 
+> Buffer overflow in the EMF parser implementation in OpenOffice.org (OOo) 
+> in SUSE openSUSE 10.3 through 11.1, Novell Linux Desktop (NLD) 9, and 
+> SUSE Linux Enterprise (SLE) 10 and 11 has unknown impact and remote 
+> attack vectors, related to enhwmf.cxx and emfplus.cxx.
+> 
+> http://cve.mitre.org/cgi-bin/cvename.cgi?name=2009-2139
+> 
+> Heap-based buffer overflow in svtools/source/filter.vcl/wmf/enhwmf.cxx in 
+> Go-oo 2.x and 3.x before 3.0.1, previously named ooo-build and related to 
+> OpenOffice.org (OOo), allows remote attackers to execute arbitrary code 
+> via a crafted EMF file, a similar issue to CVE-2008-2238.
 
-Thanks.
+in past cve's, from what i've seen, when there is an issue with the same
+source code in multiple projects (i.e. embeds and forks), there is only
+one cve issued with a text something like, "buffer overflow in
+openoffice.org and go-oo...."
 
--- 
-    JB
+so, i think 2009-3239 should be rejected and the text for 2009-2139
+should be updated to indicate that the problem affects both
+openoffice.org and go-oo.
+
+mike
