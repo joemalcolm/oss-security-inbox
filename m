@@ -1,41 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/16/6
-Message-ID: <4AD840CD.7090400@redhat.com>
-Date: Fri, 16 Oct 2009 11:45:49 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request - aria2 - 1.6.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/26/1
+Message-ID: <20091026145236.2c9665b1@redhat.com>
+Date: Mon, 26 Oct 2009 14:52:36 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: More CVE-2009-2408 like issues
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve, vendors,
+On Wed, 23 Sep 2009 11:05:17 +0200 Tomas Hoger <thoger@...hat.com>
+wrote:
 
-   aria2 upstream has released latest 1.6.2 release, fixing one DoS issue. From
-1.6.2 Release Note:
+> On Thu, 3 Sep 2009 16:45:47 +0200 Tomas Hoger <thoger@...hat.com>
+> wrote:
+> 
+> > wget - bunch of relevant links are available in here:
+> >   https://bugzilla.redhat.com/show_bug.cgi?id=520454
+> 
+> Fixed now in upstream version 1.12:
+>   http://permalink.gmane.org/gmane.comp.web.wget.general/8972
+> 
+> This and other mentioned in my previous mail (mutt 1.5.19+, possibly
+> pre-1.5.19 too, but many are likely to wontfix that; OpenLDAP with
+> openssl) should probably get CVE.
 
-This release fixes segmentation fault error if URI to download
-contains printf format string and logging is enabled
+For posterity:
+- wget got CVE-2009-3490
+- mutt CVE-2009-2408-like issue got CVE-2009-3765
+- mutt missing name checks in pre-1.5.19 got CVE-2009-3766 (only 1.5.16
+  is mentioned in the CVE description atm)
+- openldap got CVE-2009-3767
 
-* Fixed the bug that causes segmentation fault if
-    req->getCurrentUrl() contains printf format string such as %d. The
-    statement that causes this bug is useless and removed.
-
-
-References:
------------
-http://aria2.svn.sourceforge.net/viewvc/aria2/trunk/NEWS?revision=1586
-https://bugzilla.redhat.com/show_bug.cgi?id=529342
-
-Upstream patch:
----------------
-http://aria2.svn.sourceforge.net/viewvc/aria2/trunk/src/AbstractCommand.cc?r1=1539&r2=1572
-
-Affected versions:
-------------------
-aria2-1.5.x && aria2-1.6.x (aria2-1.3.x is not vulnerable)
-
-Could you allocate a CVE identifier?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+-- 
+Tomas Hoger / Red Hat Security Response Team
