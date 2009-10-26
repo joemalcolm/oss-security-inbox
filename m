@@ -1,27 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/02/2
-Message-ID: <28fa9c5e0903012244m557ec963w358917b1b66a9031@mail.gmail.com>
-Date: Mon, 2 Mar 2009 14:44:05 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel: x86-64: seccomp: 32/64 syscall hole
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/26/3
+Message-ID: <4AE5B4C5.5010909@ficora.fi>
+Date: Mon, 26 Oct 2009 16:40:05 +0200
+From: CERT-FI Vulnerability Co-ordination <vulncoord@...ora.fi>
+To: oss-security <oss-security@...ts.openwall.com>
+CC: "Steven M. Christey" <coley@...us.mitre.org>,  Josh Bressers <bressers@...hat.com>, Joe Orton <jorton@...hat.com>, Ondrej Vasik <ovasik@...hat.com>,  Roman Rakus <rrakus@...hat.com>, CERT-FI Vulnerability Co-ordination <vulncoord@...ora.fi>
+Subject: Re: CVE Request -- expat [was: Re: Regarding expat bug 1990430]
 Content-Type: text/plain; charset=utf-8
 
-On x86-64, a 32-bit process (TIF_IA32) can switch to 64-bit mode with
-ljmp, and then use the "syscall" instruction to make a 64-bit system
-call.  A 64-bit process make a 32-bit system call with int $0x80.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-In both these cases under CONFIG_SECCOMP=y, secure_computing() will
-use the wrong system call number table.  The fix is simple: test
-TS_COMPAT instead of TIF_IA32.
+Hello all,
 
-Credit: Chris Evans.
+Jan Lieskovsky wrote:
+> Based on the above -^ I would vote for separate CVE identifier for expat
+> flaw
+> (and its embedded copies in dozen of packages):
+> 
+> https://bugs.gentoo.org/show_bug.cgi?id=280615#c8
+> https://bugs.gentoo.org/show_bug.cgi?id=280615#c10
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=487255
-http://scary.beasts.org/security/CESA-2009-001.html
-http://scary.beasts.org/security/CESA-2009-004.html
-http://lkml.org/lkml/2009/2/27/451 summary
-http://lkml.org/lkml/2009/2/27/452 syscall-audit
-http://lkml.org/lkml/2009/2/27/453 seccomp
-http://lkml.org/lkml/2009/2/28/23 seccomp follow-ups
+As far as we understand, the expat flaw in question is in no way related
+to CVE-2009-2625, or other recent XML parser flaws. Therefore our take
+is that it should have a distinct CVE entry.
+
+- -Jussi / CERT-FI
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFK5bTF/64aC2E+yK8RAujqAKCgFjrzN4XZJ87Cf3pBAh2/1uNl6gCfW8+v
+qlDdj1prKH23JhsVi8mv90A=
+=Vin/
+-----END PGP SIGNATURE-----
