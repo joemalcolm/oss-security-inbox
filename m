@@ -1,38 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/23/4
-Message-ID: <49F0108E.7060700@redhat.com>
-Date: Thu, 23 Apr 2009 14:54:06 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/27/2
+Message-ID: <hc64rp$vck$1@ger.gmane.org>
+Date: Tue, 27 Oct 2009 00:44:52 -0600
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: Willy Tarreau <w@....eu>
-Subject: Re: Re: CVE-2009-1265 kernel: af_rose/x25: Sanity check the maximum user frame size
+Subject: Re: CVE-2009-3239 is a duplicate of CVE-2009-2139 and CVE-2009-2140
 Content-Type: text/plain; charset=utf-8
 
-Willy Tarreau wrote:
-> Hi Eugene,
+Tomas Hoger wrote:
+
+> On Sat, 24 Oct 2009 12:35:18 -0500 Raphael Geissert wrote:
 > 
-> On Wed, Apr 08, 2009 at 03:58:55PM +0800, Eugene Teo wrote:
->> {nr,rose,x25}_sendmsg() functions need to have sanity checks on the
->> packet size, otherwise the sizes can wrap and end up sending garbage.
->>
->> http://bugzilla.kernel.org/show_bug.cgi?id=10423
->> http://git.kernel.org/linus/83e0bbcbe2145f160fbaa109b0439dae7f4a38a9
->> http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2009-1265
->>
->> This affects both 2.4.x and 2.6.x if CONFIG_{NETROM,ROSE,X25} are enabled.
+>> CVE-2009-3239 appears to be a duplicate of CVE-2009-2139 and
+>> CVE-2009-2140, and should therefore be rejected.
 > 
-> I already have it in my queue, just did not have time to merge it yet.
-> Thanks for the reminder anyway, I really appreciate it ;-)
+> This has been discussed here already:
+> 
+> http://thread.gmane.org/gmane.comp.security.oss.general/2091/focus=2149
+> 
 
-You will need this too :)
+I see, thanks (bad filtering rule marked them as read).
 
-upstream commit: cc29c70dd581f85ee7a3e7980fb031f90b90a2ab
-
-Patch "af_rose/x25: Sanity check the maximum user frame size"
-(commit 83e0bbcbe2145f160fbaa109b0439dae7f4a38a9) from Alan Cox got
-locking wrong. If we bail out due to user frame size being too large,
-we must unlock the socket beforehand.
-
-Thanks, Eugene
+Regards,
 -- 
-Eugene Teo / Red Hat Security Response Team
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
+
+
