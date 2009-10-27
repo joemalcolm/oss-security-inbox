@@ -1,42 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/02/1
-Message-ID: <20090602110233.26295ec8@redhat.com>
-Date: Tue, 2 Jun 2009 11:02:33 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/27/5
+Message-ID: <20091027214303.GD3695@redhat.com>
+Date: Tue, 27 Oct 2009 15:43:03 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Two OpenSSL DTLS remote DoS
+Subject: CVE request for oCERT advisory 2009-013 (yTNEF/Evolution TNEF)
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+I'm not sure if a CVE name has been requested for this issue; I can't
+see one anywhere.
 
-There are 2 more issues that cause DTLS server to crash (NULL pointer
-dereference DoS), detailed in upstream bug reports linked below.
+http://www.ocert.org/advisories/ocert-2009-013.html
 
+It's for the Evolution TNEF/yTNEF issues disclosed early last month.
+Could we have a CVE name assigned for this?
 
-CVE-2009-1386
-DTLS: SegFault if ChangeCipherSpec is received before ClientHello
-
-http://rt.openssl.org/Ticket/Display.html?id=1679&user=guest&pass=guest
-http://cvs.openssl.org/chngview?cn=17369
-
-This was first fixed upstream in 0.9.8i.
-
-
-CVE-2009-1387
-DTLS fragment bug - out-of-sequence message handling
-
-http://rt.openssl.org/Ticket/Display.html?id=1838&user=guest&pass=guest
-http://cvs.openssl.org/chngview?cn=17958
-
-Here NULL pointer dereference resulting in DTLS server crash can happen in
-dtls1_retrieve_buffered_fragment() during memcpy from frag->fragment.
-
-This is fixed in 1.0.0-beta2, not yet in the latest 0.9.8 available at
-the moment - 0.9.8k.
-
-
-Both issues should be reproducible by connecting using 1.0.0-beta2
-s_client to 0.9.8 s_server.
+Thanks.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Vincent Danen / Red Hat Security Response Team 
