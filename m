@@ -1,32 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/24/1
-Message-ID: <b086760e0903240208u2f378674t954c54ea146b063a@mail.gmail.com>
-Date: Tue, 24 Mar 2009 10:08:51 +0100
-From: yersinia <yersinia.spiros@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/27/3
+Message-ID: <hc6652$2ro$1@ger.gmane.org>
+Date: Tue, 27 Oct 2009 01:06:53 -0600
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request -- ucd-snmp / net-snmp, libnss-ldapd /  nss_ldap
+Subject: Re: ghostscript CVE for multiple NULL dereferences in JBIG2 decoder
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Mar 23, 2009 at 7:27 PM, Nico Golde <oss-security+ml@...lde.de> wrote:
-> Hi,
-> * Jan Lieskovsky <jlieskov@...hat.com> [2009-03-23 14:26]:
->>   could you please assign CVE ids for following
->> two low security issues:
->>
->> 1, ucd-snmp / net-snmp snmpd runs with privileges of privileged user
->>    a, Red Hat Enterprise Linux / Fedora snmpd runs with UID=0, GID=0
->>    b, Debian snmpd runs with GID=0
->>    References:
->>    https://bugzilla.redhat.com/show_bug.cgi?id=491621
->>    http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=520724
->
-> I fail to see the vulnerability in this case. While it's
-> obvious that net-snmp shouldn't run with uid 0 if it doesn't
-> need it, this is no security issue per-se and would not
-> require a CVE id from my opinion.
+Vincent Danen wrote:
 
-What is more net-snmp have a specific MAC selinux policy in targeted
-mode in Fedora/RHEL. So the full uid=0 is not so important if Selinux
-is in enforcing mode.
+> I'm not sure if a CVE name has ever been requested for this issue.
+> Similar to Adobe's CVE-2009-0658 issue, the same PDF proof-of-concept
+> was used to crash ghostscript (multiple NULL pointer dereference flaws
+> found in Ghostscript's JBIG2 compression format decoder).
+> 
+> If a CVE name was assigned for this, does anyone know it?  I can't find
+> it.  If not, could one be assigned?  Details are available on our
+> bugzilla:
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=503785
+> 
 
-Regards
+The same PoC crashes xpdf. I'm not aware of any CVE id being assigned for
+this issue other than the one for Adobe Reader.
+
+Regards,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
+
+
