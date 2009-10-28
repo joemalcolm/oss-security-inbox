@@ -1,35 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/21/2
-Message-Id: <200908211352.11928.rbu@gentoo.org>
-Date: Fri, 21 Aug 2009 13:52:01 +0200
-From: Robert Buchholz <rbu@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/28/7
+Message-ID: <0910281316490.6938@mjc.redhat.com>
+Date: Wed, 28 Oct 2009 13:17:18 +0000 (GMT)
+From: Mark J Cox <mjc@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: vulncoord@...ora.fi
-Subject: expat bug 1990430
+Subject: Re: CVE request for oCERT advisory 2009-013 (yTNEF/Evolution TNEF)
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+> I'm not sure if a CVE name has been requested for this issue; I can't
+> see one anywhere.
+>
+> http://www.ocert.org/advisories/ocert-2009-013.html
+>
+> It's for the Evolution TNEF/yTNEF issues disclosed early last month.
+> Could we have a CVE name assigned for this?
 
-we have learned that expat fixed a crash issue in June 2008, but never 
-released an update. The bug was apparantly intended to be kept private, 
-but the bug changes were mailed to a public mailing list and Python 
-developrs menitoned the bug fix in their public svn (including NEWS 
-file, and reproducers):
+I checked and oCERT don't have a name, so use CVE-2009-3721 for this.
 
-http://mail.python.org/pipermail/expat-bugs/2009-January/002781.html
-http://sourceforge.net/tracker/index.php?func=detail&aid=1990430&group_id=10127&atid=110127
-http://svn.python.org/view?view=rev&revision=74429
-https://bugs.gentoo.org/show_bug.cgi?id=280615
-
-While the expat bug was reported by Peter Valchev of Google, Python 
-credits Ivan Krstić of Apple with the patch (submission).
-It might also be related to CVE-2009-2625 / FICORA #245608:
-https://www.cert.fi/en/reports/2009/vulnerability2009085.html
-
-As CERT-FI never released any details or test cases, I have no idea if 
-we need a new CVE of if those two issues are the same.
-
-
-Robert
-
-Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
+Mark
