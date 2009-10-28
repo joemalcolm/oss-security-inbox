@@ -1,100 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/24/6
-Message-ID: <20091124181626.GA535@janus.mylan>
-Date: Tue, 24 Nov 2009 19:16:26 +0100
-From: Sergei Golubchik <serg@...ql.com>
-To: Jan Lieskovsky <jlieskov@...hat.com>
-Cc: oss-security@...ts.openwall.com, coley <coley@...re.org>, MySQL Security Team <security@...ql.com>
-Subject: Re: mysql-5.1.41
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/28/2
+Message-ID: <20091028103816.GC32728@suse.de>
+Date: Wed, 28 Oct 2009 11:38:16 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: Handling cases of CWE-776
 Content-Type: text/plain; charset=utf-8
 
-Hi, Jan!
+On Wed, Oct 28, 2009 at 12:02:40AM +0000, Tim Brown wrote:
+> All,
+> 
+> How are problems with XML bombs (the so called "billion laughs" attack) being 
+> handled?  Should I be filing such bugs against the applications that exposes 
+> the XML parser to user input or is it better to report the issue against the 
+> parser themselves.  For example, the test case I've prepared for one affected 
+> parser simply causes the CPU to spin but the system appears to stay 
+> responsive (so far ;)).  Is it even fair to call such a denial of service? 
+> (If the code was executed in a real application, no further processing would 
+> happen within the affected process as the parser is tied up in memmove()s).  
+> I'm just curious as I don't want to waste peoples time with the disclosure 
+> process if others are simply filing "standard" bugs against affected parsers 
+> and moving on to more interesting matters.
 
-On Nov 24, Jan Lieskovsky wrote:
-> Hi Josh,
->
->   looked further into these issues.
->
-> A, wrt http://bugs.mysql.com/bug.php?id=32167
->
-> You are right, that  CVE-2008-2079 was originally assigned to:
->    http://bugs.mysql.com/bug.php?id=32167
->
-> On "[6 May 2008 11:16] Sergei Golubchik" states:
->
-> please, note in the manual that it's CVE-2008-2079
->
-> But last comment on this bug mentions:
->
-> <quote>
->
-> [12 Nov 4:50] Paul DuBois
->
-> Noted in 5.1.41, 5.5.0, 6.0.14 changelogs.
->
-> Additional corrections were made for the symlink-related privilege
-> problem originally addressed in MySQL 5.1.24. The original fix did
-> not correctly handle the data directory path name if it contained
-> symlinked directories in its path, and the check was made only at
-> table-creation time, not at table-opening time later.
->
-> </quote>
->
-> Also MySQL-5.1.41 news file now contains:
->
-> Important Change: Security Fix: Additional
-> corrections were made for the symlink-related
-> privilege problem originally addressed in MySQL
-> 5.1.24. The original fix did not correctly handle
-> the data directory path name if it contained
-> symlinked directories in its path, and the check
-> was made only at table-creation time, not at
-> table-opening time later. (Bug#32167, CVE-2008-2079)"
->
-> Consequence:
-> ===========
->
-> So I think we will need a new CVE id as incomplete fix for CVE-2009-2079.
-> Relevant patch is here (2845 Georgi Kodinov	2009-11-03)
->   http://lists.mysql.com/commits/89940
->
-> Cc-ed MySQL security team to confirm this assumption.
+If an application can be made unresponsive this way it would still be
+a denial of service against this app, so Yes.
 
-Not confirming :)
-The patch you referenced has a changeset comment
-"
-  Fixed a initialization order remark by Serg : correct directory
-  expansion order implemented on server startup.
-"
+It always should however be checked if the application can get this data
+from a real life attacker or if a admin user needs to push it in. For the
+latter it is not DoS in my eyes.
 
-And it fixes a problem mentined in my bug comment from [14 Jul 15:53].
-
-The changelog entry you quoted above goes up to bug comment from
-[25 Nov 2008 17:26] (no, I don't know why it took a year to get it to
-the manual). And the "original fix" is apparently this one:
-
-http://lists.mysql.com/commits/43206 (from 2008-02-29)
-
-while the "additional" is this:
-
-http://lists.mysql.com/commits/52326 (from 2008-08-22)
-
-> Conclusion - so two CVE ids are needed:
-> ---------------------------------------
-> 1, One for incomplete fix for CVE-2009-2079 issue) --
->    "and the check was made only at table-creation time, not at 
-> table-opening time later"
-
-cannot this one go under existing CVE ?
-
-Regards / Mit vielen Grüßen,
-Sergei
-
--- 
-   __  ___     ___ ____  __
-  /  |/  /_ __/ __/ __ \/ /   Sergei Golubchik <serg@....com>
- / /|_/ / // /\ \/ /_/ / /__  Principal Software Engineer/Server Architect
-/_/  /_/\_, /___/\___\_\___/  Sun Microsystems GmbH, HRB München 161028
-       <___/                  Sonnenallee 1, 85551 Kirchheim-Heimstetten
-Geschäftsführer: Thomas Schroeder, Wolfgang Engels, Wolf Frenkel
-Vorsitzender des Aufsichtsrates: Martin Häring
+Ciao, Marcus
