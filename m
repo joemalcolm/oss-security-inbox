@@ -1,29 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/07/4
-Message-ID: <20090407120815.GA9521@suse.de>
-Date: Tue, 7 Apr 2009 14:08:15 +0200
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/28/6
+Message-ID: <0910281253591.6938@mjc.redhat.com>
+Date: Wed, 28 Oct 2009 12:58:56 +0000 (GMT)
+From: Mark J Cox <mjc@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: clamav clamd and clamscan DoS and bypass by malformated archive
+Subject: Re:  Re: ghostscript CVE for multiple NULL dereferences in JBIG2 decoder
 Content-Type: text/plain; charset=utf-8
 
+> The same PoC crashes xpdf. I'm not aware of any CVE id being assigned for
+> this issue other than the one for Adobe Reader.
 
-These two bugs possibly need a CVE-ID.
+So I've deliberately not allocated one because we generally do not 
+consider a crash of a user application like a PDF reader to be a security 
+issue.  However CVE does have a few cases where CVE names were allocated 
+for such cases, so if any vendor here is going to treat this as a security 
+issue let me know and I'll allocate a name for tracking purposes.
 
-Here we go:
+Thanks, Mark
 
-https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1462
-
-http://blog.zoller.lu/2009/04/clamav-094-and-below-evasion-and-bypass.html
-
-
--- 
-Bye,
-     Thomas
--- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
--- 
-           Hamming's Motto:
-           The purpose of computing is insight, not numbers.
-                                -- Richard W. Hamming
