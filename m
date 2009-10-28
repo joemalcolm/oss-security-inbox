@@ -1,74 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/23/14
-Message-ID: <Pine.GSO.4.51.0910231648320.2774@faron.mitre.org>
-Date: Fri, 23 Oct 2009 17:06:06 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/28/1
+Message-Id: <200910280002.45177.tmb@65535.com>
+Date: Wed, 28 Oct 2009 00:02:40 +0000
+From: Tim Brown <tmb@...35.com>
 To: oss-security@...ts.openwall.com
-cc: coley <coley@...re.org>
-Subject: Re: CVE id request: typo3
+Subject: Handling cases of CWE-776
 Content-Type: text/plain; charset=utf-8
 
+All,
 
-On Fri, 23 Oct 2009, Josh Bressers wrote:
+How are problems with XML bombs (the so called "billion laughs" attack) being 
+handled?  Should I be filing such bugs against the applications that exposes 
+the XML parser to user input or is it better to report the issue against the 
+parser themselves.  For example, the test case I've prepared for one affected 
+parser simply causes the CPU to spin but the system appears to stay 
+responsive (so far ;)).  Is it even fair to call such a denial of service? 
+(If the code was executed in a real application, no further processing would 
+happen within the affected process as the parser is tied up in memmove()s).  
+I'm just curious as I don't want to waste peoples time with the disclosure 
+process if others are simply filing "standard" bugs against affected parsers 
+and moving on to more interesting matters.
 
-> This is a big one. Let me know if I've screwed any of these up.
-
-In traditional CVE, it would have been appropriate to combine the
-following three issues, because they are the same flaw type (XSS) and
-affected versions, even though they are clearly distinct bugs:
-
-> CVE-2009-3629 TYPO3 Cross-site scripting
->
->     TYPO3 versions 4.0.13 and below, 4.1.12 and below, 4.2.9 and below,
->     4.3.0beta1 and below contain a cross-site scripting flaw where the TYPO3
->     backend failed to properly sanitize user input.
->
->     http://marc.info/?l=oss-security&m=125626536616052&w=2
->     https://typo3.org/teams/security/security-bulletins/typo3-sa-2009-016/
->
-> CVE-2009-3633 TYPO3 API function t3lib_div::quoteJSvalue XSS
->
->     TYPO3 versions 4.0.13 and below, 4.1.12 and below, 4.2.9 and below,
->     4.3.0beta1 and below contain an unauthenticated cross-site scripting flaw
->     in its API function t3lib_div::quoteJSvalue.
->
->     http://marc.info/?l=oss-security&m=125626536616052&w=2
->     https://typo3.org/teams/security/security-bulletins/typo3-sa-2009-016/
->
-> CVE-2009-3636 TYPO3 Install Tool XSS
->
->     TYPO3 versions 4.0.13 and below, 4.1.12 and below, 4.2.9 and below,
->     4.3.0beta1 and below contain a cross-site scripting flaw in the Install
->     Tool. The Install Tool does not properly sanitize URL parameters leading
->     to this attack.
->
->     Note: The Install Tool is not meant to be activated in production
->     environments.
->
->     http://marc.info/?l=oss-security&m=125626536616052&w=2
->     https://typo3.org/teams/security/security-bulletins/typo3-sa-2009-016/
-
-Within the CVE team, we've started applying an additional consistency rule
-where we will even split issues with the same vuln-type and version *if*
-the finder/discloser/researcher/creditee is different.  In this case, none
-of these three CVEs have exactly the same finder, so it's OK to let them
-remain split. (I'm somewhat nervous about the implications of this rule
-process-wise - and CVE assignment is already "weird enough" - but I'm
-continuing with this anyway.)
-
-Note that the TYPO3 advisory doesn't explicitly state which bug is present
-in the 4.0.x series.
-
-> CVE-2009-3634 TYPO3 Frontend Login Box (felogin) XSS
->
->     TYPO3 versions 4.2.0 to 4.2.6 contian contain a cross-site scripting flaw
->     where the URL parameters of Frontend Login Box were not properly
->     sanitized.
->
->     http://marc.info/?l=oss-security&m=125626536616052&w=2
->     https://typo3.org/teams/security/security-bulletins/typo3-sa-2009-016/
-
-This would still remain distinct from the other XSS because the affected
-versions are different.
-
-- Steve
+Cheer,
+Tim
+-- 
+Tim Brown
+<mailto:tmb@...35.com>
