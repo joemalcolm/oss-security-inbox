@@ -1,92 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/17/1
-Message-ID: <Pine.GSO.4.51.0909162050220.7046@faron.mitre.org>
-Date: Wed, 16 Sep 2009 21:19:02 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/28/4
+Message-Id: <200910281204.01012.tmb@65535.com>
+Date: Wed, 28 Oct 2009 12:03:57 +0000
+From: Tim Brown <tmb@...35.com>
 To: oss-security@...ts.openwall.com
-cc: Willy Tarreau <w@....eu>, Eugene Teo <eugene@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: tc: uninitialised kernel memory leak
+Cc: Marcus Meissner <meissner@...e.de>
+Subject: Re: Handling cases of CWE-776
 Content-Type: text/plain; charset=utf-8
 
-
-On Sat, 5 Sep 2009, Solar Designer wrote:
-
-> On Thu, Sep 03, 2009 at 11:45:03AM +0800, Eugene Teo wrote:
-> > Three bytes of uninitialised kernel memory are currently leaked to user.
+On Wednesday 28 October 2009 10:38:16 Marcus Meissner wrote:
+> On Wed, Oct 28, 2009 at 12:02:40AM +0000, Tim Brown wrote:
+> > All,
 > >
-> > http://patchwork.ozlabs.org/patch/32830/
-> > https://bugzilla.redhat.com/show_bug.cgi?id=520990
+> > How are problems with XML bombs (the so called "billion laughs" attack)
+> > being handled?  Should I be filing such bugs against the applications
+> > that exposes the XML parser to user input or is it better to report the
+> > issue against the parser themselves.  For example, the test case I've
+> > prepared for one affected parser simply causes the CPU to spin but the
+> > system appears to stay responsive (so far ;)).  Is it even fair to call
+> > such a denial of service? (If the code was executed in a real
+> > application, no further processing would happen within the affected
+> > process as the parser is tied up in memmove()s). I'm just curious as I
+> > don't want to waste peoples time with the disclosure process if others
+> > are simply filing "standard" bugs against affected parsers and moving on
+> > to more interesting matters.
 >
-> 2.4 kernels appear to be affected as well, and moreover they appear to
-> require at least some of these older fixes as well:
+> If an application can be made unresponsive this way it would still be
+> a denial of service against this app, so Yes.
 >
-> http://marc.info/?l=git-commits-head&m=112002138324380
->
-> Specifically, in net/sched/sch_api.c both tc_fill_qdisc() and
-> tc_fill_tclass() are affected - the former was fixed in 2.6 in 2005,
-> the latter is being fixed now.
->
-> I'm not sure what this means for CVE.  Should there be another CVE id
-> for the issues fixed in 2.6 in 2005 (if one was not allocated at the
-> time), and 2.4 could reference both CVE ids now?
+> It always should however be checked if the application can get this data
+> from a real life attacker or if a admin user needs to push it in. For the
+> latter it is not DoS in my eyes.
 
-This would be the typical practice.  We weren't tracking kernel bugs at
-the function-name level back then, though - we were using more mature (and
-more general) advisory descriptions - so I can't be absolutely sure
-whether there's a CVE for this or not.
+So my PoC just calls the parser library directly, but on calling the API to 
+take the XML, the binary just sits there, gradually consuming more and more 
+memory.  I left it over night and it was still processing the following 
+morning, but RAM consumption had doubled.  The host itself was still 
+perfectly responsive despite this.  I've seen one example already of code 
+that takes in a POST request and drops XML body straight into the parser API 
+which would allow you to lockup that the process handling the POST but I 
+guess it depends on the design of the various calling applications what 
+exactly the effect will be even though the root of the problem is the parser 
+library and not the applications themselves.
 
-However, a search for "netlink" turned up empty for this type of problem
-in that time frame, so we probably don't have a CVE for it yet.
-
-One question, though - http://patchwork.ozlabs.org/patch/32830/ patches
-net/sched/sch_api.c / tc_fill_tclass, but the 2005 patch includes
-net/core/neighbour.c, net/sched/cls_api.c, and others.
-
-So we have:
-
-tc_fill_qdisc() - already fixed in 2.6; just fixed in 2.4
-
-  http://marc.info/?l=git-commits-head&m=112002138324380
-  (not sure of reference for 2.4)
-
-multiple functions e.g. tcf_fill_node() already fixed in 2.6; unknown
-status in 2.4.  Includes neightbl_fill_info(), neightbl_fill_param_info(),
-and others.
-
-  http://marc.info/?l=git-commits-head&m=112002138324380
-
-tc_fill_tclass() - just fixed in 2.6
-
-  http://patchwork.ozlabs.org/patch/32830/
-
-
-So for now, we have:
-
-  CVE-2009-3228 - tc_fill_tclass()
-
-  CVE-2005-4881 - tc_fill_qdisc()  (at least)
-
-Now we have:
-
-  tcf_fill_node(), neightbl_fill_info(), and others from 2005.
-
-Typical practice would be to associate tcf_fill_node() and the others with
-CVE-2005-4881, not just have it be with tc_fill_qdisc() - because they
-were all disclosed in 2005.  Then the 2.4 fix might only apply to a
-portion of CVE-2005-4881.  This could make it difficult to coordinate
-low-level patches, but our "(1)" and "(2)" numbering style in the CVE
-description could be used at that level if needed.
-
-So, let's go with these two numbers.  I'll fill them out later.  (My head
-hurts.)
-
-Oh, and if anybody could give me more precise version information than
-"2.4" and "2.6" then that would be appreciated.
-
-- Steve
-
-
-P.S. I chose the 2005 date in the CVE to help with distinguishing the
-problems, but arguably this should have received a 2009, because the 2005
-fix was so vague that the security implications weren't (apparently) known
-until 2009.
+Tim
+-- 
+Tim Brown
+<mailto:tmb@...35.com>
