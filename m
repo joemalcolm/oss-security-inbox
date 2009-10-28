@@ -1,39 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/18/4
-Message-ID: <20090318154733.GA5708@logo.rdu.rpath.com>
-Date: Wed, 18 Mar 2009 11:47:33 -0400
-From: "Michael K. Johnson" <johnsonm@...th.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: lxc-sshd security issues?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/28/3
+Message-ID: <0910281142590.6938@mjc.redhat.com>
+Date: Wed, 28 Oct 2009 11:43:26 +0000 (GMT)
+From: Mark J Cox <mjc@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+cc: "Steven M. Christey" <coley@...us.mitre.org>, Josh Bressers <bressers@...hat.com>, Joe Orton <jorton@...hat.com>, Ondrej Vasik <ovasik@...hat.com>, Roman Rakus <rrakus@...hat.com>, CERT-FI Vulnerability Co-ordination <vulncoord@...ora.fi>
+Subject: Re: CVE Request -- expat [was: Re: Regarding expat bug 1990430]
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Mar 17, 2009 at 04:02:44PM -0400, Steven M. Christey wrote:
-> 
-> On Thu, 5 Mar 2009, Michael K. Johnson wrote:
-> 
-> > I finally got the right contact info upstream, and we're talking
-> > about this, so expect it to not be a problem in future releases.
-> > For the record, it's dummy auth data, but still could be seen as a
-> > backdoor, and will probably be changed to user-configured value.
-> 
-> By "dummy auth data," do you mean that it's replaced with real/unique
-> passwords/keys before the system becomes operational?  Or do these
-> pre-packaged values work unless the admin RTFM?  (If the latter, then it
-> needs a CVE; if the former, then there doesn't seem to be a vuln because
-> there's no impact on authentication).
+>> Based on the above -^ I would vote for separate CVE identifier for expat
+>> flaw
+>> (and its embedded copies in dozen of packages):
+>>
+>> https://bugs.gentoo.org/show_bug.cgi?id=280615#c8
+>> https://bugs.gentoo.org/show_bug.cgi?id=280615#c10
+>
+> As far as we understand, the expat flaw in question is in no way related
+> to CVE-2009-2625, or other recent XML parser flaws. Therefore our take
+> is that it should have a distinct CVE entry.
 
-At least for the root user, I missed (because I was glancing through
-the contents of a tarball encoded as base64 data in the script,
-not reading the script itself nor actually running it) that when
-you run the script it tells you inline that it defaults to the
-literal string "root" for the root password for the container.
-That immediate inline notification precludes any need for a CVE;
-I don't think it's a vulnerability per se.
+So use CVE-2009-3720 for this
 
-Also, the script assumes certain specific configuration of the host
-system (specifically, a routeable bridge named br0 to which to attach
-a virtual ethernet interface) that more or less requires that you
-are familiar with what is happening under the hood in order to have
-a functioning container.
-
-Sorry to have bothered everyone here...
+Mark
