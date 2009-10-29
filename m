@@ -1,49 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/28/4
-Message-Id: <200910281204.01012.tmb@65535.com>
-Date: Wed, 28 Oct 2009 12:03:57 +0000
-From: Tim Brown <tmb@...35.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/29/2
+Message-ID: <0910290855540.20989@mjc.redhat.com>
+Date: Thu, 29 Oct 2009 08:56:17 +0000 (GMT)
+From: Mark J Cox <mjc@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Marcus Meissner <meissner@...e.de>
-Subject: Re: Handling cases of CWE-776
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kvm: check cpl before emulating debug register access
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday 28 October 2009 10:38:16 Marcus Meissner wrote:
-> On Wed, Oct 28, 2009 at 12:02:40AM +0000, Tim Brown wrote:
-> > All,
-> >
-> > How are problems with XML bombs (the so called "billion laughs" attack)
-> > being handled?  Should I be filing such bugs against the applications
-> > that exposes the XML parser to user input or is it better to report the
-> > issue against the parser themselves.  For example, the test case I've
-> > prepared for one affected parser simply causes the CPU to spin but the
-> > system appears to stay responsive (so far ;)).  Is it even fair to call
-> > such a denial of service? (If the code was executed in a real
-> > application, no further processing would happen within the affected
-> > process as the parser is tied up in memmove()s). I'm just curious as I
-> > don't want to waste peoples time with the disclosure process if others
-> > are simply filing "standard" bugs against affected parsers and moving on
-> > to more interesting matters.
+On Thu, 29 Oct 2009, Eugene Teo wrote:
+> Quote from the upstream commit:
+> "Debug registers may only be accessed from cpl 0.  Unfortunately, vmx will 
+> code to emulate the instruction even though it was issued from guest 
+> userspace, possibly leading to an unexpected trap later."
 >
-> If an application can be made unresponsive this way it would still be
-> a denial of service against this app, so Yes.
+> Introduced in v2.6.30-rc1; Fixed in v2.6.32-rc1.
 >
-> It always should however be checked if the application can get this data
-> from a real life attacker or if a admin user needs to push it in. For the
-> latter it is not DoS in my eyes.
+> http://bugzilla.redhat.com/531660
+> http://git.kernel.org/linus/0a79b009525b160081d75cef5dbf45817956acf2
 
-So my PoC just calls the parser library directly, but on calling the API to 
-take the XML, the binary just sits there, gradually consuming more and more 
-memory.  I left it over night and it was still processing the following 
-morning, but RAM consumption had doubled.  The host itself was still 
-perfectly responsive despite this.  I've seen one example already of code 
-that takes in a POST request and drops XML body straight into the parser API 
-which would allow you to lockup that the process handling the POST but I 
-guess it depends on the design of the various calling applications what 
-exactly the effect will be even though the root of the problem is the parser 
-library and not the applications themselves.
+Please use CVE-2009-3722
 
-Tim
--- 
-Tim Brown
-<mailto:tmb@...35.com>
+Mark
