@@ -1,22 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/20/1
-Message-ID: <28fa9c5e0902192215v27677e83mca222e96854e9722@mail.gmail.com>
-Date: Fri, 20 Feb 2009 14:15:36 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/29/11
+Message-Id: <200910292211.33848.tmb@65535.com>
+Date: Thu, 29 Oct 2009 22:11:32 +0000
+From: Tim Brown <tmb@...35.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: memory disclosure in SO_BSDCOMPAT gsopt
+Subject: Re:  CVE request - asterisk, python-markdown, jetty, kde
 Content-Type: text/plain; charset=utf-8
 
-According to the upstream commit
-df0bca049d01c0ee94afb7cd5dfd959541e6c8da "net: 4 bytes kernel memory
-disclosure in SO_BSDCOMPAT gsopt try #2" in linux-2.6's git, there is
-a missing initialisation of optval v.val that can be directly returned
-to userspace when getsockopt() is called with SO_BSDCOMPAT optname
-set.
+On Thursday 29 October 2009 20:10:27 Tomas Hoger wrote:
+> On Thu, 29 Oct 2009 09:42:36 -0600 Raphael Geissert
+>
+> <geissert@...ian.org> wrote:
+> > = kde =
+> > Multiple missing input sanity checks in KDE
+> > Reference:
+> > http://www.ocert.org/advisories/ocert-2009-015.html
+>
+> Btw, do you have any suggestion on how many CVEs should be allocated
+> here and what are the individual flaws?  I failed to build satisfying
+> list form the info in the advisory.  Have you managed to tell which
+> patch is supposed to address which vulnerability?
 
-http://patchwork.kernel.org/patch/6816/
-https://bugzilla.redhat.com/show_bug.cgi?id=486305
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=df0bca049d01c0ee94afb7cd5dfd959541e6c8da
+I've responded to Tomas off list regarding these issues since our advisories 
+have not yet been made available.  We have 4 advisories to cover the 
+individual flaws.  If anyone else wants further details in the meantime, feel 
+free to get in touch off list but I'll likely only respond to people I can 
+validate (i.e. package maintainers for the distros etc).
 
-Thanks, Eugene
+Tim
+-- 
+Tim Brown
+<mailto:tmb@...35.com>
