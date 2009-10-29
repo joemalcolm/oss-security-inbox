@@ -1,19 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/15/5
-Message-ID: <4AD6C118.3020103@kernel.sg>
-Date: Thu, 15 Oct 2009 14:28:40 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>, Willy Tarreau <w@....eu>
-Subject: Re: CVE request kernel: flood ping cause out-of-iommu error and panic when mtu larger than 1500
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/29/7
+Message-ID: <20091029212244.275c1536@redhat.com>
+Date: Thu, 29 Oct 2009 21:22:44 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: OSS Security <oss-security@...ts.openwall.com>
+Subject: MFSA 2009-63
 Content-Type: text/plain; charset=utf-8
 
-Eugene Teo wrote:
-> Executing ping -f -s 3000 IP in a certain network setup could trigger an 
-> out-of-IOMMU error, leading to a denial of service.
+Hi!
 
-FYI, I rated this cvss2=8.3/AV:A/AC:L/Au:N/C:C/I:C/A:C.
+Has anyone been looking into MFSA 2009-63 already trying to figure out
+what really got fixed?  We have some notes in:
 
-Eugene
+  https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-3379
+  https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-3377
+
+but I'm still not quite convinced we have a full list of upstream
+commits that need backporting.  Has anyone got any further already?
+
 -- 
-Eugene Teo / Red Hat Security Response Team
+Tomas Hoger / Red Hat Security Response Team
