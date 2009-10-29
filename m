@@ -1,44 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/27/1
-Message-Id: <1259329345.3047.6.camel@dco-milen.globul.bg>
-Date: Fri, 27 Nov 2009 15:42:25 +0200
-From: Milen Rangelov <mrangelov@...bul.bg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/29/5
+Message-ID: <0910291553490.22070@mjc.redhat.com>
+Date: Thu, 29 Oct 2009 15:59:35 +0000 (GMT)
+From: Mark J Cox <mjc@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: php 5.3.1 - proc_open() bypass PHP Bug #49026 [was: Re: CVE request: php 5.3.1 update]
+Subject: Re:  CVE request - asterisk, python-markdown, jetty, kde
 Content-Type: text/plain; charset=utf-8
 
-Hello, 
+> = asterisk =
+> Unauthorized calls allowed on prohibited networks in asterisk
+> Reference:
+> Advisory: http://downloads.asterisk.org/pub/security/AST-2009-007.html
 
+CVE-2009-3723
 
->CVE-2009-4018
+> = python-markdown =
+> Multiple XSS attack vectors
+> References:
+> http://code.google.com/p/python-markdown2/issues/detail?id=30
+> http://code.google.com/p/python-markdown2/issues/detail?id=29
+> http://secunia.com/advisories/37142/
 
->PHP before 5.3.1 proc_open() can be used to bypass the
->safe_mode_protected_env_vars INI setting. This could be used to alter the
->process environment possibly executing arbitrary code.
->
->
->http://www.php.net/ChangeLog-5.php#5.3.1
->http://bugs.php.net/bug.php?id=49026
->http://marc.info/?l=oss-security&m=125897935330618&w=2
->
->Thanks.
->
->-- 
->    JB
+Since all XSS type CVE-2009-3724 for all
 
+> = kde =
+> Multiple missing input sanity checks in KDE
+> Reference:
+> http://www.ocert.org/advisories/ocert-2009-015.html
 
+oCERT said names have already been requested, not allocating.
 
+> = jetty =
+> Multiple vulnerabilities in jetty
+> Reference:
+> http://www.ush.it/team/ush/hack-jetty6x7x/jetty-adv.txt
 
-Great to see an almost one-year-old bug getting fixed (and assigned a
-CVE ID for that matter).
+Multiple issues will need more work to allocate; deferred.
 
-It was reported back in 2008 but apparently noone took care:
-
-http://www.securityfocus.com/bid/32717/info
-
-
-Regards,
-
-Milen Rangelov
-
-
+Mark
