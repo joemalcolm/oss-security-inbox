@@ -1,32 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/29/2
-Message-ID: <20090529152028.GA23110@suse.de>
-Date: Fri, 29 May 2009 17:20:29 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Cc: mszeredi@...ell.com
-Subject: CVE request: kernel: splice local denial of service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/29/1
+Message-ID: <4AE90969.3050205@redhat.com>
+Date: Thu, 29 Oct 2009 11:18:01 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kvm: check cpl before emulating debug register access
 Content-Type: text/plain; charset=utf-8
 
-Hi oss-sec,
+Quote from the upstream commit:
+"Debug registers may only be accessed from cpl 0.  Unfortunately, vmx 
+will code to emulate the instruction even though it was issued from 
+guest userspace, possibly leading to an unexpected trap later."
 
-CVE Request for a local denial kernel issue....
+Introduced in v2.6.30-rc1; Fixed in v2.6.32-rc1.
 
-The splice(2) syscall has received some fixes against local deadlocks.
+http://bugzilla.redhat.com/531660
+http://git.kernel.org/linus/0a79b009525b160081d75cef5dbf45817956acf2
 
-2.6.30-rc3 is fixed,
-2.6.27.24 is fixed, and
-2.6.29.4 is fixed.
-
-The inode double locking code was introduced in 2.6.19, so I guess earlier
-kernel versions are not affected. (Miklos?)
-
-Its as far as I understand this set of changes in mainline:
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=7bfac9ecf0585962fe13584f5cf526d8c8e76f17
-(this one with description of issue)
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=b3c2d2ddd63944ef2a1e4a43077b602288107e01
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=2933970b960223076d6affcf7a77e2bc546b8102
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=eb443e5a25d43996deb62b9bcee1a4ce5dea2ead
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=328eaaba4e41a04c1dc4679d65bea3fee4349d86
-
-Ciao, Marcus
+Thanks, Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
