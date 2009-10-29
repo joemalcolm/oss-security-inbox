@@ -1,45 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/14/6
-Message-ID: <20090814213538.GA3469@severus.strandboge.com>
-Date: Fri, 14 Aug 2009 16:35:38 -0500
-From: Jamie Strandboge <jamie@...onical.com>
-To: gnutls-devel@....org, oss-security@...ts.openwall.com
-Cc: Jeff Cai <Jeff.Cai@....COM>, Simon Josefsson <simon@...efsson.org>
-Subject: GnuTLS CVE-2009-2730 Patches (Was Re: GnuTLS 2.8.2)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/29/3
+Message-Id: <200910291218.21686.oeriksson@mandriva.com>
+Date: Thu, 29 Oct 2009 12:18:21 +0100
+From: Oden Eriksson <oeriksson@...driva.com>
+To: oss-security@...ts.openwall.com
+Subject: Re:  Re: ghostscript CVE for multiple NULL dereferences in JBIG2 decoder
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 14 Aug 2009, Simon Josefsson wrote:
-
-> I don't have time/resources to produce releases for older branches.  If
-> someone else wants to volunteer to work on fixing older releases, that
-> would be appreciated.
+onsdagen den 28 oktober 2009 13.58.56 skrev  Mark J Cox:
+> > The same PoC crashes xpdf. I'm not aware of any CVE id being assigned for
+> > this issue other than the one for Adobe Reader.
+> 
+> So I've deliberately not allocated one because we generally do not
+> consider a crash of a user application like a PDF reader to be a security
+> issue.  However CVE does have a few cases where CVE names were allocated
+> for such cases, so if any vendor here is going to treat this as a security
+> issue let me know and I'll allocate a name for tracking purposes.
+> 
+> Thanks, Mark
 > 
 
-Attached are preliminary patches for 2.4.1, 2.0.4 and 1.2.9 backported
-from the advisory[1]. This is a first pass, have only been very lightly
-tested and have not been thoroughly looked at (you've been warned). They
-are not intended for production use yet, but hopefully others will be
-able to use them and provide feedback.
-
-2.0.4 and 1.2.9 needed an additional patch[2] which adds wide wildcard
-hostname matching. Ubuntu will likely carry this patch, but it may not
-be appropriate for everyone. 2.x passes the nul-in-x509-names.c test
-mentioned in the advisory. 1.2.9 does not pass the CN test yet, though
-at first glance certtool output looks comparable to the others. These
-patches are against Ubuntu sources and not clean tarballs.
-
-Jamie
-
-[1] http://lists.gnu.org/archive/html/help-gnutls/2009-08/msg00011.html
-[2] http://git.savannah.gnu.org/cgit/gnutls.git/patch/?id=177e7ddb761999cd8b439e14a2bf43590756e230
+I was actually planning to but as currently done in cooker where jbig2dec is 
+broken out in a new jbig2dec-0.10 package (with the patch applied). This makes 
+it easier for future borkiness. This was also done with jasper earlier for the 
+same reason.
 
 -- 
-Jamie Strandboge             | http://www.canonical.com
-
-View attachment "CVE-2009-2730_2.4.1.patch" of type "text/x-diff" (8098 bytes)
-
-View attachment "CVE-2009-2730_2.0.4.patch" of type "text/x-diff" (19482 bytes)
-
-View attachment "CVE-2009-2730_1.2.9.patch" of type "text/x-diff" (7274 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (198 bytes)
+Regards // Oden Eriksson
