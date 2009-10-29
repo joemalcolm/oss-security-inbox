@@ -1,44 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/21/7
-Message-ID: <Pine.GSO.4.51.0905211855040.18536@faron.mitre.org>
-Date: Thu, 21 May 2009 18:55:21 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>
-cc: "Steven M. Christey" <coley@...us.mitre.org>, Konstanty <konstanty@...il.com>
-Subject: Re: CVE Request -- libmodplug
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/29/10
+Message-Id: <20091029160831.77498c26.reed@reedloden.com>
+Date: Thu, 29 Oct 2009 16:08:31 -0500
+From: Reed Loden <reed@...dloden.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: MFSA 2009-63
 Content-Type: text/plain; charset=utf-8
 
+On Thu, 29 Oct 2009 21:49:39 +0100
+Florian Weimer <fw@...eb.enyo.de> wrote:
 
-On Wed, 29 Apr 2009, Jan Lieskovsky wrote:
+> We've got a rather strict backported-security-fixes-only policy
+> because we've got a very interdependent code base, so we usually can't
+> switch upstream versions for libraries because most developers have a
+> rather lax attitude towards ABI compatibility (and even if they don't,
+> we're usually trailing behind a major version or two 8-/).
 
->   apologize for not sending these all at once, but noticed
->   the following one only today. There is another buffer
->   overflow (DoS) vulnerability in libmodplug -- this time
->   in PAT sample loader.
+Yeah, we really don't like taking full library upgrades on maintenance
+branches either (it makes our QA team very unhappy, for one thing). Our
+developers tried very hard to find the smallest fixes possible that
+could be backported to fix all the issues that were found, but it just
+wasn't really feasible in various cases due to a good number of the
+fixes being dependent on unrelated changes that had been done upstream
+since the last time we did a full library upgrade. We would have had to
+backport those changes, too, and even then, we weren't sure if we
+wouldn't be opening some other security holes because of something we
+missed in the backport. So, the decision was made to do full library
+upgrades for those libraries that we couldn't realistically backport
+fixes for. I know it sucks, but it's what happened. :(
 
-======================================================
-Name: CVE-2009-1513
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1513
-Reference: CONFIRM:http://modplug-xmms.git.sourceforge.net/git/gitweb.cgi?p=modplug-xmms;a=commitdiff;h=c4ebb701be6ee9a296a44fdac5a20b7739ff0595
-Reference: CONFIRM:http://sourceforge.net/project/shownotes.php?release_id=678622&group_id=1275
-Reference: CONFIRM:http://sourceforge.net/tracker/?func=detail&aid=2777467&group_id=1275&atid=301275
-Reference: UBUNTU:USN-771-1
-Reference: URL:http://www.ubuntu.com/usn/USN-771-1
-Reference: BID:34747
-Reference: URL:http://www.securityfocus.com/bid/34747
-Reference: OSVDB:54109
-Reference: URL:http://osvdb.org/54109
-Reference: SECUNIA:34927
-Reference: URL:http://secunia.com/advisories/34927
-Reference: SECUNIA:35026
-Reference: URL:http://secunia.com/advisories/35026
-Reference: VUPEN:ADV-2009-1200
-Reference: URL:http://www.vupen.com/english/advisories/2009/1200
+~reed
+Mozilla Security Group
 
-Buffer overflow in the PATinst function in src/load_pat.cpp in
-libmodplug before 0.8.7 allows user-assisted remote attackers to cause
-a denial of service and possibly execute arbitrary code via a long
-instrument name.
+-- 
+Reed Loden - <reed@...dloden.com>
 
-
+Content of type "application/pgp-signature" skipped
