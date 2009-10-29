@@ -1,41 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/15/2
-Message-ID: <20090515150940.GA19070@suse.de>
-Date: Fri, 15 May 2009 17:09:41 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/29/4
+Message-ID: <hccd44$uli$1@ger.gmane.org>
+Date: Thu, 29 Oct 2009 09:42:36 -0600
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: Eugene Teo <eugene@...hat.com>, Steven French <sfrench@...ibm.com>, security@...nel.org, jlayton@...hat.com, "Steven M. Christey" <coley@...us.mitre.org>, dann frazier <dannf@...ian.org>, Greg KH <greg@...ah.com>
-Subject: Re: Re: Update - Re: CVE request? buffer overflow in CIFS in 2.6.*
+Subject: CVE request - asterisk, python-markdown, jetty, kde
 Content-Type: text/plain; charset=utf-8
 
-On Thu, May 14, 2009 at 01:01:11PM -0400, Steven M. Christey wrote:
-> 
-> On Thu, 14 May 2009, Eugene Teo wrote:
-> 
-> > >> CVE-2009-NOT-YET-ASSIGNED:
-> > >>  http://git.kernel.org/linus/27b87fe52baba0a55e9723030e76fce94fabcea4
-> > >>  http://git.kernel.org/?p=linux/kernel/git/sfrench/cifs-2.6.git;a=commit;h=7b0c8fcff47a885743125dd843db64af41af5a61
-> > >>  http://git.kernel.org/?p=linux/kernel/git/sfrench/cifs-2.6.git;a=commit;h=968460ebd8006d55661dec0fb86712b40d71c413
-> > >>  + some others in progress
-> >
-> > These fixes need to be tagged to a CVE.
-> 
-> Use CVE-2009-1633, to be filled in later.  This CVE should be anchored
-> *only* on the issue above.
-> 
-> I'm almost afraid to ask what relationship there is between the above
-> commits and the extensive list of other issues from Jeff Layton, which
-> lists the above commit and a ton of others.  Mark Cox or Josh Bressers,
-> this might be a good time for you to step in CNA-wise?
+Hi,
 
-The string conversion code in the CIFS module handling was rewritten
-to be able to handle destination buffer sizes.
+Could CVEs be assigned for the following issues?
 
-Its basically starting with this commit:
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=7fabf0c9479fef9fdb9528a5fbdb1cb744a744a4
-and then conversions of the code to it.
+= asterisk =
+Unauthorized calls allowed on prohibited networks in asterisk
+Reference:
+Advisory: http://downloads.asterisk.org/pub/security/AST-2009-007.html
 
-I am however not sure of how much needs to be backported, I guess only
-the stuff already with CVE entries.
+= python-markdown =
+Multiple XSS attack vectors
+References:
+http://code.google.com/p/python-markdown2/issues/detail?id=30
+http://code.google.com/p/python-markdown2/issues/detail?id=29
+http://secunia.com/advisories/37142/
 
-Ciao, Marcus
+= kde =
+Multiple missing input sanity checks in KDE
+Reference:
+http://www.ocert.org/advisories/ocert-2009-015.html
+
+= jetty =
+Multiple vulnerabilities in jetty
+Reference:
+http://www.ush.it/team/ush/hack-jetty6x7x/jetty-adv.txt
+
+Thanks.
+
+Regards,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
+
+
