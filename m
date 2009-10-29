@@ -1,82 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/15/1
-Message-Id: <200907150241.18662.rbu@gentoo.org>
-Date: Wed, 15 Jul 2009 02:41:16 +0200
-From: Robert Buchholz <rbu@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/29/9
+Message-ID: <87vdhysz6k.fsf@mid.deneb.enyo.de>
+Date: Thu, 29 Oct 2009 21:49:39 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Cc: Florian Weimer <fw@...eb.enyo.de>
-Subject: Re: Fixing the XML signature HMAC truncation authentication bypass
+Subject: Re: MFSA 2009-63
 Content-Type: text/plain; charset=utf-8
 
-On Tuesday 14 July 2009, Florian Weimer wrote:
-> Quoting from <http://www.kb.cert.org/vuls/id/466161>:
-> | XML Signature Syntax and Processing (XMLDsig) is a W3C
-> | recommendation for providing integrity, message authentication,
-> | and/or signer authentication services for data. XMLDsig is commonly
-> | used by web services such as SOAP. The XMLDsig recommendation
-> | includes support for HMAC truncation, as specified in RFC2014. When
-> | HMAC truncation is under the control of an attacker, however, this
-> | can result in an effective authentication bypass. For example, by
-> | specifying an HMACOutputLength of 1, only one bit of the signature
-> | is verified. This can allow an attacker to forge an XML signature
-> | that will be accepted as valid.
->
-> What shall we do about this?  Shall we just cap the value at 80 or 96
-> bits in our implementations?
+* Reed Loden:
 
-I believe this to be the best approach. RFC 2104 specifically states 80 
-or half of the digest length as the lower boundary for truncation, and 
-it would be compatible API-wise.
+> What type of specific information are you looking for? Mozilla works
+> with upstream Xiph.org to get such issues resolved upstream, and then
+> we either take a minimal fix downstream or a full library upgrade to
+> latest upstream code. Lately, we've been having to do full library
+> upgrades due to the complexity of fixes and dependencies on other
+> changes.
 
-As far as Gentoo is concerned, the following upstreams have confirmed 
-the issue (to CERT):
-1) Apache XML Security
-2) aleksey.com xmlsec library
-3) Mono
-4) Sun JDK/JRE 1.6
+We've got a rather strict backported-security-fixes-only policy
+because we've got a very interdependent code base, so we usually can't
+switch upstream versions for libraries because most developers have a
+rather lax attitude towards ABI compatibility (and even if they don't,
+we're usually trailing behind a major version or two 8-/).
 
-1) Apache
-Bug:
-https://issues.apache.org/bugzilla/show_bug.cgi?id=47526
-Patch:
-http://svn.apache.org/viewvc?view=rev&revision=794013
-
-It seems they disallow HMAC truncation completely.
-* In my personal opinion the best move (since we're dealing with XML,
-  who cares about an additional <16 bytes?)
-
-
-2) xmlsec:
-
-These are the patches that went into 1.2.12:
-http://git.gnome.org/cgit/xmlsec/commit/?id=34b349675af9f72eb822837a8772cc1ead7115c7
-http://git.gnome.org/cgit/xmlsec/commit/?id=d4ac1a621f88a923b17394530e333a3086ebe206
-
-The value of 40 seems like a really bad default.
-
-
-3) Mono
-
-Patches:
-http://anonsvn.mono-project.com/viewvc/?view=rev&revision=137886 (trunk)
-http://anonsvn.mono-project.com/viewvc/?view=rev&revision=137887 (2.4)
-http://anonsvn.mono-project.com/viewvc/?view=rev&revision=137888 (2.0)
-http://anonsvn.mono-project.com/viewvc/?view=rev&revision=137889 (1.9)
-http://anonsvn.mono-project.com/viewvc/?view=rev&revision=137890 (1.2.5)
-http://anonsvn.mono-project.com/viewvc/?view=rev&revision=137891 (1.2.2)
-http://anonsvn.mono-project.com/viewvc/?view=rev&revision=137892 (1.1.7)
-
-They impelement min = max(80, full length/2). Good!
-
-
-
-Florian Streibelt's analysis of the GnuTLS code indicated that is also 
-vulnerable. On our list of unreviewed suspects is still:
-* gSOAP (SOAP C++ Web Services)
-* zsi (Zolera Soap Infrastructure)
-* OpenSAML
-
-
-Robert
-
-Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
+Florian
+(Debian)
