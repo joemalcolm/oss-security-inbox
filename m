@@ -1,29 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/25/5
-Message-Id: <1235592876.4131.17.camel@localhost>
-Date: Wed, 25 Feb 2009 21:14:36 +0100
-From: Alex Legler <a3li@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/30/3
+Message-ID: <20091030193534.395d6b22@redhat.com>
+Date: Fri, 30 Oct 2009 19:35:34 +0100
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Psi <0.12.1 DoS
+Subject: Re: MFSA 2009-63
 Content-Type: text/plain; charset=utf-8
 
-Hey,
+Hi Reed!
 
-I think there is no CVE for this issue yet, so please assign one.
+On Fri, 30 Oct 2009 10:15:23 -0500 Reed Loden <reed@...dloden.com>
+wrote:
 
-From the Changelog:
-  New in 0.12.1
-  - Bugfix for DOS vulnerability in the file transfer code.
-    Thanks to Jesus Olmos (jolmos@...cauditors.com)
+> I think we used one CVE per library upgrade, so three in total
+> (libvorbis, liboggz, liboggplay).
 
-References:
-https://bugs.gentoo.org/show_bug.cgi?id=252830
-http://jolmos.blogspot.com/2008/12/psi-remote-integer-overflow.html
-http://www.securityfocus.com/archive/1/499563
-http://secunia.com/advisories/33311/
-http://milw0rm.com/exploits/7555
+Correct.  And the fixes brought in as part of those updates are
+possible spread across multiple upstream versions, which is a common
+reason to do a CVE split.
 
-Kind regards,
-Alex
+> Bug 499512 seems to be a liboggplay issue fixed by bug 512328.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (198 bytes)
+It's listed among libvorbis bugs and I wasn't able to tell if there was
+only liboggplay-side issue.
+
+> However, if you notice any issues yourself with the advisory, please
+> feel free to report any issues to me or to security@....
+
+I've only added a comment to 515889, which seems to be a dupe of one
+older vorbis CVE.
+
+Thank you!
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
