@@ -1,42 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/30/2
-Message-Id: <1238421169.3260.38.camel@lifebook>
-Date: Mon, 30 Mar 2009 15:52:48 +0200
-From: Anthony <tony@...post24.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/30/1
+Message-ID: <20091030102722.40e84439@redhat.com>
+Date: Fri, 30 Oct 2009 10:27:22 +0100
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: [Fwd: Cross-Site Scripting in Banshee DAAP Extension]
+Subject: Re: MFSA 2009-63
 Content-Type: text/plain; charset=utf-8
 
-I've notified Redhat and the Novell/SuSE security teams about a
-vulnerability in Banshee's DAAP extension. I have requested a CVE name
-for this. I will update this list when I have received the actual CVE
-name.
+On Thu, 29 Oct 2009 15:35:08 -0500 Reed Loden <reed@...dloden.com>
+wrote:
 
-Subject: Cross-Site Scripting in Banshee DAAP Extension
-From: Anthony <tony@...post24.com>
-Reply-To: tony@...post24.com
-To: cve@...re.org
-Content-Type: text/plain
-Organization: Outpost24 AB
-Message-Id: <1238405900.3260.32.camel@...ebook>
-Mime-Version: 1.0
-X-Mailer: Evolution 2.24.5 (2.24.5-1.fc10) 
-Date: Mon, 30 Mar 2009 11:38:21 +0200
-Content-Transfer-Encoding: 7bit
+> What type of specific information are you looking for?
 
-I would like to reserve a CVE name for a cross-site scripting
-vulnerability in the DAAP extension of Banshee. A description of the
-vulnerability can be found in the GNOME bugzilla
-(http://bugzilla.gnome.org/show_bug.cgi?id=577270).
-I have notified the RedHat and SuSE/Novell security teams. I consider
-the bugzilla a notification to the upstream vendor (which also happens
-to be Novell anyway).
-Upstream vendor is aware that I'm requesting this CVE name.
+What issues are actually referenced by a CVE, what fixes to backport
+where rebase is not an option (as Florian already explained).
 
-I'm still waiting for RHSA and SUSE-SA numbers. I'll follow up when I
-have them.
+> I'll see if we can get those still private bugs concerning the media
+> library fixes open sooner rather than later, though.
 
-Thank you in advance,
-- Tony
+Even bugs don't make all points clear (499512, 501279#c5) in this case.
 
-
+-- 
+Tomas Hoger / Red Hat Security Response Team
