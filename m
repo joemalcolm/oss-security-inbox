@@ -1,21 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/27/5
-Message-ID: <20091027214303.GD3695@redhat.com>
-Date: Tue, 27 Oct 2009 15:43:03 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/30/2
+Message-Id: <20091030101523.104182ef.reed@reedloden.com>
+Date: Fri, 30 Oct 2009 10:15:23 -0500
+From: Reed Loden <reed@...dloden.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request for oCERT advisory 2009-013 (yTNEF/Evolution TNEF)
+Subject: Re: MFSA 2009-63
 Content-Type: text/plain; charset=utf-8
 
-I'm not sure if a CVE name has been requested for this issue; I can't
-see one anywhere.
+On Fri, 30 Oct 2009 10:27:22 +0100
+Tomas Hoger <thoger@...hat.com> wrote:
 
-http://www.ocert.org/advisories/ocert-2009-013.html
+> On Thu, 29 Oct 2009 15:35:08 -0500 Reed Loden <reed@...dloden.com>
+> wrote:
+> 
+> > What type of specific information are you looking for?
+> 
+> What issues are actually referenced by a CVE, what fixes to backport
+> where rebase is not an option (as Florian already explained).
 
-It's for the Evolution TNEF/yTNEF issues disclosed early last month.
-Could we have a CVE name assigned for this?
+I think we used one CVE per library upgrade, so three in total
+(libvorbis, liboggz, liboggplay). As for individual fixes, I don't
+really know if that's possible, as I mentioned earlier, due to the fact
+that fixes were dependent on other changes that you would need to
+backport, too, which all just ends badly. :(
 
-Thanks.
+> > I'll see if we can get those still private bugs concerning the media
+> > library fixes open sooner rather than later, though.
+> 
+> Even bugs don't make all points clear (499512, 501279#c5) in this case.
+
+Feel free to comment in the bugs asking questions. If you don't receive
+a response in a reasonable amount of time from one of the developers,
+drop me a note OOB, and I'll see about making sure somebody replies to
+you. I'm by no means the media library expert, so I don't know all of
+the details myself. Bug 499512 seems to be a liboggplay issue fixed by
+bug 512328. As for 501279#c5, you'll just have to ask the developers.
+
+I think the advisory is missing a few bugs and is mislabeling a few
+others. If I get a chance, I'll edit the advisories to add a few
+other bugs (like 512328). However, if you notice any issues yourself
+with the advisory, please feel free to report any issues to me or to
+security@.... We try to be good at bug dependencies, so if you
+loop through the bug chains, you may find some bugs that help you better
+understand all the issues that were fixed by the upgrades.
+
+~reed
+Mozilla Security Group
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Reed Loden - <reed@...dloden.com>
+
+Content of type "application/pgp-signature" skipped
