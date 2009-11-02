@@ -1,24 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/30/1
-Message-ID: <20091030102722.40e84439@redhat.com>
-Date: Fri, 30 Oct 2009 10:27:22 +0100
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/02/1
+Message-ID: <4AEEA8FD.2050601@kernel.sg>
+Date: Mon, 02 Nov 2009 17:40:13 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Subject: Re: MFSA 2009-63
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: connector security bypass
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 29 Oct 2009 15:35:08 -0500 Reed Loden <reed@...dloden.com>
-wrote:
+1/ uvesafb/connector: Disallow unprivileged users to send netlink packets
+upstream commit: cc44578b5a508889beb8ae3ccd4d2bbdf17bc86c
+introduced in v2.6.24-rc1; fixed in v2.6.32-rc3
 
-> What type of specific information are you looking for?
+2/ pohmelfs/connector: Disallow unprivileged users to configure pohmelfs
+upstream commit: 98a5783af02f4c9b87b676d7bbda6258045cfc76
+(staging/experimental)
 
-What issues are actually referenced by a CVE, what fixes to backport
-where rebase is not an option (as Florian already explained).
+3/ dst/connector: Disallow unprivileged users to configure dst
+upstream commit: 5788c56891cfb310e419c4f9ae20427851797431
+(staging/experimental)
 
-> I'll see if we can get those still private bugs concerning the media
-> library fixes open sooner rather than later, though.
+4/ dm/connector: Only process connector packages from privileged processes
+upstream commit: 24836479a126e02be691e073c2b6cad7e7ab836a
+introduced in v2.6.31-rc1; fixed in v2.6.32-rc3
 
-Even bugs don't make all points clear (499512, 501279#c5) in this case.
+2/ and 3/ are experimental; I doubt distros are supporting these.
+1/ and 4/ fixed similar issues, so perhaps we should just have one CVE 
+name for this.
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+References:
+http://secunia.com/advisories/37113/
+http://xorl.wordpress.com/2009/10/31/linux-kernel-multiple-capabilities-missing-checks/
+
+Thanks, Eugene
