@@ -1,27 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/22/6
-Message-ID: <Pine.GSO.4.51.0905212027170.18536@faron.mitre.org>
-Date: Thu, 21 May 2009 20:27:26 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request (evolution)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/05/5
+Message-ID: <873a4sj35y.fsf@mid.deneb.enyo.de>
+Date: Thu, 05 Nov 2009 18:24:09 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2009-3555 for TLS renegotiation MITM attacks
 Content-Type: text/plain; charset=utf-8
 
+* Mark J. Cox:
 
-======================================================
-Name: CVE-2009-1631
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1631
-Reference: MLIST:[oss-security] 20090512 CVE Request (evolution)
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/05/12/6
-Reference: MISC:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=526409
-Reference: MISC:http://bugzilla.gnome.org/show_bug.cgi?id=581604
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=498648
+> http://extendedsubset.com/?p=8
+> http://www.ietf.org/mail-archive/web/tls/current/msg03948.html and so
+> on
+> https://bugzilla.redhat.com/show_bug.cgi?id=533125
+>
+> Marsh Ray of PhoneFactor has discovered a flaw in the TLS/SSL protocol
+> related to the handling of the session renegotiations.
 
-The Mailer component in Evolution 2.26.1 and earlier uses
-world-readable permissions for the .evolution directory, and certain
-directories and files under .evolution/ related to local mail, which
-allows local users to obtain sensitive information by reading these
-files.
+Shouldn't this be credited to Martin Rex from SAP?  He's the first one
+who publicly comitted to this vulnerability.  (And I'm slightly
+surprised by the rapid me-too-ing that's going on here.)
 
-
+Anyway, is the CVE just for HTTP over TLS, or more?
