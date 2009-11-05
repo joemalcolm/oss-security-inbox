@@ -1,33 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/07/1
-Message-ID: <4AA47ECD.1030002@kernel.sg>
-Date: Mon, 07 Sep 2009 11:32:29 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
-To: oss-security@...ts.openwall.com
-CC: Willy Tarreau <w@....eu>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: tc: uninitialised kernel memory leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/05/2
+Message-ID: <4AF2A13F.6050108@redhat.com>
+Date: Thu, 05 Nov 2009 10:56:15 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request - Asterisk (AST-2009-008.html)
 Content-Type: text/plain; charset=utf-8
 
-Solar Designer wrote:
-> On Thu, Sep 03, 2009 at 11:45:03AM +0800, Eugene Teo wrote:
->> Three bytes of uninitialised kernel memory are currently leaked to user.
->>
->> http://patchwork.ozlabs.org/patch/32830/
->> https://bugzilla.redhat.com/show_bug.cgi?id=520990
-> 
-> 2.4 kernels appear to be affected as well, and moreover they appear to
-> require at least some of these older fixes as well:
-> 
-> http://marc.info/?l=git-commits-head&m=112002138324380
+Hello Steve, vendors,
 
-This is commit 9ef1d4c7c7aca1cd436612b6ca785b726ffb8ed8.
+   Asterisk upstream has recently published two security advisories:
 
-And linux-2.4.37.y needs the following two patches too:
+a, SIP responses expose valid usernames
+    http://downloads.asterisk.org/pub/security/AST-2009-008.html
 
-[NETLINK]: Clear padding in netlink messages
-b3563c4fbff906991a1b4ef4609f99cca2a0de6a
+    This is similar issue to AST-2009-003.html (CVE-2008-3903)
+    http://downloads.asterisk.org/pub/security/AST-2009-003.html
 
-[NETLINK]: Missing padding fields in dumped structures
-8a47077a0b5aa2649751c46e7a27884e6686ccbf
+    But according to the patches:
 
-Thanks, Eugene
+    http://downloads.digium.com/pub/asa/AST-2009-003-1.6.1.diff.txt (AST-2009-003) vs
+    http://downloads.asterisk.org/pub/security/AST-2009-008-1.6.1.diff.txt (AST-2009-003)
+
+    it desires a new CVE id. Could you allocate one?
+
+The second issue (b,) already got an CVE id of CVE-2008-7220.
+
+b, Cross-site AJAX request vulnerability (CVE-2008-7220)
+    http://downloads.asterisk.org/pub/security/AST-2009-009.html
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+
