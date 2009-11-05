@@ -1,60 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/18/2
-Message-ID: <87y6phdy1g.fsf@mocca.josefsson.org>
-Date: Tue, 18 Aug 2009 15:58:03 +0200
-From: Simon Josefsson <simon@...efsson.org>
-To: Jamie Strandboge <jamie@...onical.com>
-Cc: oss-security@...ts.openwall.com, gnutls-devel@....org
-Subject: Re: GnuTLS CVE-2009-2730 Patches
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/05/6
+Message-ID: <1800165789.921061257442509766.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 5 Nov 2009 12:35:09 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request - Asterisk (AST-2009-008.html)
 Content-Type: text/plain; charset=utf-8
 
-Jamie Strandboge <jamie@...onical.com> writes:
+CVE-2009-3727 Asterisk AST-2009-008
 
-> On Sat, 15 Aug 2009, Simon Josefsson wrote:
->
->> Jamie Strandboge <jamie-Z7WLFzj8eWMS+FvcfC7Uqw@...lic.gmane.org> writes:
->> 
->> > On Fri, 14 Aug 2009, Simon Josefsson wrote:
->> >
->> > Attached are preliminary patches for 2.4.1, 2.0.4 and 1.2.9 backported
->> > from the advisory[1].
->> 
->> Thank you!
->> 
->> I have applied the 2.4.x patch on the gnutls_2_4_x branch, so it will be
->> built and tested by the daily autobuilder from now on.  I've tested that
->> the nul-in-x509-names self-test works as expected with the 2.4 library.
->> So in theory, it should be easy for me to make a v2.4.4 release from
->> that branch.  I wonder if this would helps anyone, though?  I'd imagine
->> that most people concerned with older releases are distributions that
->> have to support older GnuTLS releases.  And you aren't likely to use a
->> new upstream release anyway, since you just apply the patches to your
->> version.
->> 
->> I'm also concerned that there have been plenty of _other_ serious
->> problems in these old GnuTLS releases (check the security vulnerability
->> page), and I haven't back-ported the fixes to those problems to these
->> old branches.  So if I make a release on that branch, I'd have to check
->> what other serious problems would needs to be fixed for that branch to
->> be secure -- which sounds like real work (for little gain).
->> 
->> For these two reasons, I'd prefer to help you establish trust in the
->> patches you developed rather than make releases on old branches.
->> 
->
-> I'd agree with this. Vendors have likely backported all those other
-> fixes. However, having a place for people to get patches for older
-> releases would likely be beneficial going forward (like you are doing
-> with this one). This is especially true when considering your
-> aforementioned lack of resources.
+    Asterisk Open Source 1.2.x before 1.2.35, 1.4.x before 1.4.26.3, and
+    1.6.0.x before 1.6.0.17; Asterisk Business Edition A.x.x, B.x.x before
+    B.2.5.12, C.1.x.x before C.2.x.x before C.2.4.5 and C.3.2.2; s800i 1.3.x
+    before 1.3.0.5; Generates different responses when a specially crafted
+    REGISTER message is sent twice depending on whether a SIP username is
+    valid. This allows remote attackers to enumerate valid usernames.
 
-Right.  If you and others provide patches for older versions, I can
-apply them on the git branches.  Someone could even volunteer to become
-old-releases-maintainer and do it for me.  It would indeed be useful if
-all vendors could look into the git repository to find the recommended
-patch for any version, rather than everyone having to spend time on
-identifying and testing patches by themselves.  Alas, I don't have
-resources to do this, and I believe my time is best spent on maintaining
-the stable and development branches.
+    http://downloads.asterisk.org/pub/security/AST-2009-008.html
 
-/Simon
+Thanks.
+
+-- 
+    JB
+
+----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+
+> Hello Steve, vendors,
+> 
+>    Asterisk upstream has recently published two security advisories:
+> 
+> a, SIP responses expose valid usernames
+>     http://downloads.asterisk.org/pub/security/AST-2009-008.html
+> 
+>     This is similar issue to AST-2009-003.html (CVE-2008-3903)
+>     http://downloads.asterisk.org/pub/security/AST-2009-003.html
+> 
+>     But according to the patches:
+> 
+>     http://downloads.digium.com/pub/asa/AST-2009-003-1.6.1.diff.txt
+> (AST-2009-003) vs
+>    
+> http://downloads.asterisk.org/pub/security/AST-2009-008-1.6.1.diff.txt
+> (AST-2009-003)
+> 
+>     it desires a new CVE id. Could you allocate one?
+> 
+> The second issue (b,) already got an CVE id of CVE-2008-7220.
+> 
+> b, Cross-site AJAX request vulnerability (CVE-2008-7220)
+>     http://downloads.asterisk.org/pub/security/AST-2009-009.html
+> 
+> Thanks && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
