@@ -1,43 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/13/2
-Message-ID: <20091113105711.GB27846@suse.de>
-Date: Fri, 13 Nov 2009 11:57:11 +0100
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/05/4
+Message-ID: <90626448.919981257441819306.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 5 Nov 2009 12:23:39 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
 Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: bad permissions on megaraid_sas sysfs files
+Subject: Re: CVE request: kernel: NULL pointer dereference in nfs4_proc_lock()
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Nov 13, 2009 at 02:39:24PM +0800, Eugene Teo wrote:
-> The megaraid_sas driver exposes a number of driver attributes in sysfs. 
-> Many of these are read-only, just export information from the driver and 
-> are world-readable.
-> 
-> A couple of attributes are writable and may be used to change the 
-> behaviour of the driver (e.g. setting debug logging levels, selecting 
-> poll vs. interrupt I/O mode etc).
-> 
-> Some of these writable attributes are mistakenly created with 
-> world-writable permissions, e.g. dbg_lvl and poll_mode_io.
-> 
-> This would allow an unprivileged user to affect kernel driver behaviour 
-> and logging level.
-> 
-> Upstream made the dbd_lvl permissions more restrictive:
-> http://git.kernel.org/linus/66dca9b8c50b5e59d3bea8b21cee5c6dae6c9c46
-> 
-> The poll_mode_io pseudofile still has world-writable permissions 
-> upstream. I'm getting my colleague to submit a patch.
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=526068
+Please use CVE-2009-3726
 
-It seems you can set poll_mode_io multiple times to the full integer range,
-(like to 1 , 2 , 3 etc.) and it will reinitialize its timers everytime
-via init_timer() and add_timer().
+Thanks.
 
-This will corrupt the timer chain (I think) by setting entry.next = NULL
-in init_timer().
+-- 
+    JB
 
-It should only accept a boolean value. :/
+----- "Eugene Teo" <eugeneteo@...nel.sg> wrote:
 
-Ciao, Marcus
+> Quote from upstream commit:
+> "We just had a case in which a buggy server occasionally returns the 
+> wrong attributes during an OPEN call. While the client does catch this
+> 
+> sort of condition in nfs4_open_done(), and causes the
+> nfs4_atomic_open() 
+> to return -EISDIR, the logic in nfs_atomic_lookup() is broken, since
+> it 
+> causes a fallback to an ordinary lookup instead of just returning the
+> error.
+> 
+> When the buggy server then returns a regular file for the fallback 
+> lookup, the VFS allows the open, and bad things start to happen, since
+> 
+> the open file doesn't have any associated NFSv4 state.
+> 
+> The fix is firstly to return the EISDIR/ENOTDIR errors immediately,
+> and 
+> secondly to ensure that we are always careful when dereferencing the 
+> nfs_open_context state pointer."
+> 
+> Upstream commit:
+> http://git.kernel.org/linus/d953126a28f97e (v2.6.31-rc4)
+> 
+> Steps to reproduce the issue/backtraces:
+> https://bugzilla.redhat.com/show_bug.cgi?id=529227#c0
+> 
+> References:
+> http://www.spinics.net/linux/lists/linux-nfs/msg03357.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=529227
+> 
+> Thanks, Eugene
