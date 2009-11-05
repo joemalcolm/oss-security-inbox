@@ -1,42 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/16/1
-Message-ID: <hb8c8c$bdk$1@ger.gmane.org>
-Date: Thu, 15 Oct 2009 18:47:15 -0500
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/05/1
+Message-ID: <4AF262B4.6000500@kernel.sg>
+Date: Thu, 05 Nov 2009 13:29:24 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- PHP 5 - 5.2.11
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: NULL pointer dereference in nfs4_proc_lock()
 Content-Type: text/plain; charset=utf-8
 
-Steven M. Christey wrote:
+Quote from upstream commit:
+"We just had a case in which a buggy server occasionally returns the 
+wrong attributes during an OPEN call. While the client does catch this 
+sort of condition in nfs4_open_done(), and causes the nfs4_atomic_open() 
+to return -EISDIR, the logic in nfs_atomic_lookup() is broken, since it 
+causes a fallback to an ordinary lookup instead of just returning the error.
 
-> 
-> ======================================================
-> Name: CVE-2009-3291
-> 
-> The php_openssl_apply_verification_policy function in PHP before
-> 5.2.11 does not properly perform certificate validation, which has
-> unknown impact and attack vectors, probably related to an ability to
-> spoof certificates.
-> 
+When the buggy server then returns a regular file for the fallback 
+lookup, the VFS allows the open, and bad things start to happen, since 
+the open file doesn't have any associated NFSv4 state.
 
-Yes, seems to be related to an improper handling of \0 in the CN field.
+The fix is firstly to return the EISDIR/ENOTDIR errors immediately, and 
+secondly to ensure that we are always careful when dereferencing the 
+nfs_open_context state pointer."
 
-> 
-> ======================================================
-> Name: CVE-2009-3292
->
-> Unspecified vulnerability in PHP before 5.2.11 has unknown impact and
-> attack vectors related to "missing sanity checks around exif
-> processing."
->
+Upstream commit:
+http://git.kernel.org/linus/d953126a28f97e (v2.6.31-rc4)
 
-It is related to missing sanity checks when determining the length of
-sections of jpg headers and a missing limit on the nesting level of TIFF
-files.
+Steps to reproduce the issue/backtraces:
+https://bugzilla.redhat.com/show_bug.cgi?id=529227#c0
 
-Regards,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+References:
+http://www.spinics.net/linux/lists/linux-nfs/msg03357.html
+https://bugzilla.redhat.com/show_bug.cgi?id=529227
 
-
+Thanks, Eugene
