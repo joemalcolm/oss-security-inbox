@@ -1,54 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/20/1
-Message-ID: <Pine.GSO.4.51.0903191950550.13013@faron.mitre.org>
-Date: Thu, 19 Mar 2009 20:01:51 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/06/3
+Message-ID: <Fsm81lMN44X1vIl54+7dGMNZAWM@W35zwFHQJD9TSf5n3XGjbHLrnqQ>
+Date: Sat, 7 Nov 2009 02:05:31 +0300
+From: Eygene Ryabinkin <rea-sec@...elabs.ru>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: jhead
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, tls@...f.org
+Subject: Re: CVE-2009-3555 for TLS renegotiation MITM attacks
 Content-Type: text/plain; charset=utf-8
 
+Sorry for jumping in, but I had missed the topic in the other lists,
+so I am trying to ask here.  Also CC'ing tls@...f.org -- sorry for
+such cross-posting.
 
-On Fri, 6 Feb 2009, Tomas Hoger wrote:
+Thu, Nov 05, 2009 at 03:24:30PM +0000, Mark J Cox wrote:
+> Marsh Ray of PhoneFactor has discovered a flaw in the TLS/SSL protocol
+> related to the handling of the session renegotiations.  In certain
+> circumstances this flaw could be used in MITM attacks, allowing an
+> attacker to inject attacker-chosen plain text prefix into a secure
+> session of the victim.
 
-> Looks like -latest tarball was updated again and now mentions 2.86
-> inside.  In that, usage of mkstemp was replaced with mktemp (previous
-> version failed to close file descriptors opened by mkstemp, probably
-> causing issues when trying to use command on large pile of images at
-> once).  Those the temp file seem to be created user-specified
-> destination directory, probably not too likely to be /tmp (and hence
-> prone to races).
->
-> Anyway, can anyone help me understand what was CVE-2008-4639 assigned
-> to?  I tried looking at the diff between 2.7 and 2.84 and fail to see
-> any relevant change...
+Had anyone considered the scenario when the server requires client
+certificate from the beginning, but MITM possesses some other
+credentials that will be good for authentication (but can be of no use
+for authorization)?  In this case MITM can use this certificate to start
+the splitting request, then initiate renegotiation and proxy client's
+request through the established channel.  I see that Apache asks for the
+certificate for the second renegotiation, as well as the OpenSSL's
+s_server.  Here is the trace for s_server:
+-----
+$ openssl s_client -msg -key userkey.pem -cert usercert.pem -host somehost -port 8443 | grep -E '^(<<<|>>>)'
+Enter pass phrase for userkey.pem:
+>>> SSL 2.0 [length 0086], CLIENT-HELLO
+<<< TLS 1.0 Handshake [length 004a], ServerHello
+<<< TLS 1.0 Handshake [length 0b01], Certificate
+depth=1 /C=RU/O=some/CN=CA
+verify error:num=19:self signed certificate in certificate chain
+verify return:0
+<<< TLS 1.0 Handshake [length 010d], ServerKeyExchange
+<<< TLS 1.0 Handshake [length 0055], CertificateRequest
+<<< TLS 1.0 Handshake [length 0004], ServerHelloDone
+>>> TLS 1.0 Handshake [length 056a], Certificate
+>>> TLS 1.0 Handshake [length 0046], ClientKeyExchange
+>>> TLS 1.0 Handshake [length 0086], CertificateVerify
+>>> TLS 1.0 ChangeCipherSpec [length 0001]
+>>> TLS 1.0 Handshake [length 0010], Finished
+<<< TLS 1.0 ChangeCipherSpec [length 0001]
+<<< TLS 1.0 Handshake [length 0010], Finished
+R
+RENEGOTIATING
+>>> TLS 1.0 Handshake [length 0063], ClientHello
+<<< TLS 1.0 Handshake [length 0030], ServerHello
+<<< TLS 1.0 Handshake [length 0b01], Certificate
+depth=1 /C=RU/O=some/CN=CA
+verify error:num=19:self signed certificate in certificate chain
+verify return:0
+<<< TLS 1.0 Handshake [length 010d], ServerKeyExchange
+<<< TLS 1.0 Handshake [length 0055], CertificateRequest
+<<< TLS 1.0 Handshake [length 0004], ServerHelloDone
+>>> TLS 1.0 Handshake [length 056a], Certificate
+>>> TLS 1.0 Handshake [length 0046], ClientKeyExchange
+>>> TLS 1.0 Handshake [length 0086], CertificateVerify
+>>> TLS 1.0 ChangeCipherSpec [length 0001]
+>>> TLS 1.0 Handshake [length 0010], Finished
+<<< TLS 1.0 Handshake [length 060a]???
+<<< TLS 1.0 ChangeCipherSpec [length 0001]
+<<< TLS 1.0 Handshake [length 0010], Finished
+-----
+If the second certificate is used for the authorization and it is
+allowed to have distinct certificates during the first and second
+negotiations, then this could be the other way to trigger this attack
+against the servers that are requiring certificates from the beginning.
 
-I anchored on this:
-
-  http://www.openwall.com/lists/oss-security/2008/10/16/3
-
-which is John Dong's answer to an inquiry I had for how many CVEs to
-create:
-
->> = Steve
-> = John
->>
->> 1 - long -cmd
->> 2 - unsafe temp file creation
->> 3 - "more unchecked buffers" and "unsafe buffer sized strcat's in
->>    ModifyDescriptComment"  [this assumes that upstream only fixed
->>    issue 1)
->> 4 - shell escapes
->...
->
->
->So, bottom line is I think 2.84 fixes 1 and 3 acceptably, while 2 and 4
->are still unresolved.
-
-So CVE-2008-4641 was assigned to issue 4, and CVE-2008-4639 was assigned
-to issue 2.  However, I made a mistake in CVE-2008-4639 and said "before
-2.84" instead of "2.84 and earlier."  I've since fixed the CVE-2008-4639
-description to say ""2.84 and earlier."
-
-Now what's this about 2.86?... Sounds like it may be a regression.
-
-- Steve
+Any thoughts?
+-- 
+Eygene
