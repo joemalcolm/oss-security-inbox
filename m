@@ -1,34 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/03/1
-Message-ID: <20090803140736.GC30964@suse.de>
-Date: Mon, 3 Aug 2009 16:07:36 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: http://www.securityfocus.com/bid/33672/info kernel issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/06/1
+Message-ID: <Pine.GSO.4.51.0911060841300.15251@faron.mitre.org>
+Date: Fri, 6 Nov 2009 08:43:44 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: mjc@...hat.com
+cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request for oCERT advisory 2009-013 (yTNEF/Evolution TNEF)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Feb 12, 2009 at 09:22:59PM +0100, Marcus Meissner wrote:
-> On Thu, Feb 12, 2009 at 08:05:27PM +0000, Mark J Cox wrote:
-> > >http://www.securityfocus.com/bid/33672/ seems to be this commit:
-> > >http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.28.y.git;a=commit;h=8255fc826e58c0a59711029e01db9fcdc06ba211
-> > >Not sure if its exploitable though.
-> > 
-> > BTW that BID list of affected kernels isn't correct; the multibyte stuff 
-> > wasn't in <=2.6.18 at least.
-> > 
-> > I didn't check exactly where since it doesn't affect RHEL and didn't look 
-> > into the issue any further -- but on first glance it seemed like you'd 
-> > have to be a console user and display/select some carefully chosen 
-> > characters in order to do the overflow; so it's probably a 'local attacker 
-> > at keyboard' flaw?
-> 
-> We backported Unicode stuff to SLES 10 I just see, but yes, 2.6.18 then.
-> 
-> Yes, console user only. And you can overflow 2 bytes over the end of kmalloced
-> space, not sure how much you can do with this.
 
-New reference for the CVE-2009-1046 entry and a exploit:
+On Wed, 28 Oct 2009, Mark J Cox wrote:
 
-http://kernelbof.blogspot.com/2009/07/even-when-one-byte-matters.html
+> > I'm not sure if a CVE name has been requested for this issue; I can't
+> > see one anywhere.
+> >
+> > http://www.ocert.org/advisories/ocert-2009-013.html
+> >
+> > It's for the Evolution TNEF/yTNEF issues disclosed early last month.
+> > Could we have a CVE name assigned for this?
+>
+> I checked and oCERT don't have a name, so use CVE-2009-3721 for this.
 
-Ciao, Marcus
+This advisory covers both buffer overflows and path traversal in the same
+data field.  While these may stem from "input validation" (as many issues
+do), we would typically assign two separate CVE names, since the fix for a
+buffer overflow would not necessarily fix the path traversal (or vice
+versa).
+
+Unless there's some deeper reason for using a single CVE, I think we
+should assign separate CVEs here.  If you agree Mark, we can use
+CVE-2009-3721 for the overflow, and you could assign a new CVE for the
+traversal.
+
+- Steve
