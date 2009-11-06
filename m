@@ -1,26 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/24/1
-Message-ID: <Pine.GSO.4.51.0906241028050.3530@faron.mitre.org>
-Date: Wed, 24 Jun 2009 10:29:00 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/06/2
+Message-ID: <1087982932.1032701257537195439.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 6 Nov 2009 14:53:15 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: strongswan
+Cc: mjc@...hat.com, coley <coley@...re.org>
+Subject: Re: CVE request for oCERT advisory 2009-013 (yTNEF/Evolution TNEF)
 Content-Type: text/plain; charset=utf-8
 
+----- "Steven M. Christey" <coley@...us.mitre.org> wrote:
+> On Wed, 28 Oct 2009, Mark J Cox wrote:
+> 
+> >
+> > I checked and oCERT don't have a name, so use CVE-2009-3721 for this.
+> 
+> This advisory covers both buffer overflows and path traversal in the same
+> data field.  While these may stem from "input validation" (as many issues
+> do), we would typically assign two separate CVE names, since the fix for a
+> buffer overflow would not necessarily fix the path traversal (or vice
+> versa).
+> 
+> Unless there's some deeper reason for using a single CVE, I think we should
+> assign separate CVEs here.  If you agree Mark, we can use CVE-2009-3721 for
+> the overflow, and you could assign a new CVE for the traversal.
+> 
 
-On Sun, 21 Jun 2009, Nico Golde wrote:
+Let's use CVE-2009-3887 for the traversal then.
 
-> - Applying their fuzzing tool, the Orange Labs vulnerability research team
->   found another two DoS vulnerabilities, one in the rather old ASN.1
->   parser of Relative Distinguished Names (RDNs) and a second one in the
->   conversion of ASN.1 UTCTIME and GENERALIZEDTIME strings to a time_t
->   value. Malformed X.509 certificate RDNs or timestamps can cause the
->   pluto IKE daemon to crash and restart.
+Thanks.
 
-Use CVE-2009-2185.
-
-Note that this has already been processed internally by CVE, but the
-change hasn't been committed yet.  The CVE will show up live sometime
-later today.
-
-- Steve
+-- 
+    JB
