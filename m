@@ -1,47 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/25/4
-Message-ID: <1188266872.30721259168900718.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 25 Nov 2009 12:08:20 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/07/2
+Message-ID: <20091107190449.1da5932c@mail.netloc.info>
+Date: Sat, 7 Nov 2009 19:04:49 +0100
+From: Alex Legler <a3li@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: Alex Legler <a3li@...too.org>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request - Cacti - 0.8.7e
+Cc: jmm@...til.org, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request - Asterisk (AST-2009-008.html)
 Content-Type: text/plain; charset=utf-8
 
-As best as I can tell, one ID will suffice.
+On Sat, 7 Nov 2009 18:08:55 +0100, Moritz Muehlenhoff <jmm@...til.org>
+wrote:
 
-Please use CVE-2009-4032.
-
-Thanks.
-
--- 
-    JB
-
-
------ "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
-
-> Hello vendors,
+> Jan Lieskovsky wrote:
+> > The second issue (b,) already got an CVE id of CVE-2008-7220.
+> > 
+> > b, Cross-site AJAX request vulnerability (CVE-2008-7220)
+> >    http://downloads.asterisk.org/pub/security/AST-2009-009.html
 > 
->    Moritz Naumann reported multiple cross-site scripting flaws in
-> recent version of Cacti.
+> This seems to be a mistake; CVE-2008-7220 already identifies a
+> prototypejs issue.
 > 
-> References:
-> -----------
-> http://www.cacti.net/download_patches.php
-> http://docs.cacti.net/#cross-site_scripting_fixes
-> http://www.securityfocus.com/bid/37109/info
-> http://bugs.gentoo.org/show_bug.cgi?id=294573
-> 
-> Upstream patch:
-> ---------------
-> http://www.cacti.net/downloads/patches/0.8.7e/cross_site_fix.patch
-> 
-> Looks like this is different issue than CVE-2008-0783, CVE-2008-0785
-> and CVE-2008-0786 were.
-> 
-> Could you allocate a CVE id?
-> 
-> Thanks && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
 
+This is correct. Asterisk ships a copy of prototype.js.
+
+From the Asterisk advisory:
+> Asterisk includes a demonstration AJAX based manager interface,
+> ajamdemo.html which uses the prototype.js framework. 
+
+Alex
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
