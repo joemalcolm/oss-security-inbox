@@ -1,48 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/20/1
-Message-ID: <b086760e0909200627y44a3fb9bx5d859f67e953f5c1@mail.gmail.com>
-Date: Sun, 20 Sep 2009 15:27:46 +0200
-From: yersinia <yersinia.spiros@...il.com>
-To: oss-security@...ts.openwall.com,  "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- PHP 5 - 5.2.11
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/07/3
+Message-ID: <4AF59F32.1030408@extendedsubset.com>
+Date: Sat, 07 Nov 2009 10:24:18 -0600
+From: Marsh Ray <marsh@...endedsubset.com>
+To: rea-sec@...elabs.ru
+CC: oss-security@...ts.openwall.com, tls@...f.org,  "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: [TLS] CVE-2009-3555 for TLS renegotiation MITM attacks
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Sep 20, 2009 at 12:30 AM, Nico Golde
-<oss-security+ml@...lde.de<oss-security%2Bml@...lde.de>
-> wrote:
+Eygene Ryabinkin wrote:
+> 
+> Had anyone considered the scenario when the server requires client
+> certificate from the beginning, but MITM possesses some other
+> credentials that will be good for authentication (but can be of no use
+> for authorization)?  In this case MITM can use this certificate to start
+> the splitting request, then initiate renegotiation and proxy client's
+> request through the established channel.
 
-> Hi,
-> * Joe Orton <jorton@...hat.com> [2009-09-18 16:11]:
-> > On Fri, Sep 18, 2009 at 03:23:43PM +0200, Nico Golde wrote:
-> > > * Jan Lieskovsky <jlieskov@...hat.com> [2009-09-18 13:52]:
-> > > >   PHP has released another upstream 5.2 release, fixing
-> > > > four security issues:
-> > > >
-> > > > http://www.php.net/ChangeLog-5.php
-> > > > http://www.php.net/downloads.php
-> > > >
-> > > > Could you please allocate CVE identifiers?
-> > >
-> > > What is the security impact of:
-> > > Fixed bug #44683 (popen crashes when an invalid mode is passed).
-> (Pierre)
-> > > ?
-> >
-> > This would appear to be:
-> >
-> > http://svn.php.net/viewvc?view=revision&revision=287779
-> >
-> > which is Windows-specific.
->
-> I was more wondering why this is a security issue rather
-> than a bug.
+Yes. I regret that we didn't get a chance to update the paper before
+making it generally available, so it is a bit understated:
 
-http://securityvulns.com/Vdocument145.html
+"Other techniques allow the attacker to forward or re-purpose client
+certificate authentication credentials."
 
-> Cheers
-> Nico
-> --
-> Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-> For security reasons, all text in this mail is double-rot13 encrypted.
->
+> If the second certificate is used for the authorization and it is
+> allowed to have distinct certificates during the first and second
+> negotiations, then this could be the other way to trigger this attack
+> against the servers that are requiring certificates from the beginning.
+> 
+> Any thoughts?
 
+It's even worse than that. In practice, clients will sign with their
+client cert without user intervention.
+
+"For one thing, browsers' behavior of allowing automatic certificate
+sending is suspect and should be reconsidered. Secondly, browsers suffer
+from a fundamental inability to authenticate the specific transaction
+the server is about to execute, ostensibly on behalf of the client. That
+underlying problem should be addressed, and will likely involve either a
+protocol change or changes in the way existing protocols are implemented.
+
+"Finally, it may make sense to require clients to authenticate servers
+using the supplied certificate before handing client certificates back
+to the server. This will effectively prevent the chosen-server attack
+scenarios described above. This may also represent a breaking protocol
+change, however, and is being investigated.
+
+Even worse (and this is shown in some of the packet captures), web
+servers will execute MITM's request as soon as they get the Finished
+message from legit client, but the browser doesn't put up the scary page
+until he gets the Finished from the server (which could simply be
+silently dropped by the MITM).
+
+So if a client has useful client cert (or smart card) credentials, MITM
+can redirect a request to a server of his choosing that will accept
+them, use them to authenticate his arbitrary transaction, and the
+browser may never even show the scary cert error page.
+
+- Marsh
