@@ -1,28 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/21/1
-Message-Id: <200912211828.27894.hanno@hboeck.de>
-Date: Mon, 21 Dec 2009 18:28:27 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: Serendipity < 1.5 upload of files with *.php.* possible
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/08/1
+Message-Id: <E1N73M6-0002z0-5Y@wintermute01.cs.auckland.ac.nz>
+Date: Sun, 08 Nov 2009 21:42:38 +1300
+From: Peter Gutmann <pgut001@...auckland.ac.nz>
+To: marsh@...endedsubset.com, rea-sec@...elabs.ru
+Cc: coley@...us.mitre.org, oss-security@...ts.openwall.com, tls@...f.org
+Subject: Re: [TLS] CVE-2009-3555 for TLS renegotiation MITM attacks
 Content-Type: text/plain; charset=utf-8
 
-From 1.5 release notes:
-# Disallow uploading any files that contain ".php." in the filename for extra 
-security with Apache MimeMagic-Modules
+Marsh Ray <marsh@...endedsubset.com> writes:
 
-See this comment also:
-http://blog.s9y.org/archives/211-Serendipity-1.5-released.html#c3064
+>For one thing, browsers' behavior of allowing automatic certificate sending
+>is suspect and should be reconsidered.
 
+It's not actually safe to reconsider this because many servers (including some
+at very large sites) always request client auth, often without the site admins
+being aware of this or knowing how to disable it.  I became aware of this when
+I changed my code to add a roadblock until the user explicitly responded to a
+client cert request, leading to many complaints about sites that formerly
+"worked" and now didn't (I've found all sorts of other broken behaviour around
+client-auth, for example servers that send a list of 150-odd CAs, every one
+they know of, as an indication of who they'll accept certs from, and other
+strangeness).  Disabling the automatic sending of client certs would therefore
+obviously break, to the client, a number of (what I consider) broken servers.
+What my code currently does is:
 
+  if( cert request received )
+      if( client cert present )
+          send cert;
+      else
+          send no-cert alert;
 
-(it's probably worth looking at other apps if they are vulnerable to this)
+This isn't totally safe though because there's no "tell user to make their
+cert available" option if they haven't pre-emptively done so, it "works"
+mostly because the extreme rarity of client cert use and stereotyped behaviour
+of existing clients hides all the glitches in implementations.
 
-
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-
-http://schokokeks.org - professional webhosting
-
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+Peter.
