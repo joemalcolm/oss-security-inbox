@@ -1,24 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/20/4
-Message-ID: <20090720114957.GA18992@openwall.com>
-Date: Mon, 20 Jul 2009 15:49:57 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/09/2
+Message-ID: <4AF79D01.3090305@kernel.sg>
+Date: Mon, 09 Nov 2009 12:39:29 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux 2.6.30+/SELinux/RHEL5 test kernel 0day, exploiting the unexploitable
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request - kernel: NOMMU: Dont pass NULL pointers to fput() in do_mmap_pgoff()
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jul 20, 2009 at 01:37:38PM +0200, Marcus Meissner wrote:
-> Foremost, the mmap_min_addr protection is not in older kernels (<2.6.23) at all,
-> so its kinda "not implemented" instead of "bug".
+ From upstream patch:
+"Don't pass NULL pointers to fput() in the error handling paths of the 
+NOMMU do_mmap_pgoff() as it can't handle it.
 
-Oh, understood.  I did not think that way, because mmap_min_addr is
-implemented in recent 2.4 kernels, which are sort of "older", and it is
-also implemented in RHEL-5'ish OpenVZ kernels that we actually use.
-(BTW, I'd be happy to share the mmap_min_addr back-port patch to
-RHEL-5'ish kernels with Red Hat if there's any interest.)
+The following can be used as a test program:
+int main() { static long long a[1024 * 1024 * 20] = { 0 }; return a;}
 
-I am going to release 2.4.37.3-ow1 with a CVE-2009-1895 fix in it, and I
-expect it to get into 2.4.37.4.  It's not important for systems with
-"sane" userlands (no crappy SUID-root programs), though.
+Without the patch, the code oopses in atomic_long_dec_and_test() as 
+called by fput() after the kernel complains that it can't allocate that 
+big a chunk of memory.  With the patch, the kernel just complains about 
+the allocation size and then the program segfaults during execve() as 
+execve() can't complete the allocation of all the new ELF program segments."
 
-Alexander
+http://git.kernel.org/linus/89a8640279f8bb78aaf778d1fc5c4a6778f18064
+
+Doesn't affect if CONFIG_MMU=y.
+
+Thanks, Eugene
