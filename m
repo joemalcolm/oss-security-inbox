@@ -1,22 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/17/3
-Message-ID: <4A8954AC.6010302@redhat.com>
-Date: Mon, 17 Aug 2009 15:01:32 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com
-Subject: CVE Request -- OCS Inventory NG
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/09/4
+Message-ID: <20091109161547.GA20522@steve.org.uk>
+Date: Mon, 9 Nov 2009 16:15:47 +0000
+From: Steve Kemp <steve@...ve.org.uk>
+To: oss-security@...ts.openwall.com
+Subject: Re: X server umask issue
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve, vendors,
+On Mon Nov 09, 2009 at 11:09:55 -0500, Josh Bressers wrote:
 
-   a SQL injection by machine blacklisting was reported on 2009-08-11:
+> What I am wondering though, are there other files the X server creates that could
+> be an issue for this? I'm not aware of any, but I'm also not an expert by any
+> stretch of the imagination. Am I missing something else?
 
-http://seclists.org/fulldisclosure/2009/Aug/0143.html
-http://www.ocsinventory-ng.org/index.php?mact=News,cntnt01,detail,0&cntnt01articleid=147&cntnt01returnid=15
+  /tmp/.X11-unix/* or /tmp/X0-lock might be worth checking.
 
-Could you allocate a CVE id?
-
-Thanks && Regards, Jan.
+Steve
 --
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Debian GNU/Linux System Administration
+http://www.debian-administration.org/
+
