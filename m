@@ -1,37 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/01/5
-Message-ID: <c5dbda760903312320q3f5f51d5l4d2edf244622008@mail.gmail.com>
-Date: Wed, 1 Apr 2009 09:20:04 +0300
-From: Pinar Yanardag <pinar@...dus.org.tr>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: Wireshark DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/09/3
+Message-ID: <952139437.70461257782995434.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 9 Nov 2009 11:09:55 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: X server umask issue
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi everyone,
 
-Yesterday, I came upon the following Secunia advisory [1] about Wireshark 1.0.6:
+I'm looking for a second opinion, and wondering if anyone has some extra insight
+into this Debian bug:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=555308
 
---------8<---------
-Description:
+It seems that the suid X server inherits the users umask, and if you have a umask
+of 0, the X log file will end up being world writable. This is obviously a very
+silly thing to do anyhow, so I question if that's a security flaw itself. It is a
+bug that should probably be fixed I'd say.
 
-A vulnerability has been discovered in Wireshark, which can
-potentially be exploited by malicious people to compromise a user's
-system.
-The vulnerability is caused due to a format string error within the
-PN-DCP dissector when processing station names containing format
-string specifiers. This can be exploited to cause a crash and
-potentially execute arbitrary code via specially crafted packets
-captured off the wire or loaded via a capture file.
---------8<---------
+What I am wondering though, are there other files the X server creates that could
+be an issue for this? I'm not aware of any, but I'm also not an expert by any
+stretch of the imagination. Am I missing something else?
 
-[1]: http://secunia.com/advisories/34542
+Thanks.
 
-I couldn't find any related CVE request, can you assign one?
-
-Thanks,
 -- 
-Pinar Yanardag
-http://pinguar.org
-_____________________
-Pardus Security Team
-http://security.pardus.org.tr
+    JB
