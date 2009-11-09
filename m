@@ -1,37 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/15/5
-Message-ID: <20090915130336.75b7248b@mail.netloc.info>
-Date: Tue, 15 Sep 2009 13:03:36 +0200
-From: Alex Legler <a3li@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/09/5
+Message-ID: <20091109162435.GH4499@patate.is-a-geek.org>
+Date: Mon, 9 Nov 2009 17:24:35 +0100
+From: Julien Cristau <jcristau@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: jlieskov@...hat.com, "Steven M. Christey" <coley@...us.mitre.org>, vuln@...unia.com
-Subject: Re: CVE Request -- Horde 3.3.5
+Subject: Re: X server umask issue
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 15 Sep 2009 12:39:45 +0200, Jan Lieskovsky
-<jlieskov@...hat.com> wrote:
+On Mon, Nov  9, 2009 at 16:15:47 +0000, Steve Kemp wrote:
 
-> Hello Steve, vendors,
+> On Mon Nov 09, 2009 at 11:09:55 -0500, Josh Bressers wrote:
 > 
->    three security issues have been addressed within latest upstream
-> Horde version (3.3.5).
+> > What I am wondering though, are there other files the X server creates that could
+> > be an issue for this? I'm not aware of any, but I'm also not an expert by any
+> > stretch of the imagination. Am I missing something else?
 > 
+>   /tmp/.X11-unix/* or /tmp/X0-lock might be worth checking.
+> 
+The socket is intentionally world-writable, and the lock is created with
+    lfd = open(tmp, O_CREAT | O_EXCL | O_WRONLY, 0644);
+and later
+  (void) chmod(tmp, 0444);
 
-FYI: These issues also affect the Horde Groupware Edition and Horde
-Groupware Webmail Edition.
-
-Secunia has a dedicated advisory, SA369729 [1] for these. It mentions
-that the two editions are only affected by the two XSS issues. This is
-in accordance with upstream's release announcements.
-
-However, the 1.2.4 release of both editions seem to be missing in that
-advisory, both are vulnerable to all three issues, including the file
-overwrite, according to the release announcements [2, 3].
-
-Alex
-
-[1] http://secunia.com/advisories/36729/
-[2] http://marc.info/?l=horde-announce&m=125294558611682&w=2
-[3] http://marc.info/?l=horde-announce&m=125295852706029&w=2
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+Cheers,
+Julien
