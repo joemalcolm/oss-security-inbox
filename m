@@ -1,20 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/25/2
-Message-ID: <49F2DA84.4090905@redhat.com>
-Date: Sat, 25 Apr 2009 17:40:20 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/10/2
+Message-ID: <Pine.LNX.4.64.0911100025320.13231@forced.attrition.org>
+Date: Tue, 10 Nov 2009 00:26:46 +0000 (UTC)
+From: security curmudgeon <jericho@...rition.org>
 To: oss-security@...ts.openwall.com
-CC: security@...nel.org, sfrench@...ibm.com
-Subject: Re: CVE request? buffer overflow in CIFS in 2.6.*
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: oping allows the disclosure of  arbitrary file contents
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
 
-> One approach might be to "pre-tag" this whole set of changes with a single
-> CVE, then when they ultimately get merged into a single kernel version or
-> some other concrete milestone, the "scope" of that CVE ends.
+On Mon, 9 Nov 2009, Steven M. Christey wrote:
 
-I'm fine with this approach. It can actually help to make it easier to
-manage this set of changes.
+: On Sat, 17 Oct 2009, yersinia wrote:
+: 
+: > On Fri, Oct 16, 2009 at 10:06 PM, Josh Bressers <bressers@...hat.com> wrote:
+: > > ----- "Julien Tinnes" <julien.tinnes@...il.com> wrote:
+: > >
+: > > [snip]
+: > >
+: > > I took a look in the oping source. Without another security flaw, this is just
+: > > a bug, oping doesn't do anything while still root that could be an issue. I
+: > > agree that it should be fixed, it is a serious bug, but an attacker cannot do
+: > > anything nefarious with this flaw.
+: > I think that the upstream mantainer should be have the last word
+: > http://verplant.org/liboping/
+: 
+: This says:
+: 
+:   2009-09-29 Version 1.3.3 is available. The new release fixes a serious
+:   security issue in oping: If the application is installed with the
+:   SetUID-bit, anybody on the system could use oping to read arbitrary
+:   files using the "-f" option.
+: 
+: So as stated, this sounds worthy of a CVE to me.  Thoughts?
 
-Thanks, Eugene
+Is it so different than "vulnerable if dangerous_php_option=true is 
+configured"? I guess the distinction is that we know many systems 
+configure PHP with dangerous options, while admins generally don't run 
+around slapping SUID on everything. 
+
+To me, it is a vuln if there is a reasonable case where it may be SUID, 
+or called with increased privileges.
