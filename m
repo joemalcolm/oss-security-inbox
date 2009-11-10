@@ -1,19 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/23/5
-Message-ID: <Pine.GSO.4.64.0912231632580.21134@faron.mitre.org>
-Date: Wed, 23 Dec 2009 16:33:12 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: Greg KH <gregkh@...e.de>
-Subject: Re: CVE request - kernel: fuse_ioctl_copy_user() dos
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/10/6
+Message-ID: <20091110074646.GA15060@suse.de>
+Date: Tue, 10 Nov 2009 08:46:46 +0100
+From: Thomas Biege <thomas@...e.de>
+To: OSS-Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: CVE request: libpoppler4: buffer overflow in the Abiword backend
 Content-Type: text/plain; charset=utf-8
 
+Hello everybody,
 
-On Wed, 23 Dec 2009, Eugene Teo wrote:
+does this need an CVE-ID?
 
-> Reported by David Shaw. There is a problem in the ioctl handler in the fuse 
-> kernel code that causes a panic under some circumstances.
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=534680
 
-Use CVE-2009-4410, to be filled in later.
 
-- Steve
+
+-- 
+Bye,
+     Thomas
+-- 
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+-- 
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
