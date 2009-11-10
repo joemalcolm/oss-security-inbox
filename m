@@ -1,35 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/20/1
-Message-ID: <20090120090231.1cda36f4@redhat.com>
-Date: Tue, 20 Jan 2009 09:02:31 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: fw@...eb.enyo.de, coley@...us.mitre.org
-Subject: Re: CVE request -- git
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/10/5
+Message-ID: <Pine.GSO.4.51.0911092047530.4011@faron.mitre.org>
+Date: Mon, 9 Nov 2009 20:49:33 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Josh Bressers <bressers@...hat.com>
+cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: oping allows the disclosure of  arbitrary file contents
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 19 Jan 2009 21:57:03 +0100 Florian Weimer <fw@...eb.enyo.de>
-wrote:
 
-> Nerver mind, Novell used CVE-2008-5517 for this.
+On Mon, 9 Nov 2009, Josh Bressers wrote:
 
-No, they have not.  They fixed both -5516 (git_search) and -5517
-(git_snapshot and git_object) issues using quote_command() (in their
-git-1.5.2.4-24.4.src.rpm).  No idea why only one of the CVEs was
-mentioned in the security report...  They don't seem to include any
-patch for diff.external issue, or claim to have fixed it.
+> That issue has a CVE id. I gave it CVE-2009-3614 quite some time ago.
+> http://marc.info/?l=oss-security&m=125561742729846&w=2
 
-So -5517 is now really used to refer to two different issues...
+A "feature" in our oss-security list monitor prevented me from noticing
+this post.  Apologies.
 
-> (the CVE description is somewhat misleading, I think):
+> The discussion then branched out into if an unchecked call to setuid to
+> drop permissions is a security flaw (as a user could cause it to fail,
+> preventing oping from dropping privs). I saw nothing in the code that
+> showed it to be anything but a bug, as oping doesn't do anything
+> exciting after the call could fail.
 
-With little further details in SuSE security report, I think the
-description is quite appropriate - unspecified remote hole related to
-shell metacharacters.  Adding the two repo.or.cz links was most likely
-a guess, not a good one though.
+OK, in this context I would agree (just to be consistent with my Oct 16
+post.)
 
-Mitre was notified about this inconsistency in the -5517 description
-and references.
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+- Steve
