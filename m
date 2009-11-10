@@ -1,97 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/27/6
-Message-ID: <4A96A0EF.7060806@ficora.fi>
-Date: Thu, 27 Aug 2009 18:06:23 +0300
-From: CERT-FI Vulnerability Coordination <vulncoord@...ora.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/10/3
+Message-ID: <1289358301.135181257816957122.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 9 Nov 2009 20:35:57 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Robert Buchholz <rbu@...too.org>, coley@...us.mitre.org
-Subject: Re: Re: expat bug 1990430
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: oping allows the disclosure of arbitrary file contents
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+----- "Steven M. Christey" <coley@...us.mitre.org> wrote:
+> 
+> This says:
+> 
+>   2009-09-29 Version 1.3.3 is available. The new release fixes a serious
+>   security issue in oping: If the application is installed with the
+>   SetUID-bit, anybody on the system could use oping to read arbitrary files
+>   using the "-f" option.
+> 
+> So as stated, this sounds worthy of a CVE to me.  Thoughts?
+> 
 
-Steven M. Christey wrote:
-> Glad to see CERT-FI join the discussion.  A big factor in all this
-> confusion was that the original advisory did not explicitly state which
-> CVE was associated with which issue.  The scale of the effort also
-> complicates things, as happens with all PROTOS/fuzzing/test-suite projects
-> due the size and complexity of those efforts combined with lack of clarity
-> of codebase relationships and the stray coordination problem (i.e., "it
-> comes with the territory.")
+That issue has a CVE id. I gave it CVE-2009-3614 quite some time ago.
+http://marc.info/?l=oss-security&m=125561742729846&w=2
 
-Sorry about that. We will make our future advisories more explicit on
-the CVE references and the details. The test-suite/fuzzing tool projects
-sometimes make it pretty complicated to handle all the separate issues
-in a proper way. I am trying to clarify some of the confusion in my
-answers here.
+The discussion then branched out into if an unchecked call to setuid to drop
+permissions is a security flaw (as a user could cause it to fail, preventing
+oping from dropping privs). I saw nothing in the code that showed it to be
+anything but a bug, as oping doesn't do anything exciting after the call could
+fail.
 
-[...]
-> 3) CVE-2009-1885 is for a stack consumption problem in Xerces C++
->    involving nested parentheses and invalid byte values.  It appears that
->    expat and Xerces are distinct libraries, i.e. they don't have any
->    significant shared code?
-
-The expat and/or Xerces -maintainers are probably the right people to
-give a comprehensive answer for questions 1-3. However, based on the
-code I have been reading during the coordination, I think that expat and
-Xerces do not share much code.
-
-> 4) CVE-2009-2625 is for Xerces Java which is used in JRE/JDK and
->    presumably others.  The impact here is an infinite loop.  Is this
->    really a distinct problem than whatever CVE-2009-1885 is talking about?
-
-Yes, these are two distinct issues with significantly different reproducers.
-
-> 5) CERT-FI's response to the inquiry about the Python "libexpat"
->    being the same as the "expat" issue seemed to imply that CVE-2009-2625
->    is about expat... since that's the CVE that was used in the inquiry.
->    However, I thought from point 3 that expat and Xerces are distinct
->    libraries, which means the CVEs *wouldn't* be the same, because
->    CVE-2009-2625 explicitly names Xerces.  Also, for CVE-2009-2625, *none*
->    of the primary sources (Fedora, Red Hat, Mandriva, Sun) mention expat
->    in their advisories.
-
-I managed to misunderstand the only question Robert had for us. Even
-though the question was pretty clear. There probably is not a CVE for
-the expat crash (which affected Python expat too) yet. As the original
-issue was not handled by us and it was found already back in 2008, we
-did not allocate a CVE for the Python expat issue. So we probably need a
-CVE for the expat crash. I assume we could use this CVE for the Python
-expat crash too since the root cause is the same.
-
-> 6) The only recent CVE assignment that focuses on expat seems to be
->    related to the billion laughs attack (CVE-2009-1955).  So does this
->    mean that there weren't any other problems related to "infinite loop"
->    or "unexpected byte values and recursive parentheses" with memory
->    corruption?  If there were, then what are their CVEs?  (Distinct CVEs
->    would be needed because corruption/infinite-loop/"unexpected byte
->    values" suggest different vuln types than billion-laughs?)
-
-We are not aware of any other problems. In addition to the billion
-laughs issue with some code using expat, the only recent expat issue we
-are aware of is this segfault in expat's updatePosition -function when
-parsing multibyte characters. Our advisory does not cover any other
-expat issues than the Python expat -related part of the latter one.
-
-> bonus) Is Xerces vulnerable to the billion laughs attack?  If so, was this
->    covered in the CERT-FI advisory and does it map to any of the
->    previously-provided CVE names?
-
-The billion laughs attack was not covered in the CERT-FI advisory.
-
-I hope this clarifies the situation. I am sorry for the confusion for
-our part.
-
-Regards,
-
-Sauli Pahlman
-CERT-FI
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEUEARECAAYFAkqWoN8ACgkQ/64aC2E+yK8GXQCfdXn1S3+IbDqG5dY4yedRl72P
-MqMAlAtOmlxFGsnDV/v3CA3uYWYOu34=
-=VH2L
------END PGP SIGNATURE-----
+-- 
+    JB
