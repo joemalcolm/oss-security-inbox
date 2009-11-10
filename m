@@ -1,26 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/01/6
-Message-ID: <20090401110553.GB25996@ngolde.de>
-Date: Wed, 1 Apr 2009 13:05:53 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/10/7
+Message-Id: <20091110171845.429a4685.michael.s.gilbert@gmail.com>
+Date: Tue, 10 Nov 2009 17:18:45 -0500
+From: Michael Gilbert <michael.s.gilbert@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE id rquest: xfig insecure tmp files
+Subject: libjson-ruby: catastrophic backtracking
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-it has come to our intention that the Debian package of xfig 
-fixes some insecure temporary file creations in various 
-places in xfig. I attached the patch.
+hi all,
 
-Can I get a CVE id for this?
+should a cve id be issued for the following "catastrophic
+backtracking" issue in libjson-ruby?
 
-Cheers
-Nico
+http://rubyforge.org/frs/shownotes.php?release_id=36363
+http://bugs.debian.org/555516 (note two separate issues fixed there)
 
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0x73647CFF
-For security reasons, all text in this mail is double-rot13 encrypted.
+thanks,
+mike
 
-View attachment "25_mkstemp.dpatch" of type "text/plain" (10379 bytes)
-
-Content of type "application/pgp-signature" skipped
