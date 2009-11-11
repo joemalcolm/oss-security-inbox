@@ -1,27 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/06/13
-Message-ID: <Pine.GSO.4.51.0906061349060.28142@faron.mitre.org>
-Date: Sat, 6 Jun 2009 13:49:13 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/11/1
+Message-ID: <936586014.298061257961724435.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 11 Nov 2009 12:48:44 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security <oss-security@...ts.openwall.com>
-cc: coley@...re.org
-Subject: Re: CVE Request (irssi)
+Cc: coley <coley@...re.org>, serg@...ql.com
+Subject: CVE assignment and second opinion needed
 Content-Type: text/plain; charset=utf-8
 
+Hi Steve,
 
-======================================================
-Name: CVE-2009-1959
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1959
-Reference: MLIST:[oss-security] 20090529 CVE Request (irssi)
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/05/29/3
-Reference: MISC:http://xorl.wordpress.com/2009/05/28/irssi-event_wallops-off-by-one-readwrite/
-Reference: CONFIRM:http://bugs.irssi.org/index.php?do=details&task_id=662
-Reference: CONFIRM:http://www.irssi.org/ChangeLog
+So this one is a bit tricky.
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=555626
 
-Off-by-one error in the event_wallops function in
-fe-common/irc/fe-events.c in irssi 0.8.13 allows remote IRC servers to
-cause a denial of service (crash) via an empty command, which triggers
-a one-byte buffer under-read and a one-byte buffer underflow.
+There are almost two flaws here, certainly one. The issue really boils down to
+if /var/lib/mysql is world readable, it's possible for a local user who also
+has database access, and can guess a future database table name, could ensure
+that table will be a world writable file. That's an impressive runon sentence.
 
+So The question I have with respect to CVE assignment, is which part of this
+is worth of the ID. I'm thinking the directory permissions are possibly an
+issue, but by itself, isn't really a security flaw.
 
+The CREATE TABLE not fixing permissions if the file already exists is probably
+closer to the real problem. Being able to do a select into an outfile anywhere
+by default may also be an issue.
+
+I'm CCing Sergei Golubchik from MySQL who reported this to the packagers list
+so he can weigh in if I'm wrong (which is very possible).
+
+Also, Sergei, do you folks have a fix for this yet? I'm curious to see what
+you're fixing, which may help decide CVE assignment.
+
+Thanks.
+
+-- 
+    JB
