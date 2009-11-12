@@ -1,58 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/17/15
-Message-ID: <4AB2595A.8090102@redhat.com>
-Date: Thu, 17 Sep 2009 17:44:26 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: Gerald Combs <gerald@...eshark.org>
-CC: "Steven M. Christey" <coley@...us.mitre.org>, oss-security <oss-security@...ts.openwall.com>
-Subject: Wireshark - wnpa-sec-2009-05.html && wnpa-sec-2009-06.html -- CVE confirmation and CVE Request
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/12/2
+Message-ID: <916631556.335661257988049006.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 11 Nov 2009 20:07:29 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: libjson-ruby: catastrophic backtracking
 Content-Type: text/plain; charset=utf-8
 
-Hello Gerald, Steve, vendors,
 
-   this is due:
+----- "Michael Gilbert" <michael.s.gilbert@...il.com> wrote:
 
-     http://www.wireshark.org/security/wnpa-sec-2009-05.html
-     http://www.wireshark.org/security/wnpa-sec-2009-06.html
+> hi all,
+> 
+> should a cve id be issued for the following "catastrophic
+> backtracking" issue in libjson-ruby?
+> 
+> http://rubyforge.org/frs/shownotes.php?release_id=36363
+> http://bugs.debian.org/555516 (note two separate issues fixed there)
+> 
 
-   Gerald, could you please confirm, that:
+Can someone elaborate on what "catastrophic backtracking" means? Is this a DoS?
 
-     A, The AFS dissector could crash.   (Bug 3564)
-        Versions affected: 0.9.2 to 1.0.8, 1.2.0
+Thanks.
 
-       is already assigned http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2562 and
-
-     B, The Infiniband dissector could crash on some platforms.
-        Versions affected: 0.9.2 to 1.0.8, 1.2.0
-
-        is already assigned http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2563  ?
-
-   Steve, once confirmed, could you please allocate CVE ids for
-   the remaining three issues:
-
-   * The OpcUa dissector could use excessive CPU and memory.   (Bug 3986)
-     Versions affected: 0.99.6 to 1.0.8, 1.2.0 to 1.2.1
-
-     Upstream bug: https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=3986
-     Upstream patch: http://anonsvn.wireshark.org/viewvc?view=rev&revision=29813
-
-   * The GSM A RR dissector could crash.   (Bug 3893)
-     Versions affected: 1.2.0 to 1.2.1
-
-     Upstream bug: https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=3893
-     Upstream patch: http://anonsvn.wireshark.org/viewvc/trunk/epan/dissectors/packet-gsm_a_rr.c?view=log&pathrev=29403
-
-    * The TLS dissector could crash on some platforms.   (Bug 4008)
-      Versions affected: 1.2.0 to 1.2.1
-
-      Upstream bug: https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=4008
-      Upstream patch: http://anonsvn.wireshark.org/viewvc/trunk/epan/dissectors/packet-dtls.c?view=log&pathrev=29906
-
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-
-
-
+-- 
+    JB
