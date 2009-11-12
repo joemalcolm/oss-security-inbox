@@ -1,22 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/15/2
-Message-ID: <4AAEF45C.2080007@kernel.sg>
-Date: Tue, 15 Sep 2009 09:56:44 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/12/1
+Message-ID: <876718311.335541257987932605.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 11 Nov 2009 20:05:32 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE-2009-1883 kernel: missing capability check in z90crypt
+Subject: Re: CVE request: libpoppler4: buffer overflow in the Abiword backend
 Content-Type: text/plain; charset=utf-8
 
-Eugene Teo wrote:
-> There is a missing capability check in the z90crypt driver in the Linux 
-> kernel. This missing check could allow a local, unprivileged user to 
-> bypass intended capability restrictions. Thanks to Solar Designer for 
-> reporting this issue to us.
+----- "Thomas Biege" <thomas@...e.de> wrote:
 > 
-> Note that this does not affect upstream anymore.
+> Hello everybody,
+> 
+> does this need an CVE-ID?
+> 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=534680
+> 
 
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-1883
+I presume this does need a CVE id, but seeing as PDF related bugs are often a
+Pandora's Box, I'd rather not assign one just yet. Has someone looked at this
+to see what the root of the problem is?
 
-Thanks, Eugene
+Thanks.
+
+-- 
+    JB
