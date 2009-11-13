@@ -1,54 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/12/1
-Message-Id: <200903121119.18721.ludwig.nussel@suse.de>
-Date: Thu, 12 Mar 2009 11:19:18 +0100
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/13/2
+Message-ID: <20091113105711.GB27846@suse.de>
+Date: Fri, 13 Nov 2009 11:57:11 +0100
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...re.org>
-Subject: Re: CVE request - horde, imp
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: bad permissions on megaraid_sas sysfs files
 Content-Type: text/plain; charset=utf-8
 
-Mitre was not in CC I guess the request got lost. 
+On Fri, Nov 13, 2009 at 02:39:24PM +0800, Eugene Teo wrote:
+> The megaraid_sas driver exposes a number of driver attributes in sysfs. 
+> Many of these are read-only, just export information from the driver and 
+> are world-readable.
+> 
+> A couple of attributes are writable and may be used to change the 
+> behaviour of the driver (e.g. setting debug logging levels, selecting 
+> poll vs. interrupt I/O mode etc).
+> 
+> Some of these writable attributes are mistakenly created with 
+> world-writable permissions, e.g. dbg_lvl and poll_mode_io.
+> 
+> This would allow an unprivileged user to affect kernel driver behaviour 
+> and logging level.
+> 
+> Upstream made the dbd_lvl permissions more restrictive:
+> http://git.kernel.org/linus/66dca9b8c50b5e59d3bea8b21cee5c6dae6c9c46
+> 
+> The poll_mode_io pseudofile still has world-writable permissions 
+> upstream. I'm getting my colleague to submit a patch.
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=526068
 
-Tomas Hoger wrote:
-> Hi!
-> 
-> New versions of horde and imp fix few security issues:
-> 
-> Horde 3.2.4 and 3.3.3:
->      * SECURITY: Fix unescaped output in the tag cloud block
->      * SECURITY: Fix unvalidated Horde_Image driver name
-> 
-> http://lists.horde.org/archives/announce/2009/000483.html
-> http://lists.horde.org/archives/announce/2009/000482.html
-> http://cvs.horde.org/diff.php/horde/docs/CHANGES?r1=1.515.2.413.2.3&r2=1.515.2.413.2.5&ty=h
-> 
-> Patches:
-> http://cvs.horde.org/diff.php/horde/services/portal/cloud_search.php?r1=1.1.2.2&r2=1.1.2.2.4.1
-> http://cvs.horde.org/diff.php/framework/Image/Image.php?r1=1.39.10.17&r2=1.39.10.17.4.1
-> 
-> 
-> Further details:
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=513265
-> 
-> 
-> IMP 4.2.2 and 4.3.3:
-> http://lists.horde.org/archives/announce/2009/000484.html
-> http://lists.horde.org/archives/announce/2009/000485.html
-> http://cvs.horde.org/diff.php/imp/docs/CHANGES?r1=1.699.2.301.2.1&r2=1.699.2.301.2.4&ty=h
-> 
-> Patches:
-> http://cvs.horde.org/diff.php/imp/pgp.php?r1=2.79.6.15&r2=2.79.6.15.2.1
-> http://cvs.horde.org/diff.php/imp/smime.php?r1=2.48.4.12&r2=2.48.4.12.4.1
-> http://cvs.horde.org/diff.php/imp/message.php?r1=2.560.4.56&r2=2.560.4.56.4.1
-> 
-> Debian bug:
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=513266
-> 
-> 
+It seems you can set poll_mode_io multiple times to the full integer range,
+(like to 1 , 2 , 3 etc.) and it will reinitialize its timers everytime
+via init_timer() and add_timer().
 
--- 
- (o_   Ludwig Nussel
- //\   
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+This will corrupt the timer chain (I think) by setting entry.next = NULL
+in init_timer().
+
+It should only accept a boolean value. :/
+
+Ciao, Marcus
