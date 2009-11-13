@@ -1,22 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/01/2
-Message-ID: <856310338.1352081254423016480.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 1 Oct 2009 14:50:16 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/13/4
+Message-ID: <82850390.510611258145724661.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 13 Nov 2009 15:55:24 -0500 (EST)
 From: Josh Bressers <bressers@...hat.com>
-To: coley <coley@...re.org>
-Cc: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request (kernel)
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: bad permissions on megaraid_sas sysfs files
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
-
-There is an information leak issue in the Linux Kernel:
-http://lkml.org/lkml/2009/10/1/164
-
-It seems that an ia32 process running on an ia64 machine could see register
-contents from a previous process.
+Please use CVE-2009-3889 for this.
 
 Thanks.
 
 -- 
     JB
+
+
+----- "Eugene Teo" <eugeneteo@...nel.sg> wrote:
+
+> The megaraid_sas driver exposes a number of driver attributes in
+> sysfs. 
+> Many of these are read-only, just export information from the driver
+> and 
+> are world-readable.
+> 
+> A couple of attributes are writable and may be used to change the 
+> behaviour of the driver (e.g. setting debug logging levels, selecting
+> 
+> poll vs. interrupt I/O mode etc).
+> 
+> Some of these writable attributes are mistakenly created with 
+> world-writable permissions, e.g. dbg_lvl and poll_mode_io.
+> 
+> This would allow an unprivileged user to affect kernel driver
+> behaviour 
+> and logging level.
+> 
+> Upstream made the dbd_lvl permissions more restrictive:
+> http://git.kernel.org/linus/66dca9b8c50b5e59d3bea8b21cee5c6dae6c9c46
+> 
+> The poll_mode_io pseudofile still has world-writable permissions 
+> upstream. I'm getting my colleague to submit a patch.
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=526068
+> 
+> Thanks, Eugene
