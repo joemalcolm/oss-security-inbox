@@ -1,27 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/16/4
-Message-ID: <20091016102904.319368ee@tanana.suse.de>
-Date: Fri, 16 Oct 2009 10:29:04 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/13/1
+Message-ID: <4AFCFF1C.6090604@kernel.sg>
+Date: Fri, 13 Nov 2009 14:39:24 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Subject: Re: viewvc: CVE request: XSS and illegal characters while printing name-value pairs
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: bad permissions on megaraid_sas sysfs files
 Content-Type: text/plain; charset=utf-8
 
-Thomas Biege wrote:
-> Version 1.1.2 (released 11-Aug-2009)
-> 
->   * security fix: validate the 'view' parameter to avoid XSS attack
->   * security fix: avoid printing illegal parameter names and values
-> 
-> http://viewvc.tigris.org/source/browse/*checkout*/viewvc/tags/1.1.2/CHANGES
+The megaraid_sas driver exposes a number of driver attributes in sysfs. 
+Many of these are read-only, just export information from the driver and 
+are world-readable.
 
-CVE request dropped off the radar I guess.
+A couple of attributes are writable and may be used to change the 
+behaviour of the driver (e.g. setting debug logging levels, selecting 
+poll vs. interrupt I/O mode etc).
 
-cu
-Ludwig
+Some of these writable attributes are mistakenly created with 
+world-writable permissions, e.g. dbg_lvl and poll_mode_io.
 
--- 
- (o_   Ludwig Nussel
- //\   
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+This would allow an unprivileged user to affect kernel driver behaviour 
+and logging level.
+
+Upstream made the dbd_lvl permissions more restrictive:
+http://git.kernel.org/linus/66dca9b8c50b5e59d3bea8b21cee5c6dae6c9c46
+
+The poll_mode_io pseudofile still has world-writable permissions 
+upstream. I'm getting my colleague to submit a patch.
+
+https://bugzilla.redhat.com/show_bug.cgi?id=526068
+
+Thanks, Eugene
