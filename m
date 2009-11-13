@@ -1,46 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/06/2
-Message-ID: <JPy33wd8NzsoYWV61JbOsQLrJDU@psUvbB26hX94GoQd3C5ThNBxOp8>
-Date: Sat, 6 Jun 2009 20:00:20 +0400
-From: Eygene Ryabinkin <rea-sec@...elabs.ru>
-To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Cc: coley@...re.org, security@...che.org
-Subject: Re: CVE request: "billion laughs" attack against Apache APR
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/13/3
+Message-ID: <1522056838.509851258145256828.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 13 Nov 2009 15:47:36 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: NOMMU: Dont pass NULL pointers to fput() in do_mmap_pgoff()
 Content-Type: text/plain; charset=utf-8
 
-Good day.
+While this is a bit obscure, let's give it an ID anyway.
 
-Wed, Jun 03, 2009 at 04:07:43PM +0100, Joe Orton wrote:
-> The expat XML parser is vulnerable to the "billion laughs" entity 
-> expansion attack.  This results in a denial of service vulnerability in 
-> any network-facing service which uses the Apache "APR-util" library's 
-> wrapper interface for expat to parse untrusted XML documents.  The 
-> Apache httpd WebDAV module "mod_dav" is such a service.
-> 
-> References: 
-> http://milw0rm.com/exploits/8842 
-> http://marc.info/?l=apr-dev&m=124396021826125&w=2
-> http://svn.apache.org/viewvc?rev=781403&view=rev
-> 
-> Affected versions: 
-> APR-util <= 1.3.4
+CVE-2009-3888
 
-Fri, Jun 05, 2009 at 08:21:16PM -0400, Josh Bressers wrote:
-> So there's another apr-util flaw. The initial mail makes it sound pretty
-> scary, but it's really not that bad.
-> 
-> You can find all the scary details here:
-> https://bugzilla.redhat.com/show_bug.cgi?id=504390
+Thanks.
 
-Please, note that these two issues and CVE-2009-0023 seem to be
-applicable to Apache 2.2.11 and Apache 2.0.63 (latest 2.x versions),
-since they have bundled apr-util inside.  At least both have the
-vulnerable code and I had verified the "billion laughs" attack against
-Apache 2.2.11 with Subversion mod_dav_svn that uses internal Apache
-libaprutil.  OS for testing was FreeBSD, but I think that others are
-affected as well.
-
-CC'ing Apache security contacts in case they aren't informed about this
-issue yet.  Folks, may be I am wrong in my assertions?
 -- 
-Eygene
+    JB
+
+
+----- "Eugene Teo" <eugeneteo@...nel.sg> wrote:
+
+> From upstream patch:
+> "Don't pass NULL pointers to fput() in the error handling paths of the
+> 
+> NOMMU do_mmap_pgoff() as it can't handle it.
+> 
+> The following can be used as a test program:
+> int main() { static long long a[1024 * 1024 * 20] = { 0 }; return a;}
+> 
+> Without the patch, the code oopses in atomic_long_dec_and_test() as 
+> called by fput() after the kernel complains that it can't allocate
+> that 
+> big a chunk of memory.  With the patch, the kernel just complains
+> about 
+> the allocation size and then the program segfaults during execve() as
+> 
+> execve() can't complete the allocation of all the new ELF program
+> segments."
+> 
+> http://git.kernel.org/linus/89a8640279f8bb78aaf778d1fc5c4a6778f18064
+> 
+> Doesn't affect if CONFIG_MMU=y.
+> 
+> Thanks, Eugene
+
+-- 
+    JB
