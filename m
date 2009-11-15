@@ -1,38 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/02/5
-Message-ID: <Pine.GSO.4.51.0903021444340.26325@faron.mitre.org>
-Date: Mon, 2 Mar 2009 14:44:40 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/15/3
+Message-ID: <Pine.LNX.4.64.0911151042480.14563@forced.attrition.org>
+Date: Sun, 15 Nov 2009 10:43:23 +0000 (UTC)
+From: security curmudgeon <jericho@...rition.org>
 To: oss-security@...ts.openwall.com
-cc: Marcus Meissner <meissner@...e.de>
-Subject: Re: CVE request: optipng security release
+Subject: Re: CVE request: Wordpress 2.8.6
 Content-Type: text/plain; charset=utf-8
 
 
-======================================================
-Name: CVE-2009-0749
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0749
-Reference: MLIST:[oss-security] 20090224 CVE request: optipng security release
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/02/24/2
-Reference: MLIST:[oss-security] 20090225 Re: CVE request: optipng security release
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/02/25/4
-Reference: CONFIRM:http://optipng.sourceforge.net
-Reference: CONFIRM:http://sourceforge.net/tracker/index.php?func=detail&aid=2582013&group_id=151404&atid=780913
-Reference: BID:33873
-Reference: URL:http://www.securityfocus.com/bid/33873
-Reference: SECUNIA:34035
-Reference: URL:http://secunia.com/advisories/34035
-Reference: VUPEN:ADV-2009-0510
-Reference: URL:http://www.vupen.com/english/advisories/2009/0510
-Reference: XF:optipng-gifreadnextextension-code-execution(48879)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/48879
+On Sun, 15 Nov 2009, Alex Legler wrote:
 
-Use-after-free vulnerability in the GIFReadNextExtension function in
-lib/pngxtern/gif/gifread.c in OptiPNG 0.6.2 and earlier allows
-context-dependent attackers to cause a denial of service (application
-crash) via a crafted GIF image that causes the realloc function to
-return a new pointer, which triggers memory corruption when the old
-pointer is accessed.
+: Wordpress released an update, fixing 2 issues:
+: 
+: "2.8.6 fixes two security problems that can be exploited by registered, 
+: logged in users who have posting privileges.  If you have untrusted 
+: authors on your blog, upgrading to 2.8.6 is recommended.
+: 
+: The first problem is an XSS vulnerability in Press This discovered by 
+: Benjamin Flesch.  The second problem, discovered by Dawid Golunski, is 
+: an issue with sanitizing uploaded file names that can be exploited in 
+: certain Apache configurations. Thanks to Benjamin and Dawid for finding 
+: and reporting these."
+: 
+: from
+: http://wordpress.org/development/2009/11/wordpress-2-8-6-security-release/
+: 
+: I believe these are the matching tickets:
+: Issue 1: http://core.trac.wordpress.org/ticket/11119
+: Issue 2: http://core.trac.wordpress.org/ticket/11122
 
+OSVDB   Disclosure              Title
 
+59958 	2009-11-12 		WordPress /wp-includes/functions.php wp_check_filetype() Function File Upload Arbitrary Code Execution 
+
+59959 	2009-11-12 		WordPress press-this.php Unspecified XSS
