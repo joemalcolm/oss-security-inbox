@@ -1,47 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/08/3
-Message-Id: <1239178420.3175.2.camel@dhcp-lab-164.englab.brq.redhat.com>
-Date: Wed, 08 Apr 2009 10:13:40 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: (Sort of urgent) CVE request -- ghostscript
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/15/1
+Message-Id: <200911151508.28373.steffen.joeris@skolelinux.de>
+Date: Sun, 15 Nov 2009 15:08:28 +1100
+From: Steffen Joeris <steffen.joeris@...lelinux.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE Id request: request-tracker
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve,
+Hi
 
-  could you please allocate new CVE ids for the following
-two issues?
+There is an XSS issue in request-tracker. Please see debian bug #546778[0].
+Could I please get a CVE id for this?
 
-Thank you, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Cheers
+Steffen
 
-On Wed, 2009-04-01 at 21:43 +0200, Jan Lieskovsky wrote:
-> Hello Steve,
-> 
->   could you please allocate new CVE ids for the following two 
-> Ghostscript issues:
-> 
-> 1, DoS (crash) in CCITTFax decoding filter
->    References:
->    https://bugzilla.redhat.com/show_bug.cgi?id=493442
->    https://bugzilla.redhat.com/show_bug.cgi?id=229174 
->    -^ original report, so CVE-2007-XXXX will be needed
->    https://bugzilla.redhat.com/show_bug.cgi?id=493442#c1 (PoC)
-> 
-> 
-> 2, Buffer overflow in BaseFont writer module for pdfwrite defice
->    References:
->    https://bugzilla.redhat.com/show_bug.cgi?id=493445
->    http://bugs.ghostscript.com/show_bug.cgi?id=690211
->    -^ upstream bug report, so CVE-2008-XXXX will be needed
->    http://svn.ghostscript.com/viewvc?view=rev&sortby=rev&revision=9304 (upstream patch)
-> 
-> 
-> Thanks, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
-> 
-> 
+[0]: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=546778
 
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
