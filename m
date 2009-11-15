@@ -1,73 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/05/1
-Message-ID: <20090905114733.GH4180@inversepath.com>
-Date: Sat, 5 Sep 2009 12:47:33 +0100
-From: Andrea Barisani <lcars@...rt.org>
-To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
-Subject: [oCERT-2009-013] yTNEF/Evolution TNEF attachment decoder input sanitization errors
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/15/2
+Message-ID: <20091115114057.55e495c1@mail.netloc.info>
+Date: Sun, 15 Nov 2009 11:40:57 +0100
+From: Alex Legler <a3li@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: Wordpress 2.8.6
 Content-Type: text/plain; charset=utf-8
 
-#2009-013 yTNEF/Evolution TNEF attachment decoder input sanitization errors
+Hey,
 
-Description:
+Wordpress released an update, fixing 2 issues:
 
-yTNEF, an open source filter program that decodes Transport Neutral
-Encapsulation Format (TNEF) e-mail attachments, and the Evolution TNEF
-attachment decoder plugin suffer from directory traversal and buffer overflow
-vulnerabilities.
+"2.8.6 fixes two security problems that can be exploited by registered,
+logged in users who have posting privileges.  If you have untrusted
+authors on your blog, upgrading to 2.8.6 is recommended.
 
-The vulnerabilities lead to arbitrary code execution with the privilege of the
-target user running the decoders.
+The first problem is an XSS vulnerability in Press This discovered by
+Benjamin Flesch.  The second problem, discovered by Dawid Golunski, is
+an issue with sanitizing uploaded file names that can be exploited in
+certain Apache configurations. Thanks to Benjamin and Dawid for finding
+and reporting these."
 
-The directory traversal vulnerability is caused by improper sanitization of the
-file name used for saving the attachments, as it is computed directly from
-properties contained in the TNEF structure without checking for conditions that
-allow to traverse outside the temporary directory used for attachment storage.
-This leads to arbitrary code execution in case the attacker crafts an
-attachment that would overwrite a file used for execution (as an example the
-bashrc profile).
+from
+http://wordpress.org/development/2009/11/wordpress-2-8-6-security-release/
 
-Additionally buffer and heap overflow vulnerabilities can be triggered by
-passing a file name exceeding a fixed size of 256 bytes in the TNEF data
-structure. This can lead to arbitrary code execution if exploited.
+I believe these are the matching tickets:
+Issue 1: http://core.trac.wordpress.org/ticket/11119
+Issue 2: http://core.trac.wordpress.org/ticket/11122
 
-Affected version:
+Thanks, Alex
 
-yTNEF, all versions
-
-Evolution TNEF plugin, all versions
-
-Fixed version:
-
-yTNEF, N/A
-
-Evolution TNEF plugin, N/A
-
-Credit: vulnerability report and PoC code received from Yorick Koster < yorick
-[at] akitasecurity [dot] nl >.
-
-CVE: N/A
-
-Timeline:
-
-2009-07-09: vulnerability report received
-2009-07-10: contacted ytnef and evolution maintainers
-2009-07-11: former evolution plugin maintainer communicates that code is
-            unmaintained, voluntarily deletes online copy
-2009-07-21: contacted affected vendors, advising to remove or disable the
-            unmaintained code
-2009-09-05: advisory release
-
-References:
-http://www.akitasecurity.nl/advisory.php?id=AK20090601
-
-Permalink:
-http://www.ocert.org/advisories/ocert-2009-013.html
-
--- 
-Andrea Barisani |                Founder & Project Coordinator
-          oCERT | Open Source Computer Emergency Response Team
-
-<lcars@...rt.org>                         http://www.ocert.org
- 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
-        "Pluralitas non est ponenda sine necessitate"
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
