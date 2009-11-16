@@ -1,68 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/17/2
-Message-ID: <hgcbtc$5ne$1@ger.gmane.org>
-Date: Wed, 16 Dec 2009 22:26:25 -0600
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/16/3
+Message-ID: <391273470.108201258411170607.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 16 Nov 2009 17:39:30 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: Some small KDE issues
+Cc: jt@....org
+Subject: Re: CVE request: oping allows the disclosure of arbitrary file contents
 Content-Type: text/plain; charset=utf-8
 
-Tim Brown wrote:
-[...]
-> Retrospectively, I would go with CVEs for the the following:
+----- "Tomas Hoger" <thoger@...hat.com> wrote:
+> On Thu, 15 Oct 2009 15:15:57 +0200 Julien Tinnes <jt@....org> wrote:
 > 
-> * Ark Uses KHTML For Rendering Unknown File Types
-
-I don't think this is an issue on its own. 
-Not disabling javascript could be treated as one.
-I haven't tried myself, but can plugins be loaded? if that's so then there's
-a bigger risk here.
-
-> * KMail Allows Attachment Spoofing
-
-Just like the above.
-
-> * Javascript Enabled On KHTML Based Views By Default
-
-I wouldn't treat that as an issue, I would expect applications to disable
-javascript appropriately.
-
-> * KJS/KIO Slaves Enforcing Broken Same Origin Policy
-
-Agreed.
-
+> > in case anyone cares, oping also attempts to drop privileges with
+> > setuid(getuid()); without checking setuid()'s return value.
+> > 
+> > It's an obvious vulnerability, because a local attacker can make setuid()
+> > fail by setting a resource limit of 0 for RLIMIT_NPROC with setrlimit().
 > 
-> Note that KDE's fix for the latter has caused some complaints, something
-> that I suspect they were mindful of when we discussed the issues:
-> 
-> * http://forum.kde.org/viewtopic.php?f=18&t=83649
-
-Sure, not allowing xmlhttprequest when the context and the request are both
-file:// should have been expected to cause disruptions.
-
-> 
-> On top of this we have a raft of IO slave related vulnerabilities (which
-> KDE,
-> oCERT and Portcullis agreed about) .  I'm not sure what the status of each
-> of these is, as Thomas alluded to they were fixed at various times (I'm
-> not even
-> 100% sure they're all fixed now).  I would create another CVE for these.
-
-Further investigation is needed. If they were fixed at different times they
-might each deserve their own CVE.
-
-> 
-> Finally, there is the issue with KWallet which KDE never addressed.  The
-> closest I got to an answer regarding this was that users complained too
-> much even now about the matching, so adding additional restrictions were
-> unwelcome.
+> Does the RLIMIT_NPROC trick work against oping, or any setuid app that calls
+> setuid(getuid())?
 > 
 
-No matter what they say or do, this is an issue.
+This should work for everything that calls setuid()
 
-Regards,
+I have a little bit about this here:
+http://www.bress.net/blog/archives/34-setuid-madness.html
+
+The short story is that if you call setuid(), you need to check the return
+code.
+
 -- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
-
-
+    JB
