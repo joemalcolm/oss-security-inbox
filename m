@@ -1,53 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/28/1
-Message-ID: <4B386275.6020803@redhat.com>
-Date: Mon, 28 Dec 2009 15:47:01 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/16/2
+Message-ID: <20091116225116.2b6a9a03@redhat.com>
+Date: Mon, 16 Nov 2009 22:51:16 +0100
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE requests - kernel security regressions for CVE-2009-1385/and -1389
+Cc: jt@....org
+Subject: Re: CVE request: oping allows the disclosure of  arbitrary file contents
 Content-Type: text/plain; charset=utf-8
 
-http://events.ccc.de/congress/2009/Fahrplan//events/3596.en.html
+On Thu, 15 Oct 2009 15:15:57 +0200 Julien Tinnes <jt@....org> wrote:
 
-In Fabian's talk, he describes two kernel NIC driver issues:
+> in case anyone cares, oping also attempts to drop privileges with
+> setuid(getuid()); without checking setuid()'s return value.
+> 
+> It's an obvious vulnerability, because a local attacker can make
+> setuid() fail by setting a resource limit of 0 for RLIMIT_NPROC with
+> setrlimit().
 
-Issue #1
-Fabian claimed that CVE-2009-1385 has an incorrect fix: 
-http://git.kernel.org/linus/ea30e11970a96cfe5e32c03a29332554573b4a10.
+Does the RLIMIT_NPROC trick work against oping, or any setuid app that
+calls setuid(getuid())?
 
-Which fixes a DoS when the frame spans multiple buffers and the last 
-buffer contains less than four bytes. However, if that last fragment is 
-longer than 4 bytes, it will actually be taken into account while the 
-previous fragments will have been ignored.
-
-Issue #2
-The fix for CVE-2009-1389 regarding the r8169 driver introduces a 
-similar security problem as this: 
-http://git.kernel.org/linus/fdd7b4c3302c93f6833e338903ea77245eb510b4 is 
-a revert of this: 
-http://git.kernel.org/linus/126fa4b9ca5d9d7cb7d46f779ad3bd3631ca387c.
-
-The accompanying comment for the original commit (126fa):
-
-The size of the incoming frame is not correctly checked.
-
-The RxMaxSize register (0xDA) does not work as expected and incoming 
-frames whose size exceeds the MTU actually end spanning multiple 
-descriptors. The first Rx descriptor contains the size of the whole 
-frame (or some garbage in its place). The driver does not expect 
-something above the space allocated to the current skb and crashes 
-loudly when it issues a skb_put.
-
-The fix contains two parts:
-- disable hardware Rx size filtering: so far it only proved to be able
-to trigger some new fancy errors;
-[...]
-
-There are other issues he mentioned during his talk, regarding squid and 
-pidgin. You can read about it at this wonderful blog: 
-http://blog.c22.cc/2009/12/27/26c3-cat-procsysnetipv4fuckups/.
-
-Thanks, Eugene
 -- 
-Eugene Teo / Red Hat Security Response Team
+Tomas Hoger / Red Hat Security Response Team
