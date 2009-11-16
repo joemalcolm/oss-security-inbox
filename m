@@ -1,20 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/18/3
-Message-ID: <102956853.295151258568743959.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 18 Nov 2009 13:25:43 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/16/1
+Message-ID: <1721505702.99771258406687618.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 16 Nov 2009 16:24:47 -0500 (EST)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: libpoppler4: buffer overflow in the Abiword backend
+Subject: Re: CVE request: Wordpress 2.8.6
 Content-Type: text/plain; charset=utf-8
 
------ "Thomas Biege" <thomas@...e.de> wrote:
-> 
-> Our maintainer told me that version 3 and 5 are vulnerable too.
-> 
+Let's use these:
 
-As an FYI, MITRE assigned this CVE-2009-3938.
+CVE-2009-3890 wordpress OSVDB 59958
+CVE-2009-3891 wordpress OSVDB 59959
 
 Thanks.
 
 -- 
     JB
+
+----- "security curmudgeon" <jericho@...rition.org> wrote:
+
+> On Sun, 15 Nov 2009, Alex Legler wrote:
+> 
+> : Wordpress released an update, fixing 2 issues:
+> : 
+> : "2.8.6 fixes two security problems that can be exploited by
+> registered, 
+> : logged in users who have posting privileges.  If you have untrusted
+> 
+> : authors on your blog, upgrading to 2.8.6 is recommended.
+> : 
+> : The first problem is an XSS vulnerability in Press This discovered
+> by 
+> : Benjamin Flesch.  The second problem, discovered by Dawid Golunski,
+> is 
+> : an issue with sanitizing uploaded file names that can be exploited
+> in 
+> : certain Apache configurations. Thanks to Benjamin and Dawid for
+> finding 
+> : and reporting these."
+> : 
+> : from
+> :
+> http://wordpress.org/development/2009/11/wordpress-2-8-6-security-release/
+> : 
+> : I believe these are the matching tickets:
+> : Issue 1: http://core.trac.wordpress.org/ticket/11119
+> : Issue 2: http://core.trac.wordpress.org/ticket/11122
+> 
+> OSVDB   Disclosure              Title
+> 
+> 59958 	2009-11-12 		WordPress /wp-includes/functions.php
+> wp_check_filetype() Function File Upload Arbitrary Code Execution 
+> 
+> 59959 	2009-11-12 		WordPress press-this.php Unspecified XSS
