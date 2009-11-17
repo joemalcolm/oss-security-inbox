@@ -1,39 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/06/8
-Message-ID: <Pine.GSO.4.51.0905061210410.3040@faron.mitre.org>
-Date: Wed, 6 May 2009 12:10:51 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request (sort of): Quagga BGP crasher
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/17/1
+Message-ID: <20091117064917.GC31762@suse.de>
+Date: Tue, 17 Nov 2009 07:49:17 +0100
+From: Thomas Biege <thomas@...e.de>
+To: OSS-Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: CVE request: virtualbox-ose guest can trigger denial of service at host, mem consumption
 Content-Type: text/plain; charset=utf-8
 
 
-======================================================
-Name: CVE-2009-1572
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1572
-Reference: MLIST:[oss-security] 20090501 CVE request (sort of): Quagga BGP crasher
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/05/01/1
-Reference: MLIST:[oss-security] 20090501 Re: CVE request (sort of): Quagga BGP crasher
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/05/01/2
-Reference: MLIST:[quagga-dev] 20090203 [quagga-dev 6391]  [PATCH] BGP 4-byte ASN bug fixes
-Reference: URL:http://marc.info/?l=quagga-dev&m=123364779626078&w=2
-Reference: MISC:http://thread.gmane.org/gmane.network.quagga.devel/6513
-Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=526311
-Reference: DEBIAN:DSA-1788
-Reference: URL:http://www.debian.org/security/2009/dsa-1788
-Reference: BID:34817
-Reference: URL:http://www.securityfocus.com/bid/34817
-Reference: OSVDB:54200
-Reference: URL:http://www.osvdb.org/54200
-Reference: SECUNIA:34999
-Reference: URL:http://secunia.com/advisories/34999
-Reference: XF:quagga-systemnumber-dos(50317)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/50317
+Hi,
+just something I found in October:
+http://thetoms-random-thoughts.blogspot.com/2009/11/virtualbox-ose-guest-can-trigger-denial.html
 
-The BGP daemon (bgpd) in Quagga 0.99.11 and earlier allows remote
-attackers to cause a denial of service (crash) via an AS path
-containing ASN elements whose string representation is longer than
-expected, which triggers an assert error.
+The kernel module can be used to allocate an arbitrary amount of memory.
 
 
+-- 
+Bye,
+     Thomas
+-- 
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+-- 
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
