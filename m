@@ -1,33 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/11/2
-Message-ID: <49B70D5B.5090503@redhat.com>
-Date: Wed, 11 Mar 2009 09:01:15 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/17/3
+Message-ID: <20091117204812.05b6c155@redhat.com>
+Date: Tue, 17 Nov 2009 20:48:12 +0100
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-2009-0778 kernel: rt_cache leak
+Cc: jt@....org
+Subject: Re: CVE request: oping allows the disclosure of  arbitrary file contents
 Content-Type: text/plain; charset=utf-8
 
-Reported by Hector Herrera:
-A "REJECT" route in a software router (ip_forward = 1) based on CentOS 
-5.2 will cause the kernel to lose track of cached routes.  Once the 
-number of allocated route cache objects (as indicated by the value of 
-ip_dst_cache in /proc/slabinfo) reaches the value of 
-/proc/sys/net/ipv4/route/max_size - 1, the kernel will complain with a 
-'dst cache overflow' errors for every received packet and all network 
-connectivity will cease.
+On Mon, 16 Nov 2009 17:39:30 -0500 (EST) Josh Bressers wrote:
 
-But was introduced in upstream commit 8b7817f3a95. It was later fixed in 
-upstream commit 7c0ecc4c4f.
+> > Does the RLIMIT_NPROC trick work against oping, or any setuid app
+> > that calls setuid(getuid())?
+> 
+> This should work for everything that calls setuid()
+> 
+> I have a little bit about this here:
+> http://www.bress.net/blog/archives/34-setuid-madness.html
 
-Workaround:
-- either remove or replace the "REJECT" route with a different 
-alternative such as 'ip route add 10.10.0.0/16 via 127.0.0.1'.
-- using iptables.
+My previous web search did find that one.  Though set_user() doing
+NPROC check is only called when new uid differs from current real uid
+(so not called in setuid(getuid()) case).
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-0778
-
-Thanks, Eugene
 -- 
-Eugene Teo / Red Hat Security Response Team
+Tomas Hoger / Red Hat Security Response Team
