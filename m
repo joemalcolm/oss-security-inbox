@@ -1,26 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/26/2
-Message-Id: <1248593070.4204.16.camel@localhost>
-Date: Sun, 26 Jul 2009 09:24:30 +0200
-From: Alex Legler <a3li@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/18/3
+Message-ID: <102956853.295151258568743959.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 18 Nov 2009 13:25:43 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- HTMLDOC
+Subject: Re: CVE request: libpoppler4: buffer overflow in the Abiword backend
 Content-Type: text/plain; charset=utf-8
 
-On Sa, 2009-07-25 at 15:31 +0200, Nico Golde wrote:
-> Did you check:
-> htmllib.cxx:          if (sscanf(line, "%*s%*s%*s%*s%f%*s%*s%s", &width, glyph) != 2)
-> ps-pdf.cxx:   if (sscanf(line, "%*s%*s%*s%*s%d%*s%*s%s", &width, glyph) != 2)
-> as well?
-> Looks like a similar issue to me.
+----- "Thomas Biege" <thomas@...e.de> wrote:
+> 
+> Our maintainer told me that version 3 and 5 are vulnerable too.
 > 
 
-Indeed it is the same issue. I could cause an overflow with a crafted
-AFM font file.
+As an FYI, MITRE assigned this CVE-2009-3938.
 
-I have added these two to the upstream bug report.
+Thanks.
 
-Regards,
-Alex
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+-- 
+    JB
