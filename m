@@ -1,28 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/08/1
-Message-ID: <20091008171322.GC3282@redhat.com>
-Date: Thu, 8 Oct 2009 11:13:22 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/18/1
+Message-ID: <20091118070753.GA28733@suse.de>
+Date: Wed, 18 Nov 2009 08:07:53 +0100
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request for planet
+Subject: Re: CVE request: libpoppler4: buffer overflow in the Abiword backend
 Content-Type: text/plain; charset=utf-8
 
-A second vulnerability was found by Secunia in planet, that differs from
-CVE-2009-2937.  Details are available here:
+On Tue, Nov 17, 2009 at 09:27:03AM +0100, Thomas Biege wrote:
+> On Wed, Nov 11, 2009 at 08:05:32PM -0500, Josh Bressers wrote:
+> > ----- "Thomas Biege" <thomas@...e.de> wrote:
+> > > 
+> > > Hello everybody,
+> > > 
+> > > does this need an CVE-ID?
+> > > 
+> > > http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=534680
+> > > 
+> > 
+> > I presume this does need a CVE id, but seeing as PDF related bugs are often a
+> > Pandora's Box, I'd rather not assign one just yet. Has someone looked at this
+> > to see what the root of the problem is?
+> 
+> AFAICS it just affects libpoppler. But version 4 may not be the only
+> one with the bug.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=525772
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=546178#30
-
-There is a bit of confusion surrounding the two issues, but it seems as
-though they are, in fact, two separate issues.  The first
-(CVE-2009-2937) deals with insufficient escaping of input feeds, while
-the second deals with some CDATA filtering problems as well.
-
-Steve, does this warrant a second CVE or should the CDATA filtering fall
-under CVE-2009-2937 as well?
-
-Thanks.
+Our maintainer told me that version 3 and 5 are vulnerable too.
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Bye,
+     Thomas
+-- 
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+-- 
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
