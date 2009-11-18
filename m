@@ -1,38 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/10/3
-Message-ID: <Pine.GSO.4.51.0902091953320.15993@faron.mitre.org>
-Date: Mon, 9 Feb 2009 19:53:39 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/18/2
+Message-ID: <1566982364.259621258557337928.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 18 Nov 2009 10:15:37 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: ffmpeg <r16846 Type conversion vulnerability
+Subject: Re: CVE request: virtualbox-ose guest can trigger denial of service at host, mem consumption
 Content-Type: text/plain; charset=utf-8
 
+Use CVE-2009-3893 for this.
 
-======================================================
-Name: CVE-2009-0385
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0385
-Reference: BUGTRAQ:20090128 [TKADV2009-004] FFmpeg Type Conversion Vulnerability
-Reference: URL:http://www.securityfocus.com/archive/1/archive/1/500514/100/0/threaded
-Reference: MISC:http://www.trapkit.de/advisories/TKADV2009-004.txt
-Reference: CONFIRM:http://git.ffmpeg.org/?p=ffmpeg;a=commitdiff;h=72e715fb798f2cb79fd24a6d2eaeafb7c6eeda17
-Reference: CONFIRM:http://svn.mplayerhq.hu/ffmpeg/trunk/libavformat/4xm.c?r1=16838&r2=16846&pathrev=16846
-Reference: CONFIRM:http://svn.mplayerhq.hu/ffmpeg?view=rev&revision=16846
-Reference: BID:33502
-Reference: URL:http://www.securityfocus.com/bid/33502
-Reference: FRSIRT:ADV-2009-0277
-Reference: URL:http://www.frsirt.com/english/advisories/2009/0277
-Reference: OSVDB:51643
-Reference: URL:http://osvdb.org/51643
-Reference: SECUNIA:33711
-Reference: URL:http://secunia.com/advisories/33711
-Reference: XF:ffmpeg-fourxmreadheader-code-execution(48330)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/48330
+Thanks.
 
-Integer signedness error in the fourxm_read_header function in
-libavformat/4xm.c in FFmpeg before revision 16846 allows remote
-attackers to execute arbitrary code via a malformed 4X movie file with
-a large current_track value, which triggers a NULL pointer
-dereference.
+-- 
+    JB
 
 
+----- "Thomas Biege" <thomas@...e.de> wrote:
+
+> Hi,
+> just something I found in October:
+> http://thetoms-random-thoughts.blogspot.com/2009/11/virtualbox-ose-guest-can-trigger-denial.html
+> 
+> The kernel module can be used to allocate an arbitrary amount of
+> memory.
+> 
+> 
+> -- 
+> Bye,
+>      Thomas
+> -- 
+>  Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support &
+> Auditing
+>  SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+> -- 
+>   Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+>                             -- Marie von Ebner-Eschenbach
+
+-- 
+    JB
