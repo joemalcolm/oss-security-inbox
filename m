@@ -1,28 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/25/6
-Message-ID: <49C9FAFB.5040709@debian.org>
-Date: Wed, 25 Mar 2009 10:35:55 +0100
-From: Thijs Kinkhorst <thijs@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/19/3
+Message-Id: <200911191337.03260.oeriksson@mandriva.com>
+Date: Thu, 19 Nov 2009 13:37:03 +0100
+From: Oden Eriksson <oeriksson@...driva.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: phpMyAdmin
+Subject: mysql-5.1.41
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello.
 
-A number of different issues have been announced in phpMyAdmin. Can I
-please get CVE id's for these?
+The new mysql release mentions two security issues that has been addressed, 
+anyone knows more about that? I guess it would need some CVE assignment as 
+well.
 
-Issues:
-http://www.phpmyadmin.net/home_page/security/PMASA-2009-1.php
-http://www.phpmyadmin.net/home_page/security/PMASA-2009-2.php
-http://www.phpmyadmin.net/home_page/security/PMASA-2009-3.php
+http://dev.mysql.com/doc/refman/5.1/en/news-5-1-41.html
 
-Announcement of fixed versions:
-http://sourceforge.net/mailarchive/forum.php?thread_name=49C94EC6.6050603%40cegepsherbrooke.qc.ca&forum_name=phpmyadmin-news
-
-
-thanks,
-Thijs
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (545 bytes)
+-- 
+Regards // Oden Eriksson
+Security team manager - Mandriva
