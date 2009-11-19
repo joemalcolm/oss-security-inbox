@@ -1,37 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/18/4
-Message-ID: <Pine.GSO.4.51.0908181428340.17763@faron.mitre.org>
-Date: Tue, 18 Aug 2009 14:28:44 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: cfg80211: missing NULL pointer checks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/19/2
+Message-ID: <1211565651.374531258646749883.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 19 Nov 2009 11:05:49 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: coley <coley@...re.org>
+Subject: CVE assignment (libexif)
 Content-Type: text/plain; charset=utf-8
 
+I'm giving libexif CVE-2009-3895. I've not seen an ID for this yet.
 
-Use CVE-2009-2844, to be filled in later.
+Only libexif version 0.6.18 is affected, all other versions are safe.
 
-- Steve
+http://article.gmane.org/gmane.comp.graphics.libexif.devel/806
+http://bugs.gentoo.org/show_bug.cgi?id=293190
 
+Thanks.
 
-On Mon, 17 Aug 2009, Eugene Teo wrote:
-
-> Jon Oberheide wrote:
-> > On Fri, 2009-08-14 at 17:33 -0600, dann frazier wrote:
-> [...]
-> > Also would be nice to get one for the cfg80211 issue:
-> > http://patchwork.kernel.org/patch/41218/
-> >
-> > Reproducer:
-> > http://jon.oberheide.org/files/cfg80211-remote-dos.c
->
-> Thanks Jon.
->
-> "These pointers can be NULL, the is_mesh() case isn't ever hit in the
-> current kernel, but cmp_ies() can be hit under certain conditions."
->
-> Upstream commit:
-> http://git.kernel.org/linus/cd3468bad96c00b5a512f551674f36776129520e
->
-> Thanks, Eugene
->
+-- 
+    JB
