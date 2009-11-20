@@ -1,43 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/03/8
-Message-ID: <Pine.GSO.4.51.0906031223160.17965@faron.mitre.org>
-Date: Wed, 3 Jun 2009 12:24:11 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: PDF XSS in ModSecurity / apache2 mod_security 2.5.8
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/20/7
+Message-Id: <200911201946.15129.eren@pardus.org.tr>
+Date: Fri, 20 Nov 2009 19:46:14 +0200
+From: Eren Türkay <eren@...dus.org.tr>
+To: oss-security@...ts.openwall.com
+Cc: Thomas Biege <thomas@...e.de>
+Subject: Re: CVE request: php 5.3.1 update
 Content-Type: text/plain; charset=utf-8
 
+On Friday 20 November 2009 12:41:50 pm Thomas Biege wrote:
+> * Added "max_file_uploads" INI directive, which can be set to limit the
+> number of file uploads per-request to 20 by default, to prevent possible
+> DOS via temporary file exhaustion.
 
-My read is that 2.5.8 fixed this, but the version was quickly changed to
-handle the other issue.
+Bogdan Calin disclosed the details about that vulnerability on full-disclosure 
+mailing list. He didn't disclosed his script but I wrote a PoC that works like 
+a charm. It makes DoS possible for any server that runs PHP within 1 minute 
+with a few requests.
 
-- Steve
+Additionally, this vulnerability affects 5.2.11. I guess all products before 
+PHP 5.3.1 are vulnerable.
 
-
-======================================================
-Name: CVE-2009-1903
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1903
-Reference: CONFIRM:http://sourceforge.net/project/shownotes.php?release_id=667538
-Reference: FEDORA:FEDORA-2009-2654
-Reference: URL:https://www.redhat.com/archives/fedora-package-announce/2009-March/msg00487.html
-Reference: FEDORA:FEDORA-2009-2686
-Reference: URL:https://www.redhat.com/archives/fedora-package-announce/2009-March/msg00529.html
-Reference: BID:34096
-Reference: URL:http://www.securityfocus.com/bid/34096
-Reference: OSVDB:52552
-Reference: URL:http://www.osvdb.org/52552
-Reference: SECUNIA:34256
-Reference: URL:http://secunia.com/advisories/34256
-Reference: SECUNIA:34311
-Reference: URL:http://secunia.com/advisories/34311
-Reference: VUPEN:ADV-2009-0703
-Reference: URL:http://www.vupen.com/english/advisories/2009/0703
-Reference: XF:modsecurity-pdfxss-dos(49211)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/49211
-
-The PDF XSS protection feature in ModSecurity before 2.5.8 allows
-remote attackers to cause a denial of service (Apache httpd crash) via
-a request for a PDF file that does not use the GET method.
-
-
+I think this deserves CVE Id. Any ideas?
