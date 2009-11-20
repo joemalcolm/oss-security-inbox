@@ -1,54 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/22/6
-Message-ID: <576836652.904621256240153269.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 22 Oct 2009 15:35:53 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/20/6
+Message-ID: <886589536.462661258731381496.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 20 Nov 2009 10:36:21 -0500 (EST)
 From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Sahana
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: coley <coley@...re.org>
+Subject: CVE Assignment nginx
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2009-3625 for this.
+I've not seen a CVE id for this one anywhere:
+
+CVE-2009-3896
+
+engine x (nginx) contains a null pointer dereference flaw in versions
+0.1.0-0.8.13 before versions 0.8.14, 0.7.62, 0.6.39 and 0.5.38.
+
+http://nginx.net/
+http://marc.info/?l=nginx&m=125692080328141&w=2
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=552035
+http://www.debian.org/security/2009/dsa-1920
+
+Thanks
 
 -- 
     JB
-
-
------ "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
-
-> Hello Steve, vendors,
-> 
->    Greg Miernicki reported a security issue in Sahana disaster
-> management
-> system:
-> 
-> Sending a specially-crafted URL (with null character included
-> in the string) to Sahana, would allow an attacker to access any
-> file on the web server.
-> 
-> More from Greg:
-> 
-> "The first issue would allow an attacker to touch/modify any file on
-> the system.
->   Essentially the issue is that get, post, and requests aren't
-> sanitized or
->   unescaped."
-> 
-> References:
-> -----------
-> https://bugzilla.redhat.com/show_bug.cgi?id=530255
-> http://sourceforge.net/mailarchive/forum.php?thread_name=5d9043b70910191044l4bb0178fs563a5128a0f5db01%40mail.gmail.com&forum_name=sahana-maindev
-> 
-> Upstream patch:
-> ---------------
-> http://sahana.cvs.sourceforge.net/viewvc/sahana/sahana-phase2/www/index.php?r1=1.83&r2=1.84
-> 
-> PoC:
-> ----
-> http://sahana/index.php?stream=text&mod=/../../../../../../../../../../../etc/passwd%00
-> 
-> Could you allocate a CVE identifier?
-> 
-> Thanks && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
