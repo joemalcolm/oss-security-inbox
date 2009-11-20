@@ -1,85 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/22/7
-Message-ID: <Pine.GSO.4.51.0909220324130.16381@faron.mitre.org>
-Date: Tue, 22 Sep 2009 03:24:34 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security <oss-security@...ts.openwall.com>, oss-security <oss-security@...ts.openwall.com>
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- PHP 5 - 5.2.11
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/20/3
+Message-ID: <20091120104735.GB3046@redhat.com>
+Date: Fri, 20 Nov 2009 10:47:35 +0000
+From: Joe Orton <jorton@...hat.com>
+To: Thomas Biege <thomas@...e.de>
+Cc: OSS-Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: Re: CVE request: php 5.3.1 update
 Content-Type: text/plain; charset=utf-8
 
+On Fri, Nov 20, 2009 at 11:41:50AM +0100, Thomas Biege wrote:
+> Hello,
+> 
+> PHP was updated to version 5.3.1 and did also address security
+> issues: http://www.php.net/releases/5_3_1.php
 
-======================================================
-Name: CVE-2009-3291
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3291
-Reference: CONFIRM:http://www.php.net/ChangeLog-5.php#5.2.11
-Reference: CONFIRM:http://www.php.net/releases/5_2_11.php
-Reference: OSVDB:58185
-Reference: URL:http://www.osvdb.org/58185
-Reference: SECUNIA:36791
-Reference: URL:http://secunia.com/advisories/36791
-Reference: XF:php-certificate-unspecified(53334)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/53334
+We assigned some CVE names for the new issues here; two correspond to 
+existing issues fixed earlier in 5.2.11.  The CVE names have not made it 
+to the web site but were used in the e-mail announcement text:
 
-The php_openssl_apply_verification_policy function in PHP before
-5.2.11 does not properly perform certificate validation, which has
-unknown impact and attack vectors, probably related to an ability to
-spoof certificates.
+- Added missing sanity checks around exif processing. (CVE-2009-3292, Ilia)
+- Fixed a safe_mode bypass in tempnam() identified by Grzegorz Stachowiak.
+  (CVE-2009-3557, Rasmus)
+- Fixed a open_basedir bypass in posix_mkfifo() identified by Grzegorz
+  Stachowiak. (CVE-2009-3558, Rasmus)
+- Fixed bug #50063 (safe_mode_include_dir fails). (CVE-2009-3559,
+  Johannes, christian at elmerot dot se)
+- Fixed bug #44683 (popen crashes when an invalid mode is passed).
+  (CVE-2009-3294, Pierre)
 
-
-======================================================
-Name: CVE-2009-3292
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3292
-Reference: CONFIRM:http://www.php.net/ChangeLog-5.php#5.2.11
-Reference: CONFIRM:http://www.php.net/releases/5_2_11.php
-Reference: OSVDB:58186
-Reference: URL:http://www.osvdb.org/58186
-Reference: SECUNIA:36791
-Reference: URL:http://secunia.com/advisories/36791
-
-Unspecified vulnerability in PHP before 5.2.11 has unknown impact and
-attack vectors related to "missing sanity checks around exif
-processing."
-
-
-======================================================
-Name: CVE-2009-3293
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3293
-Reference: CONFIRM:http://www.php.net/ChangeLog-5.php#5.2.11
-Reference: CONFIRM:http://www.php.net/releases/5_2_11.php
-Reference: OSVDB:58187
-Reference: URL:http://www.osvdb.org/58187
-Reference: SECUNIA:36791
-Reference: URL:http://secunia.com/advisories/36791
-
-Unspecified vulnerability in the imagecolortransparent function in PHP
-before 5.2.11 has unknown impact and attack vectors related to an
-incorrect "sanity check for the color index."
-
-
-======================================================
-Name: CVE-2009-3294
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3294
-Reference: MLIST:[oss-security] 20090920 Re: CVE Request -- PHP 5 - 5.2.11
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/09/20/1
-Reference: CONFIRM:http://bugs.php.net/bug.php?id=44683
-Reference: CONFIRM:http://svn.php.net/viewvc?view=revision&revision=287779
-Reference: CONFIRM:http://www.php.net/ChangeLog-5.php#5.2.11
-Reference: CONFIRM:http://www.php.net/releases/5_2_11.php
-Reference: OSVDB:58188
-Reference: URL:http://www.osvdb.org/58188
-
-The popen API function in TSRM/tsrm_win32.c in PHP before 5.2.11, when
-running on certain Windows operating systems, allows context-dependent
-attackers to cause a denial of service (crash) via a crafted (1) "e"
-or (2) "er" string in the second argument (aka mode), possibly related
-to the _fdopen function in the Microsoft C runtime library.  NOTE: this
-might not cross privilege boundaries except in rare cases in which the
-mode argument is accessible to an attacker outside of an application
-that uses the popen function.
-
-
+Regards, Joe
