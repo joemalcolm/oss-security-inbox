@@ -1,51 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/12/2
-Message-ID: <164904189.73421255363891311.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 12 Oct 2009 12:11:31 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/20/5
+Message-ID: <20091120150328.4495c235@redhat.com>
+Date: Fri, 20 Nov 2009 15:03:28 +0100
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: Re:  CVE id request: django
+Subject: Re: CVE request: php 5.3.1 update
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2009-3610
+On Fri, 20 Nov 2009 10:47:35 +0000 Joe Orton <jorton@...hat.com> wrote:
 
-Thanks.
+> > PHP was updated to version 5.3.1 and did also address security
+> > issues: http://www.php.net/releases/5_3_1.php
+> 
+> We assigned some CVE names for the new issues here; two correspond to 
+> existing issues fixed earlier in 5.2.11.  The CVE names have not made
+> it to the web site but were used in the e-mail announcement text:
 
------ "Raphael Geissert" <geissert@...ian.org> wrote:
+Link to announcement mail with CVEs:
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> Hi,
-> 
-> A vulnerability has been found in Django's forms library that can be
-> used to
-> perform DoS attacks via certain email addresses or URLs that make the
-> validation regular expressions consume CPU resources.
-> 
-> The vulnerability is said to be being exploited on live
-> installations.
-> 
-> References:
-> http://www.djangoproject.com/weblog/2009/oct/09/security/
-> http://groups.google.com/group/django-users/browse_thread/thread/15df9e45118dfc51/677e54bd6c6e283b
-> http://lists.debian.org/debian-security-announce/2009/msg00227.html
-> 
-> Please assign a CVE identifier.
-> 
-> Kind regards,
-> - -- 
-> Raphael Geissert - Debian Developer
-> www.debian.org - get.debian.net
-> 
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.10 (GNU/Linux)
-> 
-> iEYEARECAAYFAkrREJQACgkQYy49rUbZzlpwswCgjSOAiDSfYGYiE+ZjE9i6+Zmf
-> 3MkAoJN9qvxGAzfzsgiFW8XAuP1wan81
-> =nsNz
-> -----END PGP SIGNATURE-----
+  http://news.php.net/php.announce/79
+
+> - Fixed bug #50063 (safe_mode_include_dir fails). (CVE-2009-3559,
+>   Johannes, christian at elmerot dot se)
+
+Reading the upstream bug http://bugs.php.net/bug.php?id=50063 , this is
+not a security flaw, rather a safe_mode regression causing uid check to
+happen where it should not resulting in over-restrictive safe_mode.
+
+Some links for the other two issues:
+
+> - Fixed a safe_mode bypass in tempnam() identified by Grzegorz
+> Stachowiak. (CVE-2009-3557, Rasmus)
+
+  http://securityreason.com/securityalert/6601
+  http://svn.php.net/viewvc?view=revision&revision=288945
+
+> - Fixed a open_basedir bypass in posix_mkfifo() identified by Grzegorz
+>   Stachowiak. (CVE-2009-3558, Rasmus)
+
+  http://securityreason.com/securityalert/6600
+  http://svn.php.net/viewvc?view=revision&revision=288943
+
+Looks like CVE-2009-3546 got fixed too.
 
 -- 
-    JB
+Tomas Hoger / Red Hat Security Response Team
