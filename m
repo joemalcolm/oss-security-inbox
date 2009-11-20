@@ -1,35 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/10/1
-Message-ID: <4A2F457D.4010809@redhat.com>
-Date: Wed, 10 Jun 2009 13:32:45 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-2009-1389 kernel: r8169: fix crash when large packets are received
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/20/2
+Message-ID: <20091120104150.GD621@suse.de>
+Date: Fri, 20 Nov 2009 11:41:50 +0100
+From: Thomas Biege <thomas@...e.de>
+To: OSS-Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: CVE request: php 5.3.1 update
 Content-Type: text/plain; charset=utf-8
 
-"Michael Tokarev reported receiving a large packet could crash a machine 
-with RTL8169 NIC. Problem is this driver tells that NIC frames up to 
-16383 bytes can be received but provides skb to rx ring allocated with 
-smaller sizes (1536 bytes in case standard 1500 bytes MTU is used). When 
-a frame larger than what was allocated by driver is received, dma 
-transfer can occurs past the end of buffer and corrupt kernel memory.
+Hello,
 
-Fix is to tell to NIC what is the maximum size a frame can be. This bug 
-is very old, (before git introduction, linux-2.6.10)."
+PHP was updated to version 5.3.1 and did also address security
+issues: http://www.php.net/releases/5_3_1.php
 
-I have informed Willy (2.4 maintainer) about this.
+Security Enhancements and Fixes in PHP 5.3.1:
 
-Upstream 2.6 commit:
-http://git.kernel.org/linus/fdd7b4c3302c93f6833e338903ea77245eb510b4 
-(v2.6.30)
+    * Added "max_file_uploads" INI directive, which can be set to limit the number of file uploads per-request to 20 by default, to prevent possible DOS via temporary file exhaustion.
+    * Added missing sanity checks around exif processing.
+    * Fixed a safe_mode bypass in tempnam().
+    * Fixed a open_basedir bypass in posix_mkfifo().
+    * Fixed bug #50063 (safe_mode_include_dir fails).
+    * Fixed bug #44683 (popen crashes when an invalid mode is passed).
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-1389
-http://marc.info/?t=123462473200002
-http://lkml.org/lkml/2009/6/8/194
-http://www.corpit.ru/mjt/r8169-mtu-oops.jpg
-http://article.gmane.org/gmane.linux.network/130114
-http://www.mail-archive.com/debian-kernel@lists.debian.org/msg45651.html
 
-Thanks, Eugene
+-- 
+Bye,
+     Thomas
+-- 
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+-- 
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
