@@ -1,27 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/02/6
-Message-ID: <Pine.GSO.4.51.0903021747271.26325@faron.mitre.org>
-Date: Mon, 2 Mar 2009 17:49:55 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Eugene Teo <eugene@...hat.com>
-cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: memory disclosure in SO_BSDCOMPAT gsopt
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/21/3
+Message-ID: <20091121205926.GA28278@janus.mylan>
+Date: Sat, 21 Nov 2009 21:59:26 +0100
+From: Sergei Golubchik <serg@...ql.com>
+To: Jan Lieskovsky <jlieskov@...hat.com>
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com, security@...ql.com
+Subject: Re: CVE Request - MySQL - 5.0.88
 Content-Type: text/plain; charset=utf-8
 
+Hi, Jan!
 
-On Wed, 25 Feb 2009, Eugene Teo wrote:
+On Nov 21, Jan Lieskovsky wrote:
+> Hi Josh, Steve, vendors,
+>
+> MySQL upstream has released latest 5.0.88 version of their Community
+> Server, fixing one security issue:
+...
+> While the other two (three issues) looks too to be security relevant:
+>
+> * Error handling was missing for SELECT statements containing
+>   subqueries in the WHERE clause and that assigned a SELECT
+>   result to a user variable. The server could crash as a result.
+>   (Bug#48291: http://bugs.mysql.com/48291)
+>
+> This looks to be from adjacent network exploitable mysqld DoS.
 
-> Eugene Teo wrote:
-> > [...]
-> > The fix for CVE-2009-0676 (upstream commit df0bca04) is incomplete. Note
-> > that the same problem of leaking kernel memory will reappear if someone
-> > on some architecture uses struct timeval with some internal padding (for
-> > example tv_sec 64-bit and tv_usec 32-bit) --- then, you are going to
-> > leak the padded bytes to userspace.
+Yes.
 
-Is this going to require a separate CVE identifier?  If a new minor
-version of the kernel wasn't released yet, then I'd consider the fix to be
-little more than a couple patch-discussion messages in a single Bugzilla
-entry.
+> * If the first argument to GeomFromWKB() function was a geometry
+>   value, the function just returned its value. However, it
+>   failed to preserve the argument's null_value flag, which
+>   caused an unexpected NULL value to be returned to the caller,
+>   resulting in a server crash.
+>   (Bug#47780: http://bugs.mysql.com/47780)
+>
+> Same case as the above
 
-- Steve
+Yes.
+
+> * Failure to treat BIT values as unsigned could lead to
+>   unpredictable results.
+>  (Bug#42803: http://bugs.mysql.com/42803)
+>
+> Also this one seems to be security related - upstream bug speaks about
+> invalid memory access and didn't check the code if this could lead to
+> heap overflow once the comparison fails.
+
+
+No, looks safe. It reads one byte and thinks it's a bool:
+
+class Field_num ... { ...
+   bool unsigned_flag;
+
+while it's  somewhere in the middle of a pointer:
+
+class Field_bit ... { ...
+   uchar *bit_ptr;
+
+The worst that can happen - MySQL could think the value is signed (BIT
+values are always unsigned) and during the optimization phase won't
+notice that the condition like "unsigned_value > negative_number" is
+always true. Not a big deal.
+
+Regards / Mit vielen Grüßen,
+Sergei
+
+-- 
+   __  ___     ___ ____  __
+  /  |/  /_ __/ __/ __ \/ /   Sergei Golubchik <serg@....com>
+ / /|_/ / // /\ \/ /_/ / /__  Principal Software Engineer/Server Architect
+/_/  /_/\_, /___/\___\_\___/  Sun Microsystems GmbH, HRB München 161028
+       <___/                  Sonnenallee 1, 85551 Kirchheim-Heimstetten
+Geschäftsführer: Thomas Schroeder, Wolfgang Engels, Wolf Frenkel
+Vorsitzender des Aufsichtsrates: Martin Häring
