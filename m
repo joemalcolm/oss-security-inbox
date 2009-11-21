@@ -1,25 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/11/4
-Message-ID: <20090311181642.GA16681@redhat.com>
-Date: Wed, 11 Mar 2009 12:16:42 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/21/2
+Message-ID: <4B080756.1030705@redhat.com>
+Date: Sat, 21 Nov 2009 16:29:26 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com
-Subject: CVE request -- postgresql
+CC: oss-security <oss-security@...ts.openwall.com>, Sergei Golubchik <serg@...ql.com>
+Subject: CVE Request - MySQL - 5.0.88
 Content-Type: text/plain; charset=utf-8
 
-A stack overflow was found in how PostgreSQL handles conversion
-encoding.  This could allow an authenticated user to kill
-connections to the PostgreSQL server for a small amount of time,
-which could interupt transactions by other users/clients.
+Hi Josh, Steve, vendors,
 
-References:
+   MySQL upstream has released latest 5.0.88 version of their Community Server,
+fixing one security issue:
 
-http://archives.postgresql.org/pgsql-bugs/2009-02/msg00172.php
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=517405
-https://bugzilla.redhat.com/show_bug.cgi?id=488156
+Security Fix: MySQL clients linked against OpenSSL did not
+               check server certificates presented by a server linked against
+               yaSSL. (Bug#47320: http://bugs.mysql.com/47320)
 
-Could we get a CVE name for this please?  Thanks.
+While the other two (three issues) looks too to be security relevant:
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+* Error handling was missing for SELECT statements containing
+   subqueries in the WHERE clause and that assigned a SELECT
+   result to a user variable. The server could crash as a result.
+   (Bug#48291: http://bugs.mysql.com/48291)
+
+This looks to be from adjacent network exploitable mysqld DoS.
+
+* If the first argument to GeomFromWKB() function was a geometry
+   value, the function just returned its value. However, it
+   failed to preserve the argument's null_value flag, which
+   caused an unexpected NULL value to be returned to the caller,
+   resulting in a server crash.
+   (Bug#47780: http://bugs.mysql.com/47780)
+
+Same case as the above, though I can't look into upstream MySQL bugs
+to confirm or disprove it. Thus Cc-ed Sergei Golubchik on this mail.
+
+* Failure to treat BIT values as unsigned could lead to
+   unpredictable results.
+  (Bug#42803: http://bugs.mysql.com/42803)
+
+Also this one seems to be security related - upstream bug speaks about
+invalid memory access and didn't check the code if this could
+lead to heap overflow once the comparison fails.
+
+Sergei, our opinion here is appreciated.
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+
