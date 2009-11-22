@@ -1,30 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/18/5
-Message-ID: <Pine.GSO.4.51.0908181432380.17763@faron.mitre.org>
-Date: Tue, 18 Aug 2009 14:32:49 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: flat: fix uninitialized ptr with shared libs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/22/2
+Message-ID: <Pine.LNX.4.64.0911220526140.27016@forced.attrition.org>
+Date: Sun, 22 Nov 2009 05:27:54 +0000 (UTC)
+From: security curmudgeon <jericho@...rition.org>
+To: OSS-Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: Re: CVE request: php 5.3.1 update
 Content-Type: text/plain; charset=utf-8
 
 
-Use CVE-2009-2845, to be filled in soon.
+On Fri, 20 Nov 2009, Thomas Biege wrote:
 
-On Thu, 13 Aug 2009, Eugene Teo wrote:
+: PHP was updated to version 5.3.1 and did also address security
+: issues: http://www.php.net/releases/5_3_1.php
+: 
+: Security Enhancements and Fixes in PHP 5.3.1:
+: 
+:     * Added "max_file_uploads" INI directive, which can be set to limit the number of file uploads per-request to 20 by default, to prevent possible DOS via temporary file exhaustion.
+:     * Added missing sanity checks around exif processing.
 
-> The new credentials code broke load_flat_shared_library() as it now uses
-> an uninitialised cred pointer, leading to a NULL pointer dereference.
-> This can be triggered by running a shared flat binary.
->
-> kernel/cred.c was introduced in v2.6.29-rc1 IIRC.
->
-> Upstream commit:
-> http://git.kernel.org/linus/3440625d78711bee41a84cf29c3d8c579b522666
->
-> References:
-> http://lkml.org/lkml/2009/6/22/91
-> http://thread.gmane.org/gmane.linux.hardware.blackfin.kernel.devel/1905
->
-> Thanks, Eugene
->
+This was previously disclosed and fixed in the 5.2.x tree. I believe this 
+is the same as CVE-2009-3292.
+
+:     * Fixed a safe_mode bypass in tempnam().
+:     * Fixed a open_basedir bypass in posix_mkfifo().
+:     * Fixed bug #50063 (safe_mode_include_dir fails).
+:     * Fixed bug #44683 (popen crashes when an invalid mode is passed).
+
+Also not flagged as 'security' up top, but from the changelog:
+
+Fixed bug #49026 (proc_open() can bypass safe_mode_protected_env_vars 
+restrictions). (Ilia)
+
+Brian
