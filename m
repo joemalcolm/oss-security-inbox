@@ -1,25 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/12/1
-Message-Id: <200905120943.36957.hanno@hboeck.de>
-Date: Tue, 12 May 2009 09:43:36 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Cc: Steven Christey <coley@...us.mitre.org>
-Subject: CVE request: Squirrelmail < 1.4.18 XSS, session fixation, server-side code execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/22/1
+Message-ID: <4B08948C.20908@haquarter.de>
+Date: Sun, 22 Nov 2009 02:31:56 +0100
+From: Craig <craig@...uarter.de>
+To: OSS Security <oss-security@...ts.openwall.com>
+Subject: CVE request: awstats
 Content-Type: text/plain; charset=utf-8
 
-From squirrelmail.org:
-The SquirrelMail Team is pleased to announce the release of SquirrelMail 
-version 1.4.18. The most notable changes for this version are several 
-security fixes, including a couple XSS exploits, a session fixation issue, 
-and an obscure but dangerous server-side code execution hole.
+Hi,
 
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-http://ausdenaugenausdemsinn.de - Kein Sicherheitsrabatt für CO2-Speicher
-http://tinyurl.com/dceu73 - Internetzensur stoppen!
+I think there isn't a CVE for this issues - which was fixed in 6.95 -
+yet (quote from http://awstats.sourceforge.net/docs/awstats_changelog.txt):
 
-http://schokokeks.org - professional webhosting
+- Fix security in awredir.pl script by adding a security key required by
+  default.
+- Enhance security of parameter sanitizing function
 
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+
+best regards,
+
+Craig
