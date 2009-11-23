@@ -1,28 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/17/11
-Message-ID: <4AB1DF4C.2020609@redhat.com>
-Date: Thu, 17 Sep 2009 15:03:40 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/23/4
+Message-ID: <4B0A7D86.90808@redhat.com>
+Date: Mon, 23 Nov 2009 13:18:14 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>, Willy Tarreau <w@....eu>
-Subject: Re: CVE-2009-2903 kernel: appletalk: denial of service when handling IP tunnelled over DDP datagrams
+CC: Thomas Biege <thomas@...e.de>
+Subject: Re: CVE request: php 5.3.1 - "max_file_uploads" [was: Re: CVE request: php 5.3.1 update]
 Content-Type: text/plain; charset=utf-8
 
-Eugene Teo wrote:
-> Eugene Teo wrote:
->> The check for the ipddpN device in the handle_ip_over_ddp() function 
->> returns -NODEV to the atalk_rcv() function when the device does not 
->> exist. The atalk_rcv() function then directly returns that value to 
->> its caller. There is a missing call to kfree_skb() in these unaccepted 
->> IP-DDP datagram that can exhaust the kernel memory eventually. It 
->> affects Linux hosts with appletalk and ipddp modules loaded, that are 
->> attached to the same link. Thanks to Mark Smith for reporting this 
->> issue to us.
+Eren Türkay wrote:
+> On Friday 20 November 2009 12:41:50 pm Thomas Biege wrote:
+>> * Added "max_file_uploads" INI directive, which can be set to limit the
+>> number of file uploads per-request to 20 by default, to prevent possible
+>> DOS via temporary file exhaustion.
 > 
-> Some updates and a quick analysis at: 
-> https://bugzilla.redhat.com/CVE-2009-2903#c0 and 
-> http://kbase.redhat.com/faq/docs/DOC-19069
+> Bogdan Calin disclosed the details about that vulnerability on full-disclosure 
+> mailing list. He didn't disclosed his script but I wrote a PoC that works like 
+> a charm. It makes DoS possible for any server that runs PHP within 1 minute 
+> with a few requests.
+> 
+> Additionally, this vulnerability affects 5.2.11. I guess all products before 
+> PHP 5.3.1 are vulnerable.
+> 
+> I think this deserves CVE Id. Any ideas?
 
-Should be http://kbase.redhat.com/faq/docs/DOC-19077.
+   Josh, could you please allocate one?
 
-Thanks, Eugene
+Also changed the topic to match only 'php 5.3.1 - "max_file_uploads"' thing,
+so it isn't lost in other mails.
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
