@@ -1,34 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/16/12
-Message-ID: <6cd5aad00904161015t75973011m66e9fc9a9695387a@mail.gmail.com>
-Date: Thu, 16 Apr 2009 19:15:41 +0200
-From: Tavis Ormandy <taviso@...gle.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: FreeType malformed compressed data issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/23/8
+Message-ID: <20091123195941.5eaa6469@mail.netloc.info>
+Date: Mon, 23 Nov 2009 19:59:41 +0100
+From: Alex Legler <a3li@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: Argument injections in multiple PEAR packages
 Content-Type: text/plain; charset=utf-8
 
-Hey, you're right, this one was just a non-exploitable crash, the
-other issues were regular integer overflow. I didn't report this
-particular one as a security issue, but it was fixed at the same time,
-sorry for the confusion :-)
+Hi,
 
-Thanks, Tavis.
+here are a couple of issues in PEAR packages that do not yet have a CVE
+afaik:
 
-2009/4/16 Steven M. Christey <coley@...us.mitre.org>:
->
-> I'm processing CVE-2009-0946 for the various integer overflows found by
-> Tavis Ormandy for FreeType, as captured in:
->
->  https://bugzilla.redhat.com/show_bug.cgi?id=491384
->
-> But there's also this commit:
->
->    http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=0a05ba257b6ddd87dacf8d54b626e4b360e0a596
->
-> This bug doesn't smell exactly like an integer overflow, but there's not
-> enough immediate context to tell.  Is this a different bug type?  If so,
-> it needs a new CVE.
->
-> - Steve
->
+1. PEAR-Mail Mail::Send() Argument Injection when using Sendmail
+
+Secunia writes:
+"The sendmail implementation of the "Mail::Send()" method does not
+properly sanitise the "from" parameter before invoking sendmail,
+which can be exploited to pass arbitrary arguments to the sendmail
+command."
+
+Contrary to Secunia, this does not seem to be completely fixed yet (see
+Raphael Geissert's comment in the upstream bug)
+
+http://secunia.com/advisories/37410/
+Upstream bug:
+http://pear.php.net/bugs/bug.php?id=16200
+First commit:
+http://svn.php.net/viewvc/pear/packages/Mail/trunk/Mail/sendmail.php?r1=243717&r2=280134
+Gentoo bug:
+https://bugs.gentoo.org/show_bug.cgi?id=294256
+
+2. PEAR-Net_Ping < 2.4.5 ping() Argument Injection via $host
+
+Upstream writes:
+"When input from forms are used directly, the attacker could pass
+variables that would allow him to execute remote arbitrary command
+injections."
+
+Upstream advisory:
+http://pear.php.net/advisory20091114-01.txt
+Commit:
+http://svn.php.net/viewvc/pear/packages/Net_Ping/trunk/Ping.php?r1=274728&r2=290669
+Gentoo bug:
+https://bugs.gentoo.org/show_bug.cgi?id=294258
+
+3. PEAR-Net_Traceroute < 0.21.2 traceroute() Argument Injection via
+$host
+
+See above, same advisory.
+
+Commit:
+http://svn.php.net/viewvc/pear/packages/Net_Traceroute/trunk/Traceroute.php?r1=232735&r2=290749
+Gentoo bug:
+https://bugs.gentoo.org/show_bug.cgi?id=294264
+
+Thanks, Alex
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
