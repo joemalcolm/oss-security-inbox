@@ -1,68 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/18/2
-Message-ID: <478742427.234251261164336461.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 18 Dec 2009 14:25:36 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/23/6
+Message-ID: <788268192.590651259002647709.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 23 Nov 2009 13:57:27 -0500 (EST)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: possible vulnerability in ghostscript >= 8.64
+Subject: Re: CVE request: v1.2.8 released to fix the 0777 base_dir creation issue
 Content-Type: text/plain; charset=utf-8
 
-Use CVE-2009-4270 for the stack overflow.
+Please use CVE-2009-3897 for this.
 
 Thanks.
 
------ "Vincent Danen" <vdanen@...hat.com> wrote:
-
-> We had reported to us a crash in ghostscript's gdevcups.c, and I
-> don't
-> think it can be used to do anything more than crash ghostscript,
-> certainly not in our configurations (compiled with FORTIFY_SOURCE).
-> 
-> Debug logging was added to gdevcups.c prior to the 8.64 release on
-> Oct
-> 17th, 2008:
-> 
-> http://svn.ghostscript.com/viewvc?view=rev&revision=9165
-> 
-> The addition of the debug logging allowed for a MediaType string to
-> be
-> printed, which if longer than the 1024-byte buffer in errprintf would
-> cause ghostscript to crash   This is due to errprintf() and
-> outprintf()
-> using vsprintf() on a fixed-length array on the stack.
-> 
-> This issue does not affect versions of ghostscript older than 8.64;
-> for
-> 8.64 and newer, if compiled using FORTIFY_SOURCE (as it is in
-> Fedora),
-> this is turned into nothing more than a crash.  On a system without
-> FORTIFY_SOURCE, this _might_ be exploitable, but I cannot say for
-> certain.
-> 
-> As well, we can't see (in ghostscript 8.15 at least), any other calls
-> to
-> errprintf() or outprintf() that use the %s specifier with
-> user-supplied
-> strings (so arguably the vsprintf() calls in those functions should
-> be
-> fixed, but we don't see an immediate need to do so).
-> 
-> I imagine that most vendors using ghostscript 8.64 or newer also have
-> a
-> newer glibc and are using FORTIFY_SOURCE protection, but I can't know
-> that for certain, so this is a general notice that the issue exists.
-> 
-> Our bug report:
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=540760
-> 
-> this had also been reported previously upstream as well:
-> 
-> http://bugs.ghostscript.com/show_bug.cgi?id=690829
-> 
-> -- 
-> Vincent Danen / Red Hat Security Response Team
-
 -- 
     JB
+
+
+----- "Thomas Biege" <thomas@...e.de> wrote:
+
+> Hello.
+> 
+> http://www.dovecot.org/list/dovecot-news/2009-November/000143.html
+> 
+> http://dovecot.org/releases/1.2/dovecot-1.2.8.tar.gz
+> http://dovecot.org/releases/1.2/dovecot-1.2.8.tar.gz.sig
+> 
+> This is mainly to fix the 0777 base_dir creation issue, which could
+> be
+> considered a security hole, exploitable by local users. An attacker
+> could for example replace Dovecot's auth socket and log in as other
+> users. Gaining root privileges isn't possible though.
+> 
+> This affects only v1.2 users, v1.1 and older versions were creating
+> the
+> directory with 0755 permission.
+> 
+> If your Dovecot's base_dir isn't in /var/run/dovecot/, you should
+> also
+> make sure that the $prefix/var/ and $prefix/var/run/
+> (i.e. /usr/local/var/, /usr/local/var/run/ by default) aren't 0777.
+> 
+> 	* Dovecot v1.2.x had been creating base_dir (and its parents if
+> 	  necessary) with 0777 permissions. The base_dir's permissions get
+> 	  changed to 0755 automatically at startup, but you may need to
+> 	  chmod the parent directories manually.
+> 
+> 	- acl: If user has rights from more than one group, merge them
+> instead
+> 	  of choosing one group's rights and ignoring others.
+> 	- virtual: When using a lot of mailboxes, the virtual mailbox's
+> header
+> 	  could have grown over 32 kB and caused "out of memory" crashes.
+> Also
+> 	  over 64 kB headers couldn't even be updated with existing
+> transaction
+> 	  log records. Added a new record type that gets used with >=64 kB
+> 	  headers. Older Dovecot versions don't understand this header and
+> 	  will log errors if they see it.
+> 	- FETCH BODYSTRUCTURE didn't return RFC 2231 "key*" fields correctly
+> 
+> 
+> -- 
+> Bye,
+>      Thomas
+> -- 
+>  Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support &
+> Auditing
+>  SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+> -- 
+>   Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+>                             -- Marie von Ebner-Eschenbach
