@@ -1,98 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/29/3
-Message-Id: <1233227722.4126.29.camel@dhcp-lab-164.englab.brq.redhat.com>
-Date: Thu, 29 Jan 2009 12:15:22 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com
-Subject: CVE Request -- (sort of urgent) gstreamer-plugins-good (repost) (more details about affected versions -- final version)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/23/14
+Message-ID: <259552101.599451259005888260.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 23 Nov 2009 14:51:28 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Thomas Biege <thomas@...e.de>, coley <coley@...re.org>
+Subject: Re: CVE request: php 5.3.1 - "max_file_uploads" [was: Re: CVE request: php 5.3.1 update]
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve,
+CVE-2009-4017
 
-  by mistake sent my previous post too early :(. so fixing it.
+PHP versions before 5.3.1 contain a flow in the way multipart/form-data
+handled file upload requests. A user making a specially crafted request could
+cause the web server to consume resources processing the request.
 
-  Wanted to provide more details about the affected versions
-for the gstreamer-plugins-good issues yet:
+http://www.php.net/releases/5_3_1.php
+http://marc.info/?l=full-disclosure&m=125871907031725&w=2
 
-Original advisory:
-http://trapkit.de/advisories/TKADV2009-003.txt
+Thanks.
 
-The patch:
-http://cgit.freedesktop.org/gstreamer/gst-plugins-good/commit/?id=bdc20b9baf13564d9a061343416395f8f9a92b53
+-- 
+    JB
 
-References:
-http://trapkit.de/advisories/TKADV2009-003.txt 
-http://cgit.freedesktop.org/gstreamer/gst-plugins-good/commit/?id=bdc20b9baf13564d9a061343416395f8f9a92b53
-https://bugzilla.redhat.com/show_bug.cgi?id=481267
+----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
 
-Three problems:
-[A] heap buffer overflow vulnerability in QuickTime 'ctts' Atom parsing (vuln #1)
-[B] the array index out of bounds vulnerability QuickTime 'stss' Atom parsing (vuln #2)
-[C] heap buffer overflow vulnerability QuickTime 'stts' Atom parsing (vuln #3)
-
----------------------------------------------------------------------------------
-
-i, Vulnerability [A] and [B] affects gstreamer-plugins-good versions (CVE id#1):
-  gst-plugins-good-0.10.9 <= x < gst-plugins-good-0.10.12 (latest upstream)
-
-CVE desc proposal: "A heap based buffer overflow in QuickTime 'ctts' Atom
-parsing and array index out of bounds vulnerability in QuickTimes Sync
-Sample Atom was found in gstreamer-plugins-good versions from 0.10.9
-through to 0.10.11..."
-
----------------------------------------------------------------------------------
-
-ii, Vulnerability [C] affects gstreamer-plugins and gstreamer-plugins-good versions (CVE id#2)
-  gst-plugins-good-0.10.9 <= x < gst-plugins-good-0.10.12 (latest upstream)
-  gstreamer-plugins-0.8.5
-
-CVE desc proposal: "A heap based buffer overflow in QuickTime Sync Sample
-Atom parsing has been found in gstreamer-plugins-good version from 0.10.9
-through to 0.10.11 and in gstreamer-plugins version of 0.8.5.." 
-
-----------------------------------------------------------------------------------
-
-iii, Tomas Hoger discovered the similar vulnerability like the [B] one is present
-also in upstream code of gstreamer-plugins in version (CVE id#3)
-  gstreamer-plugins-0.6.0
-
-CVE desc proposal "An array index out ouf bounds vulnerability has been found
-in gstreamer-plugins version of 0.6.0 ..."
-
-To be more exact on lines from 537 to 565 in gst-plugins-0.6.0/gst/qtdemux/qtdemux.c
-(the relevant function is "gst_qtp_trak_handler"):
-
-    556         for(i=0;i<GUINT32_FROM_BE(stsc[stsc_idx].samples_per_chunk);i++,sample++) {
-    557           guint32 size = GUINT32_FROM_BE(stsz[sample]);
-    558           track_to_be->samples[sample].offset = offset;
-    559           track_to_be->samples[sample].size = size;
-    560           track_to_be->samples[sample].timestamp =
-sample*((1000000*track_to_be->sample_duration)/track_to_be->time_scale);
-    561           track_to_be->samples[sample].track = track_to_be;
-    562
-g_tree_insert(qtdemux->samples,&(track_to_be->samples[sample].offset),&(track_to_be->samples[sample]));
-    563           offset += size;
-    564         }
-    565       }
-
-There is also missing check if "sample" is still lower than "nsamples"
-and if write attempt to e.g. track_to_be->samples[sample].size = size;
-wouldn't overflow.
-
------------------------------------------------------------------------------------------
-
-More explanation about all the mystical QuicTime Atom names ('stts') can
-be found for example here:
-
-http://developer.apple.com/DOCUMENTATION/QuickTime/QTFF/qtff.pdf (part Sample Table Atoms on page# 74).
-
-Could you please allocate the 3 CVE ids for the above three cases?
-
-Let me know, if I could be of any other help.
-
-Thanks && regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-
+> Eren Türkay wrote:
+> > On Friday 20 November 2009 12:41:50 pm Thomas Biege wrote:
+> >> * Added "max_file_uploads" INI directive, which can be set to limit
+> the
+> >> number of file uploads per-request to 20 by default, to prevent
+> possible
+> >> DOS via temporary file exhaustion.
+> > 
+> > Bogdan Calin disclosed the details about that vulnerability on
+> full-disclosure 
+> > mailing list. He didn't disclosed his script but I wrote a PoC that
+> works like 
+> > a charm. It makes DoS possible for any server that runs PHP within 1
+> minute 
+> > with a few requests.
+> > 
+> > Additionally, this vulnerability affects 5.2.11. I guess all
+> products before 
+> > PHP 5.3.1 are vulnerable.
+> > 
+> > I think this deserves CVE Id. Any ideas?
+> 
+>    Josh, could you please allocate one?
+> 
+> Also changed the topic to match only 'php 5.3.1 - "max_file_uploads"'
+> thing,
+> so it isn't lost in other mails.
+> 
+> Thanks && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
