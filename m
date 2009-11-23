@@ -1,33 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/13/1
-Message-ID: <49953B68.3090002@pardus.org.tr>
-Date: Fri, 13 Feb 2009 11:20:40 +0200
-From: Pinar Yanardag <pinar@...dus.org.tr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/23/3
+Message-ID: <4B0A6E35.40100@redhat.com>
+Date: Mon, 23 Nov 2009 12:12:53 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: Poppler -Two Denial of Service Vulnerabilities
+CC: Igor Sysoev <igor@...oev.ru>
+Subject: Re: CVEs for nginx
 Content-Type: text/plain; charset=utf-8
 
- From Secunia [1]:
+Hi Igor,
 
---->8---
-Two vulnerabilities have been reported in Poppler, which can be 
-exploited by malicious people to cause a DoS (Denial of Service).
+Igor Sysoev wrote:
+ > As I far I know - no.
 
-1) An uninitialised memory access error in the 
-"FormWidgetChoice::loadDefaults()" function can be exploited to cause a 
-crash via a specially crafted PDF document.
+   Josh, could you allocate one then?
 
-2) An error in the "JBIG2Stream::readSymbolDictSeg()" function can be 
-exploited to cause a crash via a specially crafted PDF document.
---->8---
+  > This bug was fixed in 0.8.17 and 0.7.63:
+> 
+> Changes with nginx 0.8.17                                        28 Sep 2009
+> 
+>     *) Security: now "/../" are disabled in "Destination" request header
+>        line.
+> 
+> Changes with nginx 0.7.63                                        26 Oct 2009
+> 
+>     *) Security: now "/../" are disabled in "Destination" request header
+>        line.
+> 
+> There is no patch, however, I can created it for you.
 
-[1]: http://secunia.com/Advisories/33853
+   That would be perfect.
 
--- 
-Pinar Yanardag
-http://pinguar.org
-_____________________________
-Pardus Security Team
-http://security.pardus.org.tr
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
 
