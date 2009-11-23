@@ -1,63 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/16/4
-Message-ID: <20090416133658.62fad77f@redhat.com>
-Date: Thu, 16 Apr 2009 13:36:58 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: coley@...us.mitre.org
-Cc: oss-security@...ts.openwall.com, "Wietse Venema" <wietse@...cupine.org>
-Subject: Re: Re: Some fun with tcp_wrappers
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/23/7
+Message-ID: <750835919.590711259002691938.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 23 Nov 2009 13:58:11 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request - Dovecot - 1.2.8
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve!
+This is CVE-2009-3897 (as noted in a previous mail), this is the second
+request for this flaw.
 
-On Wed, 15 Apr 2009 20:44:49 -0400 (EDT) "Steven M. Christey"
-<coley@...us.mitre.org> wrote:
-
-> I'm not sure how to handle this from a CVE perspective
-
-I'm not too surprised...  This is not too usual case, that's why I
-tried to initiate this discussion here and make others aware.
-
->  - if the API functions perform as documented, as Wietse says, then
->    separate CVEs would need to be assigned for applications that
->    misuse the API.
-> 
->  - If there is a separate bug that causes tcp_wrappers to
->    allow hosts in ways that are contrary to specification, then that
->    would be treated as a problem in tcp_wrappers (whether it's from
->    Wietse or some downstream modification).
-
-Wietse already confirmed current behavior is the expected one, which is
-what I mentioned before in both bug and the first mail in this thread.
-It can be argued whether it's also documented one, as man more reads to
-me as STRING_UNKNOWN is some special value, rather than a regular
-hostname "unknown".
-
-Wietse, I'm not trying to blame you for this or anything, I'm only
-facing a problem that needs to be resolved.  The fact that the proposed
-change is already included in tcp_wrappers packages in Fedora for some
-time (so the "break compatibility" harm was done already) is part of
-the problem.  Making sure all relevant applications are changed
-upstream to not use hosts_ctl and later reverting the change is one of
-the possible resolutions.
-
-The good_client (tcp_wrappers wrapping function in portmap /
-nfs-utils / ...) problem is rather interesting too, as it creates
-problems due to its attempt to avoid unneeded DNS lookups (workaround
-for hosts_ctl limitation?) and support host aliases (tcp_wrappers
-limitation).  Any idea why hostname alias support was coded on the
-application level, rather than on the tcp_wrappers level?  Those using
-good_client may argue, that using thinner wrapper over tcp_wrappers may
-break existing setups relying on hostname aliases and, again, blame
-tcp_wrappers for not doing what "it should".
-
-Steve, giving CVEs to applications wouldn't be much easier either, and
-is likely to result in some finger-pointing anyway (this only causes
-problem with hostname-bases rules, such rules should be more strongly
-discouraged in the documentation anyway, due to reliance on properly
-working DNS).  No easy or obvious right way to word it at the moment,
-it seems.  Apps using good_client are likely to need separate CVE(s)
-though.
+Thanks.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+    JB
+
+----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+
+> Hi Josh, Steve, vendors,
+> 
+>    Dovecot upstream has released latest 1.2.8 version, fixing
+> one security issue. Quoting from news:
+> 
+> This is mainly to fix the 0777 base_dir creation issue, which could
+> be
+> considered a security hole, exploitable by local users. An attacker
+> could for example replace Dovecot's auth socket and log in as other
+> users. Gaining root privileges isn't possible though.
+> 
+> This affects only v1.2 users, v1.1 and older versions were creating
+> the
+> directory with 0755 permission.
+> 
+> References:
+> -----------
+> http://www.dovecot.org/list/dovecot-news/2009-November/000143.html
+> http://www.dovecot.org/index.html
+> 
+> Could you allocate a CVE id? (in case there isn't one already).
+> 
+> Thanks && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
