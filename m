@@ -1,30 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/15/2
-Message-ID: <87ljtcmjkn.fsf@mid.deneb.enyo.de>
-Date: Thu, 15 Jan 2009 20:54:16 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/23/1
+Message-ID: <4B0A6871.3090500@redhat.com>
+Date: Mon, 23 Nov 2009 11:48:17 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: CVE request -- git
+CC: Igor Sysoev <igor@...oev.ru>
+Subject: Re: CVEs for nginx
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
+Hi Craig, vendors,
 
-could you please assign a CVE for this bug:
+Craig wrote:
+> Hi,
+> 
+> are the CVEs for
+> 
+> 1.) nginx webdav: http://secunia.com/advisories/36818/
 
-| Current gitweb has a possible local privilege escalation bug that allows a
-| malicious repository owner to run a command of his choice by specifying
-| diff.external configuration variable in his repository and running a
-| crafted gitweb query.
-|
-| [...] Maintenance release v1.6.0.6, v1.5.6.6, v1.5.5.6 and v1.5.4.7
-| are already available at k.org (see the announcement for v1.6.0.6 I
-| sent out a few minutes ago), and the master branch and others pushed
-| out tonight have the same fix. [...]
+   I still haven't seen a CVE id for this (pls correct me
+if I overlooked it). Could one be assigned? (if there isn't one yet).
 
-<http://marc.info/?l=git&m=122975564100860&w=2>
+Also not sure, if this one has been already addressed upstream?
+(as there has been couple of more important Nginx security issues
+  recently).
 
-It's from 2008, so maybe it should get a 2008 number.
+Igor, could you comment on upstream status of this one? Is there
+a patch handy?
 
-Thanks,
-Florian
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+> 
+> 2.) nginx Null Pointer dereference:
+> http://sysoev.ru/nginx/patch.null.pointer.txt
+> 
+> 3.) nginx SSL Renegotiation: http://sysoev.ru/nginx/patch.cve-2009-3555.txt
+> 
+> I know the last one contains a CVE number, nginx uses openssl and the
+> patch will disable renegotiation, maybe this deserves an own CVE?
+> 
+> 
+> Best regards,
+> 
+> Craig
+
