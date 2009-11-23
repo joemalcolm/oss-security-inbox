@@ -1,32 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/06/4
-Message-ID: <Pine.GSO.4.51.0906061224370.28142@faron.mitre.org>
-Date: Sat, 6 Jun 2009 12:25:31 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security <oss-security@...ts.openwall.com>
-cc: coley@...re.org
-Subject: Re: CVE Request (gstreamer-plugins-good)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/23/13
+Message-ID: <heejm3$a7v$2@ger.gmane.org>
+Date: Mon, 23 Nov 2009 12:04:18 -0600
+From: Raphael Geissert <geissert@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: Mail PEAR module code injection vulnerability
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-The patch link seems to be working again.
+Hi,
 
+A code injection vulnerability has been found in the sendmail
+(Mail/sendmail.php) method of the Mail PEAR module.
+The bug was originally reported at [1] and fixed upstream in 1.2.0b2.
+Proper sanitation is also missing for $recipients, but it wasn't addressed
+by the fix applied by upstream.
 
-======================================================
-Name: CVE-2009-1932
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1932
-Reference: CONFIRM:http://cgit.freedesktop.org/gstreamer/gst-plugins-good/commit/?id=d9544bcc44adcef769cbdf7f6453e140058a3adc
-Reference: BID:35172
-Reference: URL:http://www.securityfocus.com/bid/35172
-Reference: OSVDB:54827
-Reference: URL:http://osvdb.org/54827
+References:
+[1] http://pear.php.net/bugs/bug.php?id=16200
+http://bugs.debian.org/557121
+http://secunia.com/advisories/37410/
+http://www.debian.org/security/2009/dsa-1938
 
-Multiple integer overflows in the (1) user_info_callback, (2)
-user_endrow_callback, and (3) gst_pngdec_task functions
-(ext/libpng/gstpngdec.c) in GStreamer Good Plug-ins (aka
-gst-plugins-good or gstreamer-plugins-good) 0.10.15 allow remote
-attackers to cause a denial of service and possibly execute arbitrary
-code via a crafted PNG file, which triggers a buffer overflow.
+Could a CVE be assigned? thanks in advance
 
+Regards,
+- -- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iEYEARECAAYFAksKzqYACgkQYy49rUbZzlpOCwCfXRy7+ZgiGHwMSAoGueOMhTgA
+dnEAn10GpLXSMiNwmY0kXRNUjW7ZGy3F
+=MZV8
+-----END PGP SIGNATURE-----
 
