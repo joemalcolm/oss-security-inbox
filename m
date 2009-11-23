@@ -1,37 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/05/2
-Message-ID: <4AF2A13F.6050108@redhat.com>
-Date: Thu, 05 Nov 2009 10:56:15 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request - Asterisk (AST-2009-008.html)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/23/16
+Message-ID: <518516022.608081259010531168.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 23 Nov 2009 16:08:51 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: mysql-5.1.41
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve, vendors,
+As best as I can tell, we only need one CVE id (two issues, but one already has
+an id).
 
-   Asterisk upstream has recently published two security advisories:
+MySQL clients before version 5.1.41 linked against OpenSSL would not properly
+check certificates presented by a MySQL server linked against yaSSL. This could
+possibly lead to a man in the middle type of attack on the SSL connection.
 
-a, SIP responses expose valid usernames
-    http://downloads.asterisk.org/pub/security/AST-2009-008.html
+http://bugs.mysql.com/bug.php?id=47320
+http://dev.mysql.com/doc/refman/5.1/en/news-5-1-41.html
 
-    This is similar issue to AST-2009-003.html (CVE-2008-3903)
-    http://downloads.asterisk.org/pub/security/AST-2009-003.html
+Thanks.
 
-    But according to the patches:
-
-    http://downloads.digium.com/pub/asa/AST-2009-003-1.6.1.diff.txt (AST-2009-003) vs
-    http://downloads.asterisk.org/pub/security/AST-2009-008-1.6.1.diff.txt (AST-2009-003)
-
-    it desires a new CVE id. Could you allocate one?
-
-The second issue (b,) already got an CVE id of CVE-2008-7220.
-
-b, Cross-site AJAX request vulnerability (CVE-2008-7220)
-    http://downloads.asterisk.org/pub/security/AST-2009-009.html
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+-- 
+    JB
 
 
+----- "Oden Eriksson" <oeriksson@...driva.com> wrote:
+
+> Hello.
+> 
+> The new mysql release mentions two security issues that has been
+> addressed, 
+> anyone knows more about that? I guess it would need some CVE
+> assignment as 
+> well.
+> 
+> http://dev.mysql.com/doc/refman/5.1/en/news-5-1-41.html
+> 
+> -- 
+> Regards // Oden Eriksson
+> Security team manager - Mandriva
