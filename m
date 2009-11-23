@@ -1,42 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/17/4
-Message-Id: <1237317823.17155.10.camel@dhcp-lab-164.englab.brq.redhat.com>
-Date: Tue, 17 Mar 2009 20:23:43 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE request -- firefox, vlc, WeeChat
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/23/18
+Message-ID: <Pine.GSO.4.51.0911231748370.20369@faron.mitre.org>
+Date: Mon, 23 Nov 2009 17:50:28 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Josh Bressers <bressers@...hat.com>
+cc: oss-security@...ts.openwall.com
+Subject: Re: CVEs for nginx
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve,
 
-  1, the following DoS (crash) and null pointer dereference
-     has been recently reported against firefox-3.0.7
+On Mon, 23 Nov 2009, Josh Bressers wrote:
 
-     References:
-     http://bugs.gentoo.org/show_bug.cgi?id=262704
-     https://bugzilla.mozilla.org/show_bug.cgi?id=456727
-     http://www.milw0rm.com/exploits/8219
-     https://bugzilla.mozilla.org/show_bug.cgi?id=448329
+> > 3.) nginx SSL Renegotiation:
+> > http://sysoev.ru/nginx/patch.cve-2009-3555.txt
+> >
+> > I know the last one contains a CVE number, nginx uses openssl and the
+> > patch will disable renegotiation, maybe this deserves an own CVE?
+> >
+>
+> We'll use the same ID. mod_ssl did a similar thing and used CVE-2009-3555. I
+> think multiple IDs in this instance would actually create more confusion that
+> it would solve.
 
-  2, vlc 0.9.8a remote DoS (hang)
-     
-     References:
-     http://bugs.gentoo.org/show_bug.cgi?id=262708
-     http://milw0rm.com/exploits/8213
+The same core problem could be solved any number of ways, and I don't
+think that should distract from the fact that there is just one core
+problem.  So using the same CVE is appropriate.  (Now, if an interim fix
+is later found to have its own vulns or be bypassed in a way that was not
+originally advertised, that might need its own CVE.)
 
-  3, WeeChat -- new upstream release 0.2.6.1 with one security
-                fix included -- DoS (crash) when receiving special 
-                characters in IRC messages
-
-     References:
-     http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=519940
-     http://weechat.flashtux.org/download.php
-     https://savannah.nongnu.org/bugs/index.php?25862
-
-Could you please allocate CVE identifiers for these issues?
-
-Thanks, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
+- Steve
