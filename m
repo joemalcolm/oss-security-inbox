@@ -1,33 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/10/3
-Message-ID: <1289358301.135181257816957122.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 9 Nov 2009 20:35:57 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: oping allows the disclosure of arbitrary file contents
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/23/9
+Message-ID: <20091123131244.GH897@rambler-co.ru>
+Date: Mon, 23 Nov 2009 16:12:44 +0300
+From: Igor Sysoev <igor@...oev.ru>
+To: Jan Lieskovsky <jlieskov@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVEs for nginx
 Content-Type: text/plain; charset=utf-8
 
------ "Steven M. Christey" <coley@...us.mitre.org> wrote:
-> 
-> This says:
-> 
->   2009-09-29 Version 1.3.3 is available. The new release fixes a serious
->   security issue in oping: If the application is installed with the
->   SetUID-bit, anybody on the system could use oping to read arbitrary files
->   using the "-f" option.
-> 
-> So as stated, this sounds worthy of a CVE to me.  Thoughts?
-> 
+On Mon, Nov 23, 2009 at 12:12:53PM +0100, Jan Lieskovsky wrote:
 
-That issue has a CVE id. I gave it CVE-2009-3614 quite some time ago.
-http://marc.info/?l=oss-security&m=125561742729846&w=2
+> Hi Igor,
+> 
+> Igor Sysoev wrote:
+>  > As I far I know - no.
+> 
+>    Josh, could you allocate one then?
+> 
+>   > This bug was fixed in 0.8.17 and 0.7.63:
+> > 
+> > Changes with nginx 0.8.17                                        28 Sep 2009
+> > 
+> >     *) Security: now "/../" are disabled in "Destination" request header
+> >        line.
+> > 
+> > Changes with nginx 0.7.63                                        26 Oct 2009
+> > 
+> >     *) Security: now "/../" are disabled in "Destination" request header
+> >        line.
+> > 
+> > There is no patch, however, I can created it for you.
+> 
+>    That would be perfect.
 
-The discussion then branched out into if an unchecked call to setuid to drop
-permissions is a security flaw (as a user could cause it to fail, preventing
-oping from dropping privs). I saw nothing in the code that showed it to be
-anything but a bug, as oping doesn't do anything exciting after the call could
-fail.
+The patch attached.
+
 
 -- 
-    JB
+Igor Sysoev
+http://sysoev.ru/en/
+
+View attachment "patch.dest.txt" of type "text/plain" (3313 bytes)
