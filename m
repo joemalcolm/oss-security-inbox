@@ -1,101 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/25/3
-Message-ID: <Pine.LNX.4.64.0904250936580.365@forced.attrition.org>
-Date: Sat, 25 Apr 2009 10:23:01 +0000 (UTC)
-From: security curmudgeon <jericho@...rition.org>
-To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: VDBs (was Re: CVE request: kernel: missing capabilities in fs_mask)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/23/2
+Message-ID: <20091123110019.GE897@rambler-co.ru>
+Date: Mon, 23 Nov 2009 14:00:19 +0300
+From: Igor Sysoev <igor@...oev.ru>
+To: Jan Lieskovsky <jlieskov@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVEs for nginx
 Content-Type: text/plain; charset=utf-8
 
+On Mon, Nov 23, 2009 at 11:48:17AM +0100, Jan Lieskovsky wrote:
 
-On Sat, 25 Apr 2009, Eugene Teo wrote:
+> Hi Craig, vendors,
+> 
+> Craig wrote:
+> > Hi,
+> > 
+> > are the CVEs for
+> > 
+> > 1.) nginx webdav: http://secunia.com/advisories/36818/
+> 
+>    I still haven't seen a CVE id for this (pls correct me
+> if I overlooked it). Could one be assigned? (if there isn't one yet).
 
-: >> "When POSIX capabilities were introduced during the 2.1 Linux cycle, the
-: >> fs mask, which represents the capabilities which having fsuid==0 is
-: >> supposed to grant, did not include CAP_MKNOD and CAP_LINUX_IMMUTABLE.
-: >> However, before capabilities the privilege to call these did in fact
-: >> depend upon fsuid==0.
-: > 
-: > How is this different than CVE-2009-1072?  That CVE is based on the same
-: > bug report by Igor Zhbanov, although the description doesn't mention
-: > CAP_LINUX_IMMUTABLE.
-: 
-: Hmm. CVE-2009-1072 refers to the missing CAP_MKNOD capability in
-: CAP_NFSD_MASK, and this bug refers to the missing CAP_MKNOD and
-: CAP_LINUX_IMMUTABLE capabilities in CAP_FS_MASK. Come to think about it,
-: both are similar, and probably makes sense to have it part of
-: CVE-2009-1072 too?
+As I far I know - no.
 
-A question, really?
+> Also not sure, if this one has been already addressed upstream?
+> (as there has been couple of more important Nginx security issues
+>   recently).
 
-I'd like to reiterate what Steve Christey said in the last 24 hours, about 
-the Linux Kernel vulnerabilities becoming a serious drain on CVE. 
-Historically, OSVDB has relied on Secunia and CVE to sort out the Linux 
-Kernel vulnerability messes. Both VDBs have full time staff that can 
-dedicate time to figuring out such nuances as those above. 
+This bug was fixed in 0.8.17 and 0.7.63:
 
-Not to pick on Eugene specifically, but I feel he makes a great example of 
-my point. Nuances that a "Senior Security Engineer at Red Hat" who 
-specialies in "OS and Application Security, Project Management, 
-Vulnerability Analysis, Code-level Auditing, Penetration Testing, Red Hat 
-Products and Services, Financial Services Technical Account Management" 
-cannot definitely distinguish between difference in Kernel 
-vulnerabilities. If Eugene cannot say with certainty these deserve two CVE 
-numbers, how can Steve or his staff?
+Changes with nginx 0.8.17                                        28 Sep 2009
 
-VDBs deal with thousands of vulnerabilities a year, ranging from PHP 
-applications to Oracle to Windows services to SCADA software to cellular 
-telephones. We're expected to have a basic understanding of 
-'vulnerabilities', but this isn't 1995. Software and vulnerabilities have 
-evolved over the years. They have moved from straight-forward overflows 
-(before buffer vs stack vs heap vs underflow) and one type of XSS to a 
-wide variety of issues that are far from trivial to exploit. For fifteen 
-years, it has been a balancing act for VDBs when including Denial of 
-Service (DOS) vulnerabilities because the details are often sparse and it 
-is not clear if an unprivileged user can reasonably affect availability. 
-Jump to today where the software developers cannot, or will not tell the 
-masses what the real issue is.
+    *) Security: now "/../" are disabled in "Destination" request header
+       line.
 
-This isn't just a Linux Kernel issue at all. The recent round of 
-advisories from Mozilla contain obscure wording that allude to "memory 
-corruption" implying arbitrary code execution. If you follow the links to 
-the bugzilla reports, the wording becomes a quagmire of terms that not 
-even the developers can keep up on [1] [2]. That's if they even open the 
-bugzilla entry reference in the advisory [3]. Again, how are people not 
-intimately familiar with the code base supposed to understand these 
-reports and give a reasonable definition of the vulnerability? How do we 
-translate that mess of coder jargon into a 1 - 10 score for severity?
+Changes with nginx 0.7.63                                        26 Oct 2009
 
-It is important that VDBs continue to track these issues, and it is great 
-that we have more insight and contact with the development teams of 
-various projects. However, this insight and contact has paved the way for 
-a new set of problems that over-tax an already burdened effort. MITRE 
-receives almost 5 million dollars a year from the U.S. government to fund 
-the C*E effort, including CVE [4]. If they cannot keep up with these 
-vulnerabilities, how do their "competitors", especially free / open source 
-ones [5], have a chance?
+    *) Security: now "/../" are disabled in "Destination" request header
+       line.
 
-Projects like the Linux Kernel are familiar with CVE entries. Many Linux 
-distributions are CVE Numbering Authorities, and can assign a CVE entry to 
-a particular vulnerability. It's time that you (collectively) properly 
-document and explain vulnerabilities so that VDBs don't have to do the 
-source code analysis, patch reversals or play 20 questions with the 
-development team. Provide a clear understanding of what the vulnerability 
-is so that we may properly document it, and customers can then judge the 
-severity of issue and act on it accordingly. 
+> Igor, could you comment on upstream status of this one?
+> Is there a patch handy?
 
-I believe this is a case where over-exposure to near-proprietary technical 
-details of a product have become the antithesis of closed-source vague 
-disclosures like those from Microsoft or Oracle [6].
+There is no patch, however, I can created it for you.
 
-Brian
-OSVDB.org
+> Thanks && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+> 
+> > 
+> > 2.) nginx Null Pointer dereference:
+> > http://sysoev.ru/nginx/patch.null.pointer.txt
+> > 
+> > 3.) nginx SSL Renegotiation: http://sysoev.ru/nginx/patch.cve-2009-3555.txt
+> > 
+> > I know the last one contains a CVE number, nginx uses openssl and the
+> > patch will disable renegotiation, maybe this deserves an own CVE?
+> > 
+> > 
+> > Best regards,
+> > 
+> > Craig
 
 
-[1] https://bugzilla.mozilla.org/show_bug.cgi?id=462517
-[2] https://bugzilla.mozilla.org/show_bug.cgi?id=477775
-[3] https://bugzilla.mozilla.org/show_bug.cgi?id=478433
-[4] Based on FOIA information.
-[5] http://opensecurityfoundation.org/
-[6] Which are just as difficult to deal with in a totally different way.
+-- 
+Igor Sysoev
+http://sysoev.ru/en/
