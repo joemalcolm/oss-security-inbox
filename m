@@ -1,22 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/17/2
-Message-ID: <20090617202517.GA14988@sdf.lonestar.org>
-Date: Wed, 17 Jun 2009 20:25:17 +0000
-From: Tavis Ormandy <taviso@....lonestar.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/23/11
+Message-ID: <891439954.596821259004627925.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 23 Nov 2009 14:30:27 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: clamav CVE ids?
+Cc: eldy@...rs.sourceforge.net
+Subject: Re: CVE request: awstats
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jun 17, 2009 at 05:22:28PM +0200, Marcus Meissner wrote:
-> Hi,
+----- "Craig" <craig@...uarter.de> wrote:
 > 
-> Clamav 0.95.2 brings some fixes for Thierry Zollers issues,
-> which probably deserve (a) CVE id ...
+> I think there isn't a CVE for this issues - which was fixed in 6.95 - yet
+> (quote from
+> http://awstats.sourceforge.net/docs/awstats_changelog.txt):
+> 
+> - Fix security in awredir.pl script by adding a security key required by
+>   default.
+> - Enhance security of parameter sanitizing function
 > 
 
-Anti virus bypass? Seriously?
+I'm adding AWStats upstream to this reply. Can someone elaborate on those
+fixes? Are they security flaws, or just proactive security measures.
+
+If they're flaws that need CVE ids, I presume upstream will add them to their
+security page:
+http://awstats.sourceforge.net/awstats_security_news.php
+
+Thanks.
 
 -- 
--------------------------------------
-taviso@....lonestar.org | finger me for my gpg key.
--------------------------------------------------------
+    JB
