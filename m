@@ -1,44 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/27/1
-Message-ID: <4A961056.40706@redhat.com>
-Date: Thu, 27 Aug 2009 12:49:26 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/23/10
+Message-ID: <1096419672.595721259004023238.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 23 Nov 2009 14:20:23 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: AF_LLC getsockname 5-Byte Stack Disclosure
+Cc: coley <coley@...re.org>
+Subject: Re: CVEs for nginx
 Content-Type: text/plain; charset=utf-8
 
-Eugene Teo wrote:
-> sllc_arphrd member of sockaddr_llc might not be changed. Zero sllc 
-> before copying to the above layer's structure.
-> 
-> Note that LLC sockets are restricted to root since v2.6.25-rc9 (see 
-> commit 3480c63b).
-> 
-> Upstream commit:
-> http://git.kernel.org/linus/28e9fc592cb8c7a43e4d3147b38be6032a0e81bc
-> 
-> Reproducer:
-> http://jon.oberheide.org/files/llc-getsockname-leak.c
-> 
-> Reference:
-> https://bugzilla.redhat.com/show_bug.cgi?id=519305
+----- "Craig" <craig@...uarter.de> wrote:
 
-There are some more fixes that addressed similar infoleaks:
+> 
+> 1.) nginx webdav: http://secunia.com/advisories/36818/
 
-e84b90ae5eb3c112d1f208964df1d8156a538289
-     can: Fix raw_getname() leak
-09384dfc76e526c3993c09c42e016372dc9dd22c
-     irda: Fix irda_getname() leak
-3d392475c873c10c10d6d96b94d092a34ebd4791
-     appletalk: fix atalk_getname() leak
-f6b97b29513950bfbf621a83d85b6f86b39ec8db
-     netrom: Fix nr_getname() leak
-80922bbb12a105f858a8f0abb879cb4302d0ecaa
-     econet: Fix econet_getname() leak
-17ac2e9c58b69a1e25460a568eae1b0dc0188c25
-     rose: Fix rose_getname() leak
+Let's use CVE-2009-3898 for this one:
 
-It would make sense to address these with the same CVE name as this one.
+CVE-2009-3898
 
-Thanks, Eugene
+nginx versions before 0.8.17 and 0.7.63 contain a directory traversal flaw in
+the webdav component. A user who can COPY or MOVE permissions could place
+files outside the webdav root.
+
+http://archives.neohapsis.com/archives/fulldisclosure/2009-09/0379.html
+http://secunia.com/advisories/36818/
+http://marc.info/?l=oss-security&m=125900327409842&w=2
+
+> 
+> 2.) nginx Null Pointer dereference:
+> http://sysoev.ru/nginx/patch.null.pointer.txt
+
+This is CVE-2009-3896
+
+> 
+> 3.) nginx SSL Renegotiation:
+> http://sysoev.ru/nginx/patch.cve-2009-3555.txt
+> 
+> I know the last one contains a CVE number, nginx uses openssl and the
+> patch will disable renegotiation, maybe this deserves an own CVE?
+> 
+
+We'll use the same ID. mod_ssl did a similar thing and used CVE-2009-3555. I
+think multiple IDs in this instance would actually create more confusion that
+it would solve.
+
+Thanks.
+
+-- 
+    JB
