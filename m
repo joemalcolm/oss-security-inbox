@@ -1,30 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/26/1
-Message-ID: <20090126140300.23af2b17@redhat.com>
-Date: Mon, 26 Jan 2009 14:03:00 +0100
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/23/5
+Message-ID: <4B0A8036.2040408@redhat.com>
+Date: Mon, 23 Nov 2009 13:29:42 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: Re: CVE request - ganglia
+CC: Joe Orton <jorton@...hat.com>
+Subject: Re: CVE request: php 5.3.1 -  proc_open() bypass PHP Bug #49026 [was: Re: CVE request: php 5.3.1 update]
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 20 Jan 2009 21:13:26 -0500 (EST) "Steven M. Christey"
-<coley@...us.mitre.org> wrote:
+Hi Brian,
 
-> Notice the second CVE for the bandwidth/CPU consumption.  The attack
-> scenario isn't completely clear to me, but since it's labeled as a
-> DoS by the developer, I decided to include it.
+security curmudgeon wrote:
+> On Fri, 20 Nov 2009, Thomas Biege wrote:
+> 
+> : PHP was updated to version 5.3.1 and did also address security
+> : issues: http://www.php.net/releases/5_3_1.php
+> : 
+> : Security Enhancements and Fixes in PHP 5.3.1:
+> : 
+> :     * Added "max_file_uploads" INI directive, which can be set to limit the number of file uploads per-request to 20 by default, to prevent possible DOS via temporary file exhaustion.
+> :     * Added missing sanity checks around exif processing.
+> 
+> This was previously disclosed and fixed in the 5.2.x tree. I believe this 
+> is the same as CVE-2009-3292.
+> 
+> :     * Fixed a safe_mode bypass in tempnam().
+> :     * Fixed a open_basedir bypass in posix_mkfifo().
+> :     * Fixed bug #50063 (safe_mode_include_dir fails).
+> :     * Fixed bug #44683 (popen crashes when an invalid mode is passed).
+> 
+> Also not flagged as 'security' up top, but from the changelog:
+> 
+> Fixed bug #49026 (proc_open() can bypass safe_mode_protected_env_vars 
+> restrictions). (Ilia)
 
-CVE-2009-0242 was disputed on the ganglia mailing list, even by the
-reporter:
-http://www.mail-archive.com/ganglia-developers@lists.sourceforge.net/msg04973.html
+   Thank you for pointing this out.
 
-The flaw should only apply to gmetad with multi-request feature
-proposal included (was part of the original mail, along with the fix
-for buffer overflow).  Though from the quick look at the issue,
-specifying invalid paths does not seem to make the issue any worse even
-there:
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-0242#c1
+   Yes, further look into particular php bugzilla returns:
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+     "Environment variables specified for proc_open passed without check so
+      safe_mode_allowed_env_vars and safe_mode_protected_env_vars settings are
+      ignored. So it become possible to use buffer overflow exploit with
+      "LD_PRELOAD=evil_library.so" to bypass safe_mode restrictions and get
+      access to any files acessible for apache uid."
+
+   So looks another CVE id is needed here. Changed subject to:
+   "CVE request: php 5.3.1 - proc_open() bypass PHP Bug #49026"
+
+   Could we get another CVE id for this case?
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+> 
+> Brian
+
