@@ -1,69 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/11/1
-Message-ID: <20090511164341.GL4350@inversepath.com>
-Date: Mon, 11 May 2009 17:43:41 +0100
-From: Andrea Barisani <lcars@...rt.org>
-To: ocert-announce@...ts.ocert.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: [oCERT-2009-004] AjaxTerm session id collision
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/24/7
+Message-ID: <971275315.695731259086917677.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 24 Nov 2009 13:21:57 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: a new bind issue
 Content-Type: text/plain; charset=utf-8
 
+I'm going to defer this assignment to MITRE. I suspect they've gotten a number of
+requests for this one already (I want to avoid a duplicate assignment).
 
-#2009-004 AjaxTerm session id collision
-
-Description:
-
-AjaxTerm, an open source web based terminal, uses a form of random session id
-generation which can lead to remote session hijacking.
-
-The ajaxterm.js script allocates session ids on the client side using the
-following method:
-
- var sid=""+Math.round(Math.random()*1000000000);
-
-The javascript random function used in combination with round does not provide
-sufficient entropy for a unique session id, as the session id is the only
-unique identifier for the user session it is possible for an attacker to brute
-force the space of possible id values and attach an existing connection.
-
-This vulnerability also allows Denial Of Service attacks as it is possible to
-exhaust the available session ids when performing a brute force attack and,
-depending on the configured AjaxTerm child command, system resources.
-
-Affected version:
-
-AjaxTerm <= 0.10
-
-Fixed version:
-
-Unfortunately oCERT has been unable to get feedback from AjaxTerm maintainers
-and the package seems unmaintained, it's therefore suggested to avoid AjaxTerm
-usage on production or any environment where strong security is needed.
-
-Credit: Initial vulnerability report provided by Michael Greb <mgreb [at]
-linode [dot] com>.
-
-CVE: N/A
-
-Timeline:
-
-2009-03-12: vulnerability report received
-2009-03-12: contacted AjaxTerm maintainer
-2009-04-18: oCERT contacts various vendors security team seeking for
-            developers familiar with AjaxTerm
-2009-04-28: due to lack of feedback oCERT asks reporter to disclose the
-            issue
-2009-04-29: reporter agrees to disclosure
-2009-05-11: advisory release
-
-References:
-
-Permalink:
-http://www.ocert.org/advisories/ocert-2009-004.html
+Thanks.
 
 -- 
-Andrea Barisani |                Founder & Project Coordinator
-          oCERT | Open Source Computer Emergency Response Team
+    JB
 
-<lcars@...rt.org>                         http://www.ocert.org
- 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
-        "Pluralitas non est ponenda sine necessitate"
+
+----- "Oden Eriksson" <oeriksson@...driva.com> wrote:
+
+> Hello.
+> 
+> A new bind release is out there, it mentions:
+> 
+> "It addresses a potential cache poisoning vulnerability, in which data
+> in the 
+> additional section of a response could be cached without proper DNSSEC
+> 
+> validation."
+> 
+> "2772.   [security]      When validating, track whether pending data
+> was from
+>                         the additional section or not and only return
+> it if
+>                         validates as secure. [RT #20438]"
+> 
+> 
+> A CVE should probably be assigned.
+> 
+> 
+> -- 
+> Regards // Oden Eriksson
+> Security team manager - Mandriva
