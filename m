@@ -1,55 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/02/1
-Message-ID: <1463873825.365411259761221182.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 2 Dec 2009 08:40:21 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/24/2
+Message-ID: <87ocmsosjn.fsf@mid.deneb.enyo.de>
+Date: Tue, 24 Nov 2009 16:23:40 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: mac80211: fix two remote exploits
+Subject: CVE request: BIND 9 bug involving DNSSEC and the additional section
 Content-Type: text/plain; charset=utf-8
 
+Fixed in BIND 9.6.1-P2, 9.5.2-P1 and 9.4.3-P4, per recent
+announcements.
 
------ "Eugene Teo" <eugeneteo@...nel.sg> wrote:
+2772.	[security]	When validating, track whether pending data was from
+			the additional section or not and only return it if
+			validates as secure. [RT #20438]
 
-> http://git.kernel.org/linus/4253119acf412fd686ef4bd8749b5a4d70ea3a51
-> 
-> "Lennert Buytenhek noticed a remotely triggerable problem in mac80211,
-> 
-> which is due to some code shuffling I did that ended up changing the 
-> order in which things were done -- this was in
-> 
->    commit d75636ef9c1af224f1097941879d5a8db7cd04e5
->    Author: Johannes Berg <johannes@...solutions.net>
->    Date:   Tue Feb 10 21:25:53 2009 +0100
-> 
->      mac80211: RX aggregation: clean up stop session
-> 
-> The problem is that the BUG_ON moved before the various checks, and as
-> 
-> such can be triggered.
-> 
-> As the comment indicates, the BUG_ON can be removed since the 
-> ampdu_action callback must already exist when the state is
-> OPERATIONAL.
-> 
-> A similar code path leads to a WARN_ON in
-> ieee80211_stop_tx_ba_session, 
-> which can also be removed."
-> 
-> Btw, FYI, there's another issue that was also introduced by the same 
-> code shuffling patch (commit d75636ef) but was fixed in another patch
-> 
-> (commit 827d42c9). It was assigned with CVE-2009-4026.
-> 
-
-Hi Eugene,
-
-I can't parse this. Can you help me understand.
-
-What are the two issues the subject speaks of? Is the "similar code path"
-paragraph of importance?
-
-Thanks.
-
--- 
-    JB
+The advisory at <https://www.isc.org/node/504> is rather unclear.  The
+way it is written, one would assume that the in-bailiwick checks are
+bypassed as well.  Is this really true?  (Based on a quick look at the
+patch, this seems to happen only for secure domains, that is, you need
+some trust anchors.)
