@@ -1,23 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/16/4
-Message-ID: <20090916135056.GA12946@suse.de>
-Date: Wed, 16 Sep 2009 15:50:56 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>, security@...nel.org, davem@...emloft.net
-Subject: CVE-2008-4609 / Outpost24 TCP issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/24/11
+Message-ID: <613167753.705191259093159954.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 24 Nov 2009 15:05:59 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: Argument injections in multiple PEAR packages
 Content-Type: text/plain; charset=utf-8
 
-Hi folks,
+> 
+> here are a couple of issues in PEAR packages that do not yet have a CVE
+> afaik:
+> 
+> 1. PEAR-Mail Mail::Send() Argument Injection when using Sendmail
 
-I get customer queries on whether and how the Linux kernel is affected
-to the CVE-2008-4609 TCP denial of service problems ...
+Use CVE-2009-4023 for this.
 
-This seems to a large degree to be a kernel issue.
-Also how are applications involved in the whole picture?
+> 
+> Secunia writes:
+> "The sendmail implementation of the "Mail::Send()" method does not
+> properly sanitise the "from" parameter before invoking sendmail,
+> which can be exploited to pass arbitrary arguments to the sendmail
+> command."
+> 
+> Contrary to Secunia, this does not seem to be completely fixed yet
+> (see
+> Raphael Geissert's comment in the upstream bug)
+> 
+> http://secunia.com/advisories/37410/
+> Upstream bug:
+> http://pear.php.net/bugs/bug.php?id=16200
+> First commit:
+> http://svn.php.net/viewvc/pear/packages/Mail/trunk/Mail/sendmail.php?r1=243717&r2=280134
+> Gentoo bug:
+> https://bugs.gentoo.org/show_bug.cgi?id=294256
+> 
+> 2. PEAR-Net_Ping < 2.4.5 ping() Argument Injection via $host
 
-To my own not so deep knowledge this issue seems to affect us
-even today.
+Use CVE-2009-4024
 
-Has anyone insights to that?
+> 
+> Upstream writes:
+> "When input from forms are used directly, the attacker could pass
+> variables that would allow him to execute remote arbitrary command
+> injections."
+> 
+> Upstream advisory:
+> http://pear.php.net/advisory20091114-01.txt
+> Commit:
+> http://svn.php.net/viewvc/pear/packages/Net_Ping/trunk/Ping.php?r1=274728&r2=290669
+> Gentoo bug:
+> https://bugs.gentoo.org/show_bug.cgi?id=294258
+> 
+> 3. PEAR-Net_Traceroute < 0.21.2 traceroute() Argument Injection via
+> $host
 
-Ciao, Marcus
+Use CVE-2009-4025
+
+> 
+> See above, same advisory.
+> 
+> Commit:
+> http://svn.php.net/viewvc/pear/packages/Net_Traceroute/trunk/Traceroute.php?r1=232735&r2=290749
+> Gentoo bug:
+> https://bugs.gentoo.org/show_bug.cgi?id=294264
+> 
+
+Thanks
+
+-- 
+    JB
