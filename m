@@ -1,23 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/28/7
-Message-ID: <Pine.GSO.4.51.0901280858500.490@faron.mitre.org>
-Date: Wed, 28 Jan 2009 09:02:45 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/24/5
+Message-ID: <2099385299.694911259086011108.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 24 Nov 2009 13:06:51 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: update on CVE-2008-5718
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: fuse: prevent fuse_put_request on invalid pointer
 Content-Type: text/plain; charset=utf-8
 
+Please use CVE-2009-4021
 
-On Wed, 28 Jan 2009, Thomas Biege wrote:
+Thanks.
 
-> New patch attached, the old one was missing spaces.
-> Hope the blacklist is complete now...
+-- 
+    JB
 
-Would a "-" character allow an argument injection attack by inserting
-dangerous command-line switches?  Things like being able to add a "-rf" as
-an argument to the rm command...
 
-I assume there's something undesirable about quoting everything unless
-it's alphanumeric?
+----- "Eugene Teo" <eugeneteo@...nel.sg> wrote:
 
-- Steve
+> "fuse_direct_io() has a loop where requests are allocated in each 
+> iteration. if allocation fails, the loop is broken out and follows
+> into 
+> an unconditional fuse_put_request() on that invalid pointer."
+> 
+> Upstream commit:
+> http://git.kernel.org/linus/f60311d5f7670d9539b424e4ed8b5c0872fc9e83
+> 
+> This can be triggered when the system is low on memory, and when the 
+> fuse_request_alloc() function called from fuse_get_req() fails. The 
+> fuse_put_request() function will then dereference the invalid pointer
+> 
+> returned, resulting in a kernel oops.
+> 
+> This was introduced in 413ef8cb (v2.6.14-rc1) and fixed in
+> v2.6.32-rc7.
+> 
+> https://bugzilla.redhat.com/538734
+> 
+> Thanks, Eugene
