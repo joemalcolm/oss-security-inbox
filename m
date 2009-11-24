@@ -1,35 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/04/2
-Message-ID: <20090904135334.GG19058@ngolde.de>
-Date: Fri, 4 Sep 2009 15:53:34 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/24/10
+Message-ID: <269868542.697921259088889963.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 24 Nov 2009 13:54:49 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: silc-toolkit
+Cc: bind9-bugs@....org
+Subject: Re: a new bind issue
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Nico Golde <oss-security+ml@...lde.de> [2009-09-04 15:41]:
-> * Steven M. Christey <coley@...us.mitre.org> [2009-09-04 12:08]:
-> > On Mon, 31 Aug 2009, Nico Golde wrote:
-> > 
-> > > silc-toolkit upstream fixed [0] various security issues which
-> > > from my assessment allow an attacker arbitrary code
-> > > execution. I'd like to get some CVE ids for these.
-> > >
-> > > |    ASN1: Fix stack variable overwrite when encoding OID.
-> > 
-> > This was actually fixed in 1.1.8 back in 2008:
-> 
-> Which CVE id is that? I can't find a CVE-2008- issue 
-> describing this.
+I'm adding the address BIND notes in their advisory to the CC.
 
-EMORECOFFEE, sorry
+Bind folks, the CVE id for your latest advisory is below.
 
-Cheers
-Nico
+Thanks.
 
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
+    JB
 
-Content of type "application/pgp-signature" skipped
+
+----- "Steven M. Christey" <coley@...us.mitre.org> wrote:
+
+> On Tue, 24 Nov 2009, Josh Bressers wrote:
+> 
+> > CVE-2009-4022
+> >
+> > Bind versions 9.0.x, 9.1.x, 9.2.x, 9.3.x, 9.4.0 before 9.4.3-P3,
+> 9.5.0,
+> > 9.5.1, 9.5.2, 9.6.0, 9.6.1-P1
+> >
+> > References:
+> > https://www.isc.org/node/504
+> 
+> If anybody has a direct contact to ISC, could you notify them of the
+> new
+> number?  They have a placeholder in their advisory right now.
+> 
+> Thanks,
+> Steve
