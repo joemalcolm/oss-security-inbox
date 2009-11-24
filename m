@@ -1,26 +1,102 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/17/3
-Message-ID: <20091117204812.05b6c155@redhat.com>
-Date: Tue, 17 Nov 2009 20:48:12 +0100
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/24/3
+Message-ID: <4B0C0AEC.4000301@redhat.com>
+Date: Tue, 24 Nov 2009 17:33:48 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: jt@....org
-Subject: Re: CVE request: oping allows the disclosure of  arbitrary file contents
+CC: coley <coley@...re.org>, MySQL Security Team <security@...ql.com>
+Subject: Re: mysql-5.1.41
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 16 Nov 2009 17:39:30 -0500 (EST) Josh Bressers wrote:
+Hi Josh,
 
-> > Does the RLIMIT_NPROC trick work against oping, or any setuid app
-> > that calls setuid(getuid())?
+   looked further into these issues.
+
+A, wrt http://bugs.mysql.com/bug.php?id=32167
+
+You are right, that  CVE-2008-2079 was originally assigned to:
+    http://bugs.mysql.com/bug.php?id=32167
+
+On "[6 May 2008 11:16] Sergei Golubchik" states:
+
+please, note in the manual that it's CVE-2008-2079
+
+But last comment on this bug mentions:
+
+<quote>
+
+[12 Nov 4:50] Paul DuBois
+
+Noted in 5.1.41, 5.5.0, 6.0.14 changelogs.
+
+Additional corrections were made for the symlink-related privilege
+problem originally addressed in MySQL 5.1.24. The original fix did
+not correctly handle the data directory path name if it contained
+symlinked directories in its path, and the check was made only at
+table-creation time, not at table-opening time later.
+
+</quote>
+
+Also MySQL-5.1.41 news file now contains:
+
+Important Change: Security Fix: Additional
+corrections were made for the symlink-related
+privilege problem originally addressed in MySQL
+5.1.24. The original fix did not correctly handle
+the data directory path name if it contained
+symlinked directories in its path, and the check
+was made only at table-creation time, not at
+table-opening time later. (Bug#32167, CVE-2008-2079)"
+
+Consequence:
+===========
+
+So I think we will need a new CVE id as incomplete fix for CVE-2009-2079.
+Relevant patch is here (2845 Georgi Kodinov	2009-11-03)
+   http://lists.mysql.com/commits/89940
+
+Cc-ed MySQL security team to confirm this assumption.
+
+B, wrt to http://bugs.mysql.com/bug.php?id=39277
+
+   This is potential security issue, but the proposed patch didn't
+made it neither into 5.0.88, nor into 5.1.41 releases.
+In fact it was committed only to 6.0.9-alpha release
+("Pushed into 6.0.9-alpha" comment from that bug).
+So we will need to wait a little bit for patch "stabilization".
+
+
+Conclusion - so two CVE ids are needed:
+---------------------------------------
+1, One for incomplete fix for CVE-2009-2079 issue) --
+    "and the check was made only at table-creation time, not at table-opening time later"
+
+      http://bugs.mysql.com/bug.php?id=32167
+      http://lists.mysql.com/commits/89940
+
+2, The second one for the "MySQL clients linked against OpenSSL did not check
+    server certificates presented by a server linked against yaSSL" issue
+
+      http://bugs.mysql.com/bug.php?id=47320
+
+Sergei, please confirm / disprove the above.
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+
+Josh Bressers wrote:
+> As best as I can tell, we only need one CVE id (two issues, but one already has
+> an id).
 > 
-> This should work for everything that calls setuid()
+> MySQL clients before version 5.1.41 linked against OpenSSL would not properly
+> check certificates presented by a MySQL server linked against yaSSL. This could
+> possibly lead to a man in the middle type of attack on the SSL connection.
 > 
-> I have a little bit about this here:
-> http://www.bress.net/blog/archives/34-setuid-madness.html
+> http://bugs.mysql.com/bug.php?id=47320
+> http://dev.mysql.com/doc/refman/5.1/en/news-5-1-41.html
+> 
+> Thanks.
+> 
 
-My previous web search did find that one.  Though set_user() doing
-NPROC check is only called when new uid differs from current real uid
-(so not called in setuid(getuid()) case).
-
--- 
-Tomas Hoger / Red Hat Security Response Team
