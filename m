@@ -1,22 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/28/9
-Message-ID: <Pine.GSO.4.51.0901281013370.490@faron.mitre.org>
-Date: Wed, 28 Jan 2009 10:14:59 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Thomas Biege <thomas@...e.de>
-cc: oss-security@...ts.openwall.com, coley@...re.org
-Subject: Re: update on CVE-2008-5718
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/24/8
+Message-ID: <1514102384.696821259088010479.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 24 Nov 2009 13:40:10 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: a new bind issue
 Content-Type: text/plain; charset=utf-8
 
+CVE-2009-4022
 
-On Wed, 28 Jan 2009, Thomas Biege wrote:
+Bind versions 9.0.x, 9.1.x, 9.2.x, 9.3.x, 9.4.0 before 9.4.3-P3, 9.5.0,
+9.5.1, 9.5.2, 9.6.0, 9.6.1-P1
 
-> I was thinking about that case too but it might not work because we escape
-> the space.
+References:
+https://www.isc.org/node/504
+http://www.kb.cert.org/vuls/id/418861
+https://bugzilla.redhat.com/show_bug.cgi?id=538744
 
-This would limit the impact to whatever a single command-line switch can
-do for whatever command is being invoked.  Probably some programs accept a
-"-stdin" switch and thus would hang forever waiting to read input, as an
-example.
+Thanks.
 
-- Steve
+-- 
+    JB
+
+----- "Oden Eriksson" <oeriksson@...driva.com> wrote:
+
+> Hello.
+> 
+> A new bind release is out there, it mentions:
+> 
+> "It addresses a potential cache poisoning vulnerability, in which data
+> in the 
+> additional section of a response could be cached without proper DNSSEC
+> 
+> validation."
+> 
+> "2772.   [security]      When validating, track whether pending data
+> was from
+>                         the additional section or not and only return
+> it if
+>                         validates as secure. [RT #20438]"
+> 
+> 
+> A CVE should probably be assigned.
+> 
+> 
+> -- 
+> Regards // Oden Eriksson
+> Security team manager - Mandriva
