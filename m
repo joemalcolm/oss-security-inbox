@@ -1,41 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/04/4
-Message-ID: <20090804151046.GA3084@redhat.com>
-Date: Tue, 4 Aug 2009 09:10:46 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/24/1
+Message-Id: <200911241640.49621.oeriksson@mandriva.com>
+Date: Tue, 24 Nov 2009 16:40:49 +0100
+From: Oden Eriksson <oeriksson@...driva.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: squid DoS in external auth header parser
+Subject: a new bind issue
 Content-Type: text/plain; charset=utf-8
 
-* [2009-08-04 12:13:29 +0200] Nico Golde wrote:
+Hello.
 
->* Vincent Danen <vdanen@...hat.com> [2009-07-20 19:48]:
->> I noticed this on Debian's bts [1] and also on upstream's bugzilla [2]
->> but no CVE has been assigned (not sure if one has been requested or not,
->> but I've not seen a request come through here).
->> 
->> By the initial looks of things, it seems to be a fairly low severity
->> issue and may not be easy to duplicate/trigger.  The reporter didn't really
->> provide much in the way of a reproducer or relevant configs (and the
->> reference to zope auths makes me not even want to touch it).
->> 
->> Has anyone taken a look at this or has a CVE been requested for it?
->
->CVE-2009-2622
->CVE-2009-2621
+A new bind release is out there, it mentions:
 
-Are you sure?
+"It addresses a potential cache poisoning vulnerability, in which data in the 
+additional section of a response could be cached without proper DNSSEC 
+validation."
 
-According to MITRE's descriptions, CVE-2009-2621 deals with a lack of
-enforcing "buffer limites and related bound checks", and CVE-2009-2622
-deals with malformed requests.  When I was looking, it didn't seem like
-either of these were the issue noted in the Debian bug.  Bug #2704 on
-the squid site is still UNCONFIRMED with no additional comments made to
-it, so I don't think this is fixed in the latest upstream release (and
-wouldn't fall under one of these CVE's).
+"2772.   [security]      When validating, track whether pending data was from
+                        the additional section or not and only return it if
+                        validates as secure. [RT #20438]"
 
-I don't think a CVE has been assigned to this issue, and I don't think
-it has been fixed.
+
+A CVE should probably be assigned.
+
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Regards // Oden Eriksson
+Security team manager - Mandriva
