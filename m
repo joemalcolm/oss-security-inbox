@@ -1,28 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/14/2
-Message-ID: <20090814113836.GA23197@suse.de>
-Date: Fri, 14 Aug 2009 13:38:36 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/25/4
+Message-ID: <1188266872.30721259168900718.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 25 Nov 2009 12:08:20 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2009-2692 kernel: uninit op in SOCKOPS_WRAP() leads to privesc
+Cc: Alex Legler <a3li@...too.org>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request - Cacti - 0.8.7e
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Aug 14, 2009 at 09:12:52AM +0800, Eugene Teo wrote:
-> Marcus Meissner wrote:
-> > Apparently new root exploit from Brad, see his twitter:
-> > http://twitter.com/spendergrsec
-> > 
-> > The video is a bit sick in my opinion.
-> > 
-> > Disclosed apparently next week.
-> 
-> So, the cat is out of the bag. The exploit is available, but so is the
-> patch.
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-2692
-> http://git.kernel.org/linus/e694958388c50148389b0e9b9e9e8945cf0f1b98
+As best as I can tell, one ID will suffice.
 
-Just for the record, the other members of the affected struct were audited for
-NULL checks and found clean.
+Please use CVE-2009-4032.
 
-Ciao, Marcus
+Thanks.
+
+-- 
+    JB
+
+
+----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+
+> Hello vendors,
+> 
+>    Moritz Naumann reported multiple cross-site scripting flaws in
+> recent version of Cacti.
+> 
+> References:
+> -----------
+> http://www.cacti.net/download_patches.php
+> http://docs.cacti.net/#cross-site_scripting_fixes
+> http://www.securityfocus.com/bid/37109/info
+> http://bugs.gentoo.org/show_bug.cgi?id=294573
+> 
+> Upstream patch:
+> ---------------
+> http://www.cacti.net/downloads/patches/0.8.7e/cross_site_fix.patch
+> 
+> Looks like this is different issue than CVE-2008-0783, CVE-2008-0785
+> and CVE-2008-0786 were.
+> 
+> Could you allocate a CVE id?
+> 
+> Thanks && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+
