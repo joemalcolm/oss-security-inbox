@@ -1,28 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/09/1
-Message-ID: <1202223069.5062081234143596586.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Sun, 8 Feb 2009 20:39:56 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: coley@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: Squid <2.7.6, 3.0.13, 3.1.0.5 DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/25/1
+Message-ID: <4B0CE4D5.1040106@kernel.sg>
+Date: Wed, 25 Nov 2009 16:03:33 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: KVM: x86 emulator: limit instructions to 15 bytes
 Content-Type: text/plain; charset=utf-8
 
+Quoting from the patch: "While we are never normally passed an 
+instruction that exceeds 15 bytes, smp games can cause us to attempt to 
+interpret one, which will cause large latencies in non-preempt hosts."
 
------ "Steven M. Christey" <coley@...us.mitre.org> wrote:
+http://git.kernel.org/?p=linux/kernel/git/avi/kvm.git;a=commitdiff;h=e42d9b8141d1f54ff72ad3850bb110c95a5f3b88
+https://bugzilla.redhat.com/show_bug.cgi?id=541160
 
-> I do subscribe to oss-security so see these emails.  Still working on the
-> best process to be able to respond more quickly.
-> 
-> The SQUID advisory doesn't state what kind of DoS it is, and it's not
-> clear from the patches either.  Is it a crash, hang, resource consumption,
-> etc.?  Not essential from a CVE perspective but probanly convenient to
-> Squid users.
+I understand that a malicious guest can cause long scheduling latencies 
+in the host, resulting in a denial of service, but I have not 
+investigated this further to determine if it has more severe consequences.
 
-I have more information in the Red Hat bug:
-https://bugzilla.redhat.com/show_bug.cgi?id=484246
-
-A remote user can trigger an assert() call, so it's a crash basically.
-
+Thanks, Eugene
 -- 
-    JB
+Eugene Teo / Red Hat Security Response Team
