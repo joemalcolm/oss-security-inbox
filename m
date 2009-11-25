@@ -1,22 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/31/7
-Message-ID: <20090831182132.GA28225@ngolde.de>
-Date: Mon, 31 Aug 2009 20:21:32 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE id request: squirrelmail CSRF
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/25/2
+Message-ID: <4B0D329E.7080006@redhat.com>
+Date: Wed, 25 Nov 2009 14:35:26 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: Alex Legler <a3li@...too.org>, oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request - Cacti - 0.8.7e
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-can I get a CVE id for:
-http://www.squirrelmail.org/security/issue/2009-08-12
-please?
+Hello vendors,
 
-Cheers
-Nico
+   Moritz Naumann reported multiple cross-site scripting flaws in
+recent version of Cacti.
 
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
+References:
+-----------
+http://www.cacti.net/download_patches.php
+http://docs.cacti.net/#cross-site_scripting_fixes
+http://www.securityfocus.com/bid/37109/info
+http://bugs.gentoo.org/show_bug.cgi?id=294573
 
-Content of type "application/pgp-signature" skipped
+Upstream patch:
+---------------
+http://www.cacti.net/downloads/patches/0.8.7e/cross_site_fix.patch
+
+Looks like this is different issue than CVE-2008-0783, CVE-2008-0785
+and CVE-2008-0786 were.
+
+Could you allocate a CVE id?
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
