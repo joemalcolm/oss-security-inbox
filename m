@@ -1,28 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/31/12
-Message-ID: <Pine.GSO.4.51.0908311545230.21074@faron.mitre.org>
-Date: Mon, 31 Aug 2009 15:45:38 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security <oss-security@...ts.openwall.com>
-cc: coley <coley@...re.org>
-Subject: Re: CVE Request pidgin
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/25/3
+Message-ID: <1084415133.30031259168372226.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 25 Nov 2009 11:59:32 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: KVM: x86 emulator: limit instructions to 15 bytes
 Content-Type: text/plain; charset=utf-8
 
+Please use CVE-2009-4031 for this.
 
-On Wed, 19 Aug 2009, Josh Bressers wrote:
+Thanks
 
-> Can you give us an ID for pidgin. Their 2.6.1 release fixes a DoS in
-> only 2.6.0.
-
-======================================================
-Name: CVE-2009-3025
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3025
-Reference: MLIST:[oss-security] 20090819 CVE Request pidgin
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/08/19/2
-Reference: CONFIRM:http://developer.pidgin.im/wiki/ChangeLog
-
-Unspecified vulnerability in Pidgin 2.6.0 allows remote attackers to
-cause a denial of service (crash) via a link in a Yahoo IM.
+-- 
+    JB
 
 
+----- "Eugene Teo" <eugeneteo@...nel.sg> wrote:
+
+> Quoting from the patch: "While we are never normally passed an 
+> instruction that exceeds 15 bytes, smp games can cause us to attempt
+> to 
+> interpret one, which will cause large latencies in non-preempt
+> hosts."
+> 
+> http://git.kernel.org/?p=linux/kernel/git/avi/kvm.git;a=commitdiff;h=e42d9b8141d1f54ff72ad3850bb110c95a5f3b88
+> https://bugzilla.redhat.com/show_bug.cgi?id=541160
+> 
+> I understand that a malicious guest can cause long scheduling
+> latencies 
+> in the host, resulting in a denial of service, but I have not 
+> investigated this further to determine if it has more severe
+> consequences.
+> 
+> Thanks, Eugene
+> -- 
+> Eugene Teo / Red Hat Security Response Team
