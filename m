@@ -1,18 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/10/5
-Message-Id: <200902101150.44620.hanno@hboeck.de>
-Date: Tue, 10 Feb 2009 11:50:44 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/26/1
+Message-ID: <4B0E14F8.6030009@moritz-naumann.com>
+Date: Thu, 26 Nov 2009 06:41:12 +0100
+From: oss-security@...itz-naumann.com
 To: oss-security@...ts.openwall.com
-Cc: Steven Christey <coley@...us.mitre.org>
-Subject: CVE request: SimpleMachinesForum (SMF) < 1.1.8: HTML injection
+Subject: Re: CVE Request - Cacti - 0.8.7e
 Content-Type: text/plain; charset=utf-8
 
-http://www.securityfocus.com/bid/33595
-http://www.simplemachines.org/community/index.php?P=e016df3c7ffae77a548fdf2f90d48135&topic=290608.0
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+Josh Bressers wrote:
+> As best as I can tell, one ID will suffice.
+> 
+> Please use CVE-2009-4032.
 
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+It's 4 XSS issues (one of them persistent) and 1 priviledge escalation
+issue. An advisory is coming to a full disclosure mailing list near you
+any minute.
+
+If there's a way I can make things easier for you in the future please
+let me know.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iEYEAREKAAYFAksOFPgACgkQn6GkvSd/BgzjiwCfeLSgTSggcK6ilQ+RHRz+qePW
+LrYAnRocMkcDwWtDZ4kXsBOIO4U5qZU+
+=9hsx
+-----END PGP SIGNATURE-----
