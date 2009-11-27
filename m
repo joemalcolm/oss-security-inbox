@@ -1,33 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/04/2
-Message-ID: <20090704111401.GK6089@inversepath.com>
-Date: Sat, 4 Jul 2009 12:14:01 +0100
-From: Andrea Barisani <lcars@...rt.org>
-To: Robert Buchholz <rbu@...too.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: [oCERT-2009-009] CamlImages integer overflows
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/27/1
+Message-Id: <1259329345.3047.6.camel@dco-milen.globul.bg>
+Date: Fri, 27 Nov 2009 15:42:25 +0200
+From: Milen Rangelov <mrangelov@...bul.bg>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: php 5.3.1 - proc_open() bypass PHP Bug #49026 [was: Re: CVE request: php 5.3.1 update]
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Jul 04, 2009 at 12:39:09PM +0200, Robert Buchholz wrote:
-> On Thursday 02 July 2009, Andrea Barisani wrote:
-> > Unfortunately oCERT has been unable to get feedback from CamlImages
-> > maintainers and the package seems unmaintained, it's therefore
-> > suggested to avoid CamlImages usage on production or any environment
-> > where strong security is needed.
-> 
-> Richard Jones of RedHat contributed a patch and upstream is stated plans 
-> to review and incorporate it:
-> http://www.nabble.com/Camlimages-integer-overflows-with-PNG-images-td24321780.html
+Hello, 
+
+
+>CVE-2009-4018
+
+>PHP before 5.3.1 proc_open() can be used to bypass the
+>safe_mode_protected_env_vars INI setting. This could be used to alter the
+>process environment possibly executing arbitrary code.
 >
+>
+>http://www.php.net/ChangeLog-5.php#5.3.1
+>http://bugs.php.net/bug.php?id=49026
+>http://marc.info/?l=oss-security&m=125897935330618&w=2
+>
+>Thanks.
+>
+>-- 
+>    JB
 
-That's great, I'll update the advisory.
 
-Thanks
 
--- 
-Andrea Barisani |                Founder & Project Coordinator
-          oCERT | Open Source Computer Emergency Response Team
 
-<lcars@...rt.org>                         http://www.ocert.org
- 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
-        "Pluralitas non est ponenda sine necessitate"
+Great to see an almost one-year-old bug getting fixed (and assigned a
+CVE ID for that matter).
+
+It was reported back in 2008 but apparently noone took care:
+
+http://www.securityfocus.com/bid/32717/info
+
+
+Regards,
+
+Milen Rangelov
+
+
