@@ -1,61 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/08/9
-Message-ID: <Pine.GSO.4.51.0904081401360.29367@faron.mitre.org>
-Date: Wed, 8 Apr 2009 14:02:26 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: OSS Security <oss-security@...ts.openwall.com>
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: PHP 5.2.9
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/27/2
+Message-ID: <20091127140347.GB22978@suse.de>
+Date: Fri, 27 Nov 2009 15:03:47 +0100
+From: Thomas Biege <thomas@...e.de>
+To: OSS-Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: CVE request: ruby on rails XSS Weakness in strip_tags
 Content-Type: text/plain; charset=utf-8
 
+http://groups.google.com/group/rubyonrails-security/browse_thread/thread/4d4f71f2aef4c0ab?pli=1
 
-On Wed, 1 Apr 2009, Tomas Hoger wrote:
+Michael Koziarski   	
+Profil anzeigen   �bersetzen in die Sprache: Deutsch �bersetzt (Original anzeigen)
+	 Weitere Optionen 27 Nov., 02:44
+Von: Michael Koziarski <mich...@...iarski.com>
+Datum: Fri, 27 Nov 2009 13:44:06 +1300
+Lokal: Fr. 27 Nov. 2009 02:44
+Betreff: XSS Weakness in strip_tags
+Antworten | Antwort an Autor | Weiterleiten | Drucken | Einzelne Nachricht | Original anzeigen | Diese Nachricht melden | Nachrichten dieses Autors suchen
 
-> # Fixed a crash on extract in zip when files or directories entry names
->   contain a relative path. (Pierre)
-> http://cvs.php.net/viewvc.cgi/php-src/ext/zip/php_zip.c?r1=1.1.2.48&r2=1.1.2.49
->
-> This should only affect php 5.2.7 or versions that have original fix
-> for CVE-2008-5658 backported.
+There is a weakness in the strip_tags function in ruby on rails.  Due to
+a bug in the parsing code inside HTML::Tokenizer regarding non-printable
+ascii characters, an attacker can include values which certain browsers
+will then evaluate.
 
-This was announced in 5.2.9 changelog though, so wouldn't 5.2.8 be
-affected?
+Versions Affected:  All versions prior to 2.3.4 or 2.2.s
+Not affected:       Applications which do not use strip_tags
+Fixed Versions:     2.3.5
 
-Use CVE-2009-1272
+Impact
+------
 
-> # Fixed a segfault when malformed string is passed to json_decode().
+Applications relying on strip_tags for XSS protection may be vulnerable
+to attacks on Internet Explorer users.
 
-Use CVE-2009-1271
+Releases
+--------
 
-- Steve
+The 2.3.5 releases is available at the normal locations now.
 
+Workarounds
+-----------
 
-======================================================
-Name: CVE-2009-1271
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1271
-Reference: MLIST:[oss-security] 20090401 CVE request: PHP 5.2.9
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/04/01/9
-Reference: MISC:http://cvs.php.net/viewvc.cgi/php-src/ext/json/JSON_parser.c?r1=1.1.2.14&r2=1.1.2.15
-Reference: CONFIRM:http://www.php.net/releases/5_2_9.php
+Users using strip_tags can pass the resulting output to the regular
+escaping functionality:
 
-The JSON_parser function (ext/json/JSON_parser.c) in PHP 5.2.x before
-5.2.9 allows remote attackers to cause a denial of service
-(segmentation fault) via a malformed string to the json_decode API
-function.
+  <%= h(strip_tag(...)) %>
 
+Patches
+-------
 
-======================================================
-Name: CVE-2009-1272
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1272
-Reference: MLIST:[oss-security] 20090401 CVE request: PHP 5.2.9
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/04/01/9
-Reference: MISC:http://cvs.php.net/viewvc.cgi/php-src/ext/json/JSON_parser.c?r1=1.1.2.14&r2=1.1.2.15
-Reference: CONFIRM:http://www.php.net/releases/5_2_9.php
+To aid users who aren't able to upgrade immediately we have provided
+patches for the two supported release series.  They are in git-am format
+and consist of a single changeset updating the parser and providing an
+additional unit test.
 
-The php_zip_make_relative_path function in php_zip.c in PHP 5.2.x
-before 5.2.9 allows context-dependent attackers to cause a denial of
-service (crash) via a ZIP file that contains filenames with relative
-paths, which is not properly handled during extraction.
+* 2-2-strip_tags.patch - Patch for 2.2 series
+* 2-3-strip_tags.patch - Patch for 2.3 series
 
+Please note that only the  2.2.x and 2.3.x series are supported at
+present.  Users of earlier unsupported releases are advised to upgrade
+at their earliest convenience.
+
+Credits
+-------
+Thanks to Gabe da Silveira for reporting the vulnerability to us and
+providing the fix.
+
+-- 
+Cheers,
+
+----- End forwarded message -----
+
+-- 
+Bye,
+     Thomas
+-- 
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+-- 
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
