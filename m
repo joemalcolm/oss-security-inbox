@@ -1,32 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/17/3
-Message-Id: <200906172306.35049.hanno@hboeck.de>
-Date: Wed, 17 Jun 2009 23:06:34 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: clamav CVE ids?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/28/2
+Message-ID: <Pine.GSO.4.51.0911281138360.8809@faron.mitre.org>
+Date: Sat, 28 Nov 2009 11:40:37 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Josh Bressers <bressers@...hat.com>
+cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: Argument injections in multiple PEAR packages
 Content-Type: text/plain; charset=utf-8
 
-Am Mittwoch 17 Juni 2009 schrieb Tavis Ormandy:
-> On Wed, Jun 17, 2009 at 05:22:28PM +0200, Marcus Meissner wrote:
-> > Hi,
-> >
-> > Clamav 0.95.2 brings some fixes for Thierry Zollers issues,
-> > which probably deserve (a) CVE id ...
->
-> Anti virus bypass? Seriously?
 
-I agree that av bypass isn't a "security issue" itself, but at least the 
-cab/filesize issue sounds like it could lead to more than that.
-It's a pity clamav doesn't handle security issues in a sane way, but I think I 
-already said that recently...
+All,
 
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-http://ausdenaugenausdemsinn.de - Kein Sicherheitsrabatt für CO2-Speicher
-http://tinyurl.com/dceu73 - Internetzensur stoppen!
+Please use CVE-2009-4023 for the $from variable in Mail only.  I just
+assigned CVE-2009-4111 for the outstanding bug for $recipient; since that
+argument was reported after $from had been fixed, we are effectively
+dealing with different downstream versions and possibly partial patches by
+some distros.
 
-http://schokokeks.org - professional webhosting
-
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+- Steve
