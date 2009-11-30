@@ -1,46 +1,115 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/14/3
-Message-ID: <2029530517.1304211260830265766.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 14 Dec 2009 17:37:45 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/30/1
+Message-ID: <Pine.GSO.4.51.0911301154230.14733@faron.mitre.org>
+Date: Mon, 30 Nov 2009 11:55:48 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request - Open Flash Chart v2
+cc: MySQL Security Team <security@...ql.com>
+Subject: Re: mysql-5.1.41
 Content-Type: text/plain; charset=utf-8
 
-Here's a link to the Secunia advisory as a reference:
-http://secunia.com/advisories/37078/
 
-Please use CVE-2009-4140 for this.
+Here are the latest CVE assignments.  Because the symlink issues were not
+completely fixed in earlier versions, they get new CVE IDs for later
+versions.  (Downstream vendors might have fixed one issue, but not the
+other.)
 
-Thanks.
+The 2008 CVE is for an issue that technically was disclosed in 2008.
 
--- 
-    JB
+Let me know if we've missed anything.
+
+- Steve
+
+======================================================
+Name: CVE-2008-7247
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-7247
+Reference: MLIST:[commits] 20081124 bzr commit into mysql-6.0-backup branch (ingo.struewing:2744) Bug#39277
+Reference: URL:http://lists.mysql.com/commits/59711
+Reference: MLIST:[oss-security] 20091124 Re: mysql-5.1.41
+Reference: URL:http://marc.info/?l=oss-security&m=125908040022018&w=2
+Reference: CONFIRM:http://bugs.mysql.com/bug.php?id=39277
+
+sql/sql_table.cc in MySQL 5.0.x through 5.0.88, 5.1.x through 5.1.41,
+and 6.0 before 6.0.9-alpha, when the data home directory contains a
+symlink to a different filesystem, allows remote authenticated users
+to bypass intended access restrictions by calling CREATE TABLE with a
+(1) DATA DIRECTORY or (2) INDEX DIRECTORY argument referring to a
+subdirectory that requires following this symlink.
 
 
------ "Anthon Pang" <anthon.pang@...il.com> wrote:
+======================================================
+Name: CVE-2009-4019
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-4019
+Reference: MLIST:[oss-security] 20091121 CVE Request - MySQL - 5.0.88
+Reference: URL:http://marc.info/?l=oss-security&m=125881733826437&w=2
+Reference: MLIST:[oss-security] 20091121 Re: CVE Request - MySQL - 5.0.88
+Reference: URL:http://marc.info/?l=oss-security&m=125883754215621&w=2
+Reference: MLIST:[oss-security] 20091123 Re: CVE Request - MySQL - 5.0.88
+Reference: URL:http://marc.info/?l=oss-security&m=125901161824278&w=2
+Reference: CONFIRM:http://bugs.mysql.com/47780
+Reference: CONFIRM:http://bugs.mysql.com/48291
+Reference: CONFIRM:http://dev.mysql.com/doc/refman/5.0/en/news-5-0-88.html
+Reference: CONFIRM:http://dev.mysql.com/doc/refman/5.1/en/news-5-1-41.html
 
-> The Piwik project released an advisory re: the inclusion of
-> ofc_upload_image.php -- a potentially exploitable file from the
-> php-ofc-library offered by the Open Flash Chart project.
-> 
-> -
-> http://piwik.org/blog/2009/10/piwik-response-to-secunia-advisory-sa37078/
-> 
-> Since Open Flash Chart is used by web sites and open source projects,
-> a common CVE makes sense.
-> 
-> Open Flash Chart:  Affected v2 Beta 1 through v2 Lug Wyrm Charmer. 
-> Fixed: no
-> Piwki:  Affected: 0.2.35 through 0.4.3.  Fixed in 0.4.4.  (Removed
-> file)
-> Open Web Analytics:  Affected: 1.2.  Fixed in svn.  (Removed file)
-> 
-> Other web sites/projects:
-> -
-> http://www.google.com/search?q=php-ofc-library+ofc_upload_image.php+-piwik
-> - http://www.google.com/codesearch?q=ofc_upload_image.php
+mysqld in MySQL 5.0.x before 5.0.88 and 5.1.x before 5.1.41 does not
+(1) properly handle errors during execution of certain SELECT
+statements with subqueries, and does not (2) preserve certain
+null_value flags during execution of statements that use the
+GeomFromWKB function, which allows remote authenticated users to cause
+a denial of service (daemon crash) via a crafted statement.
 
--- 
-    JB
+
+======================================================
+Name: CVE-2009-4028
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-4028
+Reference: MLIST:[commits] 20091020 bzr commit into mysql-4.1 branch (joro:2709) Bug#47320
+Reference: URL:http://lists.mysql.com/commits/87446
+Reference: MLIST:[oss-security] 20091119 mysql-5.1.41
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/11/19/3
+Reference: MLIST:[oss-security] 20091121 CVE Request - MySQL - 5.0.88
+Reference: URL:http://marc.info/?l=oss-security&m=125881733826437&w=2
+Reference: MLIST:[oss-security] 20091123 Re: mysql-5.1.41
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/11/23/16
+Reference: CONFIRM:http://bugs.mysql.com/47320
+Reference: CONFIRM:http://dev.mysql.com/doc/refman/5.0/en/news-5-0-88.html
+Reference: CONFIRM:http://dev.mysql.com/doc/refman/5.1/en/news-5-1-41.html
+
+The vio_verify_callback function in viosslfactories.c in MySQL 5.0.x
+before 5.0.88 and 5.1.x before 5.1.41, when OpenSSL is used, accepts a
+value of zero for the depth of X.509 certificates, which allows
+man-in-the-middle attackers to spoof arbitrary SSL-based MySQL servers
+via a crafted certificate, as demonstrated by a certificate presented
+by a server linked against the yaSSL library.
+
+
+======================================================
+Name: CVE-2009-4030
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-4030
+Reference: MLIST:[commits] 20091110 bzr commit into mysql-5.0-bugteam branch (joro:2845) Bug#32167
+Reference: URL:http://lists.mysql.com/commits/89940
+Reference: MLIST:[oss-security] 20091119 mysql-5.1.41
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/11/19/3
+Reference: MLIST:[oss-security] 20091124 Re: mysql-5.1.41
+Reference: URL:http://marc.info/?l=oss-security&m=125908040022018&w=2
+Reference: MLIST:[oss-security] 20091124 Re: mysql-5.1.41
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/11/24/6
+Reference: MLIST:[oss-security] 20091124 Re: mysql-5.1.41
+Reference: URL:http://marc.info/?l=oss-security&m=125908080222685&w=2
+Reference: CONFIRM:http://bugs.mysql.com/bug.php?id=32167
+Reference: CONFIRM:http://dev.mysql.com/doc/refman/5.1/en/news-5-1-41.html
+
+MySQL 5.1.x before 5.1.41 allows local users to bypass certain
+privilege checks by calling CREATE TABLE on a MyISAM table with
+modified (1) DATA DIRECTORY or (2) INDEX DIRECTORY arguments that are
+originally associated with pathnames without symlinks, and that can
+point to tables created at a future time at which a pathname is
+modified to contain a symlink to a subdirectory of the MySQL data home
+directory, related to incorrect calculation of the
+mysql_unpacked_real_data_home value.  NOTE: this vulnerability exists
+because of an incomplete fix for CVE-2008-4098 and CVE-2008-2079.
+
+
