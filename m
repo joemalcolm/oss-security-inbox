@@ -1,25 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/19/2
-Message-ID: <20090219212536.GA11769@logo.rdu.rpath.com>
-Date: Thu, 19 Feb 2009 16:25:36 -0500
-From: "Michael K. Johnson" <johnsonm@...th.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/30/2
+Message-ID: <Pine.GSO.4.51.0911301330550.14733@faron.mitre.org>
+Date: Mon, 30 Nov 2009 13:31:25 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Poppler -Two Denial of Service Vulnerabilities
+Subject: Re: CVE Request - Cacti - 0.8.7e
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Feb 13, 2009 at 11:20:40AM +0200, Pinar Yanardag wrote:
-> 1) An uninitialised memory access error in the 
-> "FormWidgetChoice::loadDefaults()" function can be exploited to cause a 
-> crash via a specially crafted PDF document.
 
-This is changeset 1fc342eadcbbb41302f190b215c5daf23c9ec9b1 in poppler's
-git and is associated with poppler bug 19790
+On Thu, 26 Nov 2009 oss-security@...itz-naumann.com wrote:
 
-> 2) An error in the "JBIG2Stream::readSymbolDictSeg()" function can be 
-> exploited to cause a crash via a specially crafted PDF document.
+> It's 4 XSS issues (one of them persistent) and 1 priviledge escalation
+> issue. An advisory is coming to a full disclosure mailing list near you
+> any minute.
 
-This is changeset d3f04f537fb3e963c149a7e2d8d83c7cb19da8c0 in poppler's
-git and is associated with poppler bug 19702
+Use CVE-2009-4112 for the privilege escalation issue.
 
-These bugs were reported fixed in poppler-0.10.4.tar.gz, released on
-February 10, 2009
+The CVEs will be updated based on
+http://archives.neohapsis.com/archives/fulldisclosure/2009-11/0292.html
+
+- Steve
