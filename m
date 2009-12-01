@@ -1,49 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/07/1
-Message-ID: <20090607172635.GA29947@1wt.eu>
-Date: Sun, 7 Jun 2009 19:26:35 +0200
-From: Willy Tarreau <w@....eu>
-To: Eugene Teo <eugene@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE-2009-1265 kernel: af_rose/x25: Sanity check the maximum user frame size
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/01/6
+Message-ID: <20091201221857.GB7274@inutil.org>
+Date: Tue, 1 Dec 2009 23:18:57 +0100
+From: Moritz Muehlenhoff <jmm@...til.org>
+To: oss-security@...ts.openwall.com
+Cc: coley@...us.mitre.org
+Subject: Re: Need more information on recent poppler issues
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Apr 23, 2009 at 09:08:05AM +0200, Willy Tarreau wrote:
-> On Thu, Apr 23, 2009 at 02:54:06PM +0800, Eugene Teo wrote:
-> > Willy Tarreau wrote:
-> > > Hi Eugene,
-> > > 
-> > > On Wed, Apr 08, 2009 at 03:58:55PM +0800, Eugene Teo wrote:
-> > >> {nr,rose,x25}_sendmsg() functions need to have sanity checks on the
-> > >> packet size, otherwise the sizes can wrap and end up sending garbage.
-> > >>
-> > >> http://bugzilla.kernel.org/show_bug.cgi?id=10423
-> > >> http://git.kernel.org/linus/83e0bbcbe2145f160fbaa109b0439dae7f4a38a9
-> > >> http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2009-1265
-> > >>
-> > >> This affects both 2.4.x and 2.6.x if CONFIG_{NETROM,ROSE,X25} are enabled.
-> > > 
-> > > I already have it in my queue, just did not have time to merge it yet.
-> > > Thanks for the reminder anyway, I really appreciate it ;-)
-> > 
-> > You will need this too :)
-> > 
-> > upstream commit: cc29c70dd581f85ee7a3e7980fb031f90b90a2ab
-> > 
-> > Patch "af_rose/x25: Sanity check the maximum user frame size"
-> > (commit 83e0bbcbe2145f160fbaa109b0439dae7f4a38a9) from Alan Cox got
-> > locking wrong. If we bail out due to user frame size being too large,
-> > we must unlock the socket beforehand.
+On Tue, Dec 01, 2009 at 08:37:54AM +0100, Tomas Hoger wrote:
+> On Mon, 30 Nov 2009 20:08:56 -0500 (EST) "Steven M. Christey"
+> <coley@...us.mitre.org> wrote:
 > 
-> OK thanks Eugene!
-> Willy
+> > 
+> > DSA-1941 lists three reserved CVE entries for Poppler issues, but there
+> > aren't any more details, which makes it difficult to create CVE
+> > descriptions.  Specifically, CVE-2009-3906, CVE-2009-3907, and
+> > CVE-2009-3908 don't have any details as far as I can tell.
+> > 
+> > Can anybody help?
+> 
+> They look like typos to me.  That DSA lists 7 CVE-2009-390x CVEs, while
+> it should probably list CVE-2009-3*6*0x ones.  CVE-2009-390[345] are
+> public and for unrelated applications.
 
-Just checked, but nr_sendmsg() does not use lock_sock()/release_sock() in
-2.4, so the patch above did not bring any regression. I don't know if this
-lock is needed there. It has always been there in 2.6 and never in 2.4.
-Either it's a long-time missed patch or just not needed here. I won't touch
-it as I have no way to test it and nobody complains ;-)
+Yes, that is correct (and has been fixed in the Debian Security Tracker
+a few days ago: http://security-tracker.debian.org/tracker/source-package/poppler)
 
-Regards,
-Willy
+I blame it on the new console mouse mode in Emacs 23 which broke copy&paste
+from a different tty with GPM ;-) (Disabling gpm-mouse-mode helps, as I
+found out later.)
 
+Cheers,
+        Moritz
