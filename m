@@ -1,37 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/25/7
-Message-Id: <1237985171.3387.36.camel@dhcp-lab-164.englab.brq.redhat.com>
-Date: Wed, 25 Mar 2009 13:46:11 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE request -- zsh, XFree86-xfs/xorg-x11-xfs, screen
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/01/3
+Message-ID: <20091201083754.080e5215@redhat.com>
+Date: Tue, 1 Dec 2009 08:37:54 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley@...us.mitre.org
+Subject: Re: Need more information on recent poppler issues
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve,
+On Mon, 30 Nov 2009 20:08:56 -0500 (EST) "Steven M. Christey"
+<coley@...us.mitre.org> wrote:
 
-  could you please allocate new CVE ids for the following issues?
+> 
+> DSA-1941 lists three reserved CVE entries for Poppler issues, but there
+> aren't any more details, which makes it difficult to create CVE
+> descriptions.  Specifically, CVE-2009-3906, CVE-2009-3907, and
+> CVE-2009-3908 don't have any details as far as I can tell.
+> 
+> Can anybody help?
 
-1, zsh Stack-based buffer overflow due improper escaping of the '!' character
-   References: 
-   https://bugs.launchpad.net/ubuntu/+source/zsh/+bug/333722
-   http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=521108
-   https://bugzilla.redhat.com/show_bug.cgi?id=492089
+They look like typos to me.  That DSA lists 7 CVE-2009-390x CVEs, while
+it should probably list CVE-2009-3*6*0x ones.  CVE-2009-390[345] are
+public and for unrelated applications.
 
-2, XFree86-xfs / xorg-x11-xfs Unsafe usage of temporary file
-   References:
-   https://bugs.launchpad.net/ubuntu/+source/xfs/+bug/299560  
-   http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=521107
-   https://bugzilla.novell.com/show_bug.cgi?id=408006
-   https://bugzilla.redhat.com/show_bug.cgi?id=492098
+Changelog seems to list correct ids:
 
-3, screen: Unsafe usage of temporary file
-   References:
-   https://bugs.launchpad.net/ubuntu/+source/screen/+bug/315993
-   http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=521123  
-   https://bugzilla.redhat.com/show_bug.cgi?id=492104
++poppler (0.8.7-3) stable-security; urgency=high
++
++  * Non-maintainer upload by the Security Team.
++  * Fix CVE-2009-3603 to CVE-2009-3609, CVE-2009-0755. Based on patches
++    by Marc Deslauriers
++  * Fix CVE-2009-3938
++
++ -- Moritz Muehlenhoff <jmm@...ian.org>  Tue, 24 Nov 2009 21:54:26 +0100
 
-Thanks, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+HTH
 
+-- 
+Tomas Hoger / Red Hat Security Response Team
