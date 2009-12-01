@@ -1,28 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/01/1
-Message-ID: <Pine.GSO.4.51.0907010725060.10744@faron.mitre.org>
-Date: Wed, 1 Jul 2009 07:32:52 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/01/5
+Message-Id: <20091130225231.be9c1715.michael.s.gilbert@gmail.com>
+Date: Mon, 30 Nov 2009 22:52:31 -0500
+From: Michael Gilbert <michael.s.gilbert@...il.com>
 To: oss-security@...ts.openwall.com
-cc: aboudreault@...gears.com, coley@...re.org, 523027@...s.debian.org, warmerdam@...ox.com
-Subject: Re: incorrect upstream fix for CVE-2009-0840 (mapserver)
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: Need more information on recent poppler issues
 Content-Type: text/plain; charset=utf-8
 
+On Mon, 30 Nov 2009 20:08:56 -0500 (EST) Steven M. Christey wrote:
 
-On Mon, 22 Jun 2009, Nico Golde wrote:
+> 
+> DSA-1941 lists three reserved CVE entries for Poppler issues, but there
+> aren't any more details, which makes it difficult to create CVE
+> descriptions.  Specifically, CVE-2009-3906, CVE-2009-3907, and
+> CVE-2009-3908 don't have any details as far as I can tell.
+> 
+> Can anybody help?
 
-> I'm not sure if this should get a new CVE id but the versions in the CVE id
-> description should be adjusted and the upstream patch revised.
+those appear to be typos in the DSA.  the correct CVEs are
+CVE-2009-3606, CVE-2009-3607, CVE-2009-3608, and CVE-2009-3609, which
+follow in the CVE-2009-360* series of recent xpdf flaws.  hope this
+helps.
 
-This looks like even though there was a source code modification, the
-previous issue was not fixed at all.  That is, any attack that would have
-worked before the fix, will still work after the fix.
-
-However, Fedora FEDORA-2009-3383 at least claims a fix for CVE-2009-0840,
-so a new CVE is probably in order to "signal" to admins that they have
-another issue to handle.
-
-Use CVE-2009-2281 for the "new" issue.  What versions are affected by
-this?
-
-- Steve
+best wishes,
+mike
