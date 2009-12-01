@@ -1,29 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/28/8
-Message-Id: <200907290004.38759.rbu@gentoo.org>
-Date: Wed, 29 Jul 2009 00:04:36 +0200
-From: Robert Buchholz <rbu@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/01/1
+Message-ID: <Pine.GSO.4.51.0911302006460.14733@faron.mitre.org>
+Date: Mon, 30 Nov 2009 20:08:56 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: Vincent Danen <vdanen@...hat.com>
-Subject: Re: debian bug report on bind9 DoS
+Subject: Need more information on recent poppler issues
 Content-Type: text/plain; charset=utf-8
 
-On Tuesday 28 July 2009, Vincent Danen wrote:
-> I don't think
-> it's a huge problem with a well-secured bind9 configuration, but
-> could be quite problematic for bind config's that allow updates
-> without an RNDC key (typical of some dynamic DNS implementations), or
-> on a system that has lax enough permissions that the RNDC key is
-> exposed.
 
-The crash is not limited to configurations that allow updates.
-The ISC advisory states so as well, and I could reproduce the DoS on a 
-static named instance by removing the "$packet->sign_tsig(...)" line in 
-the exploit.
-So the scope of this issue is wider than apparent from the original 
-report.
+DSA-1941 lists three reserved CVE entries for Poppler issues, but there
+aren't any more details, which makes it difficult to create CVE
+descriptions.  Specifically, CVE-2009-3906, CVE-2009-3907, and
+CVE-2009-3908 don't have any details as far as I can tell.
 
+Can anybody help?
 
-Robert
-
-Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
+- Steve
