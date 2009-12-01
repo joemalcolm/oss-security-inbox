@@ -1,48 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/22/9
-Message-ID: <4A1665FB.6070506@redhat.com>
-Date: Fri, 22 May 2009 16:44:43 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/01/4
+Message-ID: <1259632338.3696.17.camel@mdlinux.technorage.com>
+Date: Mon, 30 Nov 2009 20:52:18 -0500
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request: XEN local denial of service
+Subject: Re: Need more information on recent poppler issues
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
-
-Steven M. Christey wrote:
-> More specific information on Xen's affected versions would be appreciated.
-> I made a guess based on the version that was released a few days after the
-> patch.
-
-I can't seem to find the fix in xen-3.4.0-xen.tar.gz but I found the
-patch in the linux-2.6.18-xen.hg repository:
-http://xenbits.xensource.com/linux-2.6.18-xen.hg?rev/9b9454800544
-
-In http://xenbits.xensource.com, this tree is said to be the pre-release
-of the next 3.3 version of Xen (which doesn't sound right).
-
-> ======================================================
-> Name: CVE-2009-1758
-> Status: Candidate
-> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1758
-> Reference: MLIST:[Xen-devel] 20090513 [PATCH] linux/i386: hypervisor_callback adjustments
-> Reference: URL:http://lists.xensource.com/archives/html/xen-devel/2009-05/msg00561.html
-> Reference: MLIST:[oss-security] 20090514 CVE Request: XEN local denial of service
-> Reference: URL:http://www.openwall.com/lists/oss-security/2009/05/14/2
+On Mon, 2009-11-30 at 20:08 -0500, Steven M. Christey wrote:
+> DSA-1941 lists three reserved CVE entries for Poppler issues, but there
+> aren't any more details, which makes it difficult to create CVE
+> descriptions.  Specifically, CVE-2009-3906, CVE-2009-3907, and
+> CVE-2009-3908 don't have any details as far as I can tell.
 > 
-> The hypervisor_callback function in Xen, possibly before 3.4.0, as
-> applied to the Linux kernel 2.6.30-rc4, 2.6.18, and probably other
-> versions allows guest user applications to cause a denial of service
-> (kernel oops) of the guest OS by triggering a segmentation fault in
-> "certain address ranges."
+> Can anybody help?
 
-This affects a x86 32-bit Xen guest. If a 32-bit application tried to
-access a memory location between the scrit and ecrit symbols in the
-kernel, instead of receiving a SEGV it could instead crash the kernel.
-This happens because of insufficient checking in the hypervisor_callback
-path, where it was forgetting to check the CS during entry.
+That's supposed to be CVE-2009-3603 to CVE-2009-3609.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-1758
+Marc.
 
-Thanks, Eugene
+
+-- 
+Marc Deslauriers
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
+
