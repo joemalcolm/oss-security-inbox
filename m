@@ -1,25 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/07/7
-Message-ID: <Pine.GSO.4.51.0901071327190.15738@faron.mitre.org>
-Date: Wed, 7 Jan 2009 13:27:23 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/01/2
+Message-ID: <4B14A1F4.3050009@kernel.sg>
+Date: Tue, 01 Dec 2009 12:56:20 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: audiofile
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: mac80211: fix two remote exploits
 Content-Type: text/plain; charset=utf-8
 
+http://git.kernel.org/linus/4253119acf412fd686ef4bd8749b5a4d70ea3a51
 
-======================================================
-Name: CVE-2008-5824
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5824
-Reference: MLIST:[oss-security] 20081230 CVE id request: audiofile
-Reference: URL:http://openwall.com/lists/oss-security/2008/12/30/1
-Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=510205
-Reference: CONFIRM:http://musicpd.org/mantis/view.php?id=1915
+"Lennert Buytenhek noticed a remotely triggerable problem in mac80211, 
+which is due to some code shuffling I did that ended up changing the 
+order in which things were done -- this was in
 
-Heap-based buffer overflow in msadpcm.c in libaudiofile in audiofile
-0.2.6 allows context-dependent attackers to cause a denial of service
-(application crash) or possibly execute arbitrary code via a crafted
-WAV file.
+   commit d75636ef9c1af224f1097941879d5a8db7cd04e5
+   Author: Johannes Berg <johannes@...solutions.net>
+   Date:   Tue Feb 10 21:25:53 2009 +0100
 
+     mac80211: RX aggregation: clean up stop session
 
+The problem is that the BUG_ON moved before the various checks, and as 
+such can be triggered.
+
+As the comment indicates, the BUG_ON can be removed since the 
+ampdu_action callback must already exist when the state is OPERATIONAL.
+
+A similar code path leads to a WARN_ON in ieee80211_stop_tx_ba_session, 
+which can also be removed."
+
+Btw, FYI, there's another issue that was also introduced by the same 
+code shuffling patch (commit d75636ef) but was fixed in another patch 
+(commit 827d42c9). It was assigned with CVE-2009-4026.
+
+Thanks, Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
