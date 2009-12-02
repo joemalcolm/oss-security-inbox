@@ -1,24 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/01/5
-Message-ID: <Pine.GSO.4.51.0907010802570.10744@faron.mitre.org>
-Date: Wed, 1 Jul 2009 08:03:05 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/02/1
+Message-ID: <1463873825.365411259761221182.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 2 Dec 2009 08:40:21 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: nagios
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: mac80211: fix two remote exploits
 Content-Type: text/plain; charset=utf-8
 
 
-======================================================
-Name: CVE-2009-2288
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2288
-Reference: CONFIRM:http://tracker.nagios.org/view.php?id=15
-Reference: CONFIRM:http://www.nagios.org/development/history/core-3x/
-Reference: SECUNIA:35543
-Reference: URL:http://secunia.com/advisories/35543
+----- "Eugene Teo" <eugeneteo@...nel.sg> wrote:
 
-statuswml.cgi in Nagios before 3.1.1 allows remote attackers to
-execute arbitrary commands via shell metacharacters in the (1) ping or
-(2) Traceroute parameters.
+> http://git.kernel.org/linus/4253119acf412fd686ef4bd8749b5a4d70ea3a51
+> 
+> "Lennert Buytenhek noticed a remotely triggerable problem in mac80211,
+> 
+> which is due to some code shuffling I did that ended up changing the 
+> order in which things were done -- this was in
+> 
+>    commit d75636ef9c1af224f1097941879d5a8db7cd04e5
+>    Author: Johannes Berg <johannes@...solutions.net>
+>    Date:   Tue Feb 10 21:25:53 2009 +0100
+> 
+>      mac80211: RX aggregation: clean up stop session
+> 
+> The problem is that the BUG_ON moved before the various checks, and as
+> 
+> such can be triggered.
+> 
+> As the comment indicates, the BUG_ON can be removed since the 
+> ampdu_action callback must already exist when the state is
+> OPERATIONAL.
+> 
+> A similar code path leads to a WARN_ON in
+> ieee80211_stop_tx_ba_session, 
+> which can also be removed."
+> 
+> Btw, FYI, there's another issue that was also introduced by the same 
+> code shuffling patch (commit d75636ef) but was fixed in another patch
+> 
+> (commit 827d42c9). It was assigned with CVE-2009-4026.
+> 
 
+Hi Eugene,
 
+I can't parse this. Can you help me understand.
+
+What are the two issues the subject speaks of? Is the "similar code path"
+paragraph of importance?
+
+Thanks.
+
+-- 
+    JB
