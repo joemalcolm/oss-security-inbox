@@ -1,37 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/09/1
-Message-ID: <20091209035237.GH26756@severus.strandboge.com>
-Date: Tue, 8 Dec 2009 21:52:37 -0600
-From: Jamie Strandboge <jamie@...onical.com>
-To: oss-security@...ts.openwall.com
-Subject: Linux/QEMU issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/02/4
+Message-ID: <Pine.GSO.4.51.0912021033570.25360@faron.mitre.org>
+Date: Wed, 2 Dec 2009 10:41:55 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Eugene Teo <eugene@...hat.com>
+cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: mac80211: fix two remote exploits
 Content-Type: text/plain; charset=utf-8
 
-Ubuntu recently released http://www.ubuntu.com/usn/USN-863-1 against
-qemu. Due to an oversight, this was not brought to the attention of
-oss-security before now.
 
-This issue is public and fixed upstream, and affects guests using a
-2.6.25 kernel (or backported virtio net drivers from the 2.6.25 kernel,
-like our 8.04 LTS release does). Specifically, if a guest with the
-affected virtio net drivers is running under qemu/kvm, then if you
-saturate a network connection to the guest, the guest will crash. This
-is https://launchpad.net/bugs/458521.
+On Wed, 2 Dec 2009, Eugene Teo wrote:
 
-There was not consensus on whether this should get a CVE. You can see
-the patch and upstream discussion here:
-http://patchwork.kernel.org/patch/56479/
+> Actually, you can ignore this request. So what happened was that, there
+> were actually two patches for this, but Johannes combined them together
+> when he shared the fix with us. So, this is part of the fixes for
+> CVE-2009-4026: upstream commits (1) 4253119a and (2) 827d42c9.
 
-The bug is really two parts though: the qemu issue which crashes the
-guest, and the guest kernel writing garbage to the virtio net backend.
-We decided to fix it as a security update in qemu since a remote
-attacker could DoS an Ubuntu 8.04 LTS guest, possibly leading to data
-corruption within the guest. 2.6.26 and later kernels should not be
-affected.
+The Red Hat bug report lists both CVE-2009-4026 and CVE-2009-4027 but
+doesn't actually link these two CVEs to any specific fix/issue:
 
-Jamie
+  https://bugzilla.redhat.com/show_bug.cgi?id=541149
 
--- 
-Jamie Strandboge             | http://www.canonical.com
+We associated CVE-2009-4026 with commit
+827d42c9ac91ddd728e4f4a31fefb906ef2ceff7, and we associated CVE-2009-4027
+with commit d92684e66091c0f0101819619b315b4bb8b5bcc5.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (198 bytes)
+Here is the logic chain that we had to follow in order to perform this
+association.
+
+  The History section of 541149 indicates that this "mac80211: fix
+  spurious delBA handling" bug was assigned both CVE-2009-4026 and
+  CVE-2009-4027 on 20091125. All activity in this bug is by Eugene Teo.
+  The fix for the bug is in commit
+  827d42c9ac91ddd728e4f4a31fefb906ef2ceff7. As mentioned in
+  oss-security/2009/12/01/2, the portion of this bug that was introduced
+  by the d75636ef9c1af224f1097941879d5a8db7cd04e5 commit in 2009 is
+  CVE-2009-4026. Therefore, the portion of the bug that was introduced by
+  the d92684e66091c0f0101819619b315b4bb8b5bcc5 commit in 2008 is
+  CVE-2009-4027. The 827d42c9ac91ddd728e4f4a31fefb906ef2ceff7 commit
+  message says "The first problem is that I moved a BUG_ON before various
+  checks -- thereby making it possible to hit. As the comment indicates,
+  the BUG_ON can be removed since the ampdu_action callback must already
+  exist when the state is != IDLE." However, apparently no part of the
+  diff affects any BUG_ON line in the code. Later, on 20091201, Eugene Teo
+  sent a "CVE request: kernel: mac80211: fix two remote exploits"
+  oss-security message. The fix for this additional vulnerability is in
+  commit 4253119acf412fd686ef4bd8749b5a4d70ea3a51. The entirety of the fix
+  is removal of calls to BUG_ON and WARN_ON.
+
+
+- Steve
