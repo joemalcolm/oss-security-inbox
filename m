@@ -1,78 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/23/6
-Message-ID: <4AE1AAE9.8090304@redhat.com>
-Date: Fri, 23 Oct 2009 15:08:57 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>, Josh Bressers <bressers@...hat.com>
-CC: oss-security <oss-security@...ts.openwall.com>, CERT-FI Vulnerability Co-ordination <vulncoord@...ora.fi>, Joe Orton <jorton@...hat.com>, Ondrej Vasik <ovasik@...hat.com>, Roman Rakus <rrakus@...hat.com>
-Subject: Re: CVE Request -- expat [was: Re: Regarding expat bug 1990430]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/02/3
+Message-ID: <4B16793C.4090705@redhat.com>
+Date: Wed, 02 Dec 2009 22:27:08 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: mac80211: fix two remote exploits
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve, Josh, vendors,
+On 12/02/2009 09:40 PM, Josh Bressers wrote:
+>
+> ----- "Eugene Teo"<eugeneteo@...nel.sg>  wrote:
+>
+>> http://git.kernel.org/linus/4253119acf412fd686ef4bd8749b5a4d70ea3a51
+>>
+>> "Lennert Buytenhek noticed a remotely triggerable problem in mac80211,
+>>
+>> which is due to some code shuffling I did that ended up changing the
+>> order in which things were done -- this was in
+>>
+>>     commit d75636ef9c1af224f1097941879d5a8db7cd04e5
+>>     Author: Johannes Berg<johannes@...solutions.net>
+>>     Date:   Tue Feb 10 21:25:53 2009 +0100
+>>
+>>       mac80211: RX aggregation: clean up stop session
+>>
+>> The problem is that the BUG_ON moved before the various checks, and as
+>>
+>> such can be triggered.
+>>
+>> As the comment indicates, the BUG_ON can be removed since the
+>> ampdu_action callback must already exist when the state is
+>> OPERATIONAL.
+>>
+>> A similar code path leads to a WARN_ON in
+>> ieee80211_stop_tx_ba_session,
+>> which can also be removed."
+>>
+>> Btw, FYI, there's another issue that was also introduced by the same
+>> code shuffling patch (commit d75636ef) but was fixed in another patch
+>>
+>> (commit 827d42c9). It was assigned with CVE-2009-4026.
+>>
+>
+> Hi Eugene,
+>
+> I can't parse this. Can you help me understand.
+>
+> What are the two issues the subject speaks of? Is the "similar code path"
+> paragraph of importance?
 
-Michael Gilbert wrote:
-> On Thu, 22 Oct 2009 16:04:37 +0200 Marc Schoenefeld wrote:
-> 
->> Jan Lieskovsky wrote:
->>> Hello Steve, vendors,
->>>
->>> [...]
->>>
->>>    a, Does Apache Xerces2 Java contain embedded copy ot the expat
->>> library (i.e. it's
->>>       completely the same issue as in expat, w3c-libwww, PyXML and
->>> others) - Marc
->>>       could you help to reply this question?
->>>
->> Hi,
->> the upstream patch for CVE-2009-2625 for xerces-j2 is  java-only [1] and
->> unrelated to fixes in other native C parsing libraries.
+Actually, you can ignore this request. So what happened was that, there 
+were actually two patches for this, but Johannes combined them together 
+when he shared the fix with us. So, this is part of the fixes for 
+CVE-2009-4026: upstream commits (1) 4253119a and (2) 827d42c9.
 
-Based on the above -^ I would vote for separate CVE identifier for expat flaw
-(and its embedded copies in dozen of packages):
+Hope this clears up the confusion!
 
-https://bugs.gentoo.org/show_bug.cgi?id=280615#c8
-https://bugs.gentoo.org/show_bug.cgi?id=280615#c10
-
-To remember sounding of CVE-2009-2625:
----------------------------------------
-
-Apache Xerces2 Java, as used in Sun Java Runtime Environment (JRE) in JDK
-and JRE 6 before Update 15 and JDK and JRE 5.0 before Update 20, and
-in other products, allows remote attackers to cause a denial of service
-(infinite loop and application hang) via malformed XML input, as
-demonstrated by the Codenomicon XML fuzzing framework.
-
-Argumentation for new CVE id:
------------------------------
-a, CVE-2009-2625 doesn't mention expat (just "other products", this could
-    be fixed though)
-b, The impact differs on Apache Xerces2 Java (infinite loop and application
-    hang, 100% cpu use -- have checked unpatched java-1.6.0-openjdk) and in expat
-    (clean crash) - gdb output attached for both testcases.
-
-Steve, Josh, which way would be easier to follow?
-i, mention expat in CVE-2009-2625, change impact to DoS (crash)
-    via malformed XML file, which triggers UTF-8 parser crash? or
-ii. assign new CVE id for expat (and its embedded copies) with
-     clean impact description and note that crash happens in UTF-8
-     parser?
-
-Opinions, ACKs, NACKs appreciated.
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-> 
-> hi,
-> 
-> mandriva and gentoo used CVE-2009-2625 as their reference CVE for the
-> expat fixes.  debian is also currently tracking the issue with this
-> CVE for the time being.  however, we have not yet released fixed
-> packages.
-> 
-> mike
-
-
-View attachment "gdb_output" of type "text/plain" (2477 bytes)
+Thanks, Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
