@@ -1,44 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/11/4
-Message-ID: <20090211191602.GD10133@redhat.com>
-Date: Wed, 11 Feb 2009 12:16:02 -0700
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/02/2
+Message-ID: <1288474658.367881259762587862.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 2 Dec 2009 09:03:07 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request for proftpd
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: Ruby on Rails: CSRF circumvention (from 2008)
 Content-Type: text/plain; charset=utf-8
 
-* [2009-02-11 10:58:05 -0800] TJ Saunders wrote:
+----- "Alex Legler" <a3li@...too.org> wrote:
+> 
+> a little blast from the past, I think this issue does not have a CVE
+> yet. If that is true, please assign a -2008 ID.
+> 
+> http://weblog.rubyonrails.org/2008/11/18/potential-circumvention-of-csrf-protection-in-rails-2-1
+> http://www.rorsecurity.info/journal/2008/11/19/circumvent-rails-csrf-protection.html
+> 
 
->> An SQL injection vulnerability in proftpd was reported on bugtraq
->> yesterday that could allow a user to login to proftpd with any password
->> if they use mysql for authentication (and, presumably, postgresql).
->> 
->> References:
->> 
->> http://www.securityfocus.com/archive/1/500823/30/0/threaded
->> http://bugs.gentoo.org/show_bug.cgi?id=258450
->> http://bugs.proftpd.org/show_bug.cgi?id=3180
->> https://bugzilla.redhat.com/show_bug.cgi?id=485125
->
->This has been reported on the ProFTPD Bugzilla:
->
->  http://bugs.proftpd.org/show_bug.cgi?id=3180
->
->As discussed there, this is a duplicate of an earlier bug:
->
->  http://bugs.proftpd.org/show_bug.cgi?id=3124
->
->and has been fixed in ProFTPD 1.3.2rc3 and later.
+Steve,
 
-Oh, forgot to ask.  It looks like this would have been introduced in
-1.3.1.  Is that correct?  So the affected versions would be
-1.3.1 to 1.3.2rc2.
-
-Also, as I was looking at the Gentoo report, I noticed bug #3173 which
-likely also needs a CVE name (for the "encoding-dependent SQL injection
-vulnerability").
+Can you give this one a 2008 ID?
 
 Thanks.
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+    JB
