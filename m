@@ -1,21 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/26/1
-Message-ID: <Pine.GSO.4.51.0905261411260.2902@faron.mitre.org>
-Date: Tue, 26 May 2009 14:14:40 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2009-0161 dupe of CVE-2009-0642
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/03/2
+Message-ID: <4B17BF2B.2090608@redhat.com>
+Date: Thu, 03 Dec 2009 14:37:47 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request -- xfig
 Content-Type: text/plain; charset=utf-8
 
+Hi Josh, Steve, vendors,
 
-On Tue, 26 May 2009, Nico Golde wrote:
+   PEDAMACHEPHEPTOLIONES reported [1] a stack-based buffer overflow present
+in Xfig by loading malformed .FIG files.
 
-> This is not the first time Apple products receive their own CVE id for
-> issues in the underlying oss product (e.g. webkit very often). Is that
-> on purpose or is that just because Apple is lacking to provide the
-> proper information to notice that?
+ From what I can tell, xfig-3.2.d doesn't seem to be affected by this,
+but xfig-3.2.4 && xfig-3.2.5 clearly are.
 
-It's not intentional CVE-wise, although as you've noticed, it does happen.
-I'll work on improving this situation.
+Also, the reporter claims about arbitrary code execution possibility,
+but I don't think this is possible due the non-executable stack protection.
 
-- Steve
+Anyway, could you allocate a CVE identifier?
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=559274
