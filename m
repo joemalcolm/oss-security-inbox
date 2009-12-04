@@ -1,28 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/16/3
-Message-ID: <20090916131342.GA28074@ngolde.de>
-Date: Wed, 16 Sep 2009 15:13:42 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/04/1
+Message-ID: <4B1894EA.8050101@kernel.sg>
+Date: Fri, 04 Dec 2009 12:49:46 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: changetrack
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE-2009-4020 kernel: hfs buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-there is an insecure use of file names in changetrack, a 
-service that checks the filesystem for changes. It is 
-possible to execute arbitrary commands as root via this bug.
-Looking at the code this seems to happen as the filename is 
-passed to a system call to track the changes with an rcs.
+"A specially-crafted Hierarchical File System (HFS) filesystem could 
+cause a buffer overflow to occur in a process's kernel stack during a 
+memcpy() call within the hfs_bnode_read() function (at 
+fs/hfs/bnode.c:24).  The attacker can provide the source buffer and 
+length, and the destination buffer is a local variable of a fixed 
+length.  This local variable (passed as "&entry" from fs/hfs/dir.c:112 
+and allocated on line 60) is stored in the stack frame of 
+hfs_bnode_read()'s caller, which is hfs_readdir(). Because the 
+hfs_readdir() function executes upon any attempt to read a directory on 
+the filesystem, it gets called whenever a user attempts to inspect any 
+filesystem contents."
 
-Details here: http://bugs.debian.org/546791
+http://marc.info/?l=linux-mm-commits&m=125987755823047&w=2
+https://bugzilla.redhat.com/CVE-2009-4020
 
-Can I please get a CVE id for this issue?
+This has been assigned with CVE-2009-4020.
 
-Cheers
-Nico
-
+Thanks, Eugene
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+Eugene Teo / Red Hat Security Response Team
