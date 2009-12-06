@@ -1,43 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/08/5
-Message-ID: <Pine.GSO.4.51.0904081128240.25487@faron.mitre.org>
-Date: Wed, 8 Apr 2009 11:28:50 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com, oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: (Sort of urgent) CVE request -- ghostscript
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/06/1
+Message-ID: <4B1BA754.20408@redhat.com>
+Date: Sun, 06 Dec 2009 13:45:08 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request -- moodle 1.9.7 and 1.8.11
 Content-Type: text/plain; charset=utf-8
 
+Hello Steve, vendors,
 
-======================================================
-Name: CVE-2007-6725
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6725
-Reference: MLIST:[oss-security] 20090401 CVE request -- ghostscript
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/04/01/10
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=229174
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=493442
-Reference: FEDORA:FEDORA-2008-5699
-Reference: URL:http://www.mail-archive.com/fedora-package-announce@redhat.com/msg11830.html
+   Moodle upstream has released latest stable versions (1.9.7 and 1.8.11),
+fixing multiple security issues.
 
-The CCITTFax decoding filter in Ghostscript 8.60, 8.61, and possibly
-other versions, allows remote attackers to cause a denial of service
-(crash) and possibly execute arbitrary code via a crafted PDF file
-that triggers a buffer underflow in the cf_decode_2d function.
+The list for 1.9.7 release:
+---------------------------
+  Security issues
 
+     * MSA-09-0022 - Multiple CSRF problems fixed
+     * MSA-09-0023 - Fixed user account disclosure in LAMS module
+     * MSA-09-0024 - Fixed insufficient access control in Glossary module
+     * MSA-09-0025 - Unneeded MD5 hashes removed from user table
+     * MSA-09-0026 - Fixed invalid application access control in MNET interface
+     * MSA-09-0027 - Ensured login information is always sent secured when using SSL for logins
+     * MSA-09-0028 - Passwords and secrets are no longer ever saved in backups, new backup capabilities
+                     moodle/backup:userinfo and moodle/restore:userinfo for controlling who can
+                     backup/restore user data, new checks in the security overview report help
+                     admins identify dangerous backup permissions
+     * MSA-09-0029 - A strong password policy is now enabled by default, enabling password salt
+                     in encouraged in config.php, admins are forced to change password after the
+                     upgrade and admins can force password change on other users via Bulk user actions
+     * MSA-09-0030 - New detection of insecure Flash player plugins, Moodle won't serve Flash to insecure plugins
+     * MSA-09-0031 - Fixed SQL injection in SCORM module
 
-======================================================
-Name: CVE-2008-6679
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-6679
-Reference: MLIST:[oss-security] 20090401 CVE request -- ghostscript
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/04/01/10
-Reference: CONFIRM:http://bugs.ghostscript.com/show_bug.cgi?id=690211
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=493445
+The list for 1.8.11 release:
+----------------------------
+  Security issues
 
-Buffer overflow in the BaseFont writer module in Ghostscript 8.62, and
-possibly other versions, allows remote attackers to cause a denial of
-service (ps2pdf crash) and possibly execute arbitrary code via a
-crafted Postscript file.
+     * MSA-09-0022 - Multiple CSRF problems fixed
+     * MSA-09-0023 - Fixed user account disclosure in LAMS module
+     * MSA-09-0024 - Fixed insufficient access control in Glossary module
+     * MSA-09-0025 - Unneeded MD5 hashes removed from user table
+     * MSA-09-0026 - Fixed invalid application access control in MNET interface
+     * MSA-09-0027 - Ensured login information is always sent secured when using SSL for logins
+     * MSA-09-0028 - Passwords and secrets are no longer ever saved in backups, new backup capabilities
+                     moodle/backup:userinfo and moodle/restore:userinfo for controlling who can
+                     backup/restore user data
+     * MSA-09-0029 - Enabling a password salt in encouraged in config.php and admins are forced to change password after the upgrade
+     * MSA-09-0031 - Fixed SQL injection in SCORM module
 
+ From the look at relevant Moodle security advisories seems there are not
+CVE identifiers assigned yet, so could you allocate them?
 
+References:
+-----------
+http://docs.moodle.org/en/Moodle_1.9.7_release_notes
+http://docs.moodle.org/en/Moodle_1.8.11_release_notes
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
