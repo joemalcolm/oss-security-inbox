@@ -1,33 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/06/06/3
-Message-ID: <Pine.GSO.4.51.0906061221320.28142@faron.mitre.org>
-Date: Sat, 6 Jun 2009 12:22:01 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com, oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- ImageMagick -- Integer overflow in XMakeImage()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/08/6
+Message-ID: <1989820797.872961260304519281.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 8 Dec 2009 15:35:19 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Jim Meyering <meyering@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- coreutils -- unsafe temporary directory location use
 Content-Type: text/plain; charset=utf-8
 
+Please use CVE-2009-4135 for this.
 
-======================================================
-Name: CVE-2009-1882
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1882
-Reference: CONFIRM:http://imagemagick.org/script/changelog.php
-Reference: CONFIRM:http://mirror1.smudge-it.co.uk/imagemagick/www/changelog.html
-Reference: BID:35111
-Reference: URL:http://www.securityfocus.com/bid/35111
-Reference: OSVDB:54729
-Reference: URL:http://osvdb.org/54729
-Reference: SECUNIA:35216
-Reference: URL:http://secunia.com/advisories/35216
-Reference: VUPEN:ADV-2009-1449
-Reference: URL:http://www.vupen.com/english/advisories/2009/1449
+Thanks.
 
-Integer overflow in the XMakeImage function in magick/xwindow.c in
-ImageMagick 6.5.2-8 allows remote attackers to cause a denial of
-service (crash) and possibly execute arbitrary code via a crafted TIFF
-file, which triggers a buffer overflow.  NOTE: some of these details
-are obtained from third party information.
+-- 
+    JB
 
 
+----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+
+> Hi Steve, vendors,
+> 
+>    Jim Meyering reported a flaw in coreutils in the way, its
+> "distcheck" Makefile rule used to set up a temporary directory
+> location to be used later for performing its own tasks.
+> This might allow local attacker to conduct symlink attacks or
+> potentially execute arbitrary code under certain circumstances.
+> 
+> Upstream patch:
+> --------------
+> http://git.savannah.gnu.org/cgit/coreutils.git/commit/?id=ae034822c535fa5
+> 
+> Affected versions:
+> ------------------
+> coreutils-5.2.1 through to coreutils-8.1
+> 
+> References:
+> -----------
+> https://bugzilla.redhat.com/show_bug.cgi?id=545439
+> http://git.savannah.gnu.org/cgit/coreutils.git/commit/?id=ae034822c535fa5
+> http://thread.gmane.org/gmane.comp.gnu.coreutils.bugs/19199
+> 
+> Could you allocate a CVE identifier for this issue?
+> 
+> Thanks && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
