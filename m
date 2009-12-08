@@ -1,21 +1,105 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/12/2
-Message-Id: <200909121154.54475.hanno@hboeck.de>
-Date: Sat, 12 Sep 2009 11:54:54 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/08/1
+Message-ID: <825305652.791261260238181302.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 7 Dec 2009 21:09:41 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: serendipity freetag plugin
+Subject: Re: CVE request: ruby on rails XSS Weakness in strip_tags
 Content-Type: text/plain; charset=utf-8
 
-s9y freetag plugin before 3.09 suffers from an sql injection:
+I'm sorry for the delay on this.
 
-http://blog.s9y.org/archives/210-Security-update-for-Freetag-Plugin.html
+Please use CVE-2009-4132
 
+Thanks.
 
 -- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+    JB
 
-http://schokokeks.org - professional webhosting
 
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+----- "Thomas Biege" <thomas@...e.de> wrote:
+
+> http://groups.google.com/group/rubyonrails-security/browse_thread/thread/4d4f71f2aef4c0ab?pli=1
+> 
+> Michael Koziarski   	
+> Profil anzeigen   �bersetzen in die Sprache: Deutsch �bersetzt
+> (Original anzeigen)
+> 	 Weitere Optionen 27 Nov., 02:44
+> Von: Michael Koziarski <mich...@...iarski.com>
+> Datum: Fri, 27 Nov 2009 13:44:06 +1300
+> Lokal: Fr. 27 Nov. 2009 02:44
+> Betreff: XSS Weakness in strip_tags
+> Antworten | Antwort an Autor | Weiterleiten | Drucken | Einzelne
+> Nachricht | Original anzeigen | Diese Nachricht melden | Nachrichten
+> dieses Autors suchen
+> 
+> There is a weakness in the strip_tags function in ruby on rails.  Due
+> to
+> a bug in the parsing code inside HTML::Tokenizer regarding
+> non-printable
+> ascii characters, an attacker can include values which certain
+> browsers
+> will then evaluate.
+> 
+> Versions Affected:  All versions prior to 2.3.4 or 2.2.s
+> Not affected:       Applications which do not use strip_tags
+> Fixed Versions:     2.3.5
+> 
+> Impact
+> ------
+> 
+> Applications relying on strip_tags for XSS protection may be
+> vulnerable
+> to attacks on Internet Explorer users.
+> 
+> Releases
+> --------
+> 
+> The 2.3.5 releases is available at the normal locations now.
+> 
+> Workarounds
+> -----------
+> 
+> Users using strip_tags can pass the resulting output to the regular
+> escaping functionality:
+> 
+>   <%= h(strip_tag(...)) %>
+> 
+> Patches
+> -------
+> 
+> To aid users who aren't able to upgrade immediately we have provided
+> patches for the two supported release series.  They are in git-am
+> format
+> and consist of a single changeset updating the parser and providing
+> an
+> additional unit test.
+> 
+> * 2-2-strip_tags.patch - Patch for 2.2 series
+> * 2-3-strip_tags.patch - Patch for 2.3 series
+> 
+> Please note that only the  2.2.x and 2.3.x series are supported at
+> present.  Users of earlier unsupported releases are advised to
+> upgrade
+> at their earliest convenience.
+> 
+> Credits
+> -------
+> Thanks to Gabe da Silveira for reporting the vulnerability to us and
+> providing the fix.
+> 
+> -- 
+> Cheers,
+> 
+> ----- End forwarded message -----
+> 
+> -- 
+> Bye,
+>      Thomas
+> -- 
+>  Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support &
+> Auditing
+>  SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+> -- 
+>   Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+>                             -- Marie von Ebner-Eschenbach
