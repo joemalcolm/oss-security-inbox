@@ -1,26 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/09/3
-Message-ID: <952139437.70461257782995434.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 9 Nov 2009 11:09:55 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/08/3
+Message-ID: <1687560955.834081260288286094.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 8 Dec 2009 11:04:46 -0500 (EST)
 From: Josh Bressers <bressers@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: X server umask issue
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: ruby on rails XSS Weakness in strip_tags
 Content-Type: text/plain; charset=utf-8
 
-Hi everyone,
+----- "Steven M. Christey" <coley@...us.mitre.org> wrote:
+> On Mon, 7 Dec 2009, Josh Bressers wrote:
+> 
+> > I'm sorry for the delay on this.
+> >
+> > Please use CVE-2009-4132
+> 
+> Josh, MITRE assigned CVE-2009-4214 earlier today.  Please verify these are
+> duplicates, and if so, we will stick with CVE-2009-4214.
+> 
 
-I'm looking for a second opinion, and wondering if anyone has some extra insight
-into this Debian bug:
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=555308
-
-It seems that the suid X server inherits the users umask, and if you have a umask
-of 0, the X log file will end up being world writable. This is obviously a very
-silly thing to do anyhow, so I question if that's a security flaw itself. It is a
-bug that should probably be fixed I'd say.
-
-What I am wondering though, are there other files the X server creates that could
-be an issue for this? I'm not aware of any, but I'm also not an expert by any
-stretch of the imagination. Am I missing something else?
+Yes, it's a dupe. Sorry for the confusion.
 
 Thanks.
 
