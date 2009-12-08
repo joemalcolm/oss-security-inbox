@@ -1,35 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/14/1
-Message-ID: <4AAD94DE.9030407@kernel.sg>
-Date: Mon, 14 Sep 2009 08:57:02 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>, Greg KH <gregkh@...e.de>, Willy Tarreau <w@....eu>
-Subject: CVE-2009-2903 kernel: appletalk: denial of service when handling IP tunnelled over DDP datagrams
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/08/5
+Message-ID: <Pine.GSO.4.64.0912081242270.16395@faron.mitre.org>
+Date: Tue, 8 Dec 2009 12:43:45 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security <oss-security@...ts.openwall.com>, oss-security <oss-security@...ts.openwall.com>
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- xfig
 Content-Type: text/plain; charset=utf-8
 
-The check for the ipddpN device in the handle_ip_over_ddp() function 
-returns -NODEV to the atalk_rcv() function when the device does not 
-exist. The atalk_rcv() function then directly returns that value to its 
-caller. There is a missing call to kfree_skb() in these unaccepted 
-IP-DDP datagram that can exhaust the kernel memory eventually. It 
-affects Linux hosts with appletalk and ipddp modules loaded, that are 
-attached to the same link. Thanks to Mark Smith for reporting this issue 
-to us.
 
-net-next-2.6 commit:
-http://git.kernel.org/?p=linux/kernel/git/davem/net-next-2.6.git;a=commit;h=ffcfb8db540ff879c2a85bf7e404954281443414 
+On Thu, 3 Dec 2009, Jan Lieskovsky wrote:
+
+>  PEDAMACHEPHEPTOLIONES reported [1] a stack-based buffer overflow present
+> in Xfig by loading malformed .FIG files.
+
+Use CVE-2009-4227 for the read_1_3_textobject
+
+I also assigned CVE-2009-4228 for a stack-consumption issue (NOT an 
+overflow) in u_bound.c, associated with the readfp_fig function in 
+f_read.c.
+
+- Steve
+
+======================================================
+Name: CVE-2009-4227
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-4227
+Reference: MLIST:[oss-security] 20091203 CVE Request -- xfig
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/12/03/2
+Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=559274
+Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=543905
+Reference: BID:37193
+Reference: URL:http://www.securityfocus.com/bid/37193
+Reference: SECUNIA:37571
+Reference: URL:http://secunia.com/advisories/37571
+Reference: SECUNIA:37577
+Reference: URL:http://secunia.com/advisories/37577
+Reference: XF:xfig-read13textobject-bo(54525)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/54525
+
+Stack-based buffer overflow in the read_1_3_textobject function in
+f_readold.c in Xfig 3.2.5b and earlier, and in the read_textobject
+function in read1_3.c in fig2dev in Transfig 3.2.5a and earlier,
+allows remote attackers to execute arbitrary code via a long string in
+a malformed .fig file that uses the 1.3 file format.  NOTE: some of
+these details are obtained from third party information.
 
 
-Possible mitigation method:
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-2903#c3
+======================================================
+Name: CVE-2009-4228
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-4228
+Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=559274
+Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=543905
 
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-2903
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=blob;f=Documentation/networking/ipddp.txt;h=661a5558dd8e928f15771c07ef34b3ee9cb81e57;hb=HEAD
+Stack consumption vulnerability in u_bound.c in Xfig 3.2.5b and
+earlier allows remote attackers to cause a denial of service
+(application crash) via a long string in a malformed .fig file that
+uses the 1.3 file format, possibly related to the readfp_fig function
+in f_read.c.
 
-Greg, this should go to -stable.
-
-Willy, this affects upstream 2.4 I believe.
-
-Thanks, Eugene
