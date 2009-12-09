@@ -1,34 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/21/5
-Message-ID: <Pine.GSO.4.51.0905211815080.18536@faron.mitre.org>
-Date: Thu, 21 May 2009 18:15:26 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Jamie Strandboge <jamie@...onical.com>
-cc: coley@...us.mitre.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: clamav-milter on Ubuntu
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/09/2
+Message-Id: <200912092203.56421.eren@pardus.org.tr>
+Date: Wed, 9 Dec 2009 22:03:56 +0200
+From: Eren Türkay <eren@...dus.org.tr>
+To: OSS Security <oss-security@...ts.openwall.com>
+Subject: Piwik <= 0.4.5 Cookie Unserialize() Vulnerability
 Content-Type: text/plain; charset=utf-8
 
+Hello,
 
-Assigned a while ago, sorry...
+Piwik is an open source web analytics software program used by various 
+sites.
 
-======================================================
-Name: CVE-2009-1601
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1601
-Reference: CONFIRM:https://launchpad.net/bugs/365823
-Reference: UBUNTU:USN-770-1
-Reference: URL:http://www.ubuntu.com/usn/USN-770-1
-Reference: BID:34818
-Reference: URL:http://www.securityfocus.com/bid/34818
-Reference: SECUNIA:35000
-Reference: URL:http://secunia.com/advisories/35000
-Reference: XF:clamav-clamavmilter-security-bypass(50311)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/50311
+Stefan Esser found a vulnerability in Piwik, which can allow arbitrary files 
+to be written into writable locations on the webserver. He says, it is also 
+possible to execute arbitrary PHP code directly in newer versions of Piwik.
 
-The Ubuntu clamav-milter.init script in clamav-milter before
-0.95.1+dfsg-1ubuntu1.2 in Ubuntu 9.04 sets the ownership of the
-current working directory to the clamav account, which might allow
-local users to bypass intended access restrictions via read or write
-operations involving this directory.
+The original advisory is here: 
+http://www.suspekt.org/2009/12/09/advisory-032009-piwik-cookie-
+unserialize-vulnerability/
 
+I think, it is worth assigning a CVE.
 
+Regards,
+Eren
