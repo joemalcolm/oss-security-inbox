@@ -1,33 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/13/1
-Message-ID: <4AFCFF1C.6090604@kernel.sg>
-Date: Fri, 13 Nov 2009 14:39:24 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/09/1
+Message-ID: <20091209035237.GH26756@severus.strandboge.com>
+Date: Tue, 8 Dec 2009 21:52:37 -0600
+From: Jamie Strandboge <jamie@...onical.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: bad permissions on megaraid_sas sysfs files
+Subject: Linux/QEMU issue
 Content-Type: text/plain; charset=utf-8
 
-The megaraid_sas driver exposes a number of driver attributes in sysfs. 
-Many of these are read-only, just export information from the driver and 
-are world-readable.
+Ubuntu recently released http://www.ubuntu.com/usn/USN-863-1 against
+qemu. Due to an oversight, this was not brought to the attention of
+oss-security before now.
 
-A couple of attributes are writable and may be used to change the 
-behaviour of the driver (e.g. setting debug logging levels, selecting 
-poll vs. interrupt I/O mode etc).
+This issue is public and fixed upstream, and affects guests using a
+2.6.25 kernel (or backported virtio net drivers from the 2.6.25 kernel,
+like our 8.04 LTS release does). Specifically, if a guest with the
+affected virtio net drivers is running under qemu/kvm, then if you
+saturate a network connection to the guest, the guest will crash. This
+is https://launchpad.net/bugs/458521.
 
-Some of these writable attributes are mistakenly created with 
-world-writable permissions, e.g. dbg_lvl and poll_mode_io.
+There was not consensus on whether this should get a CVE. You can see
+the patch and upstream discussion here:
+http://patchwork.kernel.org/patch/56479/
 
-This would allow an unprivileged user to affect kernel driver behaviour 
-and logging level.
+The bug is really two parts though: the qemu issue which crashes the
+guest, and the guest kernel writing garbage to the virtio net backend.
+We decided to fix it as a security update in qemu since a remote
+attacker could DoS an Ubuntu 8.04 LTS guest, possibly leading to data
+corruption within the guest. 2.6.26 and later kernels should not be
+affected.
 
-Upstream made the dbd_lvl permissions more restrictive:
-http://git.kernel.org/linus/66dca9b8c50b5e59d3bea8b21cee5c6dae6c9c46
+Jamie
 
-The poll_mode_io pseudofile still has world-writable permissions 
-upstream. I'm getting my colleague to submit a patch.
+-- 
+Jamie Strandboge             | http://www.canonical.com
 
-https://bugzilla.redhat.com/show_bug.cgi?id=526068
-
-Thanks, Eugene
+Download attachment "signature.asc" of type "application/pgp-signature" (198 bytes)
