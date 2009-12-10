@@ -1,53 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/16/5
-Message-ID: <20090916202646.GA6169@1wt.eu>
-Date: Wed, 16 Sep 2009 22:26:46 +0200
-From: Willy Tarreau <w@....eu>
-To: Marcus Meissner <meissner@...e.de>
-Cc: OSS Security List <oss-security@...ts.openwall.com>, security@...nel.org, davem@...emloft.net
-Subject: Re: [Security] CVE-2008-4609 / Outpost24 TCP issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/10/1
+Message-ID: <106755777.1035741260462270839.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 10 Dec 2009 11:24:30 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: Piwik <= 0.4.5 Cookie Unserialize() Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hi Marcus,
+Please use CVE-2009-4137 for this.
 
-On Wed, Sep 16, 2009 at 03:50:56PM +0200, Marcus Meissner wrote:
-> Hi folks,
+Sadly I can't find other references. Even the Piwik changelog is a bit slient
+on this.
+
+Thanks.
+
+-- 
+    JB
+
+
+----- "Eren Türkay" <eren@...dus.org.tr> wrote:
+
+> Hello,
 > 
-> I get customer queries on whether and how the Linux kernel is affected
-> to the CVE-2008-4609 TCP denial of service problems ...
+> Piwik is an open source web analytics software program used by various
 > 
-> This seems to a large degree to be a kernel issue.
-> Also how are applications involved in the whole picture?
+> sites.
 > 
-> To my own not so deep knowledge this issue seems to affect us
-> even today.
+> Stefan Esser found a vulnerability in Piwik, which can allow arbitrary
+> files 
+> to be written into writable locations on the webserver. He says, it is
+> also 
+> possible to execute arbitrary PHP code directly in newer versions of
+> Piwik.
 > 
-> Has anyone insights to that?
+> The original advisory is here: 
+> http://www.suspekt.org/2009/12/09/advisory-032009-piwik-cookie-
+> unserialize-vulnerability/
+> 
+> I think, it is worth assigning a CVE.
+> 
+> Regards,
+> Eren
 
-Well, I've just read the PDF from the outpost24 site, and it appears
-as TCP for dummies. It basically explains how to create connections
-without using connect().
-
-  1) everyone knows how to change ulimit -n + bind() to establish
-     hundreds of thousands of connections from a client to a server
-     using source IP ranges, without even having to fiddle with raw
-     sockets.
-
-  2) I don't see what is new in his stateless SYN/SYN-ACK/ACK method.
-     To the best of my knowledge it's been used for ages in network
-     testing. I even have a modified Netfilter TARPIT module designed
-     to do that to stress network equipments with millions of
-     connections when associated with a standard SYN flooder.
-
-I think these guys are just trying once again to get all the lights
-on them before revealing trivial things, as it's becoming more and
-more common. It's fantastic to see press journalists speculate on
-what the isue might be !
-
-So unless they reveal anything serious, right now it looks like
-pure fantasy. Or maybe I wasn't able to find relevant information
-on the subject :-/
-
-Regards,
-Willy
-
+-- 
+    JB
