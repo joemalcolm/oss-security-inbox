@@ -1,26 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/12/1
-Message-Id: <200910121057.04097.oeriksson@mandriva.com>
-Date: Mon, 12 Oct 2009 10:57:03 +0200
-From: Oden Eriksson <oeriksson@...driva.com>
-To: oss-security@...ts.openwall.com
-Subject: presumptive php sec holes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/10/2
+Message-ID: <4B215D58.4090005@gmx.net>
+Date: Thu, 10 Dec 2009 21:43:04 +0100
+From: Stefan Behte <Stefan.Behte@....net>
+To: OSS Security <oss-security@...ts.openwall.com>
+Subject: mmsclient: CVE request
 Content-Type: text/plain; charset=utf-8
 
-Hello.
+Hello,
 
-Attached are some php patches that to me looks security related (unknown 
-impact). I hope someone with insight can classify and possible assign CVE 
-numbers. The patches were taken from their svn repo, so it's "official".
+Harald van Dijk reported a buffer overflow in mmsclient in client.c to
+Gentoo security (https://bugs.gentoo.org/show_bug.cgi?id=263413):
 
-Cheers.
--- 
-Regards // Oden Eriksson
+Line 28: #define BUF_SIZE 102400
+Line 470: char data[1024];
+Line 551: len = read (s, data, BUF_SIZE) ;
 
-View attachment "php-5.3.x-safe_mode_bypass_fix.diff" of type "text/x-patch" (444 bytes)
+In a different Gentoo bug about the issue
+(http://bugs.gentoo.org/show_bug.cgi?id=284747), Florian Streibelt noticed:
 
-View attachment "php-5.2.x-safe_mode_bypass_fix.diff" of type "text/x-patch" (516 bytes)
+the reason for all this is in client.c:
 
-View attachment "php-5.2.x-open_basedir_bypass_fix.diff" of type "text/x-patch" (510 bytes)
+31  #define BUF_SIZE 102400
+[...]
+473   char                 data[1024];
+[...]
+575   len = read (s, data, BUF_SIZE) ;
+[...]
+586   len = read (s, data, BUF_SIZE) ;
 
-View attachment "php-5.3.x-open_basedir_bypass_fix.diff" of type "text/x-patch" (511 bytes)
+There might lurk more overflows in the (non-maintained) code.
+Can I get a CVE for the issue?
+
+Thanks,
+
+Stefan Behte
