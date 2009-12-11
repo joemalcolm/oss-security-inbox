@@ -1,142 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/21/6
-Message-ID: <Pine.GSO.4.51.0901202124410.22454@faron.mitre.org>
-Date: Tue, 20 Jan 2009 21:25:41 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/11/1
+Message-ID: <20091211032503.GO26756@severus.strandboge.com>
+Date: Thu, 10 Dec 2009 21:25:03 -0600
+From: Jamie Strandboge <jamie@...onical.com>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- tsqllib, slurm-llnl, libnasl, libcrypt-openssl-dsa-perl, erlang, boinc-client, m2crypto
+Subject: Some small KDE issues
 Content-Type: text/plain; charset=utf-8
 
+FYI,
 
-Notice the various disputes, including one by Renaud Deraison from Nessus,
-who says that while the issue is a bug, there is no security impact.
+Our KDE maintainer alerted us to this:
+http://www.ocert.org/advisories/ocert-2009-015.html
+http://www.kde.org/info/security/advisory-20091027-1.txt
 
-- Steve
+Jamie
 
-======================================================
-Name: CVE-2009-0124
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0124
-Reference: MLIST:[oss-security] 20090112 CVE Request -- tsqllib, slurm-llnl, libnasl, libcrypt-openssl-dsa-perl, erlang, boinc-client, m2crypto
-Reference: URL:http://openwall.com/lists/oss-security/2009/01/12/4
-Reference: MISC:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=511509
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=479650
+-- 
+Jamie Strandboge             | http://www.canonical.com
 
-The tqsl_verifyDataBlock function in openssl_cert.cpp in American
-Radio Relay League (ARRL) tqsllib 2.0 does not properly check the
-return value from the OpenSSL EVP_VerifyFinal function, which allows
-remote attackers to bypass validation of the certificate chain via a
-malformed SSL/TLS signature, a similar vulnerability to CVE-2008-5077.
-
-
-======================================================
-Name: CVE-2009-0125
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0125
-Reference: MLIST:[oss-security] 20090112 CVE Request -- tsqllib, slurm-llnl, libnasl, libcrypt-openssl-dsa-perl, erlang, boinc-client, m2crypto
-Reference: URL:http://openwall.com/lists/oss-security/2009/01/12/4
-Reference: MISC:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=511517
-Reference: CONFIRM:http://cvs.fedoraproject.org/viewvc/rpms/libnasl/F-10/libnasl.spec?r1=1.16&r2=1.17
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=479655
-Reference: VIM:20090120 CVE-2009-0125 (fwd)
-Reference: URL:http://www.attrition.org/pipermail/vim/2009-January/002133.html
-
-** DISPUTED **
-
-NOTE: this issue has been disputed by the vendor.  nasl/nasl_crypto2.c
-in the Nessus Attack Scripting Language library (aka libnasl) 2.2.11
-does not properly check the return value from the OpenSSL
-DSA_do_verify function, which allows remote attackers to bypass
-validation of the certificate chain via a malformed SSL/TLS signature,
-a similar vulnerability to CVE-2008-5077.  NOTE: the vendor has
-disputed this issue, stating "while we do misuse this function (this
-is a bug), it has absolutely no security ramification."
-
-
-======================================================
-Name: CVE-2009-0126
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0126
-Reference: MLIST:[oss-security] 20090112 CVE Request -- tsqllib, slurm-llnl, libnasl, libcrypt-openssl-dsa-perl, erlang, boinc-client, m2crypto
-Reference: URL:http://openwall.com/lists/oss-security/2009/01/12/4
-Reference: CONFIRM:http://boinc.berkeley.edu/trac/changeset/16883
-Reference: CONFIRM:http://boinc.berkeley.edu/trac/ticket/823
-Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=511521
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=479664
-
-The decrypt_public function in lib/crypt.cpp in the client in Berkeley
-Open Infrastructure for Network Computing (BOINC) 6.2.14 and 6.4.5
-does not check the return value from the OpenSSL RSA_public_decrypt
-function, which allows remote attackers to bypass validation of the
-certificate chain via a malformed SSL/TLS signature, a similar
-vulnerability to CVE-2008-5077.
-
-
-======================================================
-Name: CVE-2009-0127
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0127
-Reference: MLIST:[oss-security] 20090112 CVE Request -- tsqllib, slurm-llnl, libnasl, libcrypt-openssl-dsa-perl, erlang, boinc-client, m2crypto
-Reference: URL:http://openwall.com/lists/oss-security/2009/01/12/4
-Reference: MISC:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=511515
-Reference: MISC:https://bugzilla.redhat.com/show_bug.cgi?id=479676
-
-** DISPUTED ** M2Crypto does not properly check the return value from
-the OpenSSL EVP_VerifyFinal, DSA_verify, ECDSA_verify, DSA_do_verify,
-and ECDSA_do_verify functions, which might allow remote attackers to
-bypass validation of the certificate chain via a malformed SSL/TLS
-signature, a similar vulnerability to CVE-2008-5077.  NOTE: a Linux
-vendor disputes the relevance of this report to the M2Crypto product
-because "these functions are not used anywhere in m2crypto."
-
-
-======================================================
-Name: CVE-2009-0128
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0128
-Reference: MLIST:[oss-security] 20090112 CVE Request -- tsqllib, slurm-llnl, libnasl, libcrypt-openssl-dsa-perl, erlang, boinc-client, m2crypto
-Reference: URL:http://openwall.com/lists/oss-security/2009/01/12/4
-Reference: MISC:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=511511
-
-plugins/crypto/openssl/crypto_openssl.c in Simple Linux Utility for
-Resource Management (aka SLURM or slurm-llnl) does not properly check
-the return value from the OpenSSL EVP_VerifyFinal function, which
-allows remote attackers to bypass validation of the certificate chain
-via a malformed SSL/TLS signature, a similar vulnerability to
-CVE-2008-5077.
-
-
-======================================================
-Name: CVE-2009-0129
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0129
-Reference: MLIST:[oss-security] 20090112 CVE Request -- tsqllib, slurm-llnl, libnasl, libcrypt-openssl-dsa-perl, erlang, boinc-client, m2crypto
-Reference: URL:http://openwall.com/lists/oss-security/2009/01/12/4
-Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=511519
-
-libcrypt-openssl-dsa-perl does not properly check the return value
-from the OpenSSL DSA_verify and DSA_do_verify functions, which might
-allow remote attackers to bypass validation of the certificate chain
-via a malformed SSL/TLS signature, a similar vulnerability to
-CVE-2008-5077.
-
-
-======================================================
-Name: CVE-2009-0130
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0130
-Reference: MLIST:[oss-security] 20090112 CVE Request -- tsqllib, slurm-llnl, libnasl, libcrypt-openssl-dsa-perl, erlang, boinc-client, m2crypto
-Reference: URL:http://openwall.com/lists/oss-security/2009/01/12/4
-Reference: MISC:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=511520
-
-** DISPUTED ** lib/crypto/c_src/crypto_drv.c in erlang does not
-properly check the return value from the OpenSSL DSA_do_verify
-function, which might allow remote attackers to bypass validation of
-the certificate chain via a malformed SSL/TLS signature, a similar
-vulnerability to CVE-2008-5077.  NOTE: a package maintainer disputes
-this issue, reporting that there is a proper check within the only
-code that uses the applicable part of crypto_drv.c, and thus "this
-report is invalid."
-
-
+Download attachment "signature.asc" of type "application/pgp-signature" (198 bytes)
