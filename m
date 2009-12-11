@@ -1,30 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/04/1
-Message-ID: <4B1894EA.8050101@kernel.sg>
-Date: Fri, 04 Dec 2009 12:49:46 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/12/3
+Message-ID: <hfukps$iqt$1@ger.gmane.org>
+Date: Fri, 11 Dec 2009 17:32:12 -0600
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-2009-4020 kernel: hfs buffer overflow
+Subject: CVE request: insecure usage of temporary files in docutils
 Content-Type: text/plain; charset=utf-8
 
-"A specially-crafted Hierarchical File System (HFS) filesystem could 
-cause a buffer overflow to occur in a process's kernel stack during a 
-memcpy() call within the hfs_bnode_read() function (at 
-fs/hfs/bnode.c:24).  The attacker can provide the source buffer and 
-length, and the destination buffer is a local variable of a fixed 
-length.  This local variable (passed as "&entry" from fs/hfs/dir.c:112 
-and allocated on line 60) is stored in the stack frame of 
-hfs_bnode_read()'s caller, which is hfs_readdir(). Because the 
-hfs_readdir() function executes upon any attempt to read a directory on 
-the filesystem, it gets called whenever a user attempts to inspect any 
-filesystem contents."
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-http://marc.info/?l=linux-mm-commits&m=125987755823047&w=2
-https://bugzilla.redhat.com/CVE-2009-4020
+Hi,
 
-This has been assigned with CVE-2009-4020.
+Jakub Wilk found an insecure usage of temporary files with predictable names
+in the emacs mode reStructuredText (rst.el) as shipped by docutils 0.5 and
+0.6 that allows a local user to perform a symlink attack to overwrite
+arbitrary files.
 
-Thanks, Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
+References:
+http://docutils.sourceforge.net/
+http://bugs.debian.org/560755
+
+Could a CVE be assigned for this issue?
+
+Thanks in advance.
+
+Regards,
+- -- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iEYEARECAAYFAksi1oAACgkQYy49rUbZzlqYugCfRB1FYUUUWgZzyEApDz4qiKQJ
+ewsAoJDOy+VkyB+xrtytHa4u5UgAffJJ
+=R0mm
+-----END PGP SIGNATURE-----
+
