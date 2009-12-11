@@ -1,32 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/06/4
-Message-ID: <Pine.GSO.4.51.0905061142050.3040@faron.mitre.org>
-Date: Wed, 6 May 2009 11:42:09 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/11/6
+Message-ID: <hftv9k$aos$1@ger.gmane.org>
+Date: Fri, 11 Dec 2009 11:25:14 -0600
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: file security issue
+Subject: Re: Re: Some small KDE issues
 Content-Type: text/plain; charset=utf-8
 
+Tim Brown wrote:
 
-======================================================
-Name: CVE-2009-1515
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1515
-Reference: MISC:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=515603
-Reference: MISC:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=525820
-Reference: CONFIRM:ftp://ftp.astron.com/pub/file/file-5.01.tar.gz
-Reference: BID:34745
-Reference: URL:http://www.securityfocus.com/bid/34745
-Reference: OSVDB:54100
-Reference: URL:http://www.osvdb.org/54100
-Reference: SECUNIA:34881
-Reference: URL:http://secunia.com/advisories/34881
+> Attached is my exchange with Thomas Hoger at Redhat about these issues. 
+> You may also want to take a look at <200911041539.11338.tmb@...35.com>
+> which details our original advisories.
+> 
 
-Heap-based buffer overflow in the cdf_read_sat function in src/cdf.c
-in Christos Zoulas file 5.00 allows user-assisted remote attackers to
-execute arbitrary code via a crafted compound document file, as
-demonstrated by a .msi, .doc, or .mpp file.  NOTE: some of these
-details are obtained from third party information.
+Great, thanks for sharing more details. 
+
+Cheers,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
 
 
