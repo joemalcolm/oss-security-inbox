@@ -1,89 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/06/5
-Message-ID: <Pine.GSO.4.51.0905061146210.3040@faron.mitre.org>
-Date: Wed, 6 May 2009 11:49:14 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: OSS Security <oss-security@...ts.openwall.com>
-cc: coley@...re.org
-Subject: Re: Old cscope buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/11/3
+Message-Id: <200912111013.32984.tmb@65535.com>
+Date: Fri, 11 Dec 2009 10:13:29 +0000
+From: Tim Brown <tmb@...35.com>
+To: oss-security@...ts.openwall.com
+Subject: Re:  Re: Some small KDE issues
 Content-Type: text/plain; charset=utf-8
 
-
-On Tue, 5 May 2009, Tomas Hoger wrote:
-
-> If you're preparing cscope updates for CVE-2009-0148 and you may still
-> be shipping packages based on 15.5, you may want to have a look at:
+On Friday 11 December 2009 04:54:57 Raphael Geissert wrote:
+> Jamie Strandboge wrote:
+> > FYI,
+> >
+> > Our KDE maintainer alerted us to this:
+> > http://www.ocert.org/advisories/ocert-2009-015.html
+> > http://www.kde.org/info/security/advisory-20091027-1.txt
 >
->   https://bugzilla.redhat.com/show_bug.cgi?id=499174
+> According to 0910291553490.22070@....redhat.com, ids were already
+> requested.
 >
-> Steve, as the first public report for this is from 2006:
+> Maybe somebody needs to be prodded?
 >
->   https://bugzilla.redhat.com/show_bug.cgi?id=189666
->
-> I believe 2006 CVE id is needed here.
+> Cheers,
 
-We recently updated CVE-2009-0148 for overflows in cscope before 15.7a.
-Is this the same issue, or do we need a different one?
+These were previously discussed in <hccd44$uli$1@....gmane.org>.  I discussed 
+them off list with the Redhat folks.  I can forward our off list discussions 
+which include details of our original URLs.  The only reason the advisories 
+haven't been forwarded to the normal lists is that the person responsible for 
+managing them has been otherwise engaged this last month and we were aware of 
+the oCERT agregate advisory.
 
-This seems to be distinct from CVE-2006-4262 as well...
-
-======================================================
-Name: CVE-2006-4262
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-4262
-Reference: CONFIRM:http://sourceforge.net/mailarchive/forum.php?thread_id=30266761&forum_id=33500
-Reference: CONFIRM:https://bugzilla.redhat.com/bugzilla/show_bug.cgi?id=203645
-Reference: CONFIRM:http://sourceforge.net/mailarchive/forum.php?thread_id=30266760&forum_id=33500
-Reference: DEBIAN:DSA-1186
-Reference: URL:http://www.debian.org/security/2006/dsa-1186
-Reference: GENTOO:GLSA-200610-08
-Reference: URL:http://security.gentoo.org/glsa/glsa-200610-08.xml
-Reference: BID:19686
-Reference: URL:http://www.securityfocus.com/bid/19686
-Reference: BID:19687
-Reference: URL:http://www.securityfocus.com/bid/19687
-Reference: VUPEN:ADV-2006-3374
-Reference: URL:http://www.frsirt.com/english/advisories/2006/3374
-Reference: OSVDB:28135
-Reference: URL:http://www.osvdb.org/28135
-Reference: OSVDB:28136
-Reference: URL:http://www.osvdb.org/28136
-Reference: SECUNIA:21601
-Reference: URL:http://secunia.com/advisories/21601
-Reference: SECUNIA:22239
-Reference: URL:http://secunia.com/advisories/22239
-Reference: SECUNIA:22515
-Reference: URL:http://secunia.com/advisories/22515
-Reference: XF:cscope-reffile-bo(28546)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/28546
-Reference: XF:cscope-cscopelists-bo(28545)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/28545
-
-Multiple buffer overflows in cscope 15.5 and earlier allow
-user-assisted attackers to cause a denial of service (crash) and
-possibly execute arbitrary code via multiple vectors including (1) a
-long pathname that is not properly handled during file list parsing,
-(2) long pathnames that result from path variable expansion such as
-tilde expansion for the HOME environment variable, and (3) a long -f
-(aka reffile) command line argument.
-
-
-======================================================
-Name: CVE-2009-0148
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0148
-Reference: MLIST:[cscope-cvs] 20090410 CVS: cscope/src snprintf.c, NONE, 1.1 build.c, 1.14, 1.15 command.c, 1.32, 1.33 dir.c, 1.30, 1.31 display.c, 1.29, 1.30 edit.c, 1.6, 1.7 exec.c, 1.11, 1.12 find.c, 1.20, 1.21 global.h, 1.36, 1.37 main.c, 1.45, 1.46 Makefile.am, 1.12, 1.13 Makefile.in, 1.15, 1.16 vpaccess.c, 1.2, 1.3 vpfopen.c, 1.3, 1.4 vpopen.c, 1.4, 1.5
-Reference: URL:http://sourceforge.net/mailarchive/forum.php?thread_name=E1LsGx3-00015K-TN%40ddv4jf1.ch3.sourceforge.com&forum_name=cscope-cvs
-Reference: CONFIRM:http://sourceforge.net/forum/forum.php?forum_id=947983
-Reference: CONFIRM:http://sourceforge.net/project/shownotes.php?group_id=4664&release_id=679527
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=490667
-Reference: SECUNIA:34978
-Reference: URL:http://secunia.com/advisories/34978
-Reference: VUPEN:ADV-2009-1238
-Reference: URL:http://www.vupen.com/english/advisories/2009/1238
-
-Multiple buffer overflows in Cscope before 15.7a allow remote
-attackers to execute arbitrary code via (1) long pathnames, (2) long
-source-code strings, and other vectors.
-
-
+Tim
+-- 
+Tim Brown
+<mailto:tmb@...35.com>
