@@ -1,43 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/23/9
-Message-ID: <20091123131244.GH897@rambler-co.ru>
-Date: Mon, 23 Nov 2009 16:12:44 +0300
-From: Igor Sysoev <igor@...oev.ru>
-To: Jan Lieskovsky <jlieskov@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVEs for nginx
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/11/4
+Message-ID: <20091211132650.GQ26756@severus.strandboge.com>
+Date: Fri, 11 Dec 2009 07:26:50 -0600
+From: Jamie Strandboge <jamie@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: Re:  Re: Some small KDE issues
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Nov 23, 2009 at 12:12:53PM +0100, Jan Lieskovsky wrote:
+On Thu, 10 Dec 2009, Raphael Geissert wrote:
 
-> Hi Igor,
+> Jamie Strandboge wrote:
 > 
-> Igor Sysoev wrote:
->  > As I far I know - no.
+> > FYI,
+> > 
+> > Our KDE maintainer alerted us to this:
+> > http://www.ocert.org/advisories/ocert-2009-015.html
+> > http://www.kde.org/info/security/advisory-20091027-1.txt
+> > 
 > 
->    Josh, could you allocate one then?
+> According to 0910291553490.22070@....redhat.com, ids were already requested.
 > 
->   > This bug was fixed in 0.8.17 and 0.7.63:
-> > 
-> > Changes with nginx 0.8.17                                        28 Sep 2009
-> > 
-> >     *) Security: now "/../" are disabled in "Destination" request header
-> >        line.
-> > 
-> > Changes with nginx 0.7.63                                        26 Oct 2009
-> > 
-> >     *) Security: now "/../" are disabled in "Destination" request header
-> >        line.
-> > 
-> > There is no patch, however, I can created it for you.
+> Maybe somebody needs to be prodded?
 > 
->    That would be perfect.
+Ah, I missed this email and couldn't find CVEs for them so I just passed
+them along. Thanks!
 
-The patch attached.
-
+Jamie
 
 -- 
-Igor Sysoev
-http://sysoev.ru/en/
+Jamie Strandboge             | http://www.canonical.com
 
-View attachment "patch.dest.txt" of type "text/plain" (3313 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (198 bytes)
