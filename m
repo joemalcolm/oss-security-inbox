@@ -1,26 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/13/5
-Message-ID: <Pine.GSO.4.51.0905131045320.304@faron.mitre.org>
-Date: Wed, 13 May 2009 10:47:01 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/11/5
+Message-Id: <200912111406.32621.tmb@65535.com>
+Date: Fri, 11 Dec 2009 14:06:28 +0000
+From: Tim Brown <tmb@...35.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: php mb_ereg_replace()
+Subject: Re:  Re: Some small KDE issues
 Content-Type: text/plain; charset=utf-8
 
+Attached is my exchange with Thomas Hoger at Redhat about these issues.  You 
+may also want to take a look at <200911041539.11338.tmb@...35.com> which 
+details our original advisories.
 
-On Wed, 13 May 2009, Christian Hoffmann wrote:
+Tim
+-- 
+Tim Brown
+<mailto:tmb@...35.com>
 
-> Regarding CVE... I'm not sure. It is not a vulnerability in PHP. It's a
-> missing functionality which very very easily leads to severe security
-> problems in apps which make use of the affected functions. And, this
-> missing functionality is usually expected to be there, as preg_replace
-> works like that. So.. tough case, imo.
+Download attachment "forwarded message" of type "message/rfc822" (5218 bytes)
 
-We don't have a CVE for the fact that strcpy() exists - it can be used
-safely even though it's dangerous.  My interpretation of this issue was
-the same, so no CVE is needed.  Any PHP application that misuses
-mb_ereg_replace(), however, is fair game.
-
-(We already have a handful of CVEs for executable regexp's in PHP apps)
-
-- Steve
+Download attachment "forwarded message" of type "message/rfc822" (3734 bytes)
