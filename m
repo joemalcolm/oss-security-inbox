@@ -1,27 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/28/13
-Message-ID: <glqdj4$l1e$1@ger.gmane.org>
-Date: Wed, 28 Jan 2009 14:00:42 -0600
-From: Raphael Geissert <atomo64+debian@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/11/2
+Message-ID: <hfsjar$vs$1@ger.gmane.org>
+Date: Thu, 10 Dec 2009 22:54:57 -0600
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: php5
+Subject: Re: Some small KDE issues
 Content-Type: text/plain; charset=utf-8
 
-Josh Bressers wrote:
-[...]
+Jamie Strandboge wrote:
+
+> FYI,
 > 
-> I may be missing something here, but this looks like an issue where a bad
-> script really needs to cause this. Wouldn't it be just as easy to for the
-> script author to delete the file in question via a PHP script?
+> Our KDE maintainer alerted us to this:
+> http://www.ocert.org/advisories/ocert-2009-015.html
+> http://www.kde.org/info/security/advisory-20091027-1.txt
 > 
 
-No, please read carefully. If you have a script that doesn't do good input
-sanitation but takes a variable from the user's input and uses it as a key it
-will end up nuking the .ini file.
+According to 0910291553490.22070@....redhat.com, ids were already requested.
+
+Maybe somebody needs to be prodded?
 
 Cheers,
 -- 
-Raphael Geissert - Debian Maintainer
+Raphael Geissert - Debian Developer
 www.debian.org - get.debian.net
 
 
