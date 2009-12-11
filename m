@@ -1,29 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/16/4
-Message-ID: <1735893177.108651258411551782.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 16 Nov 2009 17:45:51 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/11/7
+Message-ID: <hfu2h1$lqh$1@ger.gmane.org>
+Date: Fri, 11 Dec 2009 12:20:13 -0600
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Id request: request-tracker
+Subject: Re: CVE request: Argument injections in multiple PEAR packages
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
------ "Steffen Joeris" <steffen.joeris@...lelinux.de> wrote:
-
-> Hi
+Alex Legler wrote:
+[...]
+> 2. PEAR-Net_Ping < 2.4.5 ping() Argument Injection via $host
 > 
-> There is an XSS issue in request-tracker. Please see debian bug
-> #546778[0].
-> Could I please get a CVE id for this?
+> Upstream writes:
+> "When input from forms are used directly, the attacker could pass
+> variables that would allow him to execute remote arbitrary command
+> injections."
+[...]
+> 3. PEAR-Net_Traceroute < 0.21.2 traceroute() Argument Injection via
+> $host
 > 
-> Cheers
-> Steffen
-> 
-> [0]: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=546778
+> See above, same advisory.
 
-Please use CVE-2009-3892 for this.
+The fix applied by upstream in both cases is incomplete as it only prevents
+the command execution vulnerability, but doesn't address the argument
+injection vulnerability.
 
-Thanks.
+The appropriate fix in both cases is to use escapeshellarg instead of
+escapeshellcmd.
 
--- 
-    JB
+Please assign new ids for the incomplete fixes.
+
+Thanks in advance.
+
+Regards,
+- -- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iEYEARECAAYFAksijWIACgkQYy49rUbZzlpnqgCfcHEHuhEA68P2uLr/UvAs1mnS
+teEAn3zmAW+a8iYFn7bjsobk9w+BXy+P
+=Bshr
+-----END PGP SIGNATURE-----
+
