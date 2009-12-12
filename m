@@ -1,40 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/03/5
-Message-ID: <Pine.GSO.4.51.0902031639060.3146@faron.mitre.org>
-Date: Tue, 3 Feb 2009 16:39:16 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/12/4
+Message-ID: <hfvf1v$83h$1@ger.gmane.org>
+Date: Sat, 12 Dec 2009 01:00:15 -0600
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-cc: coley@...us.mitre.org
-Subject: Re: CVE request - ganglia
+Subject: CVE request: polipo DoS via overly large "Content-Length" header
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-updated to a "reject".
+Hi,
 
-======================================================
-Name: CVE-2009-0242
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0242
-Reference: MLIST:[Ganglia-developers] 20090113 patches for: [Sec] Gmetad server BoF and network overload + [Feature] multiple requests per conn on interactive port
-Reference: URL:http://www.mail-archive.com/ganglia-developers@lists.sourceforge.net/msg04929.html
-Reference: MLIST:[Ganglia-developers] 20090123 Re: CVE
-Reference: URL:http://www.mail-archive.com/ganglia-developers@lists.sourceforge.net/msg04969.html
-Reference: MLIST:[Ganglia-developers] 20090123 Re: CVE
-Reference: URL:http://www.mail-archive.com/ganglia-developers@lists.sourceforge.net/msg04973.html
-Reference: MISC:https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-0242#c1
-Reference: XF:ganglia-gmetad-dos(48166)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/48166
+A vulnerability has been found in polipo that allows a remote attacker to
+crash the daemon via an overly large "Content-Length" header.
+The vulnerability is caused by connection->reqlen (in client.c:
+httpClientDiscardBody()) being a signed integer which can be overflowed
+turning it into a negative value which later leads to a segmentation fault
+in the call to memmove.
 
-** REJECT **
+References:
+http://www.exploit-db.com/exploits/10338
+http://bugs.debian.org/560779
+http://secunia.com/advisories/37607/
 
-gmetad in Ganglia 3.1.1, when supporting multiple requests per
-connection on an interactive port, allows remote attackers to cause a
-denial of service via a request to the gmetad service with a path does
-not exist, which causes Ganglia to (1) perform excessive CPU
-computation and (2) send the entire tree, which consumes network
-bandwidth.  NOTE: the vendor and original researcher have disputed
-this issue, since legitimate requests can generate the same amount of
-resource consumption.  CVE concurs with the dispute, so this
-identifier should not be used.
+Could a CVE be assigned?
 
+Thanks in advance.
+
+Regards
+- -- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iEYEARECAAYFAksjP4MACgkQYy49rUbZzlqESQCdG3O9usXILnu4G6NuMmfUcQ2b
+uYMAn1Y54+xj89y3cqXrpeQHUirdrr6E
+=KUfO
+-----END PGP SIGNATURE-----
 
