@@ -1,22 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/14/2
-Message-ID: <20090514100015.GA23394@suse.de>
-Date: Thu, 14 May 2009 12:00:16 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Request: XEN local denial of service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/12/1
+Message-ID: <Pine.GSO.4.64.0912112047520.29993@faron.mitre.org>
+Date: Fri, 11 Dec 2009 20:48:15 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Josh Bressers <bressers@...hat.com>
+cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: Ruby on Rails: CSRF circumvention (from 2008)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-http://lists.xensource.com/archives/html/xen-devel/2009-05/msg00561.html
+On Wed, 2 Dec 2009, Josh Bressers wrote:
 
-A user mode application running in a x86 32bit Xen Guest could Ooops (denial of service)
-of the guest by causing a segfault in certain address ranges.
+> ----- "Alex Legler" <a3li@...too.org> wrote:
+>>
+>> http://weblog.rubyonrails.org/2008/11/18/potential-circumvention-of-csrf-protection-in-rails-2-1
+>> http://www.rorsecurity.info/journal/2008/11/19/circumvent-rails-csrf-protection.html
+>>
+>
+> Steve,
+>
+> Can you give this one a 2008 ID?
 
-(Just jumping to an address between "ecrit" and "scrit" symbols is sufficient.)
+Use CVE-2008-7248, to be filled in later.
 
-This is not a mainline Linux kernel issue, the bug is in the XEN patchset against
-the Linux kernel.
-
-Ciao, Marcus
+- Steve
