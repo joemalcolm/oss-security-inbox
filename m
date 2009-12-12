@@ -1,21 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/15/7
-Message-ID: <Pine.GSO.4.51.0905151624500.6857@faron.mitre.org>
-Date: Fri, 15 May 2009 16:25:39 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/12/2
+Message-ID: <Pine.GSO.4.64.0912112134260.29993@faron.mitre.org>
+Date: Fri, 11 Dec 2009 21:50:26 -0500 (EST)
 From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: ptrace race CVE ID?
+To: oss-security <oss-security@...ts.openwall.com>, oss-security <oss-security@...ts.openwall.com>
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- moodle 1.9.7 and 1.8.11
 Content-Type: text/plain; charset=utf-8
 
 
-On Fri, 15 May 2009, Michael K. Johnson wrote:
+On Sun, 6 Dec 2009, Jan Lieskovsky wrote:
 
-> > CVE-2009-1527, I think
->
-> Thanks again, that's clearly it.
+>    * MSA-09-0022 - Multiple CSRF problems fixed
 
-The CVE-2009-1527 description doesn't have "ptrace" alone, just ptrace.c,
-which is why you wouldn't have found it if you searched on the CVE web
-site.  I've since added a keyword so it'll be found in the future.
+Use CVE-2009-4297
+
+
+>    * MSA-09-0023 - Fixed user account disclosure in LAMS module
+
+Use CVE-2009-4298
+
+
+>    * MSA-09-0024 - Fixed insufficient access control in Glossary module
+
+
+Use CVE-2009-4299
+
+>    * MSA-09-0025 - Unneeded MD5 hashes removed from user table
+
+
+Use CVE-2009-4300
+
+>    * MSA-09-0026 - Fixed invalid application access control in MNET 
+> interface
+
+Use CVE-2009-4301
+
+
+>    * MSA-09-0027 - Ensured login information is always sent secured when 
+> using SSL for logins
+
+Use CVE-2009-4302
+
+
+>    * MSA-09-0028 - Passwords and secrets are no longer ever saved in 
+> backups, new backup capabilities
+>                    moodle/backup:userinfo and moodle/restore:userinfo for 
+> controlling who can
+>                    backup/restore user data, new checks in the security 
+> overview report help
+>                    admins identify dangerous backup permissions
+
+Use CVE-2009-4303
+
+This will be focused on the storage of passwords and secrets in backups; 
+the remainder are considered defense-in-depth changes and not being 
+considered for CVE.  (Arguments welcome.)
+
+
+>    * MSA-09-0029 - A strong password policy is now enabled by default, 
+> enabling password salt
+>                    in encouraged in config.php, admins are forced to change 
+> password after the
+>                    upgrade and admins can force password change on other 
+> users via Bulk user actions
+
+Use CVE-2009-4304
+
+This will focus on the lack of password salt; the remainder are considered 
+defense-in-depth changes and not being considered for CVE.  (Arguments 
+welcome.)
+
+
+>    * MSA-09-0030 - New detection of insecure Flash player plugins, Moodle 
+> won't serve Flash to insecure plugins
+
+This seems to be a defense-in-depth fix, which typically does not receive 
+a CVE.
+
+
+>    * MSA-09-0031 - Fixed SQL injection in SCORM module
+
+Use CVE-2009-4305
+
+
+Descriptions will be filled in later.
 
 - Steve
