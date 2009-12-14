@@ -1,36 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/18/16
-Message-ID: <Pine.GSO.4.51.0908181656410.17763@faron.mitre.org>
-Date: Tue, 18 Aug 2009 16:58:43 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/14/3
+Message-ID: <2029530517.1304211260830265766.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 14 Dec 2009 17:37:45 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: parisc: isa-eeprom missing lower bound check
+Cc: coley <coley@...re.org>
+Subject: Re: CVE Request - Open Flash Chart v2
 Content-Type: text/plain; charset=utf-8
 
+Here's a link to the Secunia advisory as a reference:
+http://secunia.com/advisories/37078/
 
-I wasn't sure how to interpret the phrase "poke in random memory" from the
-bug comment and there wasn't enough source code context, so I guessed that
-the impact is reading unexpected memory, but maybe it's also a crash or
-whatever.
+Please use CVE-2009-4140 for this.
 
-- Steve
+Thanks.
 
-
-======================================================
-Name: CVE-2009-2846
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2846
-Reference: MLIST:[oss-security] 20090810 CVE request: kernel: parisc: isa-eeprom missing lower bound check
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/08/10/1
-Reference: MLIST:[oss-security] 20090818 Re: CVE request: kernel: parisc: isa-eeprom missing lower bound check
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/08/18/6
-Reference: CONFIRM:http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=6b4dbcd86a9d464057fcc7abe4d0574093071fcc
-
-The eisa_eeprom_read function in the parisc isa-eeprom component
-(drivers/parisc/eisa_eeprom.c) in the Linux kernel before 2.6.31-rc6
-allows local users to access restricted memory via a negative ppos
-argument, which bypasses a check that assumes that ppos is positive
-and causes an out-of-bounds read in the readb function.
+-- 
+    JB
 
 
+----- "Anthon Pang" <anthon.pang@...il.com> wrote:
+
+> The Piwik project released an advisory re: the inclusion of
+> ofc_upload_image.php -- a potentially exploitable file from the
+> php-ofc-library offered by the Open Flash Chart project.
+> 
+> -
+> http://piwik.org/blog/2009/10/piwik-response-to-secunia-advisory-sa37078/
+> 
+> Since Open Flash Chart is used by web sites and open source projects,
+> a common CVE makes sense.
+> 
+> Open Flash Chart:  Affected v2 Beta 1 through v2 Lug Wyrm Charmer. 
+> Fixed: no
+> Piwki:  Affected: 0.2.35 through 0.4.3.  Fixed in 0.4.4.  (Removed
+> file)
+> Open Web Analytics:  Affected: 1.2.  Fixed in svn.  (Removed file)
+> 
+> Other web sites/projects:
+> -
+> http://www.google.com/search?q=php-ofc-library+ofc_upload_image.php+-piwik
+> - http://www.google.com/codesearch?q=ofc_upload_image.php
+
+-- 
+    JB
