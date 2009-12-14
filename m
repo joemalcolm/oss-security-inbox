@@ -1,21 +1,11 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/27/4
-Message-ID: <20090727220158.GO28411@ngolde.de>
-Date: Tue, 28 Jul 2009 00:01:58 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/14/2
+Message-ID: <85f64f890912140900m691b7c6es56d1ade0cb9b2fd@mail.gmail.com>
+Date: Mon, 14 Dec 2009 12:00:58 -0500
+From: Anthon Pang <anthon.pang@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: mplayer and vlc
+Subject: Re: Piwik <= 0.4.5 Cookie Unserialize() Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-Can I get a CVE id for:
-http://seclists.org/fulldisclosure/2009/Jul/0418.html?
-
-Cheers
-Nico
-
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+The Piwik advisory is here:
+http://piwik.org/blog/2009/12/piwik-response-to-shocking-news-in-php-exploitation/
