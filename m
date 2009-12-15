@@ -1,38 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/18/1
-Message-ID: <20091118070753.GA28733@suse.de>
-Date: Wed, 18 Nov 2009 08:07:53 +0100
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/15/1
+Message-ID: <4B26EB67.3010806@redhat.com>
+Date: Tue, 15 Dec 2009 09:50:31 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: libpoppler4: buffer overflow in the Abiword backend
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE-2009-4138 kernel: firewire: ohci: handle receive packets with a data length of zero
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Nov 17, 2009 at 09:27:03AM +0100, Thomas Biege wrote:
-> On Wed, Nov 11, 2009 at 08:05:32PM -0500, Josh Bressers wrote:
-> > ----- "Thomas Biege" <thomas@...e.de> wrote:
-> > > 
-> > > Hello everybody,
-> > > 
-> > > does this need an CVE-ID?
-> > > 
-> > > http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=534680
-> > > 
-> > 
-> > I presume this does need a CVE id, but seeing as PDF related bugs are often a
-> > Pandora's Box, I'd rather not assign one just yet. Has someone looked at this
-> > to see what the root of the problem is?
-> 
-> AFAICS it just affects libpoppler. But version 4 may not be the only
-> one with the bug.
+Anyone who can open any of the /dev/fw* files on recent version of the 
+new firewire stack can trigger a NULL pointer dereference with ohci 1.0 
+controllers (or ohci 1.1 controllers that are being used in ohci 1.0 
+mode because of hardware bugs) by issuing certain ioctls.
 
-Our maintainer told me that version 3 and 5 are vulnerable too.
+On machines with non-blacklisted ohci1.1 controllers, the call does 
+nothing, which is a bug.
 
+https://bugzilla.redhat.com/CVE-2009-4138
+http://patchwork.kernel.org/patch/66747/
+
+Thanks, Eugene
 -- 
-Bye,
-     Thomas
--- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
--- 
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
+Eugene Teo / Red Hat Security Response Team
