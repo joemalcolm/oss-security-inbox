@@ -1,46 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/28/4
-Message-ID: <20090128092102.56964ee1@redhat.com>
-Date: Wed, 28 Jan 2009 09:21:02 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: OSS Security <oss-security@...ts.openwall.com>
-Subject: CVE request - horde, imp
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/16/3
+Message-ID: <1939320429.72621260997962453.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 16 Dec 2009 16:12:42 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>, Dan Williams <dcbw@...hat.com>
+Cc: coley <coley@...re.org>
+Subject: NetworkManager CVE assignment
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+I just assigned two CVE ids for NetworkManager:
 
-New versions of horde and imp fix few security issues:
-
-Horde 3.2.4 and 3.3.3:
-     * SECURITY: Fix unescaped output in the tag cloud block
-     * SECURITY: Fix unvalidated Horde_Image driver name
-
-http://lists.horde.org/archives/announce/2009/000483.html
-http://lists.horde.org/archives/announce/2009/000482.html
-http://cvs.horde.org/diff.php/horde/docs/CHANGES?r1=1.515.2.413.2.3&r2=1.515.2.413.2.5&ty=h
-
-Patches:
-http://cvs.horde.org/diff.php/horde/services/portal/cloud_search.php?r1=1.1.2.2&r2=1.1.2.2.4.1
-http://cvs.horde.org/diff.php/framework/Image/Image.php?r1=1.39.10.17&r2=1.39.10.17.4.1
+CVE-2009-4144 Possible connections to spoofed WPA Enterprise networks without validating network certificate
+https://bugzilla.redhat.com/show_bug.cgi?id=546795
 
 
-Further details:
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=513265
+CVE-2009-4145 Information disclosure by nm-connection-editor
+https://bugzilla.redhat.com/show_bug.cgi?id=546117
 
 
-IMP 4.2.2 and 4.3.3:
-http://lists.horde.org/archives/announce/2009/000484.html
-http://lists.horde.org/archives/announce/2009/000485.html
-http://cvs.horde.org/diff.php/imp/docs/CHANGES?r1=1.699.2.301.2.1&r2=1.699.2.301.2.4&ty=h
+These were somewhat public before now.
 
-Patches:
-http://cvs.horde.org/diff.php/imp/pgp.php?r1=2.79.6.15&r2=2.79.6.15.2.1
-http://cvs.horde.org/diff.php/imp/smime.php?r1=2.48.4.12&r2=2.48.4.12.4.1
-http://cvs.horde.org/diff.php/imp/message.php?r1=2.560.4.56&r2=2.560.4.56.4.1
-
-Debian bug:
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=513266
-
+Thanks.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+    JB
