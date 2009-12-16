@@ -1,63 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/15/13
-Message-ID: <20091015173822.084de220@redhat.com>
-Date: Thu, 15 Oct 2009 17:38:22 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/16/1
+Message-ID: <20091216115308.3941163a@redhat.com>
+Date: Wed, 16 Dec 2009 11:53:08 +0100
 From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: Re: CVE Request -- PHP 5 - 5.2.11
+Subject: Re:  Re: Some small KDE issues
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 22 Sep 2009 03:24:34 -0400 (EDT) "Steven M. Christey"
-<coley@...us.mitre.org> wrote:
+On Thu, 10 Dec 2009 22:54:57 -0600 Raphael Geissert
+<geissert@...ian.org> wrote:
 
-> Name: CVE-2009-3293
+> > Our KDE maintainer alerted us to this:
+> > http://www.ocert.org/advisories/ocert-2009-015.html
+> > http://www.kde.org/info/security/advisory-20091027-1.txt
 > 
-> Unspecified vulnerability in the imagecolortransparent function in PHP
-> before 5.2.11 has unknown impact and attack vectors related to an
-> incorrect "sanity check for the color index."
+> According to 0910291553490.22070@....redhat.com, ids were already requested.
+> 
+> Maybe somebody needs to be prodded?
 
-While looking into this one, I spotted few interesting things.
+I'd rather say it needs someone to do the work and clearly state what
+should get a CVE and why.  Advisory text does not really map well to
+the list of patches.
 
-Patch for this is:
-- if (color > -1 && color<im->colorsTotal && color<=gdMaxColors) {
-+ if (color > -1 && color < im->colorsTotal && color < gdMaxColors) {
+One obvious candidate is "do not allow non-http and non-webdav urls in
+XMLHTTPRequests" fix, related to a not-so-ideal application of the same
+origin policy on local files.  Ark and Kmail are examples where it can
+lead to issues, but it does not seem from the upstream advisory there
+is an intention to close what was described as the source of the
+problem in Portcullis advisories (e.g. not using khtml as a default
+previewer in ark, or at least not with enabled javascript sounds
+reasonable).
 
-Besides "color<=gdMaxColors" check, there is also "color<im->colorsTotal"
-check.  GD code also assumes that im->colorsTotal is <= gdMaxColors, as
-it is used as an upper bound in multiple cases when accessing arrays of
-gdMaxColors size.  You can see "im->colorsTotal<=gdMaxColors" enforced in
-e.g.  gdImageColorAllocateAlpha(), which is called for PHP function
-imagecolorallocate().
+As for the XMLHTTPRequest fix, it should be noted that the restriction
+does not seem to be what other browsers do.  Mozilla only allows local
+files to access other local urls (with the subdir restriction in recent
+versions), even using XMLHTTPRequest, but allows no remote access.  I've
+been told WebKit has a tunable for that and the same restriction should
+be the default in recent versions (confirmed in e.g. recent chromium).
+Not restricting remote access can still allow stealing data from sites
+behind the firewall kind of attacks.
 
-Hence:
-  color<im->colorsTotal (from the check)
-and
-  im->colorsTotal<=gdMaxColors (assumed in the rest of the code)
-implies
-  color < gdMaxColor
+As for KIO slaves issues, Tim posted his list already.  For CVE
+assignment, they should probably be grouped by the fix time, as not all
+of them seem to have been fixed at the same time / version.
 
-So the change should not really introduce any extra protection for current
-PHP versions.
-
-This change is relevant for pre-4.3.5 PHP versions, which do not have
-"color<im->colorsTotal" part of the check.  It is possible to trigger
-im->alpha[] off-by-one over-write in those versions.  This changes
-neighbor member of the gdImageStruct structure - trueColor.  If that
-happens, gd will believe that previously non-TrueColor image is now
-TrueColor, which can lead to buffer over-reads or over-writes in
-subsequent gd operations (due to a different storage space needed for
-pixels of TrueColor and non-TrueColor images).
-
-But there is also concern for current PHP versions, as im->colorsTotal may
-be initialized with a value greater than gdMaxColors when using
-imagecreatefromgd() PHP function on a specially crafted GD file.  Value
-read from file is not properly checked in _gdGetColors() (gd_gd.c),
-possibly allowing previously mentioned over-reads or over-writes on
-various places (e.g. colorsTotal is used in _gdGetColors()
-when initializing im->open[] with 0s).  CVE-2009-3546 was assigned to
-this problem and the fix is now committed in PHP SVN:
-  http://svn.php.net/viewvc?view=revision&revision=289557
+So taking this to an account, do you have a proposal for the list of
+issue that should get CVE?
 
 -- 
 Tomas Hoger / Red Hat Security Response Team
