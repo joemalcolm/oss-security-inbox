@@ -1,26 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/20/3
-Message-ID: <20090120103158.7cee6879@redhat.com>
-Date: Tue, 20 Jan 2009 10:31:58 +0100
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/17/2
+Message-ID: <hgcbtc$5ne$1@ger.gmane.org>
+Date: Wed, 16 Dec 2009 22:26:25 -0600
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request -- git
+Subject: Re: Re: Some small KDE issues
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 20 Jan 2009 10:11:58 +0100 Sebastian Krahmer <krahmer@...e.de>
-wrote:
+Tim Brown wrote:
+[...]
+> Retrospectively, I would go with CVEs for the the following:
+> 
+> * Ark Uses KHTML For Rendering Unknown File Types
 
-> > No, they have not.  They fixed both -5516 (git_search) and -5517
-> > (git_snapshot and git_object) issues using quote_command() (in their
-> > git-1.5.2.4-24.4.src.rpm).  No idea why only one of the CVEs was
-> > mentioned in the security report...  They don't seem to include any
-> > patch for diff.external issue, or claim to have fixed it.
->
-> Only opensuse 11.0 and 11.1 were affected by diff.external
-> issue and packages have been released for that.
+I don't think this is an issue on its own. 
+Not disabling javascript could be treated as one.
+I haven't tried myself, but can plugins be loaded? if that's so then there's
+a bigger risk here.
 
-SUSE-SR:2009:001 only mentions fix for 10.3.  I probably missed other
-report mentioning fixes in 11.x.
+> * KMail Allows Attachment Spoofing
 
+Just like the above.
+
+> * Javascript Enabled On KHTML Based Views By Default
+
+I wouldn't treat that as an issue, I would expect applications to disable
+javascript appropriately.
+
+> * KJS/KIO Slaves Enforcing Broken Same Origin Policy
+
+Agreed.
+
+> 
+> Note that KDE's fix for the latter has caused some complaints, something
+> that I suspect they were mindful of when we discussed the issues:
+> 
+> * http://forum.kde.org/viewtopic.php?f=18&t=83649
+
+Sure, not allowing xmlhttprequest when the context and the request are both
+file:// should have been expected to cause disruptions.
+
+> 
+> On top of this we have a raft of IO slave related vulnerabilities (which
+> KDE,
+> oCERT and Portcullis agreed about) .  I'm not sure what the status of each
+> of these is, as Thomas alluded to they were fixed at various times (I'm
+> not even
+> 100% sure they're all fixed now).  I would create another CVE for these.
+
+Further investigation is needed. If they were fixed at different times they
+might each deserve their own CVE.
+
+> 
+> Finally, there is the issue with KWallet which KDE never addressed.  The
+> closest I got to an answer regarding this was that users complained too
+> much even now about the matching, so adding additional restrictions were
+> unwelcome.
+> 
+
+No matter what they say or do, this is an issue.
+
+Regards,
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
+
+
