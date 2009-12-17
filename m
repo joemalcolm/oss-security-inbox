@@ -1,26 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/26/1
-Message-ID: <4A6BCAED.60301@redhat.com>
-Date: Sun, 26 Jul 2009 11:18:05 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/17/6
+Message-ID: <hge0fr$ldb$1@ger.gmane.org>
+Date: Thu, 17 Dec 2009 13:23:33 -0600
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: md raid null ptr dereference (when sysfs is writable)
+Subject: CVE request: php5: multiple issues
 Content-Type: text/plain; charset=utf-8
 
-Marcus Meissner wrote:
-> Hi,
-> 
-> http://xorl.wordpress.com/2009/07/21/linux-kernel-md-driver-null-pointer-dereference/
-> 
-> 2.6.30 stable:
-> http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.30.y.git;a=commit;h=3c92900d9a4afb176d3de335dc0da0198660a244
-> mainline:
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=b8d966efd9a46a9a35beac50cbff6e30565125ef
-> 
-> While not directly exploitable, its just needs write access to the sysfs files
-> to get exploited, so I guess this warrants a CVE number.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Note that the default permission for this sysfs file is 644. It can be
-triggered if you are a local privileged user.
+Hi,
 
-Thanks, Eugene
+Stefan Esser on his "Shocking News in PHP Exploitation"[1] presentation
+reports and analyses a couple of issues:
+
+* usort() interruption memory corruption:
+uksort() although not mentioned on the presentation is also affected. It was
+recently fixed in 5.2.12 but not considered security-relevant by upstream
+* explode() information leak
+* serialize() information leak
+
+As mentioned by the presentation all these are local vulnerabilities.
+
+[1]http://www.suspekt.org/downloads/POC2009-ShockingNewsInPHPExploitation.pdf
+
+Additionally, I've started to closely follow upstream development and found
+the following issues that were or have not been mentioned anywhere else:
+
+Null pointer dereference:
+http://svn.php.net/viewvc?view=revision&revision=292083
+
+This one looks suspicious, basically a switch from sprintf to snprintf which
+apparently already happened in the other branches at some point:
+http://svn.php.net/viewvc?view=revision&revision=291888
+
+Improper decoding, not sure what the impact could be:
+http://svn.php.net/viewvc?view=revision&revision=291586
+
+Insufficient memory allocation for unicode strings:
+http://svn.php.net/viewvc?view=revision&revision=291259
+
+I think a cross-vendor security support and tracking effort for php5 is
+needed. The number of issues silently fixed are a continuous risk, leaving
+users exposed.
+What does the others think?
+
+Regards,
+- -- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iEYEARECAAYFAksqhTsACgkQYy49rUbZzlrm4ACcC/WIYLKRJO+UMKu7fZXCOZvp
+HaoAoIVrcx8oouZ8KcJZiDon7QITQgzB
+=u60p
+-----END PGP SIGNATURE-----
+
