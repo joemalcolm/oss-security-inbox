@@ -1,92 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/01/7
-Message-Id: <1238588117.3103.18.camel@dhcp-lab-164.englab.brq.redhat.com>
-Date: Wed, 01 Apr 2009 14:15:17 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request -- zsh, XFree86-xfs/xorg-x11-xfs, screen
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/17/5
+Message-ID: <20091217162631.GP24554@inversepath.com>
+Date: Thu, 17 Dec 2009 16:26:31 +0000
+From: Andrea Barisani <lcars@...rt.org>
+To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
+Subject: [oCERT-2009-019] Ganeti path sanitization errors
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve,
 
-On Tue, 2009-03-31 at 21:12 -0400, Steven M. Christey wrote:
-> On Wed, 25 Mar 2009, Jan Lieskovsky wrote:
-> 
-> > 1, zsh Stack-based buffer overflow due improper escaping of the '!' character
-> >    References:
-> >    https://bugs.launchpad.net/ubuntu/+source/zsh/+bug/333722
-> >    http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=521108
-> >    https://bugzilla.redhat.com/show_bug.cgi?id=492089
-> 
-> This doesn't seem like a vulnerability to me.  It's only executable in
-> interactive mode.  If the attacker can already type in commands, then they
-> already have the privileges to execute code.
+#2009-019 Ganeti path sanitization errors
 
-Fair enough.
+Description:
 
-> 
-> > 2, XFree86-xfs / xorg-x11-xfs Unsafe usage of temporary file
-> >    References:
-> >    https://bugs.launchpad.net/ubuntu/+source/xfs/+bug/299560
-> >    http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=521107
-> >    https://bugzilla.novell.com/show_bug.cgi?id=408006
-> >    https://bugzilla.redhat.com/show_bug.cgi?id=492098
-> 
-> Is this a regression of CVE-2007-3103 (DEBIAN:DSA-1342) or is there
-> something else going on here?
+Ganeti, an open source virtualisation manager, suffers from an input
+validation bug that poses a security risk.
 
-Yeah, this is CVE-2007-3103.
+The vulnerability applies to the commands submitted, either locally via
+gnt-* commands or remotely via the HTTP API, to the machine acting as a
+cluster master. Validation for a file path argument is missing resulting
+in arbitrary code execution, local exploitation applies to any user with
+rights to execute ganeti commands while remote exploitation applies to
+configured users authenticated over the ganeti RAPI.
 
-> 
-> > 3, screen: Unsafe usage of temporary file
-> >    References:
-> >    https://bugs.launchpad.net/ubuntu/+source/screen/+bug/315993
-> >    http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=521123
-> >    https://bugzilla.redhat.com/show_bug.cgi?id=492104
-> 
-> CVE-2009-1214 - world-readable permissions
-> CVE-2009-1215 - symlink following
+While the local exploitation is a non-issue for the root user, which can
+execute arbitrary commands in any case, it affects local non-root users
+which are allowed to execute gnt-* commands via sudo or other suid
+wrappers.
 
-Thanks.
+Affected version:
 
-Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Ganeti >= 1.2.4 (local), >= 2.0.0 (remote)
 
-> 
-> - Steve
-> 
-> ======================================================
-> Name: CVE-2009-1214
-> Status: Candidate
-> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1214
-> Reference: MLIST:[oss-security] 20090325 CVE request -- zsh, XFree86-xfs/xorg-x11-xfs, screen
-> Reference: URL:http://www.openwall.com/lists/oss-security/2009/03/25/7
-> Reference: MISC:http://savannah.gnu.org/bugs/?25296
-> Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=521123
-> Reference: CONFIRM:https://bugs.launchpad.net/ubuntu/+source/screen/+bug/315993
-> Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=492104
-> 
-> GNU screen 4.0.3 creates the /tmp/screen-exchange temporary file with
-> world-readable permissions, which might allow local users to obtain
-> sensitive session information.
-> 
-> 
-> ======================================================
-> Name: CVE-2009-1215
-> Status: Candidate
-> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1215
-> Reference: MLIST:[oss-security] 20090325 CVE request -- zsh, XFree86-xfs/xorg-x11-xfs, screen
-> Reference: URL:http://www.openwall.com/lists/oss-security/2009/03/25/7
-> Reference: MISC:http://savannah.gnu.org/bugs/?25296
-> Reference: CONFIRM:http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=521123
-> Reference: CONFIRM:https://bugs.launchpad.net/ubuntu/+source/screen/+bug/315993
-> Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=492104
-> 
-> Race condition in GNU screen 4.0.3 allows local users to create or
-> overwrite arbitrary files via a symlink attack on the
-> /tmp/screen-exchange temporary file.
-> 
-> 
+Fixed version:
 
+Ganeti >= 1.2.9, >= 2.0.5, >= 2.1.0~rc2
+
+Credit: vulnerability report, PoC and patches received from Ganeti authors
+Iustin Pop and Michael Hanselmann, Google Inc.
+
+CVE: CVE-2009-4261
+
+CVE: N/A
+
+Timeline:
+
+2009-12-07: vulnerability report received
+2009-12-08: contacted affected vendors
+2009-12-17: ganeti 1.2.9, 2.0.5, 2.1.0~rc2 released
+2009-12-17: advisory published
+
+References:
+http://groups.google.com/group/ganeti/browse_thread/thread/cbce23d89103a8d2
+
+Permalink:
+http://www.ocert.org/advisories/ocert-2009-019.html
+
+-- 
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | Open Source Computer Emergency Response Team
+
+<lcars@...rt.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
