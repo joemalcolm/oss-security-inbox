@@ -1,75 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/21/3
-Message-ID: <20091121205926.GA28278@janus.mylan>
-Date: Sat, 21 Nov 2009 21:59:26 +0100
-From: Sergei Golubchik <serg@...ql.com>
-To: Jan Lieskovsky <jlieskov@...hat.com>
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com, security@...ql.com
-Subject: Re: CVE Request - MySQL - 5.0.88
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/17/4
+Message-ID: <20091217170159.3593e2af@redhat.com>
+Date: Thu, 17 Dec 2009 17:01:59 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: serg@...ql.com, coley@...us.mitre.org, MySQL Security Team <security@...ql.com>
+Subject: Re: mysql-5.1.41
 Content-Type: text/plain; charset=utf-8
 
-Hi, Jan!
+On Thu, 17 Dec 2009 16:28:16 +0100 Sergei Golubchik <serg@...ql.com>
+wrote:
 
-On Nov 21, Jan Lieskovsky wrote:
-> Hi Josh, Steve, vendors,
->
-> MySQL upstream has released latest 5.0.88 version of their Community
-> Server, fixing one security issue:
-...
-> While the other two (three issues) looks too to be security relevant:
->
-> * Error handling was missing for SELECT statements containing
->   subqueries in the WHERE clause and that assigned a SELECT
->   result to a user variable. The server could crash as a result.
->   (Bug#48291: http://bugs.mysql.com/48291)
->
-> This looks to be from adjacent network exploitable mysqld DoS.
+> > > Name: CVE-2009-4030
+> > > 
+> > > MySQL 5.1.x before 5.1.41 allows local users to bypass certain
+> > > privilege checks by calling CREATE TABLE on a MyISAM table with
+> > > modified (1) DATA DIRECTORY or (2) INDEX DIRECTORY arguments that are
+> > > originally associated with pathnames without symlinks, and that can
+> > > point to tables created at a future time at which a pathname is
+> > > modified to contain a symlink to a subdirectory of the MySQL data home
+> > > directory, related to incorrect calculation of the
+> > > mysql_unpacked_real_data_home value.  NOTE: this vulnerability exists
+> > > because of an incomplete fix for CVE-2008-4098 and CVE-2008-2079.
+> > 
+> > This problem is limited to situation where --datadir gets a relative
+> > path not starting with '.' and current working directory is not
+> > --basedir, right?
+> 
+> You mean the last problem in the bug report ?
+> Yes.
 
-Yes.
+The "Fixed a initialization order remark by Serg" fix,  problem pointed
+out in your comment dated as "[14 Jul 15:53] Sergei Golubchik".
 
-> * If the first argument to GeomFromWKB() function was a geometry
->   value, the function just returned its value. However, it
->   failed to preserve the argument's null_value flag, which
->   caused an unexpected NULL value to be returned to the caller,
->   resulting in a server crash.
->   (Bug#47780: http://bugs.mysql.com/47780)
->
-> Same case as the above
+As when you use full path for --datadir, it's correctly expanded using
+realpath.  Relative paths starting with '.' are expected to be resolved
+from CWD.  I've not checked path starting with '~', they may be
+affected by this problem too.
 
-Yes.
-
-> * Failure to treat BIT values as unsigned could lead to
->   unpredictable results.
->  (Bug#42803: http://bugs.mysql.com/42803)
->
-> Also this one seems to be security related - upstream bug speaks about
-> invalid memory access and didn't check the code if this could lead to
-> heap overflow once the comparison fails.
-
-
-No, looks safe. It reads one byte and thinks it's a bool:
-
-class Field_num ... { ...
-   bool unsigned_flag;
-
-while it's  somewhere in the middle of a pointer:
-
-class Field_bit ... { ...
-   uchar *bit_ptr;
-
-The worst that can happen - MySQL could think the value is signed (BIT
-values are always unsigned) and during the optimization phase won't
-notice that the condition like "unsigned_value > negative_number" is
-always true. Not a big deal.
-
-Regards / Mit vielen Grüßen,
-Sergei
+Thank you for clarifications / confirmations!
 
 -- 
-   __  ___     ___ ____  __
-  /  |/  /_ __/ __/ __ \/ /   Sergei Golubchik <serg@....com>
- / /|_/ / // /\ \/ /_/ / /__  Principal Software Engineer/Server Architect
-/_/  /_/\_, /___/\___\_\___/  Sun Microsystems GmbH, HRB München 161028
-       <___/                  Sonnenallee 1, 85551 Kirchheim-Heimstetten
-Geschäftsführer: Thomas Schroeder, Wolfgang Engels, Wolf Frenkel
-Vorsitzender des Aufsichtsrates: Martin Häring
+Tomas Hoger / Red Hat Security Response Team
