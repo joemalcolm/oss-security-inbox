@@ -1,32 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/18/1
-Message-ID: <0905180919450.20973@mjc.redhat.com>
-Date: Mon, 18 May 2009 09:32:04 +0100 (BST)
-From: Mark J Cox <mjc@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/17/7
+Message-Id: <200912172201.24236.eren@pardus.org.tr>
+Date: Thu, 17 Dec 2009 22:01:24 +0200
+From: Eren Türkay <eren@...dus.org.tr>
 To: oss-security@...ts.openwall.com
-Subject: Two OpenSSL DTLS remote DoS
+Subject: Re:  CVE request: php5: multiple issues
 Content-Type: text/plain; charset=utf-8
 
-Spotted on openssl-dev, two issues that can lead to a remote attacker 
-exhausting memory of a DTLS enabled service.  DTLS support was introduced 
-in OpenSSL 0.9.8.
+On Thursday 17 December 2009 09:23:33 pm Raphael Geissert wrote:
+> The number of issues silently fixed are a continuous risk, leaving
+> users exposed.
 
-CVE-2009-1377 DTLS epoch record buffer memory DoS
+That's the normal behavior of the PHP team. As far as I know, they are 
+not willing to announce security-related fixes unless the issues are quite 
+important. The vulnerabilities are silently fixed.
 
- 	http://rt.openssl.org/Ticket/Display.html?id=1930&user=guest&pass=guest
-         http://marc.info/?l=openssl-dev&m=124247675613888&w=2
-         http://cvs.openssl.org/chngview?cn=18187
+> What does the others think?
 
- 	CVSSv2= 5.0/AV:N/AC:L/Au:N/C:N/I:N/A:P
+I think, we should contact PHP developers about security related issues 
+from the release of the last php version (5.2.11, e.g) up to now. We can 
+miss some issues that have already been fixed. It would be better to get 
+an issue list from vendor. I hope they will be responsive.
 
-CVE-2009-1378 DTLS fragment handling memory DoS
-
- 	http://rt.openssl.org/Ticket/Display.html?id=1931&user=guest&pass=guest
-         http://marc.info/?t=124250665500033&r=1&w=2
-
- 	http://cvs.openssl.org/chngview?cn=18188
- 	(Note doesn't have a backported 0.9.8 patch yet, follow openssl-dev)
-
- 	CVSSv2= 5.0/AV:N/AC:L/Au:N/C:N/I:N/A:P
-
-Thanks, Mark
+Regards,
+Eren
