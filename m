@@ -1,32 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/20/1
-Message-ID: <20090820075641.GA4781@redhat.com>
-Date: Thu, 20 Aug 2009 08:56:41 +0100
-From: Joe Orton <jorton@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/17/1
+Message-Id: <200912170103.26263.tmb@65535.com>
+Date: Thu, 17 Dec 2009 01:03:19 +0000
+From: Tim Brown <tmb@...35.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: neon 0.28.6 - CVE-2009-2473, CVE-2009-2474
+Subject: Re:  Re: Some small KDE issues
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Aug 18, 2009 at 04:57:01PM +0100, Joe Orton wrote:
-> * SECURITY (CVE-2009-2474): Fix handling of an embedded NUL byte in
->   a certificate subject name with OpenSSL; could allow an undetected
->   MITM attack against an SSL server if a trusted CA issues such a cert.
+On Wednesday 16 December 2009 10:53:08 Tomas Hoger wrote:
+> On Thu, 10 Dec 2009 22:54:57 -0600 Raphael Geissert
+>
+> <geissert@...ian.org> wrote:
+> > > Our KDE maintainer alerted us to this:
+> > > http://www.ocert.org/advisories/ocert-2009-015.html
+> > > http://www.kde.org/info/security/advisory-20091027-1.txt
+> >
+> > According to 0910291553490.22070@....redhat.com, ids were already
+> > requested.
+> >
+> > Maybe somebody needs to be prodded?
+>
+> I'd rather say it needs someone to do the work and clearly state what
+> should get a CVE and why.  Advisory text does not really map well to
+> the list of patches.
 
-I implied here, and stated in the message to the mailing list, that neon 
-was not affected by this issue if linked against GnuTLS 2.8.2 or later, 
-rather than OpenSSL.  This was not correct.  
+I think part of the underlying problem is that we're talking about blended 
+threats (in the case of Ark and KMail).  I took an agressive view regarding 
+the issues as I originally discussed them when I dealt with them but for many 
+reasons we reached a stale mate.  We ended up releasing things as they were 
+to get them into the domain where they could better be discussed and 
+discussed.  Retrospectively, I would go with CVEs for the the following:
 
-Versions of neon <= 0.28.5 linked against any version of GnuTLS 
-(including >= 2.8.2) are still vulnerable to at least one type of 
-embedded-NUL issue.  
+* Ark Uses KHTML For Rendering Unknown File Types
+* KMail Allows Attachment Spoofing
+* Javascript Enabled On KHTML Based Views By Default
+* KJS/KIO Slaves Enforcing Broken Same Origin Policy
 
-It is necessary to upgrade to neon 0.28.6 to fix the issue completely, 
-if built against GnuTLS.
+Note that KDE's fix for the latter has caused some complaints, something that 
+I suspect they were mindful of when we discussed the issues:  
 
-So far as this vulnerability affects neon, it is neither sufficient nor 
-necessary to update to GnuTLS 2.8.2.  (i.e. neon 0.28.6 will not be 
-vulnerable if linked against older versions of GnuTLS)
+* http://forum.kde.org/viewtopic.php?f=18&t=83649
 
-Apologies for the confusion, and hope this is clear.
+On top of this we have a raft of IO slave related vulnerabilities (which KDE, 
+oCERT and Portcullis agreed about) .  I'm not sure what the status of each of 
+these is, as Thomas alluded to they were fixed at various times (I'm not even 
+100% sure they're all fixed now).  I would create another CVE for these.
 
-Regards, Joe
+Finally, there is the issue with KWallet which KDE never addressed.  The 
+closest I got to an answer regarding this was that users complained too much 
+even now about the matching, so adding additional restrictions were 
+unwelcome.
+
+Tim
+-- 
+Tim Brown
+<mailto:tmb@...35.com>
