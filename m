@@ -1,20 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/28/1
-Message-ID: <20091128123237.4d5de1b3@mail.netloc.info>
-Date: Sat, 28 Nov 2009 12:32:37 +0100
-From: Alex Legler <a3li@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: Ruby on Rails: CSRF circumvention (from 2008)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/17/8
+Message-ID: <20091217203331.GA2811@redhat.com>
+Date: Thu, 17 Dec 2009 20:33:31 +0000
+From: Joe Orton <jorton@...hat.com>
+To: Raphael Geissert <geissert@...ian.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re:  CVE request: php5: multiple issues
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Thu, Dec 17, 2009 at 01:23:33PM -0600, Raphael Geissert wrote:
+> I think a cross-vendor security support and tracking effort for php5 
+> is needed. The number of issues silently fixed are a continuous risk, 
+> leaving users exposed. What does the others think?
 
-a little blast from the past, I think this issue does not have a CVE
-yet. If that is true, please assign a -2008 ID.
+The problem we face is the ambiguity around the threat model for the PHP 
+interpreter.  If you assume that the PHP interpreter should be robust 
+against attack from a malicious script (or its author), then a vast 
+number of bugs can be considered a security vulnerability.
 
-http://weblog.rubyonrails.org/2008/11/18/potential-circumvention-of-csrf-protection-in-rails-2-1
-http://www.rorsecurity.info/journal/2008/11/19/circumvent-rails-csrf-protection.html
+Even if you assume that the PHP interpreter - and scripts using it - 
+should be robust only against attack from a remote user, it is often 
+still difficult to draw the line between a script bug and an 
+interpreter/extension bug.  Doing so requires interface documentation 
+which specifies API preconditions and guarantees with greater precision 
+than is usually available.
 
-Thanks, Alex
+So whether or not security issues are being "silently fixed" depends a 
+lot on your frame of reference.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+Ideally any effort to improve the lack of transparency around PHP 
+security would start by working with upstream to a) define a threat 
+model and b) improve strictness of API/quality of code in the context of 
+that model.  I wouldn't underestimate the time and effort that would 
+require ;)
+
+Using this list to track and share analysis of published issues is 
+certainly helpful, but I'm not sure what more we can/should do 
+independent of upstream to improve the situation - any specific ideas 
+you had?
+
+Regards, Joe
+
