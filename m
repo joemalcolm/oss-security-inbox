@@ -1,28 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/24/1
-Message-Id: <200911241640.49621.oeriksson@mandriva.com>
-Date: Tue, 24 Nov 2009 16:40:49 +0100
-From: Oden Eriksson <oeriksson@...driva.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/18/2
+Message-ID: <478742427.234251261164336461.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 18 Dec 2009 14:25:36 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: a new bind issue
+Cc: coley <coley@...re.org>
+Subject: Re: possible vulnerability in ghostscript >= 8.64
 Content-Type: text/plain; charset=utf-8
 
-Hello.
+Use CVE-2009-4270 for the stack overflow.
 
-A new bind release is out there, it mentions:
+Thanks.
 
-"It addresses a potential cache poisoning vulnerability, in which data in the 
-additional section of a response could be cached without proper DNSSEC 
-validation."
+----- "Vincent Danen" <vdanen@...hat.com> wrote:
 
-"2772.   [security]      When validating, track whether pending data was from
-                        the additional section or not and only return it if
-                        validates as secure. [RT #20438]"
-
-
-A CVE should probably be assigned.
-
+> We had reported to us a crash in ghostscript's gdevcups.c, and I
+> don't
+> think it can be used to do anything more than crash ghostscript,
+> certainly not in our configurations (compiled with FORTIFY_SOURCE).
+> 
+> Debug logging was added to gdevcups.c prior to the 8.64 release on
+> Oct
+> 17th, 2008:
+> 
+> http://svn.ghostscript.com/viewvc?view=rev&revision=9165
+> 
+> The addition of the debug logging allowed for a MediaType string to
+> be
+> printed, which if longer than the 1024-byte buffer in errprintf would
+> cause ghostscript to crash   This is due to errprintf() and
+> outprintf()
+> using vsprintf() on a fixed-length array on the stack.
+> 
+> This issue does not affect versions of ghostscript older than 8.64;
+> for
+> 8.64 and newer, if compiled using FORTIFY_SOURCE (as it is in
+> Fedora),
+> this is turned into nothing more than a crash.  On a system without
+> FORTIFY_SOURCE, this _might_ be exploitable, but I cannot say for
+> certain.
+> 
+> As well, we can't see (in ghostscript 8.15 at least), any other calls
+> to
+> errprintf() or outprintf() that use the %s specifier with
+> user-supplied
+> strings (so arguably the vsprintf() calls in those functions should
+> be
+> fixed, but we don't see an immediate need to do so).
+> 
+> I imagine that most vendors using ghostscript 8.64 or newer also have
+> a
+> newer glibc and are using FORTIFY_SOURCE protection, but I can't know
+> that for certain, so this is a general notice that the issue exists.
+> 
+> Our bug report:
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=540760
+> 
+> this had also been reported previously upstream as well:
+> 
+> http://bugs.ghostscript.com/show_bug.cgi?id=690829
+> 
+> -- 
+> Vincent Danen / Red Hat Security Response Team
 
 -- 
-Regards // Oden Eriksson
-Security team manager - Mandriva
+    JB
