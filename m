@@ -1,41 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/13/2
-Message-Id: <1234534230.12390.8.camel@dhcp-lab-164.englab.brq.redhat.com>
-Date: Fri, 13 Feb 2009 15:10:30 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: Robert Buchholz <rbu@...too.org>
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request -- net-snmp (sensitive host information disclosure)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/20/1
+Message-ID: <20091220211819.GA5283@galadriel.inutil.org>
+Date: Sun, 20 Dec 2009 22:18:19 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: phpgroupware
 Content-Type: text/plain; charset=utf-8
 
-Robert,
+Please assign CVE IDs for some phpgroupware issues from July:
 
-  thanks for the correction!
+http://secunia.com/advisories/35519/
+http://kambing.ui.ac.id/gentoo-portage/www-apps/phpgroupware/files/phpgroupware-SA35519.patch
 
-Today also found out, the net-snmp-5.3.2.2 version, as shipped
-with Red Hat Enterprise Linux 5 is not vulnerable to this
-issue (due some RH specific internal patch applied in between,
-which mitigates the impact of the flaw). So other vendors,
-please perform your own investigation, if particular version
-of net-snmp you ship is (isn't) affected.
-
-Also checked state of ucd-snmp-4.2.5 (not sure if someone
-else ship it yet), this looks NOT to be affected to this
-flaw.
-
-Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-On Thu, 2009-02-12 at 21:23 +0100, Robert Buchholz wrote:
-> On Thursday 12 February 2009, Jan Lieskovsky wrote:
-> > Affected net-snmp versions:
-> > net-snmp-5.0.9 (older versions probably too) <= x <= net-snmp-5.4.2 
-> > (till the above upstream commit)
-> 
-> Just to avoid confusion, upstream's latest release is 5.4.2.1, which is 
-> affected as well (and this could be updated in the CVE description).
-> 
-> 
-> Robert
-
+Cheers,
+        Moritz
