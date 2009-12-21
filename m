@@ -1,31 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/01/4
-Message-ID: <49D2E9A8.9030000@redhat.com>
-Date: Wed, 01 Apr 2009 12:12:24 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/21/2
+Message-ID: <4B2FB2FB.6030603@iuculano.it>
+Date: Mon, 21 Dec 2009 18:40:11 +0100
+From: Giuseppe Iuculano <giuseppe@...ulano.it>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: udp: Wrong locking code in udp seq_file infrastructure
+Subject: CVE request: phpLDAPadmin
 Content-Type: text/plain; charset=utf-8
 
-According to the upstream commit 30842f298, reading zero bytes from
-/proc/net/udp or other similar files which use the same seq_file udp
-infrastructure panics kernel in that way:
+Hello,
 
-=====================================
-[ BUG: bad unlock balance detected! ]
--------------------------------------
-read/1985 is trying to release lock (&table->hash[i].lock) at:
-[<ffffffff81321d83>] udp_seq_stop+0x27/0x29
-but there are no more locks to release!
-[...]
+a local file inclusion vulnerability has been found in phpLDAPadmin:
 
-This bug was introduced and fixed within a short timeframe. It was
-introduced in 645ca708 (Follows: v2.6.28-rc2; Precedes: v2.6.29-rc1).
+http://www.exploit-db.com/exploits/10410
+http://secunia.com/advisories/37848/
 
-http://git.kernel.org/linus/645ca708f936b2fbeb79e52d7823e3eb2c0905f8
-http://git.kernel.org/linus/30842f2989aacfaba3ccb39829b3417be9313dbe
 
-Thanks, Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
+Cheers,
+Giuseppe.
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
