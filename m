@@ -1,29 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/29/3
-Message-Id: <200910291218.21686.oeriksson@mandriva.com>
-Date: Thu, 29 Oct 2009 12:18:21 +0100
-From: Oden Eriksson <oeriksson@...driva.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/21/3
+Message-Id: <200912212021.44143.hanno@hboeck.de>
+Date: Mon, 21 Dec 2009 20:21:43 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re:  Re: ghostscript CVE for multiple NULL dereferences in JBIG2 decoder
+Subject: CVE request: simplemachinesforum
 Content-Type: text/plain; charset=utf-8
 
-onsdagen den 28 oktober 2009 13.58.56 skrev  Mark J Cox:
-> > The same PoC crashes xpdf. I'm not aware of any CVE id being assigned for
-> > this issue other than the one for Adobe Reader.
-> 
-> So I've deliberately not allocated one because we generally do not
-> consider a crash of a user application like a PDF reader to be a security
-> issue.  However CVE does have a few cases where CVE names were allocated
-> for such cases, so if any vendor here is going to treat this as a security
-> issue let me know and I'll allocate a name for tracking purposes.
-> 
-> Thanks, Mark
-> 
+http://secunia.com/advisories/37557/
+CSRF
 
-I was actually planning to but as currently done in cooker where jbig2dec is 
-broken out in a new jbig2dec-0.10 package (with the patch applied). This makes 
-it easier for future borkiness. This was also done with jasper earlier for the 
-same reason.
+http://securityreason.com/exploitalert/7513
+Remote code execution
+
+Probably even more:
+http://www.securityspace.com/de/smysecure/catid.html?id=100371
 
 -- 
-Regards // Oden Eriksson
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+
+http://schokokeks.org - professional webhosting
+
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
