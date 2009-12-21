@@ -1,26 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/06/2
-Message-Id: <200902061409.34043.hanno@hboeck.de>
-Date: Fri, 6 Feb 2009 14:09:33 +0100
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/21/1
+Message-Id: <200912211828.27894.hanno@hboeck.de>
+Date: Mon, 21 Dec 2009 18:28:27 +0100
 From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: Steven Christey <coley@...us.mitre.org>
-Subject: CVE request: phpbb < 3.0.4
+Subject: CVE request: Serendipity < 1.5 upload of files with *.php.* possible
 Content-Type: text/plain; charset=utf-8
 
-From release notes:
+From 1.5 release notes:
+# Disallow uploading any files that contain ".php." in the filename for extra 
+security with Apache MimeMagic-Modules
 
-"This release fixes some bugs introduced with the changes in 3.0.3, corrects 
-minor issues, fixes two security bugs and also increases performance 
-significantly."
+See this comment also:
+http://blog.s9y.org/archives/211-Serendipity-1.5-released.html#c3064
 
-"# [Sec] Fixed an issue where deactivated accounts could be re-activated 
-without the required privileges. (Reported by Jorick)
-# [Sec] Ask for forum password if post within passworded forum quoted in 
-private message. (Reported by nickvergessen)"
+
+
+(it's probably worth looking at other apps if they are vulnerable to this)
+
 
 -- 
 Hanno Böck		Blog:		http://www.hboeck.de/
 GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
-Download attachment "signature.asc " of type "application/pgp-signature" (198 bytes)
+http://schokokeks.org - professional webhosting
+
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
