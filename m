@@ -1,23 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/07/28/6
-Message-Id: <200907282209.22214.thijs@debian.org>
-Date: Tue, 28 Jul 2009 22:09:20 +0200
-From: Thijs Kinkhorst <thijs@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: Vincent Danen <vdanen@...hat.com>
-Subject: Re: debian bug report on bind9 DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/22/1
+Message-ID: <20091222173449.GB24154@suse.de>
+Date: Tue, 22 Dec 2009 18:34:49 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: libtheora CVE-2009-3389?
 Content-Type: text/plain; charset=utf-8
 
-On tiisdei 28 July 2009, Vincent Danen wrote:
-> There's a bind 9 DoS reported in Debian's BTS [1] that provides a
-> reproducer and some interesting info on a bind9 crash.
+Hi,
 
-> This probably requires a CVE name.
+Are there any details on CVE-2009-3389 / libtheora?
 
-CERT-CC have assigned CVE-2009-0696 to this.
-See: http://www.kb.cert.org/vuls/id/725188
+Redhat claims they are not vulnerable, but none of the public
+info links to any kind of patch or better description.
+The 2 mozilla bugs are also still closed.
 
+The diff between firefox 3.5.5 and 3.5.6 media/libtheora/
+also seems void of any integer overflow checking.
 
-Thijs
-
-Download attachment "signature.asc " of type "application/pgp-signature" (490 bytes)
+Ciao, Marcus
