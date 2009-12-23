@@ -1,27 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/31/10
-Message-ID: <20090831192834.GA27137@genua.de>
-Date: Mon, 31 Aug 2009 21:28:34 +0200
-From: Steffen Ullrich <Steffen_Ullrich@...ua.de>
-To: Tomas Hoger <thoger@...hat.com>
-Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: Re: CVE request: perl-IO-Socket-SSL certificate hostname compare bug
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/23/4
+Message-ID: <20091223201713.GD12439@jenkins.home.ifup.org>
+Date: Wed, 23 Dec 2009 12:17:13 -0800
+From: Brandon Philips <brandon@...p.org>
+To: Hanno Böck <hanno@...eck.de>
+Cc: OSS Security List <oss-security@...ts.openwall.com>
+Subject: Re: CVE request: acl 2.2.47 always follows symlinks
 Content-Type: text/plain; charset=utf-8
 
+On 11:50 Wed 23 Dec 2009, Hanno Böck wrote:
+> setfacl/getfacl (part of package acl-2.2.47) contains a bug that it ignores
+> the --physical/-P parameter that means don't follow symlinks on -R
+> (recursive).
 > 
-> I ran some test on Net-SSLeay-1.35 and IO-Socket-SSL-1.30 and
-> verify_hostname always returned error for NUL in both CN and SAN.
+> This can lead to security problems, e.g. if there's a cron script giving a
+> user full rwX rights for a directory, he can put a symlink there pointing to /
+> or /etc or whatever.
+> Another scenario would be a backup script saving the /home acls to a file,
+> every user can create an endless loop for that and prevent the script from
+> completing.
+> 
+> http://oss.sgi.com/bugzilla/show_bug.cgi?id=790
+> http://bugs.gentoo.org/show_bug.cgi?id=265425
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=499076
+> 
+> Fixed in upstream source, but no new release yet.
 
-I just verified it for CN using the \0 certificate from sslsniff.
-So it looks like it's not an issue for Net::SSLeay and IO::Socket::SSL.
+Upstream for acl and attr has moved from SGI to community hosting at
+savannah.gnu.org. The latest release is here:
 
-Regards,
-Steffen
+ http://download.savannah.gnu.org/releases-noredirect/acl/acl-2.2.49.src.tar.gz
 
--- 
-GeNUA Gesellschaft für Netzwerk - und Unix-Administration mbH
-Domagkstr. 7, D-85551 Kirchheim. http://www.genua.de
-Tel: (089) 99 19 50-0, Fax: (089) 99 10 50 - 999
+Mailing lists, git repos, and a bug system can be found here:
+ http://savannah.nongnu.org/projects/acl
+ http://savannah.nongnu.org/projects/attr
 
-Geschäftsführer: Dr. Magnus Harlander, Dr. Michaela Harlander,
-Bernhard Schneck. Amtsgericht München HRB 98238
+Thanks,
+
+	Brandon
