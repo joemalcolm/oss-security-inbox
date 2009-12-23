@@ -1,35 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/08/19/1
-Message-ID: <4A8B4519.1060203@redhat.com>
-Date: Wed, 19 Aug 2009 08:19:37 +0800
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/23/1
+Message-ID: <4B31BB44.6080805@redhat.com>
+Date: Wed, 23 Dec 2009 14:40:04 +0800
 From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: flat: fix uninitialized ptr with shared libs
+CC: Greg KH <gregkh@...e.de>
+Subject: CVE request - kernel: fuse_ioctl_copy_user() dos
 Content-Type: text/plain; charset=utf-8
 
-Steven M. Christey wrote:
-> Use CVE-2009-2845, to be filled in soon.
+Reported by David Shaw. There is a problem in the ioctl handler in the 
+fuse kernel code that causes a panic under some circumstances.
 
-This has been assigned CVE-2009-2768. Duplicate CVE.
+fuse_ioctl_copy_user() was introduced in 59efec7b (v2.6.29-rc1, 
+2008-11-26). This was fixed upstream but was missed in 2.6.30.y. The 
+most recent 2.6.31/32.y kernels already have this fix. So this only 
+affects distros that are still using 2.6.30.y.
+
+http://git.kernel.org/linus/0bd87182d3ab18a32a8e9175d3f68754c58e3432
+https://bugzilla.redhat.com/show_bug.cgi?id=549400
 
 Thanks, Eugene
-
-> On Thu, 13 Aug 2009, Eugene Teo wrote:
-> 
->> The new credentials code broke load_flat_shared_library() as it now uses
->> an uninitialised cred pointer, leading to a NULL pointer dereference.
->> This can be triggered by running a shared flat binary.
->>
->> kernel/cred.c was introduced in v2.6.29-rc1 IIRC.
->>
->> Upstream commit:
->> http://git.kernel.org/linus/3440625d78711bee41a84cf29c3d8c579b522666
->>
->> References:
->> http://lkml.org/lkml/2009/6/22/91
->> http://thread.gmane.org/gmane.linux.hardware.blackfin.kernel.devel/1905
->>
->> Thanks, Eugene
->>
-
+-- 
+Eugene Teo / Red Hat Security Response Team
