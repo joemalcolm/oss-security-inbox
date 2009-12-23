@@ -1,24 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/22/8
-Message-ID: <YMcM4drr7xfTDUmugLVqtaoff/w@XX1fo6zQUfC4h0jjRC6IBz3oNH4>
-Date: Fri, 22 May 2009 08:31:47 +0400
-From: Eygene Ryabinkin <rea-sec@...elabs.ru>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/23/5
+Message-ID: <Pine.GSO.4.64.0912231632580.21134@faron.mitre.org>
+Date: Wed, 23 Dec 2009 16:33:12 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: slim
+cc: Greg KH <gregkh@...e.de>
+Subject: Re: CVE request - kernel: fuse_ioctl_copy_user() dos
 Content-Type: text/plain; charset=utf-8
 
-Steven, *, good day.
 
-Thu, May 21, 2009 at 08:24:24PM -0400, Steven M. Christey wrote:
-[...]
-> SLiM Simple Login Manager 1.3.0 includes places the X authority magic
-                                  ^^^^^^^^^^^^^^^^
-> cookie (mcookie) on the command line when invoking xauth from (1)
-> app.cpp and (2) switchuser.cpp, which allows local users to access the
-> X session by listing the process and its arguments.
+On Wed, 23 Dec 2009, Eugene Teo wrote:
 
-It either "includes" or "places", but, I think, not both at the same
-time ;))  "Places" sounds more natural to me, but it seems to be just
-the matter of taste.
--- 
-Eygene
+> Reported by David Shaw. There is a problem in the ioctl handler in the fuse 
+> kernel code that causes a panic under some circumstances.
+
+Use CVE-2009-4410, to be filled in later.
+
+- Steve
