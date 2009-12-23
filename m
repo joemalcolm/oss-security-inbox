@@ -1,25 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/10/09/1
-Message-ID: <704536015.1970541255116323210.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 9 Oct 2009 15:25:23 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/23/3
+Message-ID: <20091223131556.439dcc19@redhat.com>
+Date: Wed, 23 Dec 2009 13:15:56 +0100
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request (kernel)
+Cc: meissner@...e.de
+Subject: Re: libtheora CVE-2009-3389?
 Content-Type: text/plain; charset=utf-8
 
+On Tue, 22 Dec 2009 18:34:49 +0100 Marcus Meissner <meissner@...e.de>
+wrote:
 
------ "Josh Bressers" <bressers@...hat.com> wrote:
+> Are there any details on CVE-2009-3389 / libtheora?
+> 
+> Redhat claims they are not vulnerable, but none of the public
+> info links to any kind of patch or better description.
+> The 2 mozilla bugs are also still closed.
 
-> 
-> There is an information leak issue in the Linux Kernel:
-> http://lkml.org/lkml/2009/10/1/164
-> 
-> It seems that an ia32 process running on an x86_64 machine could see
-> register contents from a previous process.
-> 
-
-I'm assigning CVE-2009-2910 to this.
+That statement is based on investigation using info / patches /
+reproducers from the mozilla bugs.  I did not do that work, so I can't
+give you any more details and I do not have access to the bugs, but the
+summary was that the flaws did not exist in 1.0alpha versions we ship
+and are already fixed in 1.1.0.
 
 -- 
-    JB
+Tomas Hoger / Red Hat Security Response Team
