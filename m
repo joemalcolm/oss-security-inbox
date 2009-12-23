@@ -1,37 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/08/2
-Message-ID: <20090908115343.GC12254@suse.de>
-Date: Tue, 8 Sep 2009 13:53:43 +0200
-From: Thomas Biege <thomas@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE for recent cyrus-imap issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/23/8
+Message-ID: <Pine.GSO.4.64.0912231709390.21134@faron.mitre.org>
+Date: Wed, 23 Dec 2009 17:21:14 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com, Jamie Strandboge <jamie@...onical.com>
+Subject: Re: Linux/QEMU issue
 Content-Type: text/plain; charset=utf-8
 
 
-We just received en email from CERT: CVE-2009-2628
+On Tue, 8 Dec 2009, Jamie Strandboge wrote:
 
-On Tue, Sep 08, 2009 at 10:15:32AM +0200, Sebastian Krahmer wrote:
-> Hi,
-> 
-> Anyone already successfull asking CERT for a CVE for VU#336053?
-> If not, can someone assign one?
-> 
-> thx,
-> Sebastian
-> 
+> The bug is really two parts though: the qemu issue which crashes the
+> guest, and the guest kernel writing garbage to the virtio net backend.
+
+There are three options for how to handle this:
+
+- create separate CVEs, one for QEMU and one for virtio net
+- create one CVE, concentrating on QEMU, with virtio net as an example
+- create one CVE, concentrating on virtio new, mentioning the impact on
+   QEMU
+
+In the discussion in http://patchwork.kernel.org/patch/56479/, I don't see 
+any clear resolution about whether it's a security problem that qemu exits 
+in situations other than an ACPI shutdown.  I don't know qemu/kvm so I 
+can't be sure; if qemu can support multiple hosts at the same time, and a 
+crash in one host triggers a qemu crash/exit that affects all the hosts, 
+then I would call this an issue in qemu.  If there's an attack angle to 
+prevent forensics analysis, then that might be a reasonable argument, too.
+
+If virtio net (whatever that is) exhibits this behavior in "normal" non-VM 
+situations, then it should get a CVE itself.  But if it's closely tied to 
+qemu, or to VMs in general, then I'm less certain.
+
+VMs can stretch our older notions about threat models, and I suspect 
+that's why this is difficult to handle.
+
+- Steve
+
+
+> We decided to fix it as a security update in qemu since a remote
+> attacker could DoS an Ubuntu 8.04 LTS guest, possibly leading to data
+> corruption within the guest. 2.6.26 and later kernels should not be
+> affected.
+>
+> Jamie
+>
 > -- 
-> ~
-> ~ perl self.pl
-> ~ $_='print"\$_=\47$_\47;eval"';eval
-> ~ krahmer@...e.de - SuSE Security Team
-> ~ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
-
--- 
-Bye,
-     Thomas
--- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
--- 
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
+> Jamie Strandboge             | http://www.canonical.com
+>
