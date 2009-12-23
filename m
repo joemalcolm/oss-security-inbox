@@ -1,21 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/02/09/5
-Message-ID: <Pine.GSO.4.51.0902091442130.9163@faron.mitre.org>
-Date: Mon, 9 Feb 2009 14:42:19 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/23/7
+Message-ID: <Pine.GSO.4.64.0912231701580.21134@faron.mitre.org>
+Date: Wed, 23 Dec 2009 17:02:08 -0500 (EST)
 From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: mahara
+Subject: Re: CVE request: Serendipity < 1.5 upload of files with *.php.* possible
 Content-Type: text/plain; charset=utf-8
 
 
-======================================================
-Name: CVE-2009-0487
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0487
-Reference: CONFIRM:http://mahara.org/interaction/forum/topic.php?id=198
+On Mon, 21 Dec 2009, Hanno Böck wrote:
 
-Cross-site scripting (XSS) vulnerability in Mahara before 1.0.9 allows
-remote attackers to inject arbitrary web script or HTML via a crafted
-forum post.
+> From 1.5 release notes:
+> # Disallow uploading any files that contain ".php." in the filename for extra
+> security with Apache MimeMagic-Modules
 
+Use CVE-2009-4412, to be filled in later.
 
+- Steve
