@@ -1,45 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/05/20/2
-Message-Id: <200905201112.32426.hanno@hboeck.de>
-Date: Wed, 20 May 2009 11:12:31 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/24/1
+Message-ID: <20091224112835.GA2469@galadriel.inutil.org>
+Date: Thu, 24 Dec 2009 12:28:35 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: Steven Christey <coley@...us.mitre.org>
-Subject: CVE request: coppermine <= 1.4.22
+Subject: OpenTTD remote DoS
 Content-Type: text/plain; charset=utf-8
 
-http://milw0rm.com/exploits/8736
+FYI: Debian has assigned CVE-2009-4007 for a remote DoS against
+the openttd game server:
 
-#!/usr/bin/perl
-# Coppermine Photo Gallery <= 1.4.22 Remote Exploit
-# Need register_globals = on and magic_quotes_gpc = off
-# Based on vulnerabilities discussed at http://www.milw0rm.org/exploits/8713
-# Coded by girex
+http://www.openttd.org/en/news/112
+http://binaries.openttd.org/releases/0.7.5/changelog.txt
 
-Quotet URL
-http://www.milw0rm.org/exploits/8713
-:
-
-Coppermine Foto Gallery suffers from different vulnerabilities.
-
-There is a Local File Inclusion and a Blind SQL Injection working with 
-register_globals = On and magic_quotes_gpc = Off
-and
-a SQL Injection working in case of registration is enabled and a user can 
-create/modify albums 
-(default setting if registration is enabled) and php.ini regardless
-and 
-a Blind SQL Injection when is enabled the ecard logging system 
-(that is not a default configuration) and php.ini regardless
-
-Let's see how do they work...
-
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-http://ausdenaugenausdemsinn.de - Kein Sicherheitsrabatt für CO2-Speicher
-http://tinyurl.com/dceu73 - Internetzensur stoppen!
-
-http://schokokeks.org - professional webhosting
-
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+Cheers,
+        Moritz
