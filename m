@@ -1,28 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/03/18/2
-Message-ID: <Pine.GSO.4.51.0903172038361.17171@faron.mitre.org>
-Date: Tue, 17 Mar 2009 20:38:51 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/26/1
+Message-ID: <20091226154318.GA6551@galadriel.inutil.org>
+Date: Sat, 26 Dec 2009 16:43:18 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-cc: Steven Christey <coley@...us.mitre.org>
-Subject: Re: CVE request: XSS in MUC logs of ejabberd
+Subject: CVE requests: Zabbix
 Content-Type: text/plain; charset=utf-8
 
+Several issues were reported to Bugtraq:
 
-======================================================
-Name: CVE-2009-0934
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0934
-Reference: MLIST:[oss-security] 20090316 CVE request: XSS in MUC logs of ejabberd
-Reference: URL:http://www.openwall.com/lists/oss-security/2009/03/16/1
-Reference: CONFIRM:http://www.process-one.net/en/ejabberd/release_notes/release_note_ejabberd_204
-Reference: BID:34133
-Reference: URL:http://www.securityfocus.com/bid/34133
-Reference: SECUNIA:34340
-Reference: URL:http://secunia.com/advisories/34340
+http://www.securityfocus.com/archive/1/508436/30/60/threaded
 
-Cross-site scripting (XSS) vulnerability in ejabberd before 2.0.4
-allows remote attackers to inject arbitrary web script or HTML via
-unknown vectors related to links and MUC logs.
+References:
+https://support.zabbix.com/browse/ZBX-1030
+https://support.zabbix.com/browse/ZBX-1031
+https://support.zabbix.com/browse/ZBX-993
+https://support.zabbix.com/browse/ZBX-1355
 
-
+Cheers,
+        Moritz
