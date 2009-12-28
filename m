@@ -1,24 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/11/03/1
-Message-ID: <4AF00BCD.8080300@redhat.com>
-Date: Tue, 03 Nov 2009 18:54:05 +0800
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/28/1
+Message-ID: <4B386275.6020803@redhat.com>
+Date: Mon, 28 Dec 2009 15:47:01 +0800
 From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
 CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-2009-3547 kernel: fs: pipe.c null pointer dereference
+Subject: CVE requests - kernel security regressions for CVE-2009-1385/and -1389
 Content-Type: text/plain; charset=utf-8
 
-* a NULL pointer dereference flaw was found in each of the following
-functions in the Linux kernel: pipe_read_open(), pipe_write_open(), and
-pipe_rdwr_open(). When the mutex lock is not held, the i_pipe pointer 
-could be released by other processes before it is used to update the 
-pipe's reader and writer counters. This could lead to a local denial of 
-service or privilege escalation.
+http://events.ccc.de/congress/2009/Fahrplan//events/3596.en.html
 
-http://lkml.org/lkml/2009/10/14/184
-http://lkml.org/lkml/2009/10/21/42
-http://git.kernel.org/linus/ad3960243e55320d74195fb85c975e0a8cc4466c
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-3547
+In Fabian's talk, he describes two kernel NIC driver issues:
+
+Issue #1
+Fabian claimed that CVE-2009-1385 has an incorrect fix: 
+http://git.kernel.org/linus/ea30e11970a96cfe5e32c03a29332554573b4a10.
+
+Which fixes a DoS when the frame spans multiple buffers and the last 
+buffer contains less than four bytes. However, if that last fragment is 
+longer than 4 bytes, it will actually be taken into account while the 
+previous fragments will have been ignored.
+
+Issue #2
+The fix for CVE-2009-1389 regarding the r8169 driver introduces a 
+similar security problem as this: 
+http://git.kernel.org/linus/fdd7b4c3302c93f6833e338903ea77245eb510b4 is 
+a revert of this: 
+http://git.kernel.org/linus/126fa4b9ca5d9d7cb7d46f779ad3bd3631ca387c.
+
+The accompanying comment for the original commit (126fa):
+
+The size of the incoming frame is not correctly checked.
+
+The RxMaxSize register (0xDA) does not work as expected and incoming 
+frames whose size exceeds the MTU actually end spanning multiple 
+descriptors. The first Rx descriptor contains the size of the whole 
+frame (or some garbage in its place). The driver does not expect 
+something above the space allocated to the current skb and crashes 
+loudly when it issues a skb_put.
+
+The fix contains two parts:
+- disable hardware Rx size filtering: so far it only proved to be able
+to trigger some new fancy errors;
+[...]
+
+There are other issues he mentioned during his talk, regarding squid and 
+pidgin. You can read about it at this wonderful blog: 
+http://blog.c22.cc/2009/12/27/26c3-cat-procsysnetipv4fuckups/.
 
 Thanks, Eugene
 -- 
