@@ -1,38 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/01/14/1
-Message-ID: <20090114082157.GA18040@suse.de>
-Date: Wed, 14 Jan 2009 09:21:57 +0100
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/29/1
+Message-ID: <4B3965A7.7070504@kernel.sg>
+Date: Tue, 29 Dec 2009 10:12:55 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Subject: Re: update on CVE-2008-5718
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE requests - kernel security regressions for CVE-2009-1385/and -1389
 Content-Type: text/plain; charset=utf-8
 
-Hello Nico,
+On 12/28/2009 03:47 PM, Eugene Teo wrote:
+> http://events.ccc.de/congress/2009/Fahrplan//events/3596.en.html
+>
+> In Fabian's talk, he describes two kernel NIC driver issues:
+>
+> Issue #1
+> Fabian claimed that CVE-2009-1385 has an incorrect fix:
+> http://git.kernel.org/linus/ea30e11970a96cfe5e32c03a29332554573b4a10.
+[...]
+> Issue #2
+> The fix for CVE-2009-1389 regarding the r8169 driver introduces a
+> similar security problem as this:
+> http://git.kernel.org/linus/fdd7b4c3302c93f6833e338903ea77245eb510b4 is
+> a revert of this:
+> http://git.kernel.org/linus/126fa4b9ca5d9d7cb7d46f779ad3bd3631ca387c.
 
-On Wed, Jan 14, 2009 at 12:32:07AM +0100, Nico Golde wrote:
-> Hi,
-> I just did a security update for CVE-2008-5718 and since the 
-> description is not really verbose I thought I'd share what I 
-> found in case anyone else is working on that.
-...
-> Cheers
-> Nico
-> P.S. The patch I used can be found on:
-> http://people.debian.org/~nion/nmu-diff/netatalk-2.0.3-11_2.0.3-11+lenny1.patch
+Patches update can be found here:
+https://bugzilla.redhat.com/show_bug.cgi?id=550907#c4
 
-I am not very happy with the patch because it just filters a handful of
-characters, a better solution would be to replace popen().
-(I mentioned this on the netatalk-devel ML but got no answer so far.)
-
-
-
--- 
-Bye,
-     Thomas
--- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
--- 
-           Hamming's Motto:
-           The purpose of computing is insight, not numbers.
-                                -- Richard W. Hamming
+Thanks, Eugene
