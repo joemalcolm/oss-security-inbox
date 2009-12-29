@@ -1,52 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/09/06/2
-Message-ID: <20090906203350.GH9125@1wt.eu>
-Date: Sun, 6 Sep 2009 22:33:51 +0200
-From: Willy Tarreau <w@....eu>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel: tc: uninitialised kernel memory leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/29/2
+Message-ID: <4B3A104D.6030102@redhat.com>
+Date: Tue, 29 Dec 2009 22:21:01 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE requests - kernel security regressions for CVE-2009-1385/and -1389
 Content-Type: text/plain; charset=utf-8
 
-Hi Alexander,
+On 12/29/2009 10:12 AM, Eugene Teo wrote:
+> On 12/28/2009 03:47 PM, Eugene Teo wrote:
+>> http://events.ccc.de/congress/2009/Fahrplan//events/3596.en.html
+>>
+>> In Fabian's talk, he describes two kernel NIC driver issues:
+>>
+>> Issue #1
+>> Fabian claimed that CVE-2009-1385 has an incorrect fix:
+>> http://git.kernel.org/linus/ea30e11970a96cfe5e32c03a29332554573b4a10.
+> [...]
+>> Issue #2
+>> The fix for CVE-2009-1389 regarding the r8169 driver introduces a
+>> similar security problem as this:
+>> http://git.kernel.org/linus/fdd7b4c3302c93f6833e338903ea77245eb510b4 is
+>> a revert of this:
+>> http://git.kernel.org/linus/126fa4b9ca5d9d7cb7d46f779ad3bd3631ca387c.
+>
+> Patches update can be found here:
+> https://bugzilla.redhat.com/show_bug.cgi?id=550907#c4
 
-On Sat, Sep 05, 2009 at 09:52:50PM +0400, Solar Designer wrote:
-> On Thu, Sep 03, 2009 at 11:45:03AM +0800, Eugene Teo wrote:
-> > Three bytes of uninitialised kernel memory are currently leaked to user.
-> > 
-> > http://patchwork.ozlabs.org/patch/32830/
-> > https://bugzilla.redhat.com/show_bug.cgi?id=520990
-> 
-> 2.4 kernels appear to be affected as well, and moreover they appear to
-> require at least some of these older fixes as well:
-> 
-> http://marc.info/?l=git-commits-head&m=112002138324380
+Issue #3
+I noticed that the e1000e driver also needs a similar fix as issue #1.
+https://bugzilla.redhat.com/show_bug.cgi?id=551214
 
-Thanks for letting me know.
+Progress on the patches can be found in either of the two bugs.
 
-I'm late on fixes these days. I still have several ones to apply but
-need to find time to work on them.
-
-> Specifically, in net/sched/sch_api.c both tc_fill_qdisc() and
-> tc_fill_tclass() are affected - the former was fixed in 2.6 in 2005,
-> the latter is being fixed now.
-> 
-> I'm not sure what this means for CVE.  Should there be another CVE id
-> for the issues fixed in 2.6 in 2005 (if one was not allocated at the
-> time), and 2.4 could reference both CVE ids now?
-
-Personally I have no problem referencing an old CVE in a recent
-commit if it helps tracking common bugs. And I think we've already
-done that in the past.
-
-> I did not check if any of the affected code is possibly normally only
-> available to root, but even if so the issue may be relevant on systems
-> with containers.
-
-In general I tend to consider those "bytes leak" bugs with lower
-importance, but they need to be fixed anyway since they may eventually
-impact some random setup somewhere.
-
-Thanks,
-Willy
-
+Thanks, Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
