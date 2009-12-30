@@ -1,22 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/04/15/7
-Message-Id: <20090415185322.7B5A61F3E9E@spike.porcupine.org>
-Date: Wed, 15 Apr 2009 14:53:22 -0400 (EDT)
-From: wietse@...cupine.org (Wietse Venema)
-To: Wietse Venema <wietse@...cupine.org>
-CC: Tomas Hoger <thoger@...hat.com>, oss-security@...ts.openwall.com
-Subject: Re: Re: Some fun with tcp_wrappers
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/30/1
+Message-ID: <Pine.GSO.4.64.0912301753070.15266@faron.mitre.org>
+Date: Wed, 30 Dec 2009 18:14:01 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE requests: Zabbix
 Content-Type: text/plain; charset=utf-8
 
-Wietse Venema:
-> > "test-hostsctl servicename unknown IP unknown" is what some
-> > applications do expecting tcp_wrappers to resolve IP to hostname.
-> 
-> I think that it would be a mistake to change a documented API that
 
-On the other hand, if you could add a new function under a new name
-that does have the expected behavior, then there would be no
-confusion, no risk of cross-platform applications breaking, and I
-would withdraw my objection.
+On Sat, 26 Dec 2009, Moritz Muehlenhoff wrote:
 
-	Wietse
+> https://support.zabbix.com/browse/ZBX-1030
+
+Use CVE-2009-4498
+
+> https://support.zabbix.com/browse/ZBX-1031
+
+Use CVE-2009-4499
+
+> https://support.zabbix.com/browse/ZBX-993
+
+Use CVE-2009-4500
+
+> https://support.zabbix.com/browse/ZBX-1355
+
+Use CVE-2009-4501
+
+
+Note: CVE-2009-4502  was also assigned for a separate Zabbix issue 
+discovered at the same time, as covered in 
+https://support.zabbix.com/browse/ZBX-1032
+and http://www.securityfocus.com/archive/1/508439
+
+
+These CVEs will be filled in later.
+
+- Steve
