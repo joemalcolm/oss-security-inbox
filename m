@@ -1,26 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/17/7
-Message-Id: <200912172201.24236.eren@pardus.org.tr>
-Date: Thu, 17 Dec 2009 22:01:24 +0200
-From: Eren Türkay <eren@...dus.org.tr>
-To: oss-security@...ts.openwall.com
-Subject: Re:  CVE request: php5: multiple issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2009/12/31/1
+Message-ID: <Pine.GSO.4.64.0912311436300.18891@faron.mitre.org>
+Date: Thu, 31 Dec 2009 14:37:22 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Eugene Teo <eugene@...hat.com>
+cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE requests - kernel security regressions for CVE-2009-1385/and -1389
 Content-Type: text/plain; charset=utf-8
 
-On Thursday 17 December 2009 09:23:33 pm Raphael Geissert wrote:
-> The number of issues silently fixed are a continuous risk, leaving
-> users exposed.
 
-That's the normal behavior of the PHP team. As far as I know, they are 
-not willing to announce security-related fixes unless the issues are quite 
-important. The vulnerabilities are silently fixed.
+>>> Issue #1
+>>> Fabian claimed that CVE-2009-1385 has an incorrect fix:
+>>> http://git.kernel.org/linus/ea30e11970a96cfe5e32c03a29332554573b4a10.
+>> [...]
 
-> What does the others think?
+Use CVE-2009-4536
 
-I think, we should contact PHP developers about security related issues 
-from the release of the last php version (5.2.11, e.g) up to now. We can 
-miss some issues that have already been fixed. It would be better to get 
-an issue list from vendor. I hope they will be responsive.
 
-Regards,
-Eren
+>>> Issue #2
+>>> The fix for CVE-2009-1389 regarding the r8169 driver introduces a
+>>> similar security problem as this:
+>>> http://git.kernel.org/linus/fdd7b4c3302c93f6833e338903ea77245eb510b4 is
+>>> a revert of this:
+>>> http://git.kernel.org/linus/126fa4b9ca5d9d7cb7d46f779ad3bd3631ca387c.
+>>
+>> Patches update can be found here:
+>> https://bugzilla.redhat.com/show_bug.cgi?id=550907#c4
+
+Use CVE-2009-4537
+
+
+> Issue #3
+> I noticed that the e1000e driver also needs a similar fix as issue #1.
+> https://bugzilla.redhat.com/show_bug.cgi?id=551214
+
+Use CVE-2009-4538
+
+
+- Steve
