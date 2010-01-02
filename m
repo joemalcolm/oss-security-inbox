@@ -1,36 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/01/2
-Message-ID: <4BB47F4D.2000309@redhat.com>
-Date: Thu, 01 Apr 2010 13:11:09 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request -- Zabbix v1.8.2 and v.1.6.9
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/02/1
+Message-ID: <4B3FC110.8050801@darkrain42.org>
+Date: Sat, 02 Jan 2010 13:56:32 -0800
+From: Paul Aurich <paul@...krain42.org>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request - pidgin MSN arbitrary file upload
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve, vendors,
+http://events.ccc.de/congress/2009/Fahrplan/events/3596.en.html
 
-   though April the First today, this doesn't seem to be a joke:
+In Fabian's talk, he describes an issue where Pidgin's MSN prpl does not
+validate the filename received in a request for Pidgin to upload a custom
+emoticon to a third-party, allowing an attacker to download arbitrary files
+on the system via directory traversal.
 
-   a, Zabbix <= 1.8.1 SQL Injection
+This is fixed in source, but no release yet:
+http://d.pidgin.im/viewmtn/revision/info/c64a1adc8bda2b4aeaae1f273541afbc4f71b810
 
-   [1] http://seclists.org/fulldisclosure/2010/Apr/1
-   [2] http://www.zabbix.com/rn1.8.2.php
-
-   b, also on 25 March 2010, Zabbix v1.6.9 was
-      released:
-
-   [3] http://www.zabbix.com/rn1.6.9.php
-
-      fixing one security issue -- remote commands execution in Zabbix Server.
-
-   [4] https://support.zabbix.com/browse/ZBX-1030
-
-Could you allocate CVE ids for these two issues?
-
-Thanks && Regards, Jan.
 --
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Paul Aurich
 
 
-
+Download attachment "signature.asc" of type "application/pgp-signature" (901 bytes)
