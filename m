@@ -1,27 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/09/3
-Message-Id: <20100909134842.C93F.A69D9226@jp.fujitsu.com>
-Date: Thu,  9 Sep 2010 14:01:33 +0900 (JST)
-From: KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>
-To: Roland McGrath <roland@...hat.com>
-Cc: kosaki.motohiro@...fujitsu.com, Linus Torvalds <torvalds@...ux-foundation.org>, Andrew Morton <akpm@...ux-foundation.org>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Kees Cook <kees.cook@...onical.com>, Al Viro <viro@...iv.linux.org.uk>, Oleg Nesterov <oleg@...hat.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, pageexec@...email.hu, "Brad Spengler <spender@...ecurity.net>, Eugene Teo" <eugene@...hat.com>, KAMEZAWA Hiroyuki <kamezawa.hiroyu@...fujitsu.com>
-Subject: [PATCH 0/2] execve memory exhaust of argument-copying fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/06/1
+Message-ID: <4B446811.1090100@debian.org>
+Date: Wed, 06 Jan 2010 11:38:09 +0100
+From: Giuseppe Iuculano <iuculano@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request - uzbl remote code execution
 Content-Type: text/plain; charset=utf-8
 
-> This is my take on parts of the execve large arguments copying issues
-> that Kees posted about, and Brad and others have been discussing.
-> I've only looked at the narrow area of the argument copying code
-> itself.  I think these are good and necessary fixes.  But I'm not
-> addressing the whole OOM killer/mm accounting issue, which also needs
-> to be fixed (and I have the impression others are already looking into that).
+Hi,
 
-Now, we have two OOM-Killer/mm acounting problem.
- 1) OOM-killer doesn't track nascent mm and It may kill innocent task
- 2) When execve argument-copying, our __vm_enough_memory() doesn't
-    protect any wrong plenty argument. then, execve() invoke OOM instead
-    return failure value when larger argument than system memory.
+uzbl upstream reported a remote code execution vulnerability:
+http://www.uzbl.org/news.php?id=22
 
-The patch series addressed this two issue.
+References:
+http://lists.uzbl.org/pipermail/uzbl-dev-uzbl.org/2010-January/000586.html
+http://users.edpnet.be/dieter/exploit.html
+
+Cheers,
+Giuseppe.
 
 
-
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
