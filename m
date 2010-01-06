@@ -1,36 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/09/1
-Message-ID: <Pine.GSO.4.64.1001091308001.11133@faron.mitre.org>
-Date: Sat, 9 Jan 2010 13:08:49 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: bressers@...hat.com
-Subject: Re: CVE request - pidgin MSN arbitrary file upload
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/06/4
+Message-ID: <641308197.931421262813028797.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 6 Jan 2010 16:23:48 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com, Jamie Strandboge <jamie@...onical.com>
+Cc: coley@...us.mitre.org
+Subject: Re: CVE Request: Transmission
 Content-Type: text/plain; charset=utf-8
 
 
-On Thu, 7 Jan 2010, Nico Golde wrote:
+----- "Jamie Strandboge" <jamie@...onical.com> wrote:
 
-> While everyone is talking about the file inclusion vulnerability which is
-> really important, has anyone investigated the SLP memory corruption issue yet?
-> Page 24: http://events.ccc.de/congress/2009/Fahrplan/attachments/1483_26c3_ipv4_fuckups.pdf
+> Transmission 1.77 was released to address a directory traversal
+> vulnerability that allowed file overwrites when processing crafted
+> torrent files. References:
+> 
+> http://trac.transmissionbt.com/wiki/Changes#version-1.77
+> http://trac.transmissionbt.com/changeset/9829/
+> https://launchpad.net/bugs/500625
+> http://www.mail-archive.com/debian-devel-changes@lists.debian.org/msg264483.html
+> 
 
+Please use CVE-2010-0012 for this.
 
-Use CVE-2010-0277 for the memory corruption.
+Thanks.
 
-- Steve
-
-======================================================
-Name: CVE-2010-0277
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-0277
-Reference: MLIST:[oss-security] 20100107 Re: CVE request - pidgin MSN arbitrary file upload
-Reference: URL:http://www.openwall.com/lists/oss-security/2010/01/07/2
-Reference: MISC:http://events.ccc.de/congress/2009/Fahrplan/events/3596.en.html
-
-slp.c in the MSN protocol plugin in libpurple in Pidgin 2.6.4 and
-Adium 1.3.8 allows remote attackers to cause a denial of service
-(memory corruption) or possibly have unspecified other impact via
-unknown vectors, a different issue than CVE-2010-0013.
-
-
+-- 
+    JB
