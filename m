@@ -1,27 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/08/5
-Message-ID: <20100608205135.GH4828@redhat.com>
-Date: Tue, 8 Jun 2010 14:51:35 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/06/3
+Message-ID: <2036264398.931161262812951374.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 6 Jan 2010 16:22:31 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: jar, fastjar directory traversal vulnerabilities
+Subject: Re: CVE request - uzbl remote code execution
 Content-Type: text/plain; charset=utf-8
 
-* [2010-06-08 16:01:30 -0400] Steven M. Christey wrote:
+----- "Giuseppe Iuculano" <iuculano@...ian.org> wrote:
+> 
+> uzbl upstream reported a remote code execution vulnerability:
+> http://www.uzbl.org/news.php?id=22
+> 
+> References:
+> http://lists.uzbl.org/pipermail/uzbl-dev-uzbl.org/2010-January/000586.html
+> http://users.edpnet.be/dieter/exploit.html
+> 
 
->On Tue, 8 Jun 2010, Vincent Danen wrote:
->
->>What makes things worse is that it doesn't look like CVE-2005-1080 was
->>ever fixed.  So I'm not sure if this "new" jar issue needs a new CVE
->>name, or if it would be covered under CVE-2005-1080 (since nothing ever
->>claimed to fix this directory traversal vulnerability in jar).
->
->If a bug appears in versions X and Y, and there is no evidence that a 
->fix was ever applied between versions X and Y, then the original 
->CVE's description is simply updated.
 
-Awesome, thanks for the clarification.
+Plesae use CVE-2010-0011 for this.
+
+Thanks.
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+    JB
+
