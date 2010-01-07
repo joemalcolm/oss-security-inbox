@@ -1,29 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/22/20
-Message-Id: <20101122185452.cd6659f5.michael.s.gilbert@gmail.com>
-Date: Mon, 22 Nov 2010 18:54:52 -0500
-From: Michael Gilbert <michael.s.gilbert@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/07/3
+Message-ID: <20100107220528.GM7032@hall.aurel32.net>
+Date: Thu, 7 Jan 2010 23:05:28 +0100
+From: Aurelien Jarno <aurelien@...el32.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel address leaks
+Cc: Christoph Pleger <Christoph.Pleger@...tu-dortmund.de>
+Subject: CVE id request: GNU libc: NIS shadow password leakage
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 22 Nov 2010 18:01:20 -0500, Dan Rosenberg wrote:
-> -It may or may not be acceptable to replace the addresses with 0's
-> based on privilege level.
+Hi oss-sec,
 
-I don't see why it should be considered unacceptable to require
-CAP_NET_ADMIN to be able to debug these low-level interfaces. In what
-scenario would someone attempting to do so not have the ability to
-elevate privileges on the system they're working on?  Better yet, how
-is requiring elevated privs actually a real problem for this use case?
-Your patches don't actually prevent debugging, they just require the
-user/debugger to get authorization to do so.  Tell the kernel devs
-that they need to explain why this is a real problem, and that their
-habitual "no" is not acceptable.  You're doing great, thankless work.
-Keep on fighting the good fight, and thank you.
+Christoph Pleger has reported through the Debian bug tracker [1] that
+non-priviledged users can read NIS shadow password entries simply
+using getpwnam() when nscd is in use.
 
-Oh, and if you get CVEs assigned, that kind of forces them to fix the
-problem, right?
+The issue has already been reported upstream [2], and a proposed patch
+is available on [3].
 
-Best wishes,
-Mike
+It seems that all GNU libc versions are affected, including derivatives
+like EGLIBC.
+
+Could we please get a CVE id for this issue?
+
+Thanks,
+Aurelien
+
+[1] http://bugs.debian.org/560333
+[2] http://sourceware.org/bugzilla/show_bug.cgi?id=11134
+[3] http://svn.debian.org/viewsvn/pkg-glibc/glibc-package/trunk/debian/patches/any/submitted-nis-shadow.diff?revision=4062&view=markup
+
+-- 
+Aurelien Jarno	                        GPG: 1024D/F1BCDB73
+aurelien@...el32.net                 http://www.aurel32.net
+
+Download attachment "signature.asc" of type "application/pgp-signature" (190 bytes)
