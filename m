@@ -1,33 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/18/2
-Message-ID: <4C6B76BC.3080902@redhat.com>
-Date: Wed, 18 Aug 2010 13:59:24 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/07/2
+Message-ID: <20100107165101.GK8609@ngolde.de>
+Date: Thu, 7 Jan 2010 17:51:01 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request - kernel: xfs: stale data exposure
+Subject: Re: CVE request - pidgin MSN arbitrary file upload
 Content-Type: text/plain; charset=utf-8
 
-An issue was found in the XFS filehandle conversion where inodes that 
-are deleted may return as valid files as XFS does not verify the inode 
-numbers in the file handles, i.e. allowing access to deleted data.
+Hi,
+* Josh Bressers <bressers@...hat.com> [2010-01-07 16:19]:
+> ----- "Paul Aurich" <paul@...krain42.org> wrote:
+> > http://events.ccc.de/congress/2009/Fahrplan/events/3596.en.html
+> > 
+> > In Fabian's talk, he describes an issue where Pidgin's MSN prpl does not
+> > validate the filename received in a request for Pidgin to upload a custom
+> > emoticon to a third-party, allowing an attacker to download arbitrary
+> > files on the system via directory traversal.
+> > 
+> > This is fixed in source, but no release yet:
+> > http://d.pidgin.im/viewmtn/revision/info/c64a1adc8bda2b4aeaae1f273541afbc4f71b810
+> 
+> As this really needs an ID, please use CVE-2010-0013.
 
-The test program that demonstrates the issue via the open_by_handle 
-interface can be found here: 
-http://oss.sgi.com/archives/xfs/2010-06/msg00191.html.
+While everyone is talking about the file inclusion vulnerability which is 
+really important, has anyone investigated the SLP memory corruption issue yet?
+Page 24: http://events.ccc.de/congress/2009/Fahrplan/attachments/1483_26c3_ipv4_fuckups.pdf
 
-[PATCH 1/4] xfs: always use iget in bulkstat
-http://article.gmane.org/gmane.comp.file-systems.xfs.general/33770
+I had no time to investigate this yet myself but both issues should be fixed 
+probably at once ;)
 
-[PATCH 2/4] xfs: validate untrusted inode numbers during lookup
-http://article.gmane.org/gmane.comp.file-systems.xfs.general/33771
-
-This following patch is needed too to address a regression introduced by 
-the patches above: http://oss.sgi.com/archives/xfs/2010-08/msg00179.html.
-
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=624923
-
-Thanks, Eugene
+Cheers
+Nico
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
