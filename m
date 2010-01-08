@@ -1,30 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/16/7
-Message-ID: <1055130019.1197021289930208364.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 16 Nov 2010 12:56:48 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request: libsdp
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/08/2
+Message-Id: <201001090009.10103.Christoph.Pleger@cs.tu-dortmund.de>
+Date: Sat, 9 Jan 2010 00:09:09 +0100
+From: Christoph Pleger <Christoph.Pleger@...tu-dortmund.de>
+To: Josh Bressers <bressers@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE id request: GNU libc: NIS shadow password  leakage
 Content-Type: text/plain; charset=utf-8
 
------ "Huzaifa Sidhpurwala" <huzaifas@...hat.com> wrote:
-> 
-> Leif Nixon reported that libsdp is vulnerable to insecure log file
-> handling. This is fixed by the latest libsdp version available at:
-> 
-> http://www.openfabrics.org/downloads/libsdp/libsdp-1.1.105-0.4.g1b9b996.tar.gz
-> 
-> More details are available in Red Hat bugzilla:
-> https://bugzilla.redhat.com/show_bug.cgi?id=647941
-> 
-> Can a CVE id be please assigned to this flaw?
-> 
+Hello,
 
-Please use
-CVE-2010-4173
+On Friday 08 January 2010 23:11:50, Josh Bressers wrote:
 
-Thanks.
+> I may be missing something here, or perhaps I'm not remembering correctly,
+> but NIS basically doesn't have any security in this respect. This bug
+> implies that a user has some sort of access to the NIS client, but the NIS
+> server would happily hand out the same data if the malicious user asked for
+> it (not using glibc let's say). While this may be a glibc bug (I doubt it,
+> as it would just be a false sense of security), I this this is a non issue.
 
--- 
-    JB
+No, that's not true. I have no experience with Linux NIS servers, but when the 
+NIS server runs on Solaris (Sun Microsystems is the inventor of NIS), the 
+shadow password information, which is in the passwd.adjunct.byname map, on 
+the NIS clients can only be seen by root. When other users call for 
+example "ypcat passwd.adjunct.byname", they get an error message that the map 
+does not exist. Also, on Solaris NIS clients, the shadow password cannot be 
+seen with getpwnam. 
+
+Regards
+  Christoph 
