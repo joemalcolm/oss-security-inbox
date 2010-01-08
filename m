@@ -1,59 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/11/1
-Message-ID: <20100611035325.GS4828@redhat.com>
-Date: Thu, 10 Jun 2010 21:53:25 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/08/1
+Message-ID: <611722421.1141311262988710794.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 8 Jan 2010 17:11:50 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Gerald Combs <gerald@...eshark.org>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request for new wireshark vulnerabilities
+Cc: Christoph Pleger <Christoph.Pleger@...tu-dortmund.de>
+Subject: Re: CVE id request: GNU libc: NIS shadow password leakage
 Content-Type: text/plain; charset=utf-8
 
-We've received notification of new wireshark releases (1.2.9 and 1.0.14)
-and require CVE names assigned (the updates were made available upstream
-on June 9th).
+----- "Aurelien Jarno" <aurelien@...el32.net> wrote:
 
-The following are the particulars, which have more details than the
-upstream advisory (http://www.wireshark.org/security/wnpa-sec-2010-06.html):
+> Hi oss-sec,
+> 
+> Christoph Pleger has reported through the Debian bug tracker [1] that
+> non-priviledged users can read NIS shadow password entries simply using
+> getpwnam() when nscd is in use.
+> 
+> The issue has already been reported upstream [2], and a proposed patch is
+> available on [3].
+> 
+> It seems that all GNU libc versions are affected, including derivatives
+> like EGLIBC.
+> 
+> Could we please get a CVE id for this issue?
+> 
+> Thanks,
+> Aurelien
+> 
+> [1] http://bugs.debian.org/560333
+> [2] http://sourceware.org/bugzilla/show_bug.cgi?id=11134
+> [3] http://svn.debian.org/viewsvn/pkg-glibc/glibc-package/trunk/debian/patches/any/submitted-nis-shadow.diff?revision=4062&view=markup
 
->  The SMB dissector could dereference a NULL pointer.
->  Fixed in trunk: r32650
->  Fixed in trunk-1.2: r33142
->  Fixed in trunk-1.0: r33145
->  Bug 4734
->  Versions affected: 0.99.6 to 1.0.13, 1.2.0 to 1.2.8
->
->  J. Oquendo discovered that the ASN.1 BER dissector could overrun
->  the stack.
->  Fixed in trunk: r32922, r33046
->  Fixed in trunk-1.2: r33122
->  Fixed in trunk-1.0: r33146
->  Versions affected: 0.10.13 to 1.0.13, 1.2.0 to 1.2.8
->
->  The SMB PIPE dissector could dereference a NULL pointer on some
->  platforms.
->  Fixed in trunk: r32848
->  Fixed in trunk-1.2: r33120
->  Fixed in trunk-1.0: r33143
->  Versions affected: 0.8.20 to 1.0.13, 1.2.0 to 1.2.8
->
->  The SigComp Universal Decompressor Virtual Machine could go into
->  an infinite loop.
->  Fixed in trunk: r33061, r33065
->  Fixed in trunk-1.2: r33131
->  Fixed in trunk-1.0: r33147
->  Bug 4826
->  Versions affected: 0.10.7 to 1.0.13, 1.2.0 to 1.2.8
->
->  The SigComp Universal Decompressor Virtual Machine could overrun
->  a buffer.
->  Fixed in trunk: r33087, r33090
->  Fixed in trunk-1.2: r33134
->  Fixed in trunk-1.0: r33149
->  Bug 4837
->  Versions affected: 0.10.8 to 1.0.13, 1.2.0 to 1.2.8
 
-I'm not sure if MITRE has noticed these already or not, so I've not
-assigned CVE names to these issues.
+I may be missing something here, or perhaps I'm not remembering correctly,
+but NIS basically doesn't have any security in this respect. This bug
+implies that a user has some sort of access to the NIS client, but the NIS
+server would happily hand out the same data if the malicious user asked for
+it (not using glibc let's say). While this may be a glibc bug (I doubt it,
+as it would just be a false sense of security), I this this is a non issue.
+
+If someone who knows more about NIS could chime in I would appreciate it,
+it's been a very long time since I've even thought about NIS honestly. I may
+be very mistaken.
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+    JB
