@@ -1,50 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/13/4
-Message-ID: <216419277.305681263411925052.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 13 Jan 2010 14:45:25 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/09/1
+Message-ID: <Pine.GSO.4.64.1001091308001.11133@faron.mitre.org>
+Date: Sat, 9 Jan 2010 13:08:49 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - kernel: infoleak if print-fatal-signals=1
+cc: bressers@...hat.com
+Subject: Re: CVE request - pidgin MSN arbitrary file upload
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-0003 for this.
 
-Thanks.
+On Thu, 7 Jan 2010, Nico Golde wrote:
 
--- 
-    JB
+> While everyone is talking about the file inclusion vulnerability which is
+> really important, has anyone investigated the SLP memory corruption issue yet?
+> Page 24: http://events.ccc.de/congress/2009/Fahrplan/attachments/1483_26c3_ipv4_fuckups.pdf
 
 
------ "Eugene Teo" <eugene@...hat.com> wrote:
+Use CVE-2010-0277 for the memory corruption.
 
-> Description from the upstream patch:
-> When print-fatal-signals is enabled it's possible to dump any memory 
-> reachable by the kernel to the log by simply jumping to that address 
-> from user space.
-> 
-> Or crash the system if there's some hardware with read side effects.
-> 
-> The fatal signals handler will dump 16 bytes at the execution address,
-> 
-> which is fully controlled by ring 3.
-> 
-> In addition when something jumps to an unmapped address there will be
-> up 
-> to 16 additional useless page faults, which might be potentially slow
-> 
-> (and at least is not very efficient)
-> 
-> Fortunately this option is off by default and only there on i386.
-> 
-> But fix it by hecking for kernel addresses and also stopping when 
-> there's a page fault.
-> 
-> References:
-> http://patchwork.kernel.org/patch/69752/
-> http://git.kernel.org/linus/b45c6e76bc2c72f6426c14bed64fdcbc9bf37cb0
-> https://bugzilla.redhat.com/show_bug.cgi?id=554578
-> 
-> Thanks, Eugene
-> -- 
-> Eugene Teo / Red Hat Security Response Team
+- Steve
+
+======================================================
+Name: CVE-2010-0277
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-0277
+Reference: MLIST:[oss-security] 20100107 Re: CVE request - pidgin MSN arbitrary file upload
+Reference: URL:http://www.openwall.com/lists/oss-security/2010/01/07/2
+Reference: MISC:http://events.ccc.de/congress/2009/Fahrplan/events/3596.en.html
+
+slp.c in the MSN protocol plugin in libpurple in Pidgin 2.6.4 and
+Adium 1.3.8 allows remote attackers to cause a denial of service
+(memory corruption) or possibly have unspecified other impact via
+unknown vectors, a different issue than CVE-2010-0013.
+
+
