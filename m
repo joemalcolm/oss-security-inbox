@@ -1,37 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/28/7
-Message-ID: <892728856.1380781277756766548.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 28 Jun 2010 16:26:06 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- libpng v1.4.3 and v1.2.44 -- memory leak while processing PNG image with malformed sCAL chunks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/11/4
+Message-Id: <20100111112047.00001af0.Christoph.Pleger@cs.tu-dortmund.de>
+Date: Mon, 11 Jan 2010 11:20:47 +0100
+From: Christoph Pleger <Christoph.Pleger@...tu-dortmund.de>
+To: Tomas Hoger <thoger@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE id request: GNU libc: NIS shadow password   leakage
 Content-Type: text/plain; charset=utf-8
 
+Hello,
 
------ "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+On Mon, 11 Jan 2010 10:52:08 +0100
+Tomas Hoger <thoger@...hat.com> wrote:
 
-> Hi Steve, vendors,
+> > No, that's not true. I have no experience with Linux NIS servers,
+> > but when the NIS server runs on Solaris (Sun Microsystems is the
+> > inventor of NIS), the shadow password information, which is in the
+> > passwd.adjunct.byname map, on the NIS clients can only be seen by
+> > root. When other users call for example "ypcat
+> > passwd.adjunct.byname", they get an error message that the map does
+> > not exist. Also, on Solaris NIS clients, the shadow password cannot
+> > be seen with getpwnam. 
 > 
->    libpng upstream has released latest v1.4.3 and v1.2.44 versions,
-> addressing two
-> security issues:
-> [a], out-of-bounds write to memory -- this already got a CVE id of
-> "CVE-2010-1205",
-> [b], memory-leak bug, involving images with malformed sCAL chunks,
-> which could
->     lead to an application crash.
-> 
-> References:
->    [1] http://www.libpng.org/pub/png/libpng.html
->    [2] https://bugzilla.redhat.com/show_bug.cgi?id=608644
-> 
-> Steve, could you allocate a CVE id for the [b] issue?
-> 
+> According to ypserv.conf man page [1], it is possible to restrict data
+> from some map only to clients using a privileged (< 1024) source port.
 
-Please use CVE-2010-2249 for issue [b].
+Yes, and this is the default at least in Debian and Ubuntu NIS servers.
 
-Thanks.
+> Does Solaris possibly do the same (when configured to do so)?
 
--- 
-    JB
+I did a little testing with a Linux NIS client and a Linux
+NIS server, also with the same client and a Solaris NIS server. I used
+tcpdump to look at the network traffic and saw that, when ypcat is
+called as root, it uses privileged ports. Of course, when called by
+a non-root user, it only uses non-privileged ports.
+
+It seems that Linux NIS servers as well as Solaris NIS servers expect
+that the request is sent from a privileged port when someone wants to
+look at the "secret" maps, so it is not possible for every user to
+see the encrypted NIS passwords, but only for root. This is still a
+security risk in an environment where every user can connect his or her
+own notebook, but that's another problem.
+
+Regards
+  Christoph  
+
+    
