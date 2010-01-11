@@ -1,22 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/04/8
-Message-ID: <20100204180228.GD3931@redhat.com>
-Date: Thu, 4 Feb 2010 11:02:28 -0700
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/11/3
+Message-ID: <20100111105208.71b62424@redhat.com>
+Date: Mon, 11 Jan 2010 10:52:08 +0100
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: systemtap DoS issue (CVE-2010-0411)
+Cc: Christoph.Pleger@...tu-dortmund.de
+Subject: Re: CVE id request: GNU libc: NIS shadow password  leakage
 Content-Type: text/plain; charset=utf-8
 
-Just a heads up that an issue in SystemTap was found where using the
-__get_argv() function in tapset could result in a crash of the SystemTap
-script that calls it (and syscall.execve) or, if it's running as root,
-could lead to a hang/crash of the system running the script.
+On Sat, 9 Jan 2010 00:09:09 +0100 Christoph Pleger
+<Christoph.Pleger@...tu-dortmund.de> wrote:
 
-This flaw has been assigned CVE-2010-0411.  More details can be found
-here:
+> > I may be missing something here, or perhaps I'm not remembering
+> > correctly, but NIS basically doesn't have any security in this
+> > respect. This bug implies that a user has some sort of access to
+> > the NIS client, but the NIS server would happily hand out the same
+> > data if the malicious user asked for it (not using glibc let's
+> > say). While this may be a glibc bug (I doubt it, as it would just
+> > be a false sense of security), I this this is a non issue.
+> 
+> No, that's not true. I have no experience with Linux NIS servers, but
+> when the NIS server runs on Solaris (Sun Microsystems is the inventor
+> of NIS), the shadow password information, which is in the
+> passwd.adjunct.byname map, on the NIS clients can only be seen by
+> root. When other users call for example "ypcat
+> passwd.adjunct.byname", they get an error message that the map does
+> not exist. Also, on Solaris NIS clients, the shadow password cannot
+> be seen with getpwnam. 
 
-https://bugzilla.redhat.com/show_bug.cgi?id=559719
-http://sourceware.org/bugzilla/show_bug.cgi?id=11234
+According to ypserv.conf man page [1], it is possible to restrict data
+from some map only to clients using a privileged (< 1024) source port.
+Does Solaris possibly do the same (when configured to do so)?
+
+[1] http://linux.die.net/man/5/ypserv.conf
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Tomas Hoger / Red Hat Security Response Team
