@@ -1,41 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/12/1
-Message-ID: <20100212095324.GD13468@suse.de>
-Date: Fri, 12 Feb 2010 10:53:24 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Request: gnome-screensaver termination by pressing "Enter"
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/11/2
+Message-ID: <20100111104813.38909f52@tanana.suse.de>
+Date: Mon, 11 Jan 2010 10:48:13 +0100
+From: Ludwig Nussel <ludwig.nussel@...e.de>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request: viewvc
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-Yesterday an article was published by Heise News (a german IT magazine)
-that said that the Gnome Screensaver in openSUSE 11.2 is unlockable by
-just pressing the "return" key for some time.
+viewvc 1.1.3 was released with security fixes according to the
+changelog:
+http://viewvc.tigris.org/source/browse/viewvc/trunk/CHANGES?r1=2242&r2=2313&pathrev=HEAD
 
-The issue as far as we know is the following:
+More explanations are in this commit:
+http://viewvc.tigris.org/source/browse/viewvc?view=rev&revision=2300
 
-The unlock dialog shakes if you enter the wrong password. On the last try,
-this dialog is also hidden again (so screen is blanked).
+cu
+Ludwig
 
-There is race condition between these two actions which can lead to an X error
-which aborts the screensaver (and so unlocks the screen).
-
-It is fixed in gnome-screensaver 2.28.1 release.
-
-References:
-
-The fixing commit in the 2.28 branch:
-http://git.gnome.org/browse/gnome-screensaver/commit/?h=gnome-2-28&id=98f8a22412cf388217fd5b88915eadd274d68520
-
-The news article (in german):
-http://www.heise.de/newsticker/meldung/Gnome-Bildschirmsperre-in-OpenSuse-Linux-wirkungslos-928580.html
-
-The GNOME upstream bug:
-http://bugzilla.gnome.org/show_bug.cgi?id=598476
-
-I think this does not have a CVE id yet, so please someone allocate one.
-
-I am not sure when this shaking was introduced, but it might be pretty new.
-
-Ciao, Marcus
+-- 
+ (o_   Ludwig Nussel
+ //\   
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
