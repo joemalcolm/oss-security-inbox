@@ -1,24 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/04/1
-Message-ID: <20101004110743.320a1f76@redhat.com>
-Date: Mon, 4 Oct 2010 11:07:43 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/11/6
+Message-ID: <746025907.31271263215717308.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 11 Jan 2010 08:15:17 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE requests: Poppler, Quassel, Pyfribidi, Overkill, DocUtils, FireGPG, Wireshark
+Cc: Tomas Hoger <thoger@...hat.com>
+Subject: Re: CVE id request: GNU libc: NIS shadow password leakage
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 1 Oct 2010 15:16:48 +0200 Tomas Hoger wrote:
+----- "Christoph Pleger" <Christoph.Pleger@...tu-dortmund.de> wrote:
+> 
+> I did a little testing with a Linux NIS client and a Linux NIS server,
+> also with the same client and a Solaris NIS server. I used tcpdump to
+> look at the network traffic and saw that, when ypcat is called as root,
+> it uses privileged ports. Of course, when called by a non-root user, it
+> only uses non-privileged ports.
+> 
+> It seems that Linux NIS servers as well as Solaris NIS servers expect
+> that the request is sent from a privileged port when someone wants to
+> look at the "secret" maps, so it is not possible for every user to see
+> the encrypted NIS passwords, but only for root. This is still a security
+> risk in an environment where every user can connect his or her own
+> notebook, but that's another problem.
+> 
 
-> 2fe825deac Prevents use of random value for PDF object that is not of
-> numeric type as expected.  This patch, however, does not seem to guard
-> against invalid numeric values, so if some random value used due to an
-> incorrect object type can cause crash later, I'd expect malicious
-> numeric value to be able to achieve the same.
+I was mistaken, this certainly deserves a CVE id.
 
-Oh, I was too focused on the value and missed OBJECT_TYPE_CHECK checks
-that cause abort() when object is not numeric.  The impact is limited
-to unexpected application termination.
+Please use CVE-2010-0015
+
+Thanks.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+    JB
