@@ -1,39 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/23/3
-Message-Id: <201004231459.53135.ludwig.nussel@suse.de>
-Date: Fri, 23 Apr 2010 14:59:52 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: moodle 1.9.8, 1.8.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/11/7
+Message-ID: <241062814.111731263252787945.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 11 Jan 2010 18:33:07 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE Request: phpMyAdmin
 Content-Type: text/plain; charset=utf-8
 
-Josh Bressers wrote:
-> ----- "Ludwig Nussel" <ludwig.nussel@...e.de> wrote:
-> > Moodle 1.9.8 and 1.8.12 were released with security fixes:
-> > http://docs.moodle.org/en/Moodle_1.9.8_release_notes
-> > * MSA-10-0001 Vulnerability in KSES text cleaning
-> > * MSA-10-0002 XSS vulnerabilty in the phpcas module
-> > * MSA-10-0003 Disclosure of full user names
-> > * MSA-10-0004 Improved access control in course restore
-> > * MSA-10-0005 Incorrect validation of forms data
-> > * MSA-10-0006 SQL injection in Wiki module
-> > * MSA-10-0007 Reflective Cross Site Scripting (XSS) in the Moodle
-> > Global Search Engine
-> > * MSA-10-0008 Persistent XSS when using Login-as feature
-> > * MSA-10-0009 Session fixation prevention now turned on by default
-> 
-> Steve,
-> 
-> I'm going to defer this one to MITRE.
+Steve,
 
-Just a reminder :-)
+I'm going to defer this one to you for CVE assignment so you can dish out 2009 and 2008 ids for these.
 
-cu
-Ludwig
+Thanks.
 
 -- 
- (o_   Ludwig Nussel
- //\   
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+    JB
+
+
+----- "Ludwig Nussel" <ludwig.nussel@...e.de> wrote:
+
+> Hi,
+> 
+> phpMyAdmin 2.11.10 was released with security fixes according to the
+> changelog:
+> http://phpmyadmin.svn.sourceforge.net/viewvc/phpmyadmin/branches/MAINT_2_11_10/phpMyAdmin/ChangeLog?revision=13152&view=markup
+> 
+> unserialize fix:
+> http://phpmyadmin.svn.sourceforge.net/viewvc/phpmyadmin?view=rev&revision=13149
+> 
+> the temporary file issues seem to be from 2008 but were not released
+> so far:
+> http://phpmyadmin.svn.sourceforge.net/viewvc/phpmyadmin?view=rev&revision=11536
+> http://phpmyadmin.svn.sourceforge.net/viewvc/phpmyadmin?view=rev&revision=11528
+> 
+> cu
+> Ludwig
+> 
+> -- 
+>  (o_   Ludwig Nussel
+>  //\   
+>  V_/_  http://www.suse.de/
+> SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
