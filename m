@@ -1,31 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/21/1
-Message-ID: <AANLkTi=0z3OSmUKMgUFBcTGGT_XXGiVMx4Thf91wXCk2@mail.gmail.com>
-Date: Sun, 21 Nov 2010 16:45:26 -0700
-From: Kurt Seifried <kurt@...fried.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: gif2png: command-line buffer overflow problem
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/11/5
+Message-ID: <20100111125537.06844922@tanana.suse.de>
+Date: Mon, 11 Jan 2010 12:55:37 +0100
+From: Ludwig Nussel <ludwig.nussel@...e.de>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request: phpMyAdmin
 Content-Type: text/plain; charset=utf-8
 
-This is from 2009 but doesn't appear to have a CVE (no "gif2png" in
-the CVE database).
+Hi,
 
-Sources:
-https://bugzilla.redhat.com/show_bug.cgi?id=547515
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=550978
-http://lists.grok.org.uk/pipermail/full-disclosure/2009-December/072009.html
+phpMyAdmin 2.11.10 was released with security fixes according to the
+changelog:
+http://phpmyadmin.svn.sourceforge.net/viewvc/phpmyadmin/branches/MAINT_2_11_10/phpMyAdmin/ChangeLog?revision=13152&view=markup
 
-Description:
-A buffer overflow in gif2png 2.5.3 and earlier allows an attacker to
-execute arbitrary code via a long command line argument passed to the
-gif2png binary.
+unserialize fix:
+http://phpmyadmin.svn.sourceforge.net/viewvc/phpmyadmin?view=rev&revision=13149
 
-It was first claimed that it was fixed in 2.5.2 but it is reported
-that it isn't fixed, I tested 2.5.3 and it still seg faults the same
-way as 2.5.2 so it would appear it was never fixed, as the software
-was last updated in 2005 I guess this one never gets fixed.
+the temporary file issues seem to be from 2008 but were not released
+so far:
+http://phpmyadmin.svn.sourceforge.net/viewvc/phpmyadmin?view=rev&revision=11536
+http://phpmyadmin.svn.sourceforge.net/viewvc/phpmyadmin?view=rev&revision=11528
+
+cu
+Ludwig
 
 -- 
-Kurt Seifried
-kurt@...fried.org
-tel: 1-703-879-3176
+ (o_   Ludwig Nussel
+ //\   
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
