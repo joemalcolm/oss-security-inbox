@@ -1,28 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/07/1
-Message-ID: <1824926997.992521262877409693.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 7 Jan 2010 10:16:49 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - pidgin MSN arbitrary file upload
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/11/1
+Message-ID: <4B4AECA3.40009@redhat.com>
+Date: Mon, 11 Jan 2010 10:17:23 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, Alan T DeKok <aland@...eradius.org>, Evgeny Legerov <admin@...evydis.com>
+Subject: FreeRadius 1.1.7 CVE-2009-4481 being duplicate of CVE-2009-3111
 Content-Type: text/plain; charset=utf-8
 
------ "Paul Aurich" <paul@...krain42.org> wrote:
+Hello Steve, Alan, Evgeny, vendors,
 
-> http://events.ccc.de/congress/2009/Fahrplan/events/3596.en.html
-> 
-> In Fabian's talk, he describes an issue where Pidgin's MSN prpl does not
-> validate the filename received in a request for Pidgin to upload a custom
-> emoticon to a third-party, allowing an attacker to download arbitrary
-> files on the system via directory traversal.
-> 
-> This is fixed in source, but no release yet:
-> http://d.pidgin.im/viewmtn/revision/info/c64a1adc8bda2b4aeaae1f273541afbc4f71b810
+   this is due:
 
-As this really needs an ID, please use CVE-2010-0013.
+     http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-4481 being dupe CVE of
+     http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3111
 
-Thanks.
+This was already discussed here:
+     http://www.openwall.com/lists/oss-security/2009/09/09/1
+     http://www.openwall.com/lists/oss-security/2009/09/09/4
+     http://www.openwall.com/lists/oss-security/2009/09/09/5
 
--- 
-    JB
+Alan has confirmed in his reply with Message ID: <4AA7EFB6.5070609@...eradius.org>
+(you should have it in you mbox, oss-security wasn't Cc-ed there), that it is the
+same issue, as mentioned on intervydis.com.
+
+And also Evgeny was so kind and updated intevydis.com page [1] to reflect
+CVE-2009-3111 for FreeRADIUS DoS:
+
+[1] http://intevydis.com/vd-list.shtml
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
