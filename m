@@ -1,26 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/08/5
-Message-Id: <201010082329.52273.hanno@hboeck.de>
-Date: Fri, 8 Oct 2010 23:29:51 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/12/1
+Message-ID: <4B4BE482.10507@redhat.com>
+Date: Tue, 12 Jan 2010 10:54:58 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: usebb before 1.0.11 unauthorized access to content
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request - kernel: infoleak if print-fatal-signals=1
 Content-Type: text/plain; charset=utf-8
 
-http://www.usebb.net/community/topic.php?id=2501
+Description from the upstream patch:
+When print-fatal-signals is enabled it's possible to dump any memory 
+reachable by the kernel to the log by simply jumping to that address 
+from user space.
 
+Or crash the system if there's some hardware with read side effects.
 
-A security issue has been discovered in UseBB 1.0.10 with per forum and topic 
-RSS feeds in combination with restricted forum access permissions, giving 
-users access to post contents that should remain hidden. Anyone having a 
-restricted "read" permission set but NOT an equal or more restricted "view" 
-one is prone to this issue.
+The fatal signals handler will dump 16 bytes at the execution address, 
+which is fully controlled by ring 3.
 
+In addition when something jumps to an unmapped address there will be up 
+to 16 additional useless page faults, which might be potentially slow 
+(and at least is not very efficient)
 
+Fortunately this option is off by default and only there on i386.
+
+But fix it by hecking for kernel addresses and also stopping when 
+there's a page fault.
+
+References:
+http://patchwork.kernel.org/patch/69752/
+http://git.kernel.org/linus/b45c6e76bc2c72f6426c14bed64fdcbc9bf37cb0
+https://bugzilla.redhat.com/show_bug.cgi?id=554578
+
+Thanks, Eugene
 -- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-
-http://schokokeks.org - professional webhosting
-
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+Eugene Teo / Red Hat Security Response Team
