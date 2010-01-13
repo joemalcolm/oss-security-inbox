@@ -1,31 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/21/2
-Message-ID: <20101021080645.GD21548@suse.de>
-Date: Thu, 21 Oct 2010 10:06:45 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: glibc $ORIGIN problem - CVE-2010-3847
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/13/5
+Message-ID: <1325685820.314661263416800395.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 13 Jan 2010 16:06:40 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley@...re.org
+Subject: Re: CVE Request: viewvc
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+----- "Ludwig Nussel" <ludwig.nussel@...e.de> wrote:
+> 
+> viewvc 1.1.3 was released with security fixes according to the changelog:
+> http://viewvc.tigris.org/source/browse/viewvc/trunk/CHANGES?r1=2242&r2=2313&pathrev=HEAD
+> 
+> More explanations are in this commit:
+> http://viewvc.tigris.org/source/browse/viewvc?view=rev&revision=2300
+> 
 
-The actually exploitable impact of Tavis glibc $ORIGIN problem is still a bit open question.
+As best as I can tell, there are only two things that deserve CVE ids:
 
-Apparently the bad code has a assert() in front which causes this assertion failure:
+* security fix: add root listing support of per-root authz config
+    Use CVE-2010-0004
 
-$ LD_AUDIT=\$ORIGIN ping
-Inconsistency detected by ld.so: dl-open.c: 231: dl_open_worker: Assertion `(call_map)->l_name[0] == '\0'' failed!
-$ 
+* security fix: query.py requires 'forbidden' authorizer (or none) in config
+    Use CVE-2010-0005
 
-If glibc was built with -DNDEBUG the assert() is empty and the code will proceed
-into the exploitable parts.
+Thanks.
 
-Sebastian Krahmer of my team looked at this yesterday and was quite confident
-that the problematic zone is protected by this assert(). The source code is however
-quite a labyrinth of c files, headers and macros so we might have missed something.
-
-Andreas Schwab of Redhat has posted candidate patches to fix the problems:
-	http://sourceware.org/ml/libc-hacker/2010-10/msg00007.html
-	http://sourceware.org/ml/libc-hacker/2010-10/msg00008.html
-
-Ciao, Marcus
+-- 
+    JB
