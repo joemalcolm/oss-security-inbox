@@ -1,35 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/18/1
-Message-Id: <201006180504.42482.rem@videolan.org>
-Date: Fri, 18 Jun 2010 05:04:42 +0300
-From: "Rémi Denis-Courmont" <rem@...eolan.org>
-To: vlc-devel@...eolan.org, videolan-announce@...eolan.org
-Cc: oss-security@...ts.openwall.com
-Subject: VLC 1.0 series End of Life
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/13/1
+Message-ID: <Pine.GSO.4.64.1001121951070.22906@faron.mitre.org>
+Date: Tue, 12 Jan 2010 19:53:44 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: phpMyAdmin
 Content-Type: text/plain; charset=utf-8
 
-	Hello,
 
-The official release of VLC media player and LibVLC version 1.1.0 is coming to a 
-close. The badly stretched VLC development team is not currently able to 
-maintain more than two development branches at a time. The team has been 
-focusing on the VLC 1.2 future series and the VLC 1.1 stable series.
+On Mon, 11 Jan 2010, Ludwig Nussel wrote:
 
-As a consequence, source code for VLC 1.0 is not officially unmaintained 
-anymore. There will be no further security or major bug fixes. The last version 
-was 1.0.6 and will be marked formally obsolete if/when a major issue is 
-discovered. I would also like to remind you that:
-- the LibVLC API is known to be broken in all 1.0.x releases,
-- that the Mozilla plugin is broken on X11 platforms in release 1.0.6, and
-- that binary packages (Windows, MacOS) have already been discontinued.
+> Hi,
+>
+> phpMyAdmin 2.11.10 was released with security fixes according to the
+> changelog:
+> http://phpmyadmin.svn.sourceforge.net/viewvc/phpmyadmin/branches/MAINT_2_11_10/phpMyAdmin/ChangeLog?revision=13152&view=markup
+>
+> unserialize fix:
+> http://phpmyadmin.svn.sourceforge.net/viewvc/phpmyadmin?view=rev&revision=13149
 
-If you need any of these, please update to VLC 1.1.0-RC3 already, or 1.1.0 at 
-the earliest.
+Use CVE-2009-4605, to be filled in later
 
-N.B.: VLC 1.0.5, 0.9.10, 0.8.6i and older versions exhibit known published 
-security issues. Update urgently if you have not already done so.
+> the temporary file issues seem to be from 2008 but were not released
+> so far:
 
-Best regards,
+> http://phpmyadmin.svn.sourceforge.net/viewvc/phpmyadmin?view=rev&revision=11536
 
--- 
-Rémi Denis-Courmont
+Use CVE-2008-7251
+
+> http://phpmyadmin.svn.sourceforge.net/viewvc/phpmyadmin?view=rev&revision=11528
+
+Use CVE-2008-7252
+
+
+- Steve
