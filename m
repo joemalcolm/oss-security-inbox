@@ -1,23 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/16/1
-Message-ID: <4C68A152.7090808@kernel.sg>
-Date: Mon, 16 Aug 2010 10:24:18 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request - kernel: integer overflow in ext4_ext_get_blocks()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/13/3
+Message-ID: <20100113151548.GA19602@logo.rdu.rpath.com>
+Date: Wed, 13 Jan 2010 10:15:48 -0500
+From: "Michael K. Johnson" <johnsonm@...th.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: [PATCH] memory consumption (DoS) in openssl CVE-2009-4355
 Content-Type: text/plain; charset=utf-8
 
-This was reported by a customer. Integer overflow flaws were found in 
-ext4_ext_in_cache() and ext4_ext_get_blocks(). We managed to triggered 
-the case in ext4_ext_get_blocks() but did not attempt to try the other. 
-This can trigger a BUG() on certain configuration of ext4 file systems.
+Previously, an initialization-related memory leak involving openssl
+was given CVE-2008-1678 and worked around in mod_ssl; see for example
+https://bugzilla.redhat.com/show_bug.cgi?id=447268
+https://issues.apache.org/bugzilla/show_bug.cgi?id=44975
+https://bugs.launchpad.net/ubuntu/+source/apache2/+bug/224945
+http://svn.apache.org/viewvc?view=rev&revision=654119
 
-Upstream commit:
-http://git.kernel.org/linus/731eb1a03a8445cde2cb23ecfb3580c6fa7bb690
+However, this did not resolve the general problem, and an rPath
+customer recently reproduced essentially the same memory leak via
+another pathway.  This new pathway was assigned CVE-2009-4355.
+Initially, the suggestion was to fix the leak via modifications
+to php or curl in the same way that mod_ssl was previously fixed,
+but then Andy Grimm provided a patch to openssl that would not only
+resolve the issue for curl/php but also for any other as-yet-unknown
+new vectors.  Dr. Stephen Henson, an openssl core team member,
+provided a new openssl patch which rPath has confirmed resolves
+the issue, and which Dr. Henson is committing to upstream openssl.
+Dr. Henson's patch is attached to this email.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=624327
+The specific symptom of this new pathway is that any vulnerable
+system will leak hundreds of KB of memory per SSLv3 connection after
+apache has been gracefully restarted (SIGHUP).  Temporary mitigation
+strategies include limiting the number of requests that an apache
+worker can serve to limit the quantity of leaked memory, and doing
+full restarts rather than graceful restarts of apache.
 
-Thanks, Eugene
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+Some discussion regarding this issue is in two issue reports:
+https://issues.rpath.com/browse/RPL-3157
+https://bugzilla.redhat.com/show_bug.cgi?id=546707
+
+(I cannot make the Red Hat bugzilla report public, but assume
+that it will be made public today.)
+
+View attachment "CVE-2009-4355.patch" of type "text/plain" (2416 bytes)
