@@ -1,31 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/11/8
-Message-ID: <i6gbmf$l4k$1@dough.gmane.org>
-Date: Sat, 11 Sep 2010 11:45:11 -0500
-From: Raphael Geissert <geissert@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: mailscanner, multiple vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/13/2
+Message-ID: <Pine.GSO.4.64.1001122050010.22906@faron.mitre.org>
+Date: Tue, 12 Jan 2010 20:51:19 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security <oss-security@...ts.openwall.com>
+cc: "Steven M. Christey" <coley@...us.mitre.org>, Alan T DeKok <aland@...eradius.org>, Evgeny Legerov <admin@...evydis.com>
+Subject: Re: FreeRadius 1.1.7 CVE-2009-4481 being duplicate of CVE-2009-3111
 Content-Type: text/plain; charset=utf-8
 
-Hi everyone,
 
-I reported some vulnerabilities in mailscanner but forgot to assign ids. 
-Could somebody assign ones?
+I've marked CVE-2009-4481 as a duplicate of CVE-2009-3111, see below.
 
-Incomplete fix for CVE-2008-5313:
-http://bugs.debian.org/596403
+Sorry for the confusion...
 
-update{_bad,}_phishing_sites scripts may download and use spoofed files:
-http://bugs.debian.org/596396
+- Steve
 
-Local users may prevent virus signatures from being updated:
-http://bugs.debian.org/596397
 
-Thanks.
+======================================================
+Name: CVE-2009-3111
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3111
+Reference: MISC:http://intevydis.com/vd-list.shtml
+Reference: MLIST:[freeradius-users] 20090909 Version 1.1.8 has been released
+Reference: URL:https://lists.freeradius.org/pipermail/freeradius-users/2009-September/msg00242.html
+Reference: MLIST:[oss-security] 20090909 CVE Request -- FreeRADIUS 1.1.8
+Reference: URL:http://www.openwall.com/lists/oss-security/2009/09/09/1
+Reference: CONFIRM:http://github.com/alandekok/freeradius-server/commit/860cad9e02ba344edb0038419e415fe05a9a01f4
+Reference: CONFIRM:http://support.apple.com/kb/HT3937
+Reference: APPLE:APPLE-SA-2009-11-09-1
+Reference: URL:http://lists.apple.com/archives/security-announce/2009/Nov/msg00000.html
+Reference: REDHAT:RHSA-2009:1451
+Reference: URL:http://www.redhat.com/support/errata/RHSA-2009-1451.html
+Reference: SUSE:SUSE-SR:2009:016
+Reference: URL:http://lists.opensuse.org/opensuse-security-announce/2009-10/msg00001.html
+Reference: SUSE:SUSE-SR:2009:018
+Reference: URL:http://lists.opensuse.org/opensuse-security-announce/2009-11/msg00004.html
+Reference: BID:36263
+Reference: URL:http://www.securityfocus.com/bid/36263
+Reference: SECUNIA:36509
+Reference: URL:http://secunia.com/advisories/36509
+Reference: VUPEN:ADV-2009-3184
+Reference: URL:http://www.vupen.com/english/advisories/2009/3184
 
-Kind regards,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+The rad_decode function in FreeRADIUS before 1.1.8 allows remote
+attackers to cause a denial of service (radiusd crash) via zero-length
+Tunnel-Password attributes, as demonstrated by a certain module in
+VulnDisco Pack Professional 7.6 through 8.11.  NOTE: this is a
+regression error related to CVE-2003-0967.
+
+
+======================================================
+Name: CVE-2009-4481
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-4481
+
+** REJECT **
+
+DO NOT USE THIS CANDIDATE NUMBER.  ConsultIDs: CVE-2009-3111.  Reason:
+This candidate is a duplicate of CVE-2009-3111.  Notes: All CVE users
+should reference CVE-2009-3111 instead of this candidate.  All
+references and descriptions in this candidate have been removed to
+prevent accidental usage.
 
 
