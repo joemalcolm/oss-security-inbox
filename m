@@ -1,14 +1,14 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/02/10
-Message-ID: <1093585429.1871281278097167505.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 2 Jul 2010 14:59:27 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/13/4
+Message-ID: <216419277.305681263411925052.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 13 Jan 2010 14:45:25 -0500 (EST)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
 Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request [Microsoft Windows Ruby-v1.9.x] -- Buffer over-run leading to ACE
+Subject: Re: CVE request - kernel: infoleak if print-fatal-signals=1
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-2489
+Please use CVE-2010-0003 for this.
 
 Thanks.
 
@@ -16,51 +16,35 @@ Thanks.
     JB
 
 
------ "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+----- "Eugene Teo" <eugene@...hat.com> wrote:
 
-> Hi Steve, vendors,
+> Description from the upstream patch:
+> When print-fatal-signals is enabled it's possible to dump any memory 
+> reachable by the kernel to the log by simply jumping to that address 
+> from user space.
 > 
->    Ruby upstream has released latest v1.9.1-p429, v1.9.2 RC1 versions,
-> addressing one
->    security issue, present on Microsoft Windows operating systems,
-> where version of Ruby
->    language is v1.9.x based:
->      [1]
-> http://www.ruby-lang.org/en/news/2010/07/02/ruby-1-9-1-p429-is-released/
->      [2]
-> http://www.ruby-lang.org/en/news/2010/07/02/ruby-1-9-2-rc1-is-released/
->      [3]
-> http://svn.ruby-lang.org/repos/ruby/tags/v1_9_2_rc1/ChangeLog
+> Or crash the system if there's some hardware with read side effects.
 > 
-> Quoting from [1]:
+> The fatal signals handler will dump 16 bytes at the execution address,
 > 
-> <begin quote>
+> which is fully controlled by ring 3.
 > 
-> A security vulnerability that causes buffer overflow when you assign
-> a danger value to ARGF.inplace_mode on Windows. It possibly allows an
-> attacker to execute an arbitrary code.
+> In addition when something jumps to an unmapped address there will be
+> up 
+> to 16 additional useless page faults, which might be potentially slow
 > 
-> The affected versions are:
+> (and at least is not very efficient)
 > 
->      * Ruby 1.9.1 patchlevel 378 and all prior versions.
->      * Ruby 1.9.2 preview 3 and all prior versions.
->      * Development versions of Ruby 1.9 (1.9.3dev).
+> Fortunately this option is off by default and only there on i386.
 > 
-> I recommend you to upgrade your ruby 1.9 to 1.9.1-p429 or 1.9.2-rc1.
+> But fix it by hecking for kernel addresses and also stopping when 
+> there's a page fault.
 > 
-> The vulnerability does not directly affect to Ruby 1.8 series.
-> Credit
+> References:
+> http://patchwork.kernel.org/patch/69752/
+> http://git.kernel.org/linus/b45c6e76bc2c72f6426c14bed64fdcbc9bf37cb0
+> https://bugzilla.redhat.com/show_bug.cgi?id=554578
 > 
-> The vulnerability was found and reported by Masaya TARUI.
-> 
-> <end quote>
-> 
-> Though this not affecting the Linux version of Ruby, we will need a
-> CVE identifier
-> for purpose of properly tracking is.
-> 
-> Steve, could you please allocate one?
-> 
-> Thanks && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+> Thanks, Eugene
+> -- 
+> Eugene Teo / Red Hat Security Response Team
