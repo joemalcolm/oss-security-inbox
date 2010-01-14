@@ -1,19 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/12/2
-Message-ID: <4CB40C01.6020802@redhat.com>
-Date: Tue, 12 Oct 2010 15:19:29 +0800
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/14/3
+Message-ID: <4B4E91C0.8040208@redhat.com>
+Date: Thu, 14 Jan 2010 11:38:40 +0800
 From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: kernel: avoid pgoff overflow in remap_file_pages
+CC: dann frazier <dannf@...nf.org>, fwestphal@...aro.com, kaber@...sh.net, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request: kernel ebtables perm check
 Content-Type: text/plain; charset=utf-8
 
-Thomas Pollet reported an integer overflow issue in remap_file_pages(). 
-While we are able to reproduce the issue, we are unable to find a 
-security impact. If your views differ, do let us know.
+On 01/14/2010 08:54 AM, dann frazier wrote:
+> Has a CVE been assigned for this issue yet?
 
-https://bugzilla.redhat.com/show_bug.cgi?id=636383
-http://git.kernel.org/linus/5ec1055aa5632dd7a8283cdb5fa9be3c535eaa06
+Please use CVE-2010-0007. Thanks.
 
-Thanks, Eugene
+Eugene
+
+> commit dce766af541f6605fa9889892c0280bab31c66ab
+> Author: Florian Westphal<fwestphal@...aro.com>
+> Date:   Fri Jan 8 17:31:24 2010 +0100
+>
+>      netfilter: ebtables: enforce CAP_NET_ADMIN
+>
+>      normal users are currently allowed to set/modify ebtables rules.
+>      Restrict it to processes with CAP_NET_ADMIN.
+>
+>      Note that this cannot be reproduced with unmodified ebtables
+>      binary
+>      because it uses SOCK_RAW.
+>
+>      Signed-off-by: Florian Westphal<fwestphal@...aro.com>
+>      Cc: stable@...nel.org
+>      Signed-off-by: Patrick McHardy<kaber@...sh.net>
+
+
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+Eugene Teo / Red Hat Security Response Team
