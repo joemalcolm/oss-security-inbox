@@ -1,30 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/15/7
-Message-ID: <4D08BBCC.8050508@kernel.org>
-Date: Wed, 15 Dec 2010 20:59:56 +0800
-From: Eugene Teo <eugeneteo@...nel.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/14/2
+Message-ID: <4B4E77C3.1060705@redhat.com>
+Date: Thu, 14 Jan 2010 09:47:47 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Marcus Meissner <meissner@...e.de>, stable@...nel.org
-Subject: Re: CVE Request: local privilege escalation via /sys/kernel/debug/acpi/custom_method
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE-2010-0006 - kernel: ipv6: skb_dst() can be NULL in ipv6_hop_jumbo()
 Content-Type: text/plain; charset=utf-8
 
-On 12/15/2010 07:00 PM, Marcus Meissner wrote:
-> Hi,
->
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;h=ed3aada1bf34c5a9e98af167f125f8a740fc726a
->
-> changes /sys/kernel/debug/acpi/custom_method from -w--w--w- to -w-------.
->
-> This custom_method file allows to inject custom ACPI methods into the
-> ACPI interpreter tables.
->
-> This control file was introduced with world writeable permissions
-> in Linux Kernel 2.6.33.
->
-> Fix is in 2.6.37rc and the 2.6.36.2 stable release so far.
->
-> I would say that privilege escalation is possible.
+http://marc.info/?l=linux-netdev&m=126343325807340&w=2
 
-Please use CVE-2010-4347.
+This fixes CERT-FI FICORA #341748
 
-Eugene
+Discovered by Olli Jarva and Tuomo Untinen from the CROSS
+project at Codenomicon Ltd.
+
+Just like in CVE-2007-4567, we can't rely upon skb_dst() being
+non-NULL at this point.  We fixed that in commit
+e76b2b2567b83448c2ee85a896433b96150c92e6 ("[IPV6]: Do no rely on
+skb->dst before it is assigned.")
+
+However commit 483a47d2fe794328d29950fe00ce26dd405d9437 ("ipv6: added
+net argument to IP6_INC_STATS_BH") put a new version of the same bug
+into this function.
+
+Complicating analysis further, this bug can only trigger when network
+namespaces are enabled in the build.  When namespaces are turned off,
+the dev_net() does not evaluate it's argument, so the dereference
+would not occur.
+
+So, for a long time, namespaces couldn't be turned on unless SYSFS was
+disabled.  Therefore, this code has largely been disabled except by
+people turning it on explicitly for namespace development.
+
+With help from Eugene Teo <eugene@...hat.com>
+
+Signed-off-by: David S. Miller <davem@...emloft.net>
+CC: stable <stable@...nel.org>
+
+Thanks, Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
