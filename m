@@ -1,56 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/07/7
-Message-ID: <1979823831.1610061283885156490.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 7 Sep 2010 14:45:56 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/14/4
+Message-ID: <20100114120253.GA8661@ngolde.de>
+Date: Thu, 14 Jan 2010 13:02:53 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Cc: Henrik Nordstrom <henrik@...riknordstrom.net>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Squid --  Denial of service due internal error in string handling (SQUID-2010:3)
+Subject: Re: CVE Request: viewvc
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-3072
+Hi,
+* Josh Bressers <bressers@...hat.com> [2010-01-13 22:14]:
+> ----- "Ludwig Nussel" <ludwig.nussel@...e.de> wrote:
+> > 
+> > viewvc 1.1.3 was released with security fixes according to the changelog:
+> > http://viewvc.tigris.org/source/browse/viewvc/trunk/CHANGES?r1=2242&r2=2313&pathrev=HEAD
+> > 
+> > More explanations are in this commit:
+> > http://viewvc.tigris.org/source/browse/viewvc?view=rev&revision=2300
+> > 
+> 
+> As best as I can tell, there are only two things that deserve CVE ids:
+> 
+> * security fix: add root listing support of per-root authz config
+>     Use CVE-2010-0004
 
-Thanks.
+In what sense is this a security fix? This looks just like an enhancement to 
+allow admins to configure this behaviour but I see no security bug itself 
+here. Please enlighten me :)
 
+Cheers
+Nico
 -- 
-    JB
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-
------ "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
-
-> Hello Steve, vendors,
-> 
->    Squid upstream has announced SQUID-2010:3:
->    [1] http://www.squid-cache.org/Advisories/SQUID-2010_3.txt
-> 
->    addressing one denial of service issue:
->    A denial of service flaw was found in the way Squid proxy caching
->    server internally processed NULL buffers. A remote, trusted client
->    could use this flaw to cause squid daemon crash (dereference NULL
-> pointer)
->    when processing specially-crafted request.
-> 
->    ( Flaw description based on details from [1]. Henrik, please
-> correct / complete
->      me if something isn't appropriate and needs change. Thanks, Jan
-> )
-> 
->    Upstream patch (against Squid v3.0):
->    [2]
-> http://www.squid-cache.org/Versions/v3/3.0/changesets/squid-3.0-9189.patch
-> 
->    Upstream patch (against Squid v3.1):
->    [3]
-> http://www.squid-cache.org/Versions/v3/3.1/changesets/squid-3.1-10090.patch
-> 
->    Credit:
->    The vulnerability was discovered by Phil Oester.
-> 
->    References:
->    [4] https://bugzilla.redhat.com/show_bug.cgi?id=630444
-> 
-> Steve, could you please allocate CVE id for this issue?
-> 
-> Thanks && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+Content of type "application/pgp-signature" skipped
