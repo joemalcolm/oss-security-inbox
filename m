@@ -1,38 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/10/18
-Message-ID: <AANLkTim_qPhW5Sfw7oDWET6C=gArWcZWMmqRFO=yTGOg@mail.gmail.com>
-Date: Wed, 10 Nov 2010 18:09:39 -0500
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/14/1
+Message-ID: <20100114005451.GA8494@lackof.org>
+Date: Wed, 13 Jan 2010 17:54:51 -0700
+From: dann frazier <dannf@...nf.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel: Multiple DoS issues in block layer
+Cc: fwestphal@...aro.com, kaber@...sh.net
+Subject: CVE Request: kernel ebtables perm check
 Content-Type: text/plain; charset=utf-8
 
-A series of fixes were committed to address several issues I reported
-in the block layer.  These issues require the ability to send device
-ioctls to a SCSI device, which is typically possible for users with
-group 'cdrom' or similar.
+Has a CVE been assigned for this issue yet?
 
-1. Due to integer underflow and overflow issues when determining the
-number of pages required for maliciously crafted I/O requests, a local
-user could send a device ioctl that results in the sequential
-allocation of a very large number of pages, causing the OOM killer to
-be invoked and crashing the system:
+commit dce766af541f6605fa9889892c0280bab31c66ab
+Author: Florian Westphal <fwestphal@...aro.com>
+Date:   Fri Jan 8 17:31:24 2010 +0100
 
-http://git.kernel.org/?p=linux/kernel/git/axboe/linux-2.6-block.git;a=commit;h=cb4644cac4a2797afc847e6c92736664d4b0ea34
-
-2. By submitting certain I/O requests with 0 length, a local user
-could cause a kernel panic:
-
-http://git.kernel.org/?p=linux/kernel/git/axboe/linux-2.6-block.git;a=commit;h=9284bcf4e335e5f18a8bc7b26461c33ab60d0689
-
-
-
-In addition to the fixes for these identified issues, there were also
-patches committed for improved sanity checking on I/O requests, and
-checks to prevent integer overflows in heap allocation sizes.  In my
-testing, I wasn't able to exploit these issues, so just FYI:
-
-http://git.kernel.org/?p=linux/kernel/git/axboe/linux-2.6-block.git;a=commit;h=9f864c80913467312c7b8690e41fb5ebd1b50e92
-http://git.kernel.org/?p=linux/kernel/git/axboe/linux-2.6-block.git;a=commit;h=f3f63c1c28bc861a931fac283b5bc3585efb8967
-
--Dan
+    netfilter: ebtables: enforce CAP_NET_ADMIN
+    
+    normal users are currently allowed to set/modify ebtables rules.
+    Restrict it to processes with CAP_NET_ADMIN.
+    
+    Note that this cannot be reproduced with unmodified ebtables
+    binary
+    because it uses SOCK_RAW.
+    
+    Signed-off-by: Florian Westphal <fwestphal@...aro.com>
+    Cc: stable@...nel.org
+    Signed-off-by: Patrick McHardy <kaber@...sh.net>
