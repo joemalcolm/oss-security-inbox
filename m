@@ -1,39 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/01/6
-Message-ID: <1604636191.772261265058586359.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 1 Feb 2010 16:09:46 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/15/1
+Message-ID: <20100115092851.3bd60bae@tanana.suse.de>
+Date: Fri, 15 Jan 2010 09:28:51 +0100
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Squid -- SQUID-2010_1.txt
+Subject: gnome doesn't lock external screen after resume
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
------ "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+Resuming a gnome session with a second monitor connected bypasses
+screensaver authentication on the second screen:
+https://bugzilla.gnome.org/show_bug.cgi?id=593616
+http://git.gnome.org/browse/gnome-screensaver/commit/?id=2f597ea9f1f363277fd4dfc109fa41bbc6225aca
 
-> Hi Josh, Steve, vendors,
-> 
->    Squid upstream has released updated versions fixing DoS
-> when processing specially crafted DNS packets [1].
-> 
->  From the upstream advisory:
-> 
-> "This problem allows any trusted client or external server who can
->   determine the squid receiving port to perform a short-term denial
->   of service attack on the Squid service."
-> 
-> Could you allocate a CVE id for this? (can't find one in
-> SQUID-2010_1.txt).
-> 
-> Thanks && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
-> 
-> [1] http://www.squid-cache.org/Advisories/SQUID-2010_1.txt
-
-Please use CVE-2010-0308 for this.
-
-Thanks.
+cu
+Ludwig
 
 -- 
-    JB
+ (o_   Ludwig Nussel
+ //\   
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
