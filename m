@@ -1,25 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/01/1
-Message-ID: <622949449.776341288643349734.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 1 Nov 2010 16:29:09 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/16/2
+Message-Id: <201001161929.16880.hanno@hboeck.de>
+Date: Sat, 16 Jan 2010 19:29:16 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: iovec overflow in rds_rdma_pages()
+Subject: CVE request: phpbb before 3.0.5
 Content-Type: text/plain; charset=utf-8
 
+See:
+http://www.phpbb.com/community/viewtopic.php?f=14&p=9764445
+"This release fixes numerous bugs since the 3.0.4 release, corrects style 
+issues, fixing one very minor security bug as well as increasing performance 
+and scalability again."
+# [Sec] Only use forum id supplied for posting if global announcement 
+detected. (Reported by nickvergessen)
 
------ "Eugene Teo" <eugene@...hat.com> wrote:
 
-> Reported by Thomas Pollet, more info can be found at:
-> http://www.spinics.net/lists/netdev/msg145359.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=647416
-> 
+Also please note that the last time I requested CVEs for phpbb, they never got 
+assigned:
+http://seclists.org/oss-sec/2009/q1/104
 
-
-Please use CVE-2010-3865
-
-Thanks.
+cu,
 
 -- 
-    JB
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+
+http://schokokeks.org - professional webhosting
+
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
