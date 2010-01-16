@@ -1,35 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/03/5
-Message-Id: <20100903150810.3470a783.reed@reedloden.com>
-Date: Fri, 3 Sep 2010 15:08:10 -0700
-From: Reed Loden <reed@...dloden.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/16/1
+Message-Id: <201001161922.51848.hanno@hboeck.de>
+Date: Sat, 16 Jan 2010 19:22:51 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: Julien Cristau <jcristau@...ian.org>, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Richard Moore <rich@...tpoint.ltd.uk>, Simon Ward <simon@...tpoint.ltd.uk>
-Subject: Re: CVE Request 1, NSS 2, Qt: Doesn't handle wildcards in Common Name properly
+Subject: CVE request: typo3 < 4.3.1 openid authentication bypass
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 3 Sep 2010 23:46:16 +0200
-Julien Cristau <jcristau@...ian.org> wrote:
-
-> On Fri, Sep  3, 2010 at 14:15:13 -0700, Reed Loden wrote:
-> 
-> > Mozilla has assigned this CVE-2010-3170. We're tracking this as
-> > https://bugzilla.mozilla.org/show_bug.cgi?id=578697.
-> > 
-> That bug is helpfully (or not) closed down.
-
-Yes, it's a security bug that isn't yet fixed in a released version of
-Firefox. As such, it is restricted until at some point after the
-release has been made and most users have upgraded.
-
-If you (as a @debian.org person) require access to the bug for the
-purpose of coordinating security releases, please contact Moritz
-Muehlenhoff, as he represents Debian on the Mozilla Security Group.
-
-Regards,
-~reed
-Mozilla Security Group
+See here:
+http://typo3.org/teams/security/security-bulletins/typo3-sa-2010-001/
 
 -- 
-Reed Loden - <reed@...dloden.com>
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
+http://schokokeks.org - professional webhosting
+
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
