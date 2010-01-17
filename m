@@ -1,29 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/17/13
-Message-Id: <20100917145855.8e5aee06.michael.s.gilbert@gmail.com>
-Date: Fri, 17 Sep 2010 14:58:55 -0400
-From: Michael Gilbert <michael.s.gilbert@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/17/1
+Message-ID: <4B5352CC.2050000@debian.org>
+Date: Sun, 17 Jan 2010 19:11:24 +0100
+From: Giuseppe Iuculano <iuculano@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: epiphany not checking ssl certs
+Subject: CVE request: dokuwiki
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 17 Sep 2010 14:45:28 -0400 (EDT), Steven M. Christey wrote:
-> 
-> If an application does not advertise a security feature, then in general 
-> we will not give a CVE because of its absence of the feature (I don't want 
-> to give out 50,000 CVEs for every protocol that does cleartext 
-> transmission... or uses DES... etc.)  Similarly, we generally avoid 
-> assigning CVEs to "defense in depth" fixes, although the line between 
-> "vulnerability" and "defense in depth" can get fuzzy.
-> 
-> The http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=564690#5 title says 
-> "Does not longer check certificates" which could be interpreted to mean 
-> that it used to check certs, and now it doesn't.  If that's the case, then 
-> it makes sense to assign a CVE.
+Hi,
 
-The feature was lost in the transition from gecko to webkit (or more
-accurately libsoup for certificate support). I think it makes sense to
-assign an id since it does involve the loss of an expected security
-feature.
+Multiple vulnerabilities have been discovered in DokuWiki.
 
-Mike
+References:
+http://secunia.com/advisories/38183/
+http://secunia.com/advisories/38205/
+http://bugs.splitbrain.org/index.php?do=details&task_id=1847
+http://bugs.splitbrain.org/index.php?do=details&task_id=1853
+http://www.exploit-db.com/exploits/11141
+http://www.splitbrain.org/blog/2010-01/17-dokuwiki-security
+
+
+Cheers,
+Giuseppe.
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
