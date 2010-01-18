@@ -1,72 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/07/5
-Message-ID: <4C0D0B4A.1010306@cacti.net>
-Date: Mon, 07 Jun 2010 11:07:54 -0400
-From: Larry Adams <thewitness@...ti.net>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: Jan Lieskovsky <jlieskov@...hat.com>,  oss-security@...ts.openwall.com, Nahuel Grisolia <nahuel@...sai-sec.com>,  Stefan Esser <stefan.esser@...tioneins.de>, Cacti Developers <developers@...ti.net>, Tony Roman <roman@...order.com>
-Subject: Re: CVE Request -- Cacti v0.8.7 -- three security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/18/2
+Message-ID: <1256003053.122761263849342240.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 18 Jan 2010 16:15:42 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: BerliOS.de comrpomise
 Content-Type: text/plain; charset=utf-8
 
+Hello all,
 
+As some of you have heard, it seems that BerliOS was compromised recently.
+http://lwn.net/Articles/369633/
+http://www.h-online.com/open/news/item/BerliOS-open-source-project-portal-falls-victim-to-attack-903990.html
 
-On 6/7/2010 10:21 AM, Steven M. Christey wrote:
->
-> On Tue, 1 Jun 2010, Jan Lieskovsky wrote:
->
->>> [C], SQL injection and shell escaping issues reported by Bonsai 
->>> Information Security (http://www.bonsai-sec.com)
->>>            [7] 
->>> http://www.bonsai-sec.com/blog/index.php/using-grep-to-find-0days/
->>>            [8] 
->>> http://www.bonsai-sec.com/en/research/vulnerabilities/cacti-os-command-injection-0105.php 
->>>
->>>
->>>
->>> ...
->>>
->
->>  2, OS command injection issue, CVE-2010-1645 / BONSAI-2010-0105
->>     References:  [2] 
->> http://www.bonsai-sec.com/en/research/vulnerabilities/cacti-os-command-injection-0105.php 
->>
->>     Proper patches are the following three: (noticed by Tomas Hoger 
->> && confirmed by Tony Roman, thanks for it!)
->>       [3] http://svn.cacti.net/viewvc?view=rev&revision=5778
->>       [4] http://svn.cacti.net/viewvc?view=rev&revision=5782
->>       [5] http://svn.cacti.net/viewvc?view=rev&revision=5784
->
-> The BONSAI-2010-0105 references two problems, one for ping.php and 
-> another one having to do with a "Vertical Label" in a "Graph Template."
->
-> I don't see evidence of this vector in the revisions listed above.  
-> Does anybody else?
->
-> (If the "Vertical Label" issue went unpatched, then a separate CVE 
-> should probably be assigned to it.)
->
-> - Steve
+I've mailed the BerliOS admins with no reply. I'm wondering if anyone has 
+any additional details regarding this.
 
-Steve,
+The Apache group had a similar incident some years back, and did an 
+incredible job of documenting things:
+http://www.apache.org/info/20010519-hack.html
 
-I just validated that the Vertical Label via the hostname field 
-injection is not resolved from a UI perspective in host.php.  I have not 
-checked lib/rrd.php for proper escaping and will do that shortly.
+I suspect that given the large number of distributions this will affect, 
+some sort of coordinated effort may be in order. Unless we are given 
+evidence to the contrary, I think it must be presumed that source hosted at
+berlios.de is not secure and needs to be inspected.
 
-Generally, we're not as concerned when it comes to components of the UI 
-that are not accessible for the guest account.  However, I will close 
-this loophole today and prior to Cacti 0.8.7g beta.  Simply put, we 
-should not permit any name there that is not either an IP address or 
-something that is conforming (aka hostname or fqdn).
+This topic was briefly brought up on a Fedora mailing list:
+http://lists.fedoraproject.org/pipermail/devel/2010-January/129156.html
 
-I toyed with the idea of a gethostbyname validation.  However, there are 
-cases in Cacti where we have hosts that are represented more as Objects 
-and not as physical hosts (aka no avail check), so it will have to be a 
-hostname that is syntactically correct.  I'll get you a commit # once 
-it's in.
+I suspect each distribution will have their own list of sources that need
+inspection.
 
-Regards,
+Thanks.
 
-Larry Adams
-Lead Cacti Developer
-
+-- 
+    JB
