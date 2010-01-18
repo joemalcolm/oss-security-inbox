@@ -1,50 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/07/1
-Message-Id: <20100406202638.bf1d3c3a.reed@reedloden.com>
-Date: Tue, 6 Apr 2010 20:26:38 -0500
-From: Reed Loden <reed@...dloden.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: MediaWiki 1.15.3 -- Login CSRF
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/18/1
+Message-ID: <20100118105111.GA3585@suse.de>
+Date: Mon, 18 Jan 2010 11:51:14 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: Evolution denial of service bug ... 
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-Greetings,
+We received a bugreport for Evolution from "Francis Provencher for Protek Research Lab's"
+(protekresearchlab@...oo.ca).
 
-MediaWiki 1.15.3 was just (20 min. ago) released[0] to fix a CSRF issue
-[1] in the login process, so need a CVE assigned to track the problem.
+The issue is that if Evolution accesses a malicious POP3 server the latter
+can by sending an overly long ERR message cause a X11 error (BadAlloc)
+likely due to a overly wide Message Box and so cause evolution to abort.
 
-============
-MediaWiki was found to be vulnerable to login CSRF. An attacker who
-controls a user account on the target wiki can force the victim to log
-in as the attacker, via a script on an external website. If the wiki is
-configured to allow user scripts, say with "$wgAllowUserJs = true" in
-LocalSettings.php, then the attacker can proceed to mount a
-phishing-style attack against the victim to obtain their password.
+The commit in evolution that fixes it:
+http://git.gnome.org/browse/evolution-data-server/commit/?id=22854733409fddf3e313cc637ce3a0309159b41f
+it also checks for utf-8 validity.
 
-Even without user scripting, this attack is a potential nuisance, and so
-all public wikis should be upgraded if possible.
 
-Our fix includes a breaking change to the API login action. Any clients
-using it will need to be updated. We apologise for making such a
-disruptive change in a minor release, but we feel that security is
-paramount.
-============
+I am still undecided whether this is a real security issue or not. On
+one hand getting rid of this malicious server from evolution might
+be difficult if it is auto-opened. On the other hand, malicious servers
+have also other denial of service possibilities (like sending 1000000+ mailheaders).
 
-Regards,
-~reed
-
-[0] http://lists.wikimedia.org/pipermail/mediawiki-announce/2010-April/000090.html
-[1] https://bugzilla.wikimedia.org/show_bug.cgi?id=23076
-
-- -- 
-Reed Loden - <reed@...dloden.com>
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAku7304ACgkQa6IiJvPDPVozkQCgv4DUtGwOzEgDY0m+/dNXbO/t
-LIQAnj7OdyY8THs+KjSbwRgri0O8Kbu1
-=lq2I
------END PGP SIGNATURE-----
+Ciao, Marcus
