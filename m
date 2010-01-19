@@ -1,43 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/11/3
-Message-Id: <201003111442.33276.ludwig.nussel@suse.de>
-Date: Thu, 11 Mar 2010 14:42:32 +0100
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/19/5
+Message-ID: <1719469004.227941263932377522.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 19 Jan 2010 15:19:37 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Brian Stafford <brian@...fford.uklinux.net>, libesmtp@...fford.uklinux.net, security@...ntu.com
-Subject: Re: CVE Request: libesmtp does not check NULL bytes in commonName
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: dokuwiki
 Content-Type: text/plain; charset=utf-8
 
-Brian Stafford wrote:
-> Ludwig Nussel wrote:
-> > The attached patch includes the patch from Debian. However, the
-> > match_domain() function probably should be rewritten anyways I
-> > guess. It matches patters such as 'foo.bar.*' which is rather weird.
-> [...]
-> RFC 2818 does not constrain which domain name components may contain 
-> wildcards. Names such as *.bar.com, foo.*.com and foo.bar.* are 
-> therefore all valid despite the latter two cases appearing 
-> unconventional.  The examples from RFC 2818 show wildcards only in the 
-> leading domain name components. Examples are neither normative nor 
-> exhaustive and may not therefore imply constraints or extensions of a 
-> standard's normative text. Comparison bugs aside, I believe that 
-> libESMTP's behaviour correctly implements RFC 2818 in this respect.
+----- "Giuseppe Iuculano" <iuculano@...ian.org> wrote:
 
-Hmm. Yes, RFC 2818 could be interpretet that way. RFCs 2595 (IMAP),
-4642 (NNTP) and 4513 (LDAP) restrict wildcards to the leftmost
-component. The LDAP one doesn't allow wildcards in CN's though and
-none of them explicitly disallows use of the CN if a subjAltname is
-present. RFC 3207 (SMTP) doesn't tell how matching should be
-performed. perl-IO-Socket therefore doesn't allow wildcards for
-smtp. perl-IO-Socket has the most flexible implementation I've seen
-so far but intentionally only supports one wildcard at the leftmost
-side. What a mess.
+> Hi,
+> 
+> Multiple vulnerabilities have been discovered in DokuWiki.
+> 
+> References:
+> http://secunia.com/advisories/38183/
+> http://secunia.com/advisories/38205/
+> http://bugs.splitbrain.org/index.php?do=details&task_id=1847
+> http://bugs.splitbrain.org/index.php?do=details&task_id=1853
+> http://www.exploit-db.com/exploits/11141
+> http://www.splitbrain.org/blog/2010-01/17-dokuwiki-security
+> 
+> 
 
-cu
-Ludwig
+I'm using this as my reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=556494#c6
+
+http://bugs.splitbrain.org/index.php?do=details&task_id=1847
+http://secunia.com/advisories/38183/
+- directory structure information leak
+- insufficient permissions checks, allowing attacker to change ACLs
+
+http://bugs.splitbrain.org/index.php?do=details&task_id=1853
+http://secunia.com/advisories/38205/
+- missing CSRF protections in ACL manager
+
+So for CVE assignment:
+
+CVE-2010-0287
+- directory structure information leak
+
+CVE-2010-0288
+- insufficient permissions checks, allowing attacker to change ACLs
+
+
+CVE-2010-0289
+- missing CSRF protections in ACL manager
+
+Thanks.
 
 -- 
- (o_   Ludwig Nussel
- //\   
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+    JB
