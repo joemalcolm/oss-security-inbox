@@ -1,30 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/29/2
-Message-ID: <4CA2E190.4070807@redhat.com>
-Date: Wed, 29 Sep 2010 14:49:52 +0800
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/19/1
+Message-ID: <4B554E36.1080108@redhat.com>
+Date: Tue, 19 Jan 2010 14:16:22 +0800
 From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
 CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request - kernel: prevent heap corruption in snd_ctl_new()
+Subject: CVE request - kernel: untangle the do_mremap() mess
 Content-Type: text/plain; charset=utf-8
 
-Reported by Dan Rosenberg. The snd_ctl_new() function in 
-sound/core/control.c allocates space for a snd_kcontrol struct by 
-performing arithmetic operations on a user-provided size without 
-checking for integer overflow.  If a user provides a large enough size, 
-an overflow will occur, the allocated chunk will be too small, and a 
-second user-influenced value will be written repeatedly past the bounds 
-of this chunk. This code is reachable by unprivileged users who have 
-permission to open a /dev/snd/controlC* device (on many distros, this is 
-group "audio") via the SNDRV_CTL_IOCTL_ELEM_ADD and 
-SNDRV_CTL_IOCTL_ELEM_REPLACE ioctls.
+There's a pile of upstream commits that fixed issues that can lead to 
+user-triggerable panics on supported boxes: 
+http://groups.google.com/group/linux.kernel/msg/895f20870532241e.
 
-Upstream commit:
-http://git.kernel.org/linus/5591bf07225523600450edd9e6ad258bb877b779
+http://groups.google.co.jp/group/fa.linux.kernel/browse_thread/thread/8bf22336b1082090
 
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=638478
-
-Eugene
+Thanks, Eugene
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+Eugene Teo / Red Hat Security Response Team
