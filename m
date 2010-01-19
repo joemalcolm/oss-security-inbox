@@ -1,20 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/04/9
-Message-ID: <20101104194416.GI5144@ksplice.com>
-Date: Thu, 4 Nov 2010 15:44:16 -0400
-From: Nelson Elhage <nelhage@...lice.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/19/6
+Message-ID: <2039809097.229341263933540044.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 19 Jan 2010 15:39:00 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel: logic error in INET_DIAG bytecode auditing
+Subject: Re: Evolution denial of service bug ...
 Content-Type: text/plain; charset=utf-8
 
-INET_DIAG is inconsistent about how it looks up the bytecode contained in a
-netlink message, making it possible for a user to cause the kernel to execute
-unaudited INET_DIAG bytecode.
+----- "Marcus Meissner" <meissner@...e.de> wrote:
+> 
+> We received a bugreport for Evolution from "Francis Provencher for Protek
+> Research Lab's" (protekresearchlab@...oo.ca).
+> 
+> The issue is that if Evolution accesses a malicious POP3 server the
+> latter can by sending an overly long ERR message cause a X11 error
+> (BadAlloc) likely due to a overly wide Message Box and so cause evolution
+> to abort.
+> 
+> The commit in evolution that fixes it:
+> http://git.gnome.org/browse/evolution-data-server/commit/?id=22854733409fddf3e313cc637ce3a0309159b41f
+> it also checks for utf-8 validity.
+> 
+> 
+> I am still undecided whether this is a real security issue or not. On one
+> hand getting rid of this malicious server from evolution might be
+> difficult if it is auto-opened. On the other hand, malicious servers have
+> also other denial of service possibilities (like sending 1000000+
+> mailheaders).
+> 
 
-This can be abused to make the kernel enter an infinite loop, and possibly other
-consequences, although I haven't thought of anything else interesting.
+I'm thinking not a flaw for this one. If it could execute arbitrary code,
+you'd have a flaw, but a DoS only is pretty gray area.
 
-Reference:
-http://www.spinics.net/lists/netdev/msg145899.html
+Unless someone gives me a compelling reason to do so, I'm not assigning
+this a CVE id.
 
-- Nelson
+Thanks.
+
+-- 
+    JB
