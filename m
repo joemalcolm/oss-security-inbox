@@ -1,33 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/11/1
-Message-ID: <20100711005118.GA23074@ngolde.de>
-Date: Sun, 11 Jul 2010 02:51:18 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: Stefan Esser's 0day PHP SysCan flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/19/8
+Message-ID: <1409622395.235811263936069790.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 19 Jan 2010 16:21:09 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: coley <coley@...re.org>, oss-security <oss-security@...ts.openwall.com>
+Subject: BIND CVE-2009-4022 fix incomplete
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Pierre Joye <pierre.php@...il.com> [2010-06-30 18:53]:
-> On Wed, Jun 30, 2010 at 5:32 PM, Raphael Geissert <geissert@...ian.org> wrote:
-> > Raphael Geissert wrote:
-> >> Here's a public, limited, explanation:
-> >> http://php-security.org/2010/06/25/mops-2010-061-php-splobjectstorage-
-> >> deserialization-use-after-free-vulnerability/
-> >
-> > And the fix by upstream:
-> > http://svn.php.net/viewvc?view=revision&revision=300843
-> 
-> And Stefan confirmed that the fix is correct (via one of his colleague
-> at SektionsEins).
+Hi Steve,
 
-JFYI, nice writeup from team Nibbles:
-http://nibbles.tuxfamily.org/?p=1837
+I'm not assigning this one as I'm not sure if you've seen this or not.
 
-Cheers
-Nico
+ISC released an update today for BIND, part of it was that CVE-2009-4022
+was not completely fixed:
+https://www.isc.org/advisories/CVE-2009-4022
+
+If you look down at the bottom of their advisory you can see this:
+    Jan. 19 - Revised Summary, Severity, Description, Workaround, Impact &
+    Solution (earlier fixes incomplete) 
+
+As best as we can tell, this is why:
+https://bugzilla.redhat.com/show_bug.cgi?id=554851#c7
+
+Thanks.
+
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+    JB
