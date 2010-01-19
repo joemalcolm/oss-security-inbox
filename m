@@ -1,45 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/07/1
-Message-ID: <4BE3AC76.50703@redhat.com>
-Date: Fri, 07 May 2010 14:00:22 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/19/4
+Message-ID: <998181689.222641263930352704.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 19 Jan 2010 14:45:52 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: coley@...us.mitre.org
-Subject: CVE-2010-0730 xen: emulator instruction decoding inconsistency
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: phpbb before 3.0.5
 Content-Type: text/plain; charset=utf-8
 
-Assigned with CVE-2010-0730. It does not affect upstream. For more info, 
-please see https://bugzilla.redhat.com/CVE-2010-0730.
+I'm going to leave this one to MITRE. It's much bigger than a breadbasket
+to sort through the list of things fixed, which I don't have time to do.
 
-Due to a mismatch between the opcode decoding table and the 
-implementation of the operand decoder in platform.c, the ARPL 
-instruction would cause the guest to crash if executed on a MMIO area. 
-While this is difficult to exploit from non-root, it is theoretically 
-possible to do so.
-
-This fix changes the failure path to inject #UD instead of crashing the 
-domain. The guest kernel will transform the #UD into a SIGILL.
----
-  arch/x86/hvm/platform.c |    4 +++-
-  1 files changed, 3 insertions(+), 1 deletions(-)
-
-diff --git a/arch/x86/hvm/platform.c b/arch/x86/hvm/platform.c
-index 3d69e9c..86c478d 100644
---- a/arch/x86/hvm/platform.c
-+++ b/arch/x86/hvm/platform.c
-@@ -1057,7 +1057,9 @@ void handle_mmio(unsigned long gpa)
-          for ( i = 0; i < inst_len; i++ )
-              printk(" %02x", inst[i] & 0xFF);
-          printk("\n");
--        domain_crash_synchronous();
-+
-+	hvm_inject_exception(TRAP_invalid_op, -1, 0);
-+	return;
-      }
-
-      regs->eip += inst_len; /* advance %eip */
--- 
-1.6.6.1
+Sorry.
 
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+    JB
+
+
+----- "Hanno Böck" <hanno@...eck.de> wrote:
+
+> See:
+> http://www.phpbb.com/community/viewtopic.php?f=14&p=9764445
+> "This release fixes numerous bugs since the 3.0.4 release, corrects
+> style 
+> issues, fixing one very minor security bug as well as increasing
+> performance 
+> and scalability again."
+> # [Sec] Only use forum id supplied for posting if global announcement
+> 
+> detected. (Reported by nickvergessen)
+> 
+> 
+> Also please note that the last time I requested CVEs for phpbb, they
+> never got 
+> assigned:
+> http://seclists.org/oss-sec/2009/q1/104
+> 
+> cu,
+> 
+> -- 
+> Hanno Böck		Blog:		http://www.hboeck.de/
+> GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+> 
+> http://schokokeks.org - professional webhosting
