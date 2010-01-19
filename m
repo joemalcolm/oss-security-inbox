@@ -1,37 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/18/3
-Message-ID: <1915220118.620201276874835970.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 18 Jun 2010 11:27:15 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/19/9
+Message-ID: <20100119214213.GA8969@openwall.com>
+Date: Wed, 20 Jan 2010 00:42:13 +0300
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - kernel: xfs swapext ioctl issue
+Subject: Re: CVE request: dokuwiki
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-2226 for this.
+In case anyone needs this extra info, here are the commits of the fixes
+and of the vulnerable code:
 
-Thanks.
+On Tue, Jan 19, 2010 at 03:19:37PM -0500, Josh Bressers wrote:
+> http://bugs.splitbrain.org/index.php?do=details&task_id=1847
+> http://secunia.com/advisories/38183/
+> - directory structure information leak
+> - insufficient permissions checks, allowing attacker to change ACLs
 
--- 
-    JB
+http://github.com/splitbrain/dokuwiki/commit/96a47e5d480e6c5b3aab1884a8536ec4b8ca2fab
+http://github.com/splitbrain/dokuwiki/commit/8c5215b744582107f352aa4ccea4182296674250
 
+> http://bugs.splitbrain.org/index.php?do=details&task_id=1853
+> http://secunia.com/advisories/38205/
+> - missing CSRF protections in ACL manager
 
------ "Eugene Teo" <eugeneteo@...nel.sg> wrote:
+http://github.com/splitbrain/dokuwiki/commit/d7554c0bb25241c1299af28785878d31ad02dbad
+http://github.com/splitbrain/dokuwiki/commit/cce7ae9882da5682192e7153f5b2b5cfdcf5f0ec
 
-> User "foo" can use the SWAPEXT ioctl to swap a write-only file owned
-> by 
-> user "bar" into a file owned by "foo" and subsequently reading it. It
+According to the blog post, "all bugs are in the new ACL Manager
+introduced in 2008-05-05".  The vulnerable code appears to have been
+committed on "Sat Nov 17 07:57:40 -0800 2007":
+
+http://github.com/splitbrain/dokuwiki/commit/2a3623da3390f0118660d541928ae8c635631b3d#diff-1
+
+According to http://www.dokuwiki.org/changes , there was no release
+between 2007-06-26 and 2008-05-05, which must be why only the latter
+date was mentioned.
+
+> So for CVE assignment:
 > 
-> does so by checking that the file descriptors passed to the ioctl are
+> CVE-2010-0287
+> - directory structure information leak
 > 
-> also opened for reading.
+> CVE-2010-0288
+> - insufficient permissions checks, allowing attacker to change ACLs
 > 
-> References:
-> https://bugzilla.redhat.com/show_bug.cgi?id=605158
-> http://archives.free.net.ph/message/20100616.130710.301704aa.en.html
-> http://archives.free.net.ph/message/20100616.135735.40f53a32.en.html
 > 
-> Thanks, Eugene
-> -- 
-> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i);
-> }
+> CVE-2010-0289
+> - missing CSRF protections in ACL manager
+
+Alexander
