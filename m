@@ -1,40 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/30/10
-Message-ID: <i0fr8t$m9k$1@dough.gmane.org>
-Date: Wed, 30 Jun 2010 11:27:19 -0500
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/19/7
+Message-ID: <206979674.229731263933681428.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 19 Jan 2010 15:41:21 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: PHP MOPS-2010-56..60
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: untangle the do_mremap() mess
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-According to our tracker there are still some MOPS issues that don't have 
-CVE ids.
+----- "Eugene Teo" <eugene@...hat.com> wrote:
 
-More specifically:
+> There's a pile of upstream commits that fixed issues that can lead to
+> 
+> user-triggerable panics on supported boxes: 
+> http://groups.google.com/group/linux.kernel/msg/895f20870532241e.
+> 
+> http://groups.google.co.jp/group/fa.linux.kernel/browse_thread/thread/8bf22336b1082090
+> 
 
-> 60: PHP Session Serializer Session Data Injection Vulnerability
-http://svn.php.net/viewvc?view=revision&revision=298608
+I don't think CVE ids can be assigned to this without more information. I'm
+not knowledgeable enough, nor do I have the time to properly understand
+this list.
 
-> 59: PHP php_mysqlnd_auth_write() Stack Buffer Overflow Vulnerability
-http://svn.php.net/viewvc?view=revision&revision=298703
+Thanks.
 
-> 58: PHP php_mysqlnd_read_error_from_line() [Heap] Buffer Overflow 
-Vulnerability
-http://svn.php.net/viewvc?view=revision&revision=298703
-
-> 57 PHP php_mysqlnd_rset_header_read() [Heap] Buffer Overflow Vulnerability
-I think this is http://svn.php.net/viewvc?view=revision&revision=298235
-
-> 56 PHP php_mysqlnd_ok_read() Information Leak Vulnerability
-http://svn.php.net/viewvc?view=revision&revision=298703
-
-Could CVE ids be assigned?
-
-Regards,
 -- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
-
-
+    JB
