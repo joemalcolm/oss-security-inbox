@@ -1,32 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/08/2
-Message-ID: <20100608193335.GF4828@redhat.com>
-Date: Tue, 8 Jun 2010 13:33:35 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/20/2
+Message-ID: <4B566CED.8030409@kernel.sg>
+Date: Wed, 20 Jan 2010 10:39:41 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: jar, fastjar directory traversal vulnerabilities
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE-2009-3556 kernel: qla2xxx NPIV vport management pseudofiles are world writable
 Content-Type: text/plain; charset=utf-8
 
-Hi all.
+As far as I know, this only affects Red Hat Enterprise Linux 5.
 
-A directory traversal flaw was reported in fastjar [1] that was assigned
-CVE-2010-0831.  Upon investigation, it was found that the jar program
-[2] had a similar problem.  No CVE name was assigned to the jar issue,
-however it looks like they are two different programs with two different
-code bases.
+The RHBA-2008:0314 update introduced N_Port ID Virtualization (NPIV) 
+support in the qla2xxx driver, resulting in two new sysfs pseudo files, 
+"/sys/class/scsi_host/[a qla2xxx host]/vport_create" and "vport_delete". 
+These two files were world-writable by default, allowing a local user to 
+change SCSI host attributes. This flaw only affects systems using the 
+qla2xxx driver and NPIV capable hardware.
 
-There is also some confusion because these issues are similar to (or a
-result of incomplete fixes for) CVE-2006-3619 (fastjar) and
-CVE-2005-1080 (jar).
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-3556
 
-What makes things worse is that it doesn't look like CVE-2005-1080 was
-ever fixed.  So I'm not sure if this "new" jar issue needs a new CVE
-name, or if it would be covered under CVE-2005-1080 (since nothing ever
-claimed to fix this directory traversal vulnerability in jar).
-
-Any insight from MITRE would be appreciated.  I've not assigned a CVE
-name to the "new" jar issue because of this confusion.
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+Thanks, Eugene
