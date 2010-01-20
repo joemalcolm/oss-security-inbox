@@ -1,28 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/01/3
-Message-ID: <4B66B2ED.4000701@redhat.com>
-Date: Mon, 01 Feb 2010 11:54:37 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/20/1
+Message-ID: <4B566C5A.8030503@kernel.sg>
+Date: Wed, 20 Jan 2010 10:37:14 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
+To: oss-security@...ts.openwall.com
 CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE Request -- Squid -- SQUID-2010_1.txt
+Subject: CVE-2009-4272 kernel: emergency route cache flushing leads to node deadlock
 Content-Type: text/plain; charset=utf-8
 
-Hi Josh, Steve, vendors,
+Reported by the Parallels Virtuozzo Containers team.
 
-   Squid upstream has released updated versions fixing DoS
-when processing specially crafted DNS packets [1].
+If an attacker was able to cause a large enough number of collisions in 
+the routing hash table (via specially-crafted packets) for the emergency 
+route flush to trigger, a deadlock could occur, or if the kernel routing 
+cache was disabled, an uninitialized pointer would be left behind after 
+a route lookup, leading to a NULL pointer dereference. Both caused by 
+the same issue.
 
- From the upstream advisory:
+Introduced via:
+c6153b5b77650879d78dec76414213c76dd8d574 v2.6.27-rc4~39^2~41
+1080d709fb9d8cd4392f93476ee46a9d6ea05a5b v2.6.29-rc1~581^2~973
 
-"This problem allows any trusted client or external server who can
-  determine the squid receiving port to perform a short-term denial
-  of service attack on the Squid service."
+Patches:
+https://bugzilla.redhat.com/show_bug.cgi?id=545411#c6
+https://bugzilla.redhat.com/show_bug.cgi?id=545411#c15
 
-Could you allocate a CVE id for this? (can't find one in SQUID-2010_1.txt).
+Reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=545411
 
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-[1] http://www.squid-cache.org/Advisories/SQUID-2010_1.txt
+Thanks, Eugene
