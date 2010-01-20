@@ -1,42 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/03/2
-Message-ID: <1769822633.1087291275590572969.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 3 Jun 2010 14:42:52 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/20/9
+Message-ID: <20100120150309.GD28823@kroah.com>
+Date: Wed, 20 Jan 2010 07:03:09 -0800
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Panu Matilainen <pmatilai@...hat.com>, Jindrich Novy <jnovy@...hat.com>, Florian Festi <ffesti@...hat.com>, Matt McCutchen <matt@...tmccutchen.net>
-Subject: Re: CVE Request -- rpm -- Fails to remove the SUID/SGID bits on package upgrade (RH BZ#598775)
+Cc: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: untangle the do_mremap() mess
 Content-Type: text/plain; charset=utf-8
 
------ "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+On Wed, Jan 20, 2010 at 12:41:04AM -0500, Steven M. Christey wrote:
+>
+> On Wed, 20 Jan 2010, Eugene Teo wrote:
+>
+>> Anyway, Al summarised the mess here:
+>> http://marc.info/?l=linux-arch&m=126004438008670&w=2
+>>
+>> And the pile of upstream commits were meant to address the problems 
+>> described AFAIK. It will probably make more sense to associate all these 
+>> related commits to just one CVE name.
+>
+> I defer to Josh on this, but in a series of patches that is referred to as 
+> "mremap/mmap mess" in some linux-kernel subject lines, for which a 
+> specialist like Eugene is not entirely certain about, in which some of the 
+> patches are assembly-level changes for individual architectures, and where 
+> few of the patch diffs make it clear what the underlying problem was - we 
+> could collectively spend a week of labor trying to figure everything out 
+> from a purist CVE perspective, or anchor on a single series of commits that 
+> are hopefully attached to a single kernel RC or minor version release.  I 
+> suspect the latter would be more helpful to the general CVE consumer 
+> community, so my recommendation is for a single CVE, assuming that all of 
+> these patches make it into a single kernel update.
 
-> 
-> Jan Lieskovsky wrote:
-> > Hi Steve, vendors,
-> > 
-> >    Matt McCutchen pointed out a deficiency in the way rpm handled rpm
-> >    package upgrades -- it failed to clear out the SUID/SGID bits of the
-> >    old file by file replacement when privileged user performed package
-> >    upgrade. Under certain circumstances, a local, authenticated user
-> >    could use this flaw to escalate their privileges.
-> 
-> Maybe obvious and natural conclusion from previous post already, but Panu
-> clarified yet, similar deficiency holds for dealing with posix file
-> capabilities and SELinux contexts, i.e. they are not cleared after pkg
-> upgrade. Not sure second CVE is needed for this, but if one is enough,
-> wanted to explicitly mention this, so it can be described in the text of
-> the CVE too.
-> 
+They are all in the 2.6.32.4 release.
 
-I'm going to give both of these the same CVE id. The issues are very
-related, and I had look at the CWE guide, they both seem to fall under
-"CWE-281: Improper Preservation of Permissions"
+thanks,
 
-Steve, feel free to overrule me on this one.
-
-CVE-2010-2059
-
-Thanks.
-
--- 
-    JB
+greg k-h
