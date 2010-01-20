@@ -1,47 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/10/1
-Message-Id: <201005100933.16892.oeriksson@mandriva.com>
-Date: Mon, 10 May 2010 09:33:16 +0200
-From: Oden Eriksson <oeriksson@...driva.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/20/6
+Message-ID: <4B56C674.6050209@kernel.sg>
+Date: Wed, 20 Jan 2010 17:01:40 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Subject: Re: A mysql flaw.
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE-2009-4272 kernel: emergency route cache flushing leads to node deadlock
 Content-Type: text/plain; charset=utf-8
 
-lördagen den 8 maj 2010 02.56.06 skrev  Josh Bressers:
-> Please use CVE-2010-1621 for this.
-> 
-> Thanks.
+On 01/20/2010 10:37 AM, Eugene Teo wrote:
+> Reported by the Parallels Virtuozzo Containers team.
+>
+> If an attacker was able to cause a large enough number of collisions in
+> the routing hash table (via specially-crafted packets) for the emergency
+> route flush to trigger, a deadlock could occur, or if the kernel routing
+> cache was disabled, an uninitialized pointer would be left behind after
+> a route lookup, leading to a NULL pointer dereference. Both caused by
+> the same issue.
+>
+> Introduced via:
+> c6153b5b77650879d78dec76414213c76dd8d574 v2.6.27-rc4~39^2~41
+> 1080d709fb9d8cd4392f93476ee46a9d6ea05a5b v2.6.29-rc1~581^2~973
+>
+> Patches:
+> https://bugzilla.redhat.com/show_bug.cgi?id=545411#c6
 
-Thanks Josh.
- 
-> > Hello.
-> >
-> > With the mysql-5.1.46 release they fixed a security issue mentioned
-> > here:
-> >
-> > http://bugs.mysql.com/bug.php?id=51770
-> >
-> > [...]
-> >
-> > 3375 Davi Arnaut    2010-03-09
-> >       Bug#51770: UNINSTALL PLUGIN requires no privileges
-> >
-> >       The problem was that UNINSTALL PLUGIN wasn't performing
-> > privilege
-> >       checks before removing a plugin. Any user (including users
-> > without
-> >       any kind of privileges) could uninstall any plugin.
-> >
-> >       The solution is to verify if the user has the DELETE privilege
-> > for
-> >       the mysql.plugin table before uninstalling a plugin.
-> >
-> > [...]
-> >
-> > A CVE should probably be assigned for this.
-> 
+^^
+http://git.kernel.org/linus/73e42897
+http://git.kernel.org/linus/b6280b47
 
--- 
-Regards // Oden Eriksson
-Security team manager - Mandriva
-C∞O @ NUX™ AB
+> https://bugzilla.redhat.com/show_bug.cgi?id=545411#c15
+
+I have also fixed the permissions of the file attachments.
+
+Thanks, Eugene
