@@ -1,41 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/17/1
-Message-ID: <1271540279.21078.94.camel@severus.strandboge.com>
-Date: Sat, 17 Apr 2010 16:37:59 -0500
-From: Jamie Strandboge <jamie@...onical.com>
-To: Wouter Coekaerts <coekie@...si.org>
-Cc: oss-security <oss-security@...ts.openwall.com>, Steve Langasek <steve.langasek@...onical.com>
-Subject: Re: Re: CVE request: irssi 0.8.15
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/20/7
+Message-ID: <20100120123142.GI14634@ngolde.de>
+Date: Wed, 20 Jan 2010 13:31:42 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: BerliOS.de comrpomise
 Content-Type: text/plain; charset=utf-8
 
-FYI,
+Hi,
+* Josh Bressers <bressers@...hat.com> [2010-01-18 22:16]:
+> As some of you have heard, it seems that BerliOS was compromised recently.
+> http://lwn.net/Articles/369633/
+> http://www.h-online.com/open/news/item/BerliOS-open-source-project-portal-falls-victim-to-attack-903990.html
+> 
+> I've mailed the BerliOS admins with no reply. I'm wondering if anyone has 
+> any additional details regarding this.
+> 
+> The Apache group had a similar incident some years back, and did an 
+> incredible job of documenting things:
+> http://www.apache.org/info/20010519-hack.html
 
-I backported the following svn commits to 0.8.14 for the SSL issue:
-r5104:
-  Check if an SSL certificate matches the hostname of the server we are
-  connecting to
-r5107:
-  Use one SSL_CTX per connection, use default trusted CAs if nothing
-  specified. This allows useful use of -ssl_verify without
-  -ssl_cafile/-ssl_capath, using OpenSSL's default trusted CAs.
-r5108:
-  Call OpenSSL_add_all_algorithms(), may be needed to verify SHA256
-  certs with certain versions of OpenSSL.
-r5116:
-  network-openssl: Show why a certificate failed validation.
-r5136
-  Do not use SSLv2 protocol. From Bazerka.
+We (Debian) also contacted them and got a rather distracting reply so far 
+which doesn't help much. We are thinking about informing our maintainers to 
+check the upstream tarballs. But given the replies in the lwn thread and a 
+look at git.berlios.de doesn't give the impression so far that anything has 
+been fixed in a secure manner. I'll keep you updated but so far at least (and 
+this is my personal opinion) it doesn't look to me like it would be a wise 
+decision to host files at BerliOS currently and that BerliOS is interested to 
+do what apache has been done.
 
-However, after rolling it out Steve Langasek discovered a bug when
-connecting to an SSL irc proxy server[1]. His patch (attached) adjusts
-it so when we have a proxy setting, expect the CN to match the proxy
-hostname, not the server hostname
-
-[1] https://bugs.launchpad.net/ubuntu/+source/irssi/+bug/565182
-
+Cheers
+Nico
 -- 
-Jamie Strandboge             | http://www.canonical.com
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-View attachment "irssi-565182.diff" of type "text/x-patch" (1185 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+Content of type "application/pgp-signature" skipped
