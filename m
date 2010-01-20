@@ -1,60 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/24/1
-Message-ID: <1290555222.20864.190.camel@dyson>
-Date: Tue, 23 Nov 2010 18:33:42 -0500
-From: Jon Oberheide <jon@...rheide.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/20/8
+Message-ID: <235398429.282941263996001739.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 20 Jan 2010 09:00:01 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: Linux kernel address leaks
+Cc: coley <coley@...re.org>
+Subject: Re: BIND CVE-2009-4022 fix incomplete
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 2010-11-23 at 23:49 +0100, Marcus Meissner wrote:
-> On Tue, Nov 23, 2010 at 10:04:06AM -0500, Jon Oberheide wrote:
-> > On Tue, 2010-11-23 at 09:59 +0100, Yves-Alexis Perez wrote: 
-> > > On lun., 2010-11-22 at 18:54 -0500, Michael Gilbert wrote:
-> > > > Oh, and if you get CVEs assigned, that kind of forces them to fix the
-> > > > problem, right?
-> > > > 
-> > > I'm not that sure (there are CVEs for issues considered too small by the
-> > > developers involved, not only in Linux, which are still opened), and I'm
-> > > not sure using CVE system for “blackmailing” is a good usage for that
-> > > tool.
-> > 
-> > I think calling it "blackmail" is a bit hyperbolic. Rather, it's simply
-> > the next step in the vulnerability disclosure process: (1) research
-> > reports vulnerability to vendor; (2) vendor refuses to fix
-> > vulnerability; (3) research discloses vulnerability and requests CVE.
-> > 
-> > Am I correct in assuming that it is acceptable procedure to assign CVEs
-> > to unpatched vulnerabilities?
+
+----- "Josh Bressers" <bressers@...hat.com> wrote:
+
+> Hi Steve,
 > 
-> CVE is just a directory index to vulnerabilites, regardless of fixed
-> status ... so YES.
+> I'm not assigning this one as I'm not sure if you've seen this or
+> not.
+> 
+> ISC released an update today for BIND, part of it was that
+> CVE-2009-4022
+> was not completely fixed:
+> https://www.isc.org/advisories/CVE-2009-4022
+> 
+> If you look down at the bottom of their advisory you can see this:
+>     Jan. 19 - Revised Summary, Severity, Description, Workaround,
+> Impact &
+>     Solution (earlier fixes incomplete) 
+> 
+> As best as we can tell, this is why:
+> https://bugzilla.redhat.com/show_bug.cgi?id=554851#c7
+> 
 
-Great. There's plenty of precedent for CVE assignment to vulnerabilities
-that leak information that can assist an attacker in exploitation.
+As this is holding up a Red Hat erratum, risking a dupe, I've
+assigned this CVE-2010-0290.
 
-In particular, I'm thinking about the handful of ASLR information leaks
-(eg. CVE-2009-2691 [1]), where userspace addresses are leaked via /proc,
-assisting an attacker in exploiting a vulnerability in a setuid
-userspace binary.
-
-In this case, we have an analogous situation, except that we're leaking
-kernel address via /proc, assisting an attacker in exploiting
-vulnerability in the kernel.
-
-I don't see any reason why it would not be entirely appropriate to
-assign a CVE here.
-
-Regards,
-Jon Oberheide
-
-[1] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2691
-
+Thanks.
 
 -- 
-Jon Oberheide <jon@...rheide.org>
-GnuPG Key: 1024D/F47C17FE
-Fingerprint: B716 DA66 8173 6EDD 28F6  F184 5842 1C89 F47C 17FE
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+    JB
