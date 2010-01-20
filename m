@@ -1,35 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/14/1
-Message-ID: <i1ivcp$oc6$1@dough.gmane.org>
-Date: Tue, 13 Jul 2010 19:12:17 -0500
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/20/4
+Message-ID: <20100120041010.GA23371@kroah.com>
+Date: Tue, 19 Jan 2010 20:10:10 -0800
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: znc id: CVE-2010-2448 or CVE-2010-2488?
+Cc: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: untangle the do_mremap() mess
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Wed, Jan 20, 2010 at 11:38:30AM +0800, Eugene Teo wrote:
+> On 01/20/2010 04:41 AM, Josh Bressers wrote:
+>> ----- "Eugene Teo"<eugene@...hat.com>  wrote:
+>>> There's a pile of upstream commits that fixed issues that can lead to
+>>>
+>>> user-triggerable panics on supported boxes:
+>>> http://groups.google.com/group/linux.kernel/msg/895f20870532241e.
+>>>
+>>> http://groups.google.co.jp/group/fa.linux.kernel/browse_thread/thread/8bf22336b1082090
+>>
+>> I don't think CVE ids can be assigned to this without more information. I'm
+>> not knowledgeable enough, nor do I have the time to properly understand
+>> this list.
+>
+> And upstream continues to give us grief...
 
-Some weeks ago I requested an id for a null pointer dereference in ZNC.
-Josh assigned CVE-2010-24*8*8.
+I have backported everything into the 2.6.32.4 release, so all
+should be good now.
 
-Because of a typo, the CVE id referenced in the DSA I released was 
-CVE-2010-24*4*8 [1] (previously assigned by Steven to a gitolite issue, 
-SA39587.) I updated our tracker as soon as I noticed the typo.
+thanks,
 
-However, in the last batch of CVE updates, the znc issue appeared with the 
-incorrect id (i.e. CVE-2010-24*4*8.)
-
-VUPEN and SecurityFocus already picked up the wrong id.
-
-How should we proceed?
-
-I would like to apologise for the inconvenience.
-
-[1]http://www.openwall.com/lists/oss-security/2010/06/24/5
-
-Kind regards,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
-
-
+greg k-h
