@@ -1,18 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/24/2
-Message-ID: <1274736780.3495.3.camel@new-desktop>
-Date: Mon, 24 May 2010 23:33:00 +0200
-From: Nicob <nicob@...ob.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request for Horde and Squirrelmail
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/21/3
+Message-ID: <20100121104600.0ef09f3b@tanana.suse.de>
+Date: Thu, 21 Jan 2010 10:46:00 +0100
+From: Ludwig Nussel <ludwig.nussel@...e.de>
+To: oss-security@...ts.openwall.com, Jerome Glisse <jglisse@...hat.com>
+Subject: Re: CVE request - kernel: drm/radeon: r6xx/r7xx possible security issue, system ram access
 Content-Type: text/plain; charset=utf-8
 
-Le dimanche 23 mai 2010 à 14:39 +0200, Thijs Kinkhorst a écrit :
-> The whole idea of the POP3 fetch mail plugin is to allow to connect to
-> other servers 
+Eugene Teo wrote:
+> On 01/21/2010 04:44 PM, Eugene Teo wrote:
+> > Quoting from the patch description:
+> > "This patch workaround a possible security issue which can allow user to
+> > abuse drm on r6xx/r7xx hw to access any system ram memory. This patch
+> > doesn't break userspace, it detect "valid" old use of CB_COLOR[0-7]_FRAG
+> [...]
+> > The attack is theoretical. To exploit this you need access to the drm
+> > device file which is usually set to 666 to allow users to have 3D
+> > acceleration.
+> 
+> Sorry, correction, you need to be root to open the drm device file. 
 
-Yes but usually only on TCP ports 110 and 995. Why not use this as a
-default list of authorized ports ?
+You lost me. Do you mean the driver itself checks for CAP_SYS_ADMIN for this
+particular operation? It wouldn't make much sense to set the device to 666 or
+have udev put ACLs on it otherwise.
 
-Nicob
+$ grep drm /lib/udev/rules.d/70-acl.rules 
+SUBSYSTEM=="drm", KERNEL=="card*", ENV{ACL_MANAGE}="1"
 
+cu
+Ludwig
+
+-- 
+ (o_   Ludwig Nussel
+ //\   
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
