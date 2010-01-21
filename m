@@ -1,24 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/23/3
-Message-ID: <4BA84D63.5090004@kernel.sg>
-Date: Tue, 23 Mar 2010 13:10:59 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/21/2
+Message-ID: <4B5815BA.2040801@redhat.com>
+Date: Thu, 21 Jan 2010 16:52:10 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: coley@...us.mitre.org
-Subject: CVE requests 6x kernel vulns still pending
+CC: "Steven M. Christey" <coley@...us.mitre.org>, Jerome Glisse <jglisse@...hat.com>
+Subject: Re: CVE request - kernel: drm/radeon: r6xx/r7xx possible security issue, system ram access
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
+On 01/21/2010 04:44 PM, Eugene Teo wrote:
+> Quoting from the patch description:
+> "This patch workaround a possible security issue which can allow user to
+> abuse drm on r6xx/r7xx hw to access any system ram memory. This patch
+> doesn't break userspace, it detect "valid" old use of CB_COLOR[0-7]_FRAG
+[...]
+> The attack is theoretical. To exploit this you need access to the drm
+> device file which is usually set to 666 to allow users to have 3D
+> acceleration.
 
-There are six CVE requests still not assigned with a name yet.
-
-1) kernel information leak via userspace USB interface
-2) kernel: ALSA: hda-intel: Avoid divide by zero crash
-3) kernel: NFS DoS related to "automount" symlinks
-4) kernel: dvb-core: ULE decapsulation DoS
-5) kernel: NFS: Fix an Oops when truncating a file
-6) kernel: bluetooth: potential bad memory access with sysfs files
-
-Can you please assign a name to them soon?
+Sorry, correction, you need to be root to open the drm device file. 
+However, Jerome discussed with me that it is possible if you use an X 
+program and use dri/dri2 to get access to the gpu cs ioctl. I have cc'ed 
+Jerome to this email who can help answer queries if there are any.
 
 Thanks, Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
