@@ -1,35 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/21/7
-Message-ID: <1146304676.208651285082205838.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 21 Sep 2010 11:16:45 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/21/1
+Message-ID: <4B5813E8.3050309@redhat.com>
+Date: Thu, 21 Jan 2010 16:44:24 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: egroupware remote code and xss
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request - kernel: drm/radeon: r6xx/r7xx possible security issue, system ram access
 Content-Type: text/plain; charset=utf-8
 
------ "Hanno Böck" <hanno@...eck.de> wrote:
-> 
-> http://www.egroupware.org/news?item=93
-> 
-> Nahuel Grisolia from CYBSEC S.A. Security Systems found two security
-> problems in EGroupware:
-> 
->     one is a serious remote command execution (allowing to run arbitrary
->     command on the web server by simply issuing a HTTP request!).
+Quoting from the patch description:
+"This patch workaround a possible security issue which can allow user to 
+abuse drm on r6xx/r7xx hw to access any system ram memory. This patch 
+doesn't break userspace, it detect "valid" old use of CB_COLOR[0-7]_FRAG 
+& CB_COLOR[0-7]_TILE registers and overwritte the address these 
+registers are pointing to with the one of the last color buffer. This 
+workaround will work for old mesa & xf86-video-ati and any old user 
+which did use similar register programming pattern as those (we expect 
+that there is no others user of those ioctl except possibly a malicious 
+one). This patch add a warning if it detects such usage, warning 
+encourage people to update their mesa & xf86-video-ati. New userspace 
+will submit proper relocation.
 
-Please use CVE-2010-3313
+Fix for xf86-video-ati / mesa (this kernel patch is enough to prevent 
+abuse, fix for userspace are to set proper cs stream and avoid kernel 
+warning) : 
+http://cgit.freedesktop.org/xorg/driver/xf86-video-ati/commit/?id=95d63e408cc88b6934bec84a0b1ef94dfe8bee7b
+http://cgit.freedesktop.org/mesa/mesa/commit/?id=46dc6fd3ed5ef96cda53641a97bc68c3bc104a9f
 
->     The other a reflected cross-site scripting (XSS).
+Abusing this register to perform system ram memory is not easy, here is 
+outline on how it could be achieve. First attacker must have access to 
+the drm device and be able to submit command stream throught cs ioctl. 
+Then attacker must build a proper command stream for r6xx/r7xx hw which 
+will abuse the FRAG or TILE buffer to overwrite the GPU GART which is in 
+VRAM. To achieve so attacker as to setup CB_COLOR[0-7]_FRAG or 
+CB_COLOR[0-7]_TILE to point to the GPU GART, then it has to find a way 
+to write predictable value into those buffer (with little cleverness i 
+believe this can be done but this is an hard task). Once attacker have 
+such program it can overwritte GPU GART to program GPU gart to point 
+anywhere in system memory. It then can reusse same method as he used to 
+reprogram GART to overwritte the system ram through the GART mapping. In 
+the process the attacker has to be carefull to not overwrite any 
+sensitive area of the GART table, like ring or IB gart entry as it will 
+more then likely lead to GPU lockup. Bottom line is that i think it's 
+very hard to use this flaw to get system ram access but in theory one 
+can achieve so.
 
-Please use CVE-2010-3314
+Side note: I am not aware of anyone ever using the GPU as an attack 
+vector, nevertheless we take great care in the opensource driver to try 
+to detect and forbid malicious use of GPU. I don't think the closed 
+source driver are as cautious as we are."
 
-> 
-> Here's the original advisory for both issues:
-> http://www.exploit-db.com/exploits/11777/
-> 
+The attack is theoretical. To exploit this you need access to the drm 
+device file which is usually set to 666 to allow users to have 3D 
+acceleration.
 
-Thanks
+http://lkml.org/lkml/2010/1/18/106
+https://bugzilla.redhat.com/show_bug.cgi?id=556692
 
+Thanks, Eugene
 -- 
-    JB
+Eugene Teo / Red Hat Security Response Team
