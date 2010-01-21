@@ -1,23 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/20/1
-Message-ID: <4C6E36AE.8060204@kernel.sg>
-Date: Fri, 20 Aug 2010 16:02:54 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request - kernel: jfs: don't allow os2 xattr namespace overlap with others
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/21/5
+Message-ID: <20100121151908.GC3837@localhost.localdomain>
+Date: Thu, 21 Jan 2010 16:19:08 +0100
+From: Jerome Glisse <jglisse@...hat.com>
+To: Ludwig Nussel <ludwig.nussel@...e.de>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request - kernel: drm/radeon: r6xx/r7xx possible security issue, system ram access
 Content-Type: text/plain; charset=utf-8
 
-Upstream commit: aca0fa34bdaba39bfddddba8ca70dba4782e8fe6
+On Thu, Jan 21, 2010 at 10:46:00AM +0100, Ludwig Nussel wrote:
+> Eugene Teo wrote:
+> > On 01/21/2010 04:44 PM, Eugene Teo wrote:
+> > > Quoting from the patch description:
+> > > "This patch workaround a possible security issue which can allow user to
+> > > abuse drm on r6xx/r7xx hw to access any system ram memory. This patch
+> > > doesn't break userspace, it detect "valid" old use of CB_COLOR[0-7]_FRAG
+> > [...]
+> > > The attack is theoretical. To exploit this you need access to the drm
+> > > device file which is usually set to 666 to allow users to have 3D
+> > > acceleration.
+> > 
+> > Sorry, correction, you need to be root to open the drm device file. 
+> 
+> You lost me. Do you mean the driver itself checks for CAP_SYS_ADMIN for this
+> particular operation? It wouldn't make much sense to set the device to 666 or
+> have udev put ACLs on it otherwise.
+> 
+> $ grep drm /lib/udev/rules.d/70-acl.rules 
+> SUBSYSTEM=="drm", KERNEL=="card*", ENV{ACL_MANAGE}="1"
+> 
+> cu
+> Ludwig
 
-Description from the commit: It's currently possible to bypass xattr 
-namespace access rules by prefixing valid xattr names with "os2.", since 
-the os2 namespace stores extended attributes in a legacy format with no 
-prefix.
+Sorry for being unclear, it has been a while since i last looked into
+how drm allow user to access the GPU. So in standard configuration any
+one can open the /dev/dri/card* file (well it's often restriced to a
+group but most of the time all user of the system are in the group).
 
-This patch adds checking to deny access to any valid namespace prefix 
-following "os2.".
+Opening the dev file is not enought, drm implement an authentification
+mecanism that was put in place to forbid non X client from accessing
+the hw. So in order to be able to access the hw you have to be an X
+client and to request to the server an authentification cookies (through
+the DRI or DRI2 protocol) when X server receive such request it
+generates a cookie and send it to the kernel and reply to the X client
+with the cookie. Once the X client got the cookie it sends it too to
+the kernel. Once kernel get the cookie it compares against the cookie
+the X server send and if there is a match it consider that the process
+can access the drm ioctl.
 
-Thanks, Eugene
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+drm has also more fine grained authorization for each ioctl. Some
+only need the DRM_AUTH other need the DRM_MASTER or DRM_ROOT_ONLY.
+The X server is a special client for the drm, it the first one to
+open the drm file with root power and so becomes the master, the
+master is the one being able to give other program to get the
+DRM_AUTH level.
+
+Bottom line, as of today any program trying to use the GPU either
+need to be root or to be an X client requesting DRM_AUTH through
+the DRI/DRI2 protocol.
+
+Hopes it clarify the situation. The security issue i pointed out
+can only be used localy through the X server, and so far i am not
+even sure it's doable (thing i describe is doable in theory but
+there maybe things that i didn't render this attack unpractible).
+
+Cheers,
+Jerome Glisse
+Red Hat Desktop engineering team
