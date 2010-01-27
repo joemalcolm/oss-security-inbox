@@ -1,47 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/16/2
-Message-ID: <146797506.1583071292507962436.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 16 Dec 2010 08:59:22 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/27/3
+Message-ID: <1584581143.378961264630220026.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 27 Jan 2010 17:10:20 -0500 (EST)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
 Cc: coley <coley@...re.org>
-Subject: Re: CVE request: MantisBT <=1.2.3 (db_type) Local File Inclusion Vulnerability
+Subject: Re: CVE id request: postgresql bitsubstr overflow
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-4350.
+----- "Nico Golde" <oss-security+ml@...lde.de> wrote:
+
+> Hi,
+> can I please get a CVE id for postgresql?
+> 
+> references:
+> http://intevydis.blogspot.com/2010/01/postgresql-8023-bitsubstr-overflow.html
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=567058
+> 
+
+Steve,
+
+Are you following the vulndisco stuff? I don't want to assign a dupe.
 
 Thanks.
 
 -- 
     JB
-
-
------ "David Hicks" <hickseydr@...usnet.com.au> wrote:
-
-> This is a CVE request for a vulnerability discovered in MantisBT
-> <1.2.4
-> by Gjoko Krstic of Zero Science Lab as per the following advisory:
-> 
-> http://www.zeroscience.mk/en/vulnerabilities/ZSL-2010-4984.php
-> 
-> MantisBT 1.2.4 has been released to resolve this issue.
-> 
-> For distributions or users using MantisBT 1.1.x, the following patch
-> can
-> be applied:
-> http://git.mantisbt.org/?p=mantisbt.git;a=commitdiff_plain;h=2641fdc60d2032ae1586338d6416e1eadabd7590
-> 
-> Please note that MantisBT 1.1.x is not recommended for use due to
-> many
-> security improvements and features implemented in MantisBT 1.2.x (but
-> not backported to 1.1.x).
-> 
-> Detailed information about this vulnerability can be found in this
-> bug
-> report: http://www.mantisbt.org/bugs/view.php?id=12607
-> 
-> Regards,
-> 
-> David Hicks
-> MantisBT Developer
-> mantisbt.org, #mantishelp freenode
