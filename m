@@ -1,59 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/07/1
-Message-ID: <Pine.GSO.4.64.1011071422450.27958@faron.mitre.org>
-Date: Sun, 7 Nov 2010 14:36:42 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/27/1
+Message-ID: <20100127170835.GP28326@ngolde.de>
+Date: Wed, 27 Jan 2010 18:08:37 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: moodle 1.9.10
+Subject: CVE id request: postgresql bitsubstr overflow
 Content-Type: text/plain; charset=utf-8
 
+Hi,
+can I please get a CVE id for postgresql?
 
-On Mon, 1 Nov 2010, Josh Bressers wrote:
+references:
+http://intevydis.blogspot.com/2010/01/postgresql-8023-bitsubstr-overflow.html
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=567058
 
->> Moodle 1.9.10 is a security update again:
->> http://docs.moodle.org/en/Moodle_1.9.10_release_notes
->>
->
-> This appears to be these things:
->
-> * MSA-10-0017 XSS vulnerability in YUI 2.4.0 through YUI 2.8.1
->    Use CVE-2010-3866 for this.
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-While many of the sources for YUI imply that there's only one XSS, one of 
-our CVE analysts observed that the "Affected Files and Patches" section at 
-the end of http://yuilibrary.com/support/2.8.2/ makes it clear that three 
-separate .SWF files are affected, and they are all patched in slightly 
-different versions.
-
-So, I'm going to REJECT CVE-2010-3866 and SPLIT it into the following 3 
-CVEs:
-
-CVE-2010-4207
-charts/assets/charts.swf
-YUI 2.4.0 through 2.8.1
-
-
-CVE-2010-4208
-uploader/assets/uploader.swf
-YUI 2.5.0 through 2.8.1
-
-
-CVE-2010-4209
-swfstore/swfstore.swf
-YUI 2.8.0 through 2.8.1
-
-
-> * MSA-10-0015 Customised HTML Purifier upgraded to 4.2.0
-> * MSA-10-0014 Customised phpMyAdmin upgraded to 2.11.11
->
-> These two have no real information I can see. They just say to upgrade the
-> upstream version. Does anyone have more information (I can't follow the
-> link to the tracker).
-
-This lack of information is a fairly common problem.  Generally, we take 
-the approach of assuming that such changes are related to vulnerabilities 
-that originate from the third-party package, but sometimes the 
-vulnerability is in glue code from the main package to the third-party 
-package, so there are limitations to this assumption.
-
-- Steve
+Content of type "application/pgp-signature" skipped
