@@ -1,26 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/30/1
-Message-ID: <20100730151509.GD4125@redhat.com>
-Date: Fri, 30 Jul 2010 16:15:09 +0100
-From: Joe Orton <jorton@...hat.com>
-To: dev@...pd.apache.org
-Cc: jeremy@...zel.net, oss-security@...ts.openwall.com
-Subject: CVE-2010-2791: mod_proxy information leak affecting 2.2.9 only
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/27/2
+Message-Id: <201001272254.08928.steffen.joeris@skolelinux.de>
+Date: Wed, 27 Jan 2010 22:54:04 +0100
+From: Steffen Joeris <steffen.joeris@...lelinux.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE id request: maildrop
 Content-Type: text/plain; charset=utf-8
 
-Jeremy Sowden discovered an information leak in mod_proxy affecting 
-httpd version 2.2.9 only.  If a timeout occurred reading a response from 
-a backend on a persistent connection, the backend connection was not 
-closed.  The response could subsequently be read and delivered to an 
-unrelated client.
+Hi
 
-This issue has been assigned CVE name CVE-2010-2791, and is equivalent 
-to CVE-2010-2068 (fixed in 2.2.16) but affects httpd on Unix.  The bug 
-was fixed* in 2.2.10 but the security impact was not known at the time.
+Could I please get a CVE id for this privilege escalation bug[0] in maildrop?
 
-I'll update http://httpd.apache.org/security/vulnerabilities_22.html to 
-reflect this shortly.
+Cheers
+Steffen
 
-Regards, Joe
+[0]: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=564601
 
-* fix for 2.2.x branch: http://svn.apache.org/viewvc?rev=699841&view=rev
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
