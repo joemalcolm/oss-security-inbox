@@ -1,45 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/11/4
-Message-ID: <Pine.GSO.4.64.1005111927060.21091@faron.mitre.org>
-Date: Tue, 11 May 2010 19:31:45 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/28/3
+Message-ID: <945089069.423521264686156478.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 28 Jan 2010 08:42:36 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Month of PHP Security 2010 Issues
+Subject: Re: CVE id request: maildrop
 Content-Type: text/plain; charset=utf-8
 
+----- "Steffen Joeris" <steffen.joeris@...lelinux.de> wrote:
+> 
+> Christoph Anton Mitterer discovered that maildrop, a mail delivery agent
+> with filtering abilities, is prone to a privilege escalation issue that
+> grants a user root group privileges.
+> 
+> 
+> The issue occurs when invoking maildrop -d, which keeps the root group
+> privileges on the mailbox rather than changing them to the users gid.
 
-Here is the latest round of CVE assignments for MOPS advisories.
+> [0]: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=564601
 
->MOPS-2010-021: PHP fnmatch() Stack Exhaustion Vulnerability
+Use CVE-2010-0301.
 
-CVE-2010-1917
+Thanks.
 
-
->MOPS-2010-020: Xinha WYSIWYG Plugin Configuration Injection Vulnerability
->MOPS-2010-019: Serendipity WYSIWYG Editor Plugin Configuration Injection
-
-These two are combined into a single CVE:
-
-CVE-2010-1916
-
-
->MOPS-2010-018: EFront ask_chat chatrooms_ID SQL Injection Vulnerability
-
-CVE-2010-1918
-
-
->MOPS-2010-017: PHP preg_quote() Interruption Information Leak
-
-CVE-2010-1915
-
-
->MOPS-2010-016: PHP ZEND_SR Opcode Interruption Address Information Leak 
->MOPS-2010-015: PHP ZEND_SL Opcode Interruption Address Information Leak 
->MOPS-2010-014: PHP ZEND_BW_XOR Opcode Interruption Address Information
-
-These three are combined into a single CVE:
-
-CVE-2010-1914
-
-
-- Steve
+-- 
+    JB
