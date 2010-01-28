@@ -1,29 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/09/1
-Message-ID: <516728481.319671276087340358.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 9 Jun 2010 08:42:20 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/28/2
+Message-Id: <201001281431.24966.steffen.joeris@skolelinux.de>
+Date: Thu, 28 Jan 2010 14:31:24 +0100
+From: Steffen Joeris <steffen.joeris@...lelinux.de>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - kernel: ext4: Make sure the MOVE_EXT ioctl can't overwrite append-only files
+Subject: Re: CVE id request: maildrop
 Content-Type: text/plain; charset=utf-8
 
+Hi Josh
 
------ "Eugene Teo" <eugene@...hat.com> wrote:
-
-> Using the EXT4_IOC_MOVE_EXT ioctl, it is possible to overwrite the 
-> contents of an append-only donor file.
+On Thu, 28 Jan 2010 01:53:41 pm Josh Bressers wrote:
+> ----- "Steffen Joeris" <steffen.joeris@...lelinux.de> wrote:
+> > Could I please get a CVE id for this privilege escalation bug[0] in
+> > maildrop?
+> >
+> > Cheers
+> > Steffen
+> >
+> > [0]: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=564601
 > 
-> http://git.kernel.org/linus/1f5a81e41f8b1a782c68d3843e9ec1bfaadf7d72
-> https://bugzilla.redhat.com/show_bug.cgi?id=601006
-> 
+> Can you sum this up in a few sentences? I'm having a horrible time
+> following that bug.
+
+From the DSA text:
+
+Christoph Anton Mitterer discovered that maildrop, a mail delivery agent
+with filtering abilities, is prone to a privilege escalation issue that
+grants a user root group privileges.
 
 
-Sorry for the delay.
+The issue occurs when invoking maildrop -d, which keeps the root group 
+privileges on the mailbox rather than changing them to the users gid.
 
-Please use CVE-2010-2066
+Cheers
+Steffen
 
-Thanks
-
--- 
-    JB
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
