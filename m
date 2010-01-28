@@ -1,41 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/09/4
-Message-ID: <20100609220113.GA7487@galadriel.inutil.org>
-Date: Thu, 10 Jun 2010 00:01:13 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/28/1
+Message-ID: <1094705790.419141264683221299.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 28 Jan 2010 07:53:41 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE requests: maradns, freeciv, rbot, gitolite, gource, shib, kvirc
+Subject: Re: CVE id request: maildrop
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-Please assign CVE IDs for these issues current present in the Debian
-Security Tracker, but for which no CVE IDs have been assigned so far:
+----- "Steffen Joeris" <steffen.joeris@...lelinux.de> wrote:
+> 
+> Could I please get a CVE id for this privilege escalation bug[0] in
+> maildrop?
+> 
+> Cheers
+> Steffen
+> 
+> [0]: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=564601
 
-1. maradns
-http://maradns.org/download/maradns-1.4.02-parse_segfault.patch
-Fixed in 1.4.03
+Can you sum this up in a few sentences? I'm having a horrible time
+following that bug.
 
-2. freeciv 
-http://gna.org/bugs/?15624
-Fixed in 2.2.1 and 2.3.0
+Thanks.
 
-3. rbot (http://ruby-rbot.org/)
-http://www.securityfocus.com/archive/1/509719/30/0/threaded
-
-4. gitolite
-http://secunia.com/advisories/39587/
-http://github.com/sitaramc/gitolite/commit/1e06fea3b6959faeb72d8dca46cd4753ada48637
-http://github.com/sitaramc/gitolite/commit/5fd9328c1cd1e7c576b6530b3253061c68b159aa
-http://github.com/sitaramc/gitolite/commit/5deffee3cff5f9a13c59b8c1e357c5a32487d1c3
-
-5. gource
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=577958
-
-6. Shibboleth:
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=571631
-
-7. kvirc
-http://lists.omnikron.net/pipermail/kvirc/2010-May/000867.html
-
-Cheers,
-        Moritz
+-- 
+    JB
