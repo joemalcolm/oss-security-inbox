@@ -1,27 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/05/4
-Message-ID: <loom.20101205T214528-591@post.gmane.org>
-Date: Sun, 5 Dec 2010 20:52:46 +0000 (UTC)
-From: Bhadrinath <bitstrat@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Interesting behavior with struct initiailization
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/29/1
+Message-ID: <4B62AC42.70703@redhat.com>
+Date: Fri, 29 Jan 2010 10:37:06 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+CC: "Steven M. Christey" <coley@...us.mitre.org>, Peter Lemenkov <lemenkov@...il.com>
+Subject: CVE Request -- ejabberd
 Content-Type: text/plain; charset=utf-8
 
-There was a specific concern in the previous posts.
+Hi Josh, Steve, vendors,
 
-"Even if the memset is not removed, a compiler could implement 'x.b = 2' by
--setting the low byte of a 32-bit register to 2, leaving the high bytes unchanged
--storing all 32 bits of the register into memory which would store 
-  nonzero data in the high bytes, possibly containing sensitive information. "
+   a remotely exploitable DoS from XMPP client to ejabberd server
+via too many "client2server" messages (causing the message queue on
+the server to get overloaded, leading to server crash) has been found:
 
-In this case,even after doing a memset the compiler could copy some sensitive 
-information from the 32 bit register into the padding bytes.
-So, I feel it is necessary to implement it by copying it to a new equivalent 
-struct.
+   https://support.process-one.net/browse/EJAB-1173
 
-Regards
-Bhadrinath
+Links to applied patches are in:
 
+   https://support.process-one.net/browse/EJAB-1173;jsessionid=CC9A1D875A20197DD4571444DA8C1EFB?page=com.atlassian.jira.plugin.system.issuetabpanels%3Aall-tabpanel
 
+Could you allocate a CVE id for this?
 
-
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
