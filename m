@@ -1,31 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/15/3
-Message-ID: <4BC66185.7090102@redhat.com>
-Date: Thu, 15 Apr 2010 08:44:53 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/29/4
+Message-ID: <1789757780.595691264791601925.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 29 Jan 2010 14:00:01 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Michael Gilbert <michael.s.gilbert@...il.com>, coley@...re.org
-Subject: Re: CVE request: kernel: tty: release_one_tty() forgets to put pids
+Cc: coley <coley@...re.org>
+Subject: Re: CVE id request: Wireshark
 Content-Type: text/plain; charset=utf-8
 
-On 04/15/2010 08:37 AM, Eugene Teo wrote:
-> On 04/15/2010 08:23 AM, Michael Gilbert wrote:
->> On Wed, 14 Apr 2010 11:20:00 +0800 Eugene Teo wrote:
->>
->>> 2) tty: release_one_tty() forgets to put pids
->>> https://bugzilla.redhat.com/show_bug.cgi?id=582076
->>> http://git.kernel.org/linus/6da8d866d0d39e9509ff826660f6a86a6757c966
->>> Not sure this issue can be triggered by a non-privileged user.
->>
->> this one should get a CVE id i think. looking at only two data points
->> (2.6.26 and 2.6.32), i've found the vulnerable code present in both.
->> if i'm not mistaken, redhat has had supported releases in that range.
->
-> Was discussing this with another colleague, that it seems possible to
-> trigger this issue with a non-privileged user. And yes, I agree that
-> this should have a CVE name assigned. Thanks.
 
-pgrp member in struct tty_struct was converted to struct pid in commit 
-ab521dc0, so kernels of version v2.6.26-rc1 and above are affected by this.
+----- "Eren Türkay" <eren@...dus.org.tr> wrote:
 
-Eugene
+> Hello,
+> 
+> Wireshark 1.2.6 was released that fixes buffer overflows in LWRES
+> dissector. I 
+> couldn't find any CVE references regarding to this issue. Could CVE id
+> be 
+> assigned if it hasn't been done yet.
+> 
+> http://www.wireshark.org/security/wnpa-sec-2010-02.html
+> 
+
+Please use CVE-2010-0304
+
+Thanks.
+
+-- 
+    JB
