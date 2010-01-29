@@ -1,40 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/18/5
-Message-ID: <AANLkTinH_Kg_+ViJD0s41ow02yemgVQwkS3amjDvQ77Z@mail.gmail.com>
-Date: Thu, 18 Nov 2010 17:43:59 +0100
-From: Pierre Joye <pierre.php@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/29/5
+Message-ID: <1544302949.600851264794040102.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 29 Jan 2010 14:40:40 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: NULL byte poisoning fix in php 5.3.4+
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Peter Lemenkov <lemenkov@...il.com>
+Subject: Re: CVE Request -- ejabberd
 Content-Type: text/plain; charset=utf-8
 
-forgot to add the fixes revs:
+----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
 
-http://svn.php.net/viewvc?view=revision&revision=305507
-revert of part of the OCI8 fix
-http://svn.php.net/viewvc?view=revision&revision=305509
+> Hi Josh, Steve, vendors,
+> 
+>    a remotely exploitable DoS from XMPP client to ejabberd server
+> via too many "client2server" messages (causing the message queue on
+> the server to get overloaded, leading to server crash) has been
+> found:
+> 
+>    https://support.process-one.net/browse/EJAB-1173
+> 
+> Links to applied patches are in:
+> 
+>   
+> https://support.process-one.net/browse/EJAB-1173;jsessionid=CC9A1D875A20197DD4571444DA8C1EFB?page=com.atlassian.jira.plugin.system.issuetabpanels%3Aall-tabpanel
+> 
 
-OCI8 fix (committed separately)
-http://svn.php.net/viewvc?view=revision&revision=305412
+Please use CVE-2010-0305
 
-On Thu, Nov 18, 2010 at 5:22 PM, Pierre Joye <pierre.php@...il.com> wrote:
-> hi,
->
-> The problem describes here http://www.madirish.net/?article=436, in
-> http://bugs.php.net/39863 (and numerous other places) has been fixed
-> in PHP_5_3, targetting 5.3.4 (RC1 to be released today). It is a well
-> (old) known issue in PHP and I wonder if there is a CVE already for
-> it? If not I think having one could helpful. or?
->
-> Cheers,
-> --
-> Pierre
->
-> @pierrejoye | http://blog.thepimp.net | http://www.libgd.org
->
-
-
+Thanks.
 
 -- 
-Pierre
-
-@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+    JB
