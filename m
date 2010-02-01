@@ -1,31 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/03/2
-Message-ID: <20100403134416.4b66670f@redhat.com>
-Date: Sat, 3 Apr 2010 13:44:16 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/01/6
+Message-ID: <1604636191.772261265058586359.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 1 Feb 2010 16:09:46 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: jmm@...til.org, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Zabbix v1.8.2 and v.1.6.9
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Squid -- SQUID-2010_1.txt
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 2 Apr 2010 22:28:10 +0200 Moritz Muehlenhoff <jmm@...til.org>
-wrote:
 
-> > >    a, Zabbix <= 1.8.1 SQL Injection
-> > > 
-> > >    [1] http://seclists.org/fulldisclosure/2010/Apr/1
-> > >    [2] http://www.zabbix.com/rn1.8.2.php
-> > 
-> > Use CVE-2010-1144 for this one
+----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+
+> Hi Josh, Steve, vendors,
 > 
-> Josh, in a later mail you've assigned the same ID to a libnids issue:
+>    Squid upstream has released updated versions fixing DoS
+> when processing specially crafted DNS packets [1].
+> 
+>  From the upstream advisory:
+> 
+> "This problem allows any trusted client or external server who can
+>   determine the squid receiving port to perform a short-term denial
+>   of service attack on the Squid service."
+> 
+> Could you allocate a CVE id for this? (can't find one in
+> SQUID-2010_1.txt).
+> 
+> Thanks && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+> 
+> [1] http://www.squid-cache.org/Advisories/SQUID-2010_1.txt
 
-Looks like a wrong id used in libnids mail as, according to notes, the
-assignment should be:
+Please use CVE-2010-0308 for this.
 
-CVE-2010-0751 libnids v1.24 -- Null pointer dereference
-CVE-2010-1144 Zabbix <= 1.8.1 SQL Injection
-CVE-2010-1145 Zabbix remote commands execution in Zabbix Server
+Thanks.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+    JB
