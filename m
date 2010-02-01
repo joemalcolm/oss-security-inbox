@@ -1,25 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/01/1
-Message-ID: <20100501145953.GG7745@katherina.student.utwente.nl>
-Date: Sat, 1 May 2010 16:59:53 +0200
-From: Matthijs Kooijman <matthijs@...in.nl>
-To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in OpenTTD
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/01/2
+Message-ID: <4B666982.8090200@kernel.sg>
+Date: Mon, 01 Feb 2010 13:41:22 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com
+Subject: Re: CVE requests - kernel security regressions for CVE-2009-1385/and -1389
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+On 01/01/2010 03:37 AM, Steven M. Christey wrote:
+>>>> Issue #1
+>>>> Fabian claimed that CVE-2009-1385 has an incorrect fix:
+>>>> http://git.kernel.org/linus/ea30e11970a96cfe5e32c03a29332554573b4a10.
+>>> [...]
+>
+> Use CVE-2009-4536
 
-FYI: Debian has assigned three CVE ids for three vulnerabilities present in
-all released versions (except for 1.0.1, which was released together with the
-patches). See:
+upstream commit 40a14deaf411592b57cb0720f0e8004293ab9865
 
-http://www.openttd.org/en/news/126
-http://security.openttd.org/en/CVE-2010-0401
-http://security.openttd.org/en/CVE-2010-0402
-http://security.openttd.org/en/CVE-2010-0406
+>>>> Issue #2
+>>>> The fix for CVE-2009-1389 regarding the r8169 driver introduces a
+>>>> similar security problem as this:
+>>>> http://git.kernel.org/linus/fdd7b4c3302c93f6833e338903ea77245eb510b4 is
+>>>> a revert of this:
+>>>> http://git.kernel.org/linus/126fa4b9ca5d9d7cb7d46f779ad3bd3631ca387c.
+>>>
+>>> Patches update can be found here:
+>>> https://bugzilla.redhat.com/show_bug.cgi?id=550907#c4
+>
+> Use CVE-2009-4537
 
-Gr.
+http://marc.info/?t=126202986900002&r=1&w=2.
 
-Matthijs
+>> Issue #3
+>> I noticed that the e1000e driver also needs a similar fix as issue #1.
+>> https://bugzilla.redhat.com/show_bug.cgi?id=551214
+>
+> Use CVE-2009-4538
 
-Download attachment "signature.asc" of type "application/pgp-signature" (198 bytes)
+upstream commit b94b50289622e816adc9f94111cfc2679c80177c
+
+Thanks, Eugene
