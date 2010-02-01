@@ -1,37 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/22/4
-Message-ID: <1959240262.1279521279833616868.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 22 Jul 2010 17:20:16 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Junio C Hamano <gitster@...ox.com>, gdb@....edu, coley <coley@...re.org>
-Subject: Re: CVE request: git
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/01/8
+Message-Id: <201002020032.15522.lighttpd@stbuehler.de>
+Date: Tue, 2 Feb 2010 00:32:15 +0100
+From: Stefan Bühler <lighttpd@...uehler.de>
+To: "oss-security" <oss-security@...ts.openwall.com>
+Subject: lighttpd: slow request dos/oom attack [CVE-2010-0295]
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-2542
+Hi,
 
-Thanks.
+Li Ming reported a serious bug in lighttpd:
 
--- 
-    JB
+If you send the request data very slow (e.g. sleep 0.01 after each byte), 
+lighttpd will easily use all available memory and die (especially for parallel 
+requests), allowing a DoS within minutes.
 
+The problem is that is doesn't append to previous buffer but allocates a new 
+buffer for each read; this means that for every received block (which could be 
+only one byte) lighttpd may use either 4k or 16k.
 
------ "Greg Brockman" <gdb@....EDU> wrote:
+In lighttpd 1.4.x this problem is not too bad, as the allocated buffer is just 
+as big as the content available to be read (if the system supports FIONREAD); 
+but even with ssl (or if the system doesn't support FIONREAD), lighttpd 1.4.x 
+will allocate 4k or 16k buffers for each read.
 
-> A fix for an exploitable buffer overrun was committed to git in [1].
-> In particular, if an attacker were to create a crafted working copy
-> where the user runs any git command, the attacker could force
-> execution of arbitrary code.
-> 
-> This attack should be mitigated to a denial of service if git is
-> compiled with appropriate stack-protecting flags.
-> 
-> This buffer overrun was introduced in [2], which first appeared in
-> v1.5.6, and is fixed in v1.7.2.
-> 
-> Greg
-> 
-> [1]
-> http://git.kernel.org/?p=git/git.git;a=commit;h=3c9d0414ed2db0167e6c828b547be8fc9f88fccc
-> [2]
-> http://git.kernel.org/?p=git/git.git;a=commit;h=b44ebb19e3234c5dffe9869ceac5408bb44c2e20
+Lighttpd 1.5 (our old development branch) always allocates 16k buffers for a 
+read.
+
+Our solution is to append to the previous buffer if it is still in the raw-in 
+queue (while waiting for a request header), and to pack the buffers if they 
+get moved to the next queue (for the request body).
+
+In order to append to the previous buffer in lighttpd 1.4.x we ignored a 
+SSL_read requirement: we don't pass the same buffer in the next call after 
+SSL_ERROR_WANT_*; there is no good reason for this, and it has worked in 1.5 
+for a long time now.
+
+Please note that lighttpd 1.x always trusts the backend: it will always try to 
+read from the backend (cgi,fastcgi,scgi,proxy,...) as fast as possible, so 
+backends sending large files will lead to high memory usage in lighttpd.
+
+See:
+* http://redmine.lighttpd.net/issues/2147
+* http://download.lighttpd.net/lighttpd/security/lighttpd_sa_2010_01.txt
+
+This bug is tracked as CVE-2010-0295.
+
+Kind regards,
+lighttpd developer team
