@@ -1,29 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/09/1
-Message-ID: <4B7101F6.7020802@kernel.sg>
-Date: Tue, 09 Feb 2010 14:34:30 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/01/7
+Message-ID: <1720882979.772531265058774744.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 1 Feb 2010 16:12:54 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request - kernel: race in ptrace
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- OCSNG_UNIX_SERVER-1.02.2
 Content-Type: text/plain; charset=utf-8
 
-Discovered by Tavis Ormandy. "The race involves interaction between a 
-tracer, a tracee and an antagonist. The tracer is tracing the tracee 
-with PTRACE_SYSCALL and waits on the tracee. In the mean time, an 
-antagonist blasts the tracee with SIGCONTs.
+----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
 
-The observed issue is that sometimes when the tracer attempts to 
-continue the tracee with PTRACE_SYSCALL, it gets a return value of 
--ESRCH, indicating that the tracee is already running (or not being 
-traced).  It turns out that a SIGCONT wakes up the tracee in kernel 
-mode, and for a moment the tracee's state is TASK_RUNNING then in 
-ptrace_stop we hit the condition where the tracee is found to be running 
-(and thus not traced).  If the syscall is repeated, the
-second time it usually succeeds (because by that time, the tracee has 
-been put into TASK_TRACED)."
+> Hi Josh, Steve, vendors,
+> 
+>    multiple security issues have been reported against
+> OCS Inventory NG Management server for Unix/Linux.
+> 
+> References:
+> 
+> [1] http://secunia.com/advisories/38311/
+> [2]
+> http://www.packetstormsecurity.org/1001-exploits/ocsinventoryng-sqlxss.txt
+> [3] http://www.ocsinventory-ng.org/index.php?page=1-02-1
+> [4]
+> http://launchpad.net/ocsinventory-server/stable-1.02/stable-release-1.02.2/+download/OCSNG_UNIX_SERVER-1.02.2.tar.gz
+> 
+> Could you allocate CVE ids for these?
+> 
 
-http://lkml.org/lkml/2010/2/8/327
-https://bugzilla.redhat.com/show_bug.cgi?id=563073
 
-Thanks, Eugene
+I'm going to defer this one to MITRE. I don't have time to properly assign
+IDs for this.
+
+Thanks.
+
+-- 
+    JB
+
+-- 
+    JB
