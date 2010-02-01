@@ -1,58 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/16/3
-Message-ID: <1016882186.654811279293036898.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 16 Jul 2010 11:10:36 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/01/1
+Message-ID: <4B6661F8.9040704@kernel.sg>
+Date: Mon, 01 Feb 2010 13:09:12 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Cc: pierre.php@...il.com
-Subject: Re: Re: CVE request, php var_export
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request - kernel: DoS on x86_64
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-2531
+Reported by Mathias Krause. The problem seams to be located in
+fs/binfmt_elf.c:load_elf_binary(). It calls SET_PERSONALITY() prior 
+checking that the ELF interpreter is available. This in turn makes the 
+previously 32 bit process a 64 bit one which would be fine if execve() 
+would succeed. But after the SET_PERSONALITY() the open_exec() call 
+fails (because it cannot find the interpreter) and execve() almost 
+instantly returns with an error. If you now look at /proc/PID/maps 
+you'll see, that it has the vsyscall page mapped which shouldn't be. But 
+the process is not dead yet, it's still running. By now generating a 
+segmentation fault and in turn trying to generate a core dump the
+kernel just dies.
 
-Sorry for the delay.
+Steps to Reproduce:
+1. Enable core dumps
+2. Start an 32 bit program that tries to execve() an 64 bit program
+3. The 64 bit program cannot be started by the kernel because it can't 
+find the interpreter, i.e. execve returns with an error
+4. Generate a segmentation fault
+5. panic
 
--- 
-    JB
+Upstream commit:
+http://git.kernel.org/linus/221af7f87b97431e3ee21ce4b0e77d5411cf1549
 
+References:
+http://marc.info/?t=126466700200002&r=1&w=2
+https://bugzilla.redhat.com/show_bug.cgi?id=560547
 
------ "Pierre Joye" <pierre.php@...il.com> wrote:
-
-> hi,
-> 
-> Has anyone got the time to look at this request? I would like to have
-> an ID for the last RC before we release final next week (packaging
-> RCs
-> tonight).
-> 
-> On Tue, Jul 13, 2010 at 9:00 PM, Pierre Joye <pierre.php@...il.com>
-> wrote:
-> > hi,
-> >
-> > I would like to request a new # for a flaw in php's var_export. The
-> > reason is that a fatal error occurs due to recursion, memory limit
-> or
-> > execution time var_export bails out. The buffer is never cleared
-> and
-> > it flushes to the user. It's not affected by display_errors() since
-> > its considered part of the output.
-> >
-> > Fix already commited to trunk, 5.2 and 5.3 and will be in the next
-> PHP
-> > releases (5.2.14 and 5.3.3):
-> >
-> > http://svn.php.net/viewvc?view=revision&revision=301143
-> >
-> > Cheers,
-> > --
-> > Pierre
-> >
-> > @pierrejoye | http://blog.thepimp.net | http://www.libgd.org
-> >
-> 
-> 
-> 
-> -- 
-> Pierre
-> 
-> @pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+Thanks, Eugene
