@@ -1,26 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/27/3
-Message-ID: <1584581143.378961264630220026.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 27 Jan 2010 17:10:20 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/01/5
+Message-ID: <660938310.771331265058277259.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 1 Feb 2010 16:04:37 -0500 (EST)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE id request: postgresql bitsubstr overflow
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: DoS on x86_64
 Content-Type: text/plain; charset=utf-8
 
------ "Nico Golde" <oss-security+ml@...lde.de> wrote:
+----- "Eugene Teo" <eugeneteo@...nel.sg> wrote:
 
-> Hi,
-> can I please get a CVE id for postgresql?
+> Reported by Mathias Krause. The problem seams to be located in
+> fs/binfmt_elf.c:load_elf_binary(). It calls SET_PERSONALITY() prior 
+> checking that the ELF interpreter is available. This in turn makes the
 > 
-> references:
-> http://intevydis.blogspot.com/2010/01/postgresql-8023-bitsubstr-overflow.html
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=567058
+> previously 32 bit process a 64 bit one which would be fine if execve()
+> 
+> would succeed. But after the SET_PERSONALITY() the open_exec() call 
+> fails (because it cannot find the interpreter) and execve() almost 
+> instantly returns with an error. If you now look at /proc/PID/maps 
+> you'll see, that it has the vsyscall page mapped which shouldn't be.
+> But 
+> the process is not dead yet, it's still running. By now generating a 
+> segmentation fault and in turn trying to generate a core dump the
+> kernel just dies.
+> 
+> Steps to Reproduce:
+> 1. Enable core dumps
+> 2. Start an 32 bit program that tries to execve() an 64 bit program
+> 3. The 64 bit program cannot be started by the kernel because it can't
+> 
+> find the interpreter, i.e. execve returns with an error
+> 4. Generate a segmentation fault
+> 5. panic
+> 
+> Upstream commit:
+> http://git.kernel.org/linus/221af7f87b97431e3ee21ce4b0e77d5411cf1549
+> 
+> References:
+> http://marc.info/?t=126466700200002&r=1&w=2
+> https://bugzilla.redhat.com/show_bug.cgi?id=560547
 > 
 
-Steve,
-
-Are you following the vulndisco stuff? I don't want to assign a dupe.
+Please use CVE-2010-0307 for this.
 
 Thanks.
 
