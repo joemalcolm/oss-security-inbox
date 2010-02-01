@@ -1,28 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/30/7
-Message-ID: <Pine.GSO.4.64.1003301534210.4709@faron.mitre.org>
-Date: Tue, 30 Mar 2010 15:38:34 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: ipv6: skb is unexpectedly freed (remote DoS)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/01/4
+Message-ID: <4B67165A.705@redhat.com>
+Date: Mon, 01 Feb 2010 18:58:50 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE Request -- OCSNG_UNIX_SERVER-1.02.2
 Content-Type: text/plain; charset=utf-8
 
+Hi Josh, Steve, vendors,
 
-On Mon, 29 Mar 2010, Eugene Teo wrote:
+   multiple security issues have been reported against
+OCS Inventory NG Management server for Unix/Linux.
 
-> Upstream commit:
-> http://git.kernel.org/linus/fb7e2399ec17f1004c0e0ccfd17439f8759ede01
+References:
 
-I'm not clear on the role of ipv6 here.  The affected code is in 
-ipv4/tcp_input.c and there's no mention of tcp_v6_conn_request() there.
+[1] http://secunia.com/advisories/38311/
+[2] http://www.packetstormsecurity.org/1001-exploits/ocsinventoryng-sqlxss.txt
+[3] http://www.ocsinventory-ng.org/index.php?page=1-02-1
+[4] http://launchpad.net/ocsinventory-server/stable-1.02/stable-release-1.02.2/+download/OCSNG_UNIX_SERVER-1.02.2.tar.gz
 
-I'm guessing this was fixed in Linux 2.6.20.
+Could you allocate CVE ids for these?
 
-Arguably this could have been given a 2007 ID, but the patch didn't 
-clearly label the problem as a security issue, so I will treat Eugene's 
-request as the first widely-public disclosure - thus a 2010 date.
-
-Use CVE-2010-1188
-
-- Steve
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
