@@ -1,38 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/03/4
-Message-ID: <20100903214616.GK6206@radis.liafa.jussieu.fr>
-Date: Fri, 3 Sep 2010 23:46:16 +0200
-From: Julien Cristau <jcristau@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/02/1
+Message-ID: <4B67BA38.3090108@kernel.sg>
+Date: Tue, 02 Feb 2010 13:38:00 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Cc: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Richard Moore <rich@...tpoint.ltd.uk>, Simon Ward <simon@...tpoint.ltd.uk>
-Subject: Re: CVE Request 1, NSS 2, Qt: Doesn't handle wildcards in Common Name properly
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request - kvm: cat /dev/port in the guest can cause host DoS
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Sep  3, 2010 at 14:15:13 -0700, Reed Loden wrote:
+The problem is pit_state->channels[] has 3 elements, and pit_ioport_read 
+uses "addr" as index to pit_get_count, so inb(0x43) reads (and 
+potentially writes) into other data of kvm_kpit_state.
 
-> On Fri, 03 Sep 2010 18:20:49 +0200
-> Jan Lieskovsky <jlieskov@...hat.com> wrote:
-> 
-> >    Richard Moore and Simon Ward reported flaws in the way:
-> > 
-> >    1, Network Security Services (NSS) handled wildcard (*) character
-> >       in the Common Name field of a x509v3 digital certificate.
-> >       If an attacker is able to get a carefully-crafted certificate,
-> >       signed by a Certificate Authority trusted by Firefox, the attacker
-> >       could use the certificate during the man-in-the-middle attack and
-> >       potentially confuse Firefox into accepting it by mistake. Different
-> >       vulnerability than CVE-2009-2408.
-> > 
-> >       References:
-> >       [1] http://www.westpoint.ltd.uk/advisories/wp-10-0001.txt
-> >       [2] http://bugs.gentoo.org/show_bug.cgi?id=335731
-> 
-> Mozilla has assigned this CVE-2010-3170. We're tracking this as
-> https://bugzilla.mozilla.org/show_bug.cgi?id=578697.
-> 
-That bug is helpfully (or not) closed down.
+PIT control word (address 0x43) is write-only, reads are undefined.
 
-Cheers,
-Julien
+Triggering this can cause a general protection fault on the host.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+https://bugzilla.redhat.com/show_bug.cgi?id=560887
+http://www.mail-archive.com/kvm@vger.kernel.org/msg28002.html
+
+Thanks, Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
