@@ -1,38 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/01/1
-Message-ID: <4C559A20.4040702@redhat.com>
-Date: Sun, 01 Aug 2010 18:00:32 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request -- OpenConnect < v2.25  did not verify SSL server certificates
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/02/2
+Message-Id: <201002021059.13521.thomas@suse.de>
+Date: Tue, 2 Feb 2010 10:59:13 +0100
+From: Thomas Biege <thomas@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: KVM possible security issues fixed
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve, vendors,
+Hello,
+the following was listed in the changelog of kvm
+- slirp: fix use-after-free
+- usb-linux.c: fix buffer overflow
+- fix potential stack corruption saving MSRs (Eduardo Habkost)
 
-   OpenConnect upstream has released OpenConnect v2.25:
-   [1] http://www.infradead.org/openconnect.html
+Looks like these are security issues. Does someone know more about?
+Any details about exploitability etc.
 
-addressing following security related issues (from [1]):
-   OpenConnect v2.25 — 2010-05-15
+Thanks
+Thomas
 
-     * Always validate server certificate, even when no extra --cafile is provided.
-     * Add --no-cert-check option to avoid certificate validation.
-     * Check server hostname against its certificate.
-     * Provide text-mode function for reviewing and accepting "invalid" certificates.
-     * Fix libproxy detection on NetBSD.
-
-References:
-   [2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=590873
-   [3] ftp://ftp.infradead.org/pub/openconnect/openconnect-2.25.tar.gz
-
-Though not direct security issue(s) [rather security hardening], once the package has SSL support,
-it should be enabled by default to avoid unintentional MITM attacks (implying from default package
-configuration use).
-
-Steve, could you allocate a CVE identifier for this? (but opened for discussion if such security
-hardening fixes aren't considered enough this to be handled as a security issue).
-
-Thanks && Regards, Jan.
+-- 
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
 --
-Jan iankko Lieskovsky / Red Hat Security Response Team
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
