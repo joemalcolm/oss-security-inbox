@@ -1,89 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/18/7
-Message-ID: <4CE58BAE.5080105@redhat.com>
-Date: Thu, 18 Nov 2010 15:25:18 -0500
-From: Daniel J Walsh <dwalsh@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/02/3
+Message-ID: <4B67FB5A.6020407@redhat.com>
+Date: Tue, 02 Feb 2010 18:15:54 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Kees Cook <kees@...ntu.com>, Steve Grubb <sgrubb@...hat.com>
-Subject: Re: filesystem capabilities
+CC: Thomas Biege <thomas@...e.de>
+Subject: Re: KVM possible security issues fixed
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 02/02/2010 05:59 PM, Thomas Biege wrote:
+> Hello,
+> the following was listed in the changelog of kvm
+> - slirp: fix use-after-free
+> - usb-linux.c: fix buffer overflow
 
-On 11/18/2010 01:56 PM, Kees Cook wrote:
-> Hi Steve,
-> 
-> On Wed, Nov 10, 2010 at 02:55:47PM -0500, Steve Grubb wrote:
->> drop all privs is a 2 liner:
->> capng_clear(CAPNG_SELECT_CAPS);
->> if (capng_apply(CAPNG_SELECT_CAPS))
->> 	exit(0);
->>
->> Not sure anything that small needs a library function.
-> 
-> Well, yeah, if it's just caps, I'd agree, but I'm failing to describe what
-> I mean. :)
-> 
-> For the transition from setuid to fscaps, there will be a time where
-> distros may ship a program with both setuid-root and fscaps. (Some
-> stacked filesystems, for example, don't support fscaps.) In these
-> situations, it would be nice to have a single library-based routine that
-> all of these programs can call that will basically do the following:
-> 
-> - remember if I'm running setuid
-> - drop all but needed caps
-> - if I was setuid, drop uid back to real uid
-> 
-> That way the sensitive code isn't cut/pasted into lots of programs, just
-> they all call out to a single place, and everything gets it right,
-> regardless of them being setuid or fscap.
-> 
->> I asked the maintainer if he's had any discussion [about upstreaming
->> the tar xattr patches] lately.
-> 
-> Any news here?
-> 
->>> Has there been any discussion of making rsync, cp, and cpio default to
->>> copying xattrs and acls too? I know at least with rsync they are explicitly
->>> not included in the "-a" option. :(
->>
->> My rsync man page shows a -X option and cp has a --preserve=xattr. cpio doesn't but no 
->> one seems to have been missing that.
-> 
-> Right, but I mean, it seems like it would be valuable to make these options
-> _part_ of -a when currently they are explicitly not included.
-> 
-> -Kees
-> 
+Josh wrote some notes here:
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2010-0297
 
-Something like this works in both setuid and fscap systems.
+> - fix potential stack corruption saving MSRs (Eduardo Habkost)
 
-/**
- * This function will drop all capabilities
- * Returns zero on success, non-zero otherwise
- */
-static int drop_capabilities(uid_t uid)
-{
-	capng_clear(CAPNG_SELECT_BOTH);
-	if (capng_lock() < 0)
-		return -1;
+I did not investigate this as it was already fixed in Red Hat Enterprise 
+Linux 5 before we saw the changelog.
 
-	/* Change uid */
-	if (setresuid(uid, uid, uid)) {
-		fprintf(stderr, _("Error changing uid, aborting.\n"));
-		return -1;
-	}
-	return capng_apply(CAPNG_SELECT_BOTH);
-}
+> Looks like these are security issues. Does someone know more about?
+> Any details about exploitability etc.
 
-If you are in filecaps, your current UID is the same as what you call
-setresuid with, and it becomes a noop.
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-Comment: Using GnuPG with Fedora - http://enigmail.mozdev.org/
-
-iEYEARECAAYFAkzli64ACgkQrlYvE4MpobNK9QCeIL/t5x1RZyfFaFv4McI4lriC
-BiQAnAiM0z4wXkYZTvgrSUekVW4fuCkV
-=SIkj
------END PGP SIGNATURE-----
+Thanks, Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
