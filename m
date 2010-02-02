@@ -1,36 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/18/1
-Message-Id: <201005180950.28566.ludwig.nussel@suse.de>
-Date: Tue, 18 May 2010 09:50:27 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/02/4
+Message-ID: <741878604.897651265144211229.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 2 Feb 2010 15:56:51 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: [oCERT-2010-001] multiple http client unexpected download filename vulnerability
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kvm: cat /dev/port in the guest can cause host DoS
 Content-Type: text/plain; charset=utf-8
 
-Florian Weimer wrote:
-> * Daniele Bianco:
-> 
-> > Additionally, unsafe behaviours have been found in wget and lwp-download in
-> > the case of HTTP 3xx redirections during file downloading. The two
-> > applications automatically use the URL's filename portion specified in the
-> > Location header.
-> 
-> Thanks.  In another venue, I wrote:
-> 
-> > The difficult thing is that most likely, there are setups out there
-> > which expect this particular behavior.  If we change the default
-> > behavior, we need an option in wgetrc to turn back on the old one. 8-(
 
-wget doesn't overwrite existing files by default anyways. Instead it appends a
-suffix .1, .2 etc to the newly downloaded file. wget also prints the file name
-it used. So IMO it's perfectly fine and useful for wget to take the server
-provided file name by default.
+----- "Eugene Teo" <eugeneteo@...nel.sg> wrote:
 
-cu
-Ludwig
+> The problem is pit_state->channels[] has 3 elements, and
+> pit_ioport_read 
+> uses "addr" as index to pit_get_count, so inb(0x43) reads (and 
+> potentially writes) into other data of kvm_kpit_state.
+> 
+> PIT control word (address 0x43) is write-only, reads are undefined.
+> 
+> Triggering this can cause a general protection fault on the host.
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=560887
+> http://www.mail-archive.com/kvm@vger.kernel.org/msg28002.html
+> 
+
+Please use CVE-2010-0309 for this.
+
+Thanks.
 
 -- 
- (o_   Ludwig Nussel
- //\   
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+    JB
