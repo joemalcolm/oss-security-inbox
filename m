@@ -1,50 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/02/1
-Message-ID: <4C2DEC22.1030201@redhat.com>
-Date: Fri, 02 Jul 2010 15:39:46 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request [Microsoft Windows Ruby-v1.9.x] -- Buffer over-run leading to ACE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/03/1
+Message-ID: <20100203134559.GC1890@suse.de>
+Date: Wed, 3 Feb 2010 14:45:59 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE request: kernel OOM/crash in drivers/connector
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve, vendors,
+Hi,
 
-   Ruby upstream has released latest v1.9.1-p429, v1.9.2 RC1 versions, addressing one
-   security issue, present on Microsoft Windows operating systems, where version of Ruby
-   language is v1.9.x based:
-     [1] http://www.ruby-lang.org/en/news/2010/07/02/ruby-1-9-1-p429-is-released/
-     [2] http://www.ruby-lang.org/en/news/2010/07/02/ruby-1-9-2-rc1-is-released/
-     [3] http://svn.ruby-lang.org/repos/ruby/tags/v1_9_2_rc1/ChangeLog
+Sebastian Krahmer found a problem in the drivers/connector/connector.c code
+where users could send/allocate arbitrary amounts of NETLINK_CONNECTOR
+messages to the kernel, causing OOM condition, killing selected processes
+or halting the system.
 
-Quoting from [1]:
+This is fixed in mainline commit f98bfbd78c37c5946cc53089da32a5f741efdeb7
+by removing the code.
 
-<begin quote>
+commit f98bfbd78c37c5946cc53089da32a5f741efdeb7
+Author: Evgeniy Polyakov <zbr@...emap.net>
+Date:   Tue Feb 2 15:58:48 2010 -0800
 
-A security vulnerability that causes buffer overflow when you assign
-a danger value to ARGF.inplace_mode on Windows. It possibly allows an
-attacker to execute an arbitrary code.
+    connector: Delete buggy notification code.
 
-The affected versions are:
+    On Tue, Feb 02, 2010 at 02:57:14PM -0800, Greg KH (gregkh@...e.de) wrote:
+    > > There are at least two ways to fix it: using a big cannon and a small
+    > > one. The former way is to disable notification registration, since it is
+    > > not used by anyone at all. Second way is to check whether calling
+    > > process is root and its destination group is -1 (kind of priveledged
+    > > one) before command is dispatched to workqueue.
+    >
+    > Well if no one is using it, removing it makes the most sense, right?
+    >
+    > No objection from me, care to make up a patch either way for this?
 
-     * Ruby 1.9.1 patchlevel 378 and all prior versions.
-     * Ruby 1.9.2 preview 3 and all prior versions.
-     * Development versions of Ruby 1.9 (1.9.3dev).
+    Getting it is not used, let's drop support for notifications about
+    (un)registered events from connector.
+    Another option was to check credentials on receiving, but we can always
+    restore it without bugs if needed, but genetlink has a wider code base
+    and none complained, that userspace can not get notification when some
+    other clients were (un)registered.
 
-I recommend you to upgrade your ruby 1.9 to 1.9.1-p429 or 1.9.2-rc1.
+    Kudos for Sebastian Krahmer <krahmer@...e.de>, who found a bug in the
+    code.
 
-The vulnerability does not directly affect to Ruby 1.8 series.
-Credit
+    Signed-off-by: Evgeniy Polyakov <zbr@...emap.net>
+    Acked-by: Greg Kroah-Hartman <gregkh@...e.de>
+    Signed-off-by: David S. Miller <davem@...emloft.net>
 
-The vulnerability was found and reported by Masaya TARUI.
-
-<end quote>
-
-Though this not affecting the Linux version of Ruby, we will need a CVE identifier
-for purpose of properly tracking is.
-
-Steve, could you please allocate one?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
