@@ -1,46 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/21/7
-Message-ID: <AANLkTinD_DWHauRWCW+=J=U6gFJxBeN=RtsCqOAFKjb7@mail.gmail.com>
-Date: Tue, 21 Dec 2010 15:06:38 -0600
-From: Earl Hood <earl@...lhood.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/03/2
+Message-ID: <4B69A870.90900@redhat.com>
+Date: Wed, 03 Feb 2010 17:46:40 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security <oss-security@...ts.openwall.com>
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, non customers <non-customers@...ramail.com>,  Jeff Breidenbach <jeff@....org>
-Subject: Re: CVE Request -- MHonArc: Improper escaping of certain HTML sequences (XSS)
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE Request -- GMime-2.4.15
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Dec 21, 2010 at 8:02 AM, Jan Lieskovsky <jlieskov@...hat.com> wrote:
->  MHonArc, a Perl mail-to-HTML converter, failed to
-> properly escape certain HTML sequences. A remote
-> attacker could provide a specially-crafted email
-> message and trick the local user to convert it
-> into HTML format. Subsequent preview of such
-> message might potentially execute arbitrary HTML
-> or scripting code (XSS).
+Hi Josh, Steve, vendors,
 
-I hate HTML in mail.
+   GMime upstream has released latest 2.4.15 [1] version of the
+library fixing one security issue. From 2.4.15-changes [2] file:
 
-> But fails to do the same example for a string in the form of:
->
-> <scr<body>ipt>alert("elsa");</scr<body>ipt> =>
-> <script>alert("elsa");</script>
->
-> Affected versions: Issue confirmed in latest MHonArc-2.6.16 version
+2010-01-31  Jeffrey Stedfast  <fejj@...ell.com>
 
-I should note that MHonArc documentation warns about HTML mail,
-and the recommendation is to disable support of it:
+	* gmime/gmime-encodings.h (GMIME_UUENCODE_LEN): Fixed to prevent
+	possible buffer overflows.
 
-  http://www.mhonarc.org/MHonArc/doc/faq/security.html#htmldata
+References:
 
-With that said, do have an available patch that fixes
-the problem?
+[1] http://ftp.gnome.org/pub/GNOME/sources/gmime/2.4/
+[2] http://ftp.gnome.org/pub/GNOME/sources/gmime/2.4/gmime-2.4.15.changes
+[3] http://ftp.gnome.org/pub/GNOME/sources/gmime/2.4/gmime-2.4.14-2.4.15.diff.gz
+[4] http://secunia.com/advisories/38459/
 
-If not, I can look into it during the holiday break to
-get a fix for it.  Note, even if there is a fix for the
-case you provided, there is no 100% guarantee that there
-could be other data input sequences that get by the filter.
-Hence, those concerned about security disable the
-HTML filter:
+Could you allocate a CVE id for this?
 
-  http://www.mhonarc.org/MHonArc/doc/faq/security.html#htmlexchow
-
---ewh
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
