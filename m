@@ -1,39 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/20/8
-Message-ID: <235398429.282941263996001739.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 20 Jan 2010 09:00:01 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/03/3
+Message-ID: <546083786.986621265220936547.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 3 Feb 2010 13:15:36 -0500 (EST)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
 Cc: coley <coley@...re.org>
-Subject: Re: BIND CVE-2009-4022 fix incomplete
+Subject: Re: CVE request: kernel OOM/crash in drivers/connector
 Content-Type: text/plain; charset=utf-8
 
-
------ "Josh Bressers" <bressers@...hat.com> wrote:
-
-> Hi Steve,
-> 
-> I'm not assigning this one as I'm not sure if you've seen this or
-> not.
-> 
-> ISC released an update today for BIND, part of it was that
-> CVE-2009-4022
-> was not completely fixed:
-> https://www.isc.org/advisories/CVE-2009-4022
-> 
-> If you look down at the bottom of their advisory you can see this:
->     Jan. 19 - Revised Summary, Severity, Description, Workaround,
-> Impact &
->     Solution (earlier fixes incomplete) 
-> 
-> As best as we can tell, this is why:
-> https://bugzilla.redhat.com/show_bug.cgi?id=554851#c7
-> 
-
-As this is holding up a Red Hat erratum, risking a dupe, I've
-assigned this CVE-2010-0290.
+Please use CVE-2010-0410 for this.
 
 Thanks.
 
 -- 
     JB
+
+
+----- "Marcus Meissner" <meissner@...e.de> wrote:
+
+> Hi,
+> 
+> Sebastian Krahmer found a problem in the drivers/connector/connector.c
+> code
+> where users could send/allocate arbitrary amounts of
+> NETLINK_CONNECTOR
+> messages to the kernel, causing OOM condition, killing selected
+> processes
+> or halting the system.
+> 
+> This is fixed in mainline commit
+> f98bfbd78c37c5946cc53089da32a5f741efdeb7
+> by removing the code.
+> 
+> commit f98bfbd78c37c5946cc53089da32a5f741efdeb7
+> Author: Evgeniy Polyakov <zbr@...emap.net>
+> Date:   Tue Feb 2 15:58:48 2010 -0800
+> 
+>     connector: Delete buggy notification code.
+> 
+>     On Tue, Feb 02, 2010 at 02:57:14PM -0800, Greg KH (gregkh@...e.de)
+> wrote:
+>     > > There are at least two ways to fix it: using a big cannon and
+> a small
+>     > > one. The former way is to disable notification registration,
+> since it is
+>     > > not used by anyone at all. Second way is to check whether
+> calling
+>     > > process is root and its destination group is -1 (kind of
+> priveledged
+>     > > one) before command is dispatched to workqueue.
+>     >
+>     > Well if no one is using it, removing it makes the most sense,
+> right?
+>     >
+>     > No objection from me, care to make up a patch either way for
+> this?
+> 
+>     Getting it is not used, let's drop support for notifications
+> about
+>     (un)registered events from connector.
+>     Another option was to check credentials on receiving, but we can
+> always
+>     restore it without bugs if needed, but genetlink has a wider code
+> base
+>     and none complained, that userspace can not get notification when
+> some
+>     other clients were (un)registered.
+> 
+>     Kudos for Sebastian Krahmer <krahmer@...e.de>, who found a bug in
+> the
+>     code.
+> 
+>     Signed-off-by: Evgeniy Polyakov <zbr@...emap.net>
+>     Acked-by: Greg Kroah-Hartman <gregkh@...e.de>
+>     Signed-off-by: David S. Miller <davem@...emloft.net>
