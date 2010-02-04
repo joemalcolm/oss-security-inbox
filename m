@@ -1,89 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/23/6
-Message-ID: <20101223185550.GA14193@vidovic>
-Date: Thu, 23 Dec 2010 19:55:50 +0100
-From: Nicolas Sebrecht <nicolas.s-dev@...oste.net>
-To: Jan Lieskovsky <jlieskov@...hat.com>
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security <oss-security@...ts.openwall.com>, Nicolas Sebrecht <nicolas.s-dev@...oste.net>, david b <db.pub.mail@...il.com>, Johannes Stezenbach <js@...21.net>, Christoph Höger <choeger@...tu-berlin.de>, John Goerzen <jgoerzen@...plete.org>
-Subject: Re: CVE Request -- OfflineIMAP -- 1), failed to validate remote SSL server certificate 2), allows SSLv2 protocol
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/04/1
+Message-ID: <20100204022805.GB12990@lackof.org>
+Date: Wed, 3 Feb 2010 19:28:05 -0700
+From: dann frazier <dannf@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: DoS on x86_64
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Dec 23, 2010 at 03:43:40PM +0100, Jan Lieskovsky wrote:
-> 
->   I), Didn't check SSL server certificate
-> 
->   Description:
->   OfflineIMAP prior commit:
->   [1] https://github.com/nicolas33/offlineimap/commit/4f57b94e2333c37c5a7251fc88dfeda9bc0b226a
-> 
->   did not perform SSL server certificate validation,
->   even when "ssl = yes" option was specified in the
->   configuration file. If an attacker was able to get
->   a carefully-crafted certificate signed by a
->   Certificate Authority trusted by OfflineIMAP,
->   the attacker could use the certificate during a
->   man-in-the-middle attack and potentially confuse
->   OfflineIMAP into accepting it by mistake.
+On Mon, Feb 01, 2010 at 01:09:12PM +0800, Eugene Teo wrote:
+> Reported by Mathias Krause. The problem seams to be located in
+> fs/binfmt_elf.c:load_elf_binary(). It calls SET_PERSONALITY() prior  
+> checking that the ELF interpreter is available. This in turn makes the  
+> previously 32 bit process a 64 bit one which would be fine if execve()  
+> would succeed. But after the SET_PERSONALITY() the open_exec() call  
+> fails (because it cannot find the interpreter) and execve() almost  
+> instantly returns with an error. If you now look at /proc/PID/maps  
+> you'll see, that it has the vsyscall page mapped which shouldn't be. But  
+> the process is not dead yet, it's still running. By now generating a  
+> segmentation fault and in turn trying to generate a core dump the
+> kernel just dies.
 >
->   References:
->   [2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=603450
->   [3] https://bugzilla.redhat.com/show_bug.cgi?id=665382
-> 
+> Steps to Reproduce:
+> 1. Enable core dumps
+> 2. Start an 32 bit program that tries to execve() an 64 bit program
+> 3. The 64 bit program cannot be started by the kernel because it can't  
+> find the interpreter, i.e. execve returns with an error
+> 4. Generate a segmentation fault
+> 5. panic
+>
+> Upstream commit:
+> http://git.kernel.org/linus/221af7f87b97431e3ee21ce4b0e77d5411cf1549
 
-First of all, thank you very much Jan and all the Redhat team for
-reporting it up to the CVE database.
+Thanks Eugene.
 
-The given patch from Sebastian Spaeth has been released in v6.3.2-rc1. I
-encourage distribution maintainers who want this fix to either
-
-  deploy the RC release as is
-
-or 
-
-  backport the fix against the last release they own.
-
-I expect to release a new stable soon but I still didn't have feedback
-from users using SSL. The lack of feedback could mean that
-
-  OfflineIMAP users don't expect SSL to work by still refering to the
-  documentation they know (stating that SSL checks is not supported)
-
-or 
-
-  they don't hit problems at all.
-
-So, I'll wait a bit more before releasing the next stable.
-
->   II), Allows SSLv2 protocol
-> 
->   Description:
->   In commit:
->   [4] https://github.com/nicolas33/offlineimap/commit/4f57b94e2333c37c5a7251fc88dfeda9bc0b226a
-> 
->   when SSL server certificate validation support was added
->   to OfflineIMAP it was still possible to use SSL v2 protocol
->   version. Version 2 of SSL protocol version is known
->   to be prone to multiple deficiencies, each of them
->   having security implications (to mention some of them):
->   [5] http://en.wikipedia.org/wiki/Secure_Sockets_Layer#Security
-> 
->   Thus SSLv2 protocol version should be disabled in OfflineIMAP.
-> 
->   References:
->   [6] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=606962
->   [7] https://bugzilla.redhat.com/show_bug.cgi?id=665386
-
-True.
-
-> Could you allocate CVE ids for these issues? (though opened for
-> discussion of any / none of them worthy of it)
-
-As the maintainer of OfflineIMAP, I think both issues should have their
-entry in the CVE List.
-
-Let us know if you want more clarifications.
-
-Regards,
+Also note this fix for a regression in the above:
+  http://git.kernel.org/linus/7ab02af428c2d312c0cf8fb0b01cc1eb21131a3d
 
 -- 
-Nicolas Sebrecht
+dann frazier
+
