@@ -1,33 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/20/1
-Message-ID: <20100720075911.GW6617@login.drsnuggles.stderr.nl>
-Date: Tue, 20 Jul 2010 09:59:11 +0200
-From: Matthijs Kooijman <matthijs@...in.nl>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/04/3
+Message-Id: <201002041044.36951.eren@pardus.org.tr>
+Date: Thu, 4 Feb 2010 10:44:36 +0200
+From: Eren Türkay <eren@...dus.org.tr>
 To: oss-security@...ts.openwall.com
-Cc: rubidium@...nttd.org
-Subject: CVE request for OpenTTD
+Cc: Eugene Teo <eugene@...hat.com>, Thomas Biege <thomas@...e.de>
+Subject: Re: KVM possible security issues fixed
 Content-Type: text/plain; charset=utf-8
 
-Hi folks,
+On Tuesday 02 February 2010 12:15:54 pm Eugene Teo wrote:
+> Josh wrote some notes here:
+> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2010-0297
 
-the OpenTTD developers have indentified a security vulnerability in the
-OpenTTD program. Would you be so kind as to allocate a CVE id for this
-issue?
+Will new CVEs be assigned for these issues? Or they have already been 
+assigned?
 
-The issue concerns a denial of service vulnerability, in the form of a
-hard to trigger infinite loop. The issue is reported at
-http://bugs.openttd.org/task/3909
+usb-linux.c: buffer overflow is CVE-2010-0297 but how about other two, slirp 
+and stack corruption.
 
-The first vulnerable version is 1.0.1, the upcoming 1.0.3 release will
-have the issue fixed.
+Thanks
 
-Once a CVE id is allocated, the issue will be documented at
-http://security.openttd.org/en/CVE-2010-xxxx
-
-Thanks,
-
-Matthijs
-
-(Please CC me, I'm not subscribed)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (198 bytes)
+--
+Eren
