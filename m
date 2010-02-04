@@ -1,27 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/15/2
-Message-ID: <4CE0BCCC.5020504@redhat.com>
-Date: Mon, 15 Nov 2010 12:53:32 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/04/6
+Message-ID: <416219434.1050751265289936679.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 4 Feb 2010 08:25:36 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: perf bug
+Cc: Eugene Teo <eugene@...hat.com>, Thomas Biege <thomas@...e.de>, coley <coley@...re.org>
+Subject: Re: KVM possible security issues fixed
 Content-Type: text/plain; charset=utf-8
 
-Upstream commit dab5855 ("perf_counter: Add mmap event hooks to 
-mprotect()") is fundamentally wrong as mprotect_fixup() can free 'vma' 
-due to merging. Fix the problem by moving perf_event_mmap() hook to 
-mprotect_fixup(). In certain scenario, a local, unprivileged user could 
-use this flaw to trigger a denial of service.
 
-Upstream commit:
-http://git.kernel.org/linus/63bfd7384b119409685a17d5c58f0b56e5dc03da
+----- "Eren Türkay" <eren@...dus.org.tr> wrote:
 
-https://bugzilla.redhat.com/show_bug.cgi?id=651671
+> On Tuesday 02 February 2010 12:15:54 pm Eugene Teo wrote:
+> > Josh wrote some notes here:
+> > https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2010-0297
+> 
+> Will new CVEs be assigned for these issues? Or they have already been
+> assigned?
+> 
+> usb-linux.c: buffer overflow is CVE-2010-0297 but how about other two,
+> slirp and stack corruption.
+> 
 
-PS: I thought I requested a CVE name for this already, but it turns out 
-I did not.
+I'm not comfortable assigning IDs without more details. Those bugs don't
+affect Red Hat, so I'm not in a position to spend time on them.
 
-Thanks, Eugene
+If someone has a decent analysis of the flaws, I'd be happy to hand out
+ids, but otherwise I shall defer to MITRE if they want to give out ids for
+one line changelog entries.
+
+Thanks.
+
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+    JB
