@@ -1,31 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/07/3
-Message-ID: <330660563.552911291751912143.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 7 Dec 2010 14:58:32 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/04/7
+Message-ID: <Pine.GSO.4.64.1002041157260.8661@faron.mitre.org>
+Date: Thu, 4 Feb 2010 12:00:24 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: vanilla forums before 2.0.10, xss
+Subject: CVE-2009-3297 clarification needed - samba/fuse/ncpfs symlinks
 Content-Type: text/plain; charset=utf-8
 
 
------ "Steven M. Christey" <coley@...us.mitre.org> wrote:
-> >
-> > As for the "linkbait" issue, I have no clue. Nothing in git seems to
-> > point at that.
-> >
-> > Steve, does MITRE have a precedent for such a thing?
-> 
-> The vendor is calling it a "vulnerability" which is good enough to assign
-> a CVE to, as a different vuln type than XSS.
-> 
-> My guess is that it's open redirect, which is used to redirect users away
-> from the site towards spam or malware.  Just a guess, though.
-> 
+Regarding these bug reports:
 
-Let's use CVE-2010-4266 then.
+https://bugzilla.redhat.com/show_bug.cgi?id=532940
+https://bugzilla.redhat.com/show_bug.cgi?id=558833
+https://bugzilla.samba.org/show_bug.cgi?id=6853
 
-Thanks.
+It seems that a separate CVE should be assigned for samba, fuse, and 
+ncpfs, since these are all distinct codebases.
 
--- 
-    JB
+Since the Samba bug report says that Debian assigned CVE-2009-3297 to the 
+Samba part, it looks like two new CVEs are needed, one for fuse and one 
+for ncpfs.
+
+Am I missing something here?
+
+
+Thanks,
+Steve
