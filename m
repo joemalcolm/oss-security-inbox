@@ -1,30 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/01/5
-Message-ID: <75079822.810941275413328391.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 1 Jun 2010 13:28:48 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/04/8
+Message-ID: <20100204180228.GD3931@redhat.com>
+Date: Thu, 4 Feb 2010 11:02:28 -0700
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: zonecheck
+Subject: systemtap DoS issue (CVE-2010-0411)
 Content-Type: text/plain; charset=utf-8
 
+Just a heads up that an issue in SystemTap was found where using the
+__get_argv() function in tapset could result in a crash of the SystemTap
+script that calls it (and syscall.execve) or, if it's running as root,
+could lead to a hang/crash of the system running the script.
 
------ "Sebastien Delafond" <seb@...ian.org> wrote:
+This flaw has been assigned CVE-2010-0411.  More details can be found
+here:
 
-> Hi,
-> 
-> there is a cross-scripting issue in zonecheck's CGI, up to version
-> 2.1.0
-> (fixed upstream in 2.1.1):
-> 
->   http://bugs.debian.org/583290
->   https://savannah.nongnu.org/bugs/?29967
->   http://www.xssed.com/mirror/61096/
-> 
-
-Please use CVE-2010-2052
-
-Thanks.
+https://bugzilla.redhat.com/show_bug.cgi?id=559719
+http://sourceware.org/bugzilla/show_bug.cgi?id=11234
 
 -- 
-    JB
+Vincent Danen / Red Hat Security Response Team 
