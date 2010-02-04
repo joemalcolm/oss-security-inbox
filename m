@@ -1,27 +1,119 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/17/1
-Message-ID: <4B5352CC.2050000@debian.org>
-Date: Sun, 17 Jan 2010 19:11:24 +0100
-From: Giuseppe Iuculano <iuculano@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/04/4
+Message-ID: <20100204095932.GB4850@merlin.emma.line.org>
+Date: Thu, 4 Feb 2010 10:59:32 +0100
+From: Matthias Andree <matthias.andree@....de>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: dokuwiki
+Subject: CVE request - fetchmail 6.3.11-.13 heap overflow in verbose X.509 cert display (only printable chars)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Please assign a CVE for the issue described below:
 
-Multiple vulnerabilities have been discovered in DokuWiki.
+---------------------------------------------------------------------
 
-References:
-http://secunia.com/advisories/38183/
-http://secunia.com/advisories/38205/
-http://bugs.splitbrain.org/index.php?do=details&task_id=1847
-http://bugs.splitbrain.org/index.php?do=details&task_id=1853
-http://www.exploit-db.com/exploits/11141
-http://www.splitbrain.org/blog/2010-01/17-dokuwiki-security
+fetchmail-SA-2010-01: Heap overrun in verbose SSL cert' info display.
+
+Topics:		Heap overrun in verbose SSL certificate information display.
+
+Author:		Matthias Andree
+Version:	1.0
+Announced:
+Type:		malloc() Buffer overrun with printable characters
+Impact:		Code injection (difficult).
+Danger:		low
+CVSSv2 vectors:
+
+CVE Name:
+URL:		http://www.fetchmail.info/fetchmail-SA-2010-01.txt
+Project URL:	http://www.fetchmail.info/
+
+Affects:	fetchmail releases 6.3.11, 6.3.12, and 6.3.13
+
+Not affected:	fetchmail release 6.3.14 and newer
+
+Corrected:	2010-02-04 fetchmail SVN (r5467)
+
+...
+
+1. Background
+=============
+
+fetchmail is a software package to retrieve mail from remote POP2, POP3,
+IMAP, ETRN or ODMR servers and forward it to local SMTP, LMTP servers or
+message delivery agents. It supports SSL and TLS security layers through
+the OpenSSL library, if enabled at compile time and if also enabled at
+run time.
 
 
-Cheers,
-Giuseppe.
+2. Problem description and Impact
+=================================
+
+In verbose mode, fetchmail prints X.509 certificate subject and issuer
+information to the user, and counts and allocates a malloc() buffer for
+that purpose.
+
+If the material to be displayed contains characters with high bit set
+and the platform treats the "char" type as signed, this can cause a heap
+buffer overrun because non-printing characters are escaped as
+\xFF..FFnn, where nn is 80..FF in hex.
+
+This might be exploitable to inject code if
+- fetchmail is run in verbose mode
+AND
+- the host running fetchmail considers char unsigned
+AND
+- the server uses malicious certificates with non-printing characters
+  that have the high bit set
+AND
+- these certificates manage to inject shell-code that consists purely of
+  printable characters.
+
+It is believed to be difficult to achieve all this.
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+3. Solution
+===========
+
+There are two alternatives, either of them by itself is sufficient:
+
+a. Apply the patch found in section B of this announcement to
+   fetchmail 6.3.13, recompile and reinstall it.
+
+b. Install fetchmail 6.3.14 or newer after it will have become available.
+   The fetchmail source code is always available from
+   <http://developer.berlios.de/project/showfiles.php?group_id=1824>.
+
+
+4. Workaround
+=============
+
+Run fetchmail without and verbose options.
+
+...
+
+B. Patch to remedy the problem
+==============================
+
+Note that when taking this from a GnuPG clearsigned file, the lines
+starting with a "-" character are prefixed by another "- " (dash +
+blank) combination. Either feed this file through GnuPG to strip them,
+or strip them manually. You may want to use the "-p1" flag to patch.
+
+Whitespace differences can usually be ignored by invoking "patch -l",
+so try this if the patch does not apply.
+
+--- a/sdump.c
++++ b/sdump.c
+@@ -36,7 +36,7 @@ char *sdump(const char *in, size_t len)
+ 	if (isprint((unsigned char)in[i])) {
+ 	    *(oi++) = in[i];
+ 	} else {
+-	    oi += sprintf(oi, "\\x%02X", in[i]);
++	    oi += sprintf(oi, "\\x%02X", (unsigned char)in[i]);
+ 	}
+     }
+     *oi = '\0';
+
+END OF fetchmail-SA-2010-01.txt
+
+Content of type "application/pgp-signature" skipped
