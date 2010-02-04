@@ -1,27 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/15/2
-Message-ID: <4BC65FD5.9060800@redhat.com>
-Date: Thu, 15 Apr 2010 08:37:41 +0800
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/04/2
+Message-ID: <4B6A5675.4090604@redhat.com>
+Date: Thu, 04 Feb 2010 13:09:09 +0800
 From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Michael Gilbert <michael.s.gilbert@...il.com>, coley@...re.org
-Subject: CVE request: kernel: tty: release_one_tty() forgets to put pids
+CC: dann frazier <dannf@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: DoS on x86_64
 Content-Type: text/plain; charset=utf-8
 
-On 04/15/2010 08:23 AM, Michael Gilbert wrote:
-> On Wed, 14 Apr 2010 11:20:00 +0800 Eugene Teo wrote:
+On 02/04/2010 10:28 AM, dann frazier wrote:
+> On Mon, Feb 01, 2010 at 01:09:12PM +0800, Eugene Teo wrote:
+>> Reported by Mathias Krause. The problem seams to be located in
+>> fs/binfmt_elf.c:load_elf_binary(). It calls SET_PERSONALITY() prior
+>> checking that the ELF interpreter is available. This in turn makes the
+>> previously 32 bit process a 64 bit one which would be fine if execve()
+>> would succeed. But after the SET_PERSONALITY() the open_exec() call
+>> fails (because it cannot find the interpreter) and execve() almost
+>> instantly returns with an error. If you now look at /proc/PID/maps
+>> you'll see, that it has the vsyscall page mapped which shouldn't be. But
+>> the process is not dead yet, it's still running. By now generating a
+>> segmentation fault and in turn trying to generate a core dump the
+>> kernel just dies.
+>>
+>> Steps to Reproduce:
+>> 1. Enable core dumps
+>> 2. Start an 32 bit program that tries to execve() an 64 bit program
+>> 3. The 64 bit program cannot be started by the kernel because it can't
+>> find the interpreter, i.e. execve returns with an error
+>> 4. Generate a segmentation fault
+>> 5. panic
+>>
+>> Upstream commit:
+>> http://git.kernel.org/linus/221af7f87b97431e3ee21ce4b0e77d5411cf1549
 >
->> 2) tty: release_one_tty() forgets to put pids
->> https://bugzilla.redhat.com/show_bug.cgi?id=582076
->> http://git.kernel.org/linus/6da8d866d0d39e9509ff826660f6a86a6757c966
->> Not sure this issue can be triggered by a non-privileged user.
+> Thanks Eugene.
 >
-> this one should get a CVE id i think.  looking at only two data points
-> (2.6.26 and 2.6.32), i've found the vulnerable code present in both.
-> if i'm not mistaken, redhat has had supported releases in that range.
+> Also note this fix for a regression in the above:
+>    http://git.kernel.org/linus/7ab02af428c2d312c0cf8fb0b01cc1eb21131a3d
 
-Was discussing this with another colleague, that it seems possible to 
-trigger this issue with a non-privileged user. And yes, I agree that 
-this should have a CVE name assigned. Thanks.
+Ben Hutchings reported (via stable review list) that the fix did not 
+work for him. Will monitor the list if there are other follow-ups.
 
-Eugene
+Thanks, Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
