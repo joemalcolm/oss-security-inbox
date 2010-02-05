@@ -1,29 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/19/6
-Message-ID: <Pine.GSO.4.64.1005191855080.13965@faron.mitre.org>
-Date: Wed, 19 May 2010 18:59:42 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Josh Bressers <bressers@...hat.com>
-cc: Hanno Böck <hanno@...eck.de>, "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com
-Subject: Re: CVE request: phpbb 3.0.7 and before 3.0.5
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/05/2
+Message-ID: <20100205210530.GP30053@ngolde.de>
+Date: Fri, 5 Feb 2010 22:05:30 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>, Simo Sorce <ssorce@...hat.com>
+Subject: Re: Samba symlink 0day flaw
 Content-Type: text/plain; charset=utf-8
 
+Hey,
+* Josh Bressers <bressers@...hat.com> [2010-02-05 20:11]:
+> As many of you have probably seen, there was a supposed Samba 0day flaw
+> posted to full-disclosure and youtube.
+> 
+> Samba has a response to this:
+> http://marc.info/?l=samba-technical&m=126539387432412&w=2
+> 
+> I'm not sure if this should get a CVE id. It is documented behavior.
+> Somewhat unexpected though. I think changing the default is the right way
+> to go, but it may be more of a hardening measure than a security fix.
+> 
+> Thoughts Steve?
 
-On Wed, 19 May 2010, Josh Bressers wrote:
+Given the count of users that are probably affected by this and it not being 
+documented in e.g. man 5 smb.conf I'd vote for yes! :)
 
-> ----- "Hanno Böck" <hanno@...eck.de> wrote:
->> Am Dienstag 18 Mai 2010 schrieb Josh Bressers:
->>>
->>>     http://www.phpbb.com/community/viewtopic.php?f=14&p=9764445
->>>     # [Sec] Only use forum id supplied for posting if global
->>>     announcement detected. (Reported by nickvergessen)
->>>
->>> CVE-2010-1630 phpbb 3.0.5 unspecified flaw
->>
->> Shouldn't this be CVE-2009-XXXX ?
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-Ideally yes, but the ID is out there so we may as well use it.  This 
-happens sometimes.  It doesn't look like it became "widely public" until a 
-couple months ago, so a 2010 ID isn't too bad.
-
-- Steve
+Content of type "application/pgp-signature" skipped
