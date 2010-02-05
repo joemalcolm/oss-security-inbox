@@ -1,43 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/13/3
-Message-ID: <20100113151548.GA19602@logo.rdu.rpath.com>
-Date: Wed, 13 Jan 2010 10:15:48 -0500
-From: "Michael K. Johnson" <johnsonm@...th.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: [PATCH] memory consumption (DoS) in openssl CVE-2009-4355
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/05/3
+Message-Id: <20100205170908.2fbc73eb.michael.s.gilbert@gmail.com>
+Date: Fri, 5 Feb 2010 17:09:08 -0500
+From: Michael Gilbert <michael.s.gilbert@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: Samba symlink 0day flaw
 Content-Type: text/plain; charset=utf-8
 
-Previously, an initialization-related memory leak involving openssl
-was given CVE-2008-1678 and worked around in mod_ssl; see for example
-https://bugzilla.redhat.com/show_bug.cgi?id=447268
-https://issues.apache.org/bugzilla/show_bug.cgi?id=44975
-https://bugs.launchpad.net/ubuntu/+source/apache2/+bug/224945
-http://svn.apache.org/viewvc?view=rev&revision=654119
+On Fri, 5 Feb 2010 22:05:30 +0100, Nico Golde wrote:
+> Hey,
+> * Josh Bressers <bressers@...hat.com> [2010-02-05 20:11]:
+> > As many of you have probably seen, there was a supposed Samba 0day flaw
+> > posted to full-disclosure and youtube.
+> > 
+> > Samba has a response to this:
+> > http://marc.info/?l=samba-technical&m=126539387432412&w=2
+> > 
+> > I'm not sure if this should get a CVE id. It is documented behavior.
+> > Somewhat unexpected though. I think changing the default is the right way
+> > to go, but it may be more of a hardening measure than a security fix.
+> > 
+> > Thoughts Steve?
+> 
+> Given the count of users that are probably affected by this and it not being 
+> documented in e.g. man 5 smb.conf I'd vote for yes! :)
 
-However, this did not resolve the general problem, and an rPath
-customer recently reproduced essentially the same memory leak via
-another pathway.  This new pathway was assigned CVE-2009-4355.
-Initially, the suggestion was to fix the leak via modifications
-to php or curl in the same way that mod_ssl was previously fixed,
-but then Andy Grimm provided a patch to openssl that would not only
-resolve the issue for curl/php but also for any other as-yet-unknown
-new vectors.  Dr. Stephen Henson, an openssl core team member,
-provided a new openssl patch which rPath has confirmed resolves
-the issue, and which Dr. Henson is committing to upstream openssl.
-Dr. Henson's patch is attached to this email.
+i think this should get a CVE.  "wide links = no" is not really a
+hardening feature.  it is a solution for a certain subset of samba
+users [0].  many will need to set "wide links = yes" (in order to
+use symlinks to local files) and will remain vulnerable.
 
-The specific symptom of this new pathway is that any vulnerable
-system will leak hundreds of KB of memory per SSLv3 connection after
-apache has been gracefully restarted (SIGHUP).  Temporary mitigation
-strategies include limiting the number of requests that an apache
-worker can serve to limit the quantity of leaked memory, and doing
-full restarts rather than graceful restarts of apache.
+besides, the Confidentiality Impact and Integrity Impact are rather
+high since pretty much any file on the victim's system can be read 
+(confidentiality) and /tmp and other locations are writeable
+(integrity).
 
-Some discussion regarding this issue is in two issue reports:
-https://issues.rpath.com/browse/RPL-3157
-https://bugzilla.redhat.com/show_bug.cgi?id=546707
+mike
 
-(I cannot make the Red Hat bugzilla report public, but assume
-that it will be made public today.)
-
-View attachment "CVE-2009-4355.patch" of type "text/plain" (2416 bytes)
+[0] http://lists.samba.org/archive/samba-technical/2010-February/069196.html
