@@ -1,70 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/21/8
-Message-ID: <297267266.1124781279734235963.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 21 Jul 2010 13:43:55 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: lcars@...rt.org, coley <coley@...re.org>
-Subject: Re: [oCERT-2010-002] Joomla input sanitization errors (XSS)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/05/4
+Message-ID: <20100205164335.77544297@willson.li.ssimo.org>
+Date: Fri, 5 Feb 2010 16:43:35 -0500
+From: Simo Sorce <ssorce@...hat.com>
+To: Nico Golde <oss-security+ml@...lde.de>
+Cc: oss-security@...ts.openwall.com, coley <coley@...re.org>
+Subject: Re: Samba symlink 0day flaw
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-2535 for this.
+On Fri, 5 Feb 2010 22:05:30 +0100
+Nico Golde <oss-security+ml@...lde.de> wrote:
 
-Thanks.
+> Hey,
+> * Josh Bressers <bressers@...hat.com> [2010-02-05 20:11]:
+> > As many of you have probably seen, there was a supposed Samba 0day
+> > flaw posted to full-disclosure and youtube.
+> > 
+> > Samba has a response to this:
+> > http://marc.info/?l=samba-technical&m=126539387432412&w=2
+> > 
+> > I'm not sure if this should get a CVE id. It is documented behavior.
+> > Somewhat unexpected though. I think changing the default is the
+> > right way to go, but it may be more of a hardening measure than a
+> > security fix.
+> > 
+> > Thoughts Steve?
+> 
+> Given the count of users that are probably affected by this and it
+> not being documented in e.g. man 5 smb.conf I'd vote for yes! :)
+> 
+> Cheers
+> Nico
+
+Sorry not clear what would not be documented in smb.conf ?
+
+Simo.
 
 -- 
-    JB
-
-
------ "Andrea Barisani" <lcars@...rt.org> wrote:
-
-> #2010-002 Joomla input sanitization errors (XSS)
-> 
-> Description:
-> 
-> Joomla, an open source content management system, suffers from a
-> cross-site
-> scripting (XSS) vulnerability.
-> 
-> Insufficient input sanitization on the parameters passed to pages
-> related to
-> administration settings leads to arbitrary javascript injection in the
-> context
-> of the user session, this could be potentially exploited to hijack the
-> session
-> of the Joomla administrator.
-> 
-> Affected version:
-> 
-> Joomla <= 1.5.19
-> 
-> Fixed version:
-> 
-> Joomla >= 1.5.20
-> 
-> Credit: vulnerability report and PoC received from Mesut Timur <mesut
-> [at]
-> mavitunasecurity [dot] com>.
-> 
-> CVE: N/A
-> 
-> Timeline:
-> 
-> 2010-06-01: vulnerability report received
-> 2010-06-01: contacted Joomla Security Team
-> 2010-07-15: Joomla advisory published
-> 2010-07-20: oCERT advisory published
-> 
-> References:
-> http://developer.joomla.org/security/news/318-20100704-core-xss-vulnerabilitis-in-back-end.html
-> 
-> Permalink:
-> http://www.ocert.org/advisories/ocert-2010-002.html
-> 
-> -- 
-> Andrea Barisani |                Founder & Project Coordinator
->           oCERT | Open Source Computer Emergency Response Team
-> 
-> <lcars@...rt.org>                         http://www.ocert.org
->  0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
->         "Pluralitas non est ponenda sine necessitate"
+Simo Sorce * Red Hat, Inc * New York
