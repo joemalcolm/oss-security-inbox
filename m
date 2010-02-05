@@ -1,24 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/02/5
-Message-ID: <1275513606.24713.10.camel@new-desktop>
-Date: Wed, 02 Jun 2010 23:20:06 +0200
-From: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
-To: oss-security@...ts.openwall.com
-Subject: Re: SFCB vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/05/1
+Message-ID: <721400777.1212531265395897361.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 5 Feb 2010 13:51:37 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: coley <coley@...re.org>, Simo Sorce <ssorce@...hat.com>
+Subject: Samba symlink 0day flaw
 Content-Type: text/plain; charset=utf-8
 
+As many of you have probably seen, there was a supposed Samba 0day flaw
+posted to full-disclosure and youtube.
 
-> Unfortunally they seem to re-introduce these bugs in other sblims
-> like sblim-gather. Did you look at that too?
+Samba has a response to this:
+http://marc.info/?l=samba-technical&m=126539387432412&w=2
 
-No, I only audited different CIM brokers for remote pre-auth bugs.
+I'm not sure if this should get a CVE id. It is documented behavior.
+Somewhat unexpected though. I think changing the default is the right way
+to go, but it may be more of a hardening measure than a security fix.
 
-By the way, these audits showed that vendors add many patches to the
-upstream code, sometimes removing vulnerabilities (like VMware in this
-case) and sometimes adding ones ;-)
+Thoughts Steve?
 
-Regards,
-Nicolas Grégoire / Agarri
+Thanks.
 
-
-
+-- 
+    JB
