@@ -1,76 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/30/7
-Message-ID: <20100830194806.GC25870@openwall.com>
-Date: Mon, 30 Aug 2010 23:48:06 +0400
-From: Solar Designer <solar@...nwall.com>
-To: Roland McGrath <roland@...hat.com>
-Cc: Kees Cook <kees.cook@...onical.com>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Al Viro <viro@...iv.linux.org.uk>, Andrew Morton <akpm@...ux-foundation.org>, Oleg Nesterov <oleg@...hat.com>, KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org
-Subject: Re: [PATCH] exec argument expansion can inappropriately trigger OOM-killer
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/06/2
+Message-ID: <20100206133157.GV30053@ngolde.de>
+Date: Sat, 6 Feb 2010 14:31:57 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
+To: Simo Sorce <ssorce@...hat.com>
+Cc: Nico Golde <oss-security+ml@...lde.de>, oss-security@...ts.openwall.com, coley <coley@...re.org>
+Subject: Re: Samba symlink 0day flaw
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Aug 30, 2010 at 03:06:16AM -0700, Roland McGrath wrote:
-> And I say, if your userland process could really allocate another 200GB,
-> then more power to you, you can do it with an exec too.  If you could do
-> the same with a userland stack allocation, and spend all that time in
-> strlen calls and then memcpy, you can do it inside execve too.  If it
-> takes days, that's what you asked for, and it's your process.  It just
-> ought to be every bit (or near enough) as preemptible and interruptible
-> as that normal userland activity ought to be.
+Hey,
+* Simo Sorce <ssorce@...hat.com> [2010-02-05 22:48]:
+> On Fri, 5 Feb 2010 22:05:30 +0100
+> Nico Golde <oss-security+ml@...lde.de> wrote:
+> > Hey,
+> > * Josh Bressers <bressers@...hat.com> [2010-02-05 20:11]:
+> > > As many of you have probably seen, there was a supposed Samba 0day
+> > > flaw posted to full-disclosure and youtube.
+> > > 
+> > > Samba has a response to this:
+> > > http://marc.info/?l=samba-technical&m=126539387432412&w=2
+> > > 
+> > > I'm not sure if this should get a CVE id. It is documented behavior.
+> > > Somewhat unexpected though. I think changing the default is the
+> > > right way to go, but it may be more of a hardening measure than a
+> > > security fix.
+> > > 
+> > > Thoughts Steve?
+> > 
+> > Given the count of users that are probably affected by this and it
+> > not being documented in e.g. man 5 smb.conf I'd vote for yes! :)
+> > 
+> Sorry not clear what would not be documented in smb.conf ?
 
-This makes sense to me.  However, introducing a new preemption point
-may violate assumptions under which the code was written and reviewed
-in the past.  In the worst case, we'd introduce/expose race conditions
-allowing for privilege escalation.
+The wide_links variable, at least not in my copy.
 
-> So, perhaps we want this (count already has a cond_resched in its loop):
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-Good point re: count() already having this (I think it did not in 2.2).
-
-> @@ -400,6 +403,10 @@ static int copy_strings(int argc, const 
->  		int len;
->  		unsigned long pos;
->  
-> +		if (signal_pending(current))
-> +			return -ERESTARTNOINTR;
-> +		cond_resched();
-
-So, in current kernels, you're making it possible for more kinds of
-things to change after prepare_binprm() but before
-search_binary_handler().  We'd need to check for possible implications
-of this.
-
-I must admit I am not familiar with what additional kinds of things may
-change when execution is preempted.  This made a significant difference
-in some much older kernels (many years ago), but now that the kernel
-makes a lot less use of locking most things may be changed by another
-CPU even without preemption.  So does anyone have a list of what
-additional risks we're exposed to, if any, when we allow preemption in
-current kernels?
-
-> Has someone reported this BUG_ON failure mode with a reproducer?
-
-64bit_dos.c was supposed to be the reproducer, and I managed to get it
-to work (as I've documented in another message earlier today).  The
-prerequisites appeared to be (some of these might be specific to my
-tests, though):
-
-- 64-bit kernel with 32-bit userland support (e.g., CONFIG_IA32_EMULATION);
-- 64-bit build of 64bit_dos.c;
-- 32-bit build of the target program;
-- no dynamic linking in the target program;
-- "ulimit -s unlimited" before running the reproducer program;
-- over 3 GB of RAM in the system.
-
-> [...]  Rather than better enabling OOM killing, I think what really
-> makes sense is for the nascent mm to be marked such that allocations in
-> it (they'll be from get_arg_page->get_user_pages->handle_mm_fault) just
-> fail with ENOMEM before it resorts to the OOM killer (or perhaps even to
-> very aggressive pageout).  That should percolate back to the execve just
-> failing with ENOMEM, which is nicer than OOM kill even if the OOM killer
-> actually does pick exactly and only the right target.
-
-I agree.
-
-Thanks,
-
-Alexander
+Content of type "application/pgp-signature" skipped
