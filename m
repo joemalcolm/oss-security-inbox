@@ -1,29 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/01/11
-Message-ID: <53773762.830241275420346192.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 1 Jun 2010 15:25:46 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/06/1
+Message-Id: <201002061246.14352.eren@pardus.org.tr>
+Date: Sat, 6 Feb 2010 12:46:14 +0200
+From: Eren Türkay <eren@...dus.org.tr>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: ghostscript and gv
+Cc: Josh Bressers <bressers@...hat.com>, coley <coley@...re.org>, Simo Sorce <ssorce@...hat.com>
+Subject: Re: Samba symlink 0day flaw
 Content-Type: text/plain; charset=utf-8
 
------ "Michael Gilbert" <michael.s.gilbert@...il.com> wrote:
-
-> > > In the Debian bug report Paul also mentiones that gv creates a
-> > > temporary file in an insecure way:
-> > > http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=583316#10
-> 
-> should the insecure temp file get its own id since it is rather
-> different than the original problem?
+On Friday 05 February 2010 08:51:37 pm Josh Bressers wrote:
+> As many of you have probably seen, there was a supposed Samba 0day flaw
+> posted to full-disclosure and youtube.
 > 
 
-Sigh, yes. I need to read the whole mail next time :(
+FYI, metasploit exploit module was released.
 
-So to recap:
-
-CVE-2010-2055 ghostscript and gv unsafe CWD init file usage
-CVE-2010-2056 ghostscript insecure /tmp use
-
--- 
-    JB
+http://blog.metasploit.com/2010/02/exploiting-samba-symlink-traversal.html
