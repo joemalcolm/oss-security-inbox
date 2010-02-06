@@ -1,21 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/22/7
-Message-ID: <Pine.GSO.4.64.1002221823350.14849@faron.mitre.org>
-Date: Mon, 22 Feb 2010 18:30:17 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/06/3
+Message-ID: <4B6D7292.2070304@debian.org>
+Date: Sat, 06 Feb 2010 14:45:54 +0100
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: wordpress < 2.9.2 information leak
+Subject: Re: Samba symlink 0day flaw
 Content-Type: text/plain; charset=utf-8
 
+On 06/02/2010 14:31, Nico Golde wrote:
+> The wide_links variable, at least not in my copy.
+> 
 
-On Mon, 22 Feb 2010, Hanno Böck wrote:
+       wide links (S)
 
-> http://wordpress.org/development/2010/02/wordpress-2-9-2/
-> http://tmacuk.co.uk/?p=180
-> https://core.trac.wordpress.org/ticket/11236
-> http://hakre.wordpress.com/2010/02/16/the-short-memory-of-wordpress-org-
-> security/
+           This parameter controls whether or not links in the UNIX file
+           system may be followed by the server. Links that point to areas
+           within the directory tree exported by the server are always
+           allowed; this parameter controls access only to areas that are
+           outside the directory tree being exported.
 
-Use CVE-2010-0682, to be filled in later.
+           Note that setting this parameter can have a negative effect
+on your
+           server performance due to the extra system calls that Samba
+has to
+           do in order to perform the link checks.
 
-- Steve
+           Default: wide links = yes
+
+
+This is samba 2:3.4.5~dfsg-1. Note the name is wide links, not wide_links.
+
+Cheers,
+-- 
+Yves-Alexis
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (901 bytes)
