@@ -1,42 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/04/1
-Message-ID: <20100204022805.GB12990@lackof.org>
-Date: Wed, 3 Feb 2010 19:28:05 -0700
-From: dann frazier <dannf@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - kernel: DoS on x86_64
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/07/1
+Message-ID: <20100207015021.GB22033@suse.de>
+Date: Sun, 7 Feb 2010 02:50:21 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE request: information leak / potential crash in sys_move_pages
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Feb 01, 2010 at 01:09:12PM +0800, Eugene Teo wrote:
-> Reported by Mathias Krause. The problem seams to be located in
-> fs/binfmt_elf.c:load_elf_binary(). It calls SET_PERSONALITY() prior  
-> checking that the ELF interpreter is available. This in turn makes the  
-> previously 32 bit process a 64 bit one which would be fine if execve()  
-> would succeed. But after the SET_PERSONALITY() the open_exec() call  
-> fails (because it cannot find the interpreter) and execve() almost  
-> instantly returns with an error. If you now look at /proc/PID/maps  
-> you'll see, that it has the vsyscall page mapped which shouldn't be. But  
-> the process is not dead yet, it's still running. By now generating a  
-> segmentation fault and in turn trying to generate a core dump the
-> kernel just dies.
->
-> Steps to Reproduce:
-> 1. Enable core dumps
-> 2. Start an 32 bit program that tries to execve() an 64 bit program
-> 3. The 64 bit program cannot be started by the kernel because it can't  
-> find the interpreter, i.e. execve returns with an error
-> 4. Generate a segmentation fault
-> 5. panic
->
-> Upstream commit:
-> http://git.kernel.org/linus/221af7f87b97431e3ee21ce4b0e77d5411cf1549
+Hi,
 
-Thanks Eugene.
+I spotted a problem in sys_move_pages, where "node" value is read from userspace,
+but not limited to the node set within the kernel itself.
 
-Also note this fix for a regression in the above:
-  http://git.kernel.org/linus/7ab02af428c2d312c0cf8fb0b01cc1eb21131a3d
+Due to the bit tests in mm/migrate.c:do_move_pages it is easy to read out
+the kernel memory (as node can also be negative).
 
--- 
-dann frazier
+(The node_isset and node_state functions just map to test_bit, which has 
+ no limiter in the normal implementations.)
 
+There also is (in my eyes) the chance we can corrupt kernel memory later on
+if we have all the right bits setup, but I did not research this further.
+
+Issue was present starting as sys_move_pages was introduced in 2.6.18.
+Solved in mainline by commit below.
+
+Needs a CVE for information leakage at least.
+
+Have a nice weekend, Marcus
+
+commit 6f5a55f1a6c5abee15a0e878e5c74d9f1569b8b0
+Author: Linus Torvalds <torvalds@...ux-foundation.org>
+Date:   Fri Feb 5 16:16:50 2010 -0800
+
+    Fix potential crash with sys_move_pages
+    
+    We incorrectly depended on the 'node_state/node_isset()' functions
+    testing the node range, rather than checking it explicitly.  That's not
+    reliable, even if it might often happen to work.  So do the proper
+    explicit test.
+    
+    Reported-by: Marcus Meissner <meissner@...e.de>
+    Acked-and-tested-by: Brice Goglin <Brice.Goglin@...ia.fr>
+    Acked-by: Hugh Dickins <hugh.dickins@...cali.co.uk>
+    Cc: stable@...nel.org
+    Signed-off-by: Linus Torvalds <torvalds@...ux-foundation.org>
+
+diff --git a/mm/migrate.c b/mm/migrate.c
+index efddbf0..9a0db5b 100644
+--- a/mm/migrate.c
++++ b/mm/migrate.c
+@@ -912,6 +912,9 @@ static int do_pages_move(struct mm_struct *mm, struct task_struct *task,
+ 				goto out_pm;
+ 
+ 			err = -ENODEV;
++			if (node < 0 || node >= MAX_NUMNODES)
++				goto out_pm;
++
+ 			if (!node_state(node, N_HIGH_MEMORY))
+ 				goto out_pm;
+ 
