@@ -1,22 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/26/3
-Message-ID: <Pine.GSO.4.64.1003261632110.16264@faron.mitre.org>
-Date: Fri, 26 Mar 2010 16:32:56 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Jan Lieskovsky <jlieskov@...hat.com>
-cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request -- SpamAssassin Mail Filter -- arbitrary shell command injection (priv esc)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/07/3
+Message-ID: <20100207182302.GB30053@ngolde.de>
+Date: Sun, 7 Feb 2010 19:23:02 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: Samba symlink 0day flaw
 Content-Type: text/plain; charset=utf-8
 
+Hey,
+* Yves-Alexis Perez <corsac@...ian.org> [2010-02-06 15:02]:
+> On 06/02/2010 14:31, Nico Golde wrote:
+> > The wide_links variable, at least not in my copy.
+[...] 
+> This is samba 2:3.4.5~dfsg-1. Note the name is wide links, not wide_links.
 
-On Wed, 10 Mar 2010, Jan Lieskovsky wrote:
+Args, you are right.
 
->  Security researcher called "Kingcope" pointed out:
->  [1] 
-> http://lists.grok.org.uk/pipermail/full-disclosure/2010-March/073489.html
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-Sorry for the lateness.
-
-Use CVE-2010-1132, to be filled in shortly.
-
-- Steve
+Content of type "application/pgp-signature" skipped
