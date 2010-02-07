@@ -1,48 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/06/7
-Message-ID: <20100706151655.GD24659@lackof.org>
-Date: Tue, 6 Jul 2010 09:16:55 -0600
-From: dann frazier <dannf@...nf.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/07/2
+Message-ID: <4B6ED518.2040306@kernel.sg>
+Date: Sun, 07 Feb 2010 22:58:32 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: CVE Request: kernel: hvc_console: Fix race between hvc_close and hvc_remove
+CC: Marcus Meissner <meissner@...e.de>
+Subject: Re: CVE request: information leak / potential crash in sys_move_pages
 Content-Type: text/plain; charset=utf-8
 
-[cc'ing coley@...us.mitre.org]
+On 02/07/2010 09:50 AM, Marcus Meissner wrote:
+> Hi,
+>
+> I spotted a problem in sys_move_pages, where "node" value is read from userspace,
+> but not limited to the node set within the kernel itself.
+>
+> Due to the bit tests in mm/migrate.c:do_move_pages it is easy to read out
+> the kernel memory (as node can also be negative).
+>
+> (The node_isset and node_state functions just map to test_bit, which has
+>   no limiter in the normal implementations.)
+>
+> There also is (in my eyes) the chance we can corrupt kernel memory later on
+> if we have all the right bits setup, but I did not research this further.
+>
+> Issue was present starting as sys_move_pages was introduced in 2.6.18.
+> Solved in mainline by commit below.
+>
+> Needs a CVE for information leakage at least.
 
-On Wed, Jun 30, 2010 at 11:06:41PM -0600, dann frazier wrote:
-> On Sat, Apr 17, 2010 at 11:26:46PM -0400, Michael Gilbert wrote:
-> > On Sat, 17 Apr 2010 18:15:42 -0400 Michael Gilbert wrote:
-> > 
-> > > On Thu, 04 Mar 2010 17:03:58 +0800 Eugene Teo wrote:
-> > > 
-> > > > Heads-up. You might want to backport this if your kernel is affected. We 
-> > > > are not requesting a CVE name for this as it does not affect any of our 
-> > > > Red Hat supported kernels.
-> > > 
-> > > are you sure about this?  i see the vulnerable code upstream in both
-> > > 2.6.26 and 2.6.32.  does redhat not ship hvc in their kernels?  i think
-> > > this should get a cve id because the more vanilla distros will have
-> > > shipped with this included.
-> > 
-> > i see that hvc_console is disabled by default in the debian kernels,
-> 
-> Actually, upon review, I see that it is enabled (see the powerpc64
-> image). Therefore, I'd like to request a CVE ID for it.
-> 
-> > and i assume it is the same for the redhat kernels.
-> > 
-> > are issues in features that are disabled by default generally treated
-> > as unimportant? there are bound to be a (perhaps small) subset of users
-> > turning these features on; exposing themselves to more risk if these
-> > issues go unfixed. i suppose cve assignment depends on whether or not
-> > there is an expectation to protect those users in addition to
-> > defaults-using users. 
-> > 
-> > mike
-> > 
-> 
+Thanks, please use CVE-2010-0415.
 
--- 
-dann frazier
-
+Eugene
