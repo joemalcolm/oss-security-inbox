@@ -1,48 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/02/4
-Message-ID: <4C56DF90.6060805@redhat.com>
-Date: Mon, 02 Aug 2010 17:09:04 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request [two ids] -- cabextract -- 1, Infinite loop in MS-ZIP and Quantum decoders (minor) 2, Integer wrap-around (crash) by processing certain *.cab files in test archive mode
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/08/1
+Message-ID: <4B6F6948.7070708@redhat.com>
+Date: Mon, 08 Feb 2010 09:30:48 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request - kernel: ima: fix null pointer dereference
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve, vendors,
+Was cc'ed this in a couple of kernel mailing lists.
 
-   two security issues have been reported against cabextract:
+This was introduced in 6c21a7fb4 (v2.6.33-rc1).
 
-1, Infinite loop in MS-ZIP and Quantum decoders (minor issue):
+It was first reported here http://lkml.org/lkml/2009/12/29/13, and 
+subsequently here http://lkml.org/lkml/2010/2/5/76 (backtraces).
 
-A deficiency has been reported in the way cabextract extracted
-certain Cabinet (*.cab) files, using the MZ-ZIP and Quantum decompressors.
-If a local user was tricked into opening a specially-crafted *.cab
-file, it could lead to infinite loop.
+This can be reproduced by running ltp test pipe07.
 
-References:
-   [1] http://bugs.gentoo.org/show_bug.cgi?id=329891
+http://groups.google.com/group/linux.kernel/msg/95986c94ea55c81a.
+https://bugzilla.redhat.com/show_bug.cgi?id=562597
 
-Upstream patches:
-   [2] http://libmspack.svn.sourceforge.net/viewvc/libmspack?view=revision&revision=90
-   [3] http://libmspack.svn.sourceforge.net/viewvc/libmspack?view=revision&revision=95
-   [4] http://libmspack.svn.sourceforge.net/viewvc/libmspack/libmspack/trunk/mspack/
+Mainline fix: https://bugzilla.redhat.com/show_bug.cgi?id=562597#c3
 
-2, Integer wrap-around (crash) by processing certain *.cab files in test archive mode
-
-An integer wrap-around flaw has been reported in the way cabextract processed
-certain Cabinet (*.cab) archive files. If a local user was tricked into opening
-a specially-crafted *.cab archive in test archive mode, it could lead to cabextract
-executable crash.
-
-References:
-   [1] http://bugs.gentoo.org/show_bug.cgi?id=329891
-
-Upstream patches:
-   [2] http://libmspack.svn.sourceforge.net/viewvc/libmspack/libmspack/trunk/mspack/qtmd.c?r1=114&r2=113
-   [3] http://libmspack.svn.sourceforge.net/viewvc/libmspack?view=revision&revision=118
-
-Could you allocate CVE ids for these?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Thanks, Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
