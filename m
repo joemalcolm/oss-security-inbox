@@ -1,29 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/18/3
-Message-ID: <4B7CCC51.7030501@redhat.com>
-Date: Thu, 18 Feb 2010 13:12:49 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/08/3
+Message-ID: <20100208164822.GH2434@redhat.com>
+Date: Mon, 8 Feb 2010 09:48:22 -0700
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE requests - kernel network vulns
+Subject: gnome-screensaver vulnerability (CVE-2010-0414)
 Content-Type: text/plain; charset=utf-8
 
-1) gre: fix netns vs proto registration ordering
-http://patchwork.ozlabs.org/patch/45553/
+This is a heads up on a gnome-screensaver issue that was fixed upstream
+today.
 
-"GRE protocol receive hook can be called right after protocol addition 
-is done. If netns stuff is not yet initialized, we're going to oops in
-net_generic().
+In version 2.28, it is possible to circumvent the security of screen
+locking functionality by changing the physical monitor configuration.
 
-This is remotely oopsable if ip_gre is compiled as module and packet
-comes at unfortunate moment of module loading."
+Details are available in our bugzilla, along with the patch being used
+by upstream to correct the issue:
 
-2) tunnels: fix netns vs proto registration ordering
-http://patchwork.ozlabs.org/patch/45554/
+https://bugzilla.redhat.com/show_bug.cgi?id=562217
 
-"Same stuff as in ip_gre patch: receive hook can be called before netns
-setup is done, oopsing in net_generic()."
+We have assigned CVE-2010-0414 to this issue.
 
-Thanks, Eugene
+The code that caused this issue went into gnome-screensaver during the
+2.24 development cycle, but auto-configuration of hotplugged monitors
+didn't show up until 2.28, and that is a pre-requisite for triggering
+the bug, so only 2.28 is vulnerable.
+
+References:
+
+http://git.gnome.org/browse/gnome-screensaver/commit/?id=a5f66339be6719c2b8fc478a1d5fc6545297d950
+https://bugzilla.gnome.org/show_bug.cgi?id=609337
+
 -- 
-Eugene Teo / Red Hat Security Response Team
+Vincent Danen / Red Hat Security Response Team 
