@@ -1,29 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/22/5
-Message-ID: <4CE9FADF.70905@redhat.com>
-Date: Mon, 22 Nov 2010 13:08:47 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/09/5
+Message-ID: <4B716FFF.4010909@redhat.com>
+Date: Tue, 09 Feb 2010 15:23:59 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
 CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: missing tty ops write function presence check in hci_uart_tty_open()
+Subject: CVE Request -- cURL/libCURL 7.20.0
 Content-Type: text/plain; charset=utf-8
 
-hci_uart_tty_open() is missing check that tty has a write op (a few 
-don't), and you should check this at open and refuse if the ops you need 
-don't exist, eg as SLIP does:
+Hi Steve, vendors,
 
-static int slip_open(struct tty_struct *tty)
-{
-         struct slip *sl;
-         int err;
+   cURL upstream has released latest v7.20.0 version of cURL/libCURL
+fixing the "libcurl data callback excessive length" issue.
 
-         if (!capable(CAP_NET_ADMIN))
-                 return -EPERM;
+References:
+[1] http://curl.haxx.se/docs/security.html#20100209
+[2] http://curl.haxx.se/docs/adv_20100209.html
+[3] http://curl.haxx.se/libcurl-contentencoding.patch
+[4] http://curl.haxx.se/download.html
 
-         if (tty->ops->write == NULL)
-                 return -EOPNOTSUPP;
+Mitigation factors (from [1]):
 
-https://bugzilla.redhat.com/show_bug.cgi?id=641410
-http://git.kernel.org/linus/c19483cc5e56ac5e22dd19cf25ba210ab1537773
+"This error is only present in zlib-enabled builds of libcurl and only if
+  automatic decompression has been explicitly enabled by the application - it
+  is disabled by default."
 
-Thanks, Eugene
+Could you allocate CVE id for this?
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
