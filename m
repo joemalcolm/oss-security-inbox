@@ -1,62 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/05/5
-Message-ID: <AANLkTil7296uzTbxkME0vcu3oeIzXaP6P3cNtbC046I5@mail.gmail.com>
-Date: Mon, 5 Jul 2010 12:10:58 -0400
-From: Glenn Randers-Pehrson <glennrp@...il.com>
-To: "PNG/MNG implementation discussion list" <png-mng-implement@...ts.sourceforge.net>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: [png-mng-implement] CVE Request -- libpng v1.4.3  and v1.2.44 -- memory leak while processing PNG image with malformed sCAL  chunks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/09/10
+Message-ID: <20100209161532.GA10561@kroah.com>
+Date: Tue, 9 Feb 2010 08:15:32 -0800
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: ima: fix null pointer dereference
 Content-Type: text/plain; charset=utf-8
 
-I did not intend to reveal the "crashing PNG" before
-Firefox 3.5.7 had been released.
+On Wed, Feb 10, 2010 at 12:09:23AM +0800, Eugene Teo wrote:
+> On 02/09/2010 11:56 PM, Greg KH wrote:
+> >On Mon, Feb 08, 2010 at 09:30:48AM +0800, Eugene Teo wrote:
+> >>Was cc'ed this in a couple of kernel mailing lists.
+> >>
+> >>This was introduced in 6c21a7fb4 (v2.6.33-rc1).
+> >
+> >Do we need CVE numbers for issues that never showed up in a released
+> >kernel version?  I don't see how this could affect anyone, unless they
+> >were foolish enough to ship a product on a non-released kernel :)
+> 
+> You got a point there, but I requested this in order to keep track
+> of security issues that we might need to backport in our future
+> kernels.
 
-Glenn
+Fair enough, that makes sense.  Although anyone backporting ima code
+needs to seriously consider the lunacy of what they are doing :)
 
-On Mon, Jul 5, 2010 at 7:32 AM, Marcus Meissner <meissner@...e.de> wrote:
-> On Wed, Jun 30, 2010 at 05:22:40PM +0200, Marcus Meissner wrote:
->> On Mon, Jun 28, 2010 at 04:26:06PM -0400, Josh Bressers wrote:
->> >
->> > ----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
->> >
->> > > Hi Steve, vendors,
->> > >
->> > >    libpng upstream has released latest v1.4.3 and v1.2.44 versions,
->> > > addressing two
->> > > security issues:
->> > > [a], out-of-bounds write to memory -- this already got a CVE id of
->> > > "CVE-2010-1205",
->> > > [b], memory-leak bug, involving images with malformed sCAL chunks,
->> > > which could
->> > >     lead to an application crash.
->> > >
->> > > References:
->> > >    [1] http://www.libpng.org/pub/png/libpng.html
->> > >    [2] https://bugzilla.redhat.com/show_bug.cgi?id=608644
->> > >
->> > > Steve, could you allocate a CVE id for the [b] issue?
->> > >
->> >
->> > Please use CVE-2010-2249 for issue [b].
->>
->> oss-sec, png-mng-implement ... do you have testimages or a reproducer for the sCAL issue?
->>
->> It would be helpful for our QA :/
->
-> As found on:
-> http://code.google.com/p/chromium/issues/detail?id=45983
->
-> The sample crashing PNG is:
-> http://www.ee.oulu.fi/~aki/spark.png
->
-> Ciao, Marcus
->
-> ------------------------------------------------------------------------------
-> This SF.net email is sponsored by Sprint
-> What will you do first with EVO, the first 4G phone?
-> Visit sprint.com/first -- http://p.sf.net/sfu/sprint-com-first
-> _______________________________________________
-> png-mng-implement mailing list
-> png-mng-implement@...ts.sourceforge.net
-> https://lists.sourceforge.net/lists/listinfo/png-mng-implement
->
+good luck,
+
+greg k-h
