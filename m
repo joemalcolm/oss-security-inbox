@@ -1,30 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/16/6
-Message-ID: <20100316133349.GA2713@redhat.com>
-Date: Tue, 16 Mar 2010 13:33:49 +0000
-From: Joe Orton <jorton@...hat.com>
-To: Brian Stafford <brian@...fford.uklinux.net>
-Cc: oss-security@...ts.openwall.com, libesmtp@...fford.uklinux.net, security@...ntu.com, Pawel Salek <pawsa@...ochem.kth.se>, jskarvad@...hat.com
-Subject: Re: CVE Request: libesmtp does not check NULL bytes in commonName
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/09/11
+Message-ID: <20100209180311.GE2377@redhat.com>
+Date: Tue, 9 Feb 2010 11:03:11 -0700
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: vulnerability in netpbm (CVE-2009-4274)
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Mar 16, 2010 at 11:46:11AM +0000, Brian Stafford wrote:
-> Ludwig Nussel wrote:
-> >Is there a way to comment on the draft? Maybe the author of the
-> >draft didn't think about the cases you'd like to handle.
->
-> Normally IETF working groups create a mailing list for discussion of
-> drafts when chartered and any interested party may subscribe.
-> However, as far as I can tell, this I-D is an individual submission;
-> I can't find a mailing list address so probably best to mail the
-> authors directly.
+Marc Schoenefeld discovered a stack-based buffer overflow in the way
+that netpbm processed the contents of header files in xpm image files.
+This could lead to a crash of the application processing a
+specially-crafted xpm file (and linked to netpbm), or possibly to the
+execution of arbitrary code with the privileges of the user processing
+the xpm file.  This issue is assigned CVE-2009-4274.
 
-Sorry, I should have forwarded the announcement in full:
+The issue was corrected upstream in version 10.47.07 on Dec 29, 2009:
 
-http://www.ietf.org/mail-archive/web/tls/current/msg05874.html
+http://netpbm.svn.sourceforge.net/viewvc/netpbm/stable/converter/ppm/xpmtoppm.c?view=patch&r1=995&r2=1076&pathrev=1076
 
-There is a mailing list set up here to discuss the draft:
+References:
 
-https://www.ietf.org/mailman/listinfo/certid
+https://bugzilla.redhat.com/show_bug.cgi?id=546580
 
-Regards, Joe
+-- 
+Vincent Danen / Red Hat Security Response Team 
