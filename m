@@ -1,25 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/02/1
-Message-ID: <4C563A5F.20503@redhat.com>
-Date: Mon, 02 Aug 2010 11:24:15 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: gfs2: rename cases kernel panic
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/09/4
+Message-ID: <20100209094314.30c22f7f@redhat.com>
+Date: Tue, 9 Feb 2010 09:43:14 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com, matthias.andree@....de
+Cc: "cve@...re.org" <cve@...re.org>
+Subject: Re: CVE request - fetchmail 6.3.11-.13 heap overflow in verbose X.509 cert display (only printable chars)
 Content-Type: text/plain; charset=utf-8
 
-The problem was in the way the gfs2 directory code was trying to re-use
-sentinel directory entries. A local, unprivileged user on a gfs2 mounted 
-directory can trigger this issue, resulting in a NULL pointer dereference.
+On Tue, 09 Feb 2010 09:32:07 +0100 "Matthias Andree"
+<matthias.andree@....de> wrote:
 
-https://bugzilla.redhat.com/show_bug.cgi?id=620300
+> PING?
 
-Introduced in upstream commit 71b86f56 (v2.6.19-rc1), and fixed in 
-commit 728a756b.
+Looks like one got assigned by Mitre:
+  http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2010-0562
 
-http://git.kernel.org/linus/71b86f562b5eb6f94ea00bba060caa64d0137969
-http://git.kernel.org/linus/728a756b8fcd22d80e2dbba8117a8a3aafd3f203
-
-Thanks, Eugene
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+Tomas Hoger / Red Hat Security Response Team
