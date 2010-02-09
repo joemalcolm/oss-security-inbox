@@ -1,18 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/22/1
-Message-Id: <DF2D47F3-31BC-4E49-8F66-080E6F0CC6F7@btinternet.com>
-Date: Tue, 22 Jun 2010 09:13:20 +0100
-From: Matthew Wilkes <matthewwilkes@...nternet.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Matthew Wilkes <enquiries@...culartriangle.eu>
-Subject: Re: CVE Request -- Plone -- arbitrary HTML code injection in safe_html
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/09/9
+Message-ID: <4B718A7A.7080201@redhat.com>
+Date: Wed, 10 Feb 2010 00:16:58 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Mark J Cox <mjc@...hat.com>, Greg KH <greg@...ah.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: ima: fix null pointer dereference
 Content-Type: text/plain; charset=utf-8
 
+On 02/10/2010 12:13 AM, Mark J Cox wrote:
+>>> Do we need CVE numbers for issues that never showed up in a released
+>>> kernel version? I don't see how this could affect anyone, unless they
+>>> were foolish enough to ship a product on a non-released kernel :)
+>>
+>> You got a point there, but I requested this in order to keep track of
+>> security issues that we might need to backport in our future kernels.
+>
+> It shouldn't get a CVE name. If someone at some point in the future
+> ships a vulnerable version (by selective backporting, or similar) then
+> it would get a name. Cheers, Mark
 
-On 2010-06-21, at 2048, Jan Lieskovsky wrote:
+Thanks for clarifying.
 
-> Could you allocate a CVE id for this?
-
-I requested one from MITRE over a week ago, they've not allocated one yet.
-
-Matthew
+Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
