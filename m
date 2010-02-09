@@ -1,40 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/06/2
-Message-Id: <201012060124.52619.hanno@hboeck.de>
-Date: Mon, 6 Dec 2010 01:24:52 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/09/7
+Message-ID: <4B7188B3.8060100@redhat.com>
+Date: Wed, 10 Feb 2010 00:09:23 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Josh Bressers <bressers@...hat.com>, coley <coley@...re.org>
-Subject: Re: CVE request: mybb before 1.4.11 and before 1.4.12
+CC: Greg KH <greg@...ah.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: ima: fix null pointer dereference
 Content-Type: text/plain; charset=utf-8
 
-Those got lost?
+On 02/09/2010 11:56 PM, Greg KH wrote:
+> On Mon, Feb 08, 2010 at 09:30:48AM +0800, Eugene Teo wrote:
+>> Was cc'ed this in a couple of kernel mailing lists.
+>>
+>> This was introduced in 6c21a7fb4 (v2.6.33-rc1).
+>
+> Do we need CVE numbers for issues that never showed up in a released
+> kernel version?  I don't see how this could affect anyone, unless they
+> were foolish enough to ship a product on a non-released kernel :)
 
-Mitre/steven, can you please assign?
+You got a point there, but I requested this in order to keep track of 
+security issues that we might need to backport in our future kernels.
 
-Am Monday 11 October 2010 schrieb Josh Bressers:
-> ----- "Hanno Böck" <hanno@...eck.de> wrote:
-> > http://blog.mybb.com/2009/12/29/mybb-1-4-11-released-minor-patch-security
-> > -update/
-> 
-> This will need a 2009 ID.
-> 
-> > and
-> > 
-> > http://blog.mybb.com/2010/04/13/mybb-1-4-12-released-security-maintenance
-> > -update/
-> 
-> This update hints there are security fixes, but I can't tell what they are.
-> Does someone have more information? If not I'll let MITRE assign a generic
-> "something is broken" sort of ID.
-> 
-> Thanks.
-
-
+Eugene
 -- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-
-http://schokokeks.org - professional webhosting
-
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+Eugene Teo / Red Hat Security Response Team
