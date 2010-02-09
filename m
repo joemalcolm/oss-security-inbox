@@ -1,30 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/06/2
-Message-ID: <2026309239.406031270515782435.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 5 Apr 2010 21:03:02 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/09/2
+Message-ID: <4B7115A0.1090808@kernel.sg>
+Date: Tue, 09 Feb 2010 15:58:24 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: cifs: cifs_create() NULL pointer dereference
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request - kernel: futex: Handle user space corruption gracefully
 Content-Type: text/plain; charset=utf-8
 
+Description of the issue: "If the owner of a PI futex dies we fix up the 
+pi_state and set pi_state->owner to NULL. When a malicious or just 
+sloppy programmed user space application sets the futex value to 0 e.g. 
+by calling pthread_mutex_init(), then the futex can be acquired again. A 
+new waiter manages to enqueue itself on the pi_state w/o damage, but on 
+unlock the kernel dereferences pi_state->owner and oopses.
 
------ "Eugene Teo" <eugeneteo@...nel.sg> wrote:
+Prevent this by checking pi_state->owner in the unlock path. If 
+pi_state->owner is not current we know that user space manipulated the 
+futex value. Ignore the mess and return -EINVAL.
 
-> Reported by Eugene Teo. While creating a file on a server which
-> supports 
-> Unix extensions such as Samba, if a file being created does not supply
-> 
-> nameidata (i.e. nd is NULL), cifs client can trigger a NULL pointer 
-> dereference when calling cifs_posix_open().
-> 
-> http://comments.gmane.org/gmane.linux.file-systems.cifs/5782
-> https://bugzilla.redhat.com/579445
-> 
+This catches the above case and also the case where a task hijacks the 
+futex by setting the tid value and then tries to unlock it."
 
-Please use CVE-2010-1148
+Upstream commit:
+http://git.kernel.org/linus/51246bfd189064079c54421507236fd2723b18f3
 
-Thanks.
+Note that pi-futex was introduced in:
+http://git.kernel.org/linus/c87e2837be82df479a6bae9f155c43516d2feebc
 
--- 
-    JB
+Reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=563091
+
+Thanks, Eugene
