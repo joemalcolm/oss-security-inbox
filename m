@@ -1,18 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/04/3
-Message-ID: <4B8F777E.1060705@kernel.sg>
-Date: Thu, 04 Mar 2010 17:03:58 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/09/8
+Message-ID: <1002091611300.18017@mjc.redhat.com>
+Date: Tue, 9 Feb 2010 16:13:54 +0000 (GMT)
+From: Mark J Cox <mjc@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: kernel: hvc_console: Fix race between hvc_close and hvc_remove
+cc: Greg KH <greg@...ah.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: ima: fix null pointer dereference
 Content-Type: text/plain; charset=utf-8
 
-Heads-up. You might want to backport this if your kernel is affected. We 
-are not requesting a CVE name for this as it does not affect any of our 
-Red Hat supported kernels.
+>> Do we need CVE numbers for issues that never showed up in a released
+>> kernel version?  I don't see how this could affect anyone, unless they
+>> were foolish enough to ship a product on a non-released kernel :)
+>
+> You got a point there, but I requested this in order to keep track of 
+> security issues that we might need to backport in our future kernels.
 
-More info here:
-http://patchwork.kernel.org/patch/83353/
-https://bugzilla.redhat.com/show_bug.cgi?id=568621
-
-Thanks, Eugene
+It shouldn't get a CVE name.  If someone at some point in the future ships 
+a vulnerable version (by selective backporting, or similar) then it would 
+get a name.  Cheers, Mark
