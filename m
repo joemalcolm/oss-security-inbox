@@ -1,25 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/18/2
-Message-ID: <4BF25A53.9090907@redhat.com>
-Date: Tue, 18 May 2010 17:13:55 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/09/6
+Message-ID: <20100209155622.GA10153@kroah.com>
+Date: Tue, 9 Feb 2010 07:56:22 -0800
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-CC: coley@...us.mitre.org
-Subject: kernel: btrfs: check for read permission on src file in the clone ioctl
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: ima: fix null pointer dereference
 Content-Type: text/plain; charset=utf-8
 
-The existing [btrfs] code would have allowed you to clone a file that 
-was only open for writing. Not an expected behaviour.
+On Mon, Feb 08, 2010 at 09:30:48AM +0800, Eugene Teo wrote:
+> Was cc'ed this in a couple of kernel mailing lists.
+> 
+> This was introduced in 6c21a7fb4 (v2.6.33-rc1).
 
-Upstream commit:
-http://git.kernel.org/linus/5dc6416414fb3ec6e2825fd4d20c8bf1d7fe0395
+Do we need CVE numbers for issues that never showed up in a released
+kernel version?  I don't see how this could affect anyone, unless they
+were foolish enough to ship a product on a non-released kernel :)
 
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=593226
+thanks,
 
-I'm not requesting a CVE name for this as it did not affect any of Red 
-Hats' supported Linux kernels.
-
-Thanks, Eugene
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+greg k-h
