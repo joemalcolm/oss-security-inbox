@@ -1,34 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/14/11
-Message-ID: <4C8FDAEF.17347.14CA1791@pageexec.freemail.hu>
-Date: Tue, 14 Sep 2010 22:28:31 +0200
-From: pageexec@...email.hu
-To: Roland McGrath <roland@...hat.com>
-CC: KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>, Brad Spengler <spender@...ecurity.net>, Linus Torvalds <torvalds@...ux-foundation.org>, Andrew Morton <akpm@...ux-foundation.org>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Kees Cook <kees.cook@...onical.com>, Al Viro <viro@...iv.linux.org.uk>, Oleg Nesterov <oleg@...hat.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, Eugene Teo <eugene@...hat.com>
-Subject: Re: [PATCH 1/3] setup_arg_pages: diagnose excessive argument size
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/10/1
+Message-Id: <201002101123.31638.hanno@hboeck.de>
+Date: Wed, 10 Feb 2010 11:23:31 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: "oss-security" <oss-security@...ts.openwall.com>
+Subject: CVE request - coppermine gallery <1.4.26 code execution vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On 14 Sep 2010 at 11:51, Roland McGrath wrote:
+http://forum.coppermine-gallery.net/index.php/topic,63510.0.html
 
-> > no it doesn't have to, similarly to how it doesn't have to hardcode
-> > _SC_PAGESIZE either, AT_PAGESZ tells userland what it needs to know
-> > and i think AT_ARGMAX could exist just as well.
-> 
-> I was referring to the ways available to userland heretofore.  Certainly,
-> the kernel could add new ways and then userland could do different things
-> (with new kernels).  
-> 
-> auxv in particular is not a mechanism that could fit for this.  The actual
-> limit depends on rlimits of the calling process, and rlimits can change
-> during the life of the program.
 
-obviously an AT_ARGMAX computed at execve time would be based on the rlimits
-as well and if later userland changed the rlimits, it'd be userland's problem,
-not that of the kernel (or the kernel could refuse a change that would violate
-its earlier promise).
+"The release covers a recently discovered input validation vulnerability that 
+allows (if unpatched) a malevolent visitor to include own script routines"
 
->  auxv is only appropriate for things that
-> are known at the time of the exec and won't change thereafter.
 
-you mean stuff like AT_EUID et al.? ;)
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
+http://schokokeks.org - professional webhosting
+
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
