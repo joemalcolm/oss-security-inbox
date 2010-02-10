@@ -1,36 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/10/5
-Message-Id: <20100910183309.C975.A69D9226@jp.fujitsu.com>
-Date: Fri, 10 Sep 2010 18:43:57 +0900 (JST)
-From: KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>
-To: Roland McGrath <roland@...hat.com>
-Cc: kosaki.motohiro@...fujitsu.com, Brad Spengler <spender@...ecurity.net>, Linus Torvalds <torvalds@...ux-foundation.org>, Andrew Morton <akpm@...ux-foundation.org>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Kees Cook <kees.cook@...onical.com>, Al Viro <viro@...iv.linux.org.uk>, Oleg Nesterov <oleg@...hat.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, pageexec@...email.hu, Eugene Teo <eugene@...hat.com>
-Subject: Re: [PATCH 1/3] setup_arg_pages: diagnose excessive argument size
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/10/3
+Message-ID: <4B72AE4D.7040804@redhat.com>
+Date: Wed, 10 Feb 2010 21:02:05 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: race in ptrace
 Content-Type: text/plain; charset=utf-8
 
-> > Brad, sorry, I have bad news. glibc sysconf(_SC_ARG_MAX) is implemented
-> > by hard coded RLIMIT_STACK/4 heuristics. That said, at least _now_, we
-> > can't change this even though you disliked. That said, we can't break
-> > userland even though userland library is very crazy.
-> 
-> I'm sorry you think it's "very crazy" to implement the required
-> functionality in the only way available.  POSIX requires that execve
-> fail with E2BIG when the ARG_MAX limit is exceeded.  sysconf has to
-> return the correct actual limit that execve will enforce so that a
-> conforming application knows how much it can safely attempt to use.
-> Since the kernel uses the hard-coded RLIMIT_STACK/4 heuristic and does
-> not expose the true manifest limit any other way, sysconf has to
-> parallel the kernel's calculation.
+On 02/09/2010 02:34 PM, Eugene Teo wrote:
+> Discovered by Tavis Ormandy. "The race involves interaction between a
+> tracer, a tracee and an antagonist. The tracer is tracing the tracee
+> with PTRACE_SYSCALL and waits on the tracee. In the mean time, an
+> antagonist blasts the tracee with SIGCONTs.
+>
+> The observed issue is that sometimes when the tracer attempts to
+> continue the tracee with PTRACE_SYSCALL, it gets a return value of
+> -ESRCH, indicating that the tracee is already running (or not being
+> traced). It turns out that a SIGCONT wakes up the tracee in kernel mode,
+> and for a moment the tracee's state is TASK_RUNNING then in ptrace_stop
+> we hit the condition where the tracee is found to be running (and thus
+> not traced). If the syscall is repeated, the
+> second time it usually succeeds (because by that time, the tracee has
+> been put into TASK_TRACED)."
+>
+> http://lkml.org/lkml/2010/2/8/327
+> https://bugzilla.redhat.com/show_bug.cgi?id=563073
 
-Hmm...
-Probably my poor english leaded to misunderstood. I didn't intent glibc
-is very crazy. I only intended to "even if userland is crazy, I disagree
-to break userland".
+Hold on with assigning a CVE name for this. We are still investigating 
+this issue.
 
-And yes, we obviously need to expose ARG_MAX limit to libc. a duplicated
-heuristic code easily makes confusion and mistake. nobody want such 
-fragile state. however, it's a bit offtopic. anyway.
-
-
-Thanks.
-
+Thanks, Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
