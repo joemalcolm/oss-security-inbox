@@ -1,25 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/11/3
-Message-ID: <Pine.GSO.4.64.1005111923070.21091@faron.mitre.org>
-Date: Tue, 11 May 2010 19:24:51 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE assignment: ghostscript stack-based overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/10/2
+Message-ID: <4B728C72.3050001@redhat.com>
+Date: Wed, 10 Feb 2010 11:37:38 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE Request -- ModSecurity - v2.5.12
 Content-Type: text/plain; charset=utf-8
 
+Hi Steve, vendors,
 
-FYI.  The researcher told me that some distros were notified 
-pre-disclosure, but I had already assigned this CVE when I found out.
+   multiple security flaws, which might lead to bypass of intended
+security restrictions and denial of service, have been reported
+and corrected in latest v2.5.12 version of ModSecurity.
 
+References:
+[1] http://sourceforge.net/projects/mod-security/files/modsecurity-apache/2.5.12/CHANGES_2.5.12.txt/download
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=563455
+[3] http://secunia.com/advisories/38460/
+[4] http://freshmeat.net/projects/modsecurity/releases/312017
+[5] http://www.modsecurity.org/
 
-======================================================
-Name: CVE-2010-1869
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-1869
-Reference: MISC:http://www.checkpoint.com/defense/advisories/public/2010/cpai-10-May.html
+Could you allocate CVE ids for these?
 
-Stack-based buffer overflow in the parser function in GhostScript 8.70
-and 8.64 allows context-dependent attackers to execute arbitrary code
-via a crafted PostScript file.
-
-
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
