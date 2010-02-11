@@ -1,29 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/20/1
-Message-Id: <201009201406.05890.hanno@hboeck.de>
-Date: Mon, 20 Sep 2010 14:06:05 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/11/2
+Message-ID: <Pine.GSO.4.64.1002111713190.4454@faron.mitre.org>
+Date: Thu, 11 Feb 2010 17:14:36 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: egroupware remote code and xss
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: futex: Handle user space corruption gracefully
 Content-Type: text/plain; charset=utf-8
 
-http://www.egroupware.org/news?item=93
 
-Nahuel Grisolia from CYBSEC S.A. Security Systems found two security
-problems in EGroupware:
+On Tue, 9 Feb 2010, Eugene Teo wrote:
 
-    one is a serious remote command execution (allowing to run arbitrary 
-command on the web server by simply issuing a HTTP request!).
-    the other a reflected cross-site scripting (XSS).
+> Upstream commit:
+> http://git.kernel.org/linus/51246bfd189064079c54421507236fd2723b18f3
 
-Here's the original advisory for both issues:
-http://www.exploit-db.com/exploits/11777/
+Use CVE-2010-0622, to be filled in later.
 
+Also, I assigned a CVE for a futex refcount bug listed here:
 
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=5ecb01cfdf96c5f465192bdb2a4fd4a61a24c6cc
 
-http://schokokeks.org - professional webhosting
+Use CVE-2010-0623 for that one.
 
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+- Steve
