@@ -1,20 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/21/5
-Message-ID: <1274444729.12594.22.camel@severus.strandboge.com>
-Date: Fri, 21 May 2010 07:25:29 -0500
-From: Jamie Strandboge <jamie@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/11/1
+Message-ID: <4B7390C1.7020609@redhat.com>
+Date: Thu, 11 Feb 2010 13:08:17 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: clamav crash via malformed PDF
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request - kernel: ip6_dst_lookup_tail() NULL pointer dereference
 Content-Type: text/plain; charset=utf-8
 
-The following upstream commits were confirmed by upstream to be security
-relevant (crash via malformed content):
+ipv6: Fix OOPS in ip6_dst_lookup_tail().
 
-https://wwws.clamav.net/bugzilla/show_bug.cgi?id=2016
-http://git.clamav.net/gitweb?p=clamav-devel.git;a=commit;h=f0eb394501ec21b9fe67f36cbf5db788711d4236
+This fixes kernel bugzilla 11469: "TUN with 1024 neighbours:
+ip6_dst_lookup_tail NULL crash"
 
+dst->neighbour is not necessarily hooked up at this point in the 
+processing path, so blindly dereferencing it is the wrong thing to do. 
+This NULL check exists in other similar paths and this case was just an 
+oversight.
 
+Also fix the completely wrong and confusing indentation here while we're 
+at it.
+
+References:
+http://bugzilla.kernel.org/show_bug.cgi?id=11469
+https://bugzilla.redhat.com/show_bug.cgi?id=563781
+
+Upstream patch:
+http://git.kernel.org/linus/e550dfb0c2c31b6363aa463a035fc9f8dcaa3c9b
+
+Thanks, Eugene
 -- 
-Jamie Strandboge             | http://www.canonical.com
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+Eugene Teo / Red Hat Security Response Team
