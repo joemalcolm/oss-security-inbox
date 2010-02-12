@@ -1,36 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/26/5
-Message-Id: <201005261123.35729.thomas@suse.de>
-Date: Wed, 26 May 2010 11:23:35 +0200
-From: Thomas Biege <thomas@...e.de>
-To: Tomas Hoger <thoger@...hat.com>
-Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: Fwd: [Full-disclosure] stratsec Security Advisory SS-2010-005: Samba Multiple DoS Vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/12/3
+Message-ID: <4B759B65.2040903@kde.org>
+Date: Fri, 12 Feb 2010 13:18:13 -0500
+From: Jeff Mitchell <mitchell@....org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: KDE screensaver unlock issue similar to GNOME one
 Content-Type: text/plain; charset=utf-8
 
-Am Mittwoch 26 Mai 2010 09:46:44 schrieb Tomas Hoger:
-> On Tue, 25 May 2010 17:10:04 +0200 Thomas Biege wrote:
-> > So far no assignments were made, right?
-> 
-> Do you have any public bug report with further details about these
-> flaws?
+Sorry it's not in the same thread, as I wasn't subscribed to this list
+at the time.
 
-I am just aware of this posting to FD.
+I can verify that only KDE SC 4.4.0 is affected. Released versions of
+4.3 are *not* affected by this bug.
 
+I have committed a patch to the KDE SVN server as revision 1089213. See
+https://bugs.kde.org/show_bug.cgi?id=217882#c16
 
-> According to our samba maintainers, this code is only executed
-> in per-connection smbd child and one can only DoS own connection. It
-> seems upstream has not handled this as security either.
+Although this solved the problem for me locally, I'm in the process of
+having other testers verify that they can no longer reproduce the
+problem with this patch, and will report back once this is verified.
 
-That would be good. One samba update less.
-
-Cheers,
-Thomas
+Thanks,
+Jeff
 
 
--- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
---
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
+Download attachment "signature.asc" of type "application/pgp-signature" (197 bytes)
