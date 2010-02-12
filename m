@@ -1,62 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/14/15
-Message-ID: <Pine.GSO.4.64.1006141629410.13177@faron.mitre.org>
-Date: Mon, 14 Jun 2010 16:30:36 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: Gerald Combs <gerald@...eshark.org>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request for new wireshark vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/12/1
+Message-ID: <20100212095324.GD13468@suse.de>
+Date: Fri, 12 Feb 2010 10:53:24 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request: gnome-screensaver termination by pressing "Enter"
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-On Thu, 10 Jun 2010, Vincent Danen wrote:
+Yesterday an article was published by Heise News (a german IT magazine)
+that said that the Gnome Screensaver in openSUSE 11.2 is unlockable by
+just pressing the "return" key for some time.
 
->>  The SMB dissector could dereference a NULL pointer.
->>  Fixed in trunk: r32650
->>  Fixed in trunk-1.2: r33142
->>  Fixed in trunk-1.0: r33145
->>  Bug 4734
->>  Versions affected: 0.99.6 to 1.0.13, 1.2.0 to 1.2.8
+The issue as far as we know is the following:
 
-Use CVE-2010-2283
+The unlock dialog shakes if you enter the wrong password. On the last try,
+this dialog is also hidden again (so screen is blanked).
 
->>  J. Oquendo discovered that the ASN.1 BER dissector could overrun
->>  the stack.
->>  Fixed in trunk: r32922, r33046
->>  Fixed in trunk-1.2: r33122
->>  Fixed in trunk-1.0: r33146
->>  Versions affected: 0.10.13 to 1.0.13, 1.2.0 to 1.2.8
+There is race condition between these two actions which can lead to an X error
+which aborts the screensaver (and so unlocks the screen).
 
-Use CVE-2010-2284
+It is fixed in gnome-screensaver 2.28.1 release.
 
->>  The SMB PIPE dissector could dereference a NULL pointer on some
->>  platforms.
->>  Fixed in trunk: r32848
->>  Fixed in trunk-1.2: r33120
->>  Fixed in trunk-1.0: r33143
->>  Versions affected: 0.8.20 to 1.0.13, 1.2.0 to 1.2.8
+References:
 
-Use CVE-2010-2285
+The fixing commit in the 2.28 branch:
+http://git.gnome.org/browse/gnome-screensaver/commit/?h=gnome-2-28&id=98f8a22412cf388217fd5b88915eadd274d68520
 
->>  The SigComp Universal Decompressor Virtual Machine could go into
->>  an infinite loop.
->>  Fixed in trunk: r33061, r33065
->>  Fixed in trunk-1.2: r33131
->>  Fixed in trunk-1.0: r33147
->>  Bug 4826
->>  Versions affected: 0.10.7 to 1.0.13, 1.2.0 to 1.2.8
+The news article (in german):
+http://www.heise.de/newsticker/meldung/Gnome-Bildschirmsperre-in-OpenSuse-Linux-wirkungslos-928580.html
 
-Use CVE-2010-2286
+The GNOME upstream bug:
+http://bugzilla.gnome.org/show_bug.cgi?id=598476
 
->>  The SigComp Universal Decompressor Virtual Machine could overrun
->>  a buffer.
->>  Fixed in trunk: r33087, r33090
->>  Fixed in trunk-1.2: r33134
->>  Fixed in trunk-1.0: r33149
->>  Bug 4837
->>  Versions affected: 0.10.8 to 1.0.13, 1.2.0 to 1.2.8
+I think this does not have a CVE id yet, so please someone allocate one.
 
-Use CVE-2010-2287
+I am not sure when this shaking was introduced, but it might be pretty new.
 
-
-- Steve
+Ciao, Marcus
