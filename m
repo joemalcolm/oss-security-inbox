@@ -1,49 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/22/11
-Message-ID: <1099726965.112341290442874391.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 22 Nov 2010 11:21:14 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/12/4
+Message-ID: <4B75AE45.5050606@kde.org>
+Date: Fri, 12 Feb 2010 14:38:45 -0500
+From: Jeff Mitchell <mitchell@....org>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: Re: NULL byte poisoning fix in php 5.3.4+
+Subject: Re: Re: CVE Request: KDE screensaver unlock issue similar to GNOME one
 Content-Type: text/plain; charset=utf-8
 
-Steve,
-
-Can MITRE take this one. It looks like it's from 2006 (from looking at the
-upstream bug). I don't see a CVE id for this anywhere.
-
-Thanks.
-
--- 
-    JB
-
------ "Pierre Joye" <pierre.php@...il.com> wrote:
-
-> anyone?
+On 2/12/2010 1:18 PM, Jeff Mitchell wrote:
+> Sorry it's not in the same thread, as I wasn't subscribed to this list
+> at the time.
 > 
-> On Thu, Nov 18, 2010 at 5:43 PM, Pierre Joye <pierre.php@...il.com>
-> wrote:
-> > forgot to add the fixes revs:
-> >
-> > http://svn.php.net/viewvc?view=revision&revision=305507
-> > revert of part of the OCI8 fix
-> > http://svn.php.net/viewvc?view=revision&revision=305509
-> >
-> > OCI8 fix (committed separately)
-> > http://svn.php.net/viewvc?view=revision&revision=305412
-> >
-> > On Thu, Nov 18, 2010 at 5:22 PM, Pierre Joye <pierre.php@...il.com>
-> > wrote:
-> >> hi,
-> >>
-> >> The problem describes here http://www.madirish.net/?article=436, in
-> >> http://bugs.php.net/39863 (and numerous other places) has been fixed
-> >> in PHP_5_3, targetting 5.3.4 (RC1 to be released today). It is a well
-> >> (old) known issue in PHP and I wonder if there is a CVE already for
-> >> it? If not I think having one could helpful. or?
-> >>
-> >> Cheers,
-> >> --
-> >> Pierre
-> >>
+> I can verify that only KDE SC 4.4.0 is affected. Released versions of
+> 4.3 are *not* affected by this bug.
+> 
+> I have committed a patch to the KDE SVN server as revision 1089213. See
+> https://bugs.kde.org/show_bug.cgi?id=217882#c16
+> 
+> Although this solved the problem for me locally, I'm in the process of
+> having other testers verify that they can no longer reproduce the
+> problem with this patch, and will report back once this is verified.
+
+Gentoo and Fedora distribution maintainers have also tested this patch
+and verified that it works. The patch against 4.4.0 can easily be
+obtained from here: http://websvn.kde.org/?view=revision&revision=1089241
+
+As this is now backported to the 4.4 branch, it is expected that 4.4.0
+will be the only release affected by this vulnerability.
+
+Thanks,
+Jeff
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (197 bytes)
