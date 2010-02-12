@@ -1,27 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/31/4
-Message-ID: <4D1D84DF.3090302@redhat.com>
-Date: Fri, 31 Dec 2010 12:53:11 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Dan Rosenberg <dan.j.rosenberg@...il.com>
-Subject: Re: CVE request: kernel: buffer overflow in OSS load_mixer_volumes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/12/2
+Message-ID: <20100212133329.GG24664@suse.de>
+Date: Fri, 12 Feb 2010 14:33:29 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request: KDE screensaver unlock issue similar to GNOME one
 Content-Type: text/plain; charset=utf-8
 
-On 12/31/2010 05:32 AM, Dan Rosenberg wrote:
-> "The load_mixer_volumes() function, which can be triggered by
-> unprivileged users via the SOUND_MIXER_SETLEVELS ioctl, is vulnerable to
-> a buffer overflow.  Because the provided 'name' argument isn't
-> guaranteed to be NULL terminated at the expected 32 bytes, it's possible
-> to overflow past the end of the last element in the mixer_vols array.
-> Further exploitation can result in an arbitrary kernel write (via
-> subsequent calls to load_mixer_volumes()) leading to privilege
-> escalation, or arbitrary kernel reads via get_mixer_levels().  In
-> addition, the strcmp() may leak bytes beyond the mixer_vols array."
-> 
+Hi,
 
-Please use CVE-2010-4527 for this one.
+Lots of our users also tested if the KDE screenlock program is affected
+by the "unlock by pressing return" bug.
 
+And it is.
 
--- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+There is also a race condition and/or a memory leak which causes
+the lock program to terminate.
+
+https://bugzilla.novell.com/show_bug.cgi?id=579280
+http://bugs.kde.org/show_bug.cgi?id=217882
+http://bugs.kde.org/show_bug.cgi?id=226449
+
+Suspend to * is not required, it also works just by pressing return.
+For me it takes like 5 seconds. Machine load might help.
+
+It is unclear which KDE versions are affected, reports mostly show
+KDE 4.4.0.
+
+Needs a different CVE than the GNOME one.
+
+Ciao, Marcus
