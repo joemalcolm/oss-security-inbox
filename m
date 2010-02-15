@@ -1,111 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/21/15
-Message-ID: <AANLkTikxJXRAGohcGNsoRg4zzkonxaxDAwtpsARFqWac@mail.gmail.com>
-Date: Wed, 22 Sep 2010 09:26:41 +1200
-From: Michael Koziarski <michael@...iarski.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: Thomas Biege <thomas@...e.de>, oss-security@...ts.openwall.com, juliano@...ifera.comt,  thaidn@...ecurity.net, security@...yonrails.org
-Subject: Re: CVE request: padding oracle attack: ruby on rails 2.3, owasp esapi
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/15/3
+Message-ID: <1266257529.31647.38.camel@x300.fritz.box>
+Date: Mon, 15 Feb 2010 19:12:09 +0100
+From: Thomas Waldmann <tw-public@....de>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- MoinMoin -- 1.8.7
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Sep 22, 2010 at 9:07 AM, Steven M. Christey
-<coley@...us.mitre.org> wrote:
->
-> When it comes to language interpreters and/or code libraries: if an exposed
-> API function has a vuln in it that could affect any application that uses
-> that function, it's suitable for inclusion in CVE - especially if the
-> function seems likely to accept malicious input.  If there's *no way* that
-> these API functions can be used safely, then that would be associated with
-> Rails, and a single CVE could be assigned.  If they *can* be used safely,
-> but lots of different programmers just screw it up (a la strcpy() in C),
-> then the individual applications would get their own separate CVEs.
->
-> In this case, while the issue is probably not a problem for the bulk of
-> Rails programmers, it might be for some - so a single CVE assignment seems
-> reasonable.
+Hi,
 
-In that case this is much more in the strcpy camp than anything else.
-We can do an announcement to the security list advising against the
-use of the function when there are more secure alternatives available,
-and also ship deprecation warnings in future point releases.
+sorry about being rather vague in what I told/tell about the issues, but
+this is just to protect the vulnerable systems out there until fixes are
+available and have been widely deployed (or at least every admin
+interested in security had a chance).
 
-We'll use the CVE in any announcements we make, but there won't be
-point releases to address it or patches people can install.  Does this
-sound like a plan?
+All the recently discovered issues are basically just 2 issues (the
+sys.argv issue in 1.9 and the other issue more or less in all moin
+versions at different places in the code).
 
-> Hope that made sense.
->
-> - Steve
->
->
-> On Wed, 22 Sep 2010, Michael Koziarski wrote:
->
->> On Wed, Sep 22, 2010 at 2:57 AM, Thomas Biege <thomas@...e.de> wrote:
->>>
->>> I got no answer from the POET paper authors yet but it can be
->>> that CVE-2010-3299 is invalid.
->>
->> I'm not sure what the criteria for a CVE is but there's nothing
->> exploitable here in the vast vast bulk of rails applications.
->>
->> It's certainly true that an application using the low level
->> encrypt/decrypt API is vulnerable to padding oracle attacks, but as
->> you mentioned those apis aren't actually used anywhere within rails
->> itself.
->>
->> Given the 'shoot yourself in the foot' nature of those low level apis,
->> we'll probably deprecate them as public apis and advise people to use
->> encrypt_and_sign/decrypt_and_verify instead.
->>
->>
->>
->>> Cheers
->>> Thomas
->>>
->>>
->>> Am Dienstag 14 September 2010 21:36:53 schrieb Josh Bressers:
->>>>
->>>> I've assgiend two. The details are quite vague unfortunately.
->>>>
->>>> CVE-2010-3299 padding oracle attack: ruby on rails 2.3
->>>> CVE-2010-3300 padding oracle attack: owasp esapi
->>>>
->>>> Thanks.
->>>>
->>>>> Hi,
->>>>> the paper [1], about practical padding oracle attacks
->>>>> mentions some programming frameworks as vulnerable (section 5):
->>>>> - Ruby On ails 2.3
->>>>> - OWASP ESAPI
->>>>>
->>>>> I think they both need a CVE-ID. Thanks.
->>>>>
->>>>> Cheers
->>>>> Thomas
->>>>>
->>>>> [1] http://usenix.org/events/woot10/tech/full_papers/Rizzo.pdf
->>>>
->>>
->>> --
->>>  Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
->>>  SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
->>> --
->>>  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
->>>                            -- Marie von Ebner-Eschenbach
->>>
->>
->>
->>
->> --
->> Cheers
->>
->> Koz
->>
->
+> Last message in:
+>    [7] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=569975#10
+> suggests only the "superuser list" issue was fixed in 1.8.7
+
+No, all known issues that affect 1.8 (and also all versions before) were
+fixed in 1.8.7.
+
+> and more fixes are about to come -- "<ThomasWaldmann>
+> 1.9.2 planned in about 1 or 2 weeks".
+
+1.9.2 will fix all known issues that affect 1.9.
+
+The sys.argv issue was already fixed by 1.9.1.
+
+BTW, we won't do a new 1.7.x release, but the fixes can be pulled from
+the repo. Likely this is interesting for package maintainers who have to
+support 1.7.x packages with security fixes. Users who just manually
+downloaded and installed 1.7.x are advised to just do an easy upgrade to
+1.8.7 (or even 1.9.2 soon, with a bit more work needed).
+
+> what was fixed to know, how many CVE identifiers are needed / sufficient
+> for MoinMoin of version v.1.8.7.
+
+I am not very familiar with CVE stuff, but as there are 2 fundamental
+problems that have been fixed, I guess 2 CVEs are right.
+
+a) one CVE for the sys.argv issue in 1.9 that was fixed in 1.9.1
+b) one CVE for the other kind of issues in all moin versions, fixed by
+1.8.7 and soon by 1.9.2
+
+Regards,
+
+Thomas
 
 
-
--- 
-Cheers
-
-Koz
