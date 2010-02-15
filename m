@@ -1,24 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/28/5
-Message-Id: <201009281616.18313.ludwig.nussel@suse.de>
-Date: Tue, 28 Sep 2010 16:16:18 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: clamav < 0.96.3 pdf bounds checking
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/15/4
+Message-ID: <1266258116.31647.47.camel@x300.fritz.box>
+Date: Mon, 15 Feb 2010 19:21:56 +0100
+From: Thomas Waldmann <tw-public@....de>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- MoinMoin -- 1.8.7
 Content-Type: text/plain; charset=utf-8
 
-Josh Bressers wrote:
-> Use CVE-2010-3434
-> 
-> If someone has more information, or an upstream contact it would be much appreciated.
+Sorry, have overlooked some stuff:
 
-The bug was made public now.
+>        Though there are xmlrpc related fixes in 1.8.7:
+>        "xmlrpc:
+>         * Process attachname in get/putAttachment similarly.
+>         * revertPage: convert pagename to internal representation." --
+>         Thomas are these also security related fixes?
 
-cu
-Ludwig
+No, this is rather to handle stuff consistently.
 
--- 
- (o_   Ludwig Nussel
- //\   
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+>    c, " Do not use OpenID auth code" -- not sure about state of this.
+
+Fixed by 1.8.7 (and soon by 1.9.2).
+
+BTW, I need a 3rd CVE for user profile input sanitizing (all moin
+versions), also fixed in 1.8.7 (and soon by 1.9.2).
+
+
