@@ -1,37 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/10/13
-Message-ID: <247387242.573631289417601628.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 10 Nov 2010 14:33:21 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/15/5
+Message-ID: <87ocjqnrtc.fsf@mid.deneb.enyo.de>
+Date: Mon, 15 Feb 2010 21:54:07 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request: kernel: socket filters infoleak
+Subject: CouchDB: Don't use a RESTful API from the browser, please
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-4158
+I've recently posted a somewhat fundamental security issue to the
+couchdb developer mailing list, not realizing that some of us
+(including Debian) have couchdb in a shipping product.  Oh well.
 
-Thanks.
+Here's what I wrote ("Futon" is the web front end which runs in the
+browser and served from the same domain as the database itself; the
+database uses a RESTful interface, meaning predictable URLs):
 
--- 
-    JB
+  Due to CSRF issues, Futon cannot use that API.  You really need to
+  include some sort of token in the URL (or in an HTTP header) which
+  does not get passed on automatically by the browser.  Right now,
+  you're relying on HttpOnly support in the browser, which is not
+  available universally.
+  
+  You also have a cross-site scripting issue with uploaded document
+  attachments.  Right now, it is possible to use an inline document
+  attachment in a POST request for a new document to upload Javascript
+  to the server, and have it served back to you for execution.  At this
+  point, the same-origin restrictions do not apply anymore.
+  Unfortunately, it is a bit difficult to stop browsers from
+  interpreting crafted blobs as HTML, so I have no good advice to offer
+  here.  Even if the first issue is addressed, you still have to deal
+  with Futon users viewing attachments accidentally.
 
+No reaction from the developers so far.
 
------ "Eugene Teo" <eugene@...hat.com> wrote:
+Note that older versions (such as 0.8.0) are not affected by this
+because they apparently lack any authentication whatsoever.
 
-> From Dan Rosenberg, "The "mem" array used as scratch space for socket
-> 
-> filters is not initialized, allowing unprivileged users to leak kernel
-> 
-> stack bytes."
-> 
-> proposed fix: http://www.spinics.net/lists/netdev/msg146361.html
-> 
-> reference: https://bugzilla.redhat.com/show_bug.cgi?id=651698
-> 
-> For Dave I guess: 
-> http://lists.grok.org.uk/pipermail/full-disclosure/2010-November/077321.html
-> 
-> Eugene
-> -- 
-> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i);
-> }
+Sorry for this, I would have reported it privately if I had realized
+that this particular ship had already sailed...
