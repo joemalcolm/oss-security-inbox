@@ -1,22 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/03/1
-Message-ID: <20100703085720.GA30294@merlin.emma.line.org>
-Date: Sat, 3 Jul 2010 10:57:20 +0200
-From: Matthias Andree <matthias.andree@....de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/15/1
+Message-ID: <4B78E426.3070901@redhat.com>
+Date: Mon, 15 Feb 2010 14:05:26 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: David Relson <relson@...gesoftware.com>
-Subject: Request CVE ID for bogofilter base64 decoder heap corruption
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: race in ptrace
 Content-Type: text/plain; charset=utf-8
 
-Greetings,
+On 02/10/2010 09:02 PM, Eugene Teo wrote:
+> On 02/09/2010 02:34 PM, Eugene Teo wrote:
+>> Discovered by Tavis Ormandy. "The race involves interaction between a
+>> tracer, a tracee and an antagonist. The tracer is tracing the tracee
+>> with PTRACE_SYSCALL and waits on the tracee. In the mean time, an
+>> antagonist blasts the tracee with SIGCONTs.
+>>
+>> The observed issue is that sometimes when the tracer attempts to
+>> continue the tracee with PTRACE_SYSCALL, it gets a return value of
+>> -ESRCH, indicating that the tracee is already running (or not being
+>> traced). It turns out that a SIGCONT wakes up the tracee in kernel mode,
+>> and for a moment the tracee's state is TASK_RUNNING then in ptrace_stop
+>> we hit the condition where the tracee is found to be running (and thus
+>> not traced). If the syscall is repeated, the
+>> second time it usually succeeds (because by that time, the tracee has
+>> been put into TASK_TRACED)."
+>>
+>> http://lkml.org/lkml/2010/2/8/327
+>> https://bugzilla.redhat.com/show_bug.cgi?id=563073
+>
+> Hold on with assigning a CVE name for this. We are still investigating
+> this issue.
 
-I am requesting a CVE ID for the issue described below.
+False alarm ;)
+http://marc.info/?t=126566675000008
 
-Thanks.
-
-Best regards
-Matthias Andree
-
-View attachment "bogofilter-SA-2010-01" of type "text/plain" (2217 bytes)
-
-Content of type "application/pgp-signature" skipped
+Thanks, Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
