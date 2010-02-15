@@ -1,22 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/16/7
-Message-Id: <201012162229.50068.hanno@hboeck.de>
-Date: Thu, 16 Dec 2010 22:29:49 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: Drupal views module CSRF/XSS before 2.11, XSS before 2.12
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/15/2
+Message-ID: <4B79880A.5040500@redhat.com>
+Date: Mon, 15 Feb 2010 18:44:42 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+CC: "Steven M. Christey" <coley@...us.mitre.org>, Thomas Waldmann <tw-public@....de>
+Subject: CVE Request -- MoinMoin -- 1.8.7
 Content-Type: text/plain; charset=utf-8
 
-Two CVEs CSRF and XSS before 2.11:
-http://drupal.org/node/829840
+Hi Steve, vendors,
 
-One CVE for XSS before 2.12:
-http://drupal.org/node/999380
+   multiple security issues have been reported against
+different versions of MoinMoin -- complete list here:
+   [1] http://moinmo.in/SecurityFixes (part moin 1.9.1)
 
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+Yesterday (2010-02-14) MoinMoin-1.8.7 was released:
+   [2] http://moinmo.in/
 
-http://schokokeks.org - professional webhosting
+fixing "major security issues in miscellaneous parts of moin":
+   [3] http://moinmo.in/MoinMoinRelease1.8
+   [4] http://hg.moinmo.in/moin/1.8/raw-file/1.8.7/docs/CHANGES
 
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+ From what I can tell, when mapping [4] to [1] the:
+   a, "A major security issue was discovered that could affect
+       all moin versions 1.5.0 up to and including 1.9.1. For now,
+       you can avoid the issue by not having any user names in your
+       superuser list" was fixed.
+   b, "Exclude (disable) xmlrpc and SyncPages actions" -- this was
+       'only' disabled -- "Improved package security:
+       cfg.packagepages_actions_excluded excludes unsafe or otherwise
+       questionable package actions by default now.".
+       Though there are xmlrpc related fixes in 1.8.7:
+       "xmlrpc:
+        * Process attachname in get/putAttachment similarly.
+        * revertPage: convert pagename to internal representation." --
+        Thomas are these also security related fixes?
+
+   c, " Do not use OpenID auth code" -- not sure about state of this.
+
+Also, Changes file for MoinMoin 1.9.1 mentions:
+   [5] http://hg.moinmo.in/moin/1.9/raw-file/1.9.1/docs/CHANGES
+
+    d, "* Fixed sys.argv security issue." -- not sure, if this is
+       v1.9.1 specific or affects also prior versions of MoinMoin.
+
+Other references:
+   [6] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=569975
+
+Last message in:
+   [7] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=569975#10
+suggests only the "superuser list" issue was fixed in 1.8.7
+and more fixes are about to come -- "<ThomasWaldmann>
+1.9.2 planned in about 1 or 2 weeks".
+
+Cc-ed Thomas Waldmann on this post, so he can detail
+what was fixed to know, how many CVE identifiers are needed / sufficient
+for MoinMoin of version v.1.8.7.
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
