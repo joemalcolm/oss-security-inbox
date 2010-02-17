@@ -1,17 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/28/1
-Message-ID: <87hbifuj0h.fsf@mid.deneb.enyo.de>
-Date: Sat, 28 Aug 2010 12:30:22 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: BGP protocol vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/17/1
+Message-ID: <20100217102946.GB4757@suse.de>
+Date: Wed, 17 Feb 2010 11:29:46 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE request: kernel information leak via userspace USB interface
 Content-Type: text/plain; charset=utf-8
 
-The BGP protocol and its various extensions require that BGP peering
-sessions are terminated when a peer receives a BGP update message
-which it considers semantically incorrect, leading to a persistent
-denial-of-service condition if the update is received again after the
-terminated session is reestablished.
+Hi,
 
-(This is not something new at all---we just need to get up, treat it
-as a vulnerability, and fix it.)
+While programming a USB device using libusb I found that a usb read from
+the device returned data it should not.
+
+Looking into the code showed that in USB commands that fail during
+device communication (with e.g. USB timeouts) return the transfer buffer
+unmodified back to userspace.
+
+This transfer buffer is allocated with kmalloc before and not initialized,
+so userspace gets to see recently freed data of the kernel.
+
+Greg, Linus and Alan produced a fix that was commited to mainline tonight:
+
+commit d4a4683ca054ed9917dfc9e3ff0f7ecf74ad90d6
+(full commit attached to the mail)
+
+The issue seems to have been in the kernel for the whole 2.6 series (oldest kernel
+I looked at was 2.6.5, I tested down to 2.6.25).
+
+Access to USB userspace devices either requires root access or desktop user access
+via udev/hal ACLs on non-mass-storage Digital Cameras or Media Players. (So the
+desktop user needs to plugin such a ACL getting device before being able 
+to read the memory).
+
+Ciao, Marcus
+
+View attachment "foo.pat" of type "text/plain" (1688 bytes)
