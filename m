@@ -1,40 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/16/1
-Message-Id: <201003160854.21313.ludwig.nussel@suse.de>
-Date: Tue, 16 Mar 2010 08:54:20 +0100
-From: Ludwig Nussel <ludwig.nussel@...e.de>
-To: oss-security@...ts.openwall.com
-Cc: libesmtp@...fford.uklinux.net, security@...ntu.com, Pawel Salek <pawsa@...ochem.kth.se>, jskarvad@...hat.com
-Subject: Re: CVE Request: libesmtp does not check NULL bytes in commonName
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/17/2
+Message-ID: <20100217104619.GD4757@suse.de>
+Date: Wed, 17 Feb 2010 11:46:19 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: additional memory leak in USB userspace handling
 Content-Type: text/plain; charset=utf-8
 
-Brian Stafford wrote:
-> I think the best approach is to apply Pawel's patch as this is the 
+Hi,
 
-I must have missed that patch. Could you re-post it?
+a memory allocation leak (not information, just unfreed memory)
+was spotted and fixed by Linus during debugging of previous problem.
 
-> simplest in terms of changes to the existing code base, and perhaps move 
-> to Ludwig's for a later release of libESMTP.  In the slightly longer 
-> term, I think the internet draft at
-> http://tools.ietf.org/html/draft-saintandre-tls-server-id-check is the 
-> one to follow but this might change substantially or even fall of the 
-> rails entirely.
-> 
-> [...] The I-D says only the leftmost 
-> component may contain a wildcard but this would rule out *.*.google.com 
-> The algorithm I've outlined is really a halfway house between RFC2818, 
-> which I think is too flexible, and the I-D; limit the positions of 
-> wildcards in the hostname and dont allow elaborate matches within a 
-> hostname component.  Any ideas or opinions on this would be useful.
+On put_user() errors it would leak one "struct async" per REAPURB call.
 
-Is there a way to comment on the draft? Maybe the author of the
-draft didn't think about the cases you'd like to handle.
+Fix is in commit ddeee0b2eec2a51b0712b04de4b39e7bec892a53, also
+attached.
 
-cu
-Ludwig
+Affected code is also going back throughout 2.6 history.
 
--- 
- (o_   Ludwig Nussel
- //\   
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+The issue is of less importance than the information leak fix, I am not
+sure if it deserves a CVE or not.
+
+Ciao, Marcus
+
+View attachment "reapurb-memleak.pat" of type "text/plain" (3456 bytes)
