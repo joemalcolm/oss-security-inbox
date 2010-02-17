@@ -1,47 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/08/9
-Message-ID: <4BBE08CE.8010200@redhat.com>
-Date: Thu, 08 Apr 2010 18:48:14 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request -- perl v5.8.* -- stack overflow by processing certain regex (Gentoo BTS#313565 / RH BZ#580605)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/17/3
+Message-ID: <4B7C1E39.4050500@kde.org>
+Date: Wed, 17 Feb 2010 11:50:01 -0500
+From: Jeff Mitchell <mitchell@....org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE Request: KDE screensaver unlock issue similar to GNOME one
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve, vendors,
+KDE Security Advisory 2010-02-17 has been released in regards to this issue:
 
-   1, wouldn't like to open a can of worms,
-   2, but for purpose of properly tracking it, requesting a CVE id for the
-      following Perl regular expression engine issue:
+http://www.kde.org/info/security/advisory-20100217-1.txt
 
-Bruce Merry reported:
-   [1] http://bugs.gentoo.org/show_bug.cgi?id=313565
+Thanks,
+Jeff
 
-an integer overflow, leading to stack overflow in the way
-Perl regular expression engine processed certain regular
-expression(s). Remote attacker could use this flaw to cause
-a denial of service (crash of an application, using the
-Perl regular expression engine).
 
-Public PoC from [1]:
---------------------
-   perl -e 'if ((("a " x 100000) . "a\n") =~ /\A\S+(?: \S+)*\n\z/) {}'
-
-References:
-   [2] http://bugs.gentoo.org/show_bug.cgi?id=313565
-   [3] https://bugzilla.redhat.com/show_bug.cgi?id=580605
-
-Affected Perl versions:
-   Issue tested and confirmed in Perl of versions v5.8.*.
-   Versions of Perl v5.10.* are not affected by this.
-
-Steve, what's the Mitre's opinion on cases like this --
-denial of service reachable via certain regular expression.
-
-Should we track them on per issue basis? Or only for cases,
-where more than a DoS is possible? (doesn't seem to be
-this case though).
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Download attachment "signature.asc" of type "application/pgp-signature" (197 bytes)
