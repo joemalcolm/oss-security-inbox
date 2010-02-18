@@ -1,52 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/09/14
-Message-ID: <20101209191528.GA32211@openwall.com>
-Date: Thu, 9 Dec 2010 22:15:28 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/18/1
+Message-ID: <4B7C933B.3070705@redhat.com>
+Date: Thu, 18 Feb 2010 09:09:15 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: kernel: Dangerous interaction between clear_child_tid, set_fs(), and kernel oopses
+CC: Marcus Meissner <meissner@...e.de>
+Subject: Re: CVE request: kernel information leak via userspace USB interface
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Dec 08, 2010 at 10:34:38AM -0500, Nelson Elhage wrote:
-> ... rearrange things so that the flow
-> is "check interrupt -> set_fs() -> everything else".
+Hi Marcus,
 
-This is what I did.  Works fine so far.
+On 02/17/2010 06:29 PM, Marcus Meissner wrote:
+> While programming a USB device using libusb I found that a usb read from
+> the device returned data it should not.
+[...]
+> Access to USB userspace devices either requires root access or desktop user access
+> via udev/hal ACLs on non-mass-storage Digital Cameras or Media Players. (So the
+> desktop user needs to plugin such a ACL getting device before being able
+> to read the memory).
 
---- linux-2.6.18-194.26.1.el5.028stab079.1/kernel/exit.c	2010-11-30 12:26:53 +0000
-+++ linux-2.6.18-194.26.1.el5.028stab079.1-owl/kernel/exit.c	2010-12-09 09:49:18 +0000
-@@ -949,12 +949,28 @@ fastcall NORET_TYPE void do_exit(long co
- 	int group_dead;
- 	unsigned int mycpu;
- 
-+	/*
-+	 * Check this first since set_fs() below depends on
-+	 * current_thread_info(), which we better not access when we're in
-+	 * interrupt context.  Other than that, we want to do the set_fs()
-+	 * as early as possible.
-+	 */
-+	if (unlikely(in_interrupt()))
-+		panic("Aiee, killing interrupt handler!");
-+
-+	/*
-+	 * If do_exit is called because this process Oops'ed, it's possible
-+	 * that get_fs() was left as KERNEL_DS, so reset it to USER_DS before
-+	 * continuing. Amongst other possible reasons, this is to prevent
-+	 * mm_release()->clear_child_tid() from writing to a user-controlled
-+	 * kernel address.
-+	 */
-+	set_fs(USER_DS);
-+
- 	profile_task_exit(tsk);
- 
- 	WARN_ON(atomic_read(&tsk->fs_excl));
- 
--	if (unlikely(in_interrupt()))
--		panic("Aiee, killing interrupt handler!");
- 	if (unlikely(!tsk->pid))
- 		panic("Attempted to kill the idle task!");
- #ifdef CONFIG_VE
+To abuse this, you will need physical access to plug in a USB device, so 
+I do not think this should be regarded as a security issue.
 
-Thanks,
-
-Alexander
+Thanks, Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
