@@ -1,59 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/22/8
-Message-Id: <201012221406.53271.tmb@65535.com>
-Date: Wed, 22 Dec 2010 14:06:35 +0000
-From: Tim Brown <tmb@...35.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/18/6
+Message-ID: <Pine.GSO.4.64.1002181148000.1263@faron.mitre.org>
+Date: Thu, 18 Feb 2010 11:53:30 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: Breaking the links: Exploiting the linker
+Subject: Re: CVE request: kernel information leak via userspace USB interface
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday 22 December 2010 11:46:41 Jamie Nguyen wrote:
-> Tim Brown <timb@...> writes:
-> > In the interests of a thorough peer review I'd be curious what people
-> > think of the following paper I've been working on Linux and POSIX
-> > linkers:
-> > 
-> > http://www.nth-dimension.org.uk/downloads.php?id=77
-> > 
-> > A previous revision has already been reviewed but constructive criticism
-> > is always useful.  There are some sections that I have removed whilst I
-> > wait on vendors but I'm particularly interested in feedback on pertinent
-> > references or threats that I may have missed.  As per the abstract, the
-> > aim of the paper wasn't to claim everything as my own but rather to
-> > document as much about the current state of art as possible.
-> > 
-> > Tim
-> 
-> Hi,
-> 
-> I am somewhat unknowledgeable about the whole linking process, but I was
-> testing out the execution of a file using ld on a filesystem mounted with
-> noexec. I followed the example you gave of copying the '/usr/bin/id'
-> executable to a user writeable directory and removing the executable bit.
-> 
-> After removing the executable bit, I was still able to execute this on a
-> normal filesystem using /lib/ld-linux-x86_64.so.2 but on a filesystem
-> mounted with noexec this method did not work.
-> 
-> You suggest in the article:
-> 
-> "...if you're mounting devices with noexec the you should probably ensure
-> that they [sic] the runtime linker can't be executed either."
-> 
-> Forgive me if I am being dim, because from what I can see, mounting with
-> noexec seems to solve the issue of using ld-linux-x86-64.so.2 to execute
-> non-executable files.
 
-You're not being dim.  On Linux, mounting the file system with noexec prevents 
-the kernel mmap()ing the pages with execute permissions.  Removing the execute 
-bit on a binary doesn't cause the same behaviour.  In the paper I was 
-describing the general case.  This is something taviso or stealth mentioned to 
-me too so I will update the paper to make this distinction clear.  Thanks for 
-the feedback.
+On Thu, 18 Feb 2010, Marcus Meissner wrote:
 
-Tim
--- 
-Tim Brown
-<mailto:tmb@...35.com>
+> Are we considering "giving desktop local users unintended rights"
+> a security issue or not?
 
-Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
+from a CVE purist perspective, if the security model is that "users with 
+physical access should not be able to read portions of kernel memory" then 
+a violation of that is technically a vulnerability, even if the attack 
+complexity is high - assuming that there isn't already some easier way 
+that the attacker can get the same results through legitimate means. 
+Being able to crash the system by plugging in a USB device (for example) 
+is about as easy as the defenestration exploit - i.e. throwing the 
+computer out the window - so in that case I wouldn't view it as a 
+vulnerability.  If someone with physical access can read the kernel memory 
+that's being leaked, if don't already own the box, that seems a little 
+more like a vulnerability to me.
+
+- Steve
