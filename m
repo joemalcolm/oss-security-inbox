@@ -1,32 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/11/1
-Message-ID: <4B7390C1.7020609@redhat.com>
-Date: Thu, 11 Feb 2010 13:08:17 +0800
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/18/4
+Message-ID: <4B7D66A1.7040809@redhat.com>
+Date: Fri, 19 Feb 2010 00:11:13 +0800
 From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request - kernel: ip6_dst_lookup_tail() NULL pointer dereference
+CC: Marcus Meissner <meissner@...e.de>
+Subject: Re: additional memory leak in USB userspace handling
 Content-Type: text/plain; charset=utf-8
 
-ipv6: Fix OOPS in ip6_dst_lookup_tail().
+On 02/17/2010 06:46 PM, Marcus Meissner wrote:
+> Hi,
+>
+> a memory allocation leak (not information, just unfreed memory)
+> was spotted and fixed by Linus during debugging of previous problem.
+>
+> On put_user() errors it would leak one "struct async" per REAPURB call.
+>
+> Fix is in commit ddeee0b2eec2a51b0712b04de4b39e7bec892a53, also
+> attached.
+>
+> Affected code is also going back throughout 2.6 history.
+>
+> The issue is of less importance than the information leak fix, I am not
+> sure if it deserves a CVE or not.
 
-This fixes kernel bugzilla 11469: "TUN with 1024 neighbours:
-ip6_dst_lookup_tail NULL crash"
-
-dst->neighbour is not necessarily hooked up at this point in the 
-processing path, so blindly dereferencing it is the wrong thing to do. 
-This NULL check exists in other similar paths and this case was just an 
-oversight.
-
-Also fix the completely wrong and confusing indentation here while we're 
-at it.
-
-References:
-http://bugzilla.kernel.org/show_bug.cgi?id=11469
-https://bugzilla.redhat.com/show_bug.cgi?id=563781
-
-Upstream patch:
-http://git.kernel.org/linus/e550dfb0c2c31b6363aa463a035fc9f8dcaa3c9b
+I was talking to Marcus about this. The attacker needs access to a USB 
+device like the previous bug in order to exploit this.
 
 Thanks, Eugene
 -- 
