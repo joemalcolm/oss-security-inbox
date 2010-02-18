@@ -1,21 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/03/2
-Message-ID: <4C579265.40305@kernel.sg>
-Date: Tue, 03 Aug 2010 11:52:05 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/18/2
+Message-ID: <4B7CA4A8.9090104@redhat.com>
+Date: Thu, 18 Feb 2010 10:23:36 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: akuster <akuster@...sta.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE-2010-2524 kernel: dns_resolver upcall security issue
+CC: dann frazier <dannf@...nf.org>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: DoS on x86_64
 Content-Type: text/plain; charset=utf-8
 
-On 08/03/2010 04:29 AM, akuster wrote:
-> Eugene,
+On 02/05/2010 06:46 AM, dann frazier wrote:
+> On Thu, Feb 04, 2010 at 01:09:09PM +0800, Eugene Teo wrote:
+>> On 02/04/2010 10:28 AM, dann frazier wrote:
+>>> On Mon, Feb 01, 2010 at 01:09:12PM +0800, Eugene Teo wrote:
+>>>> Reported by Mathias Krause. The problem seams to be located in
+>>>> fs/binfmt_elf.c:load_elf_binary(). It calls SET_PERSONALITY() prior
+>>>> checking that the ELF interpreter is available. This in turn makes the
+>>>> previously 32 bit process a 64 bit one which would be fine if execve()
+>>>> would succeed. But after the SET_PERSONALITY() the open_exec() call
+>>>> fails (because it cannot find the interpreter) and execve() almost
+>>>> instantly returns with an error. If you now look at /proc/PID/maps
+>>>> you'll see, that it has the vsyscall page mapped which shouldn't be. But
+>>>> the process is not dead yet, it's still running. By now generating a
+>>>> segmentation fault and in turn trying to generate a core dump the
+>>>> kernel just dies.
+>>>>
+>>>> Steps to Reproduce:
+>>>> 1. Enable core dumps
+>>>> 2. Start an 32 bit program that tries to execve() an 64 bit program
+>>>> 3. The 64 bit program cannot be started by the kernel because it can't
+>>>> find the interpreter, i.e. execve returns with an error
+>>>> 4. Generate a segmentation fault
+>>>> 5. panic
+>>>>
+>>>> Upstream commit:
+>>>> http://git.kernel.org/linus/221af7f87b97431e3ee21ce4b0e77d5411cf1549
+>>>
+>>> Thanks Eugene.
+>>>
+>>> Also note this fix for a regression in the above:
+>>>     http://git.kernel.org/linus/7ab02af428c2d312c0cf8fb0b01cc1eb21131a3d
+>>
+>> Ben Hutchings reported (via stable review list) that the fix did not
+>> work for him. Will monitor the list if there are other follow-ups.
 >
-> So would it mean git commit 6103335de8afa5d780dcd512abe85c696af7b040
-> introduced the problem?
+> Indeed, it also needs this change for x86:
+>   http://git.kernel.org/linus/05d43ed8a89c159ff641d472f970e3f1baa66318
+>
+> And the corresponding changes for powerpc&  sparc:
+>   http://git.kernel.org/linus/94f28da8409c6059135e89ac64a0839993124155
+>   http://git.kernel.org/linus/94673e968cbcce07fa78dac4b0ae05d24b5816e1
+>
+> All are in queue-2.6.32 now, btw.
 
-Yes. 2.6.25-rc1 onwards.
+Here's my updated list of patches to backport for this vulnerability:
+  - 221af7f87 ("Split 'flush_old_exec' into two functions")
+  - 05d43ed8a ("x86: get rid of the insane TIF_ABI_PENDING bit")
+  - 7ab02af42 ("Fix 'flush_old_exec()/setup_new_exec()' split")
+  - 94f28da84 ("powerpc: TIF_ABI_PENDING bit removal")
+  - 1252f238d ("x86: set_personality_ia32() misses force_personality32")
 
 Thanks, Eugene
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+Eugene Teo / Red Hat Security Response Team
