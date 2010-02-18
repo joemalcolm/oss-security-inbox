@@ -1,26 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/16/2
-Message-ID: <4C91AC19.4050205@kernel.sg>
-Date: Thu, 16 Sep 2010 13:33:13 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/18/7
+Message-ID: <20100218211500.GA3357@pcpool00.mathematik.uni-freiburg.de>
+Date: Thu, 18 Feb 2010 22:15:00 +0100
+From: "Bernhard R. Link" <brlink@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-2010-3081 kernel: 64-bit Compatibility Mode Stack Pointer Underflow
+Subject: Re: CVE request: kernel information leak via userspace USB interface
 Content-Type: text/plain; charset=utf-8
 
-Reported by Ben Hawkes. "A vulnerability in the 32-bit compatibility 
-layer for 64-bit systems was reported. It is caused by insecure 
-allocation of user space memory when translating system call inputs to 
-64-bit. A stack pointer underflow can occur when using the 
-"compat_alloc_user_space" method with an arbitrary length input."
+* Eugene Teo <eugene@...hat.com> [100218 02:09]:
+> Hi Marcus,
+>
+> On 02/17/2010 06:29 PM, Marcus Meissner wrote:
+>> While programming a USB device using libusb I found that a usb read from
+>> the device returned data it should not.
+> [...]
+>> Access to USB userspace devices either requires root access or desktop user access
+>> via udev/hal ACLs on non-mass-storage Digital Cameras or Media Players. (So the
+>> desktop user needs to plugin such a ACL getting device before being able
+>> to read the memory).
+>
+> To abuse this, you will need physical access to plug in a USB device, so
+> I do not think this should be regarded as a security issue.
 
-Reference:
-http://sota.gen.nz/compat1/
-https://bugzilla.redhat.com/CVE-2010-3081
+- What about users that already have such a device pluged in?
+- Just because someone has access to your hardware does not mean
+  they should have total control. Computer cases can be locked,
+  even put in other rooms with only monitor and usb ports (and
+  keyboard and mouse in usb) available to people that should only
+  have user rights and not root rights.
+  You can have employees/cameras to look users are not using drilling
+  machines on the cases or open the keyboards to add chips.
+  But you can hardly stop people from plugging in devices. (And I think
+  studies show that if you add any device on the street, people finding
+  them will plug them into their computer as the first thing they do).
 
-Upstream commit:
-http://git.kernel.org/linus/c41d68a513c71e35a14f66d71782d27a79a81ea6
+It might be a minor issue or something not worth issuing a id, but a
+security issue it is.
 
-Thanks, Eugene
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+	Bernhard R. Link
