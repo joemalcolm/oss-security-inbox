@@ -1,54 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/08/12
-Message-ID: <743166559.326141270758059951.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 8 Apr 2010 16:20:59 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/18/3
+Message-ID: <4B7CCC51.7030501@redhat.com>
+Date: Thu, 18 Feb 2010 13:12:49 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Jos Boumans <jos.boumans@...onical.com>, Mathias Gug <mathias.gug@...onical.com>, Thierry Carrez <thierry.carrez@...onical.com>
-Subject: Re: CVE request -- memcached
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE requests - kernel network vulns
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-1152 for this.
+1) gre: fix netns vs proto registration ordering
+http://patchwork.ozlabs.org/patch/45553/
 
-Thanks.
+"GRE protocol receive hook can be called right after protocol addition 
+is done. If netns stuff is not yet initialized, we're going to oops in
+net_generic().
 
+This is remotely oopsable if ip_gre is compiled as module and packet
+comes at unfortunate moment of module loading."
+
+2) tunnels: fix netns vs proto registration ordering
+http://patchwork.ozlabs.org/patch/45554/
+
+"Same stuff as in ip_gre patch: receive hook can be called before netns
+setup is done, oopsing in net_generic()."
+
+Thanks, Eugene
 -- 
-    JB
-
-
------ "Jamie Strandboge" <jamie@...onical.com> wrote:
-
-> FYI, this issue was recently pointed out to me:
-> http://code.google.com/p/memcached/issues/detail?id=102
-> 
-> A remote attacker who is allowed to connect to memcached can crash
-> the
-> server by sending bad input. I've not investigated this to see if it
-> is
-> more than a DoS.
-> 
-> People wanting to fix this may want to more thoroughly look at the
-> patch[1]. After a cursory glance at it, I'm not sure it is enough:
-> 1. it uses:
->   if (strcmp(ptr, "get ") && strcmp(ptr, "gets ")) {
-> 
-> Why not use something like (*totally* untested):
->   if (strncmp(ptr, "get ", 5) && strncmp(ptr, "gets ", 5)) {
-> 
-> just in case ptr is not NULL terminated? I haven't checked if this is
-> an
-> actual issue, but it certainly wouldn't hurt. '5' should probably be
-> changed to something more reasonable.
-> 
-> 2. As I read the patch, couldn't an attacker send crafted input after
-> the 4 reallocs and then achieve the same thing (a DoS)?. Perhaps this
-> isn't a problem since it limits the object size to 1MB (according to
-> the
-> FAQ [2]).
-> 
-> 
-> [1]http://github.com/memcached/memcached/commit/75cc83685e103bc8ba380a57468c8f04413033f9
-> [2]http://code.google.com/p/memcached/wiki/FAQ
-> 
-> -- 
-> Jamie Strandboge             | http://www.canonical.com
+Eugene Teo / Red Hat Security Response Team
