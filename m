@@ -1,58 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/06/2
-Message-ID: <4C5C31EE.70209@redhat.com>
-Date: Fri, 06 Aug 2010 18:01:50 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/18/5
+Message-ID: <20100218164119.GB16428@suse.de>
+Date: Thu, 18 Feb 2010 17:41:19 +0100
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>, Werner Lemberg <wl@....org>
-Subject: Re: CVE Request -- FreeType -- Memory corruption flaw by processing certain LWFN fonts + three more
+Subject: Re: CVE request: kernel information leak via userspace USB interface
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+On Thu, Feb 18, 2010 at 09:09:15AM +0800, Eugene Teo wrote:
+> Hi Marcus,
+> 
+> On 02/17/2010 06:29 PM, Marcus Meissner wrote:
+> >While programming a USB device using libusb I found that a usb read from
+> >the device returned data it should not.
+> [...]
+> >Access to USB userspace devices either requires root access or desktop 
+> >user access
+> >via udev/hal ACLs on non-mass-storage Digital Cameras or Media Players. 
+> >(So the
+> >desktop user needs to plugin such a ACL getting device before being able
+> >to read the memory).
+> 
+> To abuse this, you will need physical access to plug in a USB device, so 
+> I do not think this should be regarded as a security issue.
 
-   just for more complete list. There are more of them:
-     [1] https://savannah.nongnu.org/bugs/?30644
-         Patch at:  http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=45a3c76b547511fa9d97aca34b150a0663257375
-     [2] https://savannah.nongnu.org/bugs/?30656
-         Patch at: http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=c06da1ad34663da7b6fc39b030dc3ae185b96557
-     [3] https://savannah.nongnu.org/bugs/?30657
-         Patch at: http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=346f1867fd32dae8f56e5b482d1af98f626804ac
-   plus that one below (but you probably already noticed).
+Hmm.
 
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Or you exploit the desktop user and then wait until he plugs in such a device
+(ok, kind of a theoretical scenario, lets ignore).
 
 
-Jan Lieskovsky wrote:
-> Hi Steve, vendors,
-> 
->   A memory corruption flaw was found in the way FreeType font rendering 
-> engine
-> processed certain Adobe Type 1 Mac Font File (LWFN) fonts. An attacker
-> could use this flaw to create a specially-crafted font file that, when
-> opened, would cause an application linked against libfreetype to crash,
-> or, possibly execute arbitrary code.
-> 
-> Upstream bug report:
->   [1] https://savannah.nongnu.org/bugs/?30658
-> 
-> Public reproducer:
->   [2] http://alt.swiecki.net/j/f/sigsegv31.ttf
-> 
-> Upstream changeset:
->   [3] 
-> http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=81f3472c0ba7b8f6466e2e214fa8c1c17fade975 
-> 
-> 
-> References:
->   [4] https://bugzilla.redhat.com/show_bug.cgi?id=621907
-> 
-> Credit: Robert Swiecki
-> 
-> Could you allocate a CVE id for this?
-> 
-> Thanks && Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+Are we considering "giving desktop local users unintended rights"
+a security issue or not?
 
+(Hmm, init=/bin/sh booting and pressing reset might come into
+ play here too. Then we would not consider that.)
+
+Ciao, Marcus
