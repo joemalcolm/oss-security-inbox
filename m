@@ -1,32 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/20/4
-Message-ID: <20100120041010.GA23371@kroah.com>
-Date: Tue, 19 Jan 2010 20:10:10 -0800
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/19/1
+Message-ID: <4B7DDFB6.2000508@redhat.com>
+Date: Fri, 19 Feb 2010 08:47:50 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - kernel: untangle the do_mremap() mess
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel information leak via userspace USB interface
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jan 20, 2010 at 11:38:30AM +0800, Eugene Teo wrote:
-> On 01/20/2010 04:41 AM, Josh Bressers wrote:
->> ----- "Eugene Teo"<eugene@...hat.com>  wrote:
->>> There's a pile of upstream commits that fixed issues that can lead to
->>>
->>> user-triggerable panics on supported boxes:
->>> http://groups.google.com/group/linux.kernel/msg/895f20870532241e.
->>>
->>> http://groups.google.co.jp/group/fa.linux.kernel/browse_thread/thread/8bf22336b1082090
->>
->> I don't think CVE ids can be assigned to this without more information. I'm
->> not knowledgeable enough, nor do I have the time to properly understand
->> this list.
+On 02/19/2010 12:53 AM, Steven M. Christey wrote:
 >
-> And upstream continues to give us grief...
+> On Thu, 18 Feb 2010, Marcus Meissner wrote:
+>
+>> Are we considering "giving desktop local users unintended rights"
+>> a security issue or not?
+>
+> from a CVE purist perspective, if the security model is that "users with
+> physical access should not be able to read portions of kernel memory"
+> then a violation of that is technically a vulnerability, even if the
+> attack complexity is high - assuming that there isn't already some
+> easier way that the attacker can get the same results through legitimate
+> means. Being able to crash the system by plugging in a USB device (for
+> example) is about as easy as the defenestration exploit - i.e. throwing
+> the computer out the window - so in that case I wouldn't view it as a
+> vulnerability. If someone with physical access can read the kernel
+> memory that's being leaked, if don't already own the box, that seems a
+> little more like a vulnerability to me.
 
-I have backported everything into the 2.6.32.4 release, so all
-should be good now.
+Thanks for clarifying!
 
-thanks,
-
-greg k-h
+Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
