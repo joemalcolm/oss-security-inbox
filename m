@@ -1,35 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/03/4
-Message-ID: <432515616.276561272908045642.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 3 May 2010 13:34:05 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/22/7
+Message-ID: <Pine.GSO.4.64.1002221823350.14849@faron.mitre.org>
+Date: Mon, 22 Feb 2010 18:30:17 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: dan j rosenberg <dan.j.rosenberg@...il.com>, coley <coley@...re.org>
-Subject: Re: CVE request: lxr
+Subject: Re: CVE request: wordpress < 2.9.2 information leak
 Content-Type: text/plain; charset=utf-8
 
------ "Henri Salo" <henri@...v.fi> wrote:
 
-> On Mon, 3 May 2010 09:31:16 -0400
-> Dan Rosenberg <dan.j.rosenberg@...il.com> wrote:
-> 
-> > I discovered and reported this bug at the same time as two other XSS
-> > issues, including the one covered by CVE-2009-4497.  While the commit
-> > may be a few days apart for some of these, I think they can safely fall
-> > under the same CVE, unless it's standard practice to assign CVEs for
-> > each of several related minor issues.
-> 
-> Several XSS-vulnerabilities can have one CVE at least when those
-> vulnerabilities are fixed at the same time.
-> 
+On Mon, 22 Feb 2010, Hanno Böck wrote:
 
-In this instance, I would assign it a new ID, as the old one already exists
-and doesn't note both XSS fixes (it is possible someone fixed just the one XSS
-and not both in an update).
+> http://wordpress.org/development/2010/02/wordpress-2-9-2/
+> http://tmacuk.co.uk/?p=180
+> https://core.trac.wordpress.org/ticket/11236
+> http://hakre.wordpress.com/2010/02/16/the-short-memory-of-wordpress-org-
+> security/
 
-I've CC'd Steve Christey, for a second opinion.
+Use CVE-2010-0682, to be filled in later.
 
-Thanks
-
--- 
-    JB
+- Steve
