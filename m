@@ -1,48 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/22/5
-Message-ID: <1432075622.1471601287758332552.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 22 Oct 2010 10:38:52 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/22/5
+Message-ID: <20100222195538.2bc554a1@foo.fgeek.fi>
+Date: Mon, 22 Feb 2010 19:55:38 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: kernel: heap overflow in TIPC
+Subject: Re: CVE request - coppermine gallery <1.4.26 code execution vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-3859
+On Wed, 10 Feb 2010 11:23:31 +0100
+Hanno Böck <hanno@...eck.de> wrote:
 
-Thanks.
-
--- 
-    JB
-
-
------ "Dan Rosenberg" <dan.j.rosenberg@...il.com> wrote:
-
-> The tipc_msg_build() function in net/tipc/msg.c contains an
-> exploitable kernel heap overflow that would allow a local user to
-> escalate privileges to root by issuing maliciously crafted sendmsg()
-> calls via TIPC sockets.
+> http://forum.coppermine-gallery.net/index.php/topic,63510.0.html
 > 
-> Fortunately, none of the distributions I tested actually define a
-> module alias for TIPC even though it is compiled as a module on
-> nearly
-> all of them (I suspect this is a lucky accident).  Since in these
-> situations, the TIPC module will not be loaded automatically on
-> creation of a TIPC socket, an administrator would have had to
-> explicitly load the TIPC kernel module in order for a system to be
-> vulnerable.
-> 
-> I checked Ubuntu, Debian, and Fedora, none of which define an alias.
-> Any distributions that define a module alias for TIPC (i.e. "alias
-> net-pf-30 tipc") should treat this as a serious vulnerability.  Even
-> if your distribution does not, I highly recommend backporting the fix
-> for this, since it's a bit of defensive programming in the core
-> networking code that handles verifying user-supplied iovecs, which
-> likely resolves other undiscovered (or undisclosed) security issues
-> elsewhere.  I'll post a link to the fix when it's finalized and
-> committed.
-> 
-> Reference:
-> http://marc.info/?l=linux-netdev&m=128770476511716&w=2
-> 
-> -Dan
+> "The release covers a recently discovered input validation
+> vulnerability that allows (if unpatched) a malevolent visitor to
+> include own script routines"
+
+What is the status of this?
+
+---
+Henri Salo
