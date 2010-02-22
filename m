@@ -1,19 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/28/6
-Message-ID: <4BFFBD58.1050605@iuculano.it>
-Date: Fri, 28 May 2010 14:55:52 +0200
-From: Giuseppe Iuculano <giuseppe@...ulano.it>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/22/2
+Message-ID: <4B81FF29.4020108@kernel.sg>
+Date: Mon, 22 Feb 2010 11:51:05 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2009-4824 is a duplicate of CVE-2009-3236
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: ALSA: hda-intel: Avoid divide by zero crash
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+hda-intel crashes the kernel due to a divide by zero in azx_position_ok.
 
-CVE-2009-4824 appears to be a duplicate of CVE-2009-3236 and should
-therefore be rejected.
+Using mp3blaster-3.2.5 (latest version) to play MP3 audio, the reporter 
+was able to crash the kernel by stopping and restarting playback using 
+the "5" key repeatedly. This happens as a normal user, not only as root. 
+Kernel backtrace points to azx_position_ok() dividing by zero.
 
-Cheers,
-Giuseppe.
+Upstream commit:
+http://git.kernel.org/linus/fed08d036f2aabd8d0c684439de37f8ebec2bbc2
 
+References:
+http://lkml.org/lkml/2010/2/6/40
+http://nctritech.net/bugreport.txt
+http://lwn.net/Articles/375417/
+https://bugzilla.redhat.com/show_bug.cgi?id=567168
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+Thanks, Eugene
