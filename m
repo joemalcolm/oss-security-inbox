@@ -1,40 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/01/7
-Message-ID: <1720882979.772531265058774744.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 1 Feb 2010 16:12:54 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/22/6
+Message-Id: <201002222313.46585.hanno@hboeck.de>
+Date: Mon, 22 Feb 2010 23:13:45 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- OCSNG_UNIX_SERVER-1.02.2
+Subject: CVE request: wordpress < 2.9.2 information leak
 Content-Type: text/plain; charset=utf-8
 
------ "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
-
-> Hi Josh, Steve, vendors,
-> 
->    multiple security issues have been reported against
-> OCS Inventory NG Management server for Unix/Linux.
-> 
-> References:
-> 
-> [1] http://secunia.com/advisories/38311/
-> [2]
-> http://www.packetstormsecurity.org/1001-exploits/ocsinventoryng-sqlxss.txt
-> [3] http://www.ocsinventory-ng.org/index.php?page=1-02-1
-> [4]
-> http://launchpad.net/ocsinventory-server/stable-1.02/stable-release-1.02.2/+download/OCSNG_UNIX_SERVER-1.02.2.tar.gz
-> 
-> Could you allocate CVE ids for these?
-> 
+http://wordpress.org/development/2010/02/wordpress-2-9-2/	
+http://tmacuk.co.uk/?p=180
+https://core.trac.wordpress.org/ticket/11236
+http://hakre.wordpress.com/2010/02/16/the-short-memory-of-wordpress-org-
+security/
 
 
-I'm going to defer this one to MITRE. I don't have time to properly assign
-IDs for this.
-
-Thanks.
-
+"Thomas Mackenzie alerted us to a problem where logged in users can peek at 
+trashed posts belonging to other authors"
 -- 
-    JB
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
--- 
-    JB
+http://schokokeks.org - professional webhosting
+
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
