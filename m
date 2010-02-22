@@ -1,19 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/29/3
-Message-Id: <201001291119.48563.eren@pardus.org.tr>
-Date: Fri, 29 Jan 2010 11:19:48 +0200
-From: Eren Türkay <eren@...dus.org.tr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/22/3
+Message-ID: <1002220907330.11676@mjc.redhat.com>
+Date: Mon, 22 Feb 2010 09:09:35 +0000 (GMT)
+From: Mark J Cox <mjc@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: Wireshark
+Subject: CVE-2005-4886 assigned to old remote oops
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+http://git.kernel.org/linus/0d3d077cd4f11
 
-Wireshark 1.2.6 was released that fixes buffer overflows in LWRES dissector. I 
-couldn't find any CVE references regarding to this issue. Could CVE id be 
-assigned if it hasn't been done yet.
+This issue should have got a CVE name back in 2005 when it was discovered 
+to be a security issue, but probably didn't affect any other vendor at the 
+time.  Fixed upstream in 2.6.12, more details at:
 
-http://www.wireshark.org/security/wnpa-sec-2010-02.html
+https://bugzilla.redhat.com/show_bug.cgi?id=160117#c12
 
-Thanks,
-Eren
+Thanks, Mark
