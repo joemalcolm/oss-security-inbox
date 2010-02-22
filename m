@@ -1,46 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/30/22
-Message-ID: <2051084446.1646871277927350977.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 30 Jun 2010 15:49:10 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/22/4
+Message-Id: <201002221416.59018.thomas@suse.de>
+Date: Mon, 22 Feb 2010 14:16:58 +0100
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE requests: LibTIFF
+Subject: WANTED: mikmod patches
 Content-Type: text/plain; charset=utf-8
 
------ "Dan Rosenberg" <dan.j.rosenberg@...il.com> wrote:
+Hello,
+has somebody a pointer to the patches for CVE-2009-3996
+and CVE-2009-3995?
 
-> There are three issues that I think are CVE-worthy and have not been
-> assigned:
+The last release from upstream was 2+ yrs old.
 
-Thanks for the help Dan. Here goes:
 
-> 
-> 1.  OOB read in TIFFExtractData() leading to crash (no reference,
-> originally disclosed by me in this thread, fixed upstream with
-> release
-> 3.9.4 and security fix backported by Ubuntu).
+These IDs are from a Secunia advisory about mikmod:
+..
+====================================================================== 
+3) Vendor's Description of Software 
 
-CVE-2010-2481
+"Mikmod is a module player and library supporting many formats,
+including mod, s3m, it, and xm.".
 
-> 
-> 2.  NULL pointer dereference due to invalid td_stripbytecount leading
-> to crash (distinct from CVE-2010-2443).  The upstream changelog entry
-> for 3.9.4 reads:
-> 
-> 	* libtiff/tif_ojpeg.c (OJPEGReadBufferFill): Report an error and
-> 	avoid a crash if the input file is so broken that the strip
-> 	offsets are not defined.
+Product Link:
+http://sourceforge.net/projects/mikmod/
 
-CVE-2010-2482
+====================================================================== 
+4) Description of Vulnerability
 
-> 
-> 3.  OOB read in TIFFRGBAImageGet() leading to crash.  Reference:
-> https://bugs.launchpad.net/ubuntu/+source/tiff/+bug/591605
+Secunia Research has discovered some vulnerabilities in libmikmod,
+which can be exploited by malicious people to potentially compromise a
+user's system.
 
-CVE-2010-2483
+1) Three boundary errors in the Impulse Tracker parser when parsing 
+an instrument containing a column, panning, or pitch envelope with 
+more than ENVPOINTS (32) points can result in a heap-based buffer 
+overflow.
 
-Thanks.
+2) A boundary error in the Ultratracker parser when parsing a file 
+with more than UF_MAXCHAN (64) channels can result in a heap-based 
+buffer overflow.
+
+Successful exploitation may allow arbitrary code execution in the
+context of the process using the libmikmod library when opening a
+specially crafted module file.
+
+
+
 
 -- 
-    JB
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+--
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
