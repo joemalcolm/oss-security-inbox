@@ -1,77 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/29/4
-Message-ID: <4C013001.4050404@debian.org>
-Date: Sat, 29 May 2010 17:17:21 +0200
-From: Emilio Pozuelo Monfort <pochu@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Fwd: emesene preditable temporary filename
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/23/4
+Message-ID: <4B83FFAC.5020609@redhat.com>
+Date: Tue, 23 Feb 2010 17:17:48 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+CC: "Steven M. Christey" <coley@...us.mitre.org>, "Todd C. Miller" <Todd.Miller@...rtesan.com>
+Subject: CVE assignment notification -- CVE-2010-0427 -- sudo fails to reset group permissions if runas_default set
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi vendors,
 
-I sent this to vendor-sec but got no response. I've been told to send it to
-oss-security, so here it goes.
+   1, apologize for separate post (needed to investigate the
+      issue first).
 
-The fix is:
+   2, more about sudo "fails to reset group permissions
+      if runas_default set" issue:
 
---- emesene-1.6.1/emesenelib/ProfileManager.py	2010-03-29 22:27:23.000000000 +0200
-+++ emesene-1.6.2/emesenelib/ProfileManager.py	2010-05-26 21:51:32.000000000 +0200
-@@ -208,16 +211,10 @@ class ProfileManager(gobject.GObject):
-             return False
-         data = response.read()
-         #print "DP:", len(data), stat, reas
--        if os.name == "nt":
--            tempfolder = os.environ['TEMP'] + os.sep + "emsnpic"
--            tempfolder = unicode(tempfolder)
--        else:
--            tempfolder = '/tmp/emsnpic'
--        f = open(tempfolder, 'wb')
--        f.write(data)
--        f.close()
--        self.emit('self-dp-changed', tempfolder)
--
-+        fd, fn = tempfile.mkstemp(prefix='emsnpic')
-+        os.write(fd, data)
-+        self.emit('self-dp-changed', fn)
-+
-         return False
+      Sudo failed to properly reset group permissions, when
+      'runas_default' option was used. If a local, unprivileged
+      user was authorized by sudoers file to perform their
+      sudo commands under default user account, it could lead
+      to privilege escalation.
 
-     def onSetDP(self, response):
+Upstream bug report:
+   [1] http://www.gratisoft.us/bugzilla/show_bug.cgi?id=349
 
+Upstream patch:
+   [2] http://sudo.ws/repos/sudo/rev/aa0b6c01c462 (against v1.6 branch)
+   [3] http://www.sudo.ws/cgi-bin/cvsweb/sudo/set_perms.c.diff?r1=1.30.2.7&> r2=1.30.2.8
 
--------- Original Message --------
-Subject: emesene preditable temporary filename
-Date: Tue, 25 May 2010 00:42:07 +0200
-From: Emilio Pozuelo Monfort <pochu@...ian.org>
-To: vendor-sec@....de, Mariano Guerra <luismarianoguerra@...il.com>,  "Riccardo
-(C10uD)" <c10ud.dev@...il.com>
+Other references:
+   [4] https://bugzilla.redhat.com/show_bug.cgi?id=567622
 
-Hi,
+Affected versions:
+   a, issue tested and confirmed in sudo-1.6.9p17 version, prior v1.6.x
+      based versions might be also affected. Issue fixed
+      in upstream 1.6.9p21 version.
+   b, v1.7.x based versions of sudo are not affected by this
+      flaw due the differences in the way sudoers file is parsed.
 
-emesene 1.6.1 uses a predictable temporary filename (/tmp/emsnpic) to store a
-picture. This can lead a malicious local user to overwrite arbitrary files from
-the user who executes emesene by a symlink attack.
+CVE: CVE identifier of CVE-2010-0427 has been already assigned to this issue.
 
-I've successfully exploited this by making a symlink from a test account to a
-file owned by the user 'emilio'. Then after running emesene, the file is
-overwritten with the picture (there are cases where it doesn't, but it will
-always happen on first login and if you login with another user then back with
-yours).
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
-Before running emesene:
-
-lrwxrwxrwx 1 test    test    4 may 24 22:25 emsnpic -> file
--rw-r--r-- 1 emilio  emilio  5 may 24 22:23 file
-
-After running emesene:
-
-lrwxrwxrwx 1 test    test       4 may 24 22:25 emsnpic -> file
--rw-r--r-- 1 emilio  emilio  3032 may 24 22:26 file
-
-emilio@...urno:/tmp$ file file
-file: JPEG image data, JFIF standard 1.01
-
-Should this get assigned a CVE number?
-
-Regards,
-Emilio
+P.S.: Thanks to Todd C. Miller for pointing me to [2] and sudo
+       v1.7.x situation clarification.
