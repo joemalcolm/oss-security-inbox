@@ -1,29 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/18/1
-Message-ID: <20100118105111.GA3585@suse.de>
-Date: Mon, 18 Jan 2010 11:51:14 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: Evolution denial of service bug ... 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/23/2
+Message-Id: <201002231300.o1ND0LRc019969@core.courtesan.com>
+Date: Tue, 23 Feb 2010 08:00:21 -0500
+From: "Todd C. Miller" <Todd.Miller@...rtesan.com>
+To: oss-security <oss-security@...ts.openwall.com>
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE assignment notification -- CVE-2010-0426 -- sudo improper pseudocommands file path check 
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Here's my WIP writeup of this:
 
-We received a bugreport for Evolution from "Francis Provencher for Protek Research Lab's"
-(protekresearchlab@...oo.ca).
+Summary:
+A flaw in exists in sudo's -e option (aka sudoedit) in sudo versions
+1.6.9 through 1.7.2p3 that may give a user with permission to run
+sudoedit the ability to run arbitrary commands.
 
-The issue is that if Evolution accesses a malicious POP3 server the latter
-can by sending an overly long ERR message cause a X11 error (BadAlloc)
-likely due to a overly wide Message Box and so cause evolution to abort.
+Sudo versions affected:
+1.6.9 through 1.7.2p3 inclusive.
 
-The commit in evolution that fixes it:
-http://git.gnome.org/browse/evolution-data-server/commit/?id=22854733409fddf3e313cc637ce3a0309159b41f
-it also checks for utf-8 validity.
+Details
+When sudo performs its command matching, there is a special case
+for pseudo-commands in the sudoers file (currently, the only
+pseudo-command is sudoedit).  Unlike a regular command, pseudo-commands
+do not begin with a slash ('/').
 
+The flaw is that sudo's the matching code would only check against
+the list of pseudo-commands if the user-specified command also
+contained no slashes.  As a result, if the user ran "sudo ./sudoedit"
+the normal matching code path was followed, which uses stat(2) to
+verify that the user-specified command matches the one in sudoers.
+In this case, it would compare the "./sudoedit" specified by the
+user with "sudoedit" from the sudoers file, resulting in a positive
+match.
 
-I am still undecided whether this is a real security issue or not. On
-one hand getting rid of this malicious server from evolution might
-be difficult if it is auto-opened. On the other hand, malicious servers
-have also other denial of service possibilities (like sending 1000000+ mailheaders).
+Impact:
+Exploitation of the bug requires that the sudoers file be configured
+to allow the attacker to run sudoedit.  If no users have been granted
+access to sudoedit there is no impact.
 
-Ciao, Marcus
+Successful exploitation of the bug will allow a user to run arbitrary
+commands for whichever user they have permission to run sudoedit
+as, typically root.
+
+Fix:
+The bug is fixed in sudo 1.7.2p4 and 1.6.9p21
+
+Credit:
+This problem was brought to my attention by Glenn Waller and neonsignal.
+
+See also:
+http://sudo.ws/bugs/show_bug.cgi?id=389
