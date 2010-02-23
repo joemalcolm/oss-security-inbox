@@ -1,31 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/29/4
-Message-ID: <4BD8F280.5050601@redhat.com>
-Date: Thu, 29 Apr 2010 10:44:16 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Hui Zhu <hui.zhu@...driver.com>, Paul Gortmaker <paul.gortmaker@...driver.com>, +security-linux <security-linux@...driver.com>, "Wessel, Jason" <jason.wessel@...driver.com>, Wu Fei <fei.wu@...driver.com>
-Subject: Re: CVE request - Linux Kernel KGDB/ppc issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/23/1
+Message-ID: <4B83B356.6060701@redhat.com>
+Date: Tue, 23 Feb 2010 11:52:06 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+CC: "Steven M. Christey" <coley@...us.mitre.org>, "Todd C. Miller" <Todd.Miller@...rtesan.com>
+Subject: CVE assignment notification -- CVE-2010-0426 -- sudo improper pseudocommands file path check
 Content-Type: text/plain; charset=utf-8
 
-On 04/29/2010 10:13 AM, Hui Zhu wrote:
-> Hi All,
->
-> The problem is that if KGDB is enabled on a powerpc board, a
-> test that checks if a page is user or kernel is bypassed.
-> This means that a user can write to arbitrary kernel address space.
->
-> Upon further investigation, we found that kernels older than
-> the v2.6.30-rc1 release have the same problem for non-booke
-> ppc chips (74xx, 8641D), so we need two patches for kernels
-> up to that date, and then one patch for ones after that date.
+Hi vendors,
 
-Hi Hui,
+   a privilege escalation flaw was found in the way
+   sudo used to check file paths for pseudocommands.
+   If local, unprivileged user was authorized by sudoers
+   file to edit one or more files, it could lead to
+   execution of arbitrary code, with the privileges
+   of privileged system user (root).
 
-Just FYI, oss-security is a public mailing list. I noticed you have 
-already cc'ed the KGDB maintainer. If you are trying to report a kernel 
-security issue that is neither fixed not disclosed previously AFAIK, you 
-might want to try CC'ing security@...nel.org and LKML. Drop LKML if you 
-want to keep it private for a short period of time.
+BTS records:
+   [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=570737
+   [2] https://bugzilla.redhat.com/show_bug.cgi?id=567337
 
-Thanks, Eugene
+Patches from Todd C. Miller:
+   [3] https://bugzilla.redhat.com/attachment.cgi?id=395605&action=diff
+       (against sudo v1.7.x)
+   [4] https://bugzilla.redhat.com/attachment.cgi?id=395606&action=diff
+       (against sudo v1.6.x)
+
+   which should overcome the deficiency.
+
+Credit: neonsignal
+
+CVE: CVE identifier of CVE-2010-0426 has been already assigned to this issue.
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
