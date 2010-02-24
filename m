@@ -1,34 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/19/3
-Message-Id: <201005191528.18818.ludwig.nussel@suse.de>
-Date: Wed, 19 May 2010 15:28:18 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: [oCERT-2010-001] multiple http client unexpected download filename vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/24/4
+Message-ID: <1267025236.2778.4.camel@lupin>
+Date: Wed, 24 Feb 2010 09:27:15 -0600
+From: Jamie Strandboge <jamie@...onical.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: CVE assignment notification -- CVE-2010-0427 -- sudo fails to reset group permissions if runas_default set
 Content-Type: text/plain; charset=utf-8
 
-Solar Designer wrote:
-> [...]
-> Although I used a somewhat tricky approach in the above exploit,
-> eventually making wget overwrite a file, it is also possible to mount
-> attacks that do not rely on overwriting any files.  Many programs
-> support optional startup/config files of fixed/known/guessable names
-> that a malicious or compromised server could provide.  In fact, I've
-> just demonstrated this attack against wget itself, but it could also
-> work against another program.
-> 
-> Is this more convincing now?
+On Tue, 2010-02-23 at 17:17 +0100, Jan Lieskovsky wrote:
 
-Serving dot files is a neat trick indeed, I've overlooked that
-paragraph in the ocert advisory. Nevertheless I'm not convinced it's
-worth changing wget's default behavior in the proposed way. So I can
-understand upstream here.
+Thanks for your investigation.
 
-cu
-Ludwig
+>    b, v1.7.x based versions of sudo are not affected by this
+>       flaw due the differences in the way sudoers file is parsed.
+
+This is in conflict with Todd's statement in his writeup:
+"Sudo versions affected:
+1.6.9 through 1.7.2p3 inclusive.
+...
+Fix:
+The bug is fixed in sudo 1.7.2p4 and 1.6.9p21"
+
+
+Upstream appears to have patched 1.7.2. Can you explain why it is not
+affected?
 
 -- 
- (o_   Ludwig Nussel
- //\   
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+Jamie Strandboge             | http://www.canonical.com
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
