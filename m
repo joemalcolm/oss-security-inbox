@@ -1,46 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/13/8
-Message-ID: <Pine.GSO.4.64.1009131653470.24720@faron.mitre.org>
-Date: Mon, 13 Sep 2010 16:55:26 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Josh Bressers <bressers@...hat.com>
-cc: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: mailman
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/24/3
+Message-ID: <4B847E6B.5000806@kernel.sg>
+Date: Wed, 24 Feb 2010 09:18:35 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: NFS DoS related to "automount" symlinks
 Content-Type: text/plain; charset=utf-8
 
+fix LOOKUP_FOLLOW on automount "symlinks"
 
-Josh,
+"Make sure that automount "symlinks" are followed regardless of 
+LOOKUP_FOLLOW; it should have no effect on them."
 
-Was there a particular reason to split these into separate CVEs?  A quick 
-glance suggests they affect the same version, and since they're the same 
-type, would normally argue for a merge.
+Upstream commit:
+http://git.kernel.org/linus/ac278a9c505092dd82077a2446af8f9fc0d9c095
 
-- Steve
+Note:
++ * This is a temporary kludge to deal with "automount" symlinks; proper
++ * solution is to trigger them on follow_mount(), so that do_lookup()
++ * would DTRT.  To be killed before 2.6.34-final.
 
+This affects kernels version 2.6.18 onwards.
 
-On Mon, 13 Sep 2010, Josh Bressers wrote:
+https://bugzilla.redhat.com/show_bug.cgi?id=567813
 
->
-> ----- "Huzaifa Sidhpurwala" <huzaifas@...hat.com> wrote:
->
->> Hi,
->>
->> There are two mailman vulns. fixed by the following patch:
->> http://mail.python.org/pipermail/mailman-announce/2010-September/000151.html
->>
->> Particular Red Hat Bugzilla entries are the following:
->>
->> 	https://bugzilla.redhat.com/show_bug.cgi?id=631881
->
-> CVE-2010-3089 mailman XSS via list information HTML template
->
->
->> 	https://bugzilla.redhat.com/show_bug.cgi?id=631859
->
-> CVE-2010-3090 mailman XSS in list information overview
->
-> Thanks.
->
-> --
->    JB
->
+Thanks, Eugene
