@@ -1,32 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/27/1
-Message-ID: <i06qcn$hhu$1@dough.gmane.org>
-Date: Sun, 27 Jun 2010 01:17:06 -0500
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/24/2
+Message-ID: <4B847667.1010108@kernel.sg>
+Date: Wed, 24 Feb 2010 08:44:23 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Subject: Re: Stefan Esser's 0day PHP SysCan flaw
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: kernel: RTO (Retransmission Timeouts) Remote DoS
 Content-Type: text/plain; charset=utf-8
 
-Hi Josh,
+"Make sure, that TCP has a nonzero RTT estimation after three-way 
+handshake. Currently, a listening TCP has a value of 0 for srtt, rttvar 
+and rto right after the three-way handshake is completed with TCP 
+timestamps disabled. This will lead to corrupt RTO recalculation and 
+retransmission flood when RTO is recalculated on backoff reversion as 
+introduced in "Revert RTO on ICMP destination unreachable"
+(f1ecd5d9e7366609d640ff4040304ea197fbc618). This behaviour can be 
+provoked by connecting to a server which "responds first" (like SMTP) 
+and rejecting every packet after the handshake with dest-unreachable, 
+which will lead to softirq load on the server (up to 30% per socket in 
+some tests).
 
-Josh Bressers wrote:
-> I just assigned CVE-2010-2225 to Stefan Esser's 0day PHP unserialize flaw.
-> 
-> He speaks of it on his twitter page:
-> http://twitter.com/i0n1c/status/16447867829
-> 
-> Our bug is here:
-> https://bugzilla.redhat.com/show_bug.cgi?id=605641
-> 
-> We'll update it as we learn more.
+Thanks to Ilpo Jarvinen for providing debug patches and to Denys 
+Fedoryshchenko for reporting and testing.
 
-Here's a public, limited, explanation:
-http://php-security.org/2010/06/25/mops-2010-061-php-splobjectstorage-
-deserialization-use-after-free-vulnerability/
+Reported-by: Denys Fedoryshchenko <denys@...p.net.lb>"
 
-Regards,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+Just a heads-up. Red Hat is not requesting a CVE name for this as it did 
+not affect any of our supported kernels.
 
+http://www.securityfocus.com/bid/38355
+https://bugzilla.redhat.com/show_bug.cgi?id=567530
+Introduced: f1ecd5d9e7366609d640ff4040304ea197fbc618 - v2.6.32-rc1
+Upstream commit: 598856407d4e20ebb4de01a91a93d89325924d43
 
+Thanks, Eugene
