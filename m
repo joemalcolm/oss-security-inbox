@@ -1,39 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/30/4
-Message-ID: <1501414360.731141283179024025.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 30 Aug 2010 10:37:04 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request: BGP protocol vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/24/5
+Message-ID: <4B854AC1.4070206@redhat.com>
+Date: Wed, 24 Feb 2010 16:50:25 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: Jamie Strandboge <jamie@...onical.com>
+CC: oss-security@...ts.openwall.com
+Subject: Re: CVE assignment notification -- CVE-2010-0427 -- sudo fails to reset group permissions if runas_default set
 Content-Type: text/plain; charset=utf-8
 
------ "Florian Weimer" <fw@...eb.enyo.de> wrote:
-> * Kurt Seifried:
-> 
-> >> The BGP protocol and its various extensions require that BGP peering
-> >> sessions are terminated when a peer receives a BGP update message
-> >> which it considers semantically incorrect, leading to a persistent
-> >> denial-of-service condition if the update is received again after the
-> >> terminated session is reestablished.
-> >>
-> >> (This is not something new at all---we just need to get up, treat it
-> >> as a vulnerability, and fix it.)
-> >
-> > This sounds like CVE-2010-3035
-> > http://www.cisco.com/warp/public/707/cisco-sa-20100827-bgp.shtml
-> 
-> In this context, I don't like that the peer on the receiving end
-> resets the session.  It's got a significant impact on availability,
-> and the resulting UPDATE churn hurts everybody a little bit.
-> 
-> In short, I think there are two bugs: IOS XR producing bad data, and
-> other implementations dealing badly with it.
+Hi Jamie,
 
-I'm going to let MITRE deal with this one. I don't want to assign an ID for
-a protocol issue, that likely will affect numerous devices.
+   there are two sudo issues:
+   a, CVE-2010-0426 sudoedit to allow to run arbitrary code
+   b, CVE-2010-0427 sudo fails to reset cached groups, when
+                     runas_default option set
 
-Thanks.
+Jamie Strandboge wrote:
+> On Tue, 2010-02-23 at 17:17 +0100, Jan Lieskovsky wrote:
+> 
+> Thanks for your investigation.
+> 
+>>    b, v1.7.x based versions of sudo are not affected by this
+>>       flaw due the differences in the way sudoers file is parsed.
 
--- 
-    JB
+   This comment speaks only about CVE-2010-0427 issue.
+> 
+> This is in conflict with Todd's statement in his writeup:
+> "Sudo versions affected:
+> 1.6.9 through 1.7.2p3 inclusive.
+> ...
+> Fix:
+> The bug is fixed in sudo 1.7.2p4 and 1.6.9p21"
+
+   Above quotes from Todd are referring to CVE-2010-0426 issue (and these
+   are valid).
+> 
+> 
+> Upstream appears to have patched 1.7.2. Can you explain why it is not
+> affected?
+
+   But you mean CVE-2010-0426 here, right? For CVE-2010-0427 wrt to v1.7.x
+   you can check reproducer in:
+
+     http://www.gratisoft.us/bugzilla/show_bug.cgi?id=349
+
+   that it isn't working against v1.7.x.
+
+   I probably confused you with 'more about sudo "fails to reset group
+   permissions if runas_default set" issue', when not saying this is
+   different / new issue.
+
+   Sorry for that.
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
