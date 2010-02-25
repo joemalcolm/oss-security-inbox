@@ -1,27 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/22/12
-Message-ID: <Pine.GSO.4.64.1011221126070.14862@faron.mitre.org>
-Date: Mon, 22 Nov 2010 11:30:34 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: gif2png: command-line buffer overflow problem
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/25/3
+Message-ID: <1267136630.32734.104.camel@severus.strandboge.com>
+Date: Thu, 25 Feb 2010 16:23:50 -0600
+From: Jamie Strandboge <jamie@...onical.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, "Todd C. Miller" <Todd.Miller@...rtesan.com>
+Subject: Re: CVE assignment notification -- CVE-2010-0427 -- sudo fails to reset group permissions if runas_default set
 Content-Type: text/plain; charset=utf-8
 
+On Tue, 2010-02-23 at 17:17 +0100, Jan Lieskovsky wrote:
+> Affected versions:
+>    a, issue tested and confirmed in sudo-1.6.9p17 version, prior v1.6.x
+>       based versions might be also affected. Issue fixed
+>       in upstream 1.6.9p21 version.
 
-I'm typically uncomfortable assigning CVEs for such issues, since this 
-makes the distinction between bugs and vulnerabilities even fuzzier than 
-they already are, and potentially creates a "snowball effect" where 
-suddenly CVE sets a precedent and inadvertently grants legitimacy to large 
-numbers of issues that are of very little security concern to most 
-consumers.
+FYI,
 
-However, when there are common usage scenarios in which the product is 
-used that produce a vulnerability, these have been given CVEs in the past. 
-(Non-exploitable browser crashers kind of fall under this reasoning, 
-because of the common usage scenarios where (1) users will click on links, 
-and (2) users will have multiple tabs/windows/sessions open, so a 
-browser-ending crash will affect those sessions.)
+1.6.9 is affected as far back as 1.6.9p10 (I didn't check farther) and
+1.6.8p12 does not seem to be affected.
 
-That's a long way of saying to use CVE-2009-5018 for this issue.
+-- 
+Jamie Strandboge             | http://www.canonical.com
 
-- Steve
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
