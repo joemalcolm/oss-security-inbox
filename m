@@ -1,22 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/30/2
-Message-ID: <AANLkTik=DM41TshM+5HwZ-TGM+trZLXAj_Z2d3yP0SyV@mail.gmail.com>
-Date: Thu, 30 Dec 2010 11:01:35 -0800
-From: Jeff Breidenbach <jeff@....org>
-To: Earl Hood <earl@...lhood.com>
-Cc: oss-security <oss-security@...ts.openwall.com>,  "Steven M. Christey" <coley@...us.mitre.org>, non customers <non-customers@...ramail.com>
-Subject: Re: CVE Request -- MHonArc: Improper escaping of certain HTML sequences (XSS)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/25/2
+Message-ID: <1267134565.32734.101.camel@severus.strandboge.com>
+Date: Thu, 25 Feb 2010 15:49:25 -0600
+From: Jamie Strandboge <jamie@...onical.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: "Todd C. Miller" <Todd.Miller@...rtesan.com>, "Steven M. Christey" <coley@...us.mitre.org>, Jan Lieskovsky <jlieskov@...hat.com>
+Subject: Re: Re: CVE assignment notification -- CVE-2010-0426 -- sudo improper pseudocommands file path check
 Content-Type: text/plain; charset=utf-8
 
-Earl,
+On Tue, 2010-02-23 at 08:00 -0500, Todd C. Miller wrote:
+> Here's my WIP writeup of this:
+> 
+> Summary:
+> A flaw in exists in sudo's -e option (aka sudoedit) in sudo versions
+> 1.6.9 through 1.7.2p3 that may give a user with permission to run
+> sudoedit the ability to run arbitrary commands.
+> 
+> Sudo versions affected:
+> 1.6.9 through 1.7.2p3 inclusive.
 
-http://www.mhonarc.org/MHonArc/doc/faq/security.html#htmlexchow
+We have sudo 1.6.8p12 in a supported release of Ubuntu, and I noticed
+that while 1.6.8p12 looked like it should be affected, I couldn't get
+the reproducer[1] to work. I dug into it and found this:
 
-One of my hats is the Debian package maintainer for mhonarc. I'm tempted to
-disable HTML mail support by default rather than try to improve it. What do
-you think about the idea? What do you think about implementation? The
-package does not have control over the resource file, so it would probably
-have to be a code patch.
+In 1.6.9 we have in main() of sudo.c:
+  execve(safe_cmnd, NewArgv, environ);
 
--Jeff
+In 1.6.8p12 we have in main() of sudo.c:
+  EXECV(safe_cmnd, NewArgv);  /* run the command */
 
+In 1.6.8p12 EXECV can be either execv() or execvp() (there is a
+configure option to choose which to use, it happened to default to
+execvp() here). If you change the EXECV to be execv(), then the
+reproducer works fine.  If you change the EXECV to be execvp(), then the
+reproducer doesn't work.
+
+From the eglibc manpage for execvp():
+ The functions execlp() and execvp() will duplicate the actions of the
+ shell in searching for an executable file if the specified filename
+ does not contain a slash (/) character. The search path is the path
+ specified in the environment by the PATH variable.
+
+Looking at safe_cmnd in gdb (sudo_user.cmnd_safe) I found that it is
+passing 'sudoedit' (ie, no '/' in the name) as the first argument, and
+so execvp() is searching PATH for 'sudoedit' and exec'ing what it finds
+rather than NewArgv[0] (in this case, './sudoedit').
+
+In 1.6.8p12 PATH can be forced via the --secure-path configure option
+for sudo, so if sudo is compiled with a sane --secure-path and
+--with-execv=execvp, then it seems sudo is ok (though rather than
+failing, it will edit the file as if './sudoedit' wasn't specified).
+Without --secure-path, if sudo doesn't scrub PATH variable (eg using
+env_keep=PATH) then it is vulnerable.
+
+I did not check any other releases of 1.6.8 other than p12.
+
+[1] http://sudo.ws/bugs/show_bug.cgi?id=389
+
+-- 
+Jamie Strandboge             | http://www.canonical.com
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
