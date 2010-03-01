@@ -1,72 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/28/4
-Message-ID: <20100928134746.GR8591@core.inversepath.com>
-Date: Tue, 28 Sep 2010 15:47:46 +0200
-From: Andrea Barisani <lcars@...rt.org>
-To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
-Subject: [oCERT-2010-004] FFmpeg/libavcodec arbitrary offset dereference
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/01/1
+Message-ID: <4B8BDEB9.2080901@kernel.sg>
+Date: Mon, 01 Mar 2010 23:35:21 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: dvb-core: ULE decapsulation DoS
 Content-Type: text/plain; charset=utf-8
 
+Reported by Ang Way Chuang.
 
-#2010-004 FFmpeg/libavcodec arbitrary offset dereference
+"dvb-core: Fix DoS bug in ULE decapsulation code that can be triggered 
+by an invalid Payload Pointer ULE (Unidirectional Lightweight 
+Encapsulation RFC 4326) decapsulation has a bug that causes endless loop 
+when Payload Pointer of MPEG2-TS frame is 182 or 183.  Anyone who sends 
+malicious MPEG2-TS frame will cause the receiver of ULE SNDU to go into 
+endless loop.
 
-Description:
+This patch was generated and tested against linux-2.6.32.9 and should 
+apply cleanly to linux-2.6.33 as well because there was only one typo 
+fix to dvb_net.c since v2.6.32.
 
-The libavcodec library, an open source video encoding/decoding library part of
-the FFmpeg project, suffers from an arbitrary offset dereference vulnerability.
+This bug was brought to you by modern day Santa Claus who decided to 
+shower the satellite dish at Keio University with heavy snow causing 
+huge burst of errors.  We, receiver end, received Santa Claus's gift in 
+the form of kernel bug."
 
-The vulnerability affects the flic file format parser, insufficient
-restrictions on a writable buffer can be exploited to execute arbitrary code
-via the heap memory. A specific flic file can be crafted to trigger the
-vulnerability.
+http://git.kernel.org/linus/29e1fa3565a7951cc415c634eb2b78dbdbee151d
+http://bugzilla.redhat.com/569237
 
-The MPlayer multimedia player is also affected as it statically includes
-libavcodec, the flic codec can be disabled in codecs.conf configuration file in
-order to workaround the issue.
-
-Affected version:
-
-libavcodec <= 0.6
-
-MPlayer <= 1.0_rc3, snapshot 2010-09-27
-
-Fixed version:
-
-libavcodec >= r25223 (see References)
-
-MPlayer >= snapshot 2010-09-28
-
-Credit: vulnerability report and PoC code received from Cesar Bernardini <cesar
-[dot] bernardini [at] gmail [dot] com> and Felipe Felipe Andres Manzano <felipe
-[dot] andres [dot] manzano [at] gmail [dot] com>.
-
-CVE: CVE-2010-3429
-
-Timeline:
-
-2010-08-24: vulnerability report received
-2010-08-25: contacted mplayer maintainers
-2010-08-27: mplayer security team confirms report, describes mplayer
-            workaround and points to ffmpeg as the originally affected package
-2010-08-27: contacted ffmpeg maintainer
-2010-08-27: preliminary patch is provided by ffmpeg maintainer
-2010-08-28: reporter approves patch
-2010-09-13: upstream confirms patch, two weeks embargo is proposed
-2010-09-13: embargo accepted, contacted affected vendors
-2010-09-27: patch committed to ffmpeg repository
-2010-09-28: patch automatically pulled to mplayer repository from ffmpeg one
-2010-09-28: oCERT advisory published
-
-References:
-http://git.ffmpeg.org/?p=ffmpeg;a=commitdiff;h=16c592155f117ccd7b86006c45aacc692a81c23b
-
-Permalink:
-http://www.ocert.org/advisories/ocert-2010-004.html
-
--- 
-Andrea Barisani |                Founder & Project Coordinator
-          oCERT | Open Source Computer Emergency Response Team
-
-<lcars@...rt.org>                         http://www.ocert.org
- 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
-        "Pluralitas non est ponenda sine necessitate"
+Thanks, Eugene
