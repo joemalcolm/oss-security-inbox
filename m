@@ -1,26 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/22/2
-Message-ID: <Pine.GSO.4.64.1006221302370.12832@faron.mitre.org>
-Date: Tue, 22 Jun 2010 13:09:01 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security <oss-security@...ts.openwall.com>
-cc: "Steven M. Christey" <coley@...us.mitre.org>, Matthew Wilkes <enquiries@...culartriangle.eu>, bressers@...hat.com
-Subject: Re: Re: CVE Request -- Plone -- arbitrary HTML code injection in safe_html
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/02/2
+Message-ID: <20100302205750.GE2842@redhat.com>
+Date: Tue, 2 Mar 2010 13:57:50 -0700
+From: Vincent Danen <vdanen@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2009-3297 samba/ncpfs/fuse issues granted individual 2010 CVE names?
 Content-Type: text/plain; charset=utf-8
 
+* [2010-03-02 13:52:05 -0700] Vincent Danen wrote:
 
-On Tue, 22 Jun 2010, Matthew Wilkes wrote:
-
-> On 2010-06-21, at 2048, Jan Lieskovsky wrote:
+>Hi, Steve.  I'm confused about these three CVEs, particularly since
+>CVE-2009-3297 was assigned to this issue (I suppose it would be more
+>correct to have 3 CVEs for the issue, but I'm not sure then why
+>CVE-2009-3297 was completely ignored unless you intend for it to be not
+>used/duplicated to one of these?).
 >
->> Could you allocate a CVE id for this?
+>I'm also confused on using a 2010-based name since our bugzilla entry is
+>dated 2009-11-04, and Samba upstream has their reported dated
+>2009-10-28, so these should have received 2009-based names.
 >
-> I requested one from MITRE over a week ago, they've not allocated one yet.
+>We've used CVE-2009-3297 all over the place so it's pretty hard to miss.
+>Looking at the references just for the samba issue (your CVE-2010-0787),
+>all of the references except the git commits refer to CVE-2009-3297.
+>
+>Can you clarify why this was done?  CC'ing oss-security in case anyone
+>else has noticed this as well.
 
-Use CVE-2010-2422.
+Gah!  Sorry, I missed this other bit because I was looking on the
+website and CVE-2009-3297 still says "** RESERVED **", but:
 
-I am inferring from the hotfixes and digging into past news announcements 
-that the affected versions are 2.1 through 3.3.4.  Please let me know if 
-this is erroneous.
+> Name: CVE-2009-3297
+> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3297
+> 
+> ** REJECT **
+> 
+> DO NOT USE THIS CANDIDATE NUMBER.  ConsultIDs: CVE-2010-0787,
+> CVE-2010-0788, CVE-2010-0789.  Reason: this candidate was intended for
+> one issue in Samba, but it was used for multiple distinct issues,
+> including one in FUSE and one in ncpfs.  Notes: All CVE users should
+> consult CVE-2010-0787 (Samba), CVE-2010-0788 (ncpfs), and
+> CVE-2010-0789 (FUSE) to determine which ID is appropriate.  All
+> references and descriptions in this candidate have been removed to
+> prevent accidental usage.
 
-- Steve
+Sorry for the extra noise, but I am still curious as to why the decision
+was made to reject CVE-2009-3297 instead of just indicating it should
+have been only used for samba and had the other 2 assigned individually?
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
