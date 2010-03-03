@@ -1,37 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/14/3
-Message-ID: <4B4E91C0.8040208@redhat.com>
-Date: Thu, 14 Jan 2010 11:38:40 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: dann frazier <dannf@...nf.org>, fwestphal@...aro.com, kaber@...sh.net, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request: kernel ebtables perm check
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/03/5
+Message-ID: <20100303211618.4d2e3367@redhat.com>
+Date: Wed, 3 Mar 2010 21:16:18 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: OSS Security <oss-security@...ts.openwall.com>
+Subject: OpenSSL (with KRB5) remote crash - CVE-2010-0433
 Content-Type: text/plain; charset=utf-8
 
-On 01/14/2010 08:54 AM, dann frazier wrote:
-> Has a CVE been assigned for this issue yet?
+Hi!
 
-Please use CVE-2010-0007. Thanks.
+We've been pointed out to public reports of remote SSL server crashes
+in OpenSSL builds with kerberos support, triggered by the Nessus'
+ssl_supported_ciphers test.
 
-Eugene
+We've managed to track this problem to a missing return value check,
+causing incorrect input to be passed to the krb5 library, resulting in
+NULL pointer dereference crash in krb5 (recent MIT krb5 versions).
 
-> commit dce766af541f6605fa9889892c0280bab31c66ab
-> Author: Florian Westphal<fwestphal@...aro.com>
-> Date:   Fri Jan 8 17:31:24 2010 +0100
->
->      netfilter: ebtables: enforce CAP_NET_ADMIN
->
->      normal users are currently allowed to set/modify ebtables rules.
->      Restrict it to processes with CAP_NET_ADMIN.
->
->      Note that this cannot be reproduced with unmodified ebtables
->      binary
->      because it uses SOCK_RAW.
->
->      Signed-off-by: Florian Westphal<fwestphal@...aro.com>
->      Cc: stable@...nel.org
->      Signed-off-by: Patrick McHardy<kaber@...sh.net>
+Issue can be reproduced with chrooted SSL servers (such as dovecot's
+login process or chrooted stunnel).
 
+Report we got, with references to previous public discussions:
+  https://bugzilla.redhat.com/show_bug.cgi?id=567711
+
+Details of the flaw:
+  https://bugzilla.redhat.com/show_bug.cgi?id=569774
+
+Upstream patch:
+  http://cvs.openssl.org/chngview?cn=19374
+
+We've assigned CVE-2010-0433 to this issue.
 
 -- 
-Eugene Teo / Red Hat Security Response Team
+Tomas Hoger / Red Hat Security Response Team
