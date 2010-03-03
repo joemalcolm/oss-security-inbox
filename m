@@ -1,43 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/01/1
-Message-ID: <20100701050641.GA24773@lackof.org>
-Date: Wed, 30 Jun 2010 23:06:41 -0600
-From: dann frazier <dannf@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/03/1
+Message-ID: <4B8E2FA6.20501@kernel.sg>
+Date: Wed, 03 Mar 2010 17:45:10 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Subject: Re: kernel: hvc_console: Fix race between hvc_close and hvc_remove
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: NFS: Fix an Oops when truncating a file
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Apr 17, 2010 at 11:26:46PM -0400, Michael Gilbert wrote:
-> On Sat, 17 Apr 2010 18:15:42 -0400 Michael Gilbert wrote:
-> 
-> > On Thu, 04 Mar 2010 17:03:58 +0800 Eugene Teo wrote:
-> > 
-> > > Heads-up. You might want to backport this if your kernel is affected. We 
-> > > are not requesting a CVE name for this as it does not affect any of our 
-> > > Red Hat supported kernels.
-> > 
-> > are you sure about this?  i see the vulnerable code upstream in both
-> > 2.6.26 and 2.6.32.  does redhat not ship hvc in their kernels?  i think
-> > this should get a cve id because the more vanilla distros will have
-> > shipped with this included.
-> 
-> i see that hvc_console is disabled by default in the debian kernels,
+"The VM/VFS does not allow mapping->a_ops->invalidatepage() to fail.
+Unfortunately, nfs_wb_page_cancel() may fail if a fatal signal occurs. 
+Since the NFS code assumes that the page stays mapped for as long as the 
+writeback is active, we can end up Oopsing (among other things).
 
-Actually, upon review, I see that it is enabled (see the powerpc64
-image). Therefore, I'd like to request a CVE ID for it.
+The only safe fix here is to convert nfs_wait_on_request(), so as to 
+make it uninterruptible (as is already the case with 
+wait_on_page_writeback())."
 
-> and i assume it is the same for the redhat kernels.
-> 
-> are issues in features that are disabled by default generally treated
-> as unimportant? there are bound to be a (perhaps small) subset of users
-> turning these features on; exposing themselves to more risk if these
-> issues go unfixed. i suppose cve assignment depends on whether or not
-> there is an expectation to protect those users in addition to
-> defaults-using users. 
-> 
-> mike
-> 
+Upstream commit:
+http://git.kernel.org/linus/9f557cd8073104b39528794d44e129331ded649f
 
--- 
-dann frazier
-
+Reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=567184
