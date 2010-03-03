@@ -1,75 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/14/2
-Message-ID: <AANLkTikwJH8sF_EWXTxfb3iK8qmDB0R9aovDjwbVD7Z=@mail.gmail.com>
-Date: Thu, 14 Oct 2010 14:58:10 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/03/3
+Message-ID: <20100303153002.GA5581@openwall.com>
+Date: Wed, 3 Mar 2010 18:30:02 +0300
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: ettercap GTK
+Subject: CFPs and con invitations on the list (was: [cansecwest] Advanced PHP Hacking)
 Content-Type: text/plain; charset=utf-8
 
-Based on this, I'd say the buffer overflow CVE-2010-3844 is probably
-extraneous.  The only attack vector is due to the fact that the
-configuration file is globally accessible, so I would argue that, just
-like your example of SQL injection allowing XSS, the insecure
-temporary file usage allows the buffer overflow.  Given that the
-configuration file is hidden by default, I'd assume that there is no
-intention of allowing users to share configurations - I think it's
-only supposed to maintain settings between consecutive executions on
-the same machine.
+Hi,
 
--Dan
+I've just approved Laurent's posting, even though this is sort of an
+exception lately.  Several other postings of "this nature" (not training
+courses but mostly conference CFPs, though) were not approved.  Yet I
+thought it was time to revisit this issue, and Laurent's posting was a
+good choice because I knew that Laurent had actually joined the list
+first (unlike most others who try to cross-post their CFPs in here).
 
-On Thu, Oct 14, 2010 at 2:10 PM, Steven M. Christey
-<coley@...us.mitre.org> wrote:
->
-> If the config file is intended to be trusted, then any issues that can
-> *only* be exploited through that trusted file, are not relevant for CVE
-> inclusion - basically, it would be the admin attacking himself/herself.
->
-> If you fix problem X, and it automatically fixes another problem Y (or, at
-> worst, renders it as non-security-relevant) - then you would assign a CVE to
-> X, and perhaps emphasize Y as one of potentially-many consequences.
->
-> Maybe other attacks are possible through that config file; but would they be
-> irrelevant if the config file was only accessible to the intended user?
->
-> As a distinct example: you have a web-based application that stores content
-> into a database, including user IDs that are validated to be alphanumeric
-> before insertion into the database.  If an SQL injection vulnerability is
-> exploited, maybe the attacker could injest XSS into the user ID.  But the
-> user ID is "trusted" in the intended security model of the application, so
-> the SQL injection would get the CVE, and the XSS would be listed as a
-> consequence.
->
-> So, in this case, it might be that CVE-2010-3844 is extraneous.
->
-> But, if it's reasonable for configuration files to be shared between users
-> or installations (just like pictures, packet captures, or MP3s) - then
-> there's a reasonable exploit scenario where the temp file issue is
-> irrelevant, but the format string still has an attack vector.
->
-> Hope that makes sense.  This was a bane to us at CVE years ago, and was the
-> source of a lot of confusion and inconsistency.  It happens in the web app
-> world all the time.
->
-> - Steve
->
->
->
-> On Wed, 13 Oct 2010, Josh Bressers wrote:
->
->>> There are two issues here (insecure temporary file usage and
->>> stack-based buffer overflow), but they're probably only
->>> security-relevant when exploited in conjunction.  Not sure if it
->>> should get one CVE or two.
->>>
->>> Reference:
->>> https://bugs.launchpad.net/ubuntu/+source/ettercap/+bug/656347
->>>
->>>
->>
->> We'll use two:
->>
->> CVE-2010-3843 ettercap GTK insecure temporary file use
->> CVE-2010-3844 ettercap GTK format string flaw
->
+The last time this topic was brought up, two of the list members
+("founding members", so to speak) said they were OK with these postings
+getting through to the list "presuming they stay on the topic of Open
+Source Security" and "are not badly cross-posted":
+
+http://www.openwall.com/lists/oss-security/2009/01/07/4
+http://www.openwall.com/lists/oss-security/2009/01/07/9
+http://www.openwall.com/lists/oss-security/2009/01/07/12
+
+In practice, many of the postings were in fact "badly cross-posted" and
+none of the moderators approved them (so they should have bounced back
+to the senders in a few days).  Sometimes it is difficult to determine
+if a posting is cross-posted "badly enough" or not, though.
+
+Another thing to keep in mind is that those cross-posts provide extra
+visibility to oss-security, making more people aware of this list.  If
+we don't approve them, then people will stop trying to CC: oss-security
+on their announcements, so we won't be getting this extra visibility.
+It is not clear whether this would be a good or a bad thing.  So far,
+the visibility did not hurt, though - reasonable people were joining the
+list, and we have pre-moderation for postings by new members anyway.
+
+Can we agree on an approach that would make moderation decisions easier?
+With about one announcement of this kind per month coming our way lately
+(on average), maybe we should simply be approving them all, whether
+cross-posted or not?
+
+Should we treat invitations to cons and training courses with expensive
+registration differently from those that are free or cheap?  I imagine
+that Laurent's posting was a for-profit one, which was one of the reasons
+why I hesitated approving it.  I'd rather not base moderation decisions
+on this, though, because it'd be difficult to draw the line, and also
+because these "expensive" postings are not any worse in terms of the
+visibility they might provide to oss-security (if visibly CC'ed, which
+was not the case for Laurent's posting).
+
+Comments?
+
+Alexander
+
+On Wed, Mar 03, 2010 at 10:59:59AM +0100, Laurent OUDOT at TEHTRI-Security wrote:
+> I'd like to announce a Security Master's Dojo course during next
+> CanSecWest 2010 in Vancouver (March 22-26 2010).
+> 
+> Title: Advanced PHP Hacking (!)
+[...]
