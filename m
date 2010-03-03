@@ -1,28 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/13/2
-Message-ID: <20100413144121.5c752a32@redhat.com>
-Date: Tue, 13 Apr 2010 14:41:21 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: irssi 0.8.15
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/03/6
+Message-ID: <20100303215845.GY14491@outflux.net>
+Date: Wed, 3 Mar 2010 13:58:45 -0800
+From: Kees Cook <kees@...ntu.com>
+To: oss-security@...ts.openwall.com, libesmtp@...fford.uklinux.net
+Cc: security@...ntu.com
+Subject: CVE Request: libesmtp does not check NULL bytes in commonName
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 12 Apr 2010 15:41:34 -0400 (EDT) Josh Bressers
-<bressers@...hat.com> wrote:
+Hello,
 
-> It fixes the old "does not properly handle a '\0' character in a
-> domain name in the subject's Common Name (CN) field" flaw, plus also
-> verifies that the server being connected to is the one listed in the
-> certificate.
-> 
-> Let's assign these as such:
-> CVE-2010-1154 irssi 0.8.15 /0 in CN field
-> CVE-2010-1155 irssi 0.8.15 certificate host validation
+I just noticed that libesmtp does not appear to handle NULL-byte CNs, as
+seen with the original browser-based issue:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2408
 
-I believe assignment of CVE-2010-1154 is redundant here, given that
-CVE-2010-1155 is about the completely missing server name check.  If it
-wasn't checking names, it wasn't handling \0 in names incorrectly.
+Related to this are failures in wildcard handling:
+ http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=311191
+and CN-specificity:
+ https://bugzilla.redhat.com/show_bug.cgi?id=510202
+
+Though it may be a non-issue if TLS doesn't function at all:
+ http://bugs.gentoo.org/213066
+
+-Kees
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Kees Cook
+Ubuntu Security Team
