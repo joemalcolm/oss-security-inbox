@@ -1,23 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/02/16
-Message-Id: <201008030115.23414.hanno@hboeck.de>
-Date: Tue, 3 Aug 2010 01:15:23 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/04/2
+Message-ID: <4B8F20D4.8090501@redhat.com>
+Date: Thu, 04 Mar 2010 10:54:12 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Attachment XSS in mantis < 1.2.2
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: ip6_dst_lookup_tail() NULL pointer dereference
 Content-Type: text/plain; charset=utf-8
 
-http://www.mantisbt.org/bugs/view.php?id=11952
-http://www.mantisbt.org/blog/?p=113
+On 02/11/2010 01:08 PM, Eugene Teo wrote:
+> ipv6: Fix OOPS in ip6_dst_lookup_tail().
+>
+> This fixes kernel bugzilla 11469: "TUN with 1024 neighbours:
+> ip6_dst_lookup_tail NULL crash"
+>
+> dst->neighbour is not necessarily hooked up at this point in the
+> processing path, so blindly dereferencing it is the wrong thing to do.
+> This NULL check exists in other similar paths and this case was just an
+> oversight.
 
-Issue #11952 covers a security fix to the display of inline attachments, where 
-“Arbitrary inline attachment rendering could lead to cross-domain scripting or 
-other browser attacks”.
+Steve, can you please assign a CVE name for this?
 
+Thanks, Eugene
 -- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-
-http://schokokeks.org - professional webhosting
-
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+Eugene Teo / Red Hat Security Response Team
