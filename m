@@ -1,53 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/25/2
-Message-ID: <20100524224949.Horde.3wqa7n8lhlkwsg00s4c8k4kc@bigworm.curecanti.org>
-Date: Mon, 24 May 2010 22:49:49 -0600
-From: Michael M Slusarz <slusarz@...de.org>
-To: Max Olsterd <max.olsterd@...il.com>, oss-security@...ts.openwall.com, security-2010@...irrelmail.org, security@...de.org
-Subject: Re: [core] CVE Request for Horde and Squirrelmail
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/04/4
+Message-ID: <1144883865.3498301267744058110.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 4 Mar 2010 18:07:38 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: ip6_dst_lookup_tail() NULL pointer dereference
 Content-Type: text/plain; charset=utf-8
 
-Quoting Max Olsterd <max.olsterd@...il.com>:
 
-> Hi,
->
-> Is there a CVE number available for the two 0-days exposed during Hack In
-> The Box Dubai 2010 ?
->
-> Though the exploits were not given during HITB (?), some friends have
-> recently shown me that they found how both products (Squirrelmail and Horde)
-> might be abused to be transformed, so that they become some kind of nmap
-> scanner (banner grab, port scan, etc). It helps at discovering a remote DMZ,
-> internal LAN, etc, by using those webmails as evil internal nmap proxies.
->
-> More info available on the slides of the corporate hackers who found the
-> 0-days :
-> http://conference.hitb.org/hitbsecconf2010dxb/materials/D1%20-%20Laurent%20Oudot%20-%20Improving%20the%20Stealthiness%20of%20Web%20Hacking.pdf
-> -> Squirrelmail: page 69 (post auth vuln)
-> -> Horde: page 74 (pre auth vuln)
+----- "Eugene Teo" <eugene@...hat.com> wrote:
 
-Hi Max,
+> ipv6: Fix OOPS in ip6_dst_lookup_tail().
+> 
+> This fixes kernel bugzilla 11469: "TUN with 1024 neighbours:
+> ip6_dst_lookup_tail NULL crash"
+> 
+> dst->neighbour is not necessarily hooked up at this point in the 
+> processing path, so blindly dereferencing it is the wrong thing to do.
+> 
+> This NULL check exists in other similar paths and this case was just
+> an 
+> oversight.
+> 
+> Also fix the completely wrong and confusing indentation here while
+> we're 
+> at it.
+> 
+> References:
+> http://bugzilla.kernel.org/show_bug.cgi?id=11469
+> https://bugzilla.redhat.com/show_bug.cgi?id=563781
+> 
+> Upstream patch:
+> http://git.kernel.org/linus/e550dfb0c2c31b6363aa463a035fc9f8dcaa3c9b
+> 
 
-I don't believe there is a CVE number for this alleged "hack".
+Please use CVE-2010-0437 for this.
 
-Additionally, we at the Horde project disagree entirely with the  
-characterization that this is an exploit.  We have specifically warned  
-users for *at least 7 YEARS* that allowing the test scripts to remain  
-executable after using them is inadvisable (see  
-http://git.horde.org/diff.php/horde/docs/SECURITY?r1=1.1&r2=1.2?rt=horde).  At  
-a minimum, it is a bit disingenuous for security researchers to  
-"announce" a exploit that is explicitly mentioned in the documentation  
-shipped with the software package.
+Thanks.
 
-That being said, with framework changes that have already been made in  
-Horde 4, test scripts are now globally disabled by default, which will  
-help protect somewhat against lazy administrators.  Until then, for H3  
-admins simply need to disable/restrict the test scripts as we have  
-been telling them to do for years.
-
-michael
 
 -- 
-___________________________________
-Michael Slusarz [slusarz@...de.org]
-
+    JB
