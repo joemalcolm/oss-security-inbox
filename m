@@ -1,36 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/24/2
-Message-ID: <AANLkTi=VUkERojQLCt=mOjiOfXdVKyUzLjmvKtg_H+LR@mail.gmail.com>
-Date: Tue, 24 Aug 2010 11:34:42 +0200
-From: Pierre Joye <pierre.php@...il.com>
-To: Thomas Biege <thomas@...e.de>
-Cc: oss-security@...ts.openwall.com, Tomas Hoger <thoger@...hat.com>,  Moritz Muehlenhoff <jmm@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: PHP MOPS-2010-56..60
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/04/3
+Message-ID: <4B8F777E.1060705@kernel.sg>
+Date: Thu, 04 Mar 2010 17:03:58 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
+To: oss-security@...ts.openwall.com
+Subject: kernel: hvc_console: Fix race between hvc_close and hvc_remove
 Content-Type: text/plain; charset=utf-8
 
-hi,
+Heads-up. You might want to backport this if your kernel is affected. We 
+are not requesting a CVE name for this as it does not affect any of our 
+Red Hat supported kernels.
 
-On Tue, Aug 24, 2010 at 9:40 AM, Thomas Biege <thomas@...e.de> wrote:
-> Am Freitag, 20. August 2010, 18:45:47 schrieb Pierre Joye:
-> ..
->> > I miss that part, thanks for pointing me to it. I will commit a fix
->> > later today.
->>
->> Done: http://svn.php.net/viewvc?view=revision&revision=302565
->
-> Does it need a new CVE-ID?
->
-> --
->  Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
->  SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
->
+More info here:
+http://patchwork.kernel.org/patch/83353/
+https://bugzilla.redhat.com/show_bug.cgi?id=568621
 
-Not sure as #24 was never fixed, but I don't know what is the policy
-in this case. I can use CVE-2010-2094 or a new one if it is more
-appropriate or cleaner.
-
-Cheers,
--- 
-Pierre
-
-@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+Thanks, Eugene
