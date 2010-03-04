@@ -1,24 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/21/1
-Message-ID: <AANLkTik=KVOQQm5WMgY0PROt9hFBGr9V_1h1a9Csmw2-@mail.gmail.com>
-Date: Tue, 21 Sep 2010 00:25:33 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel: Heap corruption in ROSE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/04/1
+Message-ID: <20100304014546.GB8457@redhat.com>
+Date: Wed, 3 Mar 2010 18:45:46 -0700
+From: Vincent Danen <vdanen@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2009-3297 samba/ncpfs/fuse issues granted individual 2010 CVE names?
 Content-Type: text/plain; charset=utf-8
 
-When binding a ROSE socket, the "srose_ndigis" field of the
-user-provided sockaddr_rose struct is intended to be restricted to
-less than ROSE_MAX_DIGIS.  However, since this field is a signed
-integer, this check will pass when provided with a negative value,
-allowing the "source_ndigis" field of the rose_sock struct (which is
-an unsigned char) to be set to arbitrary values.  Then, by calling a
-function such as rose_getname(), heap corruption results, since this
-field is used as a maximum index to read from and write into an array
-of ROSE_MAX_DIGIS size.  This can only be triggered by unprivileged
-users when a ROSE device (e.g. rose0) exists.
+* [2010-03-03 13:01:18 -0500] Steven M. Christey wrote:
 
-Reference (and fix):
-http://marc.info/?l=linux-netdev&m=128502238927086&w=2
+>On Tue, 2 Mar 2010, Vincent Danen wrote:
+>
+>>* [2010-03-02 13:05:28 -0500] nobody@...hat.com via RT wrote:
+>>
+>>Hi, Steve.  I'm confused about these three CVEs, particularly since
+>>CVE-2009-3297 was assigned to this issue (I suppose it would be more
+>>correct to have 3 CVEs for the issue, but I'm not sure then why
+>>CVE-2009-3297 was completely ignored unless you intend for it to be not
+>>used/duplicated to one of these?).
+>
+>Sorry about not informing oss-security when I did this; I meant to.
+>
+>CVE-2009-3297 has been rejected since it was used heavily for 
+>multiple issues that should have been assigned separate entries.  
+>People weren't just using CVE-2009-3297 for Samba, they were using it 
+>for fuse and others.
 
--Dan
+Ok, fair enough.  I thought that might have been the reason, but I was
+unsure why we would drop CVE-2009-3297 altogether, but it makes sense.
+
+>This rejection has since been uploaded to the CVE site:
+>
+>http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3297
+>
+>Along with the three new CVEs:
+>
+>CVE-2010-0787 (Samba)
+>CVE-2010-0788 (ncpfs)
+>CVE-2010-0789 (FUSE)
+>
+>I try very hard to avoid doing this kind of split (and REJECT) except 
+>when it seems like there will be a lot of confusion; I know how much 
+>work it is to clean these up in advisories and so on.  I recognize 
+>that many people have used CVE-2009-3297 for the Samba problem, but 
+>it's been used in DEBIAN:DSA-1989 for FUSE and FEDORA-2010-1145 for 
+>ncpfs, for example.  An administrator who thinks that "CVE-2009-3297 
+>is fixed" might have solved the ncp issue but still be vulnerable to 
+>the Samba issue.
+
+I agree.  Fair enough.
+
+>I had originally asked oss-security for clarification on this, 
+>without an answer:
+>
+>http://www.openwall.com/lists/oss-security/2010/02/04/7
+>
+>(recognizing that I'm the most guilty party for not answering...) but 
+>other situations forced me to clear this out.
+
+Fair enough.  We probably should have replied to that as well.  =)
+
+>>I'm also confused on using a 2010-based name since our bugzilla entry is
+>>dated 2009-11-04, and Samba upstream has their reported dated
+>>2009-10-28, so these should have received 2009-based names.
+>
+>I agree - this was an error on my part, so I apologize for the confusion.
+
+Ok, no worries.  Certainly wouldn't want you to reject the 2010 names
+for 2009 ones now.  =)
+
+Thanks for the clarification.
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
