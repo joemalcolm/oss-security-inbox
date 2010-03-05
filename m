@@ -1,28 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/02/5
-Message-ID: <20101102145055.GA23023@suse.de>
-Date: Tue, 2 Nov 2010 15:50:55 +0100
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/05/1
+Message-Id: <201003050856.16793.ludwig.nussel@suse.de>
+Date: Fri, 5 Mar 2010 08:56:16 +0100
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: libxml2 xpath
+Cc: coley <coley@...re.org>, Simo Sorce <ssorce@...hat.com>
+Subject: Re: Samba symlink 0day flaw
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Josh Bressers wrote:
+> As many of you have probably seen, there was a supposed Samba 0day flaw
+> posted to full-disclosure and youtube.
+> 
+> Samba has a response to this:
+> http://marc.info/?l=samba-technical&m=126539387432412&w=2
+> 
+> I'm not sure if this should get a CVE id. It is documented behavior.
+> Somewhat unexpected though. I think changing the default is the right way
+> to go, but it may be more of a hardening measure than a security fix.
+> 
+> Thoughts Steve?
 
-was there already a CVE assigned for
+Any update on this? I think unexpected insecure default
+configurations that surprise admins did get CVE numbers in the past.
 
-http://git.gnome.org/browse/libxml2/commit/?id=91d19754d46acd4a639a8b9e31f50f31c78f8c9c
-
-?
-
-thx,
-Sebastian
-
+cu
+Ludwig
 
 -- 
-~
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-~ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
-
+ (o_   Ludwig Nussel
+ //\   
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
