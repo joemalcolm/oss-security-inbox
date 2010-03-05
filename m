@@ -1,54 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/30/13
-Message-ID: <42296788.1636551277923511216.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 30 Jun 2010 14:45:11 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: PHP MOPS-2010-56..60
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/05/2
+Message-ID: <20100305090958.GC6636@suse.de>
+Date: Fri, 5 Mar 2010 10:09:58 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>, coley@...re.org
+Subject: Re: CVE Request: gnome-screensaver termination by pressing "Enter"
 Content-Type: text/plain; charset=utf-8
 
-I'm going to leave these for MITRE. They handled all the other MOPS bugs,
-it's possible these have IDs and we just don't know.
 
-Thanks.
+Can someone, Stephen, assign a CVE id please?
 
--- 
-    JB
+Ciao, Marcus
 
-
------ "Raphael Geissert" <geissert@...ian.org> wrote:
-
+On Fri, Feb 12, 2010 at 10:53:24AM +0100, Marcus Meissner wrote:
 > Hi,
 > 
-> According to our tracker there are still some MOPS issues that don't
-> have 
-> CVE ids.
+> Yesterday an article was published by Heise News (a german IT magazine)
+> that said that the Gnome Screensaver in openSUSE 11.2 is unlockable by
+> just pressing the "return" key for some time.
 > 
-> More specifically:
+> The issue as far as we know is the following:
 > 
-> > 60: PHP Session Serializer Session Data Injection Vulnerability
-> http://svn.php.net/viewvc?view=revision&revision=298608
+> The unlock dialog shakes if you enter the wrong password. On the last try,
+> this dialog is also hidden again (so screen is blanked).
 > 
-> > 59: PHP php_mysqlnd_auth_write() Stack Buffer Overflow
-> Vulnerability
-> http://svn.php.net/viewvc?view=revision&revision=298703
+> There is race condition between these two actions which can lead to an X error
+> which aborts the screensaver (and so unlocks the screen).
 > 
-> > 58: PHP php_mysqlnd_read_error_from_line() [Heap] Buffer Overflow 
-> Vulnerability
-> http://svn.php.net/viewvc?view=revision&revision=298703
+> It is fixed in gnome-screensaver 2.28.1 release.
 > 
-> > 57 PHP php_mysqlnd_rset_header_read() [Heap] Buffer Overflow
-> Vulnerability
-> I think this is
-> http://svn.php.net/viewvc?view=revision&revision=298235
+> References:
 > 
-> > 56 PHP php_mysqlnd_ok_read() Information Leak Vulnerability
-> http://svn.php.net/viewvc?view=revision&revision=298703
+> The fixing commit in the 2.28 branch:
+> http://git.gnome.org/browse/gnome-screensaver/commit/?h=gnome-2-28&id=98f8a22412cf388217fd5b88915eadd274d68520
 > 
-> Could CVE ids be assigned?
+> The news article (in german):
+> http://www.heise.de/newsticker/meldung/Gnome-Bildschirmsperre-in-OpenSuse-Linux-wirkungslos-928580.html
 > 
-> Regards,
-> -- 
-> Raphael Geissert - Debian Developer
-> www.debian.org - get.debian.net
+> The GNOME upstream bug:
+> http://bugzilla.gnome.org/show_bug.cgi?id=598476
+> 
+> I think this does not have a CVE id yet, so please someone allocate one.
+> 
+> I am not sure when this shaking was introduced, but it might be pretty new.
+> 
+> Ciao, Marcus
+
+-- 
+Working, but not speaking, for the following german company:
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
