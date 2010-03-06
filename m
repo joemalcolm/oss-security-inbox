@@ -1,32 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/26/3
-Message-Id: <201005260943.03766.thomas@suse.de>
-Date: Wed, 26 May 2010 09:43:03 +0200
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/06/1
+Message-ID: <20100306175053.GD20744@outflux.net>
+Date: Sat, 6 Mar 2010 09:50:53 -0800
+From: Kees Cook <kees@...ntu.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Fwd: [Full-disclosure] stratsec Security Advisory SS-2010-005: Samba Multiple DoS Vulnerabilities
+Cc: dyon@...coder.com.au
+Subject: Re: WANTED: mikmod patches
 Content-Type: text/plain; charset=utf-8
 
+On Mon, Feb 22, 2010 at 02:16:58PM +0100, Thomas Biege wrote:
+> has somebody a pointer to the patches for CVE-2009-3996
+> and CVE-2009-3995?
+> 
+> The last release from upstream was 2+ yrs old.
+> 
+> These IDs are from a Secunia advisory about mikmod:
 
-Thanks a lot!
+http://secunia.com/secunia_research/2009-55/
 
-Am Dienstag 25 Mai 2010 23:29:00 schrieb Josh Bressers:
-> It's been pointed out to me that this should be two IDs, not one.
-> 
-> Let's use CVE-2010-1635 for the NULL pointer deref
-> and CVE-2010-1642 for the OOB read.
-> 
-> Sorry for the confusion.
-> 
-> > Please use CVE-2010-1635
-> > 
-> > Sorry for the delay, I've been out for a few days.
-> > 
-[...]
+Looks like the CVEs need to be updated -- they were assigned only for
+WinAmp originally:
+
+CVE-2009-3995:
+http://secunia.com/secunia_research/2009-52/ "Impulse Tracker Instrument"
+http://secunia.com/secunia_research/2009-53/ "Impulse Tracker Sample"
+
+CVE-2009-3996:
+http://secunia.com/secunia_research/2009-56/ "Ultratracker File"
+
+Dyon, do you have any reproducers you could share to help distros get
+libmidmod patched?
+
+Thanks,
+
+-Kees
 
 -- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
---
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
+Kees Cook
+Ubuntu Security Team
