@@ -1,33 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/19/3
-Message-ID: <4c6d5a46.4411df0a.715f.2af8@mx.google.com>
-Date: Thu, 19 Aug 2010 18:22:29 +0200
-From: "pierre.php@...il.com" <pierre.php@...il.com>
-To: "Moritz Muehlenhoff" <jmm@...ian.org>,oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: PHP MOPS-2010-56..60
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/08/1
+Message-ID: <4B9551D7.3060503@redhat.com>
+Date: Mon, 08 Mar 2010 20:36:55 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request -- Drupal v6.16 / v5.22 SA-CORE-2010-001
 Content-Type: text/plain; charset=utf-8
 
-Which one did not get an is? Most of those were actually a single issue.
+Hi Steve, vendors,
 
-Sent from my HTC
+   multiple security issues have been addressed within SA-CORE-2010-001:
 
------ Reply message -----
-From: "Moritz Muehlenhoff" <jmm@...ian.org>
-Date: Thu, Aug 19, 2010 18:14
-Subject: [oss-security] CVE request: PHP MOPS-2010-56..60
-To: <oss-security@...ts.openwall.com>
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
+* Installation cross site scripting
+* Open redirection
+* Locale module cross site scripting
+* Blocked user session regeneration
 
+References:
+   [1] http://drupal.org/node/731710
+   [2] http://lists.fedoraproject.org/pipermail/package-announce/2010-March/036472.html
+   [3] http://lists.fedoraproject.org/pipermail/package-announce/2010-March/036619.html
+   [4] http://lists.fedoraproject.org/pipermail/package-announce/2010-March/036583.html
 
-On Thu, Aug 19, 2010 at 03:04:55PM +0200, Tomas Hoger wrote:
-> Hi Steven!
-> 
-> This seems to have slipped through the cracks.
+Could you allocate CVE ids for these?
 
-Indeed. Debian had to release the PHP DSA w/o a CVE reference:
-
-http://lists.debian.org/debian-security-announce/2010/msg00134.html
-
-Cheers,
-        Moritz
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
