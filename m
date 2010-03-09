@@ -1,41 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/20/9
-Message-ID: <Pine.GSO.4.64.1008201256450.1035@faron.mitre.org>
-Date: Fri, 20 Aug 2010 12:59:15 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/09/2
+Message-ID: <20100309164649.GG7017@redhat.com>
+Date: Tue, 9 Mar 2010 09:46:49 -0700
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: PHP MOPS-2010-56..60
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE Request: postgresql integer overflow in hash table size calculation
 Content-Type: text/plain; charset=utf-8
 
+I've been looking and can't find a CVE name for this issue.  Could one
+be assigned?
 
-Apologies to everyone, especially Moritz who pinged me on this privately a 
-while ago.
+An integer overflow flaw was found in the way postgresql used to
+calculate size for the hashtable for joined relations. An attacker could
+formulate a specially-crafted sql query, which once processed would lead
+to denial of service (postgresql daemon crash).
 
-Some of these CVEs are SPLIT based on very narrow distinctions between 
-types of buffer overflows, where others might have merged.  This is one 
-area where there can be some variability in CVE assignments depending on 
-the amount of available information.
+References:
 
+https://bugzilla.redhat.com/show_bug.cgi?id=546621
+http://archives.postgresql.org/pgsql-bugs/2009-10/msg00277.php
 
-CVE-2010-3062
+Thanks.
 
-   - MOPS-2010-056, MOPS-2010-057
-   - buffer overflow with untrusted length
-
-CVE-2010-3063
-
-   - MOPS-2010-058
-   - buffer overflow with calculation error
-
-CVE-2010-3064
-
-   - MOPS-2010-059
-   - classic overflow
-
-CVE-2010-3065
-   - MOPS-2010-060
-   - session deserializer data injection
-
-
-
-- Steve
+-- 
+Vincent Danen / Red Hat Security Response Team 
