@@ -1,24 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/04/3
-Message-ID: <4CD283EE.5060402@redhat.com>
-Date: Thu, 04 Nov 2010 17:59:10 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Dan Rosenberg <dan.j.rosenberg@...il.com>
-Subject: Re: CVE request: X.25 remote DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/09/3
+Message-ID: <4B968CD9.3060302@redhat.com>
+Date: Tue, 09 Mar 2010 19:00:57 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>, Kees Cook <kees@...ntu.com>
+CC: Brian Stafford <brian@...fford.uklinux.net>, oss-security <oss-security@...ts.openwall.com>, libesmtp@...fford.uklinux.net, security@...ntu.com
+Subject: Re: CVE Request: libesmtp does not check NULL bytes in commonName
 Content-Type: text/plain; charset=utf-8
 
-On 11/04/2010 06:15 AM, Dan Rosenberg wrote:
-> Due to bad parsing of malformed X.25 facilities, a remote attacker can
-> cause a kernel panic due to heap corruption (assuming both parties are
-> communicating using X.25).  Since the below post, the X.25 maintainer
-> has confirmed the issue.
->
-> Reference:
-> http://marc.info/?l=linux-netdev&m=128871017529408&w=2
+Hi Steve,
 
-Please use CVE-2010-3873.
+Kees Cook wrote:
+> Hello,
+> 
+> I just noticed that libesmtp does not appear to handle NULL-byte CNs, as
+> seen with the original browser-based issue:
+> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2408
+> 
+> Related to this are failures in wildcard handling:
+>  http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=311191
+> and CN-specificity:
+>  https://bugzilla.redhat.com/show_bug.cgi?id=510202
+> 
+> Though it may be a non-issue if TLS doesn't function at all:
+>  http://bugs.gentoo.org/213066
 
-Thanks, Eugene
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+   any progress while assigning CVE ids for these issues?
+
+   From what I can tell, two should be enough:
+   a, libESMTP doesn't properly handle NULL character in Common Name
+
+     References:
+       http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2408
+       http://ioactive.com/pdfs/PKILayerCake.pdf (issue 2c)
+
+   b, libESMTP's match_component() accepts two strings as equal
+      if they start equal but don't have equal length => cert forgery
+
+     References:
+       http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=311191
+
+   Kees, please correct me, if I omitted something.
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+> 
+> -Kees
+> 
+
