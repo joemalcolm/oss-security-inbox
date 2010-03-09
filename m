@@ -1,74 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/11/10
-Message-ID: <478526645.161091286827148802.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 11 Oct 2010 15:59:08 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/09/1
+Message-ID: <4B9658BA.9090306@redhat.com>
+Date: Tue, 09 Mar 2010 15:18:34 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request:  Simple Machines Forum Cross-Site Request Forgery
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- cURL/libCURL 7.20.0
 Content-Type: text/plain; charset=utf-8
 
 Hi Steve,
 
-Another 2009 ID needed (lots of these today).
-
-Thanks.
-
--- 
-    JB
-
-
------ "Henri Salo" <henri@...v.fi> wrote:
-
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
+Jan Lieskovsky wrote:
+> Hi Steve, vendors,
 > 
-> Can I get 2009 CVE-identifier for this issue: 
-> 
-> http://secunia.com/advisories/37557
-> 
-> Description: "Some vulnerabilities have been discovered in Simple
-> Machines Forum, which can be exploited by malicious users and
-> malicious
-> people to conduct cross-site request forgery attacks.
-> 
-> The application allows users to perform certain actions via HTTP
-> requests without performing any validity checks to verify the
-> request.
-> This can be exploited to e.g. perform certain administrative actions
-> when a logged-in user visits a malicious site.
-> 
-> Successful exploitation allows e.g. to delete package servers,
-> conduct
-> script insertion attacks via censor lists and package manager, and
-> execute arbitrary PHP code by uploading arbitrary modules, but
-> requires
-> a valid user account."
-> 
-> Versions affected: "The vulnerabilities are confirmed in version
-> 1.1.10.
-> Other versions may also be affected."
-> 
-> Solution: "Update to version 1.1.11", which is the newest at the
-> moment.
+>   cURL upstream has released latest v7.20.0 version of cURL/libCURL
+> fixing the "libcurl data callback excessive length" issue.
 > 
 > References:
-> http://code.google.com/p/smf2-review/issues/detail?id=10
-> http://code.google.com/p/smf2-review/issues/detail?id=11
-> http://code.google.com/p/smf2-review/issues/detail?id=17
-> http://code.google.com/p/smf2-review/issues/detail?id=42
+> [1] http://curl.haxx.se/docs/security.html#20100209
+> [2] http://curl.haxx.se/docs/adv_20100209.html
+> [3] http://curl.haxx.se/libcurl-contentencoding.patch
+> [4] http://curl.haxx.se/download.html
 > 
-> http://osvdb.org/show/osvdb/60651
-> http://secunia.com/advisories/37557
-> http://download.simplemachines.org/
-> http://download.simplemachines.org/index.php?thanks;filename=smf_1-1-11_changelog.txt
+> Mitigation factors (from [1]):
 > 
-> Best regards,
-> Henri Salo
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.9 (GNU/Linux)
+> "This error is only present in zlib-enabled builds of libcurl and only if
+>  automatic decompression has been explicitly enabled by the application 
+> - it
+>  is disabled by default."
 > 
-> iEYEARECAAYFAkyzVXQACgkQXf6hBi6kbk/t5wCgu+5VkF5RTQQGSUTKjWzMNL/w
-> 918AoMneBE8hy/KJvGonlFpgUwvQ0K0v
-> =ds0s
-> -----END PGP SIGNATURE-----
+> Could you allocate CVE id for this?
+
+   Any update with assigning CVE id for this?
+
+Thanks, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+> 
+> Thanks && Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+
