@@ -1,27 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/24/9
-Message-ID: <499241793.374721290604350380.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 24 Nov 2010 08:12:30 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: posix-cpu-timers: workaround to suppress the problems with mt exec
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/09/4
+Message-ID: <4B96B3A7.3070307@redhat.com>
+Date: Tue, 09 Mar 2010 21:46:31 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request -- MediaWiki - v1.15.2
 Content-Type: text/plain; charset=utf-8
 
+Hi Steve, vendors,
 
------ "Eugene Teo" <eugene@...hat.com> wrote:
+   MediaWiki upstream has released latest v1.15.2 version:
+     [1] http://lists.wikimedia.org/pipermail/mediawiki-announce/2010-March/000088.html
 
-> This issue can trigger a BUG_ON() in posix_cpu_timer_del(). More info
-> 
-> at: https://bugzilla.redhat.com/show_bug.cgi?id=656264
-> 
-> Upstream commit:
-> http://git.kernel.org/linus/e0a70217107e6f9844628120412cb27bb4cea194
-> 
+   fixing two security issues (from upstream advisory):
+   a, a CSS validation issue was discovered which allows editors to display
+      external images in wiki pages.
+   b, a data leakage vulnerability was discovered in thumb.php which affects
+      wikis which restrict access to private files using img_auth.php, or
+      some similar scheme.
 
-Please use CVE-2010-4248
+References:
+   [2] http://lists.wikimedia.org/pipermail/mediawiki-announce/2010-March/000088.html
+   [3] http://secunia.com/advisories/38856/
+   [4] http://download.wikimedia.org/mediawiki/1.15/mediawiki-1.15.2.patch.gz
 
-Thanks.
+Could you allocate CVE ids for these?
 
--- 
-    JB
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
