@@ -1,34 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/03/5
-Message-Id: <9C232B22-5B93-463A-AE1B-581F9C30390C@apple.com>
-Date: Fri, 3 Dec 2010 11:05:53 -0800
-From: Geoff Keating <geoffk@...le.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/10/7
+Message-ID: <20100310191107.GO7017@redhat.com>
+Date: Wed, 10 Mar 2010 12:11:07 -0700
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Chad R. Dougherty" <crd@...t.org>, David Svoboda <svoboda@...t.org>
-Subject: Re: Interesting behavior with struct initiailization
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE Request: DeviceKit privilege escalation via pluggable storage device labels
 Content-Type: text/plain; charset=utf-8
 
+This is quite old, but I don't think a CVE name has ever been assigned
+to it.  The issue is with how DeviceKit handled labels for pluggable
+storage devices.  A local unprivileged user could use this flaw to
+elevate privileges.  It has been corrected upstream.
 
-On 03/12/2010, at 6:44 AM, Robert Seacord wrote:
+References:
 
-> With respect to this specific problem:
-> 
->> then the compiler is free to change the padding bytes after 'x.b' to whatever it likes, because you changed 'x.a', even though you might >  
->> think you cleared them and the compiler would have no reason to make this change.  In practice this might manifest in the case of 
-> 
->> memset (&x, 0, sizeof(x));
->> x.a = 1; x.b = 2; x.c = 3;
-> 
->> by the compiler optimising out the 'memset' as a dead store.
-> 
-> CERT proposed #5 memset_s() to clear memory, without fear of removal (see http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1358.pdf).
+https://bugzilla.redhat.com/show_bug.cgi?id=523178
+http://cgit.freedesktop.org/DeviceKit/DeviceKit-disks/commit/?id=62f883c7d38e75d0669c162529062a1e81d00da2
+http://bugs.freedesktop.org/show_bug.cgi?id=23235
 
-Even if the memset is not removed, a compiler could implement 'x.b = 2' by
+Thanks.
 
-- setting the low byte of a 32-bit register to 2, leaving the high bytes unchanged
-- storing all 32 bits of the register into memory
-
-which would store nonzero data in the high bytes, possibly containing sensitive information.
-Content of type "text/html" skipped
-
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (4221 bytes)
+-- 
+Vincent Danen / Red Hat Security Response Team 
