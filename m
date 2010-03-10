@@ -1,35 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/22/3
-Message-ID: <1940341980.46274.1292978876477.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 21 Dec 2010 19:47:56 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/10/3
+Message-Id: <201003101701.05157.ludwig.nussel@suse.de>
+Date: Wed, 10 Mar 2010 17:01:04 +0100
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: opensc buffer overflow
+Cc: Brian Stafford <brian@...fford.uklinux.net>, libesmtp@...fford.uklinux.net, security@...ntu.com
+Subject: Re: CVE Request: libesmtp does not check NULL bytes in commonName
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-4523 for this.
+Jan Lieskovsky wrote:
+>    From what I can tell, two should be enough:
+>    a, libESMTP doesn't properly handle NULL character in Common Name
 
-Thanks.
+I've created the attached patch to fix that problem
+
+>    b, libESMTP's match_component() accepts two strings as equal
+>       if they start equal but don't have equal length => cert forgery
+
+The attached patch includes the patch from Debian. However, the
+match_domain() function probably should be rewritten anyways I
+guess. It matches patters such as 'foo.bar.*' which is rather weird.
+
+libESMTP also uses the Common Name as fallback even if a dNSName in
+subjectAltName is present but doesn't match. The Common Name should
+be ignored in that case according to RFC2818.
+
+The code to perform the checks is quite complicated with openSSL
+and I'm not an expert so I'd be glad if someone could review the
+patch. This really belongs into a library ...
+
+cu
+Ludwig
 
 -- 
-    JB
+ (o_   Ludwig Nussel
+ //\   
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
 
-
------ Original Message -----
-> Hi,
-> 
-> Specially crafted smart cards could cause a buffer overflow in opensc:
-> 
-> http://labs.mwrinfosecurity.com/files/Advisories/mwri_opensc-get-serial-buffer-overflow_2010-12-13.pdf
-> http://www.h-online.com/open/news/item/When-a-smart-card-can-root-your-computer-1154829.html
-> https://www.opensc-project.org/opensc/changeset/4913
-> 
-> cu
-> Ludwig
-> 
-> --
-> (o_ Ludwig Nussel
-> //\
-> V_/_ http://www.suse.de/
-> SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+View attachment "libesmtp-1.0.4-ssl.diff" of type "text/x-patch" (4547 bytes)
