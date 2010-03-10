@@ -1,33 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/22/5
-Message-ID: <4d118c16.cf05ec0a.1275.ffffec8a@mx.google.com>
-Date: Tue, 21 Dec 2010 23:27:46 -0600
-From: Raphael Geissert <geissert@...ian.org>
-To: oss-security@...ts.openwall.com, earl@...lhood.com, 607693@...s.debian.org
-Subject: Re: CVE Request -- MHonArc: Improper escaping of certain HTML sequences (XSS)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/10/6
+Message-ID: <4B97D746.3010700@redhat.com>
+Date: Wed, 10 Mar 2010 18:30:46 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request -- Dovecot v1.2.11 -- DoS (excessive CPU use) by processing email with huge header
 Content-Type: text/plain; charset=utf-8
 
-Earl Hood wrote:
-> With that said, do have an available patch that fixes
-> the problem?
-> 
-> If not, I can look into it during the holiday break to
-> get a fix for it.  Note, even if there is a fix for the
-> case you provided, there is no 100% guarantee that there
-> could be other data input sequences that get by the filter.
-> Hence, those concerned about security disable the
-> HTML filter:
+Hi Steve, vendors,
 
-Attached patch is a quick way to fix it. It increases the processing time 
-(it has to run filter() at least twice per message,) but ensures that no 
-undesired html is returned (unless one of the existing routines misses 
-something.)
+   Dovecot upstream has released latest v1.2.11 version of Dovecot IMAP server:
+     [1] http://www.dovecot.org/list/dovecot-news/2010-March/000152.html
 
-What do you think about it?
+   addressing one denial of service issue (from upstream announcement):
+   "mbox users really should upgrade, because by sending a message with
+    a huge header you could basically cause a DoS (this problem exists only
+    with v1.2.x, not with v1.0 or v1.1)."
 
-Regards,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+   References:
+     [2] http://dovecot.org/pipermail/dovecot/2010-February/047190.html
+     [3] http://dovecot.org/pipermail/dovecot/2010-February/047058.html
+     [4] http://secunia.com/advisories/38881/
 
-View attachment "mhonarc.CVE-2010-4524.patch" of type "text/x-patch" (710 bytes)
+Could you allocate a CVE id for it?
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
