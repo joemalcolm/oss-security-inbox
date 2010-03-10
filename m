@@ -1,34 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/02/3
-Message-ID: <4C56CCF1.4050700@redhat.com>
-Date: Mon, 02 Aug 2010 15:49:37 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/10/2
+Message-ID: <4B977C67.2080404@redhat.com>
+Date: Wed, 10 Mar 2010 12:03:03 +0100
 From: Jan Lieskovsky <jlieskov@...hat.com>
 To: "Steven M. Christey" <coley@...us.mitre.org>
 CC: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request -- Socat -- Stack overflow by lexical scanning of nested character patterns
+Subject: CVE Request -- SpamAssassin Mail Filter -- arbitrary shell command injection (priv esc)
 Content-Type: text/plain; charset=utf-8
 
 Hi Steve, vendors,
 
-   Socat upstream, released an advisory:
-   [1] http://www.dest-unreach.org/socat/contrib/socat-secadv2.html
+   Security researcher called "Kingcope" pointed out:
+   [1] http://lists.grok.org.uk/pipermail/full-disclosure/2010-March/073489.html
 
-describing a stack overflow flaw, present in Socat bidirectional data relay, when
-processing command line arguments (address specifications, host names, file names),
-longer than 512 bytes. An attacker, able to to inject data into sockat's command line
-(potentially remotely via CGI script invocation), could use this flaw to execute
-arbitrary code with the privileges of the socat process.
+   a deficiency in the way Mail Filter plugin for the SpamAssassin
+   spam filter sanitized certain mail header field, when spamass-milter
+   was run with the expand flag (-x option).
 
-References:
-   [2] http://bugs.gentoo.org/show_bug.cgi?id=330785
+   Affected versions:
+     Flaw reported against v0.3.1. Others may be also affected.
 
-Upstream patch against v1.7.2:
-   [3] http://www.dest-unreach.org/socat/download/socat-1.7.1.3.patch
+   References:
+     [2] http://secunia.com/advisories/38840/
+     [3] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=573228
 
-Credit:
-Issue discovered and reported by Felix Gröbert of Google Security Team
-
-Could you allocate a CVE id for this?
+   Could you allocate CVE id for this?
 
 Thanks && Regards, Jan.
 --
