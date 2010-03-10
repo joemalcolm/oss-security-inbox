@@ -1,27 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/15/3
-Message-ID: <20101215110059.GB7013@suse.de>
-Date: Wed, 15 Dec 2010 12:00:59 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Cc: stable@...nel.org, security@...nel.org
-Subject: CVE Request: local privilege escalation via /sys/kernel/debug/acpi/custom_method
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/10/8
+Message-Id: <20100310163418.9a4c0600.reed@reedloden.com>
+Date: Wed, 10 Mar 2010 16:34:18 -0600
+From: Reed Loden <reed@...dloden.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE Request: ViewVC 1.1.4 / 1.0.10 -- XSS via user-provided query form input
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Just received an announcement stating ViewVC 1.1.4 and 1.0.10 were
+released today. Looks like they fix an XSS that needs a CVE assigned.
 
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;h=ed3aada1bf34c5a9e98af167f125f8a740fc726a
+"security fix: escape user-provided query form input to avoid XSS
+attack"
 
-changes /sys/kernel/debug/acpi/custom_method from -w--w--w- to -w-------.
+http://viewvc.tigris.org/source/browse/viewvc/trunk/CHANGES?r1=2313&r2=2342&pathrev=HEAD
 
-This custom_method file allows to inject custom ACPI methods into the
-ACPI interpreter tables.
+Here's the patch for the XSS:
+http://viewvc.tigris.org/source/browse/viewvc?view=rev&revision=2326
 
-This control file was introduced with world writeable permissions
-in Linux Kernel 2.6.33.
+* lib/viewvc.py
+  (view_queryform): Escape user-provided input before passing it
+    directly off to the templates.  Can you say "XSS attack vector"?
 
-Fix is in 2.6.37rc and the 2.6.36.2 stable release so far.
+~reed
 
-I would say that privilege escalation is possible.
+-- 
+Reed Loden - <reed@...dloden.com>
 
-Ciao, Marcus
+Content of type "application/pgp-signature" skipped
