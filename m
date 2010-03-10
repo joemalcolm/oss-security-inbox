@@ -1,46 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/24/1
-Message-ID: <20100624090359.362d34ea@redhat.com>
-Date: Thu, 24 Jun 2010 09:03:59 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: dan.j.rosenberg@...il.com
-Subject: Re: CVE requests: LibTIFF
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/10/1
+Message-ID: <20100310105632.158d9b3c@foo.fgeek.fi>
+Date: Wed, 10 Mar 2010 10:56:32 +0200
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com, cert@...t.org
+Cc: soc@...cert.gov
+Subject: phpmyvisites 2.3
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 23 Jun 2010 14:01:14 -0400 Dan Rosenberg wrote:
+There is a security vulnerability in phpMyVisites 2.3. Is there a CVE
+assigned for that issue?
 
-> 1.  Out-of-bounds read in TIFFExtractData() may result in application
-> crash (no reference, fixed upstream).  Reported by Dan Rosenberg.
+http://www.phpmyvisites.us/phpmv2/CHANGELOG
 
-Do you have any info on this?  I don't see anything obviously related
-in changelog.  TIFFExtractData itself and all its uses seem unchanged
-for years.
-
-> 2.  Out-of-bounds read in TIFFVGetField() may result in application
-> crash
-> (https://bugs.launchpad.net/ubuntu/lucid/+source/tiff/+bug/589145).
-
-This is NULL deref.  Another Sauli's test case shows that similar
-problem can occur with NULL td_stripbytecount few lines below
-td_stripoffset case addressed in upstream patch.
-
-> The fix for this issue was combined with the fix for CVE-2010-2065,
-> but it appears to be a separate issue.  Reported by Sauli Pahlman.
-
-Right, not related to what CVE-2010-2065 was assigned to.
-
-> 3.  Memory corruption in TIFFRGBAImageGet() due to buffer overflow
-> (https://bugs.launchpad.net/ubuntu/+source/tiff/+bug/591605).
-> Reported by Sauli Pahlman.
-
-IIRC, Sauli's file only demonstrates OOB read.  Upstream bug:
-http://bugzilla.maptools.org/show_bug.cgi?id=2216
-
-> 4.  http://bugzilla.maptools.org/show_bug.cgi?id=2207 ("tif_getimage
-> fails when flipping vertically on 64-bit platforms")
-
-CVE-2010-2233 was assigned to this issue.
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+---
+Henri Salo
