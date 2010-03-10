@@ -1,78 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/29/2
-Message-ID: <Pine.GSO.4.64.1011290952410.27771@faron.mitre.org>
-Date: Mon, 29 Nov 2010 10:06:50 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Jon Oberheide <jon@...rheide.org>
-cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: Linux kernel address leaks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/10/5
+Message-Id: <461A4B45-51CB-4BEC-B433-3608742F55DE@gmail.com>
+Date: Wed, 10 Mar 2010 11:51:08 -0500
+From: Anthon Pang <anthon.pang@...il.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "cert@...t.org" <cert@...t.org>, "soc@...cert.gov" <soc@...cert.gov>
+Subject: Re: phpmyvisites 2.3
 Content-Type: text/plain; charset=utf-8
 
+Should the CVE be against clickheat instead?  Looking at the  
+sourceforge project page, clickHeat is a standalone app, which  
+suggests only a loosely coupled integration with PMV.
 
-On Tue, 23 Nov 2010, Jon Oberheide wrote:
+Sent from my iPhone
 
-> Great. There's plenty of precedent for CVE assignment to vulnerabilities
-> that leak information that can assist an attacker in exploitation.
+On 2010-03-10, at 3:56 AM, Henri Salo <henri@...v.fi> wrote:
+
+> There is a security vulnerability in phpMyVisites 2.3. Is there a CVE
+> assigned for that issue?
 >
-> In particular, I'm thinking about the handful of ASLR information leaks
-> (eg. CVE-2009-2691 [1]), where userspace addresses are leaked via /proc,
-> assisting an attacker in exploiting a vulnerability in a setuid
-> userspace binary.
+> http://www.phpmyvisites.us/phpmv2/CHANGELOG
 >
-> In this case, we have an analogous situation, except that we're leaking
-> kernel address via /proc, assisting an attacker in exploiting
-> vulnerability in the kernel.
->
-> I don't see any reason why it would not be entirely appropriate to
-> assign a CVE here.
-
-I agree that it would be appropriate.
-
-There is information that leaks from one entity to another entity that 
-should not have access to it, in the "intended" security model of the 
-Linux kernel (documented security model may be a different story... 
-anybody have any pointers?)  No matter how small the leak is.
-
-As Dan pointed out, our original definition of "exposure" (the "E" in 
-"CVE") is that it "allows access to information or capabilities that can 
-be used by a hacker as a stepping-stone into a system or network." 
-(http://cve.mitre.org/about/terminology.html)  Kernel address leaks are 
-useful for attacking a protection mechanism.
-
-The ultimate CVSS score, while likely low, is not relevant - it's still 
-non-zero.
-
-The difficulty of creating a solution is not relevant, either.
-
-There are some practical considerations from the larger CVE perspective, 
-e.g. if there are hundreds or thousands of kernel address leaks (which 
-wouldn't surprise me given what seems to be happening with struct 
-initialization) then there is a risk of having the CVE namespace being 
-overwhelmed by the sheer volume of these issues and making CVE IDs more 
-difficult to manage.  But that's not necessarily a reason to stop 
-assignment (the large number of recent library-loading issues for 
-Windows/Linux come to mind), and reporting these in large groups instead 
-of bug-by-bug would help keep the CVEs manageable.
-
-If there is some formal or semi-formal position taken by, say, the Linux 
-kernel devs or the hardening team that declares "userspace is allowed to 
-know about a kernel address," then this becomes part of the 
-documented/intended security model, and CVE assignment wouldn't be 
-necessary.  (Just trying to be complete here...)
-
-- Steve
-
-
-
-
-> Regards,
-> Jon Oberheide
->
-> [1] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2691
->
->
-> -- 
-> Jon Oberheide <jon@...rheide.org>
-> GnuPG Key: 1024D/F47C17FE
-> Fingerprint: B716 DA66 8173 6EDD 28F6  F184 5842 1C89 F47C 17FE
->
+> ---
+> Henri Salo
