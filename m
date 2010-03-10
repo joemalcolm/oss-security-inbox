@@ -1,26 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/06/10
-Message-ID: <Pine.GSO.4.64.1012061622190.25660@faron.mitre.org>
-Date: Mon, 6 Dec 2010 16:26:38 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request (PHP 5.3.x getSymbol() DoS; CERT VU#479900)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/10/4
+Message-ID: <4B97C588.9040506@redhat.com>
+Date: Wed, 10 Mar 2010 17:15:04 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, "Alvaro J. Iradier Muro" <airadier@...rs.sourceforge.net>
+Subject: CVE Request -- aMSN -- improper SSL certificate validation (MITM)
 Content-Type: text/plain; charset=utf-8
 
+Hi Steve, vendors,
 
-CVE-2010-4409 was just assigned by MITRE for this issue.
+   Gabriel Menezes Nunes reported:
+     [1] http://seclists.org/bugtraq/2009/Jun/239
 
-- Steve
+   a deficiency in the way aMSN messenger validated SSL certificates when
+   connecting to the MSN server. A remote attacker could conduct man-in-the-middle
+   attacks and / or impersonate trusted servers.
 
+   Affected version:
+     Issue originally reported against aMSN v0.97.2, but further research showed [4]
+     latest aMSN v0.98.3 still suffers from the flaw.
 
-On Mon, 6 Dec 2010, Vincent Danen wrote:
+   References:
+     [2] http://www.juniper.net/security/auto/vulnerabilities/vuln35507.html
+     [3] http://secunia.com/advisories/35621/
+     [4] http://www.opensource-archive.org/showthread.php?p=183821
+     [5] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=572818
 
-> I haven't seen a CVE request for this already, and can't find a CVE name
-> if one has been assigned.
->
-> CERT has a bulletin up regarding a DoS in the getSymbol() function
-> (integer overflow vulnerability):
->
-> http://www.kb.cert.org/vuls/id/479900
-> http://svn.php.net/viewvc?view=revision&revision=305571
-> http://php.net/manual/en/numberformatter.getsymbol.php
+   Upstream (testing) patch:
+     [6] http://amsn.svn.sourceforge.net/viewvc/amsn/trunk/?view=log&pathrev=11991
+
+Not sure, if this already got a CVE id, but in case if not, could you allocate one?
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
