@@ -1,75 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/04/9
-Message-ID: <1884586003.1202051286221777299.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 4 Oct 2010 15:49:37 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/11/2
+Message-ID: <20100311080124.GJ31822@ngolde.de>
+Date: Thu, 11 Mar 2010 09:01:25 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request, security issues fixed in MySQL 5.1.51
+Subject: CVE id request: mydms
 Content-Type: text/plain; charset=utf-8
 
-Steve,
+Hi,
+multiple CSRF issues and file inclusion in mydms:
+http://seclists.org/fulldisclosure/2010/Jan/267
 
-Can MITRE handle this one?
+Can someone assign CVE ids please?
 
-Thanks.
+Cheers
+Nico
 
 -- 
-    JB
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-
------ "Vincent Danen" <vdanen@...hat.com> wrote:
-
-> MySQL 5.1.51 corrects a few security flaws.  Could we get some CVEs
-> assigned?
-> 
-> http://dev.mysql.com/doc/refman/5.1/en/news-5-1-51.html
-> 
-> Security Fix: During evaluation of arguments to extreme-value
-> functions
-> (such as LEAST() and GREATEST()), type errors did not propagate
-> properly, causing the server to crash. (Bug#55826)
-> 
-> 
-> Security Fix: The server could crash after materializing a derived
-> table
-> that required a temporary table for grouping. (Bug#55568)
-> 
-> 
-> Security Fix: A user-variable assignment expression that is evaluated
-> in
-> a logical expression context can be precalculated in a temporary
-> table
-> for GROUP BY. However, when the expression value is used after
-> creation
-> of the temporary table, it was re-evaluated, not read from the table
-> and
-> a server crash resulted. (Bug#55564)
-> 
-> 
-> Security Fix: Pre-evaluation of LIKE predicates during view
-> preparation
-> could cause a server crash. (Bug#54568)
-> 
-> 
-> Security Fix: GROUP_CONCAT() and WITH ROLLUP together could cause a
-> server crash. (Bug#54476)
-> 
-> 
-> Security Fix: Queries could cause a server crash if the GREATEST() or
-> LEAST() function had a mixed list of numeric and LONGBLOB arguments,
-> and
-> the result of such a function was processed using an intermediate
-> temporary table. (Bug#54461)
-> 
-> 
-> Security Fix: Queries with nested joins could cause an infinite loop
-> in
-> the server when used from stored procedures and prepared statements.
-> (Bug#53544)
-> 
-> 
-> Thanks!
-> 
-> -- 
-> Vincent Danen / Red Hat Security Response Team
+Content of type "application/pgp-signature" skipped
