@@ -1,39 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/15/1
-Message-ID: <4B78E426.3070901@redhat.com>
-Date: Mon, 15 Feb 2010 14:05:26 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - kernel: race in ptrace
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/11/4
+Message-Id: <201003111620.49171.ludwig.nussel@suse.de>
+Date: Thu, 11 Mar 2010 16:20:48 +0100
+From: Ludwig Nussel <ludwig.nussel@...e.de>
+To: Brian Stafford <brian@...fford.uklinux.net>
+Cc: oss-security@...ts.openwall.com, libesmtp@...fford.uklinux.net, security@...ntu.com
+Subject: Re: CVE Request: libesmtp does not check NULL bytes in commonName
 Content-Type: text/plain; charset=utf-8
 
-On 02/10/2010 09:02 PM, Eugene Teo wrote:
-> On 02/09/2010 02:34 PM, Eugene Teo wrote:
->> Discovered by Tavis Ormandy. "The race involves interaction between a
->> tracer, a tracee and an antagonist. The tracer is tracing the tracee
->> with PTRACE_SYSCALL and waits on the tracee. In the mean time, an
->> antagonist blasts the tracee with SIGCONTs.
->>
->> The observed issue is that sometimes when the tracer attempts to
->> continue the tracee with PTRACE_SYSCALL, it gets a return value of
->> -ESRCH, indicating that the tracee is already running (or not being
->> traced). It turns out that a SIGCONT wakes up the tracee in kernel mode,
->> and for a moment the tracee's state is TASK_RUNNING then in ptrace_stop
->> we hit the condition where the tracee is found to be running (and thus
->> not traced). If the syscall is repeated, the
->> second time it usually succeeds (because by that time, the tracee has
->> been put into TASK_TRACED)."
->>
->> http://lkml.org/lkml/2010/2/8/327
->> https://bugzilla.redhat.com/show_bug.cgi?id=563073
->
-> Hold on with assigning a CVE name for this. We are still investigating
-> this issue.
+Brian Stafford wrote:
+> [...]
+> I find myself coming back to RFC 2818 being a reasonable choice since it 
+> is flexible and (almost) clear, and since HTTPS, as a major user of TLS, 
+> is, I assume, well analysed for security implications wrt certificate 
+> validation. 
 
-False alarm ;)
-http://marc.info/?t=126566675000008
+More fun:
+https://bugzilla.mozilla.org/show_bug.cgi?id=159483
 
-Thanks, Eugene
+> Is it the case that for STARTTLS in SMTP what we are really interested 
+> in is encrypting the data on the wire and authentication is only of 
+> secondary importance?
+
+Encryption without authentication makes you prone to MITM.
+
+> Do we know what the best current practice is 
+> among CAs when it comes to issuing certificates for STARTTLS?
+
+The most common implementation is to just allow the simple form
+*.something so I'd assume that other patterns are rare in the wild.
+The last commenter in the aforementioned Mozilla bug says that
+*.*.appspot.com is actually used by Google though.
+
+Anyways, the matching function in libesmtp certainly is good enough.
+I was just surprised that wildcards at the right hand side are
+allowed. What about the actual patch I sent though? :-)
+
+cu
+Ludwig
+
 -- 
-Eugene Teo / Red Hat Security Response Team
+ (o_   Ludwig Nussel
+ //\   
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
