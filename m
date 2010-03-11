@@ -1,23 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/05/2
-Message-ID: <20100705081441.GA896@mutt-is-awesome>
-Date: Mon, 5 Jul 2010 11:14:41 +0300
-From: Eren Türkay <eren@...dus.org.tr>
-To: oss-security@...ts.openwall.com
-Subject: Re: Request CVE ID for bogofilter base64 decoder heap corruption
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/11/9
+Message-ID: <20100311221808.GB14859@ldl.fc.hp.com>
+Date: Thu, 11 Mar 2010 15:18:08 -0700
+From: dann frazier <dannf@...nf.org>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com, drbd-dev@...ts.linbit.com
+Subject: Re: CVE request: kernel: connector security bypass
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Jul 03, 2010 at 10:57:20AM +0200, Matthias Andree wrote:
-> Affected:	bogofilter <= 1.2.1
-> 		SVN before 2010-07-03 08:40 UTC
+On Mon, Nov 02, 2009 at 11:37:21AM +0000, Mark J Cox wrote:
+> On Mon, 2 Nov 2009, Eugene Teo wrote:
 > 
-> Not affected:	bogofilter 1.2.2	    (to be released)
+> >1/ uvesafb/connector: Disallow unprivileged users to send netlink packets
+> >upstream commit: cc44578b5a508889beb8ae3ccd4d2bbdf17bc86c
+> >introduced in v2.6.24-rc1; fixed in v2.6.32-rc3
+> >
+> >2/ pohmelfs/connector: Disallow unprivileged users to configure pohmelfs
+> >upstream commit: 98a5783af02f4c9b87b676d7bbda6258045cfc76
+> >(staging/experimental)
+> >
+> >3/ dst/connector: Disallow unprivileged users to configure dst
+> >upstream commit: 5788c56891cfb310e419c4f9ae20427851797431
+> >(staging/experimental)
+> >
+> >4/ dm/connector: Only process connector packages from privileged processes
+> >upstream commit: 24836479a126e02be691e073c2b6cad7e7ab836a
+> >introduced in v2.6.31-rc1; fixed in v2.6.32-rc3
+> 
+> >References:
+> >http://secunia.com/advisories/37113/
+> >http://xorl.wordpress.com/2009/10/31/linux-kernel-multiple-capabilities-missing-checks/
 
-FYI, r6904 and r6906 seem to be related commits for the issue.
+Debian provides an out-of-tree drbd module (drbd8), and it appears to
+be affected by this issue as well. I assume we need to allocate an
+additional CVE ID for it?
 
-http://bogofilter.svn.sf.net/viewvc/bogofilter/trunk/bogofilter/src/base64.c?view=log
+Here's a link to the upstream fix:
+http://git.drbd.org/?p=drbd-8.3.git;a=commitdiff;h=71915b0d267392c77fe0ae2309535333026cef66
 
-Regards,
-Eren
+The in-tree version that got merged for 2.6.33 looks fine.
 
-Content of type "application/pgp-signature" skipped
+-- 
+dann frazier
+
