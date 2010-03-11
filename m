@@ -1,25 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/02/3
-Message-ID: <20101202052114.GL18995@ksplice.com>
-Date: Thu, 2 Dec 2010 00:21:14 -0500
-From: Nelson Elhage <nelhage@...lice.com>
-To: oss-security@...ts.openwall.com
-Subject: kernel: Dangerous interaction between clear_child_tid, set_fs(), and kernel oopses
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/11/1
+Message-ID: <4B985203.80907@stafford.uklinux.net>
+Date: Thu, 11 Mar 2010 02:14:27 +0000
+From: Brian Stafford <brian@...fford.uklinux.net>
+To: Ludwig Nussel <ludwig.nussel@...e.de>
+CC: oss-security@...ts.openwall.com, libesmtp@...fford.uklinux.net,  security@...ntu.com
+Subject: Re: CVE Request: libesmtp does not check NULL bytes in commonName
 Content-Type: text/plain; charset=utf-8
 
-I've discovered an interesting interaction in the Linux kernel between the
-clear_child_tid feature of clone(2), and the set_fs() function used internally
-in the kernel to temporarily disable access_ok() checking of userspace pointers.
+Ludwig Nussel wrote:
+> The attached patch includes the patch from Debian. However, the
+> match_domain() function probably should be rewritten anyways I
+> guess. It matches patters such as 'foo.bar.*' which is rather weird.
+>   
+I've been reviewing match_domain() with a view to how it conforms to RFC 
+2459 and RFC 2818 section 3.1.  Unfortunately, the relevant text is 
+rather less rigourous than it might be so some further input might be 
+useful.
 
-Under some (not totally uncommon) circumstances, it is possible for a user to
-leverage this interaction to turn a kernel oops or BUG() into a write of an
-integer 0 to a user-controlled address in kernel memory.
+The text in RFC 2459 is
 
-I'm not sure if this merits a CVE or not; It is (as far as I can tell) only a
-problem in the presence of another security bug, but it potentially makes a
-large class of bugs significantly more dangerous (DoS -> privesc).
+   Finally, the semantics of subject alternative names that include
+   wildcard characters (e.g., as a placeholder for a set of names) are
+   not addressed by this specification.  Applications with specific
+   requirements may use such names but shall define the semantics.
 
-Reference:
-https://lkml.org/lkml/2010/12/1/543
+which is fair enough.  The text from RFC 2818 defining the semantics is
 
-- Nelson
+   Matching is performed using the matching rules specified by
+   [RFC2459].  If more than one identity of a given type is present in
+   the certificate (e.g., more than one dNSName name, a match in any one
+   of the set is considered acceptable.) Names may contain the wildcard
+   character * which is considered to match any single domain name
+   component or component fragment. E.g., *.a.com matches foo.a.com but
+   not bar.foo.a.com. f*.com matches foo.com but not bar.com.
+
+My interpretation, in the absense of clarification or an update to RFC 
+2818, follows.
+
+RFC 2818 does not constrain which domain name components may contain 
+wildcards. Names such as *.bar.com, foo.*.com and foo.bar.* are 
+therefore all valid despite the latter two cases appearing 
+unconventional.  The examples from RFC 2818 show wildcards only in the 
+leading domain name components. Examples are neither normative nor 
+exhaustive and may not therefore imply constraints or extensions of a 
+standard's normative text. Comparison bugs aside, I believe that 
+libESMTP's behaviour correctly implements RFC 2818 in this respect.
+
+Currently match_component() accepts a wildcard character * only in the 
+final position of the component pattern.  However RFC 2818 does not 
+actually state that the wildcard is so constrained, although the 
+examples show only this case.  The text from RFC 2818 permits, albeit 
+not explicitly, component patterns interspersed with wildcards, for 
+example, 'foo*bar', '*bar*', 'foo*bar*baz' etc.  I am unclear as to the 
+author's original intent, nevertheless I feel that to correctly 
+implement RFC 2818 libESMTP's match_component() should permit 
+comparisons where the wildcard may appear multiple times in the 
+component pattern (as is permitted in fnmatch(3) for example).
+
+RFC 2818 has INFORMATIONAL status so perhaps there is some latitude 
+here.  On the other hand, while an INFORMATIONAL RFC is not normative 
+there is no other normative text I am aware of so I feel that RFC 2818 
+must be assumed to be normative in this context.
+
+regards
+Brian
+
+
