@@ -1,62 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/06/5
-Message-Id: <201010062156.09985.oeriksson@mandriva.com>
-Date: Wed, 6 Oct 2010 21:56:09 +0200
-From: Oden Eriksson <oeriksson@...driva.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/11/3
+Message-Id: <201003111442.33276.ludwig.nussel@suse.de>
+Date: Thu, 11 Mar 2010 14:42:32 +0100
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: Josh Bressers <bressers@...hat.com>
-Subject: Re: Nagios format string issues
+Cc: Brian Stafford <brian@...fford.uklinux.net>, libesmtp@...fford.uklinux.net, security@...ntu.com
+Subject: Re: CVE Request: libesmtp does not check NULL bytes in commonName
 Content-Type: text/plain; charset=utf-8
 
-onsdagen den 6 oktober 2010 16.46.54 skrev  Josh Bressers:
-> ----- "Oden Eriksson" <oeriksson@...driva.com> wrote:
-> > We have a whole bunch of similar patches in Mandriva, just fetch the
-> > cooker source rpm packages and do something like:
-> > 
-> > rpm -qlp *.src,rpm | grep format
-> > 
-> > It would be a major task to push that to the upstream projects.
-> > 
-> > Just checked the ones I fixed (in 2008/2009):
-> > 
-> > $ rpm -qlp /SRPMS/contrib/release/*.rpm /SRPMS/main/release/*.rpm |
-> > grep
-> > format_not_a_string_literal_and_no_format_arguments | wc -l
-> > 106
-> > 
-> > So, at least 106 new CVE assignments there.
-> 
-> It's probably not 106. Just becuase something isn't using format arguments
-> doesn't mean it's a security flaw. Some subset of these probably could be
-> considered security flaws though.
-> 
-> Does anyone know any tricks for wading through this many patches?
-> 
-> It would be wise to see about initiating a process to get these upstream.
-> 
-> Thanks.
+Brian Stafford wrote:
+> Ludwig Nussel wrote:
+> > The attached patch includes the patch from Debian. However, the
+> > match_domain() function probably should be rewritten anyways I
+> > guess. It matches patters such as 'foo.bar.*' which is rather weird.
+> [...]
+> RFC 2818 does not constrain which domain name components may contain 
+> wildcards. Names such as *.bar.com, foo.*.com and foo.bar.* are 
+> therefore all valid despite the latter two cases appearing 
+> unconventional.  The examples from RFC 2818 show wildcards only in the 
+> leading domain name components. Examples are neither normative nor 
+> exhaustive and may not therefore imply constraints or extensions of a 
+> standard's normative text. Comparison bugs aside, I believe that 
+> libESMTP's behaviour correctly implements RFC 2818 in this respect.
 
-Hello.
+Hmm. Yes, RFC 2818 could be interpretet that way. RFCs 2595 (IMAP),
+4642 (NNTP) and 4513 (LDAP) restrict wildcards to the leftmost
+component. The LDAP one doesn't allow wildcards in CN's though and
+none of them explicitly disallows use of the CN if a subjAltname is
+present. RFC 3207 (SMTP) doesn't tell how matching should be
+performed. perl-IO-Socket therefore doesn't allow wildcards for
+smtp. perl-IO-Socket has the most flexible implementation I've seen
+so far but intentionally only supports one wildcard at the leftmost
+side. What a mess.
 
-I just extracted the patches I made at the time. I cannot tell which of them 
-deserves CVE assignments though. I have put them here:
+cu
+Ludwig
 
-http://n1.nux.se/work/format_not_a_string_literal_and_no_format_arguments/
-
-These are only the ones I fixed. I intentionally named the patches with the 
-long funny name *format_not_a_string_literal_and_no_format_arguments* so that 
-I could easily tell what I touched. There are more patches named differently 
-like "*str*fmt*" or something similar, so someone with a lot of free time 
-should probably look deeper into this.
-
-Anyone can extract the patches or look in our svn for more clues. I'm sorry 
-for not having the time to send the patches upstream. However some of our 
-patches have made it upstream but I have lost track, sorry.
-
-I hope it helps.
-
-Cheers.
 -- 
-Regards // Oden Eriksson
-Security team manager - Mandriva
-CEO NUX AB
+ (o_   Ludwig Nussel
+ //\   
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
