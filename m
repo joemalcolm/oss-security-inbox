@@ -1,45 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/11/9
-Message-ID: <20100311221808.GB14859@ldl.fc.hp.com>
-Date: Thu, 11 Mar 2010 15:18:08 -0700
-From: dann frazier <dannf@...nf.org>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com, drbd-dev@...ts.linbit.com
-Subject: Re: CVE request: kernel: connector security bypass
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/11/6
+Message-ID: <4B9904FA.4090401@stafford.uklinux.net>
+Date: Thu, 11 Mar 2010 14:58:02 +0000
+From: Brian Stafford <brian@...fford.uklinux.net>
+To: Ludwig Nussel <ludwig.nussel@...e.de>
+Cc: oss-security@...ts.openwall.com, libesmtp@...fford.uklinux.net, security@...ntu.com
+Subject: Re: CVE Request: libesmtp does not check NULL bytes in commonName
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Nov 02, 2009 at 11:37:21AM +0000, Mark J Cox wrote:
-> On Mon, 2 Nov 2009, Eugene Teo wrote:
-> 
-> >1/ uvesafb/connector: Disallow unprivileged users to send netlink packets
-> >upstream commit: cc44578b5a508889beb8ae3ccd4d2bbdf17bc86c
-> >introduced in v2.6.24-rc1; fixed in v2.6.32-rc3
-> >
-> >2/ pohmelfs/connector: Disallow unprivileged users to configure pohmelfs
-> >upstream commit: 98a5783af02f4c9b87b676d7bbda6258045cfc76
-> >(staging/experimental)
-> >
-> >3/ dst/connector: Disallow unprivileged users to configure dst
-> >upstream commit: 5788c56891cfb310e419c4f9ae20427851797431
-> >(staging/experimental)
-> >
-> >4/ dm/connector: Only process connector packages from privileged processes
-> >upstream commit: 24836479a126e02be691e073c2b6cad7e7ab836a
-> >introduced in v2.6.31-rc1; fixed in v2.6.32-rc3
-> 
-> >References:
-> >http://secunia.com/advisories/37113/
-> >http://xorl.wordpress.com/2009/10/31/linux-kernel-multiple-capabilities-missing-checks/
+Ludwig Nussel wrote:
+> Brian Stafford wrote:
+>   
+>> Ludwig Nussel wrote:
+>>     
+>>> The attached patch includes the patch from Debian. However, the
+>>> match_domain() function probably should be rewritten anyways I
+>>> guess. It matches patters such as 'foo.bar.*' which is rather weird.
+>>>       
+>> [...]
+>> RFC 2818 does not constrain which domain name components may contain 
+>> wildcards. Names such as *.bar.com, foo.*.com and foo.bar.* are 
+>> therefore all valid despite the latter two cases appearing 
+>> unconventional.  The examples from RFC 2818 show wildcards only in the 
+>> leading domain name components. Examples are neither normative nor 
+>> exhaustive and may not therefore imply constraints or extensions of a 
+>> standard's normative text. Comparison bugs aside, I believe that 
+>> libESMTP's behaviour correctly implements RFC 2818 in this respect.
+>>     
+>
+> Hmm. Yes, RFC 2818 could be interpretet that way. RFCs 2595 (IMAP),
+> 4642 (NNTP) and 4513 (LDAP) restrict wildcards to the leftmost
+> component. The LDAP one doesn't allow wildcards in CN's though and
+> none of them explicitly disallows use of the CN if a subjAltname is
+> present. RFC 3207 (SMTP) doesn't tell how matching should be
+> performed. perl-IO-Socket therefore doesn't allow wildcards for
+> smtp. perl-IO-Socket has the most flexible implementation I've seen
+> so far but intentionally only supports one wildcard at the leftmost
+> side. What a mess.
+>
+> cu
+> Ludwig
+>
+>   
+Hmm, looking over RFC 3207 again, I'm wondering where I originally got 
+the inspiration to use RFC 2818 as the reference for checking domain 
+names in certificates.  One possibility is Eric Rescorla's SSL/TLS book 
+(he is also the author of RFC 2818), I'll have a look there again later.
 
-Debian provides an out-of-tree drbd module (drbd8), and it appears to
-be affected by this issue as well. I assume we need to allocate an
-additional CVE ID for it?
+RFC 3207 states
 
-Here's a link to the upstream fix:
-http://git.drbd.org/?p=drbd-8.3.git;a=commitdiff;h=71915b0d267392c77fe0ae2309535333026cef66
+   The decision of whether or not to believe the authenticity of the
+   other party in a TLS negotiation is a local matter.
 
-The in-tree version that got merged for 2.6.33 looks fine.
+which is not normative language (i.e. has not been phrased with MUST, 
+SHOULD, REQUIRED etc) but implies that *any* policy is suitable (as long 
+as both communicating parties implement that policy).  Worse, this means 
+there is no interoperable standard for validating certificates used to 
+secure SMTP over TLS, We cannot even make the decision that fully 
+flexible wildcards, leading wildcards only or no wildcards at all is the 
+way to go.  Furthermore, we cannot even decide which fields within the 
+X.509 certificate are to be used.
 
--- 
-dann frazier
+I find myself coming back to RFC 2818 being a reasonable choice since it 
+is flexible and (almost) clear, and since HTTPS, as a major user of TLS, 
+is, I assume, well analysed for security implications wrt certificate 
+validation. 
 
+Is it the case that for STARTTLS in SMTP what we are really interested 
+in is encrypting the data on the wire and authentication is only of 
+secondary importance?  Do we know what the best current practice is 
+among CAs when it comes to issuing certificates for STARTTLS?
+
+Brian
