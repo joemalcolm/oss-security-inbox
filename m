@@ -1,26 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/17/8
-Message-ID: <AANLkTi=OYXcFdHLb1xAbzn-L+5Pr02FsEJZ5dKSpeGJA@mail.gmail.com>
-Date: Wed, 17 Nov 2010 11:58:02 -0500
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/11/7
+Message-Id: <81EA1BCE-3C7A-4CBE-BF3E-227CBAD368B6@apple.com>
+Date: Thu, 11 Mar 2010 11:42:11 -0800
+From: Geoff Keating <geoffk@...le.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel: integer overflow in RDS
+Cc: Ludwig Nussel <ludwig.nussel@...e.de>, libesmtp@...fford.uklinux.net, security@...ntu.com
+Subject: Re: CVE Request: libesmtp does not check NULL bytes in commonName
 Content-Type: text/plain; charset=utf-8
 
-In rds_cmsg_rdma_args(), the user-provided args->nr_local value is
-restricted to less than UINT_MAX.  This needs a tighter upper bound,
-since the calculation of total iov_size can overflow, resulting in a
-small sock_kmalloc() allocation.  This would probably just result in
-walking off the heap and crashing when calling rds_rdma_pages() with a
-high count value.  If it somehow doesn't crash here, then memory
-corruption could occur soon after.
 
-This is closely related to CVE-2010-3865
-(http://www.spinics.net/lists/netdev/msg145359.html), which also
-concerned various integer overflow and memory corruption issues in
-rds_cmsg_rdma_args().  In fact, I'd say it's due to an incomplete fix.
+On 11/03/2010, at 6:58 AM, Brian Stafford wrote:
 
-Reference:
-http://marc.info/?l=linux-netdev&m=129001184803080&w=2
+> I find myself coming back to RFC 2818 being a reasonable choice since it is flexible and (almost) clear, and since HTTPS, as a major user of TLS, is, I assume, well analysed for security implications wrt certificate validation. 
+> Is it the case that for STARTTLS in SMTP what we are really interested in is encrypting the data on the wire and authentication is only of secondary importance?  Do we know what the best current practice is among CAs when it comes to issuing certificates for STARTTLS?
 
--Dan
+The best current practice for CAs is probably expressed in the EV certificate requirements documents, which say that there should be no wildcards at all---and after reading this discussion, I think you can see why.
+
+I doubt it makes sense, from a CA perspective, to ever issue a certificate with wildcard(s) anywhere but leftmost.  Certainly there should never be a certificate which has a wildcard for the top-level (or second-level) domain, as that would imply the applicant controls the entire internet, and applicants which actually do control the whole internet (Akamai, I'm looking at you) can be issued CA intermediate certificates instead, which are better for auditing and control.
+
+STARTTLS is a bit different than HTTPS, because in most SMTP configurations there's a trivial fallback attack (pretend to be the other server, and don't offer STARTTLS) so here the confidentiality aspects are the most important, to prevent passive sniffing.
+
+Somewhere there's a draft RFC that goes into recommendations for certificate validation in much more detail, but I've lost it, and it's a draft and not yet complete.
