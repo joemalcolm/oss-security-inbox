@@ -1,62 +1,95 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/06/1
-Message-Id: <B4EF424B-CFF6-4745-879B-9473EB0FFDC3@gmail.com>
-Date: Sun, 5 Sep 2010 21:47:00 -0700
-From: Valient Gough <valient@...il.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Micha Riser <micha@...world.org>
-Subject: Re: CVE Request -- EncFS / fuse-encfs [three ids] -- Multiple Vulnerabilities in EncFS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/12/7
+Message-ID: <739582dd1003120924k6427e0e9vd06f5f9b1bb2ca48@mail.gmail.com>
+Date: Fri, 12 Mar 2010 12:24:52 -0500
+From: James Heralds <jmheralds@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Call for papers: ISP-10, USA, July 2010
 Content-Type: text/plain; charset=utf-8
 
-
-On Sep 5, 2010, at 11:33 AM, Jan Lieskovsky wrote:
-
-> Hello Steve, vendors,
-> 
->  Micha Riser reported:
->  [A] http://archives.neohapsis.com/archives/fulldisclosure/2010-08/0316.html
-> 
-> three security flaws in EncFS encrypted filesystem (more from [A]):
-> 
-> "A security analysis of EncFS has revealed multiple vulnerabilities:
-> (1) Only 32 bit of file IV used
-> (2) Watermarking attack
-> (3) Last block with single byte is insecure"
-> 
-> References:
->  [B] http://www.arg0.net/encfs
->  [C] http://bugs.gentoo.org/show_bug.cgi?id=335938
->  [D] http://archives.neohapsis.com/archives/fulldisclosure/2010-08/att-0316/watermark-attack-encfs.tar.gz
->  [E] https://bugzilla.redhat.com/show_bug.cgi?id=630460
-> 
-> 
-> Solutions / patches information:
-> ================================
-> 
-> * for issue (1) -- seems it wasn't fixed / isn't possible to
->  fix without breaking backward compatibility. More from [B]:
-> 
->  "The old IV setup is kept for backwards compatibility."
-> 
-> * for issue (2) -- EncFS upstream has released a fix for the issue:
->  [F] http://code.google.com/p/encfs/source/detail?r=59
-> 
-> Valient, could you please confirm, the above referenced [F] patch,
-> is the correct one to address the watermarking attack issue?
-> 
-> * for issue (3) -- not sure about patch status (included in [F] too?)
-> 
-
-Jan,
-
-Yes, the patch referenced in [F],  specifically changes to SSL_Cipher.cpp, were made in response to issues (1) & (2).  These are not backward compatible, and so only apply to new filesystems.
-
-Issue (3) is not directly addressed.  A workaround is to enable per-block MAC headers, or per-block random bytes.  A patch going into 1.7.2 allows per-block random bytes to be configured independently of MAC headers.  It would be possible to change the default settings such that per-block random bytes are always used.
-
-Adding new encryption modes is not planned for encfs 1.x.
-
-regards,
-Valient
+It would be highly appreciated if you could share this announcement
+with your colleagues, students and individuals whose research is in
+information security, cryptography, privacy, and related areas.
 
 
 
+Call for papers: ISP-10, USA, July 2010
+
+
+
+The 2010 International Conference on Information Security and Privacy
+(ISP-10) (website: http://www.PromoteResearch.org ) will be held
+during 12-14 of July 2010 in Orlando, FL, USA.  ISP is an important
+event in the areas of information security, privacy, cryptography and
+related topics.
+
+
+
+The conference will be held at the same time and location where
+several other major international conferences will be taking place.
+The conference will be held as part of 2010 multi-conference
+(MULTICONF-10). MULTICONF-10 will be held during July 12-14, 2010 in
+Orlando, Florida, USA. The primary goal of MULTICONF is to promote
+research and developmental activities in computer science, information
+technology, control engineering, and related fields. Another goal is
+to promote the dissemination of research to a multidisciplinary
+audience and to facilitate communication among researchers,
+developers, practitioners in different fields. The following
+conferences are planned to be organized as part of MULTICONF-10.
+
+
+
+•           International Conference on Artificial Intelligence and
+Pattern Recognition (AIPR-10)
+
+•           International Conference on Automation, Robotics and
+Control Systems (ARCS-10)
+
+•           International Conference on Bioinformatics, Computational
+Biology, Genomics and Chemoinformatics (BCBGC-10)
+
+•           International Conference on Computer Communications and
+Networks (CCN-10)
+
+•           International Conference on Enterprise Information Systems
+and Web Technologies (EISWT-10)
+
+•           International Conference on High Performance Computing
+Systems (HPCS-10)
+
+•           International Conference on Information Security and
+Privacy (ISP-10)
+
+•           International Conference on Image and Video Processing and
+Computer Vision (IVPCV-10)
+
+•           International Conference on Software Engineering Theory
+and Practice (SETP-10)
+
+•           International Conference on Theoretical and Mathematical
+Foundations of Computer Science (TMFCS-10)
+
+
+
+
+
+MULTICONF-10 will be held at Imperial Swan Hotel and Suites.  It is a
+full-service resort that puts you in the middle of the fun! Located
+1/2 block south of the famed International Drive, the hotel is just
+minutes from great entertainment like Walt Disney World® Resort,
+Universal Studios and Sea World Orlando. Guests can enjoy free
+scheduled transportation to these theme parks, as well as spacious
+accommodations, outdoor pools and on-site dining — all situated on 10
+tropically landscaped acres. Here, guests can experience a
+full-service resort with discount hotel pricing in Orlando.
+
+
+
+We invite draft paper submissions. Please see the website
+http://www.PromoteResearch.org  for more details.
+
+
+
+Sincerely
+
+James Heralds
