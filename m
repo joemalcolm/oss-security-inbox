@@ -1,25 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/06/4
-Message-ID: <1270584234.17769.212.camel@severus.strandboge.com>
-Date: Tue, 06 Apr 2010 15:03:54 -0500
-From: Jamie Strandboge <jamie@...onical.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: ClamAV small issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/12/8
+Message-ID: <20100312233641.GA7327@openwall.com>
+Date: Sat, 13 Mar 2010 02:36:41 +0300
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CFPs and con invitations on the list
 Content-Type: text/plain; charset=utf-8
 
-FYI, not sure if these should get a CVE, but it seems that a crafted
-archive could bypass scanning without these commits[1]:
+Since there were no followups to my posting/questions, I've just
+approved a CFP posting by James Heralds, who has been an oss-security
+subscriber for a month.
 
-158c35e81a25ea5fda55a2a7f62ea9fec2e883d9
-libclamav/mspack.c: improve unpacking of malformed cabinets (bb#1826)
+On Wed, Mar 03, 2010 at 06:30:02PM +0300, Solar Designer wrote:
+> I've just approved Laurent's posting, even though this is sort of an
+> exception lately.  Several other postings of "this nature" (not training
+> courses but mostly conference CFPs, though) were not approved.  Yet I
+> thought it was time to revisit this issue, ...
 
-224fee54dd6cd8933d7007331ec2bfca0398d4b4
-libclamav/mspack.c: fix Quantum decompressor (bb#1771)
-
-
-[1] http://git.clamav.net/gitweb?p=clamav-devel.git;a=log
-
--- 
-Jamie Strandboge             | http://www.canonical.com
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+Alexander
