@@ -1,95 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/25/3
-Message-ID: <4BAA9C82.4020707@gmail.com>
-Date: Thu, 25 Mar 2010 00:13:06 +0100
-From: Jonathan Brossard <endrazine@...il.com>
-To: bugtraq@...urityfocus.com, full-disclosure@...ts.grok.org.uk,  darklab@...ts.darklab.org, droit-net@....fr,  focus-apple@...urityfocus.com, focus-linux@...urityfocus.com,  focus-ids@...urityfocus.com, framework@...ol.metasploit.com,  misc@...nbsd-france.org, oss-security@...ts.openwall.com,  owasp-all@...ts.owasp.org, tmplab@...ts.tmplab.org,  webappsec@...urityfocus.com, websecurity@...appsec.org,  Organization team for Hackito Ergo Sum 2010 <hes2010-orga@...ts.hackitoergosum.org>, Hackito Ergo Sum 2010 - Call For Paper address <hes2010-cfp@...ts.hackitoergosum.org>
-Subject: Hackito Ergo Sum Conference (Paris 8-10 April 2010) : Schedule
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/12/4
+Message-ID: <20100312164711.GF22141@lackof.org>
+Date: Fri, 12 Mar 2010 09:47:11 -0700
+From: dann frazier <dannf@...nf.org>
+To: "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com, drbd-dev@...ts.linbit.com, drbd-user@...ts.linbit.com
+Subject: Re: [Drbd-dev] CVE request: kernel: connector security bypass
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Fri, Mar 12, 2010 at 10:34:52AM +0100, Lars Ellenberg wrote:
+> On Thu, Mar 11, 2010 at 03:18:08PM -0700, dann frazier wrote:
+> > On Mon, Nov 02, 2009 at 11:37:21AM +0000, Mark J Cox wrote:
+> > > On Mon, 2 Nov 2009, Eugene Teo wrote:
+> > > 
+> > > >1/ uvesafb/connector: Disallow unprivileged users to send netlink packets
+> > > >upstream commit: cc44578b5a508889beb8ae3ccd4d2bbdf17bc86c
+> > > >introduced in v2.6.24-rc1; fixed in v2.6.32-rc3
+> > > >
+> > > >2/ pohmelfs/connector: Disallow unprivileged users to configure pohmelfs
+> > > >upstream commit: 98a5783af02f4c9b87b676d7bbda6258045cfc76
+> > > >(staging/experimental)
+> > > >
+> > > >3/ dst/connector: Disallow unprivileged users to configure dst
+> > > >upstream commit: 5788c56891cfb310e419c4f9ae20427851797431
+> > > >(staging/experimental)
+> > > >
+> > > >4/ dm/connector: Only process connector packages from privileged processes
+> > > >upstream commit: 24836479a126e02be691e073c2b6cad7e7ab836a
+> > > >introduced in v2.6.31-rc1; fixed in v2.6.32-rc3
+> > > 
+> > > >References:
+> > > >http://secunia.com/advisories/37113/
+> > > >http://xorl.wordpress.com/2009/10/31/linux-kernel-multiple-capabilities-missing-checks/
+> > 
+> > Debian provides an out-of-tree drbd module (drbd8), and it appears to
+> > be affected by this issue as well. I assume we need to allocate an
+> > additional CVE ID for it?
+> 
+> Maybe just go to current upstream drbd 8.3.7?
 
- [ We apologize in case you get double postage. Please Spread ;) ]
+Lars,
+ Thanks for the suggestion. That is a possible solution for our next
+release of Debian (as is moving to the in-tree version), but for our
+current stable release we have backported "just-the-fix" as required
+by our security update policy.
 
-We are please to annouce the schedule of the first Hackito Ergo Sum
-Conference, to be held in Paris, France, from April 8th to 10th.
+-- 
+dann frazier
 
-
-- --[ Conference details
-
-* Location:
-Mains d'oeuvre (http://www.mainsdoeuvres.org/) : near the metro Porte de
-Clichy (direct line to the center of Paris).
-
-* Address:
-Main d'Oeuvre, 1 Rue Charles Garnier, 93400 Saint-Ouen,
-Seine-Saint-Denis, IDF
-
-- --[ Schedule
-
-Thursday 2010-04-08:
-10h30-11h30 ? Keynote ? Jeremie Zimmermann (La Quadrature du Net)
-11h30-12h30 ? From myth to real stuff: SMM, Kernel sploits and TPM ?
-Rodrigo Branco ?BSDaemon? (Coseinc)
-
-14h00-15h00 ? FPGA security challenge ? Sebastien Bourdeauducq
-(Milkymist, /tmp/lab, BEC)
-15h00-16h00 ? Hacking the Belgacom Box 2 ? Benjamin Henrion (FFII.org,
-HackerSpace Brussels)
-16h00-17h00 ? Using AI Techniques to improve Pentesting Automation ?
-Carlos Sarraute (Core Security)
-17h00-18h00 ? Evolution of Microsoft security mitigations ? Tim Burrell
-(Microsoft)
-
-Friday 2010-04-09:
-10h30-11h30 ? Internet Explorer turns your personal computer into a
-public file server ? Jorge Luis Alvarez Medina (Core Security)
-11h30-12h30 ? Breaking Virtualization by switching to Virtual 8086 mode
-? Jonathan Brossard (P1 Security)
-
-14h00-15h00 ? Mac OS X Physical Memory Analysis ? Matthieu Suiche
-(Moonsols, Sandman, win32dd)
-15h00-16h00 ? Attacking VoIP ? attacks and the attackers ? Sandro Gauci
-(EnableSecurity)
-16h00-17h00 ? Fuzzing- the SMB case ? Laurent Gaffié (Stratsec)
-17h00-18h00 ? Getting in the SS7 kingdom: hard technology and
-disturbingly easy hacks to get entry points in the walled garden ?
-Philippe Langlois (P1 Security)
-
-Saturday 2010-04-10:
-11h30-12h30 ? Turbot ? Next Generation Botnet ? Itzik Kotler (Radware),
-Ziv Gadot (Radware)
-
-14h00-15h00 ? Fingerprinting hardware devices using clock-skewing ?
-Renaud Lifchitz
-15h00-16h00 ? A5/1 application & crack via GPU ? Gloire Gwendal
-(Kalkulator?s Knights Project)
-16h00-17h00 ? Stack Smashing Protector in FreeBSD ? Paul Rascagneres
-17h00-18h00 ? Static analysis of a new kind of heap vulnerability ?
-Julien Vanegue (Microsoft)
-Party!
-
-- --[ Workshops & Activities
-
-    * Lockpicking workshop
-    * FPGA security and reverse engineering challenge
-    * Capture the Flag (CTF) with Over The Wire people!
-    * Tactical Media Workshop
-    * Spot the Fed contest ? only undercover ones  :)
-
-
-Hope to see you there,
-Best regards,
-
-- --
-The HES Team
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
-
-iEYEARECAAYFAkuqnIIACgkQK/YAm7PYyblO7ACbBe/UtVEt7FOqP0KhCobtOMxx
-840AoIFILMatEfzwFq5KWYlCD5RNTcXm
-=LblD
------END PGP SIGNATURE-----
