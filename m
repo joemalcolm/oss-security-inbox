@@ -1,24 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/27/1
-Message-ID: <4BD64DD3.7070804@redhat.com>
-Date: Tue, 27 Apr 2010 10:37:07 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/12/2
+Message-ID: <4B99E011.70303@kernel.sg>
+Date: Fri, 12 Mar 2010 14:32:49 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
 CC: coley@...us.mitre.org
-Subject: CVE request - gfs2 kernel issue
+Subject: CVE-2010-0729 kernel: ia64: ptrace: peek_or_poke requests miss ptrace_check_attach()
 Content-Type: text/plain; charset=utf-8
 
-When a struct gfs2_quota straddles a page boundary, the two pages 
-required to write out the complete quota were not being updated. 
-Instead, the first page was being written beyond its end. This buffer 
-overflow can cause a kernel panic. Since only the value field in struct 
-gfs2_quota needs to be updated and it's a 64-bit quantity that doesn't 
-ever straddle a page boundary by itself, we can seek to the proper page 
-where this value lies and write to it.
+The "ia64: fix deadlock in ia64 sys_ptrace" patch (no reference as it's 
+only added in our shipped kernels) moved ptrace_check_attach() from 
+find_thread_for_addr() to tasklist-is-not-held area. However it 
+introduced other problems.
 
-Steps to reproduce:
-https://bugzilla.redhat.com/show_bug.cgi?id=586006
+One of the problems is security-relevant. In certain code path, it is 
+possible that ptrace_check_attach() is not called, and the user can do 
+ptrace() on any target even without PTRACH_ATTACH.
 
-My colleague will be posting the patch for the upstream kernel soon.
+This only affects Red Hat Enterprise Linux 4.
 
-Thanks, eugene
+https://bugzilla.redhat.com/CVE-2010-0729
+
+Thanks, Eugene
+
+
