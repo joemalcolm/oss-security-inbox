@@ -1,38 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/03/2
-Message-ID: <4CF8EB89.8010308@redhat.com>
-Date: Fri, 03 Dec 2010 14:07:21 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, Ulrik Persson <ddefrostt@...il.com>, Hans de Goede <hdegoede@...hat.com>, Stanislav Ochotnicky <sochotnicky@...hat.com>
-Subject: CVE Request -- Xfig: Stack-based buffer overflow by processing FIG image with crafted color definition
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/12/1
+Message-ID: <4B99CE83.6070300@kernel.sg>
+Date: Fri, 12 Mar 2010 13:17:55 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
+To: oss-security@...ts.openwall.com
+CC: coley@...us.mitre.org
+Subject: CVE-2010-0727 kernel: gfs/gfs2 locking code DoS flaw
 Content-Type: text/plain; charset=utf-8
 
-Hello Josh, Steve, vendors,
+static int
+gfs_lock(struct file *file, int cmd, struct file_lock *fl)
+{
+..
+         if ((ip->i_di.di_mode & (S_ISGID | S_IXGRP)) == S_ISGID)
+                 return -ENOLCK;
+..
+}
 
-   the Team of Underground Stockholm researchers reported:
-   [1] https://bugzilla.redhat.com/show_bug.cgi?id=657981
+This is a check for mandatory locking where the GFS/GFS2 locking code 
+will skip the lock in case sgid bits are set for the file. This can be 
+triggered to cause a crash on a system mounting a GFS/GFS2 filesystem.
 
-   i.e:
+I believe only GFS2 is part of the upstream kernel, and GFS only affects 
+Red Hat Enterprise Linux.
 
-   A stack-based buffer overflow flaw was found in
-   the way Xfig processed certain FIG images. A remote
-   attacker could create a FIG image with specially-crafted
-   color definition, and trick the local, unsuspecting
-   user into opening it, which could lead to xfig executable
-   crash or, potentially, arbitrary code execution with
-   the privileges of the user running the executable.
+https://bugzilla.redhat.com/CVE-2010-0727
+http://lkml.org/lkml/2010/3/11/269
 
-   Public PoC:
-   [2] https://bugzilla.redhat.com/attachment.cgi?id=463393
-
-   Flaw severity note:
-   On systems with compile time buffer checks (FORTIFY_SOURCE)
-   feature enabled, the impact of this flaw is mitigated to
-   be only crash.
-
-Could you allocate CVE id for this?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Thanks, Eugene
