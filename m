@@ -1,21 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/02/17
-Message-Id: <201008030121.43581.hanno@hboeck.de>
-Date: Tue, 3 Aug 2010 01:21:43 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE 2009 request: twiki before 4.3.2 CSRF
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/12/6
+Message-ID: <20100312093452.GI22282@soda.linbit>
+Date: Fri, 12 Mar 2010 10:34:52 +0100
+From: Lars Ellenberg <lars.ellenberg@...bit.com>
+To: dann frazier <dannf@...nf.org>
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com, drbd-dev@...ts.linbit.com, drbd-user@...ts.linbit.com
+Subject: Re: [Drbd-dev] CVE request: kernel: connector security bypass
 Content-Type: text/plain; charset=utf-8
 
-See
-http://twiki.org/cgi-bin/view/Codev/SecurityAuditTokenBasedCsrfFix
+On Thu, Mar 11, 2010 at 03:18:08PM -0700, dann frazier wrote:
+> On Mon, Nov 02, 2009 at 11:37:21AM +0000, Mark J Cox wrote:
+> > On Mon, 2 Nov 2009, Eugene Teo wrote:
+> > 
+> > >1/ uvesafb/connector: Disallow unprivileged users to send netlink packets
+> > >upstream commit: cc44578b5a508889beb8ae3ccd4d2bbdf17bc86c
+> > >introduced in v2.6.24-rc1; fixed in v2.6.32-rc3
+> > >
+> > >2/ pohmelfs/connector: Disallow unprivileged users to configure pohmelfs
+> > >upstream commit: 98a5783af02f4c9b87b676d7bbda6258045cfc76
+> > >(staging/experimental)
+> > >
+> > >3/ dst/connector: Disallow unprivileged users to configure dst
+> > >upstream commit: 5788c56891cfb310e419c4f9ae20427851797431
+> > >(staging/experimental)
+> > >
+> > >4/ dm/connector: Only process connector packages from privileged processes
+> > >upstream commit: 24836479a126e02be691e073c2b6cad7e7ab836a
+> > >introduced in v2.6.31-rc1; fixed in v2.6.32-rc3
+> > 
+> > >References:
+> > >http://secunia.com/advisories/37113/
+> > >http://xorl.wordpress.com/2009/10/31/linux-kernel-multiple-capabilities-missing-checks/
+> 
+> Debian provides an out-of-tree drbd module (drbd8), and it appears to
+> be affected by this issue as well. I assume we need to allocate an
+> additional CVE ID for it?
 
-Please note it's 2009.
+Maybe just go to current upstream drbd 8.3.7?
+
+> Here's a link to the upstream fix:
+> http://git.drbd.org/?p=drbd-8.3.git;a=commitdiff;h=71915b0d267392c77fe0ae2309535333026cef66
+> 
+> The in-tree version that got merged for 2.6.33 looks fine.
 
 -- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+: Lars Ellenberg
+: LINBIT | Your Way to High Availability
+: DRBD/HA support and consulting http://www.linbit.com
 
-http://schokokeks.org - professional webhosting
-
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+DRBD® and LINBIT® are registered trademarks of LINBIT, Austria.
