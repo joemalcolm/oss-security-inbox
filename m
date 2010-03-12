@@ -1,32 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/23/11
-Message-ID: <20101123224929.GB4925@suse.de>
-Date: Tue, 23 Nov 2010 23:49:29 +0100
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/12/9
+Message-ID: <1268437685.5856.4.camel@apollo>
+Date: Fri, 12 Mar 2010 18:48:05 -0500
+From: Jon Oberheide <jon@...rheide.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel address leaks
+Subject: Re: CFPs and con invitations on the list
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Nov 23, 2010 at 10:04:06AM -0500, Jon Oberheide wrote:
-> On Tue, 2010-11-23 at 09:59 +0100, Yves-Alexis Perez wrote: 
-> > On lun., 2010-11-22 at 18:54 -0500, Michael Gilbert wrote:
-> > > Oh, and if you get CVEs assigned, that kind of forces them to fix the
-> > > problem, right?
-> > > 
-> > I'm not that sure (there are CVEs for issues considered too small by the
-> > developers involved, not only in Linux, which are still opened), and I'm
-> > not sure using CVE system for “blackmailing” is a good usage for that
-> > tool.
-> 
-> I think calling it "blackmail" is a bit hyperbolic. Rather, it's simply
-> the next step in the vulnerability disclosure process: (1) research
-> reports vulnerability to vendor; (2) vendor refuses to fix
-> vulnerability; (3) research discloses vulnerability and requests CVE.
-> 
-> Am I correct in assuming that it is acceptable procedure to assign CVEs
-> to unpatched vulnerabilities?
+Guofei at Georgia Tech maintains a list of the top few tiers of academic
+security conferences:
 
-CVE is just a directory index to vulnerabilites, regardless of fixed
-status ... so YES.
+http://faculty.cs.tamu.edu/guofei/sec_conf_stat.htm
 
-Ciao, Marcus
+While I'm not implying that this should be used as a strict whitelist
+for academic CFP announcements, it's something to keep in mind when
+maintaining a high SNR.
+
+Regards,
+Jon Oberheide
+
+On Sat, 2010-03-13 at 02:36 +0300, Solar Designer wrote:
+> Since there were no followups to my posting/questions, I've just
+> approved a CFP posting by James Heralds, who has been an oss-security
+> subscriber for a month.
+> 
+> On Wed, Mar 03, 2010 at 06:30:02PM +0300, Solar Designer wrote:
+> > I've just approved Laurent's posting, even though this is sort of an
+> > exception lately.  Several other postings of "this nature" (not training
+> > courses but mostly conference CFPs, though) were not approved.  Yet I
+> > thought it was time to revisit this issue, ...
+> 
+> Alexander
+
+
+-- 
+Jon Oberheide <jon@...rheide.org>
+GnuPG Key: 1024D/F47C17FE
+Fingerprint: B716 DA66 8173 6EDD 28F6  F184 5842 1C89 F47C 17FE
+
+Download attachment "signature.asc" of type "application/pgp-signature" (198 bytes)
