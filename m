@@ -1,39 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/08/8
-Message-Id: <201010082342.24729.hanno@hboeck.de>
-Date: Fri, 8 Oct 2010 23:42:24 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/12/5
+Message-Id: <201003121259.03795.geissert@debian.org>
+Date: Fri, 12 Mar 2010 12:58:56 -0600
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Fwd: CVE id request: fluxbb < 1.2.22 XSS
+Cc: security@....net
+Subject: CVE-2010-0397: NULL pointer dereference in PHP's xmlrpc extension
 Content-Type: text/plain; charset=utf-8
 
-never got a reply to this (please note it's 2009).
+Hi,
 
-----------  Weitergeleitete Nachricht  ----------
+At http://bugs.debian.org/573573 it has been reported a NULL pointer 
+dereference in the xmlrpc extension, in a call to estrdup[1]. This bug can at 
+least be used to perform DoS attacks.
 
-Subject: [oss-security] CVE id request: fluxbb < 1.2.22 XSS
-Date: Friday 04 September 2009
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
+Looking at the code, I can see multiple, similarly affected, calls.
 
-http://fluxbb.org/forums/topic/3222/fluxbb1222-released/
+For tracking purposes (and hoping nobody else has run and assigned one 
+themselves) I've assigned CVE-2010-0397.
 
+[1]
+Z_STRVAL_P(method_name_out) = estrdup(XMLRPC_RequestGetMethodName(response));
 
-"Fixed a critical XSS vulnerability, reported by endeavormac."
-
-
+Kind regards,
 -- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-
-http://schokokeks.org - professional webhosting
-
--------------------------------------------------------
-
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-
-http://schokokeks.org - professional webhosting
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
 
 Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
