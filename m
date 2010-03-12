@@ -1,42 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/05/2
-Message-ID: <2100391768.493571273071485268.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 5 May 2010 10:58:05 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request [was Re: kernel: execution possible in non-executable mappings in recent 2.6 kernels (SPARC only)]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/12/3
+Message-ID: <4B9A3EBE.6070602@redhat.com>
+Date: Fri, 12 Mar 2010 14:16:46 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request -- Unbound v1.4.3 -- 64 bit platforms specific remote DoS
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-1451
+Hi Steve, vendors,
 
-Thanks.
+   Unbound upstream has released latest, v1.4.3 version:
+   [1] http://www.unbound.net/download.html
 
--- 
-    JB
+   addressing one denial of service issue, specific to 64 bit
+   platforms.
 
+References:
+   [2] http://bugs.gentoo.org/show_bug.cgi?id=309117
 
------ "dann frazier" <dannf@...ian.org> wrote:
+Could you allocate CVE id for it?
 
-> On Wed, Feb 24, 2010 at 08:41:01AM +0800, Eugene Teo wrote:
-> > http://marc.info/?l=linux-sparc&m=126662196902830&w=2
-> > http://marc.info/?l=linux-sparc&m=126662159602378&w=2
-> >
-> > sparc64: Fix sun4u execute bit check in TSB I-TLB load.
-> >
-> > TSB I-tlb load code tries to use andcc to check the _PAGE_EXEC_4U
-> bit,
-> > but that's bit 12 so it gets sign extended all the way up to bit 63
-> > and the test nearly always passes as a result.
-> >
-> > Use sethi to fix the bug.
-> >
-> > I'm not requesting a CVE for this as this does not affect any of our
->  
-> > kernels. But just a heads-up for those not aware of this.
-> 
-> hey Steven,
->  Can we get a CVE allocated for this one?
-> 
-> -- 
-> dann frazier
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
