@@ -1,51 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/06/1
-Message-ID: <4C32BF38.7060203@yahoo.com.au>
-Date: Tue, 06 Jul 2010 15:29:28 +1000
-From: Ben Schmidt <mail_ben_schmidt@...oo.com.au>
-To: Christoph Thiel <ct@....org>
-CC: Morten Shearman Kirkegaard <morten@...elingp.dk>, Florian Streibelt <gentoo@...treibelt.de>, oss-security <oss-security@...ts.openwall.com>, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Michael Fleming <mfleming+rpm@...tfleminggent.com>, Mads Martin Joergensen <mmj@....dk>
-Subject: Re: CVE Request -- mlmmj -- Directory traversal flaw by editing and saving  list entries via php-admin web interface
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/14/1
+Message-Id: <20100314163353.WRGCTDJOOOBDTK@hackinthebox.org>
+Date: Sun, 14 Mar 2010 16:33:53 +0800
+From: Hafez Kamal <aphesz@...kinthebox.org>
+To: <oss-security@...ts.openwall.com>
+Subject: [HITB-Announce] HITBSecConf2010 - Dubai Agenda Released
 Content-Type: text/plain; charset=utf-8
 
-On 5/07/10 6:12 AM, Christoph Thiel wrote:
-> On Sat, Jun 26, 2010 at 10:42:25AM +0200, Morten Shearman Kirkegaard wrote:
->> CC'ing Christoph Thiel (mlmmj-php-admin author) and Ben Schmidt (current
->> mlmmj maintainer).
->>
->> On Wed, 2010-06-23 at 19:41 +0200, Florian Streibelt wrote:
->>> when I reported the bug I had no time to further investigate and I think I
->>> did not report upstream because of lack of time at that point and later
->>> forgot - which is sad.
->>
->> Yeah, well, things like that happen. Would you agree that the attached
->> patch fixes the vulnerability?
->>
->> Using a list of known-good-characters would be nice, but dot happens to
->> be a valid character in a list name.
->>
->>> The php webinterface is a third-party development for mlmmj but part of the
->>> official release.
->>
->> I know that this is just semantics, but... While it is true that the
->> mlmmj-php-admin web interface is distributed along with mlmmj, it is not
->> a part of mlmmj itself, but is located in the contribs directory.
->
-> Thanks for bringing this up. I haven't used the mlmmj-php-admin in years,
-> but from looking at the patch that was proposed by Morten, I think it fixes
-> the issues and should be shipped!
->
-> Who is taking care of commiting this to mlmmj? Is there any embargo
-> involved?
+Conference agenda for HITBSecConf2010 - Dubai has been announced!
 
-I haven't looked at it yet, but if you and Morten are both happy with
-it, I'm sure it'll be good enough for me. I will commit it shortly and
-it will appear in the next release.
+Welcoming Address by H.E Mohammed Nasser Al-Ghanim (Director General, UAE Telecom Regulatory Authority - TRA) -- TBC
 
-Smiles,
-
-Ben.
+Keynote 1: John Viega (CTO, SaaS, McAfee Inc.) -- A/V Vendors Aren't As Dumb As They Look
+Keynote 2: Matt Watchinski (Senior Director of Vulnerability Research, Sourcefire Inc.) -- TBA
 
 
+1.) Daniel Mende (ERNW GmbH) with Oliver Roeschke (ERNW GmbH) -- Attacking CISCO WLAN Solutions
+2) Dino Covotsos (Managing Director, Telspace Systems) -- Hiding a Giant: Analysis of a Next Generation Botnet
+3.) Fredric Raynal (Head of Research, Sogeti/Cap Gemini) with Arnauld Mascret (Sogeti / Cap Gemini) & Christophe Devaux (Sogeti / Cap Gemini) -- Deception 2.0: Gathering and Exploiting Information
+4.) Gynvael Coldwind (Researcher, Hispasec) -- A Case Study of Recent Windows Vulnerabilities
+5.) Laurent Oudot (Founder, TEHTRI-Security) -- Silent Steps: Improving the Stealthiness of Web Hacking
+6.) Marc Schoenefeld (Independent Network Security Specialist) -- Open Sesame: Examining Android Code with undx2
+7.) Shawn Merdinger (Security Researcher) -- We Don't Need No Stinkin' Badges: Hacking Electronic Door Access Controllers
+8.) The Grugq (Anti Forensics Specialist) -- Base Jumping: Attacking GSM Base Stations and Mobile Phone Basebands
 
+
+HITBSecConf2010 - Dubai will also feature a HITB Web Hacking. This years contest will once again include an additional binary reversing challenge as well.
+
+
+http://conference.hackinthebox.org/hitbsecconf2010dxb/agenda.pdf
+
+---
+Hafez Kamal
+HITB Crew
+Hack in The Box (M) Sdn. Bhd.
+Suite 26.3, Level 26, Menara IMC,
+No. 8 Jalan Sultan Ismail,
+50250 Kuala Lumpur,
+Malaysia
+
+Tel: +603-20394724
+Fax: +603-20318359
 
