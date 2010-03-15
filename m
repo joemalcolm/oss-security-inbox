@@ -1,51 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/22/2
-Message-ID: <AANLkTikx1ngNcFg57eYVsZnJgijHpU5ibdaD60p5d2H3@mail.gmail.com>
-Date: Mon, 22 Nov 2010 01:35:14 +0100
-From: Pierre Joye <pierre.php@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/15/1
+Message-ID: <557241719.4290181268661142400.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 15 Mar 2010 09:52:22 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: NULL byte poisoning fix in php 5.3.4+
+Subject: Re: CFPs and con invitations on the list
 Content-Type: text/plain; charset=utf-8
 
-anyone?
+----- "Solar Designer" <solar@...nwall.com> wrote:
+> 
+> That said, I won't be approving any further "multi-conference" stuff, but
+> I've just approved a HITB announcement...  BTW, Hafez Kamal has been a
+> subscriber to oss-security for a while.
+> 
 
-On Thu, Nov 18, 2010 at 5:43 PM, Pierre Joye <pierre.php@...il.com> wrote:
-> forgot to add the fixes revs:
->
-> http://svn.php.net/viewvc?view=revision&revision=305507
-> revert of part of the OCI8 fix
-> http://svn.php.net/viewvc?view=revision&revision=305509
->
-> OCI8 fix (committed separately)
-> http://svn.php.net/viewvc?view=revision&revision=305412
->
-> On Thu, Nov 18, 2010 at 5:22 PM, Pierre Joye <pierre.php@...il.com> wrote:
->> hi,
->>
->> The problem describes here http://www.madirish.net/?article=436, in
->> http://bugs.php.net/39863 (and numerous other places) has been fixed
->> in PHP_5_3, targetting 5.3.4 (RC1 to be released today). It is a well
->> (old) known issue in PHP and I wonder if there is a CVE already for
->> it? If not I think having one could helpful. or?
->>
->> Cheers,
->> --
->> Pierre
->>
->> @pierrejoye | http://blog.thepimp.net | http://www.libgd.org
->>
->
->
->
-> --
-> Pierre
->
-> @pierrejoye | http://blog.thepimp.net | http://www.libgd.org
->
+I agree with this decision. I don't see such announcements adding any value
+here, and probably just increase the noise level.
 
-
+Unless someone has a compelling argument FOR letting these though, I think
+this is an acceptable policy.
 
 -- 
-Pierre
-
-@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+    JB
