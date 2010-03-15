@@ -1,34 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/11/6
-Message-ID: <746025907.31271263215717308.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 11 Jan 2010 08:15:17 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Tomas Hoger <thoger@...hat.com>
-Subject: Re: CVE id request: GNU libc: NIS shadow password leakage
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/15/2
+Message-ID: <4B9EAFE1.1070008@stafford.uklinux.net>
+Date: Mon, 15 Mar 2010 22:08:33 +0000
+From: Brian Stafford <brian@...fford.uklinux.net>
+To: Ludwig Nussel <ludwig.nussel@...e.de>,  oss-security@...ts.openwall.com, libesmtp@...fford.uklinux.net,  security@...ntu.com, Pawel Salek <pawsa@...ochem.kth.se>,  jlieskov@...hat.com, jskarvad@...hat.com
+Subject: Re: CVE Request: libesmtp does not check NULL bytes in commonName
 Content-Type: text/plain; charset=utf-8
 
------ "Christoph Pleger" <Christoph.Pleger@...tu-dortmund.de> wrote:
-> 
-> I did a little testing with a Linux NIS client and a Linux NIS server,
-> also with the same client and a Solaris NIS server. I used tcpdump to
-> look at the network traffic and saw that, when ypcat is called as root,
-> it uses privileged ports. Of course, when called by a non-root user, it
-> only uses non-privileged ports.
-> 
-> It seems that Linux NIS servers as well as Solaris NIS servers expect
-> that the request is sent from a privileged port when someone wants to
-> look at the "secret" maps, so it is not possible for every user to see
-> the encrypted NIS passwords, but only for root. This is still a security
-> risk in an environment where every user can connect his or her own
-> notebook, but that's another problem.
-> 
+Hello all
 
-I was mistaken, this certainly deserves a CVE id.
+I think the best approach is to apply Pawel's patch as this is the 
+simplest in terms of changes to the existing code base, and perhaps move 
+to Ludwig's for a later release of libESMTP.  In the slightly longer 
+term, I think the internet draft at
+http://tools.ietf.org/html/draft-saintandre-tls-server-id-check is the 
+one to follow but this might change substantially or even fall of the 
+rails entirely.
 
-Please use CVE-2010-0015
+For the next libESMTP release I'm considering changing match_domain() as 
+follows:
+for each hostname component accept either a string or a single wildcard 
+character '*' as the pattern.  In either case only characters from the 
+set [A-Za-z0-9-] in the hostname shall be accepted, otherwise the match 
+shall fail.  If the top level domain has only two characters then 
+wildcards are barred from the 3 topmost components, otherwise from the 
+topmost 2 components, e.g. *.example.com is acceptable but not *.co.uk.  
+f*.bar.com would not be acceptable.  The I-D says only the leftmost 
+component may contain a wildcard but this would rule out *.*.google.com 
+The algorithm I've outlined is really a halfway house between RFC2818, 
+which I think is too flexible, and the I-D; limit the positions of 
+wildcards in the hostname and dont allow elaborate matches within a 
+hostname component.  Any ideas or opinions on this would be useful.
 
-Thanks.
+Regards
+Brian
 
--- 
-    JB
+
+
+
