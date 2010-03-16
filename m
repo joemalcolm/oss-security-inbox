@@ -1,37 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/30/2
-Message-ID: <20100530200812.GA29163@pcpool00.mathematik.uni-freiburg.de>
-Date: Sun, 30 May 2010 22:08:12 +0200
-From: "Bernhard R. Link" <brlink@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: ghostscript and gv
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/16/13
+Message-ID: <4B9FCB33.1090108@stafford.uklinux.net>
+Date: Tue, 16 Mar 2010 18:17:23 +0000
+From: Brian Stafford <brian@...fford.uklinux.net>
+To: Ludwig Nussel <ludwig.nussel@...e.de>
+Cc: oss-security@...ts.openwall.com, libesmtp@...fford.uklinux.net, security@...ntu.com, Pawel Salek <pawsa@...ochem.kth.se>, jskarvad@...hat.com
+Subject: Re: CVE Request: libesmtp does not check NULL bytes in commonName
 Content-Type: text/plain; charset=utf-8
 
-* Florian Weimer <fw@...eb.enyo.de> [100530 21:53]:
-> "gs -P- -DSAFER gs_init.ps" works, too, so you can inject the payload
-> with file-name-preserving user agents.  8-(
+Ludwig Nussel wrote:
+> Brian Stafford wrote:
+>   
+>> Ludwig Nussel wrote:
+>>     
+>>> Brian Stafford wrote:
+>>>   
+>>>       
+>>>> I think the best approach is to apply Pawel's patch as this is the 
+>>>>         
+>>> I must have missed that patch. Could you re-post it?
+>>>   
+>>>       
+>> It's available at https://bugzilla.redhat.com/attachment.cgi?id=399131
+>>     
 >
-> Is the general consensus that we should patch this in
-> viewers/Ghostscript wrappers, and not Ghostscript itself?
+> Doesn't that lack a null byte check for subjAltNames?
+>
+> cu
+> Ludwig
+>
+>   
+You're right.  I'll look over your patch again.  One small issue I have 
+is that declarations are interspersed with code which is not standard 
+pre-C99, although if speed is of the essence this can be ignored as I 
+will get an official libESMTP release out soon.
 
-For Gv there is also the issue with pdf2dsc.ps (and the Debian lenny
-version with the temporary filei creation stuff), so it needs to be fixed
-anyway.
-
-Gs's -P- not working (at least for gs_init.ps), is definitly a bug that
-needs to be fixed.
-
-I personally would also suggest fixing gs to not look in the current
-directory by default (looking for important stuff in the current
-directory is really always a bad idea). I guess the problem is how to
-fix it.
-
-I think (though I am not really sure) a gs that has -P- activated by
-default would for example break pdf viewing of gv versions 3.6.2 to
-3.6.5.91, because (I think) -P- also causes files in the current
-directory can no longer be opened from other postscript files with
--dSAFER and the gv versions above only use -dSAFER and not -dDELAYSAFER
-as it would need for pdf2dsc.ps generated files. (I think -P- already
-has that effect, even though it has no effect on gs_init.ps).
-
-	Bernhard R. Link
+Regards
+Brian
