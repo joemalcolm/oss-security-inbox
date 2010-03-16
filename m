@@ -1,33 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/30/1
-Message-ID: <4CA3D732.90608@redhat.com>
-Date: Thu, 30 Sep 2010 08:17:54 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/16/7
+Message-ID: <4B9F8AA0.4020002@edelweb.fr>
+Date: Tue, 16 Mar 2010 14:41:52 +0100
+From: Peter Sylvester <Peter.Sylvester@...lweb.fr>
 To: oss-security@...ts.openwall.com
-CC: Moritz Muehlenhoff <jmm@...til.org>
-Subject: Re: CVE requests: POE::Component::IRC, Alien Arena, Babiloo, Typo3, abcm2ps, ModSecurity, Linux kernel
+Cc: Brian Stafford <brian@...fford.uklinux.net>, libesmtp@...fford.uklinux.net, security@...ntu.com, Pawel Salek <pawsa@...ochem.kth.se>, jskarvad@...hat.com
+Subject: Re: CVE Request: libesmtp does not check NULL bytes in commonName
 Content-Type: text/plain; charset=utf-8
 
-On 09/30/2010 12:19 AM, Moritz Muehlenhoff wrote:
-> Hi Eugene,
->
-> On Tue, Sep 28, 2010 at 09:17:48AM +0800, Eugene Teo wrote:
->>> 7. Linux kernel (local DoS, impact limited to specific hardware)
->>> http://git.kernel.org/linus/b525c06cdbd8a3963f0173ccd23f9147d4c384b5
->>> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=565790
->>
->> I emailed this before, please search the archive for subject:
->> "[oss-security] kernel: thinkpad-acpi: lock down video output state
->> access".
->
-> Are you suggesting that there was already an assignment (I can't
-> find one) or that it should not receive one due to limited impact?
 
-http://seclists.org/oss-sec/2010/q2/318
+> 
+> Doesn't that lack a null byte check for subjAltNames?
+> 
 
-There's no CVE name. I did not request for one, but gave a heads-up for 
-this since it only affects certain specific thinkpads/xorg.
+The patch seems broken to me:
+X509_NAME_get_text_by_NID gets the "highest" one, not the leaf value.
+In case of two common names, this is wrong.
 
-Eugene
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+So instead of
+int l = X509_NAME_get_text_by_NID (X509_get_subject_name (cert),
+                             NID_commonName, buf, sizeof buf);
+
+one needs something like:
+
+    X509_NAME *name = X509_get_subject_name(cert) ;
+     if(name)
+       while((j=X509_NAME_get_index_by_NID(name,NID_commonName,i))>=0)
+         i=j;
+
+
+
