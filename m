@@ -1,25 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/15/1
-Message-Id: <201007151038.54615.mweckbecker@suse.de>
-Date: Thu, 15 Jul 2010 10:38:54 +0200
-From: Matthias Weckbecker <mweckbecker@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/16/2
+Message-ID: <20100316093731.GF22343@ngolde.de>
+Date: Tue, 16 Mar 2010 10:37:31 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: lxsession-logout
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- MediaWiki - v1.15.2
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hey,
+* Jan Lieskovsky <jlieskov@...hat.com> [2010-03-09 21:52]:
+>   MediaWiki upstream has released latest v1.15.2 version:
+>     [1] 
+> http://lists.wikimedia.org/pipermail/mediawiki-announce/2010-March/000088.html
+> 
+>   fixing two security issues (from upstream advisory):
+>   a, a CSS validation issue was discovered which allows editors to display
+>      external images in wiki pages.
+>   b, a data leakage vulnerability was discovered in thumb.php which affects
+>      wikis which restrict access to private files using img_auth.php, or
+>      some similar scheme.
 
-could you assign a CVE for this issue, please:
+Have CVE ids already been assigned to these issues?
 
-https://bugzilla.novell.com/show_bug.cgi?id=622083
-
-Thanks!
-
-ciao,
-Matthias
-
+Cheers
+Nico
 -- 
-Matthias Weckbecker, SUSE Security Team
-SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg   
-Tel: +49-911-74053-0;  http://www.opensuse.org/   
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
