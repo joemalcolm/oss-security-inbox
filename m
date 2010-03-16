@@ -1,48 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/02/6
-Message-ID: <1573834878.1870121278096451997.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 2 Jul 2010 14:47:31 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/16/12
+Message-ID: <20100316175630.GJ30480@redhat.com>
+Date: Tue, 16 Mar 2010 11:56:31 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request -- PHP strrchr() Interruption Information Leak Vulnerability
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Unbound v1.4.3 -- 64 bit platforms specific remote DoS
 Content-Type: text/plain; charset=utf-8
 
+* [2010-03-12 14:16:46 +0100] Jan Lieskovsky wrote:
 
------ "Péter Veres" <moltesalt@...il.com> wrote:
+>Hi Steve, vendors,
+>
+>  Unbound upstream has released latest, v1.4.3 version:
+>  [1] http://www.unbound.net/download.html
+>
+>  addressing one denial of service issue, specific to 64 bit
+>  platforms.
+>
+>References:
+>  [2] http://bugs.gentoo.org/show_bug.cgi?id=309117
+>
+>Could you allocate CVE id for it?
 
-> 2010/6/30 Josh Bressers <bressers@...hat.com>
-> 
-> >
-> > ----- "Péter Veres" <moltesalt@...il.com> wrote:
-> >
-> > > Hi Steve,
-> > >
-> > > PHP’s strrchr() function can be interrupted and used for
-> information
-> > > leakage due to call time pass by reference.
-> > >
-> > > Could you allocate a CVE id for this issue?
-> > >
-> >
-> > Do you have some sort of reference for this? I'm not finding
-> anything in
-> > the
-> > usual places.
-> >
-> > I'll assign an ID once I have more information.
-> >
-> 
-> 
-> Fixed in the upstream.
-> 5.3.3 RC1 not affected.
-> 5.2 branch vulnerable.
-> 
-> http://svn.php.net/viewvc?view=revision&revision=300916
-
-Please use CVE-2010-2484
-
-Thanks.
+Please use CVE-2010-0735 for this issue.
 
 -- 
-    JB
+Vincent Danen / Red Hat Security Response Team 
