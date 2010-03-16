@@ -1,59 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/28/1
-Message-ID: <20100528053312.GQ11703@mutt-is-awesome>
-Date: Fri, 28 May 2010 08:33:12 +0300
-From: Eren Türkay <eren@...dus.org.tr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/16/9
+Message-ID: <20100316171107.GG30480@redhat.com>
+Date: Tue, 16 Mar 2010 11:11:07 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: Re: Fwd: [Full-disclosure] stratsec Security Advisory SS-2010-005: Samba Multiple DoS Vulnerabilities (3.3.x)
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: Re: CVE Request: gnome-screensaver termination by pressing "Enter"
 Content-Type: text/plain; charset=utf-8
 
-On Tue, May 25, 2010 at 05:29:00PM -0400, Josh Bressers wrote:
-> It's been pointed out to me that this should be two IDs, not one.
-> 
-> Let's use CVE-2010-1635 for the NULL pointer deref 
-> and CVE-2010-1642 for the OOB read.
-> 
-> Sorry for the confusion.
+* [2010-03-05 10:09:58 +0100] Marcus Meissner wrote:
 
-Hello,
+>Can someone, Stephen, assign a CVE id please?
 
-It seems thath Samba 3.3.x is also vulnerable. I sent a mail to
-samba-technical list, but I haven't got a reply for 3 days. It would be
-really helpful if anyone knows the situation of 3.3.x. I am attaching
-the e-mail and a patch.
+Please use CVE-2010-0732 for this issue.
 
-Thank you,
-Eren
+Also note that our maintainer looked at this and indicates this is a bug
+in GTK+, not gnome-screensaver, and that this commit actually corrects
+the problem:
 
------ Forwarded message from Eren T??rkay <eren@...dus.org.tr> -----
+http://git.gnome.org/browse/gtk+/commit/?id=0748cf563d0d0d03001a62589f13be16a8ec06c1
 
-Date: Wed, 26 May 2010 19:28:50 +0300
-From: Eren Türkay <eren@...dus.org.tr>
-To: samba-technical@...ba.org
-Subject: Security patches for Samba 3.3.x (CVE-2010-{1635,1642})
-Organization: "TÜBİTAK/UEKAE"
-User-Agent: Mutt/1.5.20 (2009-06-14)
+See the comments in our bugzilla:
 
-Hello,
+https://bugzilla.redhat.com/show_bug.cgi?id=565527#c3
 
-A NULL pointer dereference (#7229, CVE-2010-1635) and a crash with CUPS
-printers (#7298, CVE-2010-1642) have been fixed with the release of
-3.4.8. Accordingly to bugzilla, the fixes were also committed to
-3.5-test.
+>On Fri, Feb 12, 2010 at 10:53:24AM +0100, Marcus Meissner wrote:
+>> Hi,
+>>
+>> Yesterday an article was published by Heise News (a german IT magazine)
+>> that said that the Gnome Screensaver in openSUSE 11.2 is unlockable by
+>> just pressing the "return" key for some time.
+>>
+>> The issue as far as we know is the following:
+>>
+>> The unlock dialog shakes if you enter the wrong password. On the last try,
+>> this dialog is also hidden again (so screen is blanked).
+>>
+>> There is race condition between these two actions which can lead to an X error
+>> which aborts the screensaver (and so unlocks the screen).
+>>
+>> It is fixed in gnome-screensaver 2.28.1 release.
+>>
+>> References:
+>>
+>> The fixing commit in the 2.28 branch:
+>> http://git.gnome.org/browse/gnome-screensaver/commit/?h=gnome-2-28&id=98f8a22412cf388217fd5b88915eadd274d68520
+>>
+>> The news article (in german):
+>> http://www.heise.de/newsticker/meldung/Gnome-Bildschirmsperre-in-OpenSuse-Linux-wirkungslos-928580.html
+>>
+>> The GNOME upstream bug:
+>> http://bugzilla.gnome.org/show_bug.cgi?id=598476
+>>
+>> I think this does not have a CVE id yet, so please someone allocate one.
+>>
+>> I am not sure when this shaking was introduced, but it might be pretty new.
+>>
+>> Ciao, Marcus
+>
+>-- 
+>Working, but not speaking, for the following german company:
+>SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
 
-It seems that 3.3.x is also vulnerable as the same code seems to exist in this
-release as well. However, I couldn't see any reference for 3.3.x being
-vulnerable. I would really appreciate a statement from Samba team as to
-the status of 3.3.x
-
-Attached is the patch that I made accordingly to the changes committed to
-GIT repository, and hopefully it fixes the issues.
-
-Regards,
-Eren
-
------ End forwarded message -----
-
-
-View attachment "samba-3.3.12-CVE-2010-1635-1642.patch" of type "text/plain" (1219 bytes)
+-- 
+Vincent Danen / Red Hat Security Response Team 
