@@ -1,23 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/30/23
-Message-ID: <20100630235149.157bca55@foo.fgeek.fi>
-Date: Wed, 30 Jun 2010 23:51:49 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/16/3
+Message-ID: <4B9F6F83.7090008@stafford.uklinux.net>
+Date: Tue, 16 Mar 2010 11:46:11 +0000
+From: Brian Stafford <brian@...fford.uklinux.net>
 To: oss-security@...ts.openwall.com
-Cc: hanno@...eck.de
-Subject: Re: CVE request: simplemachinesforum
+Cc: libesmtp@...fford.uklinux.net, security@...ntu.com, Pawel Salek <pawsa@...ochem.kth.se>, jskarvad@...hat.com
+Subject: Re: CVE Request: libesmtp does not check NULL bytes in commonName
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 21 Dec 2009 20:21:43 +0100
-Hanno Böck <hanno@...eck.de> wrote:
-
-> http://secunia.com/advisories/37557/
-> CSRF
-> 
-> http://securityreason.com/exploitalert/7513
-> Remote code execution
-
-Did these two issues get CVE-identifier assigned?
-
----
-Henri Salo
+Ludwig Nussel wrote:
+> Brian Stafford wrote:
+>   
+>> I think the best approach is to apply Pawel's patch as this is the 
+>>     
+>
+> I must have missed that patch. Could you re-post it?
+>   
+It's available at https://bugzilla.redhat.com/attachment.cgi?id=399131
+>   
+>> simplest in terms of changes to the existing code base, and perhaps move 
+>> to Ludwig's for a later release of libESMTP.  In the slightly longer 
+>> term, I think the internet draft at
+>> http://tools.ietf.org/html/draft-saintandre-tls-server-id-check is the 
+>> one to follow but this might change substantially or even fall of the 
+>> rails entirely.
+>>
+>> [...] The I-D says only the leftmost 
+>> component may contain a wildcard but this would rule out *.*.google.com 
+>> The algorithm I've outlined is really a halfway house between RFC2818, 
+>> which I think is too flexible, and the I-D; limit the positions of 
+>> wildcards in the hostname and dont allow elaborate matches within a 
+>> hostname component.  Any ideas or opinions on this would be useful.
+>>     
+>
+> Is there a way to comment on the draft? Maybe the author of the
+> draft didn't think about the cases you'd like to handle.
+>   
+Normally IETF working groups create a mailing list for discussion of 
+drafts when chartered and any interested party may subscribe.  However, 
+as far as I can tell, this I-D is an individual submission;  I can't 
+find a mailing list address so probably best to mail the authors directly.
+> cu
+> Ludwig
+>
+>   
+Regards
+Brian
