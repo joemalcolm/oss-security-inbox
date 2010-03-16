@@ -1,46 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/12/6
-Message-ID: <45808337.880901289596807903.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 12 Nov 2010 16:20:07 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/16/14
+Message-ID: <20100316200750.GA2524@redhat.com>
+Date: Tue, 16 Mar 2010 14:07:50 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: Joomla 1.5.21 SQL Injection and Information Disclosure
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request: ViewVC 1.1.4 / 1.0.10 -- XSS via user-provided query form input
 Content-Type: text/plain; charset=utf-8
 
+* [2010-03-10 16:34:18 -0600] Reed Loden wrote:
 
------ "Henri Salo" <henri@...v.fi> wrote:
+>Just received an announcement stating ViewVC 1.1.4 and 1.0.10 were
+>released today. Looks like they fix an XSS that needs a CVE assigned.
+>
+>"security fix: escape user-provided query form input to avoid XSS
+>attack"
+>
+>http://viewvc.tigris.org/source/browse/viewvc/trunk/CHANGES?r1=2313&r2=2342&pathrev=HEAD
+>
+>Here's the patch for the XSS:
+>http://viewvc.tigris.org/source/browse/viewvc?view=rev&revision=2326
+>
+>* lib/viewvc.py
+>  (view_queryform): Escape user-provided input before passing it
+>    directly off to the templates.  Can you say "XSS attack vector"?
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> Can I get CVE-identifier for this issue?
-> 
-> "Multiple vulnerabilities have been discovered in Joomla, which can be
-> exploited by malicious people to conduct SQL injection attacks.
-> 
-> Input passed via the "filter_order" and "filter_order_Dir" parameters to
-> index.php (e.g. when "option" is set to "com_weblinks", "com_contact", or
-> "com_messages") is not properly verified before being used in a SQL
-> query. This can be exploited to manipulate SQL queries by injecting
-> limited SQL code, which may result in e.g. information disclosure via
-> database errors."
-> 
-> Vulnerable versions: 1.5.21 and all previous 1.5 releases
-> Solution: Update to 1.5.22 (or later)
-> 
-> Referers:
-> http://secunia.com/advisories/42133
-> http://developer.joomla.org/security/news/9-security/10-core-security/323-20101101-core-sqli-info-disclosurevulnerabilities.html
-> http://archives.neohapsis.com/archives/fulldisclosure/2010-10/0514.html
-> 
-
-This one is confusing. The full-disclosure post also seems to cover
-CVE-2010-3712, which was fixed in Joomla 1.5.21.
-
-For the SQL injection issues, let's use CVE-2010-4166.
-
-Thanks.
+Please use CVE-2010-0736 for this issue.
 
 -- 
-    JB
+Vincent Danen / Red Hat Security Response Team 
