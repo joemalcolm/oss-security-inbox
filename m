@@ -1,59 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/07/3
-Message-ID: <20100907111345.GA19062@suse.de>
-Date: Tue, 7 Sep 2010 13:13:45 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
-To: Andrew Morton <akpm@...ux-foundation.org>
-Cc: oss-security@...ts.openwall.com, security@...nel.org, spender@...ecurity.net
-Subject: Re: [Security] /proc infoleaks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/16/16
+Message-ID: <20100316201309.GB2524@redhat.com>
+Date: Tue, 16 Mar 2010 14:13:09 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Unbound v1.4.3 -- 64 bit platforms specific remote DoS
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Sep 07, 2010 at 03:51:03AM -0700, Andrew Morton wrote:
-> On Tue, 7 Sep 2010 10:35:46 +0200 Sebastian Krahmer <krahmer@...e.de> wrote:
-> 
-> > I have been elected to receive the bashing from all sides,
-> > so here we go.
-> > It is not about a new vulnerability or even a new discussion
-> > but needs to be discussed, at least that we have a clear
-> > statement about the status quo.
-> > 
-> > Recent i-CAN-haz-MODHARDEN.c has shown once *again* that
-> > certain file permissions make no sense except to exploitation
-> > development. There is no reason to have files like
-> > 
-> > /proc/kallsyms
-> > /proc/slabinfo
-> > /proc/zoneinfo
-> > 
-> > and probably a lot of others world readable. The symbol
-> > addresses might be hard-coded for a certain targetlist
-> > inside the exploit so you can argue that there
-> > wont be any protection benefit from making it unreadable.
-> > However this argument aint a reason to also leak it for self-compiled
-> > kernels and doesnt even hold for dynamic/runtime content
-> > like slabinfos etc.
-> > It would be nice to have something like
-> > 
-> > echo 1 > /proc/quiet
-> > 
-> > or something like a umask for kernel-owned proc
-> > entries so that you have a polite default and are
-> > still able to enable it for certain profiling tools
-> > or whereever you need it.
-> 
-> chmod 0440 /proc/slabinfo
-> 
-Heh, indeed. :-)
-Would it be a bad idea to have proc_create() use a more strict
-mode so it is non-leaking by default?
+* [2010-03-16 21:08:27 +0100] Tomas Hoger wrote:
 
-Sebastian
+>On Tue, 16 Mar 2010 11:56:31 -0600 Vincent Danen <vdanen@...hat.com>
+>wrote:
+>
+>> >  Unbound upstream has released latest, v1.4.3 version:
+>> >  [1] http://www.unbound.net/download.html
+>> >
+>> >  addressing one denial of service issue, specific to 64 bit
+>> >  platforms.
+>> >
+>> >References:
+>> >  [2] http://bugs.gentoo.org/show_bug.cgi?id=309117
+>> >
+>> >Could you allocate CVE id for it?
+>>
+>> Please use CVE-2010-0735 for this issue.
+>
+>This just got CVE-2010-0969 from Mitre:
+>
+>Unbound before 1.4.3 does not properly align structures on 64-bit
+>platforms, which allows remote attackers to cause a denial of service
+>(daemon crash) via unspecified vectors.
 
+Oh ouch.  Yeah, I see it now.  Talk about poor timing.
+
+Please do _not_ use CVE-2010-0735 for this issue, but use CVE-2010-0969
+instead.
+
+Thanks, Tomas.
 
 -- 
-~
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-~ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
-
+Vincent Danen / Red Hat Security Response Team 
