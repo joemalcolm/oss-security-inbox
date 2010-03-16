@@ -1,34 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/19/1
-Message-ID: <4B7DDFB6.2000508@redhat.com>
-Date: Fri, 19 Feb 2010 08:47:50 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/16/11
+Message-ID: <20100316174007.GI30480@redhat.com>
+Date: Tue, 16 Mar 2010 11:40:07 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel information leak via userspace USB interface
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- cURL/libCURL 7.20.0
 Content-Type: text/plain; charset=utf-8
 
-On 02/19/2010 12:53 AM, Steven M. Christey wrote:
+>Hi Steve, vendors,
 >
-> On Thu, 18 Feb 2010, Marcus Meissner wrote:
+>   cURL upstream has released latest v7.20.0 version of cURL/libCURL
+>fixing the "libcurl data callback excessive length" issue.
 >
->> Are we considering "giving desktop local users unintended rights"
->> a security issue or not?
+>References:
+>[1] http://curl.haxx.se/docs/security.html#20100209
+>[2] http://curl.haxx.se/docs/adv_20100209.html
+>[3] http://curl.haxx.se/libcurl-contentencoding.patch
+>[4] http://curl.haxx.se/download.html
 >
-> from a CVE purist perspective, if the security model is that "users with
-> physical access should not be able to read portions of kernel memory"
-> then a violation of that is technically a vulnerability, even if the
-> attack complexity is high - assuming that there isn't already some
-> easier way that the attacker can get the same results through legitimate
-> means. Being able to crash the system by plugging in a USB device (for
-> example) is about as easy as the defenestration exploit - i.e. throwing
-> the computer out the window - so in that case I wouldn't view it as a
-> vulnerability. If someone with physical access can read the kernel
-> memory that's being leaked, if don't already own the box, that seems a
-> little more like a vulnerability to me.
+>Mitigation factors (from [1]):
+>
+>"This error is only present in zlib-enabled builds of libcurl and only if
+>  automatic decompression has been explicitly enabled by the application - it
+>  is disabled by default."
+>
+>Could you allocate CVE id for this?
 
-Thanks for clarifying!
+Please use CVE-2010-0734 for this issue.
 
-Eugene
 -- 
-Eugene Teo / Red Hat Security Response Team
+Vincent Danen / Red Hat Security Response Team 
