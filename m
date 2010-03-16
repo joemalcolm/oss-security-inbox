@@ -1,39 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/10/2
-Message-ID: <4C3760FC.7060500@mvista.com>
-Date: Fri, 09 Jul 2010 07:48:44 -1000
-From: akuster <akuster@...sta.com>
-To: Dan Rosenberg <dan.j.rosenberg@...il.com>
-CC: oss-security@...ts.openwall.com
-Subject: Re: kernel: gfs2 acl issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/16/10
+Message-ID: <20100316172339.GH30480@redhat.com>
+Date: Tue, 16 Mar 2010 11:23:39 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request: postgresql integer overflow in hash table size calculation
 Content-Type: text/plain; charset=utf-8
 
-Dan,
+* [2010-03-09 09:46:49 -0700] Vincent Danen wrote:
 
-Is 2.6.32 the earliest kernel showing the problem or just what was tested?
+>I've been looking and can't find a CVE name for this issue.  Could one
+>be assigned?
+>
+>An integer overflow flaw was found in the way postgresql used to
+>calculate size for the hashtable for joined relations. An attacker could
+>formulate a specially-crafted sql query, which once processed would lead
+>to denial of service (postgresql daemon crash).
+>
+>References:
+>
+>https://bugzilla.redhat.com/show_bug.cgi?id=546621
+>http://archives.postgresql.org/pgsql-bugs/2009-10/msg00277.php
 
-Regards,
-Armin
+Please use CVE-2010-0733 for this issue.
 
-On 07/08/2010 05:56 PM, Dan Rosenberg wrote:
-> To elaborate on the issue: the gfs2 filesystem in 2.6.32 kernels
-> currently allows any user to set arbitrary ACLs for files they do not
-> own, essentially granting full access to everything.  The source of
-> this problem also caused other misbehavior of ACLs.  This fix resolved
-> the issue for 2.6.33, but it was not backported, so 2.6.32 remains
-> vulnerable.
-> 
-> -Dan
-> 
-> On Thu, Jul 8, 2010 at 11:47 PM, Eugene Teo <eugeneteo@...nel.sg> wrote:
->> Upstream commit 2646a1f6 (2.6.33-rc1) fixed an interesting gfs2 acl issue
->> late last year. Thanks Dan Rosenberg for informing us about this.
->>
->> http://git.kernel.org/linus/2646a1f61a3b5525914757f10fa12b5b94713648
->>
->> I didn't request a CVE name for this but if you need one, ping Steve.
->>
->> Thanks, Eugene
->> --
->> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
->>
+-- 
+Vincent Danen / Red Hat Security Response Team 
