@@ -1,22 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/03/6
-Message-ID: <20100603224743.GC13477@inutil.org>
-Date: Fri, 4 Jun 2010 00:47:43 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/16/8
+Message-ID: <20100316135615.GA8841@eltex.net>
+Date: Tue, 16 Mar 2010 16:56:15 +0300
+From: ArkanoiD <ark@...ex.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE requests for mplayer/vlc and abcm2ps
+Cc: Brian Stafford <brian@...fford.uklinux.net>, libesmtp@...fford.uklinux.net, security@...ntu.com, Pawel Salek <pawsa@...ochem.kth.se>, jskarvad@...hat.com
+Subject: Re: CVE Request: libesmtp does not check NULL bytes in commonName
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-please assign CVE IDs for these issues:
+And according to the draft we MUST ignore non-leaf value even if
+it is the only one CN, just incorrectly placed.
 
-1. mplayer/VLC:
-http://dzcore.wordpress.com/2009/07/27/dzc-2009-001-the-movie-player-and-vlc-media-player-real-data-transport-parsing-integer-underflow/
-http://www.debian.org/security/2010/dsa-2044
-http://www.debian.org/security/2010/dsa-2043
+On Tue, Mar 16, 2010 at 02:41:52PM +0100, Peter Sylvester wrote:
+> 
+> >
+> >Doesn't that lack a null byte check for subjAltNames?
+> >
+> 
+> The patch seems broken to me:
+> X509_NAME_get_text_by_NID gets the "highest" one, not the leaf value.
+> In case of two common names, this is wrong.
+> 
+> So instead of
+> int l = X509_NAME_get_text_by_NID (X509_get_subject_name (cert),
+>                             NID_commonName, buf, sizeof buf);
+> 
+> one needs something like:
+> 
+>    X509_NAME *name = X509_get_subject_name(cert) ;
+>     if(name)
+>       while((j=X509_NAME_get_index_by_NID(name,NID_commonName,i))>=0)
+>         i=j;
+> 
+> 
+> 
+> 
+> email protected and scanned by AdvascanTM - keeping email useful - 
+> www.advascan.com 
+> 
 
-2. abcm2ps:
-http://moinejf.free.fr/abcm2ps-5.txt
-
-Cheers,
-        Moritz
