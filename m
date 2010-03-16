@@ -1,30 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/18/11
-Message-ID: <2019270851.1733491274210239517.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 18 May 2010 15:17:19 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: phorum < 5.2.15 backend XSS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/16/6
+Message-ID: <20100316133349.GA2713@redhat.com>
+Date: Tue, 16 Mar 2010 13:33:49 +0000
+From: Joe Orton <jorton@...hat.com>
+To: Brian Stafford <brian@...fford.uklinux.net>
+Cc: oss-security@...ts.openwall.com, libesmtp@...fford.uklinux.net, security@...ntu.com, Pawel Salek <pawsa@...ochem.kth.se>, jskarvad@...hat.com
+Subject: Re: CVE Request: libesmtp does not check NULL bytes in commonName
 Content-Type: text/plain; charset=utf-8
 
------ "Steven M. Christey" <coley@...us.mitre.org> wrote:
-> On Tue, 18 May 2010, Josh Bressers wrote:
-> >
-> > Does someone have some additional details for this? I don't see enough
-> > information for me to assign a CVE id.
-> 
-> Welcome to daily life in CVE.
-> 
-> In this case we have an announcement from the vendor alluding to at least
-> one security problem, and a fix for it.  This is (unfortunately)
-> sufficient for us to assign a CVE to it.
-> 
+On Tue, Mar 16, 2010 at 11:46:11AM +0000, Brian Stafford wrote:
+> Ludwig Nussel wrote:
+> >Is there a way to comment on the draft? Maybe the author of the
+> >draft didn't think about the cases you'd like to handle.
+>
+> Normally IETF working groups create a mailing list for discussion of
+> drafts when chartered and any interested party may subscribe.
+> However, as far as I can tell, this I-D is an individual submission;
+> I can't find a mailing list address so probably best to mail the
+> authors directly.
 
-Good enough for me:
-CVE-2010-1629 phorum < 5.2.15 backend XSS
+Sorry, I should have forwarded the announcement in full:
 
-Thanks
+http://www.ietf.org/mail-archive/web/tls/current/msg05874.html
 
--- 
-    JB
+There is a mailing list set up here to discuss the draft:
+
+https://www.ietf.org/mailman/listinfo/certid
+
+Regards, Joe
