@@ -1,55 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/03/7
-Message-ID: <i2j4a6942471005031314n196b6e26ye256c8d8492ccd93@mail.gmail.com>
-Date: Mon, 3 May 2010 16:14:16 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: Henri Salo <henri@...v.fi>
-Cc: oss-security@...ts.openwall.com, bressers@...hat.com,  coley <coley@...re.org>
-Subject: Re: CVE request: lxr
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/16/1
+Message-Id: <201003160854.21313.ludwig.nussel@suse.de>
+Date: Tue, 16 Mar 2010 08:54:20 +0100
+From: Ludwig Nussel <ludwig.nussel@...e.de>
+To: oss-security@...ts.openwall.com
+Cc: libesmtp@...fford.uklinux.net, security@...ntu.com, Pawel Salek <pawsa@...ochem.kth.se>, jskarvad@...hat.com
+Subject: Re: CVE Request: libesmtp does not check NULL bytes in commonName
 Content-Type: text/plain; charset=utf-8
 
-Just to clarify, two XSS bugs were fixed with a single release (new
-version 0.9.8), and then ten days later, an update was included to
-resolve a third XSS bug.  The original CVE was originally requested
-for "multiple XSS vulnerabilities", but the description only covers
-one of them.
+Brian Stafford wrote:
+> I think the best approach is to apply Pawel's patch as this is the 
 
--Dan
+I must have missed that patch. Could you re-post it?
 
-On Mon, May 3, 2010 at 1:49 PM, Henri Salo <henri@...v.fi> wrote:
-> On Mon, 3 May 2010 13:34:05 -0400 (EDT)
-> Josh Bressers <bressers@...hat.com> wrote:
->
->> ----- "Henri Salo" <henri@...v.fi> wrote:
->>
->> > On Mon, 3 May 2010 09:31:16 -0400
->> > Dan Rosenberg <dan.j.rosenberg@...il.com> wrote:
->> >
->> > > I discovered and reported this bug at the same time as two other
->> > > XSS issues, including the one covered by CVE-2009-4497.  While
->> > > the commit may be a few days apart for some of these, I think
->> > > they can safely fall under the same CVE, unless it's standard
->> > > practice to assign CVEs for each of several related minor issues.
->> >
->> > Several XSS-vulnerabilities can have one CVE at least when those
->> > vulnerabilities are fixed at the same time.
->> >
->>
->> In this instance, I would assign it a new ID, as the old one already
->> exists and doesn't note both XSS fixes (it is possible someone fixed
->> just the one XSS and not both in an update).
->>
->> I've CC'd Steve Christey, for a second opinion.
->>
->> Thanks
->
-> My sentence was for normal cases. I have seen several reports with
-> multiple XSS-vulnerabilities. This usually is the case when someone
-> audits web-applications.
->
-> If the issue already has CVE-identifier already we should
-> definately assign new CVE for clarity.
->
-> ---
-> Henri Salo
->
+> simplest in terms of changes to the existing code base, and perhaps move 
+> to Ludwig's for a later release of libESMTP.  In the slightly longer 
+> term, I think the internet draft at
+> http://tools.ietf.org/html/draft-saintandre-tls-server-id-check is the 
+> one to follow but this might change substantially or even fall of the 
+> rails entirely.
+> 
+> [...] The I-D says only the leftmost 
+> component may contain a wildcard but this would rule out *.*.google.com 
+> The algorithm I've outlined is really a halfway house between RFC2818, 
+> which I think is too flexible, and the I-D; limit the positions of 
+> wildcards in the hostname and dont allow elaborate matches within a 
+> hostname component.  Any ideas or opinions on this would be useful.
+
+Is there a way to comment on the draft? Maybe the author of the
+draft didn't think about the cases you'd like to handle.
+
+cu
+Ludwig
+
+-- 
+ (o_   Ludwig Nussel
+ //\   
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
