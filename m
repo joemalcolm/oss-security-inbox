@@ -1,38 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/25/3
-Message-ID: <4CEE6CE7.6060308@redhat.com>
-Date: Thu, 25 Nov 2010 22:04:23 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/16/5
+Message-Id: <201003161428.49548.ludwig.nussel@suse.de>
+Date: Tue, 16 Mar 2010 14:28:49 +0100
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE tagged Linux kernel git repositories
+Cc: Brian Stafford <brian@...fford.uklinux.net>, libesmtp@...fford.uklinux.net, security@...ntu.com, Pawel Salek <pawsa@...ochem.kth.se>, jskarvad@...hat.com
+Subject: Re: CVE Request: libesmtp does not check NULL bytes in commonName
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Brian Stafford wrote:
+> Ludwig Nussel wrote:
+> > Brian Stafford wrote:
+> >   
+> >> I think the best approach is to apply Pawel's patch as this is the 
+> >
+> > I must have missed that patch. Could you re-post it?
+> >   
+> It's available at https://bugzilla.redhat.com/attachment.cgi?id=399131
 
-I have published CVE tagged Linux kernel git repositories for 2.6, 
-2.6.32.y and 2.6.36.y. They are tagged with all the security issues 
-reported this year.
+Doesn't that lack a null byte check for subjAltNames?
 
-You can find them at http://git.kernel.org or
-* 
-http://git.kernel.org/?p=linux/kernel/git/eugeneteo/linux-2.6-cve-tagged.git;a=summary
-* 
-http://git.kernel.org/?p=linux/kernel/git/eugeneteo/linux-2.6.32.y-cve-tagged.git;a=summary
-* 
-http://git.kernel.org/?p=linux/kernel/git/eugeneteo/linux-2.6.36.y-cve-tagged.git;a=summary
+cu
+Ludwig
 
-You can see when the security issues were addressed:
-http://git.kernel.org/?p=linux/kernel/git/eugeneteo/linux-2.6-cve-tagged.git;a=tags
-
-You can also search for security fixes by CVE names, e.g. CVE-2010-2943:
-http://git.kernel.org/?p=linux/kernel/git/eugeneteo/linux-2.6-cve-tagged.git;a=shortlog;h=refs/tags/CVE-2010-2943
-
-In this example, you will notice that there are two tags of the same CVE 
-name, CVE-2010-2943 and CVE-2010-2943.05. That means that there are five 
-patches for this CVE name, and you can access them via CVE-2010-2943.01 
-to .05.
-
-Hope this is useful!
-
-Thanks, Eugene
+-- 
+ (o_   Ludwig Nussel
+ //\   
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
