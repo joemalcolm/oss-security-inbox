@@ -1,25 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/22/1
-Message-ID: <AANLkTil7T_CLDVLRR58GNqX93gIFrCKi612LX4QDknls@mail.gmail.com>
-Date: Wed, 21 Jul 2010 23:17:01 -0400
-From: Greg Brockman <gdb@....EDU>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/17/4
+Message-Id: <201003171423.23403.ludwig.nussel@suse.de>
+Date: Wed, 17 Mar 2010 14:23:22 +0100
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: Junio C Hamano <gitster@...ox.com>
-Subject: CVE request: git
+Cc: Brian Stafford <brian@...fford.uklinux.net>, libesmtp@...fford.uklinux.net, security@...ntu.com, Pawel Salek <pawsa@...ochem.kth.se>, jskarvad@...hat.com
+Subject: Re: CVE Request: libesmtp does not check NULL bytes in commonName
 Content-Type: text/plain; charset=utf-8
 
-A fix for an exploitable buffer overrun was committed to git in [1].
-In particular, if an attacker were to create a crafted working copy
-where the user runs any git command, the attacker could force
-execution of arbitrary code.
+Brian Stafford wrote:
+> Since both the original and patched versions of match_component() 
+> implement wildcards rather less liberally than RFC 2818 implies, I 
+> decided to move towards the approach in the I-D.  match_component() now 
+> accepts either a string or a single wildcard '*'.  Matched characters 
+> are validated against the set of valid domain name component characters 
+> , that is, *.example.org will not match %.example.org, nor for that 
+> matter will the pattern %.example.org.  Question: should underline '_' 
+> be in the set of valid characters?
 
-This attack should be mitigated to a denial of service if git is
-compiled with appropriate stack-protecting flags.
+AFAIK underlines are not allowed in DNS. I'm sure someone knows the
+RFC for that too :-)
 
-This buffer overrun was introduced in [2], which first appeared in
-v1.5.6, and is fixed in v1.7.2.
+cu
+Ludwig
 
-Greg
-
-[1] http://git.kernel.org/?p=git/git.git;a=commit;h=3c9d0414ed2db0167e6c828b547be8fc9f88fccc
-[2] http://git.kernel.org/?p=git/git.git;a=commit;h=b44ebb19e3234c5dffe9869ceac5408bb44c2e20
+-- 
+ (o_   Ludwig Nussel
+ //\   
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
