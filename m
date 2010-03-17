@@ -1,46 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/16/3
-Message-ID: <4D0A340B.4090808@redhat.com>
-Date: Thu, 16 Dec 2010 16:45:15 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, Colin Walters <walters@...hat.com>
-Subject: CVE Request -- D-BUS -- Stack frame overflow by validating message with excessive number of nested variants
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/17/6
+Message-Id: <201003171432.58841.ludwig.nussel@suse.de>
+Date: Wed, 17 Mar 2010 14:32:58 +0100
+From: Ludwig Nussel <ludwig.nussel@...e.de>
+To: oss-security@...ts.openwall.com, Brian Stafford <brian@...fford.uklinux.net>
+Cc: libesmtp@...fford.uklinux.net, security@...ntu.com, Pawel Salek <pawsa@...ochem.kth.se>, jskarvad@...hat.com
+Subject: Re: CVE Request: libesmtp does not check NULL bytes in commonName
 Content-Type: text/plain; charset=utf-8
 
-Hello Josh, Steve, vendors,
+ArkanoiD wrote:
+> And according to the draft we MUST ignore non-leaf value even if
+> it is the only one CN, just incorrectly placed.
 
-   a stack frame overflow flaw was found in the way the D-BUS message
-bus service / messaging facility validated messages with
-excessive number of nested variants. A local, authenticated
-user could use this flaw to cause dbus daemon to crash
-due to a stack frame overflow (denial of service) via a
-specially-crafted message sent to the system bus.
+Many self-signed certificates seem to have an email address as leaf
+RDN. I guess that's because openssl's CA.sh asks for the mail
+address. So with that additional constraint the scary warning
+dialogs for self-signed certs are going to be even more confusing in
+the future.
 
-References:
-[1] http://www.remlab.net/op/dbus-variant-recursion.shtml
+cu
+Ludwig
 
-Upstream bug report:
-[2] https://bugs.freedesktop.org/show_bug.cgi?id=32321
-     (not public at the moment yet)
-
-Credit:
-Rémi Denis-Courmont
-
-Note: As noted in [1] this issue may also cause malfunction
-       of some other daemons depending on d-bus. Some examples
-       (from /var/log/messages on the affected host):
-
-       Dec 16 09:49:03 hostname avahi-daemon[30120]: Disconnected from D-Bus, exiting.
-       Dec 16 09:49:03 hostname avahi-daemon[30120]: Got SIGQUIT, quitting.
-       Dec 16 09:49:03 hostname NetworkManager[982]: <warn> disconnected by the system bus.
-       Dec 16 09:49:03 hostname NetworkManager[982]: no sender
-       Dec 16 09:49:03 hostname init: Disconnected from system bus
-
-Could you allocate a CVE id for this issue?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-
+-- 
+ (o_   Ludwig Nussel
+ //\   
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
