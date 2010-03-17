@@ -1,43 +1,12 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/06/7
-Message-ID: <Pine.GSO.4.64.1012061504520.25660@faron.mitre.org>
-Date: Mon, 6 Dec 2010 15:08:56 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/17/9
+Message-ID: <20100317140802.GA1391@eltex.net>
+Date: Wed, 17 Mar 2010 17:08:02 +0300
+From: ArkanoiD <ark@...ex.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Can I request a cve for pfsense regarding --> "pfSense "graph.php" Cross-Site Scripting Vulnerabilities"
+Cc: Ludwig Nussel <ludwig.nussel@...e.de>, libesmtp@...fford.uklinux.net, security@...ntu.com, Pawel Salek <pawsa@...ochem.kth.se>, jskarvad@...hat.com
+Subject: Re: CVE Request: libesmtp does not check NULL bytes in commonName
 Content-Type: text/plain; charset=utf-8
 
-
-The original Full-Disclosure post also mentions a number of issues 
-that only affect pfsense 2 beta 4.
-
-So, I've assigned CVE-2010-4412 for these other issues.
-
-To review:
-
-CVE-2010-4246 - graph.php (pfsense stable and 2 beta 4)
-
-CVE-2010-4412 - pkg_edit.php, pkg.php, status_graph.php, interfaces.php
-                 (only 2 beta 4)
-
-
-- Steve
-
-On Wed, 24 Nov 2010, Josh Bressers wrote:
-
-> ----- "dave b" <db.pub.mail@...il.com> wrote:
->
->> Can I request a cve for pfsense regarding --> "pfSense "graph.php"
->> Cross-Site Scripting Vulnerabilities"
->>
->> http://secunia.com/advisories/42138
->> (the original email can be found at
->> http://seclists.org/fulldisclosure/2010/Nov/43 ).
->
-> Please use CVE-2010-4246 for this.
->
-> Thanks.
->
-> --
->    JB
->
+..and for EV certificates processing (for which we should turn wildcards
+off completely), are those of any use beyond web applications?
