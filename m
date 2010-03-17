@@ -1,19 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/21/4
-Message-ID: <20100921113301.GB6101@openwall.com>
-Date: Tue, 21 Sep 2010 15:33:01 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/17/1
+Message-ID: <4BA029DF.3050906@kernel.sg>
+Date: Wed, 17 Mar 2010 09:01:19 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Subject: bzip2 CVE-2010-0405 integer overflow
+CC: coley@...us.mitre.org
+Subject: CVE-2009-4271 kernel: 32bit process on 64bit system DoS
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+STMicroelectronics reported a flaw in the Linux kernel, versions 2.6.9 
+to 2.6.17, when running on x86_64, where a user could use a regular 
+32bit process to trigger a kernel panic, without any special privileges. 
+  The bug occurs when a 32bit user process triggers a segfault (i.e. 
+de-reference a null-pointer) after having performed a mprotect() to 
+restrict any rwx access on its VDSO page.
 
-Here's some analysis of this vulnerability and the changes in 1.0.6:
+This only affects Red Hat Enterprise Linux 4.
 
-http://xorl.wordpress.com/2010/09/21/cve-2010-0405-bzip2-integer-overflow/
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-4271
 
-No conclusion on whether it is exploitable or not (and in what cases),
-yet maybe this will save someone a few minutes.
-
-Alexander
+Thanks, Eugene
