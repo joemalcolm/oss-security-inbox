@@ -1,117 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/23/2
-Message-Id: <20100323103455.NFMSTHBOFSHYFW@hackinthebox.org>
-Date: Tue, 23 Mar 2010 10:34:55 +0800
-From: Hafez Kamal <aphesz@...kinthebox.org>
-To: <oss-security@...ts.openwall.com>
-Subject: [HITB-Announce] HITBSecConf2009 - Malaysia Videos Released!
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/17/2
+Message-ID: <4BA02BA4.4030100@redhat.com>
+Date: Wed, 17 Mar 2010 09:08:52 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: coley@...us.mitre.org
+Subject: CVE-2010-0008 kernel: sctp remote denial of service
 Content-Type: text/plain; charset=utf-8
 
-The videos from the 7th annual Hack in The Box security conference held
-in Malaysia last year have been released! On a related note, do keep in
-mind that online registration for HITBSecConf2010 - Dubai closes in less
-than 4 weeks and the Call for Papers for HITBSecConf2010 - Amsterdam is
-still open for submissions (Submissions are due no later than 19th April 2010)!
+Telesys Software reported a flaw was found in the sctp_rcv_ootb() 
+function in the Linux kernel Stream Control Transmission Protocol (SCTP) 
+implementation. A remote attacker could send a specially-crafted SCTP 
+packet to a target system, resulting in a denial of service.
 
-HITB CFP
-http://cfp.hackinthebox.org/
+https://bugzilla.redhat.com/CVE-2010-0008
+http://git.kernel.org/linus/ece25dfa0991f65c4e1d26beb1c3c45bda4239b8
 
-===
-
-HITB Videos
-http://video.hitb.org/
-
-DL - Torrent - Day 1
-http://video.hitb.org/hitbsecconf2009malaysia-day1.torrent
-
-DL - Torrent - Day 2
-http://video.hitb.org/hitbsecconf2009malaysia-day2.torrent
-
-Presentation Materials
-http://conference.hitb.org/hitbsecconf2009kl/materials/
-
-----
-
-Keynote 1: Joe Grand (President, Grand Idea Studio)
-Keynote 2: Rop Gonggrijp (Hacker and Activist)
-Keynote 3: Ed Skoudis (Co-Founder, InGuardians)
-Keynote 4: Julian Assange (Founder of WikiLeaks.org)
-
-Presentations By:
-
-1.) Alex 'kuza55' Kouzemtchenko (Associate Consultant, statsec)
-
-2.) Alexander Gazet (Sogeti ESEC Research & Development)
-
-3.) Andrea Barisani (Chief Security Engineer, Inverse Path)
-
-4.) Babak Javadi (TOOOL USA)
-
-5.) Bruno Goncalves de Oliveira (Computer Engineer, iBLISS)
-
-6.) Chris Evans (Information Security Engineer/Troublemaker/Chrome
-Security, Google Corp)
-
-7.) Damien Aumaitre (Sogeti)
-
-8.) Daniele Bianco (Hardware Hacker, Inverse Path)
-
-9.) Deviant Olam (TOOOL USA)
-
-10.) Dimitrios Petropoulos (Managing Director, ENCODE Middle East)
-
-11.) Frédéric Raynal (Head of Research & Software Development,
-Sogeti/Cap Gemini)
-
-12.) Guillaume Delugré (Sogeti)
-
-13.) Haroon Meer (Technical Director, Sensepost)
-
-14.) Job De Haas (Riscure)
-
-15.) Julien Tinnes (Information Security Engineer, Google Corp)
-
-16.) Justin Lundy (Founder & CEO, Subterrain)
-
-17.) Lee Chin Sheng (Independent Network Security Researcher)
-
-18.) Lucas Adamski (Director, Security Engineering, Mozilla Corp)
-
-19.) Malaysian Amateur Radio Emergency Service (MARES)
-
-20.) Mark Dowd (ISS)
-
-21.) Meling Mudin (Founder, security.org.my)
-
-22.) Nguyen Anh Quynh (Researcher, Japan Institute of Advanced
-Industrial Science and Technology)
-
-23.) Nishad Herath (CEO, Novologica)
-
-24.) Paul Theriault (Consultant, SIFT)
-
-25.) Saumil Shah (Founder, Net-Square)
-
-26.) Sheran Gunasekera (Head of Research & Development, ZenConsult)
-
-27.) Steve Anson (Director, Forward Discovery)
-
-28.) Tavis Ormandy (Information Security Engineer, Google Corp)
-
-29.) Wes Brown (Security Consultant, IOActive)
-
-30.) Yoann Guillot (Sogeti ESEC Research & Development)
-
-
----
-Hafez Kamal
-HITB Crew
-Hack in The Box (M) Sdn. Bhd.
-Suite 26.3, Level 26, Menara IMC,
-No. 8 Jalan Sultan Ismail,
-50250 Kuala Lumpur,
-Malaysia
-
-Tel: +603-20394724
-Fax: +603-20318359
-
+Thanks, Eugene
