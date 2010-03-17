@@ -1,36 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/28/3
-Message-Id: <201009281117.56424.ludwig.nussel@suse.de>
-Date: Tue, 28 Sep 2010 11:17:56 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: clamav < 0.96.3 pdf bounds checking
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/17/12
+Message-ID: <4BA10FCC.8050104@redhat.com>
+Date: Wed, 17 Mar 2010 18:22:20 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request -- Transmission v1.92 
 Content-Type: text/plain; charset=utf-8
 
-Hanno Böck wrote:
-> As always, clamav doesn't mention security issues in it's release notes, but 
-> the changelog gives some insight.
-> 
-> The bundled bzip2 code is affected by CVE-2010-0405 which is no surprise.
-> 
-> This however sounds more interesting:
-> Mon Sep 20 14:50:34 EEST 2010 (edwin)
-> -------------------------------------
->  * libclamav/pdf.c: Add missing boundscheck to pdf code (bb #2226)
-> 
-> The referenced bug report is not public, but it sounds like this deserves a 
-> CVE.
+Hi Steve, vendors,
 
-Must be this commit:
-http://git.clamav.net/gitweb?p=clamav-devel.git;a=commitdiff;h=dc5143b4669ae39c79c9af50d569c28c798f33da
+   Transmission upstream has recently released latest, v1.92 version:
+     [1] http://trac.transmissionbt.com/wiki/Changes
 
-If bytesleft2 is negative the next memchr would likely cause a
-crash. Previous commits in that file also improve bounds checks.
-cu
-Ludwig
+   fixing one (potentially two) security issues:
+     a, Fix potential buffer overflow when adding maliciously-crafted magnet links
 
--- 
- (o_   Ludwig Nussel
- //\   
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+   References:
+     [2] http://trac.transmissionbt.com/ticket/2965
+     [3] http://trac.transmissionbt.com/wiki/Changes
+     [4] http://bugs.gentoo.org/show_bug.cgi?id=309831
+
+     --
+
+     b, Fix possible data corruption issue caused by data sent by bad peers during endgame
+        (this one I am not completely sure of, but when looking at the relevant bug record:
+     [5] http://trac.transmissionbt.com/ticket/1242
+         there is written:
+     [6] http://trac.transmissionbt.com/ticket/1242#comment:1
+         "My theory is that for some reason Transmission will download a corrupt part
+          from someone but not realize it until you do a manual verify. At this point
+          T will recognize the bad part and redownload it from the same person, which
+         just causes the problem again."
+
+         so to prevent someone from successfully downloading content of some torrent file,
+         for an attacker to should be enough to download a part of it, corrupt it and
+         share it. Not sure about the algorithm, Transmission decides which torrent
+         to retrieve content from, but if it is deterministic / predictable behavior /
+         algorithm, such attack could succeed).
+
+   References:
+     [7] http://trac.transmissionbt.com/ticket/1242
+     [8] http://trac.transmissionbt.com/ticket/1242#comment:1
+     [9] http://trac.transmissionbt.com/wiki/Changes
+
+Could you allocate CVE id(s) for this / these issue(s)?
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+
