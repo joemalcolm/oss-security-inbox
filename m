@@ -1,153 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/04/1
-Message-ID: <Pine.GSO.4.64.1008041453110.19654@faron.mitre.org>
-Date: Wed, 4 Aug 2010 15:12:33 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Dan Rosenberg <dan.j.rosenberg@...il.com>
-cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request [two ids] -- cabextract -- 1, Infinite loop in MS-ZIP and Quantum decoders (minor) 2, Integer wrap-around (crash) by  processing certain *.cab files in test archive mode
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/17/5
+Message-ID: <20100317132616.GA5801@eltex.net>
+Date: Wed, 17 Mar 2010 16:26:16 +0300
+From: ArkanoiD <ark@...ex.net>
+To: oss-security@...ts.openwall.com
+Cc: Brian Stafford <brian@...fford.uklinux.net>, libesmtp@...fford.uklinux.net, security@...ntu.com, Pawel Salek <pawsa@...ochem.kth.se>, jskarvad@...hat.com
+Subject: Re: CVE Request: libesmtp does not check NULL bytes in commonName
 Content-Type: text/plain; charset=utf-8
 
+Formally, they are not. But de facto they are there for a long time.
 
-Dan,
+On Wed, Mar 17, 2010 at 02:23:22PM +0100, Ludwig Nussel wrote:
+> Brian Stafford wrote:
+> > Since both the original and patched versions of match_component() 
+> > implement wildcards rather less liberally than RFC 2818 implies, I 
+> > decided to move towards the approach in the I-D.  match_component() now 
+> > accepts either a string or a single wildcard '*'.  Matched characters 
+> > are validated against the set of valid domain name component characters 
+> > , that is, *.example.org will not match %.example.org, nor for that 
+> > matter will the pattern %.example.org.  Question: should underline '_' 
+> > be in the set of valid characters?
+> 
+> AFAIK underlines are not allowed in DNS. I'm sure someone knows the
+> RFC for that too :-)
 
-Your proposal is a pretty good subset of my own perspective of when DoS 
-becomes security-relevant (and I've been meaning to do some kind of 
-CVE-related writeup on this, so thanks for the head start ;-)
-
-There are a couple challenges in this area, though:
-
-1) As Josh alluded to, I'm of the mindset of "better safe than sorry."
-    If an advisory doesn't come in fully-cooked with root-cause analysis
-    and clear research into the impact of the issue, you can't know what's
-    going on under the hood.  Maybe there's some evidence of memory
-    corruption, but the person doing the CVE assignment may not know that.
-
-2) Item 1 below gets fuzzy when you're analyzing a piece of software you
-    don't know yourself.  From a CVE assignment (and vuln database)
-    perspective, that's impossible - typically we are dealing with 10-20
-    different applications per day.  I don't know if MPEG-player X or
-    Doc-converter Y can have multiple sessions or state at the same time.
-    So the conservative approach is to include such issues.
-
-3) Item 1 gets fuzzy *if* you consider scenarios in which the affected
-    product is part of a chain of behaviors (say, a cron job) where a
-    larger, critical task can fail if the program crashes.  Consider an
-    image conversion utility that automatically makes thumbnails.  This is
-    probably very important functionality for lots of image farms and
-    social networking sites.
-
-4) Your item 2 below gets fuzzy when you consider how much of a role the
-    attacker has to have, i.e., how "user-assisted" the attack must be.
-    I would say that if a victim sets up a chat session with an
-    attacker, and the attacker can trigger a crash, that's valid (ignoring
-    that item 1 would also apply in typical chat programs).  With
-    everything being web-enabled with URL handlers these days, a
-    conservative approach would be to assume (unless otherwise specified)
-    that an attack only requires "reasonable" or typical actions on the
-    part of a user.  For example - clicking on a link or a button in your
-    web browser is reasonable behavior.
-
-Fuzzing definitely throws a wrench into this whole thing, because of the 
-large number of results and (usually) the lack of root-cause diagnosis. A 
-couple years ago, I used to joke to myself that someday, somebody would 
-figure out how to exploit NULL pointer dereferences.  Now that joke's not 
-so funny anymore - granted, it's a limited scenario, but it's a clear 
-demonstration that behavior once thought to be "safe" (from an 
-exploitability standpoint) might be proven unsafe at a later time. 
-Integer overflows, use-after-frees, double-frees, etc. have all been known 
-for decades but only recently have they been demonstrated to be of 
-significant security concern.
-
-You are right about this all being a slippery slope.  From a CVE 
-perspective, I am often concerned about the "snowball effect" of including 
-certain types of issues, but in the case of client-side DoS, I think we 
-just have to deal with the fact that client-side software has a very high 
-attack surface and, in general, is less protected than server-side 
-software (probably a reflection of the emphasis on server-side security in 
-earlier years).
-
-- Steve
-
-
-
-
-On Mon, 2 Aug 2010, Dan Rosenberg wrote:
-
-> This seems to be a bit of a slippery slope.  While I have no problem
-> with these particular issues being assigned CVEs, since they were
-> treated as security issues, fixed, and caused unintended application
-> behavior, I have to wonder if maybe it's a bad idea to give CVEs for
-> crashes of this variety.  Denial-of-service issues are tricky.  In my
-> opinion, the following types of DoS bugs are security relevant:
->
-> 1.  Crashes in client programs that maintain some additional state
-> beyond a single session. For example, a document reader with multiple
-> tabs where a crash results in losing the contents of other tabs, or a
-> web browser.
->
-> 2.  Issues that allow users to crash processes not under their own
-> control.  This includes remote DoS vulnerabilities, kernel panics,
-> crashes in services such as files that crash A/V engines when parsed,
-> etc.
->
-> 3.  Crashes in library code where many programs may be impacted.
->
-> 4.  Crashes in client applications where further exploitability is
-> possible (basically, promising memory corruption issues that haven't
-> been fully developed).
->
-> When you open it up to "anything that causes a crash", the pool of
-> "security" bugs expands to include every fuzz file that causes a crash
-> and every stability issue in every program.  For example, I have a
-> high number of fuzz files that cause crashes in the readelf utility in
-> non-exploitable ways.  I don't consider these relevant for security,
-> because if you need to trick a user into running the program to
-> trigger the crash and there are no additional consequences besides
-> them crashing the program you tricked them into running, there is no
-> negative security impact besides perhaps a confused victim.
->
-> Although, I suppose my fourth item is the one that presents a problem
-> - who gets to decide whether a program crash is exploitable or not?
-> What if they're wrong?  Just trying to spur some discussion on this,
-> I'd love to hear what others have to say - sometimes it's nice to
-> break up all the CVE assignments with an actual conversation.  :)
->
-> -Dan
->
-> On Mon, Aug 2, 2010 at 4:08 PM, Josh Bressers <bressers@...hat.com> wrote:
->> ----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
->>
->>> Hi Steve, vendors,
->>>
->>> � �two security issues have been reported against cabextract:
->>>
->>> 1, Infinite loop in MS-ZIP and Quantum decoders (minor issue):
->>>
->>> A deficiency has been reported in the way cabextract extracted certain
->>> Cabinet (*.cab) files, using the MZ-ZIP and Quantum decompressors. �If a
->>> local user was tricked into opening a specially-crafted *.cab file, it
->>> could lead to infinite loop.
->>>
->>
->> CVE-2010-2800
->>
->>> 2, Integer wrap-around (crash) by processing certain *.cab files in
->>> test archive mode
->>>
->>> An integer wrap-around flaw has been reported in the way cabextract
->>> processed certain Cabinet (*.cab) archive files. If a local user was
->>> tricked into opening a specially-crafted *.cab archive in test archive
->>> mode, it could lead to cabextract executable crash.
->>>
->>
->> CVE-2010-2801
->>
->>
->> Thanks.
->>
->> --
->> � �JB
->>
->
->
