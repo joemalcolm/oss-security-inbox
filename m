@@ -1,38 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/02/11
-Message-ID: <AANLkTimEbgV2VeitZ2Bi06Lb8vgjvL4aSZ1fmbNhe-Uz@mail.gmail.com>
-Date: Tue, 2 Nov 2010 20:08:58 +0100
-From: Pierre Joye <pierre.php@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: utf-8 security issue in php
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/17/3
+Message-ID: <4BA0AFED.2050501@stafford.uklinux.net>
+Date: Wed, 17 Mar 2010 10:33:17 +0000
+From: Brian Stafford <brian@...fford.uklinux.net>
+To: Ludwig Nussel <ludwig.nussel@...e.de>
+Cc: oss-security@...ts.openwall.com, libesmtp@...fford.uklinux.net, security@...ntu.com, Pawel Salek <pawsa@...ochem.kth.se>, jskarvad@...hat.com
+Subject: Re: CVE Request: libesmtp does not check NULL bytes in commonName
 Content-Type: text/plain; charset=utf-8
 
-hi,
+All
 
-On Tue, Nov 2, 2010 at 6:10 PM, Vincent Danen <vdanen@...hat.com> wrote:
-> * [2010-11-02 16:35:25 +0100] Pierre Joye wrote:
->
->> On Tue, Nov 2, 2010 at 3:24 PM, Josh Bressers <bressers@...hat.com> wrote:
->>
->>> As best as I can tell, this only needs one ID. Please use CVE-2010-3870.
->>
->> Thanks, I updated the bug report and the NEWS file.
->>
->> Please note that only 5.3 and later contains this fix. 5.3.4 will have the
->> fix.
->
-> Are you saying that 5.3 and later _need_ this fix?  I.e. that this
-> doesn't affect earlier versions?  Can you clarify?  Thanks.
+I've reviewed Ludwig's patch again in light of various issues in recent 
+discussion.  I have attached a patch incorporating this and one further 
+modification.
 
-This comment was not very clear, sorry.
+Since both the original and patched versions of match_component() 
+implement wildcards rather less liberally than RFC 2818 implies, I 
+decided to move towards the approach in the I-D.  match_component() now 
+accepts either a string or a single wildcard '*'.  Matched characters 
+are validated against the set of valid domain name component characters 
+, that is, *.example.org will not match %.example.org, nor for that 
+matter will the pattern %.example.org.  Question: should underline '_' 
+be in the set of valid characters?
 
-I'm saying that 5.3 and later have been changed to fix this problem. I
-have no idea if 5.2 requires a fix and won't investigate either (sadly
-no time). It was more for the CVE description, to be sure that the
-mention of 5.3+ will be present.
+I have not altered the match_domain() algorithm so it will still accept 
+a wildcard component in any position.  I have tested the modified match 
+against a number of valid and invalid patterns and domain names and 
+behaviour is as expected.
 
-Cheers,
--- 
-Pierre
+Other than that I reformatted the affected code through 'indent -gnu 
+-bad' and twiddled things to bring things in line with the 'house style' 
+and to stop code wandering of the right edge of the screen!
 
-@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+Regards
+Brian
+
+View attachment "smtp-tls.c.patch" of type "text/x-patch" (5638 bytes)
