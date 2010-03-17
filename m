@@ -1,41 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/03/4
-Message-ID: <1239837859.986861265220969996.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 3 Feb 2010 13:16:09 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/17/11
+Message-ID: <OFED0B9F63.82A1AA3A-ON862576E9.0051C649-862576E9.0051C648@us.ibm.com>
+Date: Wed, 17 Mar 2010 09:53:10 -0500
+From: Emily Ratliff <emilyr@...ibm.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- GMime-2.4.15
+Subject: Re: CVE Request: libesmtp does not check NULL bytes in commonName
 Content-Type: text/plain; charset=utf-8
 
+Return Receipt
+                                                                           
+   Your       Re: [oss-security] CVE Request: libesmtp does not check NULL 
+   document:  bytes in commonName                                          
+                                                                           
+   was        emilyr@...ibm.com                                            
+   received                                                                
+   by:                                                                     
+                                                                           
+   at:        03/17/2010 09:53:11 CDT                                      
+                                                                           
 
------ "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
 
-> Hi Josh, Steve, vendors,
-> 
->    GMime upstream has released latest 2.4.15 [1] version of the
-> library fixing one security issue. From 2.4.15-changes [2] file:
-> 
-> 2010-01-31  Jeffrey Stedfast  <fejj@...ell.com>
-> 
-> 	* gmime/gmime-encodings.h (GMIME_UUENCODE_LEN): Fixed to prevent
-> 	possible buffer overflows.
-> 
-> References:
-> 
-> [1] http://ftp.gnome.org/pub/GNOME/sources/gmime/2.4/
-> [2]
-> http://ftp.gnome.org/pub/GNOME/sources/gmime/2.4/gmime-2.4.15.changes
-> [3]
-> http://ftp.gnome.org/pub/GNOME/sources/gmime/2.4/gmime-2.4.14-2.4.15.diff.gz
-> [4] http://secunia.com/advisories/38459/
-> 
-> Could you allocate a CVE id for this?
-> 
 
-Please use CVE-2010-0409 for this.
-
-Thanks.
-
--- 
-    JB
