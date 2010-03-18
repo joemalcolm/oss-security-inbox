@@ -1,46 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/09/2
-Message-ID: <1289194730.2444821278633901127.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 8 Jul 2010 20:05:01 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - kernel: nfsd4: bug in read_buf
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/18/2
+Message-ID: <20100318210453.GM2524@redhat.com>
+Date: Thu, 18 Mar 2010 15:04:53 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- Unbound v1.4.3 -- 64 bit platforms specific remote DoS
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-2521
+* [2010-03-18 14:59:53 -0400] Steven M. Christey wrote:
 
-Thanks.
+>On Tue, 16 Mar 2010, Vincent Danen wrote:
+>
+>>Please do _not_ use CVE-2010-0735 for this issue, but use CVE-2010-0969
+>>instead.
+>
+>CVE-2010-0735 is going to be marked for rejection so it should not be 
+>used for any issue.  CVE-2010-0969 will be updated accordingly.
+
+Perfect.  Thanks, Steve.
 
 -- 
-    JB
-
-
------ "Eugene Teo" <eugeneteo@...nel.sg> wrote:
-
-> https://bugzilla.redhat.com/show_bug.cgi?id=612028
-> Upstream commit: http://git.kernel.org/linus/2bc3c117
-> 
-> Introduced in commit 89fc0a31 ( v2.5.49) and 099e99f0 (v2.6.0-test3).
-> 
-> Fixed in v2.6.34-rc6.
-> 
-> "When read_buf is called to move over to the next page in the pagelist
-> 
-> of an NFSv4 request, it sets argp->end to essentially a random number,
-> 
-> certainly not an address within the page which argp->p now points to.
-> 
-> So subsequent calls to READ_BUF will think there is much more than a 
-> page of spare space (the cast to u32 ensures an unsigned comparison)
-> so 
-> we can expect to fall off the end of the second page."
-> 
-> There's a possibility of triggering this with a specially crafted NFS
-> 
-> WRITE request (if accepted by the server).
-> 
-> Thanks, Eugene
-> -- 
-> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i);
-> }
+Vincent Danen / Red Hat Security Response Team 
