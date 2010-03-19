@@ -1,42 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/11/1
-Message-Id: <201012112017.00150.remi@remlab.net>
-Date: Sat, 11 Dec 2010 20:16:59 +0200
-From: "Rémi Denis-Courmont" <remi@...lab.net>
-To: dbus@...ts.freedesktop.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Clarifications on the D-Bus specification
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/19/1
+Message-ID: <4BA3535E.8010805@redhat.com>
+Date: Fri, 19 Mar 2010 11:35:10 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request -- Sahana -- v0.6.2.2 -- Authentication bypass via "acl_enable_acl" URLs 
 Content-Type: text/plain; charset=utf-8
 
-Replying to self...
+Hi Steve, vendors,
 
-On Friday 10 December 2010, Rémi Denis-Courmont wrote:
-> On Fri, 10 Dec 2010 20:52:40 +0100, Thiago Macieira <thiago@....org> wrote:
-> > The other thing is protection against an attack vector -- an exploit
-> > by recursion. If the protection is by applying one of the limits,
-> > then let's use it.
-> 
-> The specification does not specify any limits on variant recursion, that I
-> can find. So it's not a matter of applying a limit that was not applied
-> this far. It's a first matter of adding a new limit to the protocol - if it
-> is needed anyhow.
+   Christopher showed:
+     [1] http://archives.neohapsis.com/archives/bugtraq/2010-03/0156.html
 
-So in fact, the bus daemon does crash with a few tens of thousands of nested 
-variants, at least on 386 (tested Debian D-Bus 1.2.24 and Ubuntu D-Bus 1.4.0):
-http://www.remlab.net/op/dbus-variant-recursion.shtml
+   a deficiency in the way, Sahana disaster management system
+   performed user authentication. Visiting a certain URL
+   would allow an attacker to view (and potentially modify)
+   information, which should be otherwise protected by authentication.
 
-I already filed the issue as FreeDesktop bug #32321.
+   Upstream bug report:
+     [2] http://sourceforge.net/tracker/?func=detail&aid=2970786&group_id=127855&atid=709778
 
-The issue might also affect other non-libdbus-based implementations but I have 
-not tested any of those. It might also affect programs that parse 'any' message 
-recursively such as dbus-send, but again I have not tested that.
+   References:
+     [3] http://archives.neohapsis.com/archives/bugtraq/2010-03/0156.html
+     [4] http://secunia.com/advisories/39020/
+
+   Affected versions:
+     Issue reported against v0.6.2.2. Other versions may be also affected.
+
+   Credit:
+     Christopher
+
+Could you allocate a CVE id for this?
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
 
-I should note that I could not convince libdbus to write a deep enough 
-message. At about two hundred nested containers, libdbus made the glibc heap 
-checks abort - probably a separate bug. If run under valgrind then libdbuds 
-'cleanly' failed to write a message with about 400 nested containers.
-
--- 
-Rémi Denis-Courmont
-http://www.remlab.net/
