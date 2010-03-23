@@ -1,40 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/08/3
-Message-ID: <20100708204414.GA21788@inutil.org>
-Date: Thu, 8 Jul 2010 22:44:14 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/23/3
+Message-ID: <4BA84D63.5090004@kernel.sg>
+Date: Tue, 23 Mar 2010 13:10:59 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kurt@...fried.org>
-Subject: Re: Bugzilla 3.7.1 CVE request
+CC: coley@...us.mitre.org
+Subject: CVE requests 6x kernel vulns still pending
 Content-Type: text/plain; charset=utf-8
 
-Reed Loden wrote:
+Hi Steve,
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> On Tue, 6 Jul 2010 00:51:40 -0600
-> Kurt Seifried <kurt@...fried.org> wrote:
-> 
-> > CVE # for this please.
-> > 
-> > http://www.bugzilla.org/security/3.7.1/
-> 
-> This security issue only affects the 3.7 and 3.7.1 development
-> "snapshots" (basically, alpha/beta quality). It's highly unlikely that
-> any distro would be tracking this unstable version/branch, so is a CVE
-> really required? If so, Mozilla can assign one from its pool.
-> 
-> I usually deal with getting CVEs assigned for Bugzilla issues, and I
-> just didn't think this one required one... However, maybe I was
-> mistaken in that.
+There are six CVE requests still not assigned with a name yet.
 
-I don't think that development snapshots needs a CVE ID, but there's 
-at least one more Bugzilla vulnerability fixed in a release which hasn't 
-been assigned a CVE ID so far:
+1) kernel information leak via userspace USB interface
+2) kernel: ALSA: hda-intel: Avoid divide by zero crash
+3) kernel: NFS DoS related to "automount" symlinks
+4) kernel: dvb-core: ULE decapsulation DoS
+5) kernel: NFS: Fix an Oops when truncating a file
+6) kernel: bluetooth: potential bad memory access with sysfs files
 
-http://www.bugzilla.org/security/3.2.3/
-https://bugzilla.mozilla.org/show_bug.cgi?id=495257
+Can you please assign a name to them soon?
 
-Cheers,
-        Moritz
+Thanks, Eugene
