@@ -1,54 +1,117 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/29/9
-Message-ID: <496727109.726411285784536703.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 29 Sep 2010 14:22:16 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Marcus Meissner <meissner@...e.de>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - kernel: prevent heap corruption in snd_ctl_new()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/23/2
+Message-Id: <20100323103455.NFMSTHBOFSHYFW@hackinthebox.org>
+Date: Tue, 23 Mar 2010 10:34:55 +0800
+From: Hafez Kamal <aphesz@...kinthebox.org>
+To: <oss-security@...ts.openwall.com>
+Subject: [HITB-Announce] HITBSecConf2009 - Malaysia Videos Released!
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-3442
+The videos from the 7th annual Hack in The Box security conference held
+in Malaysia last year have been released! On a related note, do keep in
+mind that online registration for HITBSecConf2010 - Dubai closes in less
+than 4 weeks and the Call for Papers for HITBSecConf2010 - Amsterdam is
+still open for submissions (Submissions are due no later than 19th April 2010)!
 
-Thanks.
+HITB CFP
+http://cfp.hackinthebox.org/
 
--- 
-    JB
+===
+
+HITB Videos
+http://video.hitb.org/
+
+DL - Torrent - Day 1
+http://video.hitb.org/hitbsecconf2009malaysia-day1.torrent
+
+DL - Torrent - Day 2
+http://video.hitb.org/hitbsecconf2009malaysia-day2.torrent
+
+Presentation Materials
+http://conference.hitb.org/hitbsecconf2009kl/materials/
+
+----
+
+Keynote 1: Joe Grand (President, Grand Idea Studio)
+Keynote 2: Rop Gonggrijp (Hacker and Activist)
+Keynote 3: Ed Skoudis (Co-Founder, InGuardians)
+Keynote 4: Julian Assange (Founder of WikiLeaks.org)
+
+Presentations By:
+
+1.) Alex 'kuza55' Kouzemtchenko (Associate Consultant, statsec)
+
+2.) Alexander Gazet (Sogeti ESEC Research & Development)
+
+3.) Andrea Barisani (Chief Security Engineer, Inverse Path)
+
+4.) Babak Javadi (TOOOL USA)
+
+5.) Bruno Goncalves de Oliveira (Computer Engineer, iBLISS)
+
+6.) Chris Evans (Information Security Engineer/Troublemaker/Chrome
+Security, Google Corp)
+
+7.) Damien Aumaitre (Sogeti)
+
+8.) Daniele Bianco (Hardware Hacker, Inverse Path)
+
+9.) Deviant Olam (TOOOL USA)
+
+10.) Dimitrios Petropoulos (Managing Director, ENCODE Middle East)
+
+11.) Frédéric Raynal (Head of Research & Software Development,
+Sogeti/Cap Gemini)
+
+12.) Guillaume Delugré (Sogeti)
+
+13.) Haroon Meer (Technical Director, Sensepost)
+
+14.) Job De Haas (Riscure)
+
+15.) Julien Tinnes (Information Security Engineer, Google Corp)
+
+16.) Justin Lundy (Founder & CEO, Subterrain)
+
+17.) Lee Chin Sheng (Independent Network Security Researcher)
+
+18.) Lucas Adamski (Director, Security Engineering, Mozilla Corp)
+
+19.) Malaysian Amateur Radio Emergency Service (MARES)
+
+20.) Mark Dowd (ISS)
+
+21.) Meling Mudin (Founder, security.org.my)
+
+22.) Nguyen Anh Quynh (Researcher, Japan Institute of Advanced
+Industrial Science and Technology)
+
+23.) Nishad Herath (CEO, Novologica)
+
+24.) Paul Theriault (Consultant, SIFT)
+
+25.) Saumil Shah (Founder, Net-Square)
+
+26.) Sheran Gunasekera (Head of Research & Development, ZenConsult)
+
+27.) Steve Anson (Director, Forward Discovery)
+
+28.) Tavis Ormandy (Information Security Engineer, Google Corp)
+
+29.) Wes Brown (Security Consultant, IOActive)
+
+30.) Yoann Guillot (Sogeti ESEC Research & Development)
 
 
------ "Eugene Teo" <eugene@...hat.com> wrote:
+---
+Hafez Kamal
+HITB Crew
+Hack in The Box (M) Sdn. Bhd.
+Suite 26.3, Level 26, Menara IMC,
+No. 8 Jalan Sultan Ismail,
+50250 Kuala Lumpur,
+Malaysia
 
-> On 09/29/2010 03:01 PM, Marcus Meissner wrote:
-> > On Wed, Sep 29, 2010 at 02:49:52PM +0800, Eugene Teo wrote:
-> >> Reported by Dan Rosenberg. The snd_ctl_new() function in
-> >> sound/core/control.c allocates space for a snd_kcontrol struct by
-> >> performing arithmetic operations on a user-provided size without
-> >> checking for integer overflow.  If a user provides a large enough
-> size,
-> >> an overflow will occur, the allocated chunk will be too small, and
-> a
-> >> second user-influenced value will be written repeatedly past the
-> bounds
-> >> of this chunk. This code is reachable by unprivileged users who
-> have
-> >> permission to open a /dev/snd/controlC* device (on many distros,
-> this is
-> >> group "audio") via the SNDRV_CTL_IOCTL_ELEM_ADD and
-> >> SNDRV_CTL_IOCTL_ELEM_REPLACE ioctls.
-> >>
-> >> Upstream commit:
-> >>
-> http://git.kernel.org/linus/5591bf07225523600450edd9e6ad258bb877b779
-> >
-> > Doesnt seem to be valid. There is also no change in
-> sounds/core/control.c
-> > since April in current mainline git.
-> 
-> Please use this link.
-> 
-> http://git.kernel.org/?p=linux/kernel/git/tiwai/sound-2.6.git;a=commitdiff;h=5591bf07225523600450edd9e6ad258bb877b779
-> 
-> Eugene
-> -- 
-> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i);
-> }
+Tel: +603-20394724
+Fax: +603-20318359
+
