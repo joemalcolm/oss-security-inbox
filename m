@@ -1,48 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/06/8
-Message-ID: <1722500202.417931291670152341.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 6 Dec 2010 16:15:52 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/24/4
+Message-ID: <20100324075743.23016804@foo.fgeek.fi>
+Date: Wed, 24 Mar 2010 07:57:43 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Cc: Ulrik Persson <ddefrostt@...il.com>, Hans de Goede <hdegoede@...hat.com>, Stanislav Ochotnicky <sochotnicky@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Xfig: Stack-based buffer overflow by processing FIG image with crafted color definition
+Cc: jlieskov@...hat.com, "Steven M. Christey" <coley@...us.mitre.org>, cve@...re.org
+Subject: Re: CVE Request -- MediaWiki - v1.15.2
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-4262
+On Tue, 09 Mar 2010 21:46:31 +0100
+Jan Lieskovsky <jlieskov@...hat.com> wrote:
 
-Thanks.
-
--- 
-    JB
-
-
------ "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
-
-> Hello Josh, Steve, vendors,
+> Hi Steve, vendors,
 > 
->    the Team of Underground Stockholm researchers reported:
->    [1] https://bugzilla.redhat.com/show_bug.cgi?id=657981
+>    MediaWiki upstream has released latest v1.15.2 version:
+>      [1]
+> http://lists.wikimedia.org/pipermail/mediawiki-announce/2010-March/000088.html
 > 
->    i.e:
+>    fixing two security issues (from upstream advisory):
+>    a, a CSS validation issue was discovered which allows editors to
+> display external images in wiki pages.
+>    b, a data leakage vulnerability was discovered in thumb.php which
+> affects wikis which restrict access to private files using
+> img_auth.php, or some similar scheme.
 > 
->    A stack-based buffer overflow flaw was found in
->    the way Xfig processed certain FIG images. A remote
->    attacker could create a FIG image with specially-crafted
->    color definition, and trick the local, unsuspecting
->    user into opening it, which could lead to xfig executable
->    crash or, potentially, arbitrary code execution with
->    the privileges of the user running the executable.
+> References:
+>    [2]
+> http://lists.wikimedia.org/pipermail/mediawiki-announce/2010-March/000088.html
+> [3] http://secunia.com/advisories/38856/ [4]
+> http://download.wikimedia.org/mediawiki/1.15/mediawiki-1.15.2.patch.gz
 > 
->    Public PoC:
->    [2] https://bugzilla.redhat.com/attachment.cgi?id=463393
-> 
->    Flaw severity note:
->    On systems with compile time buffer checks (FORTIFY_SOURCE)
->    feature enabled, the impact of this flaw is mitigated to
->    be only crash.
-> 
-> Could you allocate CVE id for this?
+> Could you allocate CVE ids for these?
 > 
 > Thanks && Regards, Jan.
 > --
 > Jan iankko Lieskovsky / Red Hat Security Response Team
+
+Has these been assigned? There has been security fixes in
+Linux- distributions for example Debian[1] without CVE.
+
+1: http://lists.debian.org/debian-security-announce/2010/msg00062.html
+
+---
+Henri Salo
