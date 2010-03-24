@@ -1,39 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/30/7
-Message-ID: <20100930211356.GA2592@galadriel.inutil.org>
-Date: Thu, 30 Sep 2010 23:13:56 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Horde Gollem <1.1.2 XSS in view.php
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/24/5
+Message-Id: <20100324102521.TSBKPAMGCGENJG@hackinthebox.org>
+Date: Wed, 24 Mar 2010 10:25:21 +0800
+From: Hafez Kamal <aphesz@...kinthebox.org>
+To: <oss-security@...ts.openwall.com>
+Subject: [HITB-Announce] HITBSecConf2009 - Malaysia Videos Released! *Correction*
 Content-Type: text/plain; charset=utf-8
 
-Hi Alex,
+ Justin Lundy (Founder & CEO, Subterrain) was replaced by Fyodor Yarochkin & The Grugq. Sorry about that Fyodor! :D
 
-> while there seem to be CVE IDs for most of the issues fixed in the
-> latest Horde packages, I cannot find one for this issue:
-> 
-> >From http://bugs.horde.org/ticket/9191:
-> "http://localhost/horde/gollem/view.php?actionID=view_file&type=txt&file=<script>alert("XSS")</script>&dir=../baddir/&driver=file
-> Vulnerable file : view.php (Line 32 - 46)"
-> 
-> Fixed in git (and released in 1.1.2):
-> http://lists.horde.org/archives/commits/2010-August/004747.html
-> http://lists.horde.org/archives/announce/2010/000565.html
+---
+Hafez Kamal
+HITB Crew
+Hack in The Box (M) Sdn. Bhd.
+Suite 26.3, Level 26, Menara IMC,
+No. 8 Jalan Sultan Ismail,
+50250 Kuala Lumpur,
+Malaysia
 
-There appear to be quite a few new issues related to Horde and
-related packages. AFAICT the issues mentioned below are also new
-and haven't been assigned CVE IDs?
-
-Horde:
-http://lists.horde.org/archives/announce/2010/000568.html
-
-Dimp (Dynamic Imp):
-http://lists.horde.org/archives/announce/2010/000561.html
-
-Imp4 
-http://archives.neohapsis.com/archives/fulldisclosure/2010-09/0379.html
-
-Cheers,
-        Moritz
-
+Tel: +603-20394724
+Fax: +603-20318359
 
