@@ -1,30 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/12/4
-Message-ID: <1301976200.802341289567997556.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 12 Nov 2010 08:19:57 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/24/2
+Message-ID: <4BA96DAA.3070307@redhat.com>
+Date: Wed, 24 Mar 2010 09:40:58 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: possible kernel oops from user MSS
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE requests 6x kernel vulns still pending
 Content-Type: text/plain; charset=utf-8
 
+>> 3) kernel: NFS DoS related to "automount" symlinks
+>
+> What exactly is the DoS that happens here?
 
------ "Eugene Teo" <eugene@...hat.com> wrote:
+NULL pointer dereference.
 
-> With commit f5fff5dc8a7a3f395b0525c02ba92c95d42b7390, a user program
-> can pass in TCP_MAXSEG of 12 (or TCPOLEN_TSTAMP_ALIGNED), and cause
-> kernel oops with division by 0 in tcp_select_initial_window.
-> 
-> Proposed patch:
-> http://www.spinics.net/lists/netdev/msg146495.html
-> 
-> Reference:
-> http://www.spinics.net/lists/netdev/msg146405.html
+>> 5) kernel: NFS: Fix an Oops when truncating a file
+>
+> I assume that nfs_wait_on_request() can be influenced by a non-root user
+> to generate the interrupt that triggers the Ooops?
 
+If the non-root user kills the task while truncating the file, this 
+could lead to the existence of unmapped pages that still have an 
+attached nfs_page structure in page->private. nfs_wb_page_cancel() waits 
+for I/O to complete, and when it completes, it will find itself with an 
+unmapped page and oops.
 
-Please use CVE-2010-4165.
+> All of these will be filled in sometime Wednesday.
+>
+> - Steve
 
-Thanks.
+Thanks!
 
+Eugene
 -- 
-    JB
+Eugene Teo / Red Hat Security Response Team
