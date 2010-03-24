@@ -1,28 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/02/2
-Message-ID: <4C0643C7.6020503@redhat.com>
-Date: Wed, 02 Jun 2010 13:43:03 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>, oss-security <oss-security@...ts.openwall.com>
-CC: Panu Matilainen <pmatilai@...hat.com>, Jindrich Novy <jnovy@...hat.com>, Florian Festi <ffesti@...hat.com>, Matt McCutchen <matt@...tmccutchen.net>
-Subject: CVE Request -- rpm -- Fails to remove the SUID/SGID bits on package upgrade (RH BZ#598775)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/24/3
+Message-ID: <4BA97612.4070500@kernel.sg>
+Date: Wed, 24 Mar 2010 10:16:50 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
+To: oss-security@...ts.openwall.com
+Subject: kernel: bluetooth: Fix kernel crash on L2CAP stress tests
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve, vendors,
+Heads-up, I believe this fix addresses a security-relevant issue. See 
+upstream commit c2c77ec8. It was introduced in commit f2fcfcd6 
+(v2.6.32-rc1). I did not request a CVE name for this since it did not 
+affect any of our supported Red Hat kernels.
 
-    Matt McCutchen pointed out a deficiency in the way rpm handled rpm package upgrades --
-it failed to clear out the SUID/SGID bits of the old file by file replacement when privileged
-user performed package upgrade. Under certain circumstances, a local, authenticated user could
-use this flaw to escalate their privileges.
+http://git.kernel.org/linus/c2c77ec83bdad17fb688557b5b3fdc36661dd1c6
+http://git.kernel.org/linus/f2fcfcd670257236ebf2088bbdf26f6a8ef459fe
 
-Red Hat Bugzilla entry:
-   [1] https://bugzilla.redhat.com/show_bug.cgi?id=598775
+https://bugzilla.redhat.com/show_bug.cgi?id=576433
 
-Upstream changeset:
-   [2] http://rpm.org/gitweb?p=rpm.git;a=commit;h=ca2d6b2b484f1501eafdde02e1688409340d2383
+If it affected your commercially supported kernel, please request a CVE 
+name. Thanks.
 
-Could you allocate CVE id for this?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Eugene
