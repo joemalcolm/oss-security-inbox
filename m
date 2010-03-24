@@ -1,29 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/29/3
-Message-ID: <20100929070115.GB22643@suse.de>
-Date: Wed, 29 Sep 2010 09:01:15 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/24/1
+Message-ID: <Pine.GSO.4.64.1003232056560.8753@faron.mitre.org>
+Date: Tue, 23 Mar 2010 21:12:19 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - kernel: prevent heap corruption in snd_ctl_new()
+cc: coley@...us.mitre.org
+Subject: Re: CVE requests 6x kernel vulns still pending
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Sep 29, 2010 at 02:49:52PM +0800, Eugene Teo wrote:
-> Reported by Dan Rosenberg. The snd_ctl_new() function in 
-> sound/core/control.c allocates space for a snd_kcontrol struct by 
-> performing arithmetic operations on a user-provided size without 
-> checking for integer overflow.  If a user provides a large enough size, 
-> an overflow will occur, the allocated chunk will be too small, and a 
-> second user-influenced value will be written repeatedly past the bounds 
-> of this chunk. This code is reachable by unprivileged users who have 
-> permission to open a /dev/snd/controlC* device (on many distros, this is 
-> group "audio") via the SNDRV_CTL_IOCTL_ELEM_ADD and 
-> SNDRV_CTL_IOCTL_ELEM_REPLACE ioctls.
-> 
-> Upstream commit:
-> http://git.kernel.org/linus/5591bf07225523600450edd9e6ad258bb877b779
 
-Doesnt seem to be valid. There is also no change in sounds/core/control.c
-since April in current mainline git.
- 
-Ciao, Marcus
+On Tue, 23 Mar 2010, Eugene Teo wrote:
+
+> 1) kernel information leak via userspace USB interface
+
+Use CVE-2010-1083
+
+Seems reasonable to skip the secondary issue brought up by Marcus.
+
+> 2) kernel: ALSA: hda-intel: Avoid divide by zero crash
+
+Use CVE-2010-1085
+
+> 3) kernel: NFS DoS related to "automount" symlinks
+
+What exactly is the DoS that happens here?
+
+Use CVE-2010-1088 (note that this number is out of order)
+
+> 4) kernel: dvb-core: ULE decapsulation DoS
+
+Use CVE-2010-1086
+
+> 5) kernel: NFS: Fix an Oops when truncating a file
+
+I assume that nfs_wait_on_request() can be influenced by a non-root user 
+to generate the interrupt that triggers the Ooops?
+
+Use CVE-2010-1087
+
+> 6) kernel: bluetooth: potential bad memory access with sysfs files
+
+Use CVE-2010-1084 (notice how this number is out of order)
+
+
+All of these will be filled in sometime Wednesday.
+
+- Steve
