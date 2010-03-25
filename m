@@ -1,38 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/17/3
-Message-ID: <4BA0AFED.2050501@stafford.uklinux.net>
-Date: Wed, 17 Mar 2010 10:33:17 +0000
-From: Brian Stafford <brian@...fford.uklinux.net>
-To: Ludwig Nussel <ludwig.nussel@...e.de>
-Cc: oss-security@...ts.openwall.com, libesmtp@...fford.uklinux.net, security@...ntu.com, Pawel Salek <pawsa@...ochem.kth.se>, jskarvad@...hat.com
-Subject: Re: CVE Request: libesmtp does not check NULL bytes in commonName
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/26/1
+Message-ID: <4BABD158.7010206@gmail.com>
+Date: Thu, 25 Mar 2010 22:10:48 +0100
+From: Jonathan Brossard <endrazine@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CFPs and con invitations on the list
 Content-Type: text/plain; charset=utf-8
 
-All
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I've reviewed Ludwig's patch again in light of various issues in recent 
-discussion.  I have attached a patch incorporating this and one further 
-modification.
+Hello,
 
-Since both the original and patched versions of match_component() 
-implement wildcards rather less liberally than RFC 2818 implies, I 
-decided to move towards the approach in the I-D.  match_component() now 
-accepts either a string or a single wildcard '*'.  Matched characters 
-are validated against the set of valid domain name component characters 
-, that is, *.example.org will not match %.example.org, nor for that 
-matter will the pattern %.example.org.  Question: should underline '_' 
-be in the set of valid characters?
+For what it worthes : I didn't expect to trigger such a debate on the
+list. I merely posted here because:
+1) I'd really like to see people from this list to the HES conference.
+2) I saw a hibt post on this very list little time ago.
 
-I have not altered the match_domain() algorithm so it will still accept 
-a wildcard component in any position.  I have tested the modified match 
-against a number of valid and invalid patterns and domain names and 
-behaviour is as expected.
+Sorry for the blatant inconvenience...
 
-Other than that I reformatted the affected code through 'indent -gnu 
--bad' and twiddled things to bring things in line with the 'house style' 
-and to stop code wandering of the right edge of the screen!
+Best regards,
 
-Regards
-Brian
+Jonathan-
 
-View attachment "smtp-tls.c.patch" of type "text/x-patch" (5638 bytes)
+Matthias Andree wrote:
+> Am 25.03.2010 15:24, schrieb Josh Bressers:
+> [...]
+>> I think those headers bring up a good point. This is comparable to the old
+>> days of cross posting to lots of gropus on usenet (for you young folks, it
+>> was frowned upon). Perhaps we encourage messages DIRECTED at oss-security,
+>> rather than shotgun announcements.
+> 
+> Which will then be disassembled into a series of mail-merged individual
+> invitations (aka. multi-posting, which was worse than cross-posting)?  If that
+> would happen, I'd object.  I also object to "badly cross-posted" invitations.
+> 
+>> 4) Approve posts from list memebers who've been on the list for > 1 month.
+>>     (I suspect this is the best solution)
+> 
+> A "List member[...]" might be a lurker, might be an occasional contributor, or a
+> regular contributor.  As a pointed question: Would you allow spammers to dump
+> their UCE here if they only were subscribers for four weeks?
+> 
+> More seriously, what relevance has the duration of a subscription?  My answer
+> is: none whatsoever.  There simply isn't any merit in being subscribed alone.
+> I find that this criterion, while objective, says nothing about contributions of
+> the subscriber to the list, and is therefore not useful.
+> 
+> I acknowledge that finding objective criteria is hard, but #4 is IMO just a very
+> bad loophole.
+> 
+> FWIW, I'm getting spamvertisements for conferences directed at me personally,
+> and I find that offensive and it should be a reason to prohibit the conference
+> altogether, so as to have a real incentive not to spam.
+> 
+> At the very least, conference advertisements, if allowed in moderation, should
+> be tagged so that people can automatically filter them. Filter instructions
+> could then be on the list's accompanying homepage.
+> 
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+
+iEYEARECAAYFAkur0VgACgkQK/YAm7PYybniugCgsGnNATn6j8+Ldlmfw10WEFka
+N8QAoIXD46m7d8qdlmEOgvBlMPwvEEIz
+=AM/1
+-----END PGP SIGNATURE-----
