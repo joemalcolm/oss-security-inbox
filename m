@@ -1,36 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/01/5
-Message-ID: <1102805932.207101270137126497.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 1 Apr 2010 11:52:06 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/25/4
+Message-ID: <4BAB7DFB.7050608@gmx.de>
+Date: Thu, 25 Mar 2010 16:15:07 +0100
+From: Matthias Andree <matthias.andree@....de>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Dovecot v1.2.11 -- DoS (excessive CPU use) by processing email with huge header
+Subject: Re: CFPs and con invitations on the list
 Content-Type: text/plain; charset=utf-8
 
------ "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+Am 25.03.2010 15:24, schrieb Josh Bressers:
+[...]
+> I think those headers bring up a good point. This is comparable to the old
+> days of cross posting to lots of gropus on usenet (for you young folks, it
+> was frowned upon). Perhaps we encourage messages DIRECTED at oss-security,
+> rather than shotgun announcements.
 
-> Hi Steve, vendors,
-> 
->    Dovecot upstream has released latest v1.2.11 version of Dovecot IMAP
->    server: [1]
-> 
->    http://www.dovecot.org/list/dovecot-news/2010-March/000152.html
-> 
->    addressing one denial of service issue (from upstream announcement):
->    "mbox users really should upgrade, because by sending a message with a
->    huge header you could basically cause a DoS (this problem exists only
->    with v1.2.x, not with v1.0 or v1.1)."
-> 
->    References:
->      [2] http://dovecot.org/pipermail/dovecot/2010-February/047190.html
->      [3] http://dovecot.org/pipermail/dovecot/2010-February/047058.html
->      [4] http://secunia.com/advisories/38881/
-> 
+Which will then be disassembled into a series of mail-merged individual
+invitations (aka. multi-posting, which was worse than cross-posting)?  If that
+would happen, I'd object.  I also object to "badly cross-posted" invitations.
 
-Please use CVE-2010-0745
+> 4) Approve posts from list memebers who've been on the list for > 1 month.
+>     (I suspect this is the best solution)
 
-Thanks.
+A "List member[...]" might be a lurker, might be an occasional contributor, or a
+regular contributor.  As a pointed question: Would you allow spammers to dump
+their UCE here if they only were subscribers for four weeks?
+
+More seriously, what relevance has the duration of a subscription?  My answer
+is: none whatsoever.  There simply isn't any merit in being subscribed alone.
+I find that this criterion, while objective, says nothing about contributions of
+the subscriber to the list, and is therefore not useful.
+
+I acknowledge that finding objective criteria is hard, but #4 is IMO just a very
+bad loophole.
+
+FWIW, I'm getting spamvertisements for conferences directed at me personally,
+and I find that offensive and it should be a reason to prohibit the conference
+altogether, so as to have a real incentive not to spam.
+
+At the very least, conference advertisements, if allowed in moderation, should
+be tagged so that people can automatically filter them. Filter instructions
+could then be on the list's accompanying homepage.
 
 -- 
-    JB
+Matthias Andree
