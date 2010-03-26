@@ -1,34 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/11/1
-Message-ID: <4B4AECA3.40009@redhat.com>
-Date: Mon, 11 Jan 2010 10:17:23 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, Alan T DeKok <aland@...eradius.org>, Evgeny Legerov <admin@...evydis.com>
-Subject: FreeRadius 1.1.7 CVE-2009-4481 being duplicate of CVE-2009-3111
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/26/2
+Message-ID: <1243695299.5340511269606827030.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 26 Mar 2010 08:33:47 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CFPs and con invitations on the list
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve, Alan, Evgeny, vendors,
+----- "Jonathan Brossard" <endrazine@...il.com> wrote:
+> 
+> For what it worthes : I didn't expect to trigger such a debate on the
+> list. I merely posted here because:
+> 1) I'd really like to see people from this list to the HES
+> conference.
+> 2) I saw a hibt post on this very list little time ago.
+> 
+> Sorry for the blatant inconvenience...
+> 
 
-   this is due:
+Please don't think of it like this. Your reasoning is sound. It's a good
+discussion to have, and especially good to have in public.
 
-     http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-4481 being dupe CVE of
-     http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3111
+Please don't take this personally in any way, your message just happened to
+be the one everyone paid attention to. We want to keep the list useful and
+relevant, so discussing future things is most helpful.
 
-This was already discussed here:
-     http://www.openwall.com/lists/oss-security/2009/09/09/1
-     http://www.openwall.com/lists/oss-security/2009/09/09/4
-     http://www.openwall.com/lists/oss-security/2009/09/09/5
+Just think of all the PR the conference has just gotten :)
 
-Alan has confirmed in his reply with Message ID: <4AA7EFB6.5070609@...eradius.org>
-(you should have it in you mbox, oss-security wasn't Cc-ed there), that it is the
-same issue, as mentioned on intervydis.com.
+Thanks.
 
-And also Evgeny was so kind and updated intevydis.com page [1] to reflect
-CVE-2009-3111 for FreeRADIUS DoS:
-
-[1] http://intevydis.com/vd-list.shtml
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+-- 
+    JB
