@@ -1,33 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/31/6
-Message-ID: <1096880478.943031283283617935.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 31 Aug 2010 15:40:17 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE id request: libc fortify source information disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/26/3
+Message-ID: <Pine.GSO.4.64.1003261632110.16264@faron.mitre.org>
+Date: Fri, 26 Mar 2010 16:32:56 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Jan Lieskovsky <jlieskov@...hat.com>
+cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request -- SpamAssassin Mail Filter -- arbitrary shell command injection (priv esc)
 Content-Type: text/plain; charset=utf-8
 
------ "Nico Golde" <oss-security+ml@...lde.de> wrote:
 
-> Hi,
-> http://seclists.org/fulldisclosure/2010/Apr/399
-> did this ever get a CVE id? As this also works for setuid programs it
-> would be 
-> nice to get one assigned and have this patched.
-> 
+On Wed, 10 Mar 2010, Jan Lieskovsky wrote:
 
-Steve,
+>  Security researcher called "Kingcope" pointed out:
+>  [1] 
+> http://lists.grok.org.uk/pipermail/full-disclosure/2010-March/073489.html
 
-What is MITRE policy on this one. By itself I question if this is a
-security flaw, but it also would appear to have the potential to turn a DoS
-into something worse.
+Sorry for the lateness.
 
-I'm not sure what policy is in this instance.
+Use CVE-2010-1132, to be filled in shortly.
 
-Thanks.
-
--- 
-    JB
-
-
+- Steve
