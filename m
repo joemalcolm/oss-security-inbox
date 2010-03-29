@@ -1,40 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/22/13
-Message-ID: <1548541606.114921290443512775.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 22 Nov 2010 11:31:52 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: missing tty ops write function presence check in hci_uart_tty_open()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/29/5
+Message-ID: <AB049C24AA5940DABEC6E22FD52675B8@r1>
+Date: Mon, 29 Mar 2010 13:11:32 -0400
+From: "Richard Stanway" <r.stanway@...il.com>
+To: "'oss-security'" <oss-security@...ts.openwall.com>
+Subject: RE: CVE Request -- Quake II Server -- two security issues affecting also Alien Arena
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-4242
+Hello,
 
-Thanks.
+>    -------------
+> 
+>    B, "Server-side cvar expansion:
+>        By passing an unexpanded string containing $macros to the
+>        server, the server will expand it using it's cvars. This can
+>        be used to leak sensitive information such as the 
+> rcon_password cvar."
+> 
+>    Proposed patch: N/A
+>    ---------------
+> 
+>    Richard, is there a patch for this issue yet?
 
--- 
-    JB
+I am unfamiliar with Alien Arena, but in the original Quake II engine code,
+this bug is in the sv_user.c SV_ExecuteUserCommand function.
 
+The following line is incorrect:
 
------ "Eugene Teo" <eugene@...hat.com> wrote:
+	Cmd_TokenizeString (s, true);
 
-> hci_uart_tty_open() is missing check that tty has a write op (a few 
-> don't), and you should check this at open and refuse if the ops you
-> need 
-> don't exist, eg as SLIP does:
-> 
-> static int slip_open(struct tty_struct *tty)
-> {
->          struct slip *sl;
->          int err;
-> 
->          if (!capable(CAP_NET_ADMIN))
->                  return -EPERM;
-> 
->          if (tty->ops->write == NULL)
->                  return -EOPNOTSUPP;
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=641410
-> http://git.kernel.org/linus/c19483cc5e56ac5e22dd19cf25ba210ab1537773
-> 
-> Thanks, Eugene
+The 'true' specifies that the server should expand $macros in the string,
+this is what allows the client to see the values of server-side cvars. The
+fix is simply to change true to false:
+
+	Cmd_TokenizeString (s, false);
+
+On the same function, you should also verify that the string 's' does not
+contain any 0xFF bytes, as if these are sent over the net to other clients,
+it will cause them to think the server message has ended prematurely and
+disconnect from the server.
+
+The list of Quake II engine bugs posted on the QuakeDev forums is not 100%
+complete unfortunately, especially as it only lists server exploits. There
+are numerous issues with the client code that a malicious server could
+exploit to cause buffer overflows with arbitrary code execution. I would
+recommend you download my R1Q2 engine source from
+http://www.r1ch.net/stuff/r1q2/src/ and grep for any "//r1" comments as all
+the security fixes are documented in the source.
+
+Regards,
+
+Rich.
+
