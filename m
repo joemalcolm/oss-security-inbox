@@ -1,39 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/02/15
-Message-ID: <2025944064.204631280788334173.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 2 Aug 2010 18:32:14 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/29/6
+Message-ID: <874ojygbq4.fsf@mid.deneb.enyo.de>
+Date: Mon, 29 Mar 2010 21:38:11 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request [two ids] -- cabextract -- 1, Infinite  loop in MS-ZIP and Quantum decoders (minor) 2, Integer wrap-around (crash) by  processing certain *.cab files in test archive mode
+Subject: Re: OpenSSL: CVE-2010-0740 and CVE-2009-3245 appear to be dupes
 Content-Type: text/plain; charset=utf-8
 
+* Florian Weimer:
 
------ "Dan Rosenberg" <dan.j.rosenberg@...il.com> wrote:
+> As far as I can tell, both are the same "record of death
+> vulnerability" (and probably 0.9.8m-only for FLOSS systems because
+> sizeof(short) * CHAR_BITS == 16 for us).
 
-> This seems to be a bit of a slippery slope.  While I have no problem
-> with these particular issues being assigned CVEs, since they were
-> treated as security issues, fixed, and caused unintended application
-> behavior, I have to wonder if maybe it's a bad idea to give CVEs for
-> crashes of this variety.  Denial-of-service issues are tricky.  In my
-> opinion, the following types of DoS bugs are security relevant:
-> 
-
-I agree with you on this. I gave it an ID, as I'm going to presume that the
-cabextract application is likely used in things like virus and mail
-scanners, where we don't want a crashing application.
-
-One of the unfortunate aspects of assigning a large number of CVE ids, is
-sometimes I have to assume things, as I lack the time to properly
-understand what's going on for everything. I figure it's easier to dispute
-an ID than end up in the situation where a scary exploit vector is found
-later. You are welcome to, and should, dispute this if you think I'm
-mistaken.
-
-I would have likely turned down such a request for say an image viewer.
-
-Thanks for the followup though, it's nice to know someone is watching us
-watchers ;)
-
--- 
-    JB
+SOrry, I was mistaken.  Please disregard that message.
