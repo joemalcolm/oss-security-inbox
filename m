@@ -1,33 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/20/2
-Message-ID: <4C6E381F.4040502@kernel.sg>
-Date: Fri, 20 Aug 2010 16:09:03 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-2010-2959 kernel: can: add limit for nframes and clean up signed/unsigned variables
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/29/3
+Message-ID: <4BB086C7.4010502@redhat.com>
+Date: Mon, 29 Mar 2010 12:53:59 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, Richard Stanway <r1ch@...h.net>
+Subject: CVE Request -- Quake II Server -- two security issues affecting also Alien Arena
 Content-Type: text/plain; charset=utf-8
 
-Upstream commit: 5b75c4973ce779520b9d1e392483207d6f842cde
+Hi Steve, vendors,
 
-Discovered by Ben Hawkes. From the description of the patch: "This patch 
-adds a limit for nframes as the number of frames in TX_SETUP and 
-RX_SETUP are derived from a single byte multiplex value by default. 
-Use-cases that would require to send/filter more than 256 CAN frames 
-should be implemented in userspace for complexity reasons anyway.
+   (based on [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=575621)
 
-Additionally the assignments of unsigned values from userspace to signed 
-values in kernelspace and vice versa are fixed by using unsigned values 
-in kernelspace consistently."
+Richard Stanway posted on QuakeDev Forums page:
+   [2] http://www.quakedev.com/forums/index.php?topic=53.0
 
-This can lead to a local denial of service or privilege escalation.
+two new vulnerabilities affecting also code, as present
+in Alien Arena (from [2]):
 
-This can be mitigated by blacklisting the can/can_bcm modules.
+   A, "Multiple auto downloading DoS conditions:
+       By supplying various invalid parameters to the download command,
+       it is possible to cause a DoS condition by causing the server to
+       crash. A path ending in . or / will crash on Linux. Supplying
+       a negative offset will cause a crash on all platforms."
 
-https://bugzilla.redhat.com/CVE-2010-2959
+   Proposed patch:
+   ----------------
+     [3] http://corent.proboards.com/index.cgi?action=gotopost&board=bugreport&thread=4761&post=44624
 
-I got the CVE name from a recent Ubuntu advisory.
+   Public PoC ([4] http://corent.proboards.com/index.cgi?action=gotopost&board=bugreport&thread=4761&post=44611):
+   -----------
+     cmd download maps/tca-zion.bsp -123456789
 
-Thanks, Eugene
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+   CVSSv2 Score: 4.0/AV:N/AC:L/Au:S/C:N/I:N/A:P
+   -------------
+
+   B, "Server-side cvar expansion:
+       By passing an unexpanded string containing $macros to the
+       server, the server will expand it using it's cvars. This can
+       be used to leak sensitive information such as the rcon_password cvar."
+
+   Proposed patch: N/A
+   ---------------
+
+   Richard, is there a patch for this issue yet?
+
+   Public PoC: [5] http://www.quakedev.com/forums/index.php?topic=53.0
+   -----------
+   At the client console: "say $rcon_password"
+
+   CVSSv2 Score: 4.0/ AV:N/AC:L/Au:S/C:P/I:N/A:N
+   -------------
+
+Regarding the B, issue -- not completely sure alienarena-server supports "server-side cvar expansion"
+(but assuming so). Richard, could you please clarify this?
+
+Steve, could you allocate the CVE ids for these two issues? (once issue B, confirmed).
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+
+
+
+
+
+
