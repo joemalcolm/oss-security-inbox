@@ -1,60 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/30/2
-Message-ID: <AANLkTinDL4GqcgFgjKtAVS7A=vjLbVWq4KA0sA7nFOLE@mail.gmail.com>
-Date: Tue, 30 Nov 2010 03:26:08 +0100
-From: Pierre Joye <pierre.php@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/29/1
+Message-ID: <4BB0204C.5040809@kernel.sg>
+Date: Mon, 29 Mar 2010 11:36:44 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: Re: NULL byte poisoning fix in php 5.3.4+
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: ipv6: skb is unexpectedly freed (remote DoS)
 Content-Type: text/plain; charset=utf-8
 
-Coley? :)
+Upstream commit:
+http://git.kernel.org/linus/fb7e2399ec17f1004c0e0ccfd17439f8759ede01
 
-On Mon, Nov 22, 2010 at 5:21 PM, Josh Bressers <bressers@...hat.com> wrote:
-> Steve,
->
-> Can MITRE take this one. It looks like it's from 2006 (from looking at the
-> upstream bug). I don't see a CVE id for this anywhere.
->
-> Thanks.
->
-> --
->    JB
->
-> ----- "Pierre Joye" <pierre.php@...il.com> wrote:
->
->> anyone?
->>
->> On Thu, Nov 18, 2010 at 5:43 PM, Pierre Joye <pierre.php@...il.com>
->> wrote:
->> > forgot to add the fixes revs:
->> >
->> > http://svn.php.net/viewvc?view=revision&revision=305507
->> > revert of part of the OCI8 fix
->> > http://svn.php.net/viewvc?view=revision&revision=305509
->> >
->> > OCI8 fix (committed separately)
->> > http://svn.php.net/viewvc?view=revision&revision=305412
->> >
->> > On Thu, Nov 18, 2010 at 5:22 PM, Pierre Joye <pierre.php@...il.com>
->> > wrote:
->> >> hi,
->> >>
->> >> The problem describes here http://www.madirish.net/?article=436, in
->> >> http://bugs.php.net/39863 (and numerous other places) has been fixed
->> >> in PHP_5_3, targetting 5.3.4 (RC1 to be released today). It is a well
->> >> (old) known issue in PHP and I wonder if there is a CVE already for
->> >> it? If not I think having one could helpful. or?
->> >>
->> >> Cheers,
->> >> --
->> >> Pierre
->> >>
->
+Description from the commit:
+"The server side sets IPV6_RECVPKTINFO on a listening socket, and the 
+client side just sends a message to the server.  Then the kernel panic 
+occurs on the server.
 
+This problem happens because a skb is forcibly freed in
+tcp_rcv_state_process().
 
+When a socket in listening state(TCP_LISTEN) receives a syn packet, then
+tcp_v6_conn_request() will be called from tcp_rcv_state_process().  If 
+the tcp_v6_conn_request() successfully returns, the skb would be 
+discarded by __kfree_skb().
 
--- 
-Pierre
+However, in case of a listening socket which was already set 
+IPV6_RECVPKTINFO, an address of the skb will be stored in treq->pktopts 
+and a ref count of the skb will be incremented in tcp_v6_conn_request(). 
+  But, even if the skb is still in use, the skb will be freed.  Then 
+someone still using the freed skb will cause the kernel panic."
 
-@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+Triggering this could result in a general protection fault.
+
+Reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=577711
+
+Thanks, Eugene
