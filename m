@@ -1,35 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/29/4
-Message-Id: <201008291611.20457.timb@nth-dimension.org.uk>
-Date: Sun, 29 Aug 2010 16:10:48 +0100
-From: Tim Brown <timb@...-dimension.org.uk>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/29/7
+Message-Id: <20100329175246.b3e4e1cd.reed@reedloden.com>
+Date: Mon, 29 Mar 2010 17:52:46 -0500
+From: Reed Loden <reed@...dloden.com>
 To: oss-security@...ts.openwall.com
-Subject: Hardening the linker (was Re: CVE request: CouchDB insecure library loading (Debian/Ubuntu only))
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE Request: ViewVC 1.1.5 / 1.0.11 -- XSS via user-provided 'search_re' input
 Content-Type: text/plain; charset=utf-8
 
-For those of you that missed it, this was actually reported by Dan off the back 
-of a blog post by me describing the generic case:
+Just received an announcement stating ViewVC 1.1.5 and 1.0.11 were
+released today (right on the heels of 1.1.4 and 1.0.10, for which I
+still haven't received a CVE). Looks like they fix an XSS that needs
+a CVE assigned.
 
-http://www.nth-dimension.org.uk/blog.php?id=87
+"security fix: escape user-provided search_re input to avoid XSS
+attack"
 
-I'm well aware that the linker is a tool and that it can be misused (as in 
-this case) but is anyone aware of a good reason why empty directory 
-specifications in LD_LIBRARY_PATH, PATH et al are treated as $PWD?  The only 
-times I've seen empty specifications it's because of bugs such as the one Dan 
-has reported.
+http://viewvc.tigris.org/source/browse/viewvc/trunk/CHANGES?r1=2342&r2=2359&pathrev=HEAD
 
-Is there a case to look at harding the dynamic linker to reject empty 
-specifications; there's not much that one can do where someone has explicitly 
-set a stupid LD_LIBRARY_PATH?  I appreciate that this might has some unwanted 
-outcomes (such as breaking compatibility with other POSIX-alike OS) but 
-sometimes there's a good argument for breaking compatibility if it increases 
-security (some of the various grsec kernel and GCC compiler hardening changes 
-would be good examples here).
+Here's the patch for the XSS:
+http://viewvc.tigris.org/source/browse/viewvc?view=rev&revision=2344
 
-Tim
+"""
+There were too many ways to do something as simple as HTML escaping in
+the ViewVC codebase.  Simplify, conjoin, remove, etc.
+
+* lib/sapi.py
+  (escape): New function.  *The* preferred HTML-escaping mechanism.
+  (Server.escape): New common Server object escape mechanism (which
+    uses the aforementioned escape(), of course).
+  (CgiServer.escape, WsgiServer.escape, AspServer.escape,
+   ModPythonServer.escape): Lose as unnecessary.
+
+* lib/viewvc.py
+  (Request.get_form): Escape hidden form variable names and values.
+  (htmlify): Remove.
+  (): Replace all uses of cgi.escape() and htmlify() with (directly or
+    indirectly) sapi.escape().
+  
+* lib/query.py
+  (main): Use server.escape() instead of cgi.escape().
+
+* lib/blame.py
+  (HTMLBlameSource.__getitem__): Use sapi.escape() instead of
+    cgi.escape().
+
+* lib/idiff.py
+  (_mdiff_split, _differ_split): Use sapi.escape() instead of
+    cgi.escape().
+"""
+
+~reed
+
 -- 
-Tim Brown
-<mailto:timb@...-dimension.org.uk>
-<http://www.nth-dimension.org.uk/>
+Reed Loden - <reed@...dloden.com>
 
-Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
+Content of type "application/pgp-signature" skipped
