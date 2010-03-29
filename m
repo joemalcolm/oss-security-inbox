@@ -1,20 +1,12 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/08/1
-Message-ID: <20101008015133.GK1955@redhat.com>
-Date: Thu, 7 Oct 2010 19:51:33 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/29/2
+Message-ID: <878w9bjvhy.fsf@mid.deneb.enyo.de>
+Date: Mon, 29 Mar 2010 12:02:49 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Subject: qpidd SSL connection DoS (CVE-2010-3083)
+Subject: OpenSSL: CVE-2010-0740 and CVE-2009-3245 appear to be dupes
 Content-Type: text/plain; charset=utf-8
 
-Just a heads up for anyone that ships qpid.  About a year and a half
-ago a blocking condition was found with SSL connections to qpidd, but I
-don't think upstream really thought about the security implications.
-
-It was fixed upstream in July 2009.
-
-The details are in our bug:
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2010-3083
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+As far as I can tell, both are the same "record of death
+vulnerability" (and probably 0.9.8m-only for FLOSS systems because
+sizeof(short) * CHAR_BITS == 16 for us).
