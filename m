@@ -1,29 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/29/11
-Message-Id: <1285787650-sup-6868@stingray>
-Date: Wed, 29 Sep 2010 21:20:10 +0200
-From: Alex Legler <a3li@...too.org>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE request: Horde Gollem <1.1.2 XSS in view.php
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/29/4
+Message-ID: <alpine.LFD.2.01.1003291431210.2892@localhost>
+Date: Mon, 29 Mar 2010 14:36:42 +0200 (CEST)
+From: Petr Matousek <pmatouse@...hat.com>
+To: oss-security@...ts.openwall.com
+cc: coley@...us.mitre.org
+Subject: CVE-2010-0741 qemu: Improper handling of erroneous data provided by Linux virtio-net driver
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello vendors,
 
-while there seem to be CVE IDs for most of the issues fixed in the
-latest Horde packages, I cannot find one for this issue:
+    Josh Bressers has assigned a CVE id CVE-2010-0741 to the following bug:
 
->From http://bugs.horde.org/ticket/9191:
-"http://localhost/horde/gollem/view.php?actionID=view_file&type=txt&file=<script>alert("XSS")</script>&dir=../baddir/&driver=file
-Vulnerable file : view.php (Line 32 - 46)"
+A flaw was found in the way the QEMU-KVM handled erroneous data provided 
+by the guest Linux virtio-net driver. Due deficiency in the implementation 
+of the TSO (TCP segment offloading), the guest's virtio-net driver 
+transmitted improper data to the particular QEMU-KVM process on the host, 
+resulting in its termination. A remote attacker could use this flaw to 
+cause denial of service (guest crash) by sending certain, 
+specially-crafted data to arbitrary open port on the target guest system.
 
-Fixed in git (and released in 1.1.2):
-http://lists.horde.org/archives/commits/2010-August/004747.html
-http://lists.horde.org/archives/announce/2010/000565.html
+A remote attacker could exploit this to crash guests which use virtio
+networking on Linux kernels earlier than 2.6.26.
 
-Thanks,
-Alex
--- 
-Alex Legler <a3li@...too.org>
-Gentoo Security/Ruby
+Note that this was previously reported in Canonical's launchpad but no CVE 
+name was ever assigned AFAIK.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+References:
+-----------
+https://bugzilla.redhat.com/show_bug.cgi?id=577218
+https://patchwork.kernel.org/patch/56479/
+https://bugs.edge.launchpad.net/ubuntu/+source/qemu-kvm/+bug/458521
+http://lists.gnu.org/archive/html/qemu-devel/2009-10/msg02480.html
+
+Upstream patch:
+---------------
+http://git.kernel.org/?p=virt/kvm/qemu-kvm.git;a=commit;h=184bd0484533b725194fa517ddc271ffd74da7c9
+
+Thanks && Regards, Petr.
+--
+Petr Matousek / Red Hat Security Response Team
