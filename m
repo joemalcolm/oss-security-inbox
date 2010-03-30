@@ -1,33 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/06/2
-Message-ID: <4C852FC8.50601@redhat.com>
-Date: Mon, 06 Sep 2010 20:15:36 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, Moritz Naumann <security@...itz-naumann.com>
-Subject: CVE Request -- Horde v3.3.8 -- XSS in icon_browser.php due improper sanitization of 'subdir' URL parameter
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/30/6
+Message-ID: <Pine.GSO.4.64.1003301520170.4709@faron.mitre.org>
+Date: Tue, 30 Mar 2010 15:20:49 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: tipc: Fix oops on send prior to entering networked mode
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve, vendors,
 
-   Moritz Naumann reported:
-   [1] http://seclists.org/fulldisclosure/2010/Sep/82
+On Tue, 30 Mar 2010, Eugene Teo wrote:
 
-a deficiency in the way Horde framework sanitized user-provided
-'subdir' parameter, when composing final path to the image file.
-A remote, unauthenticated user could use this flaw to conduct
-cross-site scripting attacks (execute arbitrary HTML or scripting
-code) by providing a specially-crafted URL to the running
-Horde framework instance.
+> TIPC - Transparent Inter-Process Communication protocol
+>
+> Discussion:
+> http://git.kernel.org/?p=linux/kernel/git/davem/net-2.6.git;a=commit;h=d0021b252eaf65ca07ed14f0d66425dd9ccab9a6
 
-Upstream patch:
-   [2] http://git.horde.org/diff.php/horde/util/icon_browser.php?rt=horde-git&r1=a978a35c3e95e784253508fd4333d2fbb64830b6&r2=9342addbd2b95f184f230773daa4faf5ef6d65e9
+Use CVE-2010-1187, to be filled in later.
 
-Sample public URL by Moritz to demonstrate the issue:
-   [3] [path_to_horde]/util/icon_browser.php?subdir=<body onload="alert('XSS')">&app=horde
+What version is affected?  I'm assuming at least 2.6.33.
 
-Could you allocate CVE id for this issue?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+- Steve
