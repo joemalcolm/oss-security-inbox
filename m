@@ -1,31 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/09/8
-Message-Id: <20100810.015115.356903314.wl@gnu.org>
-Date: Tue, 10 Aug 2010 01:51:15 +0200 (CEST)
-From: Werner LEMBERG <wl@....org>
-To: robert@...ecki.net
-Cc: oss-security@...ts.openwall.com, bthomas@...le.com, bressers@...hat.com
-Subject: Re: CVE Request -- FreeType -- Memory corruption flaw by processing certain LWFN fonts + three more
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/30/10
+Message-ID: <Pine.GSO.4.64.1003301632120.4709@faron.mitre.org>
+Date: Tue, 30 Mar 2010 16:34:35 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+cc: libesmtp@...fford.uklinux.net, security@...ntu.com
+Subject: Re: CVE Request: libesmtp does not check NULL bytes in commonName
 Content-Type: text/plain; charset=utf-8
 
 
->>> So these issues are going to be addressed in upcoming 2.4.3, right?
->>> They still affect 2.4.2?
->>
->> All of these issues are fixed in 2.4.2 already.
-> 
-> Thanks,
-> 
-> I've added
-> 
-> https://savannah.nongnu.org/bugs/index.php?30719
-> 
-> which is offspring of https://savannah.nongnu.org/bugs/index.php?30657
+On Wed, 3 Mar 2010, Kees Cook wrote:
 
-This looks like a pure 64bit issue, and I don't have access to such a
-machine which makes debugging very hard for me :(
+> I just noticed that libesmtp does not appear to handle NULL-byte CNs, as
+> seen with the original browser-based issue:
+> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2408
 
-Any help is greatly appreciated.
+Use CVE-2010-1192
 
+> Related to this are failures in wildcard handling:
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=311191
 
-    Werner
+Use CVE-2010-1194
+
+I'm guessing that upstream 1.0.4 and earlier are affected by both 
+problems.
+
+- Steve
