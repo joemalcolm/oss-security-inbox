@@ -1,85 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/13/6
-Message-ID: <AANLkTimCtS4sZ_U4ZSjyS6pvKDmdQHfGfzWqqXcX9V2H@mail.gmail.com>
-Date: Mon, 13 Dec 2010 19:15:32 +0100
-From: Pierre Joye <pierre.php@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/30/11
+Message-ID: <Pine.GSO.4.64.1003301639530.4709@faron.mitre.org>
+Date: Tue, 30 Mar 2010 16:41:06 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Issues without CVE names in PHP 5.3.4/5.2.15 release
+Subject: Re: CVE id request: ikiwiki
 Content-Type: text/plain; charset=utf-8
 
-hi,
 
-oh my bad, I did not see that they were listed under the security
-enhancement and I reviewed the announce... :P
+On Wed, 17 Mar 2010, Nico Golde wrote:
 
-On Mon, Dec 13, 2010 at 7:09 PM, Vincent Danen <vdanen@...hat.com> wrote:
-> * [2010-12-13 18:47:19 +0100] Pierre Joye wrote:
+> "javascript insertion via svg uris
 >
->> On Mon, Dec 13, 2010 at 5:33 PM, Vincent Danen <vdanen@...hat.com> wrote:
->>>
->>> Looking at the PHP web site, there are a few issues fixed in the most
->>> recent releases that don't seem to have a CVE name:
->>>
->>> * Fixed crash in zip extract method (possible CWE-170).
->>
->> Was requested and was not considered as worth a CVE #
->
-> Ok.
->
->>> * Fixed symbolic resolution support when the target is a DFS share.
->>
->> Why does it require a CVE #? That's not a security fix but a fix about
->> DFS support on Windows (did not work).
->
-> Well, CVEs are, by definition, for security issues.  When your release
-> notes indicate "fixed foo" under the heading "Security Enhancements and
-> Fixes", one assumes they are security-relevant, and if they're
-> security-relevant, generally they get CVE names.
->
->>> * Fixed extract() to do not overwrite $GLOBALS and $this when using
->>> EXTR_OVERWRITE.
->>
->> Not sure either if it requires one.
->
-> I can't tell because I can't find any information, however if you don't
-> believe this is security-relevant, I won't pursue it.  However, I would
-> question whether or not it is worth listing under "security enhancements
-> and fixes" instead of just "key bug fixes"?
->
->>> Also doesn't seem to be much info on these readily available.
->>>
->>> The first seems to be related to this SVN commit (don't see a bug for
->>> it):
->>>
->>> http://svn.php.net/viewvc?view=revision&revision=305848
->>>
->>> The second seems to be Windows-specific and is this bug (haven't found
->>> the SVN commit for it yet):
->>>
->>> http://bugs.php.net/bug.php?id=51945
->>>
->>> The third seems to be 5.2-specific (no mention in the 5.3 changes), but
->>> I've not yet found the bug or SVN commit.
->>
->> In any case I would like to remember you security@....net as well. We
->> also added now a security flag in our bug tracker, Joe should have
->> access to them as well, ping me if more of the redhat team needs it,
->> or other distrubutions.
->
-> I wasn't sure if I had missed some discussion about this or not, so
-> instead of burdening the security team directly, I brought it up here
-> (also under the assumption that others would read the release page notes
-> and see those items listed under security fixes and may have the same
-> questions).
->
-> Thanks for the info.
->
-> --
-> Vincent Danen / Red Hat Security Response Team
+> Ivan Shmakov pointed out that the htmlscrubber allowed data:image/* urls,
+> including data:image/svg+xml. But svg can contain javascript, so that is
+> unsafe."
+> http://ikiwiki.info/security/#index30h2
 
+Note that this URL is erroneous (it's for an older, similar issue); you 
+want this one:
 
+http://ikiwiki.info/security/#index36h2
 
--- 
-Pierre
+Use CVE-2010-1195
 
-@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+- Steve
