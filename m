@@ -1,38 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/03/5
-Message-ID: <Pine.GSO.4.64.1006031600150.1650@faron.mitre.org>
-Date: Thu, 3 Jun 2010 16:14:39 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/30/8
+Message-ID: <Pine.GSO.4.64.1003301555400.4709@faron.mitre.org>
+Date: Tue, 30 Mar 2010 15:56:03 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>, Panu Matilainen <pmatilai@...hat.com>, Jindrich Novy <jnovy@...hat.com>, Florian Festi <ffesti@...hat.com>, Matt McCutchen <matt@...tmccutchen.net>
-Subject: Re: CVE Request -- rpm -- Fails to remove the SUID/SGID bits on package upgrade (RH BZ#598775)
+To: oss-security <oss-security@...ts.openwall.com>, oss-security <oss-security@...ts.openwall.com>
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- MediaWiki - v1.15.2
 Content-Type: text/plain; charset=utf-8
 
 
-On Thu, 3 Jun 2010, Josh Bressers wrote:
+On Tue, 9 Mar 2010, Jan Lieskovsky wrote:
 
-> I'm going to give both of these the same CVE id. The issues are very
-> related, and I had look at the CWE guide, they both seem to fall under
-> "CWE-281: Improper Preservation of Permissions"
->
-> Steve, feel free to overrule me on this one.
+>  a, a CSS validation issue was discovered which allows editors to display
+>     external images in wiki pages.
 
-At a low level of granularity, it can be overkill to distinguish between 
-closely-related flaw types.
+Use CVE-2010-1189
 
-The factor of concern here is that Red Hat bug 598775 suggests that the 
-first variant was committed to a changeset, but not the second.  I can't 
-(quickly) assess whether upstream committed changes for both variants, but 
-if there's only a commit for the first one (and a public release), then 
-maybe we consider these bugs as "almost-but-not-quite the same version" 
-and assign a separate CVE.
+>  b, a data leakage vulnerability was discovered in thumb.php which affects
+>     wikis which restrict access to private files using img_auth.php, or
+>     some similar scheme.
 
-We also use time lag between disclosures as a splitter, but these were 
-more-or-less within a 24-hour period, which we typically treat as "same 
-day."
-
-This is fuzzy on both vuln type and version... I defer to others who can 
-shed more insight on the question of whether these versions are different 
-enough.
+Use CVE-2010-1190
 
 - Steve
