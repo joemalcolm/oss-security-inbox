@@ -1,40 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/18/7
-Message-ID: <1149330074.1720141274204106981.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 18 May 2010 13:35:06 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE assignment: ghostscript stack-based overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/30/9
+Message-ID: <Pine.GSO.4.64.1003301603010.4709@faron.mitre.org>
+Date: Tue, 30 Mar 2010 16:03:14 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security <oss-security@...ts.openwall.com>, oss-security <oss-security@...ts.openwall.com>
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Sahana -- v0.6.2.2 -- Authentication bypass via "acl_enable_acl" URLs 
 Content-Type: text/plain; charset=utf-8
 
 
------ "Dan Rosenberg" <dan.j.rosenberg@...il.com> wrote:
+On Fri, 19 Mar 2010, Jan Lieskovsky wrote:
 
-> CVE request for the second issue described in this advisory, just
-> published:
-> 
-> http://seclists.org/fulldisclosure/2010/May/134
-> 
-> quote:
-> 
-> GhostScript (all tested versions) fails to properly handle infinitely
-> recursive procedure invocations.  By providing a PostScript file with a
-> sequence such as:
-> 
-> /A{pop 0 A 0} bind def
-> /product A 0
-> 
-> the interpreter's internal stack will be overflowed with recursive calls,
-> at which point execution will jump to an attacker-controlled address.
-> This vulnerability can be exploited by enticing a user to open a
-> maliciously crafted PostScript file, achieving arbitrary code execution.
-> This issue has not yet been assigned a CVE identifier.
-> 
+>  Christopher showed:
+>    [1] http://archives.neohapsis.com/archives/bugtraq/2010-03/0156.html
+>
+>  a deficiency in the way, Sahana disaster management system
+>  performed user authentication. Visiting a certain URL
+>  would allow an attacker to view (and potentially modify)
+>  information, which should be otherwise protected by authentication.
 
-Use CVE-2010-1628 for this one.
+Use CVE-2010-1191
 
-Thanks.
-
--- 
-    JB
+- Steve
