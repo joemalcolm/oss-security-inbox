@@ -1,27 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/03/1
-Message-ID: <hrlq72$m35$1@dough.gmane.org>
-Date: Mon, 03 May 2010 01:24:37 -0500
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/31/3
+Message-ID: <85f64f891003301534y779df23dy9dc20f7d75ebbc3e@mail.gmail.com>
+Date: Tue, 30 Mar 2010 18:34:37 -0400
+From: Anthon Pang <anthon.pang@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: lxr
+Cc: cert@...t.org, soc@...cert.gov
+Subject: Re: phpmyvisites 2.3
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Tue, Mar 30, 2010 at 5:41 PM, Steven M. Christey
+<coley@...us.mitre.org>wrote:
 
-While working on an update for lxr the following commit by upstream that 
-fixes an XSS vulnerability in the search page was found:
+>
+> On Wed, 10 Mar 2010, Henri Salo wrote:
+>
+>  There is a security vulnerability in phpMyVisites 2.3. Is there a CVE
+>> assigned for that issue?
+>>
+>> http://www.phpmyvisites.us/phpmv2/CHANGELOG
+>>
+>
+> Use CVE-2009-4763
+>
+> Notes:
+>
+> 1) SourceForge has recently made it difficult/impossible to obtain
+> changelogs for new releases, so I can't find any information on the December
+> release of ClickHeat to get more details.
+>
+> 2) Consequently, it could be that phpMyVisites is fixing an old ClickHeat
+>   problem (CVE-2008-5793) but neither is it clear if that ClickHeat is
+>   even the same product.
+>
+>
+> - Steve
+>
 
-> Fix XSS exploit in title string
-http://lxr.cvs.sourceforge.net/viewvc/lxr/lxr/lib/LXR/Common.pm?r1=1.63&r2=1.64
+It appears to be a different issue.
 
-It does not seem to be covered by CVE-2009-4497.
+ClickHeat's primary developer denies this is a ClickHeat vulnerability:
 
-Please assign an id. Thanks in advance.
+https://sourceforge.net/tracker/?func=detail&aid=2916809&group_id=181196&atid=896225
 
-Kind regards,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+And states that the vulnerability requires the attacker to already have
+elevated privileges (application-level admin access in PMV).
 
+-- Anthon
 
