@@ -1,28 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/29/1
-Message-ID: <AANLkTikJYAcTAnLynaRzoKr7-kiuwV18QD--_WVOEyuz@mail.gmail.com>
-Date: Sat, 28 Aug 2010 18:46:01 -0600
-From: Kurt Seifried <kurt@...fried.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/30/2
+Message-Id: <1269948107.10828.75.camel@TS-HQ-4>
+Date: Tue, 30 Mar 2010 13:21:47 +0200
+From: Secunia Research <vuln@...unia.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: BGP protocol vulnerability
+Cc: vuln@...unia.com
+Subject: Re: CVE Request: ViewVC 1.1.5 / 1.0.11 -- XSS via user-provided 'search_re' input
 Content-Type: text/plain; charset=utf-8
 
-> The BGP protocol and its various extensions require that BGP peering
-> sessions are terminated when a peer receives a BGP update message
-> which it considers semantically incorrect, leading to a persistent
-> denial-of-service condition if the update is received again after the
-> terminated session is reestablished.
->
-> (This is not something new at all---we just need to get up, treat it
-> as a vulnerability, and fix it.)
+Hi,
 
-This sounds like CVE-2010-3035
-http://www.cisco.com/warp/public/707/cisco-sa-20100827-bgp.shtml
+This vulnerability was discovered by Secunia and we have already
+reserved CVE-2010-0132 for it. Please see SA38918 [1] for more
+information.
 
-or are you talking about another BGP issue? (but in the same "family"
-as CVE-2009-2055 and  CVE-2010-3035).
+[1] http://secunia.com/advisories/38918/
+
+Thanks and kind regards,
+
+On Mon, 2010-03-29 at 17:52 -0500, Reed Loden wrote:
+> Just received an announcement stating ViewVC 1.1.5 and 1.0.11 were
+> released today (right on the heels of 1.1.4 and 1.0.10, for which I
+> still haven't received a CVE). Looks like they fix an XSS that needs
+> a CVE assigned.
 
 -- 
-Kurt Seifried
-kurt@...fried.org
-tel: 1-703-879-3176
+Stefan Cornelius
+Security Specialist
+
+Secunia 
+Weidekampsgade 14 A
+DK-2300 Copenhagen S
+Denmark
+
+Phone  +45 7020 5144
+Fax    +45 7020 5145
+
