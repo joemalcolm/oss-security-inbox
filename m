@@ -1,38 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/11/3
-Message-ID: <20100111105208.71b62424@redhat.com>
-Date: Mon, 11 Jan 2010 10:52:08 +0100
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/30/4
+Message-Id: <20100330070801.4368f31e.reed@reedloden.com>
+Date: Tue, 30 Mar 2010 07:08:01 -0500
+From: Reed Loden <reed@...dloden.com>
 To: oss-security@...ts.openwall.com
-Cc: Christoph.Pleger@...tu-dortmund.de
-Subject: Re: CVE id request: GNU libc: NIS shadow password  leakage
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request: ViewVC 1.1.5 / 1.0.11 -- XSS via user-provided 'search_re' input
 Content-Type: text/plain; charset=utf-8
 
-On Sat, 9 Jan 2010 00:09:09 +0100 Christoph Pleger
-<Christoph.Pleger@...tu-dortmund.de> wrote:
+On Tue, 30 Mar 2010 07:03:44 -0500
+Reed Loden <reed@...dloden.com> wrote:
 
-> > I may be missing something here, or perhaps I'm not remembering
-> > correctly, but NIS basically doesn't have any security in this
-> > respect. This bug implies that a user has some sort of access to
-> > the NIS client, but the NIS server would happily hand out the same
-> > data if the malicious user asked for it (not using glibc let's
-> > say). While this may be a glibc bug (I doubt it, as it would just
-> > be a false sense of security), I this this is a non issue.
-> 
-> No, that's not true. I have no experience with Linux NIS servers, but
-> when the NIS server runs on Solaris (Sun Microsystems is the inventor
-> of NIS), the shadow password information, which is in the
-> passwd.adjunct.byname map, on the NIS clients can only be seen by
-> root. When other users call for example "ypcat
-> passwd.adjunct.byname", they get an error message that the map does
-> not exist. Also, on Solaris NIS clients, the shadow password cannot
-> be seen with getpwnam. 
+> Again, still need a CVE for the XSS fix in ViewVC 1.1.4 and 1.1.10,
+> however.
 
-According to ypserv.conf man page [1], it is possible to restrict data
-from some map only to clients using a privileged (< 1024) source port.
-Does Solaris possibly do the same (when configured to do so)?
+Never mind on both these things, considering they've both already been
+discussed on the list (*sigh*). I apparently should stop sending e-mails
+at 7:07am when I haven't slept at all. :(
 
-[1] http://linux.die.net/man/5/ypserv.conf
+Apologies,
+~reed
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Reed Loden - <reed@...dloden.com>
+
+Content of type "application/pgp-signature" skipped
