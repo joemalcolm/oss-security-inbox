@@ -1,41 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/31/1
-Message-ID: <20100731140352.GB19609@ngolde.de>
-Date: Sat, 31 Jul 2010 16:03:52 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/30/12
+Message-ID: <Pine.GSO.4.64.1003301739030.4709@faron.mitre.org>
+Date: Tue, 30 Mar 2010 17:41:39 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: lxr
+cc: cert@...t.org, soc@...cert.gov
+Subject: Re: phpmyvisites 2.3
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Josh Bressers <bressers@...hat.com> [2010-05-14 21:48]:
-> ----- "Dan Rosenberg" <dan.j.rosenberg@...il.com> wrote:
-> 
-> > Josh,
-> > 
-> > The XSS in the title string was already assigned CVE-2010-1448.  Do
-> > you mean to assign issue #2, the XSS reflected in search results?
-> > 
-> 
-> Sigh, yes.
-> 
-> So to sum it up:
-> 
-> 1.  XSS in the ident parameter, as described in CVE-2009-4497.
-> 
-> 2.  XSS that is reflected via the search results page after issuing
-> This one is now CVE-2010-1625
-> 
-> 3. 3.  XSS that is reflected via the <title> tag on the search page, as
-> described in Raphael's original e-mail a few days ago, which Josh assigned
-> CVE-2010-1448
 
-CVE-2010-1738 seems to be a dupe of this?
+On Wed, 10 Mar 2010, Henri Salo wrote:
 
-Cheers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
+> There is a security vulnerability in phpMyVisites 2.3. Is there a CVE
+> assigned for that issue?
+>
+> http://www.phpmyvisites.us/phpmv2/CHANGELOG
 
-Content of type "application/pgp-signature" skipped
+Use CVE-2009-4763
+
+Notes:
+
+1) SourceForge has recently made it difficult/impossible to obtain 
+changelogs for new releases, so I can't find any information on the 
+December release of ClickHeat to get more details.
+
+2) Consequently, it could be that phpMyVisites is fixing an old ClickHeat
+    problem (CVE-2008-5793) but neither is it clear if that ClickHeat is
+    even the same product.
+
+
+- Steve
