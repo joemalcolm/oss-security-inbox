@@ -1,31 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/02/9
-Message-ID: <1064040033.186681280779216140.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 2 Aug 2010 16:00:16 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/30/7
+Message-ID: <Pine.GSO.4.64.1003301534210.4709@faron.mitre.org>
+Date: Tue, 30 Mar 2010 15:38:34 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: joomla < 1.5.20
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: ipv6: skb is unexpectedly freed (remote DoS)
 Content-Type: text/plain; charset=utf-8
 
-Steve,
 
-Can MITRE take this one too. I'm not sure how to deal with this.
+On Mon, 29 Mar 2010, Eugene Teo wrote:
 
-Thanks.
+> Upstream commit:
+> http://git.kernel.org/linus/fb7e2399ec17f1004c0e0ccfd17439f8759ede01
 
--- 
-    JB
+I'm not clear on the role of ipv6 here.  The affected code is in 
+ipv4/tcp_input.c and there's no mention of tcp_v6_conn_request() there.
 
+I'm guessing this was fixed in Linux 2.6.20.
 
------ "Hanno Böck" <hanno@...eck.de> wrote:
+Arguably this could have been given a 2007 ID, but the patch didn't 
+clearly label the problem as a security issue, so I will treat Eugene's 
+request as the first widely-public disclosure - thus a 2010 date.
 
-> http://www.joomla.org/announcements/release-news/5284-joomla-1520-released.html
-> 
-> Not much info though...
-> 
-> -- 
-> Hanno Böck		Blog:		http://www.hboeck.de/
-> GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-> 
-> http://schokokeks.org - professional webhosting
+Use CVE-2010-1188
+
+- Steve
