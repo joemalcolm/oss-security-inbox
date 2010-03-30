@@ -1,31 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/10/8
-Message-Id: <20100310163418.9a4c0600.reed@reedloden.com>
-Date: Wed, 10 Mar 2010 16:34:18 -0600
-From: Reed Loden <reed@...dloden.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/30/1
+Message-ID: <4BB18ED2.1060801@kernel.sg>
+Date: Tue, 30 Mar 2010 13:40:34 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE Request: ViewVC 1.1.4 / 1.0.10 -- XSS via user-provided query form input
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: tipc: Fix oops on send prior to entering networked mode
 Content-Type: text/plain; charset=utf-8
 
-Just received an announcement stating ViewVC 1.1.4 and 1.0.10 were
-released today. Looks like they fix an XSS that needs a CVE assigned.
+TIPC - Transparent Inter-Process Communication protocol
 
-"security fix: escape user-provided query form input to avoid XSS
-attack"
+Discussion:
+http://git.kernel.org/?p=linux/kernel/git/davem/net-2.6.git;a=commit;h=d0021b252eaf65ca07ed14f0d66425dd9ccab9a6
 
-http://viewvc.tigris.org/source/browse/viewvc/trunk/CHANGES?r1=2313&r2=2342&pathrev=HEAD
+Patch: http://patchwork.ozlabs.org/patch/46856/
+http://git.kernel.org/?p=linux/kernel/git/davem/net-2.6.git;a=commit;h=d0021b252eaf65ca07ed14f0d66425dd9ccab9a6
 
-Here's the patch for the XSS:
-http://viewvc.tigris.org/source/browse/viewvc?view=rev&revision=2326
+Reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=578057
 
-* lib/viewvc.py
-  (view_queryform): Escape user-provided input before passing it
-    directly off to the templates.  Can you say "XSS attack vector"?
+"Fix TIPC to disallow sending to remote addresses prior to entering 
+NET_MODE. User programs can oops the kernel by sending datagrams via 
+AF_TIPC prior to entering networked mode.  The following backtrace has 
+been observed:
 
-~reed
+ID: 13459  TASK: ffff810014640040  CPU: 0   COMMAND: "tipc-client"
+[exception RIP: tipc_node_select_next_hop+90]
+RIP: ffffffff8869d3c3  RSP: ffff81002d9a5ab8  RFLAGS: 00010202
+RAX: 0000000000000001  RBX: 0000000000000001  RCX: 0000000000000001
+RDX: 0000000000000000  RSI: 0000000000000001  RDI: 0000000001001001
+RBP: 0000000001001001   R8: 0074736575716552   R9: 0000000000000000
+R10: ffff81003fbd0680  R11: 00000000000000c8  R12: 0000000000000008
+R13: 0000000000000001  R14: 0000000000000001  R15: ffff810015c6ca00
+ORIG_RAX: ffffffffffffffff  CS: 0010  SS: 0018
+RIP: 0000003cbd8d49a3  RSP: 00007fffc84e0be8  RFLAGS: 00010206
+RAX: 000000000000002c  RBX: ffffffff8005d116  RCX: 0000000000000000
+RDX: 0000000000000008  RSI: 00007fffc84e0c00  RDI: 0000000000000003
+RBP: 0000000000000000   R8: 00007fffc84e0c10   R9: 0000000000000010
+R10: 0000000000000000  R11: 0000000000000246  R12: 0000000000000000
+R13: 00007fffc84e0d10  R14: 0000000000000000  R15: 00007fffc84e0c30
+ORIG_RAX: 000000000000002c  CS: 0033  SS: 002b
 
--- 
-Reed Loden - <reed@...dloden.com>
+What happens is that, when the tipc module in inserted it enters a 
+standalone node mode in which communication to its own address is 
+allowed <0.0.0> but not to other addresses, since the appropriate data 
+structures have not been allocated yet (specifically the tipc_net 
+pointer).  There is nothing stopping a client from trying to send such a 
+message however, and if that happens, we attempt to dereference 
+tipc_net.zones while the pointer is still NULL, and explode.  The fix is 
+pretty straightforward.  Since these oopses all arise from the 
+dereference of global pointers prior to their assignment to allocated
+values, and since these allocations are small (about 2k total), lets 
+convert these pointers to static arrays of the appropriate size.  All 
+the accesses to these bits consider 0/NULL to be a non match when 
+searching, so all the lookups still work properly, and there is no 
+longer a chance of a bad dererence anywhere.  As a bonus, this lets us 
+eliminate the setup/teardown routines for those pointers, and elimnates 
+the need to preform any locking around them to prevent access while 
+their being allocated/freed."
 
-Content of type "application/pgp-signature" skipped
+Thanks, Eugene
