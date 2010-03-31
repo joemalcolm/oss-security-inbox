@@ -1,26 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/09/5
-Message-ID: <AANLkTi=vgt9oVY1=udE26Jm1Kx_JmfwuOsAvdHUfndGm@mail.gmail.com>
-Date: Mon, 9 Aug 2010 22:03:10 +0200
-From: Robert Święcki <robert@...ecki.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/31/2
+Message-ID: <4BB2A342.2010903@redhat.com>
+Date: Wed, 31 Mar 2010 09:20:02 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: bthomas@...le.com, bressers@...hat.com, Werner LEMBERG <wl@....org>
-Subject: Re: CVE Request -- FreeType -- Memory corruption flaw  by processing certain LWFN fonts + three more
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: ipv6: skb is unexpectedly freed (remote DoS)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Aug 9, 2010 at 7:03 PM, Werner LEMBERG <wl@....org> wrote:
->> So these issues are going to be addressed in upcoming 2.4.3, right?
->> They still affect 2.4.2?
+On 03/31/2010 03:38 AM, Steven M. Christey wrote:
+> On Mon, 29 Mar 2010, Eugene Teo wrote:
 >
-> All of these issues are fixed in 2.4.2 already.
+>> Upstream commit:
+>> http://git.kernel.org/linus/fb7e2399ec17f1004c0e0ccfd17439f8759ede01
+>
+> I'm not clear on the role of ipv6 here. The affected code is in
+> ipv4/tcp_input.c and there's no mention of tcp_v6_conn_request() there.
 
-Thanks,
+To trigger this issue, the server actually needs to do something like:
+if (setsockopt(sockfd, IPPROTO_IPV6, IPV6_RECVPKTINFO, &on, ...)) {
+on the listening socket.
 
-I've added
+tcp_rcv_state_process() is in ipv4/tcp_input.c but was called in 
+net/ipv6/tcp_ipv6.c.
 
-https://savannah.nongnu.org/bugs/index.php?30719
+> I'm guessing this was fixed in Linux 2.6.20.
 
-which is offspring of https://savannah.nongnu.org/bugs/index.php?30657
+v2.6.20-rc6
 
+> Arguably this could have been given a 2007 ID, but the patch didn't
+> clearly label the problem as a security issue, so I will treat Eugene's
+> request as the first widely-public disclosure - thus a 2010 date.
+>
+> Use CVE-2010-1188
+
+Thanks, Eugene
 -- 
-Robert Święcki
+Eugene Teo / Red Hat Security Response Team
