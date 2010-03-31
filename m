@@ -1,23 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/10/1
-Message-ID: <4CDA0CC4.4000207@redhat.com>
-Date: Wed, 10 Nov 2010 11:08:52 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/31/6
+Message-ID: <20100331203910.361e13b6@mail.a3li.li>
+Date: Wed, 31 Mar 2010 20:39:10 +0200
+From: Alex Legler <a3li@...too.org>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-2010-3086 kernel panic via futex
+Cc: jlieskov@...hat.com, "Steven M. Christey" <coley@...us.mitre.org>, Jan Lehnardt <jan@...che.org>
+Subject: Re: CVE Request -- Apache CouchDB v.0.11.0 -- timing attacks flaw
 Content-Type: text/plain; charset=utf-8
 
-Discovered by Tavis Ormandy, the exception fixup code for the 
-__futex_atomic_op1, __futex_atomic_op2, and 
-futex_atomic_cmpxchg-_inatomic() macros replaced the LOCK prefix with a 
-NOP instruction. This can cause the exceptions to not match the 
-exception table fault fixup. A local, unprivileged user could use this 
-flaw to cause a denial of service. This is assigned with CVE-2010-3086.
+Hi,
 
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2010-3086
-http://git.kernel.org/linus/9d55b9923a1b7ea8193b8875c57ec940dc2ff027
+On Wed, 31 Mar 2010 19:26:38 +0200, Jan Lieskovsky
+<jlieskov@...hat.com> wrote:
 
-Thanks, Eugene
+> 
+> [1] references CVE-2008-2370 as CVE id, but CVE-2008-2370 is Apache
+> Tomcat flaw: [6]
+> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2370
+> 
+> Since Apache CouchDB is different code base, susceptible to the same
+> issue as in [3], assuming new CVE identifier is required.
+> 
+
+Jan already posted a follow-up
+(http://seclists.org/fulldisclosure/2010/Mar/554) to his message with
+an updated ID: CVE-2010-0009
+
+Alex
+
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+Alex Legler | Gentoo Security / Ruby
+a3li@...too.org | a3li@...ber.ccc.de
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
