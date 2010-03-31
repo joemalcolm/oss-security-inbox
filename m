@@ -1,50 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/03/1
-Message-ID: <20100203134559.GC1890@suse.de>
-Date: Wed, 3 Feb 2010 14:45:59 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE request: kernel OOM/crash in drivers/connector
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/31/1
+Message-ID: <4BB2A1ED.90206@redhat.com>
+Date: Wed, 31 Mar 2010 09:14:21 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: tipc: Fix oops on send prior to entering networked mode
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 03/31/2010 03:20 AM, Steven M. Christey wrote:
+>
+> On Tue, 30 Mar 2010, Eugene Teo wrote:
+>
+>> TIPC - Transparent Inter-Process Communication protocol
+>>
+>> Discussion:
+>> http://git.kernel.org/?p=linux/kernel/git/davem/net-2.6.git;a=commit;h=d0021b252eaf65ca07ed14f0d66425dd9ccab9a6
+>>
+>
+> Use CVE-2010-1187, to be filled in later.
+>
+> What version is affected? I'm assuming at least 2.6.33.
 
-Sebastian Krahmer found a problem in the drivers/connector/connector.c code
-where users could send/allocate arbitrary amounts of NETLINK_CONNECTOR
-messages to the kernel, causing OOM condition, killing selected processes
-or halting the system.
+All kernel versions since v2.6.16-rc1.
 
-This is fixed in mainline commit f98bfbd78c37c5946cc53089da32a5f741efdeb7
-by removing the code.
-
-commit f98bfbd78c37c5946cc53089da32a5f741efdeb7
-Author: Evgeniy Polyakov <zbr@...emap.net>
-Date:   Tue Feb 2 15:58:48 2010 -0800
-
-    connector: Delete buggy notification code.
-
-    On Tue, Feb 02, 2010 at 02:57:14PM -0800, Greg KH (gregkh@...e.de) wrote:
-    > > There are at least two ways to fix it: using a big cannon and a small
-    > > one. The former way is to disable notification registration, since it is
-    > > not used by anyone at all. Second way is to check whether calling
-    > > process is root and its destination group is -1 (kind of priveledged
-    > > one) before command is dispatched to workqueue.
-    >
-    > Well if no one is using it, removing it makes the most sense, right?
-    >
-    > No objection from me, care to make up a patch either way for this?
-
-    Getting it is not used, let's drop support for notifications about
-    (un)registered events from connector.
-    Another option was to check credentials on receiving, but we can always
-    restore it without bugs if needed, but genetlink has a wider code base
-    and none complained, that userspace can not get notification when some
-    other clients were (un)registered.
-
-    Kudos for Sebastian Krahmer <krahmer@...e.de>, who found a bug in the
-    code.
-
-    Signed-off-by: Evgeniy Polyakov <zbr@...emap.net>
-    Acked-by: Greg Kroah-Hartman <gregkh@...e.de>
-    Signed-off-by: David S. Miller <davem@...emloft.net>
-
+Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
