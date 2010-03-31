@@ -1,43 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/02/2
-Message-ID: <AANLkTimc4BTaSY0RZwVq+ybe5b1jXepD60Lg7U3d1+OY@mail.gmail.com>
-Date: Tue, 2 Nov 2010 11:24:48 +0100
-From: Pierre Joye <pierre.php@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: utf-8 security issue in php
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/31/5
+Message-ID: <4BB385CE.5060208@redhat.com>
+Date: Wed, 31 Mar 2010 19:26:38 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, Jan Lehnardt <jan@...che.org>
+Subject: CVE Request -- Apache CouchDB v.0.11.0 -- timing attacks flaw
 Content-Type: text/plain; charset=utf-8
 
-hi,
+Hi Steve, vendors,
 
-I was about to ask if any of the documents linked there already has a CVE.
+   Apache CouchDB upstream has released latest, v.0.11.0
+version, addressing timing attack flaw(s). More from Bugtraq
+post:
+   [1] http://seclists.org/bugtraq/2010/Mar/254
 
-In any case, this is another set of fixes (afair it does not fix all
-possible problems) and needs a CVE. I will update the NEWS&bug
-accordingly as soon as we get one.
+"Apache CouchDB versions prior to version 0.11.0 are vulnerable to
+timing attacks, also known as side-channel information leakage,
+due to using simple break-on-inequality string comparisons when
+verifying hashes and passwords."
 
-Thanks!
+References:
+   [2] http://wiki.apache.org/couchdb/Breaking_changes
+   [3] http://codahale.com/a-lesson-in-timing-attacks/
+   [4] http://couchdb.apache.org/
+   [5] http://couchdb.apache.org/downloads.html
+
+Credit:
+   Jason Davies of the Apache CouchDB development team
+
+[1] references CVE-2008-2370 as CVE id, but CVE-2008-2370 is Apache Tomcat flaw:
+   [6] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2370
+
+Since Apache CouchDB is different code base, susceptible to the same
+issue as in [3], assuming new CVE identifier is required.
+
+Steve, could you allocate one?
+
+Thanks && Regards, Jan.
 --
-Pierre
-
-On Tue, Nov 2, 2010 at 10:56 AM, Oden Eriksson <oeriksson@...driva.com> wrote:
-> Hello.
->
-> Another security issue was recently fixed in php-5.3
->
-> http://bugs.php.net/bug.php?id=49687
-> http://svn.php.net/viewvc?view=revision&revision=304959
->
-> I suppose it needs a CVE assignment.
->
-> --
-> Regards // Oden Eriksson
-> Security team manager - Mandriva
-> CEO NUX AB
->
-
-
-
--- 
-Pierre
-
-@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+Jan iankko Lieskovsky / Red Hat Security Response Team
