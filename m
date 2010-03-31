@@ -1,29 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/03/6
-Message-ID: <20100303215845.GY14491@outflux.net>
-Date: Wed, 3 Mar 2010 13:58:45 -0800
-From: Kees Cook <kees@...ntu.com>
-To: oss-security@...ts.openwall.com, libesmtp@...fford.uklinux.net
-Cc: security@...ntu.com
-Subject: CVE Request: libesmtp does not check NULL bytes in commonName
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/31/4
+Message-ID: <378908383.63861270051296723.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 31 Mar 2010 12:01:36 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: iscsitarget/scsi-target-tuils format string CVE assignment
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+I've not seen a mail about this yet, so here goes.
 
-I just noticed that libesmtp does not appear to handle NULL-byte CNs, as
-seen with the original browser-based issue:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2408
+I'm assigning CVE-2010-0743 to this flaw.
 
-Related to this are failures in wildcard handling:
- http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=311191
-and CN-specificity:
- https://bugzilla.redhat.com/show_bug.cgi?id=510202
+Debian bug:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=574935
 
-Though it may be a non-issue if TLS doesn't function at all:
- http://bugs.gentoo.org/213066
+Red Hat bug:
+https://bugzilla.redhat.com/show_bug.cgi?id=576359
 
--Kees
+the codebase appears to be the same for both packages, so I'm going with one ID.
+
+Thanks
 
 -- 
-Kees Cook
-Ubuntu Security Team
+    JB
