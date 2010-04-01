@@ -1,64 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/26/5
-Message-ID: <1310820388.1556281280172558128.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 26 Jul 2010 15:29:18 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/01/1
+Message-Id: <201004011307.18251.ludwig.nussel@suse.de>
+Date: Thu, 1 Apr 2010 13:07:17 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
+To: "oss-security" <oss-security@...ts.openwall.com>
 Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE-2008-id Request -- ssmtp -- standardise() -- Buffer overflow
+Subject: CVE Request: moodle 1.9.8, 1.8.2
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
+Hi,
 
-I'm going to leave this one for you, I have no 2008 IDs.
+Moodle 1.9.8 and 1.8.12 were released with security fixes:
+http://docs.moodle.org/en/Moodle_1.9.8_release_notes
+* MSA-10-0001 Vulnerability in KSES text cleaning
+* MSA-10-0002 XSS vulnerabilty in the phpcas module
+* MSA-10-0003 Disclosure of full user names
+* MSA-10-0004 Improved access control in course restore
+* MSA-10-0005 Incorrect validation of forms data
+* MSA-10-0006 SQL injection in Wiki module
+* MSA-10-0007 Reflective Cross Site Scripting (XSS) in the Moodle Global Search Engine
+* MSA-10-0008 Persistent XSS when using Login-as feature
+* MSA-10-0009 Session fixation prevention now turned on by default
 
-Thanks.
+cu
+Ludwig
 
 -- 
-    JB
-
-
------ "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
-
-> Hi Steve, vendors,
-> 
->    Brendan Boerner reported:
->    [1] https://bugs.launchpad.net/ubuntu/+source/ssmtp/+bug/282424
-> 
-> a deficiency in the way ssmtp removed trailing '\n' sequence
-> by processing lines beginning with a leading dot. A local user,
-> could send a specially-crafted e-mail message via ssmtp send-only
-> sendmail emulator, leading to ssmtp executable denial of service (exit
-> with:
-> ssmtp: standardise() -- Buffer overflow). Different vulnerability
-> than CVE-2008-3962.
-> 
-> References:
->    [2] https://bugzilla.redhat.com/show_bug.cgi?id=582236
->    [3] https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2008-3962
->    [4] http://patch-tracker.debian.org/package/ssmtp/2.62-3
->    [5]
-> http://lists.fedoraproject.org/pipermail/package-announce/2010-May/041012.html
->    [6]
-> http://lists.fedoraproject.org/pipermail/package-announce/2010-May/041009.html
->    [7]
-> http://lists.fedoraproject.org/pipermail/package-announce/2010-May/041119.html
-> 
-> Debian Linux distribution patch:
->    [8]
-> http://patch-tracker.debian.org/patch/series/view/ssmtp/2.62-3/345780-standardise-bufsize
-> 
-> Public PoC (from
-> https://bugzilla.redhat.com/show_bug.cgi?id=582236#c0):
->    [9] ( 0. Install & configure ssmtp, of course )
->          1. (echo -n . ; for i in {1..2050} ; do echo -n $i ; done) |
-> mail root
-> 
-> Couldn't find CVE-2008-XXXX ssmtp identifier for this
-> (http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=ssmtp).
-> 
-> Steve, could you allocate one?
-> 
-> Thanks && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+ (o_   Ludwig Nussel
+ //\   
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
