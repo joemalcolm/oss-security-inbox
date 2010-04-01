@@ -1,30 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/13/2
-Message-ID: <AANLkTinpv2DWwGdENOQdzs3j+BdZ3wY=2BakvSS1XFo7@mail.gmail.com>
-Date: Wed, 13 Oct 2010 09:57:36 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/01/4
+Message-ID: <1128715081.206511270136888690.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 1 Apr 2010 11:48:08 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: ettercap GTK
+Cc: "Alvaro J. Iradier Muro" <airadier@...rs.sourceforge.net>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- aMSN -- improper SSL certificate validation (MITM)
 Content-Type: text/plain; charset=utf-8
 
-The GTK version of ettercap uses a global settings file at
-/tmp/.ettercap_gtk and does not verify ownership of this file before
-reading it. When parsing this file for settings in gtkui_conf_read()
-(src/interfaces/gtk/ec_gtk_conf.c), an unchecked sscanf() call can
-result in a stack-based buffer overflow.  Local users can place
-maliciously crafted settings files at this location to exploit other
-users who run ettercap.  On most distributions, stack-smashing
-protection will mitigate the impact.  I'm unclear as to whether there
-are settings that could be forced upon other users that make ettercap
-misbehave in a dangerous way.
+----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
 
-There are two issues here (insecure temporary file usage and
-stack-based buffer overflow), but they're probably only
-security-relevant when exploited in conjunction.  Not sure if it
-should get one CVE or two.
+> Hi Steve, vendors,
+> 
+>    Gabriel Menezes Nunes reported:
+>      [1] http://seclists.org/bugtraq/2009/Jun/239
+> 
+>    a deficiency in the way aMSN messenger validated SSL certificates
+> when
+>    connecting to the MSN server. A remote attacker could conduct
+> man-in-the-middle
+>    attacks and / or impersonate trusted servers.
+> 
+>    Affected version:
+>      Issue originally reported against aMSN v0.97.2, but further
+> research showed [4]
+>      latest aMSN v0.98.3 still suffers from the flaw.
+> 
+>    References:
+>      [2]
+> http://www.juniper.net/security/auto/vulnerabilities/vuln35507.html
+>      [3] http://secunia.com/advisories/35621/
+>      [4] http://www.opensource-archive.org/showthread.php?p=183821
+>      [5] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=572818
+> 
+>    Upstream (testing) patch:
+>      [6]
+> http://amsn.svn.sourceforge.net/viewvc/amsn/trunk/?view=log&pathrev=11991
+> 
+> Not sure, if this already got a CVE id, but in case if not, could you
+> allocate one?
+> 
 
-Reference:
-https://bugs.launchpad.net/ubuntu/+source/ettercap/+bug/656347
+I can't find a CVE id.
 
+Please use CVE-2010-0744
 
--Dan
+Thanks.
+
+-- 
+    JB
