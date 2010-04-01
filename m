@@ -1,55 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/13/4
-Message-ID: <AANLkTimfgo3kAgba0+mOXfArEJ_3Mfn_KHqPXYFR9p6S@mail.gmail.com>
-Date: Mon, 13 Dec 2010 18:47:19 +0100
-From: Pierre Joye <pierre.php@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/01/10
+Message-ID: <1677914590.229811270149964194.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 1 Apr 2010 15:26:04 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Issues without CVE names in PHP 5.3.4/5.2.15 release
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request: policykit (minor)
 Content-Type: text/plain; charset=utf-8
 
-hi,
+----- "Kees Cook" <kees@...ntu.com> wrote:
 
-On Mon, Dec 13, 2010 at 5:33 PM, Vincent Danen <vdanen@...hat.com> wrote:
-> Looking at the PHP web site, there are a few issues fixed in the most
-> recent releases that don't seem to have a CVE name:
->
-> * Fixed crash in zip extract method (possible CWE-170).
+> Hi,
+> 
+> Dan Rosenberg found[1] a minor information disclosure vulnerability
+> in pkexec, which has been fixed[2] upstream.  It would disclose the
+> existence of files a given user would normally not be able to
+> confirm:
+> 
+> $ pkexec /home/drosenbe/secret/hidden
+> (password prompt)
+> $ pkexec /home/drosenbe/secret/doesnotexist
+> Error getting information about /home/drosenbe/secret/doesnotexist: No
+> such file or directory
+> 
+> Thanks,
+> 
+> -Kees
+> 
+> [1] Ubuntu bug: https://launchpad.net/bugs/532852
+> [2]
+> http://cgit.freedesktop.org/PolicyKit/commit/?id=14bdfd816512a82b1ad258fa143ae5faa945df8a
+> 
 
-Was requested and was not considered as worth a CVE #
+Please use CVE-2010-0750
 
+Thanks.
 
-> * Fixed symbolic resolution support when the target is a DFS share.
-
-Why does it require a CVE #? That's not a security fix but a fix about
-DFS support on Windows (did not work).
-
-> * Fixed extract() to do not overwrite $GLOBALS and $this when using
-> EXTR_OVERWRITE.
-
-Not sure either if it requires one.
-
-> Also doesn't seem to be much info on these readily available.
->
-> The first seems to be related to this SVN commit (don't see a bug for
-> it):
->
-> http://svn.php.net/viewvc?view=revision&revision=305848
->
-> The second seems to be Windows-specific and is this bug (haven't found
-> the SVN commit for it yet):
->
-> http://bugs.php.net/bug.php?id=51945
->
-> The third seems to be 5.2-specific (no mention in the 5.3 changes), but
-> I've not yet found the bug or SVN commit.
-
-In any case I would like to remember you security@....net as well. We
-also added now a security flag in our bug tracker, Joe should have
-access to them as well, ping me if more of the redhat team needs it,
-or other distrubutions.
-
-Cheers,
 -- 
-Pierre
-
-@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+    JB
