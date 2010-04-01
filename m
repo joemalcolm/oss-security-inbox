@@ -1,32 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/28/1
-Message-ID: <4C28604F.3050108@kernel.sg>
-Date: Mon, 28 Jun 2010 16:41:51 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request - kernel: cifs: Fix a kernel BUG with remote OS/2 server
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/01/2
+Message-ID: <4BB47F4D.2000309@redhat.com>
+Date: Thu, 01 Apr 2010 13:11:09 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request -- Zabbix v1.8.2 and v.1.6.9
 Content-Type: text/plain; charset=utf-8
 
-"This was known to trigger with a OS/2 server. The server sets 
-pSMBr->CountHigh to a incorrect value even in case of normal writes. 
-This results in 'nbytes' being computed wrongly and triggers a kernel 
-BUG at mm/filemap.c.
+Hi Steve, vendors,
 
-     void iov_iter_advance(struct iov_iter *i, size_t bytes)
-     {
-             BUG_ON(i->count < bytes);    <--- BUG here
+   though April the First today, this doesn't seem to be a joke:
 
-Why the server is setting 'CountHigh' is not clear but only does so 
-after writing 64k bytes. Though this looks like the server bug, the 
-client side crash may not be acceptable.
+   a, Zabbix <= 1.8.1 SQL Injection
 
-The workaround is to mask off high 16 bits if the number of bytes 
-written as returned by the server is greater than the bytes requested by 
-the client."
+   [1] http://seclists.org/fulldisclosure/2010/Apr/1
+   [2] http://www.zabbix.com/rn1.8.2.php
 
-https://bugzilla.redhat.com/show_bug.cgi?id=608583
-http://git.kernel.org/linus/6513a81e9325d712f1bfb9a1d7b750134e49ff18
+   b, also on 25 March 2010, Zabbix v1.6.9 was
+      released:
 
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+   [3] http://www.zabbix.com/rn1.6.9.php
+
+      fixing one security issue -- remote commands execution in Zabbix Server.
+
+   [4] https://support.zabbix.com/browse/ZBX-1030
+
+Could you allocate CVE ids for these two issues?
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+
+
