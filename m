@@ -1,67 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/13/4
-Message-ID: <4CB5FA0B.7070401@redhat.com>
-Date: Wed, 13 Oct 2010 20:27:23 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, Daniel Stenberg <daniel@...x.se>, Erik van Pienbroek <erik-fedora@...pienbroek.nl>
-Subject: Re: CVE Request -- cURL / mingw32-cURL -- Did not strip directory parts separated by backslashes, when downloading files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/01/12
+Message-ID: <1162521418.230161270150278957.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 1 Apr 2010 15:31:18 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Zabbix v1.8.2 and v.1.6.9
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
+----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
 
-   just small correction. As stated in:
-   [1] https://bugzilla.redhat.com/show_bug.cgi?id=642642#c4
+> Hi Steve, vendors,
+> 
+>    though April the First today, this doesn't seem to be a joke:
+> 
+>    a, Zabbix <= 1.8.1 SQL Injection
+> 
+>    [1] http://seclists.org/fulldisclosure/2010/Apr/1
+>    [2] http://www.zabbix.com/rn1.8.2.php
 
-the mingw32-curl package is not affected by this issue, as the
-error is only present in curl command line tool and that tool
-is not bundled in the final compiled form of mingw32-curl rpm.
+Use CVE-2010-1144 for this one
 
-So the CVE request applies really only to native systems, using
-backslash as directory entries delimiter / separator.
+> 
+>    b, also on 25 March 2010, Zabbix v1.6.9 was
+>       released:
+> 
+>    [3] http://www.zabbix.com/rn1.6.9.php
+> 
+>       fixing one security issue -- remote commands execution in Zabbix
+> Server.
+> 
+>    [4] https://support.zabbix.com/browse/ZBX-1030
+> 
 
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Use CVE-2010-1145 for this one
 
-Jan Lieskovsky wrote:
-> Hello Steve, vendors,
-> 
->   cURL upstream has released new curl / libcurl v7.21.2 addressing one 
-> security flaw,
-> specific for operating systems, where backslashes are used to separate 
-> directories from
-> file names. More details follow:
-> 
-> cURL did not properly cut off directory parts from user provided
-> file name to be downloaded on operating systems, where backslashes
-> are used to separate directories and file names. This could allow
-> remote servers to create or overwrite files via a Content-Disposition
-> header that suggests a crafted filename, and possibly execute arbitrary
-> code as a consequence of writing to a certain file in a user's home
-> directory. Different vulnerability than CVE-2010-2251, CVE-2010-2252
-> and CVE-2010-2253.
-> 
-> Note: As already mentioned in [2]. This flaw only affected those
->       operating systems, where backslash is used to separate directories
->       and file names, thus Microsoft Windows, Novell Netware, MSDOS, OS/2
->       and Symbian to mention some of them.
-> 
-> References:
-> [1] http://curl.haxx.se/docs/security.html
-> [2] http://curl.haxx.se/docs/adv_20101013.html
-> 
-> Upstream patch:
-> [3] http://curl.haxx.se/curl-content-disposition.patch
-> 
-> Credit: Upstream acknowledges Dan Fandrich as the original reporter.
-> 
-> Red Hat Bugzilla tracking system record:
-> [4] https://bugzilla.redhat.com/show_bug.cgi?id=642642
-> 
-> Could you please allocate a CVE id for this issue?
-> 
-> Thanks && Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+Thanks
 
+-- 
+    JB
