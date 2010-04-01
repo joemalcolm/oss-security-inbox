@@ -1,35 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/16/16
-Message-ID: <1878625536.256431284667827677.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 16 Sep 2010 16:10:27 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/01/8
+Message-ID: <1770955031.221231270144814858.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 1 Apr 2010 14:00:14 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: mantis before 1.2.3 (XSS)
+Cc: drbd-dev@...ts.linbit.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: connector security bypass
 Content-Type: text/plain; charset=utf-8
 
------ "Kurt Seifried" <kurt@...fried.org> wrote:
-
+----- "dann frazier" <dannf@...nf.org> wrote:
 > 
-> These four have no CVE #:
-> - 0012231: [security] XSS vulnerability when uninstalling maliciously
-> named plugins (dhx) - resolved.
-> - 0012232: [security] Multiple XSS issues with custom field
-> enumeration values (dhx) - resolved.
-> - 0012234: [security] XSS issues when using custom field String
-> values
-> (dhx) - resolved.
-> - 0012238: [security] XSS in print_all_bug_page_word.php when
-> printing
-> project and category names (dhx) - resolved.
+> Debian provides an out-of-tree drbd module (drbd8), and it appears to
+> be affected by this issue as well. I assume we need to allocate an
+> additional CVE ID for it?
+> 
+> Here's a link to the upstream fix:
+> http://git.drbd.org/?p=drbd-8.3.git;a=commitdiff;h=71915b0d267392c77fe0ae2309535333026cef66
+> 
+> The in-tree version that got merged for 2.6.33 looks fine.
 > 
 
-I'm assigning one ID to all four of these. If someone thinks they should be
-split, let me know.
-
-Use CVE-2010-3303
-
-Thanks.
+Please use CVE-2010-0747 for this module (drbd8).
 
 -- 
     JB
