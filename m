@@ -1,28 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/16/3
-Message-ID: <4C91AC26.3030807@kernel.sg>
-Date: Thu, 16 Sep 2010 13:33:26 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/01/6
+Message-ID: <260780643.207481270137399652.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 1 Apr 2010 11:56:39 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE-2010-3301 kernel: IA32 System Call Entry Point Vulnerability
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request: DeviceKit privilege escalation via pluggable storage device labels
 Content-Type: text/plain; charset=utf-8
 
-On 09/16/2010 12:56 PM, Eugene Teo wrote:
-> CVE-2007-4573 regression. Local privilege escalation.
->
-> Introduced in v2.6.27-rc1 via commit d4d67150.
->
-> Upstream commits:
-> http://git.kernel.org/linus/36d001c70d8a0144ac1d038f6876c484849a74de
-> http://git.kernel.org/linus/eefdca043e8391dcd719711716492063030b55ac
->
+
+----- "Vincent Danen" <vdanen@...hat.com> wrote:
+
+> This is quite old, but I don't think a CVE name has ever been assigned to
+> it.  The issue is with how DeviceKit handled labels for pluggable storage
+> devices.  A local unprivileged user could use this flaw to elevate
+> privileges.  It has been corrected upstream.
+> 
 > References:
-> http://sota.gen.nz/compat2/
-> https://bugzilla.redhat.com/CVE-2010-3301
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=523178
+> http://cgit.freedesktop.org/DeviceKit/DeviceKit-disks/commit/?id=62f883c7d38e75d0669c162529062a1e81d00da2
+> http://bugs.freedesktop.org/show_bug.cgi?id=23235
+> 
 
-This was reported by Ben Hawkes.
+Please use CVE-2010-0746
 
-Eugene
+Thanks
+
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+    JB
