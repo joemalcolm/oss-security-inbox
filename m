@@ -1,16 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/13/3
-Message-ID: <20101013173448.GB14661@inutil.org>
-Date: Wed, 13 Oct 2010 19:34:48 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: Apache-AuthenHook perl module
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/01/7
+Message-ID: <20100401165525.GD4078@outflux.net>
+Date: Thu, 1 Apr 2010 09:55:25 -0700
+From: Kees Cook <kees@...ntu.com>
+To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE Request: policykit (minor)
 Content-Type: text/plain; charset=utf-8
 
 Hi,
-please assign a CVE ID for 
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=599712
-https://rt.cpan.org/Public/Bug/Display.html?id=62040
 
-Cheers,
-        Moritz
+Dan Rosenberg found[1] a minor information disclosure vulnerability
+in pkexec, which has been fixed[2] upstream.  It would disclose the
+existence of files a given user would normally not be able to confirm:
+
+$ pkexec /home/drosenbe/secret/hidden
+(password prompt)
+$ pkexec /home/drosenbe/secret/doesnotexist
+Error getting information about /home/drosenbe/secret/doesnotexist: No such file or directory
+
+Thanks,
+
+-Kees
+
+[1] Ubuntu bug: https://launchpad.net/bugs/532852
+[2] http://cgit.freedesktop.org/PolicyKit/commit/?id=14bdfd816512a82b1ad258fa143ae5faa945df8a
+
+-- 
+Kees Cook
+Ubuntu Security Team
