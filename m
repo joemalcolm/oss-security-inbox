@@ -1,17 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/13/3
-Message-ID: <AANLkTikVUoVEar03SzU9c3_mZFbGRn_5DG8wJrtiZ+ON@mail.gmail.com>
-Date: Mon, 13 Sep 2010 10:44:15 -0700
-From: Kyle Bader <kyle.bader@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/01/11
+Message-ID: <944349923.230021270150168501.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 1 Apr 2010 15:29:28 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request for non disclosed issue?
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- libnids v1.24 -- Null pointer dereference
 Content-Type: text/plain; charset=utf-8
 
-> Another (certainly obvious) question, where/to who can I ask a CVE id
-> for a flaw not disclosed yet?
+----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
 
-http://cve.mitre.org/cve/obtain_id.html
+> Hi Steve, vendors,
+> 
+>    libnids upstream has released latest, v1.24 version, addressing
+> one NULL pointer dereference:
+> 
+>    [1] http://libnids.sourceforge.net/
+>    [2]
+> http://freefr.dl.sourceforge.net/project/libnids/libnids/1.24/libnids-1.24.releasenotes.txt
+> 
+>    "v1.24 Mar 14 2010
+>     - fixed another remotely triggerable NULL dereference in
+>     ip_fragment.c"
+> 
+>    [3] http://secunia.com/advisories/39225/
+> 
+> Could you allocate a CVE id for it?
+> 
+
+Please use CVE-2010-1144
+
+Thanks
 
 -- 
-
-Kyle
+    JB
