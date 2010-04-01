@@ -1,30 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/02/4
-Message-ID: <741878604.897651265144211229.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 2 Feb 2010 15:56:51 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/01/9
+Message-ID: <651701606.225121270147273499.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 1 Apr 2010 14:41:13 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
 Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - kvm: cat /dev/port in the guest can cause host DoS
+Subject: Re: CVE Request -- Transmission v1.92
 Content-Type: text/plain; charset=utf-8
 
+----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
 
------ "Eugene Teo" <eugeneteo@...nel.sg> wrote:
+> Hi Steve, vendors,
+> 
+>    Transmission upstream has recently released latest, v1.92 version:
+>      [1] http://trac.transmissionbt.com/wiki/Changes
+> 
+>    fixing one (potentially two) security issues:
+>      a, Fix potential buffer overflow when adding maliciously-crafted
+>      magnet links
+> 
+>    References:
+>      [2] http://trac.transmissionbt.com/ticket/2965
+>      [3] http://trac.transmissionbt.com/wiki/Changes
+>      [4] http://bugs.gentoo.org/show_bug.cgi?id=309831
 
-> The problem is pit_state->channels[] has 3 elements, and
-> pit_ioport_read 
-> uses "addr" as index to pit_get_count, so inb(0x43) reads (and 
-> potentially writes) into other data of kvm_kpit_state.
+Use CVE-2010-0748 for this one. I'm calling it an arbitrary memory write.
+It's not really a buffer overflow.
+
 > 
-> PIT control word (address 0x43) is write-only, reads are undefined.
+>      --
 > 
-> Triggering this can cause a general protection fault on the host.
+>      b, Fix possible data corruption issue caused by data sent by bad
+>      peers during endgame (this one I am not completely sure of, but when
+>      looking at the relevant bug record:
+>      [5] http://trac.transmissionbt.com/ticket/1242
+>          there is written:
+>      [6] http://trac.transmissionbt.com/ticket/1242#comment:1
+>          "My theory is that for some reason Transmission will download a
+>          corrupt part from someone but not realize it until you do a
+>          manual verify. At this point T will recognize the bad part and
+>          redownload it from the same person, which just causes the
+>          problem again."
 > 
-> https://bugzilla.redhat.com/show_bug.cgi?id=560887
-> http://www.mail-archive.com/kvm@vger.kernel.org/msg28002.html
+>          so to prevent someone from successfully downloading content of
+>          some torrent file, for an attacker to should be enough to
+>          download a part of it, corrupt it and
+>          share it. Not sure about the algorithm, Transmission decides
+>          which torrent
+>          to retrieve content from, but if it is deterministic /
+>          predictable behavior / algorithm, such attack could succeed).
+> 
+>    References:
+>      [7] http://trac.transmissionbt.com/ticket/1242
+>      [8] http://trac.transmissionbt.com/ticket/1242#comment:1
+>      [9] http://trac.transmissionbt.com/wiki/Changes
 > 
 
-Please use CVE-2010-0309 for this.
+I'm giving this issue a CVE ID too. I think this issue is a bit on the
+fence, but given a malicious client could corrupt download data in a manner
+that is hard to fix, it should get one.
+
+Use CVE-2010-0749
 
 Thanks.
 
