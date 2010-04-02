@@ -1,28 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/15/4
-Message-ID: <1266258116.31647.47.camel@x300.fritz.box>
-Date: Mon, 15 Feb 2010 19:21:56 +0100
-From: Thomas Waldmann <tw-public@....de>
-To: oss-security <oss-security@...ts.openwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/02/2
+Message-ID: <20100402202810.GA8430@galadriel.inutil.org>
+Date: Fri, 2 Apr 2010 22:28:10 +0200
+From: Moritz Muehlenhoff <jmm@...til.org>
+To: oss-security@...ts.openwall.com
 Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- MoinMoin -- 1.8.7
+Subject: Re: CVE Request -- Zabbix v1.8.2 and v.1.6.9
 Content-Type: text/plain; charset=utf-8
 
-Sorry, have overlooked some stuff:
+On Thu, Apr 01, 2010 at 03:31:18PM -0400, Josh Bressers wrote:
+> ----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+> 
+> > Hi Steve, vendors,
+> > 
+> >    though April the First today, this doesn't seem to be a joke:
+> > 
+> >    a, Zabbix <= 1.8.1 SQL Injection
+> > 
+> >    [1] http://seclists.org/fulldisclosure/2010/Apr/1
+> >    [2] http://www.zabbix.com/rn1.8.2.php
+> 
+> Use CVE-2010-1144 for this one
 
->        Though there are xmlrpc related fixes in 1.8.7:
->        "xmlrpc:
->         * Process attachname in get/putAttachment similarly.
->         * revertPage: convert pagename to internal representation." --
->         Thomas are these also security related fixes?
+Josh, in a later mail you've assigned the same ID to a libnids issue:
 
-No, this is rather to handle stuff consistently.
+| > http://freefr.dl.sourceforge.net/project/libnids/libnids/1.24/libnids-1.24.releasenotes.txt
+| >
+| >    "v1.24 Mar 14 2010
+| >     - fixed another remotely triggerable NULL dereference in
+| >     ip_fragment.c"
+| >
+| >    [3] http://secunia.com/advisories/39225/
+| >
+| > Could you allocate a CVE id for it?
+| >
+|
+| Please use CVE-2010-1144
 
->    c, " Do not use OpenID auth code" -- not sure about state of this.
-
-Fixed by 1.8.7 (and soon by 1.9.2).
-
-BTW, I need a 3rd CVE for user profile input sanitizing (all moin
-versions), also fixed in 1.8.7 (and soon by 1.9.2).
-
-
+Cheers,
+        Moritz
