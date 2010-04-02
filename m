@@ -1,41 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/30/4
-Message-ID: <20100930054949.GA9118@mail.oracle.com>
-Date: Wed, 29 Sep 2010 22:49:50 -0700
-From: Joel Becker <Joel.Becker@...cle.com>
-To: Greg KH <greg@...ah.com>
-Cc: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Small exposure in ocfs2 fast symlinks.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/02/1
+Message-ID: <B10972B83D0BD24BA122AF919F7FF3110511BFE4@S300MSMAIL03.intranet-adsn.fr>
+Date: Fri, 2 Apr 2010 12:39:57 +0200
+From: "Nicolas GREGOIRE" <nicolas.gregoire@...aires.fr>
+To: <oss-security@...ts.openwall.com>
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: RE: CVE Request -- Zabbix v1.8.2 and v.1.6.9
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Sep 29, 2010 at 08:30:09PM -0700, Greg KH wrote:
-> On Wed, Sep 29, 2010 at 07:04:07PM -0700, Joel Becker wrote:
-> > Hey Everyone,
-> > 	We just discovered that ocfs2 could walk off the end of fast
-> > symlinks -- that is, symlinks that are stored directly in the inode
-> > block.  ocfs2 terminates these with NUL characters, but a disk
-> > corruption or an attacker with direct access to the ocfs2 disk could
-> > overwrite the NUL.  Following the symlink via the filesystem would walk
-> > off the end of the in-memory block buffer.  We're not sure how
-> > exploitable this is, but I figured I'd provide a heads-up.  The fix is
-> > in ocfs2's git tree and will be sent upstream tonight.  Erratas with the
-> > fix are being built.
+> >    b, also on 25 March 2010, Zabbix v1.6.9 was
+> >       released:
+> > 
+> >    [3] http://www.zabbix.com/rn1.6.9.php
+> >    [4] https://support.zabbix.com/browse/ZBX-1030
+> > 
 > 
-> Care to send the git commit id to the stable@...nel.org tree when it
-> hits Linus's tree so it gets backported there?
+> Use CVE-2010-1145 for this one
 
-	I Cc'd stable@...nel.org in the commit, don't worry ;-)
+CVE 2009-4498 is already affected to this vulnerability.
 
-Joel
-
--- 
-
-Life's Little Instruction Book #267
-
-	"Lie on your back and look at the stars."
-
-Joel Becker
-Consulting Software Developer
-Oracle
-E-mail: joel.becker@...cle.com
-Phone: (650) 506-8127
+Nicob
