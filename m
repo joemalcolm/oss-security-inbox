@@ -1,24 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/09/8
-Message-Id: <201009091957.47601.hanno@hboeck.de>
-Date: Thu, 9 Sep 2010 19:57:47 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/03/2
+Message-ID: <20100403134416.4b66670f@redhat.com>
+Date: Sat, 3 Apr 2010 13:44:16 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: mednafen stack manipulation
+Cc: jmm@...til.org, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Zabbix v1.8.2 and v.1.6.9
 Content-Type: text/plain; charset=utf-8
 
-http://sourceforge.net/news/?group_id=150840&id=287363
+On Fri, 2 Apr 2010 22:28:10 +0200 Moritz Muehlenhoff <jmm@...til.org>
+wrote:
 
+> > >    a, Zabbix <= 1.8.1 SQL Injection
+> > > 
+> > >    [1] http://seclists.org/fulldisclosure/2010/Apr/1
+> > >    [2] http://www.zabbix.com/rn1.8.2.php
+> > 
+> > Use CVE-2010-1144 for this one
+> 
+> Josh, in a later mail you've assigned the same ID to a libnids issue:
 
-"Fixed a couple of remotely-exploitable(if connected to a malicious server) 
-stack manipulation bugs in the network play code."
+Looks like a wrong id used in libnids mail as, according to notes, the
+assignment should be:
 
-Not more info. Please assign CVE.
+CVE-2010-0751 libnids v1.24 -- Null pointer dereference
+CVE-2010-1144 Zabbix <= 1.8.1 SQL Injection
+CVE-2010-1145 Zabbix remote commands execution in Zabbix Server
 
 -- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-
-http://schokokeks.org - professional webhosting
-
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+Tomas Hoger / Red Hat Security Response Team
