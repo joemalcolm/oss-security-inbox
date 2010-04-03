@@ -1,40 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/18/7
-Message-ID: <20100218211500.GA3357@pcpool00.mathematik.uni-freiburg.de>
-Date: Thu, 18 Feb 2010 22:15:00 +0100
-From: "Bernhard R. Link" <brlink@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/03/3
+Message-ID: <20100403135522.GL1975@ngolde.de>
+Date: Sat, 3 Apr 2010 15:55:22 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel information leak via userspace USB interface
+Cc: slusarz@...de.org, chuck@...de.org
+Subject: CVE-2010-0463 incomplete horde fixes
 Content-Type: text/plain; charset=utf-8
 
-* Eugene Teo <eugene@...hat.com> [100218 02:09]:
-> Hi Marcus,
->
-> On 02/17/2010 06:29 PM, Marcus Meissner wrote:
->> While programming a USB device using libusb I found that a usb read from
->> the device returned data it should not.
-> [...]
->> Access to USB userspace devices either requires root access or desktop user access
->> via udev/hal ACLs on non-mass-storage Digital Cameras or Media Players. (So the
->> desktop user needs to plugin such a ACL getting device before being able
->> to read the memory).
->
-> To abuse this, you will need physical access to plug in a USB device, so
-> I do not think this should be regarded as a security issue.
+Hi,
+from the CVE id description:
+| Horde IMP 4.3.6 and earlier does not request that the web browser
+| avoid DNS prefetching of domain names contained in e-mail messages,
+| which makes it easier for remote attackers to determine the network
+| location of the webmail user by logging DNS requests.
+Additionally: https://secure.grepular.com/DNS_Prefetch_Exposure_on_Thunderbird_and_Webmail
 
-- What about users that already have such a device pluged in?
-- Just because someone has access to your hardware does not mean
-  they should have total control. Computer cases can be locked,
-  even put in other rooms with only monitor and usb ports (and
-  keyboard and mouse in usb) available to people that should only
-  have user rights and not root rights.
-  You can have employees/cameras to look users are not using drilling
-  machines on the cases or open the keyboards to add chips.
-  But you can hardly stop people from plugging in devices. (And I think
-  studies show that if you add any device on the street, people finding
-  them will plug them into their computer as the first thing they do).
+In order to fix this horde upstream added:
+// Build filter stack. Starts with HTML markup and tab expansion.
+$filters = array(
+    'text2html' => array(
+        'charset' => Horde_Nls::getCharset(),
+        // See Ticket #8836
+        'noprefetch' => ($GLOBALS['browser']->isBrowser('mozilla') && !$GLOBALS['browser']->usingSSLConnection()),
+        'parselevel' => Horde_Text_Filter_Text2html::MICRO
+    ),
+    'tabs2spaces' => array(),
+);
 
-It might be a minor issue or something not worth issuing a id, but a
-security issue it is.
+If the noprefetch option is set imp will add <meta http-equiv="x-dns-prefetch-control" value="off" />
+to the page.
+The problem with the above fix is that it is only triggered if the browser is mozilla and the
+connection is not using SSL. I think this comes from a misunderstanding of the above
+blog post which states "Using HTTPS rather than HTTP disables DNS prefetching."
 
-	Bernhard R. Link
+From my understanding this fix is incomplete because other browsers (e.g. Chrome) do
+DNS prefetching as well and the assumption that this is disabled using HTTPS is also
+for mozilla only true in the default configuration.
+
+JFYI...
+
+Cheers
+Nico
+P.S. Cced upstream
+
+Content of type "application/pgp-signature" skipped
