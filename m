@@ -1,25 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/10/5
-Message-Id: <461A4B45-51CB-4BEC-B433-3608742F55DE@gmail.com>
-Date: Wed, 10 Mar 2010 11:51:08 -0500
-From: Anthon Pang <anthon.pang@...il.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "cert@...t.org" <cert@...t.org>, "soc@...cert.gov" <soc@...cert.gov>
-Subject: Re: phpmyvisites 2.3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/03/1
+Message-ID: <4BB7091C.4090509@redhat.com>
+Date: Sat, 03 Apr 2010 11:23:40 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, Roshan Kumar Singh <roshansingh@...rs.sourceforge.net>
+Subject: CVE Request -- OpenDCHub v0.8.1 -- Stack overflow by handling a specially-crafted MyINFO message
 Content-Type: text/plain; charset=utf-8
 
-Should the CVE be against clickheat instead?  Looking at the  
-sourceforge project page, clickHeat is a standalone app, which  
-suggests only a loosely coupled integration with PMV.
+Hi Steve, vendors
 
-Sent from my iPhone
+   (based on http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=576308)
 
-On 2010-03-10, at 3:56 AM, Henri Salo <henri@...v.fi> wrote:
+   Pierre Nogues found a stack overflow flaw, in the way Open DC Hub
+sanitized content of user's MyINFO message. Remote attacker,
+with valid Open DC Hub account, could send a specially-crafted
+MyINFO message to another user / all users connected to particular
+Direct Connect network, leading into denial of service (opendchub
+crash) or, potentially, to arbitrary code execution with the privileges
+of the user running opendchub.
 
-> There is a security vulnerability in phpMyVisites 2.3. Is there a CVE
-> assigned for that issue?
->
-> http://www.phpmyvisites.us/phpmv2/CHANGELOG
->
-> ---
-> Henri Salo
+References:
+   [1] http://www.indahax.com/exploits/opendchub-0-8-1-remote-code-execution-exploit#more-600
+   [2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=576308
+   [3] https://bugzilla.redhat.com/show_bug.cgi?id=579206
+
+Could you allocate a CVE id for this?
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
