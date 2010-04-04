@@ -1,30 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/15/3
-Message-ID: <608371453.1017161289842837378.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 15 Nov 2010 12:40:37 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/04/1
+Message-ID: <1270370758.2560.10.camel@new-desktop>
+Date: Sun, 04 Apr 2010 10:45:58 +0200
+From: Nicob <nicob@...ob.net>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: ImageMagick opens config files in $CWD
+Cc: jmm@...til.org, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Zabbix v1.8.2 and v.1.6.9
 Content-Type: text/plain; charset=utf-8
 
------ "Vincent Danen" <vdanen@...hat.com> wrote:
+Le samedi 03 avril 2010 à 13:44 +0200, Tomas Hoger a écrit :
 
-> Noticed this in the Debian BTS.  It's been fixed in upstream svn, and
-> would be a fairly low impact issue.  The Debian report has a proof of
-> concept.
-> 
-> Could we get a CVE assigned for this issue?  Thanks.
-> 
-> References:
-> 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=601824
-> https://bugzilla.redhat.com/show_bug.cgi?id=652860
-> 
+> CVE-2010-1145 Zabbix remote commands execution in Zabbix Server
 
-Please use CVE-2010-4167.
+This vulnerability already have a CVE entry (CVE-2009-4498).
 
-Thanks.
+Nicob.
 
--- 
-    JB
+
+
