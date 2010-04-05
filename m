@@ -1,35 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/01/9
-Message-ID: <4CA645AB.9000106@wireshark.org>
-Date: Fri, 01 Oct 2010 13:33:47 -0700
-From: Gerald Combs <gerald@...eshark.org>
-To: Vincent Danen <vdanen@...hat.com>
-CC: oss-security@...ts.openwall.com
-Subject: Re: CVE requests: Poppler, Quassel, Pyfribidi, Overkill, DocUtils, FireGPG, Wireshark
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/05/4
+Message-Id: <20100405153100.4220fe46.michael.s.gilbert@gmail.com>
+Date: Mon, 5 Apr 2010 15:31:00 -0400
+From: Michael Gilbert <michael.s.gilbert@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Debian Moin Question
 Content-Type: text/plain; charset=utf-8
 
-Vincent Danen wrote:
-> * [2010-09-29 15:06:31 -0400] Josh Bressers wrote:
+On Mon, 5 Apr 2010 14:25:05 -0400 (EDT), Josh Bressers wrote:
+> Hello everyone,
 > 
->>> 7. Wireshark BER dissector
->>> http://archives.neohapsis.com/archives/bugtraq/2010-09/0088.html
->>>
->>
->> This one looks like a stack overflow, the advisory isn't very clear, but
->> claims there are two possible outcomes. We can always split later if
->> needed.
->> CVE-2010-3445
+> I just ran across this ID from MITRE:
 > 
-> Gerald, are you aware of this issue?  Do you have further details
-> regarding it?  I poked around in bugzilla a bit but couldn't find
-> anything.
+> Name: CVE-2010-1238
+> Status: Candidate
+> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-1238
+> Final-Decision:
+> Interim-Decision:
+> Modified:
+> Proposed:
+> Assigned: 20100405
+> Category:
+> Reference: DEBIAN:DSA-2024
+> Reference: URL:http://www.debian.org/security/2010/dsa-2024
 > 
-> It claims 1.4.0, but is not clear as to whether or not older versions
-> are affected.
+> MoinMoin 1.7.1 allows remote attackers to bypass the textcha
+> protection mechanism by modifying the textcha-question and
+> textcha-answer fields to have empty values.
+> 
+> The only data I can find on this is from the Debian DSA, and the
+> information is quite slim. Can someone shed more light on this flaw?
 
-It's been fixed in the trunk (r34111) and is scheduled for inclusion in
-1.4.1 and 1.2.12. We're tracking it in bug 5230:
+would the textcha.patch section in the debian diff [0] as linked
+from the DSA be sufficient?
 
-  https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5230
+mike
 
-The bug affects all BER dissectors and not just SNMP.
+[0] http://security.debian.org/pool/updates/main/m/moin/moin_1.7.1-3+lenny4.diff.gz
