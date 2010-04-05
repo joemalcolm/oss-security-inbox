@@ -1,24 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/18/2
-Message-ID: <20100318210453.GM2524@redhat.com>
-Date: Thu, 18 Mar 2010 15:04:53 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- Unbound v1.4.3 -- 64 bit platforms specific remote DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/05/1
+Message-ID: <4BB9A4A7.60503@kernel.sg>
+Date: Mon, 05 Apr 2010 16:51:51 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: cifs: cifs_create() NULL pointer dereference
 Content-Type: text/plain; charset=utf-8
 
-* [2010-03-18 14:59:53 -0400] Steven M. Christey wrote:
+Reported by Eugene Teo. While creating a file on a server which supports 
+Unix extensions such as Samba, if a file being created does not supply 
+nameidata (i.e. nd is NULL), cifs client can trigger a NULL pointer 
+dereference when calling cifs_posix_open().
 
->On Tue, 16 Mar 2010, Vincent Danen wrote:
->
->>Please do _not_ use CVE-2010-0735 for this issue, but use CVE-2010-0969
->>instead.
->
->CVE-2010-0735 is going to be marked for rejection so it should not be 
->used for any issue.  CVE-2010-0969 will be updated accordingly.
+http://comments.gmane.org/gmane.linux.file-systems.cifs/5782
+https://bugzilla.redhat.com/579445
 
-Perfect.  Thanks, Steve.
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+Thanks, Eugene
