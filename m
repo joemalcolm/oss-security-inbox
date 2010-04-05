@@ -1,30 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/03/8
-Message-ID: <1182275185.334831280865953671.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 3 Aug 2010 16:05:53 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/05/5
+Message-ID: <4BBA5A3C.80003@iuculano.it>
+Date: Mon, 05 Apr 2010 23:46:36 +0200
+From: Giuseppe Iuculano <giuseppe@...ulano.it>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE 2009 request: twiki before 4.3.2 CSRF
+CC: Josh Bressers <bressers@...hat.com>
+Subject: Re: Debian Moin Question
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2009-4898
+Hi,
 
-Thanks.
+Il 05/04/2010 20:25, Josh Bressers ha scritto:
+> The only data I can find on this is from the Debian DSA, and the
+> information is quite slim. Can someone shed more light on this flaw?
 
--- 
-    JB
+Upstream patch:
+http://hg.moinmo.in/moin/1.7/rev/a952d07dea69
+
+Cheers,
+Giuseppe.
 
 
------ "Hanno Böck" <hanno@...eck.de> wrote:
-
-> See
-> http://twiki.org/cgi-bin/view/Codev/SecurityAuditTokenBasedCsrfFix
-> 
-> Please note it's 2009.
-> 
-> -- 
-> Hanno Böck		Blog:		http://www.hboeck.de/
-> GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-> 
-> http://schokokeks.org - professional webhosting
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
