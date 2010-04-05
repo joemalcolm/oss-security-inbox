@@ -1,56 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/07/9
-Message-ID: <20100907191903.GB23280@suse.de>
-Date: Tue, 7 Sep 2010 21:19:03 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com
-Cc: Andrew Morton <akpm@...ux-foundation.org>, security@...nel.org, spender@...ecurity.net
-Subject: Re: Re: [Security] /proc infoleaks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/05/3
+Message-ID: <75661079.372161270491905168.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 5 Apr 2010 14:25:05 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Debian Moin Question
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Sep 07, 2010 at 01:13:45PM +0200, Sebastian Krahmer wrote:
-> On Tue, Sep 07, 2010 at 03:51:03AM -0700, Andrew Morton wrote:
-> > On Tue, 7 Sep 2010 10:35:46 +0200 Sebastian Krahmer <krahmer@...e.de> wrote:
-> > 
-> > > I have been elected to receive the bashing from all sides,
-> > > so here we go.
-> > > It is not about a new vulnerability or even a new discussion
-> > > but needs to be discussed, at least that we have a clear
-> > > statement about the status quo.
-> > > 
-> > > Recent i-CAN-haz-MODHARDEN.c has shown once *again* that
-> > > certain file permissions make no sense except to exploitation
-> > > development. There is no reason to have files like
-> > > 
-> > > /proc/kallsyms
-> > > /proc/slabinfo
-> > > /proc/zoneinfo
-> > > 
-> > > and probably a lot of others world readable. The symbol
-> > > addresses might be hard-coded for a certain targetlist
-> > > inside the exploit so you can argue that there
-> > > wont be any protection benefit from making it unreadable.
-> > > However this argument aint a reason to also leak it for self-compiled
-> > > kernels and doesnt even hold for dynamic/runtime content
-> > > like slabinfos etc.
-> > > It would be nice to have something like
-> > > 
-> > > echo 1 > /proc/quiet
-> > > 
-> > > or something like a umask for kernel-owned proc
-> > > entries so that you have a polite default and are
-> > > still able to enable it for certain profiling tools
-> > > or whereever you need it.
-> > 
-> > chmod 0440 /proc/slabinfo
-> > 
-> Heh, indeed. :-)
-> Would it be a bad idea to have proc_create() use a more strict
-> mode so it is non-leaking by default?
+Hello everyone,
 
-Yeah, sane and a bit more strict, defaults are missing.
+I just ran across this ID from MITRE:
 
-The little pieces of information leakage out of the kernel should be fixed,
-to raise the bar for kernel exploits in little steps at a time.
+Name: CVE-2010-1238
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-1238
+Final-Decision:
+Interim-Decision:
+Modified:
+Proposed:
+Assigned: 20100405
+Category:
+Reference: DEBIAN:DSA-2024
+Reference: URL:http://www.debian.org/security/2010/dsa-2024
 
-Ciao, Marcus
+MoinMoin 1.7.1 allows remote attackers to bypass the textcha
+protection mechanism by modifying the textcha-question and
+textcha-answer fields to have empty values.
+
+The only data I can find on this is from the Debian DSA, and the
+information is quite slim. Can someone shed more light on this flaw?
+
+Thanks.
+
+-- 
+    JB
