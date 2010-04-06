@@ -1,32 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/12/5
-Message-ID: <1278955496.2863.18.camel@mdlinux.technorage.com>
-Date: Mon, 12 Jul 2010 13:24:56 -0400
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: ghostscript
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/06/5
+Message-ID: <4BBBA098.1030409@redhat.com>
+Date: Tue, 06 Apr 2010 22:59:04 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, David Zeuthen <davidz@...hat.com>, David Zeuthen <david@...ar.dk>, Milan Broz <mbroz@...hat.com>, Alasdair G Kergon <agk@...hat.com>
+Subject: CVE Request -- udisks v1.0.0 -- (serious) information disclosure
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 2010-07-12 at 11:00 -0600, Vincent Danen wrote:
-> * [2010-07-12 12:48:35 -0400] Dan Rosenberg wrote:
-> 
-> >I believe this is identical to CVE-2010-1869
-> >(http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2010-1869).
-> 
-> They don't look identical to me.  Patches differ, upstream bugs differ.
-> 
-> Can't really do anything hands-on to test since the PoC attached to the
-> upstream bug is private.
+Hi Steve, vendors,
 
-The reproducer for CVE-2010-1869 does trigger it on 8.64 for me, but I
-would consider it a separate issue.
+   Bastian Blank reported the following deficiency in udisks:
+     [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=576687
 
-Marc.
+   Upstream bug report is here:
+     [2] https://bugs.freedesktop.org/show_bug.cgi?id=27494
 
+Could you allocate CVE id for this?
 
--- 
-Marc Deslauriers
-Ubuntu Security Engineer     | http://www.ubuntu.com/
-Canonical Ltd.               | http://www.canonical.com/
-
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
