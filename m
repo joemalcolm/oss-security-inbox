@@ -1,29 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/11/8
-Message-ID: <1102902686.160471286826830871.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 11 Oct 2010 15:53:50 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/06/1
+Message-ID: <1471874796.405861270515680192.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 5 Apr 2010 21:01:20 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: mybb before 1.4.11 and before 1.4.12
+Cc: Roshan Kumar Singh <roshansingh@...rs.sourceforge.net>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- OpenDCHub v0.8.1 -- Stack overflow by handling a specially-crafted MyINFO message
 Content-Type: text/plain; charset=utf-8
 
 
------ "Hanno Böck" <hanno@...eck.de> wrote:
+----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
 
-> http://blog.mybb.com/2009/12/29/mybb-1-4-11-released-minor-patch-security-update/
-
-This will need a 2009 ID.
-
+> Hi Steve, vendors
 > 
-> and
+>    (based on http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=576308)
 > 
-> http://blog.mybb.com/2010/04/13/mybb-1-4-12-released-security-maintenance-update/
+>    Pierre Nogues found a stack overflow flaw, in the way Open DC Hub
+> sanitized content of user's MyINFO message. Remote attacker,
+> with valid Open DC Hub account, could send a specially-crafted
+> MyINFO message to another user / all users connected to particular
+> Direct Connect network, leading into denial of service (opendchub
+> crash) or, potentially, to arbitrary code execution with the
+> privileges
+> of the user running opendchub.
+> 
+> References:
+>    [1]
+> http://www.indahax.com/exploits/opendchub-0-8-1-remote-code-execution-exploit#more-600
+>    [2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=576308
+>    [3] https://bugzilla.redhat.com/show_bug.cgi?id=579206
 > 
 
-This update hints there are security fixes, but I can't tell what they are.
-Does someone have more information? If not I'll let MITRE assign a generic
-"something is broken" sort of ID.
+Use CVE-2010-1147
 
 Thanks.
 
