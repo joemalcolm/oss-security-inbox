@@ -1,52 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/09/4
-Message-ID: <20101209093435.GA26743@openwall.com>
-Date: Thu, 9 Dec 2010 12:34:35 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/06/2
+Message-ID: <2026309239.406031270515782435.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 5 Apr 2010 21:03:02 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: kernel: Dangerous interaction between clear_child_tid, set_fs(), and kernel oopses
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: cifs: cifs_create() NULL pointer dereference
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Dec 08, 2010 at 10:34:38AM -0500, Nelson Elhage wrote:
-> On Wed, Dec 08, 2010 at 07:51:18AM +0300, Solar Designer wrote:
-> > Nelson - why are you proposing adding set_fs(USER_DS); not to the very
-> > beginning of do_exit(), but below a few calls/checks?  I don't think
-> > there's any performance improvement from that, and it feels
-> > "theoretically safer" to return to the sane/safe state as soon as
-> > possible.  I am currently looking at do_exit() in OpenVZ's RHEL5-based
-> > 2.6.18-194.26.1.el5.028stab079.1 - it does a bit more work before
-> > reaching the place you patch.  So I am tempted to introduce
-> > set_fs(USER_DS); as the very first statement in do_exit() instead.
+
+----- "Eugene Teo" <eugeneteo@...nel.sg> wrote:
+
+> Reported by Eugene Teo. While creating a file on a server which
+> supports 
+> Unix extensions such as Samba, if a file being created does not supply
 > 
-> I put the set_fs() after the in_interrupt() check, since set_fs() frobs the
-> current thread_info, and IIUC, we aren't guaranteed to have one on an interrupt
-> stack. So I wanted to preserve that check/immediate panic(), rather than
-> possible triggering a recursive fault or other weird behavior. Other than that,
-> I stuck it as early as possible.
+> nameidata (i.e. nd is NULL), cifs client can trigger a NULL pointer 
+> dereference when calling cifs_posix_open().
 > 
-> If I'm wrong about it possibly failing on an interrupt stack, then yeah, it
-> might make sense to put it even earlier. Or to rearrange things so that the flow
-> is "check interrupt -> set_fs() -> everything else".
+> http://comments.gmane.org/gmane.linux.file-systems.cifs/5782
+> https://bugzilla.redhat.com/579445
+> 
 
-You have an excellent point.
+Please use CVE-2010-1148
 
-In practice, it appears that we do have current_thread_info() even in
-interrupt context.  It just does not make much sense.  I actually
-implemented set_fs() at the very beginning of do_exit() yesterday, and
-we put this kernel on a certain machine that keeps crashing in all sorts
-of ways (looks like its motherboard has issues supporting 8 GB of RAM).
-(We did this before you replied to my question.)  And guess what - after
-a few hours, the system was kind enough to crash with "Aiee, killing
-interrupt handler!", and another person was kind enough to take a
-screenshot via IP-KVM while I was asleep.  The screenshot shows "Process
-swapper (pid: 0, veid=0, threadinfo ffffffff80582000, task ffffff..."
-and so on.  So I guess current_thread_info() corresponds to whatever
-process/context was interrupted.  (The crash itself had nothing to do
-with the change.  Just a faulty machine.)
+Thanks.
 
-That said, I am going to revise our do_exit() patch to play safe as you
-propose.
-
-Thanks,
-
-Alexander
+-- 
+    JB
