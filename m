@@ -1,47 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/22/2
-Message-ID: <20100722110515.1af8bd3d@redhat.com>
-Date: Thu, 22 Jul 2010 11:05:15 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: OSS Security <oss-security@...ts.openwall.com>
-Subject: Cacti XSS fixes in 0.8.7g
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/06/4
+Message-ID: <1270584234.17769.212.camel@severus.strandboge.com>
+Date: Tue, 06 Apr 2010 15:03:54 -0500
+From: Jamie Strandboge <jamie@...onical.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: ClamAV small issues
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+FYI, not sure if these should get a CVE, but it seems that a crafted
+archive could bypass scanning without these commits[1]:
 
-Cacti 0.8.7g was released some days ago:
-  http://cacti.net/release_notes_0_8_7g.php
+158c35e81a25ea5fda55a2a7f62ea9fec2e883d9
+libclamav/mspack.c: improve unpacking of malformed cabinets (bb#1826)
 
-Release notes mention couple of security issue previously fixed in
-(withdrawn) 0.8.7f, but adds new protections against couple of XSS
-issues.
-
-
-"XSS 4" from CVE-2009-4032 was not fixed previously:
-  https://bugzilla.redhat.com/show_bug.cgi?id=541279#c17
-
-Fixed in include/top_graph_header.php change in:
-  http://svn.cacti.net/viewvc?view=rev&revision=6025
+224fee54dd6cd8933d7007331ec2bfca0398d4b4
+libclamav/mspack.c: fix Quantum decompressor (bb#1771)
 
 
-Search pattern in log file viewer was not filtered for bad characters,
-or escaped before echoing pattern back to page:
-  https://bugzilla.redhat.com/show_bug.cgi?id=459105
-
-Possible victims are administrative users with access to log viewer
-page.  Fixed in r6025, which adds escaping to other search patterns
-too, but others were filtered previously.
-
-
-Multiple persistent XSS via various item names or descriptions.
-Attacker needs to have certain administrative privileges, so this is
-fairly lame issue.
-  https://bugzilla.redhat.com/show_bug.cgi?id=459229
-
-Originally discovered for template names, where template XML import
-provides additional vector (trusted admin tricked to import untrusted
-template vs. untrusted admin).  HTML escaping added on various places
-in r6037, r6038, r6041 and r6042.
+[1] http://git.clamav.net/gitweb?p=clamav-devel.git;a=log
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Jamie Strandboge             | http://www.canonical.com
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
