@@ -1,44 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/15/4
-Message-ID: <1063735264.282931276630616708.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 15 Jun 2010 15:36:56 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/07/1
+Message-Id: <20100406202638.bf1d3c3a.reed@reedloden.com>
+Date: Tue, 6 Apr 2010 20:26:38 -0500
+From: Reed Loden <reed@...dloden.com>
 To: oss-security@...ts.openwall.com
-Cc: dann frazier <dannf@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request - kernel: put_tty_queue NULL pointer deref
+Subject: CVE Request: MediaWiki 1.15.3 -- Login CSRF
 Content-Type: text/plain; charset=utf-8
 
-Steve,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Can you give this a 2009 ID. Perhaps I could use a group of 2009 IDs, as there
-have been quite a few old requests this week.
+Greetings,
 
-Thanks.
+MediaWiki 1.15.3 was just (20 min. ago) released[0] to fix a CSRF issue
+[1] in the login process, so need a CVE assigned to track the problem.
 
--- 
-    JB
+============
+MediaWiki was found to be vulnerable to login CSRF. An attacker who
+controls a user account on the target wiki can force the victim to log
+in as the attacker, via a script on an external website. If the wiki is
+configured to allow user scripts, say with "$wgAllowUserJs = true" in
+LocalSettings.php, then the attacker can proceed to mount a
+phishing-style attack against the victim to obtain their password.
 
+Even without user scripting, this attack is a potential nuisance, and so
+all public wikis should be upgraded if possible.
 
------ "Eugene Teo" <eugeneteo@...nel.sg> wrote:
+Our fix includes a breaking change to the API login action. Any clients
+using it will need to be updated. We apologise for making such a
+disruptive change in a minor release, but we feel that security is
+paramount.
+============
 
-> On 06/15/2010 02:31 PM, dann frazier wrote:
-> > Going through some old issues, we have this one from 2009:
-> >   https://bugzilla.kernel.org/show_bug.cgi?id=14605
-> >
-> > Upstream fix went into 2.6.33-rc8:
-> >   
-> http://git.kernel.org/linus/80e1e823989ec44d8e35bdfddadbddcffec90424
-> >
-> > This was included in 2.6.32.9 and 2.6.27.46, but it looks like our
-> > 2.6.26-based kernel may have the issue as well.
-> 
-> Also see, https://bugzilla.redhat.com/show_bug.cgi?id=559100.
-> 
-> If memory serves me well, it should affect kernels v2.6.21-rc1 onwards
-> 
-> with the commit ab521dc0.
-> 
-> Thanks, Eugene
-> -- 
-> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i);
-> }
+Regards,
+~reed
+
+[0] http://lists.wikimedia.org/pipermail/mediawiki-announce/2010-April/000090.html
+[1] https://bugzilla.wikimedia.org/show_bug.cgi?id=23076
+
+- -- 
+Reed Loden - <reed@...dloden.com>
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAku7304ACgkQa6IiJvPDPVozkQCgv4DUtGwOzEgDY0m+/dNXbO/t
+LIQAnj7OdyY8THs+KjSbwRgri0O8Kbu1
+=lq2I
+-----END PGP SIGNATURE-----
