@@ -1,30 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/12/5
-Message-Id: <201003121259.03795.geissert@debian.org>
-Date: Fri, 12 Mar 2010 12:58:56 -0600
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/08/12
+Message-ID: <743166559.326141270758059951.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 8 Apr 2010 16:20:59 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: security@....net
-Subject: CVE-2010-0397: NULL pointer dereference in PHP's xmlrpc extension
+Cc: Jos Boumans <jos.boumans@...onical.com>, Mathias Gug <mathias.gug@...onical.com>, Thierry Carrez <thierry.carrez@...onical.com>
+Subject: Re: CVE request -- memcached
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Please use CVE-2010-1152 for this.
 
-At http://bugs.debian.org/573573 it has been reported a NULL pointer 
-dereference in the xmlrpc extension, in a call to estrdup[1]. This bug can at 
-least be used to perform DoS attacks.
+Thanks.
 
-Looking at the code, I can see multiple, similarly affected, calls.
-
-For tracking purposes (and hoping nobody else has run and assigned one 
-themselves) I've assigned CVE-2010-0397.
-
-[1]
-Z_STRVAL_P(method_name_out) = estrdup(XMLRPC_RequestGetMethodName(response));
-
-Kind regards,
 -- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+    JB
 
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+
+----- "Jamie Strandboge" <jamie@...onical.com> wrote:
+
+> FYI, this issue was recently pointed out to me:
+> http://code.google.com/p/memcached/issues/detail?id=102
+> 
+> A remote attacker who is allowed to connect to memcached can crash
+> the
+> server by sending bad input. I've not investigated this to see if it
+> is
+> more than a DoS.
+> 
+> People wanting to fix this may want to more thoroughly look at the
+> patch[1]. After a cursory glance at it, I'm not sure it is enough:
+> 1. it uses:
+>   if (strcmp(ptr, "get ") && strcmp(ptr, "gets ")) {
+> 
+> Why not use something like (*totally* untested):
+>   if (strncmp(ptr, "get ", 5) && strncmp(ptr, "gets ", 5)) {
+> 
+> just in case ptr is not NULL terminated? I haven't checked if this is
+> an
+> actual issue, but it certainly wouldn't hurt. '5' should probably be
+> changed to something more reasonable.
+> 
+> 2. As I read the patch, couldn't an attacker send crafted input after
+> the 4 reallocs and then achieve the same thing (a DoS)?. Perhaps this
+> isn't a problem since it limits the object size to 1MB (according to
+> the
+> FAQ [2]).
+> 
+> 
+> [1]http://github.com/memcached/memcached/commit/75cc83685e103bc8ba380a57468c8f04413033f9
+> [2]http://code.google.com/p/memcached/wiki/FAQ
+> 
+> -- 
+> Jamie Strandboge             | http://www.canonical.com
