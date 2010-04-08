@@ -1,25 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/27/1
-Message-ID: <AANLkTi=ZsipHZU0vK9s=5DKkgGzzW6EY31WhJUykPTtA@mail.gmail.com>
-Date: Sun, 26 Sep 2010 21:01:40 -0600
-From: Kurt Seifried <kurt@...fried.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/08/1
+Message-ID: <1692275574.220491270684965222.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 7 Apr 2010 20:02:45 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Thomas Dreibholz <dreibh@....uni-due.de>, Vlad Yasevich <vladislav.yasevich@...com>,  Ben Hutchings <ben@...adent.org.uk>
-Subject: Re: CVE Request -- Linux/SCTP DoS in sctp_packet_config()
+Cc: coley <coley@...re.org>
+Subject: Re: ClamAV small issues
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Sep 24, 2010 at 10:27 AM, dann frazier <dannf@...ian.org> wrote:
-> Please assign a CVE for the remote DoS issue described here:
->  http://marc.info/?l=linux-netdev&m=128453869227715&w=3
->
-> Upstream fix:
->  http://git.kernel.org/4bdab43323b459900578b200a4b8cf9713ac8fab
+These are certainly worth of CVE ids, but it's going to be tricky, as the
+first issue is a couple of things as seen in the bug:
+https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1826
 
-Corrected URL:
+I'm going to defer this assignment to MITRE (added Steve Christey to the CC).
 
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=4bdab43323b459900578b200a4b8cf9713ac8fab
+Thanks.
 
 -- 
-Kurt Seifried
-kurt@...fried.org
-tel: 1-703-879-3176
+    JB
+
+
+----- "Jamie Strandboge" <jamie@...onical.com> wrote:
+
+> FYI, not sure if these should get a CVE, but it seems that a crafted
+> archive could bypass scanning without these commits[1]:
+> 
+> 158c35e81a25ea5fda55a2a7f62ea9fec2e883d9
+> libclamav/mspack.c: improve unpacking of malformed cabinets (bb#1826)
+> 
+> 224fee54dd6cd8933d7007331ec2bfca0398d4b4
+> libclamav/mspack.c: fix Quantum decompressor (bb#1771)
+> 
+> 
+> [1] http://git.clamav.net/gitweb?p=clamav-devel.git;a=log
+> 
+> -- 
+> Jamie Strandboge             | http://www.canonical.com
+
+-- 
+    JB
