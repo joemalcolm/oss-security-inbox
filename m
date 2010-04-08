@@ -1,63 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/25/2
-Message-ID: <1267134565.32734.101.camel@severus.strandboge.com>
-Date: Thu, 25 Feb 2010 15:49:25 -0600
-From: Jamie Strandboge <jamie@...onical.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: "Todd C. Miller" <Todd.Miller@...rtesan.com>, "Steven M. Christey" <coley@...us.mitre.org>, Jan Lieskovsky <jlieskov@...hat.com>
-Subject: Re: Re: CVE assignment notification -- CVE-2010-0426 -- sudo improper pseudocommands file path check
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/08/2
+Message-ID: <698171942.220621270685286046.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 7 Apr 2010 20:08:06 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: David Zeuthen <davidz@...hat.com>, David Zeuthen <david@...ar.dk>, Milan Broz <mbroz@...hat.com>, Alasdair G Kergon <agk@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- udisks v1.0.0 -- (serious) information disclosure
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 2010-02-23 at 08:00 -0500, Todd C. Miller wrote:
-> Here's my WIP writeup of this:
-> 
-> Summary:
-> A flaw in exists in sudo's -e option (aka sudoedit) in sudo versions
-> 1.6.9 through 1.7.2p3 that may give a user with permission to run
-> sudoedit the ability to run arbitrary commands.
-> 
-> Sudo versions affected:
-> 1.6.9 through 1.7.2p3 inclusive.
+Please use CVE-2010-1149 for this.
 
-We have sudo 1.6.8p12 in a supported release of Ubuntu, and I noticed
-that while 1.6.8p12 looked like it should be affected, I couldn't get
-the reproducer[1] to work. I dug into it and found this:
-
-In 1.6.9 we have in main() of sudo.c:
-  execve(safe_cmnd, NewArgv, environ);
-
-In 1.6.8p12 we have in main() of sudo.c:
-  EXECV(safe_cmnd, NewArgv);  /* run the command */
-
-In 1.6.8p12 EXECV can be either execv() or execvp() (there is a
-configure option to choose which to use, it happened to default to
-execvp() here). If you change the EXECV to be execv(), then the
-reproducer works fine.  If you change the EXECV to be execvp(), then the
-reproducer doesn't work.
-
-From the eglibc manpage for execvp():
- The functions execlp() and execvp() will duplicate the actions of the
- shell in searching for an executable file if the specified filename
- does not contain a slash (/) character. The search path is the path
- specified in the environment by the PATH variable.
-
-Looking at safe_cmnd in gdb (sudo_user.cmnd_safe) I found that it is
-passing 'sudoedit' (ie, no '/' in the name) as the first argument, and
-so execvp() is searching PATH for 'sudoedit' and exec'ing what it finds
-rather than NewArgv[0] (in this case, './sudoedit').
-
-In 1.6.8p12 PATH can be forced via the --secure-path configure option
-for sudo, so if sudo is compiled with a sane --secure-path and
---with-execv=execvp, then it seems sudo is ok (though rather than
-failing, it will edit the file as if './sudoedit' wasn't specified).
-Without --secure-path, if sudo doesn't scrub PATH variable (eg using
-env_keep=PATH) then it is vulnerable.
-
-I did not check any other releases of 1.6.8 other than p12.
-
-[1] http://sudo.ws/bugs/show_bug.cgi?id=389
+Thanks.
 
 -- 
-Jamie Strandboge             | http://www.canonical.com
+    JB
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+
+----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+
+> Hi Steve, vendors,
+> 
+>    Bastian Blank reported the following deficiency in udisks:
+>      [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=576687
+> 
+>    Upstream bug report is here:
+>      [2] https://bugs.freedesktop.org/show_bug.cgi?id=27494
+> 
+> Could you allocate CVE id for this?
+> 
+> Thanks && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+
+-- 
+    JB
