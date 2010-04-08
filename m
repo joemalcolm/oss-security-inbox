@@ -1,20 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/12/8
-Message-ID: <20100312233641.GA7327@openwall.com>
-Date: Sat, 13 Mar 2010 02:36:41 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/08/10
+Message-ID: <1270753333.25949.88.camel@severus.strandboge.com>
+Date: Thu, 08 Apr 2010 14:02:13 -0500
+From: Jamie Strandboge <jamie@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CFPs and con invitations on the list
+Subject: Re: CVE request -- memcached
 Content-Type: text/plain; charset=utf-8
 
-Since there were no followups to my posting/questions, I've just
-approved a CFP posting by James Heralds, who has been an oss-security
-subscriber for a month.
+On Thu, 2010-04-08 at 11:57 -0500, Jamie Strandboge wrote:
+> People wanting to fix this may want to more thoroughly look at the
+> patch[1]. After a cursory glance at it, I'm not sure it is enough:
+> 1. it uses:
+>   if (strcmp(ptr, "get ") && strcmp(ptr, "gets ")) {
+> 
+> Why not use something like (*totally* untested):
+>   if (strncmp(ptr, "get ", 5) && strncmp(ptr, "gets ", 5)) {
+> 
+> just in case ptr is not NULL terminated? I haven't checked if this is an
+> actual issue, but it certainly wouldn't hurt. '5' should probably be
+> changed to something more reasonable.
+> 
 
-On Wed, Mar 03, 2010 at 06:30:02PM +0300, Solar Designer wrote:
-> I've just approved Laurent's posting, even though this is sort of an
-> exception lately.  Several other postings of "this nature" (not training
-> courses but mostly conference CFPs, though) were not approved.  Yet I
-> thought it was time to revisit this issue, ...
+FYI, looks like upstream decided to use strncmp after all:
+http://github.com/memcached/memcached/commit/d9cd01ede97f4145af9781d448c62a3318952719
 
-Alexander
+
+-- 
+Jamie Strandboge             | http://www.canonical.com
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
