@@ -1,36 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/24/2
-Message-ID: <4BA96DAA.3070307@redhat.com>
-Date: Wed, 24 Mar 2010 09:40:58 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE requests 6x kernel vulns still pending
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/08/5
+Message-ID: <4BBDA556.5000208@redhat.com>
+Date: Thu, 08 Apr 2010 11:43:50 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>, Jean-François Moine <moinejf.free.fr@...hat.com>, Tim Starling <tstarling@...imedia.org>
+CC: oss-security <oss-security@...ts.openwall.com>, Gerard Milmeister <gemi@...ewin.ch>
+Subject: CVE Request -- Abcm2ps v5.9.12 -- multiple unspecified vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
->> 3) kernel: NFS DoS related to "automount" symlinks
->
-> What exactly is the DoS that happens here?
+Hi Steve, vendors,
 
-NULL pointer dereference.
+   Abcm2ps upstream has released:
+     [1] http://moinejf.free.fr/
+     [2] http://moinejf.free.fr/abcm2ps-5.9.12.tar.gz
 
->> 5) kernel: NFS: Fix an Oops when truncating a file
->
-> I assume that nfs_wait_on_request() can be influenced by a non-root user
-> to generate the interrupt that triggers the Ooops?
+   latest v5.9.12 version, addressing
+   "some security vulnerabilities"
+     [3] http://moinejf.free.fr/abcm2ps-5.txt
 
-If the non-root user kills the task while truncating the file, this 
-could lead to the existence of unmapped pages that still have an 
-attached nfs_page structure in page->private. nfs_wb_page_cancel() waits 
-for I/O to complete, and when it completes, it will find itself with an 
-unmapped page and oops.
+   References:
+     [4] http://secunia.com/advisories/39345/
 
-> All of these will be filled in sometime Wednesday.
->
-> - Steve
+   Jean, Tim, could you please provide further details how many
+and what kind of flaws (i.e. describe each of the deficiencies shortly)
+has been addressed in this Abcm2ps release? (so we know, how
+many CVE identifiers:
+   [5] http://cve.mitre.org/
 
-Thanks!
+and each of them for what, should be assigned [without comparing
+source code differences among Abcm2ps v5.9.12 and Abcm2ps v5.9.11
+versions, potentially resulting in situation, we omit something] )
 
-Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
+Jean, Tim -- thanks in advance for your cooperation.
+
+Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+
+
