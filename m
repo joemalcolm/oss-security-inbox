@@ -1,32 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/21/11
-Message-ID: <20100921194903.GA9321@openwall.com>
-Date: Tue, 21 Sep 2010 23:49:03 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Minor security flaw with pam_xauth
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/08/11
+Message-Id: <20100409001400.JHAGVNYMPPOAKG@hackinthebox.org>
+Date: Fri, 9 Apr 2010 00:14:00 +0800
+From: Hafez Kamal <aphesz@...kinthebox.org>
+To: <oss-security@...ts.openwall.com>
+Subject: [HITB-Announce] FINAL CALL - CFP for HITBSecConf2010 Amsterdam
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Sep 21, 2010 at 03:22:07PM -0400, Josh Bressers wrote:
-> > > The same commit also introduces previously-missing privilege switching
-> > > into pam_env and pam_mail.  Unfortunately, this pam_env and pam_mail
-> > > fix is incomplete: it only switches the fsuid (should also switch fsgid
-> > > (or egid) and groups), and it fails to check the return value from
-> > > setfsuid() (doing so would require duplicate calls to setfsuid(), like
-> > > we do in libtcb, or switching of euid instead - yet it is desirable).
-...
-> Let's use CVE-2010-3430 for the missing setfsgid.
+This is the FINAL CALL to submit your talk / presentation proposals for
+the inaugural HITB Security Conference in Europe! Submissions are due
+by 19TH APRIL 2010.
 
-...and the missing setgroups().
+HITBSecConf2010 - Amsterdam takes place at the Grand Krasnapolsky from
+the 29th of June till the 2nd of July (Tuesday - Friday) with keynote
+speakers Anton Chuvakin and Mark Curphey in our _first ever_ QUAD TRACK
+conference.
 
-> Use CVE-2010-3431 for the missing return checks on setfsuid.
+To submit your presentation proposals and for further details on our
+submission process, please see:
 
-OK.  BTW, I think this is not exploitable on current kernels, at least
-not via RLIMIT_NPROC (it does not apply to fsuid), yet it is desirable
-to check the return value from such syscalls.
+http://cfp.hackinthebox.org/
 
-What about the completely missing privilege switching in pre-1.1.2 (the
-bug found by Sebastian)?  I don't recall if it already had a CVE id
-assigned or not.
+On a related note, online registration for HITBSecConf2010 - Dubai is
+closing on the 14TH OF APRIL - Walk in registrations are still accepted
+thereafter.
 
-Alexander
+http://conference.hitb.org/hitbsecconf2010dxb/register/
+
+See you there!
+
+
+---
+Hafez Kamal
+HITB Crew
+Hack in The Box (M) Sdn. Bhd.
+Suite 26.3, Level 26, Menara IMC,
+No. 8 Jalan Sultan Ismail,
+50250 Kuala Lumpur,
+Malaysia
+
+Tel: +603-20394724
+Fax: +603-20318359
+
