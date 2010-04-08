@@ -1,55 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/16/4
-Message-ID: <1289923322.2983.8.camel@mdlinux>
-Date: Tue, 16 Nov 2010 11:02:02 -0500
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/08/3
+Message-ID: <x2keab1748f1004071705q5e7489fdl45bbb064346838aa@mail.gmail.com>
+Date: Wed, 7 Apr 2010 18:05:55 -0600
+From: Kurt Seifried <kurt@...fried.org>
 To: oss-security@...ts.openwall.com
-Cc: Bill Janssen <bill.janssen@...il.com>, Andreas Hasenack <ahasenack@...ra.com.br>, Mads Kiilerich <mads@...lerich.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Mercurial --Doesn't verify subject Common Name properly
+Cc: coley <coley@...re.org>
+Subject: Re: ClamAV small issues
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Wed, Apr 7, 2010 at 6:02 PM, Josh Bressers <bressers@...hat.com> wrote:
+> These are certainly worth of CVE ids, but it's going to be tricky, as the
+> first issue is a couple of things as seen in the bug:
+> https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1826
+>
+> I'm going to defer this assignment to MITRE (added Steve Christey to the CC).
+>
+> Thanks.
 
-On Mon, 2010-11-15 at 16:58 -0500, Steven M. Christey wrote:
-> Ouch, this is painful for a number of reasons.
-> 
-> Maybe Python "should" get the CVE, but the decision to push the issue to 
-> application developers means that those developers will each have to 
-> provide fixes, and software consumers will have to track these related 
-> vulns at the application level.
-> 
-> (One could make the same argument about fundamental design flaws in 
-> standards-based protocols, for which CVE generally assigns a single 
-> identifier, but those issues generally feel "different" to me.  Quite 
-> logical, I know...)
-> 
-> Anyway, I think we need to assign separate CVEs for each affected product 
-> as an instance of "an implementation not working around security-relevant 
-> design limitations of APIs" (which is consistent with the approach that 
-> CVE has taken with respect to the DLL hijacking / insecure library loading 
-> issues of the past couple months.)
+This already appears to have a CVE, fromt he bug report:
 
-Thanks for the clarification. Here are some more projects that need CVEs
-for this issue:
+ReversingLabs Corp approached CERT-FI about detection evasion attacks found in
+many Antivirus software and other signature-based protection software. In
+short, the case is related to falures when parsing archive formats.
+?ReversingLabs Corp has crafted 15 ZIP, CAB, 7Z and RAR archive files that are
+considered valid by the relevant decompressors, but signature based detection
+systems cannot detect malicious content contained within them.
 
-libcloud:
-https://issues.apache.org/jira/browse/LIBCLOUD-55
-https://bugs.launchpad.net/ubuntu/+source/libcloud/+bug/675217
+CVE: CVE-2010-0098
 
-Checkbox:
-https://bugs.launchpad.net/ubuntu/+source/checkbox/+bug/625076
+> --
+>    JB
 
-Bazaar:
-https://bugs.edge.launchpad.net/bzr/+bug/651161
-
-
-Thanks,
-
-Marc.
-
-
--- 
-Marc Deslauriers
-Ubuntu Security Engineer     | http://www.ubuntu.com/
-Canonical Ltd.               | http://www.canonical.com/
-
+-Kurt
