@@ -1,44 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/06/11
-Message-ID: <898557088.423211291672299220.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 6 Dec 2010 16:51:39 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: vanilla forums before 2.0.10, xss
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/08/7
+Message-ID: <4BBDB63D.1000807@wikimedia.org>
+Date: Thu, 08 Apr 2010 20:55:57 +1000
+From: Tim Starling <tstarling@...imedia.org>
+To: Jan Lieskovsky <jlieskov@...hat.com>
+CC: oss-security@...ts.openwall.com, Jean-François Moine <moinejf@...e.fr>,  "Steven M. Christey" <coley@...us.mitre.org>, Gerard Milmeister <gemi@...ewin.ch>
+Subject: Re: CVE Request -- Abcm2ps v5.9.12 -- multiple unspecified vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Use CVE-2010-4264 for the XSS. The commit is here:
-https://github.com/vanillaforums/Garden/commit/4535a059e4e24ca11a2ef0b4d754f262398bcece
+I found:
+* A BSS overflow from an overlong command-line parameter (-O)
+* BSS overflows in a collection of output macros (PUT0, PUT1, etc.)
+exploitable using crafted input files
+* A stack overflow in trim_title(), also exploitable using input files
 
-As for the "linkbait" issue, I have no clue. Nothing in git seems to
-point at that.
+This is assuming my understanding of the linux memory model is correct
+and uninitialised global variables are stored in the BSS segment. They
+were all the classic sort of overflow, with arbitrary-length strings
+copied into fixed-sized buffers.
 
-Steve, does MITRE have a precedent for such a thing?
+Anyway, "multiple buffer overflow vulnerabilities" is probably a good
+enough summary for most of you.
 
-Thanks.
+I haven't reviewed the patch.
+ 
+-- Tim Starling
 
--- 
-    JB
-
-
------ "Hanno Böck" <hanno@...eck.de> wrote:
-
-> Hi,
-> 
-> http://vanillaforums.org/discussion/13119/vanilla-2.0.10-released/p1
-> 
-> Two sound like security:
-> #
-> # Added SafeStyles configuration to prevent XSS linkjacking
-> # Patched potential linkbait vulnerability in dispatcher
-> 
-> (although I don't know what a linkbait vulnerability is, maybe someone
-> wants 
-> to enlighten me)
-> 
+Jan Lieskovsky wrote:
+> Resending the query again (as first time used improper address
+> for Jean-François Moine :().
+>
+> Apologize other parties for unwanted spam.
+>
+> Jan.
 > -- 
-> Hanno Böck                Blog:                http://www.hboeck.de/
-> GPG: 3DBD3B20                Jabber/Mail:        hanno@...eck.de
-> 
-> http://schokokeks.org - professional webhosting
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+>
+>
+> Jan Lieskovsky wrote:
+>> Hi Steve, vendors,
+>>
+>>   Abcm2ps upstream has released:
+>>     [1] http://moinejf.free.fr/
+>>     [2] http://moinejf.free.fr/abcm2ps-5.9.12.tar.gz
+>>
+>>   latest v5.9.12 version, addressing
+>>   "some security vulnerabilities"
+>>     [3] http://moinejf.free.fr/abcm2ps-5.txt
+>>
+>>   References:
+>>     [4] http://secunia.com/advisories/39345/
+>>
+>>   Jean, Tim, could you please provide further details how many
+>> and what kind of flaws (i.e. describe each of the deficiencies shortly)
+>> has been addressed in this Abcm2ps release? (so we know, how
+>> many CVE identifiers:
+>>   [5] http://cve.mitre.org/
+>>
+>> and each of them for what, should be assigned [without comparing
+>> source code differences among Abcm2ps v5.9.12 and Abcm2ps v5.9.11
+>> versions, potentially resulting in situation, we omit something] )
+>>
+>> Jean, Tim -- thanks in advance for your cooperation.
+>>
+>> Regards, Jan.
+>> -- 
+>> Jan iankko Lieskovsky / Red Hat Security Response Team
+>>
+>>
+>>
+>
+
