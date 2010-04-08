@@ -1,29 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/06/4
-Message-ID: <641308197.931421262813028797.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 6 Jan 2010 16:23:48 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com, Jamie Strandboge <jamie@...onical.com>
-Cc: coley@...us.mitre.org
-Subject: Re: CVE Request: Transmission
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/08/6
+Message-ID: <4BBDA763.7090804@redhat.com>
+Date: Thu, 08 Apr 2010 11:52:35 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: oss-security@...ts.openwall.com, Jean-François Moine <moinejf@...e.fr>, Tim Starling <tstarling@...imedia.org>
+CC: "Steven M. Christey" <coley@...us.mitre.org>, Gerard Milmeister <gemi@...ewin.ch>
+Subject: Re: CVE Request -- Abcm2ps v5.9.12 -- multiple unspecified vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
+Resending the query again (as first time used improper address
+for Jean-François Moine :().
 
------ "Jamie Strandboge" <jamie@...onical.com> wrote:
+Apologize other parties for unwanted spam.
 
-> Transmission 1.77 was released to address a directory traversal
-> vulnerability that allowed file overwrites when processing crafted
-> torrent files. References:
+Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+
+Jan Lieskovsky wrote:
+> Hi Steve, vendors,
 > 
-> http://trac.transmissionbt.com/wiki/Changes#version-1.77
-> http://trac.transmissionbt.com/changeset/9829/
-> https://launchpad.net/bugs/500625
-> http://www.mail-archive.com/debian-devel-changes@lists.debian.org/msg264483.html
+>   Abcm2ps upstream has released:
+>     [1] http://moinejf.free.fr/
+>     [2] http://moinejf.free.fr/abcm2ps-5.9.12.tar.gz
+> 
+>   latest v5.9.12 version, addressing
+>   "some security vulnerabilities"
+>     [3] http://moinejf.free.fr/abcm2ps-5.txt
+> 
+>   References:
+>     [4] http://secunia.com/advisories/39345/
+> 
+>   Jean, Tim, could you please provide further details how many
+> and what kind of flaws (i.e. describe each of the deficiencies shortly)
+> has been addressed in this Abcm2ps release? (so we know, how
+> many CVE identifiers:
+>   [5] http://cve.mitre.org/
+> 
+> and each of them for what, should be assigned [without comparing
+> source code differences among Abcm2ps v5.9.12 and Abcm2ps v5.9.11
+> versions, potentially resulting in situation, we omit something] )
+> 
+> Jean, Tim -- thanks in advance for your cooperation.
+> 
+> Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+> 
+> 
 > 
 
-Please use CVE-2010-0012 for this.
-
-Thanks.
-
--- 
-    JB
