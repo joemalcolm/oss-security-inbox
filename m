@@ -1,77 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/17/2
-Message-ID: <AANLkTin6-nPh1pc79W9qpzTDsEQrMPiZ45aJ+2LZheCF@mail.gmail.com>
-Date: Thu, 16 Sep 2010 08:01:30 -0700
-From: Linus Torvalds <torvalds@...ux-foundation.org>
-To: KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>
-Cc: Roland McGrath <roland@...hat.com>, Andrew Morton <akpm@...ux-foundation.org>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Kees Cook <kees.cook@...onical.com>, Al Viro <viro@...iv.linux.org.uk>, Oleg Nesterov <oleg@...hat.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, pageexec@...email.hu, "Brad Spengler <spender@...ecurity.net>, Eugene Teo" <eugene@...hat.com>, KAMEZAWA Hiroyuki <kamezawa.hiroyu@...fujitsu.com>
-Subject: Re: [PATCH 2/2] execve: check the VM has enough memory at first
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/08/8
+Message-ID: <1270745859.25949.80.camel@severus.strandboge.com>
+Date: Thu, 08 Apr 2010 11:57:39 -0500
+From: Jamie Strandboge <jamie@...onical.com>
+To: oss-security@...ts.openwall.com
+Cc: Jos Boumans <jos.boumans@...onical.com>, Mathias Gug <mathias.gug@...onical.com>, Thierry Carrez <thierry.carrez@...onical.com>
+Subject: CVE request -- memcached
 Content-Type: text/plain; charset=utf-8
 
-2010/9/15 KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>:
->
-> Briefly says, to introduce new limit has bad benefit/risk balance. Sadly.
+FYI, this issue was recently pointed out to me:
+http://code.google.com/p/memcached/issues/detail?id=102
 
-Well, I mostly agree. That said, I do think we could extend the
-limiter some ways.
+A remote attacker who is allowed to connect to memcached can crash the
+server by sending bad input. I've not investigated this to see if it is
+more than a DoS.
 
-For example, I think the "stack limit / 4" is perfectly sane, but it
-would make total sense to perhaps also take into account the AS and
-RSS limits.
+People wanting to fix this may want to more thoroughly look at the
+patch[1]. After a cursory glance at it, I'm not sure it is enough:
+1. it uses:
+  if (strcmp(ptr, "get ") && strcmp(ptr, "gets ")) {
 
-And I do think that your attempt to use __vm_enough_memory() was good.
-It happens to be coded in a way that makes it useless for a one-pass
-model, and some of what it does would be too expensive to do up-front
-when you can't short-circuit it, but I do think that it would probably
-be appropriate to at least try to take the _rough_ code there and use
-it as a limit for maximum stack size too.
+Why not use something like (*totally* untested):
+  if (strncmp(ptr, "get ", 5) && strncmp(ptr, "gets ", 5)) {
 
-For example, we could have a function somewhat like
+just in case ptr is not NULL terminated? I haven't checked if this is an
+actual issue, but it certainly wouldn't hurt. '5' should probably be
+changed to something more reasonable.
 
-    unsigned long max_stack_size(void)
-   {
-        unsigned long allowed, used, limit;
+2. As I read the patch, couldn't an attacker send crafted input after
+the 4 reallocs and then achieve the same thing (a DoS)?. Perhaps this
+isn't a problem since it limits the object size to 1MB (according to the
+FAQ [2]).
 
-        switch (sysctl_overcommit_memory) {
-        case OVERCOMMIT_ALWAYS:
-                allowed = ULONG_MAX;
-                break;
-        case OVERCOMMIT_GUESS:
-                .. maybe we can come up with some upper bound here too ..
-                break;
-        default:
-                allowed = (totalram_pages - hugetlb_total_pages())
-                        * sysctl_overcommit_ratio / 100;
-                if (!cap_sys_admin)
-                        allowed -= allowed / 32;
-                allowed += total_swap_pages;
-                /* Don't let a single process grow too big:
-                   leave 3% of the size of this process for other processes */
-                if (mm)
-                        allowed -= mm->total_vm / 32;
-                /* What is already committed to? */
-                used = percpu_counter_read_positive(&vm_committed_as);
-                if (used > allowed)
-                        return 0;
-                allowed -= used;
-                break;
-        }
-        limit = ACCESS_ONCE(rlim[RLIMIT_STACK].rlim_cur) / 4;
-        if (allowed > limit)
-                allowed = limit;
-        return allowed;
-    }
 
-which we'd call once at the beginning of the execve(), and then
-remember that result and use it instead of the current 'rlimit/4'
-value.
+[1]http://github.com/memcached/memcached/commit/75cc83685e103bc8ba380a57468c8f04413033f9
+[2]http://code.google.com/p/memcached/wiki/FAQ
 
-Now, admittedly the OVERCOMMIT_GUESS case is the interesting one, and
-the one that is hard to write efficiently. But maybe we could make
-'nr_free_pages()' cheap enough that doin that whole OVERCOMMIT_GUESS
-"approximate free pages" thing from __vm_enough_memory would work out
-too?
+-- 
+Jamie Strandboge             | http://www.canonical.com
 
-I dunno. It doesn't look hopeless.
-
-                      Linus
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
