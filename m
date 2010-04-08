@@ -1,18 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/08/1
-Message-ID: <4C355C4F.1050009@kernel.sg>
-Date: Thu, 08 Jul 2010 13:04:15 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
-To: oss-security@...ts.openwall.com
-Subject: kernel: bridge br_multicast null ptr deref
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/08/9
+Message-ID: <4BBE08CE.8010200@redhat.com>
+Date: Thu, 08 Apr 2010 18:48:14 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request -- perl v5.8.* -- stack overflow by processing certain regex (Gentoo BTS#313565 / RH BZ#580605)
 Content-Type: text/plain; charset=utf-8
 
-Introduced in commit 8ef2a9a5 (v2.6.35-rc1), fixed in 7f285fa78d4. Can 
-be triggered with an IGMP packet with no multicast table allocated.
+Hi Steve, vendors,
 
-Bug report, http://www.spinics.net/lists/netdev/msg134414.html. Not 
-requesting a CVE for this, just FYI.
+   1, wouldn't like to open a can of worms,
+   2, but for purpose of properly tracking it, requesting a CVE id for the
+      following Perl regular expression engine issue:
 
-Thanks, Eugene
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+Bruce Merry reported:
+   [1] http://bugs.gentoo.org/show_bug.cgi?id=313565
+
+an integer overflow, leading to stack overflow in the way
+Perl regular expression engine processed certain regular
+expression(s). Remote attacker could use this flaw to cause
+a denial of service (crash of an application, using the
+Perl regular expression engine).
+
+Public PoC from [1]:
+--------------------
+   perl -e 'if ((("a " x 100000) . "a\n") =~ /\A\S+(?: \S+)*\n\z/) {}'
+
+References:
+   [2] http://bugs.gentoo.org/show_bug.cgi?id=313565
+   [3] https://bugzilla.redhat.com/show_bug.cgi?id=580605
+
+Affected Perl versions:
+   Issue tested and confirmed in Perl of versions v5.8.*.
+   Versions of Perl v5.10.* are not affected by this.
+
+Steve, what's the Mitre's opinion on cases like this --
+denial of service reachable via certain regular expression.
+
+Should we track them on per issue basis? Or only for cases,
+where more than a DoS is possible? (doesn't seem to be
+this case though).
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
