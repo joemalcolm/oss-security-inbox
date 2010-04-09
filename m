@@ -1,25 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/16/2
-Message-Id: <201005170038.28118.hanno@hboeck.de>
-Date: Mon, 17 May 2010 00:38:27 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/09/5
+Message-Id: <201004091224.36539.eren@pardus.org.tr>
+Date: Fri, 9 Apr 2010 12:24:36 +0300
+From: Eren Türkay <eren@...dus.org.tr>
 To: oss-security@...ts.openwall.com
-Cc: Josh Bressers <bressers@...hat.com>, coley <coley@...re.org>
-Subject: CVE request: phorum < 5.2.15 backend XSS
+Subject: Re: ClamAV small issues
 Content-Type: text/plain; charset=utf-8
 
-Release notes:
-http://www.facebook.com/note.php?note_id=371190874581
+On Friday 09 April 2010 12:22:24 pm Eren Türkay wrote:
+> Accordingly to secunia, these are highly-critical. 
+> 
 
+Sorry, I forgot to mention URLs. :)
 
-"It also has some security fixes for another less important XSS where a user 
-could "attack himself" with adding an invalid email address (thanks to Carlos 
-Ghan for pointing out this issue), see the changelog below for details. "
+http://secunia.com/advisories/39329/
+https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1771
 
 -- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-
-http://schokokeks.org - professional webhosting
-
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+Eren
