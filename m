@@ -1,38 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/08/3
-Message-Id: <20100908023628.A1F5A401AF@magilla.sf.frob.com>
-Date: Tue,  7 Sep 2010 19:36:28 -0700 (PDT)
-From: Roland McGrath <roland@...hat.com>
-To: Linus Torvalds <torvalds@...ux-foundation.org>, Andrew Morton <akpm@...ux-foundation.org>
-CC: linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Kees Cook <kees.cook@...onical.com>, Al Viro <viro@...iv.linux.org.uk>, Andrew Morton <akpm@...ux-foundation.org>, Oleg Nesterov <oleg@...hat.com>, KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, pageexec@...email.hu, "Brad Spengler <spender@...ecurity.net> Eugene Teo" <eugene@...hat.com>
-Subject: [PATCH 2/3] execve: improve interactivity with large arguments
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/09/1
+Message-ID: <4BBE9B39.8060802@kernel.sg>
+Date: Fri, 09 Apr 2010 11:12:57 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
+To: oss-security@...ts.openwall.com
+CC: coley@...us.mitre.org
+Subject: CVE-2010-1146 kernel: reiserfs priv escalation
 Content-Type: text/plain; charset=utf-8
 
-This adds a preemption point during the copying of the argument and
-environment strings for execve, in copy_strings().  There is already
-a preemption point in the count() loop, so this doesn't add any new
-points in the abstract sense.
+Credit: Matt McCutchen. The kernel allows processes to access the 
+internal ".reiserfs_priv" directory at the top of a reiserfs filesystem 
+which is used to store xattrs. Permissions are not enforced in that 
+tree, so unprivileged users can view and potentially modify the xattrs 
+on arbitrary files.
 
-When the total argument+environment strings are very large, the time
-spent copying them can be much more than a normal user time slice.
-So this change improves the interactivity of the rest of the system
-when one process is doing an execve with very large arguments.
+CERT/CC (http://www.cert.org/), report ID VRF#G7I2H94M
 
-Signed-off-by: Roland McGrath <roland@...hat.com>
----
- fs/exec.c |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+https://bugzilla.redhat.com/show_bug.cgi?id=568041
+http://marc.info/?l=linux-kernel&m=127076012022155&w=2
 
-diff --git a/fs/exec.c b/fs/exec.c
-index 1b63237..6f2d777 100644
---- a/fs/exec.c
-+++ b/fs/exec.c
-@@ -419,6 +419,8 @@ static int copy_strings(int argc, const char __user *const __user *argv,
- 		while (len > 0) {
- 			int offset, bytes_to_copy;
- 
-+			cond_resched();
-+
- 			offset = pos % PAGE_SIZE;
- 			if (offset == 0)
- 				offset = PAGE_SIZE;
+Thanks, Eugene
