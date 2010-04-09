@@ -1,19 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/21/1
-Message-ID: <AANLkTilEID2PdyhH9m_7jURox7ixHiN5mg_N9vkdXHId@mail.gmail.com>
-Date: Tue, 20 Jul 2010 19:39:09 -0600
-From: Kurt Seifried <kurt@...fried.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/09/3
+Message-Id: <201004091030.20193.ludwig.nussel@suse.de>
+Date: Fri, 9 Apr 2010 10:30:19 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE for Intel INTEL-SA-00025
+Subject: Re: ClamAV small issues
 Content-Type: text/plain; charset=utf-8
 
-Can you assign a CVE for
+Kurt Seifried wrote:
+> On Wed, Apr 7, 2010 at 6:02 PM, Josh Bressers <bressers@...hat.com> wrote:
+> > These are certainly worth of CVE ids, but it's going to be tricky, as the
+> > first issue is a couple of things as seen in the bug:
+> > https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1826
+> >
+> > I'm going to defer this assignment to MITRE (added Steve Christey to the CC).
+> >
+> > Thanks.
+> 
+> This already appears to have a CVE, fromt he bug report:
+> 
+> ReversingLabs Corp approached CERT-FI about detection evasion attacks found in
+> many Antivirus software and other signature-based protection software. In
+> short, the case is related to falures when parsing archive formats.
+> ?ReversingLabs Corp has crafted 15 ZIP, CAB, 7Z and RAR archive files that are
+> considered valid by the relevant decompressors, but signature based detection
+> systems cannot detect malicious content contained within them.
 
-http://security-center.intel.com/advisory.aspx?intelid=INTEL-SA-00025&languageid=en-fr
+Do such issues really need to be flagged as vulnerabilities? A virus
+scanner cannot detect all possible malware in any possible container
+anyways. So it's kind of natural that new releases enhance the
+methods to find even more hiding places.
 
-thanks.
+cu
+Ludwig
 
 -- 
-Kurt Seifried
-kurt@...fried.org
-tel: 1-703-879-3176
+ (o_   Ludwig Nussel
+ //\   
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
