@@ -1,22 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/17/6
-Message-Id: <201003171432.58841.ludwig.nussel@suse.de>
-Date: Wed, 17 Mar 2010 14:32:58 +0100
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/09/6
+Message-Id: <201004091150.50645.ludwig.nussel@suse.de>
+Date: Fri, 9 Apr 2010 11:50:50 +0200
 From: Ludwig Nussel <ludwig.nussel@...e.de>
-To: oss-security@...ts.openwall.com, Brian Stafford <brian@...fford.uklinux.net>
-Cc: libesmtp@...fford.uklinux.net, security@...ntu.com, Pawel Salek <pawsa@...ochem.kth.se>, jskarvad@...hat.com
-Subject: Re: CVE Request: libesmtp does not check NULL bytes in commonName
+To: oss-security@...ts.openwall.com
+Subject: Re: ClamAV small issues
 Content-Type: text/plain; charset=utf-8
 
-ArkanoiD wrote:
-> And according to the draft we MUST ignore non-leaf value even if
-> it is the only one CN, just incorrectly placed.
+Eren Türkay wrote:
+> On Friday 09 April 2010 11:30:19 am Ludwig Nussel wrote:
+> > Do such issues really need to be flagged as vulnerabilities? A virus
+> > scanner cannot detect all possible malware in any possible container
+> > anyways. So it's kind of natural that new releases enhance the
+> > methods to find even more hiding places.
+> > 
+> 
+> I guess many people who deploy e-mail service with linux use ClamAV to scan 
+> the attachments. Accordingly to ClamAV bug #1771 (CVE-2010-1311), it is 
+> possible to crash the daemon with crafted file, which is not the intended 
+> behavior.
 
-Many self-signed certificates seem to have an email address as leaf
-RDN. I guess that's because openssl's CA.sh asks for the mail
-address. So with that additional constraint the scary warning
-dialogs for self-signed certs are going to be even more confusing in
-the future.
+Sure. That's a different issue though. I was referring to CVE-2010-0098.
 
 cu
 Ludwig
