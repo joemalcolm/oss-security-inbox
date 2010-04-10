@@ -1,43 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/27/6
-Message-ID: <197838274.431221285616867430.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 27 Sep 2010 15:47:47 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/10/2
+Message-Id: <201004102012.04362.hanno@hboeck.de>
+Date: Sat, 10 Apr 2010 20:12:04 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: clamav < 0.96.3 pdf bounds checking
+Subject: CVE request: Java webstart remote code execution
 Content-Type: text/plain; charset=utf-8
 
-Use CVE-2010-3434
+http://www.reversemode.com/index.php?option=com_content&task=view&id=67&Itemid=1
 
-If someone has more information, or an upstream contact it would be much appreciated.
+[0DAY] JAVA Web Start Arbitrary command-line injection - "-XXaltjvm" arbitrary 
+dll loading 
 
-Thanks.
 
 -- 
-    JB
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
+http://schokokeks.org - professional webhosting
 
------ "Hanno Böck" <hanno@...eck.de> wrote:
-
-> As always, clamav doesn't mention security issues in it's release
-> notes, but 
-> the changelog gives some insight.
-> 
-> The bundled bzip2 code is affected by CVE-2010-0405 which is no
-> surprise.
-> 
-> This however sounds more interesting:
-> Mon Sep 20 14:50:34 EEST 2010 (edwin)
-> -------------------------------------
->  * libclamav/pdf.c: Add missing boundscheck to pdf code (bb #2226)
-> 
-> The referenced bug report is not public, but it sounds like this
-> deserves a 
-> CVE.
-> 
-> -- 
-> Hanno Böck                Blog:                http://www.hboeck.de/
-> GPG: 3DBD3B20                Jabber/Mail:        hanno@...eck.de
-> 
-> http://schokokeks.org - professional webhosting
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
