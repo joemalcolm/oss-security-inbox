@@ -1,56 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/07/8
-Message-ID: <Pine.GSO.4.64.1006071714210.15053@faron.mitre.org>
-Date: Mon, 7 Jun 2010 17:20:36 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/10/1
+Message-Id: <201004102010.34515.hanno@hboeck.de>
+Date: Sat, 10 Apr 2010 20:10:34 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-cc: Guillem Jover <guillem@...ian.org>, Aníbal Monsalve Salazar <anibal@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- rpcbind -- Insecure (predictable) temporary file use
+Subject: CVE request: typo3 remote command execution
 Content-Type: text/plain; charset=utf-8
 
+http://typo3.org/teams/security/security-bulletins/typo3-sa-2010-008/
 
-On Mon, 7 Jun 2010, Josh Bressers wrote:
+ The TYPO3 autoloader does not validate passed arguments.
 
->> On Fri, 4 Jun 2010, Josh Bressers wrote:
->>
->>> Please use CVE-2010-2061 for this.
->>
->> My read of Guillem's report at
->> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=583435#5 suggests that
->> we might have two distinct issues here:
->>
->> - "*any* user can craft those two files before the daemon has started for
->> the first time, which the daemon will parse."  Nothing to do with
->> symlinks.
->>
->> - symlinks are followed on creation of those files
->>
->
-> I'd not thought of these problems like this. You're probably right as CVE
-> assignments are for cause, not fix. I was thinking more along the lines of
-> the fix (store the files somewhere users can't write to) than the problems
-> (which there are certainly two of).
+You are not vulnerable if at least one of following conditions is met:
 
-This is the way CVE has evolved over time, to have a preference for the 
-core issue (and maybe we're going overboard the more we learn about how to 
-identify root causes).
+   1. You are using any other TYPO3 version than 4.3.0, 4.3.1 or 4.3.2 (+ 
+development releases of 4.4 branch).
+   2. You have at least one of following PHP configuration variables set to 
+"off": register_globals ("off" by default, advised to be "off" in TYPO3 
+Security Cookbook), allow_url_include ("off" by default) and allow_url_fopen 
+("on" by default)
+   3. You are using Suhosin and haven't put URL schemes in configuration 
+variable "suhosin.executor.include.whitelist".
 
-A good counter-example for the notion of counting by fix would be: a web 
-application is vulnerable to both XSS and SQL injection on the same input, 
-but with a single patch it makes sure that the input is actually numeric. 
-The fix sometimes comes into play when the core problem/attack is not 
-necessarily known.
+Possible Impact: A crafted request to a vulnerable TYPO3 installation will 
+allow an attacker to load PHP code from an external server and to execute it 
+on the TYPO3 installation. 
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
-Neither approach is better per se, it's just that for CVE we want to be 
-reasonably consistent with CVE.
+http://schokokeks.org - professional webhosting
 
-Generally, one guideline I use is: "if the developer fixes X, then could Y 
-still be a security problem?"  If so, then they are treated as distinct 
-issues.
-
-> Steve, I'll let you make the call, but I'm currently leaning toward two
-> IDs.
-
-Me too, I'd suggest assigning an ID from your pool.
-
-- Steve
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
