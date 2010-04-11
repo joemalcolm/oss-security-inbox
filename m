@@ -1,74 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/29/2
-Message-ID: <AANLkTikPDnHtsPQuJevKoynK2_xSjc0sjyTPIvyPu6eA@mail.gmail.com>
-Date: Tue, 29 Jun 2010 08:05:25 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/11/1
+Message-ID: <4BC19E34.9040308@gentoo.org>
+Date: Sun, 11 Apr 2010 12:02:28 +0200
+From: Tobias Heinlein <keytoaster@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: Tomas Hoger <thoger@...hat.com>, Josh Bressers <bressers@...hat.com>, coley <coley@...re.org>
-Subject: Re: CVE requests: LibTIFF
+Subject: CVE request: irssi 0.8.15
 Content-Type: text/plain; charset=utf-8
 
-On request, I'm re-posting the issues which I think actually deserve
-CVE ids.  The following three issues reliably crash libtiff in the
-general case of doing initial parsing to view an image:
+Not sure if everyone has seen this yet:
 
-1.  Out-of-bounds read in TIFFExtractData() may result in application
-crash.  Revision 1.92.2.9 of libtiff/tif_dirread.c added code for
-ensuring valid type information for each TIFF directory entry.  Prior
-to this fix, unknown tag types would result in an out-of-bounds array
-index in TIFFExtractData() on any code path using this macro.
+http://irssi.org/
 
-Ubuntu security backported this fix as
-debian/patches/fix-unknown-tags.patch because in discussion with them,
-I identified the patch as a fix for this issue.  I discovered this
-issue and disclosed it to iDefense Labs along with the SubjectDistance
-overflow, but they did not share details of this with downstream
-vendors (which was the source of my confusion surrounding knowledge of
-the issue).  It seems that it was actually fixed in 3.9.4
-inadvertently as a result of fixing another unrelated problem, and my
-description of it here can be considered the first disclosure of the
-issue, which affects all versions 3.x <= 3.9.2.
+"This release fixes two security issues: The first being that Irssi
+didn't check hostname on SSL connections and the other being a hard to
+exploit remote crash bug."
 
-2.  A NULL pointer derefrence in TIFFVGetField() may result in
-application crash
-(https://bugs.launchpad.net/ubuntu/lucid/+source/tiff/+bug/589145).
-The fix for this issue was combined with the fix for CVE-2010-2065,
-but it has been confirmed to be a separate issue.  Reported by Sauli
-Pahlman.
+Some further information can be found in the ChangeLog:
+http://irssi.org/news/ChangeLog
 
-3.  Out-of-bounds read in TIFFRGBAImageGet() due to reading past the
-bounds of a buffer
-(https://bugs.launchpad.net/ubuntu/+source/tiff/+bug/591605) may lead
-to application crash.  Reported by Sauli Pahlman.
-
-The remainder of the issues have already been assigned CVEs or require
-additional user assistance to trigger, as as such can be considered
-stability issues rather than security.
-
-Thanks,
-Dan
-
-On Thu, Jun 24, 2010 at 9:38 AM, Tomas Hoger <thoger@...hat.com> wrote:
-> On Thu, 24 Jun 2010 09:16:20 -0400 Dan Rosenberg wrote:
->
->> >> 1.  Out-of-bounds read in TIFFExtractData() may result in
->> >> application crash (no reference, fixed upstream).  Reported by Dan
->> >> Rosenberg.
->> >
->> > Do you have any info on this?  I don't see anything obviously
->> > related in changelog.  TIFFExtractData itself and all its uses seem
->> > unchanged for years.
->>
->> Revision 1.92.2.9 of libtiff/tif_dirread.c added code for ensuring
->> valid tag type information for each TIFF directory entry.  Prior to
->> this fix, unknown tag types would result in an out-of-bounds array
->> index in TIFFExtractData() on any code path using this macro.  Ubuntu
->> security backported this fix as debian/patches/fix-unknown-tags.patch
->> in their libtiff4 package.
->
-> So the reference is:
->  http://bugzilla.maptools.org/show_bug.cgi?id=2210
->
-> --
-> Tomas Hoger / Red Hat Security Response Team
->
