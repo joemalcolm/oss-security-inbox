@@ -1,19 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/13/1
-Message-ID: <1273787857.2858.1.camel@sprout>
-Date: Thu, 13 May 2010 23:57:37 +0200
-From: Jamie Strandboge <jamie@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/12/2
+Message-ID: <18441015.582181271097009001.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 12 Apr 2010 14:30:09 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: KDENetwork vulnerabilities
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: Java webstart remote code execution
 Content-Type: text/plain; charset=utf-8
 
-Our KDE maintainer pointed this out to us. In case people haven't
-already seen it:
 
-http://kde.org/info/security/advisory-20100513-1.txt
+----- "Hanno Böck" <hanno@...eck.de> wrote:
 
+> http://www.reversemode.com/index.php?option=com_content&task=view&id=67&Itemid=1
+> 
+> [0DAY] JAVA Web Start Arbitrary command-line injection - "-XXaltjvm"
+> arbitrary dll loading 
+> 
+
+I'm going to defer this one to MITRE. I suspect it's already on their
+radar.
+
+Thanks.
 
 -- 
-Jamie Strandboge             | http://www.canonical.com
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+    JB
