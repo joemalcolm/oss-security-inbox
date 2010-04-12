@@ -1,33 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/18/1
-Message-Id: <20100417232646.29e6f9f0.michael.s.gilbert@gmail.com>
-Date: Sat, 17 Apr 2010 23:26:46 -0400
-From: Michael Gilbert <michael.s.gilbert@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: kernel: hvc_console: Fix race between hvc_close and hvc_remove
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/12/4
+Message-ID: <Pine.GSO.4.64.1004121812300.2049@faron.mitre.org>
+Date: Mon, 12 Apr 2010 18:18:10 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Josh Bressers <bressers@...hat.com>
+cc: oss-security@...ts.openwall.com, coley@...re.org
+Subject: Re: CVE request: irssi 0.8.15
 Content-Type: text/plain; charset=utf-8
 
-On Sat, 17 Apr 2010 18:15:42 -0400 Michael Gilbert wrote:
 
-> On Thu, 04 Mar 2010 17:03:58 +0800 Eugene Teo wrote:
-> 
-> > Heads-up. You might want to backport this if your kernel is affected. We 
-> > are not requesting a CVE name for this as it does not affect any of our 
-> > Red Hat supported kernels.
-> 
-> are you sure about this?  i see the vulnerable code upstream in both
-> 2.6.26 and 2.6.32.  does redhat not ship hvc in their kernels?  i think
-> this should get a cve id because the more vanilla distros will have
-> shipped with this included.
+On Mon, 12 Apr 2010, Josh Bressers wrote:
 
-i see that hvc_console is disabled by default in the debian kernels,
-and i assume it is the same for the redhat kernels.
+>> "This release fixes two security issues: The first being that Irssi
+>> didn't check hostname on SSL connections and the other being a hard
+>> to
+>> exploit remote crash bug."
+> >
 
-are issues in features that are disabled by default generally treated
-as unimportant? there are bound to be a (perhaps small) subset of users
-turning these features on; exposing themselves to more risk if these
-issues go unfixed. i suppose cve assignment depends on whether or not
-there is an expectation to protect those users in addition to
-defaults-using users. 
+> The crash bits mentioned in the changelog are very ambiguous. The git tree
+> isn't any more clear than that. There appear to be two crashes, both sound
+> like NULL pointer dereferences that cannot be triggered by an attacker. If
+> I'm wrong, please speak up.
 
-mike
+Josh, I think we should assign another CVE anyway.  The upstream vendor 
+has explicitly labeled this as a security issue, so even if it seems of 
+limited severity, that's enough to trigger creation of a CVE.  The use of 
+the "remote crash" term also reinforces the need for a CVE.
+
+This might be juse a plain old crasher from the perspective of many 
+downstream vendors, but it's still worthy of inclusion in CVE because 
+there is a significant population that would treat it as a "security" 
+problem even if it's low severity.
+
+Should I assign one or should you?
+
+- Steve
