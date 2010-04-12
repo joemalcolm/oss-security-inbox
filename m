@@ -1,62 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/02/9
-Message-ID: <AANLkTima3nMKoCQi1H8KZ5_i16=Sn-8C+UtLqK6fWzgv@mail.gmail.com>
-Date: Tue, 2 Nov 2010 13:11:00 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/12/1
+Message-ID: <1248949213.581681271096700392.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 12 Apr 2010 14:25:00 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel stack infoleaks
+Subject: Re: CVE request: typo3 remote command execution
 Content-Type: text/plain; charset=utf-8
 
-Note that AF_PACKET requires CAP_NET_RAW to open a socket, so the
-second issue isn't reachable by unprivileged users and shouldn't be
-considered a security issue.
+Please use CVE-2010-1153
 
--Dan
+Thanks.
 
-On Tue, Nov 2, 2010 at 12:07 PM, Jon Oberheide <jon@...rheide.org> wrote:
-> Vasiliy Kulikov discovered three kernel stack infoleaks in various
-> packet families of the net subsystem:
->
-> ===========================================================
->
-> net/ax25
->
-> Sometimes ax25_getname() doesn't initialize all members of
-> fsa_digipeater field of fsa struct.  This structure is then copied to
-> userland.  It leads to leaking of contents of kernel stack memory.  We
-> have to initialize them to zero.
->
-> http://marc.info/?l=linux-netdev&m=128854507120898&w=2
->
-> ===========================================================
->
-> net/packet
->
-> packet_getname_spkt() doesn't initialize all members of sa_data field of
-> sockaddr struct if strlen(dev->name) < 13.  This structure is then
-> copied to userland.  It leads to leaking of contents of kernel stack
-> memory.  We have to fully fill sa_data with strncpy() instead of
-> strlcpy().
->
-> http://marc.info/?l=linux-netdev&m=128854507220908&w=2
->
-> ===========================================================
->
-> net/tipc
->
-> Structure sockaddr_tipc is copied to userland with padding bytes after
-> "id" field in union field "name" unitialized.  It leads to leaking of
-> contents of kernel stack memory.  We have to initialize them to zero.
->
-> http://marc.info/?l=linux-netdev&m=128854507420917&w=2
->
-> ===========================================================
->
-> Regards,
-> Jon Oberheide
->
-> --
-> Jon Oberheide <jon@...rheide.org>
-> GnuPG Key: 1024D/F47C17FE
-> Fingerprint: B716 DA66 8173 6EDD 28F6  F184 5842 1C89 F47C 17FE
->
+-- 
+    JB
+
+
+----- "Hanno Böck" <hanno@...eck.de> wrote:
+
+> http://typo3.org/teams/security/security-bulletins/typo3-sa-2010-008/
+> 
+>  The TYPO3 autoloader does not validate passed arguments.
+> 
+> You are not vulnerable if at least one of following conditions is
+> met:
+> 
+>    1. You are using any other TYPO3 version than 4.3.0, 4.3.1 or 4.3.2
+> (+ 
+> development releases of 4.4 branch).
+>    2. You have at least one of following PHP configuration variables
+> set to 
+> "off": register_globals ("off" by default, advised to be "off" in
+> TYPO3 
+> Security Cookbook), allow_url_include ("off" by default) and
+> allow_url_fopen 
+> ("on" by default)
+>    3. You are using Suhosin and haven't put URL schemes in
+> configuration 
+> variable "suhosin.executor.include.whitelist".
+> 
+> Possible Impact: A crafted request to a vulnerable TYPO3 installation
+> will 
+> allow an attacker to load PHP code from an external server and to
+> execute it 
+> on the TYPO3 installation. 
+> -- 
+> Hanno Böck		Blog:		http://www.hboeck.de/
+> GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+> 
+> http://schokokeks.org - professional webhosting
