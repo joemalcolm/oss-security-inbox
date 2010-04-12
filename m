@@ -1,40 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/26/3
-Message-ID: <20100826102925.76628c88@redhat.com>
-Date: Thu, 26 Aug 2010 10:29:25 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/12/3
+Message-ID: <1323589670.598711271101294314.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 12 Apr 2010 15:41:34 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: ghostscript and gv
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: irssi 0.8.15
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 25 Aug 2010 15:23:34 +0200 Ludwig Nussel wrote:
 
-> > - some ghostscript versions search CWD even when started with -P-
-> 
-> ... as it turned out neither a) nor b) actually solve the problem:
-> http://bugs.ghostscript.com/show_bug.cgi?id=691350#c11
-> 
-> So fixing gs must be part of the solution always. That's
-> http://svn.ghostscript.com/viewvc?view=rev&revision=11352
+----- "Tobias Heinlein" <keytoaster@...too.org> wrote:
 
-Yes, that's what I was referring to.
-
-> Therefore up to three CVE numbers could be assigned
-> a) insecure default of gs
-> b) applications don't pass -P-
-> c) non working -P-/SEARCH_HERE_FIRST
+> Not sure if everyone has seen this yet:
 > 
-> Fixing a) means b) isn't needed but then it's just a compile time
-> default that may or may not be changed by distros.
+> http://irssi.org/
 > 
-> Both a) and b) imply a fix for c) though. No idea if a separate CVE
-> is actually useful in that case.
+> "This release fixes two security issues: The first being that Irssi
+> didn't check hostname on SSL connections and the other being a hard
+> to
+> exploit remote crash bug."
+> 
+> Some further information can be found in the ChangeLog:
+> http://irssi.org/news/ChangeLog
 
-b) is likely to require per-application CVE.  With the changed default,
-one won't need to care about them though.  I agree c) should better get
-a separate CVE if it's not what CVE-2010-2055 text already tries to
-describe, given the "related to improper support for the -P- option"
-part.
+This is a bit more than what it appears.
+
+The SSL commit is here:
+http://github.com/ensc/irssi-proxy/commit/85bbc05b21678e80423815d2ef1dfe26208491ab
+
+>From reading the code it really fixes two things.
+
+It fixes the old "does not properly handle a '\0' character in a domain
+name in the subject's Common Name (CN) field" flaw, plus also verifies that
+the server being connected to is the one listed in the certificate.
+
+Let's assign these as such:
+CVE-2010-1154 irssi 0.8.15 /0 in CN field
+CVE-2010-1155 irssi 0.8.15 certificate host validation
+
+The crash bits mentioned in the changelog are very ambiguous. The git tree
+isn't any more clear than that. There appear to be two crashes, both sound
+like NULL pointer dereferences that cannot be triggered by an attacker. If
+I'm wrong, please speak up.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+    JB
