@@ -1,28 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/13/1
-Message-ID: <20100613230430.16af126f@foo.fgeek.fi>
-Date: Sun, 13 Jun 2010 23:04:30 +0300
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request - pyftpd insecure usage of temporary directory
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/13/1
+Message-ID: <1268872800.660571271157815741.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 13 Apr 2010 07:23:35 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley@...re.org
+Subject: Re: CVE request: irssi 0.8.15
 Content-Type: text/plain; charset=utf-8
 
-Pyftpd creates log-file to a temporary directory using predictable
-name. This allows a local attacker to create a denial of service
-condition and discloses sensitive information to unprivileged users.
-For example accounts of other users connecting to server and paths they
-visit.
 
-One should use tempfile.mkstemp
-<http://docs.python.org/library/tempfile.html#tempfile.mkstemp> or
-use /var/log/ -directory instead of /tmp/ and use proper file system
-modes for the log-file.
+----- "Steven M. Christey" <coley@...us.mitre.org> wrote:
 
-This affects version: 0.8.4
+> On Mon, 12 Apr 2010, Josh Bressers wrote:
+> 
+> >> "This release fixes two security issues: The first being that Irssi
+> >> didn't check hostname on SSL connections and the other being a hard to
+> >> exploit remote crash bug."
+> >>
+> 
+> > The crash bits mentioned in the changelog are very ambiguous. The git
+> > tree isn't any more clear than that. There appear to be two crashes,
+> > both sound like NULL pointer dereferences that cannot be triggered by
+> > an attacker. If I'm wrong, please speak up.
+> 
+> Josh, I think we should assign another CVE anyway.  The upstream vendor
+> has explicitly labeled this as a security issue, so even if it seems of
+> limited severity, that's enough to trigger creation of a CVE.  The use of
+> the "remote crash" term also reinforces the need for a CVE.
+> 
+> This might be juse a plain old crasher from the perspective of many
+> downstream vendors, but it's still worthy of inclusion in CVE because
+> there is a significant population that would treat it as a "security"
+> problem even if it's low severity.
+> 
+> Should I assign one or should you?
+> 
 
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=585773
+Your reasoning makes sense, I'm happy to assign an ID. Thanks.
 
-Can I have CVE-identifier for this issue?
+CVE-2010-1156 irssi 0.8.15 remote DoS
 
----
-Henri Salo
+-- 
+    JB
