@@ -1,24 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/03/1
-Message-ID: <4B8E2FA6.20501@kernel.sg>
-Date: Wed, 03 Mar 2010 17:45:10 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/13/3
+Message-ID: <x2p9e1e2b1f1004131347zb8adadf6z374ce23f7531cd3d@mail.gmail.com>
+Date: Tue, 13 Apr 2010 22:47:08 +0200
+From: Wouter Coekaerts <coekie@...si.org>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: NFS: Fix an Oops when truncating a file
+Subject: Re: CVE request: irssi 0.8.15
 Content-Type: text/plain; charset=utf-8
 
-"The VM/VFS does not allow mapping->a_ops->invalidatepage() to fail.
-Unfortunately, nfs_wb_page_cancel() may fail if a fatal signal occurs. 
-Since the NFS code assumes that the page stays mapped for as long as the 
-writeback is active, we can end up Oopsing (among other things).
+Hi,
 
-The only safe fix here is to convert nfs_wait_on_request(), so as to 
-make it uninterruptible (as is already the case with 
-wait_on_page_writeback())."
+> I believe assignment of CVE-2010-1154 is redundant here, given that
+> CVE-2010-1155 is about the completely missing server name check.  If it
+> wasn't checking names, it wasn't handling \0 in names incorrectly.
 
-Upstream commit:
-http://git.kernel.org/linus/9f557cd8073104b39528794d44e129331ded649f
+Indeed. It never checked the hostname at all, so there was no mishandling of \0.
 
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=567184
+> The crash bits mentioned in the changelog are very ambiguous. The git tree
+> isn't any more clear than that. There appear to be two crashes, both sound
+> like NULL pointer dereferences that cannot be triggered by an attacker. If
+> I'm wrong, please speak up.
+
+It is about this entry in the changelog/NEWS:
+- Fix crash when checking for fuzzy nick match when not on the channel.
+  Reported by Aurelien Delaitre (SATE 2009).
+
+The fix is revision 5126
+( http://svn.irssi.org/cgi-bin/viewvc.cgi/irssi/trunk/src/core/nicklist.c?root=irssi&r1=4922&r2=5126
+)
+
+It is only exploitable (resulting in a crash) at the exact moment the
+victim is leaving a channel.
+With some good timing it can be triggered by an attacker.
+
+Regards,
+
+Wouter aka coekie
+Irssi developer.
