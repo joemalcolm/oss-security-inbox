@@ -1,28 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/06/1
-Message-Id: <201012060123.03048.hanno@hboeck.de>
-Date: Mon, 6 Dec 2010 01:23:02 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/13/2
+Message-ID: <20100413144121.5c752a32@redhat.com>
+Date: Tue, 13 Apr 2010 14:41:21 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: vanilla forums before 2.0.10, xss
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: irssi 0.8.15
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Mon, 12 Apr 2010 15:41:34 -0400 (EDT) Josh Bressers
+<bressers@...hat.com> wrote:
 
-http://vanillaforums.org/discussion/13119/vanilla-2.0.10-released/p1
+> It fixes the old "does not properly handle a '\0' character in a
+> domain name in the subject's Common Name (CN) field" flaw, plus also
+> verifies that the server being connected to is the one listed in the
+> certificate.
+> 
+> Let's assign these as such:
+> CVE-2010-1154 irssi 0.8.15 /0 in CN field
+> CVE-2010-1155 irssi 0.8.15 certificate host validation
 
-Two sound like security:
-#
-# Added SafeStyles configuration to prevent XSS linkjacking
-# Patched potential linkbait vulnerability in dispatcher
-
-(although I don't know what a linkbait vulnerability is, maybe someone wants 
-to enlighten me)
+I believe assignment of CVE-2010-1154 is redundant here, given that
+CVE-2010-1155 is about the completely missing server name check.  If it
+wasn't checking names, it wasn't handling \0 in names incorrectly.
 
 -- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-
-http://schokokeks.org - professional webhosting
-
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+Tomas Hoger / Red Hat Security Response Team
