@@ -1,29 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/09/3
-Message-ID: <244108914.899771281370683410.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 9 Aug 2010 12:18:03 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/14/6
+Message-ID: <734313713.843551271272925855.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 14 Apr 2010 15:22:05 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: Lynx
+Cc: Chris Allegretta <chrisa@...y.org>, coley <coley@...re.org>
+Subject: Re: CVE request: GNU nano (minor)
 Content-Type: text/plain; charset=utf-8
-
 
 ----- "Dan Rosenberg" <dan.j.rosenberg@...il.com> wrote:
 
-> The Lynx browser is vulnerable to a heap overflow when parsing
-> malformed URLs with a "%" character in the last two characters of the
-> hostname.
+> Two issues were recently addressed upstream for GNU nano to provide
+> better security when editing files owned by other untrusted users,
+> especially when editing as root.  I'm not sure if either of these
+> issues require CVE identifiers due to the narrow circumstances in
+> which they can be exploited, but I figured I'd leave that up to you.
 > 
-> Reference:
-> https://bugs.launchpad.net/ubuntu/+source/lynx-cur/+bug/613254
+> Changelog is at
+> http://svn.savannah.gnu.org/viewvc/trunk/nano/ChangeLog?root=nano&view=log,
+> relevant entries at revisions 4490, 4491, 4493, and 4496.
+> 
+> 1.  When editing a file owned by another user, the owner of the file may
+> replace the file mid-editing with a symbolic link, resulting in the
+> editor overwriting the target of the symbolic link on saving with the
+> privileges of the user doing the editing, without any warning to the
+> editor.  Since this could be considered akin to replacing a target being
+> chown'd or chmod'd with a symbolic link and requires a very targeted
+> attack, I would lean towards this not needing a CVE, but that's your
+> call.
+
+Since they fixed it, and it is a plausible attack, I'm assigning this
+CVE-2010-1160
+
+> 
+> 2.  When backup files are enabled and root is editing a file by an
+> untrusted user, that user may exploit race conditions in the creation of
+> backup files to take ownership of arbitrary files.  While the scenario
+> for exploitation is somewhat unlikely (root editing untrusted files),
+> this attack can be done reliably and without requiring precise timing, so
+> this seems to be a good candidate for a CVE.
 > 
 
-Please use CVE-2010-2810 for this.
-
->From investigating this issue a bit, it looks like the flaw was introduced
-in lynx version 2.8.8dev.1. The functionality that triggers this doesn't
-exist in any of the previous versions.
+CVE-2010-1161
 
 Thanks.
 
