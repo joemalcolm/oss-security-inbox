@@ -1,36 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/16/14
-Message-ID: <20100916203441.7caee871@foo.fgeek.fi>
-Date: Thu, 16 Sep 2010 20:34:41 +0300
-From: Henri Salo <henri@...v.fi>
-To: "oss-security" <oss-security@...ts.openwall.com>
-Subject: CVE-identifier request for Dovecot ACL security bug
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/14/3
+Message-ID: <1847775681.797141271253629065.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 14 Apr 2010 10:00:29 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- perl v5.8.* -- stack overflow by processing certain regex (Gentoo BTS#313565 / RH BZ#580605)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+As MITRE didn't reply, I'm going to assign CVE-2010-1158 to this to cover Perl.
 
-Can I get CVE-identifier for this issue?
+We can address other things on a case by case basis if needed.
 
-"This release fixes a bug in ACL plugin, which could be considered a
-security bug: If Maildir is used with default settings (INBOX is same
-as Maildir root dir) and user set some ACLs to INBOX, those ACLs were
-copied to all newly created mailboxes. This should have been done only
-for "default ACLs", but with Maildir the INBOX directory is the same as
-the default ACL directory, so this mixup happened. This bug exists only
-in v1.2.x releases."
+Thanks.
 
-URL to announcement:
-http://www.dovecot.org/list/dovecot-news/2010-July/000163.html
+-- 
+    JB
 
-Please note that this is different issue than: CVE-2010-0745
 
-Best regards,
-Henri Salo
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
 
-iEYEARECAAYFAkySVTEACgkQXf6hBi6kbk9r9wCgs6z72LRTcywrsWIPtRiAR/R0
-fxcAoLQuYxA3NDFPsUiUhe7uTBm6c5xI
-=nWSw
------END PGP SIGNATURE-----
+> Hi Steve, vendors,
+> 
+>    1, wouldn't like to open a can of worms,
+>    2, but for purpose of properly tracking it, requesting a CVE id for
+> the
+>       following Perl regular expression engine issue:
+> 
+> Bruce Merry reported:
+>    [1] http://bugs.gentoo.org/show_bug.cgi?id=313565
+> 
+> an integer overflow, leading to stack overflow in the way
+> Perl regular expression engine processed certain regular
+> expression(s). Remote attacker could use this flaw to cause
+> a denial of service (crash of an application, using the
+> Perl regular expression engine).
+> 
+> Public PoC from [1]:
+> --------------------
+>    perl -e 'if ((("a " x 100000) . "a\n") =~ /\A\S+(?: \S+)*\n\z/)
+> {}'
+> 
+> References:
+>    [2] http://bugs.gentoo.org/show_bug.cgi?id=313565
+>    [3] https://bugzilla.redhat.com/show_bug.cgi?id=580605
+> 
+> Affected Perl versions:
+>    Issue tested and confirmed in Perl of versions v5.8.*.
+>    Versions of Perl v5.10.* are not affected by this.
+> 
+> Steve, what's the Mitre's opinion on cases like this --
+> denial of service reachable via certain regular expression.
+> 
+> Should we track them on per issue basis? Or only for cases,
+> where more than a DoS is possible? (doesn't seem to be
+> this case though).
+> 
+> Thanks && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
