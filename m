@@ -1,27 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/20/3
-Message-ID: <20100820121743.62c72148@redhat.com>
-Date: Fri, 20 Aug 2010 12:17:43 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/14/4
+Message-ID: <n2q4a6942471004140822if330cebbmf9a3c7e413ae497c@mail.gmail.com>
+Date: Wed, 14 Apr 2010 11:22:32 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: pierre.php@...il.com, "Moritz Muehlenhoff" <jmm@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: PHP MOPS-2010-56..60
+Cc: Chris Allegretta <chrisa@...y.org>
+Subject: CVE request: GNU nano (minor)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 19 Aug 2010 18:22:29 +0200 pierre.php@...il.com wrote:
+Two issues were recently addressed upstream for GNU nano to provide
+better security when editing files owned by other untrusted users,
+especially when editing as root.  I'm not sure if either of these
+issues require CVE identifiers due to the narrow circumstances in
+which they can be exploited, but I figured I'd leave that up to you.
 
-> Which one did not get an is? Most of those were actually a single
-> issue.
+Changelog is at
+http://svn.savannah.gnu.org/viewvc/trunk/nano/ChangeLog?root=nano&view=log,
+relevant entries at revisions 4490, 4491, 4493, and 4496.
 
-MOPS-2010-056 - MOPS-2010-060 as subject indicates.  Those are mysqlnd
-issues and session serializer issue allowing data injection.  Not any
-from that set of interruption issues that exposed one or two problems in
-different ways.
+1.  When editing a file owned by another user, the owner of the file
+may replace the file mid-editing with a symbolic link, resulting in
+the editor overwriting the target of the symbolic link on saving with
+the privileges of the user doing the editing, without any warning to
+the editor.  Since this could be considered akin to replacing a target
+being chown'd or chmod'd with a symbolic link and requires a very
+targeted attack, I would lean towards this not needing a CVE, but
+that's your call.
 
-Has upstream managed to track MOPS-2010-022 down to a proper fix
-already?  That one was not fixed in 5.3.3.  I'm also wondering whether
-the case pointed out in MOPS-2010-024 was not addressed in phar commit
-intentionally.
+2.  When backup files are enabled and root is editing a file by an
+untrusted user, that user may exploit race conditions in the creation
+of backup files to take ownership of arbitrary files.  While the
+scenario for exploitation is somewhat unlikely (root editing untrusted
+files), this attack can be done reliably and without requiring precise
+timing, so this seems to be a good candidate for a CVE.
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+Thanks,
+Dan Rosenberg
