@@ -1,43 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/29/8
-Message-ID: <i0dv67$n2g$1@dough.gmane.org>
-Date: Tue, 29 Jun 2010 18:21:55 -0500
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/14/1
+Message-ID: <4BC53460.6040903@kernel.sg>
+Date: Wed, 14 Apr 2010 11:20:00 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: XSS in python paste
+CC: coley@...re.org
+Subject: Couple of kernel issues
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+1) oom: fix the unsafe usage of badness() in proc_oom_score()
+https://bugzilla.redhat.com/show_bug.cgi?id=582068
+http://git.kernel.org/linus/b95c35e76b29ba812e5dabdd91592e25ec640e93
+upstream commit 28b83c51 (v2.6.32-rc1) introduced the problem.
 
-Quoting [1]:
+2) tty: release_one_tty() forgets to put pids
+https://bugzilla.redhat.com/show_bug.cgi?id=582076
+http://git.kernel.org/linus/6da8d866d0d39e9509ff826660f6a86a6757c966
+Not sure this issue can be triggered by a non-privileged user.
 
-> Paste 1.7.4 is released.  The only real change is to paste.httpexceptions, 
-> which was using insecure quoting of some parameters and allowed an XSS 
-> hole, 
-> most specifically with its 404 messages.  The most notably WSGI 
-> application 
-> using this is paste.urlparse.StaticURLParser and PkgResourcesParser.  By 
-> directing someone to an appropriately formed URL an attacker can execute 
-> arbitrary Javascript on the victim's client.  paste.urlmap.URLMap is also 
-> affected, but only if you have no application attached to /.  Other 
-> applications using paste.httpexceptions may be effected (especially 
-> HTTPNotFound).  WebOb/webob.exc.HTTPNotFound is not affected. 
+Not requesting CVE names for these as these did not affect our supported 
+kernels. Just FYI.
 
-The commit fixing this bug appears to be:
-http://bitbucket.org/ianb/paste/changeset/fcae59df8b56
-Homepage:
-http://pythonpaste.org/
-
-Could a CVE be assigned?
-
-Thanks in advance.
-
-[1] http://groups.google.com/group/paste-
-users/browse_thread/thread/3b3fff3dadd0b1e5?pli=1
-
-Regards,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
-
-
+Thanks, Eugene
