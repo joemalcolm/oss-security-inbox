@@ -1,14 +1,14 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/04/2
-Message-ID: <1635693818.1200701275680397128.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 4 Jun 2010 15:39:57 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/14/5
+Message-ID: <270719302.842871271272741182.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 14 Apr 2010 15:19:01 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Guillem Jover <guillem@...ian.org>, Aníbal Monsalve Salazar <anibal@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- rpcbind -- Insecure (predictable) temporary file use
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: aircrack-ng EAPOL buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-2061 for this.
+Please use CVE-2010-1159 for this.
 
 Thanks.
 
@@ -16,27 +16,22 @@ Thanks.
     JB
 
 
------ "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+----- "Florian Weimer" <fw@...eb.enyo.de> wrote:
 
-> Hi Steve, vendors,
+> An exploit for a security vulnerability in aircrack-ng has been
+> published:
 > 
->    Guillem Jover pointed out:
->    [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=583435#5
+> | The tools' code responsible for parsing IEEE802.11-packets assumes
+> the
+> | self-proclaimed length of a EAPOL-packet to be correct and never to
+> exceed
+> | a (arbitrary) maximum size of 256 bytes for packets that are part of
+> the
+> | EAPOL-authentication. [...]
 > 
-> a deficiency in the way rpcbind gathered / saved registrations from /
-> to
-> dumped file(s). A local attacker could use this flaw to conduct
-> symbolic
-> link attacks, leading to un-authorized disclosure of sensitive
-> information
-> and / or to important system files data integrity corruption.
+> <http://pyrit.googlecode.com/svn/tags/opt/aircrackng_exploit.py>
 > 
-> References:
->    [2] https://bugzilla.redhat.com/show_bug.cgi?id=599697
->    [3] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=583435#15
+> The fix seems to be fixed in r1676 and r1683:
 > 
-> Could you allocate CVE id for this?
-> 
-> Thanks && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+>   <http://trac.aircrack-ng.org/changeset/1676>
+>   <http://trac.aircrack-ng.org/changeset/1683>
