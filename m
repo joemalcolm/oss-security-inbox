@@ -1,39 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/10/6
-Message-ID: <20101110174343.GO5876@outflux.net>
-Date: Wed, 10 Nov 2010 09:43:43 -0800
-From: Kees Cook <kees@...ntu.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/15/2
+Message-ID: <4BC65FD5.9060800@redhat.com>
+Date: Thu, 15 Apr 2010 08:37:41 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel proactive security hardening
+CC: Michael Gilbert <michael.s.gilbert@...il.com>, coley@...re.org
+Subject: CVE request: kernel: tty: release_one_tty() forgets to put pids
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Nov 08, 2010 at 06:07:38AM +0300, Solar Designer wrote:
-> On a more relevant issue (to us), any ideas on dealing with kernel stack
-> infoleaks in a general manner (not just plugging the bugs one by one)?
-> I guess it could be addressed in gcc (an option to wipe stack frames) or
-> in the kernel (wipe even more of the stack, beyond the stack pointer, on
-> syscall entry).  Unfortunately, either has likely measurable performance
-> impact.  (BTW, has some of this been implemented somewhere already?)
-> Any other ideas?
+On 04/15/2010 08:23 AM, Michael Gilbert wrote:
+> On Wed, 14 Apr 2010 11:20:00 +0800 Eugene Teo wrote:
+>
+>> 2) tty: release_one_tty() forgets to put pids
+>> https://bugzilla.redhat.com/show_bug.cgi?id=582076
+>> http://git.kernel.org/linus/6da8d866d0d39e9509ff826660f6a86a6757c966
+>> Not sure this issue can be triggered by a non-privileged user.
+>
+> this one should get a CVE id i think.  looking at only two data points
+> (2.6.26 and 2.6.32), i've found the vulnerable code present in both.
+> if i'm not mistaken, redhat has had supported releases in that range.
 
-I haven't seen this, but it seems like a good idea. I'd assume the most
-efficient solution would be a compiler modification that did the stack
-clearing after raising the stack pointer from a call. I can't imagine it
-would be too expensive since that area of the stack should already be in
-CPU memory cache.
+Was discussing this with another colleague, that it seems possible to 
+trigger this issue with a non-privileged user. And yes, I agree that 
+this should have a CVE name assigned. Thanks.
 
-> In the absence of cheap-enough general solution/workaround in the
-> kernel, I'm afraid we'll need to resort to improving and using automated
-> tools to detect bugs of this nature - which is apparently what you and
-> Vasiliy were doing lately?  What tools did you use?
-
-Dan has been using grep. :) I and Vasiliy have been using coccinelle. I am
-planning on writing up my adventures soon; I have a giant ruleset for
-matching "good" uses of copy_from_user() so that I can manually audit the
-less-obviously-correct uses.
-
--Kees
-
--- 
-Kees Cook
-Ubuntu Security Team
+Eugene
