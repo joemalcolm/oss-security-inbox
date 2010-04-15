@@ -1,47 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/16/5
-Message-ID: <1052152573.656171279293549803.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 16 Jul 2010 11:19:09 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Qt SSL endless loop
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/15/4
+Message-ID: <20100415174318.6b86a2b1@redhat.com>
+Date: Thu, 15 Apr 2010 17:43:18 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: OSS Security <oss-security@...ts.openwall.com>
+Subject: CVE request - sudo
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-2533
+Hi!
 
-Thanks.
+sudo versions 1.7.2p6 and 1.6.9p22 were released recently fixing
+another sudoedit privilege escalation issue:
+
+http://sudo.ws/sudo/alerts/sudoedit_escalate2.html
 
 -- 
-    JB
-
-
------ "Ludwig Nussel" <ludwig.nussel@...e.de> wrote:
-
-> Raphael Geissert wrote:
-> > [...]
-> > He also reported another vulnerability in Qt4's SSL support:
-> > http://aluigi.altervista.org/adv/qtsslame-adv.txt
-> > 
-> > (reported to the Debian maintainers in
-> http://bugs.debian.org/587711)
-> > 
-> > Could a CVE be assigned for this other issue too?
-> 
-> Looks like the request got lost.
-> 
-> The fix seems to be
-> http://qt.gitorious.org/qt/qt/commit/f7fe575bc5f628533aeeca3eb564af89a1a1426b
-> 
-> According to the Mumble author this fix causes a regression with peer
-> certificate validation when used with openssl >= 0.9.8n though:
-> http://sourceforge.net/mailarchive/forum.php?thread_name=4C3F8BC6.9030303%40natvig.com&forum_name=mumble-packaging
-> http://bugreports.qt.nokia.com/browse/QTBUG-7200
-> 
-> cu
-> Ludwig
-> 
-> -- 
->  (o_   Ludwig Nussel
->  //\   
->  V_/_  http://www.suse.de/
-> SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+Tomas Hoger / Red Hat Security Response Team
