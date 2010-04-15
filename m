@@ -1,20 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/18/1
-Message-ID: <4C6B6DA3.3050008@redhat.com>
-Date: Wed, 18 Aug 2010 13:20:35 +0800
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/15/3
+Message-ID: <4BC66185.7090102@redhat.com>
+Date: Thu, 15 Apr 2010 08:44:53 +0800
 From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request - kernel: net sched memleak
+CC: Michael Gilbert <michael.s.gilbert@...il.com>, coley@...re.org
+Subject: Re: CVE request: kernel: tty: release_one_tty() forgets to put pids
 Content-Type: text/plain; charset=utf-8
 
-http://patchwork.ozlabs.org/patch/61857/
-https://bugzilla.redhat.com/show_bug.cgi?id=624903
+On 04/15/2010 08:37 AM, Eugene Teo wrote:
+> On 04/15/2010 08:23 AM, Michael Gilbert wrote:
+>> On Wed, 14 Apr 2010 11:20:00 +0800 Eugene Teo wrote:
+>>
+>>> 2) tty: release_one_tty() forgets to put pids
+>>> https://bugzilla.redhat.com/show_bug.cgi?id=582076
+>>> http://git.kernel.org/linus/6da8d866d0d39e9509ff826660f6a86a6757c966
+>>> Not sure this issue can be triggered by a non-privileged user.
+>>
+>> this one should get a CVE id i think. looking at only two data points
+>> (2.6.26 and 2.6.32), i've found the vulnerable code present in both.
+>> if i'm not mistaken, redhat has had supported releases in that range.
+>
+> Was discussing this with another colleague, that it seems possible to
+> trigger this issue with a non-privileged user. And yes, I agree that
+> this should have a CVE name assigned. Thanks.
 
-Memory leak issue was found numerous functions in net/sched/act_*.c.
+pgrp member in struct tty_struct was converted to struct pid in commit 
+ab521dc0, so kernels of version v2.6.26-rc1 and above are affected by this.
 
-This was introduced since v2.6.9-rc2.
-
-Thanks, Eugene
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+Eugene
