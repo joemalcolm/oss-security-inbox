@@ -1,94 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/18/3
-Message-Id: <20101118224628.GKHYUIARPUJBEA@hackinthebox.org>
-Date: Thu, 18 Nov 2010 22:46:28 +0800
-From: Hafez Kamal <aphesz@...kinthebox.org>
-To: <oss-security@...ts.openwall.com>
-Subject: [HITB-Announce] HITB2011AMS -- Call For Papers now Open
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/15/1
+Message-Id: <20100414202313.f5ca3b90.michael.s.gilbert@gmail.com>
+Date: Wed, 14 Apr 2010 20:23:13 -0400
+From: Michael Gilbert <michael.s.gilbert@...il.com>
+To: oss-security@...ts.openwall.com, coley@...re.org
+Subject: Re: Couple of kernel issues
 Content-Type: text/plain; charset=utf-8
 
-The Call for Papers for the second annual HITBSecConf in Europe is now
-open! Taking place from the 17th - 20th of May at the NH Grand
-Krasnapolsky in Amsterdam, HITB2011AMS will be a quad-track conference
-line up featuring keynote speaker Joe Sullivan (Chief Security Officer
-of Facebook) and a special keynote panel discussion on 'The Economics of
-Vulnerabilities'!
+On Wed, 14 Apr 2010 11:20:00 +0800 Eugene Teo wrote:
 
-HITB2011AMS will also feature a brand new Capture The Flag - World
-Domination competition run by the HITB.nl CTF Crew, an expanded
-Hackerspaces Village (with participation from .NL and .EU based
-hackerspaces) a Lock Picking Village run by members from TOOOL.nl and of
-course the HITBSIGINT sessions - 15 minute talks held during the coffee
-and lunch breaks with a focus on highlighting up and coming research and
-researchers.
+> 2) tty: release_one_tty() forgets to put pids
+> https://bugzilla.redhat.com/show_bug.cgi?id=582076
+> http://git.kernel.org/linus/6da8d866d0d39e9509ff826660f6a86a6757c966
+> Not sure this issue can be triggered by a non-privileged user.
 
-As always, talks that are more technical or that discuss new and never
-before seen attack methods are of more interest than a subject that has
-been covered several times before.
+this one should get a CVE id i think.  looking at only two data points
+(2.6.26 and 2.6.32), i've found the vulnerable code present in both.
+if i'm not mistaken, redhat has had supported releases in that range.
 
-Submissions are due _no later than 18th February 2011_
-HITB CFP: http://cfp.hackinthebox.org/
-
-===
-
-Topics of interest include, but are not limited to the following:
-
-# Cloud Security
-# 3G/4G/WIMAX Security
-# File System Security
-# SS7/GSM/VoIP Security
-# Smart Card and Physical Security
-# Network Protocols, Analysis and Attacks
-# Applications of Cryptographic Techniques
-# Side Channel Analysis of Hardware Devices
-# Data Recovery, Forensics and Incident Response
-# Analysis of Malicious Code / Viruses / Malware
-# Windows / Linux / OS X / *NIX Security Vulnerabilities
-# Next Generation Exploit and Exploit Mitigation Techniques
-# WLAN, GPS, HAM Radio, Satellite, RFID and Bluetooth Security
-
-Each non-resident speaker will receive accommodation for 3 nights / 4
-days. For each non-resident speaker, HITB will cover travel expenses up
-to EUR1200.00.
-
-Your submission will be reviewed by The HITB CFP Review Committee which
-includes:
-
-Charlie Miller	  (Principal Analyst, Independent Security Evaluators)
-Jeremiah Grossman (Founder, Whitehat Security)
-Red Dragon Thanh  (THC, VNSECURITY, Intel Corp)
-Mark Curphey	  (Director, Microsoft Corp)
-Cesar Cerrudo	  (Founder / CEO ArgenISS)
-Saumil Shah	  (Founder CEO Net-Square)
-Shreeraj Shah	  (Founder, BlueInfy)
-Fredric Raynal	  (Sogeti/Cap Gemini)
-Robert Hansen (rsnake) (SecTheory)
-Alexander Kornburst (Red Database)
-Emmanuel Gadaix	  (Founder, TSTF)
-Andrea Barisani	  (Inverse Path)
-Ed Skoudis	  (InGuardians)
-Haroon Meer	  (Sensepost)
-Chris Evans	  (Google)
-Philippe Langlois (TSTF)
-Skyper		  (THC)
-
-
-PLEASE NOTE:
-
-We do not accept product or vendor related pitches. If you would like to
-showcase your company's products or technology, please contact us for
-further participation opportunities.
-
-
----
-Hafez Kamal
-HITB Crew
-Hack in The Box (M) Sdn. Bhd.
-Suite 26.3, Level 26, Menara IMC,
-No. 8 Jalan Sultan Ismail,
-50250 Kuala Lumpur,
-Malaysia
-
-Tel: +603-20394724
-Fax: +603-20318359
-
+mike
