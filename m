@@ -1,23 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/19/2
-Message-ID: <360280996.217681263928685656.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 19 Jan 2010 14:18:05 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/16/3
+Message-Id: <201004161547.24490.eren@pardus.org.tr>
+Date: Fri, 16 Apr 2010 15:47:24 +0300
+From: Eren Türkay <eren@...dus.org.tr>
 To: oss-security@...ts.openwall.com
-Subject: Re: gnome doesn't lock external screen after resume
+Subject: CVE Request: JIRA Issues
 Content-Type: text/plain; charset=utf-8
 
------ "Ludwig Nussel" <ludwig.nussel@...e.de> wrote:
-> 
-> Resuming a gnome session with a second monitor connected bypasses
-> screensaver authentication on the second screen:
-> https://bugzilla.gnome.org/show_bug.cgi?id=593616
-> http://git.gnome.org/browse/gnome-screensaver/commit/?id=2f597ea9f1f363277fd4dfc109fa41bbc6225aca
-> 
+Hello,
 
-Please use CVE-2010-0285 for this.
+As you probably know, Apache.org services were taken down due to the XSS and 
+privilege escalation flaws in JIRA. Atlassian patched the issues, and released 
+an advisory.
 
-Thanks.
+Bug entires:
 
+XSS Vulnerability: http://jira.atlassian.com/browse/JRA-20994
+Privilege escalation: http://jira.atlassian.com/browse/JRA-20995
+
+JIRA Advisory: 
+http://confluence.atlassian.com/display/JIRA/JIRA+Security+Advisory+2010-04-16
+
+Could anyone assign CVE IDs for these issues?
+
+Thanks,
 -- 
-    JB
+Eren
