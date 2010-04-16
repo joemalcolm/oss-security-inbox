@@ -1,27 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/12/3
-Message-ID: <4B759B65.2040903@kde.org>
-Date: Fri, 12 Feb 2010 13:18:13 -0500
-From: Jeff Mitchell <mitchell@....org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/16/4
+Message-ID: <1046246154.1020891271430065619.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 16 Apr 2010 11:01:05 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: KDE screensaver unlock issue similar to GNOME one
+Cc: coley <coley@...re.org>
+Subject: Re: CVE Request: JIRA Issues
 Content-Type: text/plain; charset=utf-8
 
-Sorry it's not in the same thread, as I wasn't subscribed to this list
-at the time.
 
-I can verify that only KDE SC 4.4.0 is affected. Released versions of
-4.3 are *not* affected by this bug.
+----- "Eren Türkay" <eren@...dus.org.tr> wrote:
 
-I have committed a patch to the KDE SVN server as revision 1089213. See
-https://bugs.kde.org/show_bug.cgi?id=217882#c16
+> Hello,
+> 
+> As you probably know, Apache.org services were taken down due to the XSS
+> and privilege escalation flaws in JIRA. Atlassian patched the issues, and
+> released an advisory.
+> 
+> Bug entires:
+> 
+> XSS Vulnerability: http://jira.atlassian.com/browse/JRA-20994
+> Privilege escalation: http://jira.atlassian.com/browse/JRA-20995
+> 
+> JIRA Advisory: 
+> http://confluence.atlassian.com/display/JIRA/JIRA+Security+Advisory+2010-04-16
+> 
 
-Although this solved the problem for me locally, I'm in the process of
-having other testers verify that they can no longer reproduce the
-problem with this patch, and will report back once this is verified.
+Here you go:
+CVE-2010-1164 JIRA XSS Vulnerability (JRA-20994)
+CVE-2010-1165 JIRA Privilege escalation (JRA-20995)
 
-Thanks,
-Jeff
+Thanks
 
-
-Download attachment "signature.asc" of type "application/pgp-signature" (197 bytes)
+-- 
+    JB
