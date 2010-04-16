@@ -1,22 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/30/1
-Message-Id: <201012301643.27772.hanno@hboeck.de>
-Date: Thu, 30 Dec 2010 16:43:27 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/16/1
+Message-ID: <1662144449.977091271376590893.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 15 Apr 2010 20:09:50 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: wordpress before 3.0.4 XSS
+Cc: Michael Gilbert <michael.s.gilbert@...il.com>, coley@...re.org
+Subject: Re: CVE request: kernel: tty: release_one_tty() forgets to put pids
 Content-Type: text/plain; charset=utf-8
 
-Details here:
+Please use CVE-2010-1162 for this.
 
-http://wordpress.org/news/2010/12/3-0-4-update/
-http://core.trac.wordpress.org/changeset/17172/branches/3.0
-http://www.heise.de/newsticker/meldung/Security-Bugfix-fuer-Wordpress-1161909.html
+Thanks
 
 -- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+    JB
 
-http://schokokeks.org - professional webhosting
 
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+----- "Eugene Teo" <eugene@...hat.com> wrote:
+
+> On 04/15/2010 08:37 AM, Eugene Teo wrote:
+> > On 04/15/2010 08:23 AM, Michael Gilbert wrote:
+> >> On Wed, 14 Apr 2010 11:20:00 +0800 Eugene Teo wrote:
+> >>
+> >>> 2) tty: release_one_tty() forgets to put pids
+> >>> https://bugzilla.redhat.com/show_bug.cgi?id=582076
+> >>>
+> http://git.kernel.org/linus/6da8d866d0d39e9509ff826660f6a86a6757c966
+> >>> Not sure this issue can be triggered by a non-privileged user.
+> >>
+> >> this one should get a CVE id i think. looking at only two data
+> points
+> >> (2.6.26 and 2.6.32), i've found the vulnerable code present in
+> both.
+> >> if i'm not mistaken, redhat has had supported releases in that
+> range.
+> >
+> > Was discussing this with another colleague, that it seems possible
+> to
+> > trigger this issue with a non-privileged user. And yes, I agree
+> that
+> > this should have a CVE name assigned. Thanks.
+> 
+> pgrp member in struct tty_struct was converted to struct pid in commit
+> 
+> ab521dc0, so kernels of version v2.6.26-rc1 and above are affected by
+> this.
+> 
+> Eugene
