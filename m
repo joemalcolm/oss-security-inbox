@@ -1,47 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/13/1
-Message-ID: <4CB5B87D.2020001@redhat.com>
-Date: Wed, 13 Oct 2010 15:47:41 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, Daniel Stenberg <daniel@...x.se>
-Subject: CVE Request -- cURL / mingw32-cURL -- Did not strip directory parts separated by backslashes, when downloading files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/16/2
+Message-ID: <1345316171.977181271377188237.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 15 Apr 2010 20:19:48 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request - sudo
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve, vendors,
 
-   cURL upstream has released new curl / libcurl v7.21.2 addressing one security flaw,
-specific for operating systems, where backslashes are used to separate directories from
-file names. More details follow:
+----- "Tomas Hoger" <thoger@...hat.com> wrote:
 
-cURL did not properly cut off directory parts from user provided
-file name to be downloaded on operating systems, where backslashes
-are used to separate directories and file names. This could allow
-remote servers to create or overwrite files via a Content-Disposition
-header that suggests a crafted filename, and possibly execute arbitrary
-code as a consequence of writing to a certain file in a user's home
-directory. Different vulnerability than CVE-2010-2251, CVE-2010-2252
-and CVE-2010-2253.
+> Hi!
+> 
+> sudo versions 1.7.2p6 and 1.6.9p22 were released recently fixing
+> another sudoedit privilege escalation issue:
+> 
+> http://sudo.ws/sudo/alerts/sudoedit_escalate2.html
+> 
 
-Note: As already mentioned in [2]. This flaw only affected those
-       operating systems, where backslash is used to separate directories
-       and file names, thus Microsoft Windows, Novell Netware, MSDOS, OS/2
-       and Symbian to mention some of them.
+Please use CVE-2010-1163
 
-References:
-[1] http://curl.haxx.se/docs/security.html
-[2] http://curl.haxx.se/docs/adv_20101013.html
+Thanks
 
-Upstream patch:
-[3] http://curl.haxx.se/curl-content-disposition.patch
-
-Credit: Upstream acknowledges Dan Fandrich as the original reporter.
-
-Red Hat Bugzilla tracking system record:
-[4] https://bugzilla.redhat.com/show_bug.cgi?id=642642
-
-Could you please allocate a CVE id for this issue?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+-- 
+    JB
