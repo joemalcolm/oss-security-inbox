@@ -1,55 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/17/6
-Message-ID: <297054876.1296341290001086716.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 17 Nov 2010 08:38:06 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/17/2
+Message-Id: <20100417181542.9c519ba2.michael.s.gilbert@gmail.com>
+Date: Sat, 17 Apr 2010 18:15:42 -0400
+From: Michael Gilbert <michael.s.gilbert@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: Clear text password in process list when using MySQL GUI tools
+Subject: Re: kernel: hvc_console: Fix race between hvc_close and hvc_remove
 Content-Type: text/plain; charset=utf-8
 
-Steve,
+On Thu, 04 Mar 2010 17:03:58 +0800 Eugene Teo wrote:
 
-What are the thoughts of MITRE on this one? This affects all sorts of stuff,
-and I don't upstream removing the command line option (which is probably the
-only fix).
+> Heads-up. You might want to backport this if your kernel is affected. We 
+> are not requesting a CVE name for this as it does not affect any of our 
+> Red Hat supported kernels.
 
-Thanks.
+are you sure about this?  i see the vulnerable code upstream in both
+2.6.26 and 2.6.32.  does redhat not ship hvc in their kernels?  i think
+this should get a cve id because the more vanilla distros will have
+shipped with this included.
 
--- 
-    JB
-
-
------ "Martin Drescher" <drescher@...fu.de> wrote:
-
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> Hi ML.
-> 
-> If you use some MySQL-GUI-tool in most (any?) linux distribution like
-> mysql-admin or mysql-query-browser and then open 'Tools -> MySQL Text
-> Console' your password, user name and host will become exposed in the
-> process list.
-> 
-> I think this issue must exists over a long time in many distributions
-> now but nobody ever cared about.
-> 
-> For Debian users:
-> Packages mysql-query-browser, mysql-admin are affected.
-> 
-> 
-> So far, Martin
-> 
->  GnuPG Key Fingerprint, KeyID '4FBE451A':
->  '2237 1E95 8E50 E825 9FE8  AEE1 6FF4 1E34 4FBE 451A'
-> 
-> 
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.10 (GNU/Linux)
-> Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-> 
-> iEYEARECAAYFAkzir8gACgkQb/QeNE++RRqfIQCfaLDToS6pAfuj4/XgkYSKnBh0
-> nu8An3JJAp2nZWcOODOXX2KGs07ouATd
-> =/nj6
-> -----END PGP SIGNATURE-----
+mike
