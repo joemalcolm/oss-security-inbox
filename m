@@ -1,22 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/25/8
-Message-ID: <20100825194920.GS14896@ngolde.de>
-Date: Wed, 25 Aug 2010 21:49:20 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE id request: libc fortify source information disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/17/1
+Message-ID: <1271540279.21078.94.camel@severus.strandboge.com>
+Date: Sat, 17 Apr 2010 16:37:59 -0500
+From: Jamie Strandboge <jamie@...onical.com>
+To: Wouter Coekaerts <coekie@...si.org>
+Cc: oss-security <oss-security@...ts.openwall.com>, Steve Langasek <steve.langasek@...onical.com>
+Subject: Re: Re: CVE request: irssi 0.8.15
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-http://seclists.org/fulldisclosure/2010/Apr/399
-did this ever get a CVE id? As this also works for setuid programs it would be 
-nice to get one assigned and have this patched.
+FYI,
 
-Kind regards
-Nico
+I backported the following svn commits to 0.8.14 for the SSL issue:
+r5104:
+  Check if an SSL certificate matches the hostname of the server we are
+  connecting to
+r5107:
+  Use one SSL_CTX per connection, use default trusted CAs if nothing
+  specified. This allows useful use of -ssl_verify without
+  -ssl_cafile/-ssl_capath, using OpenSSL's default trusted CAs.
+r5108:
+  Call OpenSSL_add_all_algorithms(), may be needed to verify SHA256
+  certs with certain versions of OpenSSL.
+r5116:
+  network-openssl: Show why a certificate failed validation.
+r5136
+  Do not use SSLv2 protocol. From Bazerka.
+
+However, after rolling it out Steve Langasek discovered a bug when
+connecting to an SSL irc proxy server[1]. His patch (attached) adjusts
+it so when we have a proxy setting, expect the CN to match the proxy
+hostname, not the server hostname
+
+[1] https://bugs.launchpad.net/ubuntu/+source/irssi/+bug/565182
 
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
+Jamie Strandboge             | http://www.canonical.com
 
-Content of type "application/pgp-signature" skipped
+View attachment "irssi-565182.diff" of type "text/x-patch" (1185 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
