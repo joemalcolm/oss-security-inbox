@@ -1,26 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/16/4
-Message-Id: <201012161659.13150.ludwig.nussel@suse.de>
-Date: Thu, 16 Dec 2010 16:59:12 +0100
-From: Ludwig Nussel <ludwig.nussel@...e.de>
-To: Mark Stosberg <mark@...mersault.com>
-Cc: oss-security@...ts.openwall.com, Marcela Maslanova <mmaslano@...hat.com>, Petr Pisar <ppisar@...hat.com>, "Chris 'BinGOs' Williams" <chris@...gosnet.co.uk>, Reed Loden <reed@...dloden.com>, Masahiro Yamada <masa141421356@...il.com>, Byron Jones <glob@...b.com.au>, Lincoln Stein <lincoln.stein@...il.com>
-Subject: Re: Re: CVE Request -- perl-CGI two ids, perl-CGI-Simple one id (CVE-2010-3172 already assigned for Bugzilla part)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/18/1
+Message-Id: <20100417232646.29e6f9f0.michael.s.gilbert@gmail.com>
+Date: Sat, 17 Apr 2010 23:26:46 -0400
+From: Michael Gilbert <michael.s.gilbert@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: kernel: hvc_console: Fix race between hvc_close and hvc_remove
 Content-Type: text/plain; charset=utf-8
 
-Mark Stosberg wrote:
-> Yes, it is. However, later testing found that the issue wasn't
-> completely fixed in 3.50. A new patch has been developed, and is
-> currently pending review and acceptance by the primary CGI.pm author,
-> Lincoln Stein. (Now CC'ed).
+On Sat, 17 Apr 2010 18:15:42 -0400 Michael Gilbert wrote:
 
-Any update on this? What are the remaining issues?
+> On Thu, 04 Mar 2010 17:03:58 +0800 Eugene Teo wrote:
+> 
+> > Heads-up. You might want to backport this if your kernel is affected. We 
+> > are not requesting a CVE name for this as it does not affect any of our 
+> > Red Hat supported kernels.
+> 
+> are you sure about this?  i see the vulnerable code upstream in both
+> 2.6.26 and 2.6.32.  does redhat not ship hvc in their kernels?  i think
+> this should get a cve id because the more vanilla distros will have
+> shipped with this included.
 
-cu
-Ludwig
+i see that hvc_console is disabled by default in the debian kernels,
+and i assume it is the same for the redhat kernels.
 
--- 
- (o_   Ludwig Nussel
- //\   
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+are issues in features that are disabled by default generally treated
+as unimportant? there are bound to be a (perhaps small) subset of users
+turning these features on; exposing themselves to more risk if these
+issues go unfixed. i suppose cve assignment depends on whether or not
+there is an expectation to protect those users in addition to
+defaults-using users. 
+
+mike
