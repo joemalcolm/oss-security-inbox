@@ -1,48 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/14/11
-Message-ID: <899164113.143301276544641326.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 14 Jun 2010 15:44:01 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/19/1
+Message-ID: <4BCBB604.40704@redhat.com>
+Date: Mon, 19 Apr 2010 09:46:44 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: UnrealIRCd 3.2.8.1 source code contained a backdoor allowing for remote command execution
+CC: Michael Gilbert <michael.s.gilbert@...il.com>
+Subject: Re: kernel: hvc_console: Fix race between hvc_close and hvc_remove
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-2075 for this.
+Hi Michael,
 
-Thanks.
+On 04/18/2010 06:15 AM, Michael Gilbert wrote:
+> On Thu, 04 Mar 2010 17:03:58 +0800 Eugene Teo wrote:
+>
+>> Heads-up. You might want to backport this if your kernel is affected. We
+>> are not requesting a CVE name for this as it does not affect any of our
+>> Red Hat supported kernels.
+>
+> are you sure about this?  i see the vulnerable code upstream in both
 
--- 
-    JB
+Thanks for making sure.
 
+> 2.6.26 and 2.6.32.  does redhat not ship hvc in their kernels?  i think
+> this should get a cve id because the more vanilla distros will have
+> shipped with this included.
 
------ "Alex Legler" <a3li@...too.org> wrote:
+At least not for the officially supported kernels as shipped in Red Hat 
+Enterprise Linux. I don't speak for other vendors, so if they need a CVE 
+name, they should request for one.
 
-> Hi.
-> 
-> Quoting http://www.unrealircd.com/txt/unrealsecadvisory.20100612.txt:
-> 
-> "We found out that the Unreal3.2.8.1.tar.gz file on our mirrors has
-> been
-> replaced quite a while ago with a version with a backdoor (trojan) in
-> it. This backdoor allows a person to execute ANY command with the
-> privileges of the user running the ircd. The backdoor can be executed
-> regardless of any user restrictions (so even if you have passworded
-> server or hub that doesn't allow any users in)."
-> 
-> Basically, a system() call was injected into the source code,
-> disguised
-> as a debug/log macro.
-> 
-> Filed in Gentoo as https://bugs.gentoo.org/show_bug.cgi?id=323691
-> I have a diff of the 'bad' version against the 'good' version. If
-> needed, please contact me.
-> 
-> Please assign a CVE.
-> 
-> Thanks,
-> Alex
-> 
-> -- 
-> Alex Legler | Gentoo Security / Ruby
-> a3li@...too.org | a3li@...ber.ccc.de
+Thanks, Eugene
+--
+Eugene Teo / Red Hat Security Response Team
