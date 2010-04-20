@@ -1,46 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/30/20
-Message-ID: <2058498623.1644141277926128586.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 30 Jun 2010 15:28:48 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/20/1
+Message-ID: <op.vbgbkrh61e62zd@merlin.emma.line.org>
+Date: Tue, 20 Apr 2010 10:08:41 +0200
+From: "Matthias Andree" <matthias.andree@....de>
 To: oss-security@...ts.openwall.com
-Cc: David Malcolm <dmalcolm@...hat.com>, Kyle VanderBeek <kylev@...ev.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Python-Mako (prior v0.3.4): Improper escaping of single quotes in escape.cgi (XSS)
+Subject: Re: CVE request: fetchmail 4.6.3...6.3.16 DoS in -v -v mode in multibyte locales on invalid input
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-2480
+Am 19.04.2010, 17:19 Uhr, schrieb Florian Weimer:
 
-Thanks.
+> * Matthias Andree:
+>
+>> Type:		malloc() Buffer overrun with printable characters
+>
+> Is this the right summary?  It sounds like a heap buffer overflow, but
+> based on the description, I think it's just an infinite loop
+> allocating lots of memory.
+
+That's why it's a "draft". Thanks.
 
 -- 
-    JB
-
-
------ "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
-
-> Hi Steve, vendors,
-> 
->    Craig Younkins reported:
->      [1] http://bugs.python.org/issue9061
-> 
->    that Python Mako (of versions prior v0.3.4), a template library
-> written in Python,
->    improperly escaped single quotes in escape.cgi. An attacker could
-> use this flaw to conduct
->    cross-site scripting (XSS) attacks.
-> 
->    References:
->      [2] http://www.makotemplates.org/CHANGES
-> 
-> Sample public PoC (from [1]):
-> 
->    Proof of concept:
->    print """<body class='%s'></body>""" % cgi.escape("'
-> onload='alert(1);'
-> bad='")
-> 
-> Could you allocate a CVE id for this?
-> 
-> Thanks && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+Matthias Andree
