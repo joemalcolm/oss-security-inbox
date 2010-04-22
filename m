@@ -1,33 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/21/4
-Message-Id: <201005211239.48616.thomas@novell.com>
-Date: Fri, 21 May 2010 12:39:48 +0200
-From: Thomas Biege <thomas@...ell.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/22/3
+Message-ID: <20100422203033.54cd90f7@mail.a3li.li>
+Date: Thu, 22 Apr 2010 20:30:33 +0200
+From: Alex Legler <a3li@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: clamav null pointer dereference
+Subject: CVE request: VLC <1.0.6 Multiple issues
 Content-Type: text/plain; charset=utf-8
 
 Hi,
-does someone, who knows moe about clamav than I do, know if the following has
-security implications?
 
-changelog: http://git.clamav.net/gitweb?p=clamav-
-devel.git;a=blob_plain;f=ChangeLog;hb=master
+in case there was no request from upstream yet:
 
-Wed May 19 12:21:02 CEST 2010 (acab)
-------------------------------------
- * libclamav/7z/Archive/7z/7zIn.c: fix possible(?) null dereference reported
-                                by clang (bb#1909)
+VLC media player suffers from various vulnerabilities when attempting
+to parse malformatted or overly long byte streams.
 
+* Heap buffer overflow vulnerability in A/52, DTS and MPEG Audio
+  decoders
+* Invalid memory access in AVI, ASF, Matroska (MKV)
+  demuxers 
+* Invalid memory access in XSPF playlist parser
+* Inavlid memory access in ZIP archive decompressor
+* Heap buffer overflow in RTMP access
 
-diff: http://git.clamav.net/gitweb?p=clamav-
-devel.git;a=commitdiff;h=4531ba07e1ed5060ac8cb8ff748427ce0917bedd
-
-
+http://www.videolan.org/security/sa1003.html
 
 Thanks,
-Thomas
+Alex
 
 -- 
- Thomas Biege <thomas@...ell.com>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+Alex Legler | Gentoo Security / Ruby
+a3li@...too.org | a3li@...ber.ccc.de
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
