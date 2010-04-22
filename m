@@ -1,28 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/13/10
-Message-ID: <818589351.2321201284412351286.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 13 Sep 2010 17:12:31 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/22/2
+Message-Id: <201004221445.18049.ludwig.nussel@suse.de>
+Date: Thu, 22 Apr 2010 14:45:16 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request: mailman
+Subject: Check your WPA2 Enterprise setup
 Content-Type: text/plain; charset=utf-8
 
------ "Steven M. Christey" <coley@...us.mitre.org> wrote:
+Hi,
 
-> Josh,
-> 
-> Was there a particular reason to split these into separate CVEs?  A quick
-> glance suggests they affect the same version, and since they're the same
-> type, would normally argue for a merge.
-> 
+Recently I had to explain to a friend why turning off certificate
+checks for wireless networks that use WPA2 Enterprise methods for
+authentication is a bad idea. Unfortunately merely enabling some
+checkbox in the UI isn't necessarily sufficient either. If the
+RADIUS server uses a certificate signed by a public CA one can
+easily forget to apply additional constraints (e.g. matching
+subject, common name etc) to restrict acceptable certificates.
+Failure to set such constraints allows anyone with a valid domain to
+forge the wireless network and impersonate the RADIUS server. That
+finding isn't exactly new, yet it's hardly mentioned anywhere. So
+I've decided to write a paper¹ about it.
 
-I have no idea why I did that now that I look at the bugs. I'm sorry.
+I've also contacted NetworkManager upstream since NetworkManager's
+certificate handling is rather limited. Using NetworkManager for
+WPA2 Enterprise is basically only safe if a private CA is used.
+It's planned but not a priority for them to improve the situation.
 
-I'll let you pick which ID to use (do you have a policy for this? lowest
-ID?)
+So if you are using WPA2 Enterprise better check your setup.
 
-Thanks.
+cu
+Ludwig
+
+[1] http://www.suse.de/~lnussel/The_Evil_Twin_problem_with_WPA2-Enterprise_v1.1.pdf
 
 -- 
-    JB
+ (o_   Ludwig Nussel
+ //\   
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
