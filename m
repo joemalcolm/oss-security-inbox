@@ -1,30 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/16/3
-Message-ID: <Pine.GSO.4.64.1008161307540.1035@faron.mitre.org>
-Date: Mon, 16 Aug 2010 13:09:55 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/22/1
+Message-ID: <20100422052524.GA30238@lackof.org>
+Date: Wed, 21 Apr 2010 23:25:24 -0600
+From: dann frazier <dannf@...ian.org>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - kernel: integer overflow in ext4_ext_get_blocks()
+Cc: coley@...us.mitre.org
+Subject: Re: CVE-2010-0727 kernel: gfs/gfs2 locking code DoS flaw
 Content-Type: text/plain; charset=utf-8
 
-
-On Mon, 16 Aug 2010, Eugene Teo wrote:
-
-> This was reported by a customer. Integer overflow flaws were found in 
-> ext4_ext_in_cache() and ext4_ext_get_blocks(). We managed to triggered the 
-> case in ext4_ext_get_blocks() but did not attempt to try the other. This can 
-> trigger a BUG() on certain configuration of ext4 file systems.
+On Fri, Mar 12, 2010 at 01:17:55PM +0800, Eugene Teo wrote:
+> static int
+> gfs_lock(struct file *file, int cmd, struct file_lock *fl)
+> {
+> ..
+>         if ((ip->i_di.di_mode & (S_ISGID | S_IXGRP)) == S_ISGID)
+>                 return -ENOLCK;
+> ..
+> }
 >
-> Upstream commit:
-> http://git.kernel.org/linus/731eb1a03a8445cde2cb23ecfb3580c6fa7bb690
+> This is a check for mandatory locking where the GFS/GFS2 locking code  
+> will skip the lock in case sgid bits are set for the file. This can be  
+> triggered to cause a crash on a system mounting a GFS/GFS2 filesystem.
 >
-> https://bugzilla.redhat.com/show_bug.cgi?id=624327
+> I believe only GFS2 is part of the upstream kernel, and GFS only affects  
+> Red Hat Enterprise Linux.
+>
+> https://bugzilla.redhat.com/CVE-2010-0727
+> http://lkml.org/lkml/2010/3/11/269
 
+Looks like a similar issue existed in 9p - can we allocate another CVE
+for it?
 
-Use CVE-2010-3015
+commit f78233dd44a110c574fe760ad6f9c1e8741a0d00
+Author: Sachin Prabhu <sprabhu@...hat.com>
+Date:   Sat Mar 13 09:03:55 2010 -0600
 
-What does an attacker have to do to exploit this?  Mount a crafted file 
-system?
+    9p: Skip check for mandatory locks when unlocking
 
-- Steve
+-- 
+dann frazier
+
