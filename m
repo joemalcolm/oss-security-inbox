@@ -1,19 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/19/1
-Message-ID: <4B554E36.1080108@redhat.com>
-Date: Tue, 19 Jan 2010 14:16:22 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/23/4
+Message-ID: <96642b6e35f857b3b0b4afb1dc23e525.squirrel@wm.kinkhorst.nl>
+Date: Fri, 23 Apr 2010 15:35:25 +0200
+From: "Thijs Kinkhorst" <thijs@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request - kernel: untangle the do_mremap() mess
+Subject: CVE Request: cacti SQL injection in template_export
 Content-Type: text/plain; charset=utf-8
 
-There's a pile of upstream commits that fixed issues that can lead to 
-user-triggerable panics on supported boxes: 
-http://groups.google.com/group/linux.kernel/msg/895f20870532241e.
+Hi,
 
-http://groups.google.co.jp/group/fa.linux.kernel/browse_thread/thread/8bf22336b1082090
+On Wednesday an SQL injection issue was announced on Full Disclosure by
+"Bonsai Information Security":
+http://seclists.org/fulldisclosure/2010/Apr/272, quoting:
+> A Vulnerability has been discovered in Cacti, which can be exploited by
+> any user to conduct SQL Injection attacks. Input passed via the
+> export_item_id parameter to templates_export.php script is not
+> properly sanitized before being used in a SQL query.
 
-Thanks, Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
+Upstream has issued a patch for this issue:
+http://www.cacti.net/downloads/patches/0.8.7e/sql_injection_template_export.patch
+(but no new release yet)
+
+
+thanks,
+Thijs
+
