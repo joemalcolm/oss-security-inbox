@@ -1,31 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/30/6
-Message-ID: <4CF489B1.2010800@redhat.com>
-Date: Tue, 30 Nov 2010 13:20:49 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: pipe_fcntl local DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/23/3
+Message-Id: <201004231459.53135.ludwig.nussel@suse.de>
+Date: Fri, 23 Apr 2010 14:59:52 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: moodle 1.9.8, 1.8.2
 Content-Type: text/plain; charset=utf-8
 
-"Export 'get_pipe_info()' to other users
+Josh Bressers wrote:
+> ----- "Ludwig Nussel" <ludwig.nussel@...e.de> wrote:
+> > Moodle 1.9.8 and 1.8.12 were released with security fixes:
+> > http://docs.moodle.org/en/Moodle_1.9.8_release_notes
+> > * MSA-10-0001 Vulnerability in KSES text cleaning
+> > * MSA-10-0002 XSS vulnerabilty in the phpcas module
+> > * MSA-10-0003 Disclosure of full user names
+> > * MSA-10-0004 Improved access control in course restore
+> > * MSA-10-0005 Incorrect validation of forms data
+> > * MSA-10-0006 SQL injection in Wiki module
+> > * MSA-10-0007 Reflective Cross Site Scripting (XSS) in the Moodle
+> > Global Search Engine
+> > * MSA-10-0008 Persistent XSS when using Login-as feature
+> > * MSA-10-0009 Session fixation prevention now turned on by default
+> 
+> Steve,
+> 
+> I'm going to defer this one to MITRE.
 
-And in particular, use it in 'pipe_fcntl()'.
+Just a reminder :-)
 
-The other pipe functions do not need to use the 'careful' version, since 
-they are only ever called for things that are already known to be pipes.
+cu
+Ludwig
 
-The normal read/write/ioctl functions are called through the file 
-operations structures, so if a file isn't a pipe, they'd never get 
-called.  But pipe_fcntl() is special, and called directly from the 
-generic fcntl code, and needs to use the same careful function that the 
-splice code is using."
-
-In other words, this is a pipe_fcntl local DoS.
-
-http://git.kernel.org/linus/71993e62a47dabddf10302807d6aa260455503f4
-http://git.kernel.org/linus/c66fb347946ebdd5b10908866ecc9fa05ee2cf3d
-
-Introduced in v2.6.35-rc1
-
-Thanks, Eugene
+-- 
+ (o_   Ludwig Nussel
+ //\   
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
