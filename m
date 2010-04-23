@@ -1,24 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/15/1
-Message-ID: <557241719.4290181268661142400.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 15 Mar 2010 09:52:22 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CFPs and con invitations on the list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/23/1
+Message-Id: <20100423123549.DXAEHRPQYFWTWM@hackinthebox.org>
+Date: Fri, 23 Apr 2010 12:35:49 +0800
+From: Hafez Kamal <aphesz@...kinthebox.org>
+To: <oss-security@...ts.openwall.com>
+Subject: [HITB-Announce] HITBSecConf2010 - Dubai - Presentation Materials
 Content-Type: text/plain; charset=utf-8
 
------ "Solar Designer" <solar@...nwall.com> wrote:
-> 
-> That said, I won't be approving any further "multi-conference" stuff, but
-> I've just approved a HITB announcement...  BTW, Hafez Kamal has been a
-> subscriber to oss-security for a while.
-> 
+Presentation materials from the 4th annual Hack In The Box Security
+Conference in Dubai are now available for download!
 
-I agree with this decision. I don't see such announcements adding any value
-here, and probably just increase the noise level.
+http://conference.hitb.org/hitbsecconf2010dxb/materials/
 
-Unless someone has a compelling argument FOR letting these though, I think
-this is an acceptable policy.
+KEYNOTE 1 - John Viega - A/V Vendors Aren't As Dumb As They Look
+D1 - Daniel Mende - Attacking Cisco WLAN Solutions
+D1 - Laurent Oudot - Improving the Stealthiness of Web Hacking
+D1 - Dimitri Petropoulos - Attacking ATMs and HSMs **
+D1 - Dino Covotsos - Analysis of a Next Generation Botnet
+D1 - The Grugq - Crime, Kung Fu and Rice ##
 
--- 
-    JB
+KEYNOTE 2 - Sourcefire - Near Real Time Detection
+D2 - Mariano Di Croce - SAP Penetration Testing with Bizsploit
+D2 - Fred Raynal + Sogeti - Gathering and Exploiting Information
+D2 - Marc Schoenefeld - Examining Android Code with undx2
+D2 - Saumil Shah - Web Security - Going Nowhere?
+D2 - Gynvael Coldwind - A Case Study of Recent Windows Vulnerabilities
+
+Notes:
+
+** - Speaker changed due to the fscking ash cloud mess!
+
+## - Grugq was stopped by his employer COSEINC from presenting his
+original 'Attacking GSM Base Stations and Mobile Phone Basebands'
+presentation - WTF?! #fail!!!
+
+See you guys at HITBSecConf2010 - Amsterdam (June 29th - July 2nd at the
+NH Grand Krasnapolsky)
+
+http://conference.hitb.org/hitbsecconf2010ams/
+
+
+---
+Hafez Kamal
+HITB Crew
+Hack in The Box (M) Sdn. Bhd.
+Suite 26.3, Level 26, Menara IMC,
+No. 8 Jalan Sultan Ismail,
+50250 Kuala Lumpur,
+Malaysia
+
+Tel: +603-20394724
+Fax: +603-20318359
+
