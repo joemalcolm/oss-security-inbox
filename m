@@ -1,24 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/02/1
-Message-ID: <4B67BA38.3090108@kernel.sg>
-Date: Tue, 02 Feb 2010 13:38:00 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request - kvm: cat /dev/port in the guest can cause host DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/23/2
+Message-Id: <20100423124720.LFAVPRSQVTTAIS@hackinthebox.org>
+Date: Fri, 23 Apr 2010 12:47:20 +0800
+From: Hafez Kamal <aphesz@...kinthebox.org>
+To: <oss-security@...ts.openwall.com>
+Subject: [HITB-Announce] HITB eZine Issue 002 out now!
 Content-Type: text/plain; charset=utf-8
 
-The problem is pit_state->channels[] has 3 elements, and pit_ioport_read 
-uses "addr" as index to pit_get_count, so inb(0x43) reads (and 
-potentially writes) into other data of kvm_kpit_state.
+The second quarterly HITB eZine (issue 002) has been released! Grab your
+copies from here:
 
-PIT control word (address 0x43) is write-only, reads are undefined.
+https://www.hackinthebox.org/modules.php?op=modload&name=News&file=article&sid=35995
 
-Triggering this can cause a general protection fault on the host.
+===
 
-https://bugzilla.redhat.com/show_bug.cgi?id=560887
-http://www.mail-archive.com/kvm@vger.kernel.org/msg28002.html
+3 months ago, our newly 'reborn' ezine was a completely new experience
+to our small team and we didn't expect it to have a lot of followers
+considering its absence for many years. But to our surprise, we received
+over 20K downloads just weeks after its re-launch!
+Despite all this, there are still many things for us to work on and
+improve upon. Our team is still working hard to make sure our ezine will
+not only become a resource our readers love to read, but also something
+they would like to keep. Our promise is that every issue will have
+something unique to offer. You can be a CSO or a hardcore security geek,
+we're confident our content offers something for everyone.
 
-Thanks, Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
+For the second issue, all the articles are now in high resolution. We
+hope by doing this it will increase the quality and and clarity of the
+materials. In addition, the articles are now organized into their
+respective sections and the code listings in them have been improved and
+are now easier to read. Also, a new "Interviews" section has been added
+and for this issue, we have interviewed two well known experts from
+France for their thoughts on the state of computer security.
+
+Finally, we are always looking for feedback from our readers. It's very
+important for us to know how we can improve in terms of content and
+design. Please feel free to drop us an email if you have some
+constructive feedback or ideas that will help us to raise the bar even
+higher.
+
+See you in the summer (Issue 003 will be released at HITBSecConf2010 -
+Amsterdam)
+
+
+---
+Hafez Kamal
+HITB Crew
+Hack in The Box (M) Sdn. Bhd.
+Suite 26.3, Level 26, Menara IMC,
+No. 8 Jalan Sultan Ismail,
+50250 Kuala Lumpur,
+Malaysia
+
+Tel: +603-20394724
+Fax: +603-20318359
+
