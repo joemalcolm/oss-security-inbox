@@ -1,18 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/01/5
-Message-ID: <1322720227.1011571285961622280.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 1 Oct 2010 15:33:42 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/26/7
+Message-ID: <256183236.1854431272311777439.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 26 Apr 2010 15:56:17 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request - phpCAS: prevent symlink attacks, directory traversal and XSS during a proxy callback
+Cc: Steven Christey <coley@...us.mitre.org>
+Subject: Re: CVE request: joomla <= 1.5.15 code upload, information leak, session fixation, unauthorized access (was Fwd: Joomla! Security News)
 Content-Type: text/plain; charset=utf-8
 
-Sorry for the delay:
+Here you go:
 
-CVE-2010-3690 phpCAS: XSS during a proxy callback
-CVE-2010-3691 phpCAS: prevent symlink attacks during a proxy callback
-CVE-2010-3692 phpCAS: directory traversal during a proxy callback
+CVE-2010-1432 Joomla! information Disclosure
+CVE-2010-1433 Joomla! Code upload
+CVE-2010-1434 Joomla! Session fixation
+CVE-2010-1435 Joomla! Unauthorised Access
 
 Thanks.
 
@@ -20,30 +21,174 @@ Thanks.
     JB
 
 
------ "Joachim Fritschi" <fritschi@....tu-darmstadt.de> wrote:
+----- "Hanno Böck" <hanno@...eck.de> wrote:
 
-> Reported by Raphael Geissert almost 2 years ago but never really made
-> it 
-> into the upstream code:
+> ----------  forwarded message  ----------
 > 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=495542#82
+> Subject: Joomla! Security News
+> Date: Samstag 24 April 2010
+> From: "Joomla! Developer - Vulnerability News" <no_reply@...mla.org>
 > 
-> In phpCAS proxy mode the parameters submitted during a callback to the
 > 
-> callback() function are not properly sanatized. The parameters are
-> used 
-> as file handles for filesystem access and parameters in urls.
-> This allows an attacker symlink attacks, directory traversal attacks
-> and 
-> XSS attacks. The issue has been fixed and patches are available:
+> Joomla! Developer - Vulnerability News
 > 
-> https://issues.jasig.org/browse/PHPCAS-80
-> https://developer.jasig.org/source/changelog/jasigsvn?cs=21538
+> ///////////////////////////////////////////
+> [20100423] - Core - Negative Values for Limit and Offset
 > 
-> A new 1.1.3 release which contains the patch and various other
-> bugfixes 
-> will be released within the next few days.
+> Posted: 23 Apr 2010 10:31 AM PDT
+> http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/K3rjMh4AvSE/311-20100423-
+> core-negative-values-for-limit-and-
+> offset.html?utm_source=feedburner&utm_medium=email
 > 
-> Cheers,
 > 
-> Joachim
+>   Project: Joomla!
+>   SubProject: All
+>   Severity: Moderate
+>   Versions: 1.5.15 and all previous 1.5 releases
+>   Exploit type: information Disclosure
+>   Reported Date: 2010-Feb-21
+>   Fixed Date: 2010-Apr-23
+> 
+> Description
+> 
+> If a user entered a URL with a negative query limit or offset, a PHP
+> notice  
+> would display revealing information about the system.
+> Affected Installs
+> 
+> All 1.5.x installs prior to and including 1.5.15 are affected.
+> Solution
+> 
+> Upgrade to the latest Joomla! version (1.5.16 or later)
+> 
+> Reported by Security List
+> Contact
+> 
+> The JSST at the Joomla! Security Center.
+> 
+> 
+> 
+> ///////////////////////////////////////////
+> [20100423] - Core - Installer Migration Script
+> 
+> Posted: 23 Apr 2010 10:27 AM PDT
+> http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/QLis4AG_-cs/310-20100423-
+> core-installer-migration-script.html?utm_source=feedburner&utm_medium=email
+> 
+> 
+>   Project: Joomla!
+>   SubProject: All
+>   Severity: Low
+>   Versions: 1.5.15 and all previous 1.5 releases
+>   Exploit type: Code upload
+>   Reported Date: 2009-Dec-30
+>   Fixed Date: 2010-Apr-23
+> 
+> Description
+> 
+> The migration script in the Joomla! installer does not check the file
+> type  
+> being uploaded. If the installation application is present, an
+> attacker  
+> could use it to upload malicious files to a server.
+> Affected Installs
+> 
+> All 1.5.x installs prior to and including 1.5.15 are affected.
+> Solution
+> 
+> Upgrade to the latest Joomla! version (1.5.16 or later)
+> 
+> Reported by Nicola Bettini
+> Contact
+> 
+> The JSST at the Joomla! Security Center.
+> 
+> 
+> 
+> ///////////////////////////////////////////
+> [20100423] - Core - Sessation Fixation
+> 
+> Posted: 23 Apr 2010 10:22 AM PDT
+> http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/KWB_pRZpcP4/309-20100423-
+> core-sessation-fixation.html?utm_source=feedburner&utm_medium=email
+> 
+> 
+>   Project: Joomla!
+>   SubProject: All
+>   Severity: Moderate
+>   Versions: 1.5.15 and all previous 1.5 releases
+>   Exploit type: Session fixation
+>   Reported Date: 2010-Mar-25
+>   Fixed Date: 2010-Apr-23
+> 
+> Description
+> 
+> Session id doesn't get modified when user logs in.  A remote site may
+> be  
+> able to forward a visitor to the Joomla! site and set a specific
+> cookie.   
+> If the user then logs in, the remote site can use that cookie to  
+> authenticate as that user.
+> Affected Installs
+> 
+> All 1.5.x installs prior to and including 1.5.15 are affected.
+> Solution
+> 
+> Upgrade to the latest Joomla! version (1.5.16 or later)
+> 
+> Reported by Raúl Siles and Steven Pignataro
+> 
+> 
+> 
+> Contact
+> 
+> The JSST at the Joomla! Security Center.[20100423] - Core - Password
+> Reset  
+> Tokens
+> 
+> 
+> 
+> ///////////////////////////////////////////
+> [20100423] - Core - Password Reset Tokens
+> 
+> Posted: 22 Apr 2010 05:00 PM PDT
+> http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/UdLK-p0f7tQ/308-20100423-
+> core-password-reset-tokens.html?utm_source=feedburner&utm_medium=email
+> 
+> 
+>   Project: Joomla!
+>   SubProject: All
+>   Severity: Low
+>   Versions: 1.5.15 and all previous 1.5 releases
+>   Exploit type: Unauthorised Access
+>   Reported Date: 2010-Jan-07
+>   Fixed Date: 2010-Apr-23
+> 
+> Description
+> 
+> When a user requests a password reset, the reset tokens were stored in
+>  
+> plain text in the database. While this is not a vulnerability in
+> itself, it  
+> allows user accounts to be compromised if there is an extension on the
+> site  
+> with an SQL injection vulnerability.
+> Affected Installs
+> 
+> All 1.5.x installs prior to and including 1.5.15 are affected.
+> Solution
+> 
+> Upgrade to the latest Joomla! version (1.5.16 or later)
+> 
+> Reported by Madis Abel
+> Contact
+> 
+> The JSST at the Joomla! Security Center.
+> 
+> 
+> 
+> -- 
+> Hanno Böck		Blog:		http://www.hboeck.de/
+> GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+> 
+> http://schokokeks.org - professional webhosting
