@@ -1,46 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/04/6
-Message-ID: <155433307.1192971286219483294.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 4 Oct 2010 15:11:23 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE requests: Poppler, Quassel, Pyfribidi, Overkill, DocUtils, FireGPG, Wireshark
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/26/2
+Message-ID: <20100426181408.18181340@redhat.com>
+Date: Mon, 26 Apr 2010 18:14:08 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: OSS Security <oss-security@...ts.openwall.com>
+Cc: ppisar@...hat.com
+Subject: WordNet wn format string issue
 Content-Type: text/plain; charset=utf-8
 
------ "Tomas Hoger" <thoger@...hat.com> wrote:
+Hi!
 
-According to Tomas, only the first three things needs IDs:
+Petr Pisar discovered a format string bug in wordnet while doing review
+of wordnet packages in Fedora / RHEL:
 
+  https://bugzilla.redhat.com/show_bug.cgi?id=585206
+  https://bugs.gentoo.org/show_bug.cgi?id=317265
 
-> 
-> e853106b58 is uninitialized pointer use flaw.  Pointer value may be
-> controlled by PDF content, hence if pointed to attacker-controlled
-> memory, code execution may be possible via virtual method call.  This
-> should date back to very old xpdf versions.
-
-http://cgit.freedesktop.org/poppler/poppler/commit/?id=e853106b58d6b4b0467dbd6436c9bb1cfbd372cf
-
-Use CVE-2010-3702
-
-> 
-> bf2055088a seems similar to the above one.  Pointer is to the class that
-> has not virtual methods, but may be used to corrupt memory.  This should
-> only affect poppler versions after b1d4efb082.
-
-http://cgit.freedesktop.org/poppler/poppler/commit/?id=bf2055088a3a2d3bb3d3c37d464954ec1a25771f
-
-Use CVE-2010-3703
-> 
-> 39d140bfc0 array indexing error / underflow.  On platforms where atoi can
-> return negative result, this can allow out-of-array-bounds write.  Code
-> appears in old xpdf versions too.
-
-http://cgit.freedesktop.org/poppler/poppler/commit/?id=39d140bfc0b8239bdd96d6a55842034ae5c05473
-
-Use CVE-2010-3704
-
-Thanks.
+We're not treating this as security issue (no good attack vector,
+fortify source mitigation) and fixing it as a regular bug.  Though as
+the issue can be triggered in a similar way as CVE-2008-2149, and some
+vendors fixed that one as security, bringing this to attention if
+anyone wants to use a different approach.
 
 -- 
-    JB
+Tomas Hoger / Red Hat Security Response Team
