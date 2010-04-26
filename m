@@ -1,88 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/21/1
-Message-ID: <Pine.GSO.4.64.1012201530380.19162@faron.mitre.org>
-Date: Mon, 20 Dec 2010 15:43:44 -0500 (EST)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: Petr Matousek <pmatouse@...hat.com>
-cc: "Steven M. Christey" <coley@...-smtp.mitre.org>, oss-security@...ts.openwall.com, Dan Rosenberg <dan.j.rosenberg@...il.com>
-Subject: Re: CVE request: kernel: CAN information leak, 2nd attempt
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/26/6
+Message-ID: <r2z9e1e2b1f1004261248pf702bb0ez705b8c7d401a8eef@mail.gmail.com>
+Date: Mon, 26 Apr 2010 21:48:29 +0200
+From: Wouter Coekaerts <coekie@...si.org>
+To: Jamie Strandboge <jamie@...onical.com>
+Cc: oss-security <oss-security@...ts.openwall.com>,  Steve Langasek <steve.langasek@...onical.com>
+Subject: Re: Re: CVE request: irssi 0.8.15
 Content-Type: text/plain; charset=utf-8
 
+On Sat, Apr 17, 2010 at 11:37 PM, Jamie Strandboge <jamie@...onical.com> wrote:
+> However, after rolling it out Steve Langasek discovered a bug when
+> connecting to an SSL irc proxy server[1]. His patch (attached) adjusts
+> it so when we have a proxy setting, expect the CN to match the proxy
+> hostname, not the server hostname
 
-Hmmm, a couple things going on here.  I'm fine with associating 
-CVE-2010-3874 with the overflow.  But note - if the overflow does not 
-affect any decision-making, bypass protection logic, or cause a DoS (e.g. 
-if certain values of the overflowed field cause a CPU hit), then it's 
-probably OK to treat it as non-security.  There hasn't been much security 
-analysis done in semantic overflows and we probably have to treat them on 
-a case-by-case basis.  For example - if the last field happens to be a 
-bank account balance, or a flag stating whether a user has some kind of 
-special privilege, then that's a security issue even without memory 
-corruption (or rather, it's still "memory" corruption, just not with the 
-same kinds of management structures that we usually run into currently).
+Irssi doesn't have any SSL proxy support. So at first sight, this
+seemed like a bugfix for a non-existing feature. Looking at it again,
+it seems worse.
 
-Use CVE-2010-4565 for the kernel address leak.
+There is not much explanation in the linked bug, so I'm making some
+assumptions. Correct me if they're wrong.
+What you can do in irssi, is configure a proxy, and then attempt to
+connect to an SSL IRC server through that proxy. Unfortunately, irssi
+currently can't do that, because there is a bug (not a vulnerability)
+in irssi that in that case makes it send the configured "proxy_string"
+encrypted in SSL instead of in plain text. This misbehaviour could be
+used in an akward setup to connect to a proxy that requires SSL, by
+pretending to connect to an SSL irc server. To do that you would have
+to enable SSL when connecting to the server, even when it's not an SSL
+server. By looking at the code, I suspect the patch is about making
+that setup work without getting certificate checking errors. Is that
+correct?
 
-- Steve
+Because it's more familiar, maybe it's more clear in the webbrowser
+equivalent: it is like configuring an http proxy in your browser,
+without saying that it requires SSL. Then you surf to
+https://example.com, encrypting your connection to the proxy, but
+letting the proxy get http://example.com.
 
+It is intended behaviour in irssi that the certificate check fails
+here. This patch makes that check pass. That means the proxy is kind
+of always doing a MITM attack. The user is given the impression he is
+securely connecting to an IRC server, but his actual IRC connection
+(between proxy and irc server) is plain text.
 
+To me this additional patch looks like a security vulnerability.
 
-On Mon, 20 Dec 2010, Petr Matousek wrote:
+Regards,
 
-> ----- Original Message -----
->> I'm ok with this, but I wanted to point out that the previously
->> mentioned heap overflow is a semantic overflow only. Because the
->> field that is being overflowed is the last field in a struct that is
->> always allocated in a chunk significantly larger than the struct
->> itself, the overflow will never result in any kind of corruption, so
->> it has essentially no security impact.
->
-> Yes, we are aware of this [1]. Personally I'd call it a mitigation factor
-> even though I don't have a strong opinion here. Steve, could you please
-> comment?
->
->  [1] https://bugzilla.redhat.com/show_bug.cgi?id=649695#c7
->
-> Petr
->
->>
->> -Dan
->>
->> On Mon, Dec 20, 2010 at 1:36 PM, Petr Matousek <pmatouse@...hat.com>
->> wrote:
->>> "The CAN protocol uses the address of a kernel heap object as a proc
->>> filename, revealing information that could be useful during
->>> exploitation."
->>>
->>> Reference:
->>> https://bugzilla.redhat.com/show_bug.cgi?id=664544
->>> http://seclists.org/oss-sec/2010/q4/103
->>>
->>> Credit: Dan Rosenberg
->>>
->>> ------------
->>>
->>> Please note that there has been one attempt to request CVE for this
->>> issue already [1]. The problem is that vendors (Red Hat more or less
->>> included) used the assigned CVE for the potential heap overflow
->>> issue
->>> [2, 3] whereas reporter used it for information leak [4].
->>>
->>>  [1] http://seclists.org/oss-sec/2010/q4/107
->>>  [2]
->>>  http://lists.opensuse.org/opensuse-updates/2010-12/msg00026.html
->>>  [3] http://www.debian.org/security/2010/dsa-2126
->>>  [4] http://www.cs.brown.edu/people/drosenbe/research.html
->>>
->>> I'd suggest to keep the CVE-2010-3874 id for the heap overflow which
->>> has some (although very limited) security potential and assign a new
->>> id
->>> for the information leak.
->>>
->>> Thanks,
->>> --
->>> Petr Matousek / Red Hat Security Response Team
->>>
->>>
->
->
+Wouter.
+
+PS: I'd comment on launchpad, but my account seems to be blocked.
+
+> [1] https://bugs.launchpad.net/ubuntu/+source/irssi/+bug/565182
