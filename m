@@ -1,56 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/23/5
-Message-ID: <4D138220.2050503@complete.org>
-Date: Thu, 23 Dec 2010 11:08:48 -0600
-From: John Goerzen <jgoerzen@...plete.org>
-To: oss-security <oss-security@...ts.openwall.com>
-CC: Jan Lieskovsky <jlieskov@...hat.com>,  "Steven M. Christey" <coley@...us.mitre.org>, Nicolas Sebrecht <nicolas.s-dev@...oste.net>,  david b <db.pub.mail@...il.com>, Johannes Stezenbach <js@...21.net>, Christoph Höger <choeger@...tu-berlin.de>
-Subject: Re: CVE Request -- OfflineIMAP -- 1), failed to validate remote SSL server certificate 2), allows SSLv2 protocol
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/27/1
+Message-ID: <4BD64DD3.7070804@redhat.com>
+Date: Tue, 27 Apr 2010 10:37:07 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: coley@...us.mitre.org
+Subject: CVE request - gfs2 kernel issue
 Content-Type: text/plain; charset=utf-8
 
-On 12/23/2010 08:43 AM, Jan Lieskovsky wrote:
-> Hello Steve, vendors,
->
-> two issues with security implications have been recently reported
-> against OfflineIMAP:
->
-> I), Didn't check SSL server certificate
+When a struct gfs2_quota straddles a page boundary, the two pages 
+required to write out the complete quota were not being updated. 
+Instead, the first page was being written beyond its end. This buffer 
+overflow can cause a kernel panic. Since only the value field in struct 
+gfs2_quota needs to be updated and it's a 64-bit quantity that doesn't 
+ever straddle a page boundary by itself, we can seek to the proper page 
+where this value lies and write to it.
 
-Please note, by the way, that I am no longer OfflineIMAP maintainer; 
-Nicolas Sebrecht, who I see CC'd, is.  Since I was CC'd, I'm assuming 
-someone is looking for some historical perspective.
+Steps to reproduce:
+https://bugzilla.redhat.com/show_bug.cgi?id=586006
 
-This isn't recent.  OfflineIMAP didn't check the certificate because it 
-was impossible to do so in Python until Python 2.6; Python's built-in 
-SSL API (socket.ssl) simply didn't provide any way to do it. 
-OfflineIMAP's SSL support *significantly* predates Python 2.6 (it has 
-been in OfflineIMAP since at least 2002).  This limitation has been well 
-and widely documented, both in OfflineIMAP and in Python.  For instance, 
-at http://docs.python.org/release/2.5/lib/module-socket.html in the 
-description of ssl:
+My colleague will be posting the patch for the upstream kernel soon.
 
-"Warning: This does not do any certificate verification!"
-
-So if you're going to have a list of vulnerable versions, it probably 
-goes back all the way to 1.0.0.
-
-It is up to you folks whether you want to issue a CVE for it or not.
-
-In my *personal* opinion, it's a little silly; you might as well issue a 
-CVE on telnet because it is vulnerable to sniffing and MITM attacks. 
-"Well, yes it is," you might say, "and everybody knows it is, and it's 
-widely known, so why issue an advisory?"  SSL support in OfflineIMAP 
-provided some measure of utility to connect to servers that only 
-accepted SSL connections, as well as some measure of making attacks more 
-difficult.  It was all that was practical in Python at the time.  But I 
-don't expect to have a voice on that now, so feel free to ignore my opinion.
-
-That's not to say I was happy with the situation.  I wasn't.  But such 
-was all that was available.
-
-I have seen patches to address this go across the mailing list, and I'm 
-sure Nicolas could discuss that better than I at this point, so with 
-that I'll bow out and leave this discussion of what to do with this to 
-the people that are involved with the project presently.
-
-- John
+Thanks, eugene
