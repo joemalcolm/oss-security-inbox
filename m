@@ -1,26 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/02/4
-Message-ID: <20100902191759.5daa4517@redhat.com>
-Date: Thu, 2 Sep 2010 19:17:59 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/27/4
+Message-ID: <4BD68D09.9050803@redhat.com>
+Date: Tue, 27 Apr 2010 15:06:49 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: dan.j.rosenberg@...il.com, coley@...us.mitre.org
-Subject: Re: CVE id request: libc fortify source information disclosure
+CC: Eren Türkay <eren@...dus.org.tr>
+Subject: Re: CVE request: kernel: tty: release_one_tty() forgets to put pids
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 2 Sep 2010 12:23:23 -0400 Dan Rosenberg wrote:
+On 04/27/2010 02:45 PM, Eren Türkay wrote:
+> On Thu, Apr 15, 2010 at 08:44:53AM +0800, Eugene Teo wrote:
+>> pgrp member in struct tty_struct was converted to struct pid in
+>> commit ab521dc0, so kernels of version v2.6.26-rc1 and above are
+>> affected by this.
+>
+> FYI. We use v2.6.25.20 in one of our products. As far as I see from
+> include/linux/tty.h in 2.6.25 archive that pgrp member in tty_struct is already converted
+> to "struct pid". I haven't checked the older kernel releases but this
+> issue exists in 2.6.25. It would be very helpful if someone checked
+> older kernel releases to correctly determine which releases are vulnerable.
 
-> > It seems the fix would need to remove all possibly-useful info from
-> > the error message.
-> 
-> The backtrace or memory map don't really contain any potentially
-> sensitive information that couldn't be obtained otherwise.  It's just
-> the reference to argv[0] (in glibc/debug/fortify_fail.c) that worries
-> me, because this can be directly influenced to cause a printout of
-> process memory.
+Happy to know that someone reads this :) You spotted a typo.
 
-In case of stack protector failed check, it's still an attempt to
-print-out info based on what's known to be (partially) corrupted.
+Upstream ab521dc0 was introduced in v2.6.21-rc1.
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+commit ab521dc0f8e117fd808d3e425216864d60390500
+Author: Eric W. Biederman <ebiederm@...ssion.com>
+Date:   Mon Feb 12 00:53:00 2007 -0800
+
+     [PATCH] tty: update the tty layer to work with struct pid
+[...]
+
+@@ -197,8 +197,8 @@ struct tty_struct {
+         struct mutex termios_mutex;
+         struct ktermios *termios, *termios_locked;
+         char name[64];
+-       int pgrp;
+-       int session;
++       struct pid *pgrp;
+
+Thanks, Eugene
