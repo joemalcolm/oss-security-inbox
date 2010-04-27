@@ -1,34 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/10/1
-Message-Id: <201004102010.34515.hanno@hboeck.de>
-Date: Sat, 10 Apr 2010 20:10:34 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: typo3 remote command execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/27/5
+Message-ID: <20100427064115.GA3739@dario.dodds.net>
+Date: Tue, 27 Apr 2010 07:41:15 +0100
+From: Steve Langasek <steve.langasek@...onical.com>
+To: Wouter Coekaerts <coekie@...si.org>
+Cc: Jamie Strandboge <jamie@...onical.com>, oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Re: CVE request: irssi 0.8.15
 Content-Type: text/plain; charset=utf-8
 
-http://typo3.org/teams/security/security-bulletins/typo3-sa-2010-008/
+Hi Wouter,
 
- The TYPO3 autoloader does not validate passed arguments.
+Thanks for your mail.
 
-You are not vulnerable if at least one of following conditions is met:
+On Mon, Apr 26, 2010 at 09:48:29PM +0200, Wouter Coekaerts wrote:
+> Irssi doesn't have any SSL proxy support. So at first sight, this
+> seemed like a bugfix for a non-existing feature. Looking at it again,
+> it seems worse.
 
-   1. You are using any other TYPO3 version than 4.3.0, 4.3.1 or 4.3.2 (+ 
-development releases of 4.4 branch).
-   2. You have at least one of following PHP configuration variables set to 
-"off": register_globals ("off" by default, advised to be "off" in TYPO3 
-Security Cookbook), allow_url_include ("off" by default) and allow_url_fopen 
-("on" by default)
-   3. You are using Suhosin and haven't put URL schemes in configuration 
-variable "suhosin.executor.include.whitelist".
+> There is not much explanation in the linked bug, so I'm making some
+> assumptions. Correct me if they're wrong.
+> What you can do in irssi, is configure a proxy, and then attempt to
+> connect to an SSL IRC server through that proxy. Unfortunately, irssi
+> currently can't do that, because there is a bug (not a vulnerability)
+> in irssi that in that case makes it send the configured "proxy_string"
+> encrypted in SSL instead of in plain text. This misbehaviour could be
+> used in an akward setup to connect to a proxy that requires SSL, by
+> pretending to connect to an SSL irc server. To do that you would have
+> to enable SSL when connecting to the server, even when it's not an SSL
+> server. By looking at the code, I suspect the patch is about making
+> that setup work without getting certificate checking errors. Is that
+> correct?
 
-Possible Impact: A crafted request to a vulnerable TYPO3 installation will 
-allow an attacker to load PHP code from an external server and to execute it 
-on the TYPO3 installation. 
+> Because it's more familiar, maybe it's more clear in the webbrowser
+> equivalent: it is like configuring an http proxy in your browser,
+> without saying that it requires SSL. Then you surf to
+> https://example.com, encrypting your connection to the proxy, but
+> letting the proxy get http://example.com.
+
+> It is intended behaviour in irssi that the certificate check fails
+> here. This patch makes that check pass. That means the proxy is kind
+> of always doing a MITM attack. The user is given the impression he is
+> securely connecting to an IRC server, but his actual IRC connection
+> (between proxy and irc server) is plain text.
+
+I would agree with you if IRC proxies were autoconfigured the way web
+browser proxies often are; in that case, that would clearly be a MITM
+problem.  In *this* case, the IRC proxy I'm connecting to has been
+painstakingly configured to provide SSL-encrypted proxying to the
+SSL-enforced IRC servers I use, and modulo this bug where any valid
+certificate might be substituted for my proxy's certificate, was working
+entirely as expected.
+
+Whether or not irssi "has SSL proxy support", I've been successfully using
+it with an SSL proxy for several years, precisely as I was intending to use
+it, with no security vulnerabilities inherent in my setup.  To have this
+stop working in response to a security update is unacceptable collateral
+damage - my only options then are to stop using a proxy, stop *securing* my
+proxy with SSL, or to stop using irssi.  These are not choices I should have
+to contend with in response to a security update.
+
 -- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+Steve Langasek                   Give me a lever long enough and a Free OS
+Debian Developer                   to set it on, and I can move the world.
+Ubuntu Developer                                    http://www.debian.org/
+slangasek@...ntu.com                                     vorlon@...ian.org
 
-http://schokokeks.org - professional webhosting
-
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (829 bytes)
