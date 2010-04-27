@@ -1,52 +1,153 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/09/3
-Message-ID: <4B968CD9.3060302@redhat.com>
-Date: Tue, 09 Mar 2010 19:00:57 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>, Kees Cook <kees@...ntu.com>
-CC: Brian Stafford <brian@...fford.uklinux.net>, oss-security <oss-security@...ts.openwall.com>, libesmtp@...fford.uklinux.net, security@...ntu.com
-Subject: Re: CVE Request: libesmtp does not check NULL bytes in commonName
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/27/7
+Message-ID: <20100427210659.GA23076@cream>
+Date: Tue, 27 Apr 2010 22:06:59 +0100
+From: Dan Poltawski <talktodan@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVS request - Moodle
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
+Hello,
 
-Kees Cook wrote:
-> Hello,
-> 
-> I just noticed that libesmtp does not appear to handle NULL-byte CNs, as
-> seen with the original browser-based issue:
-> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2408
-> 
-> Related to this are failures in wildcard handling:
->  http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=311191
-> and CN-specificity:
->  https://bugzilla.redhat.com/show_bug.cgi?id=510202
-> 
-> Though it may be a non-issue if TLS doesn't function at all:
->  http://bugs.gentoo.org/213066
+Version 1.9.8 of Moodle has been released, fixing multiple security issues
+requiring CVE identifiers.
 
-   any progress while assigning CVE ids for these issues?
+These are detailed on http://moodle.org/security/
 
-   From what I can tell, two should be enough:
-   a, libESMTP doesn't properly handle NULL character in Common Name
+==========================================
+MSA-10-0001: 
+Topic: Vulnerability in KSES text cleaning
+Severity: Major
+Versions affected: <1.8.12 and <1.9.8
+Reported by: Sam Marshall
+Issue no.: MDL-21026
+Solution: upgrade to 1.8.12 or 1.9.8
+Workaround: apply patch
+http://cvs.moodle.org/moodle/lib/weblib.php?r1=1.1349&r2=1.1350
+Description: Sam Marshall discovered a serious vulnerability in the KSES html
+text cleaning library that Moodle includes, please upgrade all sites in order
+to prevent XSS attacks from any registered user.
 
-     References:
-       http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2408
-       http://ioactive.com/pdfs/PKILayerCake.pdf (issue 2c)
+==========================================
+MSA-10-0002: 
+Topic: XSS vulnerabilty in the phpcas module
+Severity: Major (if using CAS)
+Versions affected: <1.8.12 and <1.9.8
+Reported by: Joachim Fritschi
+Issue no.: MDL-21802
+Solution: upgrade to 1.8.12 or 1.9.8
+Workaround: use CAS/Client.php from latest release
 
-   b, libESMTP's match_component() accepts two strings as equal
-      if they start equal but don't have equal length => cert forgery
+Description: We have backported a fix for a security problem fixed in recent
+version of PHP CAS client library -
+http://www.ja-sig.org/issues/browse/PHPCAS-52. The problem can be exploited
+only if CAS authentication is enabled and used on your site.
 
-     References:
-       http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=311191
+==========================================
+MSA-10-0003: 
+Topic: Disclosure of full user names
+Severity: Minor - privacy
+Versions affected: <1.8.12 and <1.9.8
+Reported by: Klaus Kirchner
+Issue no.: MDL-21830
+Solution: upgrade to 1.8.12 or 1.9.8
+Workaround: patch
+http://cvs.moodle.org/moodle/user/view.php?r1=1.168.2.28&r2=1.168.2.29
 
-   Kees, please correct me, if I omitted something.
+Description: Klaus Kirchner identified a problem in the course profile page
+which allowed ordinary users to find out names of other users - see
+http://moodle.org/mod/forum/discuss.php?d=145967 for more details.
 
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+==========================================
+MSA-10-0004: 
+Topic: Improved access control in course restore
+Severity: Minor
+Versions affected: and <1.9.8
+Reported by: multiple reporters
+Issue no.: MDL-16658, MDL-19233
+Solution: upgrade to 1.9.8
+Workaround: none
 
-> 
-> -Kees
-> 
+Description: The restoring of courses sometimes resulted in creation of new
+roles - that code should be now more reliable. Please note that all the users
+that are allowed to restore backup files must be trustworthy.
 
+==========================================
+MSA-10-0005: 
+Topic: Incorrect validation of forms data
+Severity: Critical
+Versions affected: <1.8.12 and <1.9.8
+Reported by: Sascha Herzog
+Issue no.: MDL-21767
+Solution: upgrade to 1.8.12 or 1.9.8
+Workaround: patch
+
+http://cvs.moodle.org/moodle/lib/form/selectgroups.php?r1=1.2.4.2&r2=1.2.4.3
+http://cvs.moodle.org/moodle/lib/form/select.php?r1=1.10.4.2&r2=1.10.4.3
+Description: Sascha Herzog discovered a SQL injection exploit in several
+forms, this was caused by incorrect data validation in some forms elements.
+
+==========================================
+MSA-10-0006: 
+Topic: SQL injection in Wiki module
+Severity: Critical
+Versions affected: <1.8.12 and <1.9.8
+Reported by: Matthew Slowe
+Issue no.: MDL-21818
+Solution: upgrade to 1.8.12 or 1.9.8
+Workaround: patch
+
+http://cvs.moodle.org/moodle/mod/wiki/view.php?r1=1.76.2.6&r2=1.76.2.7
+remove mod/wiki/* if wiki module not used
+Description: Matthew Slowe discovered that the data passed to add_to_log()
+function in wiki module is not sanitised properly, this could allow SQL
+injection type attacks if there are any instances of wiki in your courses.
+
+==========================================
+MSA-10-0007: 
+Topic: Reflective Cross Site Scripting (XSS) in the Moodle Global Search
+Engine
+Severity: Major (if global search enabled)
+Versions affected: <1.8.12 and <1.9.8
+Reported by: Sascha Herzog
+Issue no.: MDL-21649
+Solution: upgrade to 1.8.12 or 1.9.8
+Workaround: patch
+
+http://cvs.moodle.org/moodle/search/query.php?r1=1.16.2.10&r2=1.16.2.11
+Description: Sascha Herzog found a problem in the handling of user submitted
+data in global search forms. This problem is exploitable only when global
+search is enabled. Please note that the global search feature is still listed
+as experimental and is disabled by default.
+
+==========================================
+MSA-10-0008: 
+Topic: Persistent XSS when using Login-as feature
+Severity: Major 
+Versions affected: <1.8.12 and <1.9.8
+Reported by: Sascha Herzog
+Issue no.: MDL-21769
+Solution: upgrade to 1.8.12 or 1.9.8
+Workaround: see Version control tab in tracker issue
+
+Description: Users may trick admins into using the "Login as" feature to edit
+some existing posts which contain XSS exploit code.
+
+==========================================
+MSA-10-0009: 
+Topic: Session fixation prevention now turned on by default
+Severity: Major
+Versions affected: <1.8.12 and <1.9.8
+Reported by: Sascha Herzog
+Issue no.: MDL-21788
+Solution: turn on session id regeneration
+
+Description: Enabling of "Regenerate session id during login" setting is now
+strongly recommended for all production servers. It is now compatible with all
+official authentication plugins including mnet.
+
+thanks,
+
+Dan Poltawski
+
+Download attachment "signature.asc" of type "application/pgp-signature" (836 bytes)
