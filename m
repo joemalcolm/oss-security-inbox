@@ -1,31 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/19/4
-Message-ID: <1232983303.1004211282246302085.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 19 Aug 2010 15:31:42 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/27/2
+Message-ID: <4BD65137.5060106@redhat.com>
+Date: Tue, 27 Apr 2010 10:51:35 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - kernel: net sched memleak
+CC: coley@...us.mitre.org
+Subject: CVE request - kernel: find_keyring_by_name() can gain the freed keyring
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-2942
+Reported by Toshiyuki Okajima. find_keyring_by_name() can gain the 
+keyring which has been already freed. And then, its space (which is 
+gained by find_keyring_by_name()) is broken by accessing the freed 
+keyring as the available keyring:
 
-Thanks.
+1) If the space of the freed keyring is reallocated for other purpose 
+(ie. filp SLUB), the data of the filp object may be destroyed by the 
+user of the freed keyring. (SLUB configuration can share the freed space 
+with other same-size slabs.)
 
--- 
-    JB
+2) If the slab space of the freed keyring is released into the system, 
+the system panic may happen because accessing the space of the freed 
+keyring causes the page-fault.
 
+Example: (we can easily confirm this problem if CONFIG_SLUB is "y".)
+[1] with CONFIG_SLUB_DEBUG_ON
+While we are executing my reproducer (which is attached), we can notice 
+that the user of the freed keyring breaks its space:
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# ./reproducer &
+...
+# dmesg
+...
+=============================================================================
+BUG key_jar: Poison overwritten
+[...]
 
------ "Eugene Teo" <eugene@...hat.com> wrote:
+More info:
+http://www.gossamer-threads.com/lists/linux/kernel/1216391
+https://patchwork.kernel.org/patch/94038/
+https://bugzilla.redhat.com/show_bug.cgi?id=585094
 
-> http://patchwork.ozlabs.org/patch/61857/
-> https://bugzilla.redhat.com/show_bug.cgi?id=624903
-> 
-> Memory leak issue was found numerous functions in net/sched/act_*.c.
-> 
-> This was introduced since v2.6.9-rc2.
-> 
-> Thanks, Eugene
-> -- 
-> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i);
-> }
+Thanks, Eugene
