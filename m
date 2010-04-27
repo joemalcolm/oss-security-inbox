@@ -1,28 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/14/1
-Message-ID: <20100114005451.GA8494@lackof.org>
-Date: Wed, 13 Jan 2010 17:54:51 -0700
-From: dann frazier <dannf@...nf.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/27/3
+Message-ID: <20100427064538.GC8346@mutt-is-awesome>
+Date: Tue, 27 Apr 2010 09:45:39 +0300
+From: Eren Türkay <eren@...dus.org.tr>
 To: oss-security@...ts.openwall.com
-Cc: fwestphal@...aro.com, kaber@...sh.net
-Subject: CVE Request: kernel ebtables perm check
+Subject: Re: CVE request: kernel: tty: release_one_tty() forgets to put pids
 Content-Type: text/plain; charset=utf-8
 
-Has a CVE been assigned for this issue yet?
+On Thu, Apr 15, 2010 at 08:44:53AM +0800, Eugene Teo wrote:
+> pgrp member in struct tty_struct was converted to struct pid in
+> commit ab521dc0, so kernels of version v2.6.26-rc1 and above are
+> affected by this.
 
-commit dce766af541f6605fa9889892c0280bab31c66ab
-Author: Florian Westphal <fwestphal@...aro.com>
-Date:   Fri Jan 8 17:31:24 2010 +0100
+FYI. We use v2.6.25.20 in one of our products. As far as I see from
+include/linux/tty.h in 2.6.25 archive that pgrp member in tty_struct is already converted
+to "struct pid". I haven't checked the older kernel releases but this
+issue exists in 2.6.25. It would be very helpful if someone checked
+older kernel releases to correctly determine which releases are vulnerable.
 
-    netfilter: ebtables: enforce CAP_NET_ADMIN
-    
-    normal users are currently allowed to set/modify ebtables rules.
-    Restrict it to processes with CAP_NET_ADMIN.
-    
-    Note that this cannot be reproduced with unmodified ebtables
-    binary
-    because it uses SOCK_RAW.
-    
-    Signed-off-by: Florian Westphal <fwestphal@...aro.com>
-    Cc: stable@...nel.org
-    Signed-off-by: Patrick McHardy <kaber@...sh.net>
+Regards,
+Eren
