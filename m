@@ -1,47 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/12/3
-Message-ID: <1323589670.598711271101294314.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 12 Apr 2010 15:41:34 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/28/3
+Message-ID: <1626485214.2005361272413617045.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 27 Apr 2010 20:13:37 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: irssi 0.8.15
+Cc: soc@...cert.gov, cert@...ora.fi, websecurity@...appsec.org, owasp-helsinki@...ts.owasp.org, cert@...t.org, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: wafp insecure temporary directory
 Content-Type: text/plain; charset=utf-8
 
 
------ "Tobias Heinlein" <keytoaster@...too.org> wrote:
+----- "Henri Salo" <henri@...v.fi> wrote:
 
-> Not sure if everyone has seen this yet:
+> Wafp creates a temporary directory to predictable path and name. This
+> allows a local attacker to create a denial of service condition and
+> discloses sensitive information to unprivileged users. This also reduces
+> usability of this software, because one can't run more than one wafp-
+> instances at the same time. This issue can also be leveraged to delete
+> arbitrary files or directories via a symlink attack.
 > 
-> http://irssi.org/
+> I notified the project:
+> http://code.google.com/p/webapplicationfingerprinter/issues/detail?id=8
 > 
-> "This release fixes two security issues: The first being that Irssi
-> didn't check hostname on SSL connections and the other being a hard
-> to
-> exploit remote crash bug."
+> Can I get CVE-identifier for this issue?
 > 
-> Some further information can be found in the ChangeLog:
-> http://irssi.org/news/ChangeLog
 
-This is a bit more than what it appears.
+Please use CVE-2010-1438.
 
-The SSL commit is here:
-http://github.com/ensc/irssi-proxy/commit/85bbc05b21678e80423815d2ef1dfe26208491ab
-
->From reading the code it really fixes two things.
-
-It fixes the old "does not properly handle a '\0' character in a domain
-name in the subject's Common Name (CN) field" flaw, plus also verifies that
-the server being connected to is the one listed in the certificate.
-
-Let's assign these as such:
-CVE-2010-1154 irssi 0.8.15 /0 in CN field
-CVE-2010-1155 irssi 0.8.15 certificate host validation
-
-The crash bits mentioned in the changelog are very ambiguous. The git tree
-isn't any more clear than that. There appear to be two crashes, both sound
-like NULL pointer dereferences that cannot be triggered by an attacker. If
-I'm wrong, please speak up.
+Thanks.
 
 -- 
     JB
