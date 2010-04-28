@@ -1,24 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/21/7
-Message-ID: <20100721173923.GA31430@ngolde.de>
-Date: Wed, 21 Jul 2010 19:39:26 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/28/4
+Message-ID: <233913361.2123201272486507567.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 28 Apr 2010 16:28:27 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: mapserver
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: VLC <1.0.6 Multiple issues
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-two security issues have been disclosed in mapserver which need CVE ids:
+----- "Alex Legler" <a3li@...too.org> wrote:
+> 
+> VLC media player suffers from various vulnerabilities when attempting
+> to parse malformatted or overly long byte streams.
+> 
+> * Heap buffer overflow vulnerability in A/52, DTS and MPEG Audio
+>   decoders
+> * Invalid memory access in AVI, ASF, Matroska (MKV)
+>   demuxers 
+> * Invalid memory access in XSPF playlist parser
+> * Inavlid memory access in ZIP archive decompressor
+> * Heap buffer overflow in RTMP access
+> 
+> http://www.videolan.org/security/sa1003.html
+> 
 
-http://trac.osgeo.org/mapserver/ticket/3484
-http://trac.osgeo.org/mapserver/ticket/3485
+I'm going to trust the upstream advisory regarding version information, so
+here goes:
 
-Can anyone please allocate two ids?
+The affected versions are VLC media player 1.0.5 down to 0.5.0
+This is fixed in version 1.0.6 and 1.1.0
 
-Cheers
-Nico
+The flaws appear to be split based on where in the vlc source they occur.
+I'm going to keep the upstream mapping for CVE ids, as it's possible
+certain other project will have cherry picked the source.
+
+CVE-2010-1441 VLC Heap buffer overflow in A/52, DTS and MPEG Audio decoders
+CVE-2010-1442 VLC Invalid memory access in AVI, ASF, Matroska (MKV) demuxers
+CVE-2010-1443 VLC Invalid memory access in XSPF playlist parser
+CVE-2010-1444 VLC Inavlid memory access in ZIP archive decompressor
+CVE-2010-1445 VLC Heap buffer overflow in RTMP access
+
+Thanks
+
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+    JB
