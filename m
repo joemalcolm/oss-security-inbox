@@ -1,21 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/17/5
-Message-Id: <201009171419.04671.hanno@hboeck.de>
-Date: Fri, 17 Sep 2010 14:19:03 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/28/1
+Message-ID: <1601861696.2004901272413366763.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 27 Apr 2010 20:09:26 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: epiphany not checking ssl certs
+Cc: coley@...us.mitre.org
+Subject: Re: CVE request - gfs2 kernel issue
 Content-Type: text/plain; charset=utf-8
 
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=564690
-http://blog.fefe.de/?ts=b26ca29d
+Please use CVE-2010-1436
 
-Did this get a CVE yet?
+Thanks.
 
 -- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+    JB
 
-http://schokokeks.org - professional webhosting
 
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+----- "Eugene Teo" <eugene@...hat.com> wrote:
+
+> When a struct gfs2_quota straddles a page boundary, the two pages 
+> required to write out the complete quota were not being updated. 
+> Instead, the first page was being written beyond its end. This buffer
+> 
+> overflow can cause a kernel panic. Since only the value field in
+> struct 
+> gfs2_quota needs to be updated and it's a 64-bit quantity that doesn't
+> 
+> ever straddle a page boundary by itself, we can seek to the proper
+> page 
+> where this value lies and write to it.
+> 
+> Steps to reproduce:
+> https://bugzilla.redhat.com/show_bug.cgi?id=586006
+> 
+> My colleague will be posting the patch for the upstream kernel soon.
+> 
+> Thanks, eugene
