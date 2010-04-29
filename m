@@ -1,27 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/31/6
-Message-ID: <AANLkTinp-R7fsC1SfFpHTMir9swqR9hPVd1LaXcQon3z@mail.gmail.com>
-Date: Fri, 31 Dec 2010 15:13:44 -0500
-From: Anthon Pang <anthon.pang@...il.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: OpenWebAnalytics < 1.2.4 - remote/local file inclusion vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/29/2
+Message-ID: <4BD8E8F0.1090502@windriver.com>
+Date: Thu, 29 Apr 2010 10:03:28 +0800
+From: Hui Zhu <hui.zhu@...driver.com>
+To: oss-security@...ts.openwall.com
+CC: coley@...us.mitre.org, ZhangXiao <xiao.zhang@...driver.com>, eugeneteo@...nel.sg
+Subject: Re: CVE-2010-1173 kernel: skb_over_panic resulting from multiple invalid parameter errors
 Content-Type: text/plain; charset=utf-8
 
-Request withdrawn.  @OSVDB pointed me to CVE 2010-2677.
+Eugene Teo:
+> https://bugzilla.redhat.com/CVE-2010-1173
+> http://article.gmane.org/gmane.linux.network/159531
+> 
+> Reported by Chris Guo from Nokia China via Red Hat Support. A similar
+> issue was reported by Jukka Taimisto and Olli Jarva from Codenomicon Ltd
+> via CERT-FI. This was also reported by Windriver on behalf of their
+> customer via vendor-sec.
+> 
+> Kernel crash occurs if sctp listening port receives malformatted init
+> package.
+> 
+> Its an skb_over_panic BUG halt that results from processing an init
+> chunk in which too many of its variable length parameters are in some
+> way malformed.
+> 
+> The problem is in sctp_process_unk_param:
+> if (NULL == *errp)
+>  *errp = sctp_make_op_error_space(asoc, chunk,
+>       ntohs(chunk->chunk_hdr->length));
+> 
+>  if (*errp) {
+>   sctp_init_cause(*errp, SCTP_ERROR_UNKNOWN_PARAM,
+>      WORD_ROUND(ntohs(param.p->length)));
+>   sctp_addto_chunk(*errp,
+>    WORD_ROUND(ntohs(param.p->length)),
+>       param.v);
+> 
+> When we allocate an error chunk, we assume that the worst case scenario
+> requires that we have chunk_hdr->length data allocated, which would be
+> correct nominally, given that we call sctp_addto_chunk for the violating
+> parameter. Unfortunately, we also, in sctp_init_cause insert a
+> sctp_errhdr_t structure into the error chunk, so the worst case
+> situation in which all parameters are in violation requires
+> chunk_hdr->length+(sizeof(sctp_errhdr_t)*param_count) bytes of data.
+> 
+> This fix solves the problem by allowing our implementation to only
+> report a fixed number of errors.  When we encounter an error in
+> parameter processing we allocate a chunk that is min(asoc->pathmtu,
+> SCTP_DEFAULT_MAXSEGMENT), limiting our error reporting to a single mtu
+> sized chunk.  Parameter errors that grow beyond that value are discarded.
+> 
+> Thanks, Eugene
+> 
 
-On Fri, Dec 31, 2010 at 12:28 AM, Anthon Pang <anthon.pang@...il.com> wrote:
-> I was searching OSVDB, and I see this one wasn't reported (and
-> presumably, not assigned a CVE).
->
-> Versions of OpenWebAnalytics prior to 1.2.4 are vulnerable to a
-> remote/local file inclusion attack.
->
-> OWA 1.2.4 was released March, 28, 2010
->
-> Vendor release announcement:  http://www.openwebanalytics.com/?p=87
->
-> Commits:
-> - http://trac.openwebanalytics.com/changeset/847/trunk/owa_coreAPI.php
-> - http://trac.openwebanalytics.com/changeset/847/trunk/owa_lib.php
-> - http://trac.openwebanalytics.com/changeset/847/trunk/owa_requestContainer.php
->
+Add Xiao to CC list.
+
+Hui
