@@ -1,36 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/07/3
-Message-ID: <20100107220528.GM7032@hall.aurel32.net>
-Date: Thu, 7 Jan 2010 23:05:28 +0100
-From: Aurelien Jarno <aurelien@...el32.net>
-To: oss-security@...ts.openwall.com
-Cc: Christoph Pleger <Christoph.Pleger@...tu-dortmund.de>
-Subject: CVE id request: GNU libc: NIS shadow password leakage
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/29/7
+Message-ID: <4BD9B2BC.4090404@windriver.com>
+Date: Thu, 29 Apr 2010 11:24:28 -0500
+From: Mark Hatle <mark.hatle@...driver.com>
+To: Eugene Teo <eugene@...hat.com>
+CC: oss-security@...ts.openwall.com, "Zhu, Hui" <hui.zhu@...driver.com>, "Gortmaker, Paul" <paul.gortmaker@...driver.com>, +security-linux <security-linux@...driver.com>, "Wessel, Jason" <jason.wessel@...driver.com>, "Wu, Fei" <fei.wu@...driver.com>
+Subject: Re: [security-linux] Re: CVE request - Linux Kernel KGDB/ppc issue
 Content-Type: text/plain; charset=utf-8
 
-Hi oss-sec,
+Eugene Teo wrote:
+> On 04/29/2010 10:13 AM, Hui Zhu wrote:
+>> Hi All,
+>>
+>> The problem is that if KGDB is enabled on a powerpc board, a
+>> test that checks if a page is user or kernel is bypassed.
+>> This means that a user can write to arbitrary kernel address space.
+>>
+>> Upon further investigation, we found that kernels older than
+>> the v2.6.30-rc1 release have the same problem for non-booke
+>> ppc chips (74xx, 8641D), so we need two patches for kernels
+>> up to that date, and then one patch for ones after that date.
 
-Christoph Pleger has reported through the Debian bug tracker [1] that
-non-priviledged users can read NIS shadow password entries simply
-using getpwnam() when nscd is in use.
+I'm sorry. This was a mistake on our part. We had intended to send the
+information to vendor-sec and coordinate with other potentially affected
+vendors. Then once a reasonable coordinated time had passed to send it to
+security@...nel.org as well as oss-security and lkml.
 
-The issue has already been reported upstream [2], and a proposed patch
-is available on [3].
+Our standard procedure:
 
-It seems that all GNU libc versions are affected, including derivatives
-like EGLIBC.
+* contact vendor-sec and coordinate with other affected vendors
+* send the information to the project specific security list
+* once public send the information to:
+    * oss-security@...ts.openwall.com
+    * other appropriate public project list(s)
 
-Could we please get a CVE id for this issue?
+Mark Hatle
+Linux Security Incident Lead
+Wind River Systems
 
-Thanks,
-Aurelien
+> Hi Hui,
+> 
+> Just FYI, oss-security is a public mailing list. I noticed you have 
+> already cc'ed the KGDB maintainer. If you are trying to report a kernel 
+> security issue that is neither fixed not disclosed previously AFAIK, you 
+> might want to try CC'ing security@...nel.org and LKML. Drop LKML if you 
+> want to keep it private for a short period of time.
+> 
+> Thanks, Eugene
 
-[1] http://bugs.debian.org/560333
-[2] http://sourceware.org/bugzilla/show_bug.cgi?id=11134
-[3] http://svn.debian.org/viewsvn/pkg-glibc/glibc-package/trunk/debian/patches/any/submitted-nis-shadow.diff?revision=4062&view=markup
 
--- 
-Aurelien Jarno	                        GPG: 1024D/F1BCDB73
-aurelien@...el32.net                 http://www.aurel32.net
-
-Download attachment "signature.asc" of type "application/pgp-signature" (190 bytes)
