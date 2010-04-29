@@ -1,30 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/30/5
-Message-ID: <4C2B12B2.2030702@kernel.sg>
-Date: Wed, 30 Jun 2010 17:47:30 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/29/4
+Message-ID: <4BD8F280.5050601@redhat.com>
+Date: Thu, 29 Apr 2010 10:44:16 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: akuster <akuster@...sta.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - kernel: cifs: Fix a kernel BUG with remote OS/2 server
+CC: Hui Zhu <hui.zhu@...driver.com>, Paul Gortmaker <paul.gortmaker@...driver.com>, +security-linux <security-linux@...driver.com>, "Wessel, Jason" <jason.wessel@...driver.com>, Wu Fei <fei.wu@...driver.com>
+Subject: Re: CVE request - Linux Kernel KGDB/ppc issue
 Content-Type: text/plain; charset=utf-8
 
-On 06/30/2010 02:43 PM, akuster wrote:
-> On 06/29/2010 02:02 PM, Eugene Teo wrote:
->> On 06/30/2010 12:57 AM, akuster wrote:
->>> pSMBr->CountHigh looks to have been introduce by commit
->>> 381a420f5b23cedd9e166e052a93a7f4237bd57c back in 2.6.12-rc2.
+On 04/29/2010 10:13 AM, Hui Zhu wrote:
+> Hi All,
+>
+> The problem is that if KGDB is enabled on a powerpc board, a
+> test that checks if a page is user or kernel is bypassed.
+> This means that a user can write to arbitrary kernel address space.
+>
+> Upon further investigation, we found that kernels older than
+> the v2.6.30-rc1 release have the same problem for non-booke
+> ppc chips (74xx, 8641D), so we need two patches for kernels
+> up to that date, and then one patch for ones after that date.
 
-2.6.12-rc1.
+Hi Hui,
 
->>> So would it be said this issue has been around since then?
-
-Yes.
-
->> ->CountHigh was added long ago. Even v2.6.9 (rhel-4) is affected.
-> I don't see that in our 2.6.10 tree.
-
-Correction, we backported patches that introduced that in rhel-4.
+Just FYI, oss-security is a public mailing list. I noticed you have 
+already cc'ed the KGDB maintainer. If you are trying to report a kernel 
+security issue that is neither fixed not disclosed previously AFAIK, you 
+might want to try CC'ing security@...nel.org and LKML. Drop LKML if you 
+want to keep it private for a short period of time.
 
 Thanks, Eugene
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
