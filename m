@@ -1,23 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/12/1
-Message-ID: <4CDCCC12.2040608@redhat.com>
-Date: Fri, 12 Nov 2010 13:09:38 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/29/9
+Message-ID: <341959897.50621272569017321.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 29 Apr 2010 15:23:37 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: possible kernel oops from user MSS
+Cc: Paul Gortmaker <paul.gortmaker@...driver.com>, +security-linux <security-linux@...driver.com>, Jason Wessel <jason.wessel@...driver.com>, Wu Fei <fei.wu@...driver.com>, coley <coley@...re.org>
+Subject: Re: CVE request - Linux Kernel KGDB/ppc issue
 Content-Type: text/plain; charset=utf-8
 
-With commit f5fff5dc8a7a3f395b0525c02ba92c95d42b7390, a user program
-can pass in TCP_MAXSEG of 12 (or TCPOLEN_TSTAMP_ALIGNED), and cause
-kernel oops with division by 0 in tcp_select_initial_window.
+Please use CVE-2010-1446 for this.
 
-Proposed patch:
-http://www.spinics.net/lists/netdev/msg146495.html
+Thanks
 
-Reference:
-http://www.spinics.net/lists/netdev/msg146405.html
-
-Thanks, Eugene
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+    JB
+
+
+----- "Hui Zhu" <hui.zhu@...driver.com> wrote:
+
+> Hi All,
+> 
+> The problem is that if KGDB is enabled on a powerpc board, a
+> test that checks if a page is user or kernel is bypassed.
+> This means that a user can write to arbitrary kernel address space.
+> 
+> Upon further investigation, we found that kernels older than
+> the v2.6.30-rc1 release have the same problem for non-booke
+> ppc chips (74xx, 8641D), so we need two patches for kernels
+> up to that date, and then one patch for ones after that date.
+> 
+> Thanks,
+> Hui
