@@ -1,41 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/09/3
-Message-Id: <201004091030.20193.ludwig.nussel@suse.de>
-Date: Fri, 9 Apr 2010 10:30:19 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/29/3
+Message-ID: <4BD8EB3E.1020809@windriver.com>
+Date: Thu, 29 Apr 2010 10:13:18 +0800
+From: Hui Zhu <hui.zhu@...driver.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: ClamAV small issues
+CC: Paul Gortmaker <paul.gortmaker@...driver.com>, +security-linux <security-linux@...driver.com>, "Wessel, Jason" <jason.wessel@...driver.com>, Wu Fei <fei.wu@...driver.com>
+Subject: CVE request - Linux Kernel KGDB/ppc issue
 Content-Type: text/plain; charset=utf-8
 
-Kurt Seifried wrote:
-> On Wed, Apr 7, 2010 at 6:02 PM, Josh Bressers <bressers@...hat.com> wrote:
-> > These are certainly worth of CVE ids, but it's going to be tricky, as the
-> > first issue is a couple of things as seen in the bug:
-> > https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1826
-> >
-> > I'm going to defer this assignment to MITRE (added Steve Christey to the CC).
-> >
-> > Thanks.
-> 
-> This already appears to have a CVE, fromt he bug report:
-> 
-> ReversingLabs Corp approached CERT-FI about detection evasion attacks found in
-> many Antivirus software and other signature-based protection software. In
-> short, the case is related to falures when parsing archive formats.
-> ?ReversingLabs Corp has crafted 15 ZIP, CAB, 7Z and RAR archive files that are
-> considered valid by the relevant decompressors, but signature based detection
-> systems cannot detect malicious content contained within them.
+Hi All,
 
-Do such issues really need to be flagged as vulnerabilities? A virus
-scanner cannot detect all possible malware in any possible container
-anyways. So it's kind of natural that new releases enhance the
-methods to find even more hiding places.
+The problem is that if KGDB is enabled on a powerpc board, a
+test that checks if a page is user or kernel is bypassed.
+This means that a user can write to arbitrary kernel address space.
 
-cu
-Ludwig
+Upon further investigation, we found that kernels older than
+the v2.6.30-rc1 release have the same problem for non-booke
+ppc chips (74xx, 8641D), so we need two patches for kernels
+up to that date, and then one patch for ones after that date.
 
--- 
- (o_   Ludwig Nussel
- //\   
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+Thanks,
+Hui
+
+
+View attachment "0001-kgdb-don-t-needlessly-skip-PAGE_USER-test-for-Fsl-bo.patch" of type "text/x-diff" (1448 bytes)
+
+View attachment "0002-kgdb-don-t-needlessly-skip-PAGE_USER-test.patch" of type "text/x-diff" (1439 bytes)
