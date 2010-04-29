@@ -1,52 +1,185 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/08/12
-Message-ID: <20101108193332.GA4394@albatros>
-Date: Mon, 8 Nov 2010 22:33:32 +0300
-From: Vasiliy Kulikov <segoon@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/29/8
+Message-ID: <1858932580.48201272567999679.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 29 Apr 2010 15:06:39 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel proactive security hardening
+Cc: coley <coley@...re.org>
+Subject: Re: CVS request - Moodle
 Content-Type: text/plain; charset=utf-8
 
-Solar,
+Hi Steve,
 
-On Mon, Nov 08, 2010 at 08:48 +0300, Solar Designer wrote:
-> 2. We could turn all function-local non-static definitions of:
-> 
-> struct x y;
-> 
-> into:
-> 
-> struct x y = {};
-> 
-> We could do this by pre-processing the source files
+I don't have enough IDs to properly deal with this one and have any left over.
+Can MITRE take it.
 
-With coccinelle it is trivial:
-
-@@
-identifier T, x, f;
-@@
-
-f(...)
-{
- ...
- struct T x
-+ = {}
- ;
- ...
-}
-
-However, I don't think that all linux maintainers would be happy with
-this.
-
-> or with a patch to
-> gcc (introduce a command-line option to assume empty initializers for
-> all on-stack structs).
-
-IMO much better solution - instead of many MB trivial patch have small
-gcc patch.
-
-
-Thanks,
+Thanks.
 
 -- 
-Vasiliy
+    JB
+
+
+----- "Dan Poltawski" <talktodan@...il.com> wrote:
+
+> Hello,
+> 
+> Version 1.9.8 of Moodle has been released, fixing multiple security
+> issues
+> requiring CVE identifiers.
+> 
+> These are detailed on http://moodle.org/security/
+> 
+> ==========================================
+> MSA-10-0001: 
+> Topic: Vulnerability in KSES text cleaning
+> Severity: Major
+> Versions affected: <1.8.12 and <1.9.8
+> Reported by: Sam Marshall
+> Issue no.: MDL-21026
+> Solution: upgrade to 1.8.12 or 1.9.8
+> Workaround: apply patch
+> http://cvs.moodle.org/moodle/lib/weblib.php?r1=1.1349&r2=1.1350
+> Description: Sam Marshall discovered a serious vulnerability in the
+> KSES html
+> text cleaning library that Moodle includes, please upgrade all sites
+> in order
+> to prevent XSS attacks from any registered user.
+> 
+> ==========================================
+> MSA-10-0002: 
+> Topic: XSS vulnerabilty in the phpcas module
+> Severity: Major (if using CAS)
+> Versions affected: <1.8.12 and <1.9.8
+> Reported by: Joachim Fritschi
+> Issue no.: MDL-21802
+> Solution: upgrade to 1.8.12 or 1.9.8
+> Workaround: use CAS/Client.php from latest release
+> 
+> Description: We have backported a fix for a security problem fixed in
+> recent
+> version of PHP CAS client library -
+> http://www.ja-sig.org/issues/browse/PHPCAS-52. The problem can be
+> exploited
+> only if CAS authentication is enabled and used on your site.
+> 
+> ==========================================
+> MSA-10-0003: 
+> Topic: Disclosure of full user names
+> Severity: Minor - privacy
+> Versions affected: <1.8.12 and <1.9.8
+> Reported by: Klaus Kirchner
+> Issue no.: MDL-21830
+> Solution: upgrade to 1.8.12 or 1.9.8
+> Workaround: patch
+> http://cvs.moodle.org/moodle/user/view.php?r1=1.168.2.28&r2=1.168.2.29
+> 
+> Description: Klaus Kirchner identified a problem in the course profile
+> page
+> which allowed ordinary users to find out names of other users - see
+> http://moodle.org/mod/forum/discuss.php?d=145967 for more details.
+> 
+> ==========================================
+> MSA-10-0004: 
+> Topic: Improved access control in course restore
+> Severity: Minor
+> Versions affected: and <1.9.8
+> Reported by: multiple reporters
+> Issue no.: MDL-16658, MDL-19233
+> Solution: upgrade to 1.9.8
+> Workaround: none
+> 
+> Description: The restoring of courses sometimes resulted in creation
+> of new
+> roles - that code should be now more reliable. Please note that all
+> the users
+> that are allowed to restore backup files must be trustworthy.
+> 
+> ==========================================
+> MSA-10-0005: 
+> Topic: Incorrect validation of forms data
+> Severity: Critical
+> Versions affected: <1.8.12 and <1.9.8
+> Reported by: Sascha Herzog
+> Issue no.: MDL-21767
+> Solution: upgrade to 1.8.12 or 1.9.8
+> Workaround: patch
+> 
+> http://cvs.moodle.org/moodle/lib/form/selectgroups.php?r1=1.2.4.2&r2=1.2.4.3
+> http://cvs.moodle.org/moodle/lib/form/select.php?r1=1.10.4.2&r2=1.10.4.3
+> Description: Sascha Herzog discovered a SQL injection exploit in
+> several
+> forms, this was caused by incorrect data validation in some forms
+> elements.
+> 
+> ==========================================
+> MSA-10-0006: 
+> Topic: SQL injection in Wiki module
+> Severity: Critical
+> Versions affected: <1.8.12 and <1.9.8
+> Reported by: Matthew Slowe
+> Issue no.: MDL-21818
+> Solution: upgrade to 1.8.12 or 1.9.8
+> Workaround: patch
+> 
+> http://cvs.moodle.org/moodle/mod/wiki/view.php?r1=1.76.2.6&r2=1.76.2.7
+> remove mod/wiki/* if wiki module not used
+> Description: Matthew Slowe discovered that the data passed to
+> add_to_log()
+> function in wiki module is not sanitised properly, this could allow
+> SQL
+> injection type attacks if there are any instances of wiki in your
+> courses.
+> 
+> ==========================================
+> MSA-10-0007: 
+> Topic: Reflective Cross Site Scripting (XSS) in the Moodle Global
+> Search
+> Engine
+> Severity: Major (if global search enabled)
+> Versions affected: <1.8.12 and <1.9.8
+> Reported by: Sascha Herzog
+> Issue no.: MDL-21649
+> Solution: upgrade to 1.8.12 or 1.9.8
+> Workaround: patch
+> 
+> http://cvs.moodle.org/moodle/search/query.php?r1=1.16.2.10&r2=1.16.2.11
+> Description: Sascha Herzog found a problem in the handling of user
+> submitted
+> data in global search forms. This problem is exploitable only when
+> global
+> search is enabled. Please note that the global search feature is still
+> listed
+> as experimental and is disabled by default.
+> 
+> ==========================================
+> MSA-10-0008: 
+> Topic: Persistent XSS when using Login-as feature
+> Severity: Major 
+> Versions affected: <1.8.12 and <1.9.8
+> Reported by: Sascha Herzog
+> Issue no.: MDL-21769
+> Solution: upgrade to 1.8.12 or 1.9.8
+> Workaround: see Version control tab in tracker issue
+> 
+> Description: Users may trick admins into using the "Login as" feature
+> to edit
+> some existing posts which contain XSS exploit code.
+> 
+> ==========================================
+> MSA-10-0009: 
+> Topic: Session fixation prevention now turned on by default
+> Severity: Major
+> Versions affected: <1.8.12 and <1.9.8
+> Reported by: Sascha Herzog
+> Issue no.: MDL-21788
+> Solution: turn on session id regeneration
+> 
+> Description: Enabling of "Regenerate session id during login" setting
+> is now
+> strongly recommended for all production servers. It is now compatible
+> with all
+> official authentication plugins including mnet.
+> 
+> thanks,
+> 
+> Dan Poltawski
