@@ -1,28 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/14/9
-Message-Id: <20100914193331.DB434403E8@magilla.sf.frob.com>
-Date: Tue, 14 Sep 2010 12:33:31 -0700 (PDT)
-From: Roland McGrath <roland@...hat.com>
-To: pageexec@...email.hu
-Cc: Linus Torvalds <torvalds@...ux-foundation.org>, Andrew Morton <akpm@...ux-foundation.org>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Kees Cook <kees.cook@...onical.com>, Al Viro <viro@...iv.linux.org.uk>, Oleg Nesterov <oleg@...hat.com>, KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, Brad Spengler <spender@...ecurity.net>, Eugene Teo <eugene@...hat.com>
-Subject: Re: [PATCH 1/3] setup_arg_pages: diagnose excessive argument size
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/29/6
+Message-ID: <4BD8FAF9.6000400@redhat.com>
+Date: Thu, 29 Apr 2010 11:20:25 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Hui Zhu <hui.zhu@...driver.com>, coley@...us.mitre.org, ZhangXiao <xiao.zhang@...driver.com>, Neil Horman <nhorman@...hat.com>, "J. McNicoll" <jeremy.mcnicoll@...driver.com>, "Ashfield, Bruce" <Bruce.Ashfield@...driver.com>, "Tao, Yue" <Yue.Tao@...driver.com>, "Borman, David" <david.borman@...driver.com>, "Fluckey, Adam" <Adam.Fluckey@...driver.com>, "Xiong, Wei" <Wei.Xiong@...driver.com>, Paul Gortmaker <paul.gortmaker@...driver.com>
+Subject: Re: CVE-2010-1173 kernel: skb_over_panic resulting from multiple invalid parameter errors
 Content-Type: text/plain; charset=utf-8
 
-Readability and obviousness are in the eye of the beholder.   
-Linus has merged my patches, so this crash is now fixed.  
-As I said before, you should by all means send further clean-up
-patches if you think they are improvements.
+On 04/29/2010 10:58 AM, Hui Zhu wrote:
+> Eugene Teo:
+>> https://bugzilla.redhat.com/CVE-2010-1173
+>> http://article.gmane.org/gmane.linux.network/159531
+>>
+>> Reported by Chris Guo from Nokia China via Red Hat Support. A similar
+>> issue was reported by Jukka Taimisto and Olli Jarva from Codenomicon Ltd
+>> via CERT-FI. This was also reported by Windriver on behalf of their
+>> customer via vendor-sec.
+>>
+>> Kernel crash occurs if sctp listening port receives malformatted init
+>> package.
+>>
+>> Its an skb_over_panic BUG halt that results from processing an init
+>> chunk in which too many of its variable length parameters are in some
+>> way malformed.
+>>
+>> The problem is in sctp_process_unk_param:
+>> if (NULL == *errp)
+>>   *errp = sctp_make_op_error_space(asoc, chunk,
+>>        ntohs(chunk->chunk_hdr->length));
+>>
+>>   if (*errp) {
+>>    sctp_init_cause(*errp, SCTP_ERROR_UNKNOWN_PARAM,
+>>       WORD_ROUND(ntohs(param.p->length)));
+>>    sctp_addto_chunk(*errp,
+>>     WORD_ROUND(ntohs(param.p->length)),
+>>        param.v);
+>>
+>> When we allocate an error chunk, we assume that the worst case scenario
+>> requires that we have chunk_hdr->length data allocated, which would be
+>> correct nominally, given that we call sctp_addto_chunk for the violating
+>> parameter. Unfortunately, we also, in sctp_init_cause insert a
+>> sctp_errhdr_t structure into the error chunk, so the worst case
+>> situation in which all parameters are in violation requires
+>> chunk_hdr->length+(sizeof(sctp_errhdr_t)*param_count) bytes of data.
+>>
+>> This fix solves the problem by allowing our implementation to only
+>> report a fixed number of errors.  When we encounter an error in
+>> parameter processing we allocate a chunk that is min(asoc->pathmtu,
+>> SCTP_DEFAULT_MAXSEGMENT), limiting our error reporting to a single mtu
+>> sized chunk.  Parameter errors that grow beyond that value are discarded.
+>>
+>> Thanks, Eugene
+>>
+>
+> Forward a mail of my workmate:
+>
+> Make a larger chunk is acceptable but for common communication case, the original one is fine enough. And I don't think it is necessary to make such a big chunk. In fact, in worst case, a *double* sized chunk is large enough to hold all necessary data. So, if we have to use the larger chunk than original, we shoudl use min(double of chunk hdr length, asoc->pathmtu, SCTP_DEFAULT_MAXSEGMENT).
+>
+> For other part of that patch, I think:
+> -) A logical issue related to function "sctp_init_cause_fixed". Even if it finds the space is not enough and return "-ENOSPC", "sctp_addto_chunk_fixed" will still be spawned to add error param data in the error report chunk.
+>
+> -) As I understand, every error report should has two part: head and data. So if the chunk doesn't have enough space to hold it, both of them should be discarded. So in WINDRIVER patch that ZhuHui released out, there are only one space check for the whole error report sapce: head + data. But with this patch, it may just report the error data without head.
+>
+> -) No use to check the "skb_tailroom" serially, for example in call trace "sctp_init_cause_fixed ->  sctp_addto_chunk_fixed". Here it just use the original actp_add_chunk is OK.
+>
+> -) Make function "sctp_init_cause_fixed", "sctp_addto_chunk_fixed" static inline;
 
-I have no special interest in this area.  I gave my opinions and
-advice because I was CC'd, and then submitted some patches myself
-because I was asked to.  I can't really keep track of all the
-formalities.  The CC list on my submissions represented the set
-of people I knew to be involved in the discussion.  I'm sorry if
-you felt slighted.  I just pay attention to the code, not the
-personalities.  The most reliable way to make sure your name is
-associated with a change is to submit patches yourself in a form
-that Linus wants to merge.
+Hi Hui,
 
+As I already mentioned, discussion of the patch should take place in 
+netdev. You might want to consider CC'ing security@...nel.org too. For a 
+start, this is not the right list for such a discussion. I don't even 
+see the maintainer for SCTP cc'ed to the email too. To make it easier 
+for you, feel free to follow-up from here: 
+http://article.gmane.org/gmane.linux.network/159531.
 
-Thanks,
-Roland
+Thanks, Eugene
