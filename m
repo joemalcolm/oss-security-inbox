@@ -1,22 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/23/1
-Message-ID: <4BA82959.7010703@kernel.sg>
-Date: Tue, 23 Mar 2010 10:37:13 +0800
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/29/1
+Message-ID: <4BD8DC25.4080800@kernel.sg>
+Date: Thu, 29 Apr 2010 09:08:53 +0800
 From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
 CC: coley@...us.mitre.org
-Subject: CVE request: kernel: bluetooth: potential bad memory access with sysfs files
+Subject: CVE-2010-1173 kernel: skb_over_panic resulting from multiple invalid parameter errors
 Content-Type: text/plain; charset=utf-8
 
-When creating a high number of Bluetooth sockets (L2CAP, SCO and RFCOMM) 
-it is possible to scribble repeatedly on arbitrary pages of memory. 
-Ensure that the content of these sysfs files is always less than one 
-page. Even if this means truncating. The files in question are scheduled 
-to be moved over to debugfs in the future anyway.
+https://bugzilla.redhat.com/CVE-2010-1173
+http://article.gmane.org/gmane.linux.network/159531
 
-Upstream patch:
-http://git.kernel.org/linus/101545f6fef4a0a3ea8daf0b5b880df2c6a92a69
+Reported by Chris Guo from Nokia China via Red Hat Support. A similar 
+issue was reported by Jukka Taimisto and Olli Jarva from Codenomicon Ltd 
+via CERT-FI. This was also reported by Windriver on behalf of their 
+customer via vendor-sec.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=576018
+Kernel crash occurs if sctp listening port receives malformatted init 
+package.
+
+Its an skb_over_panic BUG halt that results from processing an init 
+chunk in which too many of its variable length parameters are in some 
+way malformed.
+
+The problem is in sctp_process_unk_param:
+if (NULL == *errp)
+  *errp = sctp_make_op_error_space(asoc, chunk,
+       ntohs(chunk->chunk_hdr->length));
+
+  if (*errp) {
+   sctp_init_cause(*errp, SCTP_ERROR_UNKNOWN_PARAM,
+      WORD_ROUND(ntohs(param.p->length)));
+   sctp_addto_chunk(*errp,
+    WORD_ROUND(ntohs(param.p->length)),
+       param.v);
+
+When we allocate an error chunk, we assume that the worst case scenario
+requires that we have chunk_hdr->length data allocated, which would be 
+correct nominally, given that we call sctp_addto_chunk for the violating 
+parameter. Unfortunately, we also, in sctp_init_cause insert a 
+sctp_errhdr_t structure into the error chunk, so the worst case 
+situation in which all parameters are in violation requires 
+chunk_hdr->length+(sizeof(sctp_errhdr_t)*param_count) bytes of data.
+
+This fix solves the problem by allowing our implementation to only 
+report a fixed number of errors.  When we encounter an error in 
+parameter processing we allocate a chunk that is min(asoc->pathmtu, 
+SCTP_DEFAULT_MAXSEGMENT), limiting our error reporting to a single mtu 
+sized chunk.  Parameter errors that grow beyond that value are discarded.
 
 Thanks, Eugene
