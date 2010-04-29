@@ -1,61 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/14/3
-Message-ID: <1847775681.797141271253629065.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 14 Apr 2010 10:00:29 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/29/5
+Message-ID: <4BD8F5DE.2040300@windriver.com>
+Date: Thu, 29 Apr 2010 10:58:38 +0800
+From: Hui Zhu <hui.zhu@...driver.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- perl v5.8.* -- stack overflow by processing certain regex (Gentoo BTS#313565 / RH BZ#580605)
+CC: coley@...us.mitre.org, ZhangXiao <xiao.zhang@...driver.com>, Neil Horman <nhorman@...hat.com>, dann frazier <dannf@...ian.org>, "J. McNicoll" <jeremy.mcnicoll@...driver.com>, "Ashfield, Bruce" <Bruce.Ashfield@...driver.com>, "Tao, Yue" <Yue.Tao@...driver.com>, "Borman, David" <david.borman@...driver.com>, "Fluckey, Adam" <Adam.Fluckey@...driver.com>, "Xiong, Wei" <Wei.Xiong@...driver.com>, Paul Gortmaker <paul.gortmaker@...driver.com>
+Subject: Re: CVE-2010-1173 kernel: skb_over_panic resulting from multiple invalid parameter errors
 Content-Type: text/plain; charset=utf-8
 
-As MITRE didn't reply, I'm going to assign CVE-2010-1158 to this to cover Perl.
+Eugene Teo:
+> https://bugzilla.redhat.com/CVE-2010-1173
+> http://article.gmane.org/gmane.linux.network/159531
+> 
+> Reported by Chris Guo from Nokia China via Red Hat Support. A similar
+> issue was reported by Jukka Taimisto and Olli Jarva from Codenomicon Ltd
+> via CERT-FI. This was also reported by Windriver on behalf of their
+> customer via vendor-sec.
+> 
+> Kernel crash occurs if sctp listening port receives malformatted init
+> package.
+> 
+> Its an skb_over_panic BUG halt that results from processing an init
+> chunk in which too many of its variable length parameters are in some
+> way malformed.
+> 
+> The problem is in sctp_process_unk_param:
+> if (NULL == *errp)
+>  *errp = sctp_make_op_error_space(asoc, chunk,
+>       ntohs(chunk->chunk_hdr->length));
+> 
+>  if (*errp) {
+>   sctp_init_cause(*errp, SCTP_ERROR_UNKNOWN_PARAM,
+>      WORD_ROUND(ntohs(param.p->length)));
+>   sctp_addto_chunk(*errp,
+>    WORD_ROUND(ntohs(param.p->length)),
+>       param.v);
+> 
+> When we allocate an error chunk, we assume that the worst case scenario
+> requires that we have chunk_hdr->length data allocated, which would be
+> correct nominally, given that we call sctp_addto_chunk for the violating
+> parameter. Unfortunately, we also, in sctp_init_cause insert a
+> sctp_errhdr_t structure into the error chunk, so the worst case
+> situation in which all parameters are in violation requires
+> chunk_hdr->length+(sizeof(sctp_errhdr_t)*param_count) bytes of data.
+> 
+> This fix solves the problem by allowing our implementation to only
+> report a fixed number of errors.  When we encounter an error in
+> parameter processing we allocate a chunk that is min(asoc->pathmtu,
+> SCTP_DEFAULT_MAXSEGMENT), limiting our error reporting to a single mtu
+> sized chunk.  Parameter errors that grow beyond that value are discarded.
+> 
+> Thanks, Eugene
+> 
 
-We can address other things on a case by case basis if needed.
+Forward a mail of my workmate:
 
-Thanks.
+Make a larger chunk is acceptable but for common communication case, the original one is fine enough. And I don't think it is necessary to make such a big chunk. In fact, in worst case, a *double* sized chunk is large enough to hold all necessary data. So, if we have to use the larger chunk than original, we shoudl use min(double of chunk hdr length, asoc->pathmtu, SCTP_DEFAULT_MAXSEGMENT).
 
--- 
-    JB
+For other part of that patch, I think:
+-) A logical issue related to function "sctp_init_cause_fixed". Even if it finds the space is not enough and return "-ENOSPC", "sctp_addto_chunk_fixed" will still be spawned to add error param data in the error report chunk.
+
+-) As I understand, every error report should has two part: head and data. So if the chunk doesn't have enough space to hold it, both of them should be discarded. So in WINDRIVER patch that ZhuHui released out, there are only one space check for the whole error report sapce: head + data. But with this patch, it may just report the error data without head.
+
+-) No use to check the "skb_tailroom" serially, for example in call trace "sctp_init_cause_fixed -> sctp_addto_chunk_fixed". Here it just use the original actp_add_chunk is OK.
+
+-) Make function "sctp_init_cause_fixed", "sctp_addto_chunk_fixed" static inline;
 
 
------ "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
-
-> Hi Steve, vendors,
-> 
->    1, wouldn't like to open a can of worms,
->    2, but for purpose of properly tracking it, requesting a CVE id for
-> the
->       following Perl regular expression engine issue:
-> 
-> Bruce Merry reported:
->    [1] http://bugs.gentoo.org/show_bug.cgi?id=313565
-> 
-> an integer overflow, leading to stack overflow in the way
-> Perl regular expression engine processed certain regular
-> expression(s). Remote attacker could use this flaw to cause
-> a denial of service (crash of an application, using the
-> Perl regular expression engine).
-> 
-> Public PoC from [1]:
-> --------------------
->    perl -e 'if ((("a " x 100000) . "a\n") =~ /\A\S+(?: \S+)*\n\z/)
-> {}'
-> 
-> References:
->    [2] http://bugs.gentoo.org/show_bug.cgi?id=313565
->    [3] https://bugzilla.redhat.com/show_bug.cgi?id=580605
-> 
-> Affected Perl versions:
->    Issue tested and confirmed in Perl of versions v5.8.*.
->    Versions of Perl v5.10.* are not affected by this.
-> 
-> Steve, what's the Mitre's opinion on cases like this --
-> denial of service reachable via certain regular expression.
-> 
-> Should we track them on per issue basis? Or only for cases,
-> where more than a DoS is possible? (doesn't seem to be
-> this case though).
-> 
-> Thanks && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+Thanks
+Xiao 
