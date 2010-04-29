@@ -1,54 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/06/6
-Message-ID: <AANLkTimX8QzLAY4UYJ24xG7bhqnCEP0tV_2Ldv8-kq7T@mail.gmail.com>
-Date: Tue, 6 Jul 2010 00:51:40 -0600
-From: Kurt Seifried <kurt@...fried.org>
-To: oss-security@...ts.openwall.com
-Subject: Bugzilla 3.7.1 CVE request
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/29/10
+Message-ID: <Pine.GSO.4.64.1004291537280.5271@faron.mitre.org>
+Date: Thu, 29 Apr 2010 15:40:39 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: moodle 1.9.8, 1.8.2
 Content-Type: text/plain; charset=utf-8
 
-CVE # for this please.
-
-http://www.bugzilla.org/security/3.7.1/
-
-Summary
-=======
-
-Bugzilla is a Web-based bug-tracking system used by a large number of
-software projects. The following security issue has been discovered
-in Bugzilla:
-
-* In the 3.7.1 development snapshot, adding bugs using email_in.pl
-  or the WebServices Bug.create method would not restrict bugs to
-  Mandatory or Default groups.
-
-All affected installations are encouraged to upgrade as soon as
-possible.
-
-Vulnerability Details
-=====================
-
-Class:       Unauthorized Access to Confidential Information
-Affects:     3.7, 3.7.1
-Fixed In:    3.7.2
-Description: Bugzilla administrators can set certain groups as being
-             "mandatory" for when a new bug is filed. (That is, bugs
-             are always restricted to access by those groups.)
-             Administrators can also set some groups as "Default",
-             meaning that if the user makes no selection about groups,
-             the new bug will be restricted to the groups set as
-             Default. In the unreleased 3.7 code and 3.7.1 development
-             snapshot, restricting a bug to mandatory or default groups
-             would not happen when the bug was newly created using the
-             inbound email interface (email_in.pl) or the "Bug.create"
-             method in the WebServices interface. This means that these
-             bugs could be publicly available, when they should have
-             been restricted to being accessible only to certain
-             groups.
-References:  https://bugzilla.mozilla.org/show_bug.cgi?id=574892
 
 
--- 
-Kurt Seifried
-kurt@...fried.org
-tel: 1-703-879-3176
+>MSA-10-0009: Session fixation prevention now turned on by default
+
+Use CVE-2010-1613
+
+>MSA-10-0008: Persistent XSS when using Login-as feature
+>MSA-10-0007: Reflective Cross Site Scripting (XSS) in the Moodle
+>Global Search Engine
+
+These two are combined into a single CVE.
+
+Use CVE-2010-1614
+
+>MSA-10-0006: SQL injection in Wiki module
+>MSA-10-0005: Incorrect validation of forms data
+
+These two are combined into a single CVE.
+
+Use CVE-2010-1615
+
+>MSA-10-0004: Improved access control in course restore
+
+Use CVE-2010-1616
+
+>MSA-10-0003: Disclosure of full user names
+
+Use CVE-2010-1617
+
+>MSA-10-0002: XSS vulnerabilty in the phpcas module
+
+Use CVE-2010-1618
+
+>MSA-10-0001: Vulnerability in KSES text cleaning
+
+Use CVE-2010-1619
+
