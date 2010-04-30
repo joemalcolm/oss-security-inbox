@@ -1,38 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/29/7
-Message-ID: <4C2A25F2.1050703@mvista.com>
-Date: Tue, 29 Jun 2010 06:57:22 -1000
-From: akuster <akuster@...sta.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/30/1
+Message-ID: <4BDA2807.3000703@redhat.com>
+Date: Fri, 30 Apr 2010 08:44:55 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Eugene Teo <eugeneteo@...nel.sg>,  "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - kernel: cifs: Fix a kernel BUG with remote OS/2 server
+CC: Hui Zhu <hui.zhu@...driver.com>, Paul Gortmaker <paul.gortmaker@...driver.com>, +security-linux <security-linux@...driver.com>, "Wessel, Jason" <jason.wessel@...driver.com>, Wu Fei <fei.wu@...driver.com>
+Subject: Re: CVE request - Linux Kernel KGDB/ppc issue
 Content-Type: text/plain; charset=utf-8
 
+On 04/29/2010 10:13 AM, Hui Zhu wrote:
+> Hi All,
+>
+> The problem is that if KGDB is enabled on a powerpc board, a
+> test that checks if a page is user or kernel is bypassed.
+> This means that a user can write to arbitrary kernel address space.
+>
+> Upon further investigation, we found that kernels older than
+> the v2.6.30-rc1 release have the same problem for non-booke
+> ppc chips (74xx, 8641D), so we need two patches for kernels
+> up to that date, and then one patch for ones after that date.
 
-pSMBr->CountHigh looks to have been introduce by commit
-381a420f5b23cedd9e166e052a93a7f4237bd57c back in 2.6.12-rc2.
-So would it be said this issue has been around since then?
+http://www.mail-archive.com/linuxppc-dev@lists.ozlabs.org/msg30044.html
+Sun, 01 Mar 2009 22:25:03 -0800
 
-- Armin
+"Note: While at it, I removed a non-sensical statement related to 
+CONFIG_KGDB in ppc_mmu_32.c which could cause kernel mappings to be user 
+accessible when that option is enabled. Probably something that bitrot."
 
-On 06/27/2010 10:41 PM, Eugene Teo wrote:
-> "This was known to trigger with a OS/2 server. The server sets
-> pSMBr->CountHigh to a incorrect value even in case of normal writes.
-> This results in 'nbytes' being computed wrongly and triggers a kernel
-> BUG at mm/filemap.c.
-> 
->     void iov_iter_advance(struct iov_iter *i, size_t bytes)
->     {
->             BUG_ON(i->count < bytes);    <--- BUG here
-> 
-> Why the server is setting 'CountHigh' is not clear but only does so
-> after writing 64k bytes. Though this looks like the server bug, the
-> client side crash may not be acceptable.
-> 
-> The workaround is to mask off high 16 bits if the number of bytes
-> written as returned by the server is greater than the bytes requested by
-> the client."
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=608583
-> http://git.kernel.org/linus/6513a81e9325d712f1bfb9a1d7b750134e49ff18
-> 
+Eugene
