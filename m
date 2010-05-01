@@ -1,30 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/01/7
-Message-ID: <20100401165525.GD4078@outflux.net>
-Date: Thu, 1 Apr 2010 09:55:25 -0700
-From: Kees Cook <kees@...ntu.com>
-To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE Request: policykit (minor)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/01/1
+Message-ID: <20100501145953.GG7745@katherina.student.utwente.nl>
+Date: Sat, 1 May 2010 16:59:53 +0200
+From: Matthijs Kooijman <matthijs@...in.nl>
+To: oss-security@...ts.openwall.com
+Subject: Multiple vulnerabilities in OpenTTD
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi all,
 
-Dan Rosenberg found[1] a minor information disclosure vulnerability
-in pkexec, which has been fixed[2] upstream.  It would disclose the
-existence of files a given user would normally not be able to confirm:
+FYI: Debian has assigned three CVE ids for three vulnerabilities present in
+all released versions (except for 1.0.1, which was released together with the
+patches). See:
 
-$ pkexec /home/drosenbe/secret/hidden
-(password prompt)
-$ pkexec /home/drosenbe/secret/doesnotexist
-Error getting information about /home/drosenbe/secret/doesnotexist: No such file or directory
+http://www.openttd.org/en/news/126
+http://security.openttd.org/en/CVE-2010-0401
+http://security.openttd.org/en/CVE-2010-0402
+http://security.openttd.org/en/CVE-2010-0406
 
-Thanks,
+Gr.
 
--Kees
+Matthijs
 
-[1] Ubuntu bug: https://launchpad.net/bugs/532852
-[2] http://cgit.freedesktop.org/PolicyKit/commit/?id=14bdfd816512a82b1ad258fa143ae5faa945df8a
-
--- 
-Kees Cook
-Ubuntu Security Team
+Download attachment "signature.asc" of type "application/pgp-signature" (198 bytes)
