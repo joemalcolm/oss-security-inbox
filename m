@@ -1,37 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/06/1
-Message-ID: <4C5C0F9D.6070308@redhat.com>
-Date: Fri, 06 Aug 2010 15:35:25 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request -- FreeType -- Memory corruption flaw by processing certain LWFN fonts
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/03/1
+Message-ID: <hrlq72$m35$1@dough.gmane.org>
+Date: Mon, 03 May 2010 01:24:37 -0500
+From: Raphael Geissert <geissert@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: lxr
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve, vendors,
+Hi,
 
-   A memory corruption flaw was found in the way FreeType font rendering engine
-processed certain Adobe Type 1 Mac Font File (LWFN) fonts. An attacker
-could use this flaw to create a specially-crafted font file that, when
-opened, would cause an application linked against libfreetype to crash,
-or, possibly execute arbitrary code.
+While working on an update for lxr the following commit by upstream that 
+fixes an XSS vulnerability in the search page was found:
 
-Upstream bug report:
-   [1] https://savannah.nongnu.org/bugs/?30658
+> Fix XSS exploit in title string
+http://lxr.cvs.sourceforge.net/viewvc/lxr/lxr/lib/LXR/Common.pm?r1=1.63&r2=1.64
 
-Public reproducer:
-   [2] http://alt.swiecki.net/j/f/sigsegv31.ttf
+It does not seem to be covered by CVE-2009-4497.
 
-Upstream changeset:
-   [3] http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=81f3472c0ba7b8f6466e2e214fa8c1c17fade975
+Please assign an id. Thanks in advance.
 
-References:
-   [4] https://bugzilla.redhat.com/show_bug.cgi?id=621907
+Kind regards,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
 
-Credit: Robert Swiecki
 
-Could you allocate a CVE id for this?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
