@@ -1,166 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/27/9
-Message-ID: <1595864825.437661285619105944.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 27 Sep 2010 16:25:05 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/03/4
+Message-ID: <432515616.276561272908045642.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 3 May 2010 13:34:05 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Eugene Teo <eugeneteo@...nel.sg>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: multiple kernel stack memory disclosures
+Cc: dan j rosenberg <dan.j.rosenberg@...il.com>, coley <coley@...re.org>
+Subject: Re: CVE request: lxr
 Content-Type: text/plain; charset=utf-8
 
-Steve,
+----- "Henri Salo" <henri@...v.fi> wrote:
 
-Can MITRE tackle this one. I don't have enough IDs for them all, and I'm
-not sure of past precedence for putting some of these together.
+> On Mon, 3 May 2010 09:31:16 -0400
+> Dan Rosenberg <dan.j.rosenberg@...il.com> wrote:
+> 
+> > I discovered and reported this bug at the same time as two other XSS
+> > issues, including the one covered by CVE-2009-4497.  While the commit
+> > may be a few days apart for some of these, I think they can safely fall
+> > under the same CVE, unless it's standard practice to assign CVEs for
+> > each of several related minor issues.
+> 
+> Several XSS-vulnerabilities can have one CVE at least when those
+> vulnerabilities are fixed at the same time.
+> 
 
-Thanks.
+In this instance, I would assign it a new ID, as the old one already exists
+and doesn't note both XSS fixes (it is possible someone fixed just the one XSS
+and not both in an update).
+
+I've CC'd Steve Christey, for a second opinion.
+
+Thanks
 
 -- 
-    JB
-
-
------ "Dan Rosenberg" <dan.j.rosenberg@...il.com> wrote:
-
-> I'd like to request CVEs for a large series of Linux kernel stack
-> memory disclosure vulnerabilities, almost all of which have been
-> fixed.  They are all examples of declaring various structs on the
-> stack and copying them back to the user without filling in all the
-> fields, leaking uninitialized stack memory.  Since there are a lot of
-> issues here, I trust your judgment in deciding if they should each
-> receive a unique ID or if they should be combined in some way.  I
-> tried to break them up logically to make it easier.
-> 
-> ---
-> 
-> The first batch of issues occurred in the TIOCGICOUNT device ioctls
-> of
-> several device drivers.  While several of the issues were fixed on an
-> individual basis, Alan Cox fixed it for good by creating a new
-> handler.  Since these issues are essentially identical and were fixed
-> all at once, I think it might make sense to have them under a single
-> CVE.  Note that the final listed item in drivers/net/usb/hso.c was
-> already assigned CVE-2010-3298.
-> 
-> "The TIOCGICOUNT device ioctl in mos7720.c, mos7840.c, serial_core.c,
-> hso.c, amiserial.c, and nozomi.c allows unprivileged users to read
-> uninitialized stack memory, because the 'reserved' member of the
-> serial_icounter_struct struct declared on the stack is not altered or
-> zeroed before being copied back to the user."
-> 
-> 
-> Alan Cox's fix:
-> http://lkml.org/lkml/2010/9/16/294
-> 
-> drivers/usb/serial/mos*
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=a0846f1868b11cd827bdfeaf4527d8b1b1c0b098
-> 
-> drivers/serial/serial_core.c
-> http://userweb.kernel.org/~akpm/mmotm/broken-out/drivers-serial-serial_corec-prevent-reading-uninitialized-stack-memory.patch
-> 
-> drivers/char/amiserial.c
-> http://userweb.kernel.org/~akpm/mmotm/broken-out/drivers-char-amiserialc-prevent-reading-uninitialized-stack-memory.patch
-> 
-> drivers/char/nozomi.c
-> http://userweb.kernel.org/~akpm/mmotm/broken-out/drivers-char-nozomic-prevent-reading-uninitialized-stack-memory.patch
-> 
-> drivers/net/usb/hso.c (CVE-2010-3298)
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=7011e660938fc44ed86319c18a5954e95a82ab3e
-> 
-> ---
-> 
-> The next two issues both occurred in the FBIOGET_VBLANK device ioctl:
-> 
-> "The FBIOGET_VBLANK device ioctl in sis_main.c and ivtvfb.c allows
-> unprivileged users to read 16 bytes of uninitialized stack memory,
-> because the 'reserved' member of the fb_vblank struct declared on the
-> stack is not altered or zeroed before being copied back to the user."
-> 
-> drivers/video/sis/sis_main.c
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=fd02db9de73faebc51240619c7c7f99bee9f65c7
-> 
-> drivers/media/video/ivtv/ivtvfb.c
-> lkml.org/lkml/2010/9/15/393
-> 
-> ---
-> 
-> The following issues occured in miscellaneous device ioctls in a
-> variety of drivers.  Note the final two items listed have already
-> been
-> assigned CVE-2010-3296 and CVE-2010-3297 - I include them only for
-> reference.
-> 
-> 
-> sound/pci/rme9652/hdsp*.c
-> http://marc.info/?l=linux-kernel&m=128542726922720&w=2
-> 
-> "The SNDRV_HDSP_IOCTL_GET_CONFIG_INFO and
-> SNDRV_HDSP_IOCTL_GET_CONFIG_INFO ioctls in hdspm.c and hdsp.c allow
-> unprivileged users to read uninitialized kernel stack memory, because
-> several fields of the hdsp{m}_config_info structs declared on the
-> stack are not altered or zeroed before being copied back to the
-> user."
-> 
-> 
-> drivers/video/via/ioctl.c
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=b4aaa78f4c2f9cde2f335b14f4ca30b01f9651ca
-> 
-> "The VIAFB_GET_INFO device ioctl allows unprivileged users to read
-> 246
-> bytes of uninitialized stack memory, because the 'reserved' member of
-> the viafb_ioctl_info struct declared on the stack is not altered or
-> zeroed before being copied back to the user."
-> 
-> 
-> drivers/net/cxgb3/cxgb3_main.c (CVE-2010-3296)
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=49c37c0334a9b85d30ab3d6b5d1acb05ef2ef6de
-> 
-> "The CHELSIO_GET_QSET_NUM device ioctl allows unprivileged users to
-> read 4 bytes of uninitialized stack memory, because the 'addr' member
-> of the ch_reg struct declared on the stack in cxgb_extension_ioctl()
-> is not altered or zeroed before being copied back to the user."  This
-> issue was assigned CVE-2010-3296.
-> 
-> 
-> drivers/net/eql.c (CVE-2010-3297)
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=44467187dc22fdd33a1a06ea0ba86ce20be3fe3c
-> 
-> "The EQL_GETMASTRCFG device ioctl allows unprivileged users to read
-> 16
-> bytes of uninitialized stack memory, because the 'master_name' member
-> of the master_config_t struct declared on the stack in
-> eql_g_master_cfg() is not altered or zeroed before being copied back
-> to the user."  This issue was assigned CVE-2010-3297.
-> 
-> ---
-> 
-> The final identified leak is in the sys_semctl system call, which I
-> would say is more serious since it is not driver-specific:
-> 
-> ipc/sem.c
-> http://www.spinics.net/lists/mm-commits/msg80234.html
-> 
-> "The semctl syscall has several code paths that lead to the leakage
-> of
-> uninitialized kernel stack memory (namely the IPC_INFO, SEM_INFO,
-> IPC_STAT, and SEM_STAT commands) during the use of the older,
-> obsolete
-> version of the semid_ds struct.  The copy_semid_to_user() function
-> declares a semid_ds struct on the stack and copies it back to the
-> user
-> without initializing or zeroing the 'sem_base', 'sem_pending',
-> 'sem_pending_last', and 'undo' pointers, allowing the leakage of 16
-> bytes of kernel stack memory.  The code is still reachable on 32-bit
-> systems - when calling semctl() newer glibc's automatically OR the
-> IPC
-> command with the IPC_64 flag, but invoking the syscall directly
-> allows
-> users to use the older versions of the struct."
-> 
-> ---
-> 
-> Let me know if you have any questions or need any clarification on
-> any
-> of these issues.
-> 
-> Regards,
-> Dan
+    JB
