@@ -1,25 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/29/7
-Message-ID: <20100929161912.GA13207@inutil.org>
-Date: Wed, 29 Sep 2010 18:19:12 +0200
-From: Moritz Muehlenhoff <jmm@...til.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/03/5
+Message-ID: <20100503204900.24b051e6@foo.fgeek.fi>
+Date: Mon, 3 May 2010 20:49:00 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE requests: POE::Component::IRC, Alien Arena, Babiloo, Typo3, abcm2ps, ModSecurity, Linux kernel
+Cc: bressers@...hat.com, dan j rosenberg <dan.j.rosenberg@...il.com>, coley <coley@...re.org>
+Subject: Re: CVE request: lxr
 Content-Type: text/plain; charset=utf-8
 
-Hi Eugene,
+On Mon, 3 May 2010 13:34:05 -0400 (EDT)
+Josh Bressers <bressers@...hat.com> wrote:
 
-On Tue, Sep 28, 2010 at 09:17:48AM +0800, Eugene Teo wrote:
->> 7. Linux kernel (local DoS, impact limited to specific hardware)
->> http://git.kernel.org/linus/b525c06cdbd8a3963f0173ccd23f9147d4c384b5
->> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=565790
->
-> I emailed this before, please search the archive for subject:  
-> "[oss-security] kernel: thinkpad-acpi: lock down video output state 
-> access".
+> ----- "Henri Salo" <henri@...v.fi> wrote:
+> 
+> > On Mon, 3 May 2010 09:31:16 -0400
+> > Dan Rosenberg <dan.j.rosenberg@...il.com> wrote:
+> > 
+> > > I discovered and reported this bug at the same time as two other
+> > > XSS issues, including the one covered by CVE-2009-4497.  While
+> > > the commit may be a few days apart for some of these, I think
+> > > they can safely fall under the same CVE, unless it's standard
+> > > practice to assign CVEs for each of several related minor issues.
+> > 
+> > Several XSS-vulnerabilities can have one CVE at least when those
+> > vulnerabilities are fixed at the same time.
+> > 
+> 
+> In this instance, I would assign it a new ID, as the old one already
+> exists and doesn't note both XSS fixes (it is possible someone fixed
+> just the one XSS and not both in an update).
+> 
+> I've CC'd Steve Christey, for a second opinion.
+> 
+> Thanks
 
-Are you suggesting that there was already an assignment (I can't
-find one) or that it should not receive one due to limited impact?
+My sentence was for normal cases. I have seen several reports with
+multiple XSS-vulnerabilities. This usually is the case when someone
+audits web-applications.
 
-Cheers,
-        Moritz
+If the issue already has CVE-identifier already we should
+definately assign new CVE for clarity.
+
+---
+Henri Salo
