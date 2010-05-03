@@ -1,26 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/01/3
-Message-ID: <2088660612.775711275401852922.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 1 Jun 2010 10:17:32 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/03/2
+Message-ID: <p2j4a6942471005030631u64f9210bu65bed3d02706051b@mail.gmail.com>
+Date: Mon, 3 May 2010 09:31:16 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: Mediawiki below 1.15.4 / 1.16.0beta3
+Subject: Re: CVE request: lxr
 Content-Type: text/plain; charset=utf-8
 
------ "Hanno Böck" <hanno@...eck.de> wrote:
+I discovered and reported this bug at the same time as two other XSS
+issues, including the one covered by CVE-2009-4497.  While the commit
+may be a few days apart for some of these, I think they can safely
+fall under the same CVE, unless it's standard practice to assign CVEs
+for each of several related minor issues.
 
-> http://lists.wikimedia.org/pipermail/mediawiki-announce/2010-May/000091.html
-> 
-> One XSS, one CSRF.
-> 
+The description at cve.mitre.org covers an XSS bug in  the "ident"
+parameter.  It does not mention a second XSS bug which was also fixed
+in the search body, which is separate from a third bug, the search
+title, fixed here.
 
-These seem clear enough:
+-Dan
 
-CVE-2010-1647 mediawiki 1.15.4 XSS
-CVE-2010-1648 mediawiki 1.15.4 CSRF
-
-Thanks.
-
--- 
-    JB
+On Mon, May 3, 2010 at 2:24 AM, Raphael Geissert <geissert@...ian.org> wrote:
+> Hi,
+>
+> While working on an update for lxr the following commit by upstream that
+> fixes an XSS vulnerability in the search page was found:
+>
+>> Fix XSS exploit in title string
+> http://lxr.cvs.sourceforge.net/viewvc/lxr/lxr/lib/LXR/Common.pm?r1=1.63&r2=1.64
+>
+> It does not seem to be covered by CVE-2009-4497.
+>
+> Please assign an id. Thanks in advance.
+>
+> Kind regards,
+> --
+> Raphael Geissert - Debian Developer
+> www.debian.org - get.debian.net
+>
+>
+>
