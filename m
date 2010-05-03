@@ -1,45 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/06/4
-Message-ID: <alpine.LNX.2.00.1007060436540.10953@forced.attrition.org>
-Date: Tue, 6 Jul 2010 04:49:41 -0500 (CDT)
-From: security curmudgeon <jericho@...rition.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Apache Axis2 Session Fixation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/03/7
+Message-ID: <i2j4a6942471005031314n196b6e26ye256c8d8492ccd93@mail.gmail.com>
+Date: Mon, 3 May 2010 16:14:16 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: Henri Salo <henri@...v.fi>
+Cc: oss-security@...ts.openwall.com, bressers@...hat.com,  coley <coley@...re.org>
+Subject: Re: CVE request: lxr
 Content-Type: text/plain; charset=utf-8
 
+Just to clarify, two XSS bugs were fixed with a single release (new
+version 0.9.8), and then ten days later, an update was included to
+resolve a third XSS bug.  The original CVE was originally requested
+for "multiple XSS vulnerabilities", but the description only covers
+one of them.
 
-: there has recently been a Session Fixation vulnerability reported in Apache 
-: Axis2, see:
-: 
-: References:
-: https://issues.apache.org/jira/browse/AXIS2-4739
-: http://www.securityfocus.com/archive/1/511955/30/30/threaded
-: 
-: There is already CVE-2010-2103 assigned for the Cross-Site Scripting 
-: mentioned in the advisory above. However, there does not seem to be a 
-: CVE for the Session Fixation flaw, so could you possibly assign one for 
-: it too?
+-Dan
 
-Can we also get a CVE assigned for the other 186 issues I found in 
-issues.apache.org dating back to 2002-03-04? CVE covers 73 of the 259 
-issues, some much more serious than session fixation in Axis.
-
-On a more serious note, does it have to be posted to Bugtraq or F-D to get 
-attention here? If you search osvdb.org by reference for 
-"issues.apache.org", you will see a substantional amount of 
-vulnerabilities that are higher risk (e.g., auth bypass, XSS, arbitrary 
-file disclosure, cleartext password disclosure, etc). Consider there were 
-almost two dozen more vulnerabilities that didn't get added to OSVDB 
-because the bug reports were too vague, inconclusive and/or the Apache 
-staff never responded in any fashion to clarify the severity or verify the 
-report. If we had more time to actually dig into the report / code, they 
-likely would have been added. 
-
-I am not entirely sure why this one is important enough to warrant an 
-individual request to CVE for assignment, when much more serious issues 
-exist, some of which are still oustanding last I checked.
-
-If CVE does assign an entry to this, please assign one to OSVDB 58803 for 
-an Apache Wicket Session Fixation issue too. Thanks!
-
-- security curmudgeon
+On Mon, May 3, 2010 at 1:49 PM, Henri Salo <henri@...v.fi> wrote:
+> On Mon, 3 May 2010 13:34:05 -0400 (EDT)
+> Josh Bressers <bressers@...hat.com> wrote:
+>
+>> ----- "Henri Salo" <henri@...v.fi> wrote:
+>>
+>> > On Mon, 3 May 2010 09:31:16 -0400
+>> > Dan Rosenberg <dan.j.rosenberg@...il.com> wrote:
+>> >
+>> > > I discovered and reported this bug at the same time as two other
+>> > > XSS issues, including the one covered by CVE-2009-4497.  While
+>> > > the commit may be a few days apart for some of these, I think
+>> > > they can safely fall under the same CVE, unless it's standard
+>> > > practice to assign CVEs for each of several related minor issues.
+>> >
+>> > Several XSS-vulnerabilities can have one CVE at least when those
+>> > vulnerabilities are fixed at the same time.
+>> >
+>>
+>> In this instance, I would assign it a new ID, as the old one already
+>> exists and doesn't note both XSS fixes (it is possible someone fixed
+>> just the one XSS and not both in an update).
+>>
+>> I've CC'd Steve Christey, for a second opinion.
+>>
+>> Thanks
+>
+> My sentence was for normal cases. I have seen several reports with
+> multiple XSS-vulnerabilities. This usually is the case when someone
+> audits web-applications.
+>
+> If the issue already has CVE-identifier already we should
+> definately assign new CVE for clarity.
+>
+> ---
+> Henri Salo
+>
