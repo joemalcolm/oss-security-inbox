@@ -1,65 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/24/4
-Message-ID: <20100624160139.GA6536@suse.de>
-Date: Thu, 24 Jun 2010 18:01:39 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/05/1
+Message-ID: <20100505030442.GA12121@lackof.org>
+Date: Tue, 4 May 2010 21:04:42 -0600
+From: dann frazier <dannf@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE requests: maradns, freeciv, rbot, gitolite, gource, shib, kvirc
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE Request [was Re: kernel: execution possible in non-executable mappings in recent 2.6 kernels (SPARC only)]
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jun 11, 2010 at 02:04:26PM -0400, Josh Bressers wrote:
-> Steve,
-> 
-> Can MITRE handle this one. It's bigger than a breadbox and I lack time
-> to go through each of this right now.
+On Wed, Feb 24, 2010 at 08:41:01AM +0800, Eugene Teo wrote:
+> http://marc.info/?l=linux-sparc&m=126662196902830&w=2
+> http://marc.info/?l=linux-sparc&m=126662159602378&w=2
+>
+> sparc64: Fix sun4u execute bit check in TSB I-TLB load.
+>
+> TSB I-tlb load code tries to use andcc to check the _PAGE_EXEC_4U bit,
+> but that's bit 12 so it gets sign extended all the way up to bit 63
+> and the test nearly always passes as a result.
+>
+> Use sethi to fix the bug.
+>
+> I'm not requesting a CVE for this as this does not affect any of our  
+> kernels. But just a heads-up for those not aware of this.
 
-any update?
-
-Ciao, Marcus
- 
-> Thanks.
-> 
-> -- 
->     JB
-> 
-> 
-> ----- "Moritz Muehlenhoff" <jmm@...ian.org> wrote:
-> 
-> > Hi,
-> > Please assign CVE IDs for these issues current present in the Debian
-> > Security Tracker, but for which no CVE IDs have been assigned so far:
-> > 
-> > 1. maradns
-> > http://maradns.org/download/maradns-1.4.02-parse_segfault.patch
-> > Fixed in 1.4.03
-> > 
-> > 2. freeciv 
-> > http://gna.org/bugs/?15624
-> > Fixed in 2.2.1 and 2.3.0
-> > 
-> > 3. rbot (http://ruby-rbot.org/)
-> > http://www.securityfocus.com/archive/1/509719/30/0/threaded
-> > 
-> > 4. gitolite
-> > http://secunia.com/advisories/39587/
-> > http://github.com/sitaramc/gitolite/commit/1e06fea3b6959faeb72d8dca46cd4753ada48637
-> > http://github.com/sitaramc/gitolite/commit/5fd9328c1cd1e7c576b6530b3253061c68b159aa
-> > http://github.com/sitaramc/gitolite/commit/5deffee3cff5f9a13c59b8c1e357c5a32487d1c3
-> > 
-> > 5. gource
-> > http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=577958
-> > 
-> > 6. Shibboleth:
-> > http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=571631
-> > 
-> > 7. kvirc
-> > http://lists.omnikron.net/pipermail/kvirc/2010-May/000867.html
-> > 
-> > Cheers,
-> >         Moritz
-> 
+hey Steven,
+ Can we get a CVE allocated for this one?
 
 -- 
-Working, but not speaking, for the following german company:
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+dann frazier
+
