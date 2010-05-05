@@ -1,25 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/24/1
-Message-ID: <4B84759D.2020406@kernel.sg>
-Date: Wed, 24 Feb 2010 08:41:01 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/05/2
+Message-ID: <2100391768.493571273071485268.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 5 May 2010 10:58:05 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: kernel: execution possible in non-executable mappings in recent 2.6 kernels (SPARC only)
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request [was Re: kernel: execution possible in non-executable mappings in recent 2.6 kernels (SPARC only)]
 Content-Type: text/plain; charset=utf-8
 
-http://marc.info/?l=linux-sparc&m=126662196902830&w=2
-http://marc.info/?l=linux-sparc&m=126662159602378&w=2
+Please use CVE-2010-1451
 
-sparc64: Fix sun4u execute bit check in TSB I-TLB load.
+Thanks.
 
-TSB I-tlb load code tries to use andcc to check the _PAGE_EXEC_4U bit,
-but that's bit 12 so it gets sign extended all the way up to bit 63
-and the test nearly always passes as a result.
+-- 
+    JB
 
-Use sethi to fix the bug.
 
-I'm not requesting a CVE for this as this does not affect any of our 
-kernels. But just a heads-up for those not aware of this.
+----- "dann frazier" <dannf@...ian.org> wrote:
 
-Thanks, Eugene
+> On Wed, Feb 24, 2010 at 08:41:01AM +0800, Eugene Teo wrote:
+> > http://marc.info/?l=linux-sparc&m=126662196902830&w=2
+> > http://marc.info/?l=linux-sparc&m=126662159602378&w=2
+> >
+> > sparc64: Fix sun4u execute bit check in TSB I-TLB load.
+> >
+> > TSB I-tlb load code tries to use andcc to check the _PAGE_EXEC_4U
+> bit,
+> > but that's bit 12 so it gets sign extended all the way up to bit 63
+> > and the test nearly always passes as a result.
+> >
+> > Use sethi to fix the bug.
+> >
+> > I'm not requesting a CVE for this as this does not affect any of our
+>  
+> > kernels. But just a heads-up for those not aware of this.
+> 
+> hey Steven,
+>  Can we get a CVE allocated for this one?
+> 
+> -- 
+> dann frazier
