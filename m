@@ -1,31 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/11/5
-Message-ID: <20100111125537.06844922@tanana.suse.de>
-Date: Mon, 11 Jan 2010 12:55:37 +0100
-From: Ludwig Nussel <ludwig.nussel@...e.de>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request: phpMyAdmin
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/05/4
+Message-ID: <1669227525.537561273091314027.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 5 May 2010 16:28:34 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE Request - Piwik 0.5.5 - XSS vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Here you go:
+CVE-2010-1453 Piwik < 0.6 Login form XSS
 
-phpMyAdmin 2.11.10 was released with security fixes according to the
-changelog:
-http://phpmyadmin.svn.sourceforge.net/viewvc/phpmyadmin/branches/MAINT_2_11_10/phpMyAdmin/ChangeLog?revision=13152&view=markup
-
-unserialize fix:
-http://phpmyadmin.svn.sourceforge.net/viewvc/phpmyadmin?view=rev&revision=13149
-
-the temporary file issues seem to be from 2008 but were not released
-so far:
-http://phpmyadmin.svn.sourceforge.net/viewvc/phpmyadmin?view=rev&revision=11536
-http://phpmyadmin.svn.sourceforge.net/viewvc/phpmyadmin?view=rev&revision=11528
-
-cu
-Ludwig
+Thanks.
 
 -- 
- (o_   Ludwig Nussel
- //\   
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+    JB
+
+
+----- "Anthon Pang" <anthon.pang@...il.com> wrote:
+
+> A Piwik XSS vulnerability is fixed by the latest Piwik 0.6 release. 
+> The
+> advisory is published here:
+> http://piwik.org/blog/2010/04/piwik-0-6-security-advisory/
+> 
+> Description:
+> 
+> A non-persistent, cross-site scripting vulnerability (XSS) was found
+> in
+> Piwik's Login form that reflected the form_url parameter without
+> being
+> properly escaped or filtered. To exploit this vulnerability, the
+> attacker
+> tricks a Piwik user into visiting a Login URL crafted by the
+> attacker.
+> 
+> While this is a low risk threat, Piwik users are encouraged to update
+> to the
+> latest version of Piwik. This issue exists in Piwik versions 0.1.6
+> through
+> 0.5.5.
+> 
+> In Piwik 0.6, the form_url parameter has been removed.
