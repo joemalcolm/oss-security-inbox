@@ -1,91 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/17/1
-Message-ID: <20100517120322.GH11040@inversepath.com>
-Date: Mon, 17 May 2010 13:03:22 +0100
-From: Daniele Bianco <danbia@...rt.org>
-To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
-Subject: [oCERT-2010-001] multiple http client unexpected download filename vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/06/1
+Message-ID: <Pine.GSO.4.64.1005061359320.1759@faron.mitre.org>
+Date: Thu, 6 May 2010 14:11:48 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+cc: dan.j.rosenberg@...il.com
+Subject: Re: CVE request: lxr
 Content-Type: text/plain; charset=utf-8
 
 
-#2010-001 multiple http client unexpected download filename vulnerability
+On Mon, 3 May 2010, Henri Salo wrote:
 
-Description:
+> On Mon, 3 May 2010 09:31:16 -0400
+> Dan Rosenberg <dan.j.rosenberg@...il.com> wrote:
+>
+> Several XSS-vulnerabilities can have one CVE at least when those
+> vulnerabilities are fixed at the same time.
 
-The lftp, wget and lwp-download applications are ftp/http clients and file
-transfer tools supporting various network protocols. The lwp-download
-script is shipped along with the libwww-perl library.
+Another factor is when they are published at the same time.
 
-Unsafe behaviours have been found in lftp and lwp-download handling the
-Content-Disposition header in conjunction with the 'suggested filename'
-functionality.
+> Can someone verify what is the policy by the book?
 
-Additionally, unsafe behaviours have been found in wget and lwp-download in
-the case of HTTP 3xx redirections during file downloading. The two
-applications automatically use the URL's filename portion specified in the
-Location header.
+It's never as easy as just a couple rules, unfortunately.  In this case, 
+CVE-2009-4497 has been around for a long time, so it's strongly attached 
+to *only* the "i" parameter/ident issue.  It's too risky to change the 
+fundamental meaning of a CVE after it's been published.  (So even though 
+the intention of Dan's original request may have been to cover other 
+issues, that's not what it looks like to the public any more.)
 
-Implicitly trusting the suggested filenames results in a saved file that
-differs from the expected one according to the URL specified by the user.
-This can be used by an attacker-controlled server to silently write hidden
-and/or initialization files under the user's current directory
-(e.g. .login, .bashrc).
+Josh assigned CVE-2010-1448 for the search page issue, and now Dan has 
+alluded to a third issue that is neither ident nor search page, but we 
+don't know what that third issue is.
 
-The impact of this vulnerability is increased in the case of lftp/lftpget
-as the default configuration allows file to be overwritten without
-prompting the user for confirmation. In the case of lftp the get1 command
-is affected. This command can be invoked directly by the user from lftp's
-command line interface or indirectly by using the lftpget script, packaged
-within the lftp distribution.
+If Dan's issue is what he calls "a third XSS bug" in 
+http://www.openwall.com/lists/oss-security/2010/05/03/7 then I'd want a 
+different CVE for it - since it's addressed in a separate "version" than 
+the other two XSS bugs.
 
-Affected version:
+The crux of the problem here is that the original bug report alluded to 
+"several" XSS but only listed the ident issue; our CVE description 
+typically might say "multiple XSS, for example this particular vector," 
+but we didn't do that... and neither does the vendor specifically indicate 
+that the other vaguely-specified issues were actually addressed.
 
-lftp <= 4.0.5
-
-wget <= 1.12
-
-libwww-perl <= 5.834
-
-Fixed version:
-
-lftp >= 4.0.6
-
-wget N/A
-
-libwww-perl >= 5.835
-
-Credit: Vulnerability discovered and reported by Hank Leininger and Solar
-        Designer under the Openwall Project, with further analysis by
-        Daniele Bianco of oCERT.
-
-CVE: N/A
-
-Timeline:
-
-2009-10-23: vulnerability report received
-2010-01-08: further investigations and analysis completed
-2010-01-10: contacted wget, libwww-perl and lftp maintainers
-2010-01-11: wget didn't acknowledge the report, the issues reported have
-            not been considered relevant from a security perspective by
-            the maintainer
-2010-01-21: lftp acknowledged the report, preliminary analysis for the
-            reported issues provided
-2010-02-06: wget confirmed the application will not be fixed
-2010-02-08: libwww-perl acknowledged the report, preliminary analysis for
-            the reported issues provided
-2010-03-25: lftp 4.0.6 released
-2010-05-05: libwww-perl-5.836 released
-2010-05-10: contacted affected vendors
-2010-05-14: failure reported during notification process of vendor-sec
-            list, notification re-sent
-2010-05-17: advisory published
-
-Permalink:
-http://www.ocert.org/advisories/ocert-2010-001.html
-
--- 
-  Daniele Bianco      oCERT | Open Source Computer Emergency Response Team 
-  <danbia@...rt.org>                                  http://www.ocert.org
-  
-  GPG Key 0x4545E02B
-  GPG Key fingerprint = 3706 0361 56B2 61B1 B873  E400 353D 54F4 4545 E02B
+- Steve
