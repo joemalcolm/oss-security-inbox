@@ -1,96 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/30/5
-Message-Id: <20100830100616.78971400D9@magilla.sf.frob.com>
-Date: Mon, 30 Aug 2010 03:06:16 -0700 (PDT)
-From: Roland McGrath <roland@...hat.com>
-To: Solar Designer <solar@...nwall.com>
-Cc: Kees Cook <kees.cook@...onical.com>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Al Viro <viro@...iv.linux.org.uk>, Andrew Morton <akpm@...ux-foundation.org>, Oleg Nesterov <oleg@...hat.com>, KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org
-Subject: Re: [PATCH] exec argument expansion can inappropriately trigger OOM-killer
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/06/2
+Message-ID: <h2l4a6942471005061124r76d75a85x491a377eb995e4b0@mail.gmail.com>
+Date: Thu, 6 May 2010 14:24:05 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: lxr
 Content-Type: text/plain; charset=utf-8
 
-> IIRC, prior to that fix, I was able to cause the kernel to loop for tens
-> of minutes in a single execve() call on an Alpha with 128 MB RAM, by
-> using repeated mappings of the same pages (almost 200 GB total).
+Sorry for not making this explicitly clear.  There are three issues:
 
-And I say, if your userland process could really allocate another 200GB,
-then more power to you, you can do it with an exec too.  If you could do
-the same with a userland stack allocation, and spend all that time in
-strlen calls and then memcpy, you can do it inside execve too.  If it
-takes days, that's what you asked for, and it's your process.  It just
-ought to be every bit (or near enough) as preemptible and interruptible
-as that normal userland activity ought to be.
+1.  XSS in the ident parameter, as described in CVE-2009-4497.
 
-So, perhaps we want this (count already has a cond_resched in its loop):
+2.  XSS that is reflected via the search results page after issuing a search.
 
-diff --git a/fs/exec.c b/fs/exec.c
-index 2d94552..0000000 100644  
---- a/fs/exec.c
-+++ b/fs/exec.c
-@@ -369,6 +369,9 @@ static int count(const char __user * con
- 		for (;;) {
- 			const char __user * p;
- 
-+			if (signal_pending(current))
-+				return -ERESTARTNOINTR;
-+
- 			if (get_user(p, argv))
- 				return -EFAULT;
- 			if (!p)
-@@ -400,6 +403,10 @@ static int copy_strings(int argc, const 
- 		int len;
- 		unsigned long pos;
- 
-+		if (signal_pending(current))
-+			return -ERESTARTNOINTR;
-+		cond_resched();
-+
- 		if (get_user(str, argv+argc) ||
- 				!(len = strnlen_user(str, MAX_ARG_STRLEN))) {
- 			ret = -EFAULT;
+3.  XSS that is reflected via the <title> tag on the search page, as
+described in Raphael's original e-mail a few days ago, which Josh just
+assigned CVE-2010-1448.
 
-> Now it appears that, besides the issue that started this thread, the
-> same problem I mentioned above got re-introduced.  We still have
-> strnlen_user() and the "max" argument to count(), but we no longer have
-> hard limits for "max".  Someone set MAX_ARG_STRINGS to 0x7FFFFFFF, and
-> this is just too much.  MAX_ARG_STRLEN is set to 32 pages, and these two
-> combined allow a userspace program to make the kernel loop for days.
+Bugs 1 and 2 were fixed simultaneously, as indicated in the 2010-01-05
+changelog entry for LXR:
 
-I really don't think we need that stuff back.  I think we can get rid of
-it and fix the real problems, and be happier overall.
+2010-01-05 18:00  mbox
 
-> > But it sounds like all you really need is to fix the OOM/allocation
-> > behavior for huge stack allocations.
-> 
-> No, we need both.
+	* ident, search: Fix for CVE-2009-4497 from Dan Rosenberg
 
-I don't agree.  If all of the implicit allocation done inside execve is
-accounted and controlled as well as normal userland allocations so that
-the execve fails when userland allocation would fail, then there is no
-reason for special-case arbitrary limits.
+	  Avoid a XSS vulnerability
 
-> Additionally, 64bit_dos.c mentions that "it triggers a BUG() as the
-> stack tries to expand around the address space when shifted".  Perhaps
-> limiting the stack size would deal with that, but maybe the "bug" needs
-> to be patched elsewhere as well.  grsecurity has the following hunk:
+Bug 3 was fixed a few days later on 2010-01-15, as indicated by:
 
-That change seems like it might be reasonable, but I haven't really
-looked at shift_arg_pages before.  Has someone reported this BUG_ON
-failure mode with a reproducer?
+2010-01-15 23:23  mbox
 
-> Overall, there are multiple issues here (maybe up to four?) and multiple
-> things to review the code for.
+	* lib/LXR/Common.pm: Fix XSS exploit in title string
 
-Agreed.  But IMHO the missing arbitrary limits on arg/env size are not
-among them.  I don't know about shift_arg_pages.  The core fix I think
-makes sense is making the nascent mm get accounted to the user process
-normally.  Rather than better enabling OOM killing, I think what really
-makes sense is for the nascent mm to be marked such that allocations in
-it (they'll be from get_arg_page->get_user_pages->handle_mm_fault) just
-fail with ENOMEM before it resorts to the OOM killer (or perhaps even to
-very aggressive pageout).  That should percolate back to the execve just
-failing with ENOMEM, which is nicer than OOM kill even if the OOM killer
-actually does pick exactly and only the right target.
+So, while my original intent at the time of disclosure was to have a
+single CVE identifier assigned to cover all three of these issues,
+that obviously did not happen.  As it stands, bugs 1 and 3 have their
+own CVE identifiers, and bug 2 remains unassigned.
 
+-Dan
 
-Thanks,
-Roland
+On Thu, May 6, 2010 at 2:11 PM, Steven M. Christey
+<coley@...us.mitre.org> wrote:
+>
+> On Mon, 3 May 2010, Henri Salo wrote:
+>
+>> On Mon, 3 May 2010 09:31:16 -0400
+>> Dan Rosenberg <dan.j.rosenberg@...il.com> wrote:
+>>
+>> Several XSS-vulnerabilities can have one CVE at least when those
+>> vulnerabilities are fixed at the same time.
+>
+> Another factor is when they are published at the same time.
+>
+>> Can someone verify what is the policy by the book?
+>
+> It's never as easy as just a couple rules, unfortunately.  In this case,
+> CVE-2009-4497 has been around for a long time, so it's strongly attached to
+> *only* the "i" parameter/ident issue.  It's too risky to change the
+> fundamental meaning of a CVE after it's been published.  (So even though the
+> intention of Dan's original request may have been to cover other issues,
+> that's not what it looks like to the public any more.)
+>
+> Josh assigned CVE-2010-1448 for the search page issue, and now Dan has
+> alluded to a third issue that is neither ident nor search page, but we don't
+> know what that third issue is.
+>
+> If Dan's issue is what he calls "a third XSS bug" in
+> http://www.openwall.com/lists/oss-security/2010/05/03/7 then I'd want a
+> different CVE for it - since it's addressed in a separate "version" than the
+> other two XSS bugs.
+>
+> The crux of the problem here is that the original bug report alluded to
+> "several" XSS but only listed the ident issue; our CVE description typically
+> might say "multiple XSS, for example this particular vector," but we didn't
+> do that... and neither does the vendor specifically indicate that the other
+> vaguely-specified issues were actually addressed.
+>
+> - Steve
+>
