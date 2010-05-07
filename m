@@ -1,53 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/27/1
-Message-ID: <20100827220258.GF4703@outflux.net>
-Date: Fri, 27 Aug 2010 15:02:58 -0700
-From: Kees Cook <kees.cook@...onical.com>
-To: linux-kernel@...r.kernel.org
-Cc: oss-security@...ts.openwall.com, Al Viro <viro@...iv.linux.org.uk>, Andrew Morton <akpm@...ux-foundation.org>, Oleg Nesterov <oleg@...hat.com>, KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>, Neil Horman <nhorman@...driver.com>, Roland McGrath <roland@...hat.com>, linux-fsdevel@...r.kernel.org
-Subject: [PATCH] exec argument expansion can inappropriately trigger OOM-killer
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/07/7
+Message-ID: <71871187.727261273239354364.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 7 May 2010 09:35:54 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>, Gerald Combs <gerald@...eshark.org>
+Subject: Re: CVE Assignment (wireshark)
 Content-Type: text/plain; charset=utf-8
 
-Brad Spengler published a local memory-allocation DoS that
-evades the OOM-killer (though not the virtual memory RLIMIT):
-http://www.grsecurity.net/~spender/64bit_dos.c
 
-The recent changes to create a stack guard page helps slightly to
-discourage this attack, but it is not sufficient. Compiling it statically
-moves the libraries out of the way, allowing the stack VMA to fill the
-entire TASK_SIZE.
+----- "Josh Bressers" <bressers@...hat.com> wrote:
 
-There are two issues:
- 1) the OOM killer doesn't notice this argv memory explosion
- 2) the argv expansion does not check if rlim[RLIMIT_STACK].rlim_cur is -1.
+> Wireshark just published two advisories
+> 
+> http://www.wireshark.org/security/wnpa-sec-2010-03.html
+> http://www.wireshark.org/security/wnpa-sec-2010-04.html
+> 
+> I've assigned CVE ids:
+> 
+> CVE-2010-1455 wireshark wnpa-sec-2010-03
+> CVE-2010-1456 wireshark wnpa-sec-2010-04
+> 
 
-I figure a quick solution for #2 would be the following patch. However,
-running multiple copies of this program could result in similar OOM
-behavior, so issue #1 still needs a solution.
+It's been pointed out to me that these are the same thing, and should only
+use one ID.
 
-Reported-by: Brad Spengler <spender@...ecurity.net>
-Signed-off-by: Kees Cook <kees.cook@...onical.com>
----
- fs/exec.c |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
+Let's use CVE-2010-1456 as the dupe then. Please do not reference
+CVE-2010-1456 in any advisories.
 
-diff --git a/fs/exec.c b/fs/exec.c
-index dab85ec..be40063 100644
---- a/fs/exec.c
-+++ b/fs/exec.c
-@@ -194,7 +194,8 @@ static struct page *get_arg_page(struct linux_binprm *bprm, unsigned long pos,
- 		 *    to work from.
- 		 */
- 		rlim = current->signal->rlim;
--		if (size > ACCESS_ONCE(rlim[RLIMIT_STACK].rlim_cur) / 4) {
-+		if (size > ACCESS_ONCE(rlim[RLIMIT_STACK].rlim_cur) / 4 ||
-+		    size > TASK_SIZE / 4) {
- 			put_page(page);
- 			return NULL;
- 		}
--- 
-1.7.1
+Only use CVE-2010-1455.
+
+Sorry for the confusion.
+
+Thanks.
 
 -- 
-Kees Cook
-Ubuntu Security Team
+    JB
