@@ -1,34 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/22/3
-Message-ID: <20100422203033.54cd90f7@mail.a3li.li>
-Date: Thu, 22 Apr 2010 20:30:33 +0200
-From: Alex Legler <a3li@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: VLC <1.0.6 Multiple issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/07/5
+Message-ID: <2059877999.716401273235734227.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 7 May 2010 08:35:34 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: coley <coley@...re.org>
+Subject: CVE Assignment (wireshark)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Wireshark just published two advisories
 
-in case there was no request from upstream yet:
+http://www.wireshark.org/security/wnpa-sec-2010-03.html
+http://www.wireshark.org/security/wnpa-sec-2010-04.html
 
-VLC media player suffers from various vulnerabilities when attempting
-to parse malformatted or overly long byte streams.
+I've assigned CVE ids:
 
-* Heap buffer overflow vulnerability in A/52, DTS and MPEG Audio
-  decoders
-* Invalid memory access in AVI, ASF, Matroska (MKV)
-  demuxers 
-* Invalid memory access in XSPF playlist parser
-* Inavlid memory access in ZIP archive decompressor
-* Heap buffer overflow in RTMP access
+CVE-2010-1455 wireshark wnpa-sec-2010-03
+CVE-2010-1456 wireshark wnpa-sec-2010-04
 
-http://www.videolan.org/security/sa1003.html
-
-Thanks,
-Alex
+Thanks.
 
 -- 
-Alex Legler | Gentoo Security / Ruby
-a3li@...too.org | a3li@...ber.ccc.de
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+    JB
