@@ -1,39 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/16/1
-Message-ID: <4CE224F2.2090709@redhat.com>
-Date: Tue, 16 Nov 2010 12:00:10 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/07/2
+Message-Id: <201005071235.26905.oeriksson@mandriva.com>
+Date: Fri, 7 May 2010 12:35:26 +0200
+From: Oden Eriksson <oeriksson@...driva.com>
 To: oss-security@...ts.openwall.com
-CC: Pierre Joye <pierre.php@...il.com>
-Subject: utf-8 security issue in php - 2 CVEs?
+Subject: A mysql flaw.
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-This is regarding the "utf-8 security issue in php", which was discussed
-on this list[1]
->From the php bug[2], it is clear that this issue has been assigned
-CVE-2010-3870
+Hello.
 
-However yesterday another CVE was assigned to this bug i.e. CVE-2009-5016[3]
+With the mysql-5.1.46 release they fixed a security issue mentioned here:
 
-The upstream bug report, describes two issues:
-a. An integer overflow
-b. flaw in handling ill-formed UTF8 characters.
+http://bugs.mysql.com/bug.php?id=51770
 
-The integer overflow issue was solved somewhere in year 2009, which was
-however not a complete fix since the ill-formed UTF8 chars., were still
-not properly validated. The rest of the issues were solved sometime back.
+[...]
 
-It seems that the integer overflow is not exploitable on its own, you
-need to couple it with the second issue for the exploit to really work.
+3375 Davi Arnaut    2010-03-09
+      Bug#51770: UNINSTALL PLUGIN requires no privileges
 
-Therefore do we really need two CVEs for this issue?
+      The problem was that UNINSTALL PLUGIN wasn't performing privilege
+      checks before removing a plugin. Any user (including users without 
+      any kind of privileges) could uninstall any plugin.
 
-[1] http://thread.gmane.org/gmane.comp.security.oss.general
-[2] http://bugs.php.net/bug.php?id=49687
-[3] http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2009-5016
+      The solution is to verify if the user has the DELETE privilege for
+      the mysql.plugin table before uninstalling a plugin.
+
+[...]
+
+A CVE should probably be assigned for this.
 
 
 -- 
-
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+Regards // Oden Eriksson
+Security team manager - Mandriva
+C∞O @ NUX™ AB
