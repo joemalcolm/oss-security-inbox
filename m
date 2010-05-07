@@ -1,46 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/12/5
-Message-ID: <20100212221456.GI2737@redhat.com>
-Date: Fri, 12 Feb 2010 15:14:56 -0700
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/07/1
+Message-ID: <4BE3AC76.50703@redhat.com>
+Date: Fri, 07 May 2010 14:00:22 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: gnome-screensaver vulnerability (CVE-2010-0414)
+CC: coley@...us.mitre.org
+Subject: CVE-2010-0730 xen: emulator instruction decoding inconsistency
 Content-Type: text/plain; charset=utf-8
 
-* [2010-02-08 09:48:22 -0700] Vincent Danen wrote:
+Assigned with CVE-2010-0730. It does not affect upstream. For more info, 
+please see https://bugzilla.redhat.com/CVE-2010-0730.
 
->This is a heads up on a gnome-screensaver issue that was fixed upstream
->today.
->
->In version 2.28, it is possible to circumvent the security of screen
->locking functionality by changing the physical monitor configuration.
->
->Details are available in our bugzilla, along with the patch being used
->by upstream to correct the issue:
->
->https://bugzilla.redhat.com/show_bug.cgi?id=562217
->
->We have assigned CVE-2010-0414 to this issue.
->
->The code that caused this issue went into gnome-screensaver during the
->2.24 development cycle, but auto-configuration of hotplugged monitors
->didn't show up until 2.28, and that is a pre-requisite for triggering
->the bug, so only 2.28 is vulnerable.
->
->References:
->
->http://git.gnome.org/browse/gnome-screensaver/commit/?id=a5f66339be6719c2b8fc478a1d5fc6545297d950
->https://bugzilla.gnome.org/show_bug.cgi?id=609337
+Due to a mismatch between the opcode decoding table and the 
+implementation of the operand decoder in platform.c, the ARPL 
+instruction would cause the guest to crash if executed on a MMIO area. 
+While this is difficult to exploit from non-root, it is theoretically 
+possible to do so.
 
-A similar issue was also just found.  We have assigned CVE-2010-0422 to
-the new flaw that is similar to this.
+This fix changes the failure path to inject #UD instead of crashing the 
+domain. The guest kernel will transform the #UD into a SIGILL.
+---
+  arch/x86/hvm/platform.c |    4 +++-
+  1 files changed, 3 insertions(+), 1 deletions(-)
 
-https://bugzilla.redhat.com/show_bug.cgi?id=564464
-https://bugzilla.gnome.org/show_bug.cgi?id=609789
+diff --git a/arch/x86/hvm/platform.c b/arch/x86/hvm/platform.c
+index 3d69e9c..86c478d 100644
+--- a/arch/x86/hvm/platform.c
++++ b/arch/x86/hvm/platform.c
+@@ -1057,7 +1057,9 @@ void handle_mmio(unsigned long gpa)
+          for ( i = 0; i < inst_len; i++ )
+              printk(" %02x", inst[i] & 0xFF);
+          printk("\n");
+-        domain_crash_synchronous();
++
++	hvm_inject_exception(TRAP_invalid_op, -1, 0);
++	return;
+      }
 
-There are links to the upstream commits in the gnome bug report.
-
-As with the previous issue, this one also only affects version 2.28.
+      regs->eip += inst_len; /* advance %eip */
+-- 
+1.6.6.1
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
