@@ -1,41 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/28/3
-Message-ID: <20100628201940.4f32b2f7@foo.fgeek.fi>
-Date: Mon, 28 Jun 2010 20:19:40 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/07/8
+Message-ID: <u2p4a6942471005070720x9fcbe9e7h3a8bc971531ccd8e@mail.gmail.com>
+Date: Fri, 7 May 2010 10:20:55 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- Drupal v6.16 / v5.22 SA-CORE-2010-001
+Cc: coley <coley@...re.org>
+Subject: Re: CVE Assignment (gnustep)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 08 Mar 2010 20:36:55 +0100
-Jan Lieskovsky <jlieskov@...hat.com> wrote:
+Note that there's a second bug in there - a potentially exploitable
+integer overflow leading to heap overflow when reading a file (or
+socket) with a very large number of lines, causing several malloc()
+calls to underallocate space.  This should probably receive a second
+CVE.
 
-> Hi Steve, vendors,
-> 
->    multiple security issues have been addressed within
-> SA-CORE-2010-001:
-> 
-> * Installation cross site scripting
-> * Open redirection
-> * Locale module cross site scripting
-> * Blocked user session regeneration
-> 
-> References:
->    [1] http://drupal.org/node/731710
->    [2]
-> http://lists.fedoraproject.org/pipermail/package-announce/2010-March/036472.html
-> [3]
-> http://lists.fedoraproject.org/pipermail/package-announce/2010-March/036619.html
-> [4]
-> http://lists.fedoraproject.org/pipermail/package-announce/2010-March/036583.html
-> 
-> Could you allocate CVE ids for these?
-> 
-> Thanks && Regards, Jan.
+http://article.gmane.org/gmane.comp.lib.gnustep.bugs/12379
+
+-Dan
+
+On Fri, May 7, 2010 at 9:04 AM, Josh Bressers <bressers@...hat.com> wrote:
+> A file contents disclosure flaw was found when gdomap is suid root:
+>
+> https://bugs.launchpad.net/ubuntu/+source/gnustep-base/+bug/573108
+> http://thread.gmane.org/gmane.comp.lib.gnustep.bugs/12336
+>
+> I assigned CVE-2010-1457 to this.
+>
+> Thanks.
+>
 > --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
-
-Did this get CVE-identifiers?
-
----
-Henri Salo
+>    JB
+>
