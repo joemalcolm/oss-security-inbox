@@ -1,48 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/21/8
-Message-ID: <60269379.244181285095443209.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 21 Sep 2010 14:57:23 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/10/1
+Message-Id: <201005100933.16892.oeriksson@mandriva.com>
+Date: Mon, 10 May 2010 09:33:16 +0200
+From: Oden Eriksson <oeriksson@...driva.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: Minor security flaw with pam_xauth
+Subject: Re: A mysql flaw.
 Content-Type: text/plain; charset=utf-8
 
------ "Solar Designer" <solar@...nwall.com> wrote:
+lördagen den 8 maj 2010 02.56.06 skrev  Josh Bressers:
+> Please use CVE-2010-1621 for this.
+> 
+> Thanks.
 
-> On Mon, Aug 16, 2010 at 12:05:13PM +0100, Tim Brown wrote:
-> > Here's another bug where privileged code isn't checking the return
-> value from 
-> > setuid():
-> > 
+Thanks Josh.
+ 
+> > Hello.
 > >
-> http://sourceforge.net/tracker/?func=detail&aid=3028213&group_id=6663&atid=106663
+> > With the mysql-5.1.46 release they fixed a security issue mentioned
+> > here:
+> >
+> > http://bugs.mysql.com/bug.php?id=51770
+> >
+> > [...]
+> >
+> > 3375 Davi Arnaut    2010-03-09
+> >       Bug#51770: UNINSTALL PLUGIN requires no privileges
+> >
+> >       The problem was that UNINSTALL PLUGIN wasn't performing
+> > privilege
+> >       checks before removing a plugin. Any user (including users
+> > without
+> >       any kind of privileges) could uninstall any plugin.
+> >
+> >       The solution is to verify if the user has the DELETE privilege
+> > for
+> >       the mysql.plugin table before uninstalling a plugin.
+> >
+> > [...]
+> >
+> > A CVE should probably be assigned for this.
 > 
-> This is fixed in Linux-PAM 1.1.2:
-> 
-> http://git.altlinux.org/people/ldv/packages/?p=pam.git;a=commitdiff;h=06f882f30092a39a1db867c9744b2ca8d60e4ad6
-> 
-
-Let's use CVE-2010-3316 for the above flaw.
-
-
-> The same commit also introduces previously-missing privilege switching
-> into pam_env and pam_mail.  Unfortunately, this pam_env and pam_mail fix
-> is incomplete: it only switches the fsuid (should also switch fsgid (or
-> egid) and groups), and it fails to check the return value from setfsuid()
-> (doing so would require duplicate calls to setfsuid(), like we do in
-> libtcb, or switching of euid instead - yet it is desirable).
-> 
-
-This one is a bit on the tricky side. I'm going to call it "improper
-setfsuid use" so we can use just one CVE instead of two (as the flaws are
-related):
-
-Use CVE-2010-3430
-
-Steve, feel free to overrule me if MITRE doesn't like this.
-
-Thanks.
 
 -- 
-    JB
+Regards // Oden Eriksson
+Security team manager - Mandriva
+C∞O @ NUX™ AB
