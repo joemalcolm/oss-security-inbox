@@ -1,26 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/14/5
-Message-ID: <4CE01844.5000004@openttd.org>
-Date: Sun, 14 Nov 2010 18:11:32 +0100
-From: Rubidium <rubidium@...nttd.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/11/3
+Message-ID: <Pine.GSO.4.64.1005111923070.21091@faron.mitre.org>
+Date: Tue, 11 May 2010 19:24:51 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request for OpenTTD
+Subject: CVE assignment: ghostscript stack-based overflow
 Content-Type: text/plain; charset=utf-8
 
-Hi folks,
 
-we, the OpenTTD developers, have identified a security vulnerability in
-OpenTTD (an open source game with multiplayer). Would you be so kind as 
-to allocate a CVE id for this issue?
+FYI.  The researcher told me that some distros were notified 
+pre-disclosure, but I had already assigned this CVE when I found out.
 
-The issue concerns a denial of service vulnerability in the form of 
-reading and writing already freed memory. The first vulnerable version 
-is 1.0.0, the upcoming 1.0.5 release will have the issue fixed.
 
-Once a CVE id is allocated, the issue will be documented at
-http://security.openttd.org/CVE-2010-xxxx
+======================================================
+Name: CVE-2010-1869
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-1869
+Reference: MISC:http://www.checkpoint.com/defense/advisories/public/2010/cpai-10-May.html
 
-Thanks in advance,
-Remko 'Rubidium' Bijker
+Stack-based buffer overflow in the parser function in GhostScript 8.70
+and 8.64 allows context-dependent attackers to execute arbitrary code
+via a crafted PostScript file.
 
-(Please CC me, I'm not subscribed)
+
