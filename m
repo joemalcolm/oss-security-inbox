@@ -1,26 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/05/1
-Message-ID: <721400777.1212531265395897361.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 5 Feb 2010 13:51:37 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: coley <coley@...re.org>, Simo Sorce <ssorce@...hat.com>
-Subject: Samba symlink 0day flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/11/2
+Message-ID: <20100511091917.GA26117@inutil.org>
+Date: Tue, 11 May 2010 11:19:17 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Month of PHP Security 2010 Issues
 Content-Type: text/plain; charset=utf-8
 
-As many of you have probably seen, there was a supposed Samba 0day flaw
-posted to full-disclosure and youtube.
+On Tue, May 11, 2010 at 12:08:28PM +0300, Eren Türkay wrote:
+> > MOPS-2010-001: PHP hash_update_file() Already Freed Resource Access
+> > Vulnerability - http://bit.ly/aZDRha
+> 
+> Not assigned yet
 
-Samba has a response to this:
-http://marc.info/?l=samba-technical&m=126539387432412&w=2
+Since MOPS-2010-001 is about the fact that MOPB-28-2007 is still
+unfixed in current PHP, the CVE ID from MOPB-28-2007 still
+applies: CVE-2007-1581
 
-I'm not sure if this should get a CVE id. It is documented behavior.
-Somewhat unexpected though. I think changing the default is the right way
-to go, but it may be more of a hardening measure than a security fix.
-
-Thoughts Steve?
-
-Thanks.
-
--- 
-    JB
+Cheers,
+        Moritz
