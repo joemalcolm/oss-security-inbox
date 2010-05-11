@@ -1,36 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/08/1
-Message-Id: <A78A4A68-0A9D-4275-8781-D5536A831884@gmail.com>
-Date: Tue, 8 Jun 2010 14:32:30 +0200
-From: Andrea Di Pasquale <spikey.it@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/11/1
+Message-ID: <20100511090828.GC3642@mutt-is-awesome>
+Date: Tue, 11 May 2010 12:08:28 +0300
+From: Eren Türkay <eren@...dus.org.tr>
 To: oss-security@...ts.openwall.com
-Subject: ArpON (Arp handler inspectiON) 2.0 released!
+Subject: Month of PHP Security 2010 Issues
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+Hello,
 
-ArpON (Arp handler inspectiON) is a portable handler daemon that make Arp secure in order to avoid Arp Spoofing/Poisoning & co.
-This is possible using two kinds of anti Arp Poisoning tecniques, the first is based on SARPI or "Static Arp Inspection", the second on DARPI or"Dynamic Arp Inspection" approach.
+Several CVE IDs have been assigned to issues mentioned in Month of PHP
+Security 2010 page [0] However, there are issues for which CVE IDs have not yet
+been assiged. Is it possible to assign CVE IDs for these issues as well?
+It should be noted that these issues I am referring to are PHP issues,
+not PHP applications.
 
-Features:
+Additionally, is there anyone who has a contact with upstream about these issues? It
+would be really helpful to know the state of these issues (whether fixed, wheter in php bugzilla, etc)
 
-- It replaces Arpwatch & co; ArpON blocks;
-- It detects and blocks Arp Poisoning/Spoofing attacks in statically configured networks;
-- It detects and blocks Arp Poisoning/Spoofing attacks in dinamically configured (DHCP) networks;
-- It detects and blocks unidirectional and bidirectional attacks;
-- It manages the network interface into unplug, boot, hibernation and suspension OS features;
-- Easily configurable via command line switches, provided that you have root permissions;
-- It works in userspace for OS portability reasons;
-- Tested against Ettercap, Cain & Abel, dsniff and other tools.
+[0] http://php-security.org/
 
-Links:
+Here is a list that I also mailed to bugtraq and full-disclosure in
+response to Stefan Esser.
 
-http://arpon.sourceforge.net
-http://arpon.sourceforge.net/documentation.html
-http://arpon.sourceforge.net/manpage.html
-http://arpon.sourceforge.net/download.html
+> Vulnerabilities in PHP
+> ----------------------
+> 
+> MOPS-2010-017: PHP preg_quote() Interruption Information Leak
+> Vulnerability - http://bit.ly/cUYsbj
+> MOPS-2010-016: PHP ZEND_SR Opcode Interruption Address Information Leak
+> Vulnerability - http://bit.ly/bwT28V
+> MOPS-2010-015: PHP ZEND_SL Opcode Interruption Address Information Leak
+> Vulnerability - http://bit.ly/a3BonY
+> MOPS-2010-014: PHP ZEND_BW_XOR Opcode Interruption Address Information
+> Leak Vulnerability - http://bit.ly/cdMzTo
 
-Thank you,
+Not assigned yet
 
+> MOPS-2010-013: PHP sqlite_array_query() Uninitialized Memory Usage
+> Vulnerability - http://bit.ly/bhHyrj
+> MOPS-2010-012: PHP sqlite_single_query() Uninitialized Memory Usage
+> Vulnerability - http://bit.ly/8Z8xYt
 
-Andrea Di Pasquale
+- CVE-2010-1868 (for both issues)
+
+> MOPS-2010-010: PHP html_entity_decode() Interruption Information Leak
+> Vulnerability - http://bit.ly/doxAXk
+
+- CVE-2010-1860
+
+> MOPS-2010-009: PHP shm_put_var() Already Freed Resource Access
+> Vulnerability - http://bit.ly/b4NBD8
+
+- CVE-2010-1861
+
+> MOPS-2010-008: PHP chunk_split() Interruption Information Leak
+> Vulnerability - http://bit.ly/cVoWoM
+
+- CVE-2010-1862
+
+> MOPS-2010-006: PHP addcslashes() Interruption Information Leak
+> Vulnerability - http://bit.ly/b5gkaf
+
+- CVE-2010-1864
+
+> MOPS-2010-003: PHP dechunk Filter Signed Comparison Vulnerability -
+> http://bit.ly/bXDivD
+
+- CVE-2010-1866
+
+> MOPS-2010-001: PHP hash_update_file() Already Freed Resource Access
+> Vulnerability - http://bit.ly/aZDRha
+
+Not assigned yet
+
+Thanks,
+Eren
