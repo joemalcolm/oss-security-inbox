@@ -1,66 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/16/9
-Message-ID: <20100316171107.GG30480@redhat.com>
-Date: Tue, 16 Mar 2010 11:11:07 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/11/4
+Message-ID: <Pine.GSO.4.64.1005111927060.21091@faron.mitre.org>
+Date: Tue, 11 May 2010 19:31:45 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: Re: CVE Request: gnome-screensaver termination by pressing "Enter"
+Subject: Re: Month of PHP Security 2010 Issues
 Content-Type: text/plain; charset=utf-8
 
-* [2010-03-05 10:09:58 +0100] Marcus Meissner wrote:
 
->Can someone, Stephen, assign a CVE id please?
+Here is the latest round of CVE assignments for MOPS advisories.
 
-Please use CVE-2010-0732 for this issue.
+>MOPS-2010-021: PHP fnmatch() Stack Exhaustion Vulnerability
 
-Also note that our maintainer looked at this and indicates this is a bug
-in GTK+, not gnome-screensaver, and that this commit actually corrects
-the problem:
+CVE-2010-1917
 
-http://git.gnome.org/browse/gtk+/commit/?id=0748cf563d0d0d03001a62589f13be16a8ec06c1
 
-See the comments in our bugzilla:
+>MOPS-2010-020: Xinha WYSIWYG Plugin Configuration Injection Vulnerability
+>MOPS-2010-019: Serendipity WYSIWYG Editor Plugin Configuration Injection
 
-https://bugzilla.redhat.com/show_bug.cgi?id=565527#c3
+These two are combined into a single CVE:
 
->On Fri, Feb 12, 2010 at 10:53:24AM +0100, Marcus Meissner wrote:
->> Hi,
->>
->> Yesterday an article was published by Heise News (a german IT magazine)
->> that said that the Gnome Screensaver in openSUSE 11.2 is unlockable by
->> just pressing the "return" key for some time.
->>
->> The issue as far as we know is the following:
->>
->> The unlock dialog shakes if you enter the wrong password. On the last try,
->> this dialog is also hidden again (so screen is blanked).
->>
->> There is race condition between these two actions which can lead to an X error
->> which aborts the screensaver (and so unlocks the screen).
->>
->> It is fixed in gnome-screensaver 2.28.1 release.
->>
->> References:
->>
->> The fixing commit in the 2.28 branch:
->> http://git.gnome.org/browse/gnome-screensaver/commit/?h=gnome-2-28&id=98f8a22412cf388217fd5b88915eadd274d68520
->>
->> The news article (in german):
->> http://www.heise.de/newsticker/meldung/Gnome-Bildschirmsperre-in-OpenSuse-Linux-wirkungslos-928580.html
->>
->> The GNOME upstream bug:
->> http://bugzilla.gnome.org/show_bug.cgi?id=598476
->>
->> I think this does not have a CVE id yet, so please someone allocate one.
->>
->> I am not sure when this shaking was introduced, but it might be pretty new.
->>
->> Ciao, Marcus
->
->-- 
->Working, but not speaking, for the following german company:
->SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+CVE-2010-1916
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+
+>MOPS-2010-018: EFront ask_chat chatrooms_ID SQL Injection Vulnerability
+
+CVE-2010-1918
+
+
+>MOPS-2010-017: PHP preg_quote() Interruption Information Leak
+
+CVE-2010-1915
+
+
+>MOPS-2010-016: PHP ZEND_SR Opcode Interruption Address Information Leak 
+>MOPS-2010-015: PHP ZEND_SL Opcode Interruption Address Information Leak 
+>MOPS-2010-014: PHP ZEND_BW_XOR Opcode Interruption Address Information
+
+These three are combined into a single CVE:
+
+CVE-2010-1914
+
+
+- Steve
