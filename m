@@ -1,39 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/06/1
-Message-ID: <1471874796.405861270515680192.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 5 Apr 2010 21:01:20 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/12/1
+Message-ID: <AANLkTim3fIN5T94OrRRs5aq76FmAo7IfqV8OWXVWsMAL@mail.gmail.com>
+Date: Tue, 11 May 2010 20:33:01 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Roshan Kumar Singh <roshansingh@...rs.sourceforge.net>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- OpenDCHub v0.8.1 -- Stack overflow by handling a specially-crafted MyINFO message
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE assignment: ghostscript stack-based overflow
 Content-Type: text/plain; charset=utf-8
 
+CVE request for the second issue described in this advisory, just published:
 
------ "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+http://seclists.org/fulldisclosure/2010/May/134
 
-> Hi Steve, vendors
-> 
->    (based on http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=576308)
-> 
->    Pierre Nogues found a stack overflow flaw, in the way Open DC Hub
-> sanitized content of user's MyINFO message. Remote attacker,
-> with valid Open DC Hub account, could send a specially-crafted
-> MyINFO message to another user / all users connected to particular
-> Direct Connect network, leading into denial of service (opendchub
-> crash) or, potentially, to arbitrary code execution with the
-> privileges
-> of the user running opendchub.
-> 
-> References:
->    [1]
-> http://www.indahax.com/exploits/opendchub-0-8-1-remote-code-execution-exploit#more-600
->    [2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=576308
->    [3] https://bugzilla.redhat.com/show_bug.cgi?id=579206
-> 
+quote:
 
-Use CVE-2010-1147
+GhostScript (all tested versions) fails to properly handle infinitely
+recursive procedure invocations.  By providing a PostScript file with a
+sequence such as:
 
-Thanks.
+/A{pop 0 A 0} bind def
+/product A 0
 
--- 
-    JB
+the interpreter's internal stack will be overflowed with recursive calls, at
+which point execution will jump to an attacker-controlled address.  This
+vulnerability can be exploited by enticing a user to open a maliciously crafted
+PostScript file, achieving arbitrary code execution.  This issue has not yet
+been assigned a CVE identifier.
+
+Thanks,
+Dan
+
+On Tue, May 11, 2010 at 7:24 PM, Steven M. Christey
+<coley@...us.mitre.org> wrote:
+>
+> FYI.  The researcher told me that some distros were notified pre-disclosure,
+> but I had already assigned this CVE when I found out.
+>
+>
+> ======================================================
+> Name: CVE-2010-1869
+> Status: Candidate
+> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-1869
+> Reference:
+> MISC:http://www.checkpoint.com/defense/advisories/public/2010/cpai-10-May.html
+>
+> Stack-based buffer overflow in the parser function in GhostScript 8.70
+> and 8.64 allows context-dependent attackers to execute arbitrary code
+> via a crafted PostScript file.
+>
+>
+>
