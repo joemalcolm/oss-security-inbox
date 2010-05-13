@@ -1,27 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/29/1
-Message-ID: <4B62AC42.70703@redhat.com>
-Date: Fri, 29 Jan 2010 10:37:06 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-CC: "Steven M. Christey" <coley@...us.mitre.org>, Peter Lemenkov <lemenkov@...il.com>
-Subject: CVE Request -- ejabberd
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/13/1
+Message-ID: <1273787857.2858.1.camel@sprout>
+Date: Thu, 13 May 2010 23:57:37 +0200
+From: Jamie Strandboge <jamie@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: KDENetwork vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Hi Josh, Steve, vendors,
+Our KDE maintainer pointed this out to us. In case people haven't
+already seen it:
 
-   a remotely exploitable DoS from XMPP client to ejabberd server
-via too many "client2server" messages (causing the message queue on
-the server to get overloaded, leading to server crash) has been found:
+http://kde.org/info/security/advisory-20100513-1.txt
 
-   https://support.process-one.net/browse/EJAB-1173
 
-Links to applied patches are in:
+-- 
+Jamie Strandboge             | http://www.canonical.com
 
-   https://support.process-one.net/browse/EJAB-1173;jsessionid=CC9A1D875A20197DD4571444DA8C1EFB?page=com.atlassian.jira.plugin.system.issuetabpanels%3Aall-tabpanel
-
-Could you allocate a CVE id for this?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
