@@ -1,42 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/07/2
-Message-Id: <20100707015435.b9cb8db8.reed@reedloden.com>
-Date: Wed, 7 Jul 2010 01:54:35 -0500
-From: Reed Loden <reed@...dloden.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/14/3
+Message-ID: <962004038.1418271273866010415.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 14 May 2010 15:40:10 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kurt@...fried.org>
-Subject: Re: Bugzilla 3.7.1 CVE request
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: lxr
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-On Tue, 6 Jul 2010 00:51:40 -0600
-Kurt Seifried <kurt@...fried.org> wrote:
+----- "Dan Rosenberg" <dan.j.rosenberg@...il.com> wrote:
 
-> CVE # for this please.
+> Josh,
 > 
-> http://www.bugzilla.org/security/3.7.1/
+> The XSS in the title string was already assigned CVE-2010-1448.  Do
+> you mean to assign issue #2, the XSS reflected in search results?
+> 
 
-This security issue only affects the 3.7 and 3.7.1 development
-"snapshots" (basically, alpha/beta quality). It's highly unlikely that
-any distro would be tracking this unstable version/branch, so is a CVE
-really required? If so, Mozilla can assign one from its pool.
+Sigh, yes.
 
-I usually deal with getting CVEs assigned for Bugzilla issues, and I
-just didn't think this one required one... However, maybe I was
-mistaken in that.
+So to sum it up:
 
-~reed
-Mozilla Security Group
+1.  XSS in the ident parameter, as described in CVE-2009-4497.
 
-- -- 
-Reed Loden - <reed@...dloden.com>
+2.  XSS that is reflected via the search results page after issuing
+This one is now CVE-2010-1625
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
+3. 3.  XSS that is reflected via the <title> tag on the search page, as
+described in Raphael's original e-mail a few days ago, which Josh assigned
+CVE-2010-1448
 
-iEYEARECAAYFAkw0JKwACgkQa6IiJvPDPVrDPwCfax7OoqAr2Di+vZ0NQdXIrxZV
-pFMAoLBKcbef1hSrDiyeRUm7bTCoCmZY
-=EhY+
------END PGP SIGNATURE-----
+Thanks.
+
+-- 
+    JB
