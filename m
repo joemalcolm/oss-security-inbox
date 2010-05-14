@@ -1,49 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/09/6
-Message-ID: <1066087622.2481801278676648947.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 9 Jul 2010 07:57:28 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/14/1
+Message-ID: <1517560930.1416661273865324209.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 14 May 2010 15:28:44 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: kernel: gfs2 acl issue
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: lxr
 Content-Type: text/plain; charset=utf-8
-
-This clearly needs a CVE id.
-
-Use CVE-2010-2525
-
-Thanks.
-
--- 
-    JB
-
 
 ----- "Dan Rosenberg" <dan.j.rosenberg@...il.com> wrote:
 
-> To elaborate on the issue: the gfs2 filesystem in 2.6.32 kernels
-> currently allows any user to set arbitrary ACLs for files they do not
-> own, essentially granting full access to everything.  The source of
-> this problem also caused other misbehavior of ACLs.  This fix
-> resolved
-> the issue for 2.6.33, but it was not backported, so 2.6.32 remains
-> vulnerable.
+> Sorry for not making this explicitly clear.  There are three issues:
 > 
-> -Dan
+> 1.  XSS in the ident parameter, as described in CVE-2009-4497.
 > 
-> On Thu, Jul 8, 2010 at 11:47 PM, Eugene Teo <eugeneteo@...nel.sg>
-> wrote:
-> > Upstream commit 2646a1f6 (2.6.33-rc1) fixed an interesting gfs2 acl
-> issue
-> > late last year. Thanks Dan Rosenberg for informing us about this.
-> >
-> >
-> http://git.kernel.org/linus/2646a1f61a3b5525914757f10fa12b5b94713648
-> >
-> > I didn't request a CVE name for this but if you need one, ping
-> Steve.
-> >
-> > Thanks, Eugene
-> > --
-> > main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) &&
-> main(++i); }
-> >
+> 2.  XSS that is reflected via the search results page after issuing a
+> search.
+> 
+> 3.  XSS that is reflected via the <title> tag on the search page, as
+> described in Raphael's original e-mail a few days ago, which Josh just
+> assigned CVE-2010-1448.
+> 
+> Bugs 1 and 2 were fixed simultaneously, as indicated in the 2010-01-05
+> changelog entry for LXR:
+> 
+> 2010-01-05 18:00  mbox
+> 
+> 	* ident, search: Fix for CVE-2009-4497 from Dan Rosenberg
+> 
+> 	  Avoid a XSS vulnerability
+> 
+> Bug 3 was fixed a few days later on 2010-01-15, as indicated by:
+> 
+> 2010-01-15 23:23  mbox
+> 
+> 	* lib/LXR/Common.pm: Fix XSS exploit in title string
+> 
+> So, while my original intent at the time of disclosure was to have a
+> single CVE identifier assigned to cover all three of these issues, that
+> obviously did not happen.  As it stands, bugs 1 and 3 have their own CVE
+> identifiers, and bug 2 remains unassigned.
+> 
+
+Sorry this took so long.
+
+CVE-2010-1625 lxr lib/LXR/Common.pm: Fix XSS exploit in title string
+
+The diff is here:
+http://lxr.cvs.sourceforge.net/viewvc/lxr/lxr/lib/LXR/Common.pm?r1=1.63&r2=1.64
+
+Thanks
+
+-- 
+    JB
