@@ -1,19 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/16/1
-Message-Id: <201001161922.51848.hanno@hboeck.de>
-Date: Sat, 16 Jan 2010 19:22:51 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/14/2
+Message-ID: <AANLkTilTtVRQZxrPVn2ONCmKf2UNSsRGWE3P7DJ93fBR@mail.gmail.com>
+Date: Fri, 14 May 2010 15:32:18 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: typo3 < 4.3.1 openid authentication bypass
+Subject: Re: CVE request: lxr
 Content-Type: text/plain; charset=utf-8
 
-See here:
-http://typo3.org/teams/security/security-bulletins/typo3-sa-2010-001/
+Josh,
 
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+The XSS in the title string was already assigned CVE-2010-1448.  Do
+you mean to assign issue #2, the XSS reflected in search results?
 
-http://schokokeks.org - professional webhosting
+-Dan
 
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+On Fri, May 14, 2010 at 3:28 PM, Josh Bressers <bressers@...hat.com> wrote:
+> ----- "Dan Rosenberg" <dan.j.rosenberg@...il.com> wrote:
+>
+>> Sorry for not making this explicitly clear.  There are three issues:
+>>
+>> 1.  XSS in the ident parameter, as described in CVE-2009-4497.
+>>
+>> 2.  XSS that is reflected via the search results page after issuing a
+>> search.
+>>
+>> 3.  XSS that is reflected via the <title> tag on the search page, as
+>> described in Raphael's original e-mail a few days ago, which Josh just
+>> assigned CVE-2010-1448.
+>>
+>> Bugs 1 and 2 were fixed simultaneously, as indicated in the 2010-01-05
+>> changelog entry for LXR:
+>>
+>> 2010-01-05 18:00  mbox
+>>
+>>       * ident, search: Fix for CVE-2009-4497 from Dan Rosenberg
+>>
+>>         Avoid a XSS vulnerability
+>>
+>> Bug 3 was fixed a few days later on 2010-01-15, as indicated by:
+>>
+>> 2010-01-15 23:23  mbox
+>>
+>>       * lib/LXR/Common.pm: Fix XSS exploit in title string
+>>
+>> So, while my original intent at the time of disclosure was to have a
+>> single CVE identifier assigned to cover all three of these issues, that
+>> obviously did not happen.  As it stands, bugs 1 and 3 have their own CVE
+>> identifiers, and bug 2 remains unassigned.
+>>
+>
+> Sorry this took so long.
+>
+> CVE-2010-1625 lxr lib/LXR/Common.pm: Fix XSS exploit in title string
+>
+> The diff is here:
+> http://lxr.cvs.sourceforge.net/viewvc/lxr/lxr/lib/LXR/Common.pm?r1=1.63&r2=1.64
+>
+> Thanks
+>
+> --
+>    JB
+>
