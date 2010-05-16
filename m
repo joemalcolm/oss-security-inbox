@@ -1,37 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/19/5
-Message-ID: <db102a8d7b1163e711fa86cff2082a8a.squirrel@wm.kinkhorst.nl>
-Date: Wed, 19 May 2010 19:30:21 +0200
-From: "Thijs Kinkhorst" <thijs@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/16/1
+Message-Id: <201005170033.31687.hanno@hboeck.de>
+Date: Mon, 17 May 2010 00:33:31 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: phpbb 3.0.7 and before 3.0.5
+Cc: coley <coley@...re.org>, Josh Bressers <bressers@...hat.com>
+Subject: CVE request: phpbb 3.0.7 and before 3.0.5
 Content-Type: text/plain; charset=utf-8
 
-On Tue, May 18, 2010 21:19, Josh Bressers wrote:
-> ----- "Steven M. Christey" <coley@...us.mitre.org> wrote:
-> [...]
->>
->> So this could use a CVE, too.  At worst it's a signal to consumers that
->> they need to patch, even if the developer isn't clearly explaining why.
->>
->> Not much different than your typical Linux kernel bug, actually :-/
->>
->> - Steve
->
-> Here goes:
->
->     http://www.phpbb.com/community/viewtopic.php?f=14&p=9764445
->     # [Sec] Only use forum id supplied for posting if global announcement
->       detected. (Reported by nickvergessen)
->
-> CVE-2010-1630 phpbb 3.0.5 unspecified flaw
+http://www.phpbb.com/community/viewtopic.php?f=14&t=2014195
 
-At least I could find this patch. It seems to ensure that the used forum
-ID is actually the forum where the posting being edited is part of. Still,
-I'm not sure what hole this would fix.
+Please assign cve. Cite:
+"Otherwise, it is possible for users to bypass permission settings under the 
+following circumstances:
 
-http://github.com/phpbb/phpbb3/commit/4ea3402f9363c9259881bc8ea6ce7fc6cb212657
+    * Feeds are enabled
+    * Any of the posts or topics feeds are enabled
+    * The unauthorised user - or one of the groups they are a member of - have 
+forum permissions set on a private forum
+    * If you have excluded a forum from the list of forums that provide feeds, 
+it is unaffected"
 
 
-cheers,
-Thijs
+Also, I think this phpbb 3.0.5 still has no cve (I requested that before 
+here):
+http://www.phpbb.com/community/viewtopic.php?f=14&p=9764445
+# [Sec] Only use forum id supplied for posting if global announcement 
+detected. (Reported by nickvergessen)
+
+
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+
+http://schokokeks.org - professional webhosting
+
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
