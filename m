@@ -1,23 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/10/1
-Message-Id: <201002101123.31638.hanno@hboeck.de>
-Date: Wed, 10 Feb 2010 11:23:31 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: "oss-security" <oss-security@...ts.openwall.com>
-Subject: CVE request - coppermine gallery <1.4.26 code execution vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/17/1
+Message-ID: <20100517120322.GH11040@inversepath.com>
+Date: Mon, 17 May 2010 13:03:22 +0100
+From: Daniele Bianco <danbia@...rt.org>
+To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
+Subject: [oCERT-2010-001] multiple http client unexpected download filename vulnerability
 Content-Type: text/plain; charset=utf-8
 
-http://forum.coppermine-gallery.net/index.php/topic,63510.0.html
 
+#2010-001 multiple http client unexpected download filename vulnerability
 
-"The release covers a recently discovered input validation vulnerability that 
-allows (if unpatched) a malevolent visitor to include own script routines"
+Description:
 
+The lftp, wget and lwp-download applications are ftp/http clients and file
+transfer tools supporting various network protocols. The lwp-download
+script is shipped along with the libwww-perl library.
+
+Unsafe behaviours have been found in lftp and lwp-download handling the
+Content-Disposition header in conjunction with the 'suggested filename'
+functionality.
+
+Additionally, unsafe behaviours have been found in wget and lwp-download in
+the case of HTTP 3xx redirections during file downloading. The two
+applications automatically use the URL's filename portion specified in the
+Location header.
+
+Implicitly trusting the suggested filenames results in a saved file that
+differs from the expected one according to the URL specified by the user.
+This can be used by an attacker-controlled server to silently write hidden
+and/or initialization files under the user's current directory
+(e.g. .login, .bashrc).
+
+The impact of this vulnerability is increased in the case of lftp/lftpget
+as the default configuration allows file to be overwritten without
+prompting the user for confirmation. In the case of lftp the get1 command
+is affected. This command can be invoked directly by the user from lftp's
+command line interface or indirectly by using the lftpget script, packaged
+within the lftp distribution.
+
+Affected version:
+
+lftp <= 4.0.5
+
+wget <= 1.12
+
+libwww-perl <= 5.834
+
+Fixed version:
+
+lftp >= 4.0.6
+
+wget N/A
+
+libwww-perl >= 5.835
+
+Credit: Vulnerability discovered and reported by Hank Leininger and Solar
+        Designer under the Openwall Project, with further analysis by
+        Daniele Bianco of oCERT.
+
+CVE: N/A
+
+Timeline:
+
+2009-10-23: vulnerability report received
+2010-01-08: further investigations and analysis completed
+2010-01-10: contacted wget, libwww-perl and lftp maintainers
+2010-01-11: wget didn't acknowledge the report, the issues reported have
+            not been considered relevant from a security perspective by
+            the maintainer
+2010-01-21: lftp acknowledged the report, preliminary analysis for the
+            reported issues provided
+2010-02-06: wget confirmed the application will not be fixed
+2010-02-08: libwww-perl acknowledged the report, preliminary analysis for
+            the reported issues provided
+2010-03-25: lftp 4.0.6 released
+2010-05-05: libwww-perl-5.836 released
+2010-05-10: contacted affected vendors
+2010-05-14: failure reported during notification process of vendor-sec
+            list, notification re-sent
+2010-05-17: advisory published
+
+Permalink:
+http://www.ocert.org/advisories/ocert-2010-001.html
 
 -- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-
-http://schokokeks.org - professional webhosting
-
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+  Daniele Bianco      oCERT | Open Source Computer Emergency Response Team 
+  <danbia@...rt.org>                                  http://www.ocert.org
+  
+  GPG Key 0x4545E02B
+  GPG Key fingerprint = 3706 0361 56B2 61B1 B873  E400 353D 54F4 4545 E02B
