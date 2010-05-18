@@ -1,40 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/29/1
-Message-ID: <i7tufl$5p5$1@dough.gmane.org>
-Date: Tue, 28 Sep 2010 18:42:05 -0500
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/18/13
+Message-ID: <20100518234229.GA13745@openwall.com>
+Date: Wed, 19 May 2010 03:42:29 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: RFC: changing the behaviour of ld.so(8) regarding empty items on LD_LIBRARY_PATH
+Subject: Re: [oCERT-2010-001] multiple http client unexpected download filename vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hi everyone,
+On Tue, May 18, 2010 at 09:50:27AM +0200, Ludwig Nussel wrote:
+> wget doesn't overwrite existing files by default anyways. Instead it appends a
+> suffix .1, .2 etc to the newly downloaded file.
 
-I have talked to one of the eglibc Debian maintainers about making ld.so 
-ignore empty items on LD_LIBRARY_PATH instead of treating them as '.', and 
-he doesn't have any objection.
+Well, a server can sometimes override that default - please see below.
 
-Although this is a behaviour change, I do not think there is any real case 
-where an empty item was added in purpose (I even have yet to see one that 
-uses '.'.)
-We are therefore considering making this change starting with our next 
-stable release.
+> wget also prints the file name it used.
 
-What do the others think about it? do you think you would follow that change 
-too?
+This is of limited help - and for interactive uses only.  I am mostly
+concerned about uses from cron jobs and the like.
 
-This change has been proposed by some people multiple times along the years, 
-yet nothing has changed (not even properly discussed, I believe.) Has this 
-change ever been proposed to glibc upstream? (maybe the RedHat people can 
-help with this.)
+> So IMO it's perfectly fine and useful for wget to take the server
+> provided file name by default.
 
+I disagree.  Uses from scripts and cron jobs are too common, and they
+often don't care to specify an output filename explicitly.
 
-There is a similar issue with $PATH, but we have no plans for it so far 
-(execvp(8) claims ":/bin:/usr/bin" is the default if $PATH is unset, in some 
-setups.)
+Let's suppose there's a cron job like this:
 
-Regards,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+1 * * * *	wget http://www.openwall.com/pvt/wget/log &> /dev/null
 
+If the server is malicious or compromised, it can have:
 
+RedirectMatch log $1/pvt/wget/.wgetrc
+
+in .htaccess, and
+
+reject=; exec id
+output-document=.bash_profile
+
+in .wgetrc.  When the cron job runs for the first time after the above
+changes made on the server, it does:
+
+02:01:02 (2.64 MB/s) - `.wgetrc' saved [47/47]
+
+At this point, .wgetrc is on the client system.  The second time the
+cron job runs, it does:
+
+03:01:02 (2.99 MB/s) - `.bash_profile' saved [47/47]
+
+This has happily overwritten my .bash_profile file.
+
+(I replaced "/dev/null" in the cron job with another filename for
+obtaining these wget output lines.)
+
+When I am logging in to the affected account, I get the output of "id".
+Of course, the shell command could as well be nastier than that.
+
+Although I used a somewhat tricky approach in the above exploit,
+eventually making wget overwrite a file, it is also possible to mount
+attacks that do not rely on overwriting any files.  Many programs
+support optional startup/config files of fixed/known/guessable names
+that a malicious or compromised server could provide.  In fact, I've
+just demonstrated this attack against wget itself, but it could also
+work against another program.
+
+Is this more convincing now?
+
+Alexander
