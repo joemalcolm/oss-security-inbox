@@ -1,57 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/16/6
-Message-ID: <1746187219.1671761292532577515.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 16 Dec 2010 15:49:37 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/18/10
+Message-ID: <AANLkTikBtepEv7WwBr4ReQ2H6kFhANj73OwrGRvDbKe_@mail.gmail.com>
+Date: Tue, 18 May 2010 13:44:40 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Colin Walters <walters@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- D-BUS -- Stack frame overflow by validating message with excessive number of nested variants
+Cc: coley@...us.mitre.org
+Subject: Re: kernel: btrfs: check for read permission on src  file in the clone ioctl
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-4352
+Ubuntu 10.4 ships with a kernel that supports btrfs:
 
-Thanks.
+https://bugs.launchpad.net/ubuntu/+source/linux/+bug/579585
 
--- 
-    JB
+In case the bug description needs clarification, the bug allows an
+unprivileged user to clone files that can be opened for writing
+without read permissions.  Since cloning results in the creation of a
+duplicate copy owned by the user who performed the cloning operation,
+this is an information disclosure vulnerability.
 
+-Dan
 
------ "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
-
-> Hello Josh, Steve, vendors,
-> 
->    a stack frame overflow flaw was found in the way the D-BUS message
-> bus service / messaging facility validated messages with
-> excessive number of nested variants. A local, authenticated
-> user could use this flaw to cause dbus daemon to crash
-> due to a stack frame overflow (denial of service) via a
-> specially-crafted message sent to the system bus.
-> 
-> References:
-> [1] http://www.remlab.net/op/dbus-variant-recursion.shtml
-> 
-> Upstream bug report:
-> [2] https://bugs.freedesktop.org/show_bug.cgi?id=32321
->      (not public at the moment yet)
-> 
-> Credit:
-> Rémi Denis-Courmont
-> 
-> Note: As noted in [1] this issue may also cause malfunction
->        of some other daemons depending on d-bus. Some examples
->        (from /var/log/messages on the affected host):
-> 
->        Dec 16 09:49:03 hostname avahi-daemon[30120]: Disconnected from
-> D-Bus, exiting.
->        Dec 16 09:49:03 hostname avahi-daemon[30120]: Got SIGQUIT,
-> quitting.
->        Dec 16 09:49:03 hostname NetworkManager[982]: <warn>
-> disconnected by the system bus.
->        Dec 16 09:49:03 hostname NetworkManager[982]: no sender
->        Dec 16 09:49:03 hostname init: Disconnected from system bus
-> 
-> Could you allocate a CVE id for this issue?
-> 
-> Thanks && Regards, Jan.
+On Tue, May 18, 2010 at 5:13 AM, Eugene Teo <eugene@...hat.com> wrote:
+> The existing [btrfs] code would have allowed you to clone a file that was
+> only open for writing. Not an expected behaviour.
+>
+> Upstream commit:
+> http://git.kernel.org/linus/5dc6416414fb3ec6e2825fd4d20c8bf1d7fe0395
+>
+> Reference:
+> https://bugzilla.redhat.com/show_bug.cgi?id=593226
+>
+> I'm not requesting a CVE name for this as it did not affect any of Red Hats'
+> supported Linux kernels.
+>
+> Thanks, Eugene
 > --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+>
