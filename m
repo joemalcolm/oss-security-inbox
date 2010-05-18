@@ -1,41 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/12/5
-Message-ID: <20101112224816.73b27d22@foo.fgeek.fi>
-Date: Fri, 12 Nov 2010 22:48:16 +0200
-From: Henri Salo <henri@...v.fi>
-To: "oss-security" <oss-security@...ts.openwall.com>
-Subject: CVE request: Joomla 1.5.21 SQL Injection and Information Disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/18/4
+Message-ID: <1234991101.1716841274202779090.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 18 May 2010 13:12:59 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: oeriksson@...driva.com, coley <coley@...re.org>
+Subject: Re: A mysql flaw.
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+----- "Tomas Hoger" <thoger@...hat.com> wrote:
+> 
+> It seems 5.1.46 also fixes:
+>   http://bugs.mysql.com/bug.php?id=40980
+> 
+> Which is another sequel to the DATA/INDEX DIRECTORY issues like
+> CVE-2008-2079, CVE-2008-4098, CVE-2008-7247 or CVE-2009-4030.
 
-Can I get CVE-identifier for this issue?
+Please use CVE-2010-1626.
 
-"Multiple vulnerabilities have been discovered in Joomla, which can be
-exploited by malicious people to conduct SQL injection attacks.
+Thanks (sorry this took so long, I missed it).
 
-Input passed via the "filter_order" and "filter_order_Dir" parameters
-to index.php (e.g. when "option" is set to "com_weblinks",
-"com_contact", or "com_messages") is not properly verified before being
-used in a SQL query. This can be exploited to manipulate SQL queries by
-injecting limited SQL code, which may result in e.g. information 
-disclosure via database errors."
-
-Vulnerable versions: 1.5.21 and all previous 1.5 releases
-Solution: Update to 1.5.22 (or later)
-
-Referers:
-http://secunia.com/advisories/42133
-http://developer.joomla.org/security/news/9-security/10-core-security/323-20101101-core-sqli-info-disclosurevulnerabilities.html
-http://archives.neohapsis.com/archives/fulldisclosure/2010-10/0514.html
-
-Best regards,
-Henri Salo
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkzdqBAACgkQXf6hBi6kbk8lFACgmpIFET/szRnKRNpVO0COQuFd
-pXcAoMwVjrf3/8PzOIOBuWkxMBW9lodS
-=AgJf
------END PGP SIGNATURE-----
+-- 
+    JB
