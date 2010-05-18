@@ -1,35 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/11/3
-Message-ID: <1533295840.2142191284165430050.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 10 Sep 2010 20:37:10 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/18/5
+Message-ID: <767388709.1717321274203011447.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 18 May 2010 13:16:51 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: Re: CVE request: mednafen stack manipulation
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: phorum < 5.2.15 backend XSS
 Content-Type: text/plain; charset=utf-8
-
-I can't make any sense of this either. Let's just use CVE-2010-3085 to note
-that version 0.8.D fixes some security flaws.
-
-Thanks.
-
--- 
-    JB
 
 
 ----- "Hanno Böck" <hanno@...eck.de> wrote:
 
-> http://sourceforge.net/news/?group_id=150840&id=287363
+> Release notes:
+> http://www.facebook.com/note.php?note_id=371190874581
 > 
 > 
-> "Fixed a couple of remotely-exploitable(if connected to a malicious
-> server) 
-> stack manipulation bugs in the network play code."
+> "It also has some security fixes for another less important XSS where a
+> user could "attack himself" with adding an invalid email address (thanks
+> to Carlos Ghan for pointing out this issue), see the changelog below for
+> details. "
 > 
-> Not more info. Please assign CVE.
-> 
-> -- 
-> Hanno Böck		Blog:		http://www.hboeck.de/
-> GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-> 
-> http://schokokeks.org - professional webhosting
+
+Does someone have some additional details for this? I don't see enough
+information for me to assign a CVE id.
+
+Thanks
+
+-- 
+    JB
