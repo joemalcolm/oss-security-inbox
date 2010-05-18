@@ -1,18 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/27/1
-Message-ID: <4BFDBD2C.20806@kernel.sg>
-Date: Thu, 27 May 2010 08:30:36 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/18/2
+Message-ID: <4BF25A53.9090907@redhat.com>
+Date: Tue, 18 May 2010 17:13:55 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - kernel: nfsd: fix vm overcommit crash
+CC: coley@...us.mitre.org
+Subject: kernel: btrfs: check for read permission on src file in the clone ioctl
 Content-Type: text/plain; charset=utf-8
 
-On 05/27/2010 02:45 AM, Josh Bressers wrote:
-> Please use CVE-2010-1643 for this.
+The existing [btrfs] code would have allowed you to clone a file that 
+was only open for writing. Not an expected behaviour.
 
-Also need 
-http://git.kernel.org/linus/1b79cd04fab80be61dcd2732e2423aafde9a4c1c
+Upstream commit:
+http://git.kernel.org/linus/5dc6416414fb3ec6e2825fd4d20c8bf1d7fe0395
+
+Reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=593226
+
+I'm not requesting a CVE name for this as it did not affect any of Red 
+Hats' supported Linux kernels.
 
 Thanks, Eugene
 -- 
