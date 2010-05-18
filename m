@@ -1,35 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/31/6
-Message-ID: <20100331203910.361e13b6@mail.a3li.li>
-Date: Wed, 31 Mar 2010 20:39:10 +0200
-From: Alex Legler <a3li@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/18/3
+Message-ID: <20100518155034.GA26710@kroah.com>
+Date: Tue, 18 May 2010 08:50:34 -0700
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Cc: jlieskov@...hat.com, "Steven M. Christey" <coley@...us.mitre.org>, Jan Lehnardt <jan@...che.org>
-Subject: Re: CVE Request -- Apache CouchDB v.0.11.0 -- timing attacks flaw
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: cifs: cifs_create() NULL pointer dereference
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
-On Wed, 31 Mar 2010 19:26:38 +0200, Jan Lieskovsky
-<jlieskov@...hat.com> wrote:
-
+On Mon, Apr 05, 2010 at 04:56:03PM +0800, Eugene Teo wrote:
+> On 04/05/2010 04:51 PM, Eugene Teo wrote:
+> >Reported by Eugene Teo. While creating a file on a server which supports
+> >Unix extensions such as Samba, if a file being created does not supply
+> >nameidata (i.e. nd is NULL), cifs client can trigger a NULL pointer
+> >dereference when calling cifs_posix_open().
+> >
+> >http://comments.gmane.org/gmane.linux.file-systems.cifs/5782
+> >https://bugzilla.redhat.com/579445
 > 
-> [1] references CVE-2008-2370 as CVE id, but CVE-2008-2370 is Apache
-> Tomcat flaw: [6]
-> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2370
-> 
-> Since Apache CouchDB is different code base, susceptible to the same
-> issue as in [3], assuming new CVE identifier is required.
-> 
+> The code that introduced this is upstream commit c3b2a0c6. Any
+> kernel version from v2.6.29-rc6 onwards are affected.
 
-Jan already posted a follow-up
-(http://seclists.org/fulldisclosure/2010/Mar/554) to his message with
-an updated ID: CVE-2010-0009
+Am I correct in that I do not see a fix for this in the upstream kernel
+repository yet?
 
-Alex
+thanks,
 
--- 
-Alex Legler | Gentoo Security / Ruby
-a3li@...too.org | a3li@...ber.ccc.de
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+greg k-h
