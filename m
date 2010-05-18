@@ -1,22 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/10/7
-Message-ID: <AANLkTik=ZpiCN-5YfWJ6zejSJBknL8Sj4Vtc+X_XpS71@mail.gmail.com>
-Date: Fri, 10 Sep 2010 08:06:41 -0700
-From: Linus Torvalds <torvalds@...ux-foundation.org>
-To: KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>
-Cc: Roland McGrath <roland@...hat.com>, Andrew Morton <akpm@...ux-foundation.org>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Kees Cook <kees.cook@...onical.com>, Al Viro <viro@...iv.linux.org.uk>, Oleg Nesterov <oleg@...hat.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, pageexec@...email.hu, "Brad Spengler <spender@...ecurity.net>, Eugene Teo" <eugene@...hat.com>, KAMEZAWA Hiroyuki <kamezawa.hiroyu@...fujitsu.com>
-Subject: Re: [PATCH 2/2] execve: check the VM has enough memory at first
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/18/11
+Message-ID: <2019270851.1733491274210239517.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 18 May 2010 15:17:19 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: phorum < 5.2.15 backend XSS
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Sep 8, 2010 at 10:04 PM, KOSAKI Motohiro
-<kosaki.motohiro@...fujitsu.com> wrote:
->
-> After this patch, execve() expand stack at first and receive to
-> check vm_enough_memory() properly. then, too long argument of
-> execve() than the machine memory return EFAULT properly.
+----- "Steven M. Christey" <coley@...us.mitre.org> wrote:
+> On Tue, 18 May 2010, Josh Bressers wrote:
+> >
+> > Does someone have some additional details for this? I don't see enough
+> > information for me to assign a CVE id.
+> 
+> Welcome to daily life in CVE.
+> 
+> In this case we have an announcement from the vendor alluding to at least
+> one security problem, and a fix for it.  This is (unfortunately)
+> sufficient for us to assign a CVE to it.
+> 
 
-This is horrible. We don't want to walk the arguments one more time
-just for this. Let's just improve the checks that we do as we go
-along.
+Good enough for me:
+CVE-2010-1629 phorum < 5.2.15 backend XSS
 
-                            Linus
+Thanks
+
+-- 
+    JB
