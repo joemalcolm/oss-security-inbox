@@ -1,25 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/30/8
-Message-ID: <Pine.GSO.4.64.1003301555400.4709@faron.mitre.org>
-Date: Tue, 30 Mar 2010 15:56:03 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/18/8
+Message-ID: <Pine.GSO.4.64.1005181335260.13965@faron.mitre.org>
+Date: Tue, 18 May 2010 13:36:27 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security <oss-security@...ts.openwall.com>, oss-security <oss-security@...ts.openwall.com>
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- MediaWiki - v1.15.2
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: phorum < 5.2.15 backend XSS
 Content-Type: text/plain; charset=utf-8
 
 
-On Tue, 9 Mar 2010, Jan Lieskovsky wrote:
+On Tue, 18 May 2010, Josh Bressers wrote:
 
->  a, a CSS validation issue was discovered which allows editors to display
->     external images in wiki pages.
+> ----- "Hanno Böck" <hanno@...eck.de> wrote:
+>
+>> Release notes:
+>> http://www.facebook.com/note.php?note_id=371190874581
+>>
+>>
+>> "It also has some security fixes for another less important XSS where a
+>> user could "attack himself" with adding an invalid email address (thanks
+>> to Carlos Ghan for pointing out this issue), see the changelog below for
+>> details. "
+>>
+>
+> Does someone have some additional details for this? I don't see enough
+> information for me to assign a CVE id.
 
-Use CVE-2010-1189
+Welcome to daily life in CVE.
 
->  b, a data leakage vulnerability was discovered in thumb.php which affects
->     wikis which restrict access to private files using img_auth.php, or
->     some similar scheme.
-
-Use CVE-2010-1190
+In this case we have an announcement from the vendor alluding to at least 
+one security problem, and a fix for it.  This is (unfortunately) 
+sufficient for us to assign a CVE to it.
 
 - Steve
