@@ -1,30 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/12/1
-Message-ID: <4B99CE83.6070300@kernel.sg>
-Date: Fri, 12 Mar 2010 13:17:55 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/18/1
+Message-Id: <201005180950.28566.ludwig.nussel@suse.de>
+Date: Tue, 18 May 2010 09:50:27 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-CC: coley@...us.mitre.org
-Subject: CVE-2010-0727 kernel: gfs/gfs2 locking code DoS flaw
+Subject: Re: [oCERT-2010-001] multiple http client unexpected download filename vulnerability
 Content-Type: text/plain; charset=utf-8
 
-static int
-gfs_lock(struct file *file, int cmd, struct file_lock *fl)
-{
-..
-         if ((ip->i_di.di_mode & (S_ISGID | S_IXGRP)) == S_ISGID)
-                 return -ENOLCK;
-..
-}
+Florian Weimer wrote:
+> * Daniele Bianco:
+> 
+> > Additionally, unsafe behaviours have been found in wget and lwp-download in
+> > the case of HTTP 3xx redirections during file downloading. The two
+> > applications automatically use the URL's filename portion specified in the
+> > Location header.
+> 
+> Thanks.  In another venue, I wrote:
+> 
+> > The difficult thing is that most likely, there are setups out there
+> > which expect this particular behavior.  If we change the default
+> > behavior, we need an option in wgetrc to turn back on the old one. 8-(
 
-This is a check for mandatory locking where the GFS/GFS2 locking code 
-will skip the lock in case sgid bits are set for the file. This can be 
-triggered to cause a crash on a system mounting a GFS/GFS2 filesystem.
+wget doesn't overwrite existing files by default anyways. Instead it appends a
+suffix .1, .2 etc to the newly downloaded file. wget also prints the file name
+it used. So IMO it's perfectly fine and useful for wget to take the server
+provided file name by default.
 
-I believe only GFS2 is part of the upstream kernel, and GFS only affects 
-Red Hat Enterprise Linux.
+cu
+Ludwig
 
-https://bugzilla.redhat.com/CVE-2010-0727
-http://lkml.org/lkml/2010/3/11/269
-
-Thanks, Eugene
+-- 
+ (o_   Ludwig Nussel
+ //\   
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
