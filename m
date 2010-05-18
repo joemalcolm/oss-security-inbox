@@ -1,47 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/21/5
-Message-ID: <112978625.203461285080917580.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 21 Sep 2010 10:55:17 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/18/12
+Message-ID: <1116194965.1734041274210375392.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 18 May 2010 15:19:35 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: epiphany not checking ssl certs
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: phpbb 3.0.7 and before 3.0.5
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-3312 for this.
+----- "Steven M. Christey" <coley@...us.mitre.org> wrote:
+[...]
+> 
+> So this could use a CVE, too.  At worst it's a signal to consumers that
+> they need to patch, even if the developer isn't clearly explaining why.
+> 
+> Not much different than your typical Linux kernel bug, actually :-/
+> 
+> - Steve
+
+Here goes:
+
+    http://www.phpbb.com/community/viewtopic.php?f=14&p=9764445
+    # [Sec] Only use forum id supplied for posting if global announcement
+      detected. (Reported by nickvergessen)
+
+CVE-2010-1630 phpbb 3.0.5 unspecified flaw
 
 Thanks.
 
 -- 
     JB
-
-
------ "Michael Gilbert" <michael.s.gilbert@...il.com> wrote:
-
-> On Fri, 17 Sep 2010 14:45:28 -0400 (EDT), Steven M. Christey wrote:
-> > 
-> > If an application does not advertise a security feature, then in
-> general 
-> > we will not give a CVE because of its absence of the feature (I
-> don't want 
-> > to give out 50,000 CVEs for every protocol that does cleartext 
-> > transmission... or uses DES... etc.)  Similarly, we generally avoid
-> 
-> > assigning CVEs to "defense in depth" fixes, although the line
-> between 
-> > "vulnerability" and "defense in depth" can get fuzzy.
-> > 
-> > The http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=564690#5 title
-> says 
-> > "Does not longer check certificates" which could be interpreted to
-> mean 
-> > that it used to check certs, and now it doesn't.  If that's the
-> case, then 
-> > it makes sense to assign a CVE.
-> 
-> The feature was lost in the transition from gecko to webkit (or more
-> accurately libsoup for certificate support). I think it makes sense
-> to
-> assign an id since it does involve the loss of an expected security
-> feature.
-> 
-> Mike
