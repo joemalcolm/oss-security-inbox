@@ -1,75 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/07/16
-Message-ID: <20100907215131.GB31867@grsecurity.net>
-Date: Tue, 7 Sep 2010 17:51:31 -0400
-From: Brad Spengler <spender@...ecurity.net>
-To: Andrew Morton <akpm@...ux-foundation.org>
-Cc: Jon Oberheide <jon@...rheide.org>, oss-security@...ts.openwall.com, security@...nel.org, Sebastian Krahmer <krahmer@...e.de>
-Subject: Re: [Security] Re:  /proc infoleaks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/18/6
+Message-ID: <1513020392.1718561274203506044.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 18 May 2010 13:25:06 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: phpbb 3.0.7 and before 3.0.5
 Content-Type: text/plain; charset=utf-8
 
-> That being said, it *might* be acceptable to obfuscate the kernel-side
-> addresses.  Still print them, but they're all zeroes.  I doubt if many
-> tools at all are actually using those.  Perhaps a runtime knob which
-> obfuscates those addresses for unprivileged users, something like that.
->
-> That also being said, I'm not seeing any kernel-side addresses in
-> slabinfo or zoneinfo anyway and I believe some distros already hide
-> kallsyms.  More specificity is needed.
+----- "Hanno Böck" <hanno@...eck.de> wrote:
 
-Do we have an inventory of the applications accessing these /proc 
-entries?  We've been hiding them for years in grsecurity.  Some embedded 
-systems also likely remove kallsyms completely (there's a config option 
-for it), but we did find one init script looking in /proc/kallsyms for 
-"nfsd" -- only one usage that I know of, and that was as root.
+> http://www.phpbb.com/community/viewtopic.php?f=14&t=2014195
+> 
+> Please assign cve. Cite:
+> "Otherwise, it is possible for users to bypass permission settings
+> under the 
+> following circumstances:
+> 
+>     * Feeds are enabled
+>     * Any of the posts or topics feeds are enabled
+>     * The unauthorised user - or one of the groups they are a member of -
+>     have forum permissions set on a private forum
+>     * If you have excluded a forum from the list of forums that provide
+>     feeds, it is unaffected"
 
-Definitely some work needs to be done here at the distro level, because 
-it's pointless (as Enlightenment demonstrates) to hide /proc/kallsyms 
-when /boot/System.map or /lib/modules are perfectly visible on any 
-distro.
+Please use CVE-2010-1627 for this.
 
-Also remember that this information is only useful pre-exploitation 
-for non-distro kernels (since kernel image addresses involved there 
-are publicly known).  So, for example, for choosing an arbitrary write 
-target for a custom-compiled kernel.  Post-execution control, it's just 
-obfuscation (you allow arbitrary code execution in the kernel and in 
-userland -- the attacker can just as easily find and parse the symbol 
-table in the kernel).
+> 
+> 
+> Also, I think this phpbb 3.0.5 still has no cve (I requested that
+> before 
+> here):
+> http://www.phpbb.com/community/viewtopic.php?f=14&p=9764445
+> # [Sec] Only use forum id supplied for posting if global announcement
+> detected. (Reported by nickvergessen)
+> 
 
-Fixing it via configurable init script in the distro seems acceptable to 
-me (if an extra option were included in 2.6.36, distros wouldn't reap 
-the benefit of that anyway unless it was backported to each kernel).  
-The only situation where I see the userland fix not being equivalent (or 
-at least requiring more work) is if /proc gets mounted in other 
-locations at runtime (say in a chroot, even though doing so is poor for 
-security to begin with).
+I don't understand what this means. Do you have more information?
 
-The /proc/slabinfo isn't used for grabbing kernel addresses, but for 
-obtaining somewhat reliable information about the current state of the 
-different-sized slabs in the kernel (which is useful, but again not 
-necessary, for kernel heap exploitation).
+Thanks.
 
-Obfuscating just the addresses is a reasonable compromise (but when it's 
-not the default, distros need to know they have to enable it, making it 
-not much different than implementing the userland measure -- if indeed 
-there aren't any non-root users of these entries).  Leaving the symbol 
-names can still be useful pre-exploitation for reliability purposes (to 
-find out about different debugging options or other things that couldn't 
-be determined by exercising some kernel functionality) but that's what 
-makes it a compromise ;)
-
-I know the impulse is to immediately copy what we're doing in 
-grsecurity, but the reason we do some of the things in the way we do 
-them is that we can be used on any distro and have no control over 
-whatever distro that happens to be.  We also support other features like 
-PaX's KERNEXEC and UDEREF which make the symbol/address removal more 
-useful.  We're also able to make certain important assumptions about our 
-users (eg. that they want security).  So make sure you're thinking 
-carefully about what you're trying to accomplish, why you're doing it, 
-and how effective it will actually be given the (lack of) synergistic 
-features at your present disposal, instead of jumping into cargo cult 
-security.
-
--Brad
-
-Download attachment "signature.asc" of type "application/pgp-signature" (198 bytes)
+-- 
+    JB
