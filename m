@@ -1,52 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/03/1
-Message-ID: <20101103080719.GA27019@suse.de>
-Date: Wed, 3 Nov 2010 09:07:19 +0100
-From: Sebastian Krahmer <krahmer@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: utf-8 security issue in php
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/18/9
+Message-ID: <Pine.GSO.4.64.1005181336460.13965@faron.mitre.org>
+Date: Tue, 18 May 2010 13:39:37 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Josh Bressers <bressers@...hat.com>
+cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: phpbb 3.0.7 and before 3.0.5
 Content-Type: text/plain; charset=utf-8
 
-JFYI, our php maintainer found that 5.2 seems to use same xml.c
-so a patch is needed too.
 
-Sebastian
+On Tue, 18 May 2010, Josh Bressers wrote:
 
-On Tue, Nov 02, 2010 at 08:08:58PM +0100, Pierre Joye wrote:
-> hi,
-> 
-> On Tue, Nov 2, 2010 at 6:10 PM, Vincent Danen <vdanen@...hat.com> wrote:
-> > * [2010-11-02 16:35:25 +0100] Pierre Joye wrote:
-> >
-> >> On Tue, Nov 2, 2010 at 3:24 PM, Josh Bressers <bressers@...hat.com> wrote:
-> >>
-> >>> As best as I can tell, this only needs one ID. Please use CVE-2010-3870.
-> >>
-> >> Thanks, I updated the bug report and the NEWS file.
-> >>
-> >> Please note that only 5.3 and later contains this fix. 5.3.4 will have the
-> >> fix.
-> >
-> > Are you saying that 5.3 and later _need_ this fix?  I.e. that this
-> > doesn't affect earlier versions?  Can you clarify?  Thanks.
-> 
-> This comment was not very clear, sorry.
-> 
-> I'm saying that 5.3 and later have been changed to fix this problem. I
-> have no idea if 5.2 requires a fix and won't investigate either (sadly
-> no time). It was more for the CVE description, to be sure that the
-> mention of 5.3+ will be present.
-> 
-> Cheers,
-> -- 
-> Pierre
-> 
-> @pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+>> # [Sec] Only use forum id supplied for posting if global announcement
+>> detected. (Reported by nickvergessen)
+>>
+>
+> I don't understand what this means. Do you have more information?
 
--- 
-~
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-~ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+I don't know what it means either.  Another part of daily life in CVE. 
+However, the announcement comes from the vendor so we will ultimately call 
+it an unspecified vuln with unknown impact and attack vectors related to 
+"forum id" and "global announcement" or some equally useless description.
 
+So this could use a CVE, too.  At worst it's a signal to consumers that 
+they need to patch, even if the developer isn't clearly explaining why.
+
+Not much different than your typical Linux kernel bug, actually :-/
+
+- Steve
