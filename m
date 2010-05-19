@@ -1,56 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/15/7
-Message-ID: <AANLkTim2JzZPkTbNMLSPVB0Ba1p+RXO0SETkqMah1e7h@mail.gmail.com>
-Date: Mon, 15 Nov 2010 15:21:25 -0500
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: econet iovec
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/19/4
+Message-ID: <1628100272.1812781274275704396.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 19 May 2010 09:28:24 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: Hanno Böck <hanno@...eck.de>
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com
+Subject: Re: CVE request: phpbb 3.0.7 and before 3.0.5
 Content-Type: text/plain; charset=utf-8
 
-This makes sense to me.  Just so everyone's on the same page:
+----- "Hanno Böck" <hanno@...eck.de> wrote:
+> Am Dienstag 18 Mai 2010 schrieb Josh Bressers:
+> > 
+> >     http://www.phpbb.com/community/viewtopic.php?f=14&p=9764445
+> >     # [Sec] Only use forum id supplied for posting if global
+> >     announcement detected. (Reported by nickvergessen)
+> > 
+> > CVE-2010-1630 phpbb 3.0.5 unspecified flaw
+> 
+> Shouldn't this be CVE-2009-XXXX ?
+> 
 
-CVE-2010-3859 (kernel heap overflow in TIPC) and CVE-2010-4160 (kernel
-panic and potentially heap corruption in L2TP) are both fixed by
-improved sanity checking on iovec input and new limits on network I/O
-size.
+Wow, I missed the date on that.
 
-The above mentioned issue in Econet (kernel panic due to integer
-overflow in sk_buff allocation size on native Econet hardware) is no
-longer an issue due to the previously mentioned fixes.  This has not
-received a CVE, nor do I necessarily think it needs one.
+I'll leave this up to MITRE. I can't resolve dupes anyhow. Sorry for the
+confusion.
 
-There are likely other protocols that had issues resolved by these
-fixes.  I can dig some up if necessary, but I don't really see the
-point.
-
--Dan
-
-On Mon, Nov 15, 2010 at 3:02 PM, Steven M. Christey
-<coley@...us.mitre.org> wrote:
->
-> On Sun, 14 Nov 2010, Dan Rosenberg wrote:
->
->> This also raises a question of whether it's worth assigning CVEs to every
->> vulnerability that was fixed by a single change in the core code. I'm
->> leaning towards "no".
->
-> This is a big can of worms CVE-wise, since there can be multiple ways to fix
-> a single issue.  As a result, I've come to believe that you shouldn't try to
-> define a vulnerability exclusively in terms of its fix.  In practice within
-> CVE, if a single fix addresses an already-public CVE-xyz and a whole bunch
-> of other things, then we (generally) keep the already-public CVE as is, and
-> assign a new CVE(s) to the "bunch of other things" that are simultaneously
-> addressed.
->
-> For example - in package XYZ, you might have both XSS and SQL injection,
-> where the XSS is fixed by input validation (say, by ensuring that a numeric
-> input is actually converted to a number).  This fix will inadvertently
-> address SQL injection, but a different XSS fix - say, proper encoding -
-> would not.
->
-> This is one of those areas where we can't be completely consistent in CVE,
-> and the amount of available information directly affects how many CVEs get
-> assigned.
->
-> - Steve
->
+-- 
+    JB
