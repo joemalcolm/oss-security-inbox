@@ -1,26 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/13/1
-Message-ID: <4C8E189E.5070507@redhat.com>
-Date: Mon, 13 Sep 2010 17:57:10 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/19/2
+Message-Id: <201005191014.39610.hanno@hboeck.de>
+Date: Wed, 19 May 2010 10:14:39 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: mailman
+Cc: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: phpbb 3.0.7 and before 3.0.5
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Am Dienstag 18 Mai 2010 schrieb Josh Bressers:
+> ----- "Steven M. Christey" <coley@...us.mitre.org> wrote:
+> [...]
+> 
+> > So this could use a CVE, too.  At worst it's a signal to consumers that
+> > they need to patch, even if the developer isn't clearly explaining why.
+> > 
+> > Not much different than your typical Linux kernel bug, actually :-/
+> > 
+> > - Steve
+> 
+> Here goes:
+> 
+>     http://www.phpbb.com/community/viewtopic.php?f=14&p=9764445
+>     # [Sec] Only use forum id supplied for posting if global announcement
+>       detected. (Reported by nickvergessen)
+> 
+> CVE-2010-1630 phpbb 3.0.5 unspecified flaw
 
-There are two mailman vulns. fixed by the following patch:
-http://mail.python.org/pipermail/mailman-announce/2010-September/000151.html
-
-Particular Red Hat Bugzilla entries are the following:
-
-	https://bugzilla.redhat.com/show_bug.cgi?id=631881
-	https://bugzilla.redhat.com/show_bug.cgi?id=631859
-
-
-Can CVE ids be please assigned to these flaws?
-
-Thanks
+Shouldn't this be CVE-2009-XXXX ?
 
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+
+http://schokokeks.org - professional webhosting
+
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
