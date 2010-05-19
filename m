@@ -1,18 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/22/1
-Message-ID: <4B81DA4D.9040804@redhat.com>
-Date: Mon, 22 Feb 2010 09:13:49 +0800
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/19/1
+Message-ID: <4BF33A75.9040203@redhat.com>
+Date: Wed, 19 May 2010 09:10:13 +0800
 From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Greg KH <gregkh@...e.de>
-Subject: lwn: 2.6.32.9 Release notes
+CC: Greg KH <greg@...ah.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: cifs: cifs_create() NULL pointer dereference
 Content-Type: text/plain; charset=utf-8
 
-Interesting article for those who are subscribed to lwn. corbet wrote a 
-summary for the proposed 2.6.32.9-stable.
+>>> http://comments.gmane.org/gmane.linux.file-systems.cifs/5782
+>>> https://bugzilla.redhat.com/579445
+>>
+>> The code that introduced this is upstream commit c3b2a0c6. Any
+>> kernel version from v2.6.29-rc6 onwards are affected.
+>
+> Am I correct in that I do not see a fix for this in the upstream kernel
+> repository yet?
 
-http://lwn.net/Articles/375335/
+Yes. IIRC, the developers don't think this is exploitable. I didn't look 
+at this further as it has a lower priority for me and our supported 
+kernels are not affected.
 
-Thanks, Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
+Eugene
