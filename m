@@ -1,30 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/12/1
-Message-ID: <1278952119.2863.15.camel@mdlinux.technorage.com>
-Date: Mon, 12 Jul 2010 12:28:39 -0400
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/19/3
+Message-Id: <201005191528.18818.ludwig.nussel@suse.de>
+Date: Wed, 19 May 2010 15:28:18 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: ghostscript
+Subject: Re: [oCERT-2010-001] multiple http client unexpected download filename vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Solar Designer wrote:
+> [...]
+> Although I used a somewhat tricky approach in the above exploit,
+> eventually making wget overwrite a file, it is also possible to mount
+> attacks that do not rely on overwriting any files.  Many programs
+> support optional startup/config files of fixed/known/guessable names
+> that a malicious or compromised server could provide.  In fact, I've
+> just demonstrated this attack against wget itself, but it could also
+> work against another program.
+> 
+> Is this more convincing now?
 
-I don't think this ever got a CVE:
+Serving dot files is a neat trick indeed, I've overlooked that
+paragraph in the ocert advisory. Nevertheless I'm not convinced it's
+worth changing wget's default behavior in the proposed way. So I can
+understand upstream here.
 
-A memory corruption vulnerability in Ghostscript 8.64 and earlier caused
-by long names can lead to arbitrary code execution.
-
-http://bugs.ghostscript.com/show_bug.cgi?id=690523
-http://svn.ghostscript.com/viewvc?view=rev&revision=9797
-
-Thanks,
-
-Marc.
-
+cu
+Ludwig
 
 -- 
-Marc Deslauriers
-Ubuntu Security Engineer     | http://www.ubuntu.com/
-Canonical Ltd.               | http://www.canonical.com/
-
+ (o_   Ludwig Nussel
+ //\   
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
