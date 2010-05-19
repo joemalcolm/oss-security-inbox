@@ -1,38 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/26/1
-Message-ID: <1277541745.14367.21.camel@atlantic>
-Date: Sat, 26 Jun 2010 10:42:25 +0200
-From: Morten Shearman Kirkegaard <morten@...elingp.dk>
-To: Florian Streibelt <gentoo@...treibelt.de>
-Cc: oss-security <oss-security@...ts.openwall.com>, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Michael Fleming <mfleming+rpm@...tfleminggent.com>, Mads Martin Joergensen <mmj@....dk>, Christoph Thiel <ct@....org>, Ben Schmidt <mail_ben_schmidt@...oo.com.au>
-Subject: Re: CVE Request -- mlmmj -- Directory traversal flaw by editing and saving  list entries via php-admin web interface
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/19/6
+Message-ID: <Pine.GSO.4.64.1005191855080.13965@faron.mitre.org>
+Date: Wed, 19 May 2010 18:59:42 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Josh Bressers <bressers@...hat.com>
+cc: Hanno Böck <hanno@...eck.de>, "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com
+Subject: Re: CVE request: phpbb 3.0.7 and before 3.0.5
 Content-Type: text/plain; charset=utf-8
 
-CC'ing Christoph Thiel (mlmmj-php-admin author) and Ben Schmidt (current
-mlmmj maintainer).
 
-On Wed, 2010-06-23 at 19:41 +0200, Florian Streibelt wrote:
-> when I reported the bug I had no time to further investigate and I think I
-> did not report upstream because of lack of time at that point and later
-> forgot - which is sad.
+On Wed, 19 May 2010, Josh Bressers wrote:
 
-Yeah, well, things like that happen. Would you agree that the attached
-patch fixes the vulnerability?
+> ----- "Hanno Böck" <hanno@...eck.de> wrote:
+>> Am Dienstag 18 Mai 2010 schrieb Josh Bressers:
+>>>
+>>>     http://www.phpbb.com/community/viewtopic.php?f=14&p=9764445
+>>>     # [Sec] Only use forum id supplied for posting if global
+>>>     announcement detected. (Reported by nickvergessen)
+>>>
+>>> CVE-2010-1630 phpbb 3.0.5 unspecified flaw
+>>
+>> Shouldn't this be CVE-2009-XXXX ?
 
-Using a list of known-good-characters would be nice, but dot happens to
-be a valid character in a list name.
+Ideally yes, but the ID is out there so we may as well use it.  This 
+happens sometimes.  It doesn't look like it became "widely public" until a 
+couple months ago, so a 2010 ID isn't too bad.
 
-> The php webinterface is a third-party development for mlmmj but part of the
-> official release.
-
-I know that this is just semantics, but... While it is true that the
-mlmmj-php-admin web interface is distributed along with mlmmj, it is not
-a part of mlmmj itself, but is located in the contribs directory.
-
-Best regards,
-Morten
-
--- 
-Morten Shearman Kirkegaard <morten@...elingp.dk>
-
-View attachment "patch-mlmmj-php-admin-dirtravfix.diff" of type "text/x-patch" (1139 bytes)
+- Steve
