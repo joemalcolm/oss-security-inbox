@@ -1,44 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/14/1
-Message-Id: <20100314163353.WRGCTDJOOOBDTK@hackinthebox.org>
-Date: Sun, 14 Mar 2010 16:33:53 +0800
-From: Hafez Kamal <aphesz@...kinthebox.org>
-To: <oss-security@...ts.openwall.com>
-Subject: [HITB-Announce] HITBSecConf2010 - Dubai Agenda Released
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/19/5
+Message-ID: <db102a8d7b1163e711fa86cff2082a8a.squirrel@wm.kinkhorst.nl>
+Date: Wed, 19 May 2010 19:30:21 +0200
+From: "Thijs Kinkhorst" <thijs@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: phpbb 3.0.7 and before 3.0.5
 Content-Type: text/plain; charset=utf-8
 
-Conference agenda for HITBSecConf2010 - Dubai has been announced!
+On Tue, May 18, 2010 21:19, Josh Bressers wrote:
+> ----- "Steven M. Christey" <coley@...us.mitre.org> wrote:
+> [...]
+>>
+>> So this could use a CVE, too.  At worst it's a signal to consumers that
+>> they need to patch, even if the developer isn't clearly explaining why.
+>>
+>> Not much different than your typical Linux kernel bug, actually :-/
+>>
+>> - Steve
+>
+> Here goes:
+>
+>     http://www.phpbb.com/community/viewtopic.php?f=14&p=9764445
+>     # [Sec] Only use forum id supplied for posting if global announcement
+>       detected. (Reported by nickvergessen)
+>
+> CVE-2010-1630 phpbb 3.0.5 unspecified flaw
 
-Welcoming Address by H.E Mohammed Nasser Al-Ghanim (Director General, UAE Telecom Regulatory Authority - TRA) -- TBC
+At least I could find this patch. It seems to ensure that the used forum
+ID is actually the forum where the posting being edited is part of. Still,
+I'm not sure what hole this would fix.
 
-Keynote 1: John Viega (CTO, SaaS, McAfee Inc.) -- A/V Vendors Aren't As Dumb As They Look
-Keynote 2: Matt Watchinski (Senior Director of Vulnerability Research, Sourcefire Inc.) -- TBA
-
-
-1.) Daniel Mende (ERNW GmbH) with Oliver Roeschke (ERNW GmbH) -- Attacking CISCO WLAN Solutions
-2) Dino Covotsos (Managing Director, Telspace Systems) -- Hiding a Giant: Analysis of a Next Generation Botnet
-3.) Fredric Raynal (Head of Research, Sogeti/Cap Gemini) with Arnauld Mascret (Sogeti / Cap Gemini) & Christophe Devaux (Sogeti / Cap Gemini) -- Deception 2.0: Gathering and Exploiting Information
-4.) Gynvael Coldwind (Researcher, Hispasec) -- A Case Study of Recent Windows Vulnerabilities
-5.) Laurent Oudot (Founder, TEHTRI-Security) -- Silent Steps: Improving the Stealthiness of Web Hacking
-6.) Marc Schoenefeld (Independent Network Security Specialist) -- Open Sesame: Examining Android Code with undx2
-7.) Shawn Merdinger (Security Researcher) -- We Don't Need No Stinkin' Badges: Hacking Electronic Door Access Controllers
-8.) The Grugq (Anti Forensics Specialist) -- Base Jumping: Attacking GSM Base Stations and Mobile Phone Basebands
+http://github.com/phpbb/phpbb3/commit/4ea3402f9363c9259881bc8ea6ce7fc6cb212657
 
 
-HITBSecConf2010 - Dubai will also feature a HITB Web Hacking. This years contest will once again include an additional binary reversing challenge as well.
-
-
-http://conference.hackinthebox.org/hitbsecconf2010dxb/agenda.pdf
-
----
-Hafez Kamal
-HITB Crew
-Hack in The Box (M) Sdn. Bhd.
-Suite 26.3, Level 26, Menara IMC,
-No. 8 Jalan Sultan Ismail,
-50250 Kuala Lumpur,
-Malaysia
-
-Tel: +603-20394724
-Fax: +603-20318359
-
+cheers,
+Thijs
