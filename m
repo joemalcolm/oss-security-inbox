@@ -1,24 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/04/2
-Message-ID: <AANLkTin1bNChjhzMMLWrzgRA+e4jwb2CUipSwXP8LgJT@mail.gmail.com>
-Date: Mon, 4 Oct 2010 09:21:55 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/20/2
+Message-ID: <20100520042756.GA18889@openwall.com>
+Date: Thu, 20 May 2010 08:27:56 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: Eugene Teo <eugeneteo@...nel.sg>
-Subject: CVE request: kernel: SCTP memory corruption in HMAC handling
+Subject: Re: [oCERT-2010-001] multiple http client unexpected download filename vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Reference:
-http://marc.info/?l=linux-kernel&m=128596992418814&w=2
+On Wed, May 19, 2010 at 03:28:18PM +0200, Ludwig Nussel wrote:
+> Serving dot files is a neat trick indeed, I've overlooked that
+> paragraph in the ocert advisory. Nevertheless I'm not convinced it's
+> worth changing wget's default behavior in the proposed way. So I can
+> understand upstream here.
 
-When parsing a peer's supported HMAC authentication options in the
-sctp_auth_asoc_get_hmac() function, a malicious peer can craft their
-HMAC array in such a way as to cause memory corruption (out-of-bounds
-read followed by use of retrieved out-of-bounds data), which at the
-very least could cause a denial of service via kernel panic, and
-possibly worse.  It appears this could be triggered remotely when
-connecting to a malicious peer, or locally by a user acting as both
-endpoints.  In both cases, the "auth_enable" sysctl must be set in
-order to trigger the bug.
+As far as I'm aware, at the time of the initial oCERT notification, the
+wget upstream was represented by Micah Cowan, who was about to resign.
+And he did:
 
--Dan
+http://lists.gnu.org/archive/html/bug-wget/2010-04/msg00027.html
+
+oCERT has re-notified the new upstream shortly before publishing the
+advisory (we decided this was not enough of a reason to introduce a
+further pre-public-disclosure delay).  I don't think the new wget
+upstream has made a determination on this issue yet; at least I'm not
+aware of that.
+
+...
+
+For those producing back-ports for lftp, the approach to take is to
+download 4.0.5 and 4.0.6 from:
+
+http://ftp.yars.free.net/pub/source/lftp/old/
+
+Then diff them with:
+
+diff -purx configure -x po -x 'Makefile*' -x '*.in' -x '*.in.h' -x m4 -x lib -x build-aux -x '*.m4' lftp-4.0.5 lftp-4.0.6
+
+This is a small and relevant diff, which should be easy to manually turn
+into a patch for just the relevant changes.  The NEWS file mentions these:
+
+* use O_EXCL flag when xfer:clobber is off.
+* better validation of server-provided file name.
+* new setting xfer:auto-rename (off by default).
+
+All three of the above are relevant, especially the last one.  A test
+case is downloading WordPress with:
+
+lftpget http://wordpress.org/latest.tar.gz
+
+Vulnerable lftp will silently produce a file named like
+wordpress-2.9.2.tar.gz instead of latest.tar.gz.  Fixed lftp will
+produce latest.tar.gz unless the user explicitly sets xfer:auto-rename.
+
+For Owl, we simply updated to lftp 4.0.7.  Our -stable branch uses a
+too-old lftp (not yet vulnerable), so we did not require a back-port.
+
+When testing tools other than lftp, please note that the WordPress test
+case tests for one of two attack-usable HTTP headers only
+(Content-Disposition but not Location).  We did test a handful of other
+tools, but only three - lftp, lwp-download, wget - were found vulnerable.
+curl, ELinks were found not vulnerable.  Lynx was inconclusive in Hank's
+testing (and we did not investigate further).
+
+Alexander
