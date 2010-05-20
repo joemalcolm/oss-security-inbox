@@ -1,43 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/21/3
-Message-ID: <38aa66b316b9157b16c2262a34544032.squirrel@wm.kinkhorst.nl>
-Date: Fri, 21 May 2010 10:44:27 +0200
-From: "Thijs Kinkhorst" <thijs@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: security-2010@...irrelmail.org, ""Max Olsterd"" <max.olsterd@...il.com>
-Subject: Re: CVE Request for Horde and Squirrelmail
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/20/5
+Message-ID: <4BF562B2.3060107@redhat.com>
+Date: Thu, 20 May 2010 18:26:26 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>, oss-security <oss-security@...ts.openwall.com>
+CC: Tim Bunce <Tim.Bunce@...ox.com>, Rafael Garcia-Suarez <rgs@...sttype.org>, Tom Lane <tgl@...hat.com>
+Subject: CVE-2010-1974 reject request (dupe of CVE-2010-1168) and CVE-2010-1447 description modification request
 Content-Type: text/plain; charset=utf-8
 
-Hi Max,
+Hi Steve,
 
-On Thu, May 20, 2010 15:04, Max Olsterd wrote:
-> Hi,
->
-> Is there a CVE number available for the two 0-days exposed during Hack In
-> The Box Dubai 2010 ?
+   this is due:
 
-> More info available on the slides of the corporate hackers who found the
-> 0-days :
-> http://conference.hitb.org/hitbsecconf2010dxb/materials/D1%20-%20Laurent%20Oudot%20-%20Improving%20the%20Stealthiness%20of%20Web%20Hacking.pdf
-> -> Squirrelmail: page 69 (post auth vuln)
+     a, [1] http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2010-1974
 
-I don't think there's a CVE number available for the SquirrelMail "issue",
-but I also highly doubt that it's actually a vulnerability.
+        This is duplicate CVE identifier for the Perl Safe.pm module flaw,
+        CVE-2010-1168 identifier has been originally assigned to:
 
-What they basically assert is, that as an authenticated user using the
-POP3 fetch mail plugin, you could repeatedly change the POP3 server
-settings and as such could 'portscan' a remote target.
+        [2] https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2010-1168
 
-This seems just as much a vulnerability as that you could use telnet, or
-fetchmail, or Thunderbird, to be a 'portscanner', as these all have the
-option to change a remote server address at will. Or that having a shell
-account at a system is a security vulnerability as you would be able to
-write a bash script to repeatedly netcat to remote hosts. I don't buy
-this.
+     b, [3] http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2010-1447
 
-Note that you need to be an authenticated user to do this.
+        The description of this incorrectly states, it's PostgreSQL issue, but the true
+        source code base, responsible for this deficiency is Perl's Safe.pm
+        implementation. The source of this confusion is:
+        [4] http://www.postgresql.org/about/news.1203
 
+Attached are advisories from my original posts to vendor-sec channel for all four issues:
+i, CVE-2010-1168 Perl's Safe.pm 2.25 and below deficiency, when handling
+    implicit methods:
+      [5] https://bugzilla.redhat.com/show_bug.cgi?id=576508#c0
 
-Cheers,
+ii, CVE-2010-1169 PostgreSQL's PL/Perl deficiency, present due dependency / use of
+     Perl's Safe.pm extension module:
+       [6] https://bugzilla.redhat.com/show_bug.cgi?id=582615#c0
 
-Thijs
+iii, CVE-2010-1170 PostgreSQL's PL/Tcl deficiency by handling autoload():
+       [7] https://bugzilla.redhat.com/show_bug.cgi?id=583072#c0
+
+iv, CVE-2010-1447 Perl's Safe.pm 2.27 and below deficiency (see attached archive for
+     more information)
+       [8] https://bugzilla.redhat.com/show_bug.cgi?id=588269#c0
+
+Flaw history:
+   1, Red Hat Security Response Team has been notified on 2010-03-18 with the details
+      of this issue. Later CVE-2010-1168 has been assigned to this (but in that moment
+      wasn't aware Rafael did already pseudo-published flaw details on his blog:
+        [9] http://blogs.perl.org/users/rafael_garcia-suarez/2010/03/new-safepm-fixes-security-hole.html
+   2, Later Tim Bunce identified similar deficiency in PostgreSQL's PL/Perl implementation.
+      CVE-2010-1169 identifier has been assigned to this:
+        [10] https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2010-1169
+
+   3, Later Tom Lane identified similar deficiency in PostgreSQL's PL/Tcl implementation -- this
+      is what CVE-2010-1170 has been assigned for:
+        [11] https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2010-1170
+
+   4, And finally, Tim Bunce and Rafael Garcia-Suarez recognized a yet another deficiency
+      in Perl's Safe.pm implementation, allowing to bypass the Perl's Safe compartment constrains,
+      by evaluation of unsafe code, returning returning references to subroutines, whose truly
+      execution was delayed to happen later, outside of the Safe compartment.
+        [12] https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2010-1447
+
+Have checked today with Tim, there isn't any new perl Safe.pm extension module issue (besides CVE-2010-1168
+and CVE-2010-1447 cases), which would desire a new CVE id (CVE-2010-1974 is dupe of CVE-2010-1168).
+
+Steve, could you please:
+   a, reject CVE-2010-1974 (http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2010-1974) as a duplicate
+      CVE identifier for CVE-2010-1168 and,
+   b, update description of CVE-2010-1447 (http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2010-1447)
+      so it would reflect the true reason of the flaw, it was originally assigned for.
+
+Hope this clarification is sufficient. In case of any doubt / need of further background information,
+related with above four issues, please ask.
+
+Thanks && Regards, Jan.
+-- 
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+P.S.: Re-sending the message again, this time without patches, as first time the post exceeded the
+       limit for maximum size of the msg accepted by OSS mailer. Apologize to people in the Cc-list
+       for the unintended spam :(.
+
+View attachment "CVE-2010-1168-advisory.txt" of type "text/plain" (2297 bytes)
+
+View attachment "CVE-2010-1169-advisory.txt" of type "text/plain" (1700 bytes)
+
+View attachment "CVE-2010-1170-advisory.txt" of type "text/plain" (1372 bytes)
+
+View attachment "CVE-2010-1447_advisory.txt" of type "text/plain" (2462 bytes)
