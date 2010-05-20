@@ -1,54 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/21/6
-Message-Id: <201009211657.10963.thomas@suse.de>
-Date: Tue, 21 Sep 2010 16:57:10 +0200
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/20/4
+Message-ID: <AANLkTikEl2i10wgt9KMB5U9e8KvZMZYrRRBAhoMV_a32@mail.gmail.com>
+Date: Thu, 20 May 2010 15:04:23 +0200
+From: Max Olsterd <max.olsterd@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>, michael@...iarski.com, juliano@...ifera.comt, thaidn@...ecurity.net
-Subject: Re: CVE request: padding oracle attack: ruby on rails 2.3, owasp esapi
+Cc: security-2010@...irrelmail.org, security@...de.org
+Subject: CVE Request for Horde and Squirrelmail
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-grep'ing the Rails code revealed that encrypt() isn't used
-for the cookie by default. Upstream also reports that they
-are not vulnerable.
-Additionally even if encrypt() is used to encrypt data in a cookie
-there is also the digest at the end of the cookie string that might
-indicate tampering. ("might" b/c it depends on the implementation,
-which I didn't look at).
+Is there a CVE number available for the two 0-days exposed during Hack In
+The Box Dubai 2010 ?
 
-I got no answer from the POET paper authors yet but it can be
-that CVE-2010-3299 is invalid.
+Though the exploits were not given during HITB (?), some friends have
+recently shown me that they found how both products (Squirrelmail and Horde)
+might be abused to be transformed, so that they become some kind of nmap
+scanner (banner grab, port scan, etc). It helps at discovering a remote DMZ,
+internal LAN, etc, by using those webmails as evil internal nmap proxies.
 
-Cheers
-Thomas
+More info available on the slides of the corporate hackers who found the
+0-days :
+http://conference.hitb.org/hitbsecconf2010dxb/materials/D1%20-%20Laurent%20Oudot%20-%20Improving%20the%20Stealthiness%20of%20Web%20Hacking.pdf
+-> Squirrelmail: page 69 (post auth vuln)
+-> Horde: page 74 (pre auth vuln)
 
+Regards,
 
-Am Dienstag 14 September 2010 21:36:53 schrieb Josh Bressers:
-> I've assgiend two. The details are quite vague unfortunately.
-> 
-> CVE-2010-3299 padding oracle attack: ruby on rails 2.3
-> CVE-2010-3300 padding oracle attack: owasp esapi
-> 
-> Thanks.
-> 
-> > Hi,
-> > the paper [1], about practical padding oracle attacks
-> > mentions some programming frameworks as vulnerable (section 5):
-> > - Ruby On ails 2.3
-> > - OWASP ESAPI
-> >
-> > I think they both need a CVE-ID. Thanks.
-> >
-> > Cheers
-> > Thomas
-> >
-> > [1] http://usenix.org/events/woot10/tech/full_papers/Rizzo.pdf
-> 
+M@X
 
--- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
---
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
+NB: Useful links :
+
+SquirrelMail: http://www.squirrelmail.org (one of the most excellent Webmail
+/ Opensource)
+Horde: http://www.horde.org (one of the most excellent Webmail Opensource)
+TEHTRI-Security: http://www.tehtri-security.com (seems to be some kind of
+corporate hackers group / company ? who found some 0-days recently)
+HITB: http://conference.hitb.org/ (HITB Security Conferences)
+
