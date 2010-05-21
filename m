@@ -1,37 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/10/4
-Message-ID: <4B97C588.9040506@redhat.com>
-Date: Wed, 10 Mar 2010 17:15:04 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, "Alvaro J. Iradier Muro" <airadier@...rs.sourceforge.net>
-Subject: CVE Request -- aMSN -- improper SSL certificate validation (MITM)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/21/7
+Message-ID: <1274455139.12594.81.camel@severus.strandboge.com>
+Date: Fri, 21 May 2010 10:18:59 -0500
+From: Jamie Strandboge <jamie@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: off by one DoS in pe_icons.c
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve, vendors,
+Though the bug report and patch have very little details, our clamav
+maintainer confirmed with upstream that the following commit fixes a DoS
+via off by one error. It only affects 0.96 (code not present in earlier
+versions). A quick look at the code and patch suggests an out of bounds
+access on the dynamically allocated *imagedata array.
 
-   Gabriel Menezes Nunes reported:
-     [1] http://seclists.org/bugtraq/2009/Jun/239
+https://wwws.clamav.net/bugzilla/show_bug.cgi?id=2031
+http://git.clamav.net/gitweb?p=clamav-devel.git;a=commit;h=7f0e3bbf77382d9782e0189bf80f5f59a95779b3
 
-   a deficiency in the way aMSN messenger validated SSL certificates when
-   connecting to the MSN server. A remote attacker could conduct man-in-the-middle
-   attacks and / or impersonate trusted servers.
 
-   Affected version:
-     Issue originally reported against aMSN v0.97.2, but further research showed [4]
-     latest aMSN v0.98.3 still suffers from the flaw.
+-- 
+Jamie Strandboge             | http://www.canonical.com
 
-   References:
-     [2] http://www.juniper.net/security/auto/vulnerabilities/vuln35507.html
-     [3] http://secunia.com/advisories/35621/
-     [4] http://www.opensource-archive.org/showthread.php?p=183821
-     [5] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=572818
-
-   Upstream (testing) patch:
-     [6] http://amsn.svn.sourceforge.net/viewvc/amsn/trunk/?view=log&pathrev=11991
-
-Not sure, if this already got a CVE id, but in case if not, could you allocate one?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
