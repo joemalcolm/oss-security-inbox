@@ -1,18 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/03/2
-Message-ID: <AANLkTi=ncwzKWFHAgFghGipZH-bZC6B7w8OXTFjt4Re7@mail.gmail.com>
-Date: Wed, 3 Nov 2010 18:15:30 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: X.25 remote DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/21/6
+Message-ID: <1274447028.12594.45.camel@severus.strandboge.com>
+Date: Fri, 21 May 2010 08:03:48 -0500
+From: Jamie Strandboge <jamie@...onical.com>
+To: Thomas Biege <thomas@...ell.com>
+Cc: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: clamav null pointer dereference
 Content-Type: text/plain; charset=utf-8
 
-Due to bad parsing of malformed X.25 facilities, a remote attacker can
-cause a kernel panic due to heap corruption (assuming both parties are
-communicating using X.25).  Since the below post, the X.25 maintainer
-has confirmed the issue.
+On Fri, 2010-05-21 at 12:39 +0200, Thomas Biege wrote:
+> Hi,
+> does someone, who knows moe about clamav than I do, know if the following has
+> security implications?
+> 
+> changelog: http://git.clamav.net/gitweb?p=clamav-
+> devel.git;a=blob_plain;f=ChangeLog;hb=master
+> 
+> Wed May 19 12:21:02 CEST 2010 (acab)
+> ------------------------------------
+>  * libclamav/7z/Archive/7z/7zIn.c: fix possible(?) null dereference reported
+>                                 by clang (bb#1909)
+> 
+> 
+> diff: http://git.clamav.net/gitweb?p=clamav-
+> devel.git;a=commitdiff;h=4531ba07e1ed5060ac8cb8ff748427ce0917bedd
+> 
 
-Reference:
-http://marc.info/?l=linux-netdev&m=128871017529408&w=2
+I'm no expert on clamav, but looking at
+https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1909
 
--Dan
+indicates that this is not security relevant. Based on the response to
+the report (which I am rewording and attempting to clarify here), this
+is the potential NULL dereference (line 669):
+    (*unpackSizes)[si++] = SzFolder_GetUnpackSize(folders + i) - sum;
+
+However, this cannot be reached due to this check at line 659:
+    if (numSubstreams == 0)
+      continue;
+
+This is because '*unpackSizes = 0' only if '*numUnpackStreams ==
+0' (line 634) and the null dereference reached only if numFolders > 0,
+which it can be if multiple nulls are read in at line 621. However, at
+line 622 we have:
+        folders[i].NumUnpackStreams = numStreams;
+        *numUnpackStreams += numStreams;
+
+and at 658 we have:
+    UInt32 numSubstreams = folders[i].NumUnpackStreams;
+    if (numSubstreams == 0)
+      continue;
+
+Simply put, to meet the required conditional at line 634, we must read
+in some NULLs at 622, which assigns 0 to folders[i].NumUnpackStreams,
+which later we assign 'numSubstreams = folders[i].NumUnpackStreams' and
+then check if numSubstreams equals 0 (line 658) and if so continue, thus
+avoiding the NULL dereference.
+
+I've asked our clamav maintainer to contact upstream to verify this is
+the case, and will report back if I'm wrong.
+
+-- 
+Jamie Strandboge             | http://www.canonical.com
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
