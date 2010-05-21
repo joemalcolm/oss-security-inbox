@@ -1,45 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/21/6
-Message-ID: <1261048374.1123451279733716623.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 21 Jul 2010 13:35:16 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/21/4
+Message-Id: <201005211239.48616.thomas@novell.com>
+Date: Fri, 21 May 2010 12:39:48 +0200
+From: Thomas Biege <thomas@...ell.com>
 To: oss-security@...ts.openwall.com
-Cc: rubidium@...nttd.org, Matthijs Kooijman <matthijs@...in.nl>
-Subject: Re: CVE request for OpenTTD
+Subject: clamav null pointer dereference
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-2534
+Hi,
+does someone, who knows moe about clamav than I do, know if the following has
+security implications?
 
-Thanks.
+changelog: http://git.clamav.net/gitweb?p=clamav-
+devel.git;a=blob_plain;f=ChangeLog;hb=master
+
+Wed May 19 12:21:02 CEST 2010 (acab)
+------------------------------------
+ * libclamav/7z/Archive/7z/7zIn.c: fix possible(?) null dereference reported
+                                by clang (bb#1909)
+
+
+diff: http://git.clamav.net/gitweb?p=clamav-
+devel.git;a=commitdiff;h=4531ba07e1ed5060ac8cb8ff748427ce0917bedd
+
+
+
+Thanks,
+Thomas
 
 -- 
-    JB
-
-
------ "Matthijs Kooijman" <matthijs@...in.nl> wrote:
-
-> Hi folks,
-> 
-> the OpenTTD developers have indentified a security vulnerability in
-> the
-> OpenTTD program. Would you be so kind as to allocate a CVE id for
-> this
-> issue?
-> 
-> The issue concerns a denial of service vulnerability, in the form of
-> a
-> hard to trigger infinite loop. The issue is reported at
-> http://bugs.openttd.org/task/3909
-> 
-> The first vulnerable version is 1.0.1, the upcoming 1.0.3 release
-> will
-> have the issue fixed.
-> 
-> Once a CVE id is allocated, the issue will be documented at
-> http://security.openttd.org/en/CVE-2010-xxxx
-> 
-> Thanks,
-> 
-> Matthijs
-> 
-> (Please CC me, I'm not subscribed)
+ Thomas Biege <thomas@...ell.com>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
