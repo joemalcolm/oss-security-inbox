@@ -1,57 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/10/7
-Message-ID: <20101110174721.GP5876@outflux.net>
-Date: Wed, 10 Nov 2010 09:47:21 -0800
-From: Kees Cook <kees@...ntu.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/21/1
+Message-ID: <20100521033231.GA22338@openwall.com>
+Date: Fri, 21 May 2010 07:32:31 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel proactive security hardening
+Subject: Re: [oCERT-2010-001] multiple http client unexpected download filename vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Nov 08, 2010 at 10:33:32PM +0300, Vasiliy Kulikov wrote:
-> On Mon, Nov 08, 2010 at 08:48 +0300, Solar Designer wrote:
-> > 2. We could turn all function-local non-static definitions of:
-> > 
-> > struct x y;
-> > 
-> > into:
-> > 
-> > struct x y = {};
-> > 
-> > We could do this by pre-processing the source files
+On Fri, May 21, 2010 at 12:53:12AM +0400, Solar Designer wrote:
+> I brought this issue to the bug-wget list:
 > 
-> With coccinelle it is trivial:
-> 
-> @@
-> identifier T, x, f;
-> @@
-> 
-> f(...)
-> {
->  ...
->  struct T x
-> + = {}
->  ;
->  ...
-> }
-> 
-> However, I don't think that all linux maintainers would be happy with
-> this.
-> 
-> > or with a patch to
-> > gcc (introduce a command-line option to assume empty initializers for
-> > all on-stack structs).
-> 
-> IMO much better solution - instead of many MB trivial patch have small
-> gcc patch.
+> [Bug-wget] security risk of unexpected download filenames
+> http://lists.gnu.org/archive/html/bug-wget/2010-05/msg00023.html
 
-Yeah, I'd like to see this area of gcc improved. It seems like
--Wmissing-field-initializers doesn't always do the right thing either.
+Micah, the previous wget maintainer who is still active on the bug-wget
+list, has commented on the issue:
 
-I'm glad to see that using "= { }" wipes the entire structure, though. I
-was worried that it would leave holes for padding, etc.
+http://lists.gnu.org/archive/html/bug-wget/2010-05/msg00031.html
+http://lists.gnu.org/archive/html/bug-wget/2010-05/msg00033.html
 
--Kees
+It sounds like he does not mind a fix like Florian's patch getting
+included upstream.  We'll see what the current maintainers say.
 
--- 
-Kees Cook
-Ubuntu Security Team
+In another bug-wget posting, I described an attack that does not involve
+a Unix user's home directory and a dot-file:
+
+http://lists.gnu.org/archive/html/bug-wget/2010-05/msg00032.html
+
+It works against wget of a file into a website "document root" tree and
+it may take advantage of index.html taking precedence over index.php.
+
+Alexander
