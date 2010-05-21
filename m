@@ -1,24 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/21/3
-Message-ID: <AANLkTikx=kMiVyssQk4qWPnBNsB+Fb4-1YaPifEWvSsA@mail.gmail.com>
-Date: Thu, 21 Oct 2010 11:25:02 +0200
-From: Robert Święcki <robert@...ecki.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/21/5
+Message-ID: <1274444729.12594.22.camel@severus.strandboge.com>
+Date: Fri, 21 May 2010 07:25:29 -0500
+From: Jamie Strandboge <jamie@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: glibc $ORIGIN problem - CVE-2010-3847
+Subject: CVE Request: clamav crash via malformed PDF
 Content-Type: text/plain; charset=utf-8
 
-> The actually exploitable impact of Tavis glibc $ORIGIN problem is still a bit open question.
->
-> Apparently the bad code has a assert() in front which causes this assertion failure:
->
-> $ LD_AUDIT=\$ORIGIN ping
-> Inconsistency detected by ld.so: dl-open.c: 231: dl_open_worker: Assertion `(call_map)->l_name[0] == '\0'' failed!
-> $
+The following upstream commits were confirmed by upstream to be security
+relevant (crash via malformed content):
 
-Yeah.. I looked into it as well on Ubuntu, and couldn't find any way
-to bypass this assert(), but as you mentioned this code is.
-h.o.r.r.i.b.l.e ;) so I wouldn't be surprised if there's a way to
-exploit it.
+https://wwws.clamav.net/bugzilla/show_bug.cgi?id=2016
+http://git.clamav.net/gitweb?p=clamav-devel.git;a=commit;h=f0eb394501ec21b9fe67f36cbf5db788711d4236
+
 
 -- 
-Robert Święcki
+Jamie Strandboge             | http://www.canonical.com
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
