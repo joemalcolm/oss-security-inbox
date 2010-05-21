@@ -1,50 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/14/12
-Message-ID: <1144314989.143431276544689963.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 14 Jun 2010 15:44:49 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: UnrealIRCd 3.2.8.1 source code contained a backdoor allowing for remote command execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/21/2
+Message-ID: <20100521001414.20305gexcwg4cnmu@www.riboflavin.net>
+Date: Fri, 21 May 2010 00:14:14 -0500
+From: "Marcus I. Ryan" <marcus@...de.org>
+To: Max Olsterd <max.olsterd@...il.com>
+Cc: oss-security@...ts.openwall.com, security-2010@...irrelmail.org, security@...de.org
+Subject: Re: [core] CVE Request for Horde and Squirrelmail
 Content-Type: text/plain; charset=utf-8
 
-Steve,
+I'm inactive on the project, so hopefully I'm not speaking out of turn  
+(I'm assuming another horde member will give a more official response  
+and/or provide corrections as necessary), but I don't recall a CVE  
+being issued.  We were only notified just before the presentation  
+which I have to say didn't impress me personally, as it violates  
+fairly well established best-practices for reporting security issues.
 
-Can you give this one a 2009 ID.
+That said, we don't really consider it a bug.  If the administrator  
+reads and follows that documentation, their systems are not exposed.   
+Part of the problem on our end is that the tool being abused needs to  
+be turned on by default to help configure new sites, but many  
+administrators also want to leave these tools enabled after the site  
+is running and simply lock them down through other means (web server  
+configs, application-level firewalls, etc.).  However, most of those  
+means are beyond the ability of Horde to detect, so we can't  
+distinguish between admins who don't read the documentation and admins  
+that choose other ways of protecting themselves.
 
-Thanks.
+We're considering possible features we might add in future versions  
+that would help make sure things are as secure as possible without  
+reducing the flexibility we strive for.  As with any software that  
+exposes your system(s) to the public, the best protection is to read,  
+understand, and follow the documentation (docs/INSTALL and  
+docs/SECURITY to be specific here).
+
+As Norm Abram says, "Be sure to read, follow, and understand all of  
+the safety rules that come with your power tools.  Knowing how to use  
+your tools safely greatly reduces the risk of personal injury."  Good  
+advice for woodworkers and IT administrators.
+
+If you have any more concerns, please let us know.
 
 -- 
-    JB
+Marcus I. Ryan, marcus@...de.org
 
 
------ "Alex Legler" <a3li@...too.org> wrote:
+Quoting Max Olsterd <max.olsterd@...il.com>:
 
-> On Sat, 12 Jun 2010 19:10:48 +0200, Alex Legler <a3li@...too.org>
-> wrote:
-> 
-> > [blah]
-> 
-> While we're at it...
-> 
-> http://www.unrealircd.com/txt/unrealsecadvisory.20090413.txt
-> 
-> "A buffer in the code which handles user authorization is copied
-> without
-> sufficient length checks, causing a buffer overflow.
-> This bug happens BEFORE the user is online. In other words: even if
-> you
-> have a password protected server, or only allow certain ip/hosts in,
-> and you use allow::options::noident, then this bug can still be
-> triggered."
-> 
-> The issue affects versions <3.2.8.1
-> 
-> I think this issue doesn't have a CVE yet either. (CVE-2009-*)
-> 
-> Thanks,
-> Alex
-> 
-> -- 
-> Alex Legler | Gentoo Security / Ruby
-> a3li@...too.org | a3li@...ber.ccc.de
+> Hi,
+>
+> Is there a CVE number available for the two 0-days exposed during Hack In
+> The Box Dubai 2010 ?
+>
+> Though the exploits were not given during HITB (?), some friends have
+> recently shown me that they found how both products (Squirrelmail and Horde)
+> might be abused to be transformed, so that they become some kind of nmap
+> scanner (banner grab, port scan, etc). It helps at discovering a remote DMZ,
+> internal LAN, etc, by using those webmails as evil internal nmap proxies.
+>
+> More info available on the slides of the corporate hackers who found the
+> 0-days :
+> http://conference.hitb.org/hitbsecconf2010dxb/materials/D1%20-%20Laurent%20Oudot%20-%20Improving%20the%20Stealthiness%20of%20Web%20Hacking.pdf
+> -> Squirrelmail: page 69 (post auth vuln)
+> -> Horde: page 74 (pre auth vuln)
+>
+> Regards,
+>
+> M@X
+>
+> NB: Useful links :
+>
+> SquirrelMail: http://www.squirrelmail.org (one of the most excellent Webmail
+> / Opensource)
+> Horde: http://www.horde.org (one of the most excellent Webmail Opensource)
+> TEHTRI-Security: http://www.tehtri-security.com (seems to be some kind of
+> corporate hackers group / company ? who found some 0-days recently)
+> HITB: http://conference.hitb.org/ (HITB Security Conferences)
+>
+>
+
+
+
