@@ -1,53 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/08/9
-Message-ID: <20101108130630.GA3495@albatros>
-Date: Mon, 8 Nov 2010 16:06:30 +0300
-From: Vasiliy Kulikov <segooon@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/21/3
+Message-ID: <38aa66b316b9157b16c2262a34544032.squirrel@wm.kinkhorst.nl>
+Date: Fri, 21 May 2010 10:44:27 +0200
+From: "Thijs Kinkhorst" <thijs@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel proactive security hardening
+Cc: security-2010@...irrelmail.org, ""Max Olsterd"" <max.olsterd@...il.com>
+Subject: Re: CVE Request for Horde and Squirrelmail
 Content-Type: text/plain; charset=utf-8
 
-Solar,
+Hi Max,
 
-On Mon, Nov 08, 2010 at 06:07 +0300, Solar Designer wrote:
-> In the absence of cheap-enough general solution/workaround in the
-> kernel, I'm afraid we'll need to resort to improving and using automated
-> tools to detect bugs of this nature - which is apparently what you and
-> Vasiliy were doing lately?  What tools did you use?
+On Thu, May 20, 2010 15:04, Max Olsterd wrote:
+> Hi,
+>
+> Is there a CVE number available for the two 0-days exposed during Hack In
+> The Box Dubai 2010 ?
 
-At first I was using simple "grep copy_to_user" and manually checked all
-calls to copy_to_user().  Then I used coccinelle [1] to search this
-pattern: struct allocated on the stack, not prepared with neither
-copy_from_user() nor memset(), is copied with copy_to_user().  Both
-result are manually checked.  The latter doesn't find all the cases of
-leak, see e.g. [2].  The caller copies array, not struct.  Maybe my
-cocci script should be added with s/struct/array/ too.  Search with
-pahole or similar sucks as many leaks are not only padding bytes leaks,
-but trivial uninitialized fields or using strlcpy() (instead of strncpy()).
+> More info available on the slides of the corporate hackers who found the
+> 0-days :
+> http://conference.hitb.org/hitbsecconf2010dxb/materials/D1%20-%20Laurent%20Oudot%20-%20Improving%20the%20Stealthiness%20of%20Web%20Hacking.pdf
+> -> Squirrelmail: page 69 (post auth vuln)
 
+I don't think there's a CVE number available for the SquirrelMail "issue",
+but I also highly doubt that it's actually a vulnerability.
 
-Also note that even if this "pattern search" process can be fully automated,
-we might have another more difficult to discover "pattern": struct is
-allocated with kmalloc(), is not fully initialized and then is copied to
-userspace, somewhere far from kmalloc() (not in this module or even not
-in this driver layer).  Maybe this can be still automated with
-coccinelle, e.g. search for all copy_to_user() that copies _not local_
-struct/array and then check all dynamic allocation of this struct type
-(hard to check _all_ the cases :( ).
+What they basically assert is, that as an authenticated user using the
+POP3 fetch mail plugin, you could repeatedly change the POP3 server
+settings and as such could 'portscan' a remote target.
 
-But again, it also can be complicated by "virtual methods" those are called
-through pointers to functions those use different types of struct: the
-caller uses "struct A", the callee uses "struct B" that has struct A as
-the first field.  (Yes, I know that the right code should use
-container_of() macro.)
+This seems just as much a vulnerability as that you could use telnet, or
+fetchmail, or Thunderbird, to be a 'portscanner', as these all have the
+option to change a remote server address at will. Or that having a shell
+account at a system is a security vulnerability as you would be able to
+write a bash script to repeatedly netcat to remote hosts. I don't buy
+this.
+
+Note that you need to be an authenticated user to do this.
 
 
-[1] http://coccinelle.lip6.fr/
+Cheers,
 
-[2] http://www.openwall.com/lists/oss-security/2010/11/02/7
-
-
-Thanks,
-
--- 
-Vasiliy
+Thijs
