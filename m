@@ -1,35 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/24/2
-Message-ID: <20100924164823.GA21584@openwall.com>
-Date: Fri, 24 Sep 2010 20:48:23 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/23/1
+Message-Id: <201005231439.21960.thijs@debian.org>
+Date: Sun, 23 May 2010 14:39:16 +0200
+From: Thijs Kinkhorst <thijs@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: Minor security flaw with pam_xauth
+Cc: Max Olsterd <max.olsterd@...il.com>, security-2010@...irrelmail.org
+Subject: Re: CVE Request for Horde and Squirrelmail
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Sep 21, 2010 at 04:02:47PM -0400, Josh Bressers wrote:
-> Since you have the best understanding of these, can you break them down
-> with reasonable explanations and I'll assign IDs to whatever still needs
-> them?
+On sneon 22 Maaie 2010, Max Olsterd wrote:
+> But someone gave me an explanation, with a live hacking demo, and it was
+> awesome : this guy has been able to scan the LAN of an international ISP
+> whereas there was a firewall blocking incoming packets to the LAN (DMZ +
+> internal LAN) !!!
+> 
+> How ?
+> 
+> He had an account on the squirrelmail (ISP) and he has been able to create
+> an exploit for the advisory we are talking about here. Thanks to that, he
+> asked squirrelmail to scan some ranges of IP addresses that were private
+> (10.x.x.x) and unreachable from the outside of this ISP (NAT). Then he
+> found multiple interesting hosts with unpatched services, which gave him
+> an idea of how secure it was for real when you are inside. He also used
+> the DNS scanning attack that was described in the slides of HITB, by
+> bruteforcing names, and he found other IP addresses (but a firewall
+> blocked the scan so deep on the LAN).
 
-pam_xauth missing return value checks from setuid() and similar calls,
-fixed in Linux-PAM 1.1.2 - CVE-2010-3316
+That this is possible is inherent in providing the ability to your users to 
+configure any POP3 server they want to retreive email. The whole idea of the 
+POP3 fetch mail plugin is to allow to connect to other servers. And hence if 
+you want to provide this functionality there will always be the possibility 
+that someone connects to a local machine, and there's no real solution to that 
+given the premise. It is a choice to not patch internal services but any 
+adminsitrator has the responsibility to determine what 'internal' means and 
+who will have access to this network.
 
-pam_env and pam_mail accessing the target user's files as root (and thus
-susceptible to attacks by the user) in Linux-PAM below 1.1.2, partially
-fixed in 1.1.2 - no CVE ID mentioned yet
+And note that still the only thing you, as an authenticated user, can do is 
+connect to those ports within a POP3 context.
 
-pam_env and pam_mail in Linux-PAM 1.1.2 not switching fsgid (or egid)
-and groups when accessing the target user's files (and thus potentially
-susceptible to attacks by the user) - CVE-2010-3430
+The only new idea that this research adds, is that they've scripted the 
+changing of the pop3 server info so they can increase the amount of 
+hosts/ports to connect to in a given timeframe. But even if this wouldn't be 
+scriptable, it would still be possible for the user to specify POP3 servers by 
+hand (as that is the goal of the plugin) and hence any network setup that 
+can't deal with this but does enable the plugin, is broken by design.
 
-pam_env and pam_mail in Linux-PAM 1.1.2 not checking whether the
-setfsuid() calls succeed (no known impact with current Linux kernels,
-but poor practice in general) - CVE-2010-3431
+It's only a matter of scaling that they add. Anything that is 'vulnerable' 
+with this, is already vulnerable if this scripting wouldn't be possible.
 
-Now, in case someone fixes CVE-2010-3430 but fails to add return value
-checks for the added calls, we'll need yet another CVE ID for the
-partial fix... but I hope this won't happen.
 
-Alexander
+cheers,
+Thijs
+
+Download attachment "signature.asc " of type "application/pgp-signature" (491 bytes)
