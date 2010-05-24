@@ -1,25 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/07/3
-Message-ID: <20100207182302.GB30053@ngolde.de>
-Date: Sun, 7 Feb 2010 19:23:02 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/24/2
+Message-ID: <1274736780.3495.3.camel@new-desktop>
+Date: Mon, 24 May 2010 23:33:00 +0200
+From: Nicob <nicob@...ob.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Samba symlink 0day flaw
+Subject: Re: CVE Request for Horde and Squirrelmail
 Content-Type: text/plain; charset=utf-8
 
-Hey,
-* Yves-Alexis Perez <corsac@...ian.org> [2010-02-06 15:02]:
-> On 06/02/2010 14:31, Nico Golde wrote:
-> > The wide_links variable, at least not in my copy.
-[...] 
-> This is samba 2:3.4.5~dfsg-1. Note the name is wide links, not wide_links.
+Le dimanche 23 mai 2010 à 14:39 +0200, Thijs Kinkhorst a écrit :
+> The whole idea of the POP3 fetch mail plugin is to allow to connect to
+> other servers 
 
-Args, you are right.
+Yes but usually only on TCP ports 110 and 995. Why not use this as a
+default list of authorized ports ?
 
-Cheers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
+Nicob
 
-Content of type "application/pgp-signature" skipped
