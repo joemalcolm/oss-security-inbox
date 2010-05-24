@@ -1,56 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/25/3
-Message-Id: <201008251523.35271.ludwig.nussel@suse.de>
-Date: Wed, 25 Aug 2010 15:23:34 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: ghostscript and gv
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/24/1
+Message-ID: <4BFA528B.20705@redhat.com>
+Date: Mon, 24 May 2010 12:18:51 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, Nahuel Grisolia <nahuel@...sai-sec.com>, Stefan Esser <stefan.esser@...tioneins.de>
+Subject: CVE Request -- Cacti v0.8.7 -- three security fixes
 Content-Type: text/plain; charset=utf-8
 
-Tomas Hoger wrote:
-> On Sun, 30 May 2010 22:08:12 +0200 Bernhard R. Link wrote:
-> > Gs's -P- not working (at least for gs_init.ps), is definitly a bug
-> > that needs to be fixed.
-> 
-> I believe we should try to clarify what CVE-2010-2055 got actually
-> assigned to, as it seems to be used for more than one thing:
-> 
-> - ghostscript uses CWD to search for initialization files
-> - gv did not pass -P- to gs, leading to problems related to the default
->   mentioned above
+Hi Steve,
 
-That's the initial situation.It can be fixed in two ways:
-a) set SEARCH_HERE_FIRST=0 as default for gs
-b) keep SEARCH_HERE_FIRST=1 and require applications to pass -P-
+   Cacti upstream has released:
+    [1] http://www.cacti.net/release_notes_0_8_7f.php
 
-However, ...
+   latest v0.8.7 version, adressing three security flaws:
+     [A], MOPS-2010-023: Cacti Graph Viewer SQL Injection Vulnerability
+            [2] http://php-security.org/2010/05/13/mops-2010-023-cacti-graph-viewer-sql-injection-vulnerability/index.html
+            [3] http://www.vupen.com/english/advisories/2010/1204
 
-> - some ghostscript versions search CWD even when started with -P-
+          Credit: The vulnerability was discovered by Stefan Esser as part of the SQL Injection Marathon.
+          Upstream changeset:
+            [4] http://svn.cacti.net/viewvc?view=rev&revision=5920
 
-... as it turned out neither a) nor b) actually solve the problem:
-http://bugs.ghostscript.com/show_bug.cgi?id=691350#c11
+     [B], Cross-site scripting issues reported by VUPEN Security (http://www.vupen.com)
+            [5] http://www.vupen.com/english/advisories/2010/1203
 
-So fixing gs must be part of the solution always. That's
-http://svn.ghostscript.com/viewvc?view=rev&revision=11352
+          Credit: Vulnerabilities reported by Mohammed Boumediane (VUPEN Security).
+          Upstream changeset:
+            [6] http://svn.cacti.net/viewvc?view=rev&revision=5901
 
-Therefore up to three CVE numbers could be assigned
-a) insecure default of gs
-b) applications don't pass -P-
-c) non working -P-/SEARCH_HERE_FIRST
+     [C], SQL injection and shell escaping issues reported by Bonsai Information Security (http://www.bonsai-sec.com)
+            [7] http://www.bonsai-sec.com/blog/index.php/using-grep-to-find-0days/
+            [8] http://www.bonsai-sec.com/en/research/vulnerabilities/cacti-os-command-injection-0105.php
 
-Fixing a) means b) isn't needed but then it's just a compile time
-default that may or may not be changed by distros.
+          Credit: This vulnerability was discovered by Nahuel Grisolia ( nahuel -at- bonsai-sec.com )
+          Upstream changeset:
+            [9] http://svn.cacti.net/viewvc?view=rev&revision=5747
 
-Both a) and b) imply a fix for c) though. No idea if a separate CVE
-is actually useful in that case.
+If a logged Cacti user was tricked into visiting a specially-crafted Web page, it could lead to:
+i,   unauthorized arbitrary database data dislosure (vulnerability [A], from [2]),
+ii,  unauthorized arbitrary scripting code execution (vulnerability [B], from [5]),
+iii, execution of unintended commands or accessing unauthorized data. (vulnerability [C], from [8]).
 
-We've decided for a), fix gs once and for all. Hopefully. :-)
+References:
+   [10] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=582691
+   [11] https://bugzilla.redhat.com/show_bug.cgi?id=595289
 
-cu
-Ludwig
+Could you allocate relevant CVE ids?
 
--- 
- (o_   Ludwig Nussel
- //\   
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
