@@ -1,35 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/02/5
-Message-ID: <i0l52n$rs5$1@dough.gmane.org>
-Date: Fri, 02 Jul 2010 11:45:20 -0500
-From: Raphael Geissert <geissert@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- Mumble server (Murmur) / Qt SQLite -- Remotely exploitable DoS (murmur termination) due QueryUsers Qt SQLite database bug
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/25/13
+Message-ID: <Pine.GSO.4.64.1005251706220.27983@faron.mitre.org>
+Date: Tue, 25 May 2010 17:12:07 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Josh Bressers <bressers@...hat.com>
+cc: oss-security@...ts.openwall.com, security-2010@...irrelmail.org, security@...de.org
+Subject: Re: CVE Request for Horde and Squirrelmail
 Content-Type: text/plain; charset=utf-8
 
-Hi Jan, everyone,
 
-Jan Lieskovsky wrote:
->    Luigi Auriemma reported:
->    [1] http://aluigi.altervista.org/adv/mumbleed-adv.txt
-> 
-> a deficiency in the way Mumble server processed malformed SQL query data.
-> A remote, authenticated user could use this flaw to cause denial of
-> service (mumble server termination) via specially-crafted QueryUsers Qt
-> SQLite SQL query.
+While these port-scanning types of issues are rarely reported, there is 
+precedents for them, especially in the web application security world (see 
+Jeremiah Grossman's work on port-scanning through web browsers, for a 
+start).
 
-He also reported another vulnerability in Qt4's SSL support:
-http://aluigi.altervista.org/adv/qtsslame-adv.txt
+Even though the consequences may be minimal, they still allow an attacker 
+from *outside* a network to determine the state of machines that live 
+*inside* that network, even when the attacker does not have direct access 
+to the internal netork.  So there is an information leak.
 
-(reported to the Debian maintainers in http://bugs.debian.org/587711)
+As such, the CVE assignment is appropriate.  (To the Horde devs, if you 
+wish to publish a dispute within the CVE description itself, contact me 
+offline; the description can at least be written to emphasize that it only 
+happens when sysadmins don't follow documentation.)
 
-Could a CVE be assigned for this other issue too?
-
-Thanks.
-
-Regards,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
-
-
+- Steve
