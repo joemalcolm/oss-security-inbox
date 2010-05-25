@@ -1,33 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/14/3
-Message-ID: <AANLkTikm6QUjVMqFj1-WNsgzgr9Kvd-MTdWJxJJ0KDYs@mail.gmail.com>
-Date: Sun, 14 Nov 2010 11:06:20 -0500
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/25/12
+Message-ID: <1149807827.273891274818055627.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 25 May 2010 16:07:35 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: econet iovec
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: GFS2: The setflags ioctl() doesn't check file ownership
 Content-Type: text/plain; charset=utf-8
 
-Yes, this size calculation can overflow, but there's no negative
-effect, since it is only used to construct a UDP packet, and UDP is
-not susceptible to overflow issues in its sendmsg() path.
+Please use CVE-2010-1641
 
-On the other hand, the check on line 331 to put an upper bound on the
-total size can overflow, causing an underallocation on line 344 and a
-kernel panic on subsequent usage due to bad skbuff alignment.  This
-only affects people using actual native Econet hardware.  This was
-already fixed by recently added checks in iovec size calculations and
-in the sendto() path for maximum packet size.
+Thanks.
 
--Dan
+-- 
+    JB
 
-On Sun, Nov 14, 2010 at 9:56 AM, Thomas Pollet <thomas.pollet@...il.com> wrote:
-> Hi,
->
-> the AF_ECONET sendmsg iovec code also appears to be vulnerable to an integer
-> overflow that will be fixed by the verify_iovec changes in the 2.6.37
-> kernel.
-> on line 469: size += iov_len
->
-> Regards,
-> Thomas
->
+
+----- "Eugene Teo" <eugeneteo@...nel.sg> wrote:
+
+> Besides checking the write permissions, the setflags ioctl should also
+> 
+> be checking for the ownership of the file. It's a minor issue but the
+> 
+> behaviour is unexpected.
+> 
+> References:
+> https://bugzilla.redhat.com/show_bug.cgi?id=595579
+> http://www.linux-archive.org/cluster-development/375481-gfs2-fix-permissions-checking-setflags-ioctl.html
+> 
+> Thanks, Eugene
+> -- 
+> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i);
+> }
