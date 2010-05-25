@@ -1,69 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/01/1
-Message-ID: <4CF685D7.4070208@redhat.com>
-Date: Wed, 01 Dec 2010 18:28:55 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, Marcela Maslanova <mmaslano@...hat.com>, Petr Pisar <ppisar@...hat.com>, "Chris 'BinGOs' Williams" <chris@...gosnet.co.uk>, Reed Loden <reed@...dloden.com>, Masahiro Yamada <masa141421356@...il.com>, Byron Jones <glob@...b.com.au>, Mark Stosberg <mark@...mersault.com>
-Subject: CVE Request -- perl-CGI two ids, perl-CGI-Simple one id (CVE-2010-3172 already assigned for Bugzilla part)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/25/1
+Message-ID: <4BFB5899.9080205@kernel.sg>
+Date: Tue, 25 May 2010 12:56:57 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request - kernel: GFS2: The setflags ioctl() doesn't check file ownership
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve, vendors,
+Besides checking the write permissions, the setflags ioctl should also 
+be checking for the ownership of the file. It's a minor issue but the 
+behaviour is unexpected.
 
-    Masahiro Yamada reported:
-    [1] https://github.com/digg/stream/issues#issue/1
-    [2] https://bugzilla.mozilla.org/show_bug.cgi?id=600464
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=595579
+http://www.linux-archive.org/cluster-development/375481-gfs2-fix-permissions-checking-setflags-ioctl.html
 
-    the following deficiency (from [2]):
-    Search result of b.m.o. does not escape "--------- =_aaaaaaaaaa0": it is used
-    as boudary of multipart/x-mixed-replace.
-
-    Attackers can inject boundary of multipart/x-mixed-replace.
-    It may be able to be used for HTTP Header injection.
-
-    It has been fixed in new perl-CGI v3.50 upstream version via the following commit:
-    [3] http://www2.rbfh.de/cgi/cgit.cgi/perl5.git/commit/?id=84601d63a7e34958da47dad1e61e27cb3bd467d1
-
-    The Changelog from [3] mentions:
-    [SECURITY]
-     1. The MIME boundary in multipart_init is now random
-        Thanks to Byron Jones, Masahiro Yamada, Reed Loden, and Mark Stosberg
-
-     Since perl-CGi is different code base than Bugzilla, we suspect a new CVE id is required
-     for this issue? Steve, could you please allocate one? (id #1)
-
-     2. Further improvements to handling of newlines embedded in header values.
-        An exception is thrown if header values contain invalid newlines.
-        Thanks to Michal Zalewski, Max Kanat-Alexander, Yanick Champoux
-        Lincoln Stein, Frederic Buclin and Mark Stosberg
-
-        Chris, Mark, could you please provide more details about the issue? Is it
-        related to CVE-2010-3172?
-
-        Steve, could you please allocate CVE id for this? (id #2)
-
-   Yet, back to CVE-2010-3172, Masahiro mentions in [2], that perl-CGI-Simple is prone
-   to same deficiency, as CVE-2010-3172 in Bugzilla was:
-   [4] https://bugzilla.mozilla.org/show_bug.cgi?id=600464#c13
-
-   Looks, like it was already fixed in perl-CGI-Simple too:
-   [5] https://bugzilla.mozilla.org/show_bug.cgi?id=600464#c31
-
-   Relevant perl-CGi-Simple patch:
-   [6] https://github.com/AndyA/CGI--Simple/commit/e4942b871a26c1317a175a91ebb7262eea59b380
-
-   Steve, could you allocate new CVE id for this issue? (id #3)
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-
-
-
-
-
-
-
-
-
+Thanks, Eugene
+-- 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
