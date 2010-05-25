@@ -1,54 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/04/3
-Message-ID: <20101004150726.GK1955@redhat.com>
-Date: Mon, 4 Oct 2010 09:07:26 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/25/10
+Message-ID: <1304933773.266471274813455669.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 25 May 2010 14:50:55 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request, security issues fixed in MySQL 5.1.51
+Cc: coley <coley@...re.org>
+Subject: Re: CVE Request: clamav crash via malformed PDF
 Content-Type: text/plain; charset=utf-8
 
-MySQL 5.1.51 corrects a few security flaws.  Could we get some CVEs
-assigned?
+Please use CVE-2010-1639
 
-http://dev.mysql.com/doc/refman/5.1/en/news-5-1-51.html
-
-Security Fix: During evaluation of arguments to extreme-value functions
-(such as LEAST() and GREATEST()), type errors did not propagate
-properly, causing the server to crash. (Bug#55826)
-
-
-Security Fix: The server could crash after materializing a derived table
-that required a temporary table for grouping. (Bug#55568)
-
-
-Security Fix: A user-variable assignment expression that is evaluated in
-a logical expression context can be precalculated in a temporary table
-for GROUP BY. However, when the expression value is used after creation
-of the temporary table, it was re-evaluated, not read from the table and
-a server crash resulted. (Bug#55564)
-
-
-Security Fix: Pre-evaluation of LIKE predicates during view preparation
-could cause a server crash. (Bug#54568)
-
-
-Security Fix: GROUP_CONCAT() and WITH ROLLUP together could cause a
-server crash. (Bug#54476)
-
-
-Security Fix: Queries could cause a server crash if the GREATEST() or
-LEAST() function had a mixed list of numeric and LONGBLOB arguments, and
-the result of such a function was processed using an intermediate
-temporary table. (Bug#54461)
-
-
-Security Fix: Queries with nested joins could cause an infinite loop in
-the server when used from stored procedures and prepared statements.
-(Bug#53544)
-
-
-Thanks!
+Thanks.
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+    JB
+
+
+----- "Jamie Strandboge" <jamie@...onical.com> wrote:
+
+> The following upstream commits were confirmed by upstream to be
+> security
+> relevant (crash via malformed content):
+> 
+> https://wwws.clamav.net/bugzilla/show_bug.cgi?id=2016
+> http://git.clamav.net/gitweb?p=clamav-devel.git;a=commit;h=f0eb394501ec21b9fe67f36cbf5db788711d4236
+> 
+> 
+> -- 
+> Jamie Strandboge             | http://www.canonical.com
