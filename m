@@ -1,111 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/06/9
-Message-ID: <175329858.2088141278443200444.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 6 Jul 2010 15:06:40 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: David Relson <relson@...gesoftware.com>, coley <coley@...re.org>
-Subject: Re: Request CVE ID for bogofilter base64 decoder heap corruption
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/25/2
+Message-ID: <20100524224949.Horde.3wqa7n8lhlkwsg00s4c8k4kc@bigworm.curecanti.org>
+Date: Mon, 24 May 2010 22:49:49 -0600
+From: Michael M Slusarz <slusarz@...de.org>
+To: Max Olsterd <max.olsterd@...il.com>, oss-security@...ts.openwall.com, security-2010@...irrelmail.org, security@...de.org
+Subject: Re: [core] CVE Request for Horde and Squirrelmail
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-2494
+Quoting Max Olsterd <max.olsterd@...il.com>:
 
-Thanks.
+> Hi,
+>
+> Is there a CVE number available for the two 0-days exposed during Hack In
+> The Box Dubai 2010 ?
+>
+> Though the exploits were not given during HITB (?), some friends have
+> recently shown me that they found how both products (Squirrelmail and Horde)
+> might be abused to be transformed, so that they become some kind of nmap
+> scanner (banner grab, port scan, etc). It helps at discovering a remote DMZ,
+> internal LAN, etc, by using those webmails as evil internal nmap proxies.
+>
+> More info available on the slides of the corporate hackers who found the
+> 0-days :
+> http://conference.hitb.org/hitbsecconf2010dxb/materials/D1%20-%20Laurent%20Oudot%20-%20Improving%20the%20Stealthiness%20of%20Web%20Hacking.pdf
+> -> Squirrelmail: page 69 (post auth vuln)
+> -> Horde: page 74 (pre auth vuln)
+
+Hi Max,
+
+I don't believe there is a CVE number for this alleged "hack".
+
+Additionally, we at the Horde project disagree entirely with the  
+characterization that this is an exploit.  We have specifically warned  
+users for *at least 7 YEARS* that allowing the test scripts to remain  
+executable after using them is inadvisable (see  
+http://git.horde.org/diff.php/horde/docs/SECURITY?r1=1.1&r2=1.2?rt=horde).  At  
+a minimum, it is a bit disingenuous for security researchers to  
+"announce" a exploit that is explicitly mentioned in the documentation  
+shipped with the software package.
+
+That being said, with framework changes that have already been made in  
+Horde 4, test scripts are now globally disabled by default, which will  
+help protect somewhat against lazy administrators.  Until then, for H3  
+admins simply need to disable/restrict the test scripts as we have  
+been telling them to do for years.
+
+michael
 
 -- 
-    JB
+___________________________________
+Michael Slusarz [slusarz@...de.org]
 
-
------ "Matthias Andree" <matthias.andree@....de> wrote:
-
-> Greetings,
-> 
-> I am requesting a CVE ID for the issue described below.
-> 
-> Thanks.
-> 
-> Best regards
-> Matthias Andree
-> 
-> bogofilter-SA-2010-01
-> 
-> Topic:		heap corruption overrun in bogofilter/bogolexer
-> 
-> Announcement:	bogofilter-SA-2010-01
-> Writer:		Matthias Andree
-> Version:	0.1
-> CVE ID:		
-> Announced:	
-> Category:	vulnerability
-> Type:		array index underflow/out of bounds write through invalid
-> input
-> Impact:		heap corruption, application crash
-> Credits:	Julius Plenz
-> Danger:		medium
-> URL:	
-> http://bogofilter.sourceforge.net/security/bogofilter-SA-2010-01
-> 
-> Affected:	bogofilter <= 1.2.1
-> 		SVN before 2010-07-03 08:40 UTC
-> 
-> Not affected:	bogofilter 1.2.2	    (to be released)
-> 
-> 1. Background
-> =============
-> 
-> Bogofilter is a software package for classifying a message as spam or
-> non-spam.  It uses a data base to store words and must be trained
-> which messages are spam and non-spam. It uses the probabilities of
-> individual words for classifying the message.
-> 
-> Note that the bogofilter project is issuing security announcements
-> only
-> for current "stable" releases, and not necessarily for past "stable"
-> releases.
-> 
-> 2. Problem description
-> ======================
-> 
-> Bogofilter's/bogolexer's base64 could overwrite memory before its
-> heap
-> buffer if the base64 input started with an equals sign, such as
-> through
-> misdeclaration of quoted-printable as base64.
-> 
-> 3. Impact
-> =========
-> 
-> Vulnerable bogofilter and bogolexer applications can corrupt their
-> heap and
-> crash. The consequences are dependent on the local configuration,
-> memory
-> layout and operating system features.
-> 
-> 4. Solution
-> ===========
-> 
-> Upgrade your bogofilter to version 1.2.2 (or a newer release).
-> 
-> bogofilter is available from SourceForge:
-> 
-> <https://sourceforge.net/project/showfiles.php?group_id=62265>
-> 
-> A. Copyright, License and Warranty
-> ==================================
-> 
-> (C) Copyright 2010 by Matthias Andree, <matthias.andree@....de>.
-> Some rights reserved.
-> 
-> This work is licenced under the Creative Commons
-> Attribution-NonCommercial-NoDerivs 3.0 Unported License. To view a
-> copy
-> of this licence, visit
-> http://creativecommons.org/licenses/by-nc-nd/3.0/
-> or send a letter to Creative Commons, 171 Second Street, Suite 300,
-> San
-> Francisco, California 94105, USA.
-> 
-> THIS WORK IS PROVIDED FREE OF CHARGE AND WITHOUT ANY WARRANTIES.
-> Use the information herein at your own risk.
-> 
-> END of bogofilter-SA-2010-01
