@@ -1,37 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/09/5
-Message-Id: <20100909141534.C948.A69D9226@jp.fujitsu.com>
-Date: Thu,  9 Sep 2010 14:31:18 +0900 (JST)
-From: KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>
-To: Brad Spengler <spender@...ecurity.net>
-Cc: kosaki.motohiro@...fujitsu.com, Roland McGrath <roland@...hat.com>, Linus Torvalds <torvalds@...ux-foundation.org>, Andrew Morton <akpm@...ux-foundation.org>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Kees Cook <kees.cook@...onical.com>, Al Viro <viro@...iv.linux.org.uk>, Oleg Nesterov <oleg@...hat.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, pageexec@...email.hu, "Brad Spengler <spender@...ecurity.net> Eugene Teo" <eugene@...hat.com>
-Subject: Re: [PATCH 1/3] setup_arg_pages: diagnose excessive argument size
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/25/9
+Message-ID: <772617629.263861274811978260.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 25 May 2010 14:26:18 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: security-2010@...irrelmail.org, security@...de.org, coley@...re.org
+Subject: Re: CVE Request for Horde and Squirrelmail
 Content-Type: text/plain; charset=utf-8
 
-> I still don't think this addresses the whole problem.  Without question,
-> the rlimit / 4 check is bogus.  If nobody agrees with the intent of that 
-> check, then it should be removed, but I think the better solution is to 
-> fix the check so that it matches its original intent: let the initial 
-> stack setup be up to 1/Xth of the min(rlimit, TASK_SIZE dependent upon 
-> personality), which allows space for additional stack setup in the ELF 
-> loader and then further growth once the process is live.  If that 
-> amount is overstepped, then the exec will return an error to the calling 
-> process instead of being terminated.
+----- "Max Olsterd" <max.olsterd@...il.com> wrote:
+
+> Hi,
 > 
-> It might be useful to consult with the people who introduced/approved 
-> the check in the first place, as they seemed to have reasons for 
-> implementing it.
+> Is there a CVE number available for the two 0-days exposed during Hack In
+> The Box Dubai 2010 ?
+> 
+> Though the exploits were not given during HITB (?), some friends have
+> recently shown me that they found how both products (Squirrelmail and
+> Horde) might be abused to be transformed, so that they become some kind
+> of nmap scanner (banner grab, port scan, etc). It helps at discovering a
+> remote DMZ, internal LAN, etc, by using those webmails as evil internal
+> nmap proxies.
+> 
+> More info available on the slides of the corporate hackers who found the
+> 0-days :
+> http://conference.hitb.org/hitbsecconf2010dxb/materials/D1%20-%20Laurent%20Oudot%20-%20Improving%20the%20Stealthiness%20of%20Web%20Hacking.pdf
+> -> Squirrelmail: page 69 (post auth vuln)
+> -> Horde: page 74 (pre auth vuln)
+> 
 
-Brad, sorry, I have bad news. glibc sysconf(_SC_ARG_MAX) is implemented
-by hard coded RLIMIT_STACK/4 heuristics. That said, at least _now_, we
-can't change this even though you disliked. That said, we can't break
-userland even though userland library is very crazy.
+Here goes, there isn't a lot of data on these.
 
-I don't dislike your "1/Xth of the min(rlimit, TASK_SIZE dependent upon 
-> personality)" idea. however I think You and Roland haven't agreed this
-point yet. he seems to want "unlimited" works as "unlimited". then, now
-I don't make such patch. Instead, I would propose to insert 
-__vm_enough_memory() check in execve() pass. It prevent almost argv attack.
+For Squirrelmail:
+
+Here are some important notes from the slide:
+        * Default plugin <mail_fetch>, emulates POP3 fetcher with fsockopen()
+          PHP functions, Post Authentication only
+            - No verification on IP / PORTS
+        * You can transform SquirrelMail as a kind of Nmap scanner
+
+        This has been assigned TEHTRI-SA-2010-009 by the discoverer.
+
+        The danger is that this attack could be used to bypass a firewall.
+
+Let's use CVE-2010-1637 for Squirrelmail.
 
 
+For Horde:
 
+        * You can transform a default Horde installation to a kind of
+          advanced network TCP scanner with banner grabbing, etc
+
+        Pre-auth
+
+        TEHTRI-SA-2010-010
+
+Let's use CVE-2010-1638 for Horde
+
+
+If anyone has more links or information for these, please pass them along.
+Thanks.
+
+-- 
+    JB
