@@ -1,37 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/02/3
-Message-ID: <AANLkTimpyhKJ7hpj7RY5Xsv9Zmbnzac08vp_wD+QTDC8@mail.gmail.com>
-Date: Thu, 2 Sep 2010 12:23:23 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: Re: CVE id request: libc fortify source information disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/25/5
+Message-ID: <20100525170527.4c30b31f@redhat.com>
+Date: Tue, 25 May 2010 17:05:27 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: OSS Security <oss-security@...ts.openwall.com>
+Subject: Python rgbimg and audioop issues
 Content-Type: text/plain; charset=utf-8
 
-Tomas,
+Hi!
 
-> For the sake of correctness, protective technology that kicks in in the
-> Dan's example is stack protector, not FORTIFY_SOURCE.  Though it's
-> probably still glibc to blame for using the same error-reporting
-> function in both cases.
+We have found few not too exciting flaws in two python modules (rgbimg
+and audioop).  Further details / links in our bugzilla:
 
-You are correct.  Both the __stack_chk_fail(), which is inserted due
-to stack protection, and the more general __chk_fail(), which is
-inserted due to FORTIFY_SOURCE and may trigger for static buffer
-overflows in other segments, call out to the same __fortify_fail()
-function to print out the stack trace.
+https://bugzilla.redhat.com/show_bug.cgi?id=541698
+https://bugzilla.redhat.com/show_bug.cgi?id=590690
 
->
-> It seems the fix would need to remove all possibly-useful info from the
-> error message.
->
-
-The backtrace or memory map don't really contain any potentially
-sensitive information that couldn't be obtained otherwise.  It's just
-the reference to argv[0] (in glibc/debug/fortify_fail.c) that worries
-me, because this can be directly influenced to cause a printout of
-process memory.
-
-> --
-> Tomas Hoger / Red Hat Security Response Team
->
+-- 
+Tomas Hoger / Red Hat Security Response Team
