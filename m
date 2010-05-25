@@ -1,28 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/19/8
-Message-ID: <1409622395.235811263936069790.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 19 Jan 2010 16:21:09 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: coley <coley@...re.org>, oss-security <oss-security@...ts.openwall.com>
-Subject: BIND CVE-2009-4022 fix incomplete
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/25/15
+Message-ID: <Pine.GSO.4.64.1005251730530.27983@faron.mitre.org>
+Date: Tue, 25 May 2010 17:34:36 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: clamav crash via malformed PDF
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
 
-I'm not assigning this one as I'm not sure if you've seen this or not.
+On Tue, 25 May 2010, Josh Bressers wrote:
 
-ISC released an update today for BIND, part of it was that CVE-2009-4022
-was not completely fixed:
-https://www.isc.org/advisories/CVE-2009-4022
+> Please use CVE-2010-1639
 
-If you look down at the bottom of their advisory you can see this:
-    Jan. 19 - Revised Summary, Severity, Description, Workaround, Impact &
-    Solution (earlier fixes incomplete) 
+A second issue has been reported in the ClamAV changelog, involving an 
+invalid read:
 
-As best as we can tell, this is why:
-https://bugzilla.redhat.com/show_bug.cgi?id=554851#c7
+http://secunia.com/advisories/39895
+https://wwws.clamav.net/bugzilla/show_bug.cgi?id=2031
+http://git.clamav.net/gitweb?p=clamav-devel.git;a=blob_plain;f=ChangeLog;hb=clamav-0.96.1
 
-Thanks.
+This has been assigned CVE-2010-2077.
 
--- 
-    JB
+- Steve
