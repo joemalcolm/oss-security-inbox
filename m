@@ -1,34 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/17/2
-Message-ID: <4CE394E3.6020605@gmx.de>
-Date: Wed, 17 Nov 2010 09:40:03 +0100
-From: Matthias Andree <matthias.andree@....de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- Mercurial --Doesn't verify subject Common Name properly
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/25/4
+Message-Id: <201005251603.22268.thomas@suse.de>
+Date: Tue, 25 May 2010 16:03:21 +0200
+From: Thomas Biege <thomas@...e.de>
+To: "oss-security" <oss-security@...ts.openwall.com>
+Subject: Who visits the Linux Security Summit 2010
 Content-Type: text/plain; charset=utf-8
 
-Am 16.11.2010 17:02, schrieb Marc Deslauriers:
 
-> Thanks for the clarification. Here are some more projects that need CVEs
-> for this issue:
-> 
-> libcloud:
-> https://issues.apache.org/jira/browse/LIBCLOUD-55
-> https://bugs.launchpad.net/ubuntu/+source/libcloud/+bug/675217
-> 
-> Checkbox:
-> https://bugs.launchpad.net/ubuntu/+source/checkbox/+bug/625076
-> 
-> Bazaar:
-> https://bugs.edge.launchpad.net/bzr/+bug/651161
+https://security.wiki.kernel.org/index.php/LinuxSecuritySummit2010
 
-In the past, Charles Cazabon's getmail would have had to be added to the
-list, but he didn't care and pointed fingers at the Python library
-developers, and I'm not sure what the current shape of getmail 4 is, and
-don't care sufficiently to look it up.
+Who does go there?
 
-Getmail used to happily connect to sites that have expired certs, for
-instance.
+Thomas
 
 -- 
-Matthias Andree
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+--
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
