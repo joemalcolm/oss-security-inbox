@@ -1,30 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/01/7
-Message-ID: <20101001201237.GU1955@redhat.com>
-Date: Fri, 1 Oct 2010 14:12:37 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/25/16
+Message-ID: <Pine.GSO.4.64.1005251737150.27983@faron.mitre.org>
+Date: Tue, 25 May 2010 17:40:17 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: gerald@...eshark.org
-Subject: Re: CVE requests: Poppler, Quassel, Pyfribidi, Overkill, DocUtils, FireGPG, Wireshark
+Subject: Re: CVE Request: off by one DoS in pe_icons.c
 Content-Type: text/plain; charset=utf-8
 
-* [2010-09-29 15:06:31 -0400] Josh Bressers wrote:
 
->> 7. Wireshark BER dissector
->> http://archives.neohapsis.com/archives/bugtraq/2010-09/0088.html
->>
->
->This one looks like a stack overflow, the advisory isn't very clear, but
->claims there are two possible outcomes. We can always split later if
->needed.
->CVE-2010-3445
+On Tue, 25 May 2010, Josh Bressers wrote:
 
-Gerald, are you aware of this issue?  Do you have further details
-regarding it?  I poked around in bugzilla a bit but couldn't find
-anything.
+> Please use CVE-2010-1640 for this.
 
-It claims 1.4.0, but is not clear as to whether or not older versions
-are affected.
+Apologies all, I just sent out a duplicate CVE for this.  (I only looked 
+at subject lines and clam wasn't listed in this one...)
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+Keep the ID that Josh assigned, CVE-2010-1640, and ignore the ID that I 
+just assigned, CVE-2010-2077.
+
+Sorry about that!
+
+- Steve
