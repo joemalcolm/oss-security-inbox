@@ -1,58 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/06/13
-Message-ID: <Pine.GSO.4.64.1012061711580.25660@faron.mitre.org>
-Date: Mon, 6 Dec 2010 17:13:02 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: vanilla forums before 2.0.10, xss
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/26/5
+Message-Id: <201005261123.35729.thomas@suse.de>
+Date: Wed, 26 May 2010 11:23:35 +0200
+From: Thomas Biege <thomas@...e.de>
+To: Tomas Hoger <thoger@...hat.com>
+Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: Fwd: [Full-disclosure] stratsec Security Advisory SS-2010-005: Samba Multiple DoS Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
+Am Mittwoch 26 Mai 2010 09:46:44 schrieb Tomas Hoger:
+> On Tue, 25 May 2010 17:10:04 +0200 Thomas Biege wrote:
+> > So far no assignments were made, right?
+> 
+> Do you have any public bug report with further details about these
+> flaws?
 
-On Mon, 6 Dec 2010, Josh Bressers wrote:
-
-> Use CVE-2010-4264 for the XSS. The commit is here:
-> https://github.com/vanillaforums/Garden/commit/4535a059e4e24ca11a2ef0b4d754f262398bcece
->
-> As for the "linkbait" issue, I have no clue. Nothing in git seems to
-> point at that.
->
-> Steve, does MITRE have a precedent for such a thing?
-
-The vendor is calling it a "vulnerability" which is good enough to assign 
-a CVE to, as a different vuln type than XSS.
-
-My guess is that it's open redirect, which is used to redirect users away 
-from the site towards spam or malware.  Just a guess, though.
-
-- Steve
+I am just aware of this posting to FD.
 
 
->
-> Thanks.
->
-> -- 
->     JB
->
->
-> ----- "Hanno Böck" <hanno@...eck.de> wrote:
->
->> Hi,
->>
->> http://vanillaforums.org/discussion/13119/vanilla-2.0.10-released/p1
->>
->> Two sound like security:
->> #
->> # Added SafeStyles configuration to prevent XSS linkjacking
->> # Patched potential linkbait vulnerability in dispatcher
->>
->> (although I don't know what a linkbait vulnerability is, maybe someone
->> wants
->> to enlighten me)
->>
->> --
->> Hanno Böck                Blog:                http://www.hboeck.de/
->> GPG: 3DBD3B20                Jabber/Mail:        hanno@...eck.de
->>
->> http://schokokeks.org - professional webhosting
->
->
+> According to our samba maintainers, this code is only executed
+> in per-connection smbd child and one can only DoS own connection. It
+> seems upstream has not handled this as security either.
+
+That would be good. One samba update less.
+
+Cheers,
+Thomas
+
+
+-- 
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+--
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
