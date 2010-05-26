@@ -1,23 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/06/5
-Message-ID: <4BBBA098.1030409@redhat.com>
-Date: Tue, 06 Apr 2010 22:59:04 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, David Zeuthen <davidz@...hat.com>, David Zeuthen <david@...ar.dk>, Milan Broz <mbroz@...hat.com>, Alasdair G Kergon <agk@...hat.com>
-Subject: CVE Request -- udisks v1.0.0 -- (serious) information disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/26/3
+Message-Id: <201005260943.03766.thomas@suse.de>
+Date: Wed, 26 May 2010 09:43:03 +0200
+From: Thomas Biege <thomas@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: Fwd: [Full-disclosure] stratsec Security Advisory SS-2010-005: Samba Multiple DoS Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve, vendors,
 
-   Bastian Blank reported the following deficiency in udisks:
-     [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=576687
+Thanks a lot!
 
-   Upstream bug report is here:
-     [2] https://bugs.freedesktop.org/show_bug.cgi?id=27494
+Am Dienstag 25 Mai 2010 23:29:00 schrieb Josh Bressers:
+> It's been pointed out to me that this should be two IDs, not one.
+> 
+> Let's use CVE-2010-1635 for the NULL pointer deref
+> and CVE-2010-1642 for the OOB read.
+> 
+> Sorry for the confusion.
+> 
+> > Please use CVE-2010-1635
+> > 
+> > Sorry for the delay, I've been out for a few days.
+> > 
+[...]
 
-Could you allocate CVE id for this?
-
-Thanks && Regards, Jan.
+-- 
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
 --
-Jan iankko Lieskovsky / Red Hat Security Response Team
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
