@@ -1,23 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/14/2
-Message-ID: <87pr22s8oh.fsf@mid.deneb.enyo.de>
-Date: Wed, 14 Apr 2010 11:08:30 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/26/4
+Message-ID: <20100526094644.6ec7db41@redhat.com>
+Date: Wed, 26 May 2010 09:46:44 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: aircrack-ng EAPOL buffer overflow
+Cc: thomas@...ell.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: Fwd: [Full-disclosure] stratsec Security Advisory SS-2010-005: Samba Multiple DoS Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-An exploit for a security vulnerability in aircrack-ng has been
-published:
+On Tue, 25 May 2010 17:10:04 +0200 Thomas Biege wrote:
 
-| The tools' code responsible for parsing IEEE802.11-packets assumes the
-| self-proclaimed length of a EAPOL-packet to be correct and never to exceed
-| a (arbitrary) maximum size of 256 bytes for packets that are part of the
-| EAPOL-authentication. [...]
+> So far no assignments were made, right?
 
-<http://pyrit.googlecode.com/svn/tags/opt/aircrackng_exploit.py>
+Do you have any public bug report with further details about these
+flaws?  According to our samba maintainers, this code is only executed
+in per-connection smbd child and one can only DoS own connection. It
+seems upstream has not handled this as security either.
 
-The fix seems to be fixed in r1676 and r1683:
-
-  <http://trac.aircrack-ng.org/changeset/1676>
-  <http://trac.aircrack-ng.org/changeset/1683>
+-- 
+Tomas Hoger / Red Hat Security Response Team
