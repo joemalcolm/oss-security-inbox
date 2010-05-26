@@ -1,33 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/29/9
-Message-ID: <341959897.50621272569017321.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 29 Apr 2010 15:23:37 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/26/6
+Message-ID: <390300551.388131274899534089.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 26 May 2010 14:45:34 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Paul Gortmaker <paul.gortmaker@...driver.com>, +security-linux <security-linux@...driver.com>, Jason Wessel <jason.wessel@...driver.com>, Wu Fei <fei.wu@...driver.com>, coley <coley@...re.org>
-Subject: Re: CVE request - Linux Kernel KGDB/ppc issue
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: nfsd: fix vm overcommit crash
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-1446 for this.
+Please use CVE-2010-1643 for this.
 
-Thanks
+Thanks.
 
 -- 
     JB
 
+----- "Eugene Teo" <eugeneteo@...nel.sg> wrote:
 
------ "Hui Zhu" <hui.zhu@...driver.com> wrote:
-
-> Hi All,
+> "knfsd crashes if you are using it to export shmemfs objects and run 
+> strict overcommit. In this situation the current->mm based modifier to
 > 
-> The problem is that if KGDB is enabled on a powerpc board, a
-> test that checks if a page is user or kernel is bypassed.
-> This means that a user can write to arbitrary kernel address space.
+> the overcommit goes through a NULL pointer.
 > 
-> Upon further investigation, we found that kernels older than
-> the v2.6.30-rc1 release have the same problem for non-booke
-> ppc chips (74xx, 8641D), so we need two patches for kernels
-> up to that date, and then one patch for ones after that date.
+> We could simply check for NULL and skip the modifier but we've caught
 > 
-> Thanks,
-> Hui
+> other real bugs in the past from mm being NULL here - cases where we
+> did 
+> need a valid mm set up (eg the exec bug in 2005).
+> 
+> To preserve the checks and get the logic we want shuffle the checking
+> 
+> around and add a new helper to the vm_ security wrappers
+> 
+> Also fix a current->mm reference in nommu that should use the passed
+> mm"
+> 
+> Upstream commit:
+> nfsd: fix vm overcommit crash
+> http://git.kernel.org/linus/731572d39fcd3498702eda4600db4c43d51e0b26
+> 
+> Reference:
+> [PATCH] knfsd: add nfs-export support to tmpfs
+> http://git.kernel.org/linus/91828a405ae454a9503c41a7744f6ff877a80714
+> https://bugzilla.redhat.com/show_bug.cgi?id=595970
+> 
+> Backtrace (-rt kernel):
+> https://bugzilla.redhat.com/show_bug.cgi?id=595970#c1
+> 
+> Thanks, Eugene
+> -- 
+> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i);
+> }
