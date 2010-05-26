@@ -1,27 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/12/6
-Message-ID: <AANLkTikiFgeQgr18P6Iwavf9kYBSfJky0I_GJ-cOKhBX@mail.gmail.com>
-Date: Mon, 12 Jul 2010 14:33:31 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: oss-security@...ts.openwall.com, coley <coley@...re.org>
-Cc: security-alert@...bsd.org, secteam@...ebsd.org, product-security@...le.com
-Subject: CVE request: NetSMB BSD kernel module (minor)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/26/7
+Message-ID: <215000089.389431274900319124.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 26 May 2010 14:58:39 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Nahuel Grisolia <nahuel@...sai-sec.com>, Stefan Esser <stefan.esser@...tioneins.de>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Cacti v0.8.7 -- three security fixes
 Content-Type: text/plain; charset=utf-8
 
-I discovered and reported a minor security issue in the netsmb kernel
-module for NetBSD and FreeBSD.  The issue also affects Mac OS X 10.x,
-where netsmb is available as a kernel extension.
+I'm going to butcher this up a bit to make it easier to follow (at least
+for me).
 
-Several of the subroutines in the netsmb module (see reference below
-for vulnerable functions), which are reachable by unprivileged local
-users via device ioctls sent to a /dev/nsmb* device, had signedness
-errors.  By providing a negative value for a size field for certain
-device ioctls (including SMBIOC_LOOKUP and SMBIOC_OPENSESSION for
-*BSD), a size check will be bypassed and a memory overallocation will
-occur, causing a kernel panic.  NetBSD committed their fix to CVS
-today:
+----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+> 
+>    Cacti upstream has released:
+>     [1] http://www.cacti.net/release_notes_0_8_7f.php
+> 
+>    latest v0.8.7 version, adressing three security flaws:
 
-http://cvsweb.netbsd.org/bsdweb.cgi/src/sys/netsmb/smb_subr.c.diff?r1=1.34&r2=1.35&only_with_tag=MAIN&f=h
 
-Regards,
-Dan Rosenberg
+>      [A], MOPS-2010-023: Cacti Graph Viewer SQL Injection Vulnerability
+>      http://php-security.org/2010/05/13/mops-2010-023-cacti-graph-viewer-sql-injection-vulnerability/index.html
+>      http://www.vupen.com/english/advisories/2010/1204
+> 
+>      Credit: The vulnerability was discovered by Stefan Esser as part of
+>      the SQL Injection Marathon.
+> 
+>      Upstream changeset:
+>      http://svn.cacti.net/viewvc?view=rev&revision=5920
+
+Steve, you've been handling the MOPS stuff. I'm going to leave this one
+alone unless you tell me otherwise (I don't want to dupe).
+
+
+>      [B], Cross-site scripting issues reported by VUPEN Security
+>      http://www.vupen.com/english/advisories/2010/1203
+> 
+>      Credit: Vulnerabilities reported by Mohammed Boumediane (VUPEN
+>      Security).
+> 
+>      Upstream changeset:
+>      http://svn.cacti.net/viewvc?view=rev&revision=5901
+> 
+
+Use CVE-2010-1644 for this one.
+
+
+
+>      [C], SQL injection and shell escaping issues reported by Bonsai
+>      Information Security (http://www.bonsai-sec.com)
+>      http://www.bonsai-sec.com/blog/index.php/using-grep-to-find-0days/
+>      http://www.bonsai-sec.com/en/research/vulnerabilities/cacti-os-command-injection-0105.php
+> 
+>      Credit: This vulnerability was discovered by Nahuel Grisolia (
+>      nahuel -at- bonsai-sec.com )
+> 
+>      Upstream changeset:
+>      http://svn.cacti.net/viewvc?view=rev&revision=5747
+> 
+
+Use CVE-2010-1645 for this one.
+
+
+> References:
+>    [10] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=582691
+>    [11] https://bugzilla.redhat.com/show_bug.cgi?id=595289
+> 
+
+Thanks.
+
+-- 
+    JB
