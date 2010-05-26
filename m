@@ -1,142 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/25/2
-Message-ID: <AANLkTimysjTz=_5bBh2vjFv5J-bZSWzpNnQ9kP71wrNi@mail.gmail.com>
-Date: Sat, 25 Sep 2010 11:25:15 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/26/2
+Message-ID: <4BFC90AE.2090504@kernel.sg>
+Date: Wed, 26 May 2010 11:08:30 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Cc: Eugene Teo <eugeneteo@...nel.sg>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: multiple kernel stack memory disclosures
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request - kernel: nfsd: fix vm overcommit crash
 Content-Type: text/plain; charset=utf-8
 
-I'd like to request CVEs for a large series of Linux kernel stack
-memory disclosure vulnerabilities, almost all of which have been
-fixed.  They are all examples of declaring various structs on the
-stack and copying them back to the user without filling in all the
-fields, leaking uninitialized stack memory.  Since there are a lot of
-issues here, I trust your judgment in deciding if they should each
-receive a unique ID or if they should be combined in some way.  I
-tried to break them up logically to make it easier.
+"knfsd crashes if you are using it to export shmemfs objects and run 
+strict overcommit. In this situation the current->mm based modifier to 
+the overcommit goes through a NULL pointer.
 
----
+We could simply check for NULL and skip the modifier but we've caught 
+other real bugs in the past from mm being NULL here - cases where we did 
+need a valid mm set up (eg the exec bug in 2005).
 
-The first batch of issues occurred in the TIOCGICOUNT device ioctls of
-several device drivers.  While several of the issues were fixed on an
-individual basis, Alan Cox fixed it for good by creating a new
-handler.  Since these issues are essentially identical and were fixed
-all at once, I think it might make sense to have them under a single
-CVE.  Note that the final listed item in drivers/net/usb/hso.c was
-already assigned CVE-2010-3298.
+To preserve the checks and get the logic we want shuffle the checking 
+around and add a new helper to the vm_ security wrappers
 
-"The TIOCGICOUNT device ioctl in mos7720.c, mos7840.c, serial_core.c,
-hso.c, amiserial.c, and nozomi.c allows unprivileged users to read
-uninitialized stack memory, because the 'reserved' member of the
-serial_icounter_struct struct declared on the stack is not altered or
-zeroed before being copied back to the user."
+Also fix a current->mm reference in nommu that should use the passed mm"
 
+Upstream commit:
+nfsd: fix vm overcommit crash
+http://git.kernel.org/linus/731572d39fcd3498702eda4600db4c43d51e0b26
 
-Alan Cox's fix:
-http://lkml.org/lkml/2010/9/16/294
+Reference:
+[PATCH] knfsd: add nfs-export support to tmpfs
+http://git.kernel.org/linus/91828a405ae454a9503c41a7744f6ff877a80714
+https://bugzilla.redhat.com/show_bug.cgi?id=595970
 
-drivers/usb/serial/mos*
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=a0846f1868b11cd827bdfeaf4527d8b1b1c0b098
+Backtrace (-rt kernel):
+https://bugzilla.redhat.com/show_bug.cgi?id=595970#c1
 
-drivers/serial/serial_core.c
-http://userweb.kernel.org/~akpm/mmotm/broken-out/drivers-serial-serial_corec-prevent-reading-uninitialized-stack-memory.patch
-
-drivers/char/amiserial.c
-http://userweb.kernel.org/~akpm/mmotm/broken-out/drivers-char-amiserialc-prevent-reading-uninitialized-stack-memory.patch
-
-drivers/char/nozomi.c
-http://userweb.kernel.org/~akpm/mmotm/broken-out/drivers-char-nozomic-prevent-reading-uninitialized-stack-memory.patch
-
-drivers/net/usb/hso.c (CVE-2010-3298)
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=7011e660938fc44ed86319c18a5954e95a82ab3e
-
----
-
-The next two issues both occurred in the FBIOGET_VBLANK device ioctl:
-
-"The FBIOGET_VBLANK device ioctl in sis_main.c and ivtvfb.c allows
-unprivileged users to read 16 bytes of uninitialized stack memory,
-because the 'reserved' member of the fb_vblank struct declared on the
-stack is not altered or zeroed before being copied back to the user."
-
-drivers/video/sis/sis_main.c
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=fd02db9de73faebc51240619c7c7f99bee9f65c7
-
-drivers/media/video/ivtv/ivtvfb.c
-lkml.org/lkml/2010/9/15/393
-
----
-
-The following issues occured in miscellaneous device ioctls in a
-variety of drivers.  Note the final two items listed have already been
-assigned CVE-2010-3296 and CVE-2010-3297 - I include them only for
-reference.
-
-
-sound/pci/rme9652/hdsp*.c
-http://marc.info/?l=linux-kernel&m=128542726922720&w=2
-
-"The SNDRV_HDSP_IOCTL_GET_CONFIG_INFO and
-SNDRV_HDSP_IOCTL_GET_CONFIG_INFO ioctls in hdspm.c and hdsp.c allow
-unprivileged users to read uninitialized kernel stack memory, because
-several fields of the hdsp{m}_config_info structs declared on the
-stack are not altered or zeroed before being copied back to the user."
-
-
-drivers/video/via/ioctl.c
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=b4aaa78f4c2f9cde2f335b14f4ca30b01f9651ca
-
-"The VIAFB_GET_INFO device ioctl allows unprivileged users to read 246
-bytes of uninitialized stack memory, because the 'reserved' member of
-the viafb_ioctl_info struct declared on the stack is not altered or
-zeroed before being copied back to the user."
-
-
-drivers/net/cxgb3/cxgb3_main.c (CVE-2010-3296)
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=49c37c0334a9b85d30ab3d6b5d1acb05ef2ef6de
-
-"The CHELSIO_GET_QSET_NUM device ioctl allows unprivileged users to
-read 4 bytes of uninitialized stack memory, because the 'addr' member
-of the ch_reg struct declared on the stack in cxgb_extension_ioctl()
-is not altered or zeroed before being copied back to the user."  This
-issue was assigned CVE-2010-3296.
-
-
-drivers/net/eql.c (CVE-2010-3297)
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=44467187dc22fdd33a1a06ea0ba86ce20be3fe3c
-
-"The EQL_GETMASTRCFG device ioctl allows unprivileged users to read 16
-bytes of uninitialized stack memory, because the 'master_name' member
-of the master_config_t struct declared on the stack in
-eql_g_master_cfg() is not altered or zeroed before being copied back
-to the user."  This issue was assigned CVE-2010-3297.
-
----
-
-The final identified leak is in the sys_semctl system call, which I
-would say is more serious since it is not driver-specific:
-
-ipc/sem.c
-http://www.spinics.net/lists/mm-commits/msg80234.html
-
-"The semctl syscall has several code paths that lead to the leakage of
-uninitialized kernel stack memory (namely the IPC_INFO, SEM_INFO,
-IPC_STAT, and SEM_STAT commands) during the use of the older, obsolete
-version of the semid_ds struct.  The copy_semid_to_user() function
-declares a semid_ds struct on the stack and copies it back to the user
-without initializing or zeroing the 'sem_base', 'sem_pending',
-'sem_pending_last', and 'undo' pointers, allowing the leakage of 16
-bytes of kernel stack memory.  The code is still reachable on 32-bit
-systems - when calling semctl() newer glibc's automatically OR the IPC
-command with the IPC_64 flag, but invoking the syscall directly allows
-users to use the older versions of the struct."
-
----
-
-Let me know if you have any questions or need any clarification on any
-of these issues.
-
-Regards,
-Dan
+Thanks, Eugene
+-- 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
