@@ -1,31 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/16/2
-Message-Id: <201001161929.16880.hanno@hboeck.de>
-Date: Sat, 16 Jan 2010 19:29:16 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/27/2
+Message-ID: <Pine.GSO.4.64.1005271535370.6392@faron.mitre.org>
+Date: Thu, 27 May 2010 15:41:35 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: phpbb before 3.0.5
+cc: Nahuel Grisolia <nahuel@...sai-sec.com>, Stefan Esser <stefan.esser@...tioneins.de>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Cacti v0.8.7 -- three security fixes
 Content-Type: text/plain; charset=utf-8
 
-See:
-http://www.phpbb.com/community/viewtopic.php?f=14&p=9764445
-"This release fixes numerous bugs since the 3.0.4 release, corrects style 
-issues, fixing one very minor security bug as well as increasing performance 
-and scalability again."
-# [Sec] Only use forum id supplied for posting if global announcement 
-detected. (Reported by nickvergessen)
+
+On Wed, 26 May 2010, Josh Bressers wrote:
+
+>>      [A], MOPS-2010-023: Cacti Graph Viewer SQL Injection Vulnerability
+>>      http://php-security.org/2010/05/13/mops-2010-023-cacti-graph-viewer-sql-injection-vulnerability/index.html
+>>      http://www.vupen.com/english/advisories/2010/1204
+>>
+>>      Credit: The vulnerability was discovered by Stefan Esser as part of
+>>      the SQL Injection Marathon.
+>>
+>>      Upstream changeset:
+>>      http://svn.cacti.net/viewvc?view=rev&revision=5920
+>
+> Steve, you've been handling the MOPS stuff. I'm going to leave this one
+> alone unless you tell me otherwise (I don't want to dupe).
+
+Use CVE-2010-2092, to be filled in later today (with a bunch of other MOPS 
+issues).
 
 
-Also please note that the last time I requested CVEs for phpbb, they never got 
-assigned:
-http://seclists.org/oss-sec/2009/q1/104
+>>      [C], SQL injection and shell escaping issues reported by Bonsai
+>>      Information Security (http://www.bonsai-sec.com)
 
-cu,
+Josh assigned CVE-2010-1645 for the OS command issue.
 
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+The SQL injection that Jan is referring to in the original request is most 
+likely CVE-2010-1431, which was disclosed by Bonsai back in April.
 
-http://schokokeks.org - professional webhosting
-
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+- Steve
