@@ -1,30 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/14/4
-Message-Id: <201006141325.04368.ludwig.nussel@suse.de>
-Date: Mon, 14 Jun 2010 13:25:03 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/27/1
+Message-ID: <4BFDBD2C.20806@kernel.sg>
+Date: Thu, 27 May 2010 08:30:36 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: w3m does not check null bytes CN/subjAltName
+CC: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: nfsd: fix vm overcommit crash
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 05/27/2010 02:45 AM, Josh Bressers wrote:
+> Please use CVE-2010-1643 for this.
 
-Yet another occurrence of CVE-2009-2408, this time in w3m. I tried
-contacting the w3m developers listed on sourceforge but got no
-response. In the default configuration the missing null checks don't
-make the situation worse though as w3m doesn't verify certificates
-by default ('ssl_verify_server' is off by default). Attached two
-patches turn on 'ssl_verify_server' and fix the null handling.
+Also need 
+http://git.kernel.org/linus/1b79cd04fab80be61dcd2732e2423aafde9a4c1c
 
-cu
-Ludwig
-
+Thanks, Eugene
 -- 
- (o_   Ludwig Nussel
- //\   
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
-
-View attachment "w3m-0.5.2-ssl_verify_server_on.diff" of type "text/x-patch" (920 bytes)
-
-View attachment "w3m-0.5.2-nulcn.diff" of type "text/x-patch" (1632 bytes)
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
