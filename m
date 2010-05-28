@@ -1,49 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/31/3
-Message-ID: <85f64f891003301534y779df23dy9dc20f7d75ebbc3e@mail.gmail.com>
-Date: Tue, 30 Mar 2010 18:34:37 -0400
-From: Anthon Pang <anthon.pang@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/28/3
+Message-Id: <201005281038.34557.hanno@hboeck.de>
+Date: Fri, 28 May 2010 10:38:34 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: cert@...t.org, soc@...cert.gov
-Subject: Re: phpmyvisites 2.3
+Cc: Josh Bressers <bressers@...hat.com>
+Subject: CVE request: Mediawiki below 1.15.4 / 1.16.0beta3
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Mar 30, 2010 at 5:41 PM, Steven M. Christey
-<coley@...us.mitre.org>wrote:
+http://lists.wikimedia.org/pipermail/mediawiki-announce/2010-May/000091.html
 
->
-> On Wed, 10 Mar 2010, Henri Salo wrote:
->
->  There is a security vulnerability in phpMyVisites 2.3. Is there a CVE
->> assigned for that issue?
->>
->> http://www.phpmyvisites.us/phpmv2/CHANGELOG
->>
->
-> Use CVE-2009-4763
->
-> Notes:
->
-> 1) SourceForge has recently made it difficult/impossible to obtain
-> changelogs for new releases, so I can't find any information on the December
-> release of ClickHeat to get more details.
->
-> 2) Consequently, it could be that phpMyVisites is fixing an old ClickHeat
->   problem (CVE-2008-5793) but neither is it clear if that ClickHeat is
->   even the same product.
->
->
-> - Steve
->
+One XSS, one CSRF.
 
-It appears to be a different issue.
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
-ClickHeat's primary developer denies this is a ClickHeat vulnerability:
+http://schokokeks.org - professional webhosting
 
-https://sourceforge.net/tracker/?func=detail&aid=2916809&group_id=181196&atid=896225
-
-And states that the vulnerability requires the attacker to already have
-elevated privileges (application-level admin access in PMV).
-
--- Anthon
-
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
