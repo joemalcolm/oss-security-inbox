@@ -1,31 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/24/4
-Message-ID: <1267025236.2778.4.camel@lupin>
-Date: Wed, 24 Feb 2010 09:27:15 -0600
-From: Jamie Strandboge <jamie@...onical.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: CVE assignment notification -- CVE-2010-0427 -- sudo fails to reset group permissions if runas_default set
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/28/4
+Message-Id: <201005281204.31958.ludwig.nussel@suse.de>
+Date: Fri, 28 May 2010 12:04:31 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: ghostscript and gv
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 2010-02-23 at 17:17 +0100, Jan Lieskovsky wrote:
+Hi,
 
-Thanks for your investigation.
+ghostscript executes initialization files relative to the current
+directory. Unfortunately the -dSAFER option has no effect on those
+files. So when viewing a file e.g. in /tmp a local attacker could
+have the victim execute arbitrary postscript programs.
+Upstream suggested to use -P- in addition to -dSAFER. That however
+would mean every program using gs to render postscript has to be
+checked. So fixing ghostscripts default behavior might be easier for
+distributions.
+http://bugs.ghostscript.com/show_bug.cgi?id=691339
+http://www.securityfocus.com/archive/1/511433
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=583316
+https://bugzilla.novell.com/show_bug.cgi?id=608071
 
->    b, v1.7.x based versions of sudo are not affected by this
->       flaw due the differences in the way sudoers file is parsed.
+In the Debian bug report Paul also mentiones that gv creates a
+temporary file in an insecure way:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=583316#10
 
-This is in conflict with Todd's statement in his writeup:
-"Sudo versions affected:
-1.6.9 through 1.7.2p3 inclusive.
-...
-Fix:
-The bug is fixed in sudo 1.7.2p4 and 1.6.9p21"
-
-
-Upstream appears to have patched 1.7.2. Can you explain why it is not
-affected?
+cu
+Ludwig
 
 -- 
-Jamie Strandboge             | http://www.canonical.com
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+ (o_   Ludwig Nussel
+ //\   
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
