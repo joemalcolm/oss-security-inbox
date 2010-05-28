@@ -1,114 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/10/17
-Message-Id: <201011101455.47455.sgrubb@redhat.com>
-Date: Wed, 10 Nov 2010 14:55:47 -0500
-From: Steve Grubb <sgrubb@...hat.com>
-To: Kees Cook <kees@...ntu.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: filesystem capabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/28/1
+Message-ID: <20100528053312.GQ11703@mutt-is-awesome>
+Date: Fri, 28 May 2010 08:33:12 +0300
+From: Eren Türkay <eren@...dus.org.tr>
+To: oss-security@...ts.openwall.com
+Cc: coley@...re.org
+Subject: Re: Fwd: [Full-disclosure] stratsec Security Advisory SS-2010-005: Samba Multiple DoS Vulnerabilities (3.3.x)
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday, November 10, 2010 02:40:14 pm Kees Cook wrote:
-> On Wed, Nov 10, 2010 at 02:18:33PM -0500, Steve Grubb wrote:
-> > Not that I know of. The library cannot know what the application's threat
-> > model is. The library can make it simple to access the correct things.
-> > The following should be the model that I think solves the problem for
-> > either setuid or fs based capabilities.
-> > 
-> > Assuming you needed CAP_CHOWN:
-> > 		capng_get_caps_process();
-> > 		
-> >                 switch (capng_have_capabilities(CAPNG_SELECT_CAPS)) {
-> > 			
-> > 			case CAPNG_FULL:
-> > 				capng_clear(CAPNG_SELECT_BOTH);
-> > 				capng_update(CAPNG_ADD, CAPNG_EFFECTIVE|CAPNG_PERMITTED,
-> > 				
-> > 						CAP_CHOWN);
-> > 				
-> > 				if (capng_apply(CAPNG_SELECT_BOTH))
-> > 				
-> > 					exit(0);
-> > 				
-> > 				break;
-> > 			
-> > 			case CAPNG_PARTIAL:
-> > 				// Paranoid double check that we have what we expect
-> > 				if (capng_have_capability(CAPNG_EFFECTIVE, CAP_CHOWN)==0)
-> > 				
-> > 					exit(0);
-> > 				
-> > 				// Now to make sure that is ALL that we have...let's drop it and
-> > 				// see if we are empty
-> > 				capng_update(CAPNG_DROP, CAPNG_EFFECTIVE|CAPNG_PERMITTED,
-> > 				
-> > 						CAP_CHOWN);
-> > 				
-> > 				if (capng_have_capabilities(CAPNG_SELECT_CAPS) != CAPNG_NONE)
-> > 				
-> > 					exit(0);
-> > 				
-> > 				break;
-> > 			
-> > 			case CAPNG_FAIL:
-> > 			
-> > 			case CAPNG_NONE:
-> > 				exit(0);
-> > 		
-> > 		}
-> > 		// At this point both setuid and fs based caps should have the same
-> > 		thing
+On Tue, May 25, 2010 at 05:29:00PM -0400, Josh Bressers wrote:
+> It's been pointed out to me that this should be two IDs, not one.
 > 
-> What about dropping setuid once it has the needed caps, etc? It seems like
-> it'd be nice to have something like:
+> Let's use CVE-2010-1635 for the NULL pointer deref 
+> and CVE-2010-1642 for the OOB read.
 > 
-> validate_I_have_only_these_caps(CAP_WHATEVER);
+> Sorry for the confusion.
 
-Validating the caps is what I did in CAPNG_PARTIAL. But for setuid root apps, you 
-would have all capabilites. And that is why I have the switch statement above. In that 
-case, you would simply drop to the capabilities you needed.
+Hello,
+
+It seems thath Samba 3.3.x is also vulnerable. I sent a mail to
+samba-technical list, but I haven't got a reply for 3 days. It would be
+really helpful if anyone knows the situation of 3.3.x. I am attaching
+the e-mail and a patch.
+
+Thank you,
+Eren
+
+----- Forwarded message from Eren T??rkay <eren@...dus.org.tr> -----
+
+Date: Wed, 26 May 2010 19:28:50 +0300
+From: Eren Türkay <eren@...dus.org.tr>
+To: samba-technical@...ba.org
+Subject: Security patches for Samba 3.3.x (CVE-2010-{1635,1642})
+Organization: "TÜBİTAK/UEKAE"
+User-Agent: Mutt/1.5.20 (2009-06-14)
+
+Hello,
+
+A NULL pointer dereference (#7229, CVE-2010-1635) and a crash with CUPS
+printers (#7298, CVE-2010-1642) have been fixed with the release of
+3.4.8. Accordingly to bugzilla, the fixes were also committed to
+3.5-test.
+
+It seems that 3.3.x is also vulnerable as the same code seems to exist in this
+release as well. However, I couldn't see any reference for 3.3.x being
+vulnerable. I would really appreciate a statement from Samba team as to
+the status of 3.3.x
+
+Attached is the patch that I made accordingly to the changes committed to
+GIT repository, and hopefully it fixes the issues.
+
+Regards,
+Eren
+
+----- End forwarded message -----
 
 
-> ...do stuff...
-> drop_all_my_privs();
-
-drop all privs is a 2 liner:
-capng_clear(CAPNG_SELECT_CAPS);
-if (capng_apply(CAPNG_SELECT_CAPS))
-	exit(0);
-
-Not sure anything that small needs a library function.
-
-
-> and those two routines could be in the cap library, and it would handle
-> both fscaps and setuid style of priv escalation.
->
-> > You can lead a horse to water, but you cannot make them drink.
-> > http://lists.gnu.org/archive/html/bug-tar/2006-08/msg00004.html
-> > 
-> > We did our part. Its up to them to accept the patch or keep talking about
-> > it. Reading the thread, it sounded like they were going to take it. No
-> > idea why they decided against it unless it was seen as a Linux only
-> > patch. You might poke them and ask why in the last 4 years they never
-> > took the patch. Of course since then we've maintained the patch against
-> > current tar releases, so they would want a newer patch.
-> 
-> Well, I have to disagree here: the job isn't done until it's upstream
-> or it has been categorically rejected. At the time they had identified
-> real crashes in the code, and were working on it. All this said, anyone can
-> drive it, which is why I added the TODO item to Ubuntu's list of what was
-> needed for fscaps, and it would be great to try to get it in again. Since
-> the fscap push is higher on Fedora's list than Ubuntu's, would it be
-> possible to try to push that patch upstream again?
-
-I asked the maintainer if he's had any discussion lately.
-
-
-> Has there been any discussion of making rsync, cp, and cpio default to
-> copying xattrs and acls too? I know at least with rsync they are explicitly
-> not included in the "-a" option. :(
-
-My rsync man page shows a -X option and cp has a --preserve=xattr. cpio doesn't but no 
-one seems to have been missing that.
-
--Steve
+View attachment "samba-3.3.12-CVE-2010-1635-1642.patch" of type "text/plain" (1219 bytes)
