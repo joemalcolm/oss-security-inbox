@@ -1,27 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/02/2
-Message-Id: <201002021059.13521.thomas@suse.de>
-Date: Tue, 2 Feb 2010 10:59:13 +0100
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/28/5
+Message-ID: <20100528134521.GS11703@mutt-is-awesome>
+Date: Fri, 28 May 2010 16:45:21 +0300
+From: Eren Türkay <eren@...dus.org.tr>
 To: oss-security@...ts.openwall.com
-Subject: KVM possible security issues fixed
+Subject: Re: Fwd: [Full-disclosure] stratsec Security Advisory SS-2010-005: Samba Multiple DoS Vulnerabilities (3.3.x)
 Content-Type: text/plain; charset=utf-8
 
-Hello,
-the following was listed in the changelog of kvm
-- slirp: fix use-after-free
-- usb-linux.c: fix buffer overflow
-- fix potential stack corruption saving MSRs (Eduardo Habkost)
+On Fri, May 28, 2010 at 10:04:32AM +0200, Tomas Hoger wrote:
+> Hi Eren!
 
-Looks like these are security issues. Does someone know more about?
-Any details about exploitability etc.
+Hi Tomas,
 
-Thanks
-Thomas
+> Note that your bug id is off-by-one ;).  However, that's not the
+> stratsec issue, you should be looking at this:
 
--- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
---
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
+Ah, right. I confused the bug mentioned in 3.4.8 with the advisory.
+Thank you for clarification and pointing this out!
+
+>    o Fix an uninitialized variable read in smbd (bug #7254).
+> 
+> https://bugzilla.samba.org/show_bug.cgi?id=7254
+> http://git.samba.org/?p=samba.git;a=commitdiff;h=9280051bfba33745
+> 
+> This issue should rather be described as OOB read as mentioned in Josh's
+> CVE assignment.  This problem may affect fairly old samba version, I've
+> seen the same code / issue in some oldish 3.0.x versions.  The crash is
+> not too reliable though, I've only seen crash on some (recent) versions
+> using stratsec reproducer (you've noticed already their advisory
+> incorrectly labels reproducers and has them mixed-up, right?).
+
+Right. I am going to pick up the fix, then.
+
+> CVE-2010-1642 mentioned above.
+> 
+> NULL deref CVE-2010-1635 should only affect 3.5.x, as it occurs in
+> this code, which does not exist in 3.4.x:
+> 
+> http://git.samba.org/?p=samba.git;a=commitdiff;h=c116652a3050a854
+> 
+> On 3.3.x, reproducer causes smbd to follow error code path where
+> smb_panic is called.
+
+Thanks. To summarize, 3.3.x is only affected by OOB read (CVE-2010-1642)
+As smbd follows error code path where smb_panic is called, I guess we
+can say that 3.3.x is not affected by CVE-2010-1642.
+
+Regards,
+Eren
