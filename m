@@ -1,24 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/25/15
-Message-ID: <Pine.GSO.4.64.1005251730530.27983@faron.mitre.org>
-Date: Tue, 25 May 2010 17:34:36 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/28/2
+Message-ID: <20100528100432.603d6742@redhat.com>
+Date: Fri, 28 May 2010 10:04:32 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: clamav crash via malformed PDF
+Cc: coley@...re.org
+Subject: Re: Fwd: [Full-disclosure] stratsec Security Advisory SS-2010-005: Samba Multiple DoS Vulnerabilities (3.3.x)
 Content-Type: text/plain; charset=utf-8
 
+Hi Eren!
 
-On Tue, 25 May 2010, Josh Bressers wrote:
+On Fri, 28 May 2010 08:33:12 +0300 Eren Türkay wrote:
 
-> Please use CVE-2010-1639
+> A NULL pointer dereference (#7229, CVE-2010-1635) and a crash with
+> CUPS printers (#7298, CVE-2010-1642)
 
-A second issue has been reported in the ClamAV changelog, involving an 
-invalid read:
+You have a wrong bug / fix for CVE-2010-1642.  What you seem to be
+trying to pick up is the following fix mentioned in 3.4.8 release notes:
 
-http://secunia.com/advisories/39895
-https://wwws.clamav.net/bugzilla/show_bug.cgi?id=2031
-http://git.clamav.net/gitweb?p=clamav-devel.git;a=blob_plain;f=ChangeLog;hb=clamav-0.96.1
+   o Fix smbd crash with CUPS printers and no [printers] share defined
+     (bug #7297).
 
-This has been assigned CVE-2010-2077.
+Note that your bug id is off-by-one ;).  However, that's not the
+stratsec issue, you should be looking at this:
 
-- Steve
+   o Fix an uninitialized variable read in smbd (bug #7254).
+
+https://bugzilla.samba.org/show_bug.cgi?id=7254
+http://git.samba.org/?p=samba.git;a=commitdiff;h=9280051bfba33745
+
+This issue should rather be described as OOB read as mentioned in Josh's
+CVE assignment.  This problem may affect fairly old samba version, I've
+seen the same code / issue in some oldish 3.0.x versions.  The crash is
+not too reliable though, I've only seen crash on some (recent) versions
+using stratsec reproducer (you've noticed already their advisory
+incorrectly labels reproducers and has them mixed-up, right?).
+
+> It seems that 3.3.x is also vulnerable as the same code seems to
+> exist in this release as well. However, I couldn't see any reference
+> for 3.3.x being vulnerable. I would really appreciate a statement
+> from Samba team as to the status of 3.3.x
+
+CVE-2010-1642 mentioned above.
+
+NULL deref CVE-2010-1635 should only affect 3.5.x, as it occurs in
+this code, which does not exist in 3.4.x:
+
+http://git.samba.org/?p=samba.git;a=commitdiff;h=c116652a3050a854
+
+On 3.3.x, reproducer causes smbd to follow error code path where
+smb_panic is called.
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
