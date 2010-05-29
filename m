@@ -1,73 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/08/7
-Message-ID: <4BBDB63D.1000807@wikimedia.org>
-Date: Thu, 08 Apr 2010 20:55:57 +1000
-From: Tim Starling <tstarling@...imedia.org>
-To: Jan Lieskovsky <jlieskov@...hat.com>
-CC: oss-security@...ts.openwall.com, Jean-François Moine <moinejf@...e.fr>,  "Steven M. Christey" <coley@...us.mitre.org>, Gerard Milmeister <gemi@...ewin.ch>
-Subject: Re: CVE Request -- Abcm2ps v5.9.12 -- multiple unspecified vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/29/1
+Message-Id: <201005291450.06636.hanno@hboeck.de>
+Date: Sat, 29 May 2010 14:50:06 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Cc: Steven Christey <coley@...us.mitre.org>, Josh Bressers <bressers@...hat.com>
+Subject: CVE request: joomla before 1.5.18
 Content-Type: text/plain; charset=utf-8
 
-I found:
-* A BSS overflow from an overlong command-line parameter (-O)
-* BSS overflows in a collection of output macros (PUT0, PUT1, etc.)
-exploitable using crafted input files
-* A stack overflow in trim_title(), also exploitable using input files
+http://developer.joomla.org/security/news/314-20100501-core-xss-
+vulnerabilities-in-back-
+end.html?utm_source=feedburner&utm_medium=email&utm_campaign=Feed%3A+JoomlaSecurityNews+%28Joomla!
++Security+News%29
 
-This is assuming my understanding of the linux memory model is correct
-and uninitialised global variables are stored in the BSS segment. They
-were all the classic sort of overflow, with arbitrary-length strings
-copied into fixed-sized buffers.
+Description
 
-Anyway, "multiple buffer overflow vulnerabilities" is probably a good
-enough summary for most of you.
+Back-end user can inject javascript in various administrator screens.
 
-I haven't reviewed the patch.
- 
--- Tim Starling
+Affected all versions below 1.5.18.
 
-Jan Lieskovsky wrote:
-> Resending the query again (as first time used improper address
-> for Jean-François Moine :().
->
-> Apologize other parties for unwanted spam.
->
-> Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
->
->
-> Jan Lieskovsky wrote:
->> Hi Steve, vendors,
->>
->>   Abcm2ps upstream has released:
->>     [1] http://moinejf.free.fr/
->>     [2] http://moinejf.free.fr/abcm2ps-5.9.12.tar.gz
->>
->>   latest v5.9.12 version, addressing
->>   "some security vulnerabilities"
->>     [3] http://moinejf.free.fr/abcm2ps-5.txt
->>
->>   References:
->>     [4] http://secunia.com/advisories/39345/
->>
->>   Jean, Tim, could you please provide further details how many
->> and what kind of flaws (i.e. describe each of the deficiencies shortly)
->> has been addressed in this Abcm2ps release? (so we know, how
->> many CVE identifiers:
->>   [5] http://cve.mitre.org/
->>
->> and each of them for what, should be assigned [without comparing
->> source code differences among Abcm2ps v5.9.12 and Abcm2ps v5.9.11
->> versions, potentially resulting in situation, we omit something] )
->>
->> Jean, Tim -- thanks in advance for your cooperation.
->>
->> Regards, Jan.
->> -- 
->> Jan iankko Lieskovsky / Red Hat Security Response Team
->>
->>
->>
->
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
+http://schokokeks.org - professional webhosting
+
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
