@@ -1,39 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/18/10
-Message-ID: <AANLkTikBtepEv7WwBr4ReQ2H6kFhANj73OwrGRvDbKe_@mail.gmail.com>
-Date: Tue, 18 May 2010 13:44:40 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/29/2
+Message-ID: <20100529144718.GA27720@pcpool00.mathematik.uni-freiburg.de>
+Date: Sat, 29 May 2010 16:47:18 +0200
+From: "Bernhard R. Link" <brlink@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: Re: kernel: btrfs: check for read permission on src  file in the clone ioctl
+Subject: Re: CVE request: ghostscript and gv
 Content-Type: text/plain; charset=utf-8
 
-Ubuntu 10.4 ships with a kernel that supports btrfs:
+* Ludwig Nussel <ludwig.nussel@...e.de> [100528 12:05]:
+> Upstream suggested to use -P- in addition to -dSAFER.
 
-https://bugs.launchpad.net/ubuntu/+source/linux/+bug/579585
+Either I mix something up or that option does not even help:
 
-In case the bug description needs clarification, the bug allows an
-unprivileged user to clone files that can be opened for writing
-without read permissions.  Since cloning results in the creation of a
-duplicate copy owned by the user who performed the cloning operation,
-this is an information disclosure vulnerability.
+With the Debian lenny version I get:
 
--Dan
+$ touch gs_init.ps
+$ /usr/bin/gs -P- notneeded.ps
+GPL Ghostscript 8.62: Initialization file gs_init.ps does not begin with an integer.
 
-On Tue, May 18, 2010 at 5:13 AM, Eugene Teo <eugene@...hat.com> wrote:
-> The existing [btrfs] code would have allowed you to clone a file that was
-> only open for writing. Not an expected behaviour.
->
-> Upstream commit:
-> http://git.kernel.org/linus/5dc6416414fb3ec6e2825fd4d20c8bf1d7fe0395
->
-> Reference:
-> https://bugzilla.redhat.com/show_bug.cgi?id=593226
->
-> I'm not requesting a CVE name for this as it did not affect any of Red Hats'
-> supported Linux kernels.
->
-> Thanks, Eugene
-> --
-> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
->
+indicating that the gs_init.ps is looked for in the current directory
+even with -P-.
+
+And that also seems to be executed:
+$ ls doh
+ls: cannot access doh: No such file or directory
+$ cat gs_init.ps
+862
+(doh) (w) file
+$ /usr/bin/gs -P-
+$ ls doh
+doh
