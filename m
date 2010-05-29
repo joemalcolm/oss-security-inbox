@@ -1,43 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/06/10
-Message-ID: <814193225.2088351278443278066.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 6 Jul 2010 15:07:58 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/29/3
+Message-ID: <20100529150738.383@usenet.piggo.com>
+Date: Sat, 29 May 2010 13:14:48 +0000 (UTC)
+From: Sebastien Delafond <seb@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request for browser IFRAME/file download DoS
+Subject: CVE request: zonecheck
 Content-Type: text/plain; charset=utf-8
 
-This is more complicated than I wish to deal with. I'm going to defer this
-one to MITRE.
+Hi,
 
-Thanks.
+there is a cross-scripting issue in zonecheck's CGI, up to version 2.1.0
+(fixed upstream in 2.1.1):
 
--- 
-    JB
+  http://bugs.debian.org/583290
+  https://savannah.nongnu.org/bugs/?29967
+  http://www.xssed.com/mirror/61096/
 
+Cheers,
 
------ "Kurt Seifried" <kurt@...fried.org> wrote:
+--Seb
 
-> Denial of service in various browsers:
-> 
-> http://seclists.org/fulldisclosure/2010/Jul/69
-> 
-> Basically it opens a lot of iframes that point to a file download/run
-> location, you get endlessly spammed with run/save/cancel, in the case
-> of affected web browsers they become non-responsive and you need to
-> kill them using task manager/etc.
-> 
-> Affected
-> Firefox 3.6.4
-> IE 8
-> Safari 5.0 (7533.16)
-> 
-> Not affected:
-> Chrome 5/6
-> Opera 10
-> 
-> -- 
-> Kurt Seifried
-> kurt@...fried.org
-> tel: 1-703-879-3176
