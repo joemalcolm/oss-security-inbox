@@ -1,28 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/11/6
-Message-ID: <20100811203330.GA26195@openwall.com>
-Date: Thu, 12 Aug 2010 00:33:30 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/29/4
+Message-ID: <4C013001.4050404@debian.org>
+Date: Sat, 29 May 2010 17:17:21 +0200
+From: Emilio Pozuelo Monfort <pochu@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: openssl double free
+Subject: Fwd: emesene preditable temporary filename
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Aug 11, 2010 at 05:02:53PM +0200, Ludwig Nussel wrote:
-> Georgi Guninski found a double free issue in openssl's client implementation:
-> http://www.mail-archive.com/openssl-dev@openssl.org/msg28043.html
-> The affected code also is in pre 1.0 versions but only 1.0 uses ECDH
-> for ssl by default AFAICT.
+Hi,
 
-I took a brief look at the code.  ECDH was introduced somewhere between
-0.9.7 and 0.9.8.  0.9.7m doesn't have it (so it was never backported to
-those stable releases), 0.9.8 does.  The double-free bug, or at least
-the code being patched now, is already present in 0.9.8.
+I sent this to vendor-sec but got no response. I've been told to send it to
+oss-security, so here it goes.
 
-Here's the trivial patch:
+The fix is:
 
-http://www.mail-archive.com/openssl-dev@openssl.org/msg28049.html
+--- emesene-1.6.1/emesenelib/ProfileManager.py	2010-03-29 22:27:23.000000000 +0200
++++ emesene-1.6.2/emesenelib/ProfileManager.py	2010-05-26 21:51:32.000000000 +0200
+@@ -208,16 +211,10 @@ class ProfileManager(gobject.GObject):
+             return False
+         data = response.read()
+         #print "DP:", len(data), stat, reas
+-        if os.name == "nt":
+-            tempfolder = os.environ['TEMP'] + os.sep + "emsnpic"
+-            tempfolder = unicode(tempfolder)
+-        else:
+-            tempfolder = '/tmp/emsnpic'
+-        f = open(tempfolder, 'wb')
+-        f.write(data)
+-        f.close()
+-        self.emit('self-dp-changed', tempfolder)
+-
++        fd, fn = tempfile.mkstemp(prefix='emsnpic')
++        os.write(fd, data)
++        self.emit('self-dp-changed', fn)
++
+         return False
 
-which should work for 0.9.8+ (applies cleanly to 0.9.8, with an offset)
-and is not needed for older versions.
+     def onSetDP(self, response):
 
-Alexander
+
+-------- Original Message --------
+Subject: emesene preditable temporary filename
+Date: Tue, 25 May 2010 00:42:07 +0200
+From: Emilio Pozuelo Monfort <pochu@...ian.org>
+To: vendor-sec@....de, Mariano Guerra <luismarianoguerra@...il.com>,  "Riccardo
+(C10uD)" <c10ud.dev@...il.com>
+
+Hi,
+
+emesene 1.6.1 uses a predictable temporary filename (/tmp/emsnpic) to store a
+picture. This can lead a malicious local user to overwrite arbitrary files from
+the user who executes emesene by a symlink attack.
+
+I've successfully exploited this by making a symlink from a test account to a
+file owned by the user 'emilio'. Then after running emesene, the file is
+overwritten with the picture (there are cases where it doesn't, but it will
+always happen on first login and if you login with another user then back with
+yours).
+
+Before running emesene:
+
+lrwxrwxrwx 1 test    test    4 may 24 22:25 emsnpic -> file
+-rw-r--r-- 1 emilio  emilio  5 may 24 22:23 file
+
+After running emesene:
+
+lrwxrwxrwx 1 test    test       4 may 24 22:25 emsnpic -> file
+-rw-r--r-- 1 emilio  emilio  3032 may 24 22:26 file
+
+emilio@...urno:/tmp$ file file
+file: JPEG image data, JFIF standard 1.01
+
+Should this get assigned a CVE number?
+
+Regards,
+Emilio
