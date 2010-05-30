@@ -1,23 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/31/2
-Message-ID: <AANLkTimnAX6T=kZFSME-tw7Vn7TvE5iubLFSdGPHZwpp@mail.gmail.com>
-Date: Fri, 31 Dec 2010 00:28:22 -0500
-From: Anthon Pang <anthon.pang@...il.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request: OpenWebAnalytics < 1.2.4 - remote/local file inclusion vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/30/2
+Message-ID: <20100530200812.GA29163@pcpool00.mathematik.uni-freiburg.de>
+Date: Sun, 30 May 2010 22:08:12 +0200
+From: "Bernhard R. Link" <brlink@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: ghostscript and gv
 Content-Type: text/plain; charset=utf-8
 
-I was searching OSVDB, and I see this one wasn't reported (and
-presumably, not assigned a CVE).
+* Florian Weimer <fw@...eb.enyo.de> [100530 21:53]:
+> "gs -P- -DSAFER gs_init.ps" works, too, so you can inject the payload
+> with file-name-preserving user agents.  8-(
+>
+> Is the general consensus that we should patch this in
+> viewers/Ghostscript wrappers, and not Ghostscript itself?
 
-Versions of OpenWebAnalytics prior to 1.2.4 are vulnerable to a
-remote/local file inclusion attack.
+For Gv there is also the issue with pdf2dsc.ps (and the Debian lenny
+version with the temporary filei creation stuff), so it needs to be fixed
+anyway.
 
-OWA 1.2.4 was released March, 28, 2010
+Gs's -P- not working (at least for gs_init.ps), is definitly a bug that
+needs to be fixed.
 
-Vendor release announcement:  http://www.openwebanalytics.com/?p=87
+I personally would also suggest fixing gs to not look in the current
+directory by default (looking for important stuff in the current
+directory is really always a bad idea). I guess the problem is how to
+fix it.
 
-Commits:
-- http://trac.openwebanalytics.com/changeset/847/trunk/owa_coreAPI.php
-- http://trac.openwebanalytics.com/changeset/847/trunk/owa_lib.php
-- http://trac.openwebanalytics.com/changeset/847/trunk/owa_requestContainer.php
+I think (though I am not really sure) a gs that has -P- activated by
+default would for example break pdf viewing of gv versions 3.6.2 to
+3.6.5.91, because (I think) -P- also causes files in the current
+directory can no longer be opened from other postscript files with
+-dSAFER and the gv versions above only use -dSAFER and not -dDELAYSAFER
+as it would need for pdf2dsc.ps generated files. (I think -P- already
+has that effect, even though it has no effect on gs_init.ps).
+
+	Bernhard R. Link
