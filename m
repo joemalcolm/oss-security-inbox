@@ -1,37 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/14/5
-Message-ID: <270719302.842871271272741182.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 14 Apr 2010 15:19:01 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/30/1
+Message-ID: <87k4qlmajr.fsf@mid.deneb.enyo.de>
+Date: Sun, 30 May 2010 21:52:56 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: aircrack-ng EAPOL buffer overflow
+Subject: Re: CVE request: ghostscript and gv
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-1159 for this.
+* Bernhard R. Link:
 
-Thanks.
+> * Ludwig Nussel <ludwig.nussel@...e.de> [100528 12:05]:
+>> Upstream suggested to use -P- in addition to -dSAFER.
+>
+> Either I mix something up or that option does not even help:
+>
+> With the Debian lenny version I get:
+>
+> $ touch gs_init.ps
+> $ /usr/bin/gs -P- notneeded.ps
+> GPL Ghostscript 8.62: Initialization file gs_init.ps does not begin with an integer.
 
--- 
-    JB
+"gs -P- -DSAFER gs_init.ps" works, too, so you can inject the payload
+with file-name-preserving user agents.  8-(
 
-
------ "Florian Weimer" <fw@...eb.enyo.de> wrote:
-
-> An exploit for a security vulnerability in aircrack-ng has been
-> published:
-> 
-> | The tools' code responsible for parsing IEEE802.11-packets assumes
-> the
-> | self-proclaimed length of a EAPOL-packet to be correct and never to
-> exceed
-> | a (arbitrary) maximum size of 256 bytes for packets that are part of
-> the
-> | EAPOL-authentication. [...]
-> 
-> <http://pyrit.googlecode.com/svn/tags/opt/aircrackng_exploit.py>
-> 
-> The fix seems to be fixed in r1676 and r1683:
-> 
->   <http://trac.aircrack-ng.org/changeset/1676>
->   <http://trac.aircrack-ng.org/changeset/1683>
+Is the general consensus that we should patch this in
+viewers/Ghostscript wrappers, and not Ghostscript itself?
