@@ -1,27 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/01/4
-Message-ID: <4B67165A.705@redhat.com>
-Date: Mon, 01 Feb 2010 18:58:50 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE Request -- OCSNG_UNIX_SERVER-1.02.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/01/11
+Message-ID: <53773762.830241275420346192.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 1 Jun 2010 15:25:46 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: ghostscript and gv
 Content-Type: text/plain; charset=utf-8
 
-Hi Josh, Steve, vendors,
+----- "Michael Gilbert" <michael.s.gilbert@...il.com> wrote:
 
-   multiple security issues have been reported against
-OCS Inventory NG Management server for Unix/Linux.
+> > > In the Debian bug report Paul also mentiones that gv creates a
+> > > temporary file in an insecure way:
+> > > http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=583316#10
+> 
+> should the insecure temp file get its own id since it is rather
+> different than the original problem?
+> 
 
-References:
+Sigh, yes. I need to read the whole mail next time :(
 
-[1] http://secunia.com/advisories/38311/
-[2] http://www.packetstormsecurity.org/1001-exploits/ocsinventoryng-sqlxss.txt
-[3] http://www.ocsinventory-ng.org/index.php?page=1-02-1
-[4] http://launchpad.net/ocsinventory-server/stable-1.02/stable-release-1.02.2/+download/OCSNG_UNIX_SERVER-1.02.2.tar.gz
+So to recap:
 
-Could you allocate CVE ids for these?
+CVE-2010-2055 ghostscript and gv unsafe CWD init file usage
+CVE-2010-2056 ghostscript insecure /tmp use
 
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+-- 
+    JB
