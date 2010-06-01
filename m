@@ -1,25 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/04/6
-Message-ID: <772988345.1127261288869996748.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 4 Nov 2010 07:26:36 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/01/9
+Message-ID: <1038424329.822141275417701167.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 1 Jun 2010 14:41:41 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: libxml2 xpath
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: ghostscript and gv
 Content-Type: text/plain; charset=utf-8
 
-
------ "Sebastian Krahmer" <krahmer@...e.de> wrote:
-
-> Hi,
-> 
-> was there already a CVE assigned for
-> 
-> http://git.gnome.org/browse/libxml2/commit/?id=91d19754d46acd4a639a8b9e31f50f31c78f8c9c
-> 
-
-I don't understand what this patches. Can you explain?
+Please use CVE-2010-2055 for this.
 
 Thanks.
 
 -- 
     JB
+
+
+----- "Ludwig Nussel" <ludwig.nussel@...e.de> wrote:
+
+> Hi,
+> 
+> ghostscript executes initialization files relative to the current
+> directory. Unfortunately the -dSAFER option has no effect on those
+> files. So when viewing a file e.g. in /tmp a local attacker could
+> have the victim execute arbitrary postscript programs.
+> Upstream suggested to use -P- in addition to -dSAFER. That however
+> would mean every program using gs to render postscript has to be
+> checked. So fixing ghostscripts default behavior might be easier for
+> distributions.
+> http://bugs.ghostscript.com/show_bug.cgi?id=691339
+> http://www.securityfocus.com/archive/1/511433
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=583316
+> https://bugzilla.novell.com/show_bug.cgi?id=608071
+> 
+> In the Debian bug report Paul also mentiones that gv creates a
+> temporary file in an insecure way:
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=583316#10
+> 
+> cu
+> Ludwig
+> 
+> -- 
+>  (o_   Ludwig Nussel
+>  //\   
+>  V_/_  http://www.suse.de/
+> SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
