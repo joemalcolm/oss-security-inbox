@@ -1,31 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/06/4
-Message-ID: <Pine.GSO.4.64.1010061150440.25305@faron.mitre.org>
-Date: Wed, 6 Oct 2010 14:10:55 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Dan Rosenberg <dan.j.rosenberg@...il.com>
-cc: oss-security@...ts.openwall.com, Eugene Teo <eugeneteo@...nel.sg>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: multiple kernel stack memory disclosures
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/01/13
+Message-ID: <4C058EAC.5050609@gentoo.org>
+Date: Wed, 02 Jun 2010 00:50:20 +0200
+From: Stefan Behte <craig@...too.org>
+To: OSS Security <oss-security@...ts.openwall.com>
+Subject: prewikka permission bug
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-When dealing with findings of this scale, sometimes the best we can do 
-(within a reasonable amount of time) is to combine things.
+I couldn't find a CVE for this:
 
-Let's consider the general guidelines of "split by vuln type" and "split 
-by affected version."  Although the severity of each bug may vary, they 
-all appear to be related to "not initializing re-used memory."
+"The permissions on the prewikka.conf file are world readable and
+contain the sql database password used by prewikka. This update makes it
+readable just by the apache group."
 
-The remaining question is how to determine "affected version."  Ideally 
-one might like to know the minimum set of affected versions for each bug 
-(both in 2.6 and 2.4), but this might not be readily available.  We could 
-then just decide to split things based on which bugs got fixed in which 
-2.6.x.y release.  If Dan, Eugene, or someone else has that kind of 
-information (which is painful for me to research as a kernel "outsider"), 
-then we can group bugs that are fixed in the same 2.6.x.y release, then 
-assign a single CVE to each group.
+https://dev.prelude-technologies.com/projects/prewikka/repository/revisions/17e38c310410be1b7811152172cda4438936063d
 
-We effectively exclude those one-off issues that are already assigned 
-CVEs.
+Redhat and Gentoo were affected, I'm not sure about others.
 
-- Steve
+https://www.redhat.com/archives/fedora-package-announce/2009-April/msg00771.html
+
+https://bugs.gentoo.org/show_bug.cgi?id=270056
+
+
+Best regards,
+
+Stefan Behte
+
