@@ -1,51 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/19/9
-Message-ID: <20100119214213.GA8969@openwall.com>
-Date: Wed, 20 Jan 2010 00:42:13 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/01/10
+Message-Id: <20100601145556.429586c0.michael.s.gilbert@gmail.com>
+Date: Tue, 1 Jun 2010 14:55:56 -0400
+From: Michael Gilbert <michael.s.gilbert@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: dokuwiki
+Cc: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: ghostscript and gv
 Content-Type: text/plain; charset=utf-8
 
-In case anyone needs this extra info, here are the commits of the fixes
-and of the vulnerable code:
-
-On Tue, Jan 19, 2010 at 03:19:37PM -0500, Josh Bressers wrote:
-> http://bugs.splitbrain.org/index.php?do=details&task_id=1847
-> http://secunia.com/advisories/38183/
-> - directory structure information leak
-> - insufficient permissions checks, allowing attacker to change ACLs
-
-http://github.com/splitbrain/dokuwiki/commit/96a47e5d480e6c5b3aab1884a8536ec4b8ca2fab
-http://github.com/splitbrain/dokuwiki/commit/8c5215b744582107f352aa4ccea4182296674250
-
-> http://bugs.splitbrain.org/index.php?do=details&task_id=1853
-> http://secunia.com/advisories/38205/
-> - missing CSRF protections in ACL manager
-
-http://github.com/splitbrain/dokuwiki/commit/d7554c0bb25241c1299af28785878d31ad02dbad
-http://github.com/splitbrain/dokuwiki/commit/cce7ae9882da5682192e7153f5b2b5cfdcf5f0ec
-
-According to the blog post, "all bugs are in the new ACL Manager
-introduced in 2008-05-05".  The vulnerable code appears to have been
-committed on "Sat Nov 17 07:57:40 -0800 2007":
-
-http://github.com/splitbrain/dokuwiki/commit/2a3623da3390f0118660d541928ae8c635631b3d#diff-1
-
-According to http://www.dokuwiki.org/changes , there was no release
-between 2007-06-26 and 2008-05-05, which must be why only the latter
-date was mentioned.
-
-> So for CVE assignment:
+On Tue, 1 Jun 2010 14:41:41 -0400 (EDT), Josh Bressers wrote:
+> Please use CVE-2010-2055 for this.
 > 
-> CVE-2010-0287
-> - directory structure information leak
-> 
-> CVE-2010-0288
-> - insufficient permissions checks, allowing attacker to change ACLs
-> 
-> 
-> CVE-2010-0289
-> - missing CSRF protections in ACL manager
+[...]
+> > In the Debian bug report Paul also mentiones that gv creates a
+> > temporary file in an insecure way:
+> > http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=583316#10
 
-Alexander
+should the insecure temp file get its own id since it is rather
+different than the original problem?
+
+| I slightly wonder about the writing of the tmp file
+|  open("/tmp/gv_random_some.pdf.tmp", O_WRONLY|O_CREAT|O_TRUNC, 0666)
+| from within gs (no O_EXCL so would follow a symlink allowing clobber).
+
+mike
