@@ -1,22 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/29/1
-Message-ID: <4CF3B7B7.7050906@redhat.com>
-Date: Mon, 29 Nov 2010 22:24:55 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/01/7
+Message-ID: <575304390.813651275414732700.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 1 Jun 2010 13:52:12 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Josh Bressers <bressers@...hat.com>, coley <coley@...re.org>
-Subject: Re: CVE request: kernel: Multiple DoS issues in block layer
+Cc: coley <coley@...re.org>
+Subject: Re: SFCB vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
->> 2. By submitting certain I/O requests with 0 length, a local user could
->> cause a kernel panic:
->>
->> http://git.kernel.org/?p=linux/kernel/git/axboe/linux-2.6-block.git;a=commit;h=9284bcf4e335e5f18a8bc7b26461c33ab60d0689
->>
->
-> Use CVE-2010-4163
 
-Not a complete patch, need this too:
-https://patchwork.kernel.org/patch/363282/
+----- "Nicolas Grégoire" <nicolas.gregoire@...rri.fr> wrote:
 
-Eugene
+> Hi,
+> 
+> SFCB v1.3.8 fixes two remotely exploitable vulnerabilities (3001896 and
+> 3001915 in httpAdapter.c) :
+> http://sblim.cvs.sourceforge.net/sblim/sfcb/ChangeLog?view=markup
+> 
+> CVE-2010-1937 was privately assigned to entry 3001896 but I still don't
+> have a CVE id for 3001915. Could you please assign one before I release
+> the technical advisory ?
+> 
+
+I presuem this is the bug:
+http://sourceforge.net/tracker/?func=detail&aid=3001915&group_id=128809&atid=712784
+
+Please use CVE-2010-2054
+
+Thanks.
+
+-- 
+    JB
