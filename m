@@ -1,45 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/21/9
-Message-ID: <Pine.GSO.4.64.1009211508500.21207@faron.mitre.org>
-Date: Tue, 21 Sep 2010 15:15:44 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Josh Bressers <bressers@...hat.com>
-cc: oss-security@...ts.openwall.com
-Subject: Re: Minor security flaw with pam_xauth
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/01/12
+Message-ID: <1275423715.3021.747.camel@new-desktop>
+Date: Tue, 01 Jun 2010 22:21:55 +0200
+From: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
+To: oss-security@...ts.openwall.com
+Subject: Re: SFCB vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
+Le mardi 01 juin 2010 à 13:52 -0400, Josh Bressers a écrit :
+> Please use CVE-2010-2054
 
-On Tue, 21 Sep 2010, Josh Bressers wrote:
+Thanks.
+My advisory is attached to this mail.
 
->> The same commit also introduces previously-missing privilege switching
->> into pam_env and pam_mail.  Unfortunately, this pam_env and pam_mail fix
->> is incomplete: it only switches the fsuid (should also switch fsgid (or
->> egid) and groups), and it fails to check the return value from setfsuid()
->> (doing so would require duplicate calls to setfsuid(), like we do in
->> libtcb, or switching of euid instead - yet it is desirable).
->>
->
-> This one is a bit on the tricky side. I'm going to call it "improper
-> setfsuid use" so we can use just one CVE instead of two (as the flaws are
-> related):
->
-> Use CVE-2010-3430
+Regards,
+Nicolas Grégoire / Agarri
 
-Things get tricky once you get to such low levels of detail, and this is 
-the area where there's a little bit of wiggle room.  At one level, you 
-could call it "improper switching of privileges."  Or you could split at 
-the level of the individual bugs.
-
-One way that helps to clarify such things is: "if I fix X, will Y be 
-rendered neutral?"  In this case, if you don't switch fsgid/egid and 
-groups, you still have an unchecked return value that could cause problems 
-if setfsuid() fails.  The converse also appears true - even if you check 
-the result to setfsuid, you still run with the wrong group IDs.  (Note 
-that this "independent bug fix" is actually the opposite of when you merge 
-things of the same bug type, and this kind of approach will get more and 
-more complicated as the more-obvious bugs get eliminated from the affected 
-code).
-
-In this case, I would argue for two CVEs.
-
-- Steve
+View attachment "SFCB-Content_Length_heap_overflows.txt" of type "text/plain" (2808 bytes)
