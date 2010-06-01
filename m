@@ -1,34 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/09/2
-Message-ID: <4B7115A0.1090808@kernel.sg>
-Date: Tue, 09 Feb 2010 15:58:24 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/01/2
+Message-ID: <4C04C4D7.7040200@redhat.com>
+Date: Tue, 01 Jun 2010 10:29:11 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request - kernel: futex: Handle user space corruption gracefully
+CC: Nahuel Grisolia <nahuel@...sai-sec.com>, Stefan Esser <stefan.esser@...tioneins.de>, "Steven M. Christey" <coley@...us.mitre.org>, Cacti Developers <developers@...ti.net>, Tony Roman <roman@...order.com>
+Subject: Re: CVE Request -- Cacti v0.8.7 -- three security fixes
 Content-Type: text/plain; charset=utf-8
 
-Description of the issue: "If the owner of a PI futex dies we fix up the 
-pi_state and set pi_state->owner to NULL. When a malicious or just 
-sloppy programmed user space application sets the futex value to 0 e.g. 
-by calling pthread_mutex_init(), then the futex can be acquired again. A 
-new waiter manages to enqueue itself on the pi_state w/o damage, but on 
-unlock the kernel dereferences pi_state->owner and oopses.
+Hi Steve,
 
-Prevent this by checking pi_state->owner in the unlock path. If 
-pi_state->owner is not current we know that user space manipulated the 
-futex value. Ignore the mess and return -EINVAL.
+Steven M. Christey wrote:
+> 
+> On Wed, 26 May 2010, Josh Bressers wrote:
+> 
+>>>      [A], MOPS-2010-023: Cacti Graph Viewer SQL Injection Vulnerability
+>>>      
+>>> http://php-security.org/2010/05/13/mops-2010-023-cacti-graph-viewer-sql-injection-vulnerability/index.html 
+>>>
+>>>      http://www.vupen.com/english/advisories/2010/1204
+>>>
+>>>      Credit: The vulnerability was discovered by Stefan Esser as part of
+>>>      the SQL Injection Marathon.
+>>>
+>>>      Upstream changeset:
+>>>      http://svn.cacti.net/viewvc?view=rev&revision=5920
+>>
+>> Steve, you've been handling the MOPS stuff. I'm going to leave this one
+>> alone unless you tell me otherwise (I don't want to dupe).
+> 
+> Use CVE-2010-2092, to be filled in later today (with a bunch of other 
+> MOPS issues).
+> 
+> 
+> [C], SQL injection and shell escaping issues reported by Bonsai Information Security (http://www.bonsai-sec.com)
+>            [7] http://www.bonsai-sec.com/blog/index.php/using-grep-to-find-0days/
+>            [8] http://www.bonsai-sec.com/en/research/vulnerabilities/cacti-os-command-injection-0105.php
+> 
+>          Credit: This vulnerability was discovered by Nahuel Grisolia ( nahuel -at- bonsai-sec.com )
+>          Upstream changeset:
+>            [9] http://svn.cacti.net/viewvc?view=rev&revision=5747 
+> 
+> Josh assigned CVE-2010-1645 for the OS command issue.
+> 
+> The SQL injection that Jan is referring to in the original request is 
+> most likely CVE-2010-1431, which was disclosed by Bonsai back in April.
 
-This catches the above case and also the case where a task hijacks the 
-futex by setting the tid value and then tries to unlock it."
+Yeah, [C] refers to two issues:
+   1, SQL injection issue, known under CVE-2010-1431 / BONSAI-2010-0104
+      Proper patch is here: [1] http://svn.cacti.net/viewvc?view=rev&revision=5747 and
 
-Upstream commit:
-http://git.kernel.org/linus/51246bfd189064079c54421507236fd2723b18f3
+   2, OS command injection issue, CVE-2010-1645 / BONSAI-2010-0105
+      References:  [2] http://www.bonsai-sec.com/en/research/vulnerabilities/cacti-os-command-injection-0105.php
+      Proper patches are the following three: (noticed by Tomas Hoger && confirmed by Tony Roman, thanks for it!)
+        [3] http://svn.cacti.net/viewvc?view=rev&revision=5778
+        [4] http://svn.cacti.net/viewvc?view=rev&revision=5782
+        [5] http://svn.cacti.net/viewvc?view=rev&revision=5784
 
-Note that pi-futex was introduced in:
-http://git.kernel.org/linus/c87e2837be82df479a6bae9f155c43516d2feebc
+Also, there were also some regressions related with Cacti v0.8.7f:
+   [6] http://forums.cacti.net/viewtopic.php?t=37845
 
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=563091
+ From [6]:
 
-Thanks, Eugene
+"If you have already upgraded to 0.8.7f, you can simple move back to 0.8.7e." and
+"Cacti 0.8.7g will be release on June 7th to address these issues.".
+
+Not sure if Cacti v0.8.7g will address yet some security issues, so Cc-ed
+Cacti Developers and Tony Roman on this email to detail, if necessary.
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+> 
+> - Steve
+
