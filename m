@@ -1,90 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/24/13
-Message-ID: <AANLkTinMUbREsYWFi1eOMoJ+jbPNaG7MuUbxt2oK3__3@mail.gmail.com>
-Date: Wed, 24 Nov 2010 09:52:47 -0500
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/01/3
+Message-ID: <2088660612.775711275401852922.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 1 Jun 2010 10:17:32 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Interesting behavior with struct initiailization
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: Mediawiki below 1.15.4 / 1.16.0beta3
 Content-Type: text/plain; charset=utf-8
 
-This topic has come up a few times recently on lkml, so I thought I'd
-share my findings here for the sake of spreading information.
+----- "Hanno Böck" <hanno@...eck.de> wrote:
 
-Lately, there have been a high number of instances in the Linux kernel
-where uninitialized stack bytes are leaked to unprivileged users as a
-result of copying structures to userland.  There's been recent
-discussion on the proper way to make sure this doesn't happen.
+> http://lists.wikimedia.org/pipermail/mediawiki-announce/2010-May/000091.html
+> 
+> One XSS, one CSRF.
+> 
 
-There are three situations in which this might happen:
+These seem clear enough:
 
-===============================
+CVE-2010-1647 mediawiki 1.15.4 XSS
+CVE-2010-1648 mediawiki 1.15.4 CSRF
 
-1. Lack of initialization
+Thanks.
 
-This is the easiest to spot.  For example:
-
----
-struct test { int a; int b; int c; } arg;
-
-arg.a = 0;
-arg.b = 0;
-
-copy_to_user(ptr, &arg, sizeof(arg));
----
-
-The contents of arg.c will be leaked due to lack of initialization.
-This is known and expected behavior.
-
-===============================
-
-2. Lack of initialization of padding bytes
-
-gcc adds padding bytes to some structures to give them more natural
-alignment.  If these bytes aren't cleared using memset() or C99
-initialization (more on this soon), they'll be uninitialized and
-subsequently leaked:
-
----
-struct test { int a; char b; int c; } arg;
-
-arg.a = 0;
-arg.b = 0;
-arg.c = 0;
-
-copy_to_user(ptr, &arg, sizeof(arg));
----
-
-The three bytes padding after the "char b" member will remain
-uninitialized and are leaked in this example.
-
-===============================
-
-3. gcc does not clear padding bytes on full C99 initialization
-
-I think this is unexpected behavior (at least to me), and it's the
-reason I'm writing this post.  Normally, C99 initialization
-automatically zeros out padding bytes as well.  For example:
-
----
-struct test { int a; char b; int c; } arg = {};
-
-or
-
-struct test { int a; char b; int c; } arg = { .a = 1 };
----
-
-will set the specified fields, and zero out everything else, including
-padding bytes.  However, if you explicitly initialize every member
-using C99 initialization, the padding bytes won't be zeroed out:
-
----
-struct test { int a; char b; int c; } arg = { .a = 0, .b = 0, .c = 0 };
----
-
-This will leave the padding bytes after "char b" uninitialized,
-surprisingly.  I imagine this is an attempted optimization on gcc, but
-now it's coming back to bite (no pun intended) everyone who relied on
-this construct to prevent leakage.
-
-Regards,
-Dan
+-- 
+    JB
