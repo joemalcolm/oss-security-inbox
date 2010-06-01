@@ -1,32 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/03/2
-Message-ID: <4B69A870.90900@redhat.com>
-Date: Wed, 03 Feb 2010 17:46:40 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE Request -- GMime-2.4.15
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/01/4
+Message-ID: <925662149.777811275402332468.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 1 Jun 2010 10:25:32 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: Hanno Böck <hanno@...eck.de>
+Cc: Steven Christey <coley@...us.mitre.org>, oss-security@...ts.openwall.com
+Subject: Re: CVE request: joomla before 1.5.18
 Content-Type: text/plain; charset=utf-8
 
-Hi Josh, Steve, vendors,
 
-   GMime upstream has released latest 2.4.15 [1] version of the
-library fixing one security issue. From 2.4.15-changes [2] file:
+----- "Hanno Böck" <hanno@...eck.de> wrote:
 
-2010-01-31  Jeffrey Stedfast  <fejj@...ell.com>
+> http://developer.joomla.org/security/news/314-20100501-core-xss-
+> vulnerabilities-in-back-
+> end.html?utm_source=feedburner&utm_medium=email&utm_campaign=Feed%3A+JoomlaSecurityNews+%28Joomla!
+> +Security+News%29
+> 
+> Description
+> 
+> Back-end user can inject javascript in various administrator screens.
+> 
+> Affected all versions below 1.5.18.
+> 
 
-	* gmime/gmime-encodings.h (GMIME_UUENCODE_LEN): Fixed to prevent
-	possible buffer overflows.
+Please use CVE-2010-1649.
 
-References:
+Thanks.
 
-[1] http://ftp.gnome.org/pub/GNOME/sources/gmime/2.4/
-[2] http://ftp.gnome.org/pub/GNOME/sources/gmime/2.4/gmime-2.4.15.changes
-[3] http://ftp.gnome.org/pub/GNOME/sources/gmime/2.4/gmime-2.4.14-2.4.15.diff.gz
-[4] http://secunia.com/advisories/38459/
-
-Could you allocate a CVE id for this?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+-- 
+    JB
