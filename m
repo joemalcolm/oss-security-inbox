@@ -1,47 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/30/1
-Message-ID: <4C2A8991.3040608@kernel.sg>
-Date: Wed, 30 Jun 2010 08:02:25 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
-To: oss-security@...ts.openwall.com
-CC: akuster <akuster@...sta.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - kernel: cifs: Fix a kernel BUG with remote OS/2 server
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/02/4
+Message-ID: <4C066D07.10007@redhat.com>
+Date: Wed, 02 Jun 2010 16:39:03 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>, oss-security <oss-security@...ts.openwall.com>
+CC: Keith Rarick <kr@....us>
+Subject: CVE Request -- Beanstalkd (prior v1.4.6) -- Improper sanitization of job body (job payload data)
 Content-Type: text/plain; charset=utf-8
 
-On 06/30/2010 12:57 AM, akuster wrote:
-> pSMBr->CountHigh looks to have been introduce by commit
-> 381a420f5b23cedd9e166e052a93a7f4237bd57c back in 2.6.12-rc2.
-> So would it be said this issue has been around since then?
+Hi Steve, vendors,
 
-Which tree are you using? I got: fatal: bad object 
-381a420f5b23cedd9e166e052a93a7f4237bd57c.
+   Graham Barr reported that beanstalkd v1.4.5 and earlier, improperly
+sanitized job data, sent together with put command from client.
+A remote attacker, providing a specially-crafted job data in request,
+could use this flaw to bypass intended beanstalk client commands
+dispatch mechanism, leading to unauthorized execution of beanstalk
+client commands.
 
-->CountHigh was added long ago. Even v2.6.9 (rhel-4) is affected.
+References:
+   [1] http://kr.github.com/beanstalkd/2010/05/23/1.4.6-release-notes.html
+   [2] http://bugs.gentoo.org/show_bug.cgi?id=322457
 
-Eugene
+Upstream changeset:
+   [3] http://github.com/kr/beanstalkd/commit/2e8e8c6387ecdf5923dfc4d7718d18eba1b0873d
 
-> On 06/27/2010 10:41 PM, Eugene Teo wrote:
->> "This was known to trigger with a OS/2 server. The server sets
->> pSMBr->CountHigh to a incorrect value even in case of normal writes.
->> This results in 'nbytes' being computed wrongly and triggers a kernel
->> BUG at mm/filemap.c.
->>
->>      void iov_iter_advance(struct iov_iter *i, size_t bytes)
->>      {
->>              BUG_ON(i->count<  bytes);<--- BUG here
->>
->> Why the server is setting 'CountHigh' is not clear but only does so
->> after writing 64k bytes. Though this looks like the server bug, the
->> client side crash may not be acceptable.
->>
->> The workaround is to mask off high 16 bits if the number of bytes
->> written as returned by the server is greater than the bytes requested by
->> the client."
->>
->> https://bugzilla.redhat.com/show_bug.cgi?id=608583
->> http://git.kernel.org/linus/6513a81e9325d712f1bfb9a1d7b750134e49ff18
->>
+Could you allocate a CVE id for this?
 
-
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
