@@ -1,39 +1,100 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/04/2
-Message-ID: <4CD2607F.1010403@redhat.com>
-Date: Thu, 04 Nov 2010 15:27:59 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/02/1
+Message-ID: <20100602064612.GA23094@suse.de>
+Date: Wed, 2 Jun 2010 08:46:12 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: sys_semctl: fix kernel stack leakage
+Subject: Re: SFCB vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On 11/04/2010 02:40 PM, Eugene Teo wrote:
-> "The semctl syscall has several code paths that lead to the leakage of
-> uninitialized kernel stack memory (namely the IPC_INFO, SEM_INFO,
-> IPC_STAT, and SEM_STAT commands) during the use of the older, obsolete
-> version of the semid_ds struct.
->
-> The copy_semid_to_user() function declares a semid_ds struct on the
-> stack and copies it back to the user without initializing or zeroing the
-> "sem_base", "sem_pending", "sem_pending_last", and "undo" pointers,
-> allowing the leakage of 16 bytes of kernel stack memory.
->
-> The code is still reachable on 32-bit systems - when calling semctl()
-> newer glibc's automatically OR the IPC command with the IPC_64 flag, but
-> invoking the syscall directly allows users to use the older versions of
-> the struct."
->
-> Upstream commit:
-> http://git.kernel.org/linus/982f7c2b2e6a28f8f266e075d92e19c0dd4c6e56
->
-> Credit: Dan Rosenberg
->
-> Reference:
-> https://bugzilla.redhat.com/show_bug.cgi?id=649614
 
-Whoops, this has been assigned CVE-2010-4083.
+FYI, there have been plenty of other bugs inside sblim-sfcb, including
+format string vulns in mlogf(). Dunno when they fixed that upstream,
+but our sblim did that in 2008.
+Unfortunally they seem to re-introduce these bugs in other sblims
+like sblim-gather. Did you look at that too?
 
-Thanks, Eugene
+Sebastian
+
+
+On Tue, Jun 01, 2010 at 10:21:55PM +0200, Nicolas Grégoire wrote:
+> Le mardi 01 juin 2010 à 13:52 -0400, Josh Bressers a écrit :
+> > Please use CVE-2010-2054
+> 
+> Thanks.
+> My advisory is attached to this mail.
+> 
+> Regards,
+> Nicolas Grégoire / Agarri
+
+> 
+> 	SFCB "Content-Length" heap overflow
+> 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> 
+> [=] Product overview
+> 
+> SBLIM SFCB is an Open Source implementation of a WBEM CIM broker. WBEM is a set of technologies aimed to monitor and administer (larges) pools of computing ressources, applications, hardware. It's used by computers management tools like HP Systems Insight Manager, VMware vSphere or IBM Director. SFCB usually listens on TCP ports 5988 (HTTP) or 5989 (HTTPS) and is used in many Linux distributions and some VMware / Dell products.
+> 
+> [=] Vulnerabilities
+> 
+> * CVE-2010-1937 (SFCB bug #3001896) : pre-auth remote heap overflow using a forged Content-Length header
+> 
+> When parsing a HTTP request, SFCB will use any positive Content-Length value to allocate a buffer. Then, memcpy tries to copy the user-provided POST data in this buffer. By sending a small value in the Content-Length header and more data in the POST body, it's possible to overflow the previously allocated heap buffer.
+> 
+> Vulnerable versions : up to 1.3.7
+> 
+> * CVE-2010-2054 (SFCB bug #3001915) : pre-auth remote integer overflow using a forged Content-Length header
+> 
+> If the configuration option "httpMaxContentLength" is explicitly set to 0, SFCB will only check that the Content-Length value is positive and lower than UINT_MAX and then use it (adding 8) to allocate a buffer. Then, memcpy tries to copy the user-provided POST data in this buffer. By sending a value between UINT_MAX-7 and UINT_MAX-1, it is possible to overflow a buffer of size 1 to 7.
+> 
+> Vulnerable versions : from 1.3.4 to 1.3.7
+> 
+> [=] Note about VMware products
+> 
+> VMware ESXi 3.5, ESXi 4 and ESX 4 are running by default a modified version of SFCB (v1.3.3 in ESX 4). However they were tested as non vulnerable :
+> - CVE-2010-1937 has been silently patched in WMware products
+> - CVE-2010-2054 doesn't affect versions lower than 1.3.4
+>  
+> [=] Mitigating factors
+> 
+> None :
+> - SSL authentication could mitigate this bug but isn't used by SFCB
+> - the bug is triggered before any HTTP-layer credential checks
+> - POST and M-POST are default methods used by WBEM
+> 
+> [=] Vectors
+> 
+> These vulnerabilities can be triggered by default on port TCP/5988 (HTTTP) or TCP/5989 (HTTPS), using POST or M-POST requests.
+> 
+> [=] Solution
+> 
+> Upgrade to version 1.3.8
+> 
+> [=] Links
+> 
+> SBLIM SFCB :
+> http://sourceforge.net/apps/mediawiki/sblim/index.php?title=Sfcb
+> WBEM :
+> http://en.wikipedia.org/wiki/Web-Based_Enterprise_Management
+> 
+> CVE-2010-1937 :
+> http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2010-1937
+> CVE-2010-2054 :
+> http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2010-2054
+> 
+> SFCB bug #3001896 :
+> http://sourceforge.net/tracker/?func=detail&aid=3001896&group_id=128809&atid=712784
+> SFCB bug #3001915 :
+> http://sourceforge.net/tracker/?func=detail&aid=3001915&group_id=128809&atid=712784 
+> 
+> Regards,
+> Nicolas Grégoire / Agarri
+
+
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+~
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+~ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+
