@@ -1,42 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/04/4
-Message-ID: <20100704201217.GB29933@kki.org>
-Date: Sun, 4 Jul 2010 22:12:17 +0200
-From: Christoph Thiel <ct@....org>
-To: Morten Shearman Kirkegaard <morten@...elingp.dk>
-Cc: Florian Streibelt <gentoo@...treibelt.de>, oss-security <oss-security@...ts.openwall.com>, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Michael Fleming <mfleming+rpm@...tfleminggent.com>, Mads Martin Joergensen <mmj@....dk>, Ben Schmidt <mail_ben_schmidt@...oo.com.au>
-Subject: Re: CVE Request -- mlmmj -- Directory traversal flaw by editing and saving  list entries via php-admin web interface
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/02/2
+Message-ID: <4C0643C7.6020503@redhat.com>
+Date: Wed, 02 Jun 2010 13:43:03 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>, oss-security <oss-security@...ts.openwall.com>
+CC: Panu Matilainen <pmatilai@...hat.com>, Jindrich Novy <jnovy@...hat.com>, Florian Festi <ffesti@...hat.com>, Matt McCutchen <matt@...tmccutchen.net>
+Subject: CVE Request -- rpm -- Fails to remove the SUID/SGID bits on package upgrade (RH BZ#598775)
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Jun 26, 2010 at 10:42:25AM +0200, Morten Shearman Kirkegaard wrote:
-> CC'ing Christoph Thiel (mlmmj-php-admin author) and Ben Schmidt (current
-> mlmmj maintainer).
-> 
-> On Wed, 2010-06-23 at 19:41 +0200, Florian Streibelt wrote:
-> > when I reported the bug I had no time to further investigate and I think I
-> > did not report upstream because of lack of time at that point and later
-> > forgot - which is sad.
-> 
-> Yeah, well, things like that happen. Would you agree that the attached
-> patch fixes the vulnerability?
-> 
-> Using a list of known-good-characters would be nice, but dot happens to
-> be a valid character in a list name.
-> 
-> > The php webinterface is a third-party development for mlmmj but part of the
-> > official release.
-> 
-> I know that this is just semantics, but... While it is true that the
-> mlmmj-php-admin web interface is distributed along with mlmmj, it is not
-> a part of mlmmj itself, but is located in the contribs directory.
+Hi Steve, vendors,
 
-Thanks for bringing this up. I haven't used the mlmmj-php-admin in years,
-but from looking at the patch that was proposed by Morten, I think it fixes
-the issues and should be shipped!
+    Matt McCutchen pointed out a deficiency in the way rpm handled rpm package upgrades --
+it failed to clear out the SUID/SGID bits of the old file by file replacement when privileged
+user performed package upgrade. Under certain circumstances, a local, authenticated user could
+use this flaw to escalate their privileges.
 
-Who is taking care of commiting this to mlmmj? Is there any embargo
-involved?
+Red Hat Bugzilla entry:
+   [1] https://bugzilla.redhat.com/show_bug.cgi?id=598775
 
+Upstream changeset:
+   [2] http://rpm.org/gitweb?p=rpm.git;a=commit;h=ca2d6b2b484f1501eafdde02e1688409340d2383
 
-Best
-Christoph
+Could you allocate CVE id for this?
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
