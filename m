@@ -1,55 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/01/6
-Message-ID: <487219407.1015181285963512331.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 1 Oct 2010 16:05:12 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/02/3
+Message-ID: <4C064D9D.7000308@redhat.com>
+Date: Wed, 02 Jun 2010 14:25:01 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: Horde Gollem <1.1.2 XSS in view.php
+CC: "Steven M. Christey" <coley@...us.mitre.org>, Panu Matilainen <pmatilai@...hat.com>, Jindrich Novy <jnovy@...hat.com>, Florian Festi <ffesti@...hat.com>, Matt McCutchen <matt@...tmccutchen.net>
+Subject: Re: CVE Request -- rpm -- Fails to remove the SUID/SGID bits on package upgrade (RH BZ#598775)
 Content-Type: text/plain; charset=utf-8
 
+Steve,
 
------ "Alex Legler" <a3li@...too.org> wrote:
+Jan Lieskovsky wrote:
+> Hi Steve, vendors,
 > 
-> > Horde:
-> > http://lists.horde.org/archives/announce/2010/000568.html
-> >
-> 
-> From that link:
-> >     * Fixed an XSS vulnerability in util/icon_browser.php.
-> 
-> CVE-2010-3077. Also fixed in Horde Application Framework 3.3.9.
-> 
-> >     * Fixed an XSS vulnerability in the Fetchmail configuration.
-> 
-> CVE n/a. Also fixed in Horde IMP 4.3.8
-> Reference:
-> http://git.horde.org/diff.php/imp/fetchmailprefs.php?rt=horde&r1=1.39.4.10&r2=1.39.4.11
+>    Matt McCutchen pointed out a deficiency in the way rpm handled rpm 
+> package upgrades --
+> it failed to clear out the SUID/SGID bits of the old file by file 
+> replacement when privileged
+> user performed package upgrade. Under certain circumstances, a local, 
+> authenticated user could
+> use this flaw to escalate their privileges.
 
-CVE-2010-3695
+Maybe obvious and natural conclusion from previous post already, but Panu clarified
+yet, similar deficiency holds for dealing with posix file capabilities and SELinux
+contexts, i.e. they are not cleared after pkg upgrade. Not sure second CVE is needed
+for this, but if one is enough, wanted to explicitly mention this, so it can be
+described in the text of the CVE too.
 
-
-> 
-> >     * Fixed an XSS vulnerability when showing mailbox names.
-> 
-> CVE n/a. Also fixed in Horde DIMP 1.1.5
-> Reference: http://bugs.horde.org/ticket/9240
-
-CVE-2010-3693
-
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
 > 
-> >     * Protected preference forms against CSRF attacks.
+> Red Hat Bugzilla entry:
+>   [1] https://bugzilla.redhat.com/show_bug.cgi?id=598775
 > 
-> CVE n/a. Also fixed in Horde Application Framework 3.3.9.
-> Reference: http://secunia.com/advisories/39860
+> Upstream changeset:
+>   [2] 
+> http://rpm.org/gitweb?p=rpm.git;a=commit;h=ca2d6b2b484f1501eafdde02e1688409340d2383 
+> 
+> 
+> Could you allocate CVE id for this?
+> 
+> Thanks && Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
 
-CVE-2010-3694
-
-
-I think this is everything else. Let me know if I've missed something.
-
-Thanks.
-
--- 
-    JB
