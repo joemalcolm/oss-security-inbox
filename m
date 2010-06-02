@@ -1,41 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/08/1
-Message-ID: <1692275574.220491270684965222.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 7 Apr 2010 20:02:45 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/02/5
+Message-ID: <1275513606.24713.10.camel@new-desktop>
+Date: Wed, 02 Jun 2010 23:20:06 +0200
+From: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: ClamAV small issues
+Subject: Re: SFCB vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-These are certainly worth of CVE ids, but it's going to be tricky, as the
-first issue is a couple of things as seen in the bug:
-https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1826
 
-I'm going to defer this assignment to MITRE (added Steve Christey to the CC).
+> Unfortunally they seem to re-introduce these bugs in other sblims
+> like sblim-gather. Did you look at that too?
 
-Thanks.
+No, I only audited different CIM brokers for remote pre-auth bugs.
 
--- 
-    JB
+By the way, these audits showed that vendors add many patches to the
+upstream code, sometimes removing vulnerabilities (like VMware in this
+case) and sometimes adding ones ;-)
+
+Regards,
+Nicolas Grégoire / Agarri
 
 
------ "Jamie Strandboge" <jamie@...onical.com> wrote:
 
-> FYI, not sure if these should get a CVE, but it seems that a crafted
-> archive could bypass scanning without these commits[1]:
-> 
-> 158c35e81a25ea5fda55a2a7f62ea9fec2e883d9
-> libclamav/mspack.c: improve unpacking of malformed cabinets (bb#1826)
-> 
-> 224fee54dd6cd8933d7007331ec2bfca0398d4b4
-> libclamav/mspack.c: fix Quantum decompressor (bb#1771)
-> 
-> 
-> [1] http://git.clamav.net/gitweb?p=clamav-devel.git;a=log
-> 
-> -- 
-> Jamie Strandboge             | http://www.canonical.com
-
--- 
-    JB
