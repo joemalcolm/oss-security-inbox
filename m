@@ -1,25 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/10/7
-Message-ID: <20100310191107.GO7017@redhat.com>
-Date: Wed, 10 Mar 2010 12:11:07 -0700
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/03/2
+Message-ID: <1769822633.1087291275590572969.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 3 Jun 2010 14:42:52 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE Request: DeviceKit privilege escalation via pluggable storage device labels
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Panu Matilainen <pmatilai@...hat.com>, Jindrich Novy <jnovy@...hat.com>, Florian Festi <ffesti@...hat.com>, Matt McCutchen <matt@...tmccutchen.net>
+Subject: Re: CVE Request -- rpm -- Fails to remove the SUID/SGID bits on package upgrade (RH BZ#598775)
 Content-Type: text/plain; charset=utf-8
 
-This is quite old, but I don't think a CVE name has ever been assigned
-to it.  The issue is with how DeviceKit handled labels for pluggable
-storage devices.  A local unprivileged user could use this flaw to
-elevate privileges.  It has been corrected upstream.
+----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
 
-References:
+> 
+> Jan Lieskovsky wrote:
+> > Hi Steve, vendors,
+> > 
+> >    Matt McCutchen pointed out a deficiency in the way rpm handled rpm
+> >    package upgrades -- it failed to clear out the SUID/SGID bits of the
+> >    old file by file replacement when privileged user performed package
+> >    upgrade. Under certain circumstances, a local, authenticated user
+> >    could use this flaw to escalate their privileges.
+> 
+> Maybe obvious and natural conclusion from previous post already, but Panu
+> clarified yet, similar deficiency holds for dealing with posix file
+> capabilities and SELinux contexts, i.e. they are not cleared after pkg
+> upgrade. Not sure second CVE is needed for this, but if one is enough,
+> wanted to explicitly mention this, so it can be described in the text of
+> the CVE too.
+> 
 
-https://bugzilla.redhat.com/show_bug.cgi?id=523178
-http://cgit.freedesktop.org/DeviceKit/DeviceKit-disks/commit/?id=62f883c7d38e75d0669c162529062a1e81d00da2
-http://bugs.freedesktop.org/show_bug.cgi?id=23235
+I'm going to give both of these the same CVE id. The issues are very
+related, and I had look at the CWE guide, they both seem to fall under
+"CWE-281: Improper Preservation of Permissions"
+
+Steve, feel free to overrule me on this one.
+
+CVE-2010-2059
 
 Thanks.
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+    JB
