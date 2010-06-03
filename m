@@ -1,64 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/03/3
-Message-ID: <20100303153002.GA5581@openwall.com>
-Date: Wed, 3 Mar 2010 18:30:02 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/03/1
+Message-ID: <173967552.1084241275589839498.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 3 Jun 2010 14:30:39 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CFPs and con invitations on the list (was: [cansecwest] Advanced PHP Hacking)
+Cc: coley <coley@...re.org>
+Subject: Re: prewikka permission bug
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Please use CVE-2010-2058
 
-I've just approved Laurent's posting, even though this is sort of an
-exception lately.  Several other postings of "this nature" (not training
-courses but mostly conference CFPs, though) were not approved.  Yet I
-thought it was time to revisit this issue, and Laurent's posting was a
-good choice because I knew that Laurent had actually joined the list
-first (unlike most others who try to cross-post their CFPs in here).
+Thanks.
 
-The last time this topic was brought up, two of the list members
-("founding members", so to speak) said they were OK with these postings
-getting through to the list "presuming they stay on the topic of Open
-Source Security" and "are not badly cross-posted":
+-- 
+    JB
 
-http://www.openwall.com/lists/oss-security/2009/01/07/4
-http://www.openwall.com/lists/oss-security/2009/01/07/9
-http://www.openwall.com/lists/oss-security/2009/01/07/12
 
-In practice, many of the postings were in fact "badly cross-posted" and
-none of the moderators approved them (so they should have bounced back
-to the senders in a few days).  Sometimes it is difficult to determine
-if a posting is cross-posted "badly enough" or not, though.
+----- "Stefan Behte" <craig@...too.org> wrote:
 
-Another thing to keep in mind is that those cross-posts provide extra
-visibility to oss-security, making more people aware of this list.  If
-we don't approve them, then people will stop trying to CC: oss-security
-on their announcements, so we won't be getting this extra visibility.
-It is not clear whether this would be a good or a bad thing.  So far,
-the visibility did not hurt, though - reasonable people were joining the
-list, and we have pre-moderation for postings by new members anyway.
-
-Can we agree on an approach that would make moderation decisions easier?
-With about one announcement of this kind per month coming our way lately
-(on average), maybe we should simply be approving them all, whether
-cross-posted or not?
-
-Should we treat invitations to cons and training courses with expensive
-registration differently from those that are free or cheap?  I imagine
-that Laurent's posting was a for-profit one, which was one of the reasons
-why I hesitated approving it.  I'd rather not base moderation decisions
-on this, though, because it'd be difficult to draw the line, and also
-because these "expensive" postings are not any worse in terms of the
-visibility they might provide to oss-security (if visibly CC'ed, which
-was not the case for Laurent's posting).
-
-Comments?
-
-Alexander
-
-On Wed, Mar 03, 2010 at 10:59:59AM +0100, Laurent OUDOT at TEHTRI-Security wrote:
-> I'd like to announce a Security Master's Dojo course during next
-> CanSecWest 2010 in Vancouver (March 22-26 2010).
+> Hi,
 > 
-> Title: Advanced PHP Hacking (!)
-[...]
+> I couldn't find a CVE for this:
+> 
+> "The permissions on the prewikka.conf file are world readable and
+> contain the sql database password used by prewikka. This update makes
+> it
+> readable just by the apache group."
+> 
+> https://dev.prelude-technologies.com/projects/prewikka/repository/revisions/17e38c310410be1b7811152172cda4438936063d
+> 
+> Redhat and Gentoo were affected, I'm not sure about others.
+> 
+> https://www.redhat.com/archives/fedora-package-announce/2009-April/msg00771.html
+> 
+> https://bugs.gentoo.org/show_bug.cgi?id=270056
+> 
+> 
+> Best regards,
+> 
+> Stefan Behte
