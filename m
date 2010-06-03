@@ -1,32 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/28/3
-Message-ID: <1626485214.2005361272413617045.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 27 Apr 2010 20:13:37 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: soc@...cert.gov, cert@...ora.fi, websecurity@...appsec.org, owasp-helsinki@...ts.owasp.org, cert@...t.org, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: wafp insecure temporary directory
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/03/4
+Message-ID: <4C07FE2A.3050906@redhat.com>
+Date: Thu, 03 Jun 2010 21:10:34 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>, oss-security <oss-security@...ts.openwall.com>
+CC: Guillem Jover <guillem@...ian.org>, Aníbal Monsalve Salazar <anibal@...ian.org>
+Subject: CVE Request -- rpcbind -- Insecure (predictable) temporary file use
 Content-Type: text/plain; charset=utf-8
 
+Hi Steve, vendors,
 
------ "Henri Salo" <henri@...v.fi> wrote:
+   Guillem Jover pointed out:
+   [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=583435#5
 
-> Wafp creates a temporary directory to predictable path and name. This
-> allows a local attacker to create a denial of service condition and
-> discloses sensitive information to unprivileged users. This also reduces
-> usability of this software, because one can't run more than one wafp-
-> instances at the same time. This issue can also be leveraged to delete
-> arbitrary files or directories via a symlink attack.
-> 
-> I notified the project:
-> http://code.google.com/p/webapplicationfingerprinter/issues/detail?id=8
-> 
-> Can I get CVE-identifier for this issue?
-> 
+a deficiency in the way rpcbind gathered / saved registrations from / to
+dumped file(s). A local attacker could use this flaw to conduct symbolic
+link attacks, leading to un-authorized disclosure of sensitive information
+and / or to important system files data integrity corruption.
 
-Please use CVE-2010-1438.
+References:
+   [2] https://bugzilla.redhat.com/show_bug.cgi?id=599697
+   [3] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=583435#15
 
-Thanks.
+Could you allocate CVE id for this?
 
--- 
-    JB
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
