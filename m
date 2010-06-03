@@ -1,29 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/06/14
-Message-ID: <20101206225646.GB9588@redhat.com>
-Date: Mon, 6 Dec 2010 15:56:46 -0700
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/03/3
+Message-ID: <1691118425.1089391275591507515.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 3 Jun 2010 14:58:27 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request (PHP 5.3.x getSymbol() DoS; CERT VU#479900)
+Cc: Keith Rarick <kr@....us>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Beanstalkd (prior v1.4.6) -- Improper sanitization of job body (job payload data)
 Content-Type: text/plain; charset=utf-8
 
-* [2010-12-06 16:26:38 -0500] Steven M. Christey wrote:
+Please use CVE-2010-2060 for this.
 
->CVE-2010-4409 was just assigned by MITRE for this issue.
-
-Awesome.  Thanks Steve.
-
->On Mon, 6 Dec 2010, Vincent Danen wrote:
->
->>I haven't seen a CVE request for this already, and can't find a CVE name
->>if one has been assigned.
->>
->>CERT has a bulletin up regarding a DoS in the getSymbol() function
->>(integer overflow vulnerability):
->>
->>http://www.kb.cert.org/vuls/id/479900
->>http://svn.php.net/viewvc?view=revision&revision=305571
->>http://php.net/manual/en/numberformatter.getsymbol.php
+Thanks.
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+    JB
+
+
+----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+
+> Hi Steve, vendors,
+> 
+>    Graham Barr reported that beanstalkd v1.4.5 and earlier,
+> improperly
+> sanitized job data, sent together with put command from client.
+> A remote attacker, providing a specially-crafted job data in request,
+> could use this flaw to bypass intended beanstalk client commands
+> dispatch mechanism, leading to unauthorized execution of beanstalk
+> client commands.
+> 
+> References:
+>    [1]
+> http://kr.github.com/beanstalkd/2010/05/23/1.4.6-release-notes.html
+>    [2] http://bugs.gentoo.org/show_bug.cgi?id=322457
+> 
+> Upstream changeset:
+>    [3]
+> http://github.com/kr/beanstalkd/commit/2e8e8c6387ecdf5923dfc4d7718d18eba1b0873d
+> 
+> Could you allocate a CVE id for this?
+> 
+> Thanks && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
