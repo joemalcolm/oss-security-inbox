@@ -1,40 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/22/2
-Message-Id: <201004221445.18049.ludwig.nussel@suse.de>
-Date: Thu, 22 Apr 2010 14:45:16 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/03/5
+Message-ID: <Pine.GSO.4.64.1006031600150.1650@faron.mitre.org>
+Date: Thu, 3 Jun 2010 16:14:39 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Check your WPA2 Enterprise setup
+cc: "Steven M. Christey" <coley@...us.mitre.org>, Panu Matilainen <pmatilai@...hat.com>, Jindrich Novy <jnovy@...hat.com>, Florian Festi <ffesti@...hat.com>, Matt McCutchen <matt@...tmccutchen.net>
+Subject: Re: CVE Request -- rpm -- Fails to remove the SUID/SGID bits on package upgrade (RH BZ#598775)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-Recently I had to explain to a friend why turning off certificate
-checks for wireless networks that use WPA2 Enterprise methods for
-authentication is a bad idea. Unfortunately merely enabling some
-checkbox in the UI isn't necessarily sufficient either. If the
-RADIUS server uses a certificate signed by a public CA one can
-easily forget to apply additional constraints (e.g. matching
-subject, common name etc) to restrict acceptable certificates.
-Failure to set such constraints allows anyone with a valid domain to
-forge the wireless network and impersonate the RADIUS server. That
-finding isn't exactly new, yet it's hardly mentioned anywhere. So
-I've decided to write a paper¹ about it.
+On Thu, 3 Jun 2010, Josh Bressers wrote:
 
-I've also contacted NetworkManager upstream since NetworkManager's
-certificate handling is rather limited. Using NetworkManager for
-WPA2 Enterprise is basically only safe if a private CA is used.
-It's planned but not a priority for them to improve the situation.
+> I'm going to give both of these the same CVE id. The issues are very
+> related, and I had look at the CWE guide, they both seem to fall under
+> "CWE-281: Improper Preservation of Permissions"
+>
+> Steve, feel free to overrule me on this one.
 
-So if you are using WPA2 Enterprise better check your setup.
+At a low level of granularity, it can be overkill to distinguish between 
+closely-related flaw types.
 
-cu
-Ludwig
+The factor of concern here is that Red Hat bug 598775 suggests that the 
+first variant was committed to a changeset, but not the second.  I can't 
+(quickly) assess whether upstream committed changes for both variants, but 
+if there's only a commit for the first one (and a public release), then 
+maybe we consider these bugs as "almost-but-not-quite the same version" 
+and assign a separate CVE.
 
-[1] http://www.suse.de/~lnussel/The_Evil_Twin_problem_with_WPA2-Enterprise_v1.1.pdf
+We also use time lag between disclosures as a splitter, but these were 
+more-or-less within a 24-hour period, which we typically treat as "same 
+day."
 
--- 
- (o_   Ludwig Nussel
- //\   
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+This is fuzzy on both vuln type and version... I defer to others who can 
+shed more insight on the question of whether these versions are different 
+enough.
+
+- Steve
