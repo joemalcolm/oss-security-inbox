@@ -1,37 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/12/1
-Message-ID: <20100612191048.12d4bd55@mail.a3li.li>
-Date: Sat, 12 Jun 2010 19:10:48 +0200
-From: Alex Legler <a3li@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/04/5
+Message-ID: <20100604231256.42295361@redhat.com>
+Date: Fri, 4 Jun 2010 23:12:56 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: UnrealIRCd 3.2.8.1 source code contained a backdoor allowing for remote command execution
+Cc: coley <coley@...re.org>
+Subject: Re: CVE requests for mplayer/vlc and abcm2ps
 Content-Type: text/plain; charset=utf-8
 
-Hi.
+On Fri, 4 Jun 2010 16:08:10 -0400 (EDT) Josh Bressers wrote:
 
-Quoting http://www.unrealircd.com/txt/unrealsecadvisory.20100612.txt:
+> > 2. abcm2ps:
+> > http://moinejf.free.fr/abcm2ps-5.txt
+> 
+> Can you deal with this one. I lack the time or talent to parse "Fix
+> more security vulnerabilities"
 
-"We found out that the Unreal3.2.8.1.tar.gz file on our mirrors has been
-replaced quite a while ago with a version with a backdoor (trojan) in
-it. This backdoor allows a person to execute ANY command with the
-privileges of the user running the ircd. The backdoor can be executed
-regardless of any user restrictions (so even if you have passworded
-server or hub that doesn't allow any users in)."
+This seems to have been mentioned here previously:
 
-Basically, a system() call was injected into the source code, disguised
-as a debug/log macro.
-
-Filed in Gentoo as https://bugs.gentoo.org/show_bug.cgi?id=323691
-I have a diff of the 'bad' version against the 'good' version. If
-needed, please contact me.
-
-Please assign a CVE.
-
-Thanks,
-Alex
+http://thread.gmane.org/gmane.comp.security.oss.general/2786/focus=2788
 
 -- 
-Alex Legler | Gentoo Security / Ruby
-a3li@...too.org | a3li@...ber.ccc.de
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+Tomas Hoger / Red Hat Security Response Team
