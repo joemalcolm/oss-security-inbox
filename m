@@ -1,43 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/13/7
-Message-ID: <1998321318.2315911284408945143.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 13 Sep 2010 16:15:45 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/04/3
+Message-ID: <20100604224723.22075250@foo.fgeek.fi>
+Date: Fri, 4 Jun 2010 22:47:23 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: Re: CVE id requests: drupal
+Subject: Virii in the wild
 Content-Type: text/plain; charset=utf-8
 
-Here goes:
+http: //ecard-gre etings-com.googlegrou ps.com/web/ecard.zip
 
-CVE-2010-3091 drupal OpenID authentication bypass
-CVE-2010-3092 drupal File download access bypass
-CVE-2010-3093 drupal Comment unpublishing bypass
-CVE-2010-3094 drupal Actions cross site scripting
+ecard.zip
+8e4830ee84783c6fd17d4475cd1120f0
+75adc566ab7ee7fc06c19c01413ddb13c090406b
+0bdb420658f31cadad291ae497066e8f9227166a02976a548cdb5c57
 
-Thanks.
+ecard.exe
+ba8e39a695ea84767adb0b90f5973332
+73383ca43fc98fbba5d1358bebfeb9e09864d306
+9a995e18175cedcdb5c041fc96bd71cf6202b8534348664ccae179a9
 
--- 
-    JB
+PC_protect.exe
+ae875123e2325a54249974eaf425697a
+411329f5eee7b35494e05d23919122671251343b
+f8d1df776592d7159be5ece59059a9fa76c47cf511dd49ed642cd5ac
+
+https://anubis.iseclab.org/?action=result&task_id=1d65344c1a22298d4c91244f24710205c
+https://anubis.iseclab.org/?action=result&task_id=14865c640caefc854815769e2262e7297
+http://www.virustotal.com/analisis/b1d265068e42add36d161de63abcd09d461ba7598bc7bf2187843bcfb1db2e2a-1275679442
+http://www.virustotal.com/analisis/8a0d55265395aa8d947d012de267c808e9432d0c218e35210d735f2dd49bae86-1275679472
+http://virusscan.jotti.org/en/scanresult/e09e3c7d2a494edc53cc43005ab60c27fde134f7
+http://virusscan.jotti.org/en/scanresult/548e8b7a6995c70f3c79dcafbc33cd1d8ea0d3ef
+
+I already reported this to ClamAV, F-Secure and AVG. Contact me if you
+want the binaries.
 
 
------ "Steffen Joeris" <steffen.joeris@...lelinux.de> wrote:
-
-> Hi,
-> 
-> I don't think these 4 issues[0] have been assigned CVE ids yet, could
-> I get 
-> some?
-> 
-> Cheers,
-> Steffen
-> 
-> [0]: http://drupal.org/node/880476
-> 
-> OpenID authentication bypass
-> 
-> File download access bypass
-> 
-> Comment unpublishing bypass
-> 
-> Actions cross site scripting
+Best regards,
+Henri Salo
