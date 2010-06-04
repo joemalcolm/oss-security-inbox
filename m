@@ -1,43 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/13/7
-Message-ID: <ie5rj0$59f$1@dough.gmane.org>
-Date: Mon, 13 Dec 2010 13:19:59 -0600
-From: Raphael Geissert <geissert@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Issues without CVE names in PHP 5.3.4/5.2.15 release
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/04/1
+Message-ID: <alpine.LFD.2.00.1006040744240.5055@localhost>
+Date: Fri, 4 Jun 2010 07:48:41 +0300 (EEST)
+From: Panu Matilainen <pmatilai@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+cc: oss-security@...ts.openwall.com, Jindrich Novy <jnovy@...hat.com>, Florian Festi <ffesti@...hat.com>, Matt McCutchen <matt@...tmccutchen.net>
+Subject: Re: CVE Request -- rpm -- Fails to remove the SUID/SGID bits on package upgrade (RH BZ#598775)
 Content-Type: text/plain; charset=utf-8
 
-Vincent Danen wrote:
-> * [2010-12-13 18:47:19 +0100] Pierre Joye wrote:
->>> * Fixed extract() to do not overwrite $GLOBALS and $this when using
->>> EXTR_OVERWRITE.
->>
->>Not sure either if it requires one.
-> 
-> I can't tell because I can't find any information, however if you don't
-> believe this is security-relevant, I won't pursue it.  However, I would
-> question whether or not it is worth listing under "security enhancements
-> and fixes" instead of just "key bug fixes"?
+On Thu, 3 Jun 2010, Steven M. Christey wrote:
+>
+> On Thu, 3 Jun 2010, Josh Bressers wrote:
+>
+>> I'm going to give both of these the same CVE id. The issues are very
+>> related, and I had look at the CWE guide, they both seem to fall under
+>> "CWE-281: Improper Preservation of Permissions"
+>> 
+>> Steve, feel free to overrule me on this one.
+>
+> At a low level of granularity, it can be overkill to distinguish between 
+> closely-related flaw types.
+>
+> The factor of concern here is that Red Hat bug 598775 suggests that the first 
+> variant was committed to a changeset, but not the second.  I can't (quickly) 
+> assess whether upstream committed changes for both variants, but if there's 
+> only a commit for the first one (and a public release), then maybe we 
+> consider these bugs as "almost-but-not-quite the same version" and assign a 
+> separate CVE.
 
-The commit is http://svn.php.net/viewvc?view=revision&revision=305570
+The second part about POSIX file capabilities was realized shortly 
+afterwards while thinking of possible other similar cases, and has been 
+fixed too now:
+http://rpm.org/gitweb?p=rpm.git;a=commitdiff;h=4d172a194addc49851e558ea390d3045894e3230
 
+To my knowledge no distro actually uses the file capability support in RPM 
+though.
 
-OTOH, this one _could_ be considered relevant (local only, not important 
-IMHO):
-http://svn.php.net/viewvc?view=revision&revision=305303
-
-$ php t.php 
-PHP Warning:  openssl_csr_new(): dn: `�
- �
-�
-����ȿ��ȿXr�
-�
-
-��ȿ���e�        , is not a recognized name in /tmp/t.php on line 3
-
-Cheers,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
-
-
+ 	- Panu -
