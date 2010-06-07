@@ -1,44 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/08/2
-Message-Id: <20100908023549.BFFA8401AF@magilla.sf.frob.com>
-Date: Tue,  7 Sep 2010 19:35:49 -0700 (PDT)
-From: Roland McGrath <roland@...hat.com>
-To: Linus Torvalds <torvalds@...ux-foundation.org>, Andrew Morton <akpm@...ux-foundation.org>
-CC: linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Kees Cook <kees.cook@...onical.com>, Al Viro <viro@...iv.linux.org.uk>, Andrew Morton <akpm@...ux-foundation.org>, Oleg Nesterov <oleg@...hat.com>, KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, pageexec@...email.hu, "Brad Spengler <spender@...ecurity.net> Eugene Teo" <eugene@...hat.com>
-Subject: [PATCH 1/3] setup_arg_pages: diagnose excessive argument size
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/07/5
+Message-ID: <4C0D0B4A.1010306@cacti.net>
+Date: Mon, 07 Jun 2010 11:07:54 -0400
+From: Larry Adams <thewitness@...ti.net>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: Jan Lieskovsky <jlieskov@...hat.com>,  oss-security@...ts.openwall.com, Nahuel Grisolia <nahuel@...sai-sec.com>,  Stefan Esser <stefan.esser@...tioneins.de>, Cacti Developers <developers@...ti.net>, Tony Roman <roman@...order.com>
+Subject: Re: CVE Request -- Cacti v0.8.7 -- three security fixes
 Content-Type: text/plain; charset=utf-8
 
-The CONFIG_STACK_GROWSDOWN variant of setup_arg_pages() does not
-check the size of the argument/environment area on the stack.
-When it is unworkably large, shift_arg_pages() hits its BUG_ON.
-This is exploitable with a very large RLIMIT_STACK limit, to
-create a crash pretty easily.
 
-Check that the initial stack is not too large to make it possible
-to map in any executable.  We're not checking that the actual
-executable (or intepreter, for binfmt_elf) will fit.  So those
-mappings might clobber part of the initial stack mapping.  But
-that is just userland lossage that userland made happen, not a
-kernel problem.
 
-Signed-off-by: Roland McGrath <roland@...hat.com>
----
- fs/exec.c |    5 +++++
- 1 files changed, 5 insertions(+), 0 deletions(-)
+On 6/7/2010 10:21 AM, Steven M. Christey wrote:
+>
+> On Tue, 1 Jun 2010, Jan Lieskovsky wrote:
+>
+>>> [C], SQL injection and shell escaping issues reported by Bonsai 
+>>> Information Security (http://www.bonsai-sec.com)
+>>>            [7] 
+>>> http://www.bonsai-sec.com/blog/index.php/using-grep-to-find-0days/
+>>>            [8] 
+>>> http://www.bonsai-sec.com/en/research/vulnerabilities/cacti-os-command-injection-0105.php 
+>>>
+>>>
+>>>
+>>> ...
+>>>
+>
+>>  2, OS command injection issue, CVE-2010-1645 / BONSAI-2010-0105
+>>     References:  [2] 
+>> http://www.bonsai-sec.com/en/research/vulnerabilities/cacti-os-command-injection-0105.php 
+>>
+>>     Proper patches are the following three: (noticed by Tomas Hoger 
+>> && confirmed by Tony Roman, thanks for it!)
+>>       [3] http://svn.cacti.net/viewvc?view=rev&revision=5778
+>>       [4] http://svn.cacti.net/viewvc?view=rev&revision=5782
+>>       [5] http://svn.cacti.net/viewvc?view=rev&revision=5784
+>
+> The BONSAI-2010-0105 references two problems, one for ping.php and 
+> another one having to do with a "Vertical Label" in a "Graph Template."
+>
+> I don't see evidence of this vector in the revisions listed above.  
+> Does anybody else?
+>
+> (If the "Vertical Label" issue went unpatched, then a separate CVE 
+> should probably be assigned to it.)
+>
+> - Steve
 
-diff --git a/fs/exec.c b/fs/exec.c
-index 2d94552..1b63237 100644
---- a/fs/exec.c
-+++ b/fs/exec.c
-@@ -594,6 +594,11 @@ int setup_arg_pages(struct linux_binprm *bprm,
- #else
- 	stack_top = arch_align_stack(stack_top);
- 	stack_top = PAGE_ALIGN(stack_top);
-+
-+	if (unlikely(stack_top < mmap_min_addr) ||
-+	    unlikely(vma->vm_end - vma->vm_start >= stack_top - mmap_min_addr))
-+		return -ENOMEM;
-+
- 	stack_shift = vma->vm_end - stack_top;
- 
- 	bprm->p -= stack_shift;
+Steve,
+
+I just validated that the Vertical Label via the hostname field 
+injection is not resolved from a UI perspective in host.php.  I have not 
+checked lib/rrd.php for proper escaping and will do that shortly.
+
+Generally, we're not as concerned when it comes to components of the UI 
+that are not accessible for the guest account.  However, I will close 
+this loophole today and prior to Cacti 0.8.7g beta.  Simply put, we 
+should not permit any name there that is not either an IP address or 
+something that is conforming (aka hostname or fqdn).
+
+I toyed with the idea of a gethostbyname validation.  However, there are 
+cases in Cacti where we have hosts that are represented more as Objects 
+and not as physical hosts (aka no avail check), so it will have to be a 
+hostname that is syntactically correct.  I'll get you a commit # once 
+it's in.
+
+Regards,
+
+Larry Adams
+Lead Cacti Developer
+
