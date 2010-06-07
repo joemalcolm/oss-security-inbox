@@ -1,26 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/26/4
-Message-ID: <694276987.1555921280172460532.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 26 Jul 2010 15:27:40 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/07/1
+Message-ID: <4C0C4304.1080400@redhat.com>
+Date: Mon, 07 Jun 2010 08:53:24 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: GnuPG 2
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request - kernel: ext4: Make sure the MOVE_EXT ioctl can't overwrite append-only files
 Content-Type: text/plain; charset=utf-8
 
+Using the EXT4_IOC_MOVE_EXT ioctl, it is possible to overwrite the 
+contents of an append-only donor file.
 
------ "Florian Weimer" <fw@...eb.enyo.de> wrote:
+http://git.kernel.org/linus/1f5a81e41f8b1a782c68d3843e9ec1bfaadf7d72
+https://bugzilla.redhat.com/show_bug.cgi?id=601006
 
-> GnuPG 2.0 before version 2.0.17 reuses a freed pointer when verifying
-> a signature or importing a certificate with many Subject Alternate
-> Names, possibly allowing context-dependent attacks to execute
-> arbitrary code.
-> 
-> <http://lists.gnupg.org/pipermail/gnupg-announce/2010q3/000302.html>
-
-Please use CVE-2010-2547.
-
-Thanks.
-
--- 
-    JB
+Thanks, Eugene
+--
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
