@@ -1,35 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/03/2
-Message-ID: <i5rktq$kci$1@dough.gmane.org>
-Date: Fri, 03 Sep 2010 15:13:50 -0500
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/07/3
+Message-ID: <Pine.GSO.4.64.1006071043090.15053@faron.mitre.org>
+Date: Mon, 7 Jun 2010 10:46:10 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: XSS in nusoap
+cc: Guillem Jover <guillem@...ian.org>, Aníbal Monsalve Salazar <anibal@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- rpcbind -- Insecure (predictable) temporary file use
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-A XSS vulnerability has been reported against the nusoap PHP library caused 
-by insufficient sanitation of untrusted data ($_SERVER['PHP_SELF']) -- 
-CWE-79.
+On Fri, 4 Jun 2010, Josh Bressers wrote:
 
-Original report against mantisbt:
-http://www.mantisbt.org/bugs/view.php?id=12312
+> Please use CVE-2010-2061 for this.
 
-Report against nusoap (and further references):
-http://sourceforge.net/projects/nusoap/forums/forum/193579/topic/3834005
+My read of Guillem's report at 
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=583435#5 suggests that we 
+might have two distinct issues here:
 
-The fixes proposed by David Hicks[1] (from mantisbt) add escaping to some 
-other variables, but I haven't verified if they are actually exploitable (if 
-that's so, the patch might need to pass the charset to htmlentities too.)
+- "*any* user can craft those two files before the daemon
+has started for the first time, which the daemon will parse."  Nothing to 
+do with symlinks.
 
-[1]http://git.mantisbt.org/?p=mantisbt.git;a=commit;h=edb817991b99cd5538f102be26865fde7c6b7212
-
-Could a CVE id be assigned?
-
-Thanks,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+- symlinks are followed on creation of those files
 
 
+So we may need two CVEs here.
+
+- Steve
