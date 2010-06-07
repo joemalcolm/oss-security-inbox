@@ -1,78 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/11/1
-Message-ID: <20100511090828.GC3642@mutt-is-awesome>
-Date: Tue, 11 May 2010 12:08:28 +0300
-From: Eren Türkay <eren@...dus.org.tr>
-To: oss-security@...ts.openwall.com
-Subject: Month of PHP Security 2010 Issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/07/6
+Message-ID: <4C0D304D.1010207@disorder.com>
+Date: Mon, 07 Jun 2010 13:45:49 -0400
+From: Tony Roman <roman@...order.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>,  Jan Lieskovsky <jlieskov@...hat.com>
+CC: oss-security@...ts.openwall.com,  Nahuel Grisolia <nahuel@...sai-sec.com>, Stefan Esser <stefan.esser@...tioneins.de>,  Cacti Developers <developers@...ti.net>
+Subject: Re: CVE Request -- Cacti v0.8.7 -- three security fixes
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+The issue in question has been fixed in 0.8.7f release and will be also 
+including in the 0.8.7g release.
 
-Several CVE IDs have been assigned to issues mentioned in Month of PHP
-Security 2010 page [0] However, there are issues for which CVE IDs have not yet
-been assiged. Is it possible to assign CVE IDs for these issues as well?
-It should be noted that these issues I am referring to are PHP issues,
-not PHP applications.
+The fix is not in the validation of the vertical label field in the UI 
+or database, but when the text is used in execution of the rrdtool 
+command line option for the vertical label.
 
-Additionally, is there anyone who has a contact with upstream about these issues? It
-would be really helpful to know the state of these issues (whether fixed, wheter in php bugzilla, etc)
-
-[0] http://php-security.org/
-
-Here is a list that I also mailed to bugtraq and full-disclosure in
-response to Stefan Esser.
-
-> Vulnerabilities in PHP
-> ----------------------
-> 
-> MOPS-2010-017: PHP preg_quote() Interruption Information Leak
-> Vulnerability - http://bit.ly/cUYsbj
-> MOPS-2010-016: PHP ZEND_SR Opcode Interruption Address Information Leak
-> Vulnerability - http://bit.ly/bwT28V
-> MOPS-2010-015: PHP ZEND_SL Opcode Interruption Address Information Leak
-> Vulnerability - http://bit.ly/a3BonY
-> MOPS-2010-014: PHP ZEND_BW_XOR Opcode Interruption Address Information
-> Leak Vulnerability - http://bit.ly/cdMzTo
-
-Not assigned yet
-
-> MOPS-2010-013: PHP sqlite_array_query() Uninitialized Memory Usage
-> Vulnerability - http://bit.ly/bhHyrj
-> MOPS-2010-012: PHP sqlite_single_query() Uninitialized Memory Usage
-> Vulnerability - http://bit.ly/8Z8xYt
-
-- CVE-2010-1868 (for both issues)
-
-> MOPS-2010-010: PHP html_entity_decode() Interruption Information Leak
-> Vulnerability - http://bit.ly/doxAXk
-
-- CVE-2010-1860
-
-> MOPS-2010-009: PHP shm_put_var() Already Freed Resource Access
-> Vulnerability - http://bit.ly/b4NBD8
-
-- CVE-2010-1861
-
-> MOPS-2010-008: PHP chunk_split() Interruption Information Leak
-> Vulnerability - http://bit.ly/cVoWoM
-
-- CVE-2010-1862
-
-> MOPS-2010-006: PHP addcslashes() Interruption Information Leak
-> Vulnerability - http://bit.ly/b5gkaf
-
-- CVE-2010-1864
-
-> MOPS-2010-003: PHP dechunk Filter Signed Comparison Vulnerability -
-> http://bit.ly/bXDivD
-
-- CVE-2010-1866
-
-> MOPS-2010-001: PHP hash_update_file() Already Freed Resource Access
-> Vulnerability - http://bit.ly/aZDRha
-
-Not assigned yet
+Please keep all inquiries directed to me.
 
 Thanks,
-Eren
+
+Tony Roman
+Cacti Developer
+
+On 6/7/10 11:07 AM, Larry Adams wrote:
+>
+>
+> On 6/7/2010 10:21 AM, Steven M. Christey wrote:
+>>
+>> On Tue, 1 Jun 2010, Jan Lieskovsky wrote:
+>>
+>>>> [C], SQL injection and shell escaping issues reported by Bonsai 
+>>>> Information Security (http://www.bonsai-sec.com)
+>>>>            [7] 
+>>>> http://www.bonsai-sec.com/blog/index.php/using-grep-to-find-0days/
+>>>>            [8] 
+>>>> http://www.bonsai-sec.com/en/research/vulnerabilities/cacti-os-command-injection-0105.php 
+>>>>
+>>>>
+>>>>
+>>>> ...
+>>>>
+>>
+>>>  2, OS command injection issue, CVE-2010-1645 / BONSAI-2010-0105
+>>>     References:  [2] 
+>>> http://www.bonsai-sec.com/en/research/vulnerabilities/cacti-os-command-injection-0105.php 
+>>>
+>>>     Proper patches are the following three: (noticed by Tomas Hoger 
+>>> && confirmed by Tony Roman, thanks for it!)
+>>>       [3] http://svn.cacti.net/viewvc?view=rev&revision=5778
+>>>       [4] http://svn.cacti.net/viewvc?view=rev&revision=5782
+>>>       [5] http://svn.cacti.net/viewvc?view=rev&revision=5784
+>>
+>> The BONSAI-2010-0105 references two problems, one for ping.php and 
+>> another one having to do with a "Vertical Label" in a "Graph Template."
+>>
+>> I don't see evidence of this vector in the revisions listed above.  
+>> Does anybody else?
+>>
+>> (If the "Vertical Label" issue went unpatched, then a separate CVE 
+>> should probably be assigned to it.)
+>>
+>> - Steve
+>
+> Steve,
+>
+> I just validated that the Vertical Label via the hostname field 
+> injection is not resolved from a UI perspective in host.php.  I have 
+> not checked lib/rrd.php for proper escaping and will do that shortly.
+>
+> Generally, we're not as concerned when it comes to components of the 
+> UI that are not accessible for the guest account.  However, I will 
+> close this loophole today and prior to Cacti 0.8.7g beta.  Simply put, 
+> we should not permit any name there that is not either an IP address 
+> or something that is conforming (aka hostname or fqdn).
+>
+> I toyed with the idea of a gethostbyname validation.  However, there 
+> are cases in Cacti where we have hosts that are represented more as 
+> Objects and not as physical hosts (aka no avail check), so it will 
+> have to be a hostname that is syntactically correct.  I'll get you a 
+> commit # once it's in.
+>
+> Regards,
+>
+> Larry Adams
+> Lead Cacti Developer
+>
