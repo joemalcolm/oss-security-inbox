@@ -1,37 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/26/1
-Message-ID: <20100826095624.2011b220@redhat.com>
-Date: Thu, 26 Aug 2010 09:56:24 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: dan.j.rosenberg@...il.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: CouchDB insecure library loading (Debian/Ubuntu only)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/07/2
+Message-ID: <Pine.GSO.4.64.1006071017120.15053@faron.mitre.org>
+Date: Mon, 7 Jun 2010 10:21:33 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Jan Lieskovsky <jlieskov@...hat.com>
+cc: oss-security@...ts.openwall.com, Nahuel Grisolia <nahuel@...sai-sec.com>, Stefan Esser <stefan.esser@...tioneins.de>, "Steven M. Christey" <coley@...us.mitre.org>, Cacti Developers <developers@...ti.net>, Tony Roman <roman@...order.com>
+Subject: Re: CVE Request -- Cacti v0.8.7 -- three security fixes
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 25 Aug 2010 14:52:52 -0400 Dan Rosenberg wrote:
 
-> I discovered that the /usr/bin/couchdb script on Debian/Ubuntu sets an
-> insecure LD_LIBRARY_PATH environment variable, such that libraries
-> from the current directory are loaded.  If a local attacker placed a
-> maliciously crafted shared library in a directory and an administrator
-> were tricked into launching CouchDB from this directory, arbitrary
-> code execution could be achieved.  This vulnerability is only
-> triggered when the /usr/bin/couchdb script is executed explicitly,
-> since the init script (/etc/init.d/couchdb) changes the current
-> directory before launching CouchDB.
-> 
-> The vulnerability was introduced by Debian patch
-> "mozjs1.9_ldlibpath.patch" on 3/24/2009.
+On Tue, 1 Jun 2010, Jan Lieskovsky wrote:
 
-This patch does not seem to be included in current Debian stable
-0.8.0-2 and testing/unstable 0.11.0-2+b1 packages, but can be found in
-Ubuntu versions.
+>> [C], SQL injection and shell escaping issues reported by Bonsai Information 
+>> Security (http://www.bonsai-sec.com)
+>>            [7] 
+>> http://www.bonsai-sec.com/blog/index.php/using-grep-to-find-0days/
+>>            [8] 
+>> http://www.bonsai-sec.com/en/research/vulnerabilities/cacti-os-command-injection-0105.php
+>>
+>>
+>>...
+>>
 
-Stable Debian contains icu-config.patch instead which seems to
-introduce the very same problem and is also used in some Fedora
-packages:
+>  2, OS command injection issue, CVE-2010-1645 / BONSAI-2010-0105
+>     References:  [2] 
+> http://www.bonsai-sec.com/en/research/vulnerabilities/cacti-os-command-injection-0105.php
+>     Proper patches are the following three: (noticed by Tomas Hoger && 
+> confirmed by Tony Roman, thanks for it!)
+>       [3] http://svn.cacti.net/viewvc?view=rev&revision=5778
+>       [4] http://svn.cacti.net/viewvc?view=rev&revision=5782
+>       [5] http://svn.cacti.net/viewvc?view=rev&revision=5784
 
-http://pkgs.fedoraproject.org/gitweb/?p=couchdb.git;a=blob;f=couchdb.spec;h=aaef7be9;hb=f13/master#l81
+The BONSAI-2010-0105 references two problems, one for ping.php and another 
+one having to do with a "Vertical Label" in a "Graph Template."
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+I don't see evidence of this vector in the revisions listed above.  Does 
+anybody else?
+
+(If the "Vertical Label" issue went unpatched, then a separate CVE should 
+probably be assigned to it.)
+
+- Steve
