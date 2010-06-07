@@ -1,29 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/24/12
-Message-ID: <35651733.376061290605313601.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 24 Nov 2010 08:28:33 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/07/8
+Message-ID: <Pine.GSO.4.64.1006071714210.15053@faron.mitre.org>
+Date: Mon, 7 Jun 2010 17:20:36 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: Petr Matousek <pmatouse@...hat.com>, coley@...us.mitre.org
-Subject: Re: CVE request: kernel: L2TP send buffer allocation size overflows
+cc: Guillem Jover <guillem@...ian.org>, Aníbal Monsalve Salazar <anibal@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- rpcbind -- Insecure (predictable) temporary file use
 Content-Type: text/plain; charset=utf-8
 
 
------ "Dan Rosenberg" <dan.j.rosenberg@...il.com> wrote:
+On Mon, 7 Jun 2010, Josh Bressers wrote:
 
-> There are not overflows in every send/recv call.  The fix that
-> addresses these issues in l2tp also addresses any other possible
-> examples of this problem in other protocols, including CVE-2010-3859
-> (heap overflow in TIPC).
-> 
+>> On Fri, 4 Jun 2010, Josh Bressers wrote:
+>>
+>>> Please use CVE-2010-2061 for this.
+>>
+>> My read of Guillem's report at
+>> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=583435#5 suggests that
+>> we might have two distinct issues here:
+>>
+>> - "*any* user can craft those two files before the daemon has started for
+>> the first time, which the daemon will parse."  Nothing to do with
+>> symlinks.
+>>
+>> - symlinks are followed on creation of those files
+>>
+>
+> I'd not thought of these problems like this. You're probably right as CVE
+> assignments are for cause, not fix. I was thinking more along the lines of
+> the fix (store the files somewhere users can't write to) than the problems
+> (which there are certainly two of).
 
-The way CVE handles this is by flaw, not by fix. So if more flaws are found
-in other modules, but one fix cover them all, each individual flaw gets its
-own ID.
+This is the way CVE has evolved over time, to have a preference for the 
+core issue (and maybe we're going overboard the more we learn about how to 
+identify root causes).
 
-Let me know if this isn't clear.
+A good counter-example for the notion of counting by fix would be: a web 
+application is vulnerable to both XSS and SQL injection on the same input, 
+but with a single patch it makes sure that the input is actually numeric. 
+The fix sometimes comes into play when the core problem/attack is not 
+necessarily known.
 
-Thanks.
+Neither approach is better per se, it's just that for CVE we want to be 
+reasonably consistent with CVE.
 
--- 
-    JB
+Generally, one guideline I use is: "if the developer fixes X, then could Y 
+still be a security problem?"  If so, then they are treated as distinct 
+issues.
+
+> Steve, I'll let you make the call, but I'm currently leaning toward two
+> IDs.
+
+Me too, I'd suggest assigning an ID from your pool.
+
+- Steve
