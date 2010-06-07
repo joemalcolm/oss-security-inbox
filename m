@@ -1,42 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/02/12
-Message-ID: <71031608.1871771278097554952.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 2 Jul 2010 15:05:54 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/07/7
+Message-ID: <107994660.114681275936671362.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 7 Jun 2010 14:51:11 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Roundup: XSS by processing PageTemplate template for a named page
+Cc: Guillem Jover <guillem@...ian.org>, Aníbal Monsalve Salazar <anibal@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- rpcbind -- Insecure (predictable) temporary file use
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-2491
+
+----- "Steven M. Christey" <coley@...us.mitre.org> wrote:
+
+> On Fri, 4 Jun 2010, Josh Bressers wrote:
+> 
+> > Please use CVE-2010-2061 for this.
+> 
+> My read of Guillem's report at
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=583435#5 suggests that
+> we might have two distinct issues here:
+> 
+> - "*any* user can craft those two files before the daemon has started for
+> the first time, which the daemon will parse."  Nothing to do with
+> symlinks.
+> 
+> - symlinks are followed on creation of those files
+> 
+
+I'd not thought of these problems like this. You're probably right as CVE
+assignments are for cause, not fix. I was thinking more along the lines of
+the fix (store the files somewhere users can't write to) than the problems
+(which there are certainly two of).
+
+Steve, I'll let you make the call, but I'm currently leaning toward two
+IDs.
 
 Thanks.
 
 -- 
     JB
-
------ "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
-
-> Hi Steve, vendors,
-> 
->    A deficiency was found in the way Roundup, simple and flexible
-> issue-tracking system,
-> processed PageTemplate templates for named pages. A remote attacker
-> could
-> use this flaw to conduct cross-site scripting (XSS) attacks by
-> tricking
-> a local, authenticated user into visiting a specially-crafted web
-> page.
-> 
-> References:
->    [1] http://bugs.gentoo.org/show_bug.cgi?id=326395
-> 
-> Upstream changeset:
->    [2]
-> http://roundup.svn.sourceforge.net/viewvc/roundup?view=revision&revision=4486
-> 
-> Could you allocate a CVE identifier for this?
-> 
-> Thanks && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
