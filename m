@@ -1,44 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/04/4
-Message-ID: <1144883865.3498301267744058110.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 4 Mar 2010 18:07:38 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/08/3
+Message-ID: <711883486.263581276026189246.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 8 Jun 2010 15:43:09 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - kernel: ip6_dst_lookup_tail() NULL pointer dereference
+Cc: Guillem Jover <guillem@...ian.org>, Aníbal Monsalve Salazar <anibal@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- rpcbind -- Insecure (predictable) temporary file use
 Content-Type: text/plain; charset=utf-8
 
 
------ "Eugene Teo" <eugene@...hat.com> wrote:
+----- "Steven M. Christey" <coley@...us.mitre.org> wrote:
 
-> ipv6: Fix OOPS in ip6_dst_lookup_tail().
+> On Fri, 4 Jun 2010, Josh Bressers wrote:
 > 
-> This fixes kernel bugzilla 11469: "TUN with 1024 neighbours:
-> ip6_dst_lookup_tail NULL crash"
+> > Please use CVE-2010-2061 for this.
 > 
-> dst->neighbour is not necessarily hooked up at this point in the 
-> processing path, so blindly dereferencing it is the wrong thing to do.
+> My read of Guillem's report at 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=583435#5 suggests
+> that we 
+> might have two distinct issues here:
 > 
-> This NULL check exists in other similar paths and this case was just
-> an 
-> oversight.
-> 
-> Also fix the completely wrong and confusing indentation here while
-> we're 
-> at it.
-> 
-> References:
-> http://bugzilla.kernel.org/show_bug.cgi?id=11469
-> https://bugzilla.redhat.com/show_bug.cgi?id=563781
-> 
-> Upstream patch:
-> http://git.kernel.org/linus/e550dfb0c2c31b6363aa463a035fc9f8dcaa3c9b
-> 
+> - "*any* user can craft those two files before the daemon
+> has started for the first time, which the daemon will parse."  Nothing
+> to do with symlinks.
 
-Please use CVE-2010-0437 for this.
+Let's use CVE-2010-2061 for this one.
+
+> 
+> - symlinks are followed on creation of those files
+
+Let's use CVE-2010-2064 for this one.
 
 Thanks.
 
-
 -- 
     JB
+
+
