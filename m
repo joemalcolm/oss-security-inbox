@@ -1,42 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/14/4
-Message-ID: <AANLkTimK36nucvgl3EvOptUApq3L5DVTHoQX9j6_mbW6@mail.gmail.com>
-Date: Wed, 14 Jul 2010 20:13:06 +0200
-From: Pierre Joye <pierre.php@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/08/2
+Message-ID: <20100608193335.GF4828@redhat.com>
+Date: Tue, 8 Jun 2010 13:33:35 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request, php var_export
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: jar, fastjar directory traversal vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-hi,
+Hi all.
 
-Has anyone got the time to look at this request? I would like to have
-an ID for the last RC before we release final next week (packaging RCs
-tonight).
+A directory traversal flaw was reported in fastjar [1] that was assigned
+CVE-2010-0831.  Upon investigation, it was found that the jar program
+[2] had a similar problem.  No CVE name was assigned to the jar issue,
+however it looks like they are two different programs with two different
+code bases.
 
-On Tue, Jul 13, 2010 at 9:00 PM, Pierre Joye <pierre.php@...il.com> wrote:
-> hi,
->
-> I would like to request a new # for a flaw in php's var_export. The
-> reason is that a fatal error occurs due to recursion, memory limit or
-> execution time var_export bails out. The buffer is never cleared and
-> it flushes to the user. It's not affected by display_errors() since
-> its considered part of the output.
->
-> Fix already commited to trunk, 5.2 and 5.3 and will be in the next PHP
-> releases (5.2.14 and 5.3.3):
->
-> http://svn.php.net/viewvc?view=revision&revision=301143
->
-> Cheers,
-> --
-> Pierre
->
-> @pierrejoye | http://blog.thepimp.net | http://www.libgd.org
->
+There is also some confusion because these issues are similar to (or a
+result of incomplete fixes for) CVE-2006-3619 (fastjar) and
+CVE-2005-1080 (jar).
 
+What makes things worse is that it doesn't look like CVE-2005-1080 was
+ever fixed.  So I'm not sure if this "new" jar issue needs a new CVE
+name, or if it would be covered under CVE-2005-1080 (since nothing ever
+claimed to fix this directory traversal vulnerability in jar).
 
+Any insight from MITRE would be appreciated.  I've not assigned a CVE
+name to the "new" jar issue because of this confusion.
 
 -- 
-Pierre
-
-@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+Vincent Danen / Red Hat Security Response Team 
