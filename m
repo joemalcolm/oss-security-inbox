@@ -1,39 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/06/5
-Message-ID: <AANLkTimOrmo_Twbz=4Qq61JUxah91Ge-AYSsmKeehaYA@mail.gmail.com>
-Date: Mon, 6 Dec 2010 11:32:50 -0500
-From: Anthon Pang <anthon.pang@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/08/4
+Message-ID: <Pine.GSO.4.64.1006081558550.15053@faron.mitre.org>
+Date: Tue, 8 Jun 2010 16:01:30 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: openx unknown vulnerability before 2.8.7
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: jar, fastjar directory traversal vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-The previously reported Open-Flash-Chart2 ofc_upload_image.php file
-(vulnerable to arbitrary file upload) included in OpenX's video
-plugin.
 
-This is the commit (truncating it to an empty file):
+On Tue, 8 Jun 2010, Vincent Danen wrote:
 
-https://developer.openx.org/fisheye/changelog/openx/trunk?cs=61683
+> What makes things worse is that it doesn't look like CVE-2005-1080 was
+> ever fixed.  So I'm not sure if this "new" jar issue needs a new CVE
+> name, or if it would be covered under CVE-2005-1080 (since nothing ever
+> claimed to fix this directory traversal vulnerability in jar).
 
-FYI ofc_upload_image.php was found in a number of projects, including
-Piwik (CVE-2009-4140), Open Web Analytics, and the Woopra plugin for
-WordPress.
+If a bug appears in versions X and Y, and there is no evidence that a fix 
+was ever applied between versions X and Y, then the original CVE's 
+description is simply updated.
 
-Regards,
-
-Anthon
-
-On Mon, Dec 6, 2010 at 9:00 AM, Hanno Böck <hanno@...eck.de> wrote:
-> Upstream is not very talkative, but I found a blog claiming this is exploitet
-> in the wild:
-> http://blog.openx.org/09/security-update/
-> http://blog.sucuri.net/2010/09/openx-users-time-to-upgrade.html
->
-> Please assign CVE.
->
-> --
-> Hanno Böck              Blog:           http://www.hboeck.de/
-> GPG: 3DBD3B20           Jabber/Mail:    hanno@...eck.de
->
-> http://schokokeks.org - professional webhosting
->
+- Steve
