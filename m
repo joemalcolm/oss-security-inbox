@@ -1,83 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/07/3
-Message-ID: <Pine.GSO.4.64.1010071655550.16065@faron.mitre.org>
-Date: Thu, 7 Oct 2010 16:57:14 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/08/5
+Message-ID: <20100608205135.GH4828@redhat.com>
+Date: Tue, 8 Jun 2010 14:51:35 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request, security issues fixed in MySQL 5.1.51
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: jar, fastjar directory traversal vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
+* [2010-06-08 16:01:30 -0400] Steven M. Christey wrote:
 
-Looks like there were 8 security bugs reported at 
-http://dev.mysql.com/doc/refman/5.1/en/news-5-1-51.html, not 7.
+>On Tue, 8 Jun 2010, Vincent Danen wrote:
+>
+>>What makes things worse is that it doesn't look like CVE-2005-1080 was
+>>ever fixed.  So I'm not sure if this "new" jar issue needs a new CVE
+>>name, or if it would be covered under CVE-2005-1080 (since nothing ever
+>>claimed to fix this directory traversal vulnerability in jar).
+>
+>If a bug appears in versions X and Y, and there is no evidence that a 
+>fix was ever applied between versions X and Y, then the original 
+>CVE's description is simply updated.
 
-These all have different affected versions claimed, so each gets a 
-separate CVE.
+Awesome, thanks for the clarification.
 
-- Steve
-
-
-Bug#55826 - incorrect propagation of type errors in evaluation of
-arguments to extreme-value functions
-
-   CVE-2010-3833
-   "create table .. select crashes with when KILL_BAD_DATA is returned"
-   5.0.91,5.1.49,5.1.50-bzr,5.5.5
-
-Bug#55568 - The server could crash after materializing a derived table
-that required a temporary table for grouping.
-
-   CVE-2010-3834
-   "user variable assignments crash server when used within query"
-   5.0.91-debug,5.1.49-debug
-
-Bug #55564 - A user-variable assignment expression that is evaluated
-in a logical expression context can be precalculated in a temporary
-table for GROUP BY. However, when the expression value is used after
-creation of the temporary table, it was re-evaluated, not read from
-the table and a server crash resulted.
-
-   CVE-2010-3835
-   "crash with user variables, assignments, joins..."
-   5.0.92, 5.1.37, 5.1.49, 5.1.50-bzr, 5.5.6-m3
-
-Bug#54568 - Pre-evaluation of LIKE predicates during view preparation
-could cause a server crash.
-
-   CVE-2010-3836
-   "create view cause Assertion failed: 0, file .\item_subselect.cc, line 836"
-   5.0.91-debug, 5.1.47-debug
-
-Bug#54476 - GROUP_CONCAT() and WITH ROLLUP together could cause a
-server crash.
-
-   CVE-2010-3837
-   "crash when group_concat and 'with rollup' in prepared statements"
-   5.0.91, 5.1.47, 5.1.49-bzr, 5.5.3
-
-   see: [23 Jul 14:25] Alexey Kopytov
-
-Bug#54461 - Queries could cause a server crash if the GREATEST() or
-LEAST() function had a mixed list of numeric and LONGBLOB arguments,
-and the result of such a function was processed using an intermediate
-temporary table.
-
-   CVE-2010-3838
-   "crash with longblob and union or update with subquery"
-   5.0.91,5.1.47, 5.5.3, 5.5.5-m3
-
-Bug#53544 - Queries with nested joins could cause an infinite loop in
-the server when used from stored procedures and prepared statements.
-
-   CVE-2010-3839
-   "Server hangs during JOIN query in stored procedure called twice in a row"
-   5.1.47, 5.6.99-m4 Dahlia, bzr_mysql-6.0-codebase-bugfixing
-
-Bug#51875 - The PolyFromWKB() function could crash the server when
-improper WKB data was passed to the function.
-
-   CVE-2010-3840
-   "crash when loading data into geometry function polyfromwkb"
-   5.0.90,5.1.44
-
+-- 
+Vincent Danen / Red Hat Security Response Team 
