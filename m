@@ -1,33 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/03/6
-Message-ID: <1043879912.304631272918149010.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 3 May 2010 16:22:29 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/09/1
+Message-ID: <516728481.319671276087340358.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 9 Jun 2010 08:42:20 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: lxr
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: ext4: Make sure the MOVE_EXT ioctl can't overwrite append-only files
 Content-Type: text/plain; charset=utf-8
 
 
------ "Raphael Geissert" <geissert@...ian.org> wrote:
+----- "Eugene Teo" <eugene@...hat.com> wrote:
 
-> Hi,
+> Using the EXT4_IOC_MOVE_EXT ioctl, it is possible to overwrite the 
+> contents of an append-only donor file.
 > 
-> While working on an update for lxr the following commit by upstream
-> that 
-> fixes an XSS vulnerability in the search page was found:
-> 
-> > Fix XSS exploit in title string
-> http://lxr.cvs.sourceforge.net/viewvc/lxr/lxr/lib/LXR/Common.pm?r1=1.63&r2=1.64
-> 
-> It does not seem to be covered by CVE-2009-4497.
-> 
-> Please assign an id. Thanks in advance.
+> http://git.kernel.org/linus/1f5a81e41f8b1a782c68d3843e9ec1bfaadf7d72
+> https://bugzilla.redhat.com/show_bug.cgi?id=601006
 > 
 
-Please use CVE-2010-1448 for this.
 
-Thanks.
+Sorry for the delay.
+
+Please use CVE-2010-2066
+
+Thanks
 
 -- 
     JB
