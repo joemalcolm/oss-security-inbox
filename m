@@ -1,77 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/01/2
-Message-ID: <4C04C4D7.7040200@redhat.com>
-Date: Tue, 01 Jun 2010 10:29:11 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/09/2
+Message-ID: <20100609161639.GA23577@suse.de>
+Date: Wed, 9 Jun 2010 18:16:39 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-CC: Nahuel Grisolia <nahuel@...sai-sec.com>, Stefan Esser <stefan.esser@...tioneins.de>, "Steven M. Christey" <coley@...us.mitre.org>, Cacti Developers <developers@...ti.net>, Tony Roman <roman@...order.com>
-Subject: Re: CVE Request -- Cacti v0.8.7 -- three security fixes
+Cc: ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
+Subject: Re: [oCERT-2010-001] multiple http client unexpected download filename vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
-
-Steven M. Christey wrote:
+On Mon, May 17, 2010 at 01:03:22PM +0100, Daniele Bianco wrote:
 > 
-> On Wed, 26 May 2010, Josh Bressers wrote:
+> #2010-001 multiple http client unexpected download filename vulnerability
 > 
->>>      [A], MOPS-2010-023: Cacti Graph Viewer SQL Injection Vulnerability
->>>      
->>> http://php-security.org/2010/05/13/mops-2010-023-cacti-graph-viewer-sql-injection-vulnerability/index.html 
->>>
->>>      http://www.vupen.com/english/advisories/2010/1204
->>>
->>>      Credit: The vulnerability was discovered by Stefan Esser as part of
->>>      the SQL Injection Marathon.
->>>
->>>      Upstream changeset:
->>>      http://svn.cacti.net/viewvc?view=rev&revision=5920
->>
->> Steve, you've been handling the MOPS stuff. I'm going to leave this one
->> alone unless you tell me otherwise (I don't want to dupe).
+> Description:
 > 
-> Use CVE-2010-2092, to be filled in later today (with a bunch of other 
-> MOPS issues).
-> 
-> 
-> [C], SQL injection and shell escaping issues reported by Bonsai Information Security (http://www.bonsai-sec.com)
->            [7] http://www.bonsai-sec.com/blog/index.php/using-grep-to-find-0days/
->            [8] http://www.bonsai-sec.com/en/research/vulnerabilities/cacti-os-command-injection-0105.php
-> 
->          Credit: This vulnerability was discovered by Nahuel Grisolia ( nahuel -at- bonsai-sec.com )
->          Upstream changeset:
->            [9] http://svn.cacti.net/viewvc?view=rev&revision=5747 
-> 
-> Josh assigned CVE-2010-1645 for the OS command issue.
-> 
-> The SQL injection that Jan is referring to in the original request is 
-> most likely CVE-2010-1431, which was disclosed by Bonsai back in April.
+> The lftp, wget and lwp-download applications are ftp/http clients and file
+> transfer tools supporting various network protocols. The lwp-download
+> script is shipped along with the libwww-perl library.
 
-Yeah, [C] refers to two issues:
-   1, SQL injection issue, known under CVE-2010-1431 / BONSAI-2010-0104
-      Proper patch is here: [1] http://svn.cacti.net/viewvc?view=rev&revision=5747 and
+Did anyone assign CVE ids for these?
 
-   2, OS command injection issue, CVE-2010-1645 / BONSAI-2010-0105
-      References:  [2] http://www.bonsai-sec.com/en/research/vulnerabilities/cacti-os-command-injection-0105.php
-      Proper patches are the following three: (noticed by Tomas Hoger && confirmed by Tony Roman, thanks for it!)
-        [3] http://svn.cacti.net/viewvc?view=rev&revision=5778
-        [4] http://svn.cacti.net/viewvc?view=rev&revision=5782
-        [5] http://svn.cacti.net/viewvc?view=rev&revision=5784
-
-Also, there were also some regressions related with Cacti v0.8.7f:
-   [6] http://forums.cacti.net/viewtopic.php?t=37845
-
- From [6]:
-
-"If you have already upgraded to 0.8.7f, you can simple move back to 0.8.7e." and
-"Cacti 0.8.7g will be release on June 7th to address these issues.".
-
-Not sure if Cacti v0.8.7g will address yet some security issues, so Cc-ed
-Cacti Developers and Tony Roman on this email to detail, if necessary.
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-> 
-> - Steve
-
+Ciao, Marcus
