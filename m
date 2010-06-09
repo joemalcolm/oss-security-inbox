@@ -1,34 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/19/1
-Message-ID: <4BCBB604.40704@redhat.com>
-Date: Mon, 19 Apr 2010 09:46:44 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/09/4
+Message-ID: <20100609220113.GA7487@galadriel.inutil.org>
+Date: Thu, 10 Jun 2010 00:01:13 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: Michael Gilbert <michael.s.gilbert@...il.com>
-Subject: Re: kernel: hvc_console: Fix race between hvc_close and hvc_remove
+Subject: CVE requests: maradns, freeciv, rbot, gitolite, gource, shib, kvirc
 Content-Type: text/plain; charset=utf-8
 
-Hi Michael,
+Hi,
+Please assign CVE IDs for these issues current present in the Debian
+Security Tracker, but for which no CVE IDs have been assigned so far:
 
-On 04/18/2010 06:15 AM, Michael Gilbert wrote:
-> On Thu, 04 Mar 2010 17:03:58 +0800 Eugene Teo wrote:
->
->> Heads-up. You might want to backport this if your kernel is affected. We
->> are not requesting a CVE name for this as it does not affect any of our
->> Red Hat supported kernels.
->
-> are you sure about this?  i see the vulnerable code upstream in both
+1. maradns
+http://maradns.org/download/maradns-1.4.02-parse_segfault.patch
+Fixed in 1.4.03
 
-Thanks for making sure.
+2. freeciv 
+http://gna.org/bugs/?15624
+Fixed in 2.2.1 and 2.3.0
 
-> 2.6.26 and 2.6.32.  does redhat not ship hvc in their kernels?  i think
-> this should get a cve id because the more vanilla distros will have
-> shipped with this included.
+3. rbot (http://ruby-rbot.org/)
+http://www.securityfocus.com/archive/1/509719/30/0/threaded
 
-At least not for the officially supported kernels as shipped in Red Hat 
-Enterprise Linux. I don't speak for other vendors, so if they need a CVE 
-name, they should request for one.
+4. gitolite
+http://secunia.com/advisories/39587/
+http://github.com/sitaramc/gitolite/commit/1e06fea3b6959faeb72d8dca46cd4753ada48637
+http://github.com/sitaramc/gitolite/commit/5fd9328c1cd1e7c576b6530b3253061c68b159aa
+http://github.com/sitaramc/gitolite/commit/5deffee3cff5f9a13c59b8c1e357c5a32487d1c3
 
-Thanks, Eugene
---
-Eugene Teo / Red Hat Security Response Team
+5. gource
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=577958
+
+6. Shibboleth:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=571631
+
+7. kvirc
+http://lists.omnikron.net/pipermail/kvirc/2010-May/000867.html
+
+Cheers,
+        Moritz
