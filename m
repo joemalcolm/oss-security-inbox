@@ -1,41 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/10/3
-Message-Id: <201003101701.05157.ludwig.nussel@suse.de>
-Date: Wed, 10 Mar 2010 17:01:04 +0100
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/10/2
+Message-ID: <4C11765C.4090605@kernel.sg>
+Date: Fri, 11 Jun 2010 07:33:48 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Cc: Brian Stafford <brian@...fford.uklinux.net>, libesmtp@...fford.uklinux.net, security@...ntu.com
-Subject: Re: CVE Request: libesmtp does not check NULL bytes in commonName
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE-2010-2070 kernel-xen: ia64-xen: unset be from the task psr
 Content-Type: text/plain; charset=utf-8
 
-Jan Lieskovsky wrote:
->    From what I can tell, two should be enough:
->    a, libESMTP doesn't properly handle NULL character in Common Name
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2010-2070
+http://xenbits.xensource.com/xen-4.0-testing.hg?rev/42caadb14edb
 
-I've created the attached patch to fix that problem
+An unprivileged user can turn on BE by modifying the user mask of the 
+PSR, resulting in at least a local denial of service. This issue can be 
+triggered the same way CVE-2006-0742 was triggered, but both are not 
+related (not a regression).
 
->    b, libESMTP's match_component() accepts two strings as equal
->       if they start equal but don't have equal length => cert forgery
-
-The attached patch includes the patch from Debian. However, the
-match_domain() function probably should be rewritten anyways I
-guess. It matches patters such as 'foo.bar.*' which is rather weird.
-
-libESMTP also uses the Common Name as fallback even if a dNSName in
-subjectAltName is present but doesn't match. The Common Name should
-be ignored in that case according to RFC2818.
-
-The code to perform the checks is quite complicated with openSSL
-and I'm not an expert so I'd be glad if someone could review the
-patch. This really belongs into a library ...
-
-cu
-Ludwig
-
+Thanks, Eugene
 -- 
- (o_   Ludwig Nussel
- //\   
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
-
-View attachment "libesmtp-1.0.4-ssl.diff" of type "text/x-patch" (4547 bytes)
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
