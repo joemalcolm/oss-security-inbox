@@ -1,126 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/29/6
-Message-Id: <20100730012239.QGBNTUGPBVFMOK@hackinthebox.org>
-Date: Fri, 30 Jul 2010 01:22:39 +0800
-From: Hafez Kamal <aphesz@...kinthebox.org>
-To: <oss-security@...ts.openwall.com>
-Subject: [HITB-Ann] Reminder: HITB2010 Malaysia Call for Papers Closing August 9th
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/10/1
+Message-ID: <20100610204058.GP4828@redhat.com>
+Date: Thu, 10 Jun 2010 14:40:58 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: [oCERT-2010-001] multiple http client unexpected download filename vulnerability
 Content-Type: text/plain; charset=utf-8
 
-This is a reminder that the Call for Papers for Asia's largest network
-security event, HITBSecConf2010 - Malaysia is closing on the 9th of August!
+* [2010-05-20 08:27:56 +0400] Solar Designer wrote:
 
-This will be a QUAD TRACK conference featuring 2 dedicated tracks
-focusing on cutting edge attack and defense techniques, a track with
-dedicated hands-on lab sessions and a brand new lightning talk segment!
+>On Wed, May 19, 2010 at 03:28:18PM +0200, Ludwig Nussel wrote:
+>> Serving dot files is a neat trick indeed, I've overlooked that
+>> paragraph in the ocert advisory. Nevertheless I'm not convinced it's
+>> worth changing wget's default behavior in the proposed way. So I can
+>> understand upstream here.
+>
+>As far as I'm aware, at the time of the initial oCERT notification, the
+>wget upstream was represented by Micah Cowan, who was about to resign.
+>And he did:
+>
+>http://lists.gnu.org/archive/html/bug-wget/2010-04/msg00027.html
+>
+>oCERT has re-notified the new upstream shortly before publishing the
+>advisory (we decided this was not enough of a reason to introduce a
+>further pre-public-disclosure delay).  I don't think the new wget
+>upstream has made a determination on this issue yet; at least I'm not
+>aware of that.
+>
+>...
+>
+>For those producing back-ports for lftp, the approach to take is to
+>download 4.0.5 and 4.0.6 from:
+>
+>http://ftp.yars.free.net/pub/source/lftp/old/
+>
+>Then diff them with:
+>
+>diff -purx configure -x po -x 'Makefile*' -x '*.in' -x '*.in.h' -x m4 -x lib -x build-aux -x '*.m4' lftp-4.0.5 lftp-4.0.6
 
-HITB CFP: http://cfp.hackinthebox.org/
+Just to follow up on this, I did some work on this today and a patch is
+attached to our bugzilla:
 
-===
+https://bugzilla.redhat.com/show_bug.cgi?id=591580
 
-Venue: Crowne Plaza Mutiara Kuala Lumpur
-----------------------------------------
+Also looking at it, this support was introduced in 3.4.7, so anyone
+shipping a version of lftp prior to that shouldn't have to worry about
+it.
 
-4th & 5th October 2010
-* HITB TRAINING 1 - The Exploit Lab 5.0
-
-6th & 7th October 2010
-* HITB TRAINING 2 - Advanced Exploit Lab
-
-11th & 12th October 2010
-* TECH TRAINING 1 - Web 2.0 Hacking - Advanced Attacks and Defense (Ajax, RIA and SOA)
-* TECH TRAINING 2 - Network Endpoint Visibility: Digging Deeper
-* TECH TRAINING 3 - SAP Security In-Depth
-* TECH TRAINING 4 - Hunting Web Attackers
-
-Date: October 13th - Conf Day 1
-* Keynote 1: Chris Wysopal (CTO/Co-Founder, Veracode)
-* Keynote 2: Paul Vixie (President, ISC)
-
-Date: October 14th - Conf Day 2
-* Special Keynote Panel Discussion - "The Future of Mobile Malware & Cloud Computing"
-
-* Keynote Panelist 1: Mikko Hypponen (F-Secure)
-* Keynote Panelist 2: Paul Ducklin (Sophos)
-* Keynote Panelist 3: Andrey Nishikin (Kaspersky Lab)
-* Keynote Panelist 4: Dr. Jose Nazario (Arbor Networks)
-
-Moderator: Dr. Dinesh Nair
-
-Event Website:
-http://conference.hackinthebox.org/hitbsecconf2010kul/
-
-===
-TOPICS
-===
-
-Topics of interest include, but are not limited to the following:
-
-# WLAN, GPS, HAM Radio, Satellite, RFID and Bluetooth Security
-# Data Recovery, Forensics and Incident Response
-# Analysis of viruses, worms and malicious code
-# Side Channel Analysis of Hardware Devices
-# Applications of cryptographic techniques
-# HSDPA / CDMA Security / WIMAX Security
-# Apple / OS X security vulnerabilities
-# Next generation attacks and exploits
-# Smart Card and Physical Security
-# SS7/Backbone telephony networks
-# Network Protocol and Analysis
-# File system security
-# Exploit Analysis
-# Cloud Security
-# VoIP security
-
-PLEASE NOTE:
-============
-
-We do not accept product or vendor related pitches. If your talk
-involves an advertisement for a new product or service your company is
-offering, please do not submit.
-
-Your submission should include:
-
-# Name, title, address, email and phone/contact number
-# Short biography, qualification, occupation (limit 250 words)
-# Summary or abstract for your presentation (limit 1250 words)
-# Technical requirements (video, internet, wireless, audio, etc.)
-# Duration of talk (60 mins or 120 mins for hands-on lab sessions)
-
-Each non-resident speaker will receive accommodation for 3 nights / 4
-days at the Crowne Plaza Mutiara and travel reimbursement up to USD 1,200.00
-
-Your papers will be reviewed by the HITB CFP Review Board which includes:
-
-Charlie Miller	(Principal Analyst, Independent Security Evaluators)
-Jeremiah Grossman	(Founder, Whitehat Security)
-Red Dragon Thanh	(THC, VNSECURITY, Intel Corp)
-Mark Curphey	(Director, Microsoft Corp)
-Cesar Cerrudo	(Founder / CEO ArgenISS)
-Saumil Shah	(Founder CEO Net-Square)
-Shreeraj Shah	(Founder, BlueInfy)
-Fredric Raynal	(Sogeti/Cap Gemini)
-Robert Hansen (rsnake) (SecTheory)
-Alexander Kornburst	(Red Database)
-Emmanuel Gadaix	(Founder, TSTF)
-Andrea Barisani	(Inverse Path)
-Ed Skoudis		(InGuardians)
-Haroon Meer	(Sensepost)
-Chris Evans		(Google)
-Philippe Langlois	(TSTF)
-Skyper		(THC)
-
-HITB CFP: http://cfp.hackinthebox.org/
-
----
-Hafez Kamal
-HITB Crew
-Hack in The Box (M) Sdn. Bhd.
-Suite 26.3, Level 26, Menara IMC,
-No. 8 Jalan Sultan Ismail,
-50250 Kuala Lumpur,
-Malaysia
-
-Tel: +603-20394724
-Fax: +603-20318359
-
+-- 
+Vincent Danen / Red Hat Security Response Team 
