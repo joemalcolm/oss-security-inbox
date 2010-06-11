@@ -1,27 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/06/6
-Message-ID: <20101206171528.GD2076@redhat.com>
-Date: Mon, 6 Dec 2010 10:15:28 -0700
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/11/2
+Message-ID: <650554837.632351276279466831.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 11 Jun 2010 14:04:26 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request (PHP 5.3.x getSymbol() DoS; CERT VU#479900)
+Cc: coley <coley@...re.org>
+Subject: Re: CVE requests: maradns, freeciv, rbot, gitolite, gource, shib, kvirc
 Content-Type: text/plain; charset=utf-8
 
-I haven't seen a CVE request for this already, and can't find a CVE name
-if one has been assigned.
+Steve,
 
-CERT has a bulletin up regarding a DoS in the getSymbol() function
-(integer overflow vulnerability):
+Can MITRE handle this one. It's bigger than a breadbox and I lack time
+to go through each of this right now.
 
-http://www.kb.cert.org/vuls/id/479900
-http://svn.php.net/viewvc?view=revision&revision=305571
-http://php.net/manual/en/numberformatter.getsymbol.php
-
-Only affects PHP 5.3.x and probably PECL intl >= 1.0.0 as those are the
-only versions with that function.
-
-Does anyone know if a CVE has been assigned to this?  If not, could one
-be assigned?
+Thanks.
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+    JB
+
+
+----- "Moritz Muehlenhoff" <jmm@...ian.org> wrote:
+
+> Hi,
+> Please assign CVE IDs for these issues current present in the Debian
+> Security Tracker, but for which no CVE IDs have been assigned so far:
+> 
+> 1. maradns
+> http://maradns.org/download/maradns-1.4.02-parse_segfault.patch
+> Fixed in 1.4.03
+> 
+> 2. freeciv 
+> http://gna.org/bugs/?15624
+> Fixed in 2.2.1 and 2.3.0
+> 
+> 3. rbot (http://ruby-rbot.org/)
+> http://www.securityfocus.com/archive/1/509719/30/0/threaded
+> 
+> 4. gitolite
+> http://secunia.com/advisories/39587/
+> http://github.com/sitaramc/gitolite/commit/1e06fea3b6959faeb72d8dca46cd4753ada48637
+> http://github.com/sitaramc/gitolite/commit/5fd9328c1cd1e7c576b6530b3253061c68b159aa
+> http://github.com/sitaramc/gitolite/commit/5deffee3cff5f9a13c59b8c1e357c5a32487d1c3
+> 
+> 5. gource
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=577958
+> 
+> 6. Shibboleth:
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=571631
+> 
+> 7. kvirc
+> http://lists.omnikron.net/pipermail/kvirc/2010-May/000867.html
+> 
+> Cheers,
+>         Moritz
