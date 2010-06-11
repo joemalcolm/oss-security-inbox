@@ -1,28 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/24/4
-Message-ID: <20100824163948.75248326@redhat.com>
-Date: Tue, 24 Aug 2010 16:39:48 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/11/1
+Message-ID: <20100611035325.GS4828@redhat.com>
+Date: Thu, 10 Jun 2010 21:53:25 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: pierre.php@...il.com, Thomas Biege <thomas@...e.de>, Moritz Muehlenhoff <jmm@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: PHP MOPS-2010-56..60
+Cc: Gerald Combs <gerald@...eshark.org>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request for new wireshark vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 24 Aug 2010 11:34:42 +0200 Pierre Joye wrote:
+We've received notification of new wireshark releases (1.2.9 and 1.0.14)
+and require CVE names assigned (the updates were made available upstream
+on June 9th).
 
-> >> Done: http://svn.php.net/viewvc?view=revision&revision=302565
-> >
-> > Does it need a new CVE-ID?
+The following are the particulars, which have more details than the
+upstream advisory (http://www.wireshark.org/security/wnpa-sec-2010-06.html):
 
-[ .. ]
+>  The SMB dissector could dereference a NULL pointer.
+>  Fixed in trunk: r32650
+>  Fixed in trunk-1.2: r33142
+>  Fixed in trunk-1.0: r33145
+>  Bug 4734
+>  Versions affected: 0.99.6 to 1.0.13, 1.2.0 to 1.2.8
+>
+>  J. Oquendo discovered that the ASN.1 BER dissector could overrun
+>  the stack.
+>  Fixed in trunk: r32922, r33046
+>  Fixed in trunk-1.2: r33122
+>  Fixed in trunk-1.0: r33146
+>  Versions affected: 0.10.13 to 1.0.13, 1.2.0 to 1.2.8
+>
+>  The SMB PIPE dissector could dereference a NULL pointer on some
+>  platforms.
+>  Fixed in trunk: r32848
+>  Fixed in trunk-1.2: r33120
+>  Fixed in trunk-1.0: r33143
+>  Versions affected: 0.8.20 to 1.0.13, 1.2.0 to 1.2.8
+>
+>  The SigComp Universal Decompressor Virtual Machine could go into
+>  an infinite loop.
+>  Fixed in trunk: r33061, r33065
+>  Fixed in trunk-1.2: r33131
+>  Fixed in trunk-1.0: r33147
+>  Bug 4826
+>  Versions affected: 0.10.7 to 1.0.13, 1.2.0 to 1.2.8
+>
+>  The SigComp Universal Decompressor Virtual Machine could overrun
+>  a buffer.
+>  Fixed in trunk: r33087, r33090
+>  Fixed in trunk-1.2: r33134
+>  Fixed in trunk-1.0: r33149
+>  Bug 4837
+>  Versions affected: 0.10.8 to 1.0.13, 1.2.0 to 1.2.8
 
-> Not sure as #24 was never fixed, but I don't know what is the policy
-> in this case. I can use CVE-2010-2094 or a new one if it is more
-> appropriate or cleaner.
-
-Standard practice is to use new CVE.  As all 5 phar MOPS were covered
-under single CVE, and not all of them were fixed in 5.3.3, I'd expect a
-new "incomplete fix" CVE.
+I'm not sure if MITRE has noticed these already or not, so I've not
+assigned CVE names to these issues.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Vincent Danen / Red Hat Security Response Team 
