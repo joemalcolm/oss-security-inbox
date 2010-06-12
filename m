@@ -1,40 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/15/4
-Message-ID: <1126769415.1017381289842951080.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 15 Nov 2010 12:42:31 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com, rubidium@...nttd.org
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request for OpenTTD
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/12/1
+Message-ID: <20100612191048.12d4bd55@mail.a3li.li>
+Date: Sat, 12 Jun 2010 19:10:48 +0200
+From: Alex Legler <a3li@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: UnrealIRCd 3.2.8.1 source code contained a backdoor allowing for remote command execution
 Content-Type: text/plain; charset=utf-8
 
+Hi.
 
------ "Rubidium" <rubidium@...nttd.org> wrote:
+Quoting http://www.unrealircd.com/txt/unrealsecadvisory.20100612.txt:
 
-> Hi folks,
-> 
-> we, the OpenTTD developers, have identified a security vulnerability
-> in
-> OpenTTD (an open source game with multiplayer). Would you be so kind
-> as 
-> to allocate a CVE id for this issue?
-> 
-> The issue concerns a denial of service vulnerability in the form of 
-> reading and writing already freed memory. The first vulnerable version
-> 
-> is 1.0.0, the upcoming 1.0.5 release will have the issue fixed.
-> 
-> Once a CVE id is allocated, the issue will be documented at
-> http://security.openttd.org/CVE-2010-xxxx
-> 
-> Thanks in advance,
-> Remko 'Rubidium' Bijker
-> 
-> (Please CC me, I'm not subscribed)
+"We found out that the Unreal3.2.8.1.tar.gz file on our mirrors has been
+replaced quite a while ago with a version with a backdoor (trojan) in
+it. This backdoor allows a person to execute ANY command with the
+privileges of the user running the ircd. The backdoor can be executed
+regardless of any user restrictions (so even if you have passworded
+server or hub that doesn't allow any users in)."
 
-Please use CVE-2010-4168.
+Basically, a system() call was injected into the source code, disguised
+as a debug/log macro.
 
-Thanks.
+Filed in Gentoo as https://bugs.gentoo.org/show_bug.cgi?id=323691
+I have a diff of the 'bad' version against the 'good' version. If
+needed, please contact me.
+
+Please assign a CVE.
+
+Thanks,
+Alex
 
 -- 
-    JB
+Alex Legler | Gentoo Security / Ruby
+a3li@...too.org | a3li@...ber.ccc.de
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
