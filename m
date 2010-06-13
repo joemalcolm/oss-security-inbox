@@ -1,23 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/22/6
-Message-ID: <4CE9FD0E.1070502@redhat.com>
-Date: Mon, 22 Nov 2010 13:18:06 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: mm: mem allocated invisible to oom_kill() when not attached to any threads
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/13/2
+Message-ID: <20100613230830.29efb825@foo.fgeek.fi>
+Date: Sun, 13 Jun 2010 23:08:30 +0300
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request - pyftpd default username and password vulnerability
 Content-Type: text/plain; charset=utf-8
 
-This is the OOM dodging issue that can be triggered with Brad's 
-reproducer at http://grsecurity.net/~spender/64bit_dos.c. Written
-in the comments: "The second bug here is that the memory usage explodes 
-within the kernel from a single 128k allocation in userland The 
-explosion of memory isn't accounted for by any task so it won't be 
-terminated by the OOM killer."
+File /etc/pyftpd/auth_db_config.py contains:
 
-I don't recall seeing a CVE name assigned to this, so please assign one. 
-Upstream is still attempting to fix this.
+passwd = [('test', 'test', 'CY9rzUYh03PK3k6DJie09g=='),
+ ('user', 'users', '7hHLsZBS5AsHqsDKBgwj7g=='),
+ ('roxon', 'users', 'ItZ2pB7rPmzFV6hrtdnZ7A==')]
 
-https://bugzilla.redhat.com/show_bug.cgi?id=625688#c0
+These accounts can be used to login to the FTP-server and read
+arbitrary files and list directories. File perm_acl_config.py lists
+user permissions.
 
-Thanks, Eugene
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=585776
+
+This affects version: 0.8.4
+
+Can I have CVE-identifier for this issue?
+
+---
+Henri Salo
