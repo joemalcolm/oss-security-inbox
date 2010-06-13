@@ -1,25 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/08/1
-Message-ID: <20101208002137.GE9588@redhat.com>
-Date: Tue, 7 Dec 2010 17:21:37 -0700
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Eric Blake <eblake@...hat.com>
-Subject: CVE request: libvirt when compiled with openvz support has a potential security hole
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/13/1
+Message-ID: <20100613230430.16af126f@foo.fgeek.fi>
+Date: Sun, 13 Jun 2010 23:04:30 +0300
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request - pyftpd insecure usage of temporary directory
 Content-Type: text/plain; charset=utf-8
 
-We were notified of a fix to upstream libvirt that plugs a potential
-security hole (buffer overflow) via the OpenVZ support in libvirt.
+Pyftpd creates log-file to a temporary directory using predictable
+name. This allows a local attacker to create a denial of service
+condition and discloses sensitive information to unprivileged users.
+For example accounts of other users connecting to server and paths they
+visit.
 
-Red Hat and Fedora do not ship libvirt with OpenVZ support enabled; I'm
-not sure if other vendors do or not.
+One should use tempfile.mkstemp
+<http://docs.python.org/library/tempfile.html#tempfile.mkstemp> or
+use /var/log/ -directory instead of /tmp/ and use proper file system
+modes for the log-file.
 
-The patch was posted publicly today, and although it's a low impact
-issue, probably needs a CVE name.
+This affects version: 0.8.4
 
-https://www.redhat.com/archives/libvir-list/2010-December/msg00348.html
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=585773
 
-Thanks.
+Can I have CVE-identifier for this issue?
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+---
+Henri Salo
