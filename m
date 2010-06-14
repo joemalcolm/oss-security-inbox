@@ -1,46 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/26/2
-Message-ID: <AANLkTimAWN8gB3DZrHN_4qappYdOM0PzZjjiF+0EZqSz@mail.gmail.com>
-Date: Sun, 26 Dec 2010 10:29:27 -0200
-From: Felipe Pena <felipensp@...il.com>
-To: Eygene Ryabinkin <rea-sec@...elabs.ru>
-Cc: oss-security@...ts.openwall.com, kalle@....net, felipe@....net,  cellog@....net, pajoye@....net
-Subject: Re: CVE-2010-2094: PECL's phar code is vulnerable too
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/14/15
+Message-ID: <Pine.GSO.4.64.1006141629410.13177@faron.mitre.org>
+Date: Mon, 14 Jun 2010 16:30:36 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+cc: Gerald Combs <gerald@...eshark.org>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request for new wireshark vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Hi Eygene,
 
-2010/12/26 Eygene Ryabinkin <rea-sec@...elabs.ru>
+On Thu, 10 Jun 2010, Vincent Danen wrote:
 
-> Good day.
->
-> It turns out that the PECL's phar extension is vulnerable to the
-> string format vulnerabilities announced in MOPS advisories:
->  MOPS-2010-024:
-> http://svn.php.net/viewvc/pecl/phar/trunk/stream.c?revision=286339&view=markup#l473
->  MOPS-2010-025:
-> http://svn.php.net/viewvc/pecl/phar/trunk/dirstream.c?revision=284729&view=markup#l363
->  MOPS-2010-026:
-> http://svn.php.net/viewvc/pecl/phar/trunk/stream.c?revision=286339&view=markup#l764
->  MOPS-2010-027:
-> http://svn.php.net/viewvc/pecl/phar/trunk/stream.c?revision=286339&view=markup#l120
-> ,
->
-> http://svn.php.net/viewvc/pecl/phar/trunk/stream.c?revision=286339&view=markup#l131
-> ,
->
-> http://svn.php.net/viewvc/pecl/phar/trunk/stream.c?revision=286339&view=markup#l143
->  MOPS-2010-028:
-> http://svn.php.net/viewvc/pecl/phar/trunk/stream.c?revision=286339&view=markup#l195
->
-> I think that the entry should be extended.  Don't know if PECL
-> code is going to be fixed.  CC'ing PHP developers who were last
-> to modify PECL's phar code.
->
+>>  The SMB dissector could dereference a NULL pointer.
+>>  Fixed in trunk: r32650
+>>  Fixed in trunk-1.2: r33142
+>>  Fixed in trunk-1.0: r33145
+>>  Bug 4734
+>>  Versions affected: 0.99.6 to 1.0.13, 1.2.0 to 1.2.8
 
-I've backported the fixes to pecl/phar. Thanks.
+Use CVE-2010-2283
 
--- 
-Regards,
-Felipe Pena
+>>  J. Oquendo discovered that the ASN.1 BER dissector could overrun
+>>  the stack.
+>>  Fixed in trunk: r32922, r33046
+>>  Fixed in trunk-1.2: r33122
+>>  Fixed in trunk-1.0: r33146
+>>  Versions affected: 0.10.13 to 1.0.13, 1.2.0 to 1.2.8
 
+Use CVE-2010-2284
+
+>>  The SMB PIPE dissector could dereference a NULL pointer on some
+>>  platforms.
+>>  Fixed in trunk: r32848
+>>  Fixed in trunk-1.2: r33120
+>>  Fixed in trunk-1.0: r33143
+>>  Versions affected: 0.8.20 to 1.0.13, 1.2.0 to 1.2.8
+
+Use CVE-2010-2285
+
+>>  The SigComp Universal Decompressor Virtual Machine could go into
+>>  an infinite loop.
+>>  Fixed in trunk: r33061, r33065
+>>  Fixed in trunk-1.2: r33131
+>>  Fixed in trunk-1.0: r33147
+>>  Bug 4826
+>>  Versions affected: 0.10.7 to 1.0.13, 1.2.0 to 1.2.8
+
+Use CVE-2010-2286
+
+>>  The SigComp Universal Decompressor Virtual Machine could overrun
+>>  a buffer.
+>>  Fixed in trunk: r33087, r33090
+>>  Fixed in trunk-1.2: r33134
+>>  Fixed in trunk-1.0: r33149
+>>  Bug 4837
+>>  Versions affected: 0.10.8 to 1.0.13, 1.2.0 to 1.2.8
+
+Use CVE-2010-2287
+
+
+- Steve
