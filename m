@@ -1,14 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/22/3
-Message-ID: <813825154.401931285185278932.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 22 Sep 2010 15:54:38 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/14/12
+Message-ID: <1144314989.143431276544689963.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 14 Jun 2010 15:44:49 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: David Malcolm <dmalcolm@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Python -- accept() implementation in async core is broken => more subcases
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: UnrealIRCd 3.2.8.1 source code contained a backdoor allowing for remote command execution
 Content-Type: text/plain; charset=utf-8
 
-Any update on this Steve?
+Steve,
+
+Can you give this one a 2009 ID.
 
 Thanks.
 
@@ -16,56 +18,33 @@ Thanks.
     JB
 
 
------ "Josh Bressers" <bressers@...hat.com> wrote:
+----- "Alex Legler" <a3li@...too.org> wrote:
 
-> Steve,
+> On Sat, 12 Jun 2010 19:10:48 +0200, Alex Legler <a3li@...too.org>
+> wrote:
 > 
-> I'm going to leave this one up to you. While it's really a python bug,
-> I
-> suspect several affected projects will end up patching themselves (I'm
-> not
-> sure how MITRE hadnles this situation).
+> > [blah]
 > 
-> Thanks.
+> While we're at it...
+> 
+> http://www.unrealircd.com/txt/unrealsecadvisory.20090413.txt
+> 
+> "A buffer in the code which handles user authorization is copied
+> without
+> sufficient length checks, causing a buffer overflow.
+> This bug happens BEFORE the user is online. In other words: even if
+> you
+> have a password protected server, or only allow certain ip/hosts in,
+> and you use allow::options::noident, then this bug can still be
+> triggered."
+> 
+> The issue affects versions <3.2.8.1
+> 
+> I think this issue doesn't have a CVE yet either. (CVE-2009-*)
+> 
+> Thanks,
+> Alex
 > 
 > -- 
->     JB
-> 
-> 
-> ----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
-> 
-> > Hello Steve, vendors,
-> > 
-> >    Giampaolo Rodola reported a deficiency in the implementation of
-> > Python's accept() routine:
-> >    [1] http://bugs.python.org/issue6706
-> > 
-> >    The following seems to be all symptoms for the same issue:
-> >    A, SMTP (smtpd.py):
-> >       [2] https://bugzilla.redhat.com/show_bug.cgi?id=632200
-> >       [3] http://bugs.python.org/issue9129
-> > 
-> >    B, pyftpdlib:
-> >       [4] http://code.google.com/p/pyftpdlib/issues/detail?id=104
-> > 
-> >    C, ZODB:
-> >       [5] https://bugs.launchpad.net/zodb/+bug/135108
-> > 
-> >    D, more?
-> > 
-> > Not sure, how to proceed in this case:
-> > i,  if assign only one CVE id for [1] or,
-> > ii, assign also separate CVE ids for the child symptoms? ([2], [3],
-> > [4])
-> > 
-> > Cc-ed David Malcom on this post, to shed more light how to handle
-> this
-> > case.
-> > 
-> > Once the way, how to further proceed with this, specified. Steve
-> could
-> > you allocate CVE id (ids)?
-> > 
-> > Thanks && Regards, Jan.
-> > --
-> > Jan iankko Lieskovsky / Red Hat Security Response Team
+> Alex Legler | Gentoo Security / Ruby
+> a3li@...too.org | a3li@...ber.ccc.de
