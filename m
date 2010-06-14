@@ -1,13 +1,14 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/16/4
-Message-ID: <1041871031.655841279293410955.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 16 Jul 2010 11:16:50 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/14/8
+Message-ID: <1243000043.142171276544097414.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 14 Jun 2010 15:34:57 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: lxsession-logout
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - pyftpd insecure usage of temporary directory
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-2532.
+Please use CVE-2010-2072 for this.
 
 Thanks.
 
@@ -15,21 +16,25 @@ Thanks.
     JB
 
 
------ "Matthias Weckbecker" <mweckbecker@...e.de> wrote:
+----- "Henri Salo" <henri@...v.fi> wrote:
 
-> Hi,
+> Pyftpd creates log-file to a temporary directory using predictable
+> name. This allows a local attacker to create a denial of service
+> condition and discloses sensitive information to unprivileged users.
+> For example accounts of other users connecting to server and paths
+> they
+> visit.
 > 
-> could you assign a CVE for this issue, please:
+> One should use tempfile.mkstemp
+> <http://docs.python.org/library/tempfile.html#tempfile.mkstemp> or
+> use /var/log/ -directory instead of /tmp/ and use proper file system
+> modes for the log-file.
 > 
-> https://bugzilla.novell.com/show_bug.cgi?id=622083
+> This affects version: 0.8.4
 > 
-> Thanks!
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=585773
 > 
-> ciao,
-> Matthias
+> Can I have CVE-identifier for this issue?
 > 
-> -- 
-> Matthias Weckbecker, SUSE Security Team
-> SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg   
-> Tel: +49-911-74053-0;  http://www.opensuse.org/   
-> SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+> ---
+> Henri Salo
