@@ -1,58 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/08/6
-Message-ID: <20100908065238.GA30023@suse.de>
-Date: Wed, 8 Sep 2010 08:52:38 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/14/9
+Message-ID: <1224951764.142291276544148872.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 14 Jun 2010 15:35:48 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Jon Oberheide <jon@...rheide.org>, security@...nel.org, spender@...ecurity.net
-Subject: Re: Re: [Security] Re:  /proc infoleaks
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - pyftpd default username and password vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Sep 07, 2010 at 05:51:31PM -0400, Brad Spengler wrote:
+Please use CVE-2010-2073 for this.
 
-> 
-> Definitely some work needs to be done here at the distro level, because 
-> it's pointless (as Enlightenment demonstrates) to hide /proc/kallsyms 
-> when /boot/System.map or /lib/modules are perfectly visible on any 
-> distro.
-I agree that distros also have to do some homework there,
-but there are things that we cant just do via init harden scripts.
-Take /proc/pid/stack. Other files like my prefered friend /proc/net/netlink
-gives info that allows exploitation-deluxe if you overwrite your socket destructor.
-
-The list I have given was by no means complete (and even
-didnt mean slabinfo will leak addresses, but was an example
-of leaking other useful info) and I prefer an inventory
-of 'problematic' /proc, /sys or whatever files if you speak
-about inventory of programs using it.
-
-
-> I know the impulse is to immediately copy what we're doing in 
-> grsecurity, but the reason we do some of the things in the way we do 
-Its always my first thought :)
-
-> them is that we can be used on any distro and have no control over 
-> whatever distro that happens to be.  We also support other features like 
-> PaX's KERNEXEC and UDEREF which make the symbol/address removal more 
-> useful.  We're also able to make certain important assumptions about our 
-> users (eg. that they want security).  So make sure you're thinking 
-> carefully about what you're trying to accomplish, why you're doing it, 
-> and how effective it will actually be given the (lack of) synergistic 
-> features at your present disposal, instead of jumping into cargo cult 
-> security.
-Sure. It was just a proposal since I felt nobody really cared about
-the low hanging fruits. It wont make your system rocket proof but
-it makes some head-scratching for exploit developers which is
-all you need if you make them stuck in doing that.
-
-Sebastian
-
-
+Thanks.
 
 -- 
-~
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-~ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+    JB
 
+
+----- "Henri Salo" <henri@...v.fi> wrote:
+
+> File /etc/pyftpd/auth_db_config.py contains:
+> 
+> passwd = [('test', 'test', 'CY9rzUYh03PK3k6DJie09g=='),
+>  ('user', 'users', '7hHLsZBS5AsHqsDKBgwj7g=='),
+>  ('roxon', 'users', 'ItZ2pB7rPmzFV6hrtdnZ7A==')]
+> 
+> These accounts can be used to login to the FTP-server and read
+> arbitrary files and list directories. File perm_acl_config.py lists
+> user permissions.
+> 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=585776
+> 
+> This affects version: 0.8.4
+> 
+> Can I have CVE-identifier for this issue?
+> 
+> ---
+> Henri Salo
