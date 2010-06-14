@@ -1,29 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/04/4
-Message-ID: <4CD283FC.8080802@redhat.com>
-Date: Thu, 04 Nov 2010 17:59:24 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/14/3
+Message-Id: <201006141203.39356.hanno@hboeck.de>
+Date: Mon, 14 Jun 2010 12:03:38 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-CC: Dan Rosenberg <dan.j.rosenberg@...il.com>
-Subject: Re: CVE request: kernel: CAN information leak
+Subject: CVE request: punbb before 1.3.4 xss
 Content-Type: text/plain; charset=utf-8
 
-On 11/04/2010 06:19 AM, Dan Rosenberg wrote:
-> The CAN protocol uses the address of a kernel heap object as a proc
-> filename, revealing information that could be useful during
-> exploitation.
->
-> The below post also mentions a heap overflow.  While there is a
-> semantic overflow (17 bytes being copied into a 9-byte buffer), in
-> reality, the object whose member is being overflowed resides in a
-> kernel heap slab cache that includes enough padding that there is no
-> possible corruption.  So, it's a bug but not a vulnerability.
->
-> Reference:
-> http://marc.info/?l=linux-netdev&m=128872251418192&w=2
+A rather old one, but still, please assign a cve:
+http://punbb.informer.com/forums/topic/21669/punbb-134/
 
-Please use CVE-2010-3874.
+(a CVE-2008-xxxx one)
 
-Thanks, Eugene
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+
+http://schokokeks.org - professional webhosting
+
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
