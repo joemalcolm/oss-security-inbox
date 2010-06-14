@@ -1,50 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/30/14
-Message-ID: <AANLkTimzu6AhXeTfrAkvH-l9AbtB6M7pMn_pAKynDWbw@mail.gmail.com>
-Date: Wed, 30 Jun 2010 14:58:58 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: Josh Bressers <bressers@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE requests: LibTIFF
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/14/7
+Message-ID: <108390522.135071276541571985.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 14 Jun 2010 14:52:51 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Gerald Combs <gerald@...eshark.org>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request for new wireshark vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-There are three issues that I think are CVE-worthy and have not been assigned:
+Steve,
 
-1.  OOB read in TIFFExtractData() leading to crash (no reference,
-originally disclosed by me in this thread, fixed upstream with release
-3.9.4 and security fix backported by Ubuntu).
+It's been a few days. I presume you're not taking this one (MITRE is
+mentioned at the end)? If not I'll do it.
 
-2.  NULL pointer dereference due to invalid td_stripbytecount leading
-to crash (distinct from CVE-2010-2443).  The upstream changelog entry
-for 3.9.4 reads:
+Thanks.
 
-	* libtiff/tif_ojpeg.c (OJPEGReadBufferFill): Report an error and
-	avoid a crash if the input file is so broken that the strip
-	offsets are not defined.
+-- 
+    JB
 
-3.  OOB read in TIFFRGBAImageGet() leading to crash.  Reference:
-https://bugs.launchpad.net/ubuntu/+source/tiff/+bug/591605
+----- "Vincent Danen" <vdanen@...hat.com> wrote:
 
--Dan
-
-On Wed, Jun 30, 2010 at 2:42 PM, Josh Bressers <bressers@...hat.com> wrote:
-> ----- "Tomas Hoger" <thoger@...hat.com> wrote:
->
->> On Tue, 29 Jun 2010 08:05:25 -0400 Dan Rosenberg wrote:
->>
->> > On request, I'm re-posting the issues which I think actually deserve
->> > CVE ids.
->>
->> I believe the disagreement here is caused by different opinions on what
->> should be and what does not need to be called security.
->>
->
-> This thread confuses me (it's not hard to do).
->
-> Can someone sum up what still needs CVE ids with a reference link or two?
->
-> Thanks.
->
-> --
->    JB
->
+> We've received notification of new wireshark releases (1.2.9 and
+> 1.0.14)
+> and require CVE names assigned (the updates were made available
+> upstream
+> on June 9th).
+> 
+> The following are the particulars, which have more details than the
+> upstream advisory
+> (http://www.wireshark.org/security/wnpa-sec-2010-06.html):
+> 
+> >  The SMB dissector could dereference a NULL pointer.
+> >  Fixed in trunk: r32650
+> >  Fixed in trunk-1.2: r33142
+> >  Fixed in trunk-1.0: r33145
+> >  Bug 4734
+> >  Versions affected: 0.99.6 to 1.0.13, 1.2.0 to 1.2.8
+> >
+> >  J. Oquendo discovered that the ASN.1 BER dissector could overrun
+> >  the stack.
+> >  Fixed in trunk: r32922, r33046
+> >  Fixed in trunk-1.2: r33122
+> >  Fixed in trunk-1.0: r33146
+> >  Versions affected: 0.10.13 to 1.0.13, 1.2.0 to 1.2.8
+> >
+> >  The SMB PIPE dissector could dereference a NULL pointer on some
+> >  platforms.
+> >  Fixed in trunk: r32848
+> >  Fixed in trunk-1.2: r33120
+> >  Fixed in trunk-1.0: r33143
+> >  Versions affected: 0.8.20 to 1.0.13, 1.2.0 to 1.2.8
+> >
+> >  The SigComp Universal Decompressor Virtual Machine could go into
+> >  an infinite loop.
+> >  Fixed in trunk: r33061, r33065
+> >  Fixed in trunk-1.2: r33131
+> >  Fixed in trunk-1.0: r33147
+> >  Bug 4826
+> >  Versions affected: 0.10.7 to 1.0.13, 1.2.0 to 1.2.8
+> >
+> >  The SigComp Universal Decompressor Virtual Machine could overrun
+> >  a buffer.
+> >  Fixed in trunk: r33087, r33090
+> >  Fixed in trunk-1.2: r33134
+> >  Fixed in trunk-1.0: r33149
+> >  Bug 4837
+> >  Versions affected: 0.10.8 to 1.0.13, 1.2.0 to 1.2.8
+> 
+> I'm not sure if MITRE has noticed these already or not, so I've not
+> assigned CVE names to these issues.
+> 
+> -- 
+> Vincent Danen / Red Hat Security Response Team
