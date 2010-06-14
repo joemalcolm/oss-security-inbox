@@ -1,34 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/03/7
-Message-ID: <273327544.334171280865707741.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 3 Aug 2010 16:01:47 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/14/2
+Message-ID: <4C158D58.9010701@kernel.sg>
+Date: Mon, 14 Jun 2010 10:00:56 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: Attachment XSS in mantis < 1.2.2
+CC: Dan Rosenberg <dan.j.rosenberg@...il.com>
+Subject: Re: CVE request - kernel: btrfs: prevent users from setting ACLs on files 	they do not own
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-2802
+On 06/14/2010 09:42 AM, Eugene Teo wrote:
+> On 06/12/2010 04:32 AM, Dan Rosenberg wrote:
+>> Shi Weihua discovered that btrfs did not check ownership of files
+>> before setting ACLs, allowing any user to set ACLs for any file,
+>> completely bypassing all file permissions. This wasn't reported as a
+>> security issue, but it seems pretty serious to me (for those who use
+>> btrfs). See http://lkml.org/lkml/2010/5/17/544 for his original post.
+>
+> Thanks, please use CVE-2010-2071.
 
-Thanks.
+Upstream commit: http://git.kernel.org/linus/2f26afba
 
+Eugene
 -- 
-    JB
-
-
------ "Hanno Böck" <hanno@...eck.de> wrote:
-
-> http://www.mantisbt.org/bugs/view.php?id=11952
-> http://www.mantisbt.org/blog/?p=113
-> 
-> Issue #11952 covers a security fix to the display of inline
-> attachments, where 
-> “Arbitrary inline attachment rendering could lead to cross-domain
-> scripting or 
-> other browser attacks”.
-> 
-> -- 
-> Hanno Böck		Blog:		http://www.hboeck.de/
-> GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-> 
-> http://schokokeks.org - professional webhosting
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
