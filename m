@@ -1,54 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/11/4
-Message-ID: <2038642063.91381281557630738.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 11 Aug 2010 16:13:50 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Caolan McNamara <caolanm@...hat.com>, David Tardon <dtardon@...hat.com>, Malte Timmermann <malte.timmermann@...cle.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- OpenOffice.org [two ids]: 1, integer truncation error 2, short integer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/14/14
+Message-ID: <Pine.GSO.4.64.1006141625400.13177@faron.mitre.org>
+Date: Mon, 14 Jun 2010 16:26:44 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Josh Bressers <bressers@...hat.com>
+cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: punbb before 1.3.4 xss
 Content-Type: text/plain; charset=utf-8
 
 
------ "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+On Mon, 14 Jun 2010, Josh Bressers wrote:
 
-> Hi Steve, vendors,
-> 
->    two security flaws have been reported against OpenOffice.org's
-> Impress tool:
->      [1] http://securityevaluators.com/files/papers/CrashAnalysis.pdf
-> 
-> A, an integer truncation error, leading to heap-based buffer overflow
-> when
->     processing dictionary property items of the input *.ppt file:
-> 
->     References:
->       [2] https://bugzilla.redhat.com/show_bug.cgi?id=622529
->       [3] http://secunia.com/advisories/40775/
->       [4]
-> http://securityevaluators.com/files/papers/CrashAnalysis.pdf
->       [5]
-> http://www.openoffice.org/servlets/ReadMsg?list=dev&msgNo=27690
+> Can you handle this one (as I have no 2008 IDs).
 
-Use CVE-2010-2935 for this one.
+This needs to be a 2009 CVE because of the dates of the announcement and 
+the forum posts.  Presumably, Hanno mis-read the poster's registration 
+date (of 2008) as the release date.
 
+Use CVE-2009-4894
 
-> 
-> B, a short integer overflow, leading to heap-based buffer overflow,
-> when processing
->     *.ppt document with too big polygons
-> 
->     References:
->       [6] https://bugzilla.redhat.com/show_bug.cgi?id=622555
->       [7] http://secunia.com/advisories/40775/
->       [8]
-> http://securityevaluators.com/files/papers/CrashAnalysis.pdf
->       [9]
-> http://www.openoffice.org/servlets/ReadMsg?list=dev&msgNo=27690
-> 
-
-Use CVE-2010-2936
-
-Thanks.
-
--- 
-    JB
+- Steve
