@@ -1,29 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/23/1
-Message-ID: <4CEB7F72.2020202@redhat.com>
-Date: Tue, 23 Nov 2010 16:46:42 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: xen: request-processing loop is unbounded in blkback
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/14/13
+Message-ID: <Pine.GSO.4.64.1006141620110.13177@faron.mitre.org>
+Date: Mon, 14 Jun 2010 16:20:29 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Josh Bressers <bressers@...hat.com>
+cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: UnrealIRCd 3.2.8.1 source code contained a backdoor allowing for remote command execution
 Content-Type: text/plain; charset=utf-8
 
-If the frontend pass a bad index of production request, the backend will 
-enter an endless loop and then cause a excessive CPU consumption. A Xen 
-guest can cause the Xen host to be unresponsive.
 
-This issue has been fixed in upstream by:
-changeset:   391:77f831cbb91d
-user:        Keir Fraser <keir.fraser@...rix.com>
-date:        Fri Jan 18 16:52:25 2008 +0000
-summary:     blkback: Request-processing loop is unbounded and hence 
-requires a
-http://xenbits.xensource.com/linux-2.6.18-xen.hg?rev/77f831cbb91d
+On Mon, 14 Jun 2010, Josh Bressers wrote:
 
-changeset:   392:7070d34f251c
-user:        Keir Fraser <keir.fraser@...rix.com>
-date:        Mon Jan 21 11:43:31 2008 +0000
-summary:     blkback/blktap: Check for kthread_should_stop() in inner loop,
-http://xenbits.xensource.com/linux-2.6.18-xen.hg?rev/7070d34f251c
+> Can you give this one a 2009 ID.
 
-Thanks, Eugene
+Use CVE-2009-4893
+
+- Steve
+
+
+> ----- "Alex Legler" <a3li@...too.org> wrote:
+>
+>> On Sat, 12 Jun 2010 19:10:48 +0200, Alex Legler <a3li@...too.org>
+>> wrote:
+>>
+>>> [blah]
+>>
+>> While we're at it...
+>>
+>> http://www.unrealircd.com/txt/unrealsecadvisory.20090413.txt
+>>
+>> "A buffer in the code which handles user authorization is copied
+>> without
+>> sufficient length checks, causing a buffer overflow.
