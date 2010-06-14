@@ -1,26 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/05/3
-Message-ID: <p2m85f64f891005051203ic5f349cfh551c9f1cd3cc986e@mail.gmail.com>
-Date: Wed, 5 May 2010 15:03:06 -0400
-From: Anthon Pang <anthon.pang@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/14/6
+Message-ID: <1456764343.134731276541481613.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 14 Jun 2010 14:51:21 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request - Piwik 0.5.5 - XSS vulnerability
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: punbb before 1.3.4 xss
 Content-Type: text/plain; charset=utf-8
 
-A Piwik XSS vulnerability is fixed by the latest Piwik 0.6 release.  The
-advisory is published here:
-http://piwik.org/blog/2010/04/piwik-0-6-security-advisory/
+Steve,
 
-Description:
+Can you handle this one (as I have no 2008 IDs).
 
-A non-persistent, cross-site scripting vulnerability (XSS) was found in
-Piwik's Login form that reflected the form_url parameter without being
-properly escaped or filtered. To exploit this vulnerability, the attacker
-tricks a Piwik user into visiting a Login URL crafted by the attacker.
+Thanks.
 
-While this is a low risk threat, Piwik users are encouraged to update to the
-latest version of Piwik. This issue exists in Piwik versions 0.1.6 through
-0.5.5.
+-- 
+    JB
 
-In Piwik 0.6, the form_url parameter has been removed.
 
+----- "Hanno Böck" <hanno@...eck.de> wrote:
+
+> A rather old one, but still, please assign a cve:
+> http://punbb.informer.com/forums/topic/21669/punbb-134/
+> 
+> (a CVE-2008-xxxx one)
+> 
+> -- 
+> Hanno Böck		Blog:		http://www.hboeck.de/
+> GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+> 
+> http://schokokeks.org - professional webhosting
