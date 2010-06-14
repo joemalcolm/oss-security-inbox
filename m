@@ -1,36 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/14/5
-Message-ID: <20100614191014.6ed4c704@mail.a3li.li>
-Date: Mon, 14 Jun 2010 19:10:14 +0200
-From: Alex Legler <a3li@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/14/4
+Message-Id: <201006141325.04368.ludwig.nussel@suse.de>
+Date: Mon, 14 Jun 2010 13:25:03 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: UnrealIRCd 3.2.8.1 source code contained a backdoor allowing for remote command execution
+Subject: CVE Request: w3m does not check null bytes CN/subjAltName
 Content-Type: text/plain; charset=utf-8
 
-On Sat, 12 Jun 2010 19:10:48 +0200, Alex Legler <a3li@...too.org> wrote:
+Hi,
 
-> [blah]
+Yet another occurrence of CVE-2009-2408, this time in w3m. I tried
+contacting the w3m developers listed on sourceforge but got no
+response. In the default configuration the missing null checks don't
+make the situation worse though as w3m doesn't verify certificates
+by default ('ssl_verify_server' is off by default). Attached two
+patches turn on 'ssl_verify_server' and fix the null handling.
 
-While we're at it...
-
-http://www.unrealircd.com/txt/unrealsecadvisory.20090413.txt
-
-"A buffer in the code which handles user authorization is copied without
-sufficient length checks, causing a buffer overflow.
-This bug happens BEFORE the user is online. In other words: even if you
-have a password protected server, or only allow certain ip/hosts in,
-and you use allow::options::noident, then this bug can still be
-triggered."
-
-The issue affects versions <3.2.8.1
-
-I think this issue doesn't have a CVE yet either. (CVE-2009-*)
-
-Thanks,
-Alex
+cu
+Ludwig
 
 -- 
-Alex Legler | Gentoo Security / Ruby
-a3li@...too.org | a3li@...ber.ccc.de
+ (o_   Ludwig Nussel
+ //\   
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+View attachment "w3m-0.5.2-ssl_verify_server_on.diff" of type "text/x-patch" (920 bytes)
+
+View attachment "w3m-0.5.2-nulcn.diff" of type "text/x-patch" (1632 bytes)
