@@ -1,37 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/12/3
-Message-ID: <AANLkTik-2msM0MtKcJ8vDm4ir0nJ7Ywt-5ZLD8y02NPT@mail.gmail.com>
-Date: Tue, 12 Oct 2010 11:27:42 +0200
-From: Thomas Pollet <thomas.pollet@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/14/5
+Message-ID: <20100614191014.6ed4c704@mail.a3li.li>
+Date: Mon, 14 Jun 2010 19:10:14 +0200
+From: Alex Legler <a3li@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: kernel: avoid pgoff overflow in remap_file_pages
+Subject: Re: CVE request: UnrealIRCd 3.2.8.1 source code contained a backdoor allowing for remote command execution
 Content-Type: text/plain; charset=utf-8
 
-fwiw, this check :
+On Sat, 12 Jun 2010 19:10:48 +0200, Alex Legler <a3li@...too.org> wrote:
 
-if (pgoff + (size >> PAGE_SHIFT) >= (1UL << PTE_FILE_MAX_BITS))
+> [blah]
 
-is done to make sure the most significant bits are zero
-pgoff is later used to create a page table entry
+While we're at it...
 
-set_pte_at(mm, addr, pte, pgoff_to_pte(pgoff));
+http://www.unrealircd.com/txt/unrealsecadvisory.20090413.txt
 
-the other bits of the pte_t are reserved for the page status bits.
-The exact implementation is architecture dependent.
+"A buffer in the code which handles user authorization is copied without
+sufficient length checks, causing a buffer overflow.
+This bug happens BEFORE the user is online. In other words: even if you
+have a password protected server, or only allow certain ip/hosts in,
+and you use allow::options::noident, then this bug can still be
+triggered."
 
-Regards,
-Thomas
+The issue affects versions <3.2.8.1
 
+I think this issue doesn't have a CVE yet either. (CVE-2009-*)
 
-On 12 October 2010 09:19, Eugene Teo <eugene@...hat.com> wrote:
-> Thomas Pollet reported an integer overflow issue in remap_file_pages().
-> While we are able to reproduce the issue, we are unable to find a security
-> impact. If your views differ, do let us know.
->
-> https://bugzilla.redhat.com/show_bug.cgi?id=636383
-> http://git.kernel.org/linus/5ec1055aa5632dd7a8283cdb5fa9be3c535eaa06
->
-> Thanks, Eugene
-> --
-> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
->
+Thanks,
+Alex
+
+-- 
+Alex Legler | Gentoo Security / Ruby
+a3li@...too.org | a3li@...ber.ccc.de
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
