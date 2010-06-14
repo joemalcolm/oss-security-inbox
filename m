@@ -1,32 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/18/12
-Message-ID: <1116194965.1734041274210375392.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 18 May 2010 15:19:35 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/14/10
+Message-ID: <1208588851.142891276544463083.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 14 Jun 2010 15:41:03 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: phpbb 3.0.7 and before 3.0.5
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: w3m does not check null bytes CN/subjAltName
 Content-Type: text/plain; charset=utf-8
 
------ "Steven M. Christey" <coley@...us.mitre.org> wrote:
-[...]
-> 
-> So this could use a CVE, too.  At worst it's a signal to consumers that
-> they need to patch, even if the developer isn't clearly explaining why.
-> 
-> Not much different than your typical Linux kernel bug, actually :-/
-> 
-> - Steve
-
-Here goes:
-
-    http://www.phpbb.com/community/viewtopic.php?f=14&p=9764445
-    # [Sec] Only use forum id supplied for posting if global announcement
-      detected. (Reported by nickvergessen)
-
-CVE-2010-1630 phpbb 3.0.5 unspecified flaw
+Please use CVE-2010-2074 for this.
 
 Thanks.
 
 -- 
     JB
+
+
+----- "Ludwig Nussel" <ludwig.nussel@...e.de> wrote:
+
+> Hi,
+> 
+> Yet another occurrence of CVE-2009-2408, this time in w3m. I tried
+> contacting the w3m developers listed on sourceforge but got no
+> response. In the default configuration the missing null checks don't
+> make the situation worse though as w3m doesn't verify certificates
+> by default ('ssl_verify_server' is off by default). Attached two
+> patches turn on 'ssl_verify_server' and fix the null handling.
+> 
+> cu
+> Ludwig
+> 
+> -- 
+>  (o_   Ludwig Nussel
+>  //\   
+>  V_/_  http://www.suse.de/
+> SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
