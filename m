@@ -1,25 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/16/1
-Message-ID: <4C91A38E.1010104@kernel.sg>
-Date: Thu, 16 Sep 2010 12:56:46 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/15/5
+Message-ID: <Pine.GSO.4.64.1006151726120.13177@faron.mitre.org>
+Date: Tue, 15 Jun 2010 17:26:28 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-2010-3301 kernel: IA32 System Call Entry Point Vulnerability
+cc: dann frazier <dannf@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request - kernel: put_tty_queue NULL pointer deref
 Content-Type: text/plain; charset=utf-8
 
-CVE-2007-4573 regression. Local privilege escalation.
 
-Introduced in v2.6.27-rc1 via commit d4d67150.
+On Tue, 15 Jun 2010, Josh Bressers wrote:
 
-Upstream commits:
-http://git.kernel.org/linus/36d001c70d8a0144ac1d038f6876c484849a74de
-http://git.kernel.org/linus/eefdca043e8391dcd719711716492063030b55ac
+> Can you give this a 2009 ID. Perhaps I could use a group of 2009 IDs, as 
+> there have been quite a few old requests this week.
 
-References:
-http://sota.gen.nz/compat2/
-https://bugzilla.redhat.com/CVE-2010-3301
+Use CVE-2009-4895
 
-Thanks, Eugene
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+A 2009 pool will be sent to you separately.
+
+- Steve
