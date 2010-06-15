@@ -1,72 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/25/2
-Message-ID: <20101125133101.GL27147@ksplice.com>
-Date: Thu, 25 Nov 2010 08:31:01 -0500
-From: Nelson Elhage <nelhage@...lice.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/15/3
+Message-ID: <4C172370.4090403@kernel.sg>
+Date: Tue, 15 Jun 2010 14:53:36 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Subject: Re: Interesting behavior with struct initiailization
+CC: dann frazier <dannf@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request - kernel: put_tty_queue NULL pointer deref
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Nov 24, 2010 at 09:52:47AM -0500, Dan Rosenberg wrote:
-> ===============================
-> 
-> 3. gcc does not clear padding bytes on full C99 initialization
+On 06/15/2010 02:31 PM, dann frazier wrote:
+> Going through some old issues, we have this one from 2009:
+>   https://bugzilla.kernel.org/show_bug.cgi?id=14605
+>
+> Upstream fix went into 2.6.33-rc8:
+>    http://git.kernel.org/linus/80e1e823989ec44d8e35bdfddadbddcffec90424
+>
+> This was included in 2.6.32.9 and 2.6.27.46, but it looks like our
+> 2.6.26-based kernel may have the issue as well.
 
-I don't claim to be an expect, but fwiw, my read of C99 does not
-require a C99 initializer to initialize any padding bytes:
+Also see, https://bugzilla.redhat.com/show_bug.cgi?id=559100.
 
-§6.7.8.8 says:
-"An initializer specifies the initial value stored in an object."
+If memory serves me well, it should affect kernels v2.6.21-rc1 onwards 
+with the commit ab521dc0.
 
-Note that the initializer specifies a /value/, and §6.2.6.1.6 says
-
-"When a value is stored in an object of structure or union type,
-including in a member object, the bytes of the object representation
-that correspond to any padding bytes take unspecified values."
-
-Thus, I think there is no way, conceptually, that C99 could even talk
-about an initializer specifying the value of padding fields, since an
-initializer explicitly specifies a /value/ for the object, which is a
-concept that exists at a different level than the /representation/,
-which includes padding.
-
-I also can't find anywhere in GCC's manual where it talks about it
-making additional guarantees in this case, but I am not completely
-confident I did a thorough search.
-
-Is it possible that the zeroing out of padding bytes by GCC is an
-implementation detail that we've been relying on, and never something
-that was intended as part of the exposed contract? Is there anyone on
-this list more qualified to comment on either the specification or
-GCC's implementation?
-
-- Nelson
-
-> 
-> I think this is unexpected behavior (at least to me), and it's the
-> reason I'm writing this post.  Normally, C99 initialization
-> automatically zeros out padding bytes as well.  For example:
-> 
-> ---
-> struct test { int a; char b; int c; } arg = {};
-> 
-> or
-> 
-> struct test { int a; char b; int c; } arg = { .a = 1 };
-> ---
-> 
-> will set the specified fields, and zero out everything else, including
-> padding bytes.  However, if you explicitly initialize every member
-> using C99 initialization, the padding bytes won't be zeroed out:
-> 
-> ---
-> struct test { int a; char b; int c; } arg = { .a = 0, .b = 0, .c = 0 };
-> ---
-> 
-> This will leave the padding bytes after "char b" uninitialized,
-> surprisingly.  I imagine this is an attempted optimization on gcc, but
-> now it's coming back to bite (no pun intended) everyone who relied on
-> this construct to prevent leakage.
-> 
-> Regards,
-> Dan
+Thanks, Eugene
+-- 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
