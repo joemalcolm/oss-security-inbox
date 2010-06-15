@@ -1,65 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/20/13
-Message-ID: <Pine.GSO.4.64.1008201632150.1035@faron.mitre.org>
-Date: Fri, 20 Aug 2010 16:37:41 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/15/4
+Message-ID: <1063735264.282931276630616708.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 15 Jun 2010 15:36:56 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: lxr
+Cc: dann frazier <dannf@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request - kernel: put_tty_queue NULL pointer deref
 Content-Type: text/plain; charset=utf-8
 
+Steve,
 
-All,
+Can you give this a 2009 ID. Perhaps I could use a group of 2009 IDs, as there
+have been quite a few old requests this week.
 
-I agree that these are duplicates.  This arose out of an oddity in the CVE 
-content production process, the specifics of which I'm still trying to 
-figure out.  Basically we have multiple internal "production streams" 
-where CVE-2010-1448 was processed through one stream, and CVE-2010-1738 
-through another.  The original CVE confusion that happened in May 2010 no 
-doubt complicated things.
+Thanks.
 
-Prefer CVE-2010-1448.  I have REJECTED CVE-2010-1738.
-
-- Steve
+-- 
+    JB
 
 
+----- "Eugene Teo" <eugeneteo@...nel.sg> wrote:
 
-On Sat, 31 Jul 2010, Dan Rosenberg wrote:
-
-> Yes, CVE-2010-1738 is a dupe of CVE-2010-1448.
->
-> -Dan
->
-> On Sat, Jul 31, 2010 at 10:03 AM, Nico Golde <oss-security+ml@...lde.de> wrote:
->> Hi,
->> * Josh Bressers <bressers@...hat.com> [2010-05-14 21:48]:
->>> ----- "Dan Rosenberg" <dan.j.rosenberg@...il.com> wrote:
->>>
->>>> Josh,
->>>>
->>>> The XSS in the title string was already assigned CVE-2010-1448.  Do
->>>> you mean to assign issue #2, the XSS reflected in search results?
->>>>
->>>
->>> Sigh, yes.
->>>
->>> So to sum it up:
->>>
->>> 1.  XSS in the ident parameter, as described in CVE-2009-4497.
->>>
->>> 2.  XSS that is reflected via the search results page after issuing
->>> This one is now CVE-2010-1625
->>>
->>> 3. 3.  XSS that is reflected via the <title> tag on the search page, as
->>> described in Raphael's original e-mail a few days ago, which Josh assigned
->>> CVE-2010-1448
->>
->> CVE-2010-1738 seems to be a dupe of this?
->>
->> Cheers
->> Nico
->> --
->> Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
->> For security reasons, all text in this mail is double-rot13 encrypted.
->>
->
->
+> On 06/15/2010 02:31 PM, dann frazier wrote:
+> > Going through some old issues, we have this one from 2009:
+> >   https://bugzilla.kernel.org/show_bug.cgi?id=14605
+> >
+> > Upstream fix went into 2.6.33-rc8:
+> >   
+> http://git.kernel.org/linus/80e1e823989ec44d8e35bdfddadbddcffec90424
+> >
+> > This was included in 2.6.32.9 and 2.6.27.46, but it looks like our
+> > 2.6.26-based kernel may have the issue as well.
+> 
+> Also see, https://bugzilla.redhat.com/show_bug.cgi?id=559100.
+> 
+> If memory serves me well, it should affect kernels v2.6.21-rc1 onwards
+> 
+> with the commit ab521dc0.
+> 
+> Thanks, Eugene
+> -- 
+> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i);
+> }
