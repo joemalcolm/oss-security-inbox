@@ -1,51 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/10/8
-Message-ID: <20100910172457.GA23393@redhat.com>
-Date: Fri, 10 Sep 2010 19:24:57 +0200
-From: Oleg Nesterov <oleg@...hat.com>
-To: KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>
-Cc: Roland McGrath <roland@...hat.com>, Linus Torvalds <torvalds@...ux-foundation.org>, Andrew Morton <akpm@...ux-foundation.org>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Kees Cook <kees.cook@...onical.com>, Al Viro <viro@...iv.linux.org.uk>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, pageexec@...email.hu, "Brad Spengler <spender@...ecurity.net>, Eugene Teo" <eugene@...hat.com>, KAMEZAWA Hiroyuki <kamezawa.hiroyu@...fujitsu.com>
-Subject: Re: [PATCH] move cred_guard_mutex from task_struct to signal_struct
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/17/1
+Message-ID: <4C19FBFB.9090401@kernel.sg>
+Date: Thu, 17 Jun 2010 18:42:03 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request - kernel: xfs swapext ioctl issue
 Content-Type: text/plain; charset=utf-8
 
-On 09/10, KOSAKI Motohiro wrote:
->
-> 1) moving cread_guard_mutex itself
->    - no increase execve overhead
-> 	-> very good
->    - it also prevent parallel ptrace
+User "foo" can use the SWAPEXT ioctl to swap a write-only file owned by 
+user "bar" into a file owned by "foo" and subsequently reading it. It 
+does so by checking that the file descriptors passed to the ioctl are 
+also opened for reading.
 
-No, it doesn't. Only PTRACE_ATTACH needs this mutex, and as Roland
-pointed out it also needs write_lock(tasklist) which is worse. So
-this change doesn't make any practical harm for ptrace.
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=605158
+http://archives.free.net.ph/message/20100616.130710.301704aa.en.html
+http://archives.free.net.ph/message/20100616.135735.40f53a32.en.html
 
-> 2) move in_exec_mm to signal_struct too
->    -> very hard. oom-killer can use very few lock because it's called
->       from various place. now both ->mm and ->in_exec_mm are protected
->       task_lock() and it help to avoid messy.
-
-Yes. But, if ->in_exec_mm is only used by oom_badness(), then I think
-you can use task_lock(tsk->group_leader). oom_badness() needs tasklist
-anyway, this means it can't race with de_thread() changing the leader.
-But up to you.
-
-Another very minor nit (but again, up to you). Perhaps exec_mmap()
-could clear ->in_exec_mm (in task_struct or signal_struct, this doesnt
-matter), it takes task_lock(current) anyway (and at this point current
-is always the group leader).
-
-> Let's move ->cred_guard_mutex from task_struct to signal_struct. It
-> naturally prevent multiple-threads-inside-exec.
-
-Reviewed-by: Oleg Nesterov <oleg@...hat.com>
-
-
-This is very minor, but perhaps you can also fix a couple of comments
-which mention task->cred_guard_mutex,
-
-	fs/exec.c:1109		the caller must hold current->cred_guard_mutex
-	kernel/cred.c:328	The caller must hold current->cred_guard_mutex
-	include/linux/tracehook.h:153	@task->cred_guard_mutex
-
-Oleg.
-
+Thanks, Eugene
+-- 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
