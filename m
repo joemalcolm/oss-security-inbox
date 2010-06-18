@@ -1,25 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/16/8
-Message-Id: <201012162250.20162.timb@nth-dimension.org.uk>
-Date: Thu, 16 Dec 2010 22:50:09 +0000
-From: Tim Brown <timb@...-dimension.org.uk>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/18/3
+Message-ID: <1915220118.620201276874835970.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 18 Jun 2010 11:27:15 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Tomas Hoger <thoger@...hat.com>
-Subject: Re: Breaking the links: Exploiting the linker
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: xfs swapext ioctl issue
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday 15 December 2010 09:45:31 Tomas Hoger wrote:
+Please use CVE-2010-2226 for this.
 
-> Maybe you want to suggest something like this instead:
-> 
->   LD_LIBRARY_PATH=${LD_LIBRARY_PATH:+$LD_LIBRARY_PATH:}/path/to/app
+Thanks.
 
-Yes, my bad. I'm not sure how I ended up with that, thanks for the correction.
-
-Tim
 -- 
-Tim Brown
-<mailto:timb@...-dimension.org.uk>
-<http://www.nth-dimension.org.uk/>
+    JB
 
-Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
+
+----- "Eugene Teo" <eugeneteo@...nel.sg> wrote:
+
+> User "foo" can use the SWAPEXT ioctl to swap a write-only file owned
+> by 
+> user "bar" into a file owned by "foo" and subsequently reading it. It
+> 
+> does so by checking that the file descriptors passed to the ioctl are
+> 
+> also opened for reading.
+> 
+> References:
+> https://bugzilla.redhat.com/show_bug.cgi?id=605158
+> http://archives.free.net.ph/message/20100616.130710.301704aa.en.html
+> http://archives.free.net.ph/message/20100616.135735.40f53a32.en.html
+> 
+> Thanks, Eugene
+> -- 
+> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i);
+> }
