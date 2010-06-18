@@ -1,31 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/13/5
-Message-ID: <1325685820.314661263416800395.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 13 Jan 2010 16:06:40 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/18/4
+Message-ID: <20100618201408.GI11364@redhat.com>
+Date: Fri, 18 Jun 2010 14:14:08 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: Re: CVE Request: viewvc
+Subject: CVE request: moodle 1.9.9/1.8.13 multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
------ "Ludwig Nussel" <ludwig.nussel@...e.de> wrote:
-> 
-> viewvc 1.1.3 was released with security fixes according to the changelog:
-> http://viewvc.tigris.org/source/browse/viewvc/trunk/CHANGES?r1=2242&r2=2313&pathrev=HEAD
-> 
-> More explanations are in this commit:
-> http://viewvc.tigris.org/source/browse/viewvc?view=rev&revision=2300
-> 
+Moodle 1.9.9 and 1.8.13 fix a few security issues:
 
-As best as I can tell, there are only two things that deserve CVE ids:
+http://docs.moodle.org/en/Moodle_1.9.9_release_notes
+http://docs.moodle.org/en/Moodle_1.8.13_release_notes
 
-* security fix: add root listing support of per-root authz config
-    Use CVE-2010-0004
+Which address the following issues:
 
-* security fix: query.py requires 'forbidden' authorizer (or none) in config
-    Use CVE-2010-0005
+* MSA-10-0010 Persistent Cross Site Scripting vulnerability in the MNET access control interface
+* MSA-10-0011 Cross Site Scripting vulnerability in blog/index.php
+* MSA-10-0012 KSES Security Filter Bypassing vulnerability
+* MSA-10-0013 Potential Cross Site Scripting vulnerability in Quiz reports
 
-Thanks.
+Could CVE names be assigned to these issues please?  Thanks!
 
 -- 
-    JB
+Vincent Danen / Red Hat Security Response Team 
