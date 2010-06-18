@@ -1,22 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/30/5
-Message-ID: <4CF487D2.8040008@redhat.com>
-Date: Tue, 30 Nov 2010 13:12:50 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>, Marcus Meissner <meissner@...e.de>
-Subject: CVE request: xen: x86-64: don't crash Xen upon direct pv guest access
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/18/2
+Message-ID: <1540386413.595431276866848478.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 18 Jun 2010 09:14:08 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: coley <coley@...re.org>
+Subject: Stefan Esser's 0day PHP SysCan flaw
 Content-Type: text/plain; charset=utf-8
 
-handle_gdt_ldt_mapping_fault() is intended to deal with indirect 
-accesses (i.e. those caused by descriptor loads) to the GDT/LDT mapping 
-area only. While for 32-bit segment limits indeed prevent the function 
-being entered for direct accesses (i.e. a #GP fault will be raised even 
-before the address translation gets done, on 64-bit even user mode 
-accesses would lead to control reaching the BUG_ON() at the beginning of 
-that function.
+Hello all,
 
-http://lists.xensource.com/archives/html/xen-devel/2010-11/msg01650.html
-https://bugzilla.redhat.com/show_bug.cgi?id=658155
+I just assigned CVE-2010-2225 to Stefan Esser's 0day PHP unserialize flaw.
 
-Thanks, Eugene
+He speaks of it on his twitter page:
+http://twitter.com/i0n1c/status/16447867829
+
+Our bug is here:
+https://bugzilla.redhat.com/show_bug.cgi?id=605641
+
+We'll update it as we learn more.
+
+Thanks.
+
+-- 
+    JB
