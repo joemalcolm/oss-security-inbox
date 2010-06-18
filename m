@@ -1,31 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/01/4
-Message-ID: <925662149.777811275402332468.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 1 Jun 2010 10:25:32 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: Hanno Böck <hanno@...eck.de>
-Cc: Steven Christey <coley@...us.mitre.org>, oss-security@...ts.openwall.com
-Subject: Re: CVE request: joomla before 1.5.18
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/18/1
+Message-Id: <201006180504.42482.rem@videolan.org>
+Date: Fri, 18 Jun 2010 05:04:42 +0300
+From: "Rémi Denis-Courmont" <rem@...eolan.org>
+To: vlc-devel@...eolan.org, videolan-announce@...eolan.org
+Cc: oss-security@...ts.openwall.com
+Subject: VLC 1.0 series End of Life
 Content-Type: text/plain; charset=utf-8
 
+	Hello,
 
------ "Hanno Böck" <hanno@...eck.de> wrote:
+The official release of VLC media player and LibVLC version 1.1.0 is coming to a 
+close. The badly stretched VLC development team is not currently able to 
+maintain more than two development branches at a time. The team has been 
+focusing on the VLC 1.2 future series and the VLC 1.1 stable series.
 
-> http://developer.joomla.org/security/news/314-20100501-core-xss-
-> vulnerabilities-in-back-
-> end.html?utm_source=feedburner&utm_medium=email&utm_campaign=Feed%3A+JoomlaSecurityNews+%28Joomla!
-> +Security+News%29
-> 
-> Description
-> 
-> Back-end user can inject javascript in various administrator screens.
-> 
-> Affected all versions below 1.5.18.
-> 
+As a consequence, source code for VLC 1.0 is not officially unmaintained 
+anymore. There will be no further security or major bug fixes. The last version 
+was 1.0.6 and will be marked formally obsolete if/when a major issue is 
+discovered. I would also like to remind you that:
+- the LibVLC API is known to be broken in all 1.0.x releases,
+- that the Mozilla plugin is broken on X11 platforms in release 1.0.6, and
+- that binary packages (Windows, MacOS) have already been discontinued.
 
-Please use CVE-2010-1649.
+If you need any of these, please update to VLC 1.1.0-RC3 already, or 1.1.0 at 
+the earliest.
 
-Thanks.
+N.B.: VLC 1.0.5, 0.9.10, 0.8.6i and older versions exhibit known published 
+security issues. Update urgently if you have not already done so.
+
+Best regards,
 
 -- 
-    JB
+Rémi Denis-Courmont
