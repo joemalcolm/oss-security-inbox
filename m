@@ -1,36 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/05/3
-Message-ID: <75661079.372161270491905168.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 5 Apr 2010 14:25:05 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Debian Moin Question
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/21/1
+Message-ID: <AANLkTimFV8vZ0D_GumkU_IZfOOoH28v8t0DzB379CKc0@mail.gmail.com>
+Date: Mon, 21 Jun 2010 00:25:30 -0700
+From: Paul Lesniewski <paul@...irrelmail.org>
+To: Josh Bressers <bressers@...hat.com>
+Cc: oss-security@...ts.openwall.com, security-2010@...irrelmail.org,  security@...de.org, coley@...re.org
+Subject: Re: [SquirrelMail-Security] CVE Request for Horde and  Squirrelmail
 Content-Type: text/plain; charset=utf-8
 
-Hello everyone,
+Hello all,
 
-I just ran across this ID from MITRE:
+>> Is there a CVE number available for the two 0-days exposed during Hack In
+>> The Box Dubai 2010 ?
+>>
+>> Though the exploits were not given during HITB (?), some friends have
+>> recently shown me that they found how both products (Squirrelmail and
+>> Horde) might be abused to be transformed, so that they become some kind
+>> of nmap scanner (banner grab, port scan, etc). It helps at discovering a
+>> remote DMZ, internal LAN, etc, by using those webmails as evil internal
+>> nmap proxies.
+>>
+>> More info available on the slides of the corporate hackers who found the
+>> 0-days :
+>> http://conference.hitb.org/hitbsecconf2010dxb/materials/D1%20-%20Laurent%20Oudot%20-%20Improving%20the%20Stealthiness%20of%20Web%20Hacking.pdf
+>> -> Squirrelmail: page 69 (post auth vuln)
+>> -> Horde: page 74 (pre auth vuln)
+>>
+>
+> Here goes, there isn't a lot of data on these.
+>
+> For Squirrelmail:
+>
+> Here are some important notes from the slide:
+>        * Default plugin <mail_fetch>, emulates POP3 fetcher with fsockopen()
+>          PHP functions, Post Authentication only
+>            - No verification on IP / PORTS
+>        * You can transform SquirrelMail as a kind of Nmap scanner
+>
+>        This has been assigned TEHTRI-SA-2010-009 by the discoverer.
+>
+>        The danger is that this attack could be used to bypass a firewall.
+>
+> Let's use CVE-2010-1637 for Squirrelmail.
 
-Name: CVE-2010-1238
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-1238
-Final-Decision:
-Interim-Decision:
-Modified:
-Proposed:
-Assigned: 20100405
-Category:
-Reference: DEBIAN:DSA-2024
-Reference: URL:http://www.debian.org/security/2010/dsa-2024
+Sorry for the delay.  A fix for this issue is now available in the
+SquirrelMail source repository.  A new stable version (1.4.21) with
+this fix will be released in the next week or two.  Links to the
+patches if you need them now are:
 
-MoinMoin 1.7.1 allows remote attackers to bypass the textcha
-protection mechanism by modifying the textcha-question and
-textcha-answer fields to have empty values.
+Development version (1.5.2):
+http://squirrelmail.svn.sourceforge.net/squirrelmail/?rev=13950&view=rev
+Stable version (1.4.21):
+http://squirrelmail.svn.sourceforge.net/squirrelmail/?rev=13951&view=rev
 
-The only data I can find on this is from the Debian DSA, and the
-information is quite slim. Can someone shed more light on this flaw?
-
-Thanks.
 
 -- 
-    JB
+Paul Lesniewski
+SquirrelMail Team
+Please support Open Source Software by donating to SquirrelMail!
+http://squirrelmail.org/donate_paul_lesniewski.php
