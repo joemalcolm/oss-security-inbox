@@ -1,20 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/09/1
-Message-ID: <20101209032707.GA11560@ksplice.com>
-Date: Wed, 8 Dec 2010 22:27:07 -0500
-From: Nelson Elhage <nelhage@...lice.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/21/2
+Message-ID: <186858066.786041277145933950.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 21 Jun 2010 14:45:33 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel: NULL pointer dereference in AF_ECONET
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: moodle 1.9.9/1.8.13 multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-The Linux implementation of ACORN networking over UDP does not
-properly look up the device an incoming packet was received on,
-potentially resulting in a denial of service (NULL pointer
-dereference).
+----- "Vincent Danen" <vdanen@...hat.com> wrote:
 
-This is remotely triggerable if the econet module is loaded, but
-realistically the only reason is likely to have it loaded is because
-they're trying to run an exploit.
+> Moodle 1.9.9 and 1.8.13 fix a few security issues:
+> 
+> http://docs.moodle.org/en/Moodle_1.9.9_release_notes
+> http://docs.moodle.org/en/Moodle_1.8.13_release_notes
+> 
+> Which address the following issues:
+> 
+> * MSA-10-0010 Persistent Cross Site Scripting vulnerability in the
+> MNET access control interface
 
-Reference:
-http://marc.info/?l=linux-netdev&m=129185496013580&w=2
+CVE-2010-2228
+
+> * MSA-10-0011 Cross Site Scripting vulnerability in blog/index.php
+
+CVE-2010-2229
+
+> * MSA-10-0012 KSES Security Filter Bypassing vulnerability
+
+CVE-2010-2230
+
+> * MSA-10-0013 Potential Cross Site Scripting vulnerability in Quiz
+> reports
+
+CVE-2010-2231
+
+Thanks.
+
+-- 
+    JB
