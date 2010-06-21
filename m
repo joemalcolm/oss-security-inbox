@@ -1,28 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/07/2
-Message-ID: <20101007105549.7383eb92@redhat.com>
-Date: Thu, 7 Oct 2010 10:55:49 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Nagios format string issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/21/3
+Message-ID: <4C1FC1F4.5060006@redhat.com>
+Date: Mon, 21 Jun 2010 21:48:04 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, Matthew Wilkes <enquiries@...culartriangle.eu>
+Subject: CVE Request -- Plone -- arbitrary HTML code injection in safe_html
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 6 Oct 2010 21:56:09 +0200 Oden Eriksson wrote:
+Hi Steve, vendors,
 
-> I just extracted the patches I made at the time. I cannot tell which
-> of them deserves CVE assignments though. I have put them here:
-> 
-> http://n1.nux.se/work/format_not_a_string_literal_and_no_format_arguments/
+   Plone upstream has released hotfix:
+     [1] http://plone.org/products/plone/security/advisories/cve-2010-unassigned-html-injection-in-safe_html
 
-Did you use any specific way to identify all these?  From a quick look
-at a few randomly chosen patches, there seem to be cases where one call
-was fixed, other left unchanged.  That's only for the code visible in
-the context diff.
+fixing (previous) ability to inject arbitrary HTML code in safe_html by content
+author.
 
-There are few incorrect fixes too:
+References:
+   [2] http://secunia.com/advisories/40270/
 
--  g_snprintf (gev.data.b, sizeof (gev.data.b), message);
-+  g_snprintf (gev.data.b, sizeof (gev.data.b), message, "%s");
+Could you allocate a CVE id for this?
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
