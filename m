@@ -1,45 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/07/11
-Message-ID: <1969779598.1618541283887948605.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 7 Sep 2010 15:32:28 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Moritz Naumann <security@...itz-naumann.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Horde v3.3.8 -- XSS in icon_browser.php due improper sanitization of 'subdir' URL parameter
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/22/1
+Message-Id: <DF2D47F3-31BC-4E49-8F66-080E6F0CC6F7@btinternet.com>
+Date: Tue, 22 Jun 2010 09:13:20 +0100
+From: Matthew Wilkes <matthewwilkes@...nternet.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Matthew Wilkes <enquiries@...culartriangle.eu>
+Subject: Re: CVE Request -- Plone -- arbitrary HTML code injection in safe_html
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-3077
 
-Thanks.
+On 2010-06-21, at 2048, Jan Lieskovsky wrote:
 
--- 
-    JB
+> Could you allocate a CVE id for this?
 
+I requested one from MITRE over a week ago, they've not allocated one yet.
 
------ "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
-
-> Hello Steve, vendors,
-> 
->    Moritz Naumann reported:
->    [1] http://seclists.org/fulldisclosure/2010/Sep/82
-> 
-> a deficiency in the way Horde framework sanitized user-provided
-> 'subdir' parameter, when composing final path to the image file.
-> A remote, unauthenticated user could use this flaw to conduct
-> cross-site scripting attacks (execute arbitrary HTML or scripting
-> code) by providing a specially-crafted URL to the running
-> Horde framework instance.
-> 
-> Upstream patch:
->    [2]
-> http://git.horde.org/diff.php/horde/util/icon_browser.php?rt=horde-git&r1=a978a35c3e95e784253508fd4333d2fbb64830b6&r2=9342addbd2b95f184f230773daa4faf5ef6d65e9
-> 
-> Sample public URL by Moritz to demonstrate the issue:
->    [3] [path_to_horde]/util/icon_browser.php?subdir=<body
-> onload="alert('XSS')">&app=horde
-> 
-> Could you allocate CVE id for this issue?
-> 
-> Thanks && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+Matthew
