@@ -1,28 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/29/1
-Message-Id: <201005291450.06636.hanno@hboeck.de>
-Date: Sat, 29 May 2010 14:50:06 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Cc: Steven Christey <coley@...us.mitre.org>, Josh Bressers <bressers@...hat.com>
-Subject: CVE request: joomla before 1.5.18
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/22/2
+Message-ID: <Pine.GSO.4.64.1006221302370.12832@faron.mitre.org>
+Date: Tue, 22 Jun 2010 13:09:01 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security <oss-security@...ts.openwall.com>
+cc: "Steven M. Christey" <coley@...us.mitre.org>, Matthew Wilkes <enquiries@...culartriangle.eu>, bressers@...hat.com
+Subject: Re: Re: CVE Request -- Plone -- arbitrary HTML code injection in safe_html
 Content-Type: text/plain; charset=utf-8
 
-http://developer.joomla.org/security/news/314-20100501-core-xss-
-vulnerabilities-in-back-
-end.html?utm_source=feedburner&utm_medium=email&utm_campaign=Feed%3A+JoomlaSecurityNews+%28Joomla!
-+Security+News%29
 
-Description
+On Tue, 22 Jun 2010, Matthew Wilkes wrote:
 
-Back-end user can inject javascript in various administrator screens.
+> On 2010-06-21, at 2048, Jan Lieskovsky wrote:
+>
+>> Could you allocate a CVE id for this?
+>
+> I requested one from MITRE over a week ago, they've not allocated one yet.
 
-Affected all versions below 1.5.18.
+Use CVE-2010-2422.
 
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+I am inferring from the hotfixes and digging into past news announcements 
+that the affected versions are 2.1 through 3.3.4.  Please let me know if 
+this is erroneous.
 
-http://schokokeks.org - professional webhosting
-
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+- Steve
