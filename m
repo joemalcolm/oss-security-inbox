@@ -1,73 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/16/6
-Message-ID: <AANLkTinDGbKrJILvp_CQeXi78uc_3_g0ih6GBykiuBFu@mail.gmail.com>
-Date: Fri, 16 Jul 2010 17:13:38 +0200
-From: Pierre Joye <pierre.php@...il.com>
-To: Josh Bressers <bressers@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE request, php var_export
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/23/1
+Message-ID: <4C21765C.60100@kernel.sg>
+Date: Wed, 23 Jun 2010 10:50:04 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: timekeeping: Prevent oops when GENERIC_TIME=n
 Content-Type: text/plain; charset=utf-8
 
-hi,
+"Aaro Koskinen reported an issue in kernel.org bugzilla #15366, where on 
+non-GENERIC_TIME systems, accessing 
+/sys/devices/system/clocksource/clocksource0/current_clocksource results 
+in an oops.
 
-Thanks and no problem, we are in time for the next release :)
+It seems the timekeeper/clocksource rework missed initializing the 
+curr_clocksource value in the !GENERIC_TIME case."
 
-Cheers,
+Upstream commit:
+http://git.kernel.org/linus/ad6759fbf35d104dbf573cd6f4c6784ad6823f7e
 
-On Fri, Jul 16, 2010 at 5:10 PM, Josh Bressers <bressers@...hat.com> wrote:
-> Please use CVE-2010-2531
->
-> Sorry for the delay.
->
-> --
->    JB
->
->
-> ----- "Pierre Joye" <pierre.php@...il.com> wrote:
->
->> hi,
->>
->> Has anyone got the time to look at this request? I would like to have
->> an ID for the last RC before we release final next week (packaging
->> RCs
->> tonight).
->>
->> On Tue, Jul 13, 2010 at 9:00 PM, Pierre Joye <pierre.php@...il.com>
->> wrote:
->> > hi,
->> >
->> > I would like to request a new # for a flaw in php's var_export. The
->> > reason is that a fatal error occurs due to recursion, memory limit
->> or
->> > execution time var_export bails out. The buffer is never cleared
->> and
->> > it flushes to the user. It's not affected by display_errors() since
->> > its considered part of the output.
->> >
->> > Fix already commited to trunk, 5.2 and 5.3 and will be in the next
->> PHP
->> > releases (5.2.14 and 5.3.3):
->> >
->> > http://svn.php.net/viewvc?view=revision&revision=301143
->> >
->> > Cheers,
->> > --
->> > Pierre
->> >
->> > @pierrejoye | http://blog.thepimp.net | http://www.libgd.org
->> >
->>
->>
->>
->> --
->> Pierre
->>
->> @pierrejoye | http://blog.thepimp.net | http://www.libgd.org
->
+I believe distros are using GENERIC_TIME=y, at least this is the case in 
+our supported kernels.
 
-
-
+Thanks, Eugene
 -- 
-Pierre
-
-@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
