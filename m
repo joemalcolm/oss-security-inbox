@@ -1,166 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/25/3
-Message-ID: <Pine.GSO.4.64.1010251751270.20275@faron.mitre.org>
-Date: Mon, 25 Oct 2010 17:52:36 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/23/7
+Message-ID: <AANLkTilqU-tsABl89fj7Vm1fkW3S3rsxc0Adyx0zQtiu@mail.gmail.com>
+Date: Wed, 23 Jun 2010 14:01:14 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>, Eugene Teo <eugeneteo@...nel.sg>
-Subject: Re: CVE request: multiple kernel stack memory disclosures
+Subject: CVE requests: LibTIFF
 Content-Type: text/plain; charset=utf-8
 
+In the past week, LibTIFF has released new versions upstream (3.9.3,
+and soon after, 3.9.4) that address a number of potentially
+security-relevant issues, some of which have not been assigned CVE
+identifiers.  The following issues will crash (or worse) any
+application linked against LibTIFF in the trivial case of viewing a
+maliciously crafted image:
 
+1.  Out-of-bounds read in TIFFExtractData() may result in application
+crash (no reference, fixed upstream).  Reported by Dan Rosenberg.
 
-All,
+2.  Out-of-bounds read in TIFFVGetField() may result in application
+crash (https://bugs.launchpad.net/ubuntu/lucid/+source/tiff/+bug/589145).
+ The fix for this issue was combined with the fix for CVE-2010-2065,
+but it appears to be a separate issue.  Reported by Sauli Pahlman.
 
-I apologize for taking so long to handle this.  Dan, thanks for being
-so diligent about digging up more information!  That couldn't have
-been easy, let alone fun.
+3.  Memory corruption in TIFFRGBAImageGet() due to buffer overflow
+(https://bugs.launchpad.net/ubuntu/+source/tiff/+bug/591605).
+Reported by Sauli Pahlman.
 
-- Steve
 
+There is another series of issues that each lead to an application
+crash, reported at https://bugzilla.redhat.com/show_bug.cgi?id=583081
+by Nicolae Ghimbovschi.  However, these issues may require more user
+assistance, such as running specific conversion tools to process TIFF
+files, and as such may not need CVE identifiers.  I thought I'd
+include them for completeness:
 
-========================================================================
+4.  http://bugzilla.maptools.org/show_bug.cgi?id=2207 ("tif_getimage
+fails when flipping vertically on 64-bit platforms")
 
-http://www.openwall.com/lists/oss-security/2010/10/07/1
+5.  http://bugzilla.maptools.org/show_bug.cgi?id=2208 ("Bogus
+ReferenceBlackWhite values can crash libtiff")
 
-Author: Dan Rosenberg
+6.  http://bugzilla.maptools.org/show_bug.cgi?id=2209 ("Assertion
+failure in OJPEGPostDecode") - this one is an assertion failure and
+not a segfault, so it might not need a CVE.
 
 
->  ipc/shm.c (shmctl), reported and fixed by Kees Cook
->  Affects >= 2.6.0, >= 2.4.0
->
->  Reference:
->  http://lkml.org/lkml/2010/10/6/454
+Finally, to avoid confusion, the following more serious issues were
+also fixed and have already received CVE identifiers:
 
-CVE-2010-4072
+7.  Integer overflows leading to heap overflow in Fax3SetupState().
+Reported by Kevin Finisterre (CVE-2010-1411).
 
+8.  Integer overflow in TIFFFillStrip() leading to heap overflow in
+TIFFReadRawStrip1().  Reported by Sauli Pahlman (CVE-2010-2065).
 
->  ipc/compat.c (compat versions of semctl, shmctl, and msgctl)
->  Affects >= 2.6.8
->
->  ipc/compat_mq (compat versions of mq_open and mq_getsetattr)
->  Affects >= 2.6.8
->
->  Reference:
->  http://lkml.org/lkml/2010/10/6/492
+9.  Stack overflow when processing SubjectDistance EXIF tags allows
+arbitrary code execution.  Reported by Dan Rosenberg (CVE-2010-2067).
 
-CVE-2010-4073
-
-
-========================================================================
-
-http://www.openwall.com/lists/oss-security/2010/10/06/6
-
-Author: Dan Rosenberg
-
-Due to the high variation in affected kernel versions, most of these
-are SPLIT.
-
-
-
->TIOCGICOUNT stack leaks:
-
-(see http://lkml.org/lkml/2010/9/16/294)
-
->  usb/serial/mos*.c
->  Fixed in 2.6.36-rc5
->  Affects >= 2.6.19
-
-CVE-2010-4074
-
-
->drivers/serial/serial_core.c
->Not fixed yet (Alan Cox's fix will be in 2.6.37)
->Affects >= 2.6.0
-
-
-CVE-2010-4075
-
-
->drivers/char/amiserial.c
->Not fixed yet (Alan Cox's fix will be in 2.6.37)
->Affects >= 2.6.0, >= 2.4.0
-
-
-CVE-2010-4076
-
->drivers/char/nozomi.c
->Not fixed yet (Alan Cox's fix will be in 2.6.37)
->Affects >= 2.6.25
-
-CVE-2010-4077
-
-
->drivers/net/usb/hso.c (CVE-2010-3298)
->Fixed in 2.6.36-rc5
->Affects >= 2.6.29
-
-Already assigned - CVE-2010-3298
-
-
->FBIOGET_VBLANK stack leaks:
-
-
->drivers/video/sis/sis_main.c
->Fixed in 2.6.36-rc6
->Affects >= 2.6.11
-
-CVE-2010-4078
-
-
->drivers/video/ivtv/ivtvfb.c
->Not fixed yet (patch has been queued)
->Affects >= 2.6.24
-
-CVE-2010-4079
-
-
->Miscellaneous device ioctl stack leaks:
-
->sound/pci/rme9652/hdsp*.c
->Fixed in 2.6.36-rc6
->Affects >= 2.6.0 (hdsp.c), >= 2.6.13 (hdspm.c)
-
-These are SPLIT because the affected files are in different versions.
-
-hdsp.c - CVE-2010-4080
-
-hdspm.c - CVE-2010-4081
-
-
->drivers/video/via/ioctl.c
->Fixed in 2.6.36-rc5
->Affects >= 2.6.28
-
-CVE-2010-4082
-
-
->drivers/net/cxgb3/cxgb3_main.c (CVE-2010-3296)
->Fixed in 2.6.36-rc5
->Affects >= 2.6.21
-
-
-Already assigned - CVE-2010-3296
-
-
->drivers/net/eql.c (CVE-2010-3297)
->Fixed in 2.6.36-rc5
->Affects >= 2.6.0, >= 2.4.0
-
-
-Already assigned - CVE-2010-3297
-
-
->System call stack leak:
-
->ipc/sem.c
->Not fixed yet (patch queued)
->Affects >= 2.6.0, >= 2.4.0
-
-Presumably the lack of a current patch means this will affect a
-different version than CVE-2010-4072 (ipc/shm.c shmctl), see above.
-
-CVE-2010-4083
-
-
-- Steve
+Thanks,
+Dan
