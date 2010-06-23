@@ -1,44 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/26/1
-Message-ID: <4C4D4B56.3030909@redhat.com>
-Date: Mon, 26 Jul 2010 10:46:14 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/23/5
+Message-ID: <4C2237C0.8020702@redhat.com>
+Date: Wed, 23 Jun 2010 18:35:12 +0200
 From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE-2008-id Request -- ssmtp -- standardise() -- Buffer overflow
+To: "Steven M. Christey" <coley@...us.mitre.org>, Michael Fleming <mfleming+rpm@...tfleminggent.com>
+CC: oss-security <oss-security@...ts.openwall.com>, Florian Streibelt <gentoo@...treibelt.de>, Mads Martin Joergensen <mmj@....dk>, "Morten K. Poulsen" <morten@...elingp.dk>
+Subject: CVE Request -- mlmmj -- Directory traversal flaw by editing and saving list entries via php-admin web interface
 Content-Type: text/plain; charset=utf-8
 
 Hi Steve, vendors,
 
-   Brendan Boerner reported:
-   [1] https://bugs.launchpad.net/ubuntu/+source/ssmtp/+bug/282424
+   Florian Streibelt (yet in 2009) reported:
+   [1] http://bugs.gentoo.org/show_bug.cgi?id=259968#c0
 
-a deficiency in the way ssmtp removed trailing '\n' sequence
-by processing lines beginning with a leading dot. A local user,
-could send a specially-crafted e-mail message via ssmtp send-only
-sendmail emulator, leading to ssmtp executable denial of service (exit with:
-ssmtp: standardise() -- Buffer overflow). Different vulnerability
-than CVE-2008-3962.
+   a directory traversal flaw in the way mlmmj (Mailing List Managing Made
+   Joyful), mailing list manager, processed users requests to edit and save
+   list entries, originating from php-admin web interface. A remote,
+   authenticated attacker could use these flaws to alter integrity of the system
+   (write and / or delete arbitrary files) by providing a specially-crafted list
+   variable content to the edit or save request.
+
+   Florian, please correct me, if I mangled the attack scenario, and it's slightly
+   different.
+
+   Martin, Morten, are these two issues known upstream yet? Is there a patch for them already?
+
+   Steve, could you please allocate two CVE-2009-XXXX CVE ids?
+   (One for 1, 'edit' case, second for 2, 'save' case.) [Searching "Master Copy of CVE" for "mlmmj"
+    keyword returned nothing for me.]
 
 References:
-   [2] https://bugzilla.redhat.com/show_bug.cgi?id=582236
-   [3] https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2008-3962
-   [4] http://patch-tracker.debian.org/package/ssmtp/2.62-3
-   [5] http://lists.fedoraproject.org/pipermail/package-announce/2010-May/041012.html
-   [6] http://lists.fedoraproject.org/pipermail/package-announce/2010-May/041009.html
-   [7] http://lists.fedoraproject.org/pipermail/package-announce/2010-May/041119.html
-
-Debian Linux distribution patch:
-   [8] http://patch-tracker.debian.org/patch/series/view/ssmtp/2.62-3/345780-standardise-bufsize
-
-Public PoC (from https://bugzilla.redhat.com/show_bug.cgi?id=582236#c0):
-   [9] ( 0. Install & configure ssmtp, of course )
-         1. (echo -n . ; for i in {1..2050} ; do echo -n $i ; done) | mail root
-
-Couldn't find CVE-2008-XXXX ssmtp identifier for this
-(http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=ssmtp).
-
-Steve, could you allocate one?
+   [2] http://bugs.gentoo.org/show_bug.cgi?id=259968
+   [3] https://bugzilla.redhat.com/show_bug.cgi?id=607256
 
 Thanks && Regards, Jan.
 --
