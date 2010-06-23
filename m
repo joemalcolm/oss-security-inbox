@@ -1,31 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/20/1
-Message-ID: <4B566C5A.8030503@kernel.sg>
-Date: Wed, 20 Jan 2010 10:37:14 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/23/4
+Message-Id: <201006231111.19540.ludwig.nussel@suse.de>
+Date: Wed, 23 Jun 2010 11:11:19 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-2009-4272 kernel: emergency route cache flushing leads to node deadlock
+Cc: Lennart Poettering <lennart@...ttering.net>
+Subject: CVE Request: avahi DoS
 Content-Type: text/plain; charset=utf-8
 
-Reported by the Parallels Virtuozzo Containers team.
+Hi,
 
-If an attacker was able to cause a large enough number of collisions in 
-the routing hash table (via specially-crafted packets) for the emergency 
-route flush to trigger, a deadlock could occur, or if the kernel routing 
-cache was disabled, an uninitialized pointer would be left behind after 
-a route lookup, leading to a NULL pointer dereference. Both caused by 
-the same issue.
+avahi crashes if it receives a bad packet (broken checksum)
+immediately followed by a good packet. In that case FIONREAD returns
+zero size for the bad packet. avahi doesn't consider that an error
+and calls recvmsg() which succeeds and returns the good packet which
+has a non-zero length of course. This discrepancy causes an assert()
+to fail and avahi terminates.
 
-Introduced via:
-c6153b5b77650879d78dec76414213c76dd8d574 v2.6.27-rc4~39^2~41
-1080d709fb9d8cd4392f93476ee46a9d6ea05a5b v2.6.29-rc1~581^2~973
+The problem was acknowledged by upstream (Lennart) but no fix
+was commited so far. I've attached my patch proposal.
 
-Patches:
-https://bugzilla.redhat.com/show_bug.cgi?id=545411#c6
-https://bugzilla.redhat.com/show_bug.cgi?id=545411#c15
+cu
+Ludwig
 
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=545411
+-- 
+ (o_   Ludwig Nussel
+ //\   
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
 
-Thanks, Eugene
+View attachment "0001-ignore-packet-if-FIONREAD-returns-zero.diff" of type "text/x-patch" (1200 bytes)
