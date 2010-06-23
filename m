@@ -1,21 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/26/4
-Message-ID: <20100526094644.6ec7db41@redhat.com>
-Date: Wed, 26 May 2010 09:46:44 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/23/2
+Message-ID: <4C217789.1040707@kernel.sg>
+Date: Wed, 23 Jun 2010 10:55:05 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Cc: thomas@...ell.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: Fwd: [Full-disclosure] stratsec Security Advisory SS-2010-005: Samba Multiple DoS Vulnerabilities
+Subject: kernel: thinkpad-acpi: lock down video output state access
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 25 May 2010 17:10:04 +0200 Thomas Biege wrote:
+Just a heads up. Not requesting a CVE name for this since it only affect 
+certain thinkpads/xorg.
 
-> So far no assignments were made, right?
+"Given the right combination of ThinkPad and X.org, just reading the 
+video output control state is enough to hard-crash X.org.
 
-Do you have any public bug report with further details about these
-flaws?  According to our samba maintainers, this code is only executed
-in per-connection smbd child and one can only DoS own connection. It
-seems upstream has not handled this as security either.
+Until the day I somehow find out a model or BIOS cut date to not provide 
+this feature to ThinkPads that can do video switching through X RandR, 
+change permissions so that only processes with CAP_SYS_ADMIN can access 
+any sort of video output control state.
 
+This bug could be considered a local DoS I suppose, as it allows any
+non-privledged local user to cause some versions of X.org to hard-crash 
+some ThinkPads."
+
+Upstream commit:
+http://git.kernel.org/linus/b525c06cdbd8a3963f0173ccd23f9147d4c384b5
+
+Thanks, Eugene
 -- 
-Tomas Hoger / Red Hat Security Response Team
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
