@@ -1,38 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/06/3
-Message-ID: <4B6D7292.2070304@debian.org>
-Date: Sat, 06 Feb 2010 14:45:54 +0100
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/23/3
+Message-ID: <4C2182F7.5040700@kernel.sg>
+Date: Wed, 23 Jun 2010 11:43:51 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Subject: Re: Samba symlink 0day flaw
+Subject: kernel: l2tp: Fix oops in pppol2tp_xmit
 Content-Type: text/plain; charset=utf-8
 
-On 06/02/2010 14:31, Nico Golde wrote:
-> The wide_links variable, at least not in my copy.
-> 
+"When transmitting L2TP frames, we derive the outgoing interface's UDP 
+checksum hardware assist capabilities from the tunnel dst dev. This can 
+sometimes be NULL, especially when routing protocols are used and 
+routing changes occur. This patch just checks for NULL dst or dev 
+pointers when checking for netdev hardware assist features.
 
-       wide links (S)
+     BUG: unable to handle kernel NULL pointer dereference at 0000000c
+     IP: [<f89d074c>] pppol2tp_xmit+0x341/0x4da [pppol2tp]
+     *pde = 00000000
+     Oops: 0000 [#1] SMP
+     last sysfs file: /sys/class/net/lo/operstate
+[...]"
 
-           This parameter controls whether or not links in the UNIX file
-           system may be followed by the server. Links that point to areas
-           within the directory tree exported by the server are always
-           allowed; this parameter controls access only to areas that are
-           outside the directory tree being exported.
+Introduced in ffcebb16 (v2.6.29-rc1~581), fixed in 3feec909 (fixed in 
+v2.6.34-rc2). (It was later split into different files in commit 
+fd558d18 v2.6.35-rc1).
 
-           Note that setting this parameter can have a negative effect
-on your
-           server performance due to the extra system calls that Samba
-has to
-           do in order to perform the link checks.
+I'm not requesting a CVE name for this because it did not affect any of 
+our supported kernels. FYI.
 
-           Default: wide links = yes
-
-
-This is samba 2:3.4.5~dfsg-1. Note the name is wide links, not wide_links.
-
-Cheers,
+Thanks, Eugene
 -- 
-Yves-Alexis
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (901 bytes)
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
