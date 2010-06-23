@@ -1,38 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/01/3
-Message-ID: <2062114073.778081288643939128.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 1 Nov 2010 16:38:59 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: moodle 1.9.10
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/23/6
+Message-ID: <4C22473D.7000108@f-streibelt.de>
+Date: Wed, 23 Jun 2010 19:41:17 +0200
+From: Florian Streibelt <gentoo@...treibelt.de>
+To: oss-security <oss-security@...ts.openwall.com>
+CC: Jan Lieskovsky <jlieskov@...hat.com>,  "Steven M. Christey" <coley@...us.mitre.org>, Michael Fleming <mfleming+rpm@...tfleminggent.com>,  Mads Martin Joergensen <mmj@....dk>, "Morten K. Poulsen" <morten@...elingp.dk>
+Subject: Re: CVE Request -- mlmmj -- Directory traversal flaw by editing and saving  list entries via php-admin web interface
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
------ "Ludwig Nussel" <ludwig.nussel@...e.de> wrote:
+'Jan Lieskovsky' schrieb am 23.06.2010 18:35:
+>   Florian, please correct me, if I mangled the attack scenario, and it's
+> slightly different.
 
-> Hi,
-> 
-> Moodle 1.9.10 is a security update again:
-> http://docs.moodle.org/en/Moodle_1.9.10_release_notes
-> 
+when I reported the bug I had no time to further investigate and I think I
+did not report upstream because of lack of time at that point and later
+forgot - which is sad.
 
-This appears to be these things:
+The php webinterface is a third-party development for mlmmj but part of the
+official release.
 
-* MSA-10-0017 XSS vulnerability in YUI 2.4.0 through YUI 2.8.1
-    Use CVE-2010-3866 for this.
+The last official release is 1.2.16 from 2009-Sep-05.
 
-* MSA-10-0016 Multiple phpCAS library vulnerabilities
-    This seems to have CVE ids
+On http://mlmmj.mmj.dk/files/ there is a newer version that is not linked
+to on the official download page. This new version differs only in another
+template-class beeing used, so all flaws should still be there.
 
-* MSA-10-0015 Customised HTML Purifier upgraded to 4.2.0 
-* MSA-10-0014 Customised phpMyAdmin upgraded to 2.11.11 
+Reported Upstream today: http://mlmmj.org/node/84
 
-These two have no real information I can see. They just say to upgrade the
-upstream version. Does anyone have more information (I can't follow the
-link to the tracker).
 
-Thanks.
-
--- 
-    JB
+Florian
