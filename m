@@ -1,27 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/30/11
-Message-ID: <Pine.GSO.4.64.1003301639530.4709@faron.mitre.org>
-Date: Tue, 30 Mar 2010 16:41:06 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/24/1
+Message-ID: <20100624090359.362d34ea@redhat.com>
+Date: Thu, 24 Jun 2010 09:03:59 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: ikiwiki
+Cc: dan.j.rosenberg@...il.com
+Subject: Re: CVE requests: LibTIFF
 Content-Type: text/plain; charset=utf-8
 
+On Wed, 23 Jun 2010 14:01:14 -0400 Dan Rosenberg wrote:
 
-On Wed, 17 Mar 2010, Nico Golde wrote:
+> 1.  Out-of-bounds read in TIFFExtractData() may result in application
+> crash (no reference, fixed upstream).  Reported by Dan Rosenberg.
 
-> "javascript insertion via svg uris
->
-> Ivan Shmakov pointed out that the htmlscrubber allowed data:image/* urls,
-> including data:image/svg+xml. But svg can contain javascript, so that is
-> unsafe."
-> http://ikiwiki.info/security/#index30h2
+Do you have any info on this?  I don't see anything obviously related
+in changelog.  TIFFExtractData itself and all its uses seem unchanged
+for years.
 
-Note that this URL is erroneous (it's for an older, similar issue); you 
-want this one:
+> 2.  Out-of-bounds read in TIFFVGetField() may result in application
+> crash
+> (https://bugs.launchpad.net/ubuntu/lucid/+source/tiff/+bug/589145).
 
-http://ikiwiki.info/security/#index36h2
+This is NULL deref.  Another Sauli's test case shows that similar
+problem can occur with NULL td_stripbytecount few lines below
+td_stripoffset case addressed in upstream patch.
 
-Use CVE-2010-1195
+> The fix for this issue was combined with the fix for CVE-2010-2065,
+> but it appears to be a separate issue.  Reported by Sauli Pahlman.
 
-- Steve
+Right, not related to what CVE-2010-2065 was assigned to.
+
+> 3.  Memory corruption in TIFFRGBAImageGet() due to buffer overflow
+> (https://bugs.launchpad.net/ubuntu/+source/tiff/+bug/591605).
+> Reported by Sauli Pahlman.
+
+IIRC, Sauli's file only demonstrates OOB read.  Upstream bug:
+http://bugzilla.maptools.org/show_bug.cgi?id=2216
+
+> 4.  http://bugzilla.maptools.org/show_bug.cgi?id=2207 ("tif_getimage
+> fails when flipping vertically on 64-bit platforms")
+
+CVE-2010-2233 was assigned to this issue.
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
