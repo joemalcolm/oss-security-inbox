@@ -1,46 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/01/2
-Message-ID: <4C7E6044.4060703@redhat.com>
-Date: Wed, 01 Sep 2010 16:16:36 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, Marc Delisle <Marc.Delisle@...epsherbrooke.qc.ca>, Michal Cihar <michal@...ar.com>
-Subject: CVE Request -- phpMyAdmin - v3.6.6 -- XSS attack using debugging messages (CVE-2010-3056 discussion)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/24/3
+Message-ID: <20100624153827.31d04d0e@redhat.com>
+Date: Thu, 24 Jun 2010 15:38:27 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: dan.j.rosenberg@...il.com
+Subject: Re: CVE requests: LibTIFF
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve, vendors,
+On Thu, 24 Jun 2010 09:16:20 -0400 Dan Rosenberg wrote:
 
-   on 2010-08-30 phpMyAdmin published PMASA-2010-6 addressing one XSS:
-   [1] http://www.phpmyadmin.net/home_page/security/PMASA-2010-6.php
+> >> 1.  Out-of-bounds read in TIFFExtractData() may result in
+> >> application crash (no reference, fixed upstream).  Reported by Dan
+> >> Rosenberg.
+> >
+> > Do you have any info on this?  I don't see anything obviously
+> > related in changelog.  TIFFExtractData itself and all its uses seem
+> > unchanged for years.
+> 
+> Revision 1.92.2.9 of libtiff/tif_dirread.c added code for ensuring
+> valid tag type information for each TIFF directory entry.  Prior to
+> this fix, unknown tag types would result in an out-of-bounds array
+> index in TIFFExtractData() on any code path using this macro.  Ubuntu
+> security backported this fix as debian/patches/fix-unknown-tags.patch
+> in their libtiff4 package.
 
-   Summary (from [1]):
-     XSS attack using debugging messages.
-   Description (from [1]):
-     It was possible to conduct a XSS attack using error messages in PHP backtrace.
+So the reference is:
+  http://bugzilla.maptools.org/show_bug.cgi?id=2210
 
-   Affected versions (from [1]):
-   For 3.x: versions before 3.3.6 are affected.
-   Branch 2.11.x is not affected by this
-
-   Upstream commit:
-   http://phpmyadmin.git.sourceforge.net/git/gitweb.cgi?p=phpmyadmin/phpmyadmin;a=commitdiff;h=133a77fac7d31a38703db2099a90c1b49de62e37
-
-phpMyAdmin upstream seems to reference CVE-2010-3056 as CVE id to this flaw.
-
-But CVE-2010-3056 was previously assigned to:
-[2] http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-3056
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=625877
-[4] http://www.phpmyadmin.net/home_page/security/PMASA-2010-5.php
-
-which affected both (from [4]):
-For 2.11.x: versions before 2.11.10.1 are affected.
-For 3.x: versions before 3.3.5.1 are affected.
-
-so this is different issue and new CVE id should be allocated (due different
-affected versions).
-
-Could you please allocate one?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Resposne Team
+-- 
+Tomas Hoger / Red Hat Security Response Team
