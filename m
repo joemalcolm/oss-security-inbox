@@ -1,18 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/06/1
-Message-Id: <201002061246.14352.eren@pardus.org.tr>
-Date: Sat, 6 Feb 2010 12:46:14 +0200
-From: Eren Türkay <eren@...dus.org.tr>
-To: oss-security@...ts.openwall.com
-Cc: Josh Bressers <bressers@...hat.com>, coley <coley@...re.org>, Simo Sorce <ssorce@...hat.com>
-Subject: Re: Samba symlink 0day flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/24/2
+Message-ID: <AANLkTimibXfiFOLn6vjvEtx3ZBv_pznm-Ruw0v8rzTEH@mail.gmail.com>
+Date: Thu, 24 Jun 2010 09:16:20 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: Tomas Hoger <thoger@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE requests: LibTIFF
 Content-Type: text/plain; charset=utf-8
 
-On Friday 05 February 2010 08:51:37 pm Josh Bressers wrote:
-> As many of you have probably seen, there was a supposed Samba 0day flaw
-> posted to full-disclosure and youtube.
-> 
+Thanks for your help Tomas, it's hard to keep all these issues straight.
 
-FYI, metasploit exploit module was released.
+On Thu, Jun 24, 2010 at 3:03 AM, Tomas Hoger <thoger@...hat.com> wrote:
+> On Wed, 23 Jun 2010 14:01:14 -0400 Dan Rosenberg wrote:
+>
+>> 1.  Out-of-bounds read in TIFFExtractData() may result in application
+>> crash (no reference, fixed upstream).  Reported by Dan Rosenberg.
+>
+> Do you have any info on this?  I don't see anything obviously related
+> in changelog.  TIFFExtractData itself and all its uses seem unchanged
+> for years.
+>
 
-http://blog.metasploit.com/2010/02/exploiting-samba-symlink-traversal.html
+Revision 1.92.2.9 of libtiff/tif_dirread.c added code for ensuring
+valid tag type information for each TIFF directory entry.  Prior to
+this fix, unknown tag types would result in an out-of-bounds array
+index in TIFFExtractData() on any code path using this macro.  Ubuntu
+security backported this fix as debian/patches/fix-unknown-tags.patch
+in their libtiff4 package.
+
+
+>> 2.  Out-of-bounds read in TIFFVGetField() may result in application
+>> crash
+>> (https://bugs.launchpad.net/ubuntu/lucid/+source/tiff/+bug/589145).
+>
+> This is NULL deref.  Another Sauli's test case shows that similar
+> problem can occur with NULL td_stripbytecount few lines below
+> td_stripoffset case addressed in upstream patch.
+>
+>> The fix for this issue was combined with the fix for CVE-2010-2065,
+>> but it appears to be a separate issue.  Reported by Sauli Pahlman.
+>
+> Right, not related to what CVE-2010-2065 was assigned to.
+>
+>> 3.  Memory corruption in TIFFRGBAImageGet() due to buffer overflow
+>> (https://bugs.launchpad.net/ubuntu/+source/tiff/+bug/591605).
+>> Reported by Sauli Pahlman.
+>
+> IIRC, Sauli's file only demonstrates OOB read.  Upstream bug:
+> http://bugzilla.maptools.org/show_bug.cgi?id=2216
+>
+
+Sorry, I misread your comment on the Launchpad post - by "buffer
+over-read", I now understand that you meant that libtiff attempted to
+read well past the boundaries of a buffer, resulting in an
+out-of-bounds read and application crash.  My mistake.
+
+>> 4.  http://bugzilla.maptools.org/show_bug.cgi?id=2207 ("tif_getimage
+>> fails when flipping vertically on 64-bit platforms")
+>
+> CVE-2010-2233 was assigned to this issue.
+>
+> --
+> Tomas Hoger / Red Hat Security Response Team
+>
