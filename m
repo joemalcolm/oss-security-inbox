@@ -1,65 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/20/4
-Message-ID: <2046783646.20615.1292871586138.JavaMail.root@zmail05.collab.prod.int.phx2.redhat.com>
-Date: Mon, 20 Dec 2010 13:59:46 -0500 (EST)
-From: Petr Matousek <pmatouse@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com, Dan Rosenberg <dan.j.rosenberg@...il.com>
-Subject: Re: CVE request: kernel: CAN information leak, 2nd attempt
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/24/4
+Message-ID: <20100624160139.GA6536@suse.de>
+Date: Thu, 24 Jun 2010 18:01:39 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE requests: maradns, freeciv, rbot, gitolite, gource, shib, kvirc
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> I'm ok with this, but I wanted to point out that the previously
-> mentioned heap overflow is a semantic overflow only. Because the
-> field that is being overflowed is the last field in a struct that is
-> always allocated in a chunk significantly larger than the struct
-> itself, the overflow will never result in any kind of corruption, so
-> it has essentially no security impact.
-
-Yes, we are aware of this [1]. Personally I'd call it a mitigation factor
-even though I don't have a strong opinion here. Steve, could you please
-comment?
-
-  [1] https://bugzilla.redhat.com/show_bug.cgi?id=649695#c7
-
-Petr
-
+On Fri, Jun 11, 2010 at 02:04:26PM -0400, Josh Bressers wrote:
+> Steve,
 > 
-> -Dan
+> Can MITRE handle this one. It's bigger than a breadbox and I lack time
+> to go through each of this right now.
+
+any update?
+
+Ciao, Marcus
+ 
+> Thanks.
 > 
-> On Mon, Dec 20, 2010 at 1:36 PM, Petr Matousek <pmatouse@...hat.com>
-> wrote:
-> > "The CAN protocol uses the address of a kernel heap object as a proc
-> > filename, revealing information that could be useful during
-> > exploitation."
-> >
-> > Reference:
-> > https://bugzilla.redhat.com/show_bug.cgi?id=664544
-> > http://seclists.org/oss-sec/2010/q4/103
-> >
-> > Credit: Dan Rosenberg
-> >
-> > ------------
-> >
-> > Please note that there has been one attempt to request CVE for this
-> > issue already [1]. The problem is that vendors (Red Hat more or less
-> > included) used the assigned CVE for the potential heap overflow
-> > issue
-> > [2, 3] whereas reporter used it for information leak [4].
-> >
-> >  [1] http://seclists.org/oss-sec/2010/q4/107
-> >  [2]
-> >  http://lists.opensuse.org/opensuse-updates/2010-12/msg00026.html
-> >  [3] http://www.debian.org/security/2010/dsa-2126
-> >  [4] http://www.cs.brown.edu/people/drosenbe/research.html
-> >
-> > I'd suggest to keep the CVE-2010-3874 id for the heap overflow which
-> > has some (although very limited) security potential and assign a new
-> > id
-> > for the information leak.
-> >
-> > Thanks,
-> > --
-> > Petr Matousek / Red Hat Security Response Team
-> >
-> >
+> -- 
+>     JB
+> 
+> 
+> ----- "Moritz Muehlenhoff" <jmm@...ian.org> wrote:
+> 
+> > Hi,
+> > Please assign CVE IDs for these issues current present in the Debian
+> > Security Tracker, but for which no CVE IDs have been assigned so far:
+> > 
+> > 1. maradns
+> > http://maradns.org/download/maradns-1.4.02-parse_segfault.patch
+> > Fixed in 1.4.03
+> > 
+> > 2. freeciv 
+> > http://gna.org/bugs/?15624
+> > Fixed in 2.2.1 and 2.3.0
+> > 
+> > 3. rbot (http://ruby-rbot.org/)
+> > http://www.securityfocus.com/archive/1/509719/30/0/threaded
+> > 
+> > 4. gitolite
+> > http://secunia.com/advisories/39587/
+> > http://github.com/sitaramc/gitolite/commit/1e06fea3b6959faeb72d8dca46cd4753ada48637
+> > http://github.com/sitaramc/gitolite/commit/5fd9328c1cd1e7c576b6530b3253061c68b159aa
+> > http://github.com/sitaramc/gitolite/commit/5deffee3cff5f9a13c59b8c1e357c5a32487d1c3
+> > 
+> > 5. gource
+> > http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=577958
+> > 
+> > 6. Shibboleth:
+> > http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=571631
+> > 
+> > 7. kvirc
+> > http://lists.omnikron.net/pipermail/kvirc/2010-May/000867.html
+> > 
+> > Cheers,
+> >         Moritz
+> 
+
+-- 
+Working, but not speaking, for the following german company:
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
