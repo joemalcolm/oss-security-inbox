@@ -1,26 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/14/5
-Message-Id: <20100914185135.03DD6403E8@magilla.sf.frob.com>
-Date: Tue, 14 Sep 2010 11:51:34 -0700 (PDT)
-From: Roland McGrath <roland@...hat.com>
-To: pageexec@...email.hu
-Cc: KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>, Brad Spengler <spender@...ecurity.net>, Linus Torvalds <torvalds@...ux-foundation.org>, Andrew Morton <akpm@...ux-foundation.org>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Kees Cook <kees.cook@...onical.com>, Al Viro <viro@...iv.linux.org.uk>, Oleg Nesterov <oleg@...hat.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, Eugene Teo <eugene@...hat.com>
-Subject: Re: [PATCH 1/3] setup_arg_pages: diagnose excessive argument size
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/25/2
+Message-ID: <1090383007.1201011277484327110.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 25 Jun 2010 12:45:27 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Florian Streibelt <gentoo@...treibelt.de>, Mads Martin Joergensen <mmj@....dk>, "Morten K. Poulsen" <morten@...elingp.dk>, "Steven M. Christey" <coley@...us.mitre.org>, Michael Fleming <mfleming+rpm@...tfleminggent.com>
+Subject: Re: CVE Request -- mlmmj -- Directory traversal flaw by editing and saving list entries via php-admin web interface
 Content-Type: text/plain; charset=utf-8
 
-> no it doesn't have to, similarly to how it doesn't have to hardcode
-> _SC_PAGESIZE either, AT_PAGESZ tells userland what it needs to know
-> and i think AT_ARGMAX could exist just as well.
+----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
 
-I was referring to the ways available to userland heretofore.  Certainly,
-the kernel could add new ways and then userland could do different things
-(with new kernels).  
+> Hi Steve, vendors,
+> 
+>    Florian Streibelt (yet in 2009) reported:
+>    [1] http://bugs.gentoo.org/show_bug.cgi?id=259968#c0
+> 
+>    a directory traversal flaw in the way mlmmj (Mailing List Managing
+>    Made Joyful), mailing list manager, processed users requests to edit
+>    and save list entries, originating from php-admin web interface. A
+>    remote, authenticated attacker could use these flaws to alter
+>    integrity of the system (write and / or delete arbitrary files) by
+>    providing a specially-crafted list variable content to the edit or
+>    save request.
+> 
+>    Florian, please correct me, if I mangled the attack scenario, and it's
+>    slightly different.
+> 
+>    Martin, Morten, are these two issues known upstream yet? Is there a
+>    patch for them already?
+> 
+>    Steve, could you please allocate two CVE-2009-XXXX CVE ids?  (One for
+>    1, 'edit' case, second for 2, 'save' case.) [Searching "Master Copy of
+>    CVE" for "mlmmj" keyword returned nothing for me.]
+> 
 
-auxv in particular is not a mechanism that could fit for this.  The actual
-limit depends on rlimits of the calling process, and rlimits can change
-during the life of the program.  auxv is only appropriate for things that
-are known at the time of the exec and won't change thereafter.
+This should only need one ID. The flaw is unchecked input. Steve, if I'
+mistaken, just yell.
 
+CVE-2009-4896
 
-Thanks,
-Roland
+Thanks
+
+-- 
+    JB
