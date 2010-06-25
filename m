@@ -1,14 +1,14 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/26/5
-Message-ID: <1682968767.499051282862555332.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 26 Aug 2010 18:42:35 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/25/3
+Message-ID: <1313128021.1201161277484569732.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 25 Jun 2010 12:49:29 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: CouchDB insecure library loading (Debian/Ubuntu only)
+Cc: Lennart Poettering <lennart@...ttering.net>, coley <coley@...re.org>
+Subject: Re: CVE Request: avahi DoS
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-2953
+Please use CVE-2010-2244
 
 Thanks.
 
@@ -16,21 +16,25 @@ Thanks.
     JB
 
 
------ "Dan Rosenberg" <dan.j.rosenberg@...il.com> wrote:
+----- "Ludwig Nussel" <ludwig.nussel@...e.de> wrote:
 
-> I discovered that the /usr/bin/couchdb script on Debian/Ubuntu sets
-> an
-> insecure LD_LIBRARY_PATH environment variable, such that libraries
-> from the current directory are loaded.  If a local attacker placed a
-> maliciously crafted shared library in a directory and an
-> administrator
-> were tricked into launching CouchDB from this directory, arbitrary
-> code execution could be achieved.  This vulnerability is only
-> triggered when the /usr/bin/couchdb script is executed explicitly,
-> since the init script (/etc/init.d/couchdb) changes the current
-> directory before launching CouchDB.
+> Hi,
 > 
-> The vulnerability was introduced by Debian patch
-> "mozjs1.9_ldlibpath.patch" on 3/24/2009.
+> avahi crashes if it receives a bad packet (broken checksum)
+> immediately followed by a good packet. In that case FIONREAD returns
+> zero size for the bad packet. avahi doesn't consider that an error
+> and calls recvmsg() which succeeds and returns the good packet which
+> has a non-zero length of course. This discrepancy causes an assert()
+> to fail and avahi terminates.
 > 
-> -Dan
+> The problem was acknowledged by upstream (Lennart) but no fix
+> was commited so far. I've attached my patch proposal.
+> 
+> cu
+> Ludwig
+> 
+> -- 
+>  (o_   Ludwig Nussel
+>  //\   
+>  V_/_  http://www.suse.de/
+> SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
