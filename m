@@ -1,38 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/14/2
-Message-ID: <4C65EA99.5010109@redhat.com>
-Date: Sat, 14 Aug 2010 09:00:09 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: dann frazier <dannf@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>, ben@...adent.org.uk
-Subject: Re: kernel: [PARISC] led.c - fix potential stack	overflow in led_proc_write()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/26/1
+Message-ID: <1277541745.14367.21.camel@atlantic>
+Date: Sat, 26 Jun 2010 10:42:25 +0200
+From: Morten Shearman Kirkegaard <morten@...elingp.dk>
+To: Florian Streibelt <gentoo@...treibelt.de>
+Cc: oss-security <oss-security@...ts.openwall.com>, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Michael Fleming <mfleming+rpm@...tfleminggent.com>, Mads Martin Joergensen <mmj@....dk>, Christoph Thiel <ct@....org>, Ben Schmidt <mail_ben_schmidt@...oo.com.au>
+Subject: Re: CVE Request -- mlmmj -- Directory traversal flaw by editing and saving  list entries via php-admin web interface
 Content-Type: text/plain; charset=utf-8
 
-On 08/14/2010 08:54 AM, dann frazier wrote:
-> On Tue, Aug 03, 2010 at 01:51:15AM -0400, Moritz Muehlenhoff wrote:
->> On Tue, Aug 03, 2010 at 11:46:58AM +0800, Eugene Teo wrote:
->>> Ilja reported way back in Nov 2007. A writer to /proc/pdc/led(?) can
->>> cause the kernel to consume an unbounded amount of stack, and result
->>> in stack corruption.
->>>
->>> http://www.spinics.net/lists/linux-parisc/msg02960.html
->>>
->>> If you need a CVE name, change the subject to indicate that. We are
->>> not requesting one as we do not support the PA-RISC architecture in
->>> our distribution.
->>
->> Debian supports hppa.
->>
->> Steven, please assign a CVE ID.
->
-> Ben Hutchings pointed out that this file is only writeable by root -
-> can it therefore be considered a security issue?
+CC'ing Christoph Thiel (mlmmj-php-admin author) and Ben Schmidt (current
+mlmmj maintainer).
 
- From the bug report:
-"the problem being that the stack is limited and count is not (except 
-for the MAX_INT check done in sys_write() I guess). this could lead to 
-stack corruption (when for example calling capable())."
+On Wed, 2010-06-23 at 19:41 +0200, Florian Streibelt wrote:
+> when I reported the bug I had no time to further investigate and I think I
+> did not report upstream because of lack of time at that point and later
+> forgot - which is sad.
 
-Eugene
+Yeah, well, things like that happen. Would you agree that the attached
+patch fixes the vulnerability?
+
+Using a list of known-good-characters would be nice, but dot happens to
+be a valid character in a list name.
+
+> The php webinterface is a third-party development for mlmmj but part of the
+> official release.
+
+I know that this is just semantics, but... While it is true that the
+mlmmj-php-admin web interface is distributed along with mlmmj, it is not
+a part of mlmmj itself, but is located in the contribs directory.
+
+Best regards,
+Morten
+
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+Morten Shearman Kirkegaard <morten@...elingp.dk>
+
+View attachment "patch-mlmmj-php-admin-dirtravfix.diff" of type "text/x-patch" (1139 bytes)
