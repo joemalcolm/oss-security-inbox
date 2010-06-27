@@ -1,22 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/07/1
-Message-ID: <4C85AF1B.1020308@redhat.com>
-Date: Tue, 07 Sep 2010 11:18:51 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/27/2
+Message-ID: <20100628012947.0958acf9@foo.fgeek.fi>
+Date: Mon, 28 Jun 2010 01:29:47 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: xfs: XFS_IOC_FSGETXATTR ioctl memory leak
+Subject: CVE request: makepasswd, Default settings generate insecure passwords
 Content-Type: text/plain; charset=utf-8
 
- From Dan Rosenberg, "the XFS_IOC_FSGETXATTR ioctl allows unprivileged 
-users to read 12 bytes of uninitialized stack memory, because the 
-fsxattr struct declared on the stack in xfs_ioc_fsgetxattr() does not 
-alter (or zero) the 12-byte fsx_pad member before copying it back to the 
-user."
+Can I get CVE-identifier for this issue?
 
-http://www.linux.sgi.com/archives/xfs-masters/2010-09/msg00002.html
-https://bugzilla.redhat.com/show_bug.cgi?id=630804
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=564559
+http://security-tracker.debian.org/tracker/TEMP-0564559-005920
 
-Thanks, Eugene
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+---
+Henri Salo
