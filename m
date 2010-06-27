@@ -1,40 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/07/7
-Message-ID: <107994660.114681275936671362.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 7 Jun 2010 14:51:11 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/27/1
+Message-ID: <i06qcn$hhu$1@dough.gmane.org>
+Date: Sun, 27 Jun 2010 01:17:06 -0500
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: Guillem Jover <guillem@...ian.org>, Aníbal Monsalve Salazar <anibal@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- rpcbind -- Insecure (predictable) temporary file use
+Subject: Re: Stefan Esser's 0day PHP SysCan flaw
 Content-Type: text/plain; charset=utf-8
 
+Hi Josh,
 
------ "Steven M. Christey" <coley@...us.mitre.org> wrote:
-
-> On Fri, 4 Jun 2010, Josh Bressers wrote:
+Josh Bressers wrote:
+> I just assigned CVE-2010-2225 to Stefan Esser's 0day PHP unserialize flaw.
 > 
-> > Please use CVE-2010-2061 for this.
+> He speaks of it on his twitter page:
+> http://twitter.com/i0n1c/status/16447867829
 > 
-> My read of Guillem's report at
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=583435#5 suggests that
-> we might have two distinct issues here:
+> Our bug is here:
+> https://bugzilla.redhat.com/show_bug.cgi?id=605641
 > 
-> - "*any* user can craft those two files before the daemon has started for
-> the first time, which the daemon will parse."  Nothing to do with
-> symlinks.
-> 
-> - symlinks are followed on creation of those files
-> 
+> We'll update it as we learn more.
 
-I'd not thought of these problems like this. You're probably right as CVE
-assignments are for cause, not fix. I was thinking more along the lines of
-the fix (store the files somewhere users can't write to) than the problems
-(which there are certainly two of).
+Here's a public, limited, explanation:
+http://php-security.org/2010/06/25/mops-2010-061-php-splobjectstorage-
+deserialization-use-after-free-vulnerability/
 
-Steve, I'll let you make the call, but I'm currently leaning toward two
-IDs.
-
-Thanks.
-
+Regards,
 -- 
-    JB
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
+
+
