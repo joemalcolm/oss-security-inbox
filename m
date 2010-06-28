@@ -1,52 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/23/2
-Message-Id: <201002231300.o1ND0LRc019969@core.courtesan.com>
-Date: Tue, 23 Feb 2010 08:00:21 -0500
-From: "Todd C. Miller" <Todd.Miller@...rtesan.com>
-To: oss-security <oss-security@...ts.openwall.com>
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE assignment notification -- CVE-2010-0426 -- sudo improper pseudocommands file path check 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/28/3
+Message-ID: <20100628201940.4f32b2f7@foo.fgeek.fi>
+Date: Mon, 28 Jun 2010 20:19:40 +0300
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- Drupal v6.16 / v5.22 SA-CORE-2010-001
 Content-Type: text/plain; charset=utf-8
 
-Here's my WIP writeup of this:
+On Mon, 08 Mar 2010 20:36:55 +0100
+Jan Lieskovsky <jlieskov@...hat.com> wrote:
 
-Summary:
-A flaw in exists in sudo's -e option (aka sudoedit) in sudo versions
-1.6.9 through 1.7.2p3 that may give a user with permission to run
-sudoedit the ability to run arbitrary commands.
+> Hi Steve, vendors,
+> 
+>    multiple security issues have been addressed within
+> SA-CORE-2010-001:
+> 
+> * Installation cross site scripting
+> * Open redirection
+> * Locale module cross site scripting
+> * Blocked user session regeneration
+> 
+> References:
+>    [1] http://drupal.org/node/731710
+>    [2]
+> http://lists.fedoraproject.org/pipermail/package-announce/2010-March/036472.html
+> [3]
+> http://lists.fedoraproject.org/pipermail/package-announce/2010-March/036619.html
+> [4]
+> http://lists.fedoraproject.org/pipermail/package-announce/2010-March/036583.html
+> 
+> Could you allocate CVE ids for these?
+> 
+> Thanks && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
 
-Sudo versions affected:
-1.6.9 through 1.7.2p3 inclusive.
+Did this get CVE-identifiers?
 
-Details
-When sudo performs its command matching, there is a special case
-for pseudo-commands in the sudoers file (currently, the only
-pseudo-command is sudoedit).  Unlike a regular command, pseudo-commands
-do not begin with a slash ('/').
-
-The flaw is that sudo's the matching code would only check against
-the list of pseudo-commands if the user-specified command also
-contained no slashes.  As a result, if the user ran "sudo ./sudoedit"
-the normal matching code path was followed, which uses stat(2) to
-verify that the user-specified command matches the one in sudoers.
-In this case, it would compare the "./sudoedit" specified by the
-user with "sudoedit" from the sudoers file, resulting in a positive
-match.
-
-Impact:
-Exploitation of the bug requires that the sudoers file be configured
-to allow the attacker to run sudoedit.  If no users have been granted
-access to sudoedit there is no impact.
-
-Successful exploitation of the bug will allow a user to run arbitrary
-commands for whichever user they have permission to run sudoedit
-as, typically root.
-
-Fix:
-The bug is fixed in sudo 1.7.2p4 and 1.6.9p21
-
-Credit:
-This problem was brought to my attention by Glenn Waller and neonsignal.
-
-See also:
-http://sudo.ws/bugs/show_bug.cgi?id=389
+---
+Henri Salo
