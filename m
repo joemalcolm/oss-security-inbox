@@ -1,33 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/14/2
-Message-ID: <4C8EF290.1070008@redhat.com>
-Date: Tue, 14 Sep 2010 11:57:04 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/28/5
+Message-ID: <429727505.1379491277756239627.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 28 Jun 2010 16:17:19 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: numerous infoleaks
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: makepasswd, Default settings generate insecure passwords
 Content-Type: text/plain; charset=utf-8
 
-Reported by Dan Rosenberg,
+Please use CVE-2010-2247
 
-drivers/net/tulip/de4x5.c: reading uninitialized stack memory
-http://lkml.org/lkml/2010/9/11/169
-https://bugzilla.redhat.com/633158
+Thanks.
 
-drivers/net/cxgb3/cxgb3_main.c reading uninitialized stack memory
-http://lkml.org/lkml/2010/9/11/170
-introduced in 4d22de3e (v2.6.21-rc2)
-https://bugzilla.redhat.com/633149
-
-drivers/net/eql.c: reading uninitialized stack memory
-http://lkml.org/lkml/2010/9/11/168
-https://bugzilla.redhat.com/633145
-
-drivers/net/usb/hso.c: reading uninitialized memory
-http://lkml.org/lkml/2010/9/11/167
-introduced in 542f5482 (v2.6.29-rc1)
-https://bugzilla.redhat.com/633140
-
-Thanks, Eugene
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+    JB
+
+
+----- "Henri Salo" <henri@...v.fi> wrote:
+
+> Can I get CVE-identifier for this issue?
+> 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=564559
+> http://security-tracker.debian.org/tracker/TEMP-0564559-005920
+> 
+> ---
+> Henri Salo
