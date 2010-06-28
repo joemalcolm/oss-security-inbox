@@ -1,45 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/19/4
-Message-ID: <998181689.222641263930352704.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 19 Jan 2010 14:45:52 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/28/8
+Message-ID: <1933458419.1381551277757458425.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 28 Jun 2010 16:37:38 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
 Cc: coley <coley@...re.org>
-Subject: Re: CVE request: phpbb before 3.0.5
+Subject: Re: CVE Request -- Drupal v6.16 / v5.22 SA-CORE-2010-001
 Content-Type: text/plain; charset=utf-8
 
-I'm going to leave this one to MITRE. It's much bigger than a breadbasket
-to sort through the list of things fixed, which I don't have time to do.
+As best as I can tell, none of these have CVE ids. (sorry for missing these)
 
-Sorry.
+Here goes.
+
+----- "Henri Salo" <henri@...v.fi> wrote:
+
+> On Mon, 08 Mar 2010 20:36:55 +0100
+> Jan Lieskovsky <jlieskov@...hat.com> wrote:
+> 
+> > Hi Steve, vendors,
+> > 
+> >    multiple security issues have been addressed within
+> > SA-CORE-2010-001:
+> > 
+> > * Installation cross site scripting
+
+CVE-2010-2250
+
+> > * Open redirection
+
+CVE-2010-2471
+
+> > * Locale module cross site scripting
+
+CVE-2010-2472
+
+> > * Blocked user session regeneration
+
+CVE-2010-2473
+
+> > References:
+> >    [1] http://drupal.org/node/731710
+> >    [2]
+> > http://lists.fedoraproject.org/pipermail/package-announce/2010-March/036472.html
+
+> > [3]
+> > http://lists.fedoraproject.org/pipermail/package-announce/2010-March/036619.html
+
+> > [4]
+> > http://lists.fedoraproject.org/pipermail/package-announce/2010-March/036583.html
+
+> > 
+> > Could you allocate CVE ids for these?
+> > 
+> 
+> Did this get CVE-identifiers?
+> 
+
+Thanks.
 
 -- 
     JB
-
-
------ "Hanno Böck" <hanno@...eck.de> wrote:
-
-> See:
-> http://www.phpbb.com/community/viewtopic.php?f=14&p=9764445
-> "This release fixes numerous bugs since the 3.0.4 release, corrects
-> style 
-> issues, fixing one very minor security bug as well as increasing
-> performance 
-> and scalability again."
-> # [Sec] Only use forum id supplied for posting if global announcement
-> 
-> detected. (Reported by nickvergessen)
-> 
-> 
-> Also please note that the last time I requested CVEs for phpbb, they
-> never got 
-> assigned:
-> http://seclists.org/oss-sec/2009/q1/104
-> 
-> cu,
-> 
-> -- 
-> Hanno Böck		Blog:		http://www.hboeck.de/
-> GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-> 
-> http://schokokeks.org - professional webhosting
