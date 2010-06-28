@@ -1,36 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/24/10
-Message-ID: <303327254.374911290604505308.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 24 Nov 2010 08:15:05 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/28/6
+Message-ID: <1208294075.1380471277756617586.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 28 Jun 2010 16:23:37 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
 Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: unix socket local dos
+Subject: Re: CVE request - kernel: cifs: Fix a kernel BUG with remote OS/2 server
 Content-Type: text/plain; charset=utf-8
 
-
------ "Eugene Teo" <eugene@...hat.com> wrote:
-
-> Reported by Vegard Nossum: "I found this program lying around on my 
-> laptop. It kills my box (2.6.35) instantly by consuming a lot of
-> memory 
-> (allocated by the kernel, so the process doesn't get killed by the OOM
-> 
-> killer). As far as I can tell, the memory isn't being freed when the 
-> program exits either. Maybe it will eventually get cleaned up the UNIX
-> 
-> socket garbage collector thing, but in that case it doesn't get called
-> 
-> quickly enough to save my machine at least."
-> 
-> Reproducer: http://lkml.org/lkml/2010/11/23/395
-> Partial fix: http://lkml.org/lkml/2010/11/23/450
-> Reference: https://bugzilla.redhat.com/show_bug.cgi?id=656756
-> 
-
-Please use CVE-2010-4249
+Please use CVE-2010-2248
 
 Thanks.
 
 -- 
     JB
+
+
+----- "Eugene Teo" <eugeneteo@...nel.sg> wrote:
+
+> "This was known to trigger with a OS/2 server. The server sets 
+> pSMBr->CountHigh to a incorrect value even in case of normal writes. 
+> This results in 'nbytes' being computed wrongly and triggers a kernel
+> 
+> BUG at mm/filemap.c.
+> 
+>      void iov_iter_advance(struct iov_iter *i, size_t bytes)
+>      {
+>              BUG_ON(i->count < bytes);    <--- BUG here
+> 
+> Why the server is setting 'CountHigh' is not clear but only does so 
+> after writing 64k bytes. Though this looks like the server bug, the 
+> client side crash may not be acceptable.
+> 
+> The workaround is to mask off high 16 bits if the number of bytes 
+> written as returned by the server is greater than the bytes requested
+> by 
+> the client."
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=608583
+> http://git.kernel.org/linus/6513a81e9325d712f1bfb9a1d7b750134e49ff18
+> 
+> -- 
+> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i);
+> }
