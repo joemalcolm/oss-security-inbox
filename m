@@ -1,31 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/09/5
-Message-ID: <AANLkTimGTii32wHjpB=Md=3asfuqtM6yiQzy-=MxkKyR@mail.gmail.com>
-Date: Tue, 9 Nov 2010 07:14:58 -0500
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: Petr Matousek <pmatouse@...hat.com>
-Cc: coley@...us.mitre.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel: gdth: integer overflow in ioc_general()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/28/1
+Message-ID: <4C28604F.3050108@kernel.sg>
+Date: Mon, 28 Jun 2010 16:41:51 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request - kernel: cifs: Fix a kernel BUG with remote OS/2 server
 Content-Type: text/plain; charset=utf-8
 
->
-> #define SIZE 0x10000029aUL
->
-> ...
->    volatile unsigned long t = SIZE;  // volatile so that it does not get optimised (error)
->
->    printk("nada: %lx\n", current_thread_info()->addr_limit.seg);
->    printk("nada2: %lx\n", access_ok(VERIFY_READ, 0, t));
->    printk("nada3: %lx\n", t);
->    printk("nada4: %lx\n", t > UINT_MAX);
-> ...
->
-> nada: ffff810000000000
-> nada2: 1
-> nada3: 10000029a
-> nada4: 1
->
+"This was known to trigger with a OS/2 server. The server sets 
+pSMBr->CountHigh to a incorrect value even in case of normal writes. 
+This results in 'nbytes' being computed wrongly and triggers a kernel 
+BUG at mm/filemap.c.
 
-Huh.  Learn something new every day, I suppose.  I wonder if this is
-kernel version or architecture dependent?  In either case, ignore my
-previous statement, unless someone else sees anything fishy going on.
+     void iov_iter_advance(struct iov_iter *i, size_t bytes)
+     {
+             BUG_ON(i->count < bytes);    <--- BUG here
+
+Why the server is setting 'CountHigh' is not clear but only does so 
+after writing 64k bytes. Though this looks like the server bug, the 
+client side crash may not be acceptable.
+
+The workaround is to mask off high 16 bits if the number of bytes 
+written as returned by the server is greater than the bytes requested by 
+the client."
+
+https://bugzilla.redhat.com/show_bug.cgi?id=608583
+http://git.kernel.org/linus/6513a81e9325d712f1bfb9a1d7b750134e49ff18
+
+-- 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
