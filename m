@@ -1,39 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/08/4
-Message-ID: <20101108030738.GA9280@openwall.com>
-Date: Mon, 8 Nov 2010 06:07:38 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/28/4
+Message-ID: <624298254.1378791277755978846.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 28 Jun 2010 16:12:58 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel proactive security hardening
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: feh
 Content-Type: text/plain; charset=utf-8
 
-Dan, Vasiliy -
+Please use CVE-2010-2246
 
-On Sun, Nov 07, 2010 at 08:29:07PM -0500, Dan Rosenberg wrote:
-> I've just posted an RFC for the equivalent of grsecurity's MODHARDEN,
-> which places restrictions on the automatic loading of modules by
-> unprivileged users:
+Thanks.
+
+-- 
+    JB
+
+
+----- "Daniel Friesel" <derf@...osdorf.de> wrote:
+
+> Hi,
 > 
-> http://lkml.org/lkml/2010/11/7/212
-
-We simply don't include module autoloading support in Owl, and we'll
-continue to do so (it's not something we want on servers anyway, not
-only because of the security risk), but I am all for the issue getting
-(partially) addressed in/for other distros. ;-)
-
-On a more relevant issue (to us), any ideas on dealing with kernel stack
-infoleaks in a general manner (not just plugging the bugs one by one)?
-I guess it could be addressed in gcc (an option to wipe stack frames) or
-in the kernel (wipe even more of the stack, beyond the stack pointer, on
-syscall entry).  Unfortunately, either has likely measurable performance
-impact.  (BTW, has some of this been implemented somewhere already?)
-Any other ideas?
-
-In the absence of cheap-enough general solution/workaround in the
-kernel, I'm afraid we'll need to resort to improving and using automated
-tools to detect bugs of this nature - which is apparently what you and
-Vasiliy were doing lately?  What tools did you use?
-
-Thanks,
-
-Alexander
+> there is an arbitrary code execution hole in feh versions <= 1.7 down
+> to at
+> least 1.3.4 (I didn't check earlier ones).
+> When the user uses feh to open a remote file (URL) and uses the
+> --wget-timestamp option, feh passe the unescaped URL to a system()
+> call.
+> 
+> So if an attacker can trick the user into opening an image URL
+> containing
+> shell metacharacters with feh --wget-timestamp, he is able to execute
+> arbitrary shell code with the rights of the user executing feh. This
+> requires
+> the URL to resolve to an existing file, however. Obfuscating the shell
+> code
+> with HTTP escapes (like %20) does not seem to work, and a redirect
+> (via
+> tinyurl or similar) to a malicious URL will also have no effect.
+> 
+> Example:
+> remnant /t/feh > ls
+> remnant /t/feh > feh --wget-timestamp
+> 'https://derf.homelinux.org/stuff/bar`touch lol_hax`.jpg'
+> /bin/cp: cannot stat `/tmp/feh_011422_bar.jpg': No such file or
+> directory
+> feh WARNING: /tmp/feh_011422_000001_bar`touch lol_hax`.jpg does not
+> exist - skipping
+> feh WARNING: /tmp/feh_011422_000001_bar`touch lol_hax`.jpg - File does
+> not exist
+> feh - No loadable images specified.
+> Use feh --help for detailed usage information
+> remnant /t/feh > ls
+> lol_hax
+> remnant /t/feh >
+> 
+> This has been fixed in feh 1.8:
+> <https://derf.homelinux.org/projects/feh/changelog>
+> 
+> Please assign a CVE.
+> 
+> Thanks,
+> Daniel
