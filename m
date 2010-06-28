@@ -1,22 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/21/4
-Message-ID: <AANLkTilq8EW00nhZGLFCpwuw2o76UepmEMJirMc_eYq6@mail.gmail.com>
-Date: Wed, 21 Jul 2010 09:36:57 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel: btrfs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/28/2
+Message-ID: <4C288917.50706@redhat.com>
+Date: Mon, 28 Jun 2010 13:35:51 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request -- libpng v1.4.3 and v1.2.44 -- memory leak while processing PNG image with malformed sCAL chunks
 Content-Type: text/plain; charset=utf-8
 
-Fixes for two issues in btrfs were committed upstream:
+Hi Steve, vendors,
 
-1.  The BTRFS_IOC_CLONE and BTRFS_IOC_CLONE_RANGE ioctls allowed a
-local user to overwrite append-only files.
+   libpng upstream has released latest v1.4.3 and v1.2.44 versions, addressing two
+security issues:
+[a], out-of-bounds write to memory -- this already got a CVE id of "CVE-2010-1205",
+[b], memory-leak bug, involving images with malformed sCAL chunks, which could
+    lead to an application crash.
 
-2.  The BTRFS_IOC_CLONE_RANGE ioctl was subject to an integer overflow
-in specifying offsets to copy from a file, which potentially allows a
-local user to read sensitive filesystem data.
+References:
+   [1] http://www.libpng.org/pub/png/libpng.html
+   [2] https://bugzilla.redhat.com/show_bug.cgi?id=608644
 
-Reference:
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=2ebc3464781ad24474abcbd2274e6254689853b5
+Steve, could you allocate a CVE id for the [b] issue?
 
--Dan
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
