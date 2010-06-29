@@ -1,22 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/16/6
-Message-Id: <20100916144930.3BAE.A69D9226@jp.fujitsu.com>
-Date: Thu, 16 Sep 2010 14:52:56 +0900 (JST)
-From: KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>
-To: Linus Torvalds <torvalds@...ux-foundation.org>
-Cc: kosaki.motohiro@...fujitsu.com, Andrew Morton <akpm@...ux-foundation.org>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Kees Cook <kees.cook@...onical.com>, Al Viro <viro@...iv.linux.org.uk>, Oleg Nesterov <oleg@...hat.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, pageexec@...email.hu, Brad Spengler <spender@...ecurity.net>, Eugene Teo <eugene@...hat.com>, KAMEZAWA Hiroyuki <kamezawa.hiroyu@...fujitsu.com>, linux-mm <linux-mm@...ck.org>, David Rientjes <rientjes@...gle.com>
-Subject: [PATCH 0/4] oom fixes for 2.6.36
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/29/1
+Message-ID: <4C29560D.5000303@kernel.sg>
+Date: Tue, 29 Jun 2010 10:10:21 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: kernel: ethtool: kernel buffer overflow in ETHTOOL_GRXCLSRLALL
 Content-Type: text/plain; charset=utf-8
 
+FYI, "On a 32-bit machine, info.rule_cnt >= 0x40000000 leads to integer 
+overflow and the buffer may be smaller than needed.  Since 
+ETHTOOL_GRXCLSRLALL is unprivileged, this can presumably be used for at 
+least denial of service." This was introduced in v2.6.27-rc1 via 
+upstream commit 0853ad66. Also see commit 59089d8d.
 
-patch 1 and 2 fix crappy ABI breakage issue since 2.6.36-rc1.
-patch 3 and 4 fix oom dodging issue by using execve
+Reference:
+http://thread.gmane.org/gmane.linux.network/164869
+https://bugzilla.redhat.com/show_bug.cgi?id=608950
 
-  1) oom: remove totalpage normalization from oom_badness()
-  2) Revert "oom: deprecate oom_adj tunable"
-  3) move cred_guard_mutex from task_struct to signal_struct
-  4) oom: don't ignore rss in nascent mm
+I'm not requesting a CVE name for this as it did not affect any of our 
+Red Hat supported Linux kernels.
 
-
-
-
+Thanks, Eugene
+-- 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
