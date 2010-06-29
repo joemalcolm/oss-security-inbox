@@ -1,108 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/06/3
-Message-ID: <Pine.GSO.4.64.1004061119250.11220@faron.mitre.org>
-Date: Tue, 6 Apr 2010 11:41:33 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/29/8
+Message-ID: <i0dv67$n2g$1@dough.gmane.org>
+Date: Tue, 29 Jun 2010 18:21:55 -0500
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-cc: jmm@...til.org, "Steven M. Christey" <coley@...us.mitre.org>, bressers@...hat.com
-Subject: Re: CVE Request -- Zabbix v1.8.2 and v.1.6.9
+Subject: CVE request: XSS in python paste
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-On Sat, 3 Apr 2010, Tomas Hoger wrote:
+Quoting [1]:
 
->>> Use CVE-2010-1144 for this one
->>
->> Josh, in a later mail you've assigned the same ID to a libnids issue:
->
-> Looks like a wrong id used in libnids mail as, according to notes, the
-> assignment should be:
->
-> CVE-2010-0751 libnids v1.24 -- Null pointer dereference
-> CVE-2010-1144 Zabbix <= 1.8.1 SQL Injection
-> CVE-2010-1145 Zabbix remote commands execution in Zabbix Server
+> Paste 1.7.4 is released.  The only real change is to paste.httpexceptions, 
+> which was using insecure quoting of some parameters and allowed an XSS 
+> hole, 
+> most specifically with its 404 messages.  The most notably WSGI 
+> application 
+> using this is paste.urlparse.StaticURLParser and PkgResourcesParser.  By 
+> directing someone to an appropriately formed URL an attacker can execute 
+> arbitrary Javascript on the victim's client.  paste.urlmap.URLMap is also 
+> affected, but only if you have no application attached to /.  Other 
+> applications using paste.httpexceptions may be effected (especially 
+> HTTPNotFound).  WebOb/webob.exc.HTTPNotFound is not affected. 
 
-CVE-2010-1144 is in active use for both Zabbix and libnids, so that 
-identifier will have to be rejected outright.
+The commit fixing this bug appears to be:
+http://bitbucket.org/ianb/paste/changeset/fcae59df8b56
+Homepage:
+http://pythonpaste.org/
 
-Keep CVE-2010-0751 for libnids.
+Could a CVE be assigned?
 
-I also assigned CVE-2010-1277 to use for the Zabbix SQL injection.
+Thanks in advance.
 
-See below for clarification.
+[1] http://groups.google.com/group/paste-
+users/browse_thread/thread/3b3fff3dadd0b1e5?pli=1
 
-- Steve
-
-======================================================
-Name: CVE-2010-0751
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-0751
-Reference: MISC:http://xorl.wordpress.com/2010/04/04/libnids-ip-fragmentation-remote-null-pointer-dereference/
-Reference: CONFIRM:http://freefr.dl.sourceforge.net/project/libnids/libnids/1.24/libnids-1.24.releasenotes.txt
-Reference: FEDORA:FEDORA-2010-5535
-Reference: URL:http://lists.fedoraproject.org/pipermail/package-announce/2010-April/038375.html
-Reference: FEDORA:FEDORA-2010-5545
-Reference: URL:http://lists.fedoraproject.org/pipermail/package-announce/2010-April/038388.html
-Reference: FEDORA:FEDORA-2010-5562
-Reference: URL:http://lists.fedoraproject.org/pipermail/package-announce/2010-April/038410.html
-Reference: BID:39142
-Reference: URL:http://www.securityfocus.com/bid/39142
-Reference: SECUNIA:39225
-Reference: URL:http://secunia.com/advisories/39225
-Reference: SECUNIA:39249
-Reference: URL:http://secunia.com/advisories/39249
-Reference: VUPEN:ADV-2010-0777
-Reference: URL:http://www.vupen.com/english/advisories/2010/0777
-Reference: VUPEN:ADV-2010-0791
-Reference: URL:http://www.vupen.com/english/advisories/2010/0791
-Reference: XF:libnids-ipfragment-dos(57428)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/57428
-
-The ip_evictor function in ip_fragment.c in libnids 1.24, as used in
-dsniff and possibly other products, allows remote attackers to cause a
-denial of service (NULL pointer dereference and crash) via crafted
-fragmented packets.
-
-
-======================================================
-Name: CVE-2010-1144
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-1144
-
-** REJECT **
-
-DO NOT USE THIS CANDIDATE NUMBER.  ConsultIDs: CVE-2010-0751,
-CVE-2010-1277.  Reason: this candidate was intended for one issue, but
-it was accidentally assigned to two different issues, one for libnids
-and another for Zabbix.  Notes: All CVE users should consult
-CVE-2010-0751 (libnids) and CVE-2010-1277 (Zabbix) to determine which
-ID is appropriate.  All references and descriptions in this candidate
-have been removed to prevent accidental usage.
-
-
-======================================================
-Name: CVE-2010-1277
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-1277
-Reference: BUGTRAQ:20100401 Zabbix <= 1.8.1 SQL Injection
-Reference: URL:http://www.securityfocus.com/archive/1/archive/1/510480/100/0/threaded
-Reference: FULLDISC:20100401 Zabbix <= 1.8.1 SQL Injection
-Reference: URL:http://archives.neohapsis.com/archives/fulldisclosure/2010-04/0001.html
-Reference: MISC:http://legalhackers.com/advisories/zabbix181api-sql.txt
-Reference: MISC:http://legalhackers.com/poc/zabbix181api.pl-poc
-Reference: MISC:http://www.zabbix.com/rn1.8.2.php
-Reference: BID:39148
-Reference: URL:http://www.securityfocus.com/bid/39148
-Reference: OSVDB:63456
-Reference: URL:http://www.osvdb.org/63456
-Reference: SECUNIA:39119
-Reference: URL:http://secunia.com/advisories/39119
-Reference: VUPEN:ADV-2010-0799
-Reference: URL:http://www.vupen.com/english/advisories/2010/0799
-
-SQL injection vulnerability in the user.authenticate method in the API
-in Zabbix 1.8 before 1.8.2 allows remote attackers to execute
-arbitrary SQL commands via the user parameter in JSON data to
-api_jsonrpc.php.
+Regards,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
 
 
