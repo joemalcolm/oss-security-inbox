@@ -1,42 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/27/4
-Message-ID: <4BD68D09.9050803@redhat.com>
-Date: Tue, 27 Apr 2010 15:06:49 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Eren Türkay <eren@...dus.org.tr>
-Subject: Re: CVE request: kernel: tty: release_one_tty() forgets to put pids
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/29/6
+Message-ID: <AANLkTilpG-vqtlvhHUMWTw0-URx8DVyKruJwh_1J2uoi@mail.gmail.com>
+Date: Tue, 29 Jun 2010 12:36:27 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: Tomas Hoger <thoger@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE requests: LibTIFF
 Content-Type: text/plain; charset=utf-8
 
-On 04/27/2010 02:45 PM, Eren Türkay wrote:
-> On Thu, Apr 15, 2010 at 08:44:53AM +0800, Eugene Teo wrote:
->> pgrp member in struct tty_struct was converted to struct pid in
->> commit ab521dc0, so kernels of version v2.6.26-rc1 and above are
->> affected by this.
+On Tue, Jun 29, 2010 at 12:27 PM, Tomas Hoger <thoger@...hat.com> wrote:
+> On Tue, 29 Jun 2010 08:05:25 -0400 Dan Rosenberg wrote:
 >
-> FYI. We use v2.6.25.20 in one of our products. As far as I see from
-> include/linux/tty.h in 2.6.25 archive that pgrp member in tty_struct is already converted
-> to "struct pid". I haven't checked the older kernel releases but this
-> issue exists in 2.6.25. It would be very helpful if someone checked
-> older kernel releases to correctly determine which releases are vulnerable.
+>> On request, I'm re-posting the issues which I think actually deserve
+>> CVE ids.
+>
+> I believe the disagreement here is caused by different opinions on what
+> should be and what does not need to be called security.
+>
 
-Happy to know that someone reads this :) You spotted a typo.
+I agree that it's a fine line between security and stability issues.
+In these cases, since simply viewing a TIFF image will crash any
+application linked against libtiff, and given a past record of DoS
+issues in image libraries (and libtiff in particular) receiving CVEs,
+I see no reason why these bugs should be treated any differently.  In
+any case, I leave that decision to those who assign CVEs.
 
-Upstream ab521dc0 was introduced in v2.6.21-rc1.
+>> 2.  A NULL pointer derefrence in TIFFVGetField() may result in
+>> application crash
+>> (https://bugs.launchpad.net/ubuntu/lucid/+source/tiff/+bug/589145).
+>
+> This got CVE-2010-2443 from Mitre few days ago.  But I guess you're
+> going to (or should?) ask for one more for td_stripbytecount case I
+> pointed out in one of the previous replies (split due to different
+> fixed-in version).  Sauli's fuzzer to blame for the discovery again ;).
+>
 
-commit ab521dc0f8e117fd808d3e425216864d60390500
-Author: Eric W. Biederman <ebiederm@...ssion.com>
-Date:   Mon Feb 12 00:53:00 2007 -0800
+In that case, we've got three CVE-pending issues, each of which have
+been described in more detail in previous posts:
 
-     [PATCH] tty: update the tty layer to work with struct pid
-[...]
+1.  OOB read in TIFFExtractData() leading to crash.
 
-@@ -197,8 +197,8 @@ struct tty_struct {
-         struct mutex termios_mutex;
-         struct ktermios *termios, *termios_locked;
-         char name[64];
--       int pgrp;
--       int session;
-+       struct pid *pgrp;
+2.  NULL pointer dereference due to invalid td_stripbytecount leading
+to crash (distinct from CVE-2010-2443).
 
-Thanks, Eugene
+3.  OOB read in TIFFRGBAImageGet() leading to crash.
+
+-Dan
+
+> --
+> Tomas Hoger / Red Hat Security Response Team
+>
