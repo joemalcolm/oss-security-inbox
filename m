@@ -1,51 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/05/2
-Message-ID: <20100305090958.GC6636@suse.de>
-Date: Fri, 5 Mar 2010 10:09:58 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>, coley@...re.org
-Subject: Re: CVE Request: gnome-screensaver termination by pressing "Enter"
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/29/4
+Message-ID: <20100629182727.5a1d0b6e@redhat.com>
+Date: Tue, 29 Jun 2010 18:27:27 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: dan.j.rosenberg@...il.com
+Subject: Re: CVE requests: LibTIFF
 Content-Type: text/plain; charset=utf-8
 
+On Tue, 29 Jun 2010 08:05:25 -0400 Dan Rosenberg wrote:
 
-Can someone, Stephen, assign a CVE id please?
+> On request, I'm re-posting the issues which I think actually deserve
+> CVE ids.
 
-Ciao, Marcus
+I believe the disagreement here is caused by different opinions on what
+should be and what does not need to be called security.
 
-On Fri, Feb 12, 2010 at 10:53:24AM +0100, Marcus Meissner wrote:
-> Hi,
-> 
-> Yesterday an article was published by Heise News (a german IT magazine)
-> that said that the Gnome Screensaver in openSUSE 11.2 is unlockable by
-> just pressing the "return" key for some time.
-> 
-> The issue as far as we know is the following:
-> 
-> The unlock dialog shakes if you enter the wrong password. On the last try,
-> this dialog is also hidden again (so screen is blanked).
-> 
-> There is race condition between these two actions which can lead to an X error
-> which aborts the screensaver (and so unlocks the screen).
-> 
-> It is fixed in gnome-screensaver 2.28.1 release.
-> 
-> References:
-> 
-> The fixing commit in the 2.28 branch:
-> http://git.gnome.org/browse/gnome-screensaver/commit/?h=gnome-2-28&id=98f8a22412cf388217fd5b88915eadd274d68520
-> 
-> The news article (in german):
-> http://www.heise.de/newsticker/meldung/Gnome-Bildschirmsperre-in-OpenSuse-Linux-wirkungslos-928580.html
-> 
-> The GNOME upstream bug:
-> http://bugzilla.gnome.org/show_bug.cgi?id=598476
-> 
-> I think this does not have a CVE id yet, so please someone allocate one.
-> 
-> I am not sure when this shaking was introduced, but it might be pretty new.
-> 
-> Ciao, Marcus
+> 2.  A NULL pointer derefrence in TIFFVGetField() may result in
+> application crash
+> (https://bugs.launchpad.net/ubuntu/lucid/+source/tiff/+bug/589145).
+
+This got CVE-2010-2443 from Mitre few days ago.  But I guess you're
+going to (or should?) ask for one more for td_stripbytecount case I
+pointed out in one of the previous replies (split due to different
+fixed-in version).  Sauli's fuzzer to blame for the discovery again ;).
 
 -- 
-Working, but not speaking, for the following german company:
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+Tomas Hoger / Red Hat Security Response Team
