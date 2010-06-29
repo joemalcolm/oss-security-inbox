@@ -1,26 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/01/10
-Message-Id: <20100601145556.429586c0.michael.s.gilbert@gmail.com>
-Date: Tue, 1 Jun 2010 14:55:56 -0400
-From: Michael Gilbert <michael.s.gilbert@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: ghostscript and gv
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/29/3
+Message-ID: <4C2A16E1.4040101@mvista.com>
+Date: Tue, 29 Jun 2010 05:53:05 -1000
+From: akuster <akuster@...sta.com>
+To: Eugene Teo <eugeneteo@...nel.sg>
+CC: oss-security@...ts.openwall.com,  "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: kernel: ethtool: kernel buffer overflow in ETHTOOL_GRXCLSRLALL
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 1 Jun 2010 14:41:41 -0400 (EDT), Josh Bressers wrote:
-> Please use CVE-2010-2055 for this.
+Eugene,
+
+Thanks for the info. Unfortunately it does affect a few MontaVista
+kernels. Is it possible to get a CVE for this?
+
+Mahalo,
+Armin
+
+On 06/28/2010 04:10 PM, Eugene Teo wrote:
+> FYI, "On a 32-bit machine, info.rule_cnt >= 0x40000000 leads to integer
+> overflow and the buffer may be smaller than needed.  Since
+> ETHTOOL_GRXCLSRLALL is unprivileged, this can presumably be used for at
+> least denial of service." This was introduced in v2.6.27-rc1 via
+> upstream commit 0853ad66. Also see commit 59089d8d.
 > 
-[...]
-> > In the Debian bug report Paul also mentiones that gv creates a
-> > temporary file in an insecure way:
-> > http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=583316#10
-
-should the insecure temp file get its own id since it is rather
-different than the original problem?
-
-| I slightly wonder about the writing of the tmp file
-|  open("/tmp/gv_random_some.pdf.tmp", O_WRONLY|O_CREAT|O_TRUNC, 0666)
-| from within gs (no O_EXCL so would follow a symlink allowing clobber).
-
-mike
+> Reference:
+> http://thread.gmane.org/gmane.linux.network/164869
+> https://bugzilla.redhat.com/show_bug.cgi?id=608950
+> 
+> I'm not requesting a CVE name for this as it did not affect any of our
+> Red Hat supported Linux kernels.
+> 
+> Thanks, Eugene
