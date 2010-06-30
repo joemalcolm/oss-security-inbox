@@ -1,29 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/07/3
-Message-ID: <Pine.GSO.4.64.1006071043090.15053@faron.mitre.org>
-Date: Mon, 7 Jun 2010 10:46:10 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/30/12
+Message-ID: <1386461965.1636071277923333713.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 30 Jun 2010 14:42:13 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-cc: Guillem Jover <guillem@...ian.org>, Aníbal Monsalve Salazar <anibal@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- rpcbind -- Insecure (predictable) temporary file use
+Cc: dan j rosenberg <dan.j.rosenberg@...il.com>
+Subject: Re: CVE requests: LibTIFF
 Content-Type: text/plain; charset=utf-8
 
+----- "Tomas Hoger" <thoger@...hat.com> wrote:
 
-On Fri, 4 Jun 2010, Josh Bressers wrote:
+> On Tue, 29 Jun 2010 08:05:25 -0400 Dan Rosenberg wrote:
+> 
+> > On request, I'm re-posting the issues which I think actually deserve
+> > CVE ids.
+> 
+> I believe the disagreement here is caused by different opinions on what
+> should be and what does not need to be called security.
+> 
 
-> Please use CVE-2010-2061 for this.
+This thread confuses me (it's not hard to do).
 
-My read of Guillem's report at 
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=583435#5 suggests that we 
-might have two distinct issues here:
+Can someone sum up what still needs CVE ids with a reference link or two?
 
-- "*any* user can craft those two files before the daemon
-has started for the first time, which the daemon will parse."  Nothing to 
-do with symlinks.
+Thanks.
 
-- symlinks are followed on creation of those files
-
-
-So we may need two CVEs here.
-
-- Steve
+-- 
+    JB
