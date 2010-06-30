@@ -1,14 +1,14 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/28/2
-Message-ID: <1196439653.2005101272413470325.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 27 Apr 2010 20:11:10 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/30/20
+Message-ID: <2058498623.1644141277926128586.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 30 Jun 2010 15:28:48 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: Re: CVE request - kernel: find_keyring_by_name() can gain the freed keyring
+Cc: David Malcolm <dmalcolm@...hat.com>, Kyle VanderBeek <kylev@...ev.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Python-Mako (prior v0.3.4): Improper escaping of single quotes in escape.cgi (XSS)
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-1437
+Please use CVE-2010-2480
 
 Thanks.
 
@@ -16,42 +16,31 @@ Thanks.
     JB
 
 
------ "Eugene Teo" <eugene@...hat.com> wrote:
+----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
 
-> Reported by Toshiyuki Okajima. find_keyring_by_name() can gain the 
-> keyring which has been already freed. And then, its space (which is 
-> gained by find_keyring_by_name()) is broken by accessing the freed 
-> keyring as the available keyring:
+> Hi Steve, vendors,
 > 
-> 1) If the space of the freed keyring is reallocated for other purpose
+>    Craig Younkins reported:
+>      [1] http://bugs.python.org/issue9061
 > 
-> (ie. filp SLUB), the data of the filp object may be destroyed by the 
-> user of the freed keyring. (SLUB configuration can share the freed
-> space 
-> with other same-size slabs.)
+>    that Python Mako (of versions prior v0.3.4), a template library
+> written in Python,
+>    improperly escaped single quotes in escape.cgi. An attacker could
+> use this flaw to conduct
+>    cross-site scripting (XSS) attacks.
 > 
-> 2) If the slab space of the freed keyring is released into the system,
+>    References:
+>      [2] http://www.makotemplates.org/CHANGES
 > 
-> the system panic may happen because accessing the space of the freed 
-> keyring causes the page-fault.
+> Sample public PoC (from [1]):
 > 
-> Example: (we can easily confirm this problem if CONFIG_SLUB is "y".)
-> [1] with CONFIG_SLUB_DEBUG_ON
-> While we are executing my reproducer (which is attached), we can
-> notice 
-> that the user of the freed keyring breaks its space:
-> - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-> # ./reproducer &
-> ...
-> # dmesg
-> ...
-> =============================================================================
-> BUG key_jar: Poison overwritten
-> [...]
+>    Proof of concept:
+>    print """<body class='%s'></body>""" % cgi.escape("'
+> onload='alert(1);'
+> bad='")
 > 
-> More info:
-> http://www.gossamer-threads.com/lists/linux/kernel/1216391
-> https://patchwork.kernel.org/patch/94038/
-> https://bugzilla.redhat.com/show_bug.cgi?id=585094
+> Could you allocate a CVE id for this?
 > 
-> Thanks, Eugene
+> Thanks && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
