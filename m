@@ -1,25 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/10/1
-Message-ID: <4C60B2EB.1020209@windriver.com>
-Date: Tue, 10 Aug 2010 10:01:15 +0800
-From: Hui Zhu <hui.zhu@...driver.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/30/16
+Message-ID: <2046753133.1643151277925743488.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 30 Jun 2010 15:22:23 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>, bressers@...hat.com
-Subject: Re: kernel: [PARISC] led.c - fix potential stack overflow in led_proc_write()
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: XSS in python paste
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Please use CVE-2010-2477
 
-Does this issue got the id?
+Thanks.
 
-Thanks,
-Hui
+-- 
+    JB
 
-Josh Bressers:
-> Steve,
+
+----- "Raphael Geissert" <geissert@...ian.org> wrote:
+
+> Hi,
 > 
-> This one will need a 2007 ID.
+> Quoting [1]:
 > 
-> Thanks.
+> > Paste 1.7.4 is released.  The only real change is to
+> paste.httpexceptions, 
+> > which was using insecure quoting of some parameters and allowed an
+> XSS 
+> > hole, 
+> > most specifically with its 404 messages.  The most notably WSGI 
+> > application 
+> > using this is paste.urlparse.StaticURLParser and PkgResourcesParser.
+>  By 
+> > directing someone to an appropriately formed URL an attacker can
+> execute 
+> > arbitrary Javascript on the victim's client.  paste.urlmap.URLMap is
+> also 
+> > affected, but only if you have no application attached to /.  Other
 > 
-
+> > applications using paste.httpexceptions may be effected (especially
+> 
+> > HTTPNotFound).  WebOb/webob.exc.HTTPNotFound is not affected. 
+> 
+> The commit fixing this bug appears to be:
+> http://bitbucket.org/ianb/paste/changeset/fcae59df8b56
+> Homepage:
+> http://pythonpaste.org/
+> 
+> Could a CVE be assigned?
+> 
+> Thanks in advance.
+> 
+> [1] http://groups.google.com/group/paste-
+> users/browse_thread/thread/3b3fff3dadd0b1e5?pli=1
+> 
+> Regards,
+> -- 
+> Raphael Geissert - Debian Developer
+> www.debian.org - get.debian.net
