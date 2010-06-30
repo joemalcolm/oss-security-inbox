@@ -1,53 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/08/6
-Message-ID: <4BBDA763.7090804@redhat.com>
-Date: Thu, 08 Apr 2010 11:52:35 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security@...ts.openwall.com, Jean-François Moine <moinejf@...e.fr>, Tim Starling <tstarling@...imedia.org>
-CC: "Steven M. Christey" <coley@...us.mitre.org>, Gerard Milmeister <gemi@...ewin.ch>
-Subject: Re: CVE Request -- Abcm2ps v5.9.12 -- multiple unspecified vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/30/5
+Message-ID: <4C2B12B2.2030702@kernel.sg>
+Date: Wed, 30 Jun 2010 17:47:30 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
+To: oss-security@...ts.openwall.com
+CC: akuster <akuster@...sta.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: cifs: Fix a kernel BUG with remote OS/2 server
 Content-Type: text/plain; charset=utf-8
 
-Resending the query again (as first time used improper address
-for Jean-François Moine :().
+On 06/30/2010 02:43 PM, akuster wrote:
+> On 06/29/2010 02:02 PM, Eugene Teo wrote:
+>> On 06/30/2010 12:57 AM, akuster wrote:
+>>> pSMBr->CountHigh looks to have been introduce by commit
+>>> 381a420f5b23cedd9e166e052a93a7f4237bd57c back in 2.6.12-rc2.
 
-Apologize other parties for unwanted spam.
+2.6.12-rc1.
 
-Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+>>> So would it be said this issue has been around since then?
 
+Yes.
 
-Jan Lieskovsky wrote:
-> Hi Steve, vendors,
-> 
->   Abcm2ps upstream has released:
->     [1] http://moinejf.free.fr/
->     [2] http://moinejf.free.fr/abcm2ps-5.9.12.tar.gz
-> 
->   latest v5.9.12 version, addressing
->   "some security vulnerabilities"
->     [3] http://moinejf.free.fr/abcm2ps-5.txt
-> 
->   References:
->     [4] http://secunia.com/advisories/39345/
-> 
->   Jean, Tim, could you please provide further details how many
-> and what kind of flaws (i.e. describe each of the deficiencies shortly)
-> has been addressed in this Abcm2ps release? (so we know, how
-> many CVE identifiers:
->   [5] http://cve.mitre.org/
-> 
-> and each of them for what, should be assigned [without comparing
-> source code differences among Abcm2ps v5.9.12 and Abcm2ps v5.9.11
-> versions, potentially resulting in situation, we omit something] )
-> 
-> Jean, Tim -- thanks in advance for your cooperation.
-> 
-> Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
-> 
-> 
-> 
+>> ->CountHigh was added long ago. Even v2.6.9 (rhel-4) is affected.
+> I don't see that in our 2.6.10 tree.
 
+Correction, we backported patches that introduced that in rhel-4.
+
+Thanks, Eugene
+-- 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
