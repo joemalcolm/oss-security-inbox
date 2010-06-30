@@ -1,50 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/16/17
-Message-ID: <14109729.256731284667915233.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 16 Sep 2010 16:11:55 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/30/10
+Message-ID: <i0fr8t$m9k$1@dough.gmane.org>
+Date: Wed, 30 Jun 2010 11:27:19 -0500
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE-identifier request for Dovecot ACL security bug
+Subject: CVE request: PHP MOPS-2010-56..60
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-3304
+Hi,
 
-Thanks.
+According to our tracker there are still some MOPS issues that don't have 
+CVE ids.
 
+More specifically:
+
+> 60: PHP Session Serializer Session Data Injection Vulnerability
+http://svn.php.net/viewvc?view=revision&revision=298608
+
+> 59: PHP php_mysqlnd_auth_write() Stack Buffer Overflow Vulnerability
+http://svn.php.net/viewvc?view=revision&revision=298703
+
+> 58: PHP php_mysqlnd_read_error_from_line() [Heap] Buffer Overflow 
+Vulnerability
+http://svn.php.net/viewvc?view=revision&revision=298703
+
+> 57 PHP php_mysqlnd_rset_header_read() [Heap] Buffer Overflow Vulnerability
+I think this is http://svn.php.net/viewvc?view=revision&revision=298235
+
+> 56 PHP php_mysqlnd_ok_read() Information Leak Vulnerability
+http://svn.php.net/viewvc?view=revision&revision=298703
+
+Could CVE ids be assigned?
+
+Regards,
 -- 
-    JB
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
 
 
------ "Henri Salo" <henri@...v.fi> wrote:
-
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> Can I get CVE-identifier for this issue?
-> 
-> "This release fixes a bug in ACL plugin, which could be considered a
-> security bug: If Maildir is used with default settings (INBOX is same
-> as Maildir root dir) and user set some ACLs to INBOX, those ACLs were
-> copied to all newly created mailboxes. This should have been done
-> only
-> for "default ACLs", but with Maildir the INBOX directory is the same
-> as
-> the default ACL directory, so this mixup happened. This bug exists
-> only
-> in v1.2.x releases."
-> 
-> URL to announcement:
-> http://www.dovecot.org/list/dovecot-news/2010-July/000163.html
-> 
-> Please note that this is different issue than: CVE-2010-0745
-> 
-> Best regards,
-> Henri Salo
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.9 (GNU/Linux)
-> 
-> iEYEARECAAYFAkySVTEACgkQXf6hBi6kbk9r9wCgs6z72LRTcywrsWIPtRiAR/R0
-> fxcAoLQuYxA3NDFPsUiUhe7uTBm6c5xI
-> =nWSw
-> -----END PGP SIGNATURE-----
