@@ -1,56 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/04/2
-Message-ID: <Pine.GSO.4.64.1008041716240.19654@faron.mitre.org>
-Date: Wed, 4 Aug 2010 17:23:58 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: dev@...pd.apache.org, jeremy@...zel.net
-Subject: Re: CVE-2010-2791: mod_proxy information leak affecting 2.2.9 only
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/30/9
+Message-ID: <4C2B6EC2.3020603@redhat.com>
+Date: Wed, 30 Jun 2010 18:20:18 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, David Malcolm <dmalcolm@...hat.com>, Kyle VanderBeek <kylev@...ev.com>
+Subject: CVE Request -- Python-Mako (prior v0.3.4): Improper escaping of single quotes in escape.cgi (XSS)
 Content-Type: text/plain; charset=utf-8
 
+Hi Steve, vendors,
 
-A subtle comment here.  Arguably, this is the same core bug and could have 
-been merged into CVE-2010-2068, even though the versions are different. 
-Effectively, you've got multiple independent "streams" of 2.2.x Apache - 
-which vary by operating system - and there's no overlap between which 
-"stream" is affected by CVE-2010-2791 versus the ones that are affected by 
-CVE-2010-2068.  And there are no regression errors.  This general 
-abstraction difficulty applies to most software that runs on multiple 
-platforms, where each platform has slightly different up-to-date versions, 
-or delays in fixes for some platforms versus others.  (You could extend 
-the logic to how each distro maintains its own versions of common 
-software...)
+   Craig Younkins reported:
+     [1] http://bugs.python.org/issue9061
 
-However, this is a fairly arcane point that demonstrates the difficulty of 
-keeping CVE consistent with only a couple simple rules (split-by-vulntype 
-and split-by-version), instead of getting mired in lots of exceptions.
+   that Python Mako (of versions prior v0.3.4), a template library written in Python,
+   improperly escaped single quotes in escape.cgi. An attacker could use this flaw to conduct
+   cross-site scripting (XSS) attacks.
 
-As a practical matter, this is a fairly important distinction, and if we 
-were to MERGE into CVE-2010-2068 and update the description, that might 
-not be enough of a "signal" to sysadmins that they have to re-evaluate 
-their security posture.  So I'm reluctantly OK with leaving CVE-2010-2791 
-separate - but I don't want to set this up as a formal precedent for these 
-kinds of abstraction choices for later disclosures.
+   References:
+     [2] http://www.makotemplates.org/CHANGES
 
-- Steve
+Sample public PoC (from [1]):
 
+   Proof of concept:
+   print """<body class='%s'></body>""" % cgi.escape("' onload='alert(1);'
+bad='")
 
-On Fri, 30 Jul 2010, Joe Orton wrote:
+Could you allocate a CVE id for this?
 
-> Jeremy Sowden discovered an information leak in mod_proxy affecting
-> httpd version 2.2.9 only.  If a timeout occurred reading a response from
-> a backend on a persistent connection, the backend connection was not
-> closed.  The response could subsequently be read and delivered to an
-> unrelated client.
->
-> This issue has been assigned CVE name CVE-2010-2791, and is equivalent
-> to CVE-2010-2068 (fixed in 2.2.16) but affects httpd on Unix.  The bug
-> was fixed* in 2.2.10 but the security impact was not known at the time.
->
-> I'll update http://httpd.apache.org/security/vulnerabilities_22.html to
-> reflect this shortly.
->
-> Regards, Joe
->
-> * fix for 2.2.x branch: http://svn.apache.org/viewvc?rev=699841&view=rev
->
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
