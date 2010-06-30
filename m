@@ -1,23 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/24/5
-Message-Id: <20100324102521.TSBKPAMGCGENJG@hackinthebox.org>
-Date: Wed, 24 Mar 2010 10:25:21 +0800
-From: Hafez Kamal <aphesz@...kinthebox.org>
-To: <oss-security@...ts.openwall.com>
-Subject: [HITB-Announce] HITBSecConf2009 - Malaysia Videos Released! *Correction*
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/30/18
+Message-ID: <1408947388.1643541277925990594.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 30 Jun 2010 15:26:30 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: HTML Purifier
 Content-Type: text/plain; charset=utf-8
 
- Justin Lundy (Founder & CEO, Subterrain) was replaced by Fyodor Yarochkin & The Grugq. Sorry about that Fyodor! :D
+Please use CVE-2010-2479
 
----
-Hafez Kamal
-HITB Crew
-Hack in The Box (M) Sdn. Bhd.
-Suite 26.3, Level 26, Menara IMC,
-No. 8 Jalan Sultan Ismail,
-50250 Kuala Lumpur,
-Malaysia
+Thanks.
 
-Tel: +603-20394724
-Fax: +603-20318359
+-- 
+    JB
 
+
+----- "Raphael Geissert" <geissert@...ian.org> wrote:
+
+> Hi,
+> 
+> HTML Purifier 4.1.1 fixes an IE-specific XSS vulnerability.
+> 
+> Upstream announcement:
+> http://htmlpurifier.org/news/2010/0531-4.1.1-released
+> 
+> Fix:
+> http://repo.or.cz/w/htmlpurifier.git/commit/d3abcb90e30592c619047d878cf9c72b7c5836a3
+> 
+> This one is required for the fix to apply (the change is overwritten
+> by the 
+> fix):
+> http://repo.or.cz/w/htmlpurifier.git/commit/da94d3d6acdf417ac890426eb1fd239ba62b042d
+> 
+> Could a CVE id be assigned?
+> 
+> Thanks in advance.
+> 
+> Regards,
+> -- 
+> Raphael Geissert - Debian Developer
+> www.debian.org - get.debian.net
