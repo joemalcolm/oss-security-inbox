@@ -1,29 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/16/2
-Message-Id: <201008161205.35670.timb@nth-dimension.org.uk>
-Date: Mon, 16 Aug 2010 12:05:13 +0100
-From: Tim Brown <timb@...-dimension.org.uk>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/30/11
+Message-ID: <AANLkTikWFUc8zEyYoB-4hoiNC6UIo5iGKZ7zFcUfZNk_@mail.gmail.com>
+Date: Wed, 30 Jun 2010 18:33:48 +0200
+From: Pierre Joye <pierre.php@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Minor security flaw with pam_xauth
+Subject: Re: Re: Stefan Esser's 0day PHP SysCan flaw
 Content-Type: text/plain; charset=utf-8
 
-Here's another bug where privileged code isn't checking the return value from 
-setuid():
+hi,
 
-http://sourceforge.net/tracker/?func=detail&aid=3028213&group_id=6663&atid=106663
+On Wed, Jun 30, 2010 at 5:32 PM, Raphael Geissert <geissert@...ian.org> wrote:
+> Raphael Geissert wrote:
+>> Here's a public, limited, explanation:
+>> http://php-security.org/2010/06/25/mops-2010-061-php-splobjectstorage-
+>> deserialization-use-after-free-vulnerability/
+>
+> And the fix by upstream:
+> http://svn.php.net/viewvc?view=revision&revision=300843
 
-I don't think this needs a CVE as I haven't found a useful way to exploit it 
-but maybe someone on here will spot something I've missed.  Either way, I 
-would have thought it should be fixed.
+And Stefan confirmed that the fix is correct (via one of his colleague
+at SektionsEins).
 
-Tim
-
-PS Is it just me or does "I fail to see how RLIMIT_NPROC should have any affect 
-on setuid." in the comments a touch disconcerting given that it's from the PAM 
-maintainer?
+Cheers,
 -- 
-Tim Brown
-<mailto:timb@...-dimension.org.uk>
-<http://www.nth-dimension.org.uk/>
+Pierre
 
-Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
