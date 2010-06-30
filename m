@@ -1,47 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/01/9
-Message-ID: <1038424329.822141275417701167.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 1 Jun 2010 14:41:41 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: ghostscript and gv
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/30/4
+Message-ID: <4C2AE79B.60003@mvista.com>
+Date: Tue, 29 Jun 2010 20:43:39 -1000
+From: akuster <akuster@...sta.com>
+To: Eugene Teo <eugeneteo@...nel.sg>
+CC: oss-security@...ts.openwall.com,  "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: cifs: Fix a kernel BUG with remote OS/2 server
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-2055 for this.
 
-Thanks.
+Eugene,
 
--- 
-    JB
-
-
------ "Ludwig Nussel" <ludwig.nussel@...e.de> wrote:
-
-> Hi,
+On 06/29/2010 02:02 PM, Eugene Teo wrote:
+> On 06/30/2010 12:57 AM, akuster wrote:
+>> pSMBr->CountHigh looks to have been introduce by commit
+>> 381a420f5b23cedd9e166e052a93a7f4237bd57c back in 2.6.12-rc2.
+>> So would it be said this issue has been around since then?
 > 
-> ghostscript executes initialization files relative to the current
-> directory. Unfortunately the -dSAFER option has no effect on those
-> files. So when viewing a file e.g. in /tmp a local attacker could
-> have the victim execute arbitrary postscript programs.
-> Upstream suggested to use -P- in addition to -dSAFER. That however
-> would mean every program using gs to render postscript has to be
-> checked. So fixing ghostscripts default behavior might be easier for
-> distributions.
-> http://bugs.ghostscript.com/show_bug.cgi?id=691339
-> http://www.securityfocus.com/archive/1/511433
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=583316
-> https://bugzilla.novell.com/show_bug.cgi?id=608071
+> Which tree are you using? I got: fatal: bad object
+> 381a420f5b23cedd9e166e052a93a7f4237bd57c.
+
+I believe it is the historical git tree.
+git://git.kernel.org/pub/scm/linux/kernel/git/tglx/history.git
+
 > 
-> In the Debian bug report Paul also mentiones that gv creates a
-> temporary file in an insecure way:
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=583316#10
+> ->CountHigh was added long ago. Even v2.6.9 (rhel-4) is affected.
+I don't see that in our 2.6.10 tree.
+
+- Armin
+
 > 
-> cu
-> Ludwig
+> Eugene
 > 
-> -- 
->  (o_   Ludwig Nussel
->  //\   
->  V_/_  http://www.suse.de/
-> SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+>> On 06/27/2010 10:41 PM, Eugene Teo wrote:
+>>> "This was known to trigger with a OS/2 server. The server sets
+>>> pSMBr->CountHigh to a incorrect value even in case of normal writes.
+>>> This results in 'nbytes' being computed wrongly and triggers a kernel
+>>> BUG at mm/filemap.c.
+>>>
+>>>      void iov_iter_advance(struct iov_iter *i, size_t bytes)
+>>>      {
+>>>              BUG_ON(i->count<  bytes);<--- BUG here
+>>>
+>>> Why the server is setting 'CountHigh' is not clear but only does so
+>>> after writing 64k bytes. Though this looks like the server bug, the
+>>> client side crash may not be acceptable.
+>>>
+>>> The workaround is to mask off high 16 bits if the number of bytes
+>>> written as returned by the server is greater than the bytes requested by
+>>> the client."
+>>>
+>>> https://bugzilla.redhat.com/show_bug.cgi?id=608583
+>>> http://git.kernel.org/linus/6513a81e9325d712f1bfb9a1d7b750134e49ff18
+>>>
+> 
+> 
