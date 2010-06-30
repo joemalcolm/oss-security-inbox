@@ -1,37 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/02/13
-Message-ID: <20101102194442.GE10332@redhat.com>
-Date: Tue, 2 Nov 2010 13:44:42 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/30/3
+Message-ID: <i0eik7$3fp$1@dough.gmane.org>
+Date: Tue, 29 Jun 2010 23:53:36 -0500
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: utf-8 security issue in php
+Subject: CVE request: HTML Purifier
 Content-Type: text/plain; charset=utf-8
 
-* [2010-11-02 20:08:58 +0100] Pierre Joye wrote:
+Hi,
 
->On Tue, Nov 2, 2010 at 6:10 PM, Vincent Danen <vdanen@...hat.com> wrote:
->> * [2010-11-02 16:35:25 +0100] Pierre Joye wrote:
->>
->>> On Tue, Nov 2, 2010 at 3:24 PM, Josh Bressers <bressers@...hat.com> wrote:
->>>
->>>> As best as I can tell, this only needs one ID. Please use CVE-2010-3870.
->>>
->>> Thanks, I updated the bug report and the NEWS file.
->>>
->>> Please note that only 5.3 and later contains this fix. 5.3.4 will have the
->>> fix.
->>
->> Are you saying that 5.3 and later _need_ this fix?  I.e. that this
->> doesn't affect earlier versions?  Can you clarify?  Thanks.
->
->This comment was not very clear, sorry.
->
->I'm saying that 5.3 and later have been changed to fix this problem. I
->have no idea if 5.2 requires a fix and won't investigate either (sadly
->no time). It was more for the CVE description, to be sure that the
->mention of 5.3+ will be present.
+HTML Purifier 4.1.1 fixes an IE-specific XSS vulnerability.
 
-Ah, ok.  Fair enough.  Thanks for the clarification.
+Upstream announcement:
+http://htmlpurifier.org/news/2010/0531-4.1.1-released
 
+Fix:
+http://repo.or.cz/w/htmlpurifier.git/commit/d3abcb90e30592c619047d878cf9c72b7c5836a3
+
+This one is required for the fix to apply (the change is overwritten by the 
+fix):
+http://repo.or.cz/w/htmlpurifier.git/commit/da94d3d6acdf417ac890426eb1fd239ba62b042d
+
+Could a CVE id be assigned?
+
+Thanks in advance.
+
+Regards,
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
+
+
