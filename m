@@ -1,95 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/12/7
-Message-ID: <739582dd1003120924k6427e0e9vd06f5f9b1bb2ca48@mail.gmail.com>
-Date: Fri, 12 Mar 2010 12:24:52 -0500
-From: James Heralds <jmheralds@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/30/13
+Message-ID: <42296788.1636551277923511216.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 30 Jun 2010 14:45:11 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Call for papers: ISP-10, USA, July 2010
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: PHP MOPS-2010-56..60
 Content-Type: text/plain; charset=utf-8
 
-It would be highly appreciated if you could share this announcement
-with your colleagues, students and individuals whose research is in
-information security, cryptography, privacy, and related areas.
+I'm going to leave these for MITRE. They handled all the other MOPS bugs,
+it's possible these have IDs and we just don't know.
+
+Thanks.
+
+-- 
+    JB
 
 
+----- "Raphael Geissert" <geissert@...ian.org> wrote:
 
-Call for papers: ISP-10, USA, July 2010
-
-
-
-The 2010 International Conference on Information Security and Privacy
-(ISP-10) (website: http://www.PromoteResearch.org ) will be held
-during 12-14 of July 2010 in Orlando, FL, USA.  ISP is an important
-event in the areas of information security, privacy, cryptography and
-related topics.
-
-
-
-The conference will be held at the same time and location where
-several other major international conferences will be taking place.
-The conference will be held as part of 2010 multi-conference
-(MULTICONF-10). MULTICONF-10 will be held during July 12-14, 2010 in
-Orlando, Florida, USA. The primary goal of MULTICONF is to promote
-research and developmental activities in computer science, information
-technology, control engineering, and related fields. Another goal is
-to promote the dissemination of research to a multidisciplinary
-audience and to facilitate communication among researchers,
-developers, practitioners in different fields. The following
-conferences are planned to be organized as part of MULTICONF-10.
-
-
-
-•           International Conference on Artificial Intelligence and
-Pattern Recognition (AIPR-10)
-
-•           International Conference on Automation, Robotics and
-Control Systems (ARCS-10)
-
-•           International Conference on Bioinformatics, Computational
-Biology, Genomics and Chemoinformatics (BCBGC-10)
-
-•           International Conference on Computer Communications and
-Networks (CCN-10)
-
-•           International Conference on Enterprise Information Systems
-and Web Technologies (EISWT-10)
-
-•           International Conference on High Performance Computing
-Systems (HPCS-10)
-
-•           International Conference on Information Security and
-Privacy (ISP-10)
-
-•           International Conference on Image and Video Processing and
-Computer Vision (IVPCV-10)
-
-•           International Conference on Software Engineering Theory
-and Practice (SETP-10)
-
-•           International Conference on Theoretical and Mathematical
-Foundations of Computer Science (TMFCS-10)
-
-
-
-
-
-MULTICONF-10 will be held at Imperial Swan Hotel and Suites.  It is a
-full-service resort that puts you in the middle of the fun! Located
-1/2 block south of the famed International Drive, the hotel is just
-minutes from great entertainment like Walt Disney World® Resort,
-Universal Studios and Sea World Orlando. Guests can enjoy free
-scheduled transportation to these theme parks, as well as spacious
-accommodations, outdoor pools and on-site dining — all situated on 10
-tropically landscaped acres. Here, guests can experience a
-full-service resort with discount hotel pricing in Orlando.
-
-
-
-We invite draft paper submissions. Please see the website
-http://www.PromoteResearch.org  for more details.
-
-
-
-Sincerely
-
-James Heralds
+> Hi,
+> 
+> According to our tracker there are still some MOPS issues that don't
+> have 
+> CVE ids.
+> 
+> More specifically:
+> 
+> > 60: PHP Session Serializer Session Data Injection Vulnerability
+> http://svn.php.net/viewvc?view=revision&revision=298608
+> 
+> > 59: PHP php_mysqlnd_auth_write() Stack Buffer Overflow
+> Vulnerability
+> http://svn.php.net/viewvc?view=revision&revision=298703
+> 
+> > 58: PHP php_mysqlnd_read_error_from_line() [Heap] Buffer Overflow 
+> Vulnerability
+> http://svn.php.net/viewvc?view=revision&revision=298703
+> 
+> > 57 PHP php_mysqlnd_rset_header_read() [Heap] Buffer Overflow
+> Vulnerability
+> I think this is
+> http://svn.php.net/viewvc?view=revision&revision=298235
+> 
+> > 56 PHP php_mysqlnd_ok_read() Information Leak Vulnerability
+> http://svn.php.net/viewvc?view=revision&revision=298703
+> 
+> Could CVE ids be assigned?
+> 
+> Regards,
+> -- 
+> Raphael Geissert - Debian Developer
+> www.debian.org - get.debian.net
