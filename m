@@ -1,31 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/19/3
-Message-ID: <20100719133416.GC3766@redhat.com>
-Date: Mon, 19 Jul 2010 07:34:16 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/30/23
+Message-ID: <20100630235149.157bca55@foo.fgeek.fi>
+Date: Wed, 30 Jun 2010 23:51:49 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: Qt SSL endless loop
+Cc: hanno@...eck.de
+Subject: Re: CVE request: simplemachinesforum
 Content-Type: text/plain; charset=utf-8
 
-* [2010-07-19 10:49:36 +0200] Ludwig Nussel wrote:
+On Mon, 21 Dec 2009 20:21:43 +0100
+Hanno Böck <hanno@...eck.de> wrote:
 
->Vincent Danen wrote:
->> * [2010-07-16 11:19:09 -0400] Josh Bressers wrote:
->>
->> >Please use CVE-2010-2533
->>
->> Wasn't this already assigned CVE-2010-2621?
->>
->> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-2621
->>
->> It links to the same advisory (qtsslame-adv.txt) and that only seems to
->> be reporting one single problem.
->
->Oops, indeed. We've overlooked that assignment. Sorry for the confusion :-/
+> http://secunia.com/advisories/37557/
+> CSRF
+> 
+> http://securityreason.com/exploitalert/7513
+> Remote code execution
 
-No problem.  We need to discard the new one then (discard CVE-2010-2621
-as a dupe of CVE-2010-2533).
+Did these two issues get CVE-identifier assigned?
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+---
+Henri Salo
