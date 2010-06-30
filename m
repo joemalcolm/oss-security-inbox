@@ -1,28 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/07/3
-Message-ID: <20101107221632.GR5327@outflux.net>
-Date: Sun, 7 Nov 2010 14:16:32 -0800
-From: Kees Cook <kees@...ntu.com>
-To: oss-security@...ts.openwall.com
-Subject: Linux kernel proactive security hardening
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/30/14
+Message-ID: <AANLkTimzu6AhXeTfrAkvH-l9AbtB6M7pMn_pAKynDWbw@mail.gmail.com>
+Date: Wed, 30 Jun 2010 14:58:58 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: Josh Bressers <bressers@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE requests: LibTIFF
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+There are three issues that I think are CVE-worthy and have not been assigned:
 
-A push has started to try to get as much as possible upstream into the
-Linux kernel from the various hardening patches that exist in PaX,
-grsecurity, OpenWall, etc. I've got some details here:
+1.  OOB read in TIFFExtractData() leading to crash (no reference,
+originally disclosed by me in this thread, fixed upstream with release
+3.9.4 and security fix backported by Ubuntu).
 
-http://www.outflux.net/blog/archives/2010/11/07/security-is-more-than-bug-fixing/
+2.  NULL pointer dereference due to invalid td_stripbytecount leading
+to crash (distinct from CVE-2010-2443).  The upstream changelog entry
+for 3.9.4 reads:
 
-And there's a sign-up list here, for people interested in helping out:
+	* libtiff/tif_ojpeg.c (OJPEGReadBufferFill): Report an error and
+	avoid a crash if the input file is so broken that the strip
+	offsets are not defined.
 
-https://wiki.ubuntu.com/SecurityTeam/Roadmap/KernelHardening#Upstream%20Hardening
+3.  OOB read in TIFFRGBAImageGet() leading to crash.  Reference:
+https://bugs.launchpad.net/ubuntu/+source/tiff/+bug/591605
 
-We could use the help. :)
+-Dan
 
--Kees
-
--- 
-Kees Cook
-Ubuntu Security Team
+On Wed, Jun 30, 2010 at 2:42 PM, Josh Bressers <bressers@...hat.com> wrote:
+> ----- "Tomas Hoger" <thoger@...hat.com> wrote:
+>
+>> On Tue, 29 Jun 2010 08:05:25 -0400 Dan Rosenberg wrote:
+>>
+>> > On request, I'm re-posting the issues which I think actually deserve
+>> > CVE ids.
+>>
+>> I believe the disagreement here is caused by different opinions on what
+>> should be and what does not need to be called security.
+>>
+>
+> This thread confuses me (it's not hard to do).
+>
+> Can someone sum up what still needs CVE ids with a reference link or two?
+>
+> Thanks.
+>
+> --
+>    JB
+>
