@@ -1,60 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/25/4
-Message-ID: <886128461.261411282746119058.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 25 Aug 2010 10:21:59 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/30/21
+Message-ID: <AANLkTin-M5vuVgYz6_JXDjJUA5gqXn5VXeci8WzfD3il@mail.gmail.com>
+Date: Wed, 30 Jun 2010 21:33:45 +0200
+From: Pierre Joye <pierre.php@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: CERT-FI Vulnerability Co-ordination <vulncoord@...ora.fi>, Chris Hall <chris.hall@...hwayman.com>, Denis Ovsienko <infrastation@...dex.ru>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Quagga (bgpd) [two ids] -- 1, Stack buffer overflow by processing crafted Refresh-Route msgs 2, NULL ptr deref by parsing certain AS paths by BGP update request
+Subject: Re: CVE Request -- PHP strrchr() Interruption  Information Leak Vulnerability
 Content-Type: text/plain; charset=utf-8
 
------ "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+hi,
 
-> Hi Steve, vendors,
-> 
->    Quagga upstream has released latest vQuagga 0.99.17 version,
->    addressing two security flaws:
-> 
-> A, Stack buffer overflow by processing certain Route-Refresh messages
-> 
->    A stack buffer overflow flaw was found in the way Quagga's bgpd daemon
->    processed Route-Refresh messages. A configured Border Gateway Protocol
->    (BGP) peer could send a Route-Refresh message with specially-crafted
->    Outbound Route Filtering (ORF) record, which would cause the master
->    BGP daemon (bgpd) to crash or, possibly, execute arbitrary code with
->    the privileges of the user running bgpd.
-> 
->    Upstream changeset:
->    [1]
-> http://code.quagga.net/?p=quagga.git;a=commit;h=d64379e8f3c0636df53ed08d5b2f1946cfedd0e3
-> 
->    References:
->    [2] https://bugzilla.redhat.com/show_bug.cgi?id=626783
->    [3] http://www.quagga.net/news2.php?y=2010&m=8&d=19#id1282241100
+On Wed, Jun 30, 2010 at 9:27 PM, Josh Bressers <bressers@...hat.com> wrote:
+>
+> ----- "Péter Veres" <moltesalt@...il.com> wrote:
+>
+>> Hi Steve,
+>>
+>> PHP’s strrchr() function can be interrupted and used for information
+>> leakage due to call time pass by reference.
+>>
+>> Could you allocate a CVE id for this issue?
+>>
+>
+> Do you have some sort of reference for this? I'm not finding anything in the
+> usual places.
+>
+> I'll assign an ID once I have more information.
 
-Use CVE-2010-2948 for this one.
+Correct me if I'm wrong but it looks to me that it is related to the
+MOPS 18-40, which are actually the same issue.
 
-
-> 
-> B, DoS (crash) while processing certain BGP update AS path messages
-> 
->    A NULL pointer dereference flaw was found in the way Quagga's bgpd
->    daemon parsed paths of autonomous systems (AS). A configured BGP peer
->    could send a BGP update AS path request with unknown AS type, which
->    could lead to denial of service (bgpd daemon crash).
-> 
->    Upstream changeset:
->    [4]
-> http://code.quagga.net/?p=quagga.git;a=commit;h=cddb8112b80fa9867156c637d63e6e79eeac67bb
-> 
->    References:
->    [5] https://bugzilla.redhat.com/show_bug.cgi?id=626795
->    [6] http://www.quagga.net/news2.php?y=2010&m=8&d=19#id1282241100
-> 
-
-Use CVE-2010-2949 for this one.
-
-Thanks.
-
+Cheers,
 -- 
-    JB
+Pierre
+
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
