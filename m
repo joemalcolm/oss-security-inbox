@@ -1,33 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/24/5
-Message-ID: <Pine.GSO.4.64.1008241257000.25810@faron.mitre.org>
-Date: Tue, 24 Aug 2010 13:00:27 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Tomas Hoger <thoger@...hat.com>
-cc: oss-security@...ts.openwall.com, pierre.php@...il.com, Thomas Biege <thomas@...e.de>, Moritz Muehlenhoff <jmm@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: PHP MOPS-2010-56..60
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/30/8
+Message-ID: <i0fo1i$8t9$1@dough.gmane.org>
+Date: Wed, 30 Jun 2010 10:32:13 -0500
+From: Raphael Geissert <geissert@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Stefan Esser's 0day PHP SysCan flaw
 Content-Type: text/plain; charset=utf-8
 
+Raphael Geissert wrote:
+> Here's a public, limited, explanation:
+> http://php-security.org/2010/06/25/mops-2010-061-php-splobjectstorage-
+> deserialization-use-after-free-vulnerability/
 
-On Tue, 24 Aug 2010, Tomas Hoger wrote:
+And the fix by upstream:
+http://svn.php.net/viewvc?view=revision&revision=300843
 
-> Standard practice is to use new CVE.  As all 5 phar MOPS were covered
-> under single CVE, and not all of them were fixed in 5.3.3, I'd expect a
-> new "incomplete fix" CVE.
-
-That's appropriate in this case.  I'll let Josh assign a CVE to avoid the 
-possibility of dupes.
-
-General practice (subject to modification on a case-by-case basis) is:
-
-- issue was never fixed and never claimed to be fixed: use original CVE
-   (probably triggers an update to description for affected versions)
-
-- issue was claimed fixed but the fix was incomplete: use new CVE
-
-- issue was never fixed but claimed to be fixed: ??? (it's happened a few
-   times)
+Cheers,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
 
 
-
-- Steve
