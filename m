@@ -1,74 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/09/5
-Message-ID: <AANLkTik41hZOJsZ2CiD_xhc8HoZqeWZKaUqTgL1+8qfX@mail.gmail.com>
-Date: Thu, 9 Dec 2010 12:53:23 +0100
-From: Pierre Joye <pierre.php@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: Re: NULL byte poisoning fix in php 5.3.4+
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/30/7
+Message-ID: <20100630152240.GH1474@suse.de>
+Date: Wed, 30 Jun 2010 17:22:40 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: oss-security@...ts.openwall.com, png-mng-implement@...ts.sourceforge.net
+Subject: Re: CVE Request -- libpng v1.4.3 and v1.2.44 -- memory leak while processing PNG image with malformed sCAL chunks
 Content-Type: text/plain; charset=utf-8
 
-We are about to release 5.2.15 and 5.3.4, can anyone please get an id
-for this issue?
+On Mon, Jun 28, 2010 at 04:26:06PM -0400, Josh Bressers wrote:
+> 
+> ----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+> 
+> > Hi Steve, vendors,
+> > 
+> >    libpng upstream has released latest v1.4.3 and v1.2.44 versions,
+> > addressing two
+> > security issues:
+> > [a], out-of-bounds write to memory -- this already got a CVE id of
+> > "CVE-2010-1205",
+> > [b], memory-leak bug, involving images with malformed sCAL chunks,
+> > which could
+> >     lead to an application crash.
+> > 
+> > References:
+> >    [1] http://www.libpng.org/pub/png/libpng.html
+> >    [2] https://bugzilla.redhat.com/show_bug.cgi?id=608644
+> > 
+> > Steve, could you allocate a CVE id for the [b] issue?
+> > 
+> 
+> Please use CVE-2010-2249 for issue [b].
 
-Thanks,
+oss-sec, png-mng-implement ... do you have testimages or a reproducer for the sCAL issue?
 
-On Tue, Nov 30, 2010 at 3:26 AM, Pierre Joye <pierre.php@...il.com> wrote:
-> Coley? :)
->
-> On Mon, Nov 22, 2010 at 5:21 PM, Josh Bressers <bressers@...hat.com> wrote:
->> Steve,
->>
->> Can MITRE take this one. It looks like it's from 2006 (from looking at the
->> upstream bug). I don't see a CVE id for this anywhere.
->>
->> Thanks.
->>
->> --
->>    JB
->>
->> ----- "Pierre Joye" <pierre.php@...il.com> wrote:
->>
->>> anyone?
->>>
->>> On Thu, Nov 18, 2010 at 5:43 PM, Pierre Joye <pierre.php@...il.com>
->>> wrote:
->>> > forgot to add the fixes revs:
->>> >
->>> > http://svn.php.net/viewvc?view=revision&revision=305507
->>> > revert of part of the OCI8 fix
->>> > http://svn.php.net/viewvc?view=revision&revision=305509
->>> >
->>> > OCI8 fix (committed separately)
->>> > http://svn.php.net/viewvc?view=revision&revision=305412
->>> >
->>> > On Thu, Nov 18, 2010 at 5:22 PM, Pierre Joye <pierre.php@...il.com>
->>> > wrote:
->>> >> hi,
->>> >>
->>> >> The problem describes here http://www.madirish.net/?article=436, in
->>> >> http://bugs.php.net/39863 (and numerous other places) has been fixed
->>> >> in PHP_5_3, targetting 5.3.4 (RC1 to be released today). It is a well
->>> >> (old) known issue in PHP and I wonder if there is a CVE already for
->>> >> it? If not I think having one could helpful. or?
->>> >>
->>> >> Cheers,
->>> >> --
->>> >> Pierre
->>> >>
->>
->
->
->
-> --
-> Pierre
->
-> @pierrejoye | http://blog.thepimp.net | http://www.libgd.org
->
+It would be helpful for our QA :/
 
-
-
--- 
-Pierre
-
-@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+Ciao, Marcus
