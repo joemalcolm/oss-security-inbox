@@ -1,103 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/11/5
-Message-ID: <832334685.93091281558111049.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 11 Aug 2010 16:21:51 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com, remi@...lab.net
-Cc: Rémi Denis-Courmont <rem@...eolan.org>, coley <coley@...re.org>
-Subject: Re: CVE request: VideoLAN advisory 1004
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/30/1
+Message-ID: <4C2A8991.3040608@kernel.sg>
+Date: Wed, 30 Jun 2010 08:02:25 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
+To: oss-security@...ts.openwall.com
+CC: akuster <akuster@...sta.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: cifs: Fix a kernel BUG with remote OS/2 server
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-2937 for this.
+On 06/30/2010 12:57 AM, akuster wrote:
+> pSMBr->CountHigh looks to have been introduce by commit
+> 381a420f5b23cedd9e166e052a93a7f4237bd57c back in 2.6.12-rc2.
+> So would it be said this issue has been around since then?
 
-Thanks.
+Which tree are you using? I got: fatal: bad object 
+381a420f5b23cedd9e166e052a93a7f4237bd57c.
+
+->CountHigh was added long ago. Even v2.6.9 (rhel-4) is affected.
+
+Eugene
+
+> On 06/27/2010 10:41 PM, Eugene Teo wrote:
+>> "This was known to trigger with a OS/2 server. The server sets
+>> pSMBr->CountHigh to a incorrect value even in case of normal writes.
+>> This results in 'nbytes' being computed wrongly and triggers a kernel
+>> BUG at mm/filemap.c.
+>>
+>>      void iov_iter_advance(struct iov_iter *i, size_t bytes)
+>>      {
+>>              BUG_ON(i->count<  bytes);<--- BUG here
+>>
+>> Why the server is setting 'CountHigh' is not clear but only does so
+>> after writing 64k bytes. Though this looks like the server bug, the
+>> client side crash may not be acceptable.
+>>
+>> The workaround is to mask off high 16 bits if the number of bytes
+>> written as returned by the server is greater than the bytes requested by
+>> the client."
+>>
+>> https://bugzilla.redhat.com/show_bug.cgi?id=608583
+>> http://git.kernel.org/linus/6513a81e9325d712f1bfb9a1d7b750134e49ff18
+>>
+
 
 -- 
-    JB
-
-
------ "Rémi Denis-Courmont" <rem@...eolan.org> wrote:
-
-> Hello,
-> 
-> Can I get a CVE number for this? Please CC me on replies.
-> 
-> http://www.videolan.org/security/sa1004.html
-> 
-> ----8<--------8<--------8<--------8<--------8<--------8<--------8<----
-> 
-> VideoLAN Security Advisory 1004
-> 
-> Summary           : Insufficient input validation in VLC TagLib
-> plugin
-> Date              : August 2011
-> Affected versions : VLC media player versions 1.1.2 down to 0.9.0
-> ID                : VideoLAN-SA-1004
-> CVE reference     : N/A
-> 
-> Details
-> 
-> VLC fails to perform sufficient input validation when trying to
-> extract some 
-> meta-informations about input media through ID3v2 tags. In the failure
-> case, 
-> VLC attempt dereference an invalid memory address, and a crash will
-> ensure.
-> 
-> Impact
-> 
-> In the failure case, VLC will dereference a memory address within the
-> first 
-> page of its process virtual memory. In normal conditions, and on most
-> 
-> operating systems, this will result in a segmentation fault (a general
-> 
-> protection fault on Windows), and the process will terminate
-> abruptly.
-> 
-> In most usage scenarii, this will only cause user annoyance.
-> 
-> Threat mitigation
-> 
-> Exploitation of this issue requires the user to include a file in its
-> playlist 
-> or to attempt to open it.
-> 
-> Workarounds
-> 
-> The user should refrain from opening files from untrusted third
-> parties or 
-> accessing untrusted remote sites (or disable the VLC browser plugins),
-> until 
-> the patch is applied.
-> 
-> Solution
-> 
-> VLC media player 1.1.3 [will address] this issue. Patches for VLC
-> media player 
-> 1.1.x and 1.0.x are available from the corresponding official VLC
-> source code 
-> repositories.
-> 
-> Credits
-> 
-> This vulnerability was reported by FortiGuard Labs.
-> 
-> References
-> 
-> The VideoLAN project
->     http://www.videolan.org/ 
-> FortiGuard Labs
->     http://www.fortinet.com/ 
-> Patch for VLC 1.1.2, 1.1.1, 1.1.0
->     commit 24918843e57c7962e28fcb01845adce82bed6516 
-> Patch for VLC 1.0.6
->     commit 22a22e356c9d93993086810b2e25b59b55925b3a 
-> 
-> ----8<--------8<--------8<--------8<--------8<--------8<--------8<----
-> 
-> Thanks in advance, best regards,
-> 
-> -- 
-> Rémi Denis-Courmont
-> http://git.remlab.net/cgi-bin/gitweb.cgi?p=vlc-courmisch.git;a=summary
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
