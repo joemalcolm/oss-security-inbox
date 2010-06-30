@@ -1,24 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/15/1
-Message-ID: <20100115092851.3bd60bae@tanana.suse.de>
-Date: Fri, 15 Jan 2010 09:28:51 +0100
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/30/17
+Message-ID: <1256028889.1643241277925802550.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 30 Jun 2010 15:23:22 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: gnome doesn't lock external screen after resume
+Cc: akuster <akuster@...sta.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request: kernel: ethtool: kernel buffer overflow in ETHTOOL_GRXCLSRLALL
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Please use CVE-2010-2478
 
-Resuming a gnome session with a second monitor connected bypasses
-screensaver authentication on the second screen:
-https://bugzilla.gnome.org/show_bug.cgi?id=593616
-http://git.gnome.org/browse/gnome-screensaver/commit/?id=2f597ea9f1f363277fd4dfc109fa41bbc6225aca
-
-cu
-Ludwig
+Thanks.
 
 -- 
- (o_   Ludwig Nussel
- //\   
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+    JB
+
+
+----- "Eugene Teo" <eugeneteo@...nel.sg> wrote:
+
+> On 06/29/2010 11:53 PM, akuster wrote:
+> > Eugene,
+> >
+> > Thanks for the info. Unfortunately it does affect a few MontaVista
+> > kernels. Is it possible to get a CVE for this?
+> 
+> I edited the $SUBJECT :)
+> 
+> Eugene
+> 
+> > On 06/28/2010 04:10 PM, Eugene Teo wrote:
+> >> FYI, "On a 32-bit machine, info.rule_cnt>= 0x40000000 leads to
+> integer
+> >> overflow and the buffer may be smaller than needed.  Since
+> >> ETHTOOL_GRXCLSRLALL is unprivileged, this can presumably be used
+> for at
+> >> least denial of service." This was introduced in v2.6.27-rc1 via
+> >> upstream commit 0853ad66. Also see commit 59089d8d.
+> >>
+> >> Reference:
+> >> http://thread.gmane.org/gmane.linux.network/164869
+> >> https://bugzilla.redhat.com/show_bug.cgi?id=608950
+> >>
+> >> I'm not requesting a CVE name for this as it did not affect any of
+> our
+> >> Red Hat supported Linux kernels.
+> >>
+> >> Thanks, Eugene
+> 
+> 
+> -- 
+> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i);
+> }
