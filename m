@@ -1,43 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/01/2
-Message-ID: <4B666982.8090200@kernel.sg>
-Date: Mon, 01 Feb 2010 13:41:22 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com
-Subject: Re: CVE requests - kernel security regressions for CVE-2009-1385/and -1389
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/30/22
+Message-ID: <2051084446.1646871277927350977.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 30 Jun 2010 15:49:10 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE requests: LibTIFF
 Content-Type: text/plain; charset=utf-8
 
-On 01/01/2010 03:37 AM, Steven M. Christey wrote:
->>>> Issue #1
->>>> Fabian claimed that CVE-2009-1385 has an incorrect fix:
->>>> http://git.kernel.org/linus/ea30e11970a96cfe5e32c03a29332554573b4a10.
->>> [...]
->
-> Use CVE-2009-4536
+----- "Dan Rosenberg" <dan.j.rosenberg@...il.com> wrote:
 
-upstream commit 40a14deaf411592b57cb0720f0e8004293ab9865
+> There are three issues that I think are CVE-worthy and have not been
+> assigned:
 
->>>> Issue #2
->>>> The fix for CVE-2009-1389 regarding the r8169 driver introduces a
->>>> similar security problem as this:
->>>> http://git.kernel.org/linus/fdd7b4c3302c93f6833e338903ea77245eb510b4 is
->>>> a revert of this:
->>>> http://git.kernel.org/linus/126fa4b9ca5d9d7cb7d46f779ad3bd3631ca387c.
->>>
->>> Patches update can be found here:
->>> https://bugzilla.redhat.com/show_bug.cgi?id=550907#c4
->
-> Use CVE-2009-4537
+Thanks for the help Dan. Here goes:
 
-http://marc.info/?t=126202986900002&r=1&w=2.
+> 
+> 1.  OOB read in TIFFExtractData() leading to crash (no reference,
+> originally disclosed by me in this thread, fixed upstream with
+> release
+> 3.9.4 and security fix backported by Ubuntu).
 
->> Issue #3
->> I noticed that the e1000e driver also needs a similar fix as issue #1.
->> https://bugzilla.redhat.com/show_bug.cgi?id=551214
->
-> Use CVE-2009-4538
+CVE-2010-2481
 
-upstream commit b94b50289622e816adc9f94111cfc2679c80177c
+> 
+> 2.  NULL pointer dereference due to invalid td_stripbytecount leading
+> to crash (distinct from CVE-2010-2443).  The upstream changelog entry
+> for 3.9.4 reads:
+> 
+> 	* libtiff/tif_ojpeg.c (OJPEGReadBufferFill): Report an error and
+> 	avoid a crash if the input file is so broken that the strip
+> 	offsets are not defined.
 
-Thanks, Eugene
+CVE-2010-2482
+
+> 
+> 3.  OOB read in TIFFRGBAImageGet() leading to crash.  Reference:
+> https://bugs.launchpad.net/ubuntu/+source/tiff/+bug/591605
+
+CVE-2010-2483
+
+Thanks.
+
+-- 
+    JB
