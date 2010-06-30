@@ -1,44 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/30/9
-Message-ID: <105072328.846661291132211032.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 30 Nov 2010 10:50:11 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/30/6
+Message-ID: <AANLkTikJDKKOWSsAA0JJbUb-eMIlEbjOewhNumwdDOFg@mail.gmail.com>
+Date: Wed, 30 Jun 2010 11:39:05 +0200
+From: Péter Veres <moltesalt@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: pipe_fcntl local DoS
+Subject: CVE Request -- PHP strrchr() Interruption Information Leak  Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-4256
+Hi Steve,
+
+PHP’s strrchr() function can be interrupted and used for information
+leakage due to call time pass by reference.
+
+Could you allocate a CVE id for this issue?
 
 Thanks.
 
--- 
-    JB
+Regards,
+Peter Veres (DrMcKay)
 
-
------ "Eugene Teo" <eugene@...hat.com> wrote:
-
-> "Export 'get_pipe_info()' to other users
-> 
-> And in particular, use it in 'pipe_fcntl()'.
-> 
-> The other pipe functions do not need to use the 'careful' version,
-> since 
-> they are only ever called for things that are already known to be
-> pipes.
-> 
-> The normal read/write/ioctl functions are called through the file 
-> operations structures, so if a file isn't a pipe, they'd never get 
-> called.  But pipe_fcntl() is special, and called directly from the 
-> generic fcntl code, and needs to use the same careful function that
-> the 
-> splice code is using."
-> 
-> In other words, this is a pipe_fcntl local DoS.
-> 
-> http://git.kernel.org/linus/71993e62a47dabddf10302807d6aa260455503f4
-> http://git.kernel.org/linus/c66fb347946ebdd5b10908866ecc9fa05ee2cf3d
-> 
-> Introduced in v2.6.35-rc1
-> 
-> Thanks, Eugene
