@@ -1,44 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/08/2
-Message-ID: <AANLkTinMix7S8__jfQB2V7wnKWeQB_FQZBeAh-otb7nh@mail.gmail.com>
-Date: Sun, 7 Nov 2010 20:29:07 -0500
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/01/6
+Message-ID: <AANLkTin9lgxxS2X-Y0_i92bX-CKZpzzQjN8tqaZRhZAZ@mail.gmail.com>
+Date: Thu, 1 Jul 2010 21:16:02 +0200
+From: Péter Veres <moltesalt@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel proactive security hardening
+Subject: Re: CVE Request -- PHP strrchr() Interruption  Information Leak Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Thanks for your input.
+2010/6/30 Josh Bressers <bressers@...hat.com>
 
-I've just posted an RFC for the equivalent of grsecurity's MODHARDEN,
-which places restrictions on the automatic loading of modules by
-unprivileged users:
+>
+> ----- "Péter Veres" <moltesalt@...il.com> wrote:
+>
+> > Hi Steve,
+> >
+> > PHP’s strrchr() function can be interrupted and used for information
+> > leakage due to call time pass by reference.
+> >
+> > Could you allocate a CVE id for this issue?
+> >
+>
+> Do you have some sort of reference for this? I'm not finding anything in
+> the
+> usual places.
+>
+> I'll assign an ID once I have more information.
+>
+> Thanks.
+>
+> --
+>     JB
+>
 
-http://lkml.org/lkml/2010/11/7/212
 
--Dan
+Fixed in the upstream.
+5.3.3 RC1 not affected.
+5.2 branch vulnerable.
 
-On Sun, Nov 7, 2010 at 8:16 PM, Solar Designer <solar@...nwall.com> wrote:
-> Kees, Dan -
->
-> Thank you for working on this!
->
-> On Sun, Nov 07, 2010 at 02:16:32PM -0800, Kees Cook wrote:
->> And there's a sign-up list here, for people interested in helping out:
->>
->> https://wiki.ubuntu.com/SecurityTeam/Roadmap/KernelHardening#Upstream%20Hardening
->
-> I've just added a few hardening changes to consider (and edited/moved a
-> few others):
->
-> https://wiki.ubuntu.com/SecurityTeam/Roadmap/KernelHardening?action=diff&rev2=41&rev1=37
->
-> Sorry I did not sign up for any yet, although if I happen to work on any
-> I'll let you know.
->
-> I'd appreciate it if you keep the page updated with current status on
-> and links to work-in-progress and proposed patches.
->
-> Thanks again,
->
-> Alexander
->
+http://svn.php.net/viewvc?view=revision&revision=300916
+
