@@ -1,36 +1,95 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/14/3
-Message-ID: <962004038.1418271273866010415.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 14 May 2010 15:40:10 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/01/5
+Message-ID: <Pine.GSO.4.64.1007011345291.18626@faron.mitre.org>
+Date: Thu, 1 Jul 2010 13:58:11 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: lxr
+cc: Tomas Hoger <thoger@...hat.com>
+Subject: Re: CVE requests: LibTIFF
 Content-Type: text/plain; charset=utf-8
 
 
------ "Dan Rosenberg" <dan.j.rosenberg@...il.com> wrote:
+Below are some more CVEs from the additional work of one of our analysts 
+on this nasty wasty thread.  (Josh, notice the RHEL one).
 
-> Josh,
-> 
-> The XSS in the title string was already assigned CVE-2010-1448.  Do
-> you mean to assign issue #2, the XSS reflected in search results?
-> 
+For CVE, we will typically cover client-side crashers, although many don't 
+think those are important enough unless there's evidence of a possibility 
+of code execution or some broader problem.  For OSS vendors, I have kind 
+of an unspoken, informal agreement that they might not assign CVEs to 
+crashers, but we might do so after they get published.
 
-Sigh, yes.
+With a library, though, you don't know what that crash is going to affect, 
+because it depends on what software is using the library - it could be an 
+image server, web spider, cron job, etc. for which a crash has worse 
+consequences than just inconvenience.  So, crashers in libraries are 
+especially deserving of a CVE.
 
-So to sum it up:
+Personally, I also think that any client that can support multiple 
+"sessions" at the same time should also treat crashers as a security 
+issue.  e.g. in a web browser, someone may be surfing multiple web pages, 
+or in an IRC client, particpating in multiple chats.  An attacker from one 
+"thread" could cause a DoS to all other threads.  Technically, IMO, this 
+violates a security model in which only the endpoints of a communication 
+channel have the "privilege" to close that channel... even if it's really 
+low priority for most people.
 
-1.  XSS in the ident parameter, as described in CVE-2009-4497.
+- Steve
 
-2.  XSS that is reflected via the search results page after issuing
-This one is now CVE-2010-1625
 
-3. 3.  XSS that is reflected via the <title> tag on the search page, as
-described in Raphael's original e-mail a few days ago, which Josh assigned
-CVE-2010-1448
+======================================================
+Name: CVE-2010-2595
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-2595
+Reference: CONFIRM:http://bugzilla.maptools.org/show_bug.cgi?id=2208
+Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=583081
 
-Thanks.
+The TIFFYCbCrtoRGB function in LibTIFF 3.9.0 and 3.9.2, as used in
+ImageMagick, does not properly handle invalid ReferenceBlackWhite
+values, which allows remote attackers to cause a denial of service
+(application crash) via a crafted TIFF image that triggers an array
+index error, related to "downsampled OJPEG input."
 
--- 
-    JB
+
+======================================================
+Name: CVE-2010-2596
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-2596
+Reference: CONFIRM:http://bugzilla.maptools.org/show_bug.cgi?id=2209
+Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=583081
+
+The OJPEGPostDecode function in tif_ojpeg.c in LibTIFF 3.9.0 and
+3.9.2, as used in tiff2ps, allows remote attackers to cause a denial
+of service (assertion failure and application exit) via a crafted TIFF
+image, related to "downsampled OJPEG input."
+
+
+======================================================
+Name: CVE-2010-2597
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-2597
+Reference: CONFIRM:http://bugzilla.maptools.org/show_bug.cgi?id=2215
+Reference: CONFIRM:https://bugs.launchpad.net/bugs/593067
+Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=583081
+Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=603703
+
+The TIFFVStripSize function in tif_strip.c in LibTIFF 3.9.0 and 3.9.2
+makes incorrect calls to the TIFFGetField function, which allows
+remote attackers to cause a denial of service (application crash) via
+a crafted TIFF image, related to "downsampled OJPEG input" and
+possibly related to a compiler optimization that triggers a
+divide-by-zero error.
+
+
+======================================================
+Name: CVE-2010-2598
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-2598
+Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=583081
+
+LibTIFF in Red Hat Enterprise Linux (RHEL) 3 on x86_64 platforms, as
+used in tiff2rgba, attempts to process image data even when the
+required compression functionality is not configured, which allows
+remote attackers to cause a denial of service via a crafted TIFF
+image, related to "downsampled OJPEG input."
+
+
