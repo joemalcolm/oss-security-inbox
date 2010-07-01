@@ -1,41 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/22/1
-Message-ID: <20100422052524.GA30238@lackof.org>
-Date: Wed, 21 Apr 2010 23:25:24 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/01/1
+Message-ID: <20100701050641.GA24773@lackof.org>
+Date: Wed, 30 Jun 2010 23:06:41 -0600
 From: dann frazier <dannf@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: Re: CVE-2010-0727 kernel: gfs/gfs2 locking code DoS flaw
+Subject: Re: kernel: hvc_console: Fix race between hvc_close and hvc_remove
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Mar 12, 2010 at 01:17:55PM +0800, Eugene Teo wrote:
-> static int
-> gfs_lock(struct file *file, int cmd, struct file_lock *fl)
-> {
-> ..
->         if ((ip->i_di.di_mode & (S_ISGID | S_IXGRP)) == S_ISGID)
->                 return -ENOLCK;
-> ..
-> }
->
-> This is a check for mandatory locking where the GFS/GFS2 locking code  
-> will skip the lock in case sgid bits are set for the file. This can be  
-> triggered to cause a crash on a system mounting a GFS/GFS2 filesystem.
->
-> I believe only GFS2 is part of the upstream kernel, and GFS only affects  
-> Red Hat Enterprise Linux.
->
-> https://bugzilla.redhat.com/CVE-2010-0727
-> http://lkml.org/lkml/2010/3/11/269
+On Sat, Apr 17, 2010 at 11:26:46PM -0400, Michael Gilbert wrote:
+> On Sat, 17 Apr 2010 18:15:42 -0400 Michael Gilbert wrote:
+> 
+> > On Thu, 04 Mar 2010 17:03:58 +0800 Eugene Teo wrote:
+> > 
+> > > Heads-up. You might want to backport this if your kernel is affected. We 
+> > > are not requesting a CVE name for this as it does not affect any of our 
+> > > Red Hat supported kernels.
+> > 
+> > are you sure about this?  i see the vulnerable code upstream in both
+> > 2.6.26 and 2.6.32.  does redhat not ship hvc in their kernels?  i think
+> > this should get a cve id because the more vanilla distros will have
+> > shipped with this included.
+> 
+> i see that hvc_console is disabled by default in the debian kernels,
 
-Looks like a similar issue existed in 9p - can we allocate another CVE
-for it?
+Actually, upon review, I see that it is enabled (see the powerpc64
+image). Therefore, I'd like to request a CVE ID for it.
 
-commit f78233dd44a110c574fe760ad6f9c1e8741a0d00
-Author: Sachin Prabhu <sprabhu@...hat.com>
-Date:   Sat Mar 13 09:03:55 2010 -0600
-
-    9p: Skip check for mandatory locks when unlocking
+> and i assume it is the same for the redhat kernels.
+> 
+> are issues in features that are disabled by default generally treated
+> as unimportant? there are bound to be a (perhaps small) subset of users
+> turning these features on; exposing themselves to more risk if these
+> issues go unfixed. i suppose cve assignment depends on whether or not
+> there is an expectation to protect those users in addition to
+> defaults-using users. 
+> 
+> mike
+> 
 
 -- 
 dann frazier
