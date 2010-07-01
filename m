@@ -1,26 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/29/3
-Message-Id: <201008292126.10215.hanno@hboeck.de>
-Date: Sun, 29 Aug 2010 21:26:09 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/01/3
+Message-ID: <i0gop6$9p$1@dough.gmane.org>
+Date: Wed, 30 Jun 2010 19:50:56 -0500
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: serendipity < 1.5.4 xss
+Subject: CVE request: moin multiple XSS
 Content-Type: text/plain; charset=utf-8
 
-http://blog.s9y.org/archives/223-Serendipity-1.5.4-released.html
+Hi,
 
-http://www.htbridge.ch/advisory/xss_vulnerability_in_serendipity.html
+Multiple XSS vulnerabilities have been reported in moin.
 
-"as well as a XSS security issue discovered and reported by High-Tech Bridge. 
-The XSS is only exploitable though, if you are using the "Remember me" feature 
-in the Serendipity backend to login."
+References:
+http://moinmo.in/MoinMoinBugs/1.9.2UnescapedInputForThemeAddMsg
+http://bugs.debian.org/584809
 
+Could a CVE be assigned?
 
+Note that the original bug report only covered PageEditor.py, while upstream 
+fixed multiple others at the same time. Not sure if you want to assign two 
+different ids.
 
+Regards,
 -- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
 
-http://schokokeks.org - professional webhosting
 
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
