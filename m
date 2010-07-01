@@ -1,33 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/08/7
-Message-ID: <20101208122225.3e586176@redhat.com>
-Date: Wed, 8 Dec 2010 12:22:25 +0100
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/01/4
+Message-ID: <i0gpbq$1q9$1@dough.gmane.org>
+Date: Wed, 30 Jun 2010 20:00:52 -0500
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: cxib@...urityreason.com
-Subject: Re: Re: CVE request (PHP 5.3.x getSymbol() DoS; CERT VU#479900)
+Subject: CVE request: ZNC NULL pointer dereference
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 7 Dec 2010 22:43:17 +0000 (UTC) Maksymilian Arciemowicz wrote:
+Hi,
 
-> > Btw, setSymbol() is affected too, and does not seem to be addressed
-> > in r305571.  In both cases, it's PHP exposing ICU bug.
+A NULL pointer dereference has been reported in ZNC.
+
+>From [1]:
+> Fix a NULL pointer dereference with traffic stats
 > 
-> setSymbol() give only DoS with strlen(NULL) [CWE-170].
+> When something requested traffic statistics while there was an 
+unauthenticated
+> connection to ZNC, there was a NULL pointer dereference.
 
-I don't see that with ICU 4.2.1 and PHP 5.3.3.   Please clarify if you
-see some different results with different ICU or PHP.  Or maybe using
-different way to call setSymbol().  I see the same incorrect cast and
-out of bounds array indexing as with getSymbol, with setSymbol doing
-writes and hence possibly more likely to be useful for script author
-attacks (safe mode breaks).  Even ignoring possibly higher impact for
-setSymbol, it still has at least the impact described in VU#479900 and
-does not seem to have PHP fix/workaround.
+Please assign a CVE id.
 
-> getSymbol() Integer overflow which causes heap overflow.
+References:
+http://bugs.debian.org/584929
+[1]http://znc.svn.sourceforge.net/viewvc/znc?view=revision&revision=2026
 
-Not CWE-680 kind of stuff though, more of CWE-129 caused by
-CWE-197/CWE-195.
-
+Regards,
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
+
+
