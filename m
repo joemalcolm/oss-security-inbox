@@ -1,28 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/15/1
-Message-Id: <201012150214.27800.timb@nth-dimension.org.uk>
-Date: Wed, 15 Dec 2010 02:14:20 +0000
-From: Tim Brown <timb@...-dimension.org.uk>
-To: oss-security@...ts.openwall.com, dailydave@...ts.immunityinc.com
-Subject: Breaking the links: Exploiting the linker
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/02/10
+Message-ID: <1093585429.1871281278097167505.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 2 Jul 2010 14:59:27 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request [Microsoft Windows Ruby-v1.9.x] -- Buffer over-run leading to ACE
 Content-Type: text/plain; charset=utf-8
 
-In the interests of a thorough peer review I'd be curious what people think of 
-the following paper I've been working on Linux and POSIX linkers:
+Please use CVE-2010-2489
 
-http://www.nth-dimension.org.uk/downloads.php?id=77
+Thanks.
 
-A previous revision has already been reviewed but constructive criticism is 
-always useful.  There are some sections that I have removed whilst I wait on  
-vendors but I'm particularly interested in feedback on pertinent references or 
-threats that I may have missed.  As per the abstract, the aim of the paper 
-wasn't to claim everything as my own but rather to document as much about the 
-current state of art as possible.
-
-Tim
 -- 
-Tim Brown
-<mailto:timb@...-dimension.org.uk>
-<http://www.nth-dimension.org.uk/>
+    JB
 
-Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
+
+----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+
+> Hi Steve, vendors,
+> 
+>    Ruby upstream has released latest v1.9.1-p429, v1.9.2 RC1 versions,
+> addressing one
+>    security issue, present on Microsoft Windows operating systems,
+> where version of Ruby
+>    language is v1.9.x based:
+>      [1]
+> http://www.ruby-lang.org/en/news/2010/07/02/ruby-1-9-1-p429-is-released/
+>      [2]
+> http://www.ruby-lang.org/en/news/2010/07/02/ruby-1-9-2-rc1-is-released/
+>      [3]
+> http://svn.ruby-lang.org/repos/ruby/tags/v1_9_2_rc1/ChangeLog
+> 
+> Quoting from [1]:
+> 
+> <begin quote>
+> 
+> A security vulnerability that causes buffer overflow when you assign
+> a danger value to ARGF.inplace_mode on Windows. It possibly allows an
+> attacker to execute an arbitrary code.
+> 
+> The affected versions are:
+> 
+>      * Ruby 1.9.1 patchlevel 378 and all prior versions.
+>      * Ruby 1.9.2 preview 3 and all prior versions.
+>      * Development versions of Ruby 1.9 (1.9.3dev).
+> 
+> I recommend you to upgrade your ruby 1.9 to 1.9.1-p429 or 1.9.2-rc1.
+> 
+> The vulnerability does not directly affect to Ruby 1.8 series.
+> Credit
+> 
+> The vulnerability was found and reported by Masaya TARUI.
+> 
+> <end quote>
+> 
+> Though this not affecting the Linux version of Ruby, we will need a
+> CVE identifier
+> for purpose of properly tracking is.
+> 
+> Steve, could you please allocate one?
+> 
+> Thanks && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
