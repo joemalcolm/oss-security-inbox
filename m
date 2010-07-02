@@ -1,24 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/04/5
-Message-ID: <20100604231256.42295361@redhat.com>
-Date: Fri, 4 Jun 2010 23:12:56 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/02/9
+Message-ID: <687661326.1870941278097005845.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 2 Jul 2010 14:56:45 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
 Cc: coley <coley@...re.org>
-Subject: Re: CVE requests for mplayer/vlc and abcm2ps
+Subject: Re: CVE request: ZNC NULL pointer dereference
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 4 Jun 2010 16:08:10 -0400 (EDT) Josh Bressers wrote:
 
-> > 2. abcm2ps:
-> > http://moinejf.free.fr/abcm2ps-5.txt
+----- "Raphael Geissert" <geissert@...ian.org> wrote:
+
+> Hi,
 > 
-> Can you deal with this one. I lack the time or talent to parse "Fix
-> more security vulnerabilities"
+> A NULL pointer dereference has been reported in ZNC.
+> 
+> From [1]:
+> > Fix a NULL pointer dereference with traffic stats
+> > 
+> > When something requested traffic statistics while there was an 
+> unauthenticated
+> > connection to ZNC, there was a NULL pointer dereference.
+> 
+> Please assign a CVE id.
+> 
+> References:
+> http://bugs.debian.org/584929
+> [1]http://znc.svn.sourceforge.net/viewvc/znc?view=revision&revision=2026
+> 
 
-This seems to have been mentioned here previously:
+Please use CVE-2010-2488
 
-http://thread.gmane.org/gmane.comp.security.oss.general/2786/focus=2788
+Thanks.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+    JB
