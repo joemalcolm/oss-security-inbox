@@ -1,33 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/20/10
-Message-ID: <2009623087.1101371282325492735.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 20 Aug 2010 13:31:32 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request: SLiM insecure PATH assignment
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/02/4
+Message-Id: <20100702183142.edad0bf7.aluigi@autistici.org>
+Date: Fri, 2 Jul 2010 18:31:42 +0100
+From: Luigi Auriemma <aluigi@...istici.org>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request -- Mumble server (Murmur) / Qt SQLite -- Remotely exploitable DoS (murmur termination) due QueryUsers Qt SQLite database bug
 Content-Type: text/plain; charset=utf-8
 
+> Though not sure, if the true reason for this is:
+> 1, either Mumble server calling relevant Qt SQLite function in
+> improper way or 2, deficiency in that particular Qt function itself
 
------ "Niels Heinen" <niels@...eBSD.org> wrote:
+Hey Jan,
 
-> Hi all,
-> 
-> SLiM versions prior to 1.3.1 assigned logged on users a predefined
-> PATH
-> which included './'. This allowed unintentional code execution (e.g.
-> planted binary) and has been fixed by the developers in version
-> 1.3.2.
-> 
-> Can you allocate a CVE number for this one?
-> 
+I have not debugged the problem because I contacted directly the author
+immediately after the finding, so the following are his words in reply
+to the report of this specific bug:
 
-Looks like the fix is here:
-http://svn.berlios.de/wsvn/slim?op=comp&compare[]=/@...&compare[]=/@171
+"The second seems to be a .. "feature" of SQLite; it bails if you have 
+too many almost-but-not-really-utf8 chars in a 'like' query. We can 
+probably add a workaround for that."
 
-Please use CVE-2010-2945
+So the problem "seems" to be caused by SQLite but should be necessary to
+see in its manual if there are references about limitations that the
+developers should respect or something else.
 
-Thanks.
 
--- 
-    JB
+BYEZ
+
+
+--- 
+Luigi Auriemma
+http://aluigi.org
