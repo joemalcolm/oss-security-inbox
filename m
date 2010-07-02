@@ -1,29 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/21/5
-Message-ID: <630998710.1121871279732922819.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 21 Jul 2010 13:22:02 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com, "Mike O'Connor" <mjo@...o.mi.org>
-Cc: coley <coley@...re.org>
-Subject: Re: CVE for Intel INTEL-SA-00025
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/02/5
+Message-ID: <i0l52n$rs5$1@dough.gmane.org>
+Date: Fri, 02 Jul 2010 11:45:20 -0500
+From: Raphael Geissert <geissert@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- Mumble server (Murmur) / Qt SQLite -- Remotely exploitable DoS (murmur termination) due QueryUsers Qt SQLite database bug
 Content-Type: text/plain; charset=utf-8
 
+Hi Jan, everyone,
 
------ "Mike O'Connor" <mjo@...o.mi.org> wrote:
-
-> :Can you assign a CVE for
-> :
-> :http://security-center.intel.com/advisory.aspx?intelid=INTEL-SA-00025&languageid=en-fr
+Jan Lieskovsky wrote:
+>    Luigi Auriemma reported:
+>    [1] http://aluigi.altervista.org/adv/mumbleed-adv.txt
 > 
-> For fear of asking a silly question -- is the Intel MKL open source?
-> I'm curious about why you're asking for a CVE on this list, that's
-> all.
-> 
+> a deficiency in the way Mumble server processed malformed SQL query data.
+> A remote, authenticated user could use this flaw to cause denial of
+> service (mumble server termination) via specially-crafted QueryUsers Qt
+> SQLite SQL query.
 
-It does indeed appear to be closed source. I'm CCing Steve. MITRE can
-handle this one.
+He also reported another vulnerability in Qt4's SSL support:
+http://aluigi.altervista.org/adv/qtsslame-adv.txt
+
+(reported to the Debian maintainers in http://bugs.debian.org/587711)
+
+Could a CVE be assigned for this other issue too?
 
 Thanks.
 
+Regards,
 -- 
-    JB
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
+
+
