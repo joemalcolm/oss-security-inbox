@@ -1,59 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/13/4
-Message-ID: <1726633949.2314451284408360112.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 13 Sep 2010 16:06:00 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/02/8
+Message-ID: <1838575478.1870741278096799133.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 2 Jul 2010 14:53:19 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: Re: CVE Request: pidgin-knotify remote command injection
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: moin multiple XSS
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-3088 for this.
+----- "Raphael Geissert" <geissert@...ian.org> wrote:
+
+> Hi,
+> 
+> Multiple XSS vulnerabilities have been reported in moin.
+> 
+> References:
+> http://moinmo.in/MoinMoinBugs/1.9.2UnescapedInputForThemeAddMsg
+> http://bugs.debian.org/584809
+> 
+> Could a CVE be assigned?
+> 
+> Note that the original bug report only covered PageEditor.py, while
+> upstream fixed multiple others at the same time. Not sure if you want to
+> assign two different ids.
+> 
+
+I'm going to go with one ID, as they were all fixed at the same time.
+CVE-2010-2487
+
+>From what I can tell, the extra fixes are mentioned at the end of the moin
+advisory, which is enough for me.
 
 Thanks.
 
 -- 
     JB
-
-
------ "Alex Legler" <a3li@...too.org> wrote:
-
-> Hi,
-> 
-> we received a public report [0] in our Bugzilla about the following  
-> issue in pidgin-knotify [1]:
-> 
-> "pidgin-knotify is a pidgin plugin that displays received messages and
-> other
-> notices from pidgin as KDE notifications. It uses system() to invoke
-> ktdialog
-> and passes the unescaped messages as command line arguments. An
-> attacker could
-> use this to inject arbitrary commands by sending a prepared message
-> via any
-> protocol supported by pidgin to the victim.
-> [...]
-> The vulnerable system() call is located in src/pidgin-knotify.c, line
-> 71-74:
-> 
-> command = g_strdup_printf("kdialog --title '%s' --passivepopup '%s'  
-> %d", title,
-> body, timeout);
-> [...]
-> result = system(command);"
-> 
-> All upstream versions seem to be vulnerable. The reporter tried to  
-> contact upstream a week ago without a response, and the last release 
-> 
-> was Dec '09, so we are assuming upstream is inactive. Maybe our  
-> maintainer is going to provide a patch. From what I can see only  
-> Fedora ships the package besides us.
-> 
-> Please assign a CVE id.
-> 
-> Thanks,
-> Alex
-> 
-> 
-> [0] https://bugs.gentoo.org/show_bug.cgi?id=336916
-> [1] http://code.google.com/p/pidgin-knotify/
