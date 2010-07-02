@@ -1,27 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/10/5
-Message-ID: <525257199.1863781289402866690.JavaMail.root@zmail05.collab.prod.int.phx2.redhat.com>
-Date: Wed, 10 Nov 2010 10:27:46 -0500 (EST)
-From: Petr Matousek <pmatouse@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: CVE request: kernel: L2TP send buffer allocation size overflows
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/02/2
+Message-ID: <4C2E03B1.4030109@redhat.com>
+Date: Fri, 02 Jul 2010 17:20:17 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, Luigi Auriemma <aluigi@...istici.org>
+Subject: CVE Request -- Mumble server (Murmur) / Qt SQLite -- Remotely exploitable DoS (murmur termination) due QueryUsers Qt SQLite database bug
 Content-Type: text/plain; charset=utf-8
 
-"Both PPPoL2TP (in net/l2tp/l2tp_ppp.c, pppol2tp_sendmsg()) and IPoL2TP (in
-net/l2tp/l2tp_ip.c, l2tp_ip_sendmsg()) make calls to sock_wmalloc() that
-perform arithmetic on the size argument without any maximum bound. As a result,
-by issuing sendto() calls with very large sizes, this allocation size will wrap
-and result in a small buffer being allocated, leading to ugliness immediately
-after (probably kernel panics due to bad sk_buff tail position, but possibly
-kernel heap corruption)."
+Hi Steve, vendors,
 
-Credit: Dan Rosenberg
+   Luigi Auriemma reported:
+   [1] http://aluigi.altervista.org/adv/mumbleed-adv.txt
 
-Reference:
-http://www.spinics.net/lists/netdev/msg145673.html
-https://bugzilla.redhat.com/show_bug.cgi?id=651892
+a deficiency in the way Mumble server processed malformed SQL query data.
+A remote, authenticated user could use this flaw to cause denial of service
+(mumble server termination) via specially-crafted QueryUsers Qt SQLite SQL
+query.
 
-Thanks,
+References:
+   [2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=587713
+
+Public PoC:
+   [3] http://aluigi.org/poc/mumbleed.zip
+
+Though not sure, if the true reason for this is:
+1, either Mumble server calling relevant Qt SQLite function in improper way or
+2, deficiency in that particular Qt function itself
+
+Luigi, could you please clarify on the above?
+
+Steve, could you allocate a CVE id for this?
+
+Thanks && Regards, Jan.
 --
-Petr Matousek / Red Hat Security Response Team
+Jan iankko Lieskovsky / Red Hat Security Response Team
