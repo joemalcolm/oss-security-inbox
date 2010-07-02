@@ -1,44 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/03/3
-Message-ID: <1691118425.1089391275591507515.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 3 Jun 2010 14:58:27 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Keith Rarick <kr@....us>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Beanstalkd (prior v1.4.6) -- Improper sanitization of job body (job payload data)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/02/1
+Message-ID: <4C2DEC22.1030201@redhat.com>
+Date: Fri, 02 Jul 2010 15:39:46 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request [Microsoft Windows Ruby-v1.9.x] -- Buffer over-run leading to ACE
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-2060 for this.
+Hi Steve, vendors,
 
-Thanks.
+   Ruby upstream has released latest v1.9.1-p429, v1.9.2 RC1 versions, addressing one
+   security issue, present on Microsoft Windows operating systems, where version of Ruby
+   language is v1.9.x based:
+     [1] http://www.ruby-lang.org/en/news/2010/07/02/ruby-1-9-1-p429-is-released/
+     [2] http://www.ruby-lang.org/en/news/2010/07/02/ruby-1-9-2-rc1-is-released/
+     [3] http://svn.ruby-lang.org/repos/ruby/tags/v1_9_2_rc1/ChangeLog
 
--- 
-    JB
+Quoting from [1]:
 
+<begin quote>
 
------ "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+A security vulnerability that causes buffer overflow when you assign
+a danger value to ARGF.inplace_mode on Windows. It possibly allows an
+attacker to execute an arbitrary code.
 
-> Hi Steve, vendors,
-> 
->    Graham Barr reported that beanstalkd v1.4.5 and earlier,
-> improperly
-> sanitized job data, sent together with put command from client.
-> A remote attacker, providing a specially-crafted job data in request,
-> could use this flaw to bypass intended beanstalk client commands
-> dispatch mechanism, leading to unauthorized execution of beanstalk
-> client commands.
-> 
-> References:
->    [1]
-> http://kr.github.com/beanstalkd/2010/05/23/1.4.6-release-notes.html
->    [2] http://bugs.gentoo.org/show_bug.cgi?id=322457
-> 
-> Upstream changeset:
->    [3]
-> http://github.com/kr/beanstalkd/commit/2e8e8c6387ecdf5923dfc4d7718d18eba1b0873d
-> 
-> Could you allocate a CVE id for this?
-> 
-> Thanks && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+The affected versions are:
+
+     * Ruby 1.9.1 patchlevel 378 and all prior versions.
+     * Ruby 1.9.2 preview 3 and all prior versions.
+     * Development versions of Ruby 1.9 (1.9.3dev).
+
+I recommend you to upgrade your ruby 1.9 to 1.9.1-p429 or 1.9.2-rc1.
+
+The vulnerability does not directly affect to Ruby 1.8 series.
+Credit
+
+The vulnerability was found and reported by Masaya TARUI.
+
+<end quote>
+
+Though this not affecting the Linux version of Ruby, we will need a CVE identifier
+for purpose of properly tracking is.
+
+Steve, could you please allocate one?
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
