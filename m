@@ -1,23 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/07/15
-Message-Id: <20100907125714.f49700b6.akpm@linux-foundation.org>
-Date: Tue, 7 Sep 2010 12:57:14 -0700
-From: Andrew Morton <akpm@...ux-foundation.org>
-To: Jon Oberheide <jon@...rheide.org>, oss-security@...ts.openwall.com, security@...nel.org, spender@...ecurity.net, Sebastian Krahmer <krahmer@...e.de>
-Subject: Re: [Security] Re:  /proc infoleaks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/02/11
+Message-ID: <1291524204.1871571278097376467.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 2 Jul 2010 15:02:56 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Luigi Auriemma <aluigi@...istici.org>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Mumble server (Murmur) / Qt SQLite -- Remotely exploitable DoS (murmur termination) due QueryUsers Qt SQLite database bug
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 7 Sep 2010 12:46:56 -0700
-Andrew Morton <akpm@...ux-foundation.org> wrote:
+Please use CVE-2010-2490
 
-> We're not going to change the kernel defaults, end of story - that
-> would break far too much stuff.
+Thanks.
 
-That being said, it *might* be acceptable to obfuscate the kernel-side
-addresses.  Still print them, but they're all zeroes.  I doubt if many
-tools at all are actually using those.  Perhaps a runtime knob which
-obfuscates those addresses for unprivileged users, something like that.
+-- 
+    JB
 
-That also being said, I'm not seeing any kernel-side addresses in
-slabinfo or zoneinfo anyway and I believe some distros already hide
-kallsyms.  More specificity is needed.
+
+----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+
+> Hi Steve, vendors,
+> 
+>    Luigi Auriemma reported:
+>    [1] http://aluigi.altervista.org/adv/mumbleed-adv.txt
+> 
+> a deficiency in the way Mumble server processed malformed SQL query
+> data.
+> A remote, authenticated user could use this flaw to cause denial of
+> service
+> (mumble server termination) via specially-crafted QueryUsers Qt SQLite
+> SQL
+> query.
+> 
+> References:
+>    [2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=587713
+> 
+> Public PoC:
+>    [3] http://aluigi.org/poc/mumbleed.zip
+> 
+> Though not sure, if the true reason for this is:
+> 1, either Mumble server calling relevant Qt SQLite function in
+> improper way or
+> 2, deficiency in that particular Qt function itself
+> 
+> Luigi, could you please clarify on the above?
+> 
+> Steve, could you allocate a CVE id for this?
+> 
+> Thanks && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
