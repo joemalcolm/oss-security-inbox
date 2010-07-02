@@ -1,38 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/21/11
-Message-ID: <594484970.1132211279737518577.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 21 Jul 2010 14:38:38 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/02/12
+Message-ID: <71031608.1871771278097554952.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 2 Jul 2010 15:05:54 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE id request: mapserver
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Roundup: XSS by processing PageTemplate template for a named page
 Content-Type: text/plain; charset=utf-8
 
-Here you go:
-
-CVE-2010-2539 mapserver buffer overflow (3484)
-CVE-2010-2540 mapserver insecure CGI args (3485)
+Please use CVE-2010-2491
 
 Thanks.
 
 -- 
     JB
 
+----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
 
------ "Nico Golde" <oss-security+ml@...lde.de> wrote:
-
-> Hi,
-> two security issues have been disclosed in mapserver which need CVE
-> ids:
+> Hi Steve, vendors,
 > 
-> http://trac.osgeo.org/mapserver/ticket/3484
-> http://trac.osgeo.org/mapserver/ticket/3485
+>    A deficiency was found in the way Roundup, simple and flexible
+> issue-tracking system,
+> processed PageTemplate templates for named pages. A remote attacker
+> could
+> use this flaw to conduct cross-site scripting (XSS) attacks by
+> tricking
+> a local, authenticated user into visiting a specially-crafted web
+> page.
 > 
-> Can anyone please allocate two ids?
+> References:
+>    [1] http://bugs.gentoo.org/show_bug.cgi?id=326395
 > 
-> Cheers
-> Nico
-> -- 
-> Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG:
-> 0xA0A0AAAA
-> For security reasons, all text in this mail is double-rot13 encrypted.
+> Upstream changeset:
+>    [2]
+> http://roundup.svn.sourceforge.net/viewvc/roundup?view=revision&revision=4486
+> 
+> Could you allocate a CVE identifier for this?
+> 
+> Thanks && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
