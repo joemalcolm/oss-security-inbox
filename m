@@ -1,27 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/06/3
-Message-ID: <2036264398.931161262812951374.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 6 Jan 2010 16:22:31 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/02/6
+Message-ID: <1573834878.1870121278096451997.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 2 Jul 2010 14:47:31 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request - uzbl remote code execution
+Cc: coley <coley@...re.org>
+Subject: Re: CVE Request -- PHP strrchr() Interruption Information Leak Vulnerability
 Content-Type: text/plain; charset=utf-8
 
------ "Giuseppe Iuculano" <iuculano@...ian.org> wrote:
-> 
-> uzbl upstream reported a remote code execution vulnerability:
-> http://www.uzbl.org/news.php?id=22
-> 
-> References:
-> http://lists.uzbl.org/pipermail/uzbl-dev-uzbl.org/2010-January/000586.html
-> http://users.edpnet.be/dieter/exploit.html
-> 
 
+----- "Péter Veres" <moltesalt@...il.com> wrote:
 
-Plesae use CVE-2010-0011 for this.
+> 2010/6/30 Josh Bressers <bressers@...hat.com>
+> 
+> >
+> > ----- "Péter Veres" <moltesalt@...il.com> wrote:
+> >
+> > > Hi Steve,
+> > >
+> > > PHP’s strrchr() function can be interrupted and used for
+> information
+> > > leakage due to call time pass by reference.
+> > >
+> > > Could you allocate a CVE id for this issue?
+> > >
+> >
+> > Do you have some sort of reference for this? I'm not finding
+> anything in
+> > the
+> > usual places.
+> >
+> > I'll assign an ID once I have more information.
+> >
+> 
+> 
+> Fixed in the upstream.
+> 5.3.3 RC1 not affected.
+> 5.2 branch vulnerable.
+> 
+> http://svn.php.net/viewvc?view=revision&revision=300916
+
+Please use CVE-2010-2484
 
 Thanks.
 
 -- 
     JB
-
