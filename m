@@ -1,41 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/21/2
-Message-ID: <186858066.786041277145933950.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 21 Jun 2010 14:45:33 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: moodle 1.9.9/1.8.13 multiple vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/02/3
+Message-ID: <4C2E0D59.4050404@redhat.com>
+Date: Fri, 02 Jul 2010 18:01:29 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request -- Roundup: XSS by processing PageTemplate template for a named page
 Content-Type: text/plain; charset=utf-8
 
------ "Vincent Danen" <vdanen@...hat.com> wrote:
+Hi Steve, vendors,
 
-> Moodle 1.9.9 and 1.8.13 fix a few security issues:
-> 
-> http://docs.moodle.org/en/Moodle_1.9.9_release_notes
-> http://docs.moodle.org/en/Moodle_1.8.13_release_notes
-> 
-> Which address the following issues:
-> 
-> * MSA-10-0010 Persistent Cross Site Scripting vulnerability in the
-> MNET access control interface
+   A deficiency was found in the way Roundup, simple and flexible issue-tracking system,
+processed PageTemplate templates for named pages. A remote attacker could
+use this flaw to conduct cross-site scripting (XSS) attacks by tricking
+a local, authenticated user into visiting a specially-crafted web page.
 
-CVE-2010-2228
+References:
+   [1] http://bugs.gentoo.org/show_bug.cgi?id=326395
 
-> * MSA-10-0011 Cross Site Scripting vulnerability in blog/index.php
+Upstream changeset:
+   [2] http://roundup.svn.sourceforge.net/viewvc/roundup?view=revision&revision=4486
 
-CVE-2010-2229
+Could you allocate a CVE identifier for this?
 
-> * MSA-10-0012 KSES Security Filter Bypassing vulnerability
-
-CVE-2010-2230
-
-> * MSA-10-0013 Potential Cross Site Scripting vulnerability in Quiz
-> reports
-
-CVE-2010-2231
-
-Thanks.
-
--- 
-    JB
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
