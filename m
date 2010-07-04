@@ -1,76 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/03/3
-Message-ID: <546083786.986621265220936547.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 3 Feb 2010 13:15:36 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/04/3
+Message-ID: <4C309F29.5040006@kernel.sg>
+Date: Sun, 04 Jul 2010 22:48:09 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: kernel OOM/crash in drivers/connector
+CC: Moritz Muehlenhoff <jmm@...til.org>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request: kernel: l2tp: Fix oops in pppol2tp_xmit
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-0410 for this.
+On 07/04/2010 07:13 PM, Moritz Muehlenhoff wrote:
+> On Wed, Jun 23, 2010 at 11:43:51AM +0800, Eugene Teo wrote:
+>> "When transmitting L2TP frames, we derive the outgoing interface's
+>> UDP checksum hardware assist capabilities from the tunnel dst dev.
+>> This can sometimes be NULL, especially when routing protocols are
+>> used and routing changes occur. This patch just checks for NULL dst
+>> or dev pointers when checking for netdev hardware assist features.
+>>
+>>      BUG: unable to handle kernel NULL pointer dereference at 0000000c
+>>      IP: [<f89d074c>] pppol2tp_xmit+0x341/0x4da [pppol2tp]
+>>      *pde = 00000000
+>>      Oops: 0000 [#1] SMP
+>>      last sysfs file: /sys/class/net/lo/operstate
+>> [...]"
+>>
+>> Introduced in ffcebb16 (v2.6.29-rc1~581), fixed in 3feec909 (fixed
+>> in v2.6.34-rc2). (It was later split into different files in commit
+>> fd558d18 v2.6.35-rc1).
+>>
+>> I'm not requesting a CVE name for this because it did not affect any
+>> of our supported kernels. FYI.
+>
+> Steve, please assign a CVE ID for this.
 
-Thanks.
+cc'ed coley@...us.mitre.org.
 
+Please change the subject as well so that we know this needs a CVE name.
+
+Thanks, Eugene
 -- 
-    JB
-
-
------ "Marcus Meissner" <meissner@...e.de> wrote:
-
-> Hi,
-> 
-> Sebastian Krahmer found a problem in the drivers/connector/connector.c
-> code
-> where users could send/allocate arbitrary amounts of
-> NETLINK_CONNECTOR
-> messages to the kernel, causing OOM condition, killing selected
-> processes
-> or halting the system.
-> 
-> This is fixed in mainline commit
-> f98bfbd78c37c5946cc53089da32a5f741efdeb7
-> by removing the code.
-> 
-> commit f98bfbd78c37c5946cc53089da32a5f741efdeb7
-> Author: Evgeniy Polyakov <zbr@...emap.net>
-> Date:   Tue Feb 2 15:58:48 2010 -0800
-> 
->     connector: Delete buggy notification code.
-> 
->     On Tue, Feb 02, 2010 at 02:57:14PM -0800, Greg KH (gregkh@...e.de)
-> wrote:
->     > > There are at least two ways to fix it: using a big cannon and
-> a small
->     > > one. The former way is to disable notification registration,
-> since it is
->     > > not used by anyone at all. Second way is to check whether
-> calling
->     > > process is root and its destination group is -1 (kind of
-> priveledged
->     > > one) before command is dispatched to workqueue.
->     >
->     > Well if no one is using it, removing it makes the most sense,
-> right?
->     >
->     > No objection from me, care to make up a patch either way for
-> this?
-> 
->     Getting it is not used, let's drop support for notifications
-> about
->     (un)registered events from connector.
->     Another option was to check credentials on receiving, but we can
-> always
->     restore it without bugs if needed, but genetlink has a wider code
-> base
->     and none complained, that userspace can not get notification when
-> some
->     other clients were (un)registered.
-> 
->     Kudos for Sebastian Krahmer <krahmer@...e.de>, who found a bug in
-> the
->     code.
-> 
->     Signed-off-by: Evgeniy Polyakov <zbr@...emap.net>
->     Acked-by: Greg Kroah-Hartman <gregkh@...e.de>
->     Signed-off-by: David S. Miller <davem@...emloft.net>
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
