@@ -1,119 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/04/4
-Message-ID: <20100204095932.GB4850@merlin.emma.line.org>
-Date: Thu, 4 Feb 2010 10:59:32 +0100
-From: Matthias Andree <matthias.andree@....de>
-To: oss-security@...ts.openwall.com
-Subject: CVE request - fetchmail 6.3.11-.13 heap overflow in verbose X.509 cert display (only printable chars)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/04/4
+Message-ID: <20100704201217.GB29933@kki.org>
+Date: Sun, 4 Jul 2010 22:12:17 +0200
+From: Christoph Thiel <ct@....org>
+To: Morten Shearman Kirkegaard <morten@...elingp.dk>
+Cc: Florian Streibelt <gentoo@...treibelt.de>, oss-security <oss-security@...ts.openwall.com>, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Michael Fleming <mfleming+rpm@...tfleminggent.com>, Mads Martin Joergensen <mmj@....dk>, Ben Schmidt <mail_ben_schmidt@...oo.com.au>
+Subject: Re: CVE Request -- mlmmj -- Directory traversal flaw by editing and saving  list entries via php-admin web interface
 Content-Type: text/plain; charset=utf-8
 
-Please assign a CVE for the issue described below:
+On Sat, Jun 26, 2010 at 10:42:25AM +0200, Morten Shearman Kirkegaard wrote:
+> CC'ing Christoph Thiel (mlmmj-php-admin author) and Ben Schmidt (current
+> mlmmj maintainer).
+> 
+> On Wed, 2010-06-23 at 19:41 +0200, Florian Streibelt wrote:
+> > when I reported the bug I had no time to further investigate and I think I
+> > did not report upstream because of lack of time at that point and later
+> > forgot - which is sad.
+> 
+> Yeah, well, things like that happen. Would you agree that the attached
+> patch fixes the vulnerability?
+> 
+> Using a list of known-good-characters would be nice, but dot happens to
+> be a valid character in a list name.
+> 
+> > The php webinterface is a third-party development for mlmmj but part of the
+> > official release.
+> 
+> I know that this is just semantics, but... While it is true that the
+> mlmmj-php-admin web interface is distributed along with mlmmj, it is not
+> a part of mlmmj itself, but is located in the contribs directory.
 
----------------------------------------------------------------------
+Thanks for bringing this up. I haven't used the mlmmj-php-admin in years,
+but from looking at the patch that was proposed by Morten, I think it fixes
+the issues and should be shipped!
 
-fetchmail-SA-2010-01: Heap overrun in verbose SSL cert' info display.
-
-Topics:		Heap overrun in verbose SSL certificate information display.
-
-Author:		Matthias Andree
-Version:	1.0
-Announced:
-Type:		malloc() Buffer overrun with printable characters
-Impact:		Code injection (difficult).
-Danger:		low
-CVSSv2 vectors:
-
-CVE Name:
-URL:		http://www.fetchmail.info/fetchmail-SA-2010-01.txt
-Project URL:	http://www.fetchmail.info/
-
-Affects:	fetchmail releases 6.3.11, 6.3.12, and 6.3.13
-
-Not affected:	fetchmail release 6.3.14 and newer
-
-Corrected:	2010-02-04 fetchmail SVN (r5467)
-
-...
-
-1. Background
-=============
-
-fetchmail is a software package to retrieve mail from remote POP2, POP3,
-IMAP, ETRN or ODMR servers and forward it to local SMTP, LMTP servers or
-message delivery agents. It supports SSL and TLS security layers through
-the OpenSSL library, if enabled at compile time and if also enabled at
-run time.
+Who is taking care of commiting this to mlmmj? Is there any embargo
+involved?
 
 
-2. Problem description and Impact
-=================================
-
-In verbose mode, fetchmail prints X.509 certificate subject and issuer
-information to the user, and counts and allocates a malloc() buffer for
-that purpose.
-
-If the material to be displayed contains characters with high bit set
-and the platform treats the "char" type as signed, this can cause a heap
-buffer overrun because non-printing characters are escaped as
-\xFF..FFnn, where nn is 80..FF in hex.
-
-This might be exploitable to inject code if
-- fetchmail is run in verbose mode
-AND
-- the host running fetchmail considers char unsigned
-AND
-- the server uses malicious certificates with non-printing characters
-  that have the high bit set
-AND
-- these certificates manage to inject shell-code that consists purely of
-  printable characters.
-
-It is believed to be difficult to achieve all this.
-
-
-3. Solution
-===========
-
-There are two alternatives, either of them by itself is sufficient:
-
-a. Apply the patch found in section B of this announcement to
-   fetchmail 6.3.13, recompile and reinstall it.
-
-b. Install fetchmail 6.3.14 or newer after it will have become available.
-   The fetchmail source code is always available from
-   <http://developer.berlios.de/project/showfiles.php?group_id=1824>.
-
-
-4. Workaround
-=============
-
-Run fetchmail without and verbose options.
-
-...
-
-B. Patch to remedy the problem
-==============================
-
-Note that when taking this from a GnuPG clearsigned file, the lines
-starting with a "-" character are prefixed by another "- " (dash +
-blank) combination. Either feed this file through GnuPG to strip them,
-or strip them manually. You may want to use the "-p1" flag to patch.
-
-Whitespace differences can usually be ignored by invoking "patch -l",
-so try this if the patch does not apply.
-
---- a/sdump.c
-+++ b/sdump.c
-@@ -36,7 +36,7 @@ char *sdump(const char *in, size_t len)
- 	if (isprint((unsigned char)in[i])) {
- 	    *(oi++) = in[i];
- 	} else {
--	    oi += sprintf(oi, "\\x%02X", in[i]);
-+	    oi += sprintf(oi, "\\x%02X", (unsigned char)in[i]);
- 	}
-     }
-     *oi = '\0';
-
-END OF fetchmail-SA-2010-01.txt
-
-Content of type "application/pgp-signature" skipped
+Best
+Christoph
