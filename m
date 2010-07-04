@@ -1,23 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/21/7
-Message-ID: <1274455139.12594.81.camel@severus.strandboge.com>
-Date: Fri, 21 May 2010 10:18:59 -0500
-From: Jamie Strandboge <jamie@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/04/1
+Message-ID: <AANLkTik8N8P8uDqPZHICcxvtN08aVXOXSuCNi18UqOI3@mail.gmail.com>
+Date: Sat, 3 Jul 2010 23:18:07 -0600
+From: Kurt Seifried <kurt@...fried.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: off by one DoS in pe_icons.c
+Subject: CVE request for browser IFRAME/file download DoS
 Content-Type: text/plain; charset=utf-8
 
-Though the bug report and patch have very little details, our clamav
-maintainer confirmed with upstream that the following commit fixes a DoS
-via off by one error. It only affects 0.96 (code not present in earlier
-versions). A quick look at the code and patch suggests an out of bounds
-access on the dynamically allocated *imagedata array.
+Denial of service in various browsers:
 
-https://wwws.clamav.net/bugzilla/show_bug.cgi?id=2031
-http://git.clamav.net/gitweb?p=clamav-devel.git;a=commit;h=7f0e3bbf77382d9782e0189bf80f5f59a95779b3
+http://seclists.org/fulldisclosure/2010/Jul/69
 
+Basically it opens a lot of iframes that point to a file download/run
+location, you get endlessly spammed with run/save/cancel, in the case
+of affected web browsers they become non-responsive and you need to
+kill them using task manager/etc.
+
+Affected
+Firefox 3.6.4
+IE 8
+Safari 5.0 (7533.16)
+
+Not affected:
+Chrome 5/6
+Opera 10
 
 -- 
-Jamie Strandboge             | http://www.canonical.com
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+Kurt Seifried
+kurt@...fried.org
+tel: 1-703-879-3176
