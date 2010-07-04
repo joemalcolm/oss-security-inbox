@@ -1,43 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/16/16
-Message-ID: <20100316201309.GB2524@redhat.com>
-Date: Tue, 16 Mar 2010 14:13:09 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/04/2
+Message-ID: <20100704111305.GB3858@galadriel.inutil.org>
+Date: Sun, 4 Jul 2010 13:13:05 +0200
+From: Moritz Muehlenhoff <jmm@...til.org>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Unbound v1.4.3 -- 64 bit platforms specific remote DoS
+Subject: Re: kernel: l2tp: Fix oops in pppol2tp_xmit
 Content-Type: text/plain; charset=utf-8
 
-* [2010-03-16 21:08:27 +0100] Tomas Hoger wrote:
+On Wed, Jun 23, 2010 at 11:43:51AM +0800, Eugene Teo wrote:
+> "When transmitting L2TP frames, we derive the outgoing interface's
+> UDP checksum hardware assist capabilities from the tunnel dst dev.
+> This can sometimes be NULL, especially when routing protocols are
+> used and routing changes occur. This patch just checks for NULL dst
+> or dev pointers when checking for netdev hardware assist features.
+> 
+>     BUG: unable to handle kernel NULL pointer dereference at 0000000c
+>     IP: [<f89d074c>] pppol2tp_xmit+0x341/0x4da [pppol2tp]
+>     *pde = 00000000
+>     Oops: 0000 [#1] SMP
+>     last sysfs file: /sys/class/net/lo/operstate
+> [...]"
+> 
+> Introduced in ffcebb16 (v2.6.29-rc1~581), fixed in 3feec909 (fixed
+> in v2.6.34-rc2). (It was later split into different files in commit
+> fd558d18 v2.6.35-rc1).
+> 
+> I'm not requesting a CVE name for this because it did not affect any
+> of our supported kernels. FYI.
 
->On Tue, 16 Mar 2010 11:56:31 -0600 Vincent Danen <vdanen@...hat.com>
->wrote:
->
->> >  Unbound upstream has released latest, v1.4.3 version:
->> >  [1] http://www.unbound.net/download.html
->> >
->> >  addressing one denial of service issue, specific to 64 bit
->> >  platforms.
->> >
->> >References:
->> >  [2] http://bugs.gentoo.org/show_bug.cgi?id=309117
->> >
->> >Could you allocate CVE id for it?
->>
->> Please use CVE-2010-0735 for this issue.
->
->This just got CVE-2010-0969 from Mitre:
->
->Unbound before 1.4.3 does not properly align structures on 64-bit
->platforms, which allows remote attackers to cause a denial of service
->(daemon crash) via unspecified vectors.
+Steve, please assign a CVE ID for this.
 
-Oh ouch.  Yeah, I see it now.  Talk about poor timing.
-
-Please do _not_ use CVE-2010-0735 for this issue, but use CVE-2010-0969
-instead.
-
-Thanks, Tomas.
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+Cheers,
+        Moritz
