@@ -1,49 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/29/5
-Message-Id: <201009290708.13843.timb@nth-dimension.org.uk>
-Date: Wed, 29 Sep 2010 07:08:10 +0100
-From: Tim Brown <timb@...-dimension.org.uk>
-To: oss-security@...ts.openwall.com
-Cc: Raphael Geissert <geissert@...ian.org>
-Subject: Re: RFC: changing the behaviour of ld.so(8) regarding empty items on LD_LIBRARY_PATH
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/05/1
+Message-Id: <20100705092553.KADKUQHHMCAHYN@hackinthebox.org>
+Date: Mon, 5 Jul 2010 09:25:53 +0800
+From: Hafez Kamal <aphesz@...kinthebox.org>
+To: <oss-security@...ts.openwall.com>
+Subject: [HITB-Announce] HITB Magazine Issue 003 + HITBSecConf2010 - Amsterdam
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday 29 September 2010 00:42:05 Raphael Geissert wrote:
-> Hi everyone,
-> 
-> I have talked to one of the eglibc Debian maintainers about making ld.so
-> ignore empty items on LD_LIBRARY_PATH instead of treating them as '.', and
-> he doesn't have any objection.
-> 
-> Although this is a behaviour change, I do not think there is any real case
-> where an empty item was added in purpose (I even have yet to see one that
-> uses '.'.)
-> We are therefore considering making this change starting with our next
-> stable release.
-> 
-> What do the others think about it? do you think you would follow that
-> change too?
-> 
-> This change has been proposed by some people multiple times along the
-> years, yet nothing has changed (not even properly discussed, I believe.)
-> Has this change ever been proposed to glibc upstream? (maybe the RedHat
-> people can help with this.)
-> 
-> 
-> There is a similar issue with $PATH, but we have no plans for it so far
-> (execvp(8) claims ":/bin:/usr/bin" is the default if $PATH is unset, in
-> some setups.)
+Our first ever HITBSecConf in Europe is over! A big big thank you to all
+our sponsors, speakers, crew, volunteers and of course attendees who
+made it over to join us!!!
 
-You have my vote, I proposed the very same on oss-security a couple of weeks 
-back (http://www.openwall.com/lists/oss-security/2010/08/29/4).  I'm actually 
-working on a paper about exploiting the linker at the moment (seems many 
-people don't fully understand it), I'll be more than happy to share it when 
-it's complete.
+We're already planning for 2011 and the tentative timing for the HITB
+Europe is mid May (stay tuned to our @hitbsecconf twitter stream for all
+conference updates).
 
-Tim
--- 
-Tim Brown
-<mailto:timb@...-dimension.org.uk>
-<http://www.nth-dimension.org.uk/>
+All conference materials from the event can be downloaded from
+http://conference.hitb.org/hitbsecconf2010ams/materials and photos will
+be released on http://photos.hackinthebox.org in about 2 weeks time.
 
-Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
+==
+
+In conjunction with HITBSecConf2010 - Amsterdam, we are proud to
+announce the immediate availability of Issue 003 of the HITB Magazine,
+featuring a brand new double-page design!
+
+We now also have our very own sub site for the magazine and you'll find
+all the past and current issues for download at http://magazine.hitb.org
+or http://magazine.hackinthebox.org/
+
+We hope you enjoy the issue and do stay tuned for Issue 004 which we'll
+be releasing in October at HITBSecConf2010 - Malaysia. In addition to
+the electronic version, we're hoping to have a very 'limited edition'
+print issue exclusively for attendees of HITBSecConf2010 - Malaysia!
+
+Enjoy the rest of the summer sun and see you in October!
+
+- The HITB Team
+
+---
+Hafez Kamal
+HITB Crew
+Hack in The Box (M) Sdn. Bhd.
+Suite 26.3, Level 26, Menara IMC,
+No. 8 Jalan Sultan Ismail,
+50250 Kuala Lumpur,
+Malaysia
+
+Tel: +603-20394724
+Fax: +603-20318359
+
