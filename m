@@ -1,44 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/16/7
-Message-ID: <20100716222926.GG2067@redhat.com>
-Date: Fri, 16 Jul 2010 16:29:26 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Qt SSL endless loop
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/05/5
+Message-ID: <AANLkTil7296uzTbxkME0vcu3oeIzXaP6P3cNtbC046I5@mail.gmail.com>
+Date: Mon, 5 Jul 2010 12:10:58 -0400
+From: Glenn Randers-Pehrson <glennrp@...il.com>
+To: "PNG/MNG implementation discussion list" <png-mng-implement@...ts.sourceforge.net>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: [png-mng-implement] CVE Request -- libpng v1.4.3  and v1.2.44 -- memory leak while processing PNG image with malformed sCAL  chunks
 Content-Type: text/plain; charset=utf-8
 
-* [2010-07-16 11:19:09 -0400] Josh Bressers wrote:
+I did not intend to reveal the "crashing PNG" before
+Firefox 3.5.7 had been released.
 
->Please use CVE-2010-2533
+Glenn
 
-Wasn't this already assigned CVE-2010-2621?
-
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-2621
-
-It links to the same advisory (qtsslame-adv.txt) and that only seems to
-be reporting one single problem.
-
->----- "Ludwig Nussel" <ludwig.nussel@...e.de> wrote:
+On Mon, Jul 5, 2010 at 7:32 AM, Marcus Meissner <meissner@...e.de> wrote:
+> On Wed, Jun 30, 2010 at 05:22:40PM +0200, Marcus Meissner wrote:
+>> On Mon, Jun 28, 2010 at 04:26:06PM -0400, Josh Bressers wrote:
+>> >
+>> > ----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+>> >
+>> > > Hi Steve, vendors,
+>> > >
+>> > >    libpng upstream has released latest v1.4.3 and v1.2.44 versions,
+>> > > addressing two
+>> > > security issues:
+>> > > [a], out-of-bounds write to memory -- this already got a CVE id of
+>> > > "CVE-2010-1205",
+>> > > [b], memory-leak bug, involving images with malformed sCAL chunks,
+>> > > which could
+>> > >     lead to an application crash.
+>> > >
+>> > > References:
+>> > >    [1] http://www.libpng.org/pub/png/libpng.html
+>> > >    [2] https://bugzilla.redhat.com/show_bug.cgi?id=608644
+>> > >
+>> > > Steve, could you allocate a CVE id for the [b] issue?
+>> > >
+>> >
+>> > Please use CVE-2010-2249 for issue [b].
+>>
+>> oss-sec, png-mng-implement ... do you have testimages or a reproducer for the sCAL issue?
+>>
+>> It would be helpful for our QA :/
 >
->> Raphael Geissert wrote:
->> > [...]
->> > He also reported another vulnerability in Qt4's SSL support:
->> > http://aluigi.altervista.org/adv/qtsslame-adv.txt
->> >
->> > (reported to the Debian maintainers in
->> http://bugs.debian.org/587711)
->> >
->> > Could a CVE be assigned for this other issue too?
->>
->> Looks like the request got lost.
->>
->> The fix seems to be
->> http://qt.gitorious.org/qt/qt/commit/f7fe575bc5f628533aeeca3eb564af89a1a1426b
->>
->> According to the Mumble author this fix causes a regression with peer
->> certificate validation when used with openssl >= 0.9.8n though:
->> http://sourceforge.net/mailarchive/forum.php?thread_name=4C3F8BC6.9030303%40natvig.com&forum_name=mumble-packaging
->> http://bugreports.qt.nokia.com/browse/QTBUG-7200
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+> As found on:
+> http://code.google.com/p/chromium/issues/detail?id=45983
+>
+> The sample crashing PNG is:
+> http://www.ee.oulu.fi/~aki/spark.png
+>
+> Ciao, Marcus
+>
+> ------------------------------------------------------------------------------
+> This SF.net email is sponsored by Sprint
+> What will you do first with EVO, the first 4G phone?
+> Visit sprint.com/first -- http://p.sf.net/sfu/sprint-com-first
+> _______________________________________________
+> png-mng-implement mailing list
+> png-mng-implement@...ts.sourceforge.net
+> https://lists.sourceforge.net/lists/listinfo/png-mng-implement
+>
