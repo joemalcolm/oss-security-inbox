@@ -1,32 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/17/4
-Message-ID: <4CE34FBC.9090900@redhat.com>
-Date: Wed, 17 Nov 2010 09:15:00 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/06/11
+Message-ID: <986803361.2088671278443380193.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 6 Jul 2010 15:09:40 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Pierre Joye <pierre.php@...il.com>
-Subject: Re: Re: utf-8 security issue in php - 2 CVEs?
+Subject: Re: kernel: l2tp: Fix oops in pppol2tp_xmit
 Content-Type: text/plain; charset=utf-8
 
-On 11/16/2010 08:40 PM, Pierre Joye wrote:
-> hi,
-> 
-> New fixes or improved fixes, even for known flaw, get new CVE #. I was
-> not sure about that a couple of months ago, but that's the answer I
-> got when I asked about the policy for such cases. I think it makes
-> even more sense in this particular flaw.
-> 
-Right,
-However i am wondering why there is no mention of CVE-2009-5016 in the
-php NEWS file from the SVN.
-It only mentions:
+Please use CVE-2010-2495
 
-"
-- Fixed bug #49687 (utf8_decode vulnerabilities and deficiencies in the
-number
-  of reported malformed sequences). (CVE-2010-3870) (Gustavo)
-"
-
+Thanks.
 
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+    JB
+
+
+----- "Eugene Teo" <eugeneteo@...nel.sg> wrote:
+
+> "When transmitting L2TP frames, we derive the outgoing interface's UDP
+> 
+> checksum hardware assist capabilities from the tunnel dst dev. This
+> can 
+> sometimes be NULL, especially when routing protocols are used and 
+> routing changes occur. This patch just checks for NULL dst or dev 
+> pointers when checking for netdev hardware assist features.
+> 
+>      BUG: unable to handle kernel NULL pointer dereference at
+> 0000000c
+>      IP: [<f89d074c>] pppol2tp_xmit+0x341/0x4da [pppol2tp]
+>      *pde = 00000000
+>      Oops: 0000 [#1] SMP
+>      last sysfs file: /sys/class/net/lo/operstate
+> [...]"
+> 
+> Introduced in ffcebb16 (v2.6.29-rc1~581), fixed in 3feec909 (fixed in
+> 
+> v2.6.34-rc2). (It was later split into different files in commit 
+> fd558d18 v2.6.35-rc1).
+> 
+> I'm not requesting a CVE name for this because it did not affect any
+> of 
+> our supported kernels. FYI.
+> 
+> Thanks, Eugene
+> -- 
+> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i);
+> }
