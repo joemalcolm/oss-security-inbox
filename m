@@ -1,39 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/04/1
-Message-ID: <alpine.LFD.2.00.1006040744240.5055@localhost>
-Date: Fri, 4 Jun 2010 07:48:41 +0300 (EEST)
-From: Panu Matilainen <pmatilai@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-cc: oss-security@...ts.openwall.com, Jindrich Novy <jnovy@...hat.com>, Florian Festi <ffesti@...hat.com>, Matt McCutchen <matt@...tmccutchen.net>
-Subject: Re: CVE Request -- rpm -- Fails to remove the SUID/SGID bits on package upgrade (RH BZ#598775)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/06/4
+Message-ID: <alpine.LNX.2.00.1007060436540.10953@forced.attrition.org>
+Date: Tue, 6 Jul 2010 04:49:41 -0500 (CDT)
+From: security curmudgeon <jericho@...rition.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: Apache Axis2 Session Fixation
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 3 Jun 2010, Steven M. Christey wrote:
->
-> On Thu, 3 Jun 2010, Josh Bressers wrote:
->
->> I'm going to give both of these the same CVE id. The issues are very
->> related, and I had look at the CWE guide, they both seem to fall under
->> "CWE-281: Improper Preservation of Permissions"
->> 
->> Steve, feel free to overrule me on this one.
->
-> At a low level of granularity, it can be overkill to distinguish between 
-> closely-related flaw types.
->
-> The factor of concern here is that Red Hat bug 598775 suggests that the first 
-> variant was committed to a changeset, but not the second.  I can't (quickly) 
-> assess whether upstream committed changes for both variants, but if there's 
-> only a commit for the first one (and a public release), then maybe we 
-> consider these bugs as "almost-but-not-quite the same version" and assign a 
-> separate CVE.
 
-The second part about POSIX file capabilities was realized shortly 
-afterwards while thinking of possible other similar cases, and has been 
-fixed too now:
-http://rpm.org/gitweb?p=rpm.git;a=commitdiff;h=4d172a194addc49851e558ea390d3045894e3230
+: there has recently been a Session Fixation vulnerability reported in Apache 
+: Axis2, see:
+: 
+: References:
+: https://issues.apache.org/jira/browse/AXIS2-4739
+: http://www.securityfocus.com/archive/1/511955/30/30/threaded
+: 
+: There is already CVE-2010-2103 assigned for the Cross-Site Scripting 
+: mentioned in the advisory above. However, there does not seem to be a 
+: CVE for the Session Fixation flaw, so could you possibly assign one for 
+: it too?
 
-To my knowledge no distro actually uses the file capability support in RPM 
-though.
+Can we also get a CVE assigned for the other 186 issues I found in 
+issues.apache.org dating back to 2002-03-04? CVE covers 73 of the 259 
+issues, some much more serious than session fixation in Axis.
 
- 	- Panu -
+On a more serious note, does it have to be posted to Bugtraq or F-D to get 
+attention here? If you search osvdb.org by reference for 
+"issues.apache.org", you will see a substantional amount of 
+vulnerabilities that are higher risk (e.g., auth bypass, XSS, arbitrary 
+file disclosure, cleartext password disclosure, etc). Consider there were 
+almost two dozen more vulnerabilities that didn't get added to OSVDB 
+because the bug reports were too vague, inconclusive and/or the Apache 
+staff never responded in any fashion to clarify the severity or verify the 
+report. If we had more time to actually dig into the report / code, they 
+likely would have been added. 
+
+I am not entirely sure why this one is important enough to warrant an 
+individual request to CVE for assignment, when much more serious issues 
+exist, some of which are still oustanding last I checked.
+
+If CVE does assign an entry to this, please assign one to OSVDB 58803 for 
+an Apache Wicket Session Fixation issue too. Thanks!
+
+- security curmudgeon
