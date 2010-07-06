@@ -1,40 +1,111 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/06/1
-Message-ID: <20100306175053.GD20744@outflux.net>
-Date: Sat, 6 Mar 2010 09:50:53 -0800
-From: Kees Cook <kees@...ntu.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/06/9
+Message-ID: <175329858.2088141278443200444.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 6 Jul 2010 15:06:40 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: dyon@...coder.com.au
-Subject: Re: WANTED: mikmod patches
+Cc: David Relson <relson@...gesoftware.com>, coley <coley@...re.org>
+Subject: Re: Request CVE ID for bogofilter base64 decoder heap corruption
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Feb 22, 2010 at 02:16:58PM +0100, Thomas Biege wrote:
-> has somebody a pointer to the patches for CVE-2009-3996
-> and CVE-2009-3995?
-> 
-> The last release from upstream was 2+ yrs old.
-> 
-> These IDs are from a Secunia advisory about mikmod:
+Please use CVE-2010-2494
 
-http://secunia.com/secunia_research/2009-55/
-
-Looks like the CVEs need to be updated -- they were assigned only for
-WinAmp originally:
-
-CVE-2009-3995:
-http://secunia.com/secunia_research/2009-52/ "Impulse Tracker Instrument"
-http://secunia.com/secunia_research/2009-53/ "Impulse Tracker Sample"
-
-CVE-2009-3996:
-http://secunia.com/secunia_research/2009-56/ "Ultratracker File"
-
-Dyon, do you have any reproducers you could share to help distros get
-libmidmod patched?
-
-Thanks,
-
--Kees
+Thanks.
 
 -- 
-Kees Cook
-Ubuntu Security Team
+    JB
+
+
+----- "Matthias Andree" <matthias.andree@....de> wrote:
+
+> Greetings,
+> 
+> I am requesting a CVE ID for the issue described below.
+> 
+> Thanks.
+> 
+> Best regards
+> Matthias Andree
+> 
+> bogofilter-SA-2010-01
+> 
+> Topic:		heap corruption overrun in bogofilter/bogolexer
+> 
+> Announcement:	bogofilter-SA-2010-01
+> Writer:		Matthias Andree
+> Version:	0.1
+> CVE ID:		
+> Announced:	
+> Category:	vulnerability
+> Type:		array index underflow/out of bounds write through invalid
+> input
+> Impact:		heap corruption, application crash
+> Credits:	Julius Plenz
+> Danger:		medium
+> URL:	
+> http://bogofilter.sourceforge.net/security/bogofilter-SA-2010-01
+> 
+> Affected:	bogofilter <= 1.2.1
+> 		SVN before 2010-07-03 08:40 UTC
+> 
+> Not affected:	bogofilter 1.2.2	    (to be released)
+> 
+> 1. Background
+> =============
+> 
+> Bogofilter is a software package for classifying a message as spam or
+> non-spam.  It uses a data base to store words and must be trained
+> which messages are spam and non-spam. It uses the probabilities of
+> individual words for classifying the message.
+> 
+> Note that the bogofilter project is issuing security announcements
+> only
+> for current "stable" releases, and not necessarily for past "stable"
+> releases.
+> 
+> 2. Problem description
+> ======================
+> 
+> Bogofilter's/bogolexer's base64 could overwrite memory before its
+> heap
+> buffer if the base64 input started with an equals sign, such as
+> through
+> misdeclaration of quoted-printable as base64.
+> 
+> 3. Impact
+> =========
+> 
+> Vulnerable bogofilter and bogolexer applications can corrupt their
+> heap and
+> crash. The consequences are dependent on the local configuration,
+> memory
+> layout and operating system features.
+> 
+> 4. Solution
+> ===========
+> 
+> Upgrade your bogofilter to version 1.2.2 (or a newer release).
+> 
+> bogofilter is available from SourceForge:
+> 
+> <https://sourceforge.net/project/showfiles.php?group_id=62265>
+> 
+> A. Copyright, License and Warranty
+> ==================================
+> 
+> (C) Copyright 2010 by Matthias Andree, <matthias.andree@....de>.
+> Some rights reserved.
+> 
+> This work is licenced under the Creative Commons
+> Attribution-NonCommercial-NoDerivs 3.0 Unported License. To view a
+> copy
+> of this licence, visit
+> http://creativecommons.org/licenses/by-nc-nd/3.0/
+> or send a letter to Creative Commons, 171 Second Street, Suite 300,
+> San
+> Francisco, California 94105, USA.
+> 
+> THIS WORK IS PROVIDED FREE OF CHARGE AND WITHOUT ANY WARRANTIES.
+> Use the information herein at your own risk.
+> 
+> END of bogofilter-SA-2010-01
