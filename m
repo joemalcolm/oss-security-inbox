@@ -1,26 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/03/3
-Message-ID: <20100503182523.647df0da@foo.fgeek.fi>
-Date: Mon, 3 May 2010 18:25:23 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/06/8
+Message-ID: <20100706153425.GE22989@suse.de>
+Date: Tue, 6 Jul 2010 17:34:25 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: dan.j.rosenberg@...il.com
-Subject: Re: CVE request: lxr
+Subject: Re: CVE request: Apache Axis2 Session Fixation
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 3 May 2010 09:31:16 -0400
-Dan Rosenberg <dan.j.rosenberg@...il.com> wrote:
+On Tue, Jul 06, 2010 at 04:49:41AM -0500, security curmudgeon wrote:
+> 
+> : there has recently been a Session Fixation vulnerability reported in Apache 
+> : Axis2, see:
+> : 
+> : References:
+> : https://issues.apache.org/jira/browse/AXIS2-4739
+> : http://www.securityfocus.com/archive/1/511955/30/30/threaded
+> : 
+> : There is already CVE-2010-2103 assigned for the Cross-Site Scripting 
+> : mentioned in the advisory above. However, there does not seem to be a 
+> : CVE for the Session Fixation flaw, so could you possibly assign one for 
+> : it too?
+> 
+> Can we also get a CVE assigned for the other 186 issues I found in 
+> issues.apache.org dating back to 2002-03-04? CVE covers 73 of the 259 
+> issues, some much more serious than session fixation in Axis.
+> 
+> On a more serious note, does it have to be posted to Bugtraq or F-D to get 
+> attention here?
+> If you search osvdb.org by reference for 
+> "issues.apache.org", you will see a substantional amount of 
+> vulnerabilities that are higher risk (e.g., auth bypass, XSS, arbitrary 
+> file disclosure, cleartext password disclosure, etc). Consider there were 
+> almost two dozen more vulnerabilities that didn't get added to OSVDB 
+> because the bug reports were too vague, inconclusive and/or the Apache 
+> staff never responded in any fashion to clarify the severity or verify the 
+> report. If we had more time to actually dig into the report / code, they 
+> likely would have been added. 
+> 
+> I am not entirely sure why this one is important enough to warrant an 
+> individual request to CVE for assignment, when much more serious issues 
+> exist, some of which are still oustanding last I checked.
+> 
+> If CVE does assign an entry to this, please assign one to OSVDB 58803 for 
+> an Apache Wicket Session Fixation issue too. Thanks!
 
-> I discovered and reported this bug at the same time as two other XSS
-> issues, including the one covered by CVE-2009-4497.  While the commit
-> may be a few days apart for some of these, I think they can safely
-> fall under the same CVE, unless it's standard practice to assign CVEs
-> for each of several related minor issues.
 
-Several XSS-vulnerabilities can have one CVE at least when those
-vulnerabilities are fixed at the same time.
+Basically a CVE naming authority or CVE needs to be told somehow of the issue.
 
-Can someone verify what is the policy by the book?
+No one will just go to bugtrackers and add CVEs randomly.
 
----
-Henri Salo
+So there are usually external references to the bugs.
+
+There is no reason why the bugs could not get CVE entries, it however really
+helps if you have a list of 1 or more URLs per-issue prepared, as the database
+is filled out by humans ;)
+
+288 is however a massive amount and probably going back the history is not
+that useful either.
+
+Ciao, Marcus
