@@ -1,29 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/22/1
-Message-Id: <201009222051.55865.hanno@hboeck.de>
-Date: Wed, 22 Sep 2010 20:51:55 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/06/7
+Message-ID: <20100706151655.GD24659@lackof.org>
+Date: Tue, 6 Jul 2010 09:16:55 -0600
+From: dann frazier <dannf@...nf.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: clamav < 0.96.3 pdf bounds checking
+Cc: coley@...us.mitre.org
+Subject: CVE Request: kernel: hvc_console: Fix race between hvc_close and hvc_remove
 Content-Type: text/plain; charset=utf-8
 
-As always, clamav doesn't mention security issues in it's release notes, but 
-the changelog gives some insight.
+[cc'ing coley@...us.mitre.org]
 
-The bundled bzip2 code is affected by CVE-2010-0405 which is no surprise.
-
-This however sounds more interesting:
-Mon Sep 20 14:50:34 EEST 2010 (edwin)
--------------------------------------
- * libclamav/pdf.c: Add missing boundscheck to pdf code (bb #2226)
-
-The referenced bug report is not public, but it sounds like this deserves a 
-CVE.
+On Wed, Jun 30, 2010 at 11:06:41PM -0600, dann frazier wrote:
+> On Sat, Apr 17, 2010 at 11:26:46PM -0400, Michael Gilbert wrote:
+> > On Sat, 17 Apr 2010 18:15:42 -0400 Michael Gilbert wrote:
+> > 
+> > > On Thu, 04 Mar 2010 17:03:58 +0800 Eugene Teo wrote:
+> > > 
+> > > > Heads-up. You might want to backport this if your kernel is affected. We 
+> > > > are not requesting a CVE name for this as it does not affect any of our 
+> > > > Red Hat supported kernels.
+> > > 
+> > > are you sure about this?  i see the vulnerable code upstream in both
+> > > 2.6.26 and 2.6.32.  does redhat not ship hvc in their kernels?  i think
+> > > this should get a cve id because the more vanilla distros will have
+> > > shipped with this included.
+> > 
+> > i see that hvc_console is disabled by default in the debian kernels,
+> 
+> Actually, upon review, I see that it is enabled (see the powerpc64
+> image). Therefore, I'd like to request a CVE ID for it.
+> 
+> > and i assume it is the same for the redhat kernels.
+> > 
+> > are issues in features that are disabled by default generally treated
+> > as unimportant? there are bound to be a (perhaps small) subset of users
+> > turning these features on; exposing themselves to more risk if these
+> > issues go unfixed. i suppose cve assignment depends on whether or not
+> > there is an expectation to protect those users in addition to
+> > defaults-using users. 
+> > 
+> > mike
+> > 
+> 
 
 -- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+dann frazier
 
-http://schokokeks.org - professional webhosting
-
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
