@@ -1,38 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/29/8
-Message-ID: <20100929175030.GA3560@galadriel.inutil.org>
-Date: Wed, 29 Sep 2010 19:50:30 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/06/3
+Message-Id: <201007061133.10450.mweckbecker@suse.de>
+Date: Tue, 6 Jul 2010 11:33:09 +0200
+From: Matthias Weckbecker <mweckbecker@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE requests: Poppler, Quassel, Pyfribidi, Overkill, DocUtils, FireGPG, Wireshark
+Subject: CVE request: Apache Axis2 Session Fixation
 Content-Type: text/plain; charset=utf-8
 
 Hi,
-here's a few more CVE requests for issues in the Debian Security Tracker
-without a CVE ID assigned:
 
-1. Poppler (might also affect xpdf and kpdf due to code heritage, not determined yet)
-http://secunia.com/advisories/41596/
--> Links to poppler git commits are given in the Secunia link
+there has recently been a Session Fixation vulnerability reported in Apache 
+Axis2, see:
 
-2. Quassel
-http://quassel-irc.org/node/115
+References:
+https://issues.apache.org/jira/browse/AXIS2-4739
+http://www.securityfocus.com/archive/1/511955/30/30/threaded
 
-3. Pyfribidi
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=570068
+There is already CVE-2010-2103 assigned for the Cross-Site Scripting mentioned 
+in the advisory above. However, there does not seem to be a CVE for the 
+Session Fixation flaw, so could you possibly assign one for it too?
 
-4. Overkill (this should be a CVE-2009 ID)
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=549310
+Thanks!
 
-5. Emacs mode for reStructuredText (from DocUtils) (this should be a CVE-2009 ID)
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=560755
+ciao,
+Matthias
 
-6. FireGPG (this should be a CVE-2008 ID)
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=514386
-http://securityvulns.com/Udocument757.html
-
-7. Wireshark BER dissector
-http://archives.neohapsis.com/archives/bugtraq/2010-09/0088.html
-
-Cheers,
-        Moritz
+-- 
+Matthias Weckbecker, SUSE Security Team
+SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg   
+Tel: +49-911-74053-0;  http://www.opensuse.org/   
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
