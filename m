@@ -1,23 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/09/1
-Message-ID: <4C886EAA.7090804@redhat.com>
-Date: Thu, 09 Sep 2010 13:20:42 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/06/5
+Message-ID: <20100706135157.GA4184@suse.de>
+Date: Tue, 6 Jul 2010 15:51:57 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: niu buffer overflow for ETHTOOL_GRXCLSRLALL
+Cc: yoshfuji@...ux-ipv6.org
+Subject: patch for remote buffer overflows and local message spoofing in mipv6 daemon
 Content-Type: text/plain; charset=utf-8
 
-https://bugzilla.redhat.com/show_bug.cgi?id=632069
-http://www.spinics.net/lists/netdev/msg140133.html
+Hi,
 
-"niu_get_ethtool_tcam_all() assumes that its output buffer is the right 
-size, and warns before returning if it is not.  However, the output 
-buffer size is under user control and ETHTOOL_GRXCLSRLALL is an 
-unprivileged ethtool command."
+I tried this 2 years ago on vendor-sec and with the maintainers
+at that time w/o success. I polished the patch to fit in the current commit.
+The bugs were not fixed during the two years.
+Can someone assign CVE(s)?
 
-Affects kernel v2.6.30-rc1 onwards.
+Sebastian
 
-Thanks, Eugene
+
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+~
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+~ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+
+
+View attachment "mipv6-daemon-0.5rc1.diff" of type "text/x-patch" (2918 bytes)
