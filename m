@@ -1,44 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/12/1
-Message-ID: <20100913002457.100028b07bsvy9fd@horde.stingray.a3li.info>
-Date: Mon, 13 Sep 2010 00:24:57 +0200
-From: Alex Legler <a3li@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/06/6
+Message-ID: <AANLkTimX8QzLAY4UYJ24xG7bhqnCEP0tV_2Ldv8-kq7T@mail.gmail.com>
+Date: Tue, 6 Jul 2010 00:51:40 -0600
+From: Kurt Seifried <kurt@...fried.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: pidgin-knotify remote command injection
+Subject: Bugzilla 3.7.1 CVE request
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+CVE # for this please.
 
-we received a public report [0] in our Bugzilla about the following  
-issue in pidgin-knotify [1]:
+http://www.bugzilla.org/security/3.7.1/
 
-"pidgin-knotify is a pidgin plugin that displays received messages and other
-notices from pidgin as KDE notifications. It uses system() to invoke ktdialog
-and passes the unescaped messages as command line arguments. An attacker could
-use this to inject arbitrary commands by sending a prepared message via any
-protocol supported by pidgin to the victim.
-[...]
-The vulnerable system() call is located in src/pidgin-knotify.c, line 71-74:
+Summary
+=======
 
-command = g_strdup_printf("kdialog --title '%s' --passivepopup '%s'  
-%d", title,
-body, timeout);
-[...]
-result = system(command);"
+Bugzilla is a Web-based bug-tracking system used by a large number of
+software projects. The following security issue has been discovered
+in Bugzilla:
 
-All upstream versions seem to be vulnerable. The reporter tried to  
-contact upstream a week ago without a response, and the last release  
-was Dec '09, so we are assuming upstream is inactive. Maybe our  
-maintainer is going to provide a patch. From what I can see only  
-Fedora ships the package besides us.
+* In the 3.7.1 development snapshot, adding bugs using email_in.pl
+  or the WebServices Bug.create method would not restrict bugs to
+  Mandatory or Default groups.
 
-Please assign a CVE id.
+All affected installations are encouraged to upgrade as soon as
+possible.
 
-Thanks,
-Alex
+Vulnerability Details
+=====================
+
+Class:       Unauthorized Access to Confidential Information
+Affects:     3.7, 3.7.1
+Fixed In:    3.7.2
+Description: Bugzilla administrators can set certain groups as being
+             "mandatory" for when a new bug is filed. (That is, bugs
+             are always restricted to access by those groups.)
+             Administrators can also set some groups as "Default",
+             meaning that if the user makes no selection about groups,
+             the new bug will be restricted to the groups set as
+             Default. In the unreleased 3.7 code and 3.7.1 development
+             snapshot, restricting a bug to mandatory or default groups
+             would not happen when the bug was newly created using the
+             inbound email interface (email_in.pl) or the "Bug.create"
+             method in the WebServices interface. This means that these
+             bugs could be publicly available, when they should have
+             been restricted to being accessible only to certain
+             groups.
+References:  https://bugzilla.mozilla.org/show_bug.cgi?id=574892
 
 
-[0] https://bugs.gentoo.org/show_bug.cgi?id=336916
-[1] http://code.google.com/p/pidgin-knotify/
-
-Content of type "application/pgp-signature" skipped
+-- 
+Kurt Seifried
+kurt@...fried.org
+tel: 1-703-879-3176
