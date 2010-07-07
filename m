@@ -1,40 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/16/6
-Message-ID: <4CE2AFCC.5020008@snafu.de>
-Date: Tue, 16 Nov 2010 17:22:36 +0100
-From: Martin Drescher <drescher@...fu.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/07/2
+Message-Id: <20100707015435.b9cb8db8.reed@reedloden.com>
+Date: Wed, 7 Jul 2010 01:54:35 -0500
+From: Reed Loden <reed@...dloden.com>
 To: oss-security@...ts.openwall.com
-Subject: Clear text password in process list when using MySQL GUI tools
+Cc: Kurt Seifried <kurt@...fried.org>
+Subject: Re: Bugzilla 3.7.1 CVE request
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-Hi ML.
+On Tue, 6 Jul 2010 00:51:40 -0600
+Kurt Seifried <kurt@...fried.org> wrote:
 
-If you use some MySQL-GUI-tool in most (any?) linux distribution like
-mysql-admin or mysql-query-browser and then open 'Tools -> MySQL Text
-Console' your password, user name and host will become exposed in the
-process list.
+> CVE # for this please.
+> 
+> http://www.bugzilla.org/security/3.7.1/
 
-I think this issue must exists over a long time in many distributions
-now but nobody ever cared about.
+This security issue only affects the 3.7 and 3.7.1 development
+"snapshots" (basically, alpha/beta quality). It's highly unlikely that
+any distro would be tracking this unstable version/branch, so is a CVE
+really required? If so, Mozilla can assign one from its pool.
 
-For Debian users:
-Packages mysql-query-browser, mysql-admin are affected.
+I usually deal with getting CVEs assigned for Bugzilla issues, and I
+just didn't think this one required one... However, maybe I was
+mistaken in that.
 
+~reed
+Mozilla Security Group
 
-So far, Martin
-
- GnuPG Key Fingerprint, KeyID '4FBE451A':
- '2237 1E95 8E50 E825 9FE8  AEE1 6FF4 1E34 4FBE 451A'
-
+- -- 
+Reed Loden - <reed@...dloden.com>
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.10 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iEYEARECAAYFAkzir8gACgkQb/QeNE++RRqfIQCfaLDToS6pAfuj4/XgkYSKnBh0
-nu8An3JJAp2nZWcOODOXX2KGs07ouATd
-=/nj6
+iEYEARECAAYFAkw0JKwACgkQa6IiJvPDPVrDPwCfax7OoqAr2Di+vZ0NQdXIrxZV
+pFMAoLBKcbef1hSrDiyeRUm7bTCoCmZY
+=EhY+
 -----END PGP SIGNATURE-----
