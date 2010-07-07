@@ -1,38 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/17/7
-Message-ID: <4BA0E08B.8020808@stafford.uklinux.net>
-Date: Wed, 17 Mar 2010 14:00:43 +0000
-From: Brian Stafford <brian@...fford.uklinux.net>
-To: Ludwig Nussel <ludwig.nussel@...e.de>
-Cc: oss-security@...ts.openwall.com, libesmtp@...fford.uklinux.net, security@...ntu.com, Pawel Salek <pawsa@...ochem.kth.se>, jskarvad@...hat.com
-Subject: Re: CVE Request: libesmtp does not check NULL bytes in commonName
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/07/3
+Message-ID: <2033753502.2168681278502970126.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 7 Jul 2010 07:42:50 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: yoshfuji@...ux-ipv6.org, Sebastian Krahmer <krahmer@...e.de>
+Subject: Re: patch for remote buffer overflows and local message spoofing in mipv6 daemon
 Content-Type: text/plain; charset=utf-8
 
-Ludwig Nussel wrote:
-> Brian Stafford wrote:
->   
->> Since both the original and patched versions of match_component() 
->> implement wildcards rather less liberally than RFC 2818 implies, I 
->> decided to move towards the approach in the I-D.  match_component() now 
->> accepts either a string or a single wildcard '*'.  Matched characters 
->> are validated against the set of valid domain name component characters 
->> , that is, *.example.org will not match %.example.org, nor for that 
->> matter will the pattern %.example.org.  Question: should underline '_' 
->> be in the set of valid characters?
->>     
->
-> AFAIK underlines are not allowed in DNS. I'm sure someone knows the
-> RFC for that too :-)
->   
-They are permitted in some contexts but not in actual domain names, for 
-example a SRV record question to a name server contains stuff like 
-_smtp._tcp.host.example.org  The host.example.org section is forbidden 
-from using _ but obviously the name server itself supports it so it can 
-handle the _smtp._tcp components.  I am assuming that since we're 
-validating domain names and not name server queries, the _ is forbidden 
-but if anyone out there can clarify it might be useful :-)
-> cu
-> Ludwig
->
->   
-Brian
+
+----- "Sebastian Krahmer" <krahmer@...e.de> wrote:
+
+> Hi,
+> 
+> I tried this 2 years ago on vendor-sec and with the maintainers at that
+> time w/o success. I polished the patch to fit in the current commit.  The
+> bugs were not fixed during the two years.  Can someone assign CVE(s)?
+> 
+
+Do you need two IDs? This message sounds like it, but I'm not completely
+sure.
+
+Thanks.
+
+-- 
+    JB
