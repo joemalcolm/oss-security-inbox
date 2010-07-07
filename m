@@ -1,23 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/11/7
-Message-Id: <81EA1BCE-3C7A-4CBE-BF3E-227CBAD368B6@apple.com>
-Date: Thu, 11 Mar 2010 11:42:11 -0800
-From: Geoff Keating <geoffk@...le.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/07/5
+Message-ID: <Pine.GSO.4.64.1007071241440.8569@faron.mitre.org>
+Date: Wed, 7 Jul 2010 12:44:34 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: Ludwig Nussel <ludwig.nussel@...e.de>, libesmtp@...fford.uklinux.net, security@...ntu.com
-Subject: Re: CVE Request: libesmtp does not check NULL bytes in commonName
+Subject: Re: kernel: hvc_console: Fix race between hvc_close and hvc_remove
 Content-Type: text/plain; charset=utf-8
 
 
-On 11/03/2010, at 6:58 AM, Brian Stafford wrote:
+On Wed, 30 Jun 2010, dann frazier wrote:
 
-> I find myself coming back to RFC 2818 being a reasonable choice since it is flexible and (almost) clear, and since HTTPS, as a major user of TLS, is, I assume, well analysed for security implications wrt certificate validation. 
-> Is it the case that for STARTTLS in SMTP what we are really interested in is encrypting the data on the wire and authentication is only of secondary importance?  Do we know what the best current practice is among CAs when it comes to issuing certificates for STARTTLS?
+>> i see that hvc_console is disabled by default in the debian kernels,
+>
+> Actually, upon review, I see that it is enabled (see the powerpc64
+> image). Therefore, I'd like to request a CVE ID for it.
+>
 
-The best current practice for CAs is probably expressed in the EV certificate requirements documents, which say that there should be no wildcards at all---and after reading this discussion, I think you can see why.
+Use CVE-2010-2653
 
-I doubt it makes sense, from a CA perspective, to ever issue a certificate with wildcard(s) anywhere but leftmost.  Certainly there should never be a certificate which has a wildcard for the top-level (or second-level) domain, as that would imply the applicant controls the entire internet, and applicants which actually do control the whole internet (Akamai, I'm looking at you) can be issued CA intermediate certificates instead, which are better for auditing and control.
+Let's ignore the default case.  If there's a feature that's available to 
+some set of users, no matter how small, then CVE assignment is reasonable, 
+even if it's not the default.  It's not much different than if you have an 
+issue that only affects a particular chip set or compiler.
 
-STARTTLS is a bit different than HTTPS, because in most SMTP configurations there's a trivial fallback attack (pretend to be the other server, and don't offer STARTTLS) so here the confidentiality aspects are the most important, to prevent passive sniffing.
-
-Somewhere there's a draft RFC that goes into recommendations for certificate validation in much more detail, but I've lost it, and it's a draft and not yet complete.
+- Steve
