@@ -1,36 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/09/7
-Message-ID: <AANLkTinOn79QjN4KXpyj+efyVtQo=kiZ2DmXa+nEtWEd@mail.gmail.com>
-Date: Mon, 9 Aug 2010 17:38:59 -0600
-From: Kurt Seifried <kurt@...fried.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request - ZNC
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/07/4
+Message-ID: <20100707121319.GA6091@suse.de>
+Date: Wed, 7 Jul 2010 14:13:19 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
+To: Josh Bressers <bressers@...hat.com>
+Cc: oss-security@...ts.openwall.com, yoshfuji@...ux-ipv6.org
+Subject: Re: patch for remote buffer overflows and local message spoofing in mipv6 daemon
 Content-Type: text/plain; charset=utf-8
 
-Sorry forgot to mention it's version 0.092 (currently the latest) is affected.
+Its probably better to have two IDs, even though its unlikely
+that they will be fixed separately. Its two issues at last.
 
-On Mon, Aug 9, 2010 at 5:36 PM, Kurt Seifried <kurt@...fried.org> wrote:
-> Vincent Danen      2010-08-09 17:44:43 EDT
->
-> An out-of-range flaw was found in znc where if it received a "PING" from a
-> client without an argument, std::string would throw a std::out_of_range
-> exception which killed znc.  This is fixed in subversion [1].
->
-> Some unsafe substr() calls were fixed as well.  These are of lesser impact
-> because a valid login is required in order to cause a std::out_of_range
-> exception.  This is also fixed in subversion [2].
->
-> [1] http://znc.svn.sourceforge.net/viewvc/znc?view=revision&revision=2093
-> [2] http://znc.svn.sourceforge.net/viewvc/znc?view=revision&revision=2095
->
-> http://en.znc.in/wiki/ZNC
-> https://bugzilla.redhat.com/show_bug.cgi?id=622601
-> https://bugzilla.redhat.com/show_bug.cgi?id=622600
->
->
+Sebastian
 
+
+On Wed, Jul 07, 2010 at 07:42:50AM -0400, Josh Bressers wrote:
+> 
+> ----- "Sebastian Krahmer" <krahmer@...e.de> wrote:
+> 
+> > Hi,
+> > 
+> > I tried this 2 years ago on vendor-sec and with the maintainers at that
+> > time w/o success. I polished the patch to fit in the current commit.  The
+> > bugs were not fixed during the two years.  Can someone assign CVE(s)?
+> > 
+> 
+> Do you need two IDs? This message sounds like it, but I'm not completely
+> sure.
+> 
+> Thanks.
+> 
+> -- 
+>     JB
 
 -- 
-Kurt Seifried
-kurt@...fried.org
-tel: 1-703-879-3176
+~
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+~ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+
