@@ -1,38 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/23/1
-Message-ID: <4B83B356.6060701@redhat.com>
-Date: Tue, 23 Feb 2010 11:52:06 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-CC: "Steven M. Christey" <coley@...us.mitre.org>, "Todd C. Miller" <Todd.Miller@...rtesan.com>
-Subject: CVE assignment notification -- CVE-2010-0426 -- sudo improper pseudocommands file path check
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/07/1
+Message-ID: <4C34176C.4060402@kernel.sg>
+Date: Wed, 07 Jul 2010 13:58:04 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request - kernel: nfsd4: bug in read_buf
 Content-Type: text/plain; charset=utf-8
 
-Hi vendors,
+https://bugzilla.redhat.com/show_bug.cgi?id=612028
+Upstream commit: http://git.kernel.org/linus/2bc3c117
 
-   a privilege escalation flaw was found in the way
-   sudo used to check file paths for pseudocommands.
-   If local, unprivileged user was authorized by sudoers
-   file to edit one or more files, it could lead to
-   execution of arbitrary code, with the privileges
-   of privileged system user (root).
+Introduced in commit 89fc0a31 ( v2.5.49) and 099e99f0 (v2.6.0-test3). 
+Fixed in v2.6.34-rc6.
 
-BTS records:
-   [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=570737
-   [2] https://bugzilla.redhat.com/show_bug.cgi?id=567337
+"When read_buf is called to move over to the next page in the pagelist 
+of an NFSv4 request, it sets argp->end to essentially a random number, 
+certainly not an address within the page which argp->p now points to. 
+So subsequent calls to READ_BUF will think there is much more than a 
+page of spare space (the cast to u32 ensures an unsigned comparison) so 
+we can expect to fall off the end of the second page."
 
-Patches from Todd C. Miller:
-   [3] https://bugzilla.redhat.com/attachment.cgi?id=395605&action=diff
-       (against sudo v1.7.x)
-   [4] https://bugzilla.redhat.com/attachment.cgi?id=395606&action=diff
-       (against sudo v1.6.x)
+There's a possibility of triggering this with a specially crafted NFS 
+WRITE request (if accepted by the server).
 
-   which should overcome the deficiency.
-
-Credit: neonsignal
-
-CVE: CVE identifier of CVE-2010-0426 has been already assigned to this issue.
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Thanks, Eugene
+-- 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
