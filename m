@@ -1,22 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/26/1
-Message-ID: <4CC64A3C.20402@redhat.com>
-Date: Tue, 26 Oct 2010 11:25:48 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/08/2
+Message-ID: <87k4p6w8ic.fsf@small.ssi.corp>
+Date: Thu, 08 Jul 2010 12:52:27 +0200
+From: arno@...isbad.org (Arnaud Ebalard)
 To: oss-security@...ts.openwall.com
-CC: Kees Cook <kees@...ntu.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: heap contents leak from ETHTOOL_GRXCLSRLALL
+Subject: Re: patch for remote buffer overflows and local message spoofing in mipv6 daemon
 Content-Type: text/plain; charset=utf-8
 
-On 10/26/2010 07:36 AM, Kees Cook wrote:
-> This is an uncommon leak I found that was fixed in 2.6.36 here:
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=ae6df5f96a51818d6376da5307d773baeece4014
->
-> This is different from CVE-2010-2478, but was introduced at the same time
-> (0853ad66, 2.6.27-rc1).
+Hi Sebastian,
 
-Please use CVE-2010-3861.
+Sebastian Krahmer <krahmer@...e.de> writes:
 
-E
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+>> > I tried this 2 years ago on vendor-sec and with the maintainers at that
+>> > time w/o success.
+
+Romain Kuntz and I had the same problem for our bugfixes and additional
+features against UMIP. We ended up maintaining a parallel git tree on
+umip.org: it provides bug fixes, code simplifications, addditional
+features ... We also maintain Debian packages and additional trees.
+
+USAGI people have been warned but - just like you - we got no feedback.
+
+>> > I polished the patch to fit in the current commit.  The
+>> > bugs were not fixed during the two years.  Can someone assign CVE(s)?
+
+FWIW, the two bugs you report have been fixed (along with others if you
+are interested) in our tree (http://www.umip.org/git/umip.git) for a
+while:
+
+commit 3fd3941434a0ee567f874e56c53a5d0855c945e3
+Author: Romain Kuntz <kuntz@...it.u-strasbg.fr>
+Date:   Sun Oct 25 01:34:32 2009 +0200
+
+    Additional sanity checks for ND options length
+
+commit 0e67a61ffd37cc4e3dfa8add137a5d6cd8963a8e
+Author: Arnaud Ebalard <arno@...isbad.org>
+Date:   Sat Oct 24 12:11:58 2009 +0200
+
+    Security fix: Check origin of netlink messages in netlink helpers.
+    
+    Sending multicast Netlink messages requires some privileges. Sending
+    unicast ones can be done by common users. Then, this is up to the
+    receiver to filter incoming messages to verify the origin and
+    prevent security issues. See http://lwn.net/Articles/329266/ for
+    more information. 
+    
+    As UMIP expects only kernel messages, this patch adds additional
+    checks where needed to verify the kernel is the emiiter of the
+    message. Note that this check needs to be done early (before
+    checking if recvmsg() return value is not 0) to prevent someone
+    sending us an empty message and returning.
+    
+    This patch is based on an initial version by Romain.
+
+
+If you find additional bugs on UMIP, don't hesitate to drop a mail on
+the Mailing List: http://ml.nautilus6.org/mailman/listinfo/support. It
+is also available via Gmane (gmane.network.ipv6.nautilus6.general).
+
+Cheers,
+
+a+  
+
