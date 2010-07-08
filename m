@@ -1,32 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/09/6
-Message-Id: <201004091150.50645.ludwig.nussel@suse.de>
-Date: Fri, 9 Apr 2010 11:50:50 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/08/3
+Message-ID: <20100708204414.GA21788@inutil.org>
+Date: Thu, 8 Jul 2010 22:44:14 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: ClamAV small issues
+Cc: Kurt Seifried <kurt@...fried.org>
+Subject: Re: Bugzilla 3.7.1 CVE request
 Content-Type: text/plain; charset=utf-8
 
-Eren Türkay wrote:
-> On Friday 09 April 2010 11:30:19 am Ludwig Nussel wrote:
-> > Do such issues really need to be flagged as vulnerabilities? A virus
-> > scanner cannot detect all possible malware in any possible container
-> > anyways. So it's kind of natural that new releases enhance the
-> > methods to find even more hiding places.
-> > 
+Reed Loden wrote:
+
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
 > 
-> I guess many people who deploy e-mail service with linux use ClamAV to scan 
-> the attachments. Accordingly to ClamAV bug #1771 (CVE-2010-1311), it is 
-> possible to crash the daemon with crafted file, which is not the intended 
-> behavior.
+> On Tue, 6 Jul 2010 00:51:40 -0600
+> Kurt Seifried <kurt@...fried.org> wrote:
+> 
+> > CVE # for this please.
+> > 
+> > http://www.bugzilla.org/security/3.7.1/
+> 
+> This security issue only affects the 3.7 and 3.7.1 development
+> "snapshots" (basically, alpha/beta quality). It's highly unlikely that
+> any distro would be tracking this unstable version/branch, so is a CVE
+> really required? If so, Mozilla can assign one from its pool.
+> 
+> I usually deal with getting CVEs assigned for Bugzilla issues, and I
+> just didn't think this one required one... However, maybe I was
+> mistaken in that.
 
-Sure. That's a different issue though. I was referring to CVE-2010-0098.
+I don't think that development snapshots needs a CVE ID, but there's 
+at least one more Bugzilla vulnerability fixed in a release which hasn't 
+been assigned a CVE ID so far:
 
-cu
-Ludwig
+http://www.bugzilla.org/security/3.2.3/
+https://bugzilla.mozilla.org/show_bug.cgi?id=495257
 
--- 
- (o_   Ludwig Nussel
- //\   
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+Cheers,
+        Moritz
