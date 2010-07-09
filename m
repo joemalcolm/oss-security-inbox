@@ -1,89 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/09/9
-Message-ID: <Pine.GSO.4.64.1012090928490.6544@faron.mitre.org>
-Date: Thu, 9 Dec 2010 09:34:26 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/09/4
+Message-ID: <AANLkTin1BwBnRQxkbI2n16d1ZLmmgz1K6pE_AQrdj-xT@mail.gmail.com>
+Date: Thu, 8 Jul 2010 23:56:21 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: NULL byte poisoning fix in php 5.3.4+
+Subject: Re: kernel: gfs2 acl issue
 Content-Type: text/plain; charset=utf-8
 
+To elaborate on the issue: the gfs2 filesystem in 2.6.32 kernels
+currently allows any user to set arbitrary ACLs for files they do not
+own, essentially granting full access to everything.  The source of
+this problem also caused other misbehavior of ACLs.  This fix resolved
+the issue for 2.6.33, but it was not backported, so 2.6.32 remains
+vulnerable.
 
-On Thu, 9 Dec 2010, Pierre Joye wrote:
+-Dan
 
-> We are about to release 5.2.15 and 5.3.4, can anyone please get an id
-> for this issue?
-
-I just assigned CVE-2006-7243 to the http://bugs.php.net/39863 issue, i.e. 
-NULL injection in file_exists() *only*.
-
-However, as already stated, the issue of NULL byte injection with PHP 
-dates back to 1999 or so (ouch... I remember that).  If PHP is addressing 
-NULL byte injection beyond just file_exists(), then that may need a 
-separate CVE.
-
-- Steve
-
-
-> Thanks,
+On Thu, Jul 8, 2010 at 11:47 PM, Eugene Teo <eugeneteo@...nel.sg> wrote:
+> Upstream commit 2646a1f6 (2.6.33-rc1) fixed an interesting gfs2 acl issue
+> late last year. Thanks Dan Rosenberg for informing us about this.
 >
-> On Tue, Nov 30, 2010 at 3:26 AM, Pierre Joye <pierre.php@...il.com> wrote:
->> Coley? :)
->>
->> On Mon, Nov 22, 2010 at 5:21 PM, Josh Bressers <bressers@...hat.com> wrote:
->>> Steve,
->>>
->>> Can MITRE take this one. It looks like it's from 2006 (from looking at the
->>> upstream bug). I don't see a CVE id for this anywhere.
->>>
->>> Thanks.
->>>
->>> --
->>>    JB
->>>
->>> ----- "Pierre Joye" <pierre.php@...il.com> wrote:
->>>
->>>> anyone?
->>>>
->>>> On Thu, Nov 18, 2010 at 5:43 PM, Pierre Joye <pierre.php@...il.com>
->>>> wrote:
->>>>> forgot to add the fixes revs:
->>>>>
->>>>> http://svn.php.net/viewvc?view=revision&revision=305507
->>>>> revert of part of the OCI8 fix
->>>>> http://svn.php.net/viewvc?view=revision&revision=305509
->>>>>
->>>>> OCI8 fix (committed separately)
->>>>> http://svn.php.net/viewvc?view=revision&revision=305412
->>>>>
->>>>> On Thu, Nov 18, 2010 at 5:22 PM, Pierre Joye <pierre.php@...il.com>
->>>>> wrote:
->>>>>> hi,
->>>>>>
->>>>>> The problem describes here http://www.madirish.net/?article=436, in
->>>>>> http://bugs.php.net/39863 (and numerous other places) has been fixed
->>>>>> in PHP_5_3, targetting 5.3.4 (RC1 to be released today). It is a well
->>>>>> (old) known issue in PHP and I wonder if there is a CVE already for
->>>>>> it? If not I think having one could helpful. or?
->>>>>>
->>>>>> Cheers,
->>>>>> --
->>>>>> Pierre
->>>>>>
->>>
->>
->>
->>
->> --
->> Pierre
->>
->> @pierrejoye | http://blog.thepimp.net | http://www.libgd.org
->>
+> http://git.kernel.org/linus/2646a1f61a3b5525914757f10fa12b5b94713648
 >
+> I didn't request a CVE name for this but if you need one, ping Steve.
 >
->
-> -- 
-> Pierre
->
-> @pierrejoye | http://blog.thepimp.net | http://www.libgd.org
->
+> Thanks, Eugene
+> --
+> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
 >
