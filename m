@@ -1,44 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/12/3
-Message-Id: <1281626393.12337.145.camel@TS-HQ-2>
-Date: Thu, 12 Aug 2010 17:19:53 +0200
-From: "Carsten H. Eiram" <che@...unia.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/09/5
+Message-ID: <4C36B7F0.6020700@kernel.sg>
+Date: Fri, 09 Jul 2010 13:47:28 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Subject: Re: opera 10.61 fixes 3 security bugs
+CC: Dan Rosenberg <dan.j.rosenberg@...il.com>
+Subject: Re: kernel: gfs2 acl issue
 Content-Type: text/plain; charset=utf-8
 
-Please note that CVE-2010-2576 is already assigned to the issue
-discovered by us.
+On 07/09/2010 11:56 AM, Dan Rosenberg wrote:
+> To elaborate on the issue: the gfs2 filesystem in 2.6.32 kernels
+> currently allows any user to set arbitrary ACLs for files they do not
+> own, essentially granting full access to everything.  The source of
+> this problem also caused other misbehavior of ACLs.  This fix resolved
+> the issue for 2.6.33, but it was not backported, so 2.6.32 remains
+> vulnerable.
 
-http://secunia.com/secunia_research/2010-110/
+Thanks Dan. I have informed Greg about 2.6.32.y. FWIW, 2.6.{33,34}.y are 
+not affected.
+
+Eugene
+
+> On Thu, Jul 8, 2010 at 11:47 PM, Eugene Teo<eugeneteo@...nel.sg>  wrote:
+>> Upstream commit 2646a1f6 (2.6.33-rc1) fixed an interesting gfs2 acl issue
+>> late last year. Thanks Dan Rosenberg for informing us about this.
+>>
+>> http://git.kernel.org/linus/2646a1f61a3b5525914757f10fa12b5b94713648
+>>
+>> I didn't request a CVE name for this but if you need one, ping Steve.
+>>
+>> Thanks, Eugene
+>> --
+>> main(i) { putchar(182623909>>  (i-1) * 5&31|!!(i<7)<<6)&&  main(++i); }
+>>
 
 
-
-On Thu, 2010-08-12 at 17:04 +0200, Thomas Biege wrote:
-> http://www.opera.com/docs/changelogs/unix/1061/
-> 
-> * Fixed an issue where heap buffer overflow in HTML5 canvas could be used to 
-> execute arbitrary code, as reported by Kuzzcc; see our advisory.
-> * Fixed an issue where unexpected changes in tab focus could be used to run 
-> programs from the Internet, as reported by Jakob Balle and Sven Krewitt of 
-> Secunia; see our advisory.
-> * Fixed an issue where news feed preview could subscribe to feeds without 
-> interaction, as reported by Alexios Fakos; see our advisory.
-> 
-> 
 -- 
-
-Med venlig hilsen / Kind regards
-
-
-Carsten H. Eiram
-Chief Security Specialist
-
-Secunia 
-Weidekampsgade 14 A
-DK-2300 Copenhagen S
-Denmark
-
-Phone  +45 7020 5144
-Fax    +45 7020 5145
-
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
