@@ -1,22 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/29/2
-Message-Id: <201010291324.26366.ludwig.nussel@suse.de>
-Date: Fri, 29 Oct 2010 13:24:26 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: moodle 1.9.10
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/10/2
+Message-ID: <4C3760FC.7060500@mvista.com>
+Date: Fri, 09 Jul 2010 07:48:44 -1000
+From: akuster <akuster@...sta.com>
+To: Dan Rosenberg <dan.j.rosenberg@...il.com>
+CC: oss-security@...ts.openwall.com
+Subject: Re: kernel: gfs2 acl issue
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Dan,
 
-Moodle 1.9.10 is a security update again:
-http://docs.moodle.org/en/Moodle_1.9.10_release_notes
+Is 2.6.32 the earliest kernel showing the problem or just what was tested?
 
-cu
-Ludwig
+Regards,
+Armin
 
--- 
- (o_   Ludwig Nussel
- //\   
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+On 07/08/2010 05:56 PM, Dan Rosenberg wrote:
+> To elaborate on the issue: the gfs2 filesystem in 2.6.32 kernels
+> currently allows any user to set arbitrary ACLs for files they do not
+> own, essentially granting full access to everything.  The source of
+> this problem also caused other misbehavior of ACLs.  This fix resolved
+> the issue for 2.6.33, but it was not backported, so 2.6.32 remains
+> vulnerable.
+> 
+> -Dan
+> 
+> On Thu, Jul 8, 2010 at 11:47 PM, Eugene Teo <eugeneteo@...nel.sg> wrote:
+>> Upstream commit 2646a1f6 (2.6.33-rc1) fixed an interesting gfs2 acl issue
+>> late last year. Thanks Dan Rosenberg for informing us about this.
+>>
+>> http://git.kernel.org/linus/2646a1f61a3b5525914757f10fa12b5b94713648
+>>
+>> I didn't request a CVE name for this but if you need one, ping Steve.
+>>
+>> Thanks, Eugene
+>> --
+>> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+>>
