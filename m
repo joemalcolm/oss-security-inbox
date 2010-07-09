@@ -1,41 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/08/5
-Message-ID: <4BBDA556.5000208@redhat.com>
-Date: Thu, 08 Apr 2010 11:43:50 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>, Jean-François Moine <moinejf.free.fr@...hat.com>, Tim Starling <tstarling@...imedia.org>
-CC: oss-security <oss-security@...ts.openwall.com>, Gerard Milmeister <gemi@...ewin.ch>
-Subject: CVE Request -- Abcm2ps v5.9.12 -- multiple unspecified vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/09/2
+Message-ID: <1289194730.2444821278633901127.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 8 Jul 2010 20:05:01 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: nfsd4: bug in read_buf
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve, vendors,
+Please use CVE-2010-2521
 
-   Abcm2ps upstream has released:
-     [1] http://moinejf.free.fr/
-     [2] http://moinejf.free.fr/abcm2ps-5.9.12.tar.gz
+Thanks.
 
-   latest v5.9.12 version, addressing
-   "some security vulnerabilities"
-     [3] http://moinejf.free.fr/abcm2ps-5.txt
-
-   References:
-     [4] http://secunia.com/advisories/39345/
-
-   Jean, Tim, could you please provide further details how many
-and what kind of flaws (i.e. describe each of the deficiencies shortly)
-has been addressed in this Abcm2ps release? (so we know, how
-many CVE identifiers:
-   [5] http://cve.mitre.org/
-
-and each of them for what, should be assigned [without comparing
-source code differences among Abcm2ps v5.9.12 and Abcm2ps v5.9.11
-versions, potentially resulting in situation, we omit something] )
-
-Jean, Tim -- thanks in advance for your cooperation.
-
-Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+-- 
+    JB
 
 
+----- "Eugene Teo" <eugeneteo@...nel.sg> wrote:
 
+> https://bugzilla.redhat.com/show_bug.cgi?id=612028
+> Upstream commit: http://git.kernel.org/linus/2bc3c117
+> 
+> Introduced in commit 89fc0a31 ( v2.5.49) and 099e99f0 (v2.6.0-test3).
+> 
+> Fixed in v2.6.34-rc6.
+> 
+> "When read_buf is called to move over to the next page in the pagelist
+> 
+> of an NFSv4 request, it sets argp->end to essentially a random number,
+> 
+> certainly not an address within the page which argp->p now points to.
+> 
+> So subsequent calls to READ_BUF will think there is much more than a 
+> page of spare space (the cast to u32 ensures an unsigned comparison)
+> so 
+> we can expect to fall off the end of the second page."
+> 
+> There's a possibility of triggering this with a specially crafted NFS
+> 
+> WRITE request (if accepted by the server).
+> 
+> Thanks, Eugene
+> -- 
+> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i);
+> }
