@@ -1,29 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/19/2
-Message-ID: <20100719111212.39224acf@redhat.com>
-Date: Mon, 19 Jul 2010 11:12:12 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: brlink@...ian.org
-Subject: Re: CVE request: ghostscript and gv
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/10/1
+Message-ID: <AANLkTimRwif7c-YXVTLzdo00M1KvfJLP8IMqz7URfGTn@mail.gmail.com>
+Date: Fri, 9 Jul 2010 21:44:20 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: akuster <akuster@...sta.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: kernel: gfs2 acl issue
 Content-Type: text/plain; charset=utf-8
 
-On Sun, 30 May 2010 22:08:12 +0200 Bernhard R. Link wrote:
+Kernels prior to 2.6.32 are not vulnerable.
 
-> Gs's -P- not working (at least for gs_init.ps), is definitly a bug
-> that needs to be fixed.
+-Dan
 
-This should be fixed in upstream SVN now.
-
-> I personally would also suggest fixing gs to not look in the current
-> directory by default (looking for important stuff in the current
-> directory is really always a bad idea). I guess the problem is how to
-> fix it.
-
-Following commit should change default from -P to -P- :
-  http://svn.ghostscript.com/viewvc?view=rev&revision=11494
-
-Is this the approach other vendors are expecting to use?
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+On Fri, Jul 9, 2010 at 1:48 PM, akuster <akuster@...sta.com> wrote:
+> Dan,
+>
+> Is 2.6.32 the earliest kernel showing the problem or just what was tested?
+>
+> Regards,
+> Armin
+>
+> On 07/08/2010 05:56 PM, Dan Rosenberg wrote:
+>> To elaborate on the issue: the gfs2 filesystem in 2.6.32 kernels
+>> currently allows any user to set arbitrary ACLs for files they do not
+>> own, essentially granting full access to everything.  The source of
+>> this problem also caused other misbehavior of ACLs.  This fix resolved
+>> the issue for 2.6.33, but it was not backported, so 2.6.32 remains
+>> vulnerable.
+>>
+>> -Dan
+>>
+>> On Thu, Jul 8, 2010 at 11:47 PM, Eugene Teo <eugeneteo@...nel.sg> wrote:
+>>> Upstream commit 2646a1f6 (2.6.33-rc1) fixed an interesting gfs2 acl issue
+>>> late last year. Thanks Dan Rosenberg for informing us about this.
+>>>
+>>> http://git.kernel.org/linus/2646a1f61a3b5525914757f10fa12b5b94713648
+>>>
+>>> I didn't request a CVE name for this but if you need one, ping Steve.
+>>>
+>>> Thanks, Eugene
+>>> --
+>>> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+>>>
+>
