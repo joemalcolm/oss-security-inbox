@@ -1,44 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/30/6
-Message-ID: <1585616389.884931285876642314.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 30 Sep 2010 15:57:22 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/12/4
+Message-ID: <AANLkTin6D9PNgiTOwOvIOpP2kB4FWMZm3vHECMMZOLGn@mail.gmail.com>
+Date: Mon, 12 Jul 2010 13:18:57 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Moritz Muehlenhoff <jmm@...til.org>, coley <coley@...re.org>
-Subject: Re: CVE requests: POE::Component::IRC, Alien Arena, Babiloo, Typo3, abcm2ps, ModSecurity, Linux kernel
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: ghostscript
 Content-Type: text/plain; charset=utf-8
 
+Perhaps they're not identical, but they certainly seem related.  I
+noticed that the upstream patch is for "psi/iscan.c", which is where
+the overflow for CVE-2010-1869 takes place, and both appear to be due
+to the same trivial case of long PostScript/PDF identifiers.  In this
+case, the overflow appears to occur in the conversion of a PDF to a
+PostScript file.
 
------ "Eugene Teo" <eugene@...hat.com> wrote:
+-Dan
 
-> On 09/30/2010 12:19 AM, Moritz Muehlenhoff wrote:
-> > Hi Eugene,
-> >
-> > On Tue, Sep 28, 2010 at 09:17:48AM +0800, Eugene Teo wrote:
-> >>> 7. Linux kernel (local DoS, impact limited to specific hardware)
-> >>>
-> http://git.kernel.org/linus/b525c06cdbd8a3963f0173ccd23f9147d4c384b5
-> >>> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=565790
-> >>
-> >> I emailed this before, please search the archive for subject:
-> >> "[oss-security] kernel: thinkpad-acpi: lock down video output
-> state
-> >> access".
-> >
-> > Are you suggesting that there was already an assignment (I can't
-> > find one) or that it should not receive one due to limited impact?
-> 
-> http://seclists.org/oss-sec/2010/q2/318
-> 
-> There's no CVE name. I did not request for one, but gave a heads-up
-> for 
-> this since it only affects certain specific thinkpads/xorg.
-> 
-
-
-Plese use CVE-2010-3448 for this. Sorry for the misunderstanding.
-
-Thanks.
-
--- 
-    JB
+On Mon, Jul 12, 2010 at 1:00 PM, Vincent Danen <vdanen@...hat.com> wrote:
+> * [2010-07-12 12:48:35 -0400] Dan Rosenberg wrote:
+>
+>> I believe this is identical to CVE-2010-1869
+>> (http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2010-1869).
+>
+> They don't look identical to me.  Patches differ, upstream bugs differ.
+>
+> Can't really do anything hands-on to test since the PoC attached to the
+> upstream bug is private.
+>
+>> On Mon, Jul 12, 2010 at 12:28 PM, Marc Deslauriers
+>> <marc.deslauriers@...onical.com> wrote:
+>>>
+>>> Hi,
+>>>
+>>> I don't think this ever got a CVE:
+>>>
+>>> A memory corruption vulnerability in Ghostscript 8.64 and earlier caused
+>>> by long names can lead to arbitrary code execution.
+>>>
+>>> http://bugs.ghostscript.com/show_bug.cgi?id=690523
+>>> http://svn.ghostscript.com/viewvc?view=rev&revision=9797
+>
+> --
+> Vincent Danen / Red Hat Security Response Team
