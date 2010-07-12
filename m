@@ -1,25 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/22/8
-Message-ID: <4CEA7FAA.8030706@redhat.com>
-Date: Mon, 22 Nov 2010 15:35:22 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, Dwayne Bailey <dwayne@...nslate.org.za>, F Wolff <friedel@...nslate.org.za>
-Subject: CVE Request -- pootle -- XSS via 'match_names' parameter on translate.html page
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/12/1
+Message-ID: <1278952119.2863.15.camel@mdlinux.technorage.com>
+Date: Mon, 12 Jul 2010 12:28:39 -0400
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: ghostscript
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve, vendors,
+Hi,
 
-   looks like the following didn't get a CVE identifier yet:
-[1] https://bugzilla.redhat.com/show_bug.cgi?id=647832
-[2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=604060
-[3] http://forums.cnet.com/7726-6132_102-5022830.html
-[4] http://sourceforge.net/projects/translate/files//Pootle/2.1.2/RELEASE.txt/view
-[5] http://www.xssed.com/mirror/70160/
-[6] http://secunia.com/advisories/42185/
+I don't think this ever got a CVE:
 
-Could you please allocate one?
+A memory corruption vulnerability in Ghostscript 8.64 and earlier caused
+by long names can lead to arbitrary code execution.
 
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+http://bugs.ghostscript.com/show_bug.cgi?id=690523
+http://svn.ghostscript.com/viewvc?view=rev&revision=9797
+
+Thanks,
+
+Marc.
+
+
+-- 
+Marc Deslauriers
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
+
