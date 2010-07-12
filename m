@@ -1,22 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/24/1
-Message-Id: <201008240941.12591.thomas@suse.de>
-Date: Tue, 24 Aug 2010 09:40:54 +0200
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/12/2
+Message-ID: <AANLkTiktlNpllg34REo4HProhNYf5eWGy-9g8s48qjm5@mail.gmail.com>
+Date: Mon, 12 Jul 2010 12:48:35 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Pierre Joye <pierre.php@...il.com>, Tomas Hoger <thoger@...hat.com>, Moritz Muehlenhoff <jmm@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: PHP MOPS-2010-56..60
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: ghostscript
 Content-Type: text/plain; charset=utf-8
 
-Am Freitag, 20. August 2010, 18:45:47 schrieb Pierre Joye:
-..
-> > I miss that part, thanks for pointing me to it. I will commit a fix
-> > later today.
-> 
-> Done: http://svn.php.net/viewvc?view=revision&revision=302565
+I believe this is identical to CVE-2010-1869
+(http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2010-1869).
 
-Does it need a new CVE-ID?
+-Dan
 
--- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+On Mon, Jul 12, 2010 at 12:28 PM, Marc Deslauriers
+<marc.deslauriers@...onical.com> wrote:
+> Hi,
+>
+> I don't think this ever got a CVE:
+>
+> A memory corruption vulnerability in Ghostscript 8.64 and earlier caused
+> by long names can lead to arbitrary code execution.
+>
+> http://bugs.ghostscript.com/show_bug.cgi?id=690523
+> http://svn.ghostscript.com/viewvc?view=rev&revision=9797
+>
+> Thanks,
+>
+> Marc.
+>
+>
+> --
+> Marc Deslauriers
+> Ubuntu Security Engineer     | http://www.ubuntu.com/
+> Canonical Ltd.               | http://www.canonical.com/
+>
+>
