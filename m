@@ -1,27 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/09/9
-Message-ID: <4B718A7A.7080201@redhat.com>
-Date: Wed, 10 Feb 2010 00:16:58 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/12/5
+Message-ID: <1278955496.2863.18.camel@mdlinux.technorage.com>
+Date: Mon, 12 Jul 2010 13:24:56 -0400
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
 To: oss-security@...ts.openwall.com
-CC: Mark J Cox <mjc@...hat.com>, Greg KH <greg@...ah.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - kernel: ima: fix null pointer dereference
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: ghostscript
 Content-Type: text/plain; charset=utf-8
 
-On 02/10/2010 12:13 AM, Mark J Cox wrote:
->>> Do we need CVE numbers for issues that never showed up in a released
->>> kernel version? I don't see how this could affect anyone, unless they
->>> were foolish enough to ship a product on a non-released kernel :)
->>
->> You got a point there, but I requested this in order to keep track of
->> security issues that we might need to backport in our future kernels.
->
-> It shouldn't get a CVE name. If someone at some point in the future
-> ships a vulnerable version (by selective backporting, or similar) then
-> it would get a name. Cheers, Mark
+On Mon, 2010-07-12 at 11:00 -0600, Vincent Danen wrote:
+> * [2010-07-12 12:48:35 -0400] Dan Rosenberg wrote:
+> 
+> >I believe this is identical to CVE-2010-1869
+> >(http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2010-1869).
+> 
+> They don't look identical to me.  Patches differ, upstream bugs differ.
+> 
+> Can't really do anything hands-on to test since the PoC attached to the
+> upstream bug is private.
 
-Thanks for clarifying.
+The reproducer for CVE-2010-1869 does trigger it on 8.64 for me, but I
+would consider it a separate issue.
 
-Eugene
+Marc.
+
+
 -- 
-Eugene Teo / Red Hat Security Response Team
+Marc Deslauriers
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
+
