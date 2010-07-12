@@ -1,144 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/28/8
-Message-ID: <Pine.GSO.4.64.1009281713570.24337@faron.mitre.org>
-Date: Tue, 28 Sep 2010 17:19:53 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Josh Bressers <bressers@...hat.com>
-cc: oss-security@...ts.openwall.com
-Subject: Re: CVE requests: POE::Component::IRC, Alien Arena, Babiloo, Typo3, abcm2ps, ModSecurity, Linux kernel
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/12/6
+Message-ID: <AANLkTikiFgeQgr18P6Iwavf9kYBSfJky0I_GJ-cOKhBX@mail.gmail.com>
+Date: Mon, 12 Jul 2010 14:33:31 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: oss-security@...ts.openwall.com, coley <coley@...re.org>
+Cc: security-alert@...bsd.org, secteam@...ebsd.org, product-security@...le.com
+Subject: CVE request: NetSMB BSD kernel module (minor)
 Content-Type: text/plain; charset=utf-8
 
+I discovered and reported a minor security issue in the netsmb kernel
+module for NetBSD and FreeBSD.  The issue also affects Mac OS X 10.x,
+where netsmb is available as a kernel extension.
 
-Here are the CVEs for TYPO3:
-http://typo3.org/teams/security/security-bulletins/typo3-sa-2010-012/
+Several of the subroutines in the netsmb module (see reference below
+for vulnerable functions), which are reachable by unprivileged local
+users via device ioctls sent to a /dev/nsmb* device, had signedness
+errors.  By providing a negative value for a size field for certain
+device ioctls (including SMBIOC_LOOKUP and SMBIOC_OPENSESSION for
+*BSD), a size check will be bypassed and a memory overallocation will
+occur, causing a kernel panic.  NetBSD committed their fix to CVS
+today:
 
+http://cvsweb.netbsd.org/bsdweb.cgi/src/sys/netsmb/smb_subr.c.diff?r1=1.34&r2=1.35&only_with_tag=MAIN&f=h
 
-This is a good microcosm of CVE's main content decisions in action (i.e. 
-SPLIT on different versions or different bug types) along with reading 
-between the lines.  You see a lot of vulns with the same type, but many of 
-them are SPLIT because of different versions.  Some issues have the same 
-label, but it's pretty clear that they're really talking about different 
-vuln types that happen to have the same consequence, so they're SPLIT.
-
-When all is said and done, only 2 XSS issues are MERGED in this case.
-
-- Steve
-
-
-
-CVE-2010-3659
--------------
-
-Multiple XSS (subcomponent #1: Backend)
-   - fixed: 4.1.14, 4.2.13, 4.3.4, 4.4.1
-XSS  (subcomponent #1: Backend)
-   - fixed: 4.1.14, 4.2.13, 4.3.4, 4.4.1
-   - in Extension manager
-
-
-CVE-2010-3660
--------------
-Open Redirection (subcomponent #1: Backend)
-
-   - fixed: 4.1.14, 4.2.13, 4.3.4, 4.4.1
-
-
-CVE-2010-3661
--------------
-SQL Injection  (subcomponent #1: Backend)
-
-   - fixed: 4.1.14, 4.2.13, 4.3.4, 4.4.1
-
-
-CVE-2010-3662
--------------
-
-Arbitrary Code Execution  (subcomponent #1: Backend)
-   - fixed: 4.1.14, 4.2.13, 4.3.4 or 4.4.1
-   - Note: CVE calls this "unrestricted file upload"
-
-
-CVE-2010-3663
--------------
-Information Disclosure (subcomponent #1: Backend)
-   - fixed: 4.1.14, 4.2.13, 4.3.4 or 4.4.1
-   - error message infoleak of path to web root
-
-
-CVE-2010-3664
--------------
-Information Disclosure (subcomponent #1: Backend)
-   - fixed: 4.1.14, 4.2.13, 4.3.4, 4.4.1
-   - SPLIT: reading contents of arbitrary files by "forging a special
-     request parameter."  Issue is probably path traversal, thus
-     different vuln type than "error message infoleak"
-
-
-CVE-2010-3665
--------------
-Insecure Randomness  (subcomponent #2: User authentication)
-   - fixed: 4.1.14, 4.2.13, 4.3.4, 4.4.1
-
-
-CVE-2010-3666
--------------
-Spam Abuse (subcomponent #3: Frontend)
-   - fixed: 4.1.14, 4.2.13, 4.3.4, 4.4.1
-   - could be same vuln type as "forging a special request" issue in
-     Backend, but that one is probably path traversal
-
-
-CVE-2010-3667
--------------
-Header Injection  (subcomponent #3: Frontend)
-   - fixed: 4.1.14, 4.2.13, 4.3.4, 4.4.1
-
-
-CVE-2010-3668
--------------
-Open Redirection (subcomponent #4: Frontend Login)
-   - fixed: 4.2.13, 4.3.4, 4.4.1
-   - SPLIT: different versions than open redir in Backend
-
-
-CVE-2010-3669
--------------
-XSS (subcomponent #4: Frontend Login)
-   - fixed: 4.2.13, 4.3.4, 4.4.1
-   - SPLIT: different versions than XSS in Backend
-
-
-CVE-2010-3670
--------------
-Insecure Randomness  (subcomponent #4: Frontend Login)
-   - fixed: 4.3.4, 4.4.1
-   - SPLIT: different versions than insecure randomness in User authentication
-
-
-CVE-2010-3671
--------------
-Broken Authentication and Session Management (subcomponent #5: Install Tool)
-   - fixed: 4.1.14, 4.2.13, 4.3.4, 4.4.1
-   - Note: CVE calls this session fixation
-
-
-CVE-2010-3672
--------------
-XSS (subcomponent #6: FLUID Templating Engine)
-   - fixed: 4.3.4, 4.4.1
-   - SPLIT: different versions than XSS in Backend and Frontend Login
-
-
-CVE-2010-3673
--------------
-Information Disclosure  (subcomponent #7: Mailing API)
-   - fixed: 4.2.13, 4.3.4, 4.4.1
-   - SPLIT: different 'type' of Information Disclosure than others
-
-
-CVE-2010-3674
--------------
-XSS (subcomponent #8: Introduction Package)
-   - fixed: 4.4.1
-   - SPLIT: different versions than XSS in other components
-
+Regards,
+Dan Rosenberg
