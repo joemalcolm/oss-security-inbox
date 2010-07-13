@@ -1,24 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/07/10
-Message-ID: <1063218865.1617721283887713311.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 7 Sep 2010 15:28:33 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/13/2
+Message-ID: <AANLkTiliVp55vqtftqHUd1VbwK2FpvsH3ud98ijKmsNr@mail.gmail.com>
+Date: Tue, 13 Jul 2010 23:34:47 +0200
+From: Robert Święcki <robert@...ecki.net>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: smbind Sql Injection
+Subject: Multiple bugs in freetype
 Content-Type: text/plain; charset=utf-8
 
+FYI
 
------ "Giuseppe Iuculano" <iuculano@...ian.org> wrote:
+I've reported recently multiple problems in freetype (around ~20),
+most of them are NULL-ptr derefs, stack exhaustion and div by zero
+issues, but the rest might be interesting. RedHat was kind enough to
+assign CVE numbers to some of them. vendor-sec members tend to treat
+it as public issues, so reposting here:
 
-> Could you allocate CVE id for this please?
-> 
-> http://packetstormsecurity.org/1009-exploits/smbind-sql.txt
-> 
+> CVE-2010-2497 freetype integer underflow #30082 #30083
+> CVE-2010-2498 freetype invalid free #30106
+> CVE-2010-2499 freetype buffer overflow #30248 #30249
+> CVE-2010-2500 freetype integer overflow #30263
+> CVE-2010-2519 freetype heap buffer overflow #30306
+> CVE-2010-2520 freetype buffer overflow on heap #30361
 
-Please use CVE-2010-3076
+I wasn't trying to make weaponized exploits, although some of those
+issues are clearly exploitable.
 
-Thanks.
+The full list
+
+http://savannah.nongnu.org/bugs/index.php?group=freetype&func=browse&set=custom&report_id=101&submitted_by=78858
 
 -- 
-    JB
+Robert Swiecki - http://www.swiecki.net
