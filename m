@@ -1,21 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/10/2
-Message-ID: <4C11765C.4090605@kernel.sg>
-Date: Fri, 11 Jun 2010 07:33:48 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/14/4
+Message-ID: <AANLkTimK36nucvgl3EvOptUApq3L5DVTHoQX9j6_mbW6@mail.gmail.com>
+Date: Wed, 14 Jul 2010 20:13:06 +0200
+From: Pierre Joye <pierre.php@...il.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-2010-2070 kernel-xen: ia64-xen: unset be from the task psr
+Subject: Re: CVE request, php var_export
 Content-Type: text/plain; charset=utf-8
 
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2010-2070
-http://xenbits.xensource.com/xen-4.0-testing.hg?rev/42caadb14edb
+hi,
 
-An unprivileged user can turn on BE by modifying the user mask of the 
-PSR, resulting in at least a local denial of service. This issue can be 
-triggered the same way CVE-2006-0742 was triggered, but both are not 
-related (not a regression).
+Has anyone got the time to look at this request? I would like to have
+an ID for the last RC before we release final next week (packaging RCs
+tonight).
 
-Thanks, Eugene
+On Tue, Jul 13, 2010 at 9:00 PM, Pierre Joye <pierre.php@...il.com> wrote:
+> hi,
+>
+> I would like to request a new # for a flaw in php's var_export. The
+> reason is that a fatal error occurs due to recursion, memory limit or
+> execution time var_export bails out. The buffer is never cleared and
+> it flushes to the user. It's not affected by display_errors() since
+> its considered part of the output.
+>
+> Fix already commited to trunk, 5.2 and 5.3 and will be in the next PHP
+> releases (5.2.14 and 5.3.3):
+>
+> http://svn.php.net/viewvc?view=revision&revision=301143
+>
+> Cheers,
+> --
+> Pierre
+>
+> @pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+>
+
+
+
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+Pierre
+
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
