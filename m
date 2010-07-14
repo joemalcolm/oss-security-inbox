@@ -1,20 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/06/2
-Message-ID: <20100706084102.GA15734@merlin.emma.line.org>
-Date: Tue, 6 Jul 2010 10:41:02 +0200
-From: Matthias Andree <matthias.andree@....de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/14/1
+Message-ID: <i1ivcp$oc6$1@dough.gmane.org>
+Date: Tue, 13 Jul 2010 19:12:17 -0500
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: David Relson <relson@...gesoftware.com>
-Subject: REPOST: CVE request for bogofilter
+Subject: znc id: CVE-2010-2448 or CVE-2010-2488?
 Content-Type: text/plain; charset=utf-8
 
-This is a repost, because the CVE for the issue below (already inquired
-on 03 Jul) has not yet been assigned, and there has been discussion in
-the request thread.
+Hi,
 
-The draft below is v0.2 and includes a patch, to follow up on Eren
-Türkay's post here on the list that listed the relevant two changes.
+Some weeks ago I requested an id for a null pointer dereference in ZNC.
+Josh assigned CVE-2010-24*8*8.
 
-View attachment "bogofilter-SA-2010-01" of type "text/plain" (2939 bytes)
+Because of a typo, the CVE id referenced in the DSA I released was 
+CVE-2010-24*4*8 [1] (previously assigned by Steven to a gitolite issue, 
+SA39587.) I updated our tracker as soon as I noticed the typo.
 
-Content of type "application/pgp-signature" skipped
+However, in the last batch of CVE updates, the znc issue appeared with the 
+incorrect id (i.e. CVE-2010-24*4*8.)
+
+VUPEN and SecurityFocus already picked up the wrong id.
+
+How should we proceed?
+
+I would like to apologise for the inconvenience.
+
+[1]http://www.openwall.com/lists/oss-security/2010/06/24/5
+
+Kind regards,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
+
+
