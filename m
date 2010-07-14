@@ -1,14 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/22/16
-Message-ID: <822303483.115991290443731980.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 22 Nov 2010 11:35:31 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/14/3
+Message-ID: <2060260017.430061279129531508.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 14 Jul 2010 13:45:31 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Dwayne Bailey <dwayne@...nslate.org.za>, F Wolff <friedel@...nslate.org.za>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- pootle -- XSS via 'match_names' parameter on translate.html page
+Cc: coley <coley@...re.org>
+Subject: Re: Multiple bugs in freetype
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-4245
+I'm also adding a CVE id for the buffer overflows in the freetype demo programs:
+
+CVE-2010-2527
+http://savannah.nongnu.org/bugs/index.php?30054
+
+The fix is here:
+http://git.savannah.gnu.org/cgit/freetype/freetype2-demos.git/commit/?id=b995299b73ba4cd259f221f500d4e63095508bec
 
 Thanks.
 
@@ -16,21 +22,30 @@ Thanks.
     JB
 
 
------ "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
 
-> Hello Steve, vendors,
+----- "Robert Święcki" <robert@...ecki.net> wrote:
+
+> FYI
 > 
->    looks like the following didn't get a CVE identifier yet:
-> [1] https://bugzilla.redhat.com/show_bug.cgi?id=647832
-> [2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=604060
-> [3] http://forums.cnet.com/7726-6132_102-5022830.html
-> [4]
-> http://sourceforge.net/projects/translate/files//Pootle/2.1.2/RELEASE.txt/view
-> [5] http://www.xssed.com/mirror/70160/
-> [6] http://secunia.com/advisories/42185/
+> I've reported recently multiple problems in freetype (around ~20),
+> most of them are NULL-ptr derefs, stack exhaustion and div by zero
+> issues, but the rest might be interesting. RedHat was kind enough to
+> assign CVE numbers to some of them. vendor-sec members tend to treat
+> it as public issues, so reposting here:
 > 
-> Could you please allocate one?
+> > CVE-2010-2497 freetype integer underflow #30082 #30083
+> > CVE-2010-2498 freetype invalid free #30106
+> > CVE-2010-2499 freetype buffer overflow #30248 #30249
+> > CVE-2010-2500 freetype integer overflow #30263
+> > CVE-2010-2519 freetype heap buffer overflow #30306
+> > CVE-2010-2520 freetype buffer overflow on heap #30361
 > 
-> Thanks && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+> I wasn't trying to make weaponized exploits, although some of those
+> issues are clearly exploitable.
+> 
+> The full list
+> 
+> http://savannah.nongnu.org/bugs/index.php?group=freetype&func=browse&set=custom&report_id=101&submitted_by=78858
+> 
+> -- 
+> Robert Swiecki - http://www.swiecki.net
