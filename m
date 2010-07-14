@@ -1,40 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/10/9
-Message-ID: <20101110180629.GR5876@outflux.net>
-Date: Wed, 10 Nov 2010 10:06:29 -0800
-From: Kees Cook <kees@...ntu.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/14/2
+Message-ID: <AANLkTiljcdeGc029EbLwGzVETd0_qHSYQPbVz_uokH6r@mail.gmail.com>
+Date: Wed, 14 Jul 2010 09:34:28 +0200
+From: Pierre Joye <pierre.php@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: filesystem capabilities
+Subject: Re: Multiple bugs in freetype
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Nov 08, 2010 at 12:01:29PM -0500, Steve Grubb wrote:
-> >While in general this is a good idea, there are issues with it, 
-> >in arbitrary order:
-> >
-> >- Some currently-SUID programs are aware of them being (potentially) SUID, and 
-> >will drop the "more privileged" euid when it is no longer needed, but they will
-> >probably not be aware of them possessing capabilities.
-> 
-> This is an artifact of having a capabilities library that takes several lines of code 
-> to do anything. It is more correct to check for capabilities that trusting that euid 
-> means that you have certain powers. In my opinion, a lot of this code should be 
-> cleaned up so that its correct.
+Thanks for the headup. FYI fixes are part of 2.4.0 as far as I can tell.
 
-Right, it's not just a matter of dropping setuid bits and adding fscaps;
-these tools each need to be changed to understand fscaps and correctly drop
-privs. Which is especially true for "mixed" environments where the code
-could run _either_ as setuid or with fscaps. Building that logic into the
-cap library (which ever one) is the plan, as I understand.
+On Tue, Jul 13, 2010 at 11:34 PM, Robert Święcki <robert@...ecki.net> wrote:
+> FYI
+>
+> I've reported recently multiple problems in freetype (around ~20),
+> most of them are NULL-ptr derefs, stack exhaustion and div by zero
+> issues, but the rest might be interesting. RedHat was kind enough to
+> assign CVE numbers to some of them. vendor-sec members tend to treat
+> it as public issues, so reposting here:
+>
+>> CVE-2010-2497 freetype integer underflow #30082 #30083
+>> CVE-2010-2498 freetype invalid free #30106
+>> CVE-2010-2499 freetype buffer overflow #30248 #30249
+>> CVE-2010-2500 freetype integer overflow #30263
+>> CVE-2010-2519 freetype heap buffer overflow #30306
+>> CVE-2010-2520 freetype buffer overflow on heap #30361
+>
+> I wasn't trying to make weaponized exploits, although some of those
+> issues are clearly exploitable.
+>
+> The full list
+>
+> http://savannah.nongnu.org/bugs/index.php?group=freetype&func=browse&set=custom&report_id=101&submitted_by=78858
+>
+> --
+> Robert Swiecki - http://www.swiecki.net
+>
 
-> The intent of this project is to get the patches and user space work done. We know 
-> that just setting the bit is not all that has to be done.
 
-Yup, and Debian and Ubuntu have even further to go since their userspace
-and package manager don't even handle xattrs. It would be nice if upstream
-tar took the xattr patches. Steve, are there any plans to make that happen?
-
--Kees
 
 -- 
-Kees Cook
-Ubuntu Security Team
+Pierre
+
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
