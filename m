@@ -1,82 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/28/9
-Message-ID: <Pine.GSO.4.64.1009281721420.24337@faron.mitre.org>
-Date: Tue, 28 Sep 2010 17:28:44 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Josh Bressers <bressers@...hat.com>
-cc: oss-security@...ts.openwall.com
-Subject: Re: CVE requests: POE::Component::IRC, Alien Arena, Babiloo, Typo3, abcm2ps, ModSecurity, Linux kernel
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/15/1
+Message-Id: <201007151038.54615.mweckbecker@suse.de>
+Date: Thu, 15 Jul 2010 10:38:54 +0200
+From: Matthias Weckbecker <mweckbecker@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: lxsession-logout
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-On Tue, 28 Sep 2010, Josh Bressers wrote:
+could you assign a CVE for this issue, please:
 
->> 6. ModSecurity
->> There was already a CVE request by Jan Lieskovsky, but it doesn't
->> seem
->> to have led to an ID assignment:
->> http://www.openwall.com/lists/oss-security/2010/02/10/2
->>
->
-> This one is also too big for me to handle properly. Can MITRE take it?
+https://bugzilla.novell.com/show_bug.cgi?id=622083
 
-This changelog is too vague to be certain which issues are really about 
-"security" versus which ones are enhancements or feature additions.  So, 
-I'll need some help here.
+Thanks!
 
-Here are ones that smell like security issues:
+ciao,
+Matthias
 
-  * Fixed path normalization to better handle backreferences that extend
-    above root directories.  Reported by Sogeti/ESEC R&D.
-
-  * Fixed failure to match internally set TX variables with regex
-    (TX:/.../) syntax.
-
-  * Fixed failure to log full internal TX variable names and populate
-    MATCHED_VAR* vars.
-
-  * Fixed memory leak in v1 cookie parser.  Reported by Sogeti/ESEC R&D.
-
-
-Here are ones that *might* be security issues, but it's unclear:
-
-  * Fixed nolog,auditlog/noauditlog/nolog controls for disruptive actions.
-
-  * Fixed SecUploadFileMode to set the correct mode.
-
-  * Trim whitespace around phrases used with @pmFromFile and allow
-    for both LF and CRLF terminated lines.
-
-  * Allow for more robust parsing for multipart header folding.  Reported
-    by Sogeti/ESEC R&D.
-
-  * Reduced default PCRE match limits reducing impact of REDoS on poorly
-    written regex rules.  Reported by Sogeti/ESEC R&D.
-
-  * Do not escape quotes in macro resolution and only escape NUL in
-    setenv values.
-
-
-Here are ones that smell like "defense in depth" or "fixing non-security 
-bug in security feature" or "addition of new 'signature' type" (thus no 
-CVE):
-
-  * Added SecUploadFileLimit to limit the number of uploaded file parts
-    that will be processed in a multipart POST.  The default is 100.
-
-  * Added PCRE match limits (SecPcreMatchLimit/SecPcreMatchLimitRecursion)
-    to aide in REDoS type attacks.  A rule that goes over the limits will set
-    TX:MSC_PCRE_LIMITS_EXCEEDED.  It is intended that the next major
-    release of ModSecurity (2.6.x) will move these flags to a dedicated
-    collection.
-
-  * Enabled PCRE "studying" by default.  This is now a configure-time
-    option.
-
-  * Now support macro expansion in numeric operators (@eq, @ge, @lt, etc.)
-
-  * Fixed SecAction not working when CONNECT request method is used
-    (MODSEC-110). [Ivan Ristic]
-
-
-- Steve
+-- 
+Matthias Weckbecker, SUSE Security Team
+SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg   
+Tel: +49-911-74053-0;  http://www.opensuse.org/   
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
