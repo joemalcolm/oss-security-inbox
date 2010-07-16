@@ -1,27 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/15/1
-Message-ID: <4CE0AAC5.3080506@redhat.com>
-Date: Mon, 15 Nov 2010 11:36:37 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/16/1
+Message-Id: <201007161308.53396.ludwig.nussel@suse.de>
+Date: Fri, 16 Jul 2010 13:08:53 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-CC: Dan Rosenberg <dan.j.rosenberg@...il.com>
-Subject: Re: econet iovec
+Subject: Re: Qt SSL endless loop
 Content-Type: text/plain; charset=utf-8
 
-Thomas, thanks for the heads-up. Appreciated it.
+Raphael Geissert wrote:
+> [...]
+> He also reported another vulnerability in Qt4's SSL support:
+> http://aluigi.altervista.org/adv/qtsslame-adv.txt
+> 
+> (reported to the Debian maintainers in http://bugs.debian.org/587711)
+> 
+> Could a CVE be assigned for this other issue too?
 
-On 11/15/2010 12:09 AM, Dan Rosenberg wrote:
-> This also raises a question of whether it's worth assigning CVEs to
-> every vulnerability that was fixed by a single change in the core
-> code.  I'm leaning towards "no".
+Looks like the request got lost.
 
-Yeah, It wouldn't make much sense too.
+The fix seems to be
+http://qt.gitorious.org/qt/qt/commit/f7fe575bc5f628533aeeca3eb564af89a1a1426b
 
-Distros should backport the changes made to mitigate such issues. See 
-https://bugzilla.redhat.com/651927, and the following patches:
-http://git.kernel.org/linus/253eacc070b114c2ec1f81b067d2fed7305467b0
-http://git.kernel.org/linus/8acfe468b0384e834a303f08ebc4953d72fb690a
+According to the Mumble author this fix causes a regression with peer
+certificate validation when used with openssl >= 0.9.8n though:
+http://sourceforge.net/mailarchive/forum.php?thread_name=4C3F8BC6.9030303%40natvig.com&forum_name=mumble-packaging
+http://bugreports.qt.nokia.com/browse/QTBUG-7200
 
-Thanks, Eugene
+cu
+Ludwig
+
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+ (o_   Ludwig Nussel
+ //\   
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
