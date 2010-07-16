@@ -1,28 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/12/3
-Message-ID: <1721731303.802131289567933037.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 12 Nov 2010 08:18:53 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/16/7
+Message-ID: <20100716222926.GG2067@redhat.com>
+Date: Fri, 16 Jul 2010 16:29:26 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: kernel: remote DoS in X.25
+Subject: Re: Qt SSL endless loop
 Content-Type: text/plain; charset=utf-8
 
+* [2010-07-16 11:19:09 -0400] Josh Bressers wrote:
 
------ "Dan Rosenberg" <dan.j.rosenberg@...il.com> wrote:
+>Please use CVE-2010-2533
 
-> A remote (or local) attacker communicating over X.25 could cause a
-> kernel panic by attempting to negotiate malformed facilities.  This
-> is
-> a separate issue from CVE-2010-3873, which affects the same code
-> path.
-> 
-> Reference:
-> http://marc.info/?l=linux-netdev&m=128951543005554&w=2
+Wasn't this already assigned CVE-2010-2621?
 
-Please use CVE-2010-4164
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-2621
 
-Thanks.
+It links to the same advisory (qtsslame-adv.txt) and that only seems to
+be reporting one single problem.
+
+>----- "Ludwig Nussel" <ludwig.nussel@...e.de> wrote:
+>
+>> Raphael Geissert wrote:
+>> > [...]
+>> > He also reported another vulnerability in Qt4's SSL support:
+>> > http://aluigi.altervista.org/adv/qtsslame-adv.txt
+>> >
+>> > (reported to the Debian maintainers in
+>> http://bugs.debian.org/587711)
+>> >
+>> > Could a CVE be assigned for this other issue too?
+>>
+>> Looks like the request got lost.
+>>
+>> The fix seems to be
+>> http://qt.gitorious.org/qt/qt/commit/f7fe575bc5f628533aeeca3eb564af89a1a1426b
+>>
+>> According to the Mumble author this fix causes a regression with peer
+>> certificate validation when used with openssl >= 0.9.8n though:
+>> http://sourceforge.net/mailarchive/forum.php?thread_name=4C3F8BC6.9030303%40natvig.com&forum_name=mumble-packaging
+>> http://bugreports.qt.nokia.com/browse/QTBUG-7200
 
 -- 
-    JB
+Vincent Danen / Red Hat Security Response Team 
