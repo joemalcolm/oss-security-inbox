@@ -1,47 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/08/4
-Message-ID: <20101208045118.GA21424@openwall.com>
-Date: Wed, 8 Dec 2010 07:51:18 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/16/4
+Message-ID: <1041871031.655841279293410955.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 16 Jul 2010 11:16:50 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: kernel: Dangerous interaction between clear_child_tid, set_fs(), and kernel oopses
+Subject: Re: CVE request: lxsession-logout
 Content-Type: text/plain; charset=utf-8
 
-Nelson, Dan, Steve -
+Please use CVE-2010-2532.
 
-It's been a few days, so I'll over-quote a little bit.  Please see below:
+Thanks.
 
-On Thu, Dec 02, 2010 at 12:21:14AM -0500, Nelson Elhage wrote:
-> I've discovered an interesting interaction in the Linux kernel between the
-> clear_child_tid feature of clone(2), and the set_fs() function used internally
-> in the kernel to temporarily disable access_ok() checking of userspace pointers.
+-- 
+    JB
+
+
+----- "Matthias Weckbecker" <mweckbecker@...e.de> wrote:
+
+> Hi,
 > 
-> Under some (not totally uncommon) circumstances, it is possible for a user to
-> leverage this interaction to turn a kernel oops or BUG() into a write of an
-> integer 0 to a user-controlled address in kernel memory.
+> could you assign a CVE for this issue, please:
 > 
-> I'm not sure if this merits a CVE or not; It is (as far as I can tell) only a
-> problem in the presence of another security bug, but it potentially makes a
-> large class of bugs significantly more dangerous (DoS -> privesc).
+> https://bugzilla.novell.com/show_bug.cgi?id=622083
 > 
-> Reference:
-> https://lkml.org/lkml/2010/12/1/543
-
-To me, things like this are more important than individual NULL pointer
-dereference bugs or the like.  So if those get CVEs, this one definitely
-should as well.
-
-Nelson - why are you proposing adding set_fs(USER_DS); not to the very
-beginning of do_exit(), but below a few calls/checks?  I don't think
-there's any performance improvement from that, and it feels
-"theoretically safer" to return to the sane/safe state as soon as
-possible.  I am currently looking at do_exit() in OpenVZ's RHEL5-based
-2.6.18-194.26.1.el5.028stab079.1 - it does a bit more work before
-reaching the place you patch.  So I am tempted to introduce
-set_fs(USER_DS); as the very first statement in do_exit() instead.
-
-Did you check whether 2.4 kernels are affected as well?
-
-Thanks,
-
-Alexander
+> Thanks!
+> 
+> ciao,
+> Matthias
+> 
+> -- 
+> Matthias Weckbecker, SUSE Security Team
+> SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg   
+> Tel: +49-911-74053-0;  http://www.opensuse.org/   
+> SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
