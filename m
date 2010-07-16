@@ -1,16 +1,13 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/11/3
-Message-ID: <1364128867.154141286824300900.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 11 Oct 2010 15:11:40 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/16/5
+Message-ID: <1052152573.656171279293549803.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 16 Jul 2010 11:19:09 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request eoCMS SQL injection vulnerability
+Subject: Re: Qt SSL endless loop
 Content-Type: text/plain; charset=utf-8
 
-This needs a 2009 ID.
-
-Steve, can MITRE take it.
+Please use CVE-2010-2533
 
 Thanks.
 
@@ -18,35 +15,33 @@ Thanks.
     JB
 
 
------ "Henri Salo" <henri@...v.fi> wrote:
+----- "Ludwig Nussel" <ludwig.nussel@...e.de> wrote:
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
+> Raphael Geissert wrote:
+> > [...]
+> > He also reported another vulnerability in Qt4's SSL support:
+> > http://aluigi.altervista.org/adv/qtsslame-adv.txt
+> > 
+> > (reported to the Debian maintainers in
+> http://bugs.debian.org/587711)
+> > 
+> > Could a CVE be assigned for this other issue too?
 > 
-> Description: "Cao Xuan Sang has reported a vulnerability in eoCMS,
-> which
-> can be exploited by malicious people to conduct SQL injection
-> attacks.
+> Looks like the request got lost.
 > 
-> Certain input passed to the page divide function of the viewboard and
-> viewtopic modules is not properly sanitised before being used in SQL
-> queries. This can be exploited to manipulate SQL queries by injecting
-> arbitrary SQL code."
+> The fix seems to be
+> http://qt.gitorious.org/qt/qt/commit/f7fe575bc5f628533aeeca3eb564af89a1a1426b
 > 
-> References:
-> http://secunia.com/advisories/37272/
-> http://security.bkis.com/eocms-sql-injection-vulnerability/
+> According to the Mumble author this fix causes a regression with peer
+> certificate validation when used with openssl >= 0.9.8n though:
+> http://sourceforge.net/mailarchive/forum.php?thread_name=4C3F8BC6.9030303%40natvig.com&forum_name=mumble-packaging
+> http://bugreports.qt.nokia.com/browse/QTBUG-7200
 > 
-> Fixed in version: 0.9.02
+> cu
+> Ludwig
 > 
-> Can I get CVE-identifier for this issue?
-> 
-> Best regards,
-> Henri Salo
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.9 (GNU/Linux)
-> 
-> iEYEARECAAYFAkyvcPsACgkQXf6hBi6kbk+2rwCcCZamyTdNH/KYU1hUIB6kgHV2
-> Lx8AnRny2eowTyJBUz+tEM0I3OdP34RF
-> =+rgg
-> -----END PGP SIGNATURE-----
+> -- 
+>  (o_   Ludwig Nussel
+>  //\   
+>  V_/_  http://www.suse.de/
+> SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
