@@ -1,29 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/22/3
-Message-ID: <AANLkTikK3k2YJudnA50amoERCjL-S2mDgw5kooOsCScM@mail.gmail.com>
-Date: Sun, 21 Nov 2010 18:04:10 -0700
-From: Kurt Seifried <kurt@...fried.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: gif2png: command-line buffer overflow problem
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/16/6
+Message-ID: <AANLkTinDGbKrJILvp_CQeXi78uc_3_g0ih6GBykiuBFu@mail.gmail.com>
+Date: Fri, 16 Jul 2010 17:13:38 +0200
+From: Pierre Joye <pierre.php@...il.com>
+To: Josh Bressers <bressers@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE request, php var_export
 Content-Type: text/plain; charset=utf-8
 
-> How could this possibly be exploited?  If you can trick a user into
-> running gif2png [exploit payload], then that user has already lost.
+hi,
 
-It was reported that some CGI scripts/etc use it automatically so by
-using a long file name it may be possible.
+Thanks and no problem, we are in time for the next release :)
 
-Personally I'm not worried but Debian/Fedora have fixed it as a
-security issue so if that is the case a CVE would be nice for tracking
-purposes.
+Cheers,
 
-> See also:
-> make `perl -e 'print "A"x10000'`
+On Fri, Jul 16, 2010 at 5:10 PM, Josh Bressers <bressers@...hat.com> wrote:
+> Please use CVE-2010-2531
 >
-> -Dan
+> Sorry for the delay.
+>
+> --
+>    JB
+>
+>
+> ----- "Pierre Joye" <pierre.php@...il.com> wrote:
+>
+>> hi,
+>>
+>> Has anyone got the time to look at this request? I would like to have
+>> an ID for the last RC before we release final next week (packaging
+>> RCs
+>> tonight).
+>>
+>> On Tue, Jul 13, 2010 at 9:00 PM, Pierre Joye <pierre.php@...il.com>
+>> wrote:
+>> > hi,
+>> >
+>> > I would like to request a new # for a flaw in php's var_export. The
+>> > reason is that a fatal error occurs due to recursion, memory limit
+>> or
+>> > execution time var_export bails out. The buffer is never cleared
+>> and
+>> > it flushes to the user. It's not affected by display_errors() since
+>> > its considered part of the output.
+>> >
+>> > Fix already commited to trunk, 5.2 and 5.3 and will be in the next
+>> PHP
+>> > releases (5.2.14 and 5.3.3):
+>> >
+>> > http://svn.php.net/viewvc?view=revision&revision=301143
+>> >
+>> > Cheers,
+>> > --
+>> > Pierre
+>> >
+>> > @pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+>> >
+>>
+>>
+>>
+>> --
+>> Pierre
+>>
+>> @pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+>
+
 
 
 -- 
-Kurt Seifried
-kurt@...fried.org
-tel: 1-703-879-3176
+Pierre
+
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
