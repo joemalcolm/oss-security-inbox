@@ -1,32 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/09/5
-Message-ID: <4B716FFF.4010909@redhat.com>
-Date: Tue, 09 Feb 2010 15:23:59 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE Request -- cURL/libCURL 7.20.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/16/3
+Message-ID: <1016882186.654811279293036898.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 16 Jul 2010 11:10:36 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: pierre.php@...il.com
+Subject: Re: Re: CVE request, php var_export
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve, vendors,
+Please use CVE-2010-2531
 
-   cURL upstream has released latest v7.20.0 version of cURL/libCURL
-fixing the "libcurl data callback excessive length" issue.
+Sorry for the delay.
 
-References:
-[1] http://curl.haxx.se/docs/security.html#20100209
-[2] http://curl.haxx.se/docs/adv_20100209.html
-[3] http://curl.haxx.se/libcurl-contentencoding.patch
-[4] http://curl.haxx.se/download.html
+-- 
+    JB
 
-Mitigation factors (from [1]):
 
-"This error is only present in zlib-enabled builds of libcurl and only if
-  automatic decompression has been explicitly enabled by the application - it
-  is disabled by default."
+----- "Pierre Joye" <pierre.php@...il.com> wrote:
 
-Could you allocate CVE id for this?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+> hi,
+> 
+> Has anyone got the time to look at this request? I would like to have
+> an ID for the last RC before we release final next week (packaging
+> RCs
+> tonight).
+> 
+> On Tue, Jul 13, 2010 at 9:00 PM, Pierre Joye <pierre.php@...il.com>
+> wrote:
+> > hi,
+> >
+> > I would like to request a new # for a flaw in php's var_export. The
+> > reason is that a fatal error occurs due to recursion, memory limit
+> or
+> > execution time var_export bails out. The buffer is never cleared
+> and
+> > it flushes to the user. It's not affected by display_errors() since
+> > its considered part of the output.
+> >
+> > Fix already commited to trunk, 5.2 and 5.3 and will be in the next
+> PHP
+> > releases (5.2.14 and 5.3.3):
+> >
+> > http://svn.php.net/viewvc?view=revision&revision=301143
+> >
+> > Cheers,
+> > --
+> > Pierre
+> >
+> > @pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+> >
+> 
+> 
+> 
+> -- 
+> Pierre
+> 
+> @pierrejoye | http://blog.thepimp.net | http://www.libgd.org
