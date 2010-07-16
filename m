@@ -1,36 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/24/2
-Message-ID: <4B847667.1010108@kernel.sg>
-Date: Wed, 24 Feb 2010 08:44:23 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/16/2
+Message-ID: <1014759682.654471279292894070.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 16 Jul 2010 11:08:14 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: kernel: RTO (Retransmission Timeouts) Remote DoS
+Cc: security-alert@...bsd.org, secteam@...ebsd.org, product-security@...le.com, coley <coley@...re.org>
+Subject: Re: CVE request: NetSMB BSD kernel module (minor)
 Content-Type: text/plain; charset=utf-8
 
-"Make sure, that TCP has a nonzero RTT estimation after three-way 
-handshake. Currently, a listening TCP has a value of 0 for srtt, rttvar 
-and rto right after the three-way handshake is completed with TCP 
-timestamps disabled. This will lead to corrupt RTO recalculation and 
-retransmission flood when RTO is recalculated on backoff reversion as 
-introduced in "Revert RTO on ICMP destination unreachable"
-(f1ecd5d9e7366609d640ff4040304ea197fbc618). This behaviour can be 
-provoked by connecting to a server which "responds first" (like SMTP) 
-and rejecting every packet after the handshake with dest-unreachable, 
-which will lead to softirq load on the server (up to 30% per socket in 
-some tests).
+Please use CVE-2010-2530
 
-Thanks to Ilpo Jarvinen for providing debug patches and to Denys 
-Fedoryshchenko for reporting and testing.
+Sorry for the delay.
 
-Reported-by: Denys Fedoryshchenko <denys@...p.net.lb>"
+-- 
+    JB
 
-Just a heads-up. Red Hat is not requesting a CVE name for this as it did 
-not affect any of our supported kernels.
 
-http://www.securityfocus.com/bid/38355
-https://bugzilla.redhat.com/show_bug.cgi?id=567530
-Introduced: f1ecd5d9e7366609d640ff4040304ea197fbc618 - v2.6.32-rc1
-Upstream commit: 598856407d4e20ebb4de01a91a93d89325924d43
+----- "Dan Rosenberg" <dan.j.rosenberg@...il.com> wrote:
 
-Thanks, Eugene
+> I discovered and reported a minor security issue in the netsmb kernel
+> module for NetBSD and FreeBSD.  The issue also affects Mac OS X 10.x,
+> where netsmb is available as a kernel extension.
+> 
+> Several of the subroutines in the netsmb module (see reference below
+> for vulnerable functions), which are reachable by unprivileged local
+> users via device ioctls sent to a /dev/nsmb* device, had signedness
+> errors.  By providing a negative value for a size field for certain
+> device ioctls (including SMBIOC_LOOKUP and SMBIOC_OPENSESSION for
+> *BSD), a size check will be bypassed and a memory overallocation will
+> occur, causing a kernel panic.  NetBSD committed their fix to CVS
+> today:
+> 
+> http://cvsweb.netbsd.org/bsdweb.cgi/src/sys/netsmb/smb_subr.c.diff?r1=1.34&r2=1.35&only_with_tag=MAIN&f=h
+> 
+> Regards,
+> Dan Rosenberg
