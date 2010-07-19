@@ -1,29 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/29/2
-Message-ID: <87y6bp7ekl.fsf@mid.deneb.enyo.de>
-Date: Sun, 29 Aug 2010 15:07:06 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/19/3
+Message-ID: <20100719133416.GC3766@redhat.com>
+Date: Mon, 19 Jul 2010 07:34:16 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: BGP protocol vulnerability
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: Qt SSL endless loop
 Content-Type: text/plain; charset=utf-8
 
-* Kurt Seifried:
+* [2010-07-19 10:49:36 +0200] Ludwig Nussel wrote:
 
->> The BGP protocol and its various extensions require that BGP peering
->> sessions are terminated when a peer receives a BGP update message
->> which it considers semantically incorrect, leading to a persistent
->> denial-of-service condition if the update is received again after the
->> terminated session is reestablished.
+>Vincent Danen wrote:
+>> * [2010-07-16 11:19:09 -0400] Josh Bressers wrote:
 >>
->> (This is not something new at all---we just need to get up, treat it
->> as a vulnerability, and fix it.)
+>> >Please use CVE-2010-2533
+>>
+>> Wasn't this already assigned CVE-2010-2621?
+>>
+>> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-2621
+>>
+>> It links to the same advisory (qtsslame-adv.txt) and that only seems to
+>> be reporting one single problem.
 >
-> This sounds like CVE-2010-3035
-> http://www.cisco.com/warp/public/707/cisco-sa-20100827-bgp.shtml
+>Oops, indeed. We've overlooked that assignment. Sorry for the confusion :-/
 
-In this context, I don't like that the peer on the receiving end
-resets the session.  It's got a significant impact on availability,
-and the resulting UPDATE churn hurts everybody a little bit.
+No problem.  We need to discard the new one then (discard CVE-2010-2621
+as a dupe of CVE-2010-2533).
 
-In short, I think there are two bugs: IOS XR producing bad data, and
-other implementations dealing badly with it.
+-- 
+Vincent Danen / Red Hat Security Response Team 
