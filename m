@@ -1,24 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/18/4
-Message-ID: <1234991101.1716841274202779090.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 18 May 2010 13:12:59 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/19/1
+Message-Id: <201007191049.36633.ludwig.nussel@suse.de>
+Date: Mon, 19 Jul 2010 10:49:36 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: oeriksson@...driva.com, coley <coley@...re.org>
-Subject: Re: A mysql flaw.
+Subject: Re: Qt SSL endless loop
 Content-Type: text/plain; charset=utf-8
 
------ "Tomas Hoger" <thoger@...hat.com> wrote:
+Vincent Danen wrote:
+> * [2010-07-16 11:19:09 -0400] Josh Bressers wrote:
 > 
-> It seems 5.1.46 also fixes:
->   http://bugs.mysql.com/bug.php?id=40980
+> >Please use CVE-2010-2533
 > 
-> Which is another sequel to the DATA/INDEX DIRECTORY issues like
-> CVE-2008-2079, CVE-2008-4098, CVE-2008-7247 or CVE-2009-4030.
+> Wasn't this already assigned CVE-2010-2621?
+> 
+> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-2621
+> 
+> It links to the same advisory (qtsslame-adv.txt) and that only seems to
+> be reporting one single problem.
 
-Please use CVE-2010-1626.
+Oops, indeed. We've overlooked that assignment. Sorry for the confusion :-/
 
-Thanks (sorry this took so long, I missed it).
+cu
+Ludwig
 
 -- 
-    JB
+ (o_   Ludwig Nussel
+ //\   
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
