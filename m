@@ -1,28 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/11/5
-Message-Id: <201009111612.42713.steffen.joeris@skolelinux.de>
-Date: Sat, 11 Sep 2010 16:12:35 +1000
-From: Steffen Joeris <steffen.joeris@...lelinux.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/19/2
+Message-ID: <20100719111212.39224acf@redhat.com>
+Date: Mon, 19 Jul 2010 11:12:12 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE id requests: drupal
+Cc: brlink@...ian.org
+Subject: Re: CVE request: ghostscript and gv
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Sun, 30 May 2010 22:08:12 +0200 Bernhard R. Link wrote:
 
-I don't think these 4 issues[0] have been assigned CVE ids yet, could I get 
-some?
+> Gs's -P- not working (at least for gs_init.ps), is definitly a bug
+> that needs to be fixed.
 
-Cheers,
-Steffen
+This should be fixed in upstream SVN now.
 
-[0]: http://drupal.org/node/880476
+> I personally would also suggest fixing gs to not look in the current
+> directory by default (looking for important stuff in the current
+> directory is really always a bad idea). I guess the problem is how to
+> fix it.
 
-OpenID authentication bypass
+Following commit should change default from -P to -P- :
+  http://svn.ghostscript.com/viewvc?view=rev&revision=11494
 
-File download access bypass
+Is this the approach other vendors are expecting to use?
 
-Comment unpublishing bypass
-
-Actions cross site scripting
-
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+-- 
+Tomas Hoger / Red Hat Security Response Team
