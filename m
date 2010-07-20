@@ -1,44 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/22/10
-Message-ID: <910412384.111291290442657866.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 22 Nov 2010 11:17:37 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request: gif2png: command-line buffer overflow problem
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/20/2
+Message-ID: <20100720210334.GB5026@inversepath.com>
+Date: Tue, 20 Jul 2010 22:03:34 +0100
+From: Andrea Barisani <lcars@...rt.org>
+To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
+Subject: [oCERT-2010-002] Joomla input sanitization errors (XSS)
 Content-Type: text/plain; charset=utf-8
 
-Steve,
 
-I don't have any 2009 IDs. Can you take this one.
+#2010-002 Joomla input sanitization errors (XSS)
 
-Thanks.
+Description:
+
+Joomla, an open source content management system, suffers from a cross-site
+scripting (XSS) vulnerability.
+
+Insufficient input sanitization on the parameters passed to pages related to
+administration settings leads to arbitrary javascript injection in the context
+of the user session, this could be potentially exploited to hijack the session
+of the Joomla administrator.
+
+Affected version:
+
+Joomla <= 1.5.19
+
+Fixed version:
+
+Joomla >= 1.5.20
+
+Credit: vulnerability report and PoC received from Mesut Timur <mesut [at]
+mavitunasecurity [dot] com>.
+
+CVE: N/A
+
+Timeline:
+
+2010-06-01: vulnerability report received
+2010-06-01: contacted Joomla Security Team
+2010-07-15: Joomla advisory published
+2010-07-20: oCERT advisory published
+
+References:
+http://developer.joomla.org/security/news/318-20100704-core-xss-vulnerabilitis-in-back-end.html
+
+Permalink:
+http://www.ocert.org/advisories/ocert-2010-002.html
 
 -- 
-    JB
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | Open Source Computer Emergency Response Team
 
-
------ "Kurt Seifried" <kurt@...fried.org> wrote:
-
-> This is from 2009 but doesn't appear to have a CVE (no "gif2png" in
-> the CVE database).
-> 
-> Sources:
-> https://bugzilla.redhat.com/show_bug.cgi?id=547515
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=550978
-> http://lists.grok.org.uk/pipermail/full-disclosure/2009-December/072009.html
-> 
-> Description:
-> A buffer overflow in gif2png 2.5.3 and earlier allows an attacker to
-> execute arbitrary code via a long command line argument passed to the
-> gif2png binary.
-> 
-> It was first claimed that it was fixed in 2.5.2 but it is reported
-> that it isn't fixed, I tested 2.5.3 and it still seg faults the same
-> way as 2.5.2 so it would appear it was never fixed, as the software
-> was last updated in 2005 I guess this one never gets fixed.
-> 
-> -- 
-> Kurt Seifried
-> kurt@...fried.org
-> tel: 1-703-879-3176
+<lcars@...rt.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
