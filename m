@@ -1,31 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/02/4
-Message-ID: <4C066D07.10007@redhat.com>
-Date: Wed, 02 Jun 2010 16:39:03 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>, oss-security <oss-security@...ts.openwall.com>
-CC: Keith Rarick <kr@....us>
-Subject: CVE Request -- Beanstalkd (prior v1.4.6) -- Improper sanitization of job body (job payload data)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/20/1
+Message-ID: <20100720075911.GW6617@login.drsnuggles.stderr.nl>
+Date: Tue, 20 Jul 2010 09:59:11 +0200
+From: Matthijs Kooijman <matthijs@...in.nl>
+To: oss-security@...ts.openwall.com
+Cc: rubidium@...nttd.org
+Subject: CVE request for OpenTTD
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve, vendors,
+Hi folks,
 
-   Graham Barr reported that beanstalkd v1.4.5 and earlier, improperly
-sanitized job data, sent together with put command from client.
-A remote attacker, providing a specially-crafted job data in request,
-could use this flaw to bypass intended beanstalk client commands
-dispatch mechanism, leading to unauthorized execution of beanstalk
-client commands.
+the OpenTTD developers have indentified a security vulnerability in the
+OpenTTD program. Would you be so kind as to allocate a CVE id for this
+issue?
 
-References:
-   [1] http://kr.github.com/beanstalkd/2010/05/23/1.4.6-release-notes.html
-   [2] http://bugs.gentoo.org/show_bug.cgi?id=322457
+The issue concerns a denial of service vulnerability, in the form of a
+hard to trigger infinite loop. The issue is reported at
+http://bugs.openttd.org/task/3909
 
-Upstream changeset:
-   [3] http://github.com/kr/beanstalkd/commit/2e8e8c6387ecdf5923dfc4d7718d18eba1b0873d
+The first vulnerable version is 1.0.1, the upcoming 1.0.3 release will
+have the issue fixed.
 
-Could you allocate a CVE id for this?
+Once a CVE id is allocated, the issue will be documented at
+http://security.openttd.org/en/CVE-2010-xxxx
 
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Thanks,
+
+Matthijs
+
+(Please CC me, I'm not subscribed)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (198 bytes)
