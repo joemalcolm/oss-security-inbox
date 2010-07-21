@@ -1,39 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/20/10
-Message-ID: <847761369.309221264004399691.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 20 Jan 2010 11:19:59 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request - kernel: untangle the do_mremap() mess
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/21/4
+Message-ID: <AANLkTilq8EW00nhZGLFCpwuw2o76UepmEMJirMc_eYq6@mail.gmail.com>
+Date: Wed, 21 Jul 2010 09:36:57 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: kernel: btrfs
 Content-Type: text/plain; charset=utf-8
 
------ "Steven M. Christey" <coley@...us.mitre.org> wrote:
-> On Wed, 20 Jan 2010, Eugene Teo wrote:
-> 
-> > Anyway, Al summarised the mess here:
-> > http://marc.info/?l=linux-arch&m=126004438008670&w=2
-> >
-> > And the pile of upstream commits were meant to address the problems
-> > described AFAIK. It will probably make more sense to associate all
-> > these related commits to just one CVE name.
-> 
-> I defer to Josh on this, but in a series of patches that is referred to
-> as "mremap/mmap mess" in some linux-kernel subject lines, for which a
-> specialist like Eugene is not entirely certain about, in which some of
-> the patches are assembly-level changes for individual architectures, and
-> where few of the patch diffs make it clear what the underlying problem
-> was - we could collectively spend a week of labor trying to figure
-> everything out from a purist CVE perspective, or anchor on a single
-> series of commits that are hopefully attached to a single kernel RC or
-> minor version release.  I suspect the latter would be more helpful to the
-> general CVE consumer community, so my recommendation is for a single CVE,
-> assuming that all of these patches make it into a single kernel update.
-> 
+Fixes for two issues in btrfs were committed upstream:
 
-Let's use CVE-2010-0291 for this one.
+1.  The BTRFS_IOC_CLONE and BTRFS_IOC_CLONE_RANGE ioctls allowed a
+local user to overwrite append-only files.
 
-Thanks.
+2.  The BTRFS_IOC_CLONE_RANGE ioctl was subject to an integer overflow
+in specifying offsets to copy from a file, which potentially allows a
+local user to read sensitive filesystem data.
 
--- 
-    JB
+Reference:
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=2ebc3464781ad24474abcbd2274e6254689853b5
+
+-Dan
