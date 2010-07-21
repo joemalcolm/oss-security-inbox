@@ -1,54 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/23/1
-Message-Id: <20100423123549.DXAEHRPQYFWTWM@hackinthebox.org>
-Date: Fri, 23 Apr 2010 12:35:49 +0800
-From: Hafez Kamal <aphesz@...kinthebox.org>
-To: <oss-security@...ts.openwall.com>
-Subject: [HITB-Announce] HITBSecConf2010 - Dubai - Presentation Materials
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/21/6
+Message-ID: <1261048374.1123451279733716623.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 21 Jul 2010 13:35:16 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: rubidium@...nttd.org, Matthijs Kooijman <matthijs@...in.nl>
+Subject: Re: CVE request for OpenTTD
 Content-Type: text/plain; charset=utf-8
 
-Presentation materials from the 4th annual Hack In The Box Security
-Conference in Dubai are now available for download!
+Please use CVE-2010-2534
 
-http://conference.hitb.org/hitbsecconf2010dxb/materials/
+Thanks.
 
-KEYNOTE 1 - John Viega - A/V Vendors Aren't As Dumb As They Look
-D1 - Daniel Mende - Attacking Cisco WLAN Solutions
-D1 - Laurent Oudot - Improving the Stealthiness of Web Hacking
-D1 - Dimitri Petropoulos - Attacking ATMs and HSMs **
-D1 - Dino Covotsos - Analysis of a Next Generation Botnet
-D1 - The Grugq - Crime, Kung Fu and Rice ##
-
-KEYNOTE 2 - Sourcefire - Near Real Time Detection
-D2 - Mariano Di Croce - SAP Penetration Testing with Bizsploit
-D2 - Fred Raynal + Sogeti - Gathering and Exploiting Information
-D2 - Marc Schoenefeld - Examining Android Code with undx2
-D2 - Saumil Shah - Web Security - Going Nowhere?
-D2 - Gynvael Coldwind - A Case Study of Recent Windows Vulnerabilities
-
-Notes:
-
-** - Speaker changed due to the fscking ash cloud mess!
-
-## - Grugq was stopped by his employer COSEINC from presenting his
-original 'Attacking GSM Base Stations and Mobile Phone Basebands'
-presentation - WTF?! #fail!!!
-
-See you guys at HITBSecConf2010 - Amsterdam (June 29th - July 2nd at the
-NH Grand Krasnapolsky)
-
-http://conference.hitb.org/hitbsecconf2010ams/
+-- 
+    JB
 
 
----
-Hafez Kamal
-HITB Crew
-Hack in The Box (M) Sdn. Bhd.
-Suite 26.3, Level 26, Menara IMC,
-No. 8 Jalan Sultan Ismail,
-50250 Kuala Lumpur,
-Malaysia
+----- "Matthijs Kooijman" <matthijs@...in.nl> wrote:
 
-Tel: +603-20394724
-Fax: +603-20318359
-
+> Hi folks,
+> 
+> the OpenTTD developers have indentified a security vulnerability in
+> the
+> OpenTTD program. Would you be so kind as to allocate a CVE id for
+> this
+> issue?
+> 
+> The issue concerns a denial of service vulnerability, in the form of
+> a
+> hard to trigger infinite loop. The issue is reported at
+> http://bugs.openttd.org/task/3909
+> 
+> The first vulnerable version is 1.0.1, the upcoming 1.0.3 release
+> will
+> have the issue fixed.
+> 
+> Once a CVE id is allocated, the issue will be documented at
+> http://security.openttd.org/en/CVE-2010-xxxx
+> 
+> Thanks,
+> 
+> Matthijs
+> 
+> (Please CC me, I'm not subscribed)
