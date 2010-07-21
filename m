@@ -1,52 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/29/6
-Message-ID: <AANLkTilpG-vqtlvhHUMWTw0-URx8DVyKruJwh_1J2uoi@mail.gmail.com>
-Date: Tue, 29 Jun 2010 12:36:27 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: Tomas Hoger <thoger@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE requests: LibTIFF
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/21/3
+Message-Id: <201007211209.42978.timb@nth-dimension.org.uk>
+Date: Wed, 21 Jul 2010 12:09:28 +0100
+From: Tim Brown <timb@...-dimension.org.uk>
+To: oss-security@...ts.openwall.com
+Subject: Universal XSS in Rekonq
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jun 29, 2010 at 12:27 PM, Tomas Hoger <thoger@...hat.com> wrote:
-> On Tue, 29 Jun 2010 08:05:25 -0400 Dan Rosenberg wrote:
->
->> On request, I'm re-posting the issues which I think actually deserve
->> CVE ids.
->
-> I believe the disagreement here is caused by different opinions on what
-> should be and what does not need to be called security.
->
+Hi guys,
 
-I agree that it's a fine line between security and stability issues.
-In these cases, since simply viewing a TIFF image will crash any
-application linked against libtiff, and given a past record of DoS
-issues in image libraries (and libtiff in particular) receiving CVEs,
-I see no reason why these bugs should be treated any differently.  In
-any case, I leave that decision to those who assign CVEs.
+Can a CVE be assigned for the universal XSS in Rekonq 
+(https://bugs.kde.org/show_bug.cgi?id=217464).  Essentially, the error page 
+displayed when a requested URL is not available includes said URL.  If said 
+URL includes HTML fragments these will be rendered in the context of the 
+requested URL.  If you request something like 
+http://wontresolve.twitter.com/"><script>alert(document.cookies)</script> then 
+you may very well snare your Twitter cookies.
 
->> 2.  A NULL pointer derefrence in TIFFVGetField() may result in
->> application crash
->> (https://bugs.launchpad.net/ubuntu/lucid/+source/tiff/+bug/589145).
->
-> This got CVE-2010-2443 from Mitre few days ago.  But I guess you're
-> going to (or should?) ask for one more for td_stripbytecount case I
-> pointed out in one of the previous replies (split due to different
-> fixed-in version).  Sauli's fuzzer to blame for the discovery again ;).
->
+Originally when I reported this bug to the Rekonq developers, it was a very 
+small project without much following, however Rekonq is starting to make its 
+way into multiple distros so I thought it was probably time to flag it up.
 
-In that case, we've got three CVE-pending issues, each of which have
-been described in more detail in previous posts:
+Quick history:
+05/12/09 Reported by me against Rekonq 0.4
+05/12/09 Added note that it also appears to affect Qt's demo browser
+05/12/09 KDE patch kwebkitpart
+07/12/09 Confirmed by Rekonq developers
+13/04/10 Reported resolved by developers
+14/07/10 Retested on 0.5 and found still to be vulnerable
 
-1.  OOB read in TIFFExtractData() leading to crash.
+Cheers,
+Tim
+-- 
+Tim Brown
+<mailto:timb@...-dimension.org.uk>
+<http://www.nth-dimension.org.uk/>
 
-2.  NULL pointer dereference due to invalid td_stripbytecount leading
-to crash (distinct from CVE-2010-2443).
-
-3.  OOB read in TIFFRGBAImageGet() leading to crash.
-
--Dan
-
-> --
-> Tomas Hoger / Red Hat Security Response Team
->
+Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
