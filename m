@@ -1,22 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/31/3
-Message-ID: <20100831115304.GA27486@openwall.com>
-Date: Tue, 31 Aug 2010 15:53:04 +0400
-From: Solar Designer <solar@...nwall.com>
-To: Brad Spengler <spender@...ecurity.net>
-Cc: Roland McGrath <roland@...hat.com>, Kees Cook <kees.cook@...onical.com>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Al Viro <viro@...iv.linux.org.uk>, Andrew Morton <akpm@...ux-foundation.org>, Oleg Nesterov <oleg@...hat.com>, KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, pageexec@...email.hu
-Subject: Re: [PATCH] exec argument expansion can inappropriately trigger OOM-killer
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/21/8
+Message-ID: <297267266.1124781279734235963.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 21 Jul 2010 13:43:55 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: lcars@...rt.org, coley <coley@...re.org>
+Subject: Re: [oCERT-2010-002] Joomla input sanitization errors (XSS)
 Content-Type: text/plain; charset=utf-8
 
-Brad, Roland -
+Please use CVE-2010-2535 for this.
 
-Thank you for your comments and your work on this.
+Thanks.
 
-On Mon, Aug 30, 2010 at 06:08:47PM -0400, Brad Spengler wrote:
-> There shouldn't be any additional risk from adding the extra rescheds, 
-> as copy_*_user can already sleep and be raced against via a number of 
-> methods.
+-- 
+    JB
 
-Agreed.
 
-Alexander
+----- "Andrea Barisani" <lcars@...rt.org> wrote:
+
+> #2010-002 Joomla input sanitization errors (XSS)
+> 
+> Description:
+> 
+> Joomla, an open source content management system, suffers from a
+> cross-site
+> scripting (XSS) vulnerability.
+> 
+> Insufficient input sanitization on the parameters passed to pages
+> related to
+> administration settings leads to arbitrary javascript injection in the
+> context
+> of the user session, this could be potentially exploited to hijack the
+> session
+> of the Joomla administrator.
+> 
+> Affected version:
+> 
+> Joomla <= 1.5.19
+> 
+> Fixed version:
+> 
+> Joomla >= 1.5.20
+> 
+> Credit: vulnerability report and PoC received from Mesut Timur <mesut
+> [at]
+> mavitunasecurity [dot] com>.
+> 
+> CVE: N/A
+> 
+> Timeline:
+> 
+> 2010-06-01: vulnerability report received
+> 2010-06-01: contacted Joomla Security Team
+> 2010-07-15: Joomla advisory published
+> 2010-07-20: oCERT advisory published
+> 
+> References:
+> http://developer.joomla.org/security/news/318-20100704-core-xss-vulnerabilitis-in-back-end.html
+> 
+> Permalink:
+> http://www.ocert.org/advisories/ocert-2010-002.html
+> 
+> -- 
+> Andrea Barisani |                Founder & Project Coordinator
+>           oCERT | Open Source Computer Emergency Response Team
+> 
+> <lcars@...rt.org>                         http://www.ocert.org
+>  0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+>         "Pluralitas non est ponenda sine necessitate"
