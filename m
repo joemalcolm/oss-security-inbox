@@ -1,33 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/07/4
-Message-ID: <Pine.GSO.4.64.1006071058480.15053@faron.mitre.org>
-Date: Mon, 7 Jun 2010 11:03:29 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: zonecheck
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/21/5
+Message-ID: <630998710.1121871279732922819.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 21 Jul 2010 13:22:02 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com, "Mike O'Connor" <mjo@...o.mi.org>
+Cc: coley <coley@...re.org>
+Subject: Re: CVE for Intel INTEL-SA-00025
 Content-Type: text/plain; charset=utf-8
 
 
-On Tue, 1 Jun 2010, Josh Bressers wrote:
+----- "Mike O'Connor" <mjo@...o.mi.org> wrote:
 
->> Hi,
->>
->> there is a cross-scripting issue in zonecheck's CGI, up to version
->> 2.1.0
->> (fixed upstream in 2.1.1):
->>
->>   http://bugs.debian.org/583290
->>   https://savannah.nongnu.org/bugs/?29967
->>   http://www.xssed.com/mirror/61096/
->>
->
-> Please use CVE-2010-2052
+> :Can you assign a CVE for
+> :
+> :http://security-center.intel.com/advisory.aspx?intelid=INTEL-SA-00025&languageid=en-fr
+> 
+> For fear of asking a silly question -- is the Intel MKL open source?
+> I'm curious about why you're asking for a CVE on this list, that's
+> all.
+> 
 
-I inadvertently assigned a duplicate, CVE-2010-2155, after this initial 
-assignment.  Since CVE-2010-2155 is already widespread based on Google 
-counts, we should keep it, and reject the CVE-2010-2052 that was assigned 
-by Josh.
+It does indeed appear to be closed source. I'm CCing Steve. MITRE can
+handle this one.
 
-Sorry about that, my fault...
+Thanks.
 
-- Steve
+-- 
+    JB
