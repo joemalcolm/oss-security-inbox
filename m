@@ -1,54 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/03/1
-Message-ID: <20101003220003.GA23811@altlinux.org>
-Date: Mon, 4 Oct 2010 02:00:03 +0400
-From: "Dmitry V. Levin" <ldv@...linux.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/21/10
+Message-ID: <2104881042.1128801279735912713.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 21 Jul 2010 14:11:52 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Minor security flaw with pam_xauth
+Cc: dan.j.rosenberg@...il.com, coley <coley@...re.org>
+Subject: Re: CVE request: kernel: btrfs
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-On Fri, Oct 01, 2010 at 04:02:04PM -0600, Vincent Danen wrote:
-> * [2010-09-28 00:17:29 +0400] Solar Designer wrote:
-> >On Mon, Sep 27, 2010 at 11:36:13AM -0600, Vincent Danen wrote:
-> >>* [2010-09-24 20:48:23 +0400] Solar Designer wrote:
-> >>>pam_env and pam_mail accessing the target user's files as root (and thus
-> >>>susceptible to attacks by the user) in Linux-PAM below 1.1.2, partially
-> >>>fixed in 1.1.2 - no CVE ID mentioned yet
-> >>>
-> >>>pam_env and pam_mail in Linux-PAM 1.1.2 not switching fsgid (or egid)
-> >>>and groups when accessing the target user's files (and thus potentially
-> >>>susceptible to attacks by the user) - CVE-2010-3430
-> >>>
-> >>>pam_env and pam_mail in Linux-PAM 1.1.2 not checking whether the
-> >>>setfsuid() calls succeed (no known impact with current Linux kernels,
-> >>>but poor practice in general) - CVE-2010-3431
-[...]
-> >>Are there patches available to fully fix these issues?  And are there
-> >>patches for 3430 and 3431 yet?
-> >
-> >This is the same question asked different ways.  We have a patch that
-> >we're reviewing internally.  To be made available soon.
+----- "Dan Rosenberg" <dan.j.rosenberg@...il.com> wrote:
+
+> Fixes for two issues in btrfs were committed upstream:
 > 
-> Great, looking forward to seeing them.
+> 1.  The BTRFS_IOC_CLONE and BTRFS_IOC_CLONE_RANGE ioctls allowed a
+> local user to overwrite append-only files.
 
-The patch that fixes CVE-2010-3430 and CVE-2010-3431 was just made public:
-http://git.altlinux.org/people/ldv/packages/?p=pam.git;a=commitdiff;h=pam_modutil_priv
+Please use CVE-2010-2537.
 
-Besides that, another two issues have been fixed in pam_xauth after
-Linux-PAM 1.1.2 release:
+> 
+> 2.  The BTRFS_IOC_CLONE_RANGE ioctl was subject to an integer
+> overflow
+> in specifying offsets to copy from a file, which potentially allows a
+> local user to read sensitive filesystem data.
 
-In pam_sm_close_session(), the attempt to unlink cookie file was made
-without dropping privileges at all if target uid could not be determined:
-http://git.altlinux.org/people/ldv/packages/?p=pam.git;a=commitdiff;h=Linux-PAM-1_1_2-3-g05dafc0
+Please use CVE-2010-2538
 
-In check_acl(), there were no check that the acl file provided by target
-user is a regular file:
-http://git.altlinux.org/people/ldv/packages/?p=pam.git;a=commitdiff;h=Linux-PAM-1_1_2-2-gffe7058
+> 
+> Reference:
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=2ebc3464781ad24474abcbd2274e6254689853b5
+> 
 
+Thanks.
 
 -- 
-ldv
-
-Content of type "application/pgp-signature" skipped
+    JB
