@@ -1,43 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/27/2
-Message-ID: <4BD65137.5060106@redhat.com>
-Date: Tue, 27 Apr 2010 10:51:35 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/21/11
+Message-ID: <594484970.1132211279737518577.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 21 Jul 2010 14:38:38 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: coley@...us.mitre.org
-Subject: CVE request - kernel: find_keyring_by_name() can gain the freed keyring
+Cc: coley <coley@...re.org>
+Subject: Re: CVE id request: mapserver
 Content-Type: text/plain; charset=utf-8
 
-Reported by Toshiyuki Okajima. find_keyring_by_name() can gain the 
-keyring which has been already freed. And then, its space (which is 
-gained by find_keyring_by_name()) is broken by accessing the freed 
-keyring as the available keyring:
+Here you go:
 
-1) If the space of the freed keyring is reallocated for other purpose 
-(ie. filp SLUB), the data of the filp object may be destroyed by the 
-user of the freed keyring. (SLUB configuration can share the freed space 
-with other same-size slabs.)
+CVE-2010-2539 mapserver buffer overflow (3484)
+CVE-2010-2540 mapserver insecure CGI args (3485)
 
-2) If the slab space of the freed keyring is released into the system, 
-the system panic may happen because accessing the space of the freed 
-keyring causes the page-fault.
+Thanks.
 
-Example: (we can easily confirm this problem if CONFIG_SLUB is "y".)
-[1] with CONFIG_SLUB_DEBUG_ON
-While we are executing my reproducer (which is attached), we can notice 
-that the user of the freed keyring breaks its space:
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# ./reproducer &
-...
-# dmesg
-...
-=============================================================================
-BUG key_jar: Poison overwritten
-[...]
+-- 
+    JB
 
-More info:
-http://www.gossamer-threads.com/lists/linux/kernel/1216391
-https://patchwork.kernel.org/patch/94038/
-https://bugzilla.redhat.com/show_bug.cgi?id=585094
 
-Thanks, Eugene
+----- "Nico Golde" <oss-security+ml@...lde.de> wrote:
+
+> Hi,
+> two security issues have been disclosed in mapserver which need CVE
+> ids:
+> 
+> http://trac.osgeo.org/mapserver/ticket/3484
+> http://trac.osgeo.org/mapserver/ticket/3485
+> 
+> Can anyone please allocate two ids?
+> 
+> Cheers
+> Nico
+> -- 
+> Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG:
+> 0xA0A0AAAA
+> For security reasons, all text in this mail is double-rot13 encrypted.
