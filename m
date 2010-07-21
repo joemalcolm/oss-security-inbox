@@ -1,38 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/04/4
-Message-ID: <771209333.1202871275682090696.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 4 Jun 2010 16:08:10 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/21/7
+Message-ID: <20100721173923.GA31430@ngolde.de>
+Date: Wed, 21 Jul 2010 19:39:26 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE requests for mplayer/vlc and abcm2ps
+Subject: CVE id request: mapserver
 Content-Type: text/plain; charset=utf-8
 
------ "Moritz Muehlenhoff" <jmm@...ian.org> wrote:
+Hi,
+two security issues have been disclosed in mapserver which need CVE ids:
 
-> Hi,
-> please assign CVE IDs for these issues:
-> 
-> 1. mplayer/VLC:
-> http://dzcore.wordpress.com/2009/07/27/dzc-2009-001-the-movie-player-and-vlc-media-player-real-data-transport-parsing-integer-underflow/
-> http://www.debian.org/security/2010/dsa-2044
-> http://www.debian.org/security/2010/dsa-2043
+http://trac.osgeo.org/mapserver/ticket/3484
+http://trac.osgeo.org/mapserver/ticket/3485
 
-It's the same code that causes both of these. We'll use one id:
-CVE-2010-2062
+Can anyone please allocate two ids?
 
-
-> 
-> 2. abcm2ps:
-> http://moinejf.free.fr/abcm2ps-5.txt
-> 
-
-Steve,
-
-Can you deal with this one. I lack the time or talent to parse "Fix more
-security vulnerabilities"
-
-Thanks.
-
+Cheers
+Nico
 -- 
-    JB
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
