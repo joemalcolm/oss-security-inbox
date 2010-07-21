@@ -1,29 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/19/4
-Message-ID: <1628100272.1812781274275704396.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 19 May 2010 09:28:24 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: Hanno Böck <hanno@...eck.de>
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com
-Subject: Re: CVE request: phpbb 3.0.7 and before 3.0.5
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/21/1
+Message-ID: <AANLkTilEID2PdyhH9m_7jURox7ixHiN5mg_N9vkdXHId@mail.gmail.com>
+Date: Tue, 20 Jul 2010 19:39:09 -0600
+From: Kurt Seifried <kurt@...fried.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE for Intel INTEL-SA-00025
 Content-Type: text/plain; charset=utf-8
 
------ "Hanno Böck" <hanno@...eck.de> wrote:
-> Am Dienstag 18 Mai 2010 schrieb Josh Bressers:
-> > 
-> >     http://www.phpbb.com/community/viewtopic.php?f=14&p=9764445
-> >     # [Sec] Only use forum id supplied for posting if global
-> >     announcement detected. (Reported by nickvergessen)
-> > 
-> > CVE-2010-1630 phpbb 3.0.5 unspecified flaw
-> 
-> Shouldn't this be CVE-2009-XXXX ?
-> 
+Can you assign a CVE for
 
-Wow, I missed the date on that.
+http://security-center.intel.com/advisory.aspx?intelid=INTEL-SA-00025&languageid=en-fr
 
-I'll leave this up to MITRE. I can't resolve dupes anyhow. Sorry for the
-confusion.
+thanks.
 
 -- 
-    JB
+Kurt Seifried
+kurt@...fried.org
+tel: 1-703-879-3176
