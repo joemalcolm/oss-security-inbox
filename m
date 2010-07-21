@@ -1,39 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/01/2
-Message-ID: <20101201105533.1510436a@angelo.pretender.us>
-Date: Wed, 1 Dec 2010 10:55:33 -0800
-From: Reed Loden <reed@...dloden.com>
-To: Mark Stosberg <mark@...mersault.com>
-Cc: oss-security <oss-security@...ts.openwall.com>, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Marcela Maslanova <mmaslano@...hat.com>, Petr Pisar <ppisar@...hat.com>, Chris 'BinGOs' Williams <chris@...gosnet.co.uk>, Masahiro Yamada <masa141421356@...il.com>, Byron Jones <glob@...b.com.au>, Lincoln Stein <lincoln.stein@...il.com>
-Subject: Re: CVE Request -- perl-CGI two ids, perl-CGI-Simple one id (CVE-2010-3172 already assigned for Bugzilla part)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/21/9
+Message-ID: <88743937.1126661279735003935.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 21 Jul 2010 13:56:43 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Tim Brown <timb@...-dimension.org.uk>, coley <coley@...re.org>
+Subject: Re: Universal XSS in Rekonq
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 01 Dec 2010 13:39:14 -0500
-Mark Stosberg <mark@...mersault.com> wrote:
+Please use CVE-2010-2536
 
-> >     2. Further improvements to handling of newlines embedded in header
-> > values.
-> >        An exception is thrown if header values contain invalid newlines.
-> >        Thanks to Michal Zalewski, Max Kanat-Alexander, Yanick Champoux
-> >        Lincoln Stein, Frederic Buclin and Mark Stosberg
-> > 
-> >        Chris, Mark, could you please provide more details about the
-> > issue? Is it
-> >        related to CVE-2010-3172?
-> 
-> Yes, it is. However, later testing found that the issue wasn't
-> completely fixed in 3.50. A new patch has been developed, and is
-> currently pending review and acceptance by the primary CGI.pm author,
-> Lincoln Stein. (Now CC'ed).
-> 
-> >        Steve, could you please allocate CVE id for this? (id #2)
-
-Mozilla already allocated CVE-2010-2761 to this part for the perl-CGI
-issue.
-
-~reed
-Mozilla Security Group
+Thanks.
 
 -- 
-Reed Loden
-reed@...dloden.com
+    JB
+
+----- "Tim Brown" <timb@...-dimension.org.uk> wrote:
+
+> Hi guys,
+> 
+> Can a CVE be assigned for the universal XSS in Rekonq 
+> (https://bugs.kde.org/show_bug.cgi?id=217464).  Essentially, the error
+> page 
+> displayed when a requested URL is not available includes said URL.  If
+> said 
+> URL includes HTML fragments these will be rendered in the context of
+> the 
+> requested URL.  If you request something like 
+> http://wontresolve.twitter.com/"><script>alert(document.cookies)</script>
+> then 
+> you may very well snare your Twitter cookies.
+> 
+> Originally when I reported this bug to the Rekonq developers, it was a
+> very 
+> small project without much following, however Rekonq is starting to
+> make its 
+> way into multiple distros so I thought it was probably time to flag it
+> up.
+> 
+> Quick history:
+> 05/12/09 Reported by me against Rekonq 0.4
+> 05/12/09 Added note that it also appears to affect Qt's demo browser
+> 05/12/09 KDE patch kwebkitpart
+> 07/12/09 Confirmed by Rekonq developers
+> 13/04/10 Reported resolved by developers
+> 14/07/10 Retested on 0.5 and found still to be vulnerable
+> 
+> Cheers,
+> Tim
+> -- 
+> Tim Brown
+> <mailto:timb@...-dimension.org.uk>
+> <http://www.nth-dimension.org.uk/>
