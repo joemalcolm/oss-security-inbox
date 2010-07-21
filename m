@@ -1,32 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/25/1
-Message-ID: <20100825115048.27f6142b@redhat.com>
-Date: Wed, 25 Aug 2010 11:50:48 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/21/2
+Message-ID: <20100721025832.GH12014@dojo.mi.org>
+Date: Wed, 21 Jul 2010 02:58:32 +0000
+From: Mike O'Connor <mjo@...o.mi.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: ghostscript and gv
+Subject: Re: CVE for Intel INTEL-SA-00025
 Content-Type: text/plain; charset=utf-8
 
-On Sun, 30 May 2010 22:08:12 +0200 Bernhard R. Link wrote:
+:Can you assign a CVE for
+:
+:http://security-center.intel.com/advisory.aspx?intelid=INTEL-SA-00025&languageid=en-fr
 
-> Gs's -P- not working (at least for gs_init.ps), is definitly a bug
-> that needs to be fixed.
-
-I believe we should try to clarify what CVE-2010-2055 got actually
-assigned to, as it seems to be used for more than one thing:
-
-- ghostscript uses CWD to search for initialization files
-- gv did not pass -P- to gs, leading to problems related to the default
-  mentioned above
-- some ghostscript versions search CWD even when started with -P-
-
-> I personally would also suggest fixing gs to not look in the current
-> directory by default (looking for important stuff in the current
-> directory is really always a bad idea). I guess the problem is how to
-> fix it.
-
-As previously mentioned, upstream changed SEARCH_HERE_FIRST default to
-address this.  I believe SuSE updates did the same change already too.
+For fear of asking a silly question -- is the Intel MKL open source?
+I'm curious about why you're asking for a CVE on this list, that's all.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+ Michael J. O'Connor                                          mjo@...o.mi.org
+ =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
+"Villains always have antidotes.  They're funny that way."          -The Tick
