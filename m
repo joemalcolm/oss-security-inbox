@@ -1,32 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/02/2
-Message-ID: <20100902175639.07169083@redhat.com>
-Date: Thu, 2 Sep 2010 17:56:39 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/22/2
+Message-ID: <20100722110515.1af8bd3d@redhat.com>
+Date: Thu, 22 Jul 2010 11:05:15 +0200
 From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: Re: CVE id request: libc fortify source information disclosure
+To: OSS Security <oss-security@...ts.openwall.com>
+Subject: Cacti XSS fixes in 0.8.7g
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 31 Aug 2010 16:02:14 -0400 (EDT) Steven M. Christey wrote:
+Hi!
 
-> The risk may be very minimal, but the FORTIFY_SOURCE protection
-> mechanism is not working "as advertised" - it can be manipulated for
-> an admittedly-small information leak.
+Cacti 0.8.7g was released some days ago:
+  http://cacti.net/release_notes_0_8_7g.php
 
-For the sake of correctness, protective technology that kicks in in the
-Dan's example is stack protector, not FORTIFY_SOURCE.  Though it's
-probably still glibc to blame for using the same error-reporting
-function in both cases.
+Release notes mention couple of security issue previously fixed in
+(withdrawn) 0.8.7f, but adds new protections against couple of XSS
+issues.
 
 
-On Wed, 25 Aug 2010 21:49:20 +0200 Nico Golde wrote:
+"XSS 4" from CVE-2009-4032 was not fixed previously:
+  https://bugzilla.redhat.com/show_bug.cgi?id=541279#c17
 
-> As this also works for setuid programs it would be nice to get one
-> assigned and have this patched.
+Fixed in include/top_graph_header.php change in:
+  http://svn.cacti.net/viewvc?view=rev&revision=6025
 
-It seems the fix would need to remove all possibly-useful info from the
-error message.
+
+Search pattern in log file viewer was not filtered for bad characters,
+or escaped before echoing pattern back to page:
+  https://bugzilla.redhat.com/show_bug.cgi?id=459105
+
+Possible victims are administrative users with access to log viewer
+page.  Fixed in r6025, which adds escaping to other search patterns
+too, but others were filtered previously.
+
+
+Multiple persistent XSS via various item names or descriptions.
+Attacker needs to have certain administrative privileges, so this is
+fairly lame issue.
+  https://bugzilla.redhat.com/show_bug.cgi?id=459229
+
+Originally discovered for template names, where template XML import
+provides additional vector (trusted admin tricked to import untrusted
+template vs. untrusted admin).  HTML escaping added on various places
+in r6037, r6038, r6041 and r6042.
 
 -- 
 Tomas Hoger / Red Hat Security Response Team
