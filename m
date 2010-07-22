@@ -1,23 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/10/8
-Message-ID: <20101110180128.GQ5876@outflux.net>
-Date: Wed, 10 Nov 2010 10:01:28 -0800
-From: Kees Cook <kees@...ntu.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/22/1
+Message-ID: <AANLkTil7T_CLDVLRR58GNqX93gIFrCKi612LX4QDknls@mail.gmail.com>
+Date: Wed, 21 Jul 2010 23:17:01 -0400
+From: Greg Brockman <gdb@....EDU>
 To: oss-security@...ts.openwall.com
-Subject: Re: filesystem capabilities
+Cc: Junio C Hamano <gitster@...ox.com>
+Subject: CVE request: git
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Nov 08, 2010 at 12:37:35PM +0100, Sebastian Krahmer wrote:
-> To me it looks like an error condition
-> where you should die() if you see +s root AND fscaps applied.
+A fix for an exploitable buffer overrun was committed to git in [1].
+In particular, if an attacker were to create a crafted working copy
+where the user runs any git command, the attacker could force
+execution of arbitrary code.
 
-Right now the kernel will only apply the caps and will ignore the setuid
-bit, actually, if both are seen:
+This attack should be mitigated to a denial of service if git is
+compiled with appropriate stack-protecting flags.
 
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=b5f22a59c0356655a501190959db9f7f5dd07e3f
+This buffer overrun was introduced in [2], which first appeared in
+v1.5.6, and is fixed in v1.7.2.
 
--Kees
+Greg
 
--- 
-Kees Cook
-Ubuntu Security Team
+[1] http://git.kernel.org/?p=git/git.git;a=commit;h=3c9d0414ed2db0167e6c828b547be8fc9f88fccc
+[2] http://git.kernel.org/?p=git/git.git;a=commit;h=b44ebb19e3234c5dffe9869ceac5408bb44c2e20
