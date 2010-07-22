@@ -1,33 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/23/6
-Message-ID: <4C22473D.7000108@f-streibelt.de>
-Date: Wed, 23 Jun 2010 19:41:17 +0200
-From: Florian Streibelt <gentoo@...treibelt.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/22/3
+Message-ID: <77071155.1269251279827927550.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 22 Jul 2010 15:45:27 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security <oss-security@...ts.openwall.com>
-CC: Jan Lieskovsky <jlieskov@...hat.com>,  "Steven M. Christey" <coley@...us.mitre.org>, Michael Fleming <mfleming+rpm@...tfleminggent.com>,  Mads Martin Joergensen <mmj@....dk>, "Morten K. Poulsen" <morten@...elingp.dk>
-Subject: Re: CVE Request -- mlmmj -- Directory traversal flaw by editing and saving  list entries via php-admin web interface
+Cc: Werner Lemberg <wl@....org>, Marek Kasik <mkasik@...hat.com>
+Subject: Another freetype-demos buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello everyone,
 
-'Jan Lieskovsky' schrieb am 23.06.2010 18:35:
->   Florian, please correct me, if I mangled the attack scenario, and it's
-> slightly different.
+While fixing CVE-2010-2527, one of our developers, Marek Kašík, discovered
+an additional buffer overflow in the ftmulti demo program.
 
-when I reported the bug I had no time to further investigate and I think I
-did not report upstream because of lack of time at that point and later
-forgot - which is sad.
+I've assigned it CVE-2010-2541. There is more information in our bug:
+https://bugzilla.redhat.com/show_bug.cgi?id=617342
 
-The php webinterface is a third-party development for mlmmj but part of the
-official release.
+Upstream was told and added a partial fix to their git:
+http://git.savannah.gnu.org/cgit/freetype/freetype2-demos.git/commit/?id=3636982a7666bcfa0e47fb31d565314d1b3e7d78
 
-The last official release is 1.2.16 from 2009-Sep-05.
+I've attached a patch to the Red Hat bug that we're using.
 
-On http://mlmmj.mmj.dk/files/ there is a newer version that is not linked
-to on the official download page. This new version differs only in another
-template-class beeing used, so all flaws should still be there.
+Thanks.
 
-Reported Upstream today: http://mlmmj.org/node/84
-
-
-Florian
+-- 
+    JB
