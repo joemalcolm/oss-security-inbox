@@ -1,26 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/21/2
-Message-Id: <201012211025.39888.ludwig.nussel@suse.de>
-Date: Tue, 21 Dec 2010 10:25:38 +0100
-From: Ludwig Nussel <ludwig.nussel@...e.de>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: opensc buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/23/3
+Message-ID: <4C497FF4.5090808@redhat.com>
+Date: Fri, 23 Jul 2010 13:41:40 +0200
+From: Marc Schoenefeld <mschoene@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE assignment notification -- CVE-2010-2474 -- JBossESB
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello Steve,
 
-Specially crafted smart cards could cause a buffer overflow in opensc:
+JBossESB: privilege escalation in cross-domain contexts
 
-http://labs.mwrinfosecurity.com/files/Advisories/mwri_opensc-get-serial-buffer-overflow_2010-12-13.pdf
-http://www.h-online.com/open/news/item/When-a-smart-card-can-root-your-computer-1154829.html
-https://www.opensc-project.org/opensc/changeset/4913
+The security context from an authentication request should check the
+domain and invalidate the information if the service is secured with a
+different security domain.
 
-cu
-Ludwig
+At present the execution of a service with a different domain could
+result in the pipeline being executed differing credentials, one set
+from the first domain if the request is still valid, a second set
+from the second domain if it has expired.
+
+References:
+----------
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2010-2474
+http://fisheye.jboss.org/changelog/JBossESB/?cs=33454
+
+CVE identifier of CVE-2010-2474 has been already assigned to these issues.
+
+Thanks && Regards,
+Marc
 
 -- 
- (o_   Ludwig Nussel
- //\   
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+Marc Schoenefeld / Red Hat Security Response Team
