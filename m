@@ -1,23 +1,15 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/21/1
-Message-ID: <Pine.GSO.4.64.1002211115030.9538@faron.mitre.org>
-Date: Sun, 21 Feb 2010 11:15:36 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Thomas Waldmann <tw-public@....de>
-cc: oss-security <oss-security@...ts.openwall.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- MoinMoin -- 1.8.7
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/23/4
+Message-ID: <876306aunm.fsf@mid.deneb.enyo.de>
+Date: Fri, 23 Jul 2010 21:02:37 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: GnuPG 2
 Content-Type: text/plain; charset=utf-8
 
+GnuPG 2.0 before version 2.0.17 reuses a freed pointer when verifying
+a signature or importing a certificate with many Subject Alternate
+Names, possibly allowing context-dependent attacks to execute
+arbitrary code.
 
-On Mon, 15 Feb 2010, Thomas Waldmann wrote:
-
-> a) one CVE for the sys.argv issue in 1.9 that was fixed in 1.9.1
-
-Use CVE-2010-0667
-
-> b) one CVE for the other kind of issues in all moin versions, fixed by
-> 1.8.7 and soon by 1.9.2
-
-Use CVE-2010-0668
-
-- Steve
+<http://lists.gnupg.org/pipermail/gnupg-announce/2010q3/000302.html>
