@@ -1,21 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/07/6
-Message-ID: <995912288.719521273237467294.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 7 May 2010 09:04:27 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: coley <coley@...re.org>
-Subject: CVE Assignment (gnustep)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/23/1
+Message-ID: <20100723110812.33616b6f@redhat.com>
+Date: Fri, 23 Jul 2010 11:08:12 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: OSS Security <oss-security@...ts.openwall.com>
+Subject: mikmod incomplete fix for CVE-2009-3995
 Content-Type: text/plain; charset=utf-8
 
-A file contents disclosure flaw was found when gdomap is suid root:
+Upstream fix created to address CVE-2009-3995 does not address the
+flaw properly.  See upstream bug for details:
 
-https://bugs.launchpad.net/ubuntu/+source/gnustep-base/+bug/573108
-http://thread.gmane.org/gmane.comp.lib.gnustep.bugs/12336
-
-I assigned CVE-2010-1457 to this.
-
-Thanks.
+https://sourceforge.net/tracker/?func=detail&aid=3033086&group_id=40531&atid=428227
 
 -- 
-    JB
+Tomas Hoger / Red Hat Security Response Team
