@@ -1,63 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/17/11
-Message-ID: <4CE45E1C.9030101@snafu.de>
-Date: Wed, 17 Nov 2010 23:58:36 +0100
-From: Martin Drescher <drescher@...fu.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/26/2
+Message-ID: <1809296454.1554981280172009597.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 26 Jul 2010 15:20:09 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Clear text password in process list when using MySQL GUI tools
+Cc: coley <coley@...re.org>
+Subject: Re: Cacti XSS fixes in 0.8.7g
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Sorry for the delay. IDs inline.
 
-Hi ML.
 
-On 17/11/10 21:06, Moritz Muehlenhoff wrote:
-> On Wed, Nov 17, 2010 at 08:38:06AM -0500, Josh Bressers wrote:
->> Steve,
->>
->> What are the thoughts of MITRE on this one? This affects all sorts of stuff,
->> and I don't upstream removing the command line option (which is probably the
->> only fix).
+----- "Tomas Hoger" <thoger@...hat.com> wrote:
+
+> Hi!
 > 
-> I didn't look into this specific issue since both mysql-query-browser
-> and mysql-admin have been removed and are no longer supported in Debian,
+> Cacti 0.8.7g was released some days ago:
+>   http://cacti.net/release_notes_0_8_7g.php
+> 
+> Release notes mention couple of security issue previously fixed in
+> (withdrawn) 0.8.7f, but adds new protections against couple of XSS
+> issues.
+> 
+> 
+> "XSS 4" from CVE-2009-4032 was not fixed previously:
+>   https://bugzilla.redhat.com/show_bug.cgi?id=541279#c17
+> 
+> Fixed in include/top_graph_header.php change in:
+>   http://svn.cacti.net/viewvc?view=rev&revision=6025
 
-I can't follow you with that. Those packages are part of my Debian
-distribution, which is lenny and the reason I initially posted this
-issue to Debian security.
-
-> but there have been cases in the past, where leaking sensitive information
-> in the process list was assigned a CVE ID, e.g. CVE-2004-1948 for
-> ncftp.
-
-Let me add that for an experienced user it should/may be clear that
-command line arguments may be visible in process list or via the proc
-fs. The MySQL GUI-tools _and_ mysql command line tool do in fact that
-they care about sensitive information (eg. user, password, host). But
-then the GUI does this epic fail calling 'mysql' through an 'xterm -e
-mysql ...' call. Or some other kind of terminal. This is a kind of stupid.
+Use CVE-2010-2543
 
 > 
-> Cheers,
->         Moritz
+> 
+> Search pattern in log file viewer was not filtered for bad
+> characters,
+> or escaped before echoing pattern back to page:
+>   https://bugzilla.redhat.com/show_bug.cgi?id=459105
+> 
+> Possible victims are administrative users with access to log viewer
+> page.  Fixed in r6025, which adds escaping to other search patterns
+> too, but others were filtered previously.
 
-- -- 
- Martin Drescher
- Manfred-von-Richthofen-Strasse 223
- 12101 Berlin
+Use CVE-2010-2544
 
- Office:+49.(0)30.746 80 425
- Mobil: +49.(0)176 101 73 264
- Email:<drescher@...fu.de>
- USt-IdNr. DE211832267
- GnuPG Key Fingerprint, KeyID '4FBE451A':
- '2237 1E95 8E50 E825 9FE8  AEE1 6FF4 1E34 4FBE 451A'
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+> 
+> 
+> Multiple persistent XSS via various item names or descriptions.
+> Attacker needs to have certain administrative privileges, so this is
+> fairly lame issue.
+>   https://bugzilla.redhat.com/show_bug.cgi?id=459229
+> 
+> Originally discovered for template names, where template XML import
+> provides additional vector (trusted admin tricked to import untrusted
+> template vs. untrusted admin).  HTML escaping added on various places
+> in r6037, r6038, r6041 and r6042.
+> 
 
-iEYEARECAAYFAkzkXhYACgkQb/QeNE++RRpMhwCffUPk6ehCaW9yrdruxmEw4LEo
-JZUAn0LfOhjxrUYdcrAZqP0rWG+Vuxpx
-=caEx
------END PGP SIGNATURE-----
+Use CVE-2010-2545
+
+Thanks.
+
+-- 
+    JB
