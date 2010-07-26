@@ -1,38 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/31/8
-Message-ID: <Pine.GSO.4.64.1008311734300.3520@faron.mitre.org>
-Date: Tue, 31 Aug 2010 17:42:27 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/26/5
+Message-ID: <1310820388.1556281280172558128.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 26 Jul 2010 15:29:18 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: BGP protocol vulnerability
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE-2008-id Request -- ssmtp -- standardise() -- Buffer overflow
 Content-Type: text/plain; charset=utf-8
 
+Hi Steve,
 
-On Sat, 28 Aug 2010, Kurt Seifried wrote:
+I'm going to leave this one for you, I have no 2008 IDs.
 
->> The BGP protocol and its various extensions require that BGP peering
->> sessions are terminated when a peer receives a BGP update message
->> which it considers semantically incorrect, leading to a persistent
->> denial-of-service condition if the update is received again after the
->> terminated session is reestablished.
->>
->> (This is not something new at all---we just need to get up, treat it
->> as a vulnerability, and fix it.)
->
-> This sounds like CVE-2010-3035
-> http://www.cisco.com/warp/public/707/cisco-sa-20100827-bgp.shtml
+Thanks.
 
-The way Cisco has written up this CVE, they are clearly focusing on the 
-generation of corrupted attributes, not a protocol problem.  So, I'd want 
-a separate CVE for the general BGP design issue.
+-- 
+    JB
 
-> or are you talking about another BGP issue? (but in the same "family"
-> as CVE-2009-2055 and  CVE-2010-3035).
 
-I can't quite tell the difference between CVE-2009-2055 and what Florian 
-is requesting a CVE for.  In CVE-2009-2055, Cisco seems to be implying 
-that it's a problem in XR, not the design of the whole protocol - but it's 
-not immediately clear if they even "fixed" it.  The issue at hand is 
-whether we need a new CVE or a rewrite for the old CVE-2009-2055.
+----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
 
-- Steve
+> Hi Steve, vendors,
+> 
+>    Brendan Boerner reported:
+>    [1] https://bugs.launchpad.net/ubuntu/+source/ssmtp/+bug/282424
+> 
+> a deficiency in the way ssmtp removed trailing '\n' sequence
+> by processing lines beginning with a leading dot. A local user,
+> could send a specially-crafted e-mail message via ssmtp send-only
+> sendmail emulator, leading to ssmtp executable denial of service (exit
+> with:
+> ssmtp: standardise() -- Buffer overflow). Different vulnerability
+> than CVE-2008-3962.
+> 
+> References:
+>    [2] https://bugzilla.redhat.com/show_bug.cgi?id=582236
+>    [3] https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2008-3962
+>    [4] http://patch-tracker.debian.org/package/ssmtp/2.62-3
+>    [5]
+> http://lists.fedoraproject.org/pipermail/package-announce/2010-May/041012.html
+>    [6]
+> http://lists.fedoraproject.org/pipermail/package-announce/2010-May/041009.html
+>    [7]
+> http://lists.fedoraproject.org/pipermail/package-announce/2010-May/041119.html
+> 
+> Debian Linux distribution patch:
+>    [8]
+> http://patch-tracker.debian.org/patch/series/view/ssmtp/2.62-3/345780-standardise-bufsize
+> 
+> Public PoC (from
+> https://bugzilla.redhat.com/show_bug.cgi?id=582236#c0):
+>    [9] ( 0. Install & configure ssmtp, of course )
+>          1. (echo -n . ; for i in {1..2050} ; do echo -n $i ; done) |
+> mail root
+> 
+> Couldn't find CVE-2008-XXXX ssmtp identifier for this
+> (http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=ssmtp).
+> 
+> Steve, could you allocate one?
+> 
+> Thanks && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
