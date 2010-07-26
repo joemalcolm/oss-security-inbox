@@ -1,50 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/20/3
-Message-ID: <AANLkTi=qvFLiV=R+EcdwXpLHWfsq8bqkwqwEVQqC+s2T@mail.gmail.com>
-Date: Mon, 20 Dec 2010 13:45:29 -0500
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: Petr Matousek <pmatouse@...hat.com>, oss-security@...ts.openwall.com,  "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: CAN information leak, 2nd attempt
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/26/1
+Message-ID: <4C4D4B56.3030909@redhat.com>
+Date: Mon, 26 Jul 2010 10:46:14 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE-2008-id Request -- ssmtp -- standardise() -- Buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-I'm ok with this, but I wanted to point out that the previously
-mentioned heap overflow is a semantic overflow only.  Because the
-field that is being overflowed is the last field in a struct that is
-always allocated in a chunk significantly larger than the struct
-itself, the overflow will never result in any kind of corruption, so
-it has essentially no security impact.
+Hi Steve, vendors,
 
--Dan
+   Brendan Boerner reported:
+   [1] https://bugs.launchpad.net/ubuntu/+source/ssmtp/+bug/282424
 
-On Mon, Dec 20, 2010 at 1:36 PM, Petr Matousek <pmatouse@...hat.com> wrote:
-> "The CAN protocol uses the address of a kernel heap object as a proc
-> filename, revealing information that could be useful during
-> exploitation."
->
-> Reference:
-> https://bugzilla.redhat.com/show_bug.cgi?id=664544
-> http://seclists.org/oss-sec/2010/q4/103
->
-> Credit: Dan Rosenberg
->
-> ------------
->
-> Please note that there has been one attempt to request CVE for this
-> issue already [1]. The problem is that vendors (Red Hat more or less
-> included) used the assigned CVE for the potential heap overflow issue
-> [2, 3] whereas reporter used it for information leak [4].
->
->  [1] http://seclists.org/oss-sec/2010/q4/107
->  [2] http://lists.opensuse.org/opensuse-updates/2010-12/msg00026.html
->  [3] http://www.debian.org/security/2010/dsa-2126
->  [4] http://www.cs.brown.edu/people/drosenbe/research.html
->
-> I'd suggest to keep the CVE-2010-3874 id for the heap overflow which
-> has some (although very limited) security potential and assign a new id
-> for the information leak.
->
-> Thanks,
-> --
-> Petr Matousek / Red Hat Security Response Team
->
->
+a deficiency in the way ssmtp removed trailing '\n' sequence
+by processing lines beginning with a leading dot. A local user,
+could send a specially-crafted e-mail message via ssmtp send-only
+sendmail emulator, leading to ssmtp executable denial of service (exit with:
+ssmtp: standardise() -- Buffer overflow). Different vulnerability
+than CVE-2008-3962.
+
+References:
+   [2] https://bugzilla.redhat.com/show_bug.cgi?id=582236
+   [3] https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2008-3962
+   [4] http://patch-tracker.debian.org/package/ssmtp/2.62-3
+   [5] http://lists.fedoraproject.org/pipermail/package-announce/2010-May/041012.html
+   [6] http://lists.fedoraproject.org/pipermail/package-announce/2010-May/041009.html
+   [7] http://lists.fedoraproject.org/pipermail/package-announce/2010-May/041119.html
+
+Debian Linux distribution patch:
+   [8] http://patch-tracker.debian.org/patch/series/view/ssmtp/2.62-3/345780-standardise-bufsize
+
+Public PoC (from https://bugzilla.redhat.com/show_bug.cgi?id=582236#c0):
+   [9] ( 0. Install & configure ssmtp, of course )
+         1. (echo -n . ; for i in {1..2050} ; do echo -n $i ; done) | mail root
+
+Couldn't find CVE-2008-XXXX ssmtp identifier for this
+(http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=ssmtp).
+
+Steve, could you allocate one?
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
