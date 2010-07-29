@@ -1,25 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/09/1
-Message-ID: <1857384826.2445241278634078205.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 8 Jul 2010 20:07:58 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: Sebastian Krahmer <krahmer@...e.de>
-Cc: oss-security@...ts.openwall.com, yoshfuji@...ux-ipv6.org, coley <coley@...re.org>
-Subject: Re: patch for remote buffer overflows and local message spoofing in mipv6 daemon
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/29/1
+Message-ID: <i2qjss$v51$1@dough.gmane.org>
+Date: Wed, 28 Jul 2010 21:01:22 -0400
+From: Raphael Geissert <geissert@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: zabbix
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
------ "Sebastian Krahmer" <krahmer@...e.de> wrote:
+A XSS vulnerability was discovered in the Zabbix PHP frontend.
 
-> Its probably better to have two IDs, even though its unlikely
-> that they will be fixed separately. Its two issues at last.
-> 
+References:
+https://support.zabbix.com/browse/ZBX-2326
+http://www.zabbix.com/forum/showthread.php?p=68770
 
-Here you go:
-CVE-2010-2522 mipv6 daemon local message spoofing
-CVE-2010-2523 mipv6 daemon remote buffer overflow
+Could a CVE id be assigned?
 
-Thanks.
-
+Regards,
 -- 
-    JB
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
+
+
