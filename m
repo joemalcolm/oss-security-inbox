@@ -1,73 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/02/6
-Message-ID: <1565015240.86931291322670509.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 2 Dec 2010 15:44:30 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/29/2
+Message-ID: <1470672121.25911280410087303.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 29 Jul 2010 09:28:07 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Jon Ciesla <limb@...mserv.net>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Wordpress v3.0.2 SQL injection flaw + two minor XSS issues
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- KVIrc -- Remote CTCP commands execution via specially-crafted CTCP parameter
 Content-Type: text/plain; charset=utf-8
 
-
------ "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
-
-> Hello Steve, vendors,
-> 
->    Wordpress upstream has released latest v3.0.2 version, addressing
-> one SQL injection
-> flaw:
-> 
->    1), SQL injection flaw by processing trackbacks
-> 
->    An improper input sanitization flaw was found in the way Wordpress
-> performed trackbacks (a way to notify a website when an entry that
-> references it is published) maintainance. A remote attacker,
-> with Author-level privilege could use this flaw to conduct
-> SQL injection attacks (gain further access to the site, which
-> should be otherwise prohibited).
-> 
->    References:
->    [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=605603
->    [2] http://codex.wordpress.org/Version_3.0.2
->    [3] http://core.trac.wordpress.org/changeset/16625
->    [4] https://bugzilla.redhat.com/show_bug.cgi?id=659265
-
-Use CVE-2010-4257 for the SQL injection flaw.
-
-I'm less sure about the other two.
-
-> The two XSS issues below are minor, as they need Wordpress administrator
-> to perform the attack, but according to CVE philosophy, the CVE ids
-> should be assigned for them too. But these two opened / left for further
-> discussion:
-> 
->    2), XSS in requesting user credentials in order to connect to the
-> filesystem
->    References:
->    [7] https://bugzilla.redhat.com/show_bug.cgi?id=659294
->    [8] http://codex.wordpress.org/Version_3.0.2
->    [9] http://core.trac.wordpress.org/changeset/16367
-> 
->    3), XSS when deleting a plugin
->    References:
->    [10] https://bugzilla.redhat.com/show_bug.cgi?id=659299
->    [11] http://codex.wordpress.org/Version_3.0.2
->    [12] http://core.trac.wordpress.org/changeset/16373
-> 
-> Note: The other issues mentioned in:
->        http://codex.wordpress.org/Version_3.0.2
-> 
->        should be only bugfixes.
-> 
-
-Do these two XSS flaws cross a trust boundary? I'm not familiar with
-wordpress.
-
-I looked back at previous wordpress admin related issues, there were none
-like this. Most XSS things affecting the admin involved an xss that affects
-the admin, not one triggered by an admin.
+Please use CVE-2010-2785
 
 Thanks.
 
 -- 
     JB
+
+----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+
+> Hi Steve,
+> 
+>    user with nickname 'unic0rn' reported:
+>      [1] https://svn.kvirc.de/kvirc/ticket/858
+> 
+> a deficiency in the way KVIrc IRC client extracted the "next" CTCP
+> parameter from message
+> pointer. A remote, authenticated attacker, valid KVIrc user, could
+> send a specially-crafted
+> DCC Client-To-Client Protocol (CTCP) message, like:
+> 
+> /ctcp nickname DCC GET\rQUIT\r
+> /ctcp nickname DCC GET\rPRIVMSG\40#channel\40:epic\40fail\r
+> 
+> which could lead to / allow remote (KVIrc) CTCP commands execution.
+> Different vulnerability
+> than CVE-2010-2451:
+>    [2] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-2451
+> and CVE-2010-2452:
+>    [3] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-2452
+> 
+> Upstream patch:
+>    [3] https://svn.kvirc.de/kvirc/changeset/4693
+> 
+> Workaround: (from [1])
+>    /option boolNotifyFailedDccHandshakes 0
+> 
+> References:
+>    [4] http://bugs.gentoo.org/show_bug.cgi?id=330111
+> 
+> Could you please allocate a CVE id for this?
+> 
+> Thanks && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
