@@ -1,36 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/16/1
-Message-Id: <201007161308.53396.ludwig.nussel@suse.de>
-Date: Fri, 16 Jul 2010 13:08:53 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/29/5
+Message-ID: <1727618335.35551280413328674.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 29 Jul 2010 10:22:08 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Qt SSL endless loop
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: zabbix
 Content-Type: text/plain; charset=utf-8
 
-Raphael Geissert wrote:
-> [...]
-> He also reported another vulnerability in Qt4's SSL support:
-> http://aluigi.altervista.org/adv/qtsslame-adv.txt
-> 
-> (reported to the Debian maintainers in http://bugs.debian.org/587711)
-> 
-> Could a CVE be assigned for this other issue too?
+Please use CVE-2010-2790.
 
-Looks like the request got lost.
-
-The fix seems to be
-http://qt.gitorious.org/qt/qt/commit/f7fe575bc5f628533aeeca3eb564af89a1a1426b
-
-According to the Mumble author this fix causes a regression with peer
-certificate validation when used with openssl >= 0.9.8n though:
-http://sourceforge.net/mailarchive/forum.php?thread_name=4C3F8BC6.9030303%40natvig.com&forum_name=mumble-packaging
-http://bugreports.qt.nokia.com/browse/QTBUG-7200
-
-cu
-Ludwig
+Thanks.
 
 -- 
- (o_   Ludwig Nussel
- //\   
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+    JB
+
+
+----- "Raphael Geissert" <geissert@...ian.org> wrote:
+
+> Hi,
+> 
+> A XSS vulnerability was discovered in the Zabbix PHP frontend.
+> 
+> References:
+> https://support.zabbix.com/browse/ZBX-2326
+> http://www.zabbix.com/forum/showthread.php?p=68770
+> 
+> Could a CVE id be assigned?
+> 
+> Regards,
+> -- 
+> Raphael Geissert - Debian Developer
+> www.debian.org - get.debian.net
