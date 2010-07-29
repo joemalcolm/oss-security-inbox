@@ -1,47 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/08/1
-Message-ID: <611722421.1141311262988710794.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 8 Jan 2010 17:11:50 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/29/4
+Message-ID: <1823507182.33761280412706163.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 29 Jul 2010 10:11:46 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Christoph Pleger <Christoph.Pleger@...tu-dortmund.de>
-Subject: Re: CVE id request: GNU libc: NIS shadow password leakage
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: mediawiki
 Content-Type: text/plain; charset=utf-8
 
------ "Aurelien Jarno" <aurelien@...el32.net> wrote:
 
-> Hi oss-sec,
+----- "Raphael Geissert" <geissert@...ian.org> wrote:
+
+> Hi,
 > 
-> Christoph Pleger has reported through the Debian bug tracker [1] that
-> non-priviledged users can read NIS shadow password entries simply using
-> getpwnam() when nscd is in use.
+> A data leakage and a XSS vulnerabilities were discovered in
+> mediawiki.
 > 
-> The issue has already been reported upstream [2], and a proposed patch is
-> available on [3].
+> References:
+> http://lists.wikimedia.org/pipermail/mediawiki-announce/2010-July/000092.html
+> https://bugzilla.wikimedia.org/show_bug.cgi?id=24565
 > 
-> It seems that all GNU libc versions are affected, including derivatives
-> like EGLIBC.
-> 
-> Could we please get a CVE id for this issue?
-> 
-> Thanks,
-> Aurelien
-> 
-> [1] http://bugs.debian.org/560333
-> [2] http://sourceware.org/bugzilla/show_bug.cgi?id=11134
-> [3] http://svn.debian.org/viewsvn/pkg-glibc/glibc-package/trunk/debian/patches/any/submitted-nis-shadow.diff?revision=4062&view=markup
+
+I spy three flaws:
+
+    A data leakage vulnerability was discovered, affecting MediaWiki 1.8
+    and later. Public caching headers were incorrectly set on API
+    responses containing private data. By means of a CSRF-style attack,
+    this can lead to the disclosure of various types of private data
+    stored on a wiki. All users are advised to upgrade. Full details can
+    be found at:
+
+    https://bugzilla.wikimedia.org/show_bug.cgi?id=24565
+
+Use CVE-2010-2787
 
 
-I may be missing something here, or perhaps I'm not remembering correctly,
-but NIS basically doesn't have any security in this respect. This bug
-implies that a user has some sort of access to the NIS client, but the NIS
-server would happily hand out the same data if the malicious user asked for
-it (not using glibc let's say). While this may be a glibc bug (I doubt it,
-as it would just be a false sense of security), I this this is a non issue.
+    A cross-site scripting (XSS) vulnerability was discovered in
+    profileinfo.php. The vulnerability is only exposed when the script is
+    explicitly enabled in LocalSettings.php, with $wgEnableProfileInfo = true.
 
-If someone who knows more about NIS could chime in I would appreciate it,
-it's been a very long time since I've even thought about NIS honestly. I may
-be very mistaken.
+Use CVE-2010-2788
+
+    A register_globals arbitrary inclusion vulnerability was discovered in
+    the 1.16 beta release series, in MediaWikiParserTest.php. This
+    vulnerability does not affect any stable MediaWiki release. It only
+    affects wikis which have PHP's register_globals feature enabled,
+    despite our strong advice to the contrary. Apache installations with
+    AllowOverride enabled may be protected against this vulnerability,
+    since there is a .htaccess file with "Deny from all" in the relevant path.
+
+Use CVE-2010-2789
+
+Thank.
 
 -- 
     JB
