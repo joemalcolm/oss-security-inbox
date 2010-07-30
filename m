@@ -1,31 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/05/1
-Message-ID: <20100505030442.GA12121@lackof.org>
-Date: Tue, 4 May 2010 21:04:42 -0600
-From: dann frazier <dannf@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE Request [was Re: kernel: execution possible in non-executable mappings in recent 2.6 kernels (SPARC only)]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/30/1
+Message-ID: <20100730151509.GD4125@redhat.com>
+Date: Fri, 30 Jul 2010 16:15:09 +0100
+From: Joe Orton <jorton@...hat.com>
+To: dev@...pd.apache.org
+Cc: jeremy@...zel.net, oss-security@...ts.openwall.com
+Subject: CVE-2010-2791: mod_proxy information leak affecting 2.2.9 only
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Feb 24, 2010 at 08:41:01AM +0800, Eugene Teo wrote:
-> http://marc.info/?l=linux-sparc&m=126662196902830&w=2
-> http://marc.info/?l=linux-sparc&m=126662159602378&w=2
->
-> sparc64: Fix sun4u execute bit check in TSB I-TLB load.
->
-> TSB I-tlb load code tries to use andcc to check the _PAGE_EXEC_4U bit,
-> but that's bit 12 so it gets sign extended all the way up to bit 63
-> and the test nearly always passes as a result.
->
-> Use sethi to fix the bug.
->
-> I'm not requesting a CVE for this as this does not affect any of our  
-> kernels. But just a heads-up for those not aware of this.
+Jeremy Sowden discovered an information leak in mod_proxy affecting 
+httpd version 2.2.9 only.  If a timeout occurred reading a response from 
+a backend on a persistent connection, the backend connection was not 
+closed.  The response could subsequently be read and delivered to an 
+unrelated client.
 
-hey Steven,
- Can we get a CVE allocated for this one?
+This issue has been assigned CVE name CVE-2010-2791, and is equivalent 
+to CVE-2010-2068 (fixed in 2.2.16) but affects httpd on Unix.  The bug 
+was fixed* in 2.2.10 but the security impact was not known at the time.
 
--- 
-dann frazier
+I'll update http://httpd.apache.org/security/vulnerabilities_22.html to 
+reflect this shortly.
 
+Regards, Joe
+
+* fix for 2.2.x branch: http://svn.apache.org/viewvc?rev=699841&view=rev
