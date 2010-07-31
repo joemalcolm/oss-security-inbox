@@ -1,87 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/07/6
-Message-ID: <4C0D304D.1010207@disorder.com>
-Date: Mon, 07 Jun 2010 13:45:49 -0400
-From: Tony Roman <roman@...order.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>,  Jan Lieskovsky <jlieskov@...hat.com>
-CC: oss-security@...ts.openwall.com,  Nahuel Grisolia <nahuel@...sai-sec.com>, Stefan Esser <stefan.esser@...tioneins.de>,  Cacti Developers <developers@...ti.net>
-Subject: Re: CVE Request -- Cacti v0.8.7 -- three security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/31/2
+Message-ID: <AANLkTik3gQ0QzGQB27m9YcPAt+1qiz11Bmt-kzLLWnT7@mail.gmail.com>
+Date: Sat, 31 Jul 2010 12:09:35 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: lxr
 Content-Type: text/plain; charset=utf-8
 
-The issue in question has been fixed in 0.8.7f release and will be also 
-including in the 0.8.7g release.
+Yes, CVE-2010-1738 is a dupe of CVE-2010-1448.
 
-The fix is not in the validation of the vertical label field in the UI 
-or database, but when the text is used in execution of the rrdtool 
-command line option for the vertical label.
+-Dan
 
-Please keep all inquiries directed to me.
-
-Thanks,
-
-Tony Roman
-Cacti Developer
-
-On 6/7/10 11:07 AM, Larry Adams wrote:
->
->
-> On 6/7/2010 10:21 AM, Steven M. Christey wrote:
+On Sat, Jul 31, 2010 at 10:03 AM, Nico Golde <oss-security+ml@...lde.de> wrote:
+> Hi,
+> * Josh Bressers <bressers@...hat.com> [2010-05-14 21:48]:
+>> ----- "Dan Rosenberg" <dan.j.rosenberg@...il.com> wrote:
 >>
->> On Tue, 1 Jun 2010, Jan Lieskovsky wrote:
+>> > Josh,
+>> >
+>> > The XSS in the title string was already assigned CVE-2010-1448.  Do
+>> > you mean to assign issue #2, the XSS reflected in search results?
+>> >
 >>
->>>> [C], SQL injection and shell escaping issues reported by Bonsai 
->>>> Information Security (http://www.bonsai-sec.com)
->>>>            [7] 
->>>> http://www.bonsai-sec.com/blog/index.php/using-grep-to-find-0days/
->>>>            [8] 
->>>> http://www.bonsai-sec.com/en/research/vulnerabilities/cacti-os-command-injection-0105.php 
->>>>
->>>>
->>>>
->>>> ...
->>>>
+>> Sigh, yes.
 >>
->>>  2, OS command injection issue, CVE-2010-1645 / BONSAI-2010-0105
->>>     References:  [2] 
->>> http://www.bonsai-sec.com/en/research/vulnerabilities/cacti-os-command-injection-0105.php 
->>>
->>>     Proper patches are the following three: (noticed by Tomas Hoger 
->>> && confirmed by Tony Roman, thanks for it!)
->>>       [3] http://svn.cacti.net/viewvc?view=rev&revision=5778
->>>       [4] http://svn.cacti.net/viewvc?view=rev&revision=5782
->>>       [5] http://svn.cacti.net/viewvc?view=rev&revision=5784
+>> So to sum it up:
 >>
->> The BONSAI-2010-0105 references two problems, one for ping.php and 
->> another one having to do with a "Vertical Label" in a "Graph Template."
+>> 1.  XSS in the ident parameter, as described in CVE-2009-4497.
 >>
->> I don't see evidence of this vector in the revisions listed above.  
->> Does anybody else?
+>> 2.  XSS that is reflected via the search results page after issuing
+>> This one is now CVE-2010-1625
 >>
->> (If the "Vertical Label" issue went unpatched, then a separate CVE 
->> should probably be assigned to it.)
->>
->> - Steve
+>> 3. 3.  XSS that is reflected via the <title> tag on the search page, as
+>> described in Raphael's original e-mail a few days ago, which Josh assigned
+>> CVE-2010-1448
 >
-> Steve,
+> CVE-2010-1738 seems to be a dupe of this?
 >
-> I just validated that the Vertical Label via the hostname field 
-> injection is not resolved from a UI perspective in host.php.  I have 
-> not checked lib/rrd.php for proper escaping and will do that shortly.
->
-> Generally, we're not as concerned when it comes to components of the 
-> UI that are not accessible for the guest account.  However, I will 
-> close this loophole today and prior to Cacti 0.8.7g beta.  Simply put, 
-> we should not permit any name there that is not either an IP address 
-> or something that is conforming (aka hostname or fqdn).
->
-> I toyed with the idea of a gethostbyname validation.  However, there 
-> are cases in Cacti where we have hosts that are represented more as 
-> Objects and not as physical hosts (aka no avail check), so it will 
-> have to be a hostname that is syntactically correct.  I'll get you a 
-> commit # once it's in.
->
-> Regards,
->
-> Larry Adams
-> Lead Cacti Developer
+> Cheers
+> Nico
+> --
+> Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+> For security reasons, all text in this mail is double-rot13 encrypted.
 >
