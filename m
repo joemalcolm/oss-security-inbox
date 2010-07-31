@@ -1,33 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/07/8
-Message-ID: <u2p4a6942471005070720x9fcbe9e7h3a8bc971531ccd8e@mail.gmail.com>
-Date: Fri, 7 May 2010 10:20:55 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/31/1
+Message-ID: <20100731140352.GB19609@ngolde.de>
+Date: Sat, 31 Jul 2010 16:03:52 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Assignment (gnustep)
+Subject: Re: CVE request: lxr
 Content-Type: text/plain; charset=utf-8
 
-Note that there's a second bug in there - a potentially exploitable
-integer overflow leading to heap overflow when reading a file (or
-socket) with a very large number of lines, causing several malloc()
-calls to underallocate space.  This should probably receive a second
-CVE.
+Hi,
+* Josh Bressers <bressers@...hat.com> [2010-05-14 21:48]:
+> ----- "Dan Rosenberg" <dan.j.rosenberg@...il.com> wrote:
+> 
+> > Josh,
+> > 
+> > The XSS in the title string was already assigned CVE-2010-1448.  Do
+> > you mean to assign issue #2, the XSS reflected in search results?
+> > 
+> 
+> Sigh, yes.
+> 
+> So to sum it up:
+> 
+> 1.  XSS in the ident parameter, as described in CVE-2009-4497.
+> 
+> 2.  XSS that is reflected via the search results page after issuing
+> This one is now CVE-2010-1625
+> 
+> 3. 3.  XSS that is reflected via the <title> tag on the search page, as
+> described in Raphael's original e-mail a few days ago, which Josh assigned
+> CVE-2010-1448
 
-http://article.gmane.org/gmane.comp.lib.gnustep.bugs/12379
+CVE-2010-1738 seems to be a dupe of this?
 
--Dan
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-On Fri, May 7, 2010 at 9:04 AM, Josh Bressers <bressers@...hat.com> wrote:
-> A file contents disclosure flaw was found when gdomap is suid root:
->
-> https://bugs.launchpad.net/ubuntu/+source/gnustep-base/+bug/573108
-> http://thread.gmane.org/gmane.comp.lib.gnustep.bugs/12336
->
-> I assigned CVE-2010-1457 to this.
->
-> Thanks.
->
-> --
->    JB
->
+Content of type "application/pgp-signature" skipped
