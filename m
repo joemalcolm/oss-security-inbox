@@ -1,15 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/24/1
-Message-ID: <20101224142204.GA4081@galadriel.inutil.org>
-Date: Fri, 24 Dec 2010 15:22:04 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/01/3
+Message-Id: <201008020109.09879.hanno@hboeck.de>
+Date: Mon, 2 Aug 2010 01:09:09 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: IO::Socket::SSL perl module: CVE-2010-4501/CVE-2010-4334 dupe
+Subject: CVE request: joomla < 1.5.20
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+http://www.joomla.org/announcements/release-news/5284-joomla-1520-released.html
 
-CVE-2010-4501 seems to be a duplicate of CVE-2010-4334.
+Not much info though...
 
-Cheers,
-        Moritz
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+
+http://schokokeks.org - professional webhosting
+
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
