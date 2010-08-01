@@ -1,33 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/08/2
-Message-ID: <20100208143602.GC12437@suse.de>
-Date: Mon, 8 Feb 2010 15:36:02 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: information leak / potential crash in sys_move_pages
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/01/1
+Message-ID: <4C559A20.4040702@redhat.com>
+Date: Sun, 01 Aug 2010 18:00:32 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request -- OpenConnect < v2.25  did not verify SSL server certificates
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Feb 07, 2010 at 02:50:21AM +0100, Marcus Meissner wrote:
-> Hi,
-> 
-> I spotted a problem in sys_move_pages, where "node" value is read from userspace,
-> but not limited to the node set within the kernel itself.
+Hello Steve, vendors,
 
-For the record...
+   OpenConnect upstream has released OpenConnect v2.25:
+   [1] http://www.infradead.org/openconnect.html
 
-This was reported to Novell Bugzilla by our business partner IBM as a beta test
-bug on our Service Pack SLES 11 SP1, from rcvalle@....
+addressing following security related issues (from [1]):
+   OpenConnect v2.25 — 2010-05-15
 
-The report contained the Ooops backtrace, caused by runs of the "flail" tool,
-( http://www.risesecurity.org/ramon/flail-0.1.0.tar.gz )
+     * Always validate server certificate, even when no extra --cafile is provided.
+     * Add --no-cert-check option to avoid certificate validation.
+     * Check server hostname against its certificate.
+     * Provide text-mode function for reviewing and accepting "invalid" certificates.
+     * Fix libproxy detection on NetBSD.
 
-I spotted this 1 bug in the actual code though and mailed security@...nel.org
-to get it fixed ASAP for 2.6.33 and our product.
+References:
+   [2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=590873
+   [3] ftp://ftp.infradead.org/pub/openconnect/openconnect-2.25.tar.gz
 
-Usually IBM wants to just have their bugs fixed, but this seems to be different
-in this case. So sorry for not giving credit where credit is due.
+Though not direct security issue(s) [rather security hardening], once the package has SSL support,
+it should be enabled by default to avoid unintentional MITM attacks (implying from default package
+configuration use).
 
-That there was an Oops is however a good indicator that memory corruption
-is also possible.
+Steve, could you allocate a CVE identifier for this? (but opened for discussion if such security
+hardening fixes aren't considered enough this to be handled as a security issue).
 
-Ciao, Marcus
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
