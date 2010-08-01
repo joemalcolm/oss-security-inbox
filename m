@@ -1,32 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/14/1
-Message-ID: <20100814005439.GH10479@lackof.org>
-Date: Fri, 13 Aug 2010 18:54:39 -0600
-From: dann frazier <dannf@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/01/2
+Message-Id: <201008020056.25566.hanno@hboeck.de>
+Date: Mon, 2 Aug 2010 00:56:24 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, ben@...adent.org.uk
-Subject: Re: kernel: [PARISC] led.c - fix potential stack overflow in led_proc_write()
+Subject: CVE request: cmsmadesimple < 1.8.1
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Aug 03, 2010 at 01:51:15AM -0400, Moritz Muehlenhoff wrote:
-> On Tue, Aug 03, 2010 at 11:46:58AM +0800, Eugene Teo wrote:
-> > Ilja reported way back in Nov 2007. A writer to /proc/pdc/led(?) can
-> > cause the kernel to consume an unbounded amount of stack, and result
-> > in stack corruption.
-> > 
-> > http://www.spinics.net/lists/linux-parisc/msg02960.html
-> > 
-> > If you need a CVE name, change the subject to indicate that. We are
-> > not requesting one as we do not support the PA-RISC architecture in
-> > our distribution.
-> 
-> Debian supports hppa. 
-> 
-> Steven, please assign a CVE ID.
+http://www.cmsmadesimple.org/2010/07/3/announcing-cms-made-simple-1-8-1-
+mankara/?utm_source=feedburner&utm_medium=feed&utm_campaign=Feed%3A+cmsmadesimple%2Fblog+%28CMS+Made+Simple%29
 
-Ben Hutchings pointed out that this file is only writeable by root -
-can it therefore be considered a security issue?
+ NOTE: This release fixes an important security vulnerability,
+we recommend that ALL users upgrade as soon as possible.
 
+The local inclusion vulnerability fixed is old and affects many
+previous versions of CMSMS. Therefore it is important for ALL
+installations to be upgraded as soon as possible.
+
+This release also fixes all of the issues encountered with the
+CMSMS 1.8 release due to the overhaul of the translation function.
+Your performance in the admin section should be back to normal
+following this upgrade.
+
+Below is a complete list of the remaining issues that have been
+addressed in this release, enjoy.
+
+Version 1.8.1 - Mankara
+
+
+Security:
+
+    Fixed local inclusion security flaw
 -- 
-dann frazier
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
+http://schokokeks.org - professional webhosting
+
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
