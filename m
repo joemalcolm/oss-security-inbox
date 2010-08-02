@@ -1,26 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/01/8
-Message-ID: <1770955031.221231270144814858.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 1 Apr 2010 14:00:14 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: drbd-dev@...ts.linbit.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: connector security bypass
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/02/5
+Message-Id: <201008021726.51586.thomas@suse.de>
+Date: Mon, 2 Aug 2010 17:26:51 +0200
+From: Thomas Biege <thomas@...e.de>
+To: "oss-security" <oss-security@...ts.openwall.com>
+Subject: RFC: squid: 	Fix free memory corruption and off-by-on error when comparing SNMP OIDs
 Content-Type: text/plain; charset=utf-8
 
------ "dann frazier" <dannf@...nf.org> wrote:
-> 
-> Debian provides an out-of-tree drbd module (drbd8), and it appears to
-> be affected by this issue as well. I assume we need to allocate an
-> additional CVE ID for it?
-> 
-> Here's a link to the upstream fix:
-> http://git.drbd.org/?p=drbd-8.3.git;a=commitdiff;h=71915b0d267392c77fe0ae2309535333026cef66
-> 
-> The in-tree version that got merged for 2.6.33 looks fine.
-> 
+Hello people,
+does someone know if this bug has security implications. TIA!
 
-Please use CVE-2010-0747 for this module (drbd8).
+http://www.squid-cache.org/Versions/v3/3.1/changesets/SQUID_3_1_5.html
+http://www.squid-cache.org/Versions/v3/3.1/changesets/squid-3.1-10008.patch
+
+Cheers,
+Thomas
+
+
 
 -- 
-    JB
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+--
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
