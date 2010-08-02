@@ -1,75 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/01/11
-Message-ID: <20101001220204.GW1955@redhat.com>
-Date: Fri, 1 Oct 2010 16:02:04 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/02/17
+Message-Id: <201008030121.43581.hanno@hboeck.de>
+Date: Tue, 3 Aug 2010 01:21:43 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Minor security flaw with pam_xauth
+Subject: CVE 2009 request: twiki before 4.3.2 CSRF
 Content-Type: text/plain; charset=utf-8
 
-* [2010-09-28 00:17:29 +0400] Solar Designer wrote:
+See
+http://twiki.org/cgi-bin/view/Codev/SecurityAuditTokenBasedCsrfFix
 
->On Mon, Sep 27, 2010 at 11:36:13AM -0600, Vincent Danen wrote:
->> * [2010-09-24 20:48:23 +0400] Solar Designer wrote:
->> >pam_env and pam_mail accessing the target user's files as root (and thus
->> >susceptible to attacks by the user) in Linux-PAM below 1.1.2, partially
->> >fixed in 1.1.2 - no CVE ID mentioned yet
->> >
->> >pam_env and pam_mail in Linux-PAM 1.1.2 not switching fsgid (or egid)
->> >and groups when accessing the target user's files (and thus potentially
->> >susceptible to attacks by the user) - CVE-2010-3430
->> >
->> >pam_env and pam_mail in Linux-PAM 1.1.2 not checking whether the
->> >setfsuid() calls succeed (no known impact with current Linux kernels,
->> >but poor practice in general) - CVE-2010-3431
->...
->> These that are partially fixed are fixed in that git commit you noted
->> previously?
->>
->> http://git.altlinux.org/people/ldv/packages/?p=pam.git;a=commitdiff;h=06f882f30092a39a1db867c9744b2ca8d60e4ad6
->>
->> Or are they fixed in different commits?  It looks like they should all
->> be fixed in that commit, but I want to double-check.
->
->No, they are not fully fixed at all.  We're working on a patch (so you
->don't need to).  The commit has the mentioned partial fixes only.
-
-Oh, ok.  Gotchya.
-
->> Are there patches available to fully fix these issues?  And are there
->> patches for 3430 and 3431 yet?
->
->This is the same question asked different ways.  We have a patch that
->we're reviewing internally.  To be made available soon.
-
-Great, looking forward to seeing them.
-
->> I'm assuming also that those issues have
->> always existed although you say 'in 1.1.2', but they would affect
->> earlier versions yet, right?
->
->The original pam_env and pam_mail issues, yes.  The partial fixes, no,
->because there were no fixes at all before 1.1.2.
-
-Ok, that makes sense.  I wasn't clear on the "partial fix" part.
-
->> Thanks for any clarification.  I'm trying to wrap my head around this
->> and the impact of these issues.  They all strike me as relatively minor
->> issues, but it is possible that I am missing or misunderstanding
->> something here.
->
->They're relatively minor because these modules are normally not used.
->However, if the modules are used in a PAM stack on a given install, then
->the original issues reported against pam_env and pam_mail by Sebastian
->become major ones.
->
->Additionally, as mentioned by Sebastian, pam_env's intended behavior is
->a security risk (user-provided env vars may affect some services in ways
->not expected by the sysadmin).  I am not sure how to deal with that.
->Maybe improve the documentation.
-
-I'm not sure either, but I think that improving the documentation would
-be a good start -- especially if that is pam_env's intended behaviour.
+Please note it's 2009.
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+
+http://schokokeks.org - professional webhosting
+
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
