@@ -1,27 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/17/10
-Message-ID: <20100317144050.GB16073@ngolde.de>
-Date: Wed, 17 Mar 2010 15:40:50 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/02/14
+Message-ID: <AANLkTikWuD8=D2ZW0Jbm7ytDZcARBDogdpOunSdEkd9q@mail.gmail.com>
+Date: Mon, 2 Aug 2010 17:40:09 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: ikiwiki
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request [two ids] -- cabextract -- 1, Infinite  loop in MS-ZIP and Quantum decoders (minor) 2, Integer wrap-around (crash) by  processing certain *.cab files in test archive mode
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-"javascript insertion via svg uris
+This seems to be a bit of a slippery slope.  While I have no problem
+with these particular issues being assigned CVEs, since they were
+treated as security issues, fixed, and caused unintended application
+behavior, I have to wonder if maybe it's a bad idea to give CVEs for
+crashes of this variety.  Denial-of-service issues are tricky.  In my
+opinion, the following types of DoS bugs are security relevant:
 
-Ivan Shmakov pointed out that the htmlscrubber allowed data:image/* urls, 
-including data:image/svg+xml. But svg can contain javascript, so that is 
-unsafe."
-http://ikiwiki.info/security/#index30h2
+1.  Crashes in client programs that maintain some additional state
+beyond a single session. For example, a document reader with multiple
+tabs where a crash results in losing the contents of other tabs, or a
+web browser.
 
-Can someone please assign a CVE id to this?
+2.  Issues that allow users to crash processes not under their own
+control.  This includes remote DoS vulnerabilities, kernel panics,
+crashes in services such as files that crash A/V engines when parsed,
+etc.
 
-Cheers
-Nico
+3.  Crashes in library code where many programs may be impacted.
 
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
+4.  Crashes in client applications where further exploitability is
+possible (basically, promising memory corruption issues that haven't
+been fully developed).
 
-Content of type "application/pgp-signature" skipped
+When you open it up to "anything that causes a crash", the pool of
+"security" bugs expands to include every fuzz file that causes a crash
+and every stability issue in every program.  For example, I have a
+high number of fuzz files that cause crashes in the readelf utility in
+non-exploitable ways.  I don't consider these relevant for security,
+because if you need to trick a user into running the program to
+trigger the crash and there are no additional consequences besides
+them crashing the program you tricked them into running, there is no
+negative security impact besides perhaps a confused victim.
+
+Although, I suppose my fourth item is the one that presents a problem
+- who gets to decide whether a program crash is exploitable or not?
+What if they're wrong?  Just trying to spur some discussion on this,
+I'd love to hear what others have to say - sometimes it's nice to
+break up all the CVE assignments with an actual conversation.  :)
+
+-Dan
+
+On Mon, Aug 2, 2010 at 4:08 PM, Josh Bressers <bressers@...hat.com> wrote:
+> ----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+>
+>> Hi Steve, vendors,
+>>
+>>    two security issues have been reported against cabextract:
+>>
+>> 1, Infinite loop in MS-ZIP and Quantum decoders (minor issue):
+>>
+>> A deficiency has been reported in the way cabextract extracted certain
+>> Cabinet (*.cab) files, using the MZ-ZIP and Quantum decompressors.  If a
+>> local user was tricked into opening a specially-crafted *.cab file, it
+>> could lead to infinite loop.
+>>
+>
+> CVE-2010-2800
+>
+>> 2, Integer wrap-around (crash) by processing certain *.cab files in
+>> test archive mode
+>>
+>> An integer wrap-around flaw has been reported in the way cabextract
+>> processed certain Cabinet (*.cab) archive files. If a local user was
+>> tricked into opening a specially-crafted *.cab archive in test archive
+>> mode, it could lead to cabextract executable crash.
+>>
+>
+> CVE-2010-2801
+>
+>
+> Thanks.
+>
+> --
+>    JB
+>
