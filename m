@@ -1,44 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/13/1
-Message-ID: <1268872800.660571271157815741.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 13 Apr 2010 07:23:35 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/02/7
+Message-ID: <1030247303.185641280778886880.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 2 Aug 2010 15:54:46 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: Re: CVE request: irssi 0.8.15
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- OpenConnect < v2.25  did not verify SSL server certificates
 Content-Type: text/plain; charset=utf-8
 
+Steve,
 
------ "Steven M. Christey" <coley@...us.mitre.org> wrote:
+Can MITRE take this one. I'm not sure how to dish out the IDs in this case.
+All the issues are related, but different as to how certificates work.
 
-> On Mon, 12 Apr 2010, Josh Bressers wrote:
-> 
-> >> "This release fixes two security issues: The first being that Irssi
-> >> didn't check hostname on SSL connections and the other being a hard to
-> >> exploit remote crash bug."
-> >>
-> 
-> > The crash bits mentioned in the changelog are very ambiguous. The git
-> > tree isn't any more clear than that. There appear to be two crashes,
-> > both sound like NULL pointer dereferences that cannot be triggered by
-> > an attacker. If I'm wrong, please speak up.
-> 
-> Josh, I think we should assign another CVE anyway.  The upstream vendor
-> has explicitly labeled this as a security issue, so even if it seems of
-> limited severity, that's enough to trigger creation of a CVE.  The use of
-> the "remote crash" term also reinforces the need for a CVE.
-> 
-> This might be juse a plain old crasher from the perspective of many
-> downstream vendors, but it's still worthy of inclusion in CVE because
-> there is a significant population that would treat it as a "security"
-> problem even if it's low severity.
-> 
-> Should I assign one or should you?
-> 
-
-Your reasoning makes sense, I'm happy to assign an ID. Thanks.
-
-CVE-2010-1156 irssi 0.8.15 remote DoS
+Thanks.
 
 -- 
     JB
+----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+
+> Hello Steve, vendors,
+> 
+>    OpenConnect upstream has released OpenConnect v2.25:
+>    [1] http://www.infradead.org/openconnect.html
+> 
+> addressing following security related issues (from [1]):
+>    OpenConnect v2.25 — 2010-05-15
+> 
+>      * Always validate server certificate, even when no extra --cafile
+> is provided.
+>      * Add --no-cert-check option to avoid certificate validation.
+>      * Check server hostname against its certificate.
+>      * Provide text-mode function for reviewing and accepting
+> "invalid" certificates.
+>      * Fix libproxy detection on NetBSD.
+> 
+> References:
+>    [2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=590873
+>    [3]
+> ftp://ftp.infradead.org/pub/openconnect/openconnect-2.25.tar.gz
+> 
+> Though not direct security issue(s) [rather security hardening], once
+> the package has SSL support,
+> it should be enabled by default to avoid unintentional MITM attacks
+> (implying from default package
+> configuration use).
+> 
+> Steve, could you allocate a CVE identifier for this? (but opened for
+> discussion if such security
+> hardening fixes aren't considered enough this to be handled as a
+> security issue).
+> 
+> Thanks && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
