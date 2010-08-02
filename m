@@ -1,37 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/12/7
-Message-ID: <188876289.142981278959629700.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 12 Jul 2010 14:33:49 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/02/8
+Message-ID: <2100079136.186211280779059938.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 2 Aug 2010 15:57:39 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: ghostscript
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: cmsmadesimple < 1.8.1
 Content-Type: text/plain; charset=utf-8
 
------ "Marc Deslauriers" <marc.deslauriers@...onical.com> wrote:
-
-> On Mon, 2010-07-12 at 11:00 -0600, Vincent Danen wrote:
-> > * [2010-07-12 12:48:35 -0400] Dan Rosenberg wrote:
-> > 
-> > >I believe this is identical to CVE-2010-1869
-> > >(http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2010-1869).
-> > 
-> > They don't look identical to me.  Patches differ, upstream bugs differ.
-> > 
-> > Can't really do anything hands-on to test since the PoC attached to the
-> > upstream bug is private.
-> 
-> The reproducer for CVE-2010-1869 does trigger it on 8.64 for me, but I
-> would consider it a separate issue.
-> 
-
-We'll give it a seperate CVE id, it seems to be a different issue.
-
-As it's from 2009:
-
-Use CVE-2009-4897
+Please use CVE-2010-2797
 
 Thanks.
 
 -- 
     JB
+
+
+----- "Hanno Böck" <hanno@...eck.de> wrote:
+
+> http://www.cmsmadesimple.org/2010/07/3/announcing-cms-made-simple-1-8-1-
+> mankara/?utm_source=feedburner&utm_medium=feed&utm_campaign=Feed%3A+cmsmadesimple%2Fblog+%28CMS+Made+Simple%29
+> 
+>  NOTE: This release fixes an important security vulnerability,
+> we recommend that ALL users upgrade as soon as possible.
+> 
+> The local inclusion vulnerability fixed is old and affects many
+> previous versions of CMSMS. Therefore it is important for ALL
+> installations to be upgraded as soon as possible.
+> 
+> This release also fixes all of the issues encountered with the
+> CMSMS 1.8 release due to the overhaul of the translation function.
+> Your performance in the admin section should be back to normal
+> following this upgrade.
+> 
+> Below is a complete list of the remaining issues that have been
+> addressed in this release, enjoy.
+> 
+> Version 1.8.1 - Mankara
+> 
+> 
+> Security:
+> 
+>     Fixed local inclusion security flaw
+> -- 
+> Hanno Böck		Blog:		http://www.hboeck.de/
+> GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+> 
+> http://schokokeks.org - professional webhosting
