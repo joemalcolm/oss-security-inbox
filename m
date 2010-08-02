@@ -1,61 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/20/5
-Message-Id: <201008201252.52176.thomas@suse.de>
-Date: Fri, 20 Aug 2010 12:52:51 +0200
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/02/15
+Message-ID: <2025944064.204631280788334173.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 2 Aug 2010 18:32:14 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: jengelh@...ozas.de
-Subject: CVE Request: heap-based buffer overflow in libHX
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request [two ids] -- cabextract -- 1, Infinite  loop in MS-ZIP and Quantum decoders (minor) 2, Integer wrap-around (crash) by  processing certain *.cab files in test archive mode
 Content-Type: text/plain; charset=utf-8
 
 
+----- "Dan Rosenberg" <dan.j.rosenberg@...il.com> wrote:
 
-http://libhx.git.sourceforge.net/git/gitweb.cgi?p=libhx/libhx;a=commitdiff;h=904a46f90dd3f046bfac0b64a5e813d7cd4fca59
+> This seems to be a bit of a slippery slope.  While I have no problem
+> with these particular issues being assigned CVEs, since they were
+> treated as security issues, fixed, and caused unintended application
+> behavior, I have to wonder if maybe it's a bad idea to give CVEs for
+> crashes of this variety.  Denial-of-service issues are tricky.  In my
+> opinion, the following types of DoS bugs are security relevant:
+> 
 
-string: fixed buffer overflow in HX_split when too few fields are present
+I agree with you on this. I gave it an ID, as I'm going to presume that the
+cabextract application is likely used in things like virus and mail
+scanners, where we don't want a crashing application.
 
-Jan Engelhardt [Mon, 16 Aug 2010 17:08:51 +0000 (19:08 +0200)]
+One of the unfortunate aspects of assigning a large number of CVE ids, is
+sometimes I have to assume things, as I lack the time to properly
+understand what's going on for everything. I figure it's easier to dispute
+an ID than end up in the situation where a scary exploit vector is found
+later. You are welcome to, and should, dispute this if you think I'm
+mistaken.
 
+I would have likely turned down such a request for say an image viewer.
 
-
-When HX_split is called with a maximum number of desired fields (4th
-
-argument != 0), passing in a string that has less fields than that led
-
-to a buffer overrun (write beyond end of malloc'd area).
-
-
-
-CVSS Base Score: 10
-
-- Impact Subscore: 10
-
-- Exploitability Subscore: 10
-
-CVSS Temporal Score: 7.4
-
-CVSS Environmental Score: Undefined
-
-Overall CVSS Score: 7.4
-
-
-
-CVSS Base vector:: AV:N/AC:L/Au:N/C:C/I:C/A:C
-
-- AV: libHX may be used by network services
-
-- Au: some services may not require authentication
-
-- A: can cause crash when result is freed
-
-
-
-CVSS Temporal vectors:: RL:O/RC:C
-
-
-
-Affects all versions prior to, and including, 3.5.
+Thanks for the followup though, it's nice to know someone is watching us
+watchers ;)
 
 -- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+    JB
