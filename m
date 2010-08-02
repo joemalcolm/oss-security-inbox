@@ -1,28 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/24/3
-Message-ID: <4B847E6B.5000806@kernel.sg>
-Date: Wed, 24 Feb 2010 09:18:35 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/02/16
+Message-Id: <201008030115.23414.hanno@hboeck.de>
+Date: Tue, 3 Aug 2010 01:15:23 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: NFS DoS related to "automount" symlinks
+Subject: CVE request: Attachment XSS in mantis < 1.2.2
 Content-Type: text/plain; charset=utf-8
 
-fix LOOKUP_FOLLOW on automount "symlinks"
+http://www.mantisbt.org/bugs/view.php?id=11952
+http://www.mantisbt.org/blog/?p=113
 
-"Make sure that automount "symlinks" are followed regardless of 
-LOOKUP_FOLLOW; it should have no effect on them."
+Issue #11952 covers a security fix to the display of inline attachments, where 
+“Arbitrary inline attachment rendering could lead to cross-domain scripting or 
+other browser attacks”.
 
-Upstream commit:
-http://git.kernel.org/linus/ac278a9c505092dd82077a2446af8f9fc0d9c095
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
-Note:
-+ * This is a temporary kludge to deal with "automount" symlinks; proper
-+ * solution is to trigger them on follow_mount(), so that do_lookup()
-+ * would DTRT.  To be killed before 2.6.34-final.
+http://schokokeks.org - professional webhosting
 
-This affects kernels version 2.6.18 onwards.
-
-https://bugzilla.redhat.com/show_bug.cgi?id=567813
-
-Thanks, Eugene
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
