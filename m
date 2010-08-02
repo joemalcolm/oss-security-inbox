@@ -1,37 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/02/9
-Message-ID: <687661326.1870941278097005845.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 2 Jul 2010 14:56:45 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/02/10
+Message-ID: <1329644874.186801280779272637.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 2 Aug 2010 16:01:12 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: ZNC NULL pointer dereference
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: gfs2: rename cases kernel panic
 Content-Type: text/plain; charset=utf-8
 
-
------ "Raphael Geissert" <geissert@...ian.org> wrote:
-
-> Hi,
-> 
-> A NULL pointer dereference has been reported in ZNC.
-> 
-> From [1]:
-> > Fix a NULL pointer dereference with traffic stats
-> > 
-> > When something requested traffic statistics while there was an 
-> unauthenticated
-> > connection to ZNC, there was a NULL pointer dereference.
-> 
-> Please assign a CVE id.
-> 
-> References:
-> http://bugs.debian.org/584929
-> [1]http://znc.svn.sourceforge.net/viewvc/znc?view=revision&revision=2026
-> 
-
-Please use CVE-2010-2488
+Please use CVE-2010-2798
 
 Thanks.
 
 -- 
     JB
+
+
+----- "Eugene Teo" <eugene@...hat.com> wrote:
+
+> The problem was in the way the gfs2 directory code was trying to
+> re-use
+> sentinel directory entries. A local, unprivileged user on a gfs2
+> mounted 
+> directory can trigger this issue, resulting in a NULL pointer
+> dereference.
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=620300
+> 
+> Introduced in upstream commit 71b86f56 (v2.6.19-rc1), and fixed in 
+> commit 728a756b.
+> 
+> http://git.kernel.org/linus/71b86f562b5eb6f94ea00bba060caa64d0137969
+> http://git.kernel.org/linus/728a756b8fcd22d80e2dbba8117a8a3aafd3f203
+> 
+> Thanks, Eugene
+> -- 
+> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i);
+> }
