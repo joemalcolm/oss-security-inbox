@@ -1,23 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/25/7
-Message-ID: <AANLkTimuoqH+N+9LuFgNEriDKNxDOE6DaufN70uutAYA@mail.gmail.com>
-Date: Wed, 25 Aug 2010 14:52:52 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: oss-security@...ts.openwall.com,  "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: CouchDB insecure library loading (Debian/Ubuntu only)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/02/6
+Message-ID: <Pine.GSO.4.64.1008021523490.12961@faron.mitre.org>
+Date: Mon, 2 Aug 2010 15:24:06 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Josh Bressers <bressers@...hat.com>
+cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE-2008-id Request -- ssmtp -- standardise() -- Buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-I discovered that the /usr/bin/couchdb script on Debian/Ubuntu sets an
-insecure LD_LIBRARY_PATH environment variable, such that libraries
-from the current directory are loaded.  If a local attacker placed a
-maliciously crafted shared library in a directory and an administrator
-were tricked into launching CouchDB from this directory, arbitrary
-code execution could be achieved.  This vulnerability is only
-triggered when the /usr/bin/couchdb script is executed explicitly,
-since the init script (/etc/init.d/couchdb) changes the current
-directory before launching CouchDB.
 
-The vulnerability was introduced by Debian patch
-"mozjs1.9_ldlibpath.patch" on 3/24/2009.
+> ----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+>
+>> Hi Steve, vendors,
+>>
+>>    Brendan Boerner reported:
+>>    [1] https://bugs.launchpad.net/ubuntu/+source/ssmtp/+bug/282424
+>>
+>> a deficiency in the way ssmtp removed trailing '\n' sequence
+>> by processing lines beginning with a leading dot. A local user,
+>> could send a specially-crafted e-mail message via ssmtp send-only
+>> sendmail emulator, leading to ssmtp executable denial of service (exit
+>> with:
+>> ssmtp: standardise() -- Buffer overflow). Different vulnerability
+>> than CVE-2008-3962.
 
--Dan
+
+Use CVE-2008-7258
+
+- Steve
+
+
+
+>> References:
+>>    [2] https://bugzilla.redhat.com/show_bug.cgi?id=582236
+>>    [3] https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2008-3962
+>>    [4] http://patch-tracker.debian.org/package/ssmtp/2.62-3
+>>    [5]
+>> http://lists.fedoraproject.org/pipermail/package-announce/2010-May/041012.html
+>>    [6]
+>> http://lists.fedoraproject.org/pipermail/package-announce/2010-May/041009.html
+>>    [7]
+>> http://lists.fedoraproject.org/pipermail/package-announce/2010-May/041119.html
+>>
+>> Debian Linux distribution patch:
+>>    [8]
+>> http://patch-tracker.debian.org/patch/series/view/ssmtp/2.62-3/345780-standardise-bufsize
+>>
+>> Public PoC (from
+>> https://bugzilla.redhat.com/show_bug.cgi?id=582236#c0):
+>>    [9] ( 0. Install & configure ssmtp, of course )
+>>          1. (echo -n . ; for i in {1..2050} ; do echo -n $i ; done) |
+>> mail root
+>>
+>> Couldn't find CVE-2008-XXXX ssmtp identifier for this
+>> (http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=ssmtp).
+>>
+>> Steve, could you allocate one?
+>>
+>> Thanks && Regards, Jan.
+>> --
+>> Jan iankko Lieskovsky / Red Hat Security Response Team
+>
