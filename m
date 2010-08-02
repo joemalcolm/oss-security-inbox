@@ -1,54 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/03/2
-Message-ID: <4B8E331F.1030805@tehtri-security.com>
-Date: Wed, 03 Mar 2010 10:59:59 +0100
-From: Laurent OUDOT at TEHTRI-Security <laurent.oudot@...tri-security.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/02/2
+Message-ID: <4C563FEA.6010901@kernel.sg>
+Date: Mon, 02 Aug 2010 11:47:54 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-CC: Laurent OUDOT at TEHTRI-Security <laurent.oudot@...tri-security.com>
-Subject: [cansecwest] Advanced PHP Hacking
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE-2010-2524 kernel: dns_resolver upcall security issue
 Content-Type: text/plain; charset=utf-8
 
+CIFS has the ability to chase MS-DFS referrals. In order to do this it 
+has to be able to resolve hostnames into IP addresses. For this, it uses 
+the keys API to upcall to the cifs.upcall userspace helper. It then 
+resolves the name and hands the address back to the kernel.
 
+The dns_resolver upcall currently used by CIFS is susceptible to cache
+stuffing. It's possible for a malicious user to stuff the keyring with 
+the results of a lookup, and then trick the server into mounting a 
+server of his choosing.
 
-Hi,
+I have assigned this with CVE-2010-2524. To be susceptible to this, you 
+need CONFIG_CIFS_DFS_UPCALL enabled. Interesting bug.
 
-I'd like to announce a Security Master's Dojo course during next
-CanSecWest 2010 in Vancouver (March 22-26 2010).
+https://bugzilla.redhat.com/CVE-2010-2524
 
-Title: Advanced PHP Hacking (!)
+Upstream commit:
+http://git.kernel.org/linus/4c0c03ca54f72fdd5912516ad0a23ec5cf01bda7
 
-PHP is a worldwide web language used by individuals as well as companies
-(Facebook...). This session aims at providing a hands-on focused PHP
-Hacking experience. After this course, you will really know how
-attackers work and move through PHP hax0ring so that they can jump
-deeper down to your networks.
-
-*BONUS*
-This training will end with a final amazing exercise through a step by
-step live hacking simulation. It will help students at coming back to
-offensive and defensive hands-on actions seen during the whole day,
-thanks to this complete information warfare operation.
-
-For further information, just check :
- http://www.tehtri-security.com/en/trainings.php?t=cansecwest-2010
-
-Register as soon as possible (!) and join us at Cansecwest 2010
-(http://cansecwest.com)
-
-See you soon in Vancouver for more PHP Hacking :)
-
---
-Laurent OUDOT
- Founder & CEO of TEHTRI-Security
- http://www.tehtri-security.com
-
-
-
-
-
-
-
-
-
-
-
+Thanks, Eugene
+-- 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
