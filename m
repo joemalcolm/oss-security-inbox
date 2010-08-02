@@ -1,38 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/30/2
-Message-Id: <1269948107.10828.75.camel@TS-HQ-4>
-Date: Tue, 30 Mar 2010 13:21:47 +0200
-From: Secunia Research <vuln@...unia.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/02/12
+Message-ID: <1671447452.190931280779738889.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 2 Aug 2010 16:08:58 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: vuln@...unia.com
-Subject: Re: CVE Request: ViewVC 1.1.5 / 1.0.11 -- XSS via user-provided 'search_re' input
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request [two ids] -- cabextract -- 1, Infinite loop in MS-ZIP and Quantum decoders (minor) 2, Integer wrap-around (crash) by processing certain *.cab files in test archive mode
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
 
-This vulnerability was discovered by Secunia and we have already
-reserved CVE-2010-0132 for it. Please see SA38918 [1] for more
-information.
+> Hi Steve, vendors,
+> 
+>    two security issues have been reported against cabextract:
+> 
+> 1, Infinite loop in MS-ZIP and Quantum decoders (minor issue):
+> 
+> A deficiency has been reported in the way cabextract extracted certain
+> Cabinet (*.cab) files, using the MZ-ZIP and Quantum decompressors.  If a
+> local user was tricked into opening a specially-crafted *.cab file, it
+> could lead to infinite loop.
+> 
 
-[1] http://secunia.com/advisories/38918/
+CVE-2010-2800
 
-Thanks and kind regards,
+> 2, Integer wrap-around (crash) by processing certain *.cab files in
+> test archive mode
+> 
+> An integer wrap-around flaw has been reported in the way cabextract
+> processed certain Cabinet (*.cab) archive files. If a local user was
+> tricked into opening a specially-crafted *.cab archive in test archive
+> mode, it could lead to cabextract executable crash.
+> 
 
-On Mon, 2010-03-29 at 17:52 -0500, Reed Loden wrote:
-> Just received an announcement stating ViewVC 1.1.5 and 1.0.11 were
-> released today (right on the heels of 1.1.4 and 1.0.10, for which I
-> still haven't received a CVE). Looks like they fix an XSS that needs
-> a CVE assigned.
+CVE-2010-2801
+
+
+Thanks.
 
 -- 
-Stefan Cornelius
-Security Specialist
-
-Secunia 
-Weidekampsgade 14 A
-DK-2300 Copenhagen S
-Denmark
-
-Phone  +45 7020 5144
-Fax    +45 7020 5145
-
+    JB
