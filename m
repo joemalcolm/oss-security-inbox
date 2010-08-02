@@ -1,56 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/02/7
-Message-ID: <1288714032.3197.63.camel@dyson>
-Date: Tue, 02 Nov 2010 12:07:12 -0400
-From: Jon Oberheide <jon@...rheide.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/02/13
+Message-ID: <4C572ABA.7000400@mvista.com>
+Date: Mon, 02 Aug 2010 10:29:46 -1000
+From: akuster <akuster@...sta.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel stack infoleaks
+CC: Eugene Teo <eugeneteo@...nel.sg>,  "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE-2010-2524 kernel: dns_resolver upcall security issue
 Content-Type: text/plain; charset=utf-8
 
-Vasiliy Kulikov discovered three kernel stack infoleaks in various
-packet families of the net subsystem:
+Eugene,
 
-===========================================================
+So would it mean git commit 6103335de8afa5d780dcd512abe85c696af7b040
+introduced the problem?
 
-net/ax25
+- Armin
 
-Sometimes ax25_getname() doesn't initialize all members of
-fsa_digipeater field of fsa struct.  This structure is then copied to
-userland.  It leads to leaking of contents of kernel stack memory.  We
-have to initialize them to zero.
-
-http://marc.info/?l=linux-netdev&m=128854507120898&w=2
-
-===========================================================
-
-net/packet
-
-packet_getname_spkt() doesn't initialize all members of sa_data field of
-sockaddr struct if strlen(dev->name) < 13.  This structure is then
-copied to userland.  It leads to leaking of contents of kernel stack
-memory.  We have to fully fill sa_data with strncpy() instead of
-strlcpy().
-
-http://marc.info/?l=linux-netdev&m=128854507220908&w=2
-
-===========================================================
-
-net/tipc
-
-Structure sockaddr_tipc is copied to userland with padding bytes after
-"id" field in union field "name" unitialized.  It leads to leaking of
-contents of kernel stack memory.  We have to initialize them to zero.
-
-http://marc.info/?l=linux-netdev&m=128854507420917&w=2
-
-===========================================================
-
-Regards,
-Jon Oberheide
-
--- 
-Jon Oberheide <jon@...rheide.org>
-GnuPG Key: 1024D/F47C17FE
-Fingerprint: B716 DA66 8173 6EDD 28F6  F184 5842 1C89 F47C 17FE
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+On 08/01/2010 05:47 PM, Eugene Teo wrote:
+> CIFS has the ability to chase MS-DFS referrals. In order to do this it
+> has to be able to resolve hostnames into IP addresses. For this, it uses
+> the keys API to upcall to the cifs.upcall userspace helper. It then
+> resolves the name and hands the address back to the kernel.
+> 
+> The dns_resolver upcall currently used by CIFS is susceptible to cache
+> stuffing. It's possible for a malicious user to stuff the keyring with
+> the results of a lookup, and then trick the server into mounting a
+> server of his choosing.
+> 
+> I have assigned this with CVE-2010-2524. To be susceptible to this, you
+> need CONFIG_CIFS_DFS_UPCALL enabled. Interesting bug.
+> 
+> https://bugzilla.redhat.com/CVE-2010-2524
+> 
+> Upstream commit:
+> http://git.kernel.org/linus/4c0c03ca54f72fdd5912516ad0a23ec5cf01bda7
+> 
+> Thanks, Eugene
