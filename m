@@ -1,29 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/21/2
-Message-ID: <4C983775.8010703@redhat.com>
-Date: Tue, 21 Sep 2010 12:41:25 +0800
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/02/1
+Message-ID: <4C563A5F.20503@redhat.com>
+Date: Mon, 02 Aug 2010 11:24:15 +0800
 From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Dan Rosenberg <dan.j.rosenberg@...il.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: Heap corruption in ROSE
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: gfs2: rename cases kernel panic
 Content-Type: text/plain; charset=utf-8
 
-On 09/21/2010 12:25 PM, Dan Rosenberg wrote:
-> When binding a ROSE socket, the "srose_ndigis" field of the
-> user-provided sockaddr_rose struct is intended to be restricted to
-> less than ROSE_MAX_DIGIS.  However, since this field is a signed
-> integer, this check will pass when provided with a negative value,
-> allowing the "source_ndigis" field of the rose_sock struct (which is
-> an unsigned char) to be set to arbitrary values.  Then, by calling a
-> function such as rose_getname(), heap corruption results, since this
-> field is used as a maximum index to read from and write into an array
-> of ROSE_MAX_DIGIS size.  This can only be triggered by unprivileged
-> users when a ROSE device (e.g. rose0) exists.
->
-> Reference (and fix):
-> http://marc.info/?l=linux-netdev&m=128502238927086&w=2
+The problem was in the way the gfs2 directory code was trying to re-use
+sentinel directory entries. A local, unprivileged user on a gfs2 mounted 
+directory can trigger this issue, resulting in a NULL pointer dereference.
 
-Please use CVE-2010-3310.
+https://bugzilla.redhat.com/show_bug.cgi?id=620300
+
+Introduced in upstream commit 71b86f56 (v2.6.19-rc1), and fixed in 
+commit 728a756b.
+
+http://git.kernel.org/linus/71b86f562b5eb6f94ea00bba060caa64d0137969
+http://git.kernel.org/linus/728a756b8fcd22d80e2dbba8117a8a3aafd3f203
 
 Thanks, Eugene
 -- 
