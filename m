@@ -1,68 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/27/5
-Message-ID: <20100427064115.GA3739@dario.dodds.net>
-Date: Tue, 27 Apr 2010 07:41:15 +0100
-From: Steve Langasek <steve.langasek@...onical.com>
-To: Wouter Coekaerts <coekie@...si.org>
-Cc: Jamie Strandboge <jamie@...onical.com>, oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Re: CVE request: irssi 0.8.15
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/02/4
+Message-ID: <4C56DF90.6060805@redhat.com>
+Date: Mon, 02 Aug 2010 17:09:04 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request [two ids] -- cabextract -- 1, Infinite loop in MS-ZIP and Quantum decoders (minor) 2, Integer wrap-around (crash) by processing certain *.cab files in test archive mode
 Content-Type: text/plain; charset=utf-8
 
-Hi Wouter,
+Hi Steve, vendors,
 
-Thanks for your mail.
+   two security issues have been reported against cabextract:
 
-On Mon, Apr 26, 2010 at 09:48:29PM +0200, Wouter Coekaerts wrote:
-> Irssi doesn't have any SSL proxy support. So at first sight, this
-> seemed like a bugfix for a non-existing feature. Looking at it again,
-> it seems worse.
+1, Infinite loop in MS-ZIP and Quantum decoders (minor issue):
 
-> There is not much explanation in the linked bug, so I'm making some
-> assumptions. Correct me if they're wrong.
-> What you can do in irssi, is configure a proxy, and then attempt to
-> connect to an SSL IRC server through that proxy. Unfortunately, irssi
-> currently can't do that, because there is a bug (not a vulnerability)
-> in irssi that in that case makes it send the configured "proxy_string"
-> encrypted in SSL instead of in plain text. This misbehaviour could be
-> used in an akward setup to connect to a proxy that requires SSL, by
-> pretending to connect to an SSL irc server. To do that you would have
-> to enable SSL when connecting to the server, even when it's not an SSL
-> server. By looking at the code, I suspect the patch is about making
-> that setup work without getting certificate checking errors. Is that
-> correct?
+A deficiency has been reported in the way cabextract extracted
+certain Cabinet (*.cab) files, using the MZ-ZIP and Quantum decompressors.
+If a local user was tricked into opening a specially-crafted *.cab
+file, it could lead to infinite loop.
 
-> Because it's more familiar, maybe it's more clear in the webbrowser
-> equivalent: it is like configuring an http proxy in your browser,
-> without saying that it requires SSL. Then you surf to
-> https://example.com, encrypting your connection to the proxy, but
-> letting the proxy get http://example.com.
+References:
+   [1] http://bugs.gentoo.org/show_bug.cgi?id=329891
 
-> It is intended behaviour in irssi that the certificate check fails
-> here. This patch makes that check pass. That means the proxy is kind
-> of always doing a MITM attack. The user is given the impression he is
-> securely connecting to an IRC server, but his actual IRC connection
-> (between proxy and irc server) is plain text.
+Upstream patches:
+   [2] http://libmspack.svn.sourceforge.net/viewvc/libmspack?view=revision&revision=90
+   [3] http://libmspack.svn.sourceforge.net/viewvc/libmspack?view=revision&revision=95
+   [4] http://libmspack.svn.sourceforge.net/viewvc/libmspack/libmspack/trunk/mspack/
 
-I would agree with you if IRC proxies were autoconfigured the way web
-browser proxies often are; in that case, that would clearly be a MITM
-problem.  In *this* case, the IRC proxy I'm connecting to has been
-painstakingly configured to provide SSL-encrypted proxying to the
-SSL-enforced IRC servers I use, and modulo this bug where any valid
-certificate might be substituted for my proxy's certificate, was working
-entirely as expected.
+2, Integer wrap-around (crash) by processing certain *.cab files in test archive mode
 
-Whether or not irssi "has SSL proxy support", I've been successfully using
-it with an SSL proxy for several years, precisely as I was intending to use
-it, with no security vulnerabilities inherent in my setup.  To have this
-stop working in response to a security update is unacceptable collateral
-damage - my only options then are to stop using a proxy, stop *securing* my
-proxy with SSL, or to stop using irssi.  These are not choices I should have
-to contend with in response to a security update.
+An integer wrap-around flaw has been reported in the way cabextract processed
+certain Cabinet (*.cab) archive files. If a local user was tricked into opening
+a specially-crafted *.cab archive in test archive mode, it could lead to cabextract
+executable crash.
 
--- 
-Steve Langasek                   Give me a lever long enough and a Free OS
-Debian Developer                   to set it on, and I can move the world.
-Ubuntu Developer                                    http://www.debian.org/
-slangasek@...ntu.com                                     vorlon@...ian.org
+References:
+   [1] http://bugs.gentoo.org/show_bug.cgi?id=329891
 
-Download attachment "signature.asc" of type "application/pgp-signature" (829 bytes)
+Upstream patches:
+   [2] http://libmspack.svn.sourceforge.net/viewvc/libmspack/libmspack/trunk/mspack/qtmd.c?r1=114&r2=113
+   [3] http://libmspack.svn.sourceforge.net/viewvc/libmspack?view=revision&revision=118
+
+Could you allocate CVE ids for these?
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
