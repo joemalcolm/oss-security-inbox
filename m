@@ -1,27 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/30/1
-Message-ID: <87k4qlmajr.fsf@mid.deneb.enyo.de>
-Date: Sun, 30 May 2010 21:52:56 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: ghostscript and gv
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/02/3
+Message-ID: <4C56CCF1.4050700@redhat.com>
+Date: Mon, 02 Aug 2010 15:49:37 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request -- Socat -- Stack overflow by lexical scanning of nested character patterns
 Content-Type: text/plain; charset=utf-8
 
-* Bernhard R. Link:
+Hi Steve, vendors,
 
-> * Ludwig Nussel <ludwig.nussel@...e.de> [100528 12:05]:
->> Upstream suggested to use -P- in addition to -dSAFER.
->
-> Either I mix something up or that option does not even help:
->
-> With the Debian lenny version I get:
->
-> $ touch gs_init.ps
-> $ /usr/bin/gs -P- notneeded.ps
-> GPL Ghostscript 8.62: Initialization file gs_init.ps does not begin with an integer.
+   Socat upstream, released an advisory:
+   [1] http://www.dest-unreach.org/socat/contrib/socat-secadv2.html
 
-"gs -P- -DSAFER gs_init.ps" works, too, so you can inject the payload
-with file-name-preserving user agents.  8-(
+describing a stack overflow flaw, present in Socat bidirectional data relay, when
+processing command line arguments (address specifications, host names, file names),
+longer than 512 bytes. An attacker, able to to inject data into sockat's command line
+(potentially remotely via CGI script invocation), could use this flaw to execute
+arbitrary code with the privileges of the socat process.
 
-Is the general consensus that we should patch this in
-viewers/Ghostscript wrappers, and not Ghostscript itself?
+References:
+   [2] http://bugs.gentoo.org/show_bug.cgi?id=330785
+
+Upstream patch against v1.7.2:
+   [3] http://www.dest-unreach.org/socat/download/socat-1.7.1.3.patch
+
+Credit:
+Issue discovered and reported by Felix Gröbert of Google Security Team
+
+Could you allocate a CVE id for this?
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
