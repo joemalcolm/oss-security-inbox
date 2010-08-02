@@ -1,27 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/22/2
-Message-ID: <1263555106.46238.1292978482898.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 21 Dec 2010 19:41:22 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/02/11
+Message-ID: <269680180.187051280779360813.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 2 Aug 2010 16:02:40 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Steve Christey <coley@...us.mitre.org>
-Subject: Re: CVE Request: MyBB XSS bugs
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Socat -- Stack overflow by lexical scanning of nested character patterns
 Content-Type: text/plain; charset=utf-8
 
-
-
------ Original Message -----
-> MyBB has some XSS bugs:
-> 
-> http://blog.mybb.com/2010/12/15/mybb-1-6-1-release-1-4-14-update/
-> 
-
-As best as I can tell, one ID should work for "multiple XSS flaws".
-If someone knows a reason to split, we can do that in the future.
-
-Please use CVE-2010-4522.
+Please use CVE-2010-2799
 
 Thanks.
 
 -- 
     JB
+
+
+----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+
+> Hi Steve, vendors,
+> 
+>    Socat upstream, released an advisory:
+>    [1] http://www.dest-unreach.org/socat/contrib/socat-secadv2.html
+> 
+> describing a stack overflow flaw, present in Socat bidirectional data
+> relay, when
+> processing command line arguments (address specifications, host names,
+> file names),
+> longer than 512 bytes. An attacker, able to to inject data into
+> sockat's command line
+> (potentially remotely via CGI script invocation), could use this flaw
+> to execute
+> arbitrary code with the privileges of the socat process.
+> 
+> References:
+>    [2] http://bugs.gentoo.org/show_bug.cgi?id=330785
+> 
+> Upstream patch against v1.7.2:
+>    [3] http://www.dest-unreach.org/socat/download/socat-1.7.1.3.patch
+> 
+> Credit:
+> Issue discovered and reported by Felix Gröbert of Google Security
+> Team
+> 
+> Could you allocate a CVE id for this?
+> 
+> Thanks && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
