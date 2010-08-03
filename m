@@ -1,45 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/05/3
-Message-ID: <20100705113237.GB24423@suse.de>
-Date: Mon, 5 Jul 2010 13:32:37 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com, png-mng-implement@...ts.sourceforge.net
-Subject: Re: CVE Request -- libpng v1.4.3 and v1.2.44 -- memory leak while processing PNG image with malformed sCAL chunks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/03/6
+Message-ID: <1232869034.333911280865635594.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 3 Aug 2010 16:00:35 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: kernel: [PARISC] led.c - fix potential stack overflow in led_proc_write()
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jun 30, 2010 at 05:22:40PM +0200, Marcus Meissner wrote:
-> On Mon, Jun 28, 2010 at 04:26:06PM -0400, Josh Bressers wrote:
+Steve,
+
+This one will need a 2007 ID.
+
+Thanks.
+
+-- 
+    JB
+
+
+----- "Moritz Muehlenhoff" <jmm@...til.org> wrote:
+
+> On Tue, Aug 03, 2010 at 11:46:58AM +0800, Eugene Teo wrote:
+> > Ilja reported way back in Nov 2007. A writer to /proc/pdc/led(?)
+> can
+> > cause the kernel to consume an unbounded amount of stack, and
+> result
+> > in stack corruption.
 > > 
-> > ----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+> > http://www.spinics.net/lists/linux-parisc/msg02960.html
 > > 
-> > > Hi Steve, vendors,
-> > > 
-> > >    libpng upstream has released latest v1.4.3 and v1.2.44 versions,
-> > > addressing two
-> > > security issues:
-> > > [a], out-of-bounds write to memory -- this already got a CVE id of
-> > > "CVE-2010-1205",
-> > > [b], memory-leak bug, involving images with malformed sCAL chunks,
-> > > which could
-> > >     lead to an application crash.
-> > > 
-> > > References:
-> > >    [1] http://www.libpng.org/pub/png/libpng.html
-> > >    [2] https://bugzilla.redhat.com/show_bug.cgi?id=608644
-> > > 
-> > > Steve, could you allocate a CVE id for the [b] issue?
-> > > 
-> > 
-> > Please use CVE-2010-2249 for issue [b].
+> > If you need a CVE name, change the subject to indicate that. We are
+> > not requesting one as we do not support the PA-RISC architecture in
+> > our distribution.
 > 
-> oss-sec, png-mng-implement ... do you have testimages or a reproducer for the sCAL issue?
+> Debian supports hppa. 
 > 
-> It would be helpful for our QA :/
-
-As found on:
-http://code.google.com/p/chromium/issues/detail?id=45983
-
-The sample crashing PNG is:
-http://www.ee.oulu.fi/~aki/spark.png
-
-Ciao, Marcus
+> Steven, please assign a CVE ID.
+> 
+> Cheers,
+>         Moritz
