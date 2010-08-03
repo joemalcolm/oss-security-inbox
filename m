@@ -1,41 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/14/17
-Message-Id: <20100914230411.B1F0D403E8@magilla.sf.frob.com>
-Date: Tue, 14 Sep 2010 16:04:11 -0700 (PDT)
-From: Roland McGrath <roland@...hat.com>
-To: pageexec@...email.hu
-Cc: KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>, Brad Spengler <spender@...ecurity.net>, Linus Torvalds <torvalds@...ux-foundation.org>, Andrew Morton <akpm@...ux-foundation.org>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Kees Cook <kees.cook@...onical.com>, Al Viro <viro@...iv.linux.org.uk>, Oleg Nesterov <oleg@...hat.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, Eugene Teo <eugene@...hat.com>
-Subject: Re: [PATCH 1/3] setup_arg_pages: diagnose excessive argument size
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/03/2
+Message-ID: <4C579265.40305@kernel.sg>
+Date: Tue, 03 Aug 2010 11:52:05 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
+To: oss-security@...ts.openwall.com
+CC: akuster <akuster@...sta.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE-2010-2524 kernel: dns_resolver upcall security issue
 Content-Type: text/plain; charset=utf-8
 
-> userland could never rely on the kernel's policy at all since get_arg_page
-> could have failed for more reasons than overstepping the currently hardcoded
-> ARG_MAX check in there. 
+On 08/03/2010 04:29 AM, akuster wrote:
+> Eugene,
+>
+> So would it mean git commit 6103335de8afa5d780dcd512abe85c696af7b040
+> introduced the problem?
 
-I don't see how it could fail except for OOM cases where get_user_pages()
-failed rather than blocking.  Is that what you mean?
+Yes. 2.6.25-rc1 onwards.
 
-> so what AT_ARGMAX would buy us is to allow the kernel
-> policy to change over time, but it's never been about guarantees, whether
-> POSIX wants such a thing or not.
-
-I understand the motivation for an explicit mechanism for the kernel to
-tell userland its limit.  Since the kernel policy today depends on
-something that can change between execs, AT_ARGMAX is inadequate for
-that purpose for today's policy, let alone any future different policy.
-
-> > The information that these give is about the conditions at startup.
-> > That's what they mean to userland, and userland only uses them to know
-> > the situation before it has made any calls.  The definition of AT_EUID
-> > is "effective user ID at program startup", and that fact does not
-> > change.
-> 
-> just for my own curiosity, where does this definition come from?
-
-You mean documentation?  I'm not really sure if there is any for that.
-But it's the inherent definition of auxv that all its information can
-only be about the conditions at program startup.
-
-
-Thanks,
-Roland
+Thanks, Eugene
+-- 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
