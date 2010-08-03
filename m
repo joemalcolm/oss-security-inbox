@@ -1,27 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/22/2
-Message-ID: <4B81FF29.4020108@kernel.sg>
-Date: Mon, 22 Feb 2010 11:51:05 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/03/4
+Message-ID: <4C57D0D2.7060208@redhat.com>
+Date: Tue, 03 Aug 2010 16:18:26 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: ALSA: hda-intel: Avoid divide by zero crash
+CC: Moritz Muehlenhoff <jmm@...til.org>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request - kernel: [PARISC] led.c - fix potential stack overflow in led_proc_write()
 Content-Type: text/plain; charset=utf-8
 
-hda-intel crashes the kernel due to a divide by zero in azx_position_ok.
+On 08/03/2010 01:51 PM, Moritz Muehlenhoff wrote:
+> On Tue, Aug 03, 2010 at 11:46:58AM +0800, Eugene Teo wrote:
+>> Ilja reported way back in Nov 2007. A writer to /proc/pdc/led(?) can
+>> cause the kernel to consume an unbounded amount of stack, and result
+>> in stack corruption.
+>>
+>> http://www.spinics.net/lists/linux-parisc/msg02960.html
+>>
+>> If you need a CVE name, change the subject to indicate that. We are
+>> not requesting one as we do not support the PA-RISC architecture in
+>> our distribution.
+>
+> Debian supports hppa.
+>
+> Steven, please assign a CVE ID.
 
-Using mp3blaster-3.2.5 (latest version) to play MP3 audio, the reporter 
-was able to crash the kernel by stopping and restarting playback using 
-the "5" key repeatedly. This happens as a normal user, not only as root. 
-Kernel backtrace points to azx_position_ok() dividing by zero.
+Changed the subject to make sure we don't miss this.
 
-Upstream commit:
-http://git.kernel.org/linus/fed08d036f2aabd8d0c684439de37f8ebec2bbc2
-
-References:
-http://lkml.org/lkml/2010/2/6/40
-http://nctritech.net/bugreport.txt
-http://lwn.net/Articles/375417/
-https://bugzilla.redhat.com/show_bug.cgi?id=567168
-
-Thanks, Eugene
+Eugene
+-- 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
