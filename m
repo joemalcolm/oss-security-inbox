@@ -1,26 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/09/11
-Message-ID: <20100209180311.GE2377@redhat.com>
-Date: Tue, 9 Feb 2010 11:03:11 -0700
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/03/5
+Message-ID: <4C57DCC2.8060508@hrz.tu-darmstadt.de>
+Date: Tue, 03 Aug 2010 11:09:22 +0200
+From: Joachim Fritschi <fritschi@....tu-darmstadt.de>
 To: oss-security@...ts.openwall.com
-Subject: vulnerability in netpbm (CVE-2009-4274)
+CC: secalert@...hat.com
+Subject: 2 vulnerabilties in phpCAS
 Content-Type: text/plain; charset=utf-8
 
-Marc Schoenefeld discovered a stack-based buffer overflow in the way
-that netpbm processed the contents of header files in xpm image files.
-This could lead to a crash of the application processing a
-specially-crafted xpm file (and linked to netpbm), or possibly to the
-execution of arbitrary code with the privileges of the user processing
-the xpm file.  This issue is assigned CVE-2009-4274.
+Hi all,
 
-The issue was corrected upstream in version 10.47.07 on Dec 29, 2009:
+the phpCAS library [1] contains 2 security vulnerabilties that have been 
+fixed in the new phpCAS release [2]. Redhat already provided CVE 
+numbers, thanks.
 
-http://netpbm.svn.sourceforge.net/viewvc/netpbm/stable/converter/ppm/xpmtoppm.c?view=patch&r1=995&r2=1076&pathrev=1076
+A: CVE-2010-2795 (PHPCAS-61) [3] is a serious issue. It allows you to 
+hijack any authenticated user session if get access to a users service 
+ticket in any way. The submitted service ticket was used to rename the 
+http session before actually validating the ticket. If you intercept or 
+guess a service ticket you can hijack a user session without proper 
+ticket validation.
 
-References:
+B: CVE-2010-2796 (PHPCAS-67) [4] is a minor issue. phpCAS is not 
+sanatizing a submitted value. Might be usable for XSS in cas proxy mode.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=546580
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+The phpCAS library is included in multiple other projects:
+glpi,moodle,tikiwiki,claroline etc. that might be vulnerable as well
+
+
+Regards,
+
+Joachim Fritschi
+
+
+[1] https://wiki.jasig.org/display/CASC/phpCAS
+[2] http://downloads.jasig.org/cas-clients/php/1.1.2/
+[3] https://issues.jasig.org/browse/PHPCAS-61
+[4] https://issues.jasig.org/browse/PHPCAS-67
+
+
+
+
+
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (5024 bytes)
