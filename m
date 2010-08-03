@@ -1,30 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/29/6
-Message-ID: <4CA339C8.5050600@hrz.tu-darmstadt.de>
-Date: Wed, 29 Sep 2010 15:06:16 +0200
-From: Joachim Fritschi <fritschi@....tu-darmstadt.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/03/7
+Message-ID: <273327544.334171280865707741.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 3 Aug 2010 16:01:47 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request - phpCAS: prevent symlink attacks, directory traversal and XSS during a proxy callback
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: Attachment XSS in mantis < 1.2.2
 Content-Type: text/plain; charset=utf-8
 
-Reported by Raphael Geissert almost 2 years ago but never really made it 
-into the upstream code:
+Please use CVE-2010-2802
 
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=495542#82
+Thanks.
 
-In phpCAS proxy mode the parameters submitted during a callback to the 
-callback() function are not properly sanatized. The parameters are used 
-as file handles for filesystem access and parameters in urls.
-This allows an attacker symlink attacks, directory traversal attacks and 
-XSS attacks. The issue has been fixed and patches are available:
+-- 
+    JB
 
-https://issues.jasig.org/browse/PHPCAS-80
-https://developer.jasig.org/source/changelog/jasigsvn?cs=21538
 
-A new 1.1.3 release which contains the patch and various other bugfixes 
-will be released within the next few days.
+----- "Hanno Böck" <hanno@...eck.de> wrote:
 
-Cheers,
-
-Joachim
-
+> http://www.mantisbt.org/bugs/view.php?id=11952
+> http://www.mantisbt.org/blog/?p=113
+> 
+> Issue #11952 covers a security fix to the display of inline
+> attachments, where 
+> “Arbitrary inline attachment rendering could lead to cross-domain
+> scripting or 
+> other browser attacks”.
+> 
+> -- 
+> Hanno Böck		Blog:		http://www.hboeck.de/
+> GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+> 
+> http://schokokeks.org - professional webhosting
