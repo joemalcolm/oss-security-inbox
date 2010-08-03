@@ -1,26 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/04/10
-Message-ID: <1244677537.1389791288901139402.JavaMail.root@zmail05.collab.prod.int.phx2.redhat.com>
-Date: Thu, 4 Nov 2010 16:05:39 -0400 (EDT)
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/03/3
+Message-ID: <20100803055115.GB4916@galadriel.inutil.org>
+Date: Tue, 3 Aug 2010 01:51:15 -0400
+From: Moritz Muehlenhoff <jmm@...til.org>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: CVE request: kernel: kvm kernel stack leakage
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: kernel: [PARISC] led.c - fix potential stack overflow in led_proc_write()
 Content-Type: text/plain; charset=utf-8
 
-"Structures kvm_vcpu_events, kvm_debugregs, kvm_pit_state2 and kvm_clock_data
-are copied to userland with some padding and reserved fields unitialized.  It
-leads to leaking of contents of kernel stack memory."
+On Tue, Aug 03, 2010 at 11:46:58AM +0800, Eugene Teo wrote:
+> Ilja reported way back in Nov 2007. A writer to /proc/pdc/led(?) can
+> cause the kernel to consume an unbounded amount of stack, and result
+> in stack corruption.
+> 
+> http://www.spinics.net/lists/linux-parisc/msg02960.html
+> 
+> If you need a CVE name, change the subject to indicate that. We are
+> not requesting one as we do not support the PA-RISC architecture in
+> our distribution.
 
-Upstream commit:
-http://git.kernel.org/?p=virt/kvm/kvm.git;a=commit;h=831d9d02f9522e739825a51a11e3bc5aa531a905
+Debian supports hppa. 
 
-Credit: Vasiliy Kulikov
+Steven, please assign a CVE ID.
 
-Reference:
-http://www.spinics.net/lists/kvm/msg44130.html
-https://bugzilla.redhat.com/show_bug.cgi?id=649920
-
-Thanks,
---
-Petr Matousek / Red Hat Security Response Team
+Cheers,
+        Moritz
