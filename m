@@ -1,35 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/14/1
-Message-ID: <1289747107.2994.86.camel@mdlinux>
-Date: Sun, 14 Nov 2010 10:05:07 -0500
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/04/2
+Message-ID: <Pine.GSO.4.64.1008041716240.19654@faron.mitre.org>
+Date: Wed, 4 Aug 2010 17:23:58 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: Bill Janssen <bill.janssen@...il.com>, Andreas Hasenack <ahasenack@...ra.com.br>, Mads Kiilerich <mads@...lerich.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Mercurial --Doesn't verify subject Common Name properly
+cc: dev@...pd.apache.org, jeremy@...zel.net
+Subject: Re: CVE-2010-2791: mod_proxy information leak affecting 2.2.9 only
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 2010-10-11 at 15:48 -0400, Josh Bressers wrote:
-> Steve,
-> 
-> Can I defer this one to MITRE? My initial thought is that python should get
-> the ID, but they seem to want to push it up to the application developers,
-> but they also added some functionality in
-> http://svn.python.org/view?view=rev&revision=85321
-> 
-> Is there a past precedent for this?
-> 
 
-Has any decision been made regarding CVE assignment for this? I've found
-some more python applications that aren't validating ssl certs, and am
-waiting to know how this is going to be handled.
+A subtle comment here.  Arguably, this is the same core bug and could have 
+been merged into CVE-2010-2068, even though the versions are different. 
+Effectively, you've got multiple independent "streams" of 2.2.x Apache - 
+which vary by operating system - and there's no overlap between which 
+"stream" is affected by CVE-2010-2791 versus the ones that are affected by 
+CVE-2010-2068.  And there are no regression errors.  This general 
+abstraction difficulty applies to most software that runs on multiple 
+platforms, where each platform has slightly different up-to-date versions, 
+or delays in fixes for some platforms versus others.  (You could extend 
+the logic to how each distro maintains its own versions of common 
+software...)
 
-Thanks,
+However, this is a fairly arcane point that demonstrates the difficulty of 
+keeping CVE consistent with only a couple simple rules (split-by-vulntype 
+and split-by-version), instead of getting mired in lots of exceptions.
 
-Marc.
+As a practical matter, this is a fairly important distinction, and if we 
+were to MERGE into CVE-2010-2068 and update the description, that might 
+not be enough of a "signal" to sysadmins that they have to re-evaluate 
+their security posture.  So I'm reluctantly OK with leaving CVE-2010-2791 
+separate - but I don't want to set this up as a formal precedent for these 
+kinds of abstraction choices for later disclosures.
+
+- Steve
 
 
--- 
-Marc Deslauriers
-Ubuntu Security Engineer     | http://www.ubuntu.com/
-Canonical Ltd.               | http://www.canonical.com/
+On Fri, 30 Jul 2010, Joe Orton wrote:
 
+> Jeremy Sowden discovered an information leak in mod_proxy affecting
+> httpd version 2.2.9 only.  If a timeout occurred reading a response from
+> a backend on a persistent connection, the backend connection was not
+> closed.  The response could subsequently be read and delivered to an
+> unrelated client.
+>
+> This issue has been assigned CVE name CVE-2010-2791, and is equivalent
+> to CVE-2010-2068 (fixed in 2.2.16) but affects httpd on Unix.  The bug
+> was fixed* in 2.2.10 but the security impact was not known at the time.
+>
+> I'll update http://httpd.apache.org/security/vulnerabilities_22.html to
+> reflect this shortly.
+>
+> Regards, Joe
+>
+> * fix for 2.2.x branch: http://svn.apache.org/viewvc?rev=699841&view=rev
+>
