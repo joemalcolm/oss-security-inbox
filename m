@@ -1,76 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/29/10
-Message-ID: <1827547617.733251285787191204.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 29 Sep 2010 15:06:31 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/06/2
+Message-ID: <4C5C31EE.70209@redhat.com>
+Date: Fri, 06 Aug 2010 18:01:50 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE requests: Poppler, Quassel, Pyfribidi, Overkill, DocUtils, FireGPG, Wireshark
+CC: "Steven M. Christey" <coley@...us.mitre.org>, Werner Lemberg <wl@....org>
+Subject: Re: CVE Request -- FreeType -- Memory corruption flaw by processing certain LWFN fonts + three more
 Content-Type: text/plain; charset=utf-8
 
-Steve,
+Hi all,
 
-There are a few requests for MITRE below (2008 and 2009 IDs needed).
+   just for more complete list. There are more of them:
+     [1] https://savannah.nongnu.org/bugs/?30644
+         Patch at:  http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=45a3c76b547511fa9d97aca34b150a0663257375
+     [2] https://savannah.nongnu.org/bugs/?30656
+         Patch at: http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=c06da1ad34663da7b6fc39b030dc3ae185b96557
+     [3] https://savannah.nongnu.org/bugs/?30657
+         Patch at: http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=346f1867fd32dae8f56e5b482d1af98f626804ac
+   plus that one below (but you probably already noticed).
 
------ "Moritz Muehlenhoff" <jmm@...ian.org> wrote:
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+
+Jan Lieskovsky wrote:
+> Hi Steve, vendors,
 > 
-> Hi,
-> here's a few more CVE requests for issues in the Debian Security Tracker
-> without a CVE ID assigned:
+>   A memory corruption flaw was found in the way FreeType font rendering 
+> engine
+> processed certain Adobe Type 1 Mac Font File (LWFN) fonts. An attacker
+> could use this flaw to create a specially-crafted font file that, when
+> opened, would cause an application linked against libfreetype to crash,
+> or, possibly execute arbitrary code.
 > 
-> 1. Poppler (might also affect xpdf and kpdf due to code heritage, not
-> determined yet)
-> http://secunia.com/advisories/41596/
-> -> Links to poppler git commits are given in the Secunia link
-
-This needs to be properly understood. I'm not assigning IDs until someone
-does a proper triage.
-
+> Upstream bug report:
+>   [1] https://savannah.nongnu.org/bugs/?30658
 > 
-> 2. Quassel
-> http://quassel-irc.org/node/115
-
-I presume this is a DoS (the details are pretty slim)
-CVE-2010-3443
-
+> Public reproducer:
+>   [2] http://alt.swiecki.net/j/f/sigsegv31.ttf
 > 
-> 3. Pyfribidi
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=570068
-
-This looks to be a buffer overflow.
-CVE-2010-3444
-
+> Upstream changeset:
+>   [3] 
+> http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=81f3472c0ba7b8f6466e2e214fa8c1c17fade975 
 > 
-> 4. Overkill (this should be a CVE-2009 ID)
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=549310
-
-I'm out of 2009 IDs. Can MITRE take this one.
-
 > 
-> 5. Emacs mode for reStructuredText (from DocUtils) (this should be a
-> CVE-2009 ID)
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=560755
-
-I'm out of 2009 IDs. Can MITRE take this one.
-
+> References:
+>   [4] https://bugzilla.redhat.com/show_bug.cgi?id=621907
 > 
-> 6. FireGPG (this should be a CVE-2008 ID)
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=514386
-> http://securityvulns.com/Udocument757.html
-
-I have no 2008 IDs. This one will have to wait for MITRE.
-
+> Credit: Robert Swiecki
 > 
-> 7. Wireshark BER dissector
-> http://archives.neohapsis.com/archives/bugtraq/2010-09/0088.html
+> Could you allocate a CVE id for this?
 > 
+> Thanks && Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
 
-This one looks like a stack overflow, the advisory isn't very clear, but
-claims there are two possible outcomes. We can always split later if
-needed.
-CVE-2010-3445
-
-Thanks
-
--- 
-    JB
