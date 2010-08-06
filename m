@@ -1,51 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/01/4
-Message-ID: <1128715081.206511270136888690.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 1 Apr 2010 11:48:08 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Alvaro J. Iradier Muro" <airadier@...rs.sourceforge.net>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- aMSN -- improper SSL certificate validation (MITM)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/06/3
+Message-ID: <20100806191502.12d9802c@mail.a3li.li>
+Date: Fri, 6 Aug 2010 19:15:02 +0200
+From: Alex Legler <a3li@...too.org>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE request: uzbl before 2010.08.05: User-assisted execution of arbitrary commands caused by faulty default config
 Content-Type: text/plain; charset=utf-8
 
------ "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+Please assign a CVE for the following issue:
 
-> Hi Steve, vendors,
-> 
->    Gabriel Menezes Nunes reported:
->      [1] http://seclists.org/bugtraq/2009/Jun/239
-> 
->    a deficiency in the way aMSN messenger validated SSL certificates
-> when
->    connecting to the MSN server. A remote attacker could conduct
-> man-in-the-middle
->    attacks and / or impersonate trusted servers.
-> 
->    Affected version:
->      Issue originally reported against aMSN v0.97.2, but further
-> research showed [4]
->      latest aMSN v0.98.3 still suffers from the flaw.
-> 
->    References:
->      [2]
-> http://www.juniper.net/security/auto/vulnerabilities/vuln35507.html
->      [3] http://secunia.com/advisories/35621/
->      [4] http://www.opensource-archive.org/showthread.php?p=183821
->      [5] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=572818
-> 
->    Upstream (testing) patch:
->      [6]
-> http://amsn.svn.sourceforge.net/viewvc/amsn/trunk/?view=log&pathrev=11991
-> 
-> Not sure, if this already got a CVE id, but in case if not, could you
-> allocate one?
-> 
+"With shell code in hyperlinks on a page, one of the sample (uzbl-core)
+resp. default (uzbl-browser) button bindings (binding for mousebutton2)
+would execute this code. This commit fixes that issue.
+Note that just upgrading your uzbl is not enough. If you have an
+existing config, the change will not be automatically applied. So be
+sure you have this change in your config."
 
-I can't find a CVE id.
+Source: http://www.uzbl.org/news.php?id=29
+Upstream bug: http://www.uzbl.org/bugs/index.php?do=details&task_id=240
 
-Please use CVE-2010-0744
-
-Thanks.
+Thanks,
+Alex
 
 -- 
-    JB
+Alex Legler | Gentoo Security / Ruby
+a3li@...too.org | a3li@...ber.ccc.de
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
