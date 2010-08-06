@@ -1,25 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/10/2
-Message-ID: <AANLkTinM9cu4Hjqm=ygXim9wLhaXWAs8SQ8umRF75Rdt@mail.gmail.com>
-Date: Tue, 10 Aug 2010 10:52:29 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
-To: oss-security@...ts.openwall.com
-Subject: CVE ID Request For 2Wire Broadband Router Session Hijacking  Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/06/1
+Message-ID: <4C5C0F9D.6070308@redhat.com>
+Date: Fri, 06 Aug 2010 15:35:25 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request -- FreeType -- Memory corruption flaw by processing certain LWFN fonts
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Hi Steve, vendors,
 
-Let us request CVE ID for
-http://seclists.org/fulldisclosure/2010/Aug/95
+   A memory corruption flaw was found in the way FreeType font rendering engine
+processed certain Adobe Type 1 Mac Font File (LWFN) fonts. An attacker
+could use this flaw to create a specially-crafted font file that, when
+opened, would cause an application linked against libfreetype to crash,
+or, possibly execute arbitrary code.
 
+Upstream bug report:
+   [1] https://savannah.nongnu.org/bugs/?30658
 
-Thanks for your time.
+Public reproducer:
+   [2] http://alt.swiecki.net/j/f/sigsegv31.ttf
 
+Upstream changeset:
+   [3] http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=81f3472c0ba7b8f6466e2e214fa8c1c17fade975
 
----------------------------------
-Best regards,
-YGN Ethical Hacker Group
-Yangon, Myanmar
-http://yehg.net
-Our Lab | http://yehg.net/lab
-Our Directory | http://yehg.net/hwd
+References:
+   [4] https://bugzilla.redhat.com/show_bug.cgi?id=621907
+
+Credit: Robert Swiecki
+
+Could you allocate a CVE id for this?
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
