@@ -1,38 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/29/1
-Message-ID: <4BB0204C.5040809@kernel.sg>
-Date: Mon, 29 Mar 2010 11:36:44 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/06/5
+Message-ID: <1309185107.739551281119917610.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 6 Aug 2010 14:38:37 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: ipv6: skb is unexpectedly freed (remote DoS)
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: uzbl before 2010.08.05: User-assisted execution of arbitrary commands caused by faulty default config
 Content-Type: text/plain; charset=utf-8
 
-Upstream commit:
-http://git.kernel.org/linus/fb7e2399ec17f1004c0e0ccfd17439f8759ede01
+Please use CVE-2010-2809
 
-Description from the commit:
-"The server side sets IPV6_RECVPKTINFO on a listening socket, and the 
-client side just sends a message to the server.  Then the kernel panic 
-occurs on the server.
+Thanks.
 
-This problem happens because a skb is forcibly freed in
-tcp_rcv_state_process().
+-- 
+    JB
 
-When a socket in listening state(TCP_LISTEN) receives a syn packet, then
-tcp_v6_conn_request() will be called from tcp_rcv_state_process().  If 
-the tcp_v6_conn_request() successfully returns, the skb would be 
-discarded by __kfree_skb().
 
-However, in case of a listening socket which was already set 
-IPV6_RECVPKTINFO, an address of the skb will be stored in treq->pktopts 
-and a ref count of the skb will be incremented in tcp_v6_conn_request(). 
-  But, even if the skb is still in use, the skb will be freed.  Then 
-someone still using the freed skb will cause the kernel panic."
+----- "Alex Legler" <a3li@...too.org> wrote:
 
-Triggering this could result in a general protection fault.
-
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=577711
-
-Thanks, Eugene
+> Please assign a CVE for the following issue:
+> 
+> "With shell code in hyperlinks on a page, one of the sample
+> (uzbl-core)
+> resp. default (uzbl-browser) button bindings (binding for
+> mousebutton2)
+> would execute this code. This commit fixes that issue.
+> Note that just upgrading your uzbl is not enough. If you have an
+> existing config, the change will not be automatically applied. So be
+> sure you have this change in your config."
+> 
+> Source: http://www.uzbl.org/news.php?id=29
+> Upstream bug:
+> http://www.uzbl.org/bugs/index.php?do=details&task_id=240
+> 
+> Thanks,
+> Alex
+> 
+> -- 
+> Alex Legler | Gentoo Security / Ruby
+> a3li@...too.org | a3li@...ber.ccc.de
