@@ -1,62 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/28/8
-Message-ID: <1933458419.1381551277757458425.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 28 Jun 2010 16:37:38 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request -- Drupal v6.16 / v5.22 SA-CORE-2010-001
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/09/8
+Message-Id: <20100810.015115.356903314.wl@gnu.org>
+Date: Tue, 10 Aug 2010 01:51:15 +0200 (CEST)
+From: Werner LEMBERG <wl@....org>
+To: robert@...ecki.net
+Cc: oss-security@...ts.openwall.com, bthomas@...le.com, bressers@...hat.com
+Subject: Re: CVE Request -- FreeType -- Memory corruption flaw by processing certain LWFN fonts + three more
 Content-Type: text/plain; charset=utf-8
 
-As best as I can tell, none of these have CVE ids. (sorry for missing these)
 
-Here goes.
-
------ "Henri Salo" <henri@...v.fi> wrote:
-
-> On Mon, 08 Mar 2010 20:36:55 +0100
-> Jan Lieskovsky <jlieskov@...hat.com> wrote:
+>>> So these issues are going to be addressed in upcoming 2.4.3, right?
+>>> They still affect 2.4.2?
+>>
+>> All of these issues are fixed in 2.4.2 already.
 > 
-> > Hi Steve, vendors,
-> > 
-> >    multiple security issues have been addressed within
-> > SA-CORE-2010-001:
-> > 
-> > * Installation cross site scripting
-
-CVE-2010-2250
-
-> > * Open redirection
-
-CVE-2010-2471
-
-> > * Locale module cross site scripting
-
-CVE-2010-2472
-
-> > * Blocked user session regeneration
-
-CVE-2010-2473
-
-> > References:
-> >    [1] http://drupal.org/node/731710
-> >    [2]
-> > http://lists.fedoraproject.org/pipermail/package-announce/2010-March/036472.html
-
-> > [3]
-> > http://lists.fedoraproject.org/pipermail/package-announce/2010-March/036619.html
-
-> > [4]
-> > http://lists.fedoraproject.org/pipermail/package-announce/2010-March/036583.html
-
-> > 
-> > Could you allocate CVE ids for these?
-> > 
+> Thanks,
 > 
-> Did this get CVE-identifiers?
+> I've added
 > 
+> https://savannah.nongnu.org/bugs/index.php?30719
+> 
+> which is offspring of https://savannah.nongnu.org/bugs/index.php?30657
 
-Thanks.
+This looks like a pure 64bit issue, and I don't have access to such a
+machine which makes debugging very hard for me :(
 
--- 
-    JB
+Any help is greatly appreciated.
+
+
+    Werner
