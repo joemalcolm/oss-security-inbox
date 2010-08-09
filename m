@@ -1,37 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/10/3
-Message-ID: <1795978644.998521292013527646.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 10 Dec 2010 15:38:47 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com, Petr Matousek <pmatouse@...hat.com>
-Cc: coley@...us.mitre.org
-Subject: Re: Subject: CVE request: kernel: install_special_mapping skips security_file_mmap check
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/09/5
+Message-ID: <AANLkTi=vgt9oVY1=udE26Jm1Kx_JmfwuOsAvdHUfndGm@mail.gmail.com>
+Date: Mon, 9 Aug 2010 22:03:10 +0200
+From: Robert Święcki <robert@...ecki.net>
+To: oss-security@...ts.openwall.com
+Cc: bthomas@...le.com, bressers@...hat.com, Werner LEMBERG <wl@....org>
+Subject: Re: CVE Request -- FreeType -- Memory corruption flaw  by processing certain LWFN fonts + three more
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-4346
+On Mon, Aug 9, 2010 at 7:03 PM, Werner LEMBERG <wl@....org> wrote:
+>> So these issues are going to be addressed in upcoming 2.4.3, right?
+>> They still affect 2.4.2?
+>
+> All of these issues are fixed in 2.4.2 already.
 
-Thanks.
+Thanks,
+
+I've added
+
+https://savannah.nongnu.org/bugs/index.php?30719
+
+which is offspring of https://savannah.nongnu.org/bugs/index.php?30657
 
 -- 
-    JB
-
-
------ "Petr Matousek" <pmatouse@...hat.com> wrote:
-
-> "The install_special_mapping routine (used, for example, to setup the
-> vdso)
-> skips the security check before insert_vm_struct, allowing a local
-> attacker to
-> bypass the mmap_min_addr security restriction by limiting the
-> available pages
-> for special mappings."
-> 
-> Credit: Tavis Ormandi
-> 
-> Reference:
-> https://lkml.org/lkml/2010/12/9/222
-> https://bugzilla.redhat.com/show_bug.cgi?id=662189
-> 
-> Thanks,
-> --
-> Petr Matousek / Red Hat Security Response Team
+Robert Święcki
