@@ -1,24 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/06/3
-Message-ID: <4CFC4B77.6000600@redhat.com>
-Date: Mon, 06 Dec 2010 10:33:27 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/09/6
+Message-ID: <AANLkTi=kpBvQUdJg6ixLA=uspsxSq7qY62xZrt3nqmzM@mail.gmail.com>
+Date: Mon, 9 Aug 2010 17:36:27 -0600
+From: Kurt Seifried <kurt@...fried.org>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: igb panics when receiving tag vlan packet
+Subject: CVE Request - ZNC
 Content-Type: text/plain; charset=utf-8
 
-If igb's SR-IOV and promiscuous mode are enabled and the interface 
-receives a tag VLAN packet, this will result in a null pointer 
-dereference. To fix this, we will backport upstream commit 31b24b95 to 
-ensure that vlan_gro_receive is only used if vlans have been registered 
-to the adapter structure.
+Vincent Danen      2010-08-09 17:44:43 EDT
 
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=660188
-https://bugzilla.kernel.org/show_bug.cgi?id=15582
+An out-of-range flaw was found in znc where if it received a "PING" from a
+client without an argument, std::string would throw a std::out_of_range
+exception which killed znc.  This is fixed in subversion [1].
 
-Upstream commit:
-http://git.kernel.org/linus/31b24b95
+Some unsafe substr() calls were fixed as well.  These are of lesser impact
+because a valid login is required in order to cause a std::out_of_range
+exception.  This is also fixed in subversion [2].
 
-Thanks, Eugene
+[1] http://znc.svn.sourceforge.net/viewvc/znc?view=revision&revision=2093
+[2] http://znc.svn.sourceforge.net/viewvc/znc?view=revision&revision=2095
+
+http://en.znc.in/wiki/ZNC
+https://bugzilla.redhat.com/show_bug.cgi?id=622601
+https://bugzilla.redhat.com/show_bug.cgi?id=622600
+
+
+-- 
+Kurt Seifried
+kurt@...fried.org
+tel: 1-703-879-3176
