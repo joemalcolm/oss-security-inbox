@@ -1,62 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/15/2
-Message-ID: <4B79880A.5040500@redhat.com>
-Date: Mon, 15 Feb 2010 18:44:42 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-CC: "Steven M. Christey" <coley@...us.mitre.org>, Thomas Waldmann <tw-public@....de>
-Subject: CVE Request -- MoinMoin -- 1.8.7
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/09/4
+Message-Id: <20100809.190349.434425154.wl@gnu.org>
+Date: Mon, 09 Aug 2010 19:03:49 +0200 (CEST)
+From: Werner LEMBERG <wl@....org>
+To: bthomas@...le.com
+Cc: bressers@...hat.com, oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- FreeType -- Memory corruption flaw by processing certain LWFN fonts + three more
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve, vendors,
+> So these issues are going to be addressed in upcoming 2.4.3, right?
+> They still affect 2.4.2?
 
-   multiple security issues have been reported against
-different versions of MoinMoin -- complete list here:
-   [1] http://moinmo.in/SecurityFixes (part moin 1.9.1)
+All of these issues are fixed in 2.4.2 already.
 
-Yesterday (2010-02-14) MoinMoin-1.8.7 was released:
-   [2] http://moinmo.in/
 
-fixing "major security issues in miscellaneous parts of moin":
-   [3] http://moinmo.in/MoinMoinRelease1.8
-   [4] http://hg.moinmo.in/moin/1.8/raw-file/1.8.7/docs/CHANGES
-
- From what I can tell, when mapping [4] to [1] the:
-   a, "A major security issue was discovered that could affect
-       all moin versions 1.5.0 up to and including 1.9.1. For now,
-       you can avoid the issue by not having any user names in your
-       superuser list" was fixed.
-   b, "Exclude (disable) xmlrpc and SyncPages actions" -- this was
-       'only' disabled -- "Improved package security:
-       cfg.packagepages_actions_excluded excludes unsafe or otherwise
-       questionable package actions by default now.".
-       Though there are xmlrpc related fixes in 1.8.7:
-       "xmlrpc:
-        * Process attachname in get/putAttachment similarly.
-        * revertPage: convert pagename to internal representation." --
-        Thomas are these also security related fixes?
-
-   c, " Do not use OpenID auth code" -- not sure about state of this.
-
-Also, Changes file for MoinMoin 1.9.1 mentions:
-   [5] http://hg.moinmo.in/moin/1.9/raw-file/1.9.1/docs/CHANGES
-
-    d, "* Fixed sys.argv security issue." -- not sure, if this is
-       v1.9.1 specific or affects also prior versions of MoinMoin.
-
-Other references:
-   [6] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=569975
-
-Last message in:
-   [7] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=569975#10
-suggests only the "superuser list" issue was fixed in 1.8.7
-and more fixes are about to come -- "<ThomasWaldmann>
-1.9.2 planned in about 1 or 2 weeks".
-
-Cc-ed Thomas Waldmann on this post, so he can detail
-what was fixed to know, how many CVE identifiers are needed / sufficient
-for MoinMoin of version v.1.8.7.
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+    Werner
