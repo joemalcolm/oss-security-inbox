@@ -1,26 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/29/1
-Message-ID: <4C29560D.5000303@kernel.sg>
-Date: Tue, 29 Jun 2010 10:10:21 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: kernel: ethtool: kernel buffer overflow in ETHTOOL_GRXCLSRLALL
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/09/1
+Message-ID: <AANLkTi=U6tn1xr3UpHUfeE_LdV4S7qpAfBzZQeWyOHST@mail.gmail.com>
+Date: Mon, 9 Aug 2010 10:17:45 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: oss-security@...ts.openwall.com, coley <coley@...re.org>
+Subject: CVE request: Lynx
 Content-Type: text/plain; charset=utf-8
 
-FYI, "On a 32-bit machine, info.rule_cnt >= 0x40000000 leads to integer 
-overflow and the buffer may be smaller than needed.  Since 
-ETHTOOL_GRXCLSRLALL is unprivileged, this can presumably be used for at 
-least denial of service." This was introduced in v2.6.27-rc1 via 
-upstream commit 0853ad66. Also see commit 59089d8d.
+The Lynx browser is vulnerable to a heap overflow when parsing
+malformed URLs with a "%" character in the last two characters of the
+hostname.
 
 Reference:
-http://thread.gmane.org/gmane.linux.network/164869
-https://bugzilla.redhat.com/show_bug.cgi?id=608950
+https://bugs.launchpad.net/ubuntu/+source/lynx-cur/+bug/613254
 
-I'm not requesting a CVE name for this as it did not affect any of our 
-Red Hat supported Linux kernels.
-
-Thanks, Eugene
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+-Dan
