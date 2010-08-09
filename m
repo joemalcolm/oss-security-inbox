@@ -1,37 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/25/1
-Message-ID: <1459656894.1199601277483143500.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 25 Jun 2010 12:25:43 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/09/7
+Message-ID: <AANLkTinOn79QjN4KXpyj+efyVtQo=kiZ2DmXa+nEtWEd@mail.gmail.com>
+Date: Mon, 9 Aug 2010 17:38:59 -0600
+From: Kurt Seifried <kurt@...fried.org>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: timekeeping: Prevent oops when GENERIC_TIME=n
+Subject: Re: CVE Request - ZNC
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-2243 for this.
+Sorry forgot to mention it's version 0.092 (currently the latest) is affected.
 
-Thanks.
+On Mon, Aug 9, 2010 at 5:36 PM, Kurt Seifried <kurt@...fried.org> wrote:
+> Vincent Danen      2010-08-09 17:44:43 EDT
+>
+> An out-of-range flaw was found in znc where if it received a "PING" from a
+> client without an argument, std::string would throw a std::out_of_range
+> exception which killed znc.  This is fixed in subversion [1].
+>
+> Some unsafe substr() calls were fixed as well.  These are of lesser impact
+> because a valid login is required in order to cause a std::out_of_range
+> exception.  This is also fixed in subversion [2].
+>
+> [1] http://znc.svn.sourceforge.net/viewvc/znc?view=revision&revision=2093
+> [2] http://znc.svn.sourceforge.net/viewvc/znc?view=revision&revision=2095
+>
+> http://en.znc.in/wiki/ZNC
+> https://bugzilla.redhat.com/show_bug.cgi?id=622601
+> https://bugzilla.redhat.com/show_bug.cgi?id=622600
+>
+>
 
------ "Eugene Teo" <eugeneteo@...nel.sg> wrote:
 
-> "Aaro Koskinen reported an issue in kernel.org bugzilla #15366, where
-> on 
-> non-GENERIC_TIME systems, accessing 
-> /sys/devices/system/clocksource/clocksource0/current_clocksource
-> results 
-> in an oops.
-> 
-> It seems the timekeeper/clocksource rework missed initializing the 
-> curr_clocksource value in the !GENERIC_TIME case."
-> 
-> Upstream commit:
-> http://git.kernel.org/linus/ad6759fbf35d104dbf573cd6f4c6784ad6823f7e
-> 
-> I believe distros are using GENERIC_TIME=y, at least this is the case
-> in 
-> our supported kernels.
-> 
-> Thanks, Eugene
-> -- 
-> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i);
-> }
+-- 
+Kurt Seifried
+kurt@...fried.org
+tel: 1-703-879-3176
