@@ -1,38 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/08/8
-Message-ID: <20100908114731.GA11762@grsecurity.net>
-Date: Wed, 8 Sep 2010 07:47:31 -0400
-From: Brad Spengler <spender@...ecurity.net>
-To: Sebastian Krahmer <krahmer@...e.de>
-Cc: oss-security@...ts.openwall.com, Jon Oberheide <jon@...rheide.org>, security@...nel.org
-Subject: Re: Re: [Security] Re:  /proc infoleaks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/10/2
+Message-ID: <AANLkTinM9cu4Hjqm=ygXim9wLhaXWAs8SQ8umRF75Rdt@mail.gmail.com>
+Date: Tue, 10 Aug 2010 10:52:29 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
+To: oss-security@...ts.openwall.com
+Subject: CVE ID Request For 2Wire Broadband Router Session Hijacking  Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-> I agree that distros also have to do some homework there,
-> but there are things that we cant just do via init harden scripts.
-> Take /proc/pid/stack. Other files like my prefered friend /proc/net/netlink
-> gives info that allows exploitation-deluxe if you overwrite your socket destructor.
+Hi
 
-That's true too -- I was just talking about the ones mentioned in the 
-original post.  /proc/pid/stack goes away when you disable 
-CONFIG_STACKTRACE btw, but the best solution going forward (as a lot of 
-these and other infoleaks have been added recently through new features) 
-is this: the internals of the kernel should be a black box to 
-unprivileged processes.  This needs to be considered by the people who 
-write and approve these new features that push out all kinds of 
-information via /proc and elsewhere.  If it doesn't get considered 
-before it goes into the kernel, then we have to play this game after the 
-fact of staying compatible with apps that now depend on that behavior.
+Let us request CVE ID for
+http://seclists.org/fulldisclosure/2010/Aug/95
 
-> Sure. It was just a proposal since I felt nobody really cared about
-> the low hanging fruits. It wont make your system rocket proof but
-> it makes some head-scratching for exploit developers which is
-> all you need if you make them stuck in doing that.
 
-Be careful about assuming head-scratching -- if something can be worked 
-around (like in the kallsyms case), it only takes one person.  Everyone 
-else can reuse that work without any head-scratching.
+Thanks for your time.
 
--Brad
 
-Download attachment "signature.asc" of type "application/pgp-signature" (198 bytes)
+---------------------------------
+Best regards,
+YGN Ethical Hacker Group
+Yangon, Myanmar
+http://yehg.net
+Our Lab | http://yehg.net/lab
+Our Directory | http://yehg.net/hwd
