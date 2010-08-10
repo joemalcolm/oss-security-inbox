@@ -1,14 +1,15 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/08/13
-Message-ID: <1404259840.277251289249903379.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 8 Nov 2010 15:58:23 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/10/4
+Message-ID: <1166278498.1082231281476050522.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 10 Aug 2010 17:34:10 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
 Cc: coley <coley@...re.org>
-Subject: Re: CVE Request: PHP 5.3.3, libmbfl, mb_strcut
+Subject: Re: Re: CVE Request - ZNC
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-4156
+Please use CVE-2010-2812 for the PING issue
+Please use CVE-2010-2934 for the substr() issues.
 
 Thanks.
 
@@ -16,49 +17,40 @@ Thanks.
     JB
 
 
------ "Pierre Joye" <pierre.php@...il.com> wrote:
+----- "Kurt Seifried" <kurt@...fried.org> wrote:
 
-> hi,
+> Sorry forgot to mention it's version 0.092 (currently the latest) is
+> affected.
 > 
-> Mateusz reported the following issue earlier today.
-> 
-> Updated patch, tests pass now: http://pastie.org/1279682
-> 
-> Information disclosure flaw. PHP 5.2 is not affected (newer version of
-> libmbfl).
-> 
-> PHP 5.3 and trunk uses libmbfl 1.1.0.
-> 
-> 
-> ---------- Forwarded message ----------
-> From: Mateusz Kocielski <m.kocielski@...il.com>
-> Date: Sun, Nov 7, 2010 at 6:47 PM
-> Subject: mb_strcut
-> To: security@....net
-> 
-> 
-> Hello,
-> 
->  I've found flaw in the mb_strcut function, php doesn't the length
-> parameter passed to the function in all possible cases.
-> 
->  Simple exploitation:
-> 
-> <?php
-> $b = "bbbbbbbbbbb";
-> str_repeat("THIS IS A SECRET MESSAGE, ISN'T IT?", 1);
-> $var3 = mb_strcut($b, 0, 1000);
-> echo $var3;
-> ?>
-> 
-> Pierre suggested the following patch:
-> http://pastie.org/pastes/1279428/text . I've tested it with your test
-> suite, one of the mbstring related test cases failed: Bug #49354
-> (mb_strcut() cuts wrong length when offset is in the middle of a
-> multibyte character) [ext/mbstring/tests/bug49354.phpt]
+> On Mon, Aug 9, 2010 at 5:36 PM, Kurt Seifried <kurt@...fried.org>
+> wrote:
+> > Vincent Danen      2010-08-09 17:44:43 EDT
+> >
+> > An out-of-range flaw was found in znc where if it received a "PING"
+> from a
+> > client without an argument, std::string would throw a
+> std::out_of_range
+> > exception which killed znc.  This is fixed in subversion [1].
+> >
+> > Some unsafe substr() calls were fixed as well.  These are of lesser
+> impact
+> > because a valid login is required in order to cause a
+> std::out_of_range
+> > exception.  This is also fixed in subversion [2].
+> >
+> > [1]
+> http://znc.svn.sourceforge.net/viewvc/znc?view=revision&revision=2093
+> > [2]
+> http://znc.svn.sourceforge.net/viewvc/znc?view=revision&revision=2095
+> >
+> > http://en.znc.in/wiki/ZNC
+> > https://bugzilla.redhat.com/show_bug.cgi?id=622601
+> > https://bugzilla.redhat.com/show_bug.cgi?id=622600
+> >
+> >
 > 
 > 
 > -- 
-> Pierre
-> 
-> @pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+> Kurt Seifried
+> kurt@...fried.org
+> tel: 1-703-879-3176
