@@ -1,37 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/17/1
-Message-ID: <20100217102946.GB4757@suse.de>
-Date: Wed, 17 Feb 2010 11:29:46 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE request: kernel information leak via userspace USB interface
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/10/3
+Message-ID: <1384918288.1072801281471791306.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 10 Aug 2010 16:23:11 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE ID Request For 2Wire Broadband Router Session Hijacking  Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-While programming a USB device using libusb I found that a usb read from
-the device returned data it should not.
+----- "YGN Ethical Hacker Group" <lists@...g.net> wrote:
 
-Looking into the code showed that in USB commands that fail during
-device communication (with e.g. USB timeouts) return the transfer buffer
-unmodified back to userspace.
+> Hi
+> 
+> Let us request CVE ID for
+> http://seclists.org/fulldisclosure/2010/Aug/95
+> 
+> 
 
-This transfer buffer is allocated with kmalloc before and not initialized,
-so userspace gets to see recently freed data of the kernel.
+I'm not going to give this an ID. It's not for an open source product,
+which is hte purpose of this this.
 
-Greg, Linus and Alan produced a fix that was commited to mainline tonight:
+Sorry.
 
-commit d4a4683ca054ed9917dfc9e3ff0f7ecf74ad90d6
-(full commit attached to the mail)
+I'm adding MITRE to the CC list, they can assign this.
 
-The issue seems to have been in the kernel for the whole 2.6 series (oldest kernel
-I looked at was 2.6.5, I tested down to 2.6.25).
-
-Access to USB userspace devices either requires root access or desktop user access
-via udev/hal ACLs on non-mass-storage Digital Cameras or Media Players. (So the
-desktop user needs to plugin such a ACL getting device before being able 
-to read the memory).
-
-Ciao, Marcus
-
-View attachment "foo.pat" of type "text/plain" (1688 bytes)
+-- 
+    JB
