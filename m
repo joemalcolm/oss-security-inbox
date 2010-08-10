@@ -1,50 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/20/2
-Message-Id: <201009201612.49964.ludwig.nussel@suse.de>
-Date: Mon, 20 Sep 2010 16:12:48 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/10/1
+Message-ID: <4C60B2EB.1020209@windriver.com>
+Date: Tue, 10 Aug 2010 10:01:15 +0800
+From: Hui Zhu <hui.zhu@...driver.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: epiphany not checking ssl certs
+CC: "Steven M. Christey" <coley@...us.mitre.org>, bressers@...hat.com
+Subject: Re: kernel: [PARISC] led.c - fix potential stack overflow in led_proc_write()
 Content-Type: text/plain; charset=utf-8
 
-Tomas Hoger wrote:
-> On Fri, 17 Sep 2010 14:19:03 +0200 Hanno Böck wrote:
+Hi,
+
+Does this issue got the id?
+
+Thanks,
+Hui
+
+Josh Bressers:
+> Steve,
 > 
-> > http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=564690
-> > http://blog.fefe.de/?ts=b26ca29d
-> > 
-> > Did this get a CVE yet?
+> This one will need a 2007 ID.
 > 
-> Any specific reason to only give CVE to epiphany if you want to start
-> giving CVEs for this kind of flaw?  IIRC, not long ago, no
-> WebKitGtk-based browser I tried verified server SSL certificates and
-> all connected without any complaint or indication that SSL certificate
-> was not verified.  None seemed to offer any configuration option to
-> enable certificate checking.  I guess there may be / was some
-> limitations on WebKitGtk side that can explain this.
+> Thanks.
+> 
 
-Looking at what we have on our Distros I found three different kinds
-of behavior:
-1) epiphany 1.8.5 with mozilla engine raises a popup window if the
-   certificate cant't be verified. The status bar displays a broken
-   lock icon if one chooses to continue anyways.
-2) epiphany 2.28 changes address bar color, displays a lock icon and
-   connects just fine even if it can't verify certificates. The code
-   simply uses a strcmp for 'https' as trigger.
-3) epiphany 2.30 shows the broken lock icon as described in the
-   debian bug report
-
-While the modest security indicators of 3) are probably not the most
-smartest way to tell the user about a potential problem the real
-danger is 2). That version of epiphany really is broken. If a
-program doesn't implement the necessary checks it should at the very
-least not display common https security indicators either.
-
-cu
-Ludwig
-
--- 
- (o_   Ludwig Nussel
- //\   
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
