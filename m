@@ -1,28 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/30/11
-Message-ID: <AANLkTikWFUc8zEyYoB-4hoiNC6UIo5iGKZ7zFcUfZNk_@mail.gmail.com>
-Date: Wed, 30 Jun 2010 18:33:48 +0200
-From: Pierre Joye <pierre.php@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: Stefan Esser's 0day PHP SysCan flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/11/2
+Message-Id: <201008111702.54361.ludwig.nussel@suse.de>
+Date: Wed, 11 Aug 2010 17:02:53 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
+To: "oss-security" <oss-security@...ts.openwall.com>
+Subject: CVE Request: openssl double free
 Content-Type: text/plain; charset=utf-8
 
-hi,
+Hi,
 
-On Wed, Jun 30, 2010 at 5:32 PM, Raphael Geissert <geissert@...ian.org> wrote:
-> Raphael Geissert wrote:
->> Here's a public, limited, explanation:
->> http://php-security.org/2010/06/25/mops-2010-061-php-splobjectstorage-
->> deserialization-use-after-free-vulnerability/
->
-> And the fix by upstream:
-> http://svn.php.net/viewvc?view=revision&revision=300843
+Georgi Guninski found a double free issue in openssl's client implementation:
+http://www.mail-archive.com/openssl-dev@openssl.org/msg28043.html
+The affected code also is in pre 1.0 versions but only 1.0 uses ECDH
+for ssl by default AFAICT.
 
-And Stefan confirmed that the fix is correct (via one of his colleague
-at SektionsEins).
+cu
+Ludwig
 
-Cheers,
 -- 
-Pierre
-
-@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+ (o_   Ludwig Nussel
+ //\   
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
