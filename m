@@ -1,29 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/31/1
-Message-ID: <4BB2A1ED.90206@redhat.com>
-Date: Wed, 31 Mar 2010 09:14:21 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/11/4
+Message-ID: <2038642063.91381281557630738.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 11 Aug 2010 16:13:50 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: tipc: Fix oops on send prior to entering networked mode
+Cc: Caolan McNamara <caolanm@...hat.com>, David Tardon <dtardon@...hat.com>, Malte Timmermann <malte.timmermann@...cle.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- OpenOffice.org [two ids]: 1, integer truncation error 2, short integer overflow
 Content-Type: text/plain; charset=utf-8
 
-On 03/31/2010 03:20 AM, Steven M. Christey wrote:
->
-> On Tue, 30 Mar 2010, Eugene Teo wrote:
->
->> TIPC - Transparent Inter-Process Communication protocol
->>
->> Discussion:
->> http://git.kernel.org/?p=linux/kernel/git/davem/net-2.6.git;a=commit;h=d0021b252eaf65ca07ed14f0d66425dd9ccab9a6
->>
->
-> Use CVE-2010-1187, to be filled in later.
->
-> What version is affected? I'm assuming at least 2.6.33.
 
-All kernel versions since v2.6.16-rc1.
+----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
 
-Eugene
+> Hi Steve, vendors,
+> 
+>    two security flaws have been reported against OpenOffice.org's
+> Impress tool:
+>      [1] http://securityevaluators.com/files/papers/CrashAnalysis.pdf
+> 
+> A, an integer truncation error, leading to heap-based buffer overflow
+> when
+>     processing dictionary property items of the input *.ppt file:
+> 
+>     References:
+>       [2] https://bugzilla.redhat.com/show_bug.cgi?id=622529
+>       [3] http://secunia.com/advisories/40775/
+>       [4]
+> http://securityevaluators.com/files/papers/CrashAnalysis.pdf
+>       [5]
+> http://www.openoffice.org/servlets/ReadMsg?list=dev&msgNo=27690
+
+Use CVE-2010-2935 for this one.
+
+
+> 
+> B, a short integer overflow, leading to heap-based buffer overflow,
+> when processing
+>     *.ppt document with too big polygons
+> 
+>     References:
+>       [6] https://bugzilla.redhat.com/show_bug.cgi?id=622555
+>       [7] http://secunia.com/advisories/40775/
+>       [8]
+> http://securityevaluators.com/files/papers/CrashAnalysis.pdf
+>       [9]
+> http://www.openoffice.org/servlets/ReadMsg?list=dev&msgNo=27690
+> 
+
+Use CVE-2010-2936
+
+Thanks.
+
 -- 
-Eugene Teo / Red Hat Security Response Team
+    JB
