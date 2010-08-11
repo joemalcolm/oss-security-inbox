@@ -1,44 +1,103 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/08/2
-Message-ID: <4CAF3396.7070708@redhat.com>
-Date: Fri, 08 Oct 2010 17:07:02 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, Bill Janssen <bill.janssen@...il.com>, Andreas Hasenack <ahasenack@...ra.com.br>, Mads Kiilerich <mads@...lerich.com>
-Subject: CVE Request -- Mercurial --Doesn't verify subject Common Name properly
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/11/5
+Message-ID: <832334685.93091281558111049.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 11 Aug 2010 16:21:51 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com, remi@...lab.net
+Cc: Rémi Denis-Courmont <rem@...eolan.org>, coley <coley@...re.org>
+Subject: Re: CVE request: VideoLAN advisory 1004
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve, vendors,
+Please use CVE-2010-2937 for this.
 
-   a security flaw was found in the way Mercurial handled subject
-Common Name field of the provided certificate (the check
-if the commonName in the received certificate matches the
-requested hostname was not performed). An attacker, able
-to get a carefully-crafted certificate signed by a Certificate
-Authority could use the certificate during a man-in-the-middle
-attack and potentially confuse Mercurial into accepting it by
-mistake.
+Thanks.
 
-References:
-[1] http://mercurial.selenic.com/bts/issue2407
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=641373
-[3] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=598841
-Upstream patch:
-[4] http://selenic.com/repo/hg-stable/diff/f2937d6492c5/mercurial/url.py
+-- 
+    JB
 
-According to [1] the true reason for this problem is the new python SSL
-module implementation:
-[5] http://bugs.python.org/issue1589
-[6] http://svn.python.org/view?view=rev&revision=85321
 
-and as stated in:
-[7] http://bugs.python.org/issue1589#msg58472
+----- "Rémi Denis-Courmont" <rem@...eolan.org> wrote:
 
-it should be decision made by application designers, if the subject CN
-field will be checked despite of the python SSL module implementation.
-
-So could you allocate a CVE identifier for this issue(s)?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+> Hello,
+> 
+> Can I get a CVE number for this? Please CC me on replies.
+> 
+> http://www.videolan.org/security/sa1004.html
+> 
+> ----8<--------8<--------8<--------8<--------8<--------8<--------8<----
+> 
+> VideoLAN Security Advisory 1004
+> 
+> Summary           : Insufficient input validation in VLC TagLib
+> plugin
+> Date              : August 2011
+> Affected versions : VLC media player versions 1.1.2 down to 0.9.0
+> ID                : VideoLAN-SA-1004
+> CVE reference     : N/A
+> 
+> Details
+> 
+> VLC fails to perform sufficient input validation when trying to
+> extract some 
+> meta-informations about input media through ID3v2 tags. In the failure
+> case, 
+> VLC attempt dereference an invalid memory address, and a crash will
+> ensure.
+> 
+> Impact
+> 
+> In the failure case, VLC will dereference a memory address within the
+> first 
+> page of its process virtual memory. In normal conditions, and on most
+> 
+> operating systems, this will result in a segmentation fault (a general
+> 
+> protection fault on Windows), and the process will terminate
+> abruptly.
+> 
+> In most usage scenarii, this will only cause user annoyance.
+> 
+> Threat mitigation
+> 
+> Exploitation of this issue requires the user to include a file in its
+> playlist 
+> or to attempt to open it.
+> 
+> Workarounds
+> 
+> The user should refrain from opening files from untrusted third
+> parties or 
+> accessing untrusted remote sites (or disable the VLC browser plugins),
+> until 
+> the patch is applied.
+> 
+> Solution
+> 
+> VLC media player 1.1.3 [will address] this issue. Patches for VLC
+> media player 
+> 1.1.x and 1.0.x are available from the corresponding official VLC
+> source code 
+> repositories.
+> 
+> Credits
+> 
+> This vulnerability was reported by FortiGuard Labs.
+> 
+> References
+> 
+> The VideoLAN project
+>     http://www.videolan.org/ 
+> FortiGuard Labs
+>     http://www.fortinet.com/ 
+> Patch for VLC 1.1.2, 1.1.1, 1.1.0
+>     commit 24918843e57c7962e28fcb01845adce82bed6516 
+> Patch for VLC 1.0.6
+>     commit 22a22e356c9d93993086810b2e25b59b55925b3a 
+> 
+> ----8<--------8<--------8<--------8<--------8<--------8<--------8<----
+> 
+> Thanks in advance, best regards,
+> 
+> -- 
+> Rémi Denis-Courmont
+> http://git.remlab.net/cgi-bin/gitweb.cgi?p=vlc-courmisch.git;a=summary
