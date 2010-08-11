@@ -1,22 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/31/2
-Message-ID: <1275339534.3021.711.camel@new-desktop>
-Date: Mon, 31 May 2010 22:58:53 +0200
-From: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
-To: oss-security@...ts.openwall.com
-Subject: SFCB vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/11/1
+Message-ID: <4C627D67.9090007@redhat.com>
+Date: Wed, 11 Aug 2010 12:37:27 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, Caolan McNamara <caolanm@...hat.com>, David Tardon <dtardon@...hat.com>, Malte Timmermann <malte.timmermann@...cle.com>
+Subject: CVE Request -- OpenOffice.org [two ids]: 1, integer truncation error 2, short integer overflow
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi Steve, vendors,
 
-SFCB v1.3.8 fixes two remotely exploitable vulnerabilities (3001896 and
-3001915 in httpAdapter.c) :
-http://sblim.cvs.sourceforge.net/sblim/sfcb/ChangeLog?view=markup
+   two security flaws have been reported against OpenOffice.org's Impress tool:
+     [1] http://securityevaluators.com/files/papers/CrashAnalysis.pdf
 
-CVE-2010-1937 was privately assigned to entry 3001896 but I still don't
-have a CVE id for 3001915. Could you please assign one before I release
-the technical advisory ?
+A, an integer truncation error, leading to heap-based buffer overflow when
+    processing dictionary property items of the input *.ppt file:
 
-Regards,
-Nicolas Grégoire / Agarri
+    References:
+      [2] https://bugzilla.redhat.com/show_bug.cgi?id=622529
+      [3] http://secunia.com/advisories/40775/
+      [4] http://securityevaluators.com/files/papers/CrashAnalysis.pdf
+      [5] http://www.openoffice.org/servlets/ReadMsg?list=dev&msgNo=27690
 
+B, a short integer overflow, leading to heap-based buffer overflow, when processing
+    *.ppt document with too big polygons
+
+    References:
+      [6] https://bugzilla.redhat.com/show_bug.cgi?id=622555
+      [7] http://secunia.com/advisories/40775/
+      [8] http://securityevaluators.com/files/papers/CrashAnalysis.pdf
+      [9] http://www.openoffice.org/servlets/ReadMsg?list=dev&msgNo=27690
+
+Could you allocate CVE ids for these two issues?
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
