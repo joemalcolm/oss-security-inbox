@@ -1,24 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/02/8
-Message-ID: <20101102171028.GD10332@redhat.com>
-Date: Tue, 2 Nov 2010 11:10:28 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: utf-8 security issue in php
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/11/3
+Message-Id: <201008112254.04993.rem@videolan.org>
+Date: Wed, 11 Aug 2010 22:54:04 +0300
+From: "Rémi Denis-Courmont" <rem@...eolan.org>
+To: oss-security@...ts.openwall.com, remi@...lab.net
+Subject: CVE request: VideoLAN advisory 1004
 Content-Type: text/plain; charset=utf-8
 
-* [2010-11-02 16:35:25 +0100] Pierre Joye wrote:
+	Hello,
 
->On Tue, Nov 2, 2010 at 3:24 PM, Josh Bressers <bressers@...hat.com> wrote:
->
->> As best as I can tell, this only needs one ID. Please use CVE-2010-3870.
->
->Thanks, I updated the bug report and the NEWS file.
->
->Please note that only 5.3 and later contains this fix. 5.3.4 will have the fix.
+Can I get a CVE number for this? Please CC me on replies.
 
-Are you saying that 5.3 and later _need_ this fix?  I.e. that this
-doesn't affect earlier versions?  Can you clarify?  Thanks.
+http://www.videolan.org/security/sa1004.html
+
+----8<--------8<--------8<--------8<--------8<--------8<--------8<----
+
+VideoLAN Security Advisory 1004
+
+Summary           : Insufficient input validation in VLC TagLib plugin
+Date              : August 2011
+Affected versions : VLC media player versions 1.1.2 down to 0.9.0
+ID                : VideoLAN-SA-1004
+CVE reference     : N/A
+
+Details
+
+VLC fails to perform sufficient input validation when trying to extract some 
+meta-informations about input media through ID3v2 tags. In the failure case, 
+VLC attempt dereference an invalid memory address, and a crash will ensure.
+
+Impact
+
+In the failure case, VLC will dereference a memory address within the first 
+page of its process virtual memory. In normal conditions, and on most 
+operating systems, this will result in a segmentation fault (a general 
+protection fault on Windows), and the process will terminate abruptly.
+
+In most usage scenarii, this will only cause user annoyance.
+
+Threat mitigation
+
+Exploitation of this issue requires the user to include a file in its playlist 
+or to attempt to open it.
+
+Workarounds
+
+The user should refrain from opening files from untrusted third parties or 
+accessing untrusted remote sites (or disable the VLC browser plugins), until 
+the patch is applied.
+
+Solution
+
+VLC media player 1.1.3 [will address] this issue. Patches for VLC media player 
+1.1.x and 1.0.x are available from the corresponding official VLC source code 
+repositories.
+
+Credits
+
+This vulnerability was reported by FortiGuard Labs.
+
+References
+
+The VideoLAN project
+    http://www.videolan.org/ 
+FortiGuard Labs
+    http://www.fortinet.com/ 
+Patch for VLC 1.1.2, 1.1.1, 1.1.0
+    commit 24918843e57c7962e28fcb01845adce82bed6516 
+Patch for VLC 1.0.6
+    commit 22a22e356c9d93993086810b2e25b59b55925b3a 
+
+----8<--------8<--------8<--------8<--------8<--------8<--------8<----
+
+Thanks in advance, best regards,
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Rémi Denis-Courmont
+http://git.remlab.net/cgi-bin/gitweb.cgi?p=vlc-courmisch.git;a=summary
