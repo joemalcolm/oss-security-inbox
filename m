@@ -1,39 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/04/3
-Message-ID: <20100604224723.22075250@foo.fgeek.fi>
-Date: Fri, 4 Jun 2010 22:47:23 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/11/6
+Message-ID: <20100811203330.GA26195@openwall.com>
+Date: Thu, 12 Aug 2010 00:33:30 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Virii in the wild
+Subject: Re: CVE Request: openssl double free
 Content-Type: text/plain; charset=utf-8
 
-http: //ecard-gre etings-com.googlegrou ps.com/web/ecard.zip
+On Wed, Aug 11, 2010 at 05:02:53PM +0200, Ludwig Nussel wrote:
+> Georgi Guninski found a double free issue in openssl's client implementation:
+> http://www.mail-archive.com/openssl-dev@openssl.org/msg28043.html
+> The affected code also is in pre 1.0 versions but only 1.0 uses ECDH
+> for ssl by default AFAICT.
 
-ecard.zip
-8e4830ee84783c6fd17d4475cd1120f0
-75adc566ab7ee7fc06c19c01413ddb13c090406b
-0bdb420658f31cadad291ae497066e8f9227166a02976a548cdb5c57
+I took a brief look at the code.  ECDH was introduced somewhere between
+0.9.7 and 0.9.8.  0.9.7m doesn't have it (so it was never backported to
+those stable releases), 0.9.8 does.  The double-free bug, or at least
+the code being patched now, is already present in 0.9.8.
 
-ecard.exe
-ba8e39a695ea84767adb0b90f5973332
-73383ca43fc98fbba5d1358bebfeb9e09864d306
-9a995e18175cedcdb5c041fc96bd71cf6202b8534348664ccae179a9
+Here's the trivial patch:
 
-PC_protect.exe
-ae875123e2325a54249974eaf425697a
-411329f5eee7b35494e05d23919122671251343b
-f8d1df776592d7159be5ece59059a9fa76c47cf511dd49ed642cd5ac
+http://www.mail-archive.com/openssl-dev@openssl.org/msg28049.html
 
-https://anubis.iseclab.org/?action=result&task_id=1d65344c1a22298d4c91244f24710205c
-https://anubis.iseclab.org/?action=result&task_id=14865c640caefc854815769e2262e7297
-http://www.virustotal.com/analisis/b1d265068e42add36d161de63abcd09d461ba7598bc7bf2187843bcfb1db2e2a-1275679442
-http://www.virustotal.com/analisis/8a0d55265395aa8d947d012de267c808e9432d0c218e35210d735f2dd49bae86-1275679472
-http://virusscan.jotti.org/en/scanresult/e09e3c7d2a494edc53cc43005ab60c27fde134f7
-http://virusscan.jotti.org/en/scanresult/548e8b7a6995c70f3c79dcafbc33cd1d8ea0d3ef
+which should work for 0.9.8+ (applies cleanly to 0.9.8, with an offset)
+and is not needed for older versions.
 
-I already reported this to ClamAV, F-Secure and AVG. Contact me if you
-want the binaries.
-
-
-Best regards,
-Henri Salo
+Alexander
