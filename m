@@ -1,23 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/12/1
-Message-Id: <201008121704.05470.thomas@suse.de>
-Date: Thu, 12 Aug 2010 17:04:05 +0200
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/12/4
+Message-ID: <685446971.199481281634542595.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 12 Aug 2010 13:35:42 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: opera 10.61 fixes 3 security bugs
+Cc: coley <coley@...re.org>
+Subject: Re: CVE Request: openssl double free
 Content-Type: text/plain; charset=utf-8
 
-http://www.opera.com/docs/changelogs/unix/1061/
+Please use CVE-2010-2939 for this.
 
-* Fixed an issue where heap buffer overflow in HTML5 canvas could be used to 
-execute arbitrary code, as reported by Kuzzcc; see our advisory.
-* Fixed an issue where unexpected changes in tab focus could be used to run 
-programs from the Internet, as reported by Jakob Balle and Sven Krewitt of 
-Secunia; see our advisory.
-* Fixed an issue where news feed preview could subscribe to feeds without 
-interaction, as reported by Alexios Fakos; see our advisory.
-
+Thanks.
 
 -- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+    JB
+
+
+----- "Ludwig Nussel" <ludwig.nussel@...e.de> wrote:
+
+> Hi,
+> 
+> Georgi Guninski found a double free issue in openssl's client
+> implementation:
+> http://www.mail-archive.com/openssl-dev@openssl.org/msg28043.html
+> The affected code also is in pre 1.0 versions but only 1.0 uses ECDH
+> for ssl by default AFAICT.
+> 
+> cu
+> Ludwig
+> 
+> -- 
+>  (o_   Ludwig Nussel
+>  //\   
+>  V_/_  http://www.suse.de/
+> SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
