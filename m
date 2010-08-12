@@ -1,79 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/22/1
-Message-ID: <AANLkTikr_4tFN7Xo_MEPulcaI22EhBvde8SNhmid2myV@mail.gmail.com>
-Date: Sat, 22 May 2010 17:59:41 +0200
-From: Max Olsterd <max.olsterd@...il.com>
-To: Thijs Kinkhorst <thijs@...ian.org>
-Cc: oss-security@...ts.openwall.com, security-2010@...irrelmail.org
-Subject: Re: CVE Request for Horde and Squirrelmail
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/12/2
+Message-ID: <AANLkTikg43XowWKMFOnFyD2J6=m8+y-xvQk=v1ASBpDW@mail.gmail.com>
+Date: Thu, 12 Aug 2010 17:07:22 +0200
+From: Robert Święcki <robert@...ecki.net>
+To: Werner LEMBERG <wl@....org>
+Cc: oss-security@...ts.openwall.com, bthomas@...le.com, bressers@...hat.com
+Subject: Re: CVE Request -- FreeType -- Memory corruption flaw by processing certain LWFN fonts + three more
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Looks like it's been fixed with
+http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=a205b3ca85d2d78aac71ea3c1df104972031d6ad
 
-On Fri, May 21, 2010 at 10:44 AM, Thijs Kinkhorst <thijs@...ian.org> wrote:
+Thanks Werner, you're awesome when it comes to fixing security bugs.
 
-> Hi Max,
+On Tue, Aug 10, 2010 at 1:51 AM, Werner LEMBERG <wl@....org> wrote:
 >
-> On Thu, May 20, 2010 15:04, Max Olsterd wrote:
-> > Hi,
-> >
-> > Is there a CVE number available for the two 0-days exposed during Hack In
-> > The Box Dubai 2010 ?
+>>>> So these issues are going to be addressed in upcoming 2.4.3, right?
+>>>> They still affect 2.4.2?
+>>>
+>>> All of these issues are fixed in 2.4.2 already.
+>>
+>> Thanks,
+>>
+>> I've added
+>>
+>> https://savannah.nongnu.org/bugs/index.php?30719
+>>
+>> which is offspring of https://savannah.nongnu.org/bugs/index.php?30657
 >
-> > More info available on the slides of the corporate hackers who found the
-> > 0-days :
-> >
-> http://conference.hitb.org/hitbsecconf2010dxb/materials/D1%20-%20Laurent%20Oudot%20-%20Improving%20the%20Stealthiness%20of%20Web%20Hacking.pdf
-> > -> Squirrelmail: page 69 (post auth vuln)
+> This looks like a pure 64bit issue, and I don't have access to such a
+> machine which makes debugging very hard for me :(
 >
-> I don't think there's a CVE number available for the SquirrelMail "issue",
-> but I also highly doubt that it's actually a vulnerability.
->
-> What they basically assert is, that as an authenticated user using the
-> POP3 fetch mail plugin, you could repeatedly change the POP3 server
-> settings and as such could 'portscan' a remote target.
->
-> This seems just as much a vulnerability as that you could use telnet, or
-> fetchmail, or Thunderbird, to be a 'portscanner', as these all have the
-> option to change a remote server address at will. Or that having a shell
-> account at a system is a security vulnerability as you would be able to
-> write a bash script to repeatedly netcat to remote hosts. I don't buy
-> this.
->
-> Note that you need to be an authenticated user to do this.
+> Any help is greatly appreciated.
 >
 >
+>    Werner
+>
 
-On the one hand, you're totally right, it looks like something stupid. And
-this was exactly what I thought too, at least for the first seconds... What
-the hell with something like just scanning a target, as I can scan it myself
-??!!
 
-But someone gave me an explanation, with a live hacking demo, and it was
-awesome : this guy has been able to scan the LAN of an international ISP
-whereas there was a firewall blocking incoming packets to the LAN (DMZ +
-internal LAN) !!!
 
-How ?
-
-He had an account on the squirrelmail (ISP) and he has been able to create
-an exploit for the advisory we are talking about here. Thanks to that, he
-asked squirrelmail to scan some ranges of IP addresses that were private
-(10.x.x.x) and unreachable from the outside of this ISP (NAT). Then he found
-multiple interesting hosts with unpatched services, which gave him an idea
-of how secure it was for real when you are inside. He also used the DNS
-scanning attack that was described in the slides of HITB, by bruteforcing
-names, and he found other IP addresses (but a firewall blocked the scan so
-deep on the LAN).
-
-So, to me, it is a real vulnerability, because those webmails might be used
-to scan private networks, which was something I had not understood when I
-got an email from my boss asking me to look at this potential issue... And
-of course, I thought that it was something that could not happen on a real
-ISP. I was wrong: there is a real risk, even if we can keep on claiming
-there is no problem, so that it looks cool and secure.
-
-Cheers and thanks for your comment men,
-
-M@X
-
+-- 
+Robert Święcki
