@@ -1,63 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/17/5
-Message-ID: <AANLkTimp-a+psMOEp1ZMGVjihyELreAOeN__A0cRqjd1@mail.gmail.com>
-Date: Wed, 17 Nov 2010 20:29:28 +1100
-From: dave b <db.pub.mail@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/12/3
+Message-Id: <1281626393.12337.145.camel@TS-HQ-2>
+Date: Thu, 12 Aug 2010 17:19:53 +0200
+From: "Carsten H. Eiram" <che@...unia.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- Mercurial --Doesn't verify subject Common Name properly
+Subject: Re: opera 10.61 fixes 3 security bugs
 Content-Type: text/plain; charset=utf-8
 
-On 17 November 2010 19:40, Matthias Andree <matthias.andree@....de> wrote:
-> Am 16.11.2010 17:02, schrieb Marc Deslauriers:
->
->> Thanks for the clarification. Here are some more projects that need CVEs
->> for this issue:
->>
->> libcloud:
->> https://issues.apache.org/jira/browse/LIBCLOUD-55
->> https://bugs.launchpad.net/ubuntu/+source/libcloud/+bug/675217
->>
->> Checkbox:
->> https://bugs.launchpad.net/ubuntu/+source/checkbox/+bug/625076
->>
->> Bazaar:
->> https://bugs.edge.launchpad.net/bzr/+bug/651161
->
-> In the past, Charles Cazabon's getmail would have had to be added to the
-> list, but he didn't care and pointed fingers at the Python library
-> developers, and I'm not sure what the current shape of getmail 4 is, and
-> don't care sufficiently to look it up.
->
-> Getmail used to happily connect to sites that have expired certs, for
-> instance.
+Please note that CVE-2010-2576 is already assigned to the issue
+discovered by us.
 
-This is already rather boring. Can we keep this about what has a
-problem that people actually use and would be problematic (at risk) if
-the software was subject to a man in the middled attack.
+http://secunia.com/secunia_research/2010-110/
 
-I don't know about getmail, but offlineimap also has 'this problem'.
-See https://bugs.launchpad.net/ubuntu/+source/offlineimap/+bug/675120.
 
-Really 'the issue' is two fold:
-1. there is software which *should* check that the ssl connection is
-secure but don't even bother to do any kind of checking. (e.g.
-offlineimap)
-2. then is software which attempts to do the checks that the
-developers thought were sufficient but really were not enough (e.g.
-bzr, mercurial)
 
-If python blocks these problems in the ssl module and enforces the
-checks(all of them *that* it should be doing) by default in the
-various http (and other modules) then we can stop 'guessing' at what
-may have a problem.
-I would also like it if python did not have sslv2 enabled by default
-in the ssl module methods. [0]
-However, with openssl changing, this will also change afaik. [1]
+On Thu, 2010-08-12 at 17:04 +0200, Thomas Biege wrote:
+> http://www.opera.com/docs/changelogs/unix/1061/
+> 
+> * Fixed an issue where heap buffer overflow in HTML5 canvas could be used to 
+> execute arbitrary code, as reported by Kuzzcc; see our advisory.
+> * Fixed an issue where unexpected changes in tab focus could be used to run 
+> programs from the Internet, as reported by Jakob Balle and Sven Krewitt of 
+> Secunia; see our advisory.
+> * Fixed an issue where news feed preview could subscribe to feeds without 
+> interaction, as reported by Alexios Fakos; see our advisory.
+> 
+> 
+-- 
 
-I have created a new python issue at http://bugs.python.org/issue10442.
+Med venlig hilsen / Kind regards
 
-[0] - http://seclists.org/fulldisclosure/2010/Nov/138
-[1] - http://bugs.python.org/issue8322
 
---
-Suspicion always haunts the guilty mind.		-- Wm. Shakespeare
+Carsten H. Eiram
+Chief Security Specialist
+
+Secunia 
+Weidekampsgade 14 A
+DK-2300 Copenhagen S
+Denmark
+
+Phone  +45 7020 5144
+Fax    +45 7020 5145
+
