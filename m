@@ -1,39 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/16/13
-Message-ID: <4B9FCB33.1090108@stafford.uklinux.net>
-Date: Tue, 16 Mar 2010 18:17:23 +0000
-From: Brian Stafford <brian@...fford.uklinux.net>
-To: Ludwig Nussel <ludwig.nussel@...e.de>
-Cc: oss-security@...ts.openwall.com, libesmtp@...fford.uklinux.net, security@...ntu.com, Pawel Salek <pawsa@...ochem.kth.se>, jskarvad@...hat.com
-Subject: Re: CVE Request: libesmtp does not check NULL bytes in commonName
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/12/5
+Message-ID: <1461620600.215751281639493592.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 12 Aug 2010 14:58:13 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: RFC: squid: 	Fix free memory corruption and off-by-on error when comparing SNMP OIDs
 Content-Type: text/plain; charset=utf-8
 
-Ludwig Nussel wrote:
-> Brian Stafford wrote:
->   
->> Ludwig Nussel wrote:
->>     
->>> Brian Stafford wrote:
->>>   
->>>       
->>>> I think the best approach is to apply Pawel's patch as this is the 
->>>>         
->>> I must have missed that patch. Could you re-post it?
->>>   
->>>       
->> It's available at https://bugzilla.redhat.com/attachment.cgi?id=399131
->>     
->
-> Doesn't that lack a null byte check for subjAltNames?
->
-> cu
-> Ludwig
->
->   
-You're right.  I'll look over your patch again.  One small issue I have 
-is that declarations are interspersed with code which is not standard 
-pre-C99, although if speed is of the essence this can be ignored as I 
-will get an official libESMTP release out soon.
 
-Regards
-Brian
+----- "Thomas Biege" <thomas@...e.de> wrote:
+
+> Hello people,
+> does someone know if this bug has security implications. TIA!
+> 
+> http://www.squid-cache.org/Versions/v3/3.1/changesets/SQUID_3_1_5.html
+> http://www.squid-cache.org/Versions/v3/3.1/changesets/squid-3.1-10008.patch
+> 
+
+This is really two flaws. The first bit of the patch is an off by one on
+the loop that could overflow a heap buffer.
+
+>From looking at the code, I only see this function being called with static
+strings for the MIBs. I may be missing something, but it doesn't appear
+that arbitrary strings make it into this. I'm not sure if this can be
+exploted, or if it's just a bug someone noticed.
+
+The second flaw is an invalid free. I'm not sure if arbitrary data can make
+it into this, but with current glibc memory protections, this should be a
+DoS only.
+
+Both only seem to affect modern versions of squid. The code seems present
+in 3.1.4, but not 2.6.STABLE21 (these are two versions we ship).
+
+Have you mailed upstream at all?
+
+Thanks.
+
+-- 
+    JB
