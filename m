@@ -1,64 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/17/4
-Message-ID: <20100917092103.GW8591@core.inversepath.com>
-Date: Fri, 17 Sep 2010 11:21:03 +0200
-From: Andrea Barisani <lcars@...rt.org>
-To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
-Subject: [oCERT-2010-003] Free Simple CMS path sanitization errors
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/12/1
+Message-Id: <201008121704.05470.thomas@suse.de>
+Date: Thu, 12 Aug 2010 17:04:05 +0200
+From: Thomas Biege <thomas@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: opera 10.61 fixes 3 security bugs
 Content-Type: text/plain; charset=utf-8
 
+http://www.opera.com/docs/changelogs/unix/1061/
 
-#2010-003 Free Simple CMS path sanitization errors
+* Fixed an issue where heap buffer overflow in HTML5 canvas could be used to 
+execute arbitrary code, as reported by Kuzzcc; see our advisory.
+* Fixed an issue where unexpected changes in tab focus could be used to run 
+programs from the Internet, as reported by Jakob Balle and Sven Krewitt of 
+Secunia; see our advisory.
+* Fixed an issue where news feed preview could subscribe to feeds without 
+interaction, as reported by Alexios Fakos; see our advisory.
 
-Description:
-
-Free Simple CMS, an open source content management system, suffers from
-remote file inclusion vulnerabilities.
-
-Insufficient path sanitization on several query string parameters leads to
-inclusion of arbitrary files from remote sources, this could be exploited to
-execute arbitrary command or code.
-
-The vulnerable URLs are similar to the one referenced in a previously
-disclosed file inclusion vulnerability affecting the same version of the
-software (see References). It has been discovered that 'body', 'footer',
-'header', 'menu_left', 'menu_right' are also vulnerable to remote file
-inclusion.
-
-Affected version:
-
-Free Simple CMS <= 1.0
-
-Fixed version:
-
-Free Simple CMS, N/A
-
-Credit: vulnerability report received from Evan Pitstick, SecureWorks.
-
-CVE: N/A
-
-Timeline:
-
-2010-08-20: vulnerability report received
-2010-08-22: contacted freesimplecms maintainer
-2010-08-24: maintainer replies, vulnerability report is provided
-2010-09-13: due to lack of feedback oCERT asks reporter to disclose the
-            issue
-2010-09-14: reporter agrees to disclosure
-2010-09-17: oCERT advisory published
-
-References:
-http://packetstormsecurity.org/1008-exploits/freesimplesoftware-rfi.txt
-http://secunia.com/advisories/41001
-http://osvdb.org/67329
-
-Permalink:
-http://www.ocert.org/advisories/ocert-2010-003.html
 
 -- 
-Andrea Barisani |                Founder & Project Coordinator
-          oCERT | Open Source Computer Emergency Response Team
-
-<lcars@...rt.org>                         http://www.ocert.org
- 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
-        "Pluralitas non est ponenda sine necessitate"
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
