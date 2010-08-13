@@ -1,32 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/24/3
-Message-ID: <20100624153827.31d04d0e@redhat.com>
-Date: Thu, 24 Jun 2010 15:38:27 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: dan.j.rosenberg@...il.com
-Subject: Re: CVE requests: LibTIFF
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/13/2
+Message-ID: <1281695480.13980.53.camel@henriknordstrom.net>
+Date: Fri, 13 Aug 2010 12:31:20 +0200
+From: Henrik Nordström <henrik@...riknordstrom.net>
+To: Thomas Biege <thomas@...e.de>
+Cc: squid-bugs@...id-cache.org, oss-security@...ts.openwall.com
+Subject: Re: RFC: squid: Fix free memory corruption and off-by-on error when comparing SNMP OIDs
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 24 Jun 2010 09:16:20 -0400 Dan Rosenberg wrote:
+It's just bugs in the snmp initialization code and not considered a
+security issue. But the invalid free may result in free heap corruption
+(subject to quality of malloc implementation) which may then cause
+stability issues later on. Both issues were introduced in 3.1.4 and
+found in an project internal code quality audit.
 
-> >> 1.  Out-of-bounds read in TIFFExtractData() may result in
-> >> application crash (no reference, fixed upstream).  Reported by Dan
-> >> Rosenberg.
-> >
-> > Do you have any info on this?  I don't see anything obviously
-> > related in changelog.  TIFFExtractData itself and all its uses seem
-> > unchanged for years.
+Regards
+Henrik Nordström
+Squid HTTP Proxy project
+
+fre 2010-08-13 klockan 09:00 +0200 skrev Thomas Biege:
+> Hello project maintainers,
+> we stumbled over two bugs in your last release because they sound like
+> security vulnerabilities. Can you shed some light on them for us please?
 > 
-> Revision 1.92.2.9 of libtiff/tif_dirread.c added code for ensuring
-> valid tag type information for each TIFF directory entry.  Prior to
-> this fix, unknown tag types would result in an out-of-bounds array
-> index in TIFFExtractData() on any code path using this macro.  Ubuntu
-> security backported this fix as debian/patches/fix-unknown-tags.patch
-> in their libtiff4 package.
+> Thanks
+> Thomas
+> 
+> 
+> Am Donnerstag, 12. August 2010, 20:58:13 schrieb Josh Bressers:
+> > ----- "Thomas Biege" <thomas@...e.de> wrote:
+> > > Hello people,
+> > > does someone know if this bug has security implications. TIA!
+> > > 
+> > > http://www.squid-cache.org/Versions/v3/3.1/changesets/SQUID_3_1_5.html
+> > > http://www.squid-cache.org/Versions/v3/3.1/changesets/squid-3.1-10008.pat
+> > > ch
+> > 
+> > This is really two flaws. The first bit of the patch is an off by one on
+> > the loop that could overflow a heap buffer.
+> > 
+> > From looking at the code, I only see this function being called with static
+> > strings for the MIBs. I may be missing something, but it doesn't appear
+> > that arbitrary strings make it into this. I'm not sure if this can be
+> > exploted, or if it's just a bug someone noticed.
+> > 
+> > The second flaw is an invalid free. I'm not sure if arbitrary data can make
+> > it into this, but with current glibc memory protections, this should be a
+> > DoS only.
+> > 
+> > Both only seem to affect modern versions of squid. The code seems present
+> > in 3.1.4, but not 2.6.STABLE21 (these are two versions we ship).
+> > 
+> > Have you mailed upstream at all?
+> > 
+> > Thanks.
+> 
+> 
 
-So the reference is:
-  http://bugzilla.maptools.org/show_bug.cgi?id=2210
 
--- 
-Tomas Hoger / Red Hat Security Response Team
