@@ -1,55 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/26/6
-Message-ID: <r2z9e1e2b1f1004261248pf702bb0ez705b8c7d401a8eef@mail.gmail.com>
-Date: Mon, 26 Apr 2010 21:48:29 +0200
-From: Wouter Coekaerts <coekie@...si.org>
-To: Jamie Strandboge <jamie@...onical.com>
-Cc: oss-security <oss-security@...ts.openwall.com>,  Steve Langasek <steve.langasek@...onical.com>
-Subject: Re: Re: CVE request: irssi 0.8.15
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/13/1
+Message-Id: <201008130900.12133.thomas@suse.de>
+Date: Fri, 13 Aug 2010 09:00:09 +0200
+From: Thomas Biege <thomas@...e.de>
+To: squid-bugs@...id-cache.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: RFC: squid: Fix free memory corruption and off-by-on error when comparing SNMP OIDs
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Apr 17, 2010 at 11:37 PM, Jamie Strandboge <jamie@...onical.com> wrote:
-> However, after rolling it out Steve Langasek discovered a bug when
-> connecting to an SSL irc proxy server[1]. His patch (attached) adjusts
-> it so when we have a proxy setting, expect the CN to match the proxy
-> hostname, not the server hostname
+Hello project maintainers,
+we stumbled over two bugs in your last release because they sound like
+security vulnerabilities. Can you shed some light on them for us please?
 
-Irssi doesn't have any SSL proxy support. So at first sight, this
-seemed like a bugfix for a non-existing feature. Looking at it again,
-it seems worse.
+Thanks
+Thomas
 
-There is not much explanation in the linked bug, so I'm making some
-assumptions. Correct me if they're wrong.
-What you can do in irssi, is configure a proxy, and then attempt to
-connect to an SSL IRC server through that proxy. Unfortunately, irssi
-currently can't do that, because there is a bug (not a vulnerability)
-in irssi that in that case makes it send the configured "proxy_string"
-encrypted in SSL instead of in plain text. This misbehaviour could be
-used in an akward setup to connect to a proxy that requires SSL, by
-pretending to connect to an SSL irc server. To do that you would have
-to enable SSL when connecting to the server, even when it's not an SSL
-server. By looking at the code, I suspect the patch is about making
-that setup work without getting certificate checking errors. Is that
-correct?
 
-Because it's more familiar, maybe it's more clear in the webbrowser
-equivalent: it is like configuring an http proxy in your browser,
-without saying that it requires SSL. Then you surf to
-https://example.com, encrypting your connection to the proxy, but
-letting the proxy get http://example.com.
+Am Donnerstag, 12. August 2010, 20:58:13 schrieb Josh Bressers:
+> ----- "Thomas Biege" <thomas@...e.de> wrote:
+> > Hello people,
+> > does someone know if this bug has security implications. TIA!
+> > 
+> > http://www.squid-cache.org/Versions/v3/3.1/changesets/SQUID_3_1_5.html
+> > http://www.squid-cache.org/Versions/v3/3.1/changesets/squid-3.1-10008.pat
+> > ch
+> 
+> This is really two flaws. The first bit of the patch is an off by one on
+> the loop that could overflow a heap buffer.
+> 
+> From looking at the code, I only see this function being called with static
+> strings for the MIBs. I may be missing something, but it doesn't appear
+> that arbitrary strings make it into this. I'm not sure if this can be
+> exploted, or if it's just a bug someone noticed.
+> 
+> The second flaw is an invalid free. I'm not sure if arbitrary data can make
+> it into this, but with current glibc memory protections, this should be a
+> DoS only.
+> 
+> Both only seem to affect modern versions of squid. The code seems present
+> in 3.1.4, but not 2.6.STABLE21 (these are two versions we ship).
+> 
+> Have you mailed upstream at all?
+> 
+> Thanks.
 
-It is intended behaviour in irssi that the certificate check fails
-here. This patch makes that check pass. That means the proxy is kind
-of always doing a MITM attack. The user is given the impression he is
-securely connecting to an IRC server, but his actual IRC connection
-(between proxy and irc server) is plain text.
 
-To me this additional patch looks like a security vulnerability.
-
-Regards,
-
-Wouter.
-
-PS: I'd comment on launchpad, but my account seems to be blocked.
-
-> [1] https://bugs.launchpad.net/ubuntu/+source/irssi/+bug/565182
+-- 
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
