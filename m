@@ -1,45 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/31/2
-Message-ID: <AANLkTik3gQ0QzGQB27m9YcPAt+1qiz11Bmt-kzLLWnT7@mail.gmail.com>
-Date: Sat, 31 Jul 2010 12:09:35 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: lxr
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/14/3
+Message-ID: <1281749317.7543.547.camel@localhost>
+Date: Sat, 14 Aug 2010 02:28:37 +0100
+From: Ben Hutchings <ben@...adent.org.uk>
+To: Eugene Teo <eugene@...hat.com>
+Cc: oss-security@...ts.openwall.com, dann frazier <dannf@...ian.org>,  "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: kernel: [PARISC] led.c - fix potential stack overflow in led_proc_write()
 Content-Type: text/plain; charset=utf-8
 
-Yes, CVE-2010-1738 is a dupe of CVE-2010-1448.
+On Sat, 2010-08-14 at 09:00 +0800, Eugene Teo wrote:
+> On 08/14/2010 08:54 AM, dann frazier wrote:
+> > On Tue, Aug 03, 2010 at 01:51:15AM -0400, Moritz Muehlenhoff wrote:
+> >> On Tue, Aug 03, 2010 at 11:46:58AM +0800, Eugene Teo wrote:
+> >>> Ilja reported way back in Nov 2007. A writer to /proc/pdc/led(?) can
+> >>> cause the kernel to consume an unbounded amount of stack, and result
+> >>> in stack corruption.
+> >>>
+> >>> http://www.spinics.net/lists/linux-parisc/msg02960.html
+> >>>
+> >>> If you need a CVE name, change the subject to indicate that. We are
+> >>> not requesting one as we do not support the PA-RISC architecture in
+> >>> our distribution.
+> >>
+> >> Debian supports hppa.
+> >>
+> >> Steven, please assign a CVE ID.
+> >
+> > Ben Hutchings pointed out that this file is only writeable by root -
+> > can it therefore be considered a security issue?
+> 
+>  From the bug report:
+> "the problem being that the stack is limited and count is not (except 
+> for the MAX_INT check done in sys_write() I guess). this could lead to 
+> stack corruption (when for example calling capable())."
 
--Dan
+But the file permissions are checked even before the function is called,
+are they not?
 
-On Sat, Jul 31, 2010 at 10:03 AM, Nico Golde <oss-security+ml@...lde.de> wrote:
-> Hi,
-> * Josh Bressers <bressers@...hat.com> [2010-05-14 21:48]:
->> ----- "Dan Rosenberg" <dan.j.rosenberg@...il.com> wrote:
->>
->> > Josh,
->> >
->> > The XSS in the title string was already assigned CVE-2010-1448.  Do
->> > you mean to assign issue #2, the XSS reflected in search results?
->> >
->>
->> Sigh, yes.
->>
->> So to sum it up:
->>
->> 1.  XSS in the ident parameter, as described in CVE-2009-4497.
->>
->> 2.  XSS that is reflected via the search results page after issuing
->> This one is now CVE-2010-1625
->>
->> 3. 3.  XSS that is reflected via the <title> tag on the search page, as
->> described in Raphael's original e-mail a few days ago, which Josh assigned
->> CVE-2010-1448
->
-> CVE-2010-1738 seems to be a dupe of this?
->
-> Cheers
-> Nico
-> --
-> Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-> For security reasons, all text in this mail is double-rot13 encrypted.
->
+Ben.
+
+-- 
+Ben Hutchings
+Once a job is fouled up, anything done to improve it makes it worse.
+
+Download attachment "signature.asc" of type "application/pgp-signature" (829 bytes)
