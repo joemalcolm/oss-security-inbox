@@ -1,46 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/06/1
-Message-ID: <Pine.GSO.4.64.1005061359320.1759@faron.mitre.org>
-Date: Thu, 6 May 2010 14:11:48 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: dan.j.rosenberg@...il.com
-Subject: Re: CVE request: lxr
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/14/4
+Message-ID: <4C65FC75.7040108@redhat.com>
+Date: Sat, 14 Aug 2010 10:16:21 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: Ben Hutchings <ben@...adent.org.uk>
+CC: oss-security@...ts.openwall.com, dann frazier <dannf@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: kernel: [PARISC] led.c - fix potential stack overflow in led_proc_write()
 Content-Type: text/plain; charset=utf-8
 
-
-On Mon, 3 May 2010, Henri Salo wrote:
-
-> On Mon, 3 May 2010 09:31:16 -0400
-> Dan Rosenberg <dan.j.rosenberg@...il.com> wrote:
+On 08/14/2010 09:28 AM, Ben Hutchings wrote:
+> On Sat, 2010-08-14 at 09:00 +0800, Eugene Teo wrote:
+>> On 08/14/2010 08:54 AM, dann frazier wrote:
+>>> On Tue, Aug 03, 2010 at 01:51:15AM -0400, Moritz Muehlenhoff wrote:
+>>>> On Tue, Aug 03, 2010 at 11:46:58AM +0800, Eugene Teo wrote:
+>>>>> Ilja reported way back in Nov 2007. A writer to /proc/pdc/led(?) can
+>>>>> cause the kernel to consume an unbounded amount of stack, and result
+>>>>> in stack corruption.
+>>>>>
+>>>>> http://www.spinics.net/lists/linux-parisc/msg02960.html
+>>>>>
+>>>>> If you need a CVE name, change the subject to indicate that. We are
+>>>>> not requesting one as we do not support the PA-RISC architecture in
+>>>>> our distribution.
+>>>>
+>>>> Debian supports hppa.
+>>>>
+>>>> Steven, please assign a CVE ID.
+>>>
+>>> Ben Hutchings pointed out that this file is only writeable by root -
+>>> can it therefore be considered a security issue?
+>>
+>>    From the bug report:
+>> "the problem being that the stack is limited and count is not (except
+>> for the MAX_INT check done in sys_write() I guess). this could lead to
+>> stack corruption (when for example calling capable())."
 >
-> Several XSS-vulnerabilities can have one CVE at least when those
-> vulnerabilities are fixed at the same time.
+> But the file permissions are checked even before the function is called,
+> are they not?
 
-Another factor is when they are published at the same time.
+If that's the case with all distros, I would not consider this a 
+security issue.
 
-> Can someone verify what is the policy by the book?
-
-It's never as easy as just a couple rules, unfortunately.  In this case, 
-CVE-2009-4497 has been around for a long time, so it's strongly attached 
-to *only* the "i" parameter/ident issue.  It's too risky to change the 
-fundamental meaning of a CVE after it's been published.  (So even though 
-the intention of Dan's original request may have been to cover other 
-issues, that's not what it looks like to the public any more.)
-
-Josh assigned CVE-2010-1448 for the search page issue, and now Dan has 
-alluded to a third issue that is neither ident nor search page, but we 
-don't know what that third issue is.
-
-If Dan's issue is what he calls "a third XSS bug" in 
-http://www.openwall.com/lists/oss-security/2010/05/03/7 then I'd want a 
-different CVE for it - since it's addressed in a separate "version" than 
-the other two XSS bugs.
-
-The crux of the problem here is that the original bug report alluded to 
-"several" XSS but only listed the ident issue; our CVE description 
-typically might say "multiple XSS, for example this particular vector," 
-but we didn't do that... and neither does the vendor specifically indicate 
-that the other vaguely-specified issues were actually addressed.
-
-- Steve
+Thanks, Eugene
+-- 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
