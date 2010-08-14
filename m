@@ -1,59 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/15/2
-Message-ID: <AANLkTikDaFntxeAA+GGYB0XBaLp9U_-AVod-Q-f8B4PL@mail.gmail.com>
-Date: Wed, 15 Sep 2010 11:49:45 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/14/2
+Message-ID: <4C65EA99.5010109@redhat.com>
+Date: Sat, 14 Aug 2010 09:00:09 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, jeffm@...e.com
-Subject: Re: CVE request: kernel: numerous infoleaks
+CC: dann frazier <dannf@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>, ben@...adent.org.uk
+Subject: Re: kernel: [PARISC] led.c - fix potential stack	overflow in led_proc_write()
 Content-Type: text/plain; charset=utf-8
 
-Jeff Mahoney correctly pointed out that the first case
-(drivers/net/tulip/de4x5.c) is not a security issue because the copied
-data is from a union, not a struct.  I've gone through these again to
-confirm that the remaining three are actually security issues.
+On 08/14/2010 08:54 AM, dann frazier wrote:
+> On Tue, Aug 03, 2010 at 01:51:15AM -0400, Moritz Muehlenhoff wrote:
+>> On Tue, Aug 03, 2010 at 11:46:58AM +0800, Eugene Teo wrote:
+>>> Ilja reported way back in Nov 2007. A writer to /proc/pdc/led(?) can
+>>> cause the kernel to consume an unbounded amount of stack, and result
+>>> in stack corruption.
+>>>
+>>> http://www.spinics.net/lists/linux-parisc/msg02960.html
+>>>
+>>> If you need a CVE name, change the subject to indicate that. We are
+>>> not requesting one as we do not support the PA-RISC architecture in
+>>> our distribution.
+>>
+>> Debian supports hppa.
+>>
+>> Steven, please assign a CVE ID.
+>
+> Ben Hutchings pointed out that this file is only writeable by root -
+> can it therefore be considered a security issue?
 
-Therefore, CVE-2010-3295 should be marked as invalid.
+ From the bug report:
+"the problem being that the stack is limited and count is not (except 
+for the MAX_INT check done in sys_write() I guess). this could lead to 
+stack corruption (when for example calling capable())."
 
--Dan
-
-On Tue, Sep 14, 2010 at 3:26 PM, Josh Bressers <bressers@...hat.com> wrote:
-> ----- "Eugene Teo" <eugene@...hat.com> wrote:
->
->> Reported by Dan Rosenberg,
->>
->> drivers/net/tulip/de4x5.c: reading uninitialized stack memory
->> http://lkml.org/lkml/2010/9/11/169
->> https://bugzilla.redhat.com/633158
->
-> CVE-2010-3295
->
->>
->> drivers/net/cxgb3/cxgb3_main.c reading uninitialized stack memory
->> http://lkml.org/lkml/2010/9/11/170
->> introduced in 4d22de3e (v2.6.21-rc2)
->> https://bugzilla.redhat.com/633149
->
-> CVE-2010-3296
->
->>
->> drivers/net/eql.c: reading uninitialized stack memory
->> http://lkml.org/lkml/2010/9/11/168
->> https://bugzilla.redhat.com/633145
->
-> CVE-2010-3297
->
->>
->> drivers/net/usb/hso.c: reading uninitialized memory
->> http://lkml.org/lkml/2010/9/11/167
->> introduced in 542f5482 (v2.6.29-rc1)
->> https://bugzilla.redhat.com/633140
->>
->
-> CVE-2010-3298
->
-> Thanks.
->
-> --
->    JB
->
+Eugene
+-- 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
