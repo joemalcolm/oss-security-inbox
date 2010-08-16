@@ -1,70 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/15/8
-Message-ID: <Pine.GSO.4.64.1011151555550.2809@faron.mitre.org>
-Date: Mon, 15 Nov 2010 16:58:27 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/16/3
+Message-ID: <Pine.GSO.4.64.1008161307540.1035@faron.mitre.org>
+Date: Mon, 16 Aug 2010 13:09:55 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Marc Deslauriers <marc.deslauriers@...onical.com>
-cc: oss-security@...ts.openwall.com, Bill Janssen <bill.janssen@...il.com>, Andreas Hasenack <ahasenack@...ra.com.br>, Mads Kiilerich <mads@...lerich.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Mercurial --Doesn't verify subject Common Name properly
+To: oss-security@...ts.openwall.com
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: integer overflow in ext4_ext_get_blocks()
 Content-Type: text/plain; charset=utf-8
 
 
-Ouch, this is painful for a number of reasons.
+On Mon, 16 Aug 2010, Eugene Teo wrote:
 
-Maybe Python "should" get the CVE, but the decision to push the issue to 
-application developers means that those developers will each have to 
-provide fixes, and software consumers will have to track these related 
-vulns at the application level.
+> This was reported by a customer. Integer overflow flaws were found in 
+> ext4_ext_in_cache() and ext4_ext_get_blocks(). We managed to triggered the 
+> case in ext4_ext_get_blocks() but did not attempt to try the other. This can 
+> trigger a BUG() on certain configuration of ext4 file systems.
+>
+> Upstream commit:
+> http://git.kernel.org/linus/731eb1a03a8445cde2cb23ecfb3580c6fa7bb690
+>
+> https://bugzilla.redhat.com/show_bug.cgi?id=624327
 
-(One could make the same argument about fundamental design flaws in 
-standards-based protocols, for which CVE generally assigns a single 
-identifier, but those issues generally feel "different" to me.  Quite 
-logical, I know...)
 
-Anyway, I think we need to assign separate CVEs for each affected product 
-as an instance of "an implementation not working around security-relevant 
-design limitations of APIs" (which is consistent with the approach that 
-CVE has taken with respect to the DLL hijacking / insecure library loading 
-issues of the past couple months.)
+Use CVE-2010-3015
 
-I've been tempted to start assigning a single CVE to design limitations 
-such as this Python certificate issue, and (where needed) independent CVEs 
-for affected implementations, but I'm not feeling adventurous enough yet. 
-it kind of goes against the idea where each vuln has only one CVE 
-associated with it.
-
-So - use CVE-2010-4237 for the issue in Mercurial, and feel free to 
-consult with me privately for the other issues if you wish.
+What does an attacker have to do to exploit this?  Mount a crafted file 
+system?
 
 - Steve
-
-
-
-On Sun, 14 Nov 2010, Marc Deslauriers wrote:
-
-> On Mon, 2010-10-11 at 15:48 -0400, Josh Bressers wrote:
->> Steve,
->>
->> Can I defer this one to MITRE? My initial thought is that python should get
->> the ID, but they seem to want to push it up to the application developers,
->> but they also added some functionality in
->> http://svn.python.org/view?view=rev&revision=85321
->>
->> Is there a past precedent for this?
->>
->
-> Has any decision been made regarding CVE assignment for this? I've found
-> some more python applications that aren't validating ssl certs, and am
-> waiting to know how this is going to be handled.
->
-> Thanks,
->
-> Marc.
->
->
-> -- 
-> Marc Deslauriers
-> Ubuntu Security Engineer     | http://www.ubuntu.com/
-> Canonical Ltd.               | http://www.canonical.com/
->
->
