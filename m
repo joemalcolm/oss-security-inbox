@@ -1,38 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/16/5
-Message-Id: <20100916111714.CA03.A69D9226@jp.fujitsu.com>
-Date: Thu, 16 Sep 2010 14:51:55 +0900 (JST)
-From: KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>
-To: Linus Torvalds <torvalds@...ux-foundation.org>
-Cc: kosaki.motohiro@...fujitsu.com, Roland McGrath <roland@...hat.com>, Andrew Morton <akpm@...ux-foundation.org>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Kees Cook <kees.cook@...onical.com>, Al Viro <viro@...iv.linux.org.uk>, Oleg Nesterov <oleg@...hat.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, pageexec@...email.hu, "Brad Spengler <spender@...ecurity.net>, Eugene Teo" <eugene@...hat.com>, KAMEZAWA Hiroyuki <kamezawa.hiroyu@...fujitsu.com>
-Subject: Re: [PATCH 2/2] execve: check the VM has enough memory at first
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/16/1
+Message-ID: <4C68A152.7090808@kernel.sg>
+Date: Mon, 16 Aug 2010 10:24:18 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request - kernel: integer overflow in ext4_ext_get_blocks()
 Content-Type: text/plain; charset=utf-8
 
-> > On Wed, Sep 8, 2010 at 10:04 PM, KOSAKI Motohiro
-> > <kosaki.motohiro@...fujitsu.com> wrote:
-> > >
-> > > After this patch, execve() expand stack at first and receive to
-> > > check vm_enough_memory() properly. then, too long argument of
-> > > execve() than the machine memory return EFAULT properly.
-> > 
-> > This is horrible. We don't want to walk the arguments one more time
-> > just for this. Let's just improve the checks that we do as we go
-> > along.
-> > 
-> >                             Linus
-> 
-> Okey. I'll consider new way in this night.
+This was reported by a customer. Integer overflow flaws were found in 
+ext4_ext_in_cache() and ext4_ext_get_blocks(). We managed to triggered 
+the case in ext4_ext_get_blocks() but did not attempt to try the other. 
+This can trigger a BUG() on certain configuration of ext4 file systems.
 
-After while thinking, I decided to just drop this idea. because
- 1) If one pass check is must, we can't reuse vm-overcommit check.
- 2) Glibc has the duplicated hueristic, then we can't change it nor
-    introduce new hard limit. (Sh*t)
- 3) This is not must fix, it only mitigate a pain when accidental large
-    argv case. Only OOM fixes enough care intended attack case.
- 4) distro can change default of rlim_max of RLIMIT_STACK. It protect
-    from RLIM_INFINITY smash.
+Upstream commit:
+http://git.kernel.org/linus/731eb1a03a8445cde2cb23ecfb3580c6fa7bb690
 
-Briefly says, to introduce new limit has bad benefit/risk balance. Sadly.
+https://bugzilla.redhat.com/show_bug.cgi?id=624327
 
-
-
+Thanks, Eugene
+-- 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
