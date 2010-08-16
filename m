@@ -1,55 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/20/2
-Message-ID: <20100720210334.GB5026@inversepath.com>
-Date: Tue, 20 Jul 2010 22:03:34 +0100
-From: Andrea Barisani <lcars@...rt.org>
-To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
-Subject: [oCERT-2010-002] Joomla input sanitization errors (XSS)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/16/4
+Message-ID: <Pine.GSO.4.64.1008161312520.1035@faron.mitre.org>
+Date: Mon, 16 Aug 2010 13:19:06 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Minor security flaw with pam_xauth
 Content-Type: text/plain; charset=utf-8
 
 
-#2010-002 Joomla input sanitization errors (XSS)
+On Mon, 16 Aug 2010, Tim Brown wrote:
 
-Description:
+> I don't think this needs a CVE as I haven't found a useful way to exploit it
+> but maybe someone on here will spot something I've missed.  Either way, I
+> would have thought it should be fixed.
 
-Joomla, an open source content management system, suffers from a cross-site
-scripting (XSS) vulnerability.
+If the attacker can execute an 'extra' process in violation of 
+RLIMIT_NPROC, then that would be technically a violation of the *intended* 
+security policy, so it would count for CVE inclusion by itself - even if 
+you can't manipulate the issue for code execution.  (Though somehow 
+manipulating the xauth authority file may be fruitful to mess around with 
+the display as root.)
 
-Insufficient input sanitization on the parameters passed to pages related to
-administration settings leads to arbitrary javascript injection in the context
-of the user session, this could be potentially exploited to hijack the session
-of the Joomla administrator.
+Thoughts?
 
-Affected version:
-
-Joomla <= 1.5.19
-
-Fixed version:
-
-Joomla >= 1.5.20
-
-Credit: vulnerability report and PoC received from Mesut Timur <mesut [at]
-mavitunasecurity [dot] com>.
-
-CVE: N/A
-
-Timeline:
-
-2010-06-01: vulnerability report received
-2010-06-01: contacted Joomla Security Team
-2010-07-15: Joomla advisory published
-2010-07-20: oCERT advisory published
-
-References:
-http://developer.joomla.org/security/news/318-20100704-core-xss-vulnerabilitis-in-back-end.html
-
-Permalink:
-http://www.ocert.org/advisories/ocert-2010-002.html
-
--- 
-Andrea Barisani |                Founder & Project Coordinator
-          oCERT | Open Source Computer Emergency Response Team
-
-<lcars@...rt.org>                         http://www.ocert.org
- 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
-        "Pluralitas non est ponenda sine necessitate"
+- Steve
