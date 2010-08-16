@@ -1,54 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/06/12
-Message-ID: <329432445.425311291672823572.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 6 Dec 2010 17:00:23 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/16/2
+Message-Id: <201008161205.35670.timb@nth-dimension.org.uk>
+Date: Mon, 16 Aug 2010 12:05:13 +0100
+From: Tim Brown <timb@...-dimension.org.uk>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: openx unknown vulnerability before 2.8.7
+Subject: Minor security flaw with pam_xauth
 Content-Type: text/plain; charset=utf-8
 
-Thanks for the info.
+Here's another bug where privileged code isn't checking the return value from 
+setuid():
 
-Steve, can you update MITRE's CVE (CVE-2009-4140). I don't need to assign
-anything.
+http://sourceforge.net/tracker/?func=detail&aid=3028213&group_id=6663&atid=106663
 
-Thanks.
+I don't think this needs a CVE as I haven't found a useful way to exploit it 
+but maybe someone on here will spot something I've missed.  Either way, I 
+would have thought it should be fixed.
 
+Tim
+
+PS Is it just me or does "I fail to see how RLIMIT_NPROC should have any affect 
+on setuid." in the comments a touch disconcerting given that it's from the PAM 
+maintainer?
 -- 
-    JB
+Tim Brown
+<mailto:timb@...-dimension.org.uk>
+<http://www.nth-dimension.org.uk/>
 
-
------ "Anthon Pang" <anthon.pang@...il.com> wrote:
-
-> The previously reported Open-Flash-Chart2 ofc_upload_image.php file
-> (vulnerable to arbitrary file upload) included in OpenX's video
-> plugin.
-> 
-> This is the commit (truncating it to an empty file):
-> 
-> https://developer.openx.org/fisheye/changelog/openx/trunk?cs=61683
-> 
-> FYI ofc_upload_image.php was found in a number of projects, including
-> Piwik (CVE-2009-4140), Open Web Analytics, and the Woopra plugin for
-> WordPress.
-> 
-> Regards,
-> 
-> Anthon
-> 
-> On Mon, Dec 6, 2010 at 9:00 AM, Hanno Böck <hanno@...eck.de> wrote:
-> > Upstream is not very talkative, but I found a blog claiming this is
-> exploitet
-> > in the wild:
-> > http://blog.openx.org/09/security-update/
-> > http://blog.sucuri.net/2010/09/openx-users-time-to-upgrade.html
-> >
-> > Please assign CVE.
-> >
-> > --
-> > Hanno Böck              Blog:           http://www.hboeck.de/
-> > GPG: 3DBD3B20           Jabber/Mail:    hanno@...eck.de
-> >
-> > http://schokokeks.org - professional webhosting
-> >
+Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
