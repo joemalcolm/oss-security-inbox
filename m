@@ -1,32 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/12/2
-Message-ID: <20100212133329.GG24664@suse.de>
-Date: Fri, 12 Feb 2010 14:33:29 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Request: KDE screensaver unlock issue similar to GNOME one
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/17/2
+Message-ID: <20100817190905.GA5658@openwall.com>
+Date: Tue, 17 Aug 2010 23:09:05 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: [oCERT-2010-001] multiple http client unexpected download filename vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Wed, Jun 09, 2010 at 03:47:42PM -0400, Steven M. Christey wrote:
+> CVE-2010-2252 - wget 
 
-Lots of our users also tested if the KDE screenlock program is affected
-by the "unlock by pressing return" bug.
+This is finally getting fixed in wget upstream:
 
-And it is.
+http://lists.gnu.org/archive/html/bug-wget/2010-07/msg00076.html
 
-There is also a race condition and/or a memory leak which causes
-the lock program to terminate.
+Giuseppe had to come up with his own patch (included at the end of the
+posting above).  He "couldn't" use Florian's patch for licensing reasons
+(getting a patch into an FSF project requires some paperwork sent to the
+FSF, and somehow this process got stalled at some stage).
 
-https://bugzilla.novell.com/show_bug.cgi?id=579280
-http://bugs.kde.org/show_bug.cgi?id=217882
-http://bugs.kde.org/show_bug.cgi?id=226449
+The new option name is "--trust-server-names".
 
-Suspend to * is not required, it also works just by pressing return.
-For me it takes like 5 seconds. Machine load might help.
+Some criticism from a wget user, and Giuseppe's answer (which I agree with):
 
-It is unclear which KDE versions are affected, reports mostly show
-KDE 4.4.0.
+http://lists.gnu.org/archive/html/bug-wget/2010-08/msg00004.html
 
-Needs a different CVE than the GNOME one.
+So things look good.  We should expect this feature and the safe default
+in the next wget release.
 
-Ciao, Marcus
+(I did not test the patch myself, but I "trust" that it works.)
+
+Alexander
