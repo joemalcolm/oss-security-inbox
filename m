@@ -1,30 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/15/1
-Message-ID: <4C16C443.1030002@kernel.sg>
-Date: Tue, 15 Jun 2010 08:07:31 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/17/1
+Message-ID: <4C6A03F0.8020003@redhat.com>
+Date: Tue, 17 Aug 2010 11:37:20 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Alex Legler <a3li@...too.org>
-Subject: Re: CVE request: UnrealIRCd 3.2.8.1 source code contained a backdoor allowing for remote command execution
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: integer overflow in ext4_ext_get_blocks()
 Content-Type: text/plain; charset=utf-8
 
-On 06/13/2010 01:10 AM, Alex Legler wrote:
-> Hi.
+> Use CVE-2010-3015
 >
-> Quoting http://www.unrealircd.com/txt/unrealsecadvisory.20100612.txt:
->
-> "We found out that the Unreal3.2.8.1.tar.gz file on our mirrors has been
-> replaced quite a while ago with a version with a backdoor (trojan) in
-> it. This backdoor allows a person to execute ANY command with the
-> privileges of the user running the ircd. The backdoor can be executed
-> regardless of any user restrictions (so even if you have passworded
-> server or hub that doesn't allow any users in)."
->
-> Basically, a system() call was injected into the source code, disguised
-> as a debug/log macro.
+> What does an attacker have to do to exploit this? Mount a crafted file
+> system?
 
-Also see, http://seclists.org/dailydave/2010/q2/56
+To trigger this, the attacker needs to write to the last block of a file 
+(of max file size) and sync it.
 
-Eugene
+Thanks, Eugene
 -- 
 main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
