@@ -1,55 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/11/2
-Message-ID: <650554837.632351276279466831.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 11 Jun 2010 14:04:26 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/18/2
+Message-ID: <4C6B76BC.3080902@redhat.com>
+Date: Wed, 18 Aug 2010 13:59:24 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE requests: maradns, freeciv, rbot, gitolite, gource, shib, kvirc
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request - kernel: xfs: stale data exposure
 Content-Type: text/plain; charset=utf-8
 
-Steve,
+An issue was found in the XFS filehandle conversion where inodes that 
+are deleted may return as valid files as XFS does not verify the inode 
+numbers in the file handles, i.e. allowing access to deleted data.
 
-Can MITRE handle this one. It's bigger than a breadbox and I lack time
-to go through each of this right now.
+The test program that demonstrates the issue via the open_by_handle 
+interface can be found here: 
+http://oss.sgi.com/archives/xfs/2010-06/msg00191.html.
 
-Thanks.
+[PATCH 1/4] xfs: always use iget in bulkstat
+http://article.gmane.org/gmane.comp.file-systems.xfs.general/33770
 
+[PATCH 2/4] xfs: validate untrusted inode numbers during lookup
+http://article.gmane.org/gmane.comp.file-systems.xfs.general/33771
+
+This following patch is needed too to address a regression introduced by 
+the patches above: http://oss.sgi.com/archives/xfs/2010-08/msg00179.html.
+
+Reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=624923
+
+Thanks, Eugene
 -- 
-    JB
-
-
------ "Moritz Muehlenhoff" <jmm@...ian.org> wrote:
-
-> Hi,
-> Please assign CVE IDs for these issues current present in the Debian
-> Security Tracker, but for which no CVE IDs have been assigned so far:
-> 
-> 1. maradns
-> http://maradns.org/download/maradns-1.4.02-parse_segfault.patch
-> Fixed in 1.4.03
-> 
-> 2. freeciv 
-> http://gna.org/bugs/?15624
-> Fixed in 2.2.1 and 2.3.0
-> 
-> 3. rbot (http://ruby-rbot.org/)
-> http://www.securityfocus.com/archive/1/509719/30/0/threaded
-> 
-> 4. gitolite
-> http://secunia.com/advisories/39587/
-> http://github.com/sitaramc/gitolite/commit/1e06fea3b6959faeb72d8dca46cd4753ada48637
-> http://github.com/sitaramc/gitolite/commit/5fd9328c1cd1e7c576b6530b3253061c68b159aa
-> http://github.com/sitaramc/gitolite/commit/5deffee3cff5f9a13c59b8c1e357c5a32487d1c3
-> 
-> 5. gource
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=577958
-> 
-> 6. Shibboleth:
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=571631
-> 
-> 7. kvirc
-> http://lists.omnikron.net/pipermail/kvirc/2010-May/000867.html
-> 
-> Cheers,
->         Moritz
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
