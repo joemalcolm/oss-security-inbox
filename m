@@ -1,21 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/01/1
-Message-ID: <4C7DE059.3010401@redhat.com>
-Date: Wed, 01 Sep 2010 13:10:49 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/18/3
+Message-ID: <20100818155103.924@usenet.piggo.com>
+Date: Wed, 18 Aug 2010 13:51:38 +0000 (UTC)
+From: Sébastien Delafond <seb@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-2010-2954 kernel: irda null ptr deref
+Subject: CVE request: zope-ldapuser
 Content-Type: text/plain; charset=utf-8
 
-Reported by Taviso Ormandy.
-Patch at: http://www.spinics.net/lists/netdev/msg139404.html.
-References:
-https://bugzilla.redhat.com/CVE-2010-2954
-http://twitter.com/taviso/status/22635752128
+Hi,
 
-Quick check, introduced in 61e44b48 (v2.6.24 and above).
+there is an authentication probleme in zope-ldapuser, where any password
+is accepted when attempting to log in as the emergency user (as defined
+in zpasswd.py). See Debian bug 593466[0] for the corresponding patch.
 
-Thanks, Eugene
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+Cheers,
+
+--Seb
+
+[0] http://bugs.debian.org/593466
+
