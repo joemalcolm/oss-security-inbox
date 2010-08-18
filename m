@@ -1,21 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/11/2
-Message-ID: <20100511091917.GA26117@inutil.org>
-Date: Tue, 11 May 2010 11:19:17 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/18/1
+Message-ID: <4C6B6DA3.3050008@redhat.com>
+Date: Wed, 18 Aug 2010 13:20:35 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Month of PHP Security 2010 Issues
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request - kernel: net sched memleak
 Content-Type: text/plain; charset=utf-8
 
-On Tue, May 11, 2010 at 12:08:28PM +0300, Eren Türkay wrote:
-> > MOPS-2010-001: PHP hash_update_file() Already Freed Resource Access
-> > Vulnerability - http://bit.ly/aZDRha
-> 
-> Not assigned yet
+http://patchwork.ozlabs.org/patch/61857/
+https://bugzilla.redhat.com/show_bug.cgi?id=624903
 
-Since MOPS-2010-001 is about the fact that MOPB-28-2007 is still
-unfixed in current PHP, the CVE ID from MOPB-28-2007 still
-applies: CVE-2007-1581
+Memory leak issue was found numerous functions in net/sched/act_*.c.
 
-Cheers,
-        Moritz
+This was introduced since v2.6.9-rc2.
+
+Thanks, Eugene
+-- 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
