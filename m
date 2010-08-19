@@ -1,56 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/27/4
-Message-ID: <20100927173613.GM1960@redhat.com>
-Date: Mon, 27 Sep 2010 11:36:13 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/19/5
+Message-ID: <460603542.1004501282246464479.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 19 Aug 2010 15:34:24 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: Minor security flaw with pam_xauth
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: xfs: stale data exposure
 Content-Type: text/plain; charset=utf-8
 
-* [2010-09-24 20:48:23 +0400] Solar Designer wrote:
+Please use CVE-2010-2943
 
->On Tue, Sep 21, 2010 at 04:02:47PM -0400, Josh Bressers wrote:
->> Since you have the best understanding of these, can you break them down
->> with reasonable explanations and I'll assign IDs to whatever still needs
->> them?
->
->pam_xauth missing return value checks from setuid() and similar calls,
->fixed in Linux-PAM 1.1.2 - CVE-2010-3316
->
->pam_env and pam_mail accessing the target user's files as root (and thus
->susceptible to attacks by the user) in Linux-PAM below 1.1.2, partially
->fixed in 1.1.2 - no CVE ID mentioned yet
->
->pam_env and pam_mail in Linux-PAM 1.1.2 not switching fsgid (or egid)
->and groups when accessing the target user's files (and thus potentially
->susceptible to attacks by the user) - CVE-2010-3430
->
->pam_env and pam_mail in Linux-PAM 1.1.2 not checking whether the
->setfsuid() calls succeed (no known impact with current Linux kernels,
->but poor practice in general) - CVE-2010-3431
->
->Now, in case someone fixes CVE-2010-3430 but fails to add return value
->checks for the added calls, we'll need yet another CVE ID for the
->partial fix... but I hope this won't happen.
-
-These that are partially fixed are fixed in that git commit you noted
-previously?
-
-http://git.altlinux.org/people/ldv/packages/?p=pam.git;a=commitdiff;h=06f882f30092a39a1db867c9744b2ca8d60e4ad6
-
-Or are they fixed in different commits?  It looks like they should all
-be fixed in that commit, but I want to double-check.
-
-Are there patches available to fully fix these issues?  And are there
-patches for 3430 and 3431 yet?  I'm assuming also that those issues have
-always existed although you say 'in 1.1.2', but they would affect
-earlier versions yet, right?
-
-Thanks for any clarification.  I'm trying to wrap my head around this
-and the impact of these issues.  They all strike me as relatively minor
-issues, but it is possible that I am missing or misunderstanding
-something here.
+Thanks.
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+    JB
+
+
+----- "Eugene Teo" <eugene@...hat.com> wrote:
+
+> An issue was found in the XFS filehandle conversion where inodes that
+> 
+> are deleted may return as valid files as XFS does not verify the inode
+> 
+> numbers in the file handles, i.e. allowing access to deleted data.
+> 
+> The test program that demonstrates the issue via the open_by_handle 
+> interface can be found here: 
+> http://oss.sgi.com/archives/xfs/2010-06/msg00191.html.
+> 
+> [PATCH 1/4] xfs: always use iget in bulkstat
+> http://article.gmane.org/gmane.comp.file-systems.xfs.general/33770
+> 
+> [PATCH 2/4] xfs: validate untrusted inode numbers during lookup
+> http://article.gmane.org/gmane.comp.file-systems.xfs.general/33771
+> 
+> This following patch is needed too to address a regression introduced
+> by 
+> the patches above:
+> http://oss.sgi.com/archives/xfs/2010-08/msg00179.html.
+> 
+> Reference:
+> https://bugzilla.redhat.com/show_bug.cgi?id=624923
+> 
+> Thanks, Eugene
+> -- 
+> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i);
+> }
