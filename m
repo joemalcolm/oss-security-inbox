@@ -1,28 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/07/4
-Message-ID: <1655483003.716031273235500866.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 7 May 2010 08:31:40 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/19/4
+Message-ID: <1232983303.1004211282246302085.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 19 Aug 2010 15:31:42 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: MOPS and CVEs?
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: net sched memleak
 Content-Type: text/plain; charset=utf-8
 
-
------ "Hanno Böck" <hanno@...eck.de> wrote:
-
-> Hi,
-> 
-> Is anyone following the "Month of PHP Security" and assigning CVEs to
-> it?
-> 
-> http://www.php-security.org/category/vulnerabilities/index.html
-> 
-
-Steve Christey knows and is keeping an eye on things. MITRE is doing the
-assignment.
+Please use CVE-2010-2942
 
 Thanks.
 
 -- 
     JB
+
+
+----- "Eugene Teo" <eugene@...hat.com> wrote:
+
+> http://patchwork.ozlabs.org/patch/61857/
+> https://bugzilla.redhat.com/show_bug.cgi?id=624903
+> 
+> Memory leak issue was found numerous functions in net/sched/act_*.c.
+> 
+> This was introduced since v2.6.9-rc2.
+> 
+> Thanks, Eugene
+> -- 
+> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i);
+> }
