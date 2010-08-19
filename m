@@ -1,41 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/01/6
-Message-ID: <AANLkTin9lgxxS2X-Y0_i92bX-CKZpzzQjN8tqaZRhZAZ@mail.gmail.com>
-Date: Thu, 1 Jul 2010 21:16:02 +0200
-From: Péter Veres <moltesalt@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- PHP strrchr() Interruption  Information Leak Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/19/3
+Message-ID: <4c6d5a46.4411df0a.715f.2af8@mx.google.com>
+Date: Thu, 19 Aug 2010 18:22:29 +0200
+From: "pierre.php@...il.com" <pierre.php@...il.com>
+To: "Moritz Muehlenhoff" <jmm@...ian.org>,oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: PHP MOPS-2010-56..60
 Content-Type: text/plain; charset=utf-8
 
-2010/6/30 Josh Bressers <bressers@...hat.com>
+Which one did not get an is? Most of those were actually a single issue.
 
->
-> ----- "Péter Veres" <moltesalt@...il.com> wrote:
->
-> > Hi Steve,
-> >
-> > PHP’s strrchr() function can be interrupted and used for information
-> > leakage due to call time pass by reference.
-> >
-> > Could you allocate a CVE id for this issue?
-> >
->
-> Do you have some sort of reference for this? I'm not finding anything in
-> the
-> usual places.
->
-> I'll assign an ID once I have more information.
->
-> Thanks.
->
-> --
->     JB
->
+Sent from my HTC
+
+----- Reply message -----
+From: "Moritz Muehlenhoff" <jmm@...ian.org>
+Date: Thu, Aug 19, 2010 18:14
+Subject: [oss-security] CVE request: PHP MOPS-2010-56..60
+To: <oss-security@...ts.openwall.com>
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
 
 
-Fixed in the upstream.
-5.3.3 RC1 not affected.
-5.2 branch vulnerable.
+On Thu, Aug 19, 2010 at 03:04:55PM +0200, Tomas Hoger wrote:
+> Hi Steven!
+> 
+> This seems to have slipped through the cracks.
 
-http://svn.php.net/viewvc?view=revision&revision=300916
+Indeed. Debian had to release the PHP DSA w/o a CVE reference:
 
+http://lists.debian.org/debian-security-announce/2010/msg00134.html
+
+Cheers,
+        Moritz
