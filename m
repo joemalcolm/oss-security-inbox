@@ -1,68 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/08/9
-Message-ID: <20101208153438.GL20041@ksplice.com>
-Date: Wed, 8 Dec 2010 10:34:38 -0500
-From: Nelson Elhage <nelhage@...lice.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: kernel: Dangerous interaction between clear_child_tid, set_fs(), and kernel oopses
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/19/1
+Message-ID: <20100819150455.7228df85@redhat.com>
+Date: Thu, 19 Aug 2010 15:04:55 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: PHP MOPS-2010-56..60
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Dec 08, 2010 at 07:51:18AM +0300, Solar Designer wrote:
-> Nelson, Dan, Steve -
+Hi Steven!
+
+This seems to have slipped through the cracks.
+
+
+On Wed, 30 Jun 2010 11:27:19 -0500 Raphael Geissert wrote:
+
+> Hi,
 > 
-> It's been a few days, so I'll over-quote a little bit.  Please see below:
+> According to our tracker there are still some MOPS issues that don't
+> have CVE ids.
 > 
-> On Thu, Dec 02, 2010 at 12:21:14AM -0500, Nelson Elhage wrote:
-> > I've discovered an interesting interaction in the Linux kernel between the
-> > clear_child_tid feature of clone(2), and the set_fs() function used internally
-> > in the kernel to temporarily disable access_ok() checking of userspace pointers.
-> > 
-> > Under some (not totally uncommon) circumstances, it is possible for a user to
-> > leverage this interaction to turn a kernel oops or BUG() into a write of an
-> > integer 0 to a user-controlled address in kernel memory.
-> > 
-> > I'm not sure if this merits a CVE or not; It is (as far as I can tell) only a
-> > problem in the presence of another security bug, but it potentially makes a
-> > large class of bugs significantly more dangerous (DoS -> privesc).
-> > 
-> > Reference:
-> > https://lkml.org/lkml/2010/12/1/543
+> More specifically:
 > 
-> To me, things like this are more important than individual NULL pointer
-> dereference bugs or the like.  So if those get CVEs, this one definitely
-> should as well.
-
-Yeah, as you saw, Dan requested a CVE separately and this is CVE-2010-4258.
-
+> > 60: PHP Session Serializer Session Data Injection Vulnerability
+> http://svn.php.net/viewvc?view=revision&revision=298608
 > 
-> Nelson - why are you proposing adding set_fs(USER_DS); not to the very
-> beginning of do_exit(), but below a few calls/checks?  I don't think
-> there's any performance improvement from that, and it feels
-> "theoretically safer" to return to the sane/safe state as soon as
-> possible.  I am currently looking at do_exit() in OpenVZ's RHEL5-based
-> 2.6.18-194.26.1.el5.028stab079.1 - it does a bit more work before
-> reaching the place you patch.  So I am tempted to introduce
-> set_fs(USER_DS); as the very first statement in do_exit() instead.
-
-I put the set_fs() after the in_interrupt() check, since set_fs() frobs the
-current thread_info, and IIUC, we aren't guaranteed to have one on an interrupt
-stack. So I wanted to preserve that check/immediate panic(), rather than
-possible triggering a recursive fault or other weird behavior. Other than that,
-I stuck it as early as possible.
-
-If I'm wrong about it possibly failing on an interrupt stack, then yeah, it
-might make sense to put it even earlier. Or to rearrange things so that the flow
-is "check interrupt -> set_fs() -> everything else".
-
+> > 59: PHP php_mysqlnd_auth_write() Stack Buffer Overflow Vulnerability
+> http://svn.php.net/viewvc?view=revision&revision=298703
 > 
-> Did you check whether 2.4 kernels are affected as well?
-
-I have not. My man pages claim that CLONE_CHILD_CLEARTID is new since Linux
-2.5.49, so that specific hole probably isn't there, though.
-
-- Nelson
-
+> > 58: PHP php_mysqlnd_read_error_from_line() [Heap] Buffer Overflow 
+> Vulnerability
+> http://svn.php.net/viewvc?view=revision&revision=298703
 > 
-> Thanks,
+> > 57 PHP php_mysqlnd_rset_header_read() [Heap] Buffer Overflow
+> > Vulnerability
+> I think this is
+> http://svn.php.net/viewvc?view=revision&revision=298235
 > 
-> Alexander
+> > 56 PHP php_mysqlnd_ok_read() Information Leak Vulnerability
+> http://svn.php.net/viewvc?view=revision&revision=298703
+> 
+> Could CVE ids be assigned?
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
