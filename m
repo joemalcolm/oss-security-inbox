@@ -1,36 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/07/7
-Message-ID: <71871187.727261273239354364.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 7 May 2010 09:35:54 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/19/7
+Message-ID: <394439939.1007701282247609910.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 19 Aug 2010 15:53:29 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>, Gerald Combs <gerald@...eshark.org>
-Subject: Re: CVE Assignment (wireshark)
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: zope-ldapuser
 Content-Type: text/plain; charset=utf-8
 
 
------ "Josh Bressers" <bressers@...hat.com> wrote:
+----- "Sébastien Delafond" <seb@...ian.org> wrote:
 
-> Wireshark just published two advisories
+> Hi,
 > 
-> http://www.wireshark.org/security/wnpa-sec-2010-03.html
-> http://www.wireshark.org/security/wnpa-sec-2010-04.html
+> there is an authentication probleme in zope-ldapuser, where any
+> password
+> is accepted when attempting to log in as the emergency user (as
+> defined
+> in zpasswd.py). See Debian bug 593466[0] for the corresponding patch.
 > 
-> I've assigned CVE ids:
 > 
-> CVE-2010-1455 wireshark wnpa-sec-2010-03
-> CVE-2010-1456 wireshark wnpa-sec-2010-04
-> 
+> [0] http://bugs.debian.org/593466
 
-It's been pointed out to me that these are the same thing, and should only
-use one ID.
+The debian bug has lots more info.
 
-Let's use CVE-2010-1456 as the dupe then. Please do not reference
-CVE-2010-1456 in any advisories.
-
-Only use CVE-2010-1455.
-
-Sorry for the confusion.
+Please use CVE-2010-2944
 
 Thanks.
 
