@@ -1,42 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/03/2
-Message-ID: <p2j4a6942471005030631u64f9210bu65bed3d02706051b@mail.gmail.com>
-Date: Mon, 3 May 2010 09:31:16 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/19/8
+Message-ID: <4C6D954E.1030801@FreeBSD.org>
+Date: Thu, 19 Aug 2010 22:34:22 +0200
+From: Niels Heinen <niels@...eBSD.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: lxr
+Subject: CVE Request: SLiM insecure PATH assignment
 Content-Type: text/plain; charset=utf-8
 
-I discovered and reported this bug at the same time as two other XSS
-issues, including the one covered by CVE-2009-4497.  While the commit
-may be a few days apart for some of these, I think they can safely
-fall under the same CVE, unless it's standard practice to assign CVEs
-for each of several related minor issues.
 
-The description at cve.mitre.org covers an XSS bug in  the "ident"
-parameter.  It does not mention a second XSS bug which was also fixed
-in the search body, which is separate from a third bug, the search
-title, fixed here.
+Hi all,
 
--Dan
+SLiM versions prior to 1.3.1 assigned logged on users a predefined PATH
+which included './'. This allowed unintentional code execution (e.g.
+planted binary) and has been fixed by the developers in version 1.3.2.
 
-On Mon, May 3, 2010 at 2:24 AM, Raphael Geissert <geissert@...ian.org> wrote:
-> Hi,
->
-> While working on an update for lxr the following commit by upstream that
-> fixes an XSS vulnerability in the search page was found:
->
->> Fix XSS exploit in title string
-> http://lxr.cvs.sourceforge.net/viewvc/lxr/lxr/lib/LXR/Common.pm?r1=1.63&r2=1.64
->
-> It does not seem to be covered by CVE-2009-4497.
->
-> Please assign an id. Thanks in advance.
->
-> Kind regards,
-> --
-> Raphael Geissert - Debian Developer
-> www.debian.org - get.debian.net
->
->
->
+Can you allocate a CVE number for this one?
+
+Thanks,
+
+-- 
+Niels Heinen
+FreeBSD committer | www.freebsd.org
+PGP: 0x5FE39B80
+
