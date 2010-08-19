@@ -1,37 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/21/10
-Message-ID: <2104881042.1128801279735912713.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 21 Jul 2010 14:11:52 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/19/2
+Message-ID: <20100819161422.GA2649@galadriel.inutil.org>
+Date: Thu, 19 Aug 2010 18:14:22 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: dan.j.rosenberg@...il.com, coley <coley@...re.org>
-Subject: Re: CVE request: kernel: btrfs
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: PHP MOPS-2010-56..60
 Content-Type: text/plain; charset=utf-8
 
-
------ "Dan Rosenberg" <dan.j.rosenberg@...il.com> wrote:
-
-> Fixes for two issues in btrfs were committed upstream:
+On Thu, Aug 19, 2010 at 03:04:55PM +0200, Tomas Hoger wrote:
+> Hi Steven!
 > 
-> 1.  The BTRFS_IOC_CLONE and BTRFS_IOC_CLONE_RANGE ioctls allowed a
-> local user to overwrite append-only files.
+> This seems to have slipped through the cracks.
 
-Please use CVE-2010-2537.
+Indeed. Debian had to release the PHP DSA w/o a CVE reference:
 
-> 
-> 2.  The BTRFS_IOC_CLONE_RANGE ioctl was subject to an integer
-> overflow
-> in specifying offsets to copy from a file, which potentially allows a
-> local user to read sensitive filesystem data.
+http://lists.debian.org/debian-security-announce/2010/msg00134.html
 
-Please use CVE-2010-2538
-
-> 
-> Reference:
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=2ebc3464781ad24474abcbd2274e6254689853b5
-> 
-
-Thanks.
-
--- 
-    JB
+Cheers,
+        Moritz
