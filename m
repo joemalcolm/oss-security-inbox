@@ -1,65 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/21/6
-Message-ID: <1274447028.12594.45.camel@severus.strandboge.com>
-Date: Fri, 21 May 2010 08:03:48 -0500
-From: Jamie Strandboge <jamie@...onical.com>
-To: Thomas Biege <thomas@...ell.com>
-Cc: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: clamav null pointer dereference
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/20/8
+Message-ID: <AANLkTikB4US8kd48URcXpLEZeLmmKN4tO+usLNgfFL67@mail.gmail.com>
+Date: Fri, 20 Aug 2010 18:45:47 +0200
+From: Pierre Joye <pierre.php@...il.com>
+To: Tomas Hoger <thoger@...hat.com>
+Cc: oss-security@...ts.openwall.com, Moritz Muehlenhoff <jmm@...ian.org>,  "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: PHP MOPS-2010-56..60
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 2010-05-21 at 12:39 +0200, Thomas Biege wrote:
-> Hi,
-> does someone, who knows moe about clamav than I do, know if the following has
-> security implications?
-> 
-> changelog: http://git.clamav.net/gitweb?p=clamav-
-> devel.git;a=blob_plain;f=ChangeLog;hb=master
-> 
-> Wed May 19 12:21:02 CEST 2010 (acab)
-> ------------------------------------
->  * libclamav/7z/Archive/7z/7zIn.c: fix possible(?) null dereference reported
->                                 by clang (bb#1909)
-> 
-> 
-> diff: http://git.clamav.net/gitweb?p=clamav-
-> devel.git;a=commitdiff;h=4531ba07e1ed5060ac8cb8ff748427ce0917bedd
-> 
+On Fri, Aug 20, 2010 at 1:24 PM, Pierre Joye <pierre.php@...il.com> wrote:
+> On Fri, Aug 20, 2010 at 1:00 PM, Tomas Hoger <thoger@...hat.com> wrote:
+>> On Fri, 20 Aug 2010 12:38:31 +0200 Pierre Joye wrote:
+>>
+>>> > MOPS-2010-056 - MOPS-2010-060 as subject indicates.  Those are
+>>> > mysqlnd issues and session serializer issue allowing data
+>>> > injection.  Not any from that set of interruption issues that
+>>> > exposed one or two problems in different ways.
+>>>
+>>> As far as I can tell and see, both the mysqlnd and session issues have
+>>> been fixed.
+>>
+>> Raphael posted commit links earlier in this thread.
+>>
+>>> Phar: http://svn.php.net/viewvc?view=revision&revision=298667
+>>
+>> I'm aware of that commit.  It does not change
+>> php_stream_wrapper_log_error invocation from phar_stream_flush, as
+>> mentioned in MOPS-2010-024:
+>>
+>> http://svn.php.net/viewvc/php/php-src/trunk/ext/phar/stream.c?view=markup&pathrev=298667#l471
+>>
+>> Hence the question if there is some less obvious change that make that
+>> particular cases non-issue too.
+>
+> I miss that part, thanks for pointing me to it. I will commit a fix
+> later today.
 
-I'm no expert on clamav, but looking at
-https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1909
+Done: http://svn.php.net/viewvc?view=revision&revision=302565
 
-indicates that this is not security relevant. Based on the response to
-the report (which I am rewording and attempting to clarify here), this
-is the potential NULL dereference (line 669):
-    (*unpackSizes)[si++] = SzFolder_GetUnpackSize(folders + i) - sum;
-
-However, this cannot be reached due to this check at line 659:
-    if (numSubstreams == 0)
-      continue;
-
-This is because '*unpackSizes = 0' only if '*numUnpackStreams ==
-0' (line 634) and the null dereference reached only if numFolders > 0,
-which it can be if multiple nulls are read in at line 621. However, at
-line 622 we have:
-        folders[i].NumUnpackStreams = numStreams;
-        *numUnpackStreams += numStreams;
-
-and at 658 we have:
-    UInt32 numSubstreams = folders[i].NumUnpackStreams;
-    if (numSubstreams == 0)
-      continue;
-
-Simply put, to meet the required conditional at line 634, we must read
-in some NULLs at 622, which assigns 0 to folders[i].NumUnpackStreams,
-which later we assign 'numSubstreams = folders[i].NumUnpackStreams' and
-then check if numSubstreams equals 0 (line 658) and if so continue, thus
-avoiding the NULL dereference.
-
-I've asked our clamav maintainer to contact upstream to verify this is
-the case, and will report back if I'm wrong.
-
+Cheers,
 -- 
-Jamie Strandboge             | http://www.canonical.com
+Pierre
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
