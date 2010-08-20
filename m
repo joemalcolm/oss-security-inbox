@@ -1,123 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/30/3
-Message-ID: <20100830032331.GA22773@openwall.com>
-Date: Mon, 30 Aug 2010 07:23:31 +0400
-From: Solar Designer <solar@...nwall.com>
-To: Roland McGrath <roland@...hat.com>
-Cc: Kees Cook <kees.cook@...onical.com>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Al Viro <viro@...iv.linux.org.uk>, Andrew Morton <akpm@...ux-foundation.org>, Oleg Nesterov <oleg@...hat.com>, KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org
-Subject: Re: [PATCH] exec argument expansion can inappropriately trigger OOM-killer
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/20/14
+Message-ID: <Pine.GSO.4.64.1008201652200.1035@faron.mitre.org>
+Date: Fri, 20 Aug 2010 16:56:02 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: Qt SSL endless loop
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Aug 29, 2010 at 05:56:48PM -0700, Roland McGrath wrote:
-> IMHO unlimited should mean unlimited.
 
-In general, I'd agree, however let's recall that back in 2.2 days we
-introduced strnlen_user() and the "max" argument to count() to prevent a
-userspace program from making the kernel loop busily for too long.
-IIRC, prior to that fix, I was able to cause the kernel to loop for tens
-of minutes in a single execve() call on an Alpha with 128 MB RAM, by
-using repeated mappings of the same pages (almost 200 GB total).
+Just to close this up.  I have actually preserved CVE-2010-2621 and have 
+marked CVE-2010-2533 as a duplicate, which is contrary to what Vincent 
+said.
 
-Now it appears that, besides the issue that started this thread, the
-same problem I mentioned above got re-introduced.  We still have
-strnlen_user() and the "max" argument to count(), but we no longer have
-hard limits for "max".  Someone set MAX_ARG_STRINGS to 0x7FFFFFFF, and
-this is just too much.  MAX_ARG_STRLEN is set to 32 pages, and these two
-combined allow a userspace program to make the kernel loop for days.
+MITRE is ultimately the authority on which CVE should be rejected when 
+duplicates arise.  See 
+http://cve.mitre.org/cve/editorial_policies/duplicates.html for the 
+criteria that I generally follow (every once in a while, a behemoth 
+"authoritative source" wins, though generally there is an expectation that 
+their ID will become more ubiquitous in the future anyway.)
 
-So I think that we should re-introduce some artificial limit(s), maybe
-adjustable by root (by the host system's real root only when container
-virtualization is involved).  Maybe we should lower MAX_ARG_STRINGS
-and/or maybe we should limit the portion of stack space usable for argv
-to, say, 0.75 GB (or even less).
+- Steve
 
-> So, on that score, I'd leave this
-> constraint out and just say whatever deficiencies in the OOM killer (or in
-> whatever should make a manifestly too-large allocation get ENOMEM) should
-> just be fixed separately.
 
-I think the "OOM killer problem" should be fixed too.
 
-> But that aside, I'll just consider the intent stated in the comment in
-> get_arg_page:
-> 		 * Limit to 1/4-th the stack size for the argv+env strings.
-> 		 * This ensures that:
-> 		 *  - the remaining binfmt code will not run out of stack space,
-> 		 *  - the program will have a reasonable amount of stack left
-> 		 *    to work from.
-> To effect "1/4th the stack size", a cap at TASK_SIZE/4 does make some sense,
-> since TASK_SIZE is less than RLIM_INFINITY even in the pure 32-bit world,
-> and that is the true theoretical limit on stack size.
-> 
-> The trouble here, both for that stated intent, and for this "exploit",
-> is which TASK_SIZE that is on a biarch machine.  In fact, it's the
-> TASK_SIZE of the process that called execve.  (get_arg_page is called
-> from copy_strings, from do_execve before search_binary_handler--i.e.,
-> before anything has looked at the file to decide whether it's going to
-> be a 32-bit or 64-bit task on exec.)  If it's a 32-bit process exec'ing
-> a 64-bit program, it's the 32-bit TASK_SIZE (perhaps as little as 3GB).
-> So that's a limit of 0.75GB on a 64-bit program, which might actually do
-> just fine with 2 or 3GB.  If it's a 64-bit process exec'ing a 32-bit
-> program, it's the 64-bit TASK_SIZE (128TB on x86-64).  So that's a limit
-> of 32TB, which is perhaps not that helpfully less than 2PB minus 1 byte
-> (RLIM_INFINITY/4) as far as preventing any over-allocation DoS in practice.
+On Mon, 19 Jul 2010, Vincent Danen wrote:
 
-That's a very good point!
-
-> If you want to constrain it this way, it's probably simpler just to use
-> a smaller hard limit for RLIM_STACK at boot time (and hence system-wide).
-
-Right.
-
-> But it sounds like all you really need is to fix the OOM/allocation
-> behavior for huge stack allocations.
-
-No, we need both.
-
-Additionally, 64bit_dos.c mentions that "it triggers a BUG() as the
-stack tries to expand around the address space when shifted".  Perhaps
-limiting the stack size would deal with that, but maybe the "bug" needs
-to be patched elsewhere as well.  grsecurity has the following hunk:
-
-@@ -505,7 +520,8 @@ static int shift_arg_pages(struct vm_are
- 	unsigned long new_end = old_end - shift;
- 	struct mmu_gather *tlb;
- 
--	BUG_ON(new_start > new_end);
-+	if (new_start >= new_end || new_start < mmap_min_addr)
-+		return -EFAULT;
- 
- 	/*
- 	 * ensure there are no vmas between where we want to go
-
-which is likely part of a fix (but not the entire fix) for what the
-comment in 64bit_dos.c refers to.  However, I was not able to trigger
-the BUG_ON() on RHEL5'ish kernels by simply running the 64bit_dos
-program (64-bit to 32-bit exec) on two systems, one with 2 GB RAM, the
-other with 4 GB.  Of course, I set "ulimit -s unlimited" first.
-
-On the 2 GB system, I saw the OOM killer problem (several other
-processes got killed before 64bit_dos was killed as well).  On the 4 GB
-system, exec succeeded (after looping in the kernel for a few seconds,
-and then the newly started program failed because of its address space
-exhaustion).  Maybe the BUG is only triggerable on certain other kernel
-versions, or maybe I didn't try hard enough (I certainly did not try
-very hard - I did not review the code closely).
-
-Someone could want to look into this aspect as well.
-
-grsecurity's added check against mmap_min_addr (and the reference to it
-in the "exploit's" comment) is also very curious.  It can be just a way
-to avoid triggering another BUG() elsewhere, or it can be just an extra
-hardening measure - but it could also be "for real".  We could want to
-double-check that there wasn't an mmap_min_addr bypass possible here.
-
-Overall, there are multiple issues here (maybe up to four?) and multiple
-things to review the code for.
-
-Does anyone (with more time than me) want to look into these for real?
-(I sure hope so.)
-
-Thanks,
-
-Alexander
+> * [2010-07-19 10:49:36 +0200] Ludwig Nussel wrote:
+>
+>> Vincent Danen wrote:
+>>> * [2010-07-16 11:19:09 -0400] Josh Bressers wrote:
+>>> 
+>>> >Please use CVE-2010-2533
+>>> 
+>>> Wasn't this already assigned CVE-2010-2621?
+>>> 
+>>> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-2621
+>>> 
+>>> It links to the same advisory (qtsslame-adv.txt) and that only seems to
+>>> be reporting one single problem.
+>> 
+>> Oops, indeed. We've overlooked that assignment. Sorry for the confusion :-/
+>
+> No problem.  We need to discard the new one then (discard CVE-2010-2621
+> as a dupe of CVE-2010-2533).
+>
+> -- 
+> Vincent Danen / Red Hat Security Response Team
