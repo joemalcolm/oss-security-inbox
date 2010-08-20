@@ -1,57 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/11/2
-Message-ID: <2144085049.2142031284165154353.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 10 Sep 2010 20:32:34 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/20/13
+Message-ID: <Pine.GSO.4.64.1008201632150.1035@faron.mitre.org>
+Date: Fri, 20 Aug 2010 16:37:41 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: David Malcolm <dmalcolm@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Python -- accept() implementation in async core is broken => more subcases
+Subject: Re: CVE request: lxr
 Content-Type: text/plain; charset=utf-8
 
-Steve,
 
-I'm going to leave this one up to you. While it's really a python bug, I
-suspect several affected projects will end up patching themselves (I'm not
-sure how MITRE hadnles this situation).
+All,
 
-Thanks.
+I agree that these are duplicates.  This arose out of an oddity in the CVE 
+content production process, the specifics of which I'm still trying to 
+figure out.  Basically we have multiple internal "production streams" 
+where CVE-2010-1448 was processed through one stream, and CVE-2010-1738 
+through another.  The original CVE confusion that happened in May 2010 no 
+doubt complicated things.
 
--- 
-    JB
+Prefer CVE-2010-1448.  I have REJECTED CVE-2010-1738.
+
+- Steve
 
 
------ "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
 
-> Hello Steve, vendors,
-> 
->    Giampaolo Rodola reported a deficiency in the implementation of
-> Python's accept() routine:
->    [1] http://bugs.python.org/issue6706
-> 
->    The following seems to be all symptoms for the same issue:
->    A, SMTP (smtpd.py):
->       [2] https://bugzilla.redhat.com/show_bug.cgi?id=632200
->       [3] http://bugs.python.org/issue9129
-> 
->    B, pyftpdlib:
->       [4] http://code.google.com/p/pyftpdlib/issues/detail?id=104
-> 
->    C, ZODB:
->       [5] https://bugs.launchpad.net/zodb/+bug/135108
-> 
->    D, more?
-> 
-> Not sure, how to proceed in this case:
-> i,  if assign only one CVE id for [1] or,
-> ii, assign also separate CVE ids for the child symptoms? ([2], [3],
-> [4])
-> 
-> Cc-ed David Malcom on this post, to shed more light how to handle this
-> case.
-> 
-> Once the way, how to further proceed with this, specified. Steve could
-> you allocate CVE id (ids)?
-> 
-> Thanks && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+On Sat, 31 Jul 2010, Dan Rosenberg wrote:
+
+> Yes, CVE-2010-1738 is a dupe of CVE-2010-1448.
+>
+> -Dan
+>
+> On Sat, Jul 31, 2010 at 10:03 AM, Nico Golde <oss-security+ml@...lde.de> wrote:
+>> Hi,
+>> * Josh Bressers <bressers@...hat.com> [2010-05-14 21:48]:
+>>> ----- "Dan Rosenberg" <dan.j.rosenberg@...il.com> wrote:
+>>>
+>>>> Josh,
+>>>>
+>>>> The XSS in the title string was already assigned CVE-2010-1448.  Do
+>>>> you mean to assign issue #2, the XSS reflected in search results?
+>>>>
+>>>
+>>> Sigh, yes.
+>>>
+>>> So to sum it up:
+>>>
+>>> 1.  XSS in the ident parameter, as described in CVE-2009-4497.
+>>>
+>>> 2.  XSS that is reflected via the search results page after issuing
+>>> This one is now CVE-2010-1625
+>>>
+>>> 3. 3.  XSS that is reflected via the <title> tag on the search page, as
+>>> described in Raphael's original e-mail a few days ago, which Josh assigned
+>>> CVE-2010-1448
+>>
+>> CVE-2010-1738 seems to be a dupe of this?
+>>
+>> Cheers
+>> Nico
+>> --
+>> Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+>> For security reasons, all text in this mail is double-rot13 encrypted.
+>>
+>
+>
