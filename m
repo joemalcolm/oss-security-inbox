@@ -1,65 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/25/9
-Message-ID: <772617629.263861274811978260.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 25 May 2010 14:26:18 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/20/2
+Message-ID: <4C6E381F.4040502@kernel.sg>
+Date: Fri, 20 Aug 2010 16:09:03 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Cc: security-2010@...irrelmail.org, security@...de.org, coley@...re.org
-Subject: Re: CVE Request for Horde and Squirrelmail
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE-2010-2959 kernel: can: add limit for nframes and clean up signed/unsigned variables
 Content-Type: text/plain; charset=utf-8
 
------ "Max Olsterd" <max.olsterd@...il.com> wrote:
+Upstream commit: 5b75c4973ce779520b9d1e392483207d6f842cde
 
-> Hi,
-> 
-> Is there a CVE number available for the two 0-days exposed during Hack In
-> The Box Dubai 2010 ?
-> 
-> Though the exploits were not given during HITB (?), some friends have
-> recently shown me that they found how both products (Squirrelmail and
-> Horde) might be abused to be transformed, so that they become some kind
-> of nmap scanner (banner grab, port scan, etc). It helps at discovering a
-> remote DMZ, internal LAN, etc, by using those webmails as evil internal
-> nmap proxies.
-> 
-> More info available on the slides of the corporate hackers who found the
-> 0-days :
-> http://conference.hitb.org/hitbsecconf2010dxb/materials/D1%20-%20Laurent%20Oudot%20-%20Improving%20the%20Stealthiness%20of%20Web%20Hacking.pdf
-> -> Squirrelmail: page 69 (post auth vuln)
-> -> Horde: page 74 (pre auth vuln)
-> 
+Discovered by Ben Hawkes. From the description of the patch: "This patch 
+adds a limit for nframes as the number of frames in TX_SETUP and 
+RX_SETUP are derived from a single byte multiplex value by default. 
+Use-cases that would require to send/filter more than 256 CAN frames 
+should be implemented in userspace for complexity reasons anyway.
 
-Here goes, there isn't a lot of data on these.
+Additionally the assignments of unsigned values from userspace to signed 
+values in kernelspace and vice versa are fixed by using unsigned values 
+in kernelspace consistently."
 
-For Squirrelmail:
+This can lead to a local denial of service or privilege escalation.
 
-Here are some important notes from the slide:
-        * Default plugin <mail_fetch>, emulates POP3 fetcher with fsockopen()
-          PHP functions, Post Authentication only
-            - No verification on IP / PORTS
-        * You can transform SquirrelMail as a kind of Nmap scanner
+This can be mitigated by blacklisting the can/can_bcm modules.
 
-        This has been assigned TEHTRI-SA-2010-009 by the discoverer.
+https://bugzilla.redhat.com/CVE-2010-2959
 
-        The danger is that this attack could be used to bypass a firewall.
+I got the CVE name from a recent Ubuntu advisory.
 
-Let's use CVE-2010-1637 for Squirrelmail.
-
-
-For Horde:
-
-        * You can transform a default Horde installation to a kind of
-          advanced network TCP scanner with banner grabbing, etc
-
-        Pre-auth
-
-        TEHTRI-SA-2010-010
-
-Let's use CVE-2010-1638 for Horde
-
-
-If anyone has more links or information for these, please pass them along.
-Thanks.
-
+Thanks, Eugene
 -- 
-    JB
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
