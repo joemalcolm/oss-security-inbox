@@ -1,30 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/16/5
-Message-Id: <201003161428.49548.ludwig.nussel@suse.de>
-Date: Tue, 16 Mar 2010 14:28:49 +0100
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/20/12
+Message-ID: <195554551.1101541282325596951.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 20 Aug 2010 13:33:16 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Brian Stafford <brian@...fford.uklinux.net>, libesmtp@...fford.uklinux.net, security@...ntu.com, Pawel Salek <pawsa@...ochem.kth.se>, jskarvad@...hat.com
-Subject: Re: CVE Request: libesmtp does not check NULL bytes in commonName
+Cc: jengelh@...ozas.de, coley <coley@...re.org>
+Subject: Re: CVE Request: heap-based buffer overflow in libHX
 Content-Type: text/plain; charset=utf-8
 
-Brian Stafford wrote:
-> Ludwig Nussel wrote:
-> > Brian Stafford wrote:
-> >   
-> >> I think the best approach is to apply Pawel's patch as this is the 
-> >
-> > I must have missed that patch. Could you re-post it?
-> >   
-> It's available at https://bugzilla.redhat.com/attachment.cgi?id=399131
+Please use CVE-2010-2947
 
-Doesn't that lack a null byte check for subjAltNames?
-
-cu
-Ludwig
+Thanks.
 
 -- 
- (o_   Ludwig Nussel
- //\   
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+    JB
+
+
+----- "Thomas Biege" <thomas@...e.de> wrote:
+
+> http://libhx.git.sourceforge.net/git/gitweb.cgi?p=libhx/libhx;a=commitdiff;h=904a46f90dd3f046bfac0b64a5e813d7cd4fca59
+> 
+> string: fixed buffer overflow in HX_split when too few fields are
+> present
+> 
+> Jan Engelhardt [Mon, 16 Aug 2010 17:08:51 +0000 (19:08 +0200)]
+> 
+> 
+> 
+> When HX_split is called with a maximum number of desired fields (4th
+> 
+> argument != 0), passing in a string that has less fields than that
+> led
+> 
+> to a buffer overrun (write beyond end of malloc'd area).
+> 
+> 
+> 
+> CVSS Base Score: 10
+> 
+> - Impact Subscore: 10
+> 
+> - Exploitability Subscore: 10
+> 
+> CVSS Temporal Score: 7.4
+> 
+> CVSS Environmental Score: Undefined
+> 
+> Overall CVSS Score: 7.4
+> 
+> 
+> 
+> CVSS Base vector:: AV:N/AC:L/Au:N/C:C/I:C/A:C
+> 
+> - AV: libHX may be used by network services
+> 
+> - Au: some services may not require authentication
+> 
+> - A: can cause crash when result is freed
+> 
+> 
+> 
+> CVSS Temporal vectors:: RL:O/RC:C
+> 
+> 
+> 
+> Affects all versions prior to, and including, 3.5.
+> 
+> -- 
+>  Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support &
+> Auditing
+>  SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
