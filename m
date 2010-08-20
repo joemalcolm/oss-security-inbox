@@ -1,33 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/04/7
-Message-ID: <20101104150429.GO25118@suse.de>
-Date: Thu, 4 Nov 2010 16:04:29 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Clarification: OpenFabrics ofed stack also contains RDS protocol
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/20/5
+Message-Id: <201008201252.52176.thomas@suse.de>
+Date: Fri, 20 Aug 2010 12:52:51 +0200
+From: Thomas Biege <thomas@...e.de>
+To: oss-security@...ts.openwall.com
+Cc: jengelh@...ozas.de
+Subject: CVE Request: heap-based buffer overflow in libHX
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
-The openfabrics remote messaging / dma stack also contains
-the RDS protocol family module (actually it seems to be the originator
-before it came into mainline).
-
-It is in the ofa_kernel package, and SUSE ships it e.g. in the "ofed"
-packages.
 
 
-The net/rds/ code inside of it is pretty much the same as the Linux
-kernel module. It also is autoloading with module aliases.
+http://libhx.git.sourceforge.net/git/gitweb.cgi?p=libhx/libhx;a=commitdiff;h=904a46f90dd3f046bfac0b64a5e813d7cd4fca59
 
-CVE-2010-3904 seems to be there up to the latest version after looking
-at the code (I tried the 1.4 version).
+string: fixed buffer overflow in HX_split when too few fields are present
 
-CVE-2010-3865 seems to be present in some versions, but not in the
-latest version. Unverified.
+Jan Engelhardt [Mon, 16 Aug 2010 17:08:51 +0000 (19:08 +0200)]
 
 
-Does this need new CVEs? The projects are different, but the history
-seems clear and the code basically the same.
 
-Ciao, Marcus
+When HX_split is called with a maximum number of desired fields (4th
+
+argument != 0), passing in a string that has less fields than that led
+
+to a buffer overrun (write beyond end of malloc'd area).
+
+
+
+CVSS Base Score: 10
+
+- Impact Subscore: 10
+
+- Exploitability Subscore: 10
+
+CVSS Temporal Score: 7.4
+
+CVSS Environmental Score: Undefined
+
+Overall CVSS Score: 7.4
+
+
+
+CVSS Base vector:: AV:N/AC:L/Au:N/C:C/I:C/A:C
+
+- AV: libHX may be used by network services
+
+- Au: some services may not require authentication
+
+- A: can cause crash when result is freed
+
+
+
+CVSS Temporal vectors:: RL:O/RC:C
+
+
+
+Affects all versions prior to, and including, 3.5.
+
+-- 
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
