@@ -1,70 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/07/1
-Message-ID: <idk3fe$gtl$1@dough.gmane.org>
-Date: Mon, 06 Dec 2010 19:44:06 -0600
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/20/9
+Message-ID: <Pine.GSO.4.64.1008201256450.1035@faron.mitre.org>
+Date: Fri, 20 Aug 2010 12:59:15 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE requests: IO::Socket::SSL, cakephp, collectd, gnash, ocrodjvu, hypermail, libcloud, piwigo
+Subject: Re: CVE request: PHP MOPS-2010-56..60
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-Could CVE ids be assigned for the following issues? thanks in advance.
+Apologies to everyone, especially Moritz who pinged me on this privately a 
+while ago.
 
-IO::Socket::SSL: unexpected fallback to VERIFY_NONE if certificate file(s) 
-are not specified.
-http://bugs.debian.org/606058
-http://secunia.com/advisories/42508/
-
-cakephp: code execution via unserialize() call with untrusted data
-http://malloc.im/CakePHP-unserialize.txt
-https://github.com/cakephp/cakephp/commit/e431e86aa4301ced4273dc7919b59362cbb353cb
-http://secunia.com/advisories/42211/
-
-collectd: DoS via the RRDtool and RRDCacheD plugins
-http://bugs.debian.org/605092
-http://secunia.com/advisories/42393/
-
-gnash: insecure handling of temp files at build-time
-http://bugs.debian.org/605419
-http://secunia.com/advisories/42416/
-
-ocrodjvu: insecure handling of temp files
-http://bugs.debian.org/598134
-
-hypermail: XSS
-http://bugs.debian.org/598743
-
-libcloud: "doesn't verify ssl certificate"
-It appears that what it doesn't verify is the certificate's CN. From the 
-references provided in the Debian bug report it looks like it is a 
-widespread issue on the SSL implementations in Python.
-Not sure how MITRE would like to handle those.
-
-http://bugs.debian.org/598463
-https://github.com/tjfontaine/linode-python/issues/issue/1#issue/1
-
-piwigo:
-a1) CSRF
-a2) SQL injection
-a3) stored XSS
-http://secunia.com/advisories/41365/
-http://piwigo.org/releases/2.1.3
-http://www.exploit-db.com/exploits/14973/
-(the issues mentioned by the exploit-db entry appear to be the same that 
-were fixed in 2.1.3)
-b) search.php SQL injection
-http://secunia.com/advisories/38305/
-http://piwigo.org/releases/2.0.8
-c) CSRF in the admin panel:
-http://secunia.com/advisories/37681/
-http://www.exploit-db.com/exploits/10417
-(the exploit-db entry details two other issues, but are "admin-only" -- feel 
-free to assign or ignore those.)
-
-Regards,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+Some of these CVEs are SPLIT based on very narrow distinctions between 
+types of buffer overflows, where others might have merged.  This is one 
+area where there can be some variability in CVE assignments depending on 
+the amount of available information.
 
 
+CVE-2010-3062
+
+   - MOPS-2010-056, MOPS-2010-057
+   - buffer overflow with untrusted length
+
+CVE-2010-3063
+
+   - MOPS-2010-058
+   - buffer overflow with calculation error
+
+CVE-2010-3064
+
+   - MOPS-2010-059
+   - classic overflow
+
+CVE-2010-3065
+   - MOPS-2010-060
+   - session deserializer data injection
+
+
+
+- Steve
