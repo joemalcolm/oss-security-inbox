@@ -1,28 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/26/4
-Message-ID: <AANLkTimNg3koQjJG6t+VxY9PGFYnL=Ex-Tn+d-NRs-uP@mail.gmail.com>
-Date: Sun, 26 Dec 2010 17:26:29 -0200
-From: Felipe Pena <felipensp@...il.com>
-To: Eygene Ryabinkin <rea-sec@...elabs.ru>
-Cc: oss-security@...ts.openwall.com, kalle@....net, felipe@....net,  cellog@....net, pajoye@....net
-Subject: Re: Re: CVE-2010-2094: PECL's phar code is vulnerable too
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/20/7
+Message-ID: <AANLkTikn9beTBkkwBgNZqeDUskpTDCop+woTyCCOo=Bh@mail.gmail.com>
+Date: Fri, 20 Aug 2010 13:24:57 +0200
+From: Pierre Joye <pierre.php@...il.com>
+To: Tomas Hoger <thoger@...hat.com>
+Cc: oss-security@...ts.openwall.com, Moritz Muehlenhoff <jmm@...ian.org>,  "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: PHP MOPS-2010-56..60
 Content-Type: text/plain; charset=utf-8
 
-2010/12/26 Eygene Ryabinkin <rea-sec@...elabs.ru>
-
-> Felipe, good day.
+On Fri, Aug 20, 2010 at 1:00 PM, Tomas Hoger <thoger@...hat.com> wrote:
+> On Fri, 20 Aug 2010 12:38:31 +0200 Pierre Joye wrote:
 >
-> Sun, Dec 26, 2010 at 10:29:27AM -0200, Felipe Pena wrote:
-> > I've backported the fixes to pecl/phar.
+>> > MOPS-2010-056 - MOPS-2010-060 as subject indicates.  Those are
+>> > mysqlnd issues and session serializer issue allowing data
+>> > injection.  Not any from that set of interruption issues that
+>> > exposed one or two problems in different ways.
+>>
+>> As far as I can tell and see, both the mysqlnd and session issues have
+>> been fixed.
 >
-> Good news.  Do you plan to tag a release?
-> --
-> Eygene
+> Raphael posted commit links earlier in this thread.
 >
+>> Phar: http://svn.php.net/viewvc?view=revision&revision=298667
+>
+> I'm aware of that commit.  It does not change
+> php_stream_wrapper_log_error invocation from phar_stream_flush, as
+> mentioned in MOPS-2010-024:
+>
+> http://svn.php.net/viewvc/php/php-src/trunk/ext/phar/stream.c?view=markup&pathrev=298667#l471
+>
+> Hence the question if there is some less obvious change that make that
+> particular cases non-issue too.
 
-Yes, I will contact anyone to do it... (I'm not the ext/phar maintainer)
+I miss that part, thanks for pointing me to it. I will commit a fix
+later today. However same issue that the other phar flaws in this
+MOPS.
 
+>> As far as I remember, the resources related issues are not fixed (-22
+>> and -03), it is also not new and related to the same bug. I also don't
+>> think that it will get fixed any time soon as it is not possible to
+>> fix easily. I think there is already a CVE about this problem.
+>
+> Are you aware of any good bugs.php.net reference that covers the issue
+> in greater detail?
+
+There is no bug report about MOPS, sadly. There was a couple of
+discussions on security@ but nothing interesting or new (Joe may have
+them as he is part of this list too). All we had are the blog posts
+from Stefen.
+
+Cheers,
 -- 
-Regards,
-Felipe Pena
+Pierre
 
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
