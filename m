@@ -1,39 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/21/3
-Message-Id: <201007211209.42978.timb@nth-dimension.org.uk>
-Date: Wed, 21 Jul 2010 12:09:28 +0100
-From: Tim Brown <timb@...-dimension.org.uk>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/20/15
+Message-ID: <20100820213030.GT3357@redhat.com>
+Date: Fri, 20 Aug 2010 15:30:30 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Universal XSS in Rekonq
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: Qt SSL endless loop
 Content-Type: text/plain; charset=utf-8
 
-Hi guys,
+* [2010-08-20 16:56:02 -0400] Steven M. Christey wrote:
 
-Can a CVE be assigned for the universal XSS in Rekonq 
-(https://bugs.kde.org/show_bug.cgi?id=217464).  Essentially, the error page 
-displayed when a requested URL is not available includes said URL.  If said 
-URL includes HTML fragments these will be rendered in the context of the 
-requested URL.  If you request something like 
-http://wontresolve.twitter.com/"><script>alert(document.cookies)</script> then 
-you may very well snare your Twitter cookies.
+>Just to close this up.  I have actually preserved CVE-2010-2621 and 
+>have marked CVE-2010-2533 as a duplicate, which is contrary to what 
+>Vincent said.
 
-Originally when I reported this bug to the Rekonq developers, it was a very 
-small project without much following, however Rekonq is starting to make its 
-way into multiple distros so I thought it was probably time to flag it up.
+Bah, just re-read the below thing and you're entirely right, and this
+was what I meant (looking at our bug, we never used 2533, and left 2621
+as it was).  My intention was to note the newly _assigned_ one as a dupe
+and I was apparently concentrating on the larger number when I wrote the
+response.
 
-Quick history:
-05/12/09 Reported by me against Rekonq 0.4
-05/12/09 Added note that it also appears to affect Qt's demo browser
-05/12/09 KDE patch kwebkitpart
-07/12/09 Confirmed by Rekonq developers
-13/04/10 Reported resolved by developers
-14/07/10 Retested on 0.5 and found still to be vulnerable
+Sorry about that, that probably created a healthy dose of confusion.
 
-Cheers,
-Tim
+>MITRE is ultimately the authority on which CVE should be rejected 
+>when duplicates arise.  See 
+>http://cve.mitre.org/cve/editorial_policies/duplicates.html for the 
+>criteria that I generally follow (every once in a while, a behemoth 
+>"authoritative source" wins, though generally there is an expectation 
+>that their ID will become more ubiquitous in the future anyway.)
+
+No problem at all.  Thanks for the clarification here Steve.
+
+>On Mon, 19 Jul 2010, Vincent Danen wrote:
+>
+>>* [2010-07-19 10:49:36 +0200] Ludwig Nussel wrote:
+>>
+>>>Vincent Danen wrote:
+>>>>* [2010-07-16 11:19:09 -0400] Josh Bressers wrote:
+>>>>
+>>>>>Please use CVE-2010-2533
+>>>>
+>>>>Wasn't this already assigned CVE-2010-2621?
+>>>>
+>>>>http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-2621
+>>>>
+>>>>It links to the same advisory (qtsslame-adv.txt) and that only seems to
+>>>>be reporting one single problem.
+>>>
+>>>Oops, indeed. We've overlooked that assignment. Sorry for the confusion :-/
+>>
+>>No problem.  We need to discard the new one then (discard CVE-2010-2621
+>>as a dupe of CVE-2010-2533).
+
 -- 
-Tim Brown
-<mailto:timb@...-dimension.org.uk>
-<http://www.nth-dimension.org.uk/>
-
-Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
+Vincent Danen / Red Hat Security Response Team 
