@@ -1,27 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/14/18
-Message-ID: <AANLkTin=pn9EU2U2JzBTjyuhtos3Bb9+UocMkX+MJs_+@mail.gmail.com>
-Date: Tue, 14 Sep 2010 17:05:02 -0600
-From: Kurt Seifried <kurt@...fried.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: mantis before 1.2.3 (XSS)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/20/4
+Message-ID: <AANLkTinpfR2=5Xe=L=Z9aZFGM=TwozQLwvm82PQHa+RE@mail.gmail.com>
+Date: Fri, 20 Aug 2010 12:38:31 +0200
+From: Pierre Joye <pierre.php@...il.com>
+To: Tomas Hoger <thoger@...hat.com>
+Cc: oss-security@...ts.openwall.com, Moritz Muehlenhoff <jmm@...ian.org>,  "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: PHP MOPS-2010-56..60
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Sep 14, 2010 at 3:06 PM, Hanno Böck <hanno@...eck.de> wrote:
-> From release notes
+hi,
+
+On Fri, Aug 20, 2010 at 12:17 PM, Tomas Hoger <thoger@...hat.com> wrote:
+> On Thu, 19 Aug 2010 18:22:29 +0200 pierre.php@...il.com wrote:
 >
-> "Issue #12312 covers an XSS vulnerability in the upstream NuSOAP library.
-> The fix has been applied to the library included in MantisBT releases,
-> and a patch has been submitted upstream for future releases of NuSOAP.
-> See http://www.mantisbt.org/bugs/view.php?id=12312 for further details.
+>> Which one did not get an is? Most of those were actually a single
+>> issue.
+>
+> MOPS-2010-056 - MOPS-2010-060 as subject indicates.  Those are mysqlnd
+> issues and session serializer issue allowing data injection.  Not any
+> from that set of interruption issues that exposed one or two problems in
+> different ways.
 
-Are you talking about the PHP_SELF thing?
-http://sourceforge.net/projects/nusoap/forums/forum/193579/topic/3834005
-https://bugzilla.redhat.com/show_bug.cgi?id=629585
-if so it has a CVE #:
-CVE-2010-3070 php-nusoap: XSS vulnerability due improper escaping of URLs
+As far as I can tell and see, both the mysqlnd and session issues have
+been fixed.
 
+Phar: http://svn.php.net/viewvc?view=revision&revision=298667
+
+I don't have the revision at hand for mysqlnd but it is fixed too
+(5.3.x and trunk).
+
+About phar, Stefen plans to make yet another blog post about this
+flaw, to explain it. We'll see if we managed to fix it... (did I
+mention that I love the idea behind responsible disclosure? And I
+really love this list too btw :-).
+
+> Has upstream managed to track MOPS-2010-022 down to a proper fix
+> already?  That one was not fixed in 5.3.3.  I'm also wondering whether
+> the case pointed out in MOPS-2010-024 was not addressed in phar commit
+> intentionally.
+
+As far as I remember, the resources related issues are not fixed (-22
+and -03), it is also not new and related to the same bug. I also don't
+think that it will get fixed any time soon as it is not possible to
+fix easily. I think there is already a CVE about this problem.
+
+The phar flaw is fixed (see link).
+
+Please let me know if you need more details, I can try to dig again
+the archive to figure them out.
+
+Cheers,
 -- 
-Kurt Seifried
-kurt@...fried.org
-tel: 1-703-879-3176
+Pierre
+
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
