@@ -1,27 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/03/3
-Message-ID: <20100803055115.GB4916@galadriel.inutil.org>
-Date: Tue, 3 Aug 2010 01:51:15 -0400
-From: Moritz Muehlenhoff <jmm@...til.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/20/3
+Message-ID: <20100820121743.62c72148@redhat.com>
+Date: Fri, 20 Aug 2010 12:17:43 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: kernel: [PARISC] led.c - fix potential stack overflow in led_proc_write()
+Cc: pierre.php@...il.com, "Moritz Muehlenhoff" <jmm@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: PHP MOPS-2010-56..60
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Aug 03, 2010 at 11:46:58AM +0800, Eugene Teo wrote:
-> Ilja reported way back in Nov 2007. A writer to /proc/pdc/led(?) can
-> cause the kernel to consume an unbounded amount of stack, and result
-> in stack corruption.
-> 
-> http://www.spinics.net/lists/linux-parisc/msg02960.html
-> 
-> If you need a CVE name, change the subject to indicate that. We are
-> not requesting one as we do not support the PA-RISC architecture in
-> our distribution.
+On Thu, 19 Aug 2010 18:22:29 +0200 pierre.php@...il.com wrote:
 
-Debian supports hppa. 
+> Which one did not get an is? Most of those were actually a single
+> issue.
 
-Steven, please assign a CVE ID.
+MOPS-2010-056 - MOPS-2010-060 as subject indicates.  Those are mysqlnd
+issues and session serializer issue allowing data injection.  Not any
+from that set of interruption issues that exposed one or two problems in
+different ways.
 
-Cheers,
-        Moritz
+Has upstream managed to track MOPS-2010-022 down to a proper fix
+already?  That one was not fixed in 5.3.3.  I'm also wondering whether
+the case pointed out in MOPS-2010-024 was not addressed in phar commit
+intentionally.
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
