@@ -1,51 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/02/11
-Message-ID: <1291524204.1871571278097376467.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 2 Jul 2010 15:02:56 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/20/10
+Message-ID: <2009623087.1101371282325492735.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 20 Aug 2010 13:31:32 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Luigi Auriemma <aluigi@...istici.org>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Mumble server (Murmur) / Qt SQLite -- Remotely exploitable DoS (murmur termination) due QueryUsers Qt SQLite database bug
+Cc: coley <coley@...re.org>
+Subject: Re: CVE Request: SLiM insecure PATH assignment
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-2490
+
+----- "Niels Heinen" <niels@...eBSD.org> wrote:
+
+> Hi all,
+> 
+> SLiM versions prior to 1.3.1 assigned logged on users a predefined
+> PATH
+> which included './'. This allowed unintentional code execution (e.g.
+> planted binary) and has been fixed by the developers in version
+> 1.3.2.
+> 
+> Can you allocate a CVE number for this one?
+> 
+
+Looks like the fix is here:
+http://svn.berlios.de/wsvn/slim?op=comp&compare[]=/@...&compare[]=/@171
+
+Please use CVE-2010-2945
 
 Thanks.
 
 -- 
     JB
-
-
------ "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
-
-> Hi Steve, vendors,
-> 
->    Luigi Auriemma reported:
->    [1] http://aluigi.altervista.org/adv/mumbleed-adv.txt
-> 
-> a deficiency in the way Mumble server processed malformed SQL query
-> data.
-> A remote, authenticated user could use this flaw to cause denial of
-> service
-> (mumble server termination) via specially-crafted QueryUsers Qt SQLite
-> SQL
-> query.
-> 
-> References:
->    [2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=587713
-> 
-> Public PoC:
->    [3] http://aluigi.org/poc/mumbleed.zip
-> 
-> Though not sure, if the true reason for this is:
-> 1, either Mumble server calling relevant Qt SQLite function in
-> improper way or
-> 2, deficiency in that particular Qt function itself
-> 
-> Luigi, could you please clarify on the above?
-> 
-> Steve, could you allocate a CVE id for this?
-> 
-> Thanks && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
