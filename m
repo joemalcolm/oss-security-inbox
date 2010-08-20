@@ -1,33 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/21/1
-Message-ID: <20100521033231.GA22338@openwall.com>
-Date: Fri, 21 May 2010 07:32:31 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/20/1
+Message-ID: <4C6E36AE.8060204@kernel.sg>
+Date: Fri, 20 Aug 2010 16:02:54 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Subject: Re: [oCERT-2010-001] multiple http client unexpected download filename vulnerability
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request - kernel: jfs: don't allow os2 xattr namespace overlap with others
 Content-Type: text/plain; charset=utf-8
 
-On Fri, May 21, 2010 at 12:53:12AM +0400, Solar Designer wrote:
-> I brought this issue to the bug-wget list:
-> 
-> [Bug-wget] security risk of unexpected download filenames
-> http://lists.gnu.org/archive/html/bug-wget/2010-05/msg00023.html
+Upstream commit: aca0fa34bdaba39bfddddba8ca70dba4782e8fe6
 
-Micah, the previous wget maintainer who is still active on the bug-wget
-list, has commented on the issue:
+Description from the commit: It's currently possible to bypass xattr 
+namespace access rules by prefixing valid xattr names with "os2.", since 
+the os2 namespace stores extended attributes in a legacy format with no 
+prefix.
 
-http://lists.gnu.org/archive/html/bug-wget/2010-05/msg00031.html
-http://lists.gnu.org/archive/html/bug-wget/2010-05/msg00033.html
+This patch adds checking to deny access to any valid namespace prefix 
+following "os2.".
 
-It sounds like he does not mind a fix like Florian's patch getting
-included upstream.  We'll see what the current maintainers say.
-
-In another bug-wget posting, I described an attack that does not involve
-a Unix user's home directory and a dot-file:
-
-http://lists.gnu.org/archive/html/bug-wget/2010-05/msg00032.html
-
-It works against wget of a file into a website "document root" tree and
-it may take advantage of index.html taking precedence over index.php.
-
-Alexander
+Thanks, Eugene
+-- 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
