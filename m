@@ -1,27 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/16/2
-Message-ID: <1345316171.977181271377188237.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 15 Apr 2010 20:19:48 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/23/1
+Message-ID: <AANLkTi=-3vCNGVnJW1XCsKUm0MH2+a_iQUmrt4OgSPRU@mail.gmail.com>
+Date: Mon, 23 Aug 2010 16:24:53 +0200
+From: Pierre Joye <pierre.php@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request - sudo
+Subject: Re: CVE request: PHP MOPS-2010-56..60
 Content-Type: text/plain; charset=utf-8
 
+hi,
 
------ "Tomas Hoger" <thoger@...hat.com> wrote:
+Can you send me a list of the MOPS CVE please? I'm missing some and I
+would like to update the NEWS file accordingly.
 
-> Hi!
-> 
-> sudo versions 1.7.2p6 and 1.6.9p22 were released recently fixing
-> another sudoedit privilege escalation issue:
-> 
-> http://sudo.ws/sudo/alerts/sudoedit_escalate2.html
-> 
+Cheers,
 
-Please use CVE-2010-1163
+On Fri, Aug 20, 2010 at 6:59 PM, Steven M. Christey
+<coley@...us.mitre.org> wrote:
+>
+> Apologies to everyone, especially Moritz who pinged me on this privately a
+> while ago.
+>
+> Some of these CVEs are SPLIT based on very narrow distinctions between types
+> of buffer overflows, where others might have merged.  This is one area where
+> there can be some variability in CVE assignments depending on the amount of
+> available information.
+>
+>
+> CVE-2010-3062
+>
+>  - MOPS-2010-056, MOPS-2010-057
+>  - buffer overflow with untrusted length
+>
+> CVE-2010-3063
+>
+>  - MOPS-2010-058
+>  - buffer overflow with calculation error
+>
+> CVE-2010-3064
+>
+>  - MOPS-2010-059
+>  - classic overflow
+>
+> CVE-2010-3065
+>  - MOPS-2010-060
+>  - session deserializer data injection
+>
+>
+>
+> - Steve
+>
 
-Thanks
+
 
 -- 
-    JB
+Pierre
+
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
