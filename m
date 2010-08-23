@@ -1,27 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/10/3
-Message-Id: <20100910092541.2864A405D5@magilla.sf.frob.com>
-Date: Fri, 10 Sep 2010 02:25:41 -0700 (PDT)
-From: Roland McGrath <roland@...hat.com>
-To: KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>
-Cc: Brad Spengler <spender@...ecurity.net>, Linus Torvalds <torvalds@...ux-foundation.org>, Andrew Morton <akpm@...ux-foundation.org>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Kees Cook <kees.cook@...onical.com>, Al Viro <viro@...iv.linux.org.uk>, Oleg Nesterov <oleg@...hat.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, pageexec@...email.hu, Brad Spengler <spender@...ecurity.net>, Eugene Teo <eugene@...hat.com>
-Subject: Re: [PATCH 1/3] setup_arg_pages: diagnose excessive argument size
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/23/2
+Message-ID: <20100823165535.GA2477@galadriel.inutil.org>
+Date: Mon, 23 Aug 2010 18:55:35 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: PHP MOPS-2010-56..60
 Content-Type: text/plain; charset=utf-8
 
-> Brad, sorry, I have bad news. glibc sysconf(_SC_ARG_MAX) is implemented
-> by hard coded RLIMIT_STACK/4 heuristics. That said, at least _now_, we
-> can't change this even though you disliked. That said, we can't break
-> userland even though userland library is very crazy.
+On Mon, Aug 23, 2010 at 04:24:53PM +0200, Pierre Joye wrote:
+> hi,
+> 
+> Can you send me a list of the MOPS CVE please? I'm missing some and I
+> would like to update the NEWS file accordingly.
 
-I'm sorry you think it's "very crazy" to implement the required
-functionality in the only way available.  POSIX requires that execve
-fail with E2BIG when the ARG_MAX limit is exceeded.  sysconf has to
-return the correct actual limit that execve will enforce so that a
-conforming application knows how much it can safely attempt to use.
-Since the kernel uses the hard-coded RLIMIT_STACK/4 heuristic and does
-not expose the true manifest limit any other way, sysconf has to
-parallel the kernel's calculation.
+Here's the full list. The missing IDs are for apps written in PHP,
+but not in PHP itself:
 
+001: CVE-2007-1581
+003: CVE-2010-1866
+006: CVE-2010-1864
+008: CVE-2010-1862
+009: CVE-2010-1861
+010: CVE-2010-1860
+012: CVE-2010-1868
+013: CVE-2010-1868
+014: CVE-2010-1914
+015: CVE-2010-1914
+016: CVE-2010-1914
+017: CVE-2010-1915
+021: CVE-2010-1917
+022: CVE-2010-2093
+024: CVE-2010-2094
+025: CVE-2010-2094
+026: CVE-2010-2094
+027: CVE-2010-2094
+028: CVE-2010-2094
+032: CVE-2010-2097
+033: CVE-2010-2097
+034: CVE-2010-2097
+036: CVE-2010-2100
+037: CVE-2010-2100
+038: CVE-2010-2100
+039: CVE-2010-2100
+040: CVE-2010-2100
+041: CVE-2010-2101
+042: CVE-2010-2101
+043: CVE-2010-2101
+044: CVE-2010-2101
+045: CVE-2010-2101
+046: CVE-2010-2101
+047: CVE-2010-2190
+048: CVE-2010-2190
+049: CVE-2010-2191
+050: CVE-2010-2191
+051: CVE-2010-2191
+052: CVE-2010-2191
+053: CVE-2010-2191
+054: CVE-2010-2191
+055: CVE-2010-2191
+056: CVE-2010-3062
+057: CVE-2010-3062
+058: CVE-2010-3063
+059: CVE-2010-3064
+060: CVE-2010-3065
 
-Thanks,
-Roland
+Cheers,
+        Moritz
