@@ -1,69 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/29/3
-Message-ID: <4BB086C7.4010502@redhat.com>
-Date: Mon, 29 Mar 2010 12:53:59 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, Richard Stanway <r1ch@...h.net>
-Subject: CVE Request -- Quake II Server -- two security issues affecting also Alien Arena
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/23/3
+Message-ID: <AANLkTin6o21vgdsZnGzhgJM75k+hY489HQO86MWJwpZu@mail.gmail.com>
+Date: Mon, 23 Aug 2010 19:02:05 +0200
+From: Pierre Joye <pierre.php@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: PHP MOPS-2010-56..60
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve, vendors,
+thanks :)
 
-   (based on [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=575621)
+On Mon, Aug 23, 2010 at 6:55 PM, Moritz Muehlenhoff <jmm@...ian.org> wrote:
+> On Mon, Aug 23, 2010 at 04:24:53PM +0200, Pierre Joye wrote:
+>> hi,
+>>
+>> Can you send me a list of the MOPS CVE please? I'm missing some and I
+>> would like to update the NEWS file accordingly.
+>
+> Here's the full list. The missing IDs are for apps written in PHP,
+> but not in PHP itself:
+>
+> 001: CVE-2007-1581
+> 003: CVE-2010-1866
+> 006: CVE-2010-1864
+> 008: CVE-2010-1862
+> 009: CVE-2010-1861
+> 010: CVE-2010-1860
+> 012: CVE-2010-1868
+> 013: CVE-2010-1868
+> 014: CVE-2010-1914
+> 015: CVE-2010-1914
+> 016: CVE-2010-1914
+> 017: CVE-2010-1915
+> 021: CVE-2010-1917
+> 022: CVE-2010-2093
+> 024: CVE-2010-2094
+> 025: CVE-2010-2094
+> 026: CVE-2010-2094
+> 027: CVE-2010-2094
+> 028: CVE-2010-2094
+> 032: CVE-2010-2097
+> 033: CVE-2010-2097
+> 034: CVE-2010-2097
+> 036: CVE-2010-2100
+> 037: CVE-2010-2100
+> 038: CVE-2010-2100
+> 039: CVE-2010-2100
+> 040: CVE-2010-2100
+> 041: CVE-2010-2101
+> 042: CVE-2010-2101
+> 043: CVE-2010-2101
+> 044: CVE-2010-2101
+> 045: CVE-2010-2101
+> 046: CVE-2010-2101
+> 047: CVE-2010-2190
+> 048: CVE-2010-2190
+> 049: CVE-2010-2191
+> 050: CVE-2010-2191
+> 051: CVE-2010-2191
+> 052: CVE-2010-2191
+> 053: CVE-2010-2191
+> 054: CVE-2010-2191
+> 055: CVE-2010-2191
+> 056: CVE-2010-3062
+> 057: CVE-2010-3062
+> 058: CVE-2010-3063
+> 059: CVE-2010-3064
+> 060: CVE-2010-3065
+>
+> Cheers,
+>        Moritz
+>
 
-Richard Stanway posted on QuakeDev Forums page:
-   [2] http://www.quakedev.com/forums/index.php?topic=53.0
-
-two new vulnerabilities affecting also code, as present
-in Alien Arena (from [2]):
-
-   A, "Multiple auto downloading DoS conditions:
-       By supplying various invalid parameters to the download command,
-       it is possible to cause a DoS condition by causing the server to
-       crash. A path ending in . or / will crash on Linux. Supplying
-       a negative offset will cause a crash on all platforms."
-
-   Proposed patch:
-   ----------------
-     [3] http://corent.proboards.com/index.cgi?action=gotopost&board=bugreport&thread=4761&post=44624
-
-   Public PoC ([4] http://corent.proboards.com/index.cgi?action=gotopost&board=bugreport&thread=4761&post=44611):
-   -----------
-     cmd download maps/tca-zion.bsp -123456789
-
-   CVSSv2 Score: 4.0/AV:N/AC:L/Au:S/C:N/I:N/A:P
-   -------------
-
-   B, "Server-side cvar expansion:
-       By passing an unexpanded string containing $macros to the
-       server, the server will expand it using it's cvars. This can
-       be used to leak sensitive information such as the rcon_password cvar."
-
-   Proposed patch: N/A
-   ---------------
-
-   Richard, is there a patch for this issue yet?
-
-   Public PoC: [5] http://www.quakedev.com/forums/index.php?topic=53.0
-   -----------
-   At the client console: "say $rcon_password"
-
-   CVSSv2 Score: 4.0/ AV:N/AC:L/Au:S/C:P/I:N/A:N
-   -------------
-
-Regarding the B, issue -- not completely sure alienarena-server supports "server-side cvar expansion"
-(but assuming so). Richard, could you please clarify this?
-
-Steve, could you allocate the CVE ids for these two issues? (once issue B, confirmed).
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
 
 
+-- 
+Pierre
 
-
-
-
-
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
