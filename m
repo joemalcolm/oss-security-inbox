@@ -1,39 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/09/6
-Message-ID: <4C88DB97.1060602@redhat.com>
-Date: Thu, 09 Sep 2010 15:05:27 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, David Malcolm <dmalcolm@...hat.com>
-Subject: CVE Request -- Python -- accept() implementation in async core is broken => more subcases
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/24/1
+Message-Id: <201008240941.12591.thomas@suse.de>
+Date: Tue, 24 Aug 2010 09:40:54 +0200
+From: Thomas Biege <thomas@...e.de>
+To: oss-security@...ts.openwall.com
+Cc: Pierre Joye <pierre.php@...il.com>, Tomas Hoger <thoger@...hat.com>, Moritz Muehlenhoff <jmm@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: PHP MOPS-2010-56..60
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve, vendors,
+Am Freitag, 20. August 2010, 18:45:47 schrieb Pierre Joye:
+..
+> > I miss that part, thanks for pointing me to it. I will commit a fix
+> > later today.
+> 
+> Done: http://svn.php.net/viewvc?view=revision&revision=302565
 
-   Giampaolo Rodola reported a deficiency in the implementation of Python's accept() routine:
-   [1] http://bugs.python.org/issue6706
+Does it need a new CVE-ID?
 
-   The following seems to be all symptoms for the same issue:
-   A, SMTP (smtpd.py):
-      [2] https://bugzilla.redhat.com/show_bug.cgi?id=632200
-      [3] http://bugs.python.org/issue9129
-
-   B, pyftpdlib:
-      [4] http://code.google.com/p/pyftpdlib/issues/detail?id=104
-
-   C, ZODB:
-      [5] https://bugs.launchpad.net/zodb/+bug/135108
-
-   D, more?
-
-Not sure, how to proceed in this case:
-i,  if assign only one CVE id for [1] or,
-ii, assign also separate CVE ids for the child symptoms? ([2], [3], [4])
-
-Cc-ed David Malcom on this post, to shed more light how to handle this case.
-
-Once the way, how to further proceed with this, specified. Steve could you allocate CVE id (ids)?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+-- 
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
