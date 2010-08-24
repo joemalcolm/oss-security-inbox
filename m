@@ -1,16 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/31/7
-Message-ID: <AANLkTins1=AjtjQkvyCjWgTYGaj9MXUhZDN0mZS-xFCV@mail.gmail.com>
-Date: Fri, 31 Dec 2010 21:26:05 +0100
-From: Ulrik Persson <ddefrostt@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: Wireshark
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/24/7
+Message-ID: <20100824234550.GF4358@thorne.id.au>
+Date: Wed, 25 Aug 2010 09:45:50 +1000
+From: Stephen Thorne <stephen@...rne.id.au>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Amos Jeffries <amosjeffries@...id-cache.org>, Stephen Thorne <stephen@...rne.id.au>
+Subject: Re: CVE Request -- Squid v3.1.6 -- DoS (crash) while processing large DNS replies with no IPv6 resolver present
 Content-Type: text/plain; charset=utf-8
 
-Wireshark has a buffer overflow in ENTTEC DMX Data RLE:
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5539
+On 2010-08-24, Jan Lieskovsky wrote:
+>   Stephen Thorne reported a buffer overread flaw in the way Squid proxy caching server
+> processed large DNS replies in cases, when no IPv6 resolver was present.
+> A remote attacker could provide DNS reply with large amount of data,
+> leading to denial of service (squid server crash).
 
-Happy new year!
+Those references all look correct, but I have one small niggle, this was not a
+buffer overread flaw.
+
+What actually happens is that if a TCP DNS request is required, a logic error
+causes a sockopt to be set on the ipv6 resolver fd, which will be fatal if that
+resolver is not configured.
 
 -- 
-Ulrik | Rock Madrid | http://rock-madrid.com/
+Regards,
+Stephen Thorne
+Development Engineer
+Netbox Blue
