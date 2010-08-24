@@ -1,29 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/06/3
-Message-ID: <20100806191502.12d9802c@mail.a3li.li>
-Date: Fri, 6 Aug 2010 19:15:02 +0200
-From: Alex Legler <a3li@...too.org>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE request: uzbl before 2010.08.05: User-assisted execution of arbitrary commands caused by faulty default config
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/24/6
+Message-ID: <4C74038B.8010103@redhat.com>
+Date: Tue, 24 Aug 2010 19:38:19 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, Amos Jeffries <amosjeffries@...id-cache.org>, Stephen Thorne <stephen@...rne.id.au>
+Subject: CVE Request -- Squid v3.1.6 -- DoS (crash) while processing large DNS replies with no IPv6 resolver present
 Content-Type: text/plain; charset=utf-8
 
-Please assign a CVE for the following issue:
+Hi Steve, vendors,
 
-"With shell code in hyperlinks on a page, one of the sample (uzbl-core)
-resp. default (uzbl-browser) button bindings (binding for mousebutton2)
-would execute this code. This commit fixes that issue.
-Note that just upgrading your uzbl is not enough. If you have an
-existing config, the change will not be automatically applied. So be
-sure you have this change in your config."
+   Stephen Thorne reported a buffer overread flaw in the way Squid proxy caching server
+processed large DNS replies in cases, when no IPv6 resolver was present.
+A remote attacker could provide DNS reply with large amount of data,
+leading to denial of service (squid server crash).
 
-Source: http://www.uzbl.org/news.php?id=29
-Upstream bug: http://www.uzbl.org/bugs/index.php?do=details&task_id=240
+Upstream bug report:
+   [1] http://bugs.squid-cache.org/show_bug.cgi?id=3021
 
-Thanks,
-Alex
+Relevant upstream changeset:
+   [2] http://bazaar.launchpad.net/~squid/squid/3.1/revision/10072
 
--- 
-Alex Legler | Gentoo Security / Ruby
-a3li@...too.org | a3li@...ber.ccc.de
+References:
+   [3] http://marc.info/?l=squid-users&m=128263555724981&w=2
+   [4] https://bugzilla.redhat.com/show_bug.cgi?id=626927
+   [5] http://bugs.gentoo.org/show_bug.cgi?id=334263
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+Could you allocate CVE id for this issue?
+
+Amos, Stephen please correct me, if some of [1] and [2] doesn't correspond to:
+
+"One regression introduced with 3.1.6 when contacting IPv4-only DNS
+resolvers opens a small but exploitable DoS vulnerability."
+
+issue mentioned in [3].
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
