@@ -1,40 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/25/3
-Message-ID: <1313128021.1201161277484569732.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 25 Jun 2010 12:49:29 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Lennart Poettering <lennart@...ttering.net>, coley <coley@...re.org>
-Subject: Re: CVE Request: avahi DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/24/2
+Message-ID: <AANLkTi=VUkERojQLCt=mOjiOfXdVKyUzLjmvKtg_H+LR@mail.gmail.com>
+Date: Tue, 24 Aug 2010 11:34:42 +0200
+From: Pierre Joye <pierre.php@...il.com>
+To: Thomas Biege <thomas@...e.de>
+Cc: oss-security@...ts.openwall.com, Tomas Hoger <thoger@...hat.com>,  Moritz Muehlenhoff <jmm@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: PHP MOPS-2010-56..60
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-2244
+hi,
 
-Thanks.
+On Tue, Aug 24, 2010 at 9:40 AM, Thomas Biege <thomas@...e.de> wrote:
+> Am Freitag, 20. August 2010, 18:45:47 schrieb Pierre Joye:
+> ..
+>> > I miss that part, thanks for pointing me to it. I will commit a fix
+>> > later today.
+>>
+>> Done: http://svn.php.net/viewvc?view=revision&revision=302565
+>
+> Does it need a new CVE-ID?
+>
+> --
+>  Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+>  SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+>
 
+Not sure as #24 was never fixed, but I don't know what is the policy
+in this case. I can use CVE-2010-2094 or a new one if it is more
+appropriate or cleaner.
+
+Cheers,
 -- 
-    JB
+Pierre
 
-
------ "Ludwig Nussel" <ludwig.nussel@...e.de> wrote:
-
-> Hi,
-> 
-> avahi crashes if it receives a bad packet (broken checksum)
-> immediately followed by a good packet. In that case FIONREAD returns
-> zero size for the bad packet. avahi doesn't consider that an error
-> and calls recvmsg() which succeeds and returns the good packet which
-> has a non-zero length of course. This discrepancy causes an assert()
-> to fail and avahi terminates.
-> 
-> The problem was acknowledged by upstream (Lennart) but no fix
-> was commited so far. I've attached my patch proposal.
-> 
-> cu
-> Ludwig
-> 
-> -- 
->  (o_   Ludwig Nussel
->  //\   
->  V_/_  http://www.suse.de/
-> SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
