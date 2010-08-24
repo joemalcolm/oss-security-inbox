@@ -1,31 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/02/2
-Message-ID: <4C563FEA.6010901@kernel.sg>
-Date: Mon, 02 Aug 2010 11:47:54 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-2010-2524 kernel: dns_resolver upcall security issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/24/5
+Message-ID: <Pine.GSO.4.64.1008241257000.25810@faron.mitre.org>
+Date: Tue, 24 Aug 2010 13:00:27 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Tomas Hoger <thoger@...hat.com>
+cc: oss-security@...ts.openwall.com, pierre.php@...il.com, Thomas Biege <thomas@...e.de>, Moritz Muehlenhoff <jmm@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: PHP MOPS-2010-56..60
 Content-Type: text/plain; charset=utf-8
 
-CIFS has the ability to chase MS-DFS referrals. In order to do this it 
-has to be able to resolve hostnames into IP addresses. For this, it uses 
-the keys API to upcall to the cifs.upcall userspace helper. It then 
-resolves the name and hands the address back to the kernel.
 
-The dns_resolver upcall currently used by CIFS is susceptible to cache
-stuffing. It's possible for a malicious user to stuff the keyring with 
-the results of a lookup, and then trick the server into mounting a 
-server of his choosing.
+On Tue, 24 Aug 2010, Tomas Hoger wrote:
 
-I have assigned this with CVE-2010-2524. To be susceptible to this, you 
-need CONFIG_CIFS_DFS_UPCALL enabled. Interesting bug.
+> Standard practice is to use new CVE.  As all 5 phar MOPS were covered
+> under single CVE, and not all of them were fixed in 5.3.3, I'd expect a
+> new "incomplete fix" CVE.
 
-https://bugzilla.redhat.com/CVE-2010-2524
+That's appropriate in this case.  I'll let Josh assign a CVE to avoid the 
+possibility of dupes.
 
-Upstream commit:
-http://git.kernel.org/linus/4c0c03ca54f72fdd5912516ad0a23ec5cf01bda7
+General practice (subject to modification on a case-by-case basis) is:
 
-Thanks, Eugene
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+- issue was never fixed and never claimed to be fixed: use original CVE
+   (probably triggers an update to description for affected versions)
+
+- issue was claimed fixed but the fix was incomplete: use new CVE
+
+- issue was never fixed but claimed to be fixed: ??? (it's happened a few
+   times)
+
+
+
+- Steve
