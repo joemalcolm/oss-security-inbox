@@ -1,39 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/27/2
-Message-ID: <Pine.GSO.4.64.1005271535370.6392@faron.mitre.org>
-Date: Thu, 27 May 2010 15:41:35 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/25/10
+Message-ID: <Pine.GSO.4.64.1008251954120.3520@faron.mitre.org>
+Date: Wed, 25 Aug 2010 19:56:57 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: Nahuel Grisolia <nahuel@...sai-sec.com>, Stefan Esser <stefan.esser@...tioneins.de>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Cacti v0.8.7 -- three security fixes
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: CVE request: VLC media player - DLL preloading vulnerability
 Content-Type: text/plain; charset=utf-8
 
 
-On Wed, 26 May 2010, Josh Bressers wrote:
+We will have one CVE per vulnerable application.  Yes, it's going to be 
+very painful.  Roughly, the rationale is: "the product does not protect 
+against a common configuration/behavior in its environment."
 
->>      [A], MOPS-2010-023: Cacti Graph Viewer SQL Injection Vulnerability
->>      http://php-security.org/2010/05/13/mops-2010-023-cacti-graph-viewer-sql-injection-vulnerability/index.html
->>      http://www.vupen.com/english/advisories/2010/1204
->>
->>      Credit: The vulnerability was discovered by Stefan Esser as part of
->>      the SQL Injection Marathon.
->>
->>      Upstream changeset:
->>      http://svn.cacti.net/viewvc?view=rev&revision=5920
->
-> Steve, you've been handling the MOPS stuff. I'm going to leave this one
-> alone unless you tell me otherwise (I don't want to dupe).
+> VLC was exploitable by loading wintab32.dll, a component request by
+> Qt, as shown in http://www.exploit-db.com/exploits/14750/
 
-Use CVE-2010-2092, to be filled in later today (with a bunch of other MOPS 
-issues).
+Use CVE-2010-3124
 
 
->>      [C], SQL injection and shell escaping issues reported by Bonsai
->>      Information Security (http://www.bonsai-sec.com)
+> There's another possibility with DMO.
 
-Josh assigned CVE-2010-1645 for the OS command issue.
+Is this a distinct product outside of VLC, or is it just a different 
+component / attack vector?
 
-The SQL injection that Jan is referring to in the original request is most 
-likely CVE-2010-1431, which was disclosed by Bonsai back in April.
 
 - Steve
