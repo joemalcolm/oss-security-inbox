@@ -1,43 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/14/15
-Message-ID: <4C8FF6EE.21454.153770F9@pageexec.freemail.hu>
-Date: Wed, 15 Sep 2010 00:27:58 +0200
-From: pageexec@...email.hu
-To: Roland McGrath <roland@...hat.com>
-CC: KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>, Brad Spengler <spender@...ecurity.net>, Linus Torvalds <torvalds@...ux-foundation.org>, Andrew Morton <akpm@...ux-foundation.org>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Kees Cook <kees.cook@...onical.com>, Al Viro <viro@...iv.linux.org.uk>, Oleg Nesterov <oleg@...hat.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, Eugene Teo <eugene@...hat.com>
-Subject: Re: [PATCH 1/3] setup_arg_pages: diagnose excessive argument size
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/25/1
+Message-ID: <20100825115048.27f6142b@redhat.com>
+Date: Wed, 25 Aug 2010 11:50:48 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: ghostscript and gv
 Content-Type: text/plain; charset=utf-8
 
-On 14 Sep 2010 at 14:16, Roland McGrath wrote:
+On Sun, 30 May 2010 22:08:12 +0200 Bernhard R. Link wrote:
 
-> > obviously an AT_ARGMAX computed at execve time would be based on the rlimits
-> > as well and if later userland changed the rlimits, it'd be userland's problem,
-> > not that of the kernel (or the kernel could refuse a change that would violate
-> > its earlier promise).
-> 
-> This would thoroughly defeat the purpose of adding the thing.  The
-> only reason to have a new thing is so that userland does not have to
-> mirror the kernel's policy (as it attempts to do now, with the 1/4
-> calculation).  If the new thing is not something that userland can
-> use consistently so as not to have to know what the kernel's actual
-> policy is, then I don't see the point of it at all.
+> Gs's -P- not working (at least for gs_init.ps), is definitly a bug
+> that needs to be fixed.
 
-userland could never rely on the kernel's policy at all since get_arg_page
-could have failed for more reasons than overstepping the currently hardcoded
-ARG_MAX check in there. so what AT_ARGMAX would buy us is to allow the kernel
-policy to change over time, but it's never been about guarantees, whether
-POSIX wants such a thing or not.
+I believe we should try to clarify what CVE-2010-2055 got actually
+assigned to, as it seems to be used for more than one thing:
 
-> > >  auxv is only appropriate for things that
-> > > are known at the time of the exec and won't change thereafter.
-> > 
-> > you mean stuff like AT_EUID et al.? ;)
-> 
-> The information that these give is about the conditions at startup.
-> That's what they mean to userland, and userland only uses them to know
-> the situation before it has made any calls.  The definition of AT_EUID
-> is "effective user ID at program startup", and that fact does not
-> change.
+- ghostscript uses CWD to search for initialization files
+- gv did not pass -P- to gs, leading to problems related to the default
+  mentioned above
+- some ghostscript versions search CWD even when started with -P-
 
-just for my own curiosity, where does this definition come from?
+> I personally would also suggest fixing gs to not look in the current
+> directory by default (looking for important stuff in the current
+> directory is really always a bad idea). I guess the problem is how to
+> fix it.
 
+As previously mentioned, upstream changed SEARCH_HERE_FIRST default to
+address this.  I believe SuSE updates did the same change already too.
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
