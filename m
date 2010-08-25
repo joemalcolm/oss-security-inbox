@@ -1,27 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/07/3
-Message-ID: <2033753502.2168681278502970126.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 7 Jul 2010 07:42:50 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/25/6
+Message-ID: <448348997.262011282746290470.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 25 Aug 2010 10:24:50 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: yoshfuji@...ux-ipv6.org, Sebastian Krahmer <krahmer@...e.de>
-Subject: Re: patch for remote buffer overflows and local message spoofing in mipv6 daemon
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Amos Jeffries <amosjeffries@...id-cache.org>, Stephen Thorne <stephen@...rne.id.au>
+Subject: Re: Re: CVE Request -- Squid v3.1.6 -- DoS (crash) while processing large DNS replies with no IPv6 resolver present
 Content-Type: text/plain; charset=utf-8
 
-
------ "Sebastian Krahmer" <krahmer@...e.de> wrote:
-
-> Hi,
-> 
-> I tried this 2 years ago on vendor-sec and with the maintainers at that
-> time w/o success. I polished the patch to fit in the current commit.  The
-> bugs were not fixed during the two years.  Can someone assign CVE(s)?
-> 
-
-Do you need two IDs? This message sounds like it, but I'm not completely
-sure.
+Please use CVE-2010-2951 for this.
 
 Thanks.
 
 -- 
     JB
+
+
+----- "Stephen Thorne" <stephen@...rne.id.au> wrote:
+
+> On 2010-08-24, Jan Lieskovsky wrote:
+> >   Stephen Thorne reported a buffer overread flaw in the way Squid
+> proxy caching server
+> > processed large DNS replies in cases, when no IPv6 resolver was
+> present.
+> > A remote attacker could provide DNS reply with large amount of
+> data,
+> > leading to denial of service (squid server crash).
+> 
+> Those references all look correct, but I have one small niggle, this
+> was not a
+> buffer overread flaw.
+> 
+> What actually happens is that if a TCP DNS request is required, a
+> logic error
+> causes a sockopt to be set on the ipv6 resolver fd, which will be
+> fatal if that
+> resolver is not configured.
+> 
+> -- 
+> Regards,
+> Stephen Thorne
+> Development Engineer
+> Netbox Blue
