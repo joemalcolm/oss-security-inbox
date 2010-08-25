@@ -1,45 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/03/5
-Message-ID: <20100503204900.24b051e6@foo.fgeek.fi>
-Date: Mon, 3 May 2010 20:49:00 +0300
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Cc: bressers@...hat.com, dan j rosenberg <dan.j.rosenberg@...il.com>, coley <coley@...re.org>
-Subject: Re: CVE request: lxr
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/25/2
+Message-ID: <4C74C3C8.10005@treenet.co.nz>
+Date: Wed, 25 Aug 2010 19:18:32 +1200
+From: Amos Jeffries <squid3@...enet.co.nz>
+To: oss-security <oss-security@...ts.openwall.com>
+CC: "Steven M. Christey" <coley@...us.mitre.org>,  Amos Jeffries <amosjeffries@...id-cache.org>, Stephen Thorne <stephen@...rne.id.au>
+Subject: Re: CVE Request -- Squid v3.1.6 -- DoS (crash) while processing large DNS replies with no IPv6 resolver present
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 3 May 2010 13:34:05 -0400 (EDT)
-Josh Bressers <bressers@...hat.com> wrote:
-
-> ----- "Henri Salo" <henri@...v.fi> wrote:
+Jan Lieskovsky wrote:
+> Hi Steve, vendors,
 > 
-> > On Mon, 3 May 2010 09:31:16 -0400
-> > Dan Rosenberg <dan.j.rosenberg@...il.com> wrote:
-> > 
-> > > I discovered and reported this bug at the same time as two other
-> > > XSS issues, including the one covered by CVE-2009-4497.  While
-> > > the commit may be a few days apart for some of these, I think
-> > > they can safely fall under the same CVE, unless it's standard
-> > > practice to assign CVEs for each of several related minor issues.
-> > 
-> > Several XSS-vulnerabilities can have one CVE at least when those
-> > vulnerabilities are fixed at the same time.
-> > 
+>   Stephen Thorne reported a buffer overread flaw in the way Squid proxy 
+> caching server
+> processed large DNS replies in cases, when no IPv6 resolver was present.
+> A remote attacker could provide DNS reply with large amount of data,
+> leading to denial of service (squid server crash).
 > 
-> In this instance, I would assign it a new ID, as the old one already
-> exists and doesn't note both XSS fixes (it is possible someone fixed
-> just the one XSS and not both in an update).
+> Upstream bug report:
+>   [1] http://bugs.squid-cache.org/show_bug.cgi?id=3021
 > 
-> I've CC'd Steve Christey, for a second opinion.
+> Relevant upstream changeset:
+>   [2] http://bazaar.launchpad.net/~squid/squid/3.1/revision/10072
 > 
-> Thanks
 
-My sentence was for normal cases. I have seen several reports with
-multiple XSS-vulnerabilities. This usually is the case when someone
-audits web-applications.
+Also for use as needed our patch archive copy:
+http://www.squid-cache.org/Versions/v3/3.1/changesets/squid-3.1-10072.patch
 
-If the issue already has CVE-identifier already we should
-definately assign new CVE for clarity.
+> References:
+>   [3] http://marc.info/?l=squid-users&m=128263555724981&w=2
+>   [4] https://bugzilla.redhat.com/show_bug.cgi?id=626927
+>   [5] http://bugs.gentoo.org/show_bug.cgi?id=334263
+> 
+> Could you allocate CVE id for this issue?
+> 
+> Amos, Stephen please correct me, if some of [1] and [2] doesn't 
+> correspond to:
+> 
+> "One regression introduced with 3.1.6 when contacting IPv4-only DNS
+> resolvers opens a small but exploitable DoS vulnerability."
+> 
+> issue mentioned in [3].
+> 
+> Thanks && Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
 
----
-Henri Salo
+Henrik covered the rest in your bug report [4].
+
+Amos
+-- 
+Please be using
+   Current Stable Squid 2.7.STABLE9 or 3.1.7
+   Beta testers wanted for 3.2.0.1
