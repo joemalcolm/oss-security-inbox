@@ -1,45 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/23/9
-Message-Id: <20101123144629.8bbdb6db.michael.s.gilbert@gmail.com>
-Date: Tue, 23 Nov 2010 14:46:29 -0500
-From: Michael Gilbert <michael.s.gilbert@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/25/8
+Message-ID: <20100825194920.GS14896@ngolde.de>
+Date: Wed, 25 Aug 2010 21:49:20 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel address leaks
+Subject: CVE id request: libc fortify source information disclosure
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 23 Nov 2010 12:17:43 -0500, Dan Rosenberg wrote:
-> > But you can't access kernel memory as a common user unless you already have a second
-> > bug. That second bug is the CVE. Saying this leak helps escate privs is like saying
-> > /etc/password leaks account names. You already have to have system access to use that
-> > info.
-> >
-> 
-> I'm going to stop nitpicking over CVE definitions, because it's not
-> the point of this conversation.  Let's forget I ever brought it up.  I
-> agree that this isn't a direct threat, but in the interest of being
-> proactive rather than reactive, fixing this (in combination with other
-> previously mentioned hardening efforts) would make exploitation of
-> other vulnerabilities harder.
+Hi,
+http://seclists.org/fulldisclosure/2010/Apr/399
+did this ever get a CVE id? As this also works for setuid programs it would be 
+nice to get one assigned and have this patched.
 
-I think that the only way to support your goal is to make the case that
-the CVE definition does cover such exposures.  In my opinion it
-certainly does; although at the lowest possible severity.
+Kind regards
+Nico
 
-The best course of action is to ask for the assignments, and perhaps
-Steve Christey will clarify.  That's not "blackmail" or anything
-nefarious, that's simply the proper procedure for disclosing a
-security-relevant issue.
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-For those that are against increased CVE assignments due to the
-inevitable sensational "high bug count journalism", get over it.
-Realize that the people that do this simply do not recognize the hidden
-factors at play and the fact that quantity does not equal quality.
-They're a lost cause.
-
-Oh, and Dan, don't get discouraged so easily.  You're tackling a hard
-problem (well, a technically straightforward problem, but a hard
-social problem). You're bound to run into barriers simply due to human
-nature. If it were easy it would already be done.
-
-Best wishes,
-Mike
+Content of type "application/pgp-signature" skipped
