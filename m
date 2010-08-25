@@ -1,31 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/01/6
-Message-ID: <260780643.207481270137399652.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 1 Apr 2010 11:56:39 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request: DeviceKit privilege escalation via pluggable storage device labels
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/25/9
+Message-ID: <AANLkTimPpDBv8VpDJuJNbOAui1ENdTegicoXLMohwW-1@mail.gmail.com>
+Date: Wed, 25 Aug 2010 23:32:33 +0200
+From: Geoffroy Couprie <geal@...eolan.org>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE request: VLC media player - DLL preloading vulnerability
 Content-Type: text/plain; charset=utf-8
 
+Hello,
 
------ "Vincent Danen" <vdanen@...hat.com> wrote:
+We fixed the DLL preloading vulnerability in VLC media player with this commit:
 
-> This is quite old, but I don't think a CVE name has ever been assigned to
-> it.  The issue is with how DeviceKit handled labels for pluggable storage
-> devices.  A local unprivileged user could use this flaw to elevate
-> privileges.  It has been corrected upstream.
-> 
-> References:
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=523178
-> http://cgit.freedesktop.org/DeviceKit/DeviceKit-disks/commit/?id=62f883c7d38e75d0669c162529062a1e81d00da2
-> http://bugs.freedesktop.org/show_bug.cgi?id=23235
-> 
+http://git.videolan.org/?p=vlc/vlc-1.1.git;a=blobdiff;f=bin/winvlc.c;h=ac9b97ca9f5f9ba001f13bf61eb5127a1c1dbcbf;hp=2d09cba320e3b0def7069ce1ebab25d1340161c5;hb=43a31df56c37bd62c691cdbe3c1f11babd164b56;hpb=2d366da738b19f8d761d7084746c6db6f52808c6
 
-Please use CVE-2010-0746
+VLC was exploitable by loading wintab32.dll, a component request by
+Qt, as shown in http://www.exploit-db.com/exploits/14750/
+There's another possibility with DMO.
 
-Thanks
+Will there be a CVE ID by vulnerable application (presumably, this
+will need a lot of IDs), or only one for Windows?
 
--- 
-    JB
+Best regards,
+
+Geoffroy Couprie
