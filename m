@@ -1,36 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/10/1
-Message-ID: <1012100939540.799@mjc.redhat.com>
-Date: Fri, 10 Dec 2010 09:48:20 +0000 (GMT)
-From: Mark J Cox <mjc@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/25/4
+Message-ID: <886128461.261411282746119058.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 25 Aug 2010 10:21:59 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Exim remote root
+Cc: CERT-FI Vulnerability Co-ordination <vulncoord@...ora.fi>, Chris Hall <chris.hall@...hwayman.com>, Denis Ovsienko <infrastation@...dex.ru>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Quagga (bgpd) [two ids] -- 1, Stack buffer overflow by processing crafted Refresh-Route msgs 2, NULL ptr deref by parsing certain AS paths by BGP update request
 Content-Type: text/plain; charset=utf-8
 
-A number of sites are reporting an exim remote root based from this
-report:
-http://www.exim.org/lurker/message/20101207.215955.bb32d4f2.en.html
+----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
 
-Quoting David Woodhouse: "There are two bugs here. First a remote exploit 
-where the attacker somehow tricks Exim into evaluating data it shouldn't, 
-and honouring a ${run {/bin/sh...}} directive which ends up giving the 
-attacker a shell (as user 'exim').
+> Hi Steve, vendors,
+> 
+>    Quagga upstream has released latest vQuagga 0.99.17 version,
+>    addressing two security flaws:
+> 
+> A, Stack buffer overflow by processing certain Route-Refresh messages
+> 
+>    A stack buffer overflow flaw was found in the way Quagga's bgpd daemon
+>    processed Route-Refresh messages. A configured Border Gateway Protocol
+>    (BGP) peer could send a Route-Refresh message with specially-crafted
+>    Outbound Route Filtering (ORF) record, which would cause the master
+>    BGP daemon (bgpd) to crash or, possibly, execute arbitrary code with
+>    the privileges of the user running bgpd.
+> 
+>    Upstream changeset:
+>    [1]
+> http://code.quagga.net/?p=quagga.git;a=commit;h=d64379e8f3c0636df53ed08d5b2f1946cfedd0e3
+> 
+>    References:
+>    [2] https://bugzilla.redhat.com/show_bug.cgi?id=626783
+>    [3] http://www.quagga.net/news2.php?y=2010&m=8&d=19#id1282241100
 
-Secondly a privilege escalation where the trusted 'exim' user is able to 
-tell Exim to use arbitrary config files, in which further ${run ...} 
-commands will be invoked as root."
-https://bugzilla.redhat.com/show_bug.cgi?id=661756#c3
+Use CVE-2010-2948 for this one.
 
-The remote vulnerability is still being investigated.  However it is worth 
-allocating the CVE names now to help with co-ordination.
 
-CVE-2010-4344 exim vuln that allows remote code execution as 'exim'
-CVE-2010-4345 exim vuln that allows privilege escalation 'exim' to root
+> 
+> B, DoS (crash) while processing certain BGP update AS path messages
+> 
+>    A NULL pointer dereference flaw was found in the way Quagga's bgpd
+>    daemon parsed paths of autonomous systems (AS). A configured BGP peer
+>    could send a BGP update AS path request with unknown AS type, which
+>    could lead to denial of service (bgpd daemon crash).
+> 
+>    Upstream changeset:
+>    [4]
+> http://code.quagga.net/?p=quagga.git;a=commit;h=cddb8112b80fa9867156c637d63e6e79eeac67bb
+> 
+>    References:
+>    [5] https://bugzilla.redhat.com/show_bug.cgi?id=626795
+>    [6] http://www.quagga.net/news2.php?y=2010&m=8&d=19#id1282241100
+> 
 
-A patch for CVE-2010-4345:
-http://lists.exim.org/lurker/message/20101209.172233.abcba158.en.html
+Use CVE-2010-2949 for this one.
 
-Thanks, Mark
---
-Mark J Cox / Red Hat Security Response
+Thanks.
+
+-- 
+    JB
