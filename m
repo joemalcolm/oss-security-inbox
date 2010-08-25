@@ -1,32 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/09/4
-Message-ID: <4B96B3A7.3070307@redhat.com>
-Date: Tue, 09 Mar 2010 21:46:31 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request -- MediaWiki - v1.15.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/25/7
+Message-ID: <AANLkTimuoqH+N+9LuFgNEriDKNxDOE6DaufN70uutAYA@mail.gmail.com>
+Date: Wed, 25 Aug 2010 14:52:52 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: oss-security@...ts.openwall.com,  "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: CouchDB insecure library loading (Debian/Ubuntu only)
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve, vendors,
+I discovered that the /usr/bin/couchdb script on Debian/Ubuntu sets an
+insecure LD_LIBRARY_PATH environment variable, such that libraries
+from the current directory are loaded.  If a local attacker placed a
+maliciously crafted shared library in a directory and an administrator
+were tricked into launching CouchDB from this directory, arbitrary
+code execution could be achieved.  This vulnerability is only
+triggered when the /usr/bin/couchdb script is executed explicitly,
+since the init script (/etc/init.d/couchdb) changes the current
+directory before launching CouchDB.
 
-   MediaWiki upstream has released latest v1.15.2 version:
-     [1] http://lists.wikimedia.org/pipermail/mediawiki-announce/2010-March/000088.html
+The vulnerability was introduced by Debian patch
+"mozjs1.9_ldlibpath.patch" on 3/24/2009.
 
-   fixing two security issues (from upstream advisory):
-   a, a CSS validation issue was discovered which allows editors to display
-      external images in wiki pages.
-   b, a data leakage vulnerability was discovered in thumb.php which affects
-      wikis which restrict access to private files using img_auth.php, or
-      some similar scheme.
-
-References:
-   [2] http://lists.wikimedia.org/pipermail/mediawiki-announce/2010-March/000088.html
-   [3] http://secunia.com/advisories/38856/
-   [4] http://download.wikimedia.org/mediawiki/1.15/mediawiki-1.15.2.patch.gz
-
-Could you allocate CVE ids for these?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+-Dan
