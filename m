@@ -1,27 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/08/1
-Message-ID: <4B6F6948.7070708@redhat.com>
-Date: Mon, 08 Feb 2010 09:30:48 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/25/5
+Message-ID: <1207142256.261621282746177336.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 25 Aug 2010 10:22:57 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request - kernel: ima: fix null pointer dereference
+Cc: pierre php <pierre.php@...il.com>, Thomas Biege <thomas@...e.de>, Moritz Muehlenhoff <jmm@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>, Tomas Hoger <thoger@...hat.com>
+Subject: Re: CVE request: PHP MOPS-2010-56..60
 Content-Type: text/plain; charset=utf-8
 
-Was cc'ed this in a couple of kernel mailing lists.
+Please use CVE-2010-2950
 
-This was introduced in 6c21a7fb4 (v2.6.33-rc1).
+Thanks.
 
-It was first reported here http://lkml.org/lkml/2009/12/29/13, and 
-subsequently here http://lkml.org/lkml/2010/2/5/76 (backtraces).
-
-This can be reproduced by running ltp test pipe07.
-
-http://groups.google.com/group/linux.kernel/msg/95986c94ea55c81a.
-https://bugzilla.redhat.com/show_bug.cgi?id=562597
-
-Mainline fix: https://bugzilla.redhat.com/show_bug.cgi?id=562597#c3
-
-Thanks, Eugene
 -- 
-Eugene Teo / Red Hat Security Response Team
+    JB
+
+
+----- "Steven M. Christey" <coley@...us.mitre.org> wrote:
+
+> On Tue, 24 Aug 2010, Tomas Hoger wrote:
+> 
+> > Standard practice is to use new CVE.  As all 5 phar MOPS were
+> covered
+> > under single CVE, and not all of them were fixed in 5.3.3, I'd
+> expect a
+> > new "incomplete fix" CVE.
+> 
+> That's appropriate in this case.  I'll let Josh assign a CVE to avoid
+> the 
+> possibility of dupes.
+> 
+> General practice (subject to modification on a case-by-case basis)
+> is:
+> 
+> - issue was never fixed and never claimed to be fixed: use original
+> CVE
+>    (probably triggers an update to description for affected versions)
+> 
+> - issue was claimed fixed but the fix was incomplete: use new CVE
+> 
+> - issue was never fixed but claimed to be fixed: ??? (it's happened a
+> few
+>    times)
+> 
+> 
+> 
+> - Steve
