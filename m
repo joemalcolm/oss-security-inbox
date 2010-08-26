@@ -1,55 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/28/2
-Message-ID: <20100528100432.603d6742@redhat.com>
-Date: Fri, 28 May 2010 10:04:32 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: Re: Fwd: [Full-disclosure] stratsec Security Advisory SS-2010-005: Samba Multiple DoS Vulnerabilities (3.3.x)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/26/4
+Message-Id: <20100826222443.RRQINHQUTNSOYR@hackinthebox.org>
+Date: Thu, 26 Aug 2010 22:24:43 +0800
+From: Hafez Kamal <aphesz@...kinthebox.org>
+To: <oss-security@...ts.openwall.com>
+Subject: [HITB-Announce] HITB2010 SIGNINT Sessions
 Content-Type: text/plain; charset=utf-8
 
-Hi Eren!
+Hack In The Box is proud to announce, a brand new lightning session
+called HITB SIGINT (Signal Intelligence/Interrupt)! HITB SIGINT
+sessions are designed to provide a quick 15 minute overview for
+material and research that's up and coming - stuff that isn't quite
+ready for the mainstream tracks of the conference but deserve a mention
+nonetheless. Final year students who want to present their projects to
+industry experts are also strongly encouraged to submit their papers.
 
-On Fri, 28 May 2010 08:33:12 +0300 Eren Türkay wrote:
+These sessions are held during the conference coffee and lunch breaks.
+The papers would be reviewed by the main CFP panel and student
+submissions will be reviewed by the HITB Team. The best research paper
+presented will be voted on by the audience. This session is strictly
+meant for research papers that are at least 50% COMPLETE at the time of
+submission.
 
-> A NULL pointer dereference (#7229, CVE-2010-1635) and a crash with
-> CUPS printers (#7298, CVE-2010-1642)
+What you get:
 
-You have a wrong bug / fix for CVE-2010-1642.  What you seem to be
-trying to pick up is the following fix mentioned in 3.4.8 release notes:
+# Chance to present your research at an international conference
+# Chance to get your research seen and reviewed by industry experts
+# Full access to the conference on 13th-14th October 2010 worth MYR1299
+# Best research as voted by the audience will be given ONE FREE training in HITB SecConf Malaysia 2011
+# Best research will be uploaded to the HITB conference materials segment and mirrored through HITB affiliates
+/ partners (Packetstorm, etc)
 
-   o Fix smbd crash with CUPS printers and no [printers] share defined
-     (bug #7297).
+Submissions are due 1st October 2010. For further details, please see:
+http://conference.hackinthebox.org/hitbsecconf2010kul/?page_id=961
 
-Note that your bug id is off-by-one ;).  However, that's not the
-stratsec issue, you should be looking at this:
+---
+Hafez Kamal
+HITB Crew
+Hack in The Box (M) Sdn. Bhd.
+Suite 26.3, Level 26, Menara IMC,
+No. 8 Jalan Sultan Ismail,
+50250 Kuala Lumpur,
+Malaysia
 
-   o Fix an uninitialized variable read in smbd (bug #7254).
+Tel: +603-20394724
+Fax: +603-20318359
 
-https://bugzilla.samba.org/show_bug.cgi?id=7254
-http://git.samba.org/?p=samba.git;a=commitdiff;h=9280051bfba33745
-
-This issue should rather be described as OOB read as mentioned in Josh's
-CVE assignment.  This problem may affect fairly old samba version, I've
-seen the same code / issue in some oldish 3.0.x versions.  The crash is
-not too reliable though, I've only seen crash on some (recent) versions
-using stratsec reproducer (you've noticed already their advisory
-incorrectly labels reproducers and has them mixed-up, right?).
-
-> It seems that 3.3.x is also vulnerable as the same code seems to
-> exist in this release as well. However, I couldn't see any reference
-> for 3.3.x being vulnerable. I would really appreciate a statement
-> from Samba team as to the status of 3.3.x
-
-CVE-2010-1642 mentioned above.
-
-NULL deref CVE-2010-1635 should only affect 3.5.x, as it occurs in
-this code, which does not exist in 3.4.x:
-
-http://git.samba.org/?p=samba.git;a=commitdiff;h=c116652a3050a854
-
-On 3.3.x, reproducer causes smbd to follow error code path where
-smb_panic is called.
-
--- 
-Tomas Hoger / Red Hat Security Response Team
