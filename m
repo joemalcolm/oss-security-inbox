@@ -1,35 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/22/15
-Message-ID: <224296305.115231290443560699.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 22 Nov 2010 11:32:40 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/26/3
+Message-ID: <20100826102925.76628c88@redhat.com>
+Date: Thu, 26 Aug 2010 10:29:25 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: mm: mem allocated invisible to oom_kill() when not attached to any threads
+Subject: Re: CVE request: ghostscript and gv
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-4243
+On Wed, 25 Aug 2010 15:23:34 +0200 Ludwig Nussel wrote:
 
-Thanks.
+> > - some ghostscript versions search CWD even when started with -P-
+> 
+> ... as it turned out neither a) nor b) actually solve the problem:
+> http://bugs.ghostscript.com/show_bug.cgi?id=691350#c11
+> 
+> So fixing gs must be part of the solution always. That's
+> http://svn.ghostscript.com/viewvc?view=rev&revision=11352
+
+Yes, that's what I was referring to.
+
+> Therefore up to three CVE numbers could be assigned
+> a) insecure default of gs
+> b) applications don't pass -P-
+> c) non working -P-/SEARCH_HERE_FIRST
+> 
+> Fixing a) means b) isn't needed but then it's just a compile time
+> default that may or may not be changed by distros.
+> 
+> Both a) and b) imply a fix for c) though. No idea if a separate CVE
+> is actually useful in that case.
+
+b) is likely to require per-application CVE.  With the changed default,
+one won't need to care about them though.  I agree c) should better get
+a separate CVE if it's not what CVE-2010-2055 text already tries to
+describe, given the "related to improper support for the -P- option"
+part.
 
 -- 
-    JB
-
-
------ "Eugene Teo" <eugene@...hat.com> wrote:
-
-> This is the OOM dodging issue that can be triggered with Brad's 
-> reproducer at http://grsecurity.net/~spender/64bit_dos.c. Written
-> in the comments: "The second bug here is that the memory usage
-> explodes 
-> within the kernel from a single 128k allocation in userland The 
-> explosion of memory isn't accounted for by any task so it won't be 
-> terminated by the OOM killer."
-> 
-> I don't recall seeing a CVE name assigned to this, so please assign
-> one. 
-> Upstream is still attempting to fix this.
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=625688#c0
-> 
-> Thanks, Eugene
+Tomas Hoger / Red Hat Security Response Team
