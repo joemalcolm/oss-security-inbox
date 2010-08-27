@@ -1,25 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/18/4
-Message-ID: <20100618201408.GI11364@redhat.com>
-Date: Fri, 18 Jun 2010 14:14:08 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: moodle 1.9.9/1.8.13 multiple vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/27/1
+Message-ID: <20100827220258.GF4703@outflux.net>
+Date: Fri, 27 Aug 2010 15:02:58 -0700
+From: Kees Cook <kees.cook@...onical.com>
+To: linux-kernel@...r.kernel.org
+Cc: oss-security@...ts.openwall.com, Al Viro <viro@...iv.linux.org.uk>, Andrew Morton <akpm@...ux-foundation.org>, Oleg Nesterov <oleg@...hat.com>, KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>, Neil Horman <nhorman@...driver.com>, Roland McGrath <roland@...hat.com>, linux-fsdevel@...r.kernel.org
+Subject: [PATCH] exec argument expansion can inappropriately trigger OOM-killer
 Content-Type: text/plain; charset=utf-8
 
-Moodle 1.9.9 and 1.8.13 fix a few security issues:
+Brad Spengler published a local memory-allocation DoS that
+evades the OOM-killer (though not the virtual memory RLIMIT):
+http://www.grsecurity.net/~spender/64bit_dos.c
 
-http://docs.moodle.org/en/Moodle_1.9.9_release_notes
-http://docs.moodle.org/en/Moodle_1.8.13_release_notes
+The recent changes to create a stack guard page helps slightly to
+discourage this attack, but it is not sufficient. Compiling it statically
+moves the libraries out of the way, allowing the stack VMA to fill the
+entire TASK_SIZE.
 
-Which address the following issues:
+There are two issues:
+ 1) the OOM killer doesn't notice this argv memory explosion
+ 2) the argv expansion does not check if rlim[RLIMIT_STACK].rlim_cur is -1.
 
-* MSA-10-0010 Persistent Cross Site Scripting vulnerability in the MNET access control interface
-* MSA-10-0011 Cross Site Scripting vulnerability in blog/index.php
-* MSA-10-0012 KSES Security Filter Bypassing vulnerability
-* MSA-10-0013 Potential Cross Site Scripting vulnerability in Quiz reports
+I figure a quick solution for #2 would be the following patch. However,
+running multiple copies of this program could result in similar OOM
+behavior, so issue #1 still needs a solution.
 
-Could CVE names be assigned to these issues please?  Thanks!
+Reported-by: Brad Spengler <spender@...ecurity.net>
+Signed-off-by: Kees Cook <kees.cook@...onical.com>
+---
+ fs/exec.c |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+diff --git a/fs/exec.c b/fs/exec.c
+index dab85ec..be40063 100644
+--- a/fs/exec.c
++++ b/fs/exec.c
+@@ -194,7 +194,8 @@ static struct page *get_arg_page(struct linux_binprm *bprm, unsigned long pos,
+ 		 *    to work from.
+ 		 */
+ 		rlim = current->signal->rlim;
+-		if (size > ACCESS_ONCE(rlim[RLIMIT_STACK].rlim_cur) / 4) {
++		if (size > ACCESS_ONCE(rlim[RLIMIT_STACK].rlim_cur) / 4 ||
++		    size > TASK_SIZE / 4) {
+ 			put_page(page);
+ 			return NULL;
+ 		}
+-- 
+1.7.1
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Kees Cook
+Ubuntu Security Team
