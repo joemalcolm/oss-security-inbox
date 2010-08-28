@@ -1,24 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/07/5
-Message-ID: <2059877999.716401273235734227.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 7 May 2010 08:35:34 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: coley <coley@...re.org>
-Subject: CVE Assignment (wireshark)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/28/1
+Message-ID: <87hbifuj0h.fsf@mid.deneb.enyo.de>
+Date: Sat, 28 Aug 2010 12:30:22 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: BGP protocol vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Wireshark just published two advisories
+The BGP protocol and its various extensions require that BGP peering
+sessions are terminated when a peer receives a BGP update message
+which it considers semantically incorrect, leading to a persistent
+denial-of-service condition if the update is received again after the
+terminated session is reestablished.
 
-http://www.wireshark.org/security/wnpa-sec-2010-03.html
-http://www.wireshark.org/security/wnpa-sec-2010-04.html
-
-I've assigned CVE ids:
-
-CVE-2010-1455 wireshark wnpa-sec-2010-03
-CVE-2010-1456 wireshark wnpa-sec-2010-04
-
-Thanks.
-
--- 
-    JB
+(This is not something new at all---we just need to get up, treat it
+as a vulnerability, and fix it.)
