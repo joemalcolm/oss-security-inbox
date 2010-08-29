@@ -1,43 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/01/2
-Message-ID: <20100701103817.10948d59@redhat.com>
-Date: Thu, 1 Jul 2010 10:38:17 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/29/2
+Message-ID: <87y6bp7ekl.fsf@mid.deneb.enyo.de>
+Date: Sun, 29 Aug 2010 15:07:06 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Cc: dan.j.rosenberg@...il.com
-Subject: Re: CVE requests: LibTIFF
+Subject: Re: CVE Request: BGP protocol vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 30 Jun 2010 14:58:58 -0400 Dan Rosenberg wrote:
+* Kurt Seifried:
 
-> 1.  OOB read in TIFFExtractData() leading to crash (no reference,
-> originally disclosed by me in this thread, fixed upstream with release
-> 3.9.4 and security fix backported by Ubuntu).
+>> The BGP protocol and its various extensions require that BGP peering
+>> sessions are terminated when a peer receives a BGP update message
+>> which it considers semantically incorrect, leading to a persistent
+>> denial-of-service condition if the update is received again after the
+>> terminated session is reestablished.
+>>
+>> (This is not something new at all---we just need to get up, treat it
+>> as a vulnerability, and fix it.)
+>
+> This sounds like CVE-2010-3035
+> http://www.cisco.com/warp/public/707/cisco-sa-20100827-bgp.shtml
 
-Not really a reference for the issue, but at least for the patch:
-http://bugzilla.maptools.org/show_bug.cgi?id=2210
+In this context, I don't like that the peer on the receiving end
+resets the session.  It's got a significant impact on availability,
+and the resulting UPDATE churn hurts everybody a little bit.
 
-> 2.  NULL pointer dereference due to invalid td_stripbytecount leading
-> to crash (distinct from CVE-2010-2443).  The upstream changelog entry
-> for 3.9.4 reads:
-> 
-> 	* libtiff/tif_ojpeg.c (OJPEGReadBufferFill): Report an error
->       and avoid a crash if the input file is so broken that the strip
-> 	offsets are not defined.
-
-This changelog entry refers to td_stripoffset issue (aka CVE-2010-2443)
-and it first appears in 3.9.3 changelog.  td_stripbytecount case is not
-yet fixed upstream as far as I can tell.
-
-References for CVE-2010-2482:
-https://bugs.launchpad.net/bugs/597246
-https://bugzilla.redhat.com/show_bug.cgi?id=603024#c9
-http://bugzilla.maptools.org/show_bug.cgi?id=1996#c12  
-
-> 3.  OOB read in TIFFRGBAImageGet() leading to crash.  Reference:
-> https://bugs.launchpad.net/ubuntu/+source/tiff/+bug/591605
-
-http://bugzilla.maptools.org/show_bug.cgi?id=2216
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+In short, I think there are two bugs: IOS XR producing bad data, and
+other implementations dealing badly with it.
