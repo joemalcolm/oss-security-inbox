@@ -1,33 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/13/5
-Message-ID: <600668924.2314631284408486649.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 13 Sep 2010 16:08:06 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/29/1
+Message-ID: <AANLkTikJYAcTAnLynaRzoKr7-kiuwV18QD--_WVOEyuz@mail.gmail.com>
+Date: Sat, 28 Aug 2010 18:46:01 -0600
+From: Kurt Seifried <kurt@...fried.org>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: Re: CVE Request: mailman
+Subject: Re: CVE Request: BGP protocol vulnerability
 Content-Type: text/plain; charset=utf-8
 
+> The BGP protocol and its various extensions require that BGP peering
+> sessions are terminated when a peer receives a BGP update message
+> which it considers semantically incorrect, leading to a persistent
+> denial-of-service condition if the update is received again after the
+> terminated session is reestablished.
+>
+> (This is not something new at all---we just need to get up, treat it
+> as a vulnerability, and fix it.)
 
------ "Huzaifa Sidhpurwala" <huzaifas@...hat.com> wrote:
+This sounds like CVE-2010-3035
+http://www.cisco.com/warp/public/707/cisco-sa-20100827-bgp.shtml
 
-> Hi,
-> 
-> There are two mailman vulns. fixed by the following patch:
-> http://mail.python.org/pipermail/mailman-announce/2010-September/000151.html
-> 
-> Particular Red Hat Bugzilla entries are the following:
-> 
-> 	https://bugzilla.redhat.com/show_bug.cgi?id=631881
-
-CVE-2010-3089 mailman XSS via list information HTML template
-
-
-> 	https://bugzilla.redhat.com/show_bug.cgi?id=631859
-
-CVE-2010-3090 mailman XSS in list information overview
-
-Thanks.
+or are you talking about another BGP issue? (but in the same "family"
+as CVE-2009-2055 and  CVE-2010-3035).
 
 -- 
-    JB
+Kurt Seifried
+kurt@...fried.org
+tel: 1-703-879-3176
