@@ -1,50 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/12/1
-Message-ID: <1248949213.581681271096700392.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 12 Apr 2010 14:25:00 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/29/3
+Message-Id: <201008292126.10215.hanno@hboeck.de>
+Date: Sun, 29 Aug 2010 21:26:09 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: typo3 remote command execution
+Subject: CVE request: serendipity < 1.5.4 xss
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-1153
+http://blog.s9y.org/archives/223-Serendipity-1.5.4-released.html
 
-Thanks.
+http://www.htbridge.ch/advisory/xss_vulnerability_in_serendipity.html
+
+"as well as a XSS security issue discovered and reported by High-Tech Bridge. 
+The XSS is only exploitable though, if you are using the "Remember me" feature 
+in the Serendipity backend to login."
+
+
 
 -- 
-    JB
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
+http://schokokeks.org - professional webhosting
 
------ "Hanno Böck" <hanno@...eck.de> wrote:
-
-> http://typo3.org/teams/security/security-bulletins/typo3-sa-2010-008/
-> 
->  The TYPO3 autoloader does not validate passed arguments.
-> 
-> You are not vulnerable if at least one of following conditions is
-> met:
-> 
->    1. You are using any other TYPO3 version than 4.3.0, 4.3.1 or 4.3.2
-> (+ 
-> development releases of 4.4 branch).
->    2. You have at least one of following PHP configuration variables
-> set to 
-> "off": register_globals ("off" by default, advised to be "off" in
-> TYPO3 
-> Security Cookbook), allow_url_include ("off" by default) and
-> allow_url_fopen 
-> ("on" by default)
->    3. You are using Suhosin and haven't put URL schemes in
-> configuration 
-> variable "suhosin.executor.include.whitelist".
-> 
-> Possible Impact: A crafted request to a vulnerable TYPO3 installation
-> will 
-> allow an attacker to load PHP code from an external server and to
-> execute it 
-> on the TYPO3 installation. 
-> -- 
-> Hanno Böck		Blog:		http://www.hboeck.de/
-> GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-> 
-> http://schokokeks.org - professional webhosting
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
