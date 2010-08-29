@@ -1,48 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/14/7
-Message-ID: <2067197162.2450151284492365091.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 14 Sep 2010 15:26:05 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/29/4
+Message-Id: <201008291611.20457.timb@nth-dimension.org.uk>
+Date: Sun, 29 Aug 2010 16:10:48 +0100
+From: Tim Brown <timb@...-dimension.org.uk>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: numerous infoleaks
+Subject: Hardening the linker (was Re: CVE request: CouchDB insecure library loading (Debian/Ubuntu only))
 Content-Type: text/plain; charset=utf-8
 
------ "Eugene Teo" <eugene@...hat.com> wrote:
+For those of you that missed it, this was actually reported by Dan off the back 
+of a blog post by me describing the generic case:
 
-> Reported by Dan Rosenberg,
-> 
-> drivers/net/tulip/de4x5.c: reading uninitialized stack memory
-> http://lkml.org/lkml/2010/9/11/169
-> https://bugzilla.redhat.com/633158
+http://www.nth-dimension.org.uk/blog.php?id=87
 
-CVE-2010-3295
+I'm well aware that the linker is a tool and that it can be misused (as in 
+this case) but is anyone aware of a good reason why empty directory 
+specifications in LD_LIBRARY_PATH, PATH et al are treated as $PWD?  The only 
+times I've seen empty specifications it's because of bugs such as the one Dan 
+has reported.
 
-> 
-> drivers/net/cxgb3/cxgb3_main.c reading uninitialized stack memory
-> http://lkml.org/lkml/2010/9/11/170
-> introduced in 4d22de3e (v2.6.21-rc2)
-> https://bugzilla.redhat.com/633149
+Is there a case to look at harding the dynamic linker to reject empty 
+specifications; there's not much that one can do where someone has explicitly 
+set a stupid LD_LIBRARY_PATH?  I appreciate that this might has some unwanted 
+outcomes (such as breaking compatibility with other POSIX-alike OS) but 
+sometimes there's a good argument for breaking compatibility if it increases 
+security (some of the various grsec kernel and GCC compiler hardening changes 
+would be good examples here).
 
-CVE-2010-3296
-
-> 
-> drivers/net/eql.c: reading uninitialized stack memory
-> http://lkml.org/lkml/2010/9/11/168
-> https://bugzilla.redhat.com/633145
-
-CVE-2010-3297
-
-> 
-> drivers/net/usb/hso.c: reading uninitialized memory
-> http://lkml.org/lkml/2010/9/11/167
-> introduced in 542f5482 (v2.6.29-rc1)
-> https://bugzilla.redhat.com/633140
-> 
-
-CVE-2010-3298
-
-Thanks.
-
+Tim
 -- 
-    JB
+Tim Brown
+<mailto:timb@...-dimension.org.uk>
+<http://www.nth-dimension.org.uk/>
+
+Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
