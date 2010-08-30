@@ -1,57 +1,247 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/23/5
-Message-ID: <AANLkTikLaACS7oDJVp8aOMyFSiFeMhc+95eVG1=e-1xb@mail.gmail.com>
-Date: Tue, 23 Nov 2010 12:00:51 -0500
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel address leaks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/30/1
+Message-Id: <20100830091909.5248.A69D9226@jp.fujitsu.com>
+Date: Mon, 30 Aug 2010 09:19:58 +0900 (JST)
+From: KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>
+To: Kees Cook <kees.cook@...onical.com>
+Cc: kosaki.motohiro@...fujitsu.com, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Al Viro <viro@...iv.linux.org.uk>, Andrew Morton <akpm@...ux-foundation.org>, Oleg Nesterov <oleg@...hat.com>, Neil Horman <nhorman@...driver.com>, Roland McGrath <roland@...hat.com>, linux-fsdevel@...r.kernel.org
+Subject: Re: [PATCH] exec argument expansion can inappropriately trigger OOM-killer
 Content-Type: text/plain; charset=utf-8
 
-For starters, I don't want to turn this into a conversation about
-CVEs.  The point of my post was to generate discussion on a particular
-class of information leakage and talk about how to address it.
-
-That said, MITRE's website defines an "exposure" (the "E" in "CVE") as
-follows [1]:
-
-"An information security 'exposure' is a system configuration issue or
-a mistake in software that allows access to information or
-capabilities that can be used by a hacker as a stepping-stone into a
-system or network.
-
-CVE considers a configuration issue or a mistake an exposure if it
-does not directly allow compromise but could be an important component
-of a successful attack, and is a violation of a reasonable security
-policy."
-
-
-I don't think it's appropriate to use CVEs as a blackmailing tool, and
-I don't actually think these issues need CVEs.  But claiming that it
-would be inappropriate to assign them because they're not "security
-problems" is a bit misguided.  We're not talking about leaking
-function addresses here - we're talking about leaking the addresses of
-live kernel data structures, which in my opinion is more of a risk.
-
--Dan
-
-[1] http://cve.mitre.org/about/terminology.html
-
-
-On Tue, Nov 23, 2010 at 11:46 AM, Marcus Meissner <meissner@...e.de> wrote:
-> On Tue, Nov 23, 2010 at 09:59:13AM +0100, Yves-Alexis Perez wrote:
->> On lun., 2010-11-22 at 18:54 -0500, Michael Gilbert wrote:
->> > Oh, and if you get CVEs assigned, that kind of forces them to fix the
->> > problem, right?
->> >
->> I'm not that sure (there are CVEs for issues considered too small by the
->> developers involved, not only in Linux, which are still opened), and I'm
->> not sure using CVE system for “blackmailing” is a good usage for that
->> tool.
+> Brad Spengler published a local memory-allocation DoS that
+> evades the OOM-killer (though not the virtual memory RLIMIT):
+> http://www.grsecurity.net/~spender/64bit_dos.c
+> 
+> The recent changes to create a stack guard page helps slightly to
+> discourage this attack, but it is not sufficient. Compiling it statically
+> moves the libraries out of the way, allowing the stack VMA to fill the
+> entire TASK_SIZE.
+> 
+> There are two issues:
+>  1) the OOM killer doesn't notice this argv memory explosion
+>  2) the argv expansion does not check if rlim[RLIMIT_STACK].rlim_cur is -1.
+> 
+> I figure a quick solution for #2 would be the following patch. However,
+> running multiple copies of this program could result in similar OOM
+> behavior, so issue #1 still needs a solution.
 >
-> CVEs are for security problems. Leaking kernel function addresses to
-> userspace is not a security issue in my opinion.
->
-> (Leaking content of kernel memory however is.)
->
-> Ciao, Marcus
->
+>Reported-by: Brad Spengler <spender@...ecurity.net>
+>Signed-off-by: Kees Cook <kees.cook@...onical.com>
+
+Reviewed-by: KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>
+
+
+And, I have a patch for #1. Can you please see this? Alternative idea
+is to change rss accounting itself.
+
+
+
+From d4e114e5d31b14ebfc399d4b1fb142c7dfce0ca4 Mon Sep 17 00:00:00 2001
+From: KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>
+Date: Thu, 19 Aug 2010 20:40:20 +0900
+Subject: [PATCH] oom: don't ignore temporary rss while execve
+
+execve() makes new mm struct and setup stack and argv vector,
+Unfortunately this new mm is not pointed any tasks, then oom-kill
+can't detect this memory usage. therefore oom-kill may kill incorrect
+task.
+
+This patch added in-exec rss treatness to oom.
+
+Signed-off-by: KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>
+---
+ fs/compat.c             |    8 ++++++--
+ fs/exec.c               |   19 +++++++++++++++++--
+ include/linux/binfmts.h |    1 +
+ include/linux/sched.h   |    1 +
+ mm/oom_kill.c           |   36 +++++++++++++++++++++++++++---------
+ 5 files changed, 52 insertions(+), 13 deletions(-)
+
+diff --git a/fs/compat.c b/fs/compat.c
+index 718c706..643140c 100644
+--- a/fs/compat.c
++++ b/fs/compat.c
+@@ -1527,6 +1527,7 @@ int compat_do_execve(char * filename,
+ 	retval = bprm_mm_init(bprm);
+ 	if (retval)
+ 		goto out_file;
++	set_exec_mm(bprm->mm);
+ 
+ 	bprm->argc = compat_count(argv, MAX_ARG_STRINGS);
+ 	if ((retval = bprm->argc) < 0)
+@@ -1560,6 +1561,7 @@ int compat_do_execve(char * filename,
+ 	/* execve succeeded */
+ 	current->fs->in_exec = 0;
+ 	current->in_execve = 0;
++	set_exec_mm(NULL);
+ 	acct_update_integrals(current);
+ 	free_bprm(bprm);
+ 	if (displaced)
+@@ -1567,8 +1569,10 @@ int compat_do_execve(char * filename,
+ 	return retval;
+ 
+ out:
+-	if (bprm->mm)
+-		mmput(bprm->mm);
++	if (current->in_exec_mm) {
++		struct mm_struct *in_exec_mm = set_exec_mm(NULL);
++		mmput (in_exec_mm);
++	}
+ 
+ out_file:
+ 	if (bprm->file) {
+diff --git a/fs/exec.c b/fs/exec.c
+index 2d94552..85192e1 100644
+--- a/fs/exec.c
++++ b/fs/exec.c
+@@ -1314,6 +1314,17 @@ int search_binary_handler(struct linux_binprm *bprm,struct pt_regs *regs)
+ 
+ EXPORT_SYMBOL(search_binary_handler);
+ 
++struct mm_struct* set_exec_mm(struct mm_struct *mm)
++{
++	struct mm_struct *old = current->in_exec_mm;
++
++	task_lock(current);
++	current->in_exec_mm = mm;
++	task_unlock(current);
++
++	return old;
++}
++
+ /*
+  * sys_execve() executes a new program.
+  */
+@@ -1361,6 +1372,7 @@ int do_execve(const char * filename,
+ 	retval = bprm_mm_init(bprm);
+ 	if (retval)
+ 		goto out_file;
++	set_exec_mm(bprm->mm);
+ 
+ 	bprm->argc = count(argv, MAX_ARG_STRINGS);
+ 	if ((retval = bprm->argc) < 0)
+@@ -1395,6 +1407,7 @@ int do_execve(const char * filename,
+ 	/* execve succeeded */
+ 	current->fs->in_exec = 0;
+ 	current->in_execve = 0;
++	set_exec_mm(NULL);
+ 	acct_update_integrals(current);
+ 	free_bprm(bprm);
+ 	if (displaced)
+@@ -1402,8 +1415,10 @@ int do_execve(const char * filename,
+ 	return retval;
+ 
+ out:
+-	if (bprm->mm)
+-		mmput (bprm->mm);
++	if (current->in_exec_mm) {
++		struct mm_struct *in_exec_mm = set_exec_mm(NULL);
++		mmput (in_exec_mm);
++	}
+ 
+ out_file:
+ 	if (bprm->file) {
+diff --git a/include/linux/binfmts.h b/include/linux/binfmts.h
+index a065612..8cf61eb 100644
+--- a/include/linux/binfmts.h
++++ b/include/linux/binfmts.h
+@@ -133,6 +133,7 @@ extern void install_exec_creds(struct linux_binprm *bprm);
+ extern void do_coredump(long signr, int exit_code, struct pt_regs *regs);
+ extern void set_binfmt(struct linux_binfmt *new);
+ extern void free_bprm(struct linux_binprm *);
++extern struct mm_struct* set_exec_mm(struct mm_struct *mm);
+ 
+ #endif /* __KERNEL__ */
+ #endif /* _LINUX_BINFMTS_H */
+diff --git a/include/linux/sched.h b/include/linux/sched.h
+index 1e2a6db..d413757 100644
+--- a/include/linux/sched.h
++++ b/include/linux/sched.h
+@@ -1217,6 +1217,7 @@ struct task_struct {
+ 	struct plist_node pushable_tasks;
+ 
+ 	struct mm_struct *mm, *active_mm;
++	struct mm_struct *in_exec_mm;
+ #if defined(SPLIT_RSS_COUNTING)
+ 	struct task_rss_stat	rss_stat;
+ #endif
+diff --git a/mm/oom_kill.c b/mm/oom_kill.c
+index 57c05f7..7fc6916 100644
+--- a/mm/oom_kill.c
++++ b/mm/oom_kill.c
+@@ -120,6 +120,30 @@ struct task_struct *find_lock_task_mm(struct task_struct *p)
+ 	return NULL;
+ }
+ 
++static unsigned long calculate_rss_swap(struct task_struct *p)
++{
++	struct task_struct *t = p;
++	int mm_accounted = 0;
++	unsigned long points = 0;
++
++	do {
++		task_lock(t);
++		if (!mm_accounted && t->mm) {
++			points += get_mm_rss(t->mm);
++			points += get_mm_counter(t->mm, MM_SWAPENTS);
++			mm_accounted = 1;
++		}
++		if (t->in_exec_mm) {
++			points += get_mm_rss(t->in_exec_mm);
++			points += get_mm_counter(t->in_exec_mm, MM_SWAPENTS);
++		}
++		task_unlock(t);
++	} while_each_thread(p, t);
++
++	return points;
++}
++
++
+ /* return true if the task is not adequate as candidate victim task. */
+ static bool oom_unkillable_task(struct task_struct *p, struct mem_cgroup *mem,
+ 			   const nodemask_t *nodemask)
+@@ -157,16 +181,11 @@ unsigned int oom_badness(struct task_struct *p, struct mem_cgroup *mem,
+ 	if (oom_unkillable_task(p, mem, nodemask))
+ 		return 0;
+ 
+-	p = find_lock_task_mm(p);
+-	if (!p)
+-		return 0;
+-
+ 	/*
+ 	 * Shortcut check for OOM_SCORE_ADJ_MIN so the entire heuristic doesn't
+ 	 * need to be executed for something that cannot be killed.
+ 	 */
+ 	if (p->signal->oom_score_adj == OOM_SCORE_ADJ_MIN) {
+-		task_unlock(p);
+ 		return 0;
+ 	}
+ 
+@@ -175,7 +194,6 @@ unsigned int oom_badness(struct task_struct *p, struct mem_cgroup *mem,
+ 	 * priority for oom killing.
+ 	 */
+ 	if (p->flags & PF_OOM_ORIGIN) {
+-		task_unlock(p);
+ 		return 1000;
+ 	}
+ 
+@@ -190,9 +208,9 @@ unsigned int oom_badness(struct task_struct *p, struct mem_cgroup *mem,
+ 	 * The baseline for the badness score is the proportion of RAM that each
+ 	 * task's rss and swap space use.
+ 	 */
+-	points = (get_mm_rss(p->mm) + get_mm_counter(p->mm, MM_SWAPENTS)) * 1000 /
+-			totalpages;
+-	task_unlock(p);
++	points = calculate_rss_swap(p) * 1000 / totalpages;
++	if (!points)
++		return 0;
+ 
+ 	/*
+ 	 * Root processes get 3% bonus, just like the __vm_enough_memory()
+-- 
+1.6.5.2
+
+
+
+
+
