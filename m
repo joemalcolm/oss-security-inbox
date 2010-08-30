@@ -1,27 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/17/2
-Message-ID: <20100217104619.GD4757@suse.de>
-Date: Wed, 17 Feb 2010 11:46:19 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: additional memory leak in USB userspace handling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/30/5
+Message-Id: <20100830100616.78971400D9@magilla.sf.frob.com>
+Date: Mon, 30 Aug 2010 03:06:16 -0700 (PDT)
+From: Roland McGrath <roland@...hat.com>
+To: Solar Designer <solar@...nwall.com>
+Cc: Kees Cook <kees.cook@...onical.com>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Al Viro <viro@...iv.linux.org.uk>, Andrew Morton <akpm@...ux-foundation.org>, Oleg Nesterov <oleg@...hat.com>, KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org
+Subject: Re: [PATCH] exec argument expansion can inappropriately trigger OOM-killer
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+> IIRC, prior to that fix, I was able to cause the kernel to loop for tens
+> of minutes in a single execve() call on an Alpha with 128 MB RAM, by
+> using repeated mappings of the same pages (almost 200 GB total).
 
-a memory allocation leak (not information, just unfreed memory)
-was spotted and fixed by Linus during debugging of previous problem.
+And I say, if your userland process could really allocate another 200GB,
+then more power to you, you can do it with an exec too.  If you could do
+the same with a userland stack allocation, and spend all that time in
+strlen calls and then memcpy, you can do it inside execve too.  If it
+takes days, that's what you asked for, and it's your process.  It just
+ought to be every bit (or near enough) as preemptible and interruptible
+as that normal userland activity ought to be.
 
-On put_user() errors it would leak one "struct async" per REAPURB call.
+So, perhaps we want this (count already has a cond_resched in its loop):
 
-Fix is in commit ddeee0b2eec2a51b0712b04de4b39e7bec892a53, also
-attached.
+diff --git a/fs/exec.c b/fs/exec.c
+index 2d94552..0000000 100644  
+--- a/fs/exec.c
++++ b/fs/exec.c
+@@ -369,6 +369,9 @@ static int count(const char __user * con
+ 		for (;;) {
+ 			const char __user * p;
+ 
++			if (signal_pending(current))
++				return -ERESTARTNOINTR;
++
+ 			if (get_user(p, argv))
+ 				return -EFAULT;
+ 			if (!p)
+@@ -400,6 +403,10 @@ static int copy_strings(int argc, const 
+ 		int len;
+ 		unsigned long pos;
+ 
++		if (signal_pending(current))
++			return -ERESTARTNOINTR;
++		cond_resched();
++
+ 		if (get_user(str, argv+argc) ||
+ 				!(len = strnlen_user(str, MAX_ARG_STRLEN))) {
+ 			ret = -EFAULT;
 
-Affected code is also going back throughout 2.6 history.
+> Now it appears that, besides the issue that started this thread, the
+> same problem I mentioned above got re-introduced.  We still have
+> strnlen_user() and the "max" argument to count(), but we no longer have
+> hard limits for "max".  Someone set MAX_ARG_STRINGS to 0x7FFFFFFF, and
+> this is just too much.  MAX_ARG_STRLEN is set to 32 pages, and these two
+> combined allow a userspace program to make the kernel loop for days.
 
-The issue is of less importance than the information leak fix, I am not
-sure if it deserves a CVE or not.
+I really don't think we need that stuff back.  I think we can get rid of
+it and fix the real problems, and be happier overall.
 
-Ciao, Marcus
+> > But it sounds like all you really need is to fix the OOM/allocation
+> > behavior for huge stack allocations.
+> 
+> No, we need both.
 
-View attachment "reapurb-memleak.pat" of type "text/plain" (3456 bytes)
+I don't agree.  If all of the implicit allocation done inside execve is
+accounted and controlled as well as normal userland allocations so that
+the execve fails when userland allocation would fail, then there is no
+reason for special-case arbitrary limits.
+
+> Additionally, 64bit_dos.c mentions that "it triggers a BUG() as the
+> stack tries to expand around the address space when shifted".  Perhaps
+> limiting the stack size would deal with that, but maybe the "bug" needs
+> to be patched elsewhere as well.  grsecurity has the following hunk:
+
+That change seems like it might be reasonable, but I haven't really
+looked at shift_arg_pages before.  Has someone reported this BUG_ON
+failure mode with a reproducer?
+
+> Overall, there are multiple issues here (maybe up to four?) and multiple
+> things to review the code for.
+
+Agreed.  But IMHO the missing arbitrary limits on arg/env size are not
+among them.  I don't know about shift_arg_pages.  The core fix I think
+makes sense is making the nascent mm get accounted to the user process
+normally.  Rather than better enabling OOM killing, I think what really
+makes sense is for the nascent mm to be marked such that allocations in
+it (they'll be from get_arg_page->get_user_pages->handle_mm_fault) just
+fail with ENOMEM before it resorts to the OOM killer (or perhaps even to
+very aggressive pageout).  That should percolate back to the execve just
+failing with ENOMEM, which is nicer than OOM kill even if the OOM killer
+actually does pick exactly and only the right target.
+
+
+Thanks,
+Roland
