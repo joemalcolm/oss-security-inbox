@@ -1,37 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/17/9
-Message-ID: <i70but$vlc$1@dough.gmane.org>
-Date: Fri, 17 Sep 2010 13:27:55 -0500
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/30/4
+Message-ID: <1501414360.731141283179024025.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 30 Aug 2010 10:37:04 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: pixelpost
+Cc: coley <coley@...re.org>
+Subject: Re: CVE Request: BGP protocol vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Raphael Geissert wrote:
-> It also appears to be using PHP_SELF in some places, so that's another XSS
-> vector. Will confirm it later.
+----- "Florian Weimer" <fw@...eb.enyo.de> wrote:
+> * Kurt Seifried:
+> 
+> >> The BGP protocol and its various extensions require that BGP peering
+> >> sessions are terminated when a peer receives a BGP update message
+> >> which it considers semantically incorrect, leading to a persistent
+> >> denial-of-service condition if the update is received again after the
+> >> terminated session is reestablished.
+> >>
+> >> (This is not something new at all---we just need to get up, treat it
+> >> as a vulnerability, and fix it.)
+> >
+> > This sounds like CVE-2010-3035
+> > http://www.cisco.com/warp/public/707/cisco-sa-20100827-bgp.shtml
+> 
+> In this context, I don't like that the peer on the receiving end
+> resets the session.  It's got a significant impact on availability,
+> and the resulting UPDATE churn hurts everybody a little bit.
+> 
+> In short, I think there are two bugs: IOS XR producing bad data, and
+> other implementations dealing badly with it.
 
-There a few easily-exploitable vectors on the following admin pages:
-admin/index.php?view=comments
-admin/index.php?view=options
-admin/index.php?view=info
+I'm going to let MITRE deal with this one. I don't want to assign an ID for
+a protocol issue, that likely will affect numerous devices.
 
-E.g.
-http://host/pixelpost/admin/index.php/%22%3E%3Cscript%3Ewindow.alert();
-%3C/script%3E'%3E%3Cscript%3Ewindow.alert();%3C/script%3E/?view=info
+Thanks.
 
-
-There is also another vector on the feeds generator if a template uses the 
-"old" (according to the code) tag <ATOM_AUTODETECT>.
-Similarly, if a template uses the <TAG_RSS_LINK> or <TAG_ATOM_LINK> tags 
-there's another XSS vector via the tag= GET variable(none of the default 
-templates do, in 1.7.1 and 1.7.3.)
-
-There are a few more in other places, but I guess the picture is clear.
-
-Regards,
 -- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
-
-
+    JB
