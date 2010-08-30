@@ -1,32 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/08/1
-Message-ID: <20101108011603.GA8957@openwall.com>
-Date: Mon, 8 Nov 2010 04:16:03 +0300
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/30/7
+Message-ID: <20100830194806.GC25870@openwall.com>
+Date: Mon, 30 Aug 2010 23:48:06 +0400
 From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel proactive security hardening
+To: Roland McGrath <roland@...hat.com>
+Cc: Kees Cook <kees.cook@...onical.com>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Al Viro <viro@...iv.linux.org.uk>, Andrew Morton <akpm@...ux-foundation.org>, Oleg Nesterov <oleg@...hat.com>, KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org
+Subject: Re: [PATCH] exec argument expansion can inappropriately trigger OOM-killer
 Content-Type: text/plain; charset=utf-8
 
-Kees, Dan -
+On Mon, Aug 30, 2010 at 03:06:16AM -0700, Roland McGrath wrote:
+> And I say, if your userland process could really allocate another 200GB,
+> then more power to you, you can do it with an exec too.  If you could do
+> the same with a userland stack allocation, and spend all that time in
+> strlen calls and then memcpy, you can do it inside execve too.  If it
+> takes days, that's what you asked for, and it's your process.  It just
+> ought to be every bit (or near enough) as preemptible and interruptible
+> as that normal userland activity ought to be.
 
-Thank you for working on this!
+This makes sense to me.  However, introducing a new preemption point
+may violate assumptions under which the code was written and reviewed
+in the past.  In the worst case, we'd introduce/expose race conditions
+allowing for privilege escalation.
 
-On Sun, Nov 07, 2010 at 02:16:32PM -0800, Kees Cook wrote:
-> And there's a sign-up list here, for people interested in helping out:
-> 
-> https://wiki.ubuntu.com/SecurityTeam/Roadmap/KernelHardening#Upstream%20Hardening
+> So, perhaps we want this (count already has a cond_resched in its loop):
 
-I've just added a few hardening changes to consider (and edited/moved a
-few others):
+Good point re: count() already having this (I think it did not in 2.2).
 
-https://wiki.ubuntu.com/SecurityTeam/Roadmap/KernelHardening?action=diff&rev2=41&rev1=37
+> @@ -400,6 +403,10 @@ static int copy_strings(int argc, const 
+>  		int len;
+>  		unsigned long pos;
+>  
+> +		if (signal_pending(current))
+> +			return -ERESTARTNOINTR;
+> +		cond_resched();
 
-Sorry I did not sign up for any yet, although if I happen to work on any
-I'll let you know.
+So, in current kernels, you're making it possible for more kinds of
+things to change after prepare_binprm() but before
+search_binary_handler().  We'd need to check for possible implications
+of this.
 
-I'd appreciate it if you keep the page updated with current status on
-and links to work-in-progress and proposed patches.
+I must admit I am not familiar with what additional kinds of things may
+change when execution is preempted.  This made a significant difference
+in some much older kernels (many years ago), but now that the kernel
+makes a lot less use of locking most things may be changed by another
+CPU even without preemption.  So does anyone have a list of what
+additional risks we're exposed to, if any, when we allow preemption in
+current kernels?
 
-Thanks again,
+> Has someone reported this BUG_ON failure mode with a reproducer?
+
+64bit_dos.c was supposed to be the reproducer, and I managed to get it
+to work (as I've documented in another message earlier today).  The
+prerequisites appeared to be (some of these might be specific to my
+tests, though):
+
+- 64-bit kernel with 32-bit userland support (e.g., CONFIG_IA32_EMULATION);
+- 64-bit build of 64bit_dos.c;
+- 32-bit build of the target program;
+- no dynamic linking in the target program;
+- "ulimit -s unlimited" before running the reproducer program;
+- over 3 GB of RAM in the system.
+
+> [...]  Rather than better enabling OOM killing, I think what really
+> makes sense is for the nascent mm to be marked such that allocations in
+> it (they'll be from get_arg_page->get_user_pages->handle_mm_fault) just
+> fail with ENOMEM before it resorts to the OOM killer (or perhaps even to
+> very aggressive pageout).  That should percolate back to the execve just
+> failing with ENOMEM, which is nicer than OOM kill even if the OOM killer
+> actually does pick exactly and only the right target.
+
+I agree.
+
+Thanks,
 
 Alexander
