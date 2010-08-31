@@ -1,39 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/30/2
-Message-ID: <4C2A8A5E.2000202@kernel.sg>
-Date: Wed, 30 Jun 2010 08:05:50 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/31/8
+Message-ID: <Pine.GSO.4.64.1008311734300.3520@faron.mitre.org>
+Date: Tue, 31 Aug 2010 17:42:27 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-CC: akuster <akuster@...sta.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE Request: kernel: ethtool: kernel buffer overflow in ETHTOOL_GRXCLSRLALL
+Subject: Re: CVE Request: BGP protocol vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On 06/29/2010 11:53 PM, akuster wrote:
-> Eugene,
+
+On Sat, 28 Aug 2010, Kurt Seifried wrote:
+
+>> The BGP protocol and its various extensions require that BGP peering
+>> sessions are terminated when a peer receives a BGP update message
+>> which it considers semantically incorrect, leading to a persistent
+>> denial-of-service condition if the update is received again after the
+>> terminated session is reestablished.
+>>
+>> (This is not something new at all---we just need to get up, treat it
+>> as a vulnerability, and fix it.)
 >
-> Thanks for the info. Unfortunately it does affect a few MontaVista
-> kernels. Is it possible to get a CVE for this?
+> This sounds like CVE-2010-3035
+> http://www.cisco.com/warp/public/707/cisco-sa-20100827-bgp.shtml
 
-I edited the $SUBJECT :)
+The way Cisco has written up this CVE, they are clearly focusing on the 
+generation of corrupted attributes, not a protocol problem.  So, I'd want 
+a separate CVE for the general BGP design issue.
 
-Eugene
+> or are you talking about another BGP issue? (but in the same "family"
+> as CVE-2009-2055 and  CVE-2010-3035).
 
-> On 06/28/2010 04:10 PM, Eugene Teo wrote:
->> FYI, "On a 32-bit machine, info.rule_cnt>= 0x40000000 leads to integer
->> overflow and the buffer may be smaller than needed.  Since
->> ETHTOOL_GRXCLSRLALL is unprivileged, this can presumably be used for at
->> least denial of service." This was introduced in v2.6.27-rc1 via
->> upstream commit 0853ad66. Also see commit 59089d8d.
->>
->> Reference:
->> http://thread.gmane.org/gmane.linux.network/164869
->> https://bugzilla.redhat.com/show_bug.cgi?id=608950
->>
->> I'm not requesting a CVE name for this as it did not affect any of our
->> Red Hat supported Linux kernels.
->>
->> Thanks, Eugene
+I can't quite tell the difference between CVE-2009-2055 and what Florian 
+is requesting a CVE for.  In CVE-2009-2055, Cisco seems to be implying 
+that it's a problem in XR, not the design of the whole protocol - but it's 
+not immediately clear if they even "fixed" it.  The issue at hand is 
+whether we need a new CVE or a rewrite for the old CVE-2009-2055.
 
-
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+- Steve
