@@ -1,37 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/13/11
-Message-ID: <20100913212406.GA11053@1wt.eu>
-Date: Mon, 13 Sep 2010 23:24:06 +0200
-From: Willy Tarreau <w@....eu>
-To: Marcus Meissner <meissner@...e.de>
-Cc: oss-security@...ts.openwall.com, Andrew Morton <akpm@...ux-foundation.org>, spender@...ecurity.net, security@...nel.org
-Subject: Re: [Security] Re:  /proc infoleaks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/31/7
+Message-ID: <Pine.GSO.4.64.1008311556010.3520@faron.mitre.org>
+Date: Tue, 31 Aug 2010 16:02:14 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Josh Bressers <bressers@...hat.com>
+cc: oss-security@...ts.openwall.com
+Subject: Re: CVE id request: libc fortify source information disclosure
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Sep 07, 2010 at 09:19:03PM +0200, Marcus Meissner wrote:
-> > > > or something like a umask for kernel-owned proc
-> > > > entries so that you have a polite default and are
-> > > > still able to enable it for certain profiling tools
-> > > > or whereever you need it.
-> > > 
-> > > chmod 0440 /proc/slabinfo
-> > > 
-> > Heh, indeed. :-)
-> > Would it be a bad idea to have proc_create() use a more strict
-> > mode so it is non-leaking by default?
-> 
-> Yeah, sane and a bit more strict, defaults are missing.
-> 
-> The little pieces of information leakage out of the kernel should be fixed,
-> to raise the bar for kernel exploits in little steps at a time.
 
-Personally, I don't see why slabinfo could represent a threat.
-I'm regularly using it as a normal user just to check where all
-my RAM is going from time to time. The more we restrict access to
-harmless information, the more we'll have sudoers in the wild for
-special users who need special accesses. And sudoers are generally
-not as well managed as permissions, believe me ;-)
+I think this technically qualifies as an "exposure" which is the "E" in 
+"CVE" - it can be used as a stepping stone for exploitation of another 
+vulnerability.  (Very old, unwieldy definitions here: 
+http://cve.mitre.org/about/terminology.html)
 
-Cheers,
-Willy
+The risk may be very minimal, but the FORTIFY_SOURCE protection mechanism 
+is not working "as advertised" - it can be manipulated for an 
+admittedly-small information leak.
 
+Use CVE-2010-3192 for the issue.
+
+- Steve
+
+
+On Tue, 31 Aug 2010, Josh Bressers wrote:
+
+> ----- "Nico Golde" <oss-security+ml@...lde.de> wrote:
+>
+>> Hi,
+>> http://seclists.org/fulldisclosure/2010/Apr/399
+>> did this ever get a CVE id? As this also works for setuid programs it
+>> would be
+>> nice to get one assigned and have this patched.
+>>
+>
+> Steve,
+>
+> What is MITRE policy on this one. By itself I question if this is a
+> security flaw, but it also would appear to have the potential to turn a DoS
+> into something worse.
+>
+> I'm not sure what policy is in this instance.
+>
+> Thanks.
+>
+> --
+>    JB
+>
+>
+>
