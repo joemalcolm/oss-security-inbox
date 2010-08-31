@@ -1,27 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/25/10
-Message-ID: <Pine.GSO.4.64.1008251954120.3520@faron.mitre.org>
-Date: Wed, 25 Aug 2010 19:56:57 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: VLC media player - DLL preloading vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/31/4
+Message-Id: <201008312056.FAB26586.OOVFLJQOFFStMH@I-love.SAKURA.ne.jp>
+Date: Tue, 31 Aug 2010 20:56:52 +0900
+From: Tetsuo Handa <penguin-kernel@...ove.SAKURA.ne.jp>
+To: spender@...ecurity.net, solar@...nwall.com
+Cc: roland@...hat.com, kees.cook@...onical.com, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, viro@...iv.linux.org.uk, akpm@...ux-foundation.org, oleg@...hat.com, kosaki.motohiro@...fujitsu.com, nhorman@...driver.com, linux-fsdevel@...r.kernel.org, pageexec@...email.hu
+Subject: Re: [PATCH] exec argument expansion can inappropriately triggerOOM-killer
 Content-Type: text/plain; charset=utf-8
 
-
-We will have one CVE per vulnerable application.  Yes, it's going to be 
-very painful.  Roughly, the rationale is: "the product does not protect 
-against a common configuration/behavior in its environment."
-
-> VLC was exploitable by loading wintab32.dll, a component request by
-> Qt, as shown in http://www.exploit-db.com/exploits/14750/
-
-Use CVE-2010-3124
-
-
-> There's another possibility with DMO.
-
-Is this a distinct product outside of VLC, or is it just a different 
-component / attack vector?
-
-
-- Steve
+Brad Spengler wrote:
+> The bug seems to have been introduced in 2.6.23, see:
+> http://thread.gmane.org/gmane.linux.ports.hppa/752
+> http://www.spinics.net/lists/linux-arch/msg01584.html
+> http://www.mail-archive.com/linux-kernel@vger.kernel.org/msg170491.html
+> though I'm guessing the functionality was also backported to major 
+> distros
+As far as I know, RHEL >= 5.3 and Asianux >= 3.2 backported this functionality.
