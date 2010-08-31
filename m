@@ -1,27 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/21/5
-Message-ID: <1292941665.3234.6.camel@luna>
-Date: Tue, 21 Dec 2010 08:27:44 -0600
-From: Jamie Strandboge <jamie@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/31/6
+Message-ID: <1096880478.943031283283617935.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 31 Aug 2010 15:40:17 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: opensc buffer overflow
+Cc: coley <coley@...re.org>
+Subject: Re: CVE id request: libc fortify source information disclosure
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 2010-12-21 at 10:25 +0100, Ludwig Nussel wrote:
-> Hi,
-> 
-> Specially crafted smart cards could cause a buffer overflow in opensc:
-> 
-> http://labs.mwrinfosecurity.com/files/Advisories/mwri_opensc-get-serial-buffer-overflow_2010-12-13.pdf
-> http://www.h-online.com/open/news/item/When-a-smart-card-can-root-your-computer-1154829.html
-> https://www.opensc-project.org/opensc/changeset/4913
+----- "Nico Golde" <oss-security+ml@...lde.de> wrote:
 
-It is my understanding that you will also want to apply the following
-changeset for the above to work:
-https://www.opensc-project.org/opensc/changeset/4912
+> Hi,
+> http://seclists.org/fulldisclosure/2010/Apr/399
+> did this ever get a CVE id? As this also works for setuid programs it
+> would be 
+> nice to get one assigned and have this patched.
+> 
+
+Steve,
+
+What is MITRE policy on this one. By itself I question if this is a
+security flaw, but it also would appear to have the potential to turn a DoS
+into something worse.
+
+I'm not sure what policy is in this instance.
+
+Thanks.
 
 -- 
-Jamie Strandboge             | http://www.canonical.com
+    JB
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+
