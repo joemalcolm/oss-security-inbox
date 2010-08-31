@@ -1,27 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/23/4
-Message-ID: <4D13820A.7060205@redhat.com>
-Date: Thu, 23 Dec 2010 18:08:26 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, Luke Macken <lmacken@...hat.com>
-Subject: CVE Request -- Django 1.2.4, Django 1.1.3 and Django 1.3 beta 1 -- addressing two security flaws
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/31/3
+Message-ID: <20100831115304.GA27486@openwall.com>
+Date: Tue, 31 Aug 2010 15:53:04 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Brad Spengler <spender@...ecurity.net>
+Cc: Roland McGrath <roland@...hat.com>, Kees Cook <kees.cook@...onical.com>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Al Viro <viro@...iv.linux.org.uk>, Andrew Morton <akpm@...ux-foundation.org>, Oleg Nesterov <oleg@...hat.com>, KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, pageexec@...email.hu
+Subject: Re: [PATCH] exec argument expansion can inappropriately trigger OOM-killer
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve, vendors,
+Brad, Roland -
 
-   Django upstream recently released Django 1.2.4, Django 1.1.3 and Django 1.3 beta 1
-versions of Django addressing two security flaws:
+Thank you for your comments and your work on this.
 
-   I),   Information leakage in Django administrative interface
-   II),  Denial-of-service attack in password-reset mechanism
+On Mon, Aug 30, 2010 at 06:08:47PM -0400, Brad Spengler wrote:
+> There shouldn't be any additional risk from adding the extra rescheds, 
+> as copy_*_user can already sleep and be raced against via a number of 
+> methods.
 
-   References:
-   [1] http://www.djangoproject.com/weblog/2010/dec/22/security/
-   [2] https://bugzilla.redhat.com/show_bug.cgi?id=665373
+Agreed.
 
-Could you allocate CVE ids for these issues?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Alexander
