@@ -1,245 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/10/6
-Message-Id: <20100910101528.C958.A69D9226@jp.fujitsu.com>
-Date: Fri, 10 Sep 2010 18:57:24 +0900 (JST)
-From: KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>
-To: Oleg Nesterov <oleg@...hat.com>
-Cc: kosaki.motohiro@...fujitsu.com, Roland McGrath <roland@...hat.com>, Linus Torvalds <torvalds@...ux-foundation.org>, Andrew Morton <akpm@...ux-foundation.org>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Kees Cook <kees.cook@...onical.com>, Al Viro <viro@...iv.linux.org.uk>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, pageexec@...email.hu, "Brad Spengler <spender@...ecurity.net>, Eugene Teo" <eugene@...hat.com>, KAMEZAWA Hiroyuki <kamezawa.hiroyu@...fujitsu.com>
-Subject: [PATCH] move cred_guard_mutex from task_struct to signal_struct
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/01/2
+Message-ID: <4C7E6044.4060703@redhat.com>
+Date: Wed, 01 Sep 2010 16:16:36 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, Marc Delisle <Marc.Delisle@...epsherbrooke.qc.ca>, Michal Cihar <michal@...ar.com>
+Subject: CVE Request -- phpMyAdmin - v3.6.6 -- XSS attack using debugging messages (CVE-2010-3056 discussion)
 Content-Type: text/plain; charset=utf-8
 
-> On 09/09, KOSAKI Motohiro wrote:
-> >
-> > --- a/include/linux/sched.h
-> > +++ b/include/linux/sched.h
-> > @@ -1226,6 +1226,7 @@ struct task_struct {
-> >  	int pdeath_signal;  /*  The signal sent when the parent dies  */
-> >  	/* ??? */
-> >  	unsigned int personality;
-> > +	struct mm_struct *in_exec_mm;
-> 
-> Oh, yes, this has to be per-thread (unlike ->mm, btw).
-> 
-> I wonder if it makes sense to move ->cred_guard_mutex from task_struct
-> to signal_struct and thus make multiple-threads-inside-exec impossible.
-> Only one thread can win anyway.
+Hi Steve, vendors,
 
-Interesting idea, really.
-I've thought
+   on 2010-08-30 phpMyAdmin published PMASA-2010-6 addressing one XSS:
+   [1] http://www.phpmyadmin.net/home_page/security/PMASA-2010-6.php
 
-1) moving cread_guard_mutex itself
-   - no increase execve overhead
-	-> very good
-   - it also prevent parallel ptrace
-	-> probably no problem. nobody want parallel debugging
-2) move in_exec_mm to signal_struct too
-   -> very hard. oom-killer can use very few lock because it's called
-      from various place. now both ->mm and ->in_exec_mm are protected
-      task_lock() and it help to avoid messy.
+   Summary (from [1]):
+     XSS attack using debugging messages.
+   Description (from [1]):
+     It was possible to conduct a XSS attack using error messages in PHP backtrace.
 
+   Affected versions (from [1]):
+   For 3.x: versions before 3.3.6 are affected.
+   Branch 2.11.x is not affected by this
 
-So, I've done only (1). I think this restriction effectivly prevent 
-some theorical execve() resouce smashing attack.
+   Upstream commit:
+   http://phpmyadmin.git.sourceforge.net/git/gitweb.cgi?p=phpmyadmin/phpmyadmin;a=commitdiff;h=133a77fac7d31a38703db2099a90c1b49de62e37
 
+phpMyAdmin upstream seems to reference CVE-2010-3056 as CVE id to this flaw.
 
-======================================================================
-Subject: [PATCH] move cred_guard_mutex from task_struct to signal_struct
+But CVE-2010-3056 was previously assigned to:
+[2] http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-3056
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=625877
+[4] http://www.phpmyadmin.net/home_page/security/PMASA-2010-5.php
 
-Oleg Nesterov pointed out we have to prevent multiple-threads-inside-exec
-itself and we can reuse ->cred_guard_mutex for it. Yes, concurrent execve()
-has no worth.
+which affected both (from [4]):
+For 2.11.x: versions before 2.11.10.1 are affected.
+For 3.x: versions before 3.3.5.1 are affected.
 
-Let's move ->cred_guard_mutex from task_struct to signal_struct. It
-naturally prevent multiple-threads-inside-exec.
+so this is different issue and new CVE id should be allocated (due different
+affected versions).
 
-Cc: Oleg Nesterov <oleg@...hat.com>
-Cc: Roland McGrath <roland@...hat.com>
-Signed-off-by: KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>
----
- fs/exec.c                 |    8 ++++----
- fs/proc/base.c            |    8 ++++----
- include/linux/init_task.h |    4 ++--
- include/linux/sched.h     |    7 ++++---
- kernel/cred.c             |    2 --
- kernel/fork.c             |    2 ++
- kernel/ptrace.c           |    4 ++--
- 7 files changed, 18 insertions(+), 17 deletions(-)
+Could you please allocate one?
 
-diff --git a/fs/exec.c b/fs/exec.c
-index 81d0d06..052ed54 100644
---- a/fs/exec.c
-+++ b/fs/exec.c
-@@ -1091,14 +1091,14 @@ EXPORT_SYMBOL(setup_new_exec);
-  */
- int prepare_bprm_creds(struct linux_binprm *bprm)
- {
--	if (mutex_lock_interruptible(&current->cred_guard_mutex))
-+	if (mutex_lock_interruptible(&current->signal->cred_guard_mutex))
- 		return -ERESTARTNOINTR;
- 
- 	bprm->cred = prepare_exec_creds();
- 	if (likely(bprm->cred))
- 		return 0;
- 
--	mutex_unlock(&current->cred_guard_mutex);
-+	mutex_unlock(&current->signal->cred_guard_mutex);
- 	return -ENOMEM;
- }
- 
-@@ -1106,7 +1106,7 @@ void free_bprm(struct linux_binprm *bprm)
- {
- 	free_arg_pages(bprm);
- 	if (bprm->cred) {
--		mutex_unlock(&current->cred_guard_mutex);
-+		mutex_unlock(&current->signal->cred_guard_mutex);
- 		abort_creds(bprm->cred);
- 	}
- 	kfree(bprm);
-@@ -1127,7 +1127,7 @@ void install_exec_creds(struct linux_binprm *bprm)
- 	 * credentials; any time after this it may be unlocked.
- 	 */
- 	security_bprm_committed_creds(bprm);
--	mutex_unlock(&current->cred_guard_mutex);
-+	mutex_unlock(&current->signal->cred_guard_mutex);
- }
- EXPORT_SYMBOL(install_exec_creds);
- 
-diff --git a/fs/proc/base.c b/fs/proc/base.c
-index 55a16f2..fd97c8f 100644
---- a/fs/proc/base.c
-+++ b/fs/proc/base.c
-@@ -226,7 +226,7 @@ struct mm_struct *mm_for_maps(struct task_struct *task)
- {
- 	struct mm_struct *mm;
- 
--	if (mutex_lock_killable(&task->cred_guard_mutex))
-+	if (mutex_lock_killable(&task->signal->cred_guard_mutex))
- 		return NULL;
- 
- 	mm = get_task_mm(task);
-@@ -235,7 +235,7 @@ struct mm_struct *mm_for_maps(struct task_struct *task)
- 		mmput(mm);
- 		mm = NULL;
- 	}
--	mutex_unlock(&task->cred_guard_mutex);
-+	mutex_unlock(&task->signal->cred_guard_mutex);
- 
- 	return mm;
- }
-@@ -2273,14 +2273,14 @@ static ssize_t proc_pid_attr_write(struct file * file, const char __user * buf,
- 		goto out_free;
- 
- 	/* Guard against adverse ptrace interaction */
--	length = mutex_lock_interruptible(&task->cred_guard_mutex);
-+	length = mutex_lock_interruptible(&task->signal->cred_guard_mutex);
- 	if (length < 0)
- 		goto out_free;
- 
- 	length = security_setprocattr(task,
- 				      (char*)file->f_path.dentry->d_name.name,
- 				      (void*)page, count);
--	mutex_unlock(&task->cred_guard_mutex);
-+	mutex_unlock(&task->signal->cred_guard_mutex);
- out_free:
- 	free_page((unsigned long) page);
- out:
-diff --git a/include/linux/init_task.h b/include/linux/init_task.h
-index 1f43fa5..ff3cc33 100644
---- a/include/linux/init_task.h
-+++ b/include/linux/init_task.h
-@@ -29,6 +29,8 @@ extern struct fs_struct init_fs;
- 		.running = 0,						\
- 		.lock = __SPIN_LOCK_UNLOCKED(sig.cputimer.lock),	\
- 	},								\
-+	.cred_guard_mutex =						\
-+		 __MUTEX_INITIALIZER(sig.cred_guard_mutex),		\
- }
- 
- extern struct nsproxy init_nsproxy;
-@@ -139,8 +141,6 @@ extern struct cred init_cred;
- 	.group_leader	= &tsk,						\
- 	.real_cred	= &init_cred,					\
- 	.cred		= &init_cred,					\
--	.cred_guard_mutex =						\
--		 __MUTEX_INITIALIZER(tsk.cred_guard_mutex),		\
- 	.comm		= "swapper",					\
- 	.thread		= INIT_THREAD,					\
- 	.fs		= &init_fs,					\
-diff --git a/include/linux/sched.h b/include/linux/sched.h
-index bb5bf3d..a7e7c2a 100644
---- a/include/linux/sched.h
-+++ b/include/linux/sched.h
-@@ -623,6 +623,10 @@ struct signal_struct {
- 
- 	int oom_adj;		/* OOM kill score adjustment (bit shift) */
- 	long oom_score_adj;	/* OOM kill score adjustment */
-+
-+	struct mutex cred_guard_mutex;	/* guard against foreign influences on
-+					 * credential calculations
-+					 * (notably. ptrace) */
- };
- 
- /* Context switch must be unlocked if interrupts are to be enabled */
-@@ -1293,9 +1297,6 @@ struct task_struct {
- 					 * credentials (COW) */
- 	const struct cred *cred;	/* effective (overridable) subjective task
- 					 * credentials (COW) */
--	struct mutex cred_guard_mutex;	/* guard against foreign influences on
--					 * credential calculations
--					 * (notably. ptrace) */
- 	struct cred *replacement_session_keyring; /* for KEYCTL_SESSION_TO_PARENT */
- 
- 	char comm[TASK_COMM_LEN]; /* executable name excluding path
-diff --git a/kernel/cred.c b/kernel/cred.c
-index 9a3e226..a81833d 100644
---- a/kernel/cred.c
-+++ b/kernel/cred.c
-@@ -384,8 +384,6 @@ int copy_creds(struct task_struct *p, unsigned long clone_flags)
- 	struct cred *new;
- 	int ret;
- 
--	mutex_init(&p->cred_guard_mutex);
--
- 	if (
- #ifdef CONFIG_KEYS
- 		!p->cred->thread_keyring &&
-diff --git a/kernel/fork.c b/kernel/fork.c
-index b7e9d60..4c0d3ea 100644
---- a/kernel/fork.c
-+++ b/kernel/fork.c
-@@ -904,6 +904,8 @@ static int copy_signal(unsigned long clone_flags, struct task_struct *tsk)
- 	sig->oom_adj = current->signal->oom_adj;
- 	sig->oom_score_adj = current->signal->oom_score_adj;
- 
-+	mutex_init(&sig->cred_guard_mutex);
-+
- 	return 0;
- }
- 
-diff --git a/kernel/ptrace.c b/kernel/ptrace.c
-index f34d798..ac5013a 100644
---- a/kernel/ptrace.c
-+++ b/kernel/ptrace.c
-@@ -181,7 +181,7 @@ int ptrace_attach(struct task_struct *task)
- 	 * under ptrace.
- 	 */
- 	retval = -ERESTARTNOINTR;
--	if (mutex_lock_interruptible(&task->cred_guard_mutex))
-+	if (mutex_lock_interruptible(&task->signal->cred_guard_mutex))
- 		goto out;
- 
- 	task_lock(task);
-@@ -208,7 +208,7 @@ int ptrace_attach(struct task_struct *task)
- unlock_tasklist:
- 	write_unlock_irq(&tasklist_lock);
- unlock_creds:
--	mutex_unlock(&task->cred_guard_mutex);
-+	mutex_unlock(&task->signal->cred_guard_mutex);
- out:
- 	return retval;
- }
--- 
-1.6.5.2
-
-
-
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Resposne Team
