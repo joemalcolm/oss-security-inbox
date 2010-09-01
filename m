@@ -1,28 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/30/10
-Message-ID: <Pine.GSO.4.64.1003301632120.4709@faron.mitre.org>
-Date: Tue, 30 Mar 2010 16:34:35 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/01/3
+Message-ID: <1586659856.1104131283370417096.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 1 Sep 2010 15:46:57 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-cc: libesmtp@...fford.uklinux.net, security@...ntu.com
-Subject: Re: CVE Request: libesmtp does not check NULL bytes in commonName
+Cc: Marc Delisle <Marc.Delisle@...epsherbrooke.qc.ca>, Michal Cihar <michal@...ar.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- phpMyAdmin - v3.6.6 -- XSS attack using debugging messages (CVE-2010-3056 discussion)
 Content-Type: text/plain; charset=utf-8
 
+Please use CVE-2010-2958
 
-On Wed, 3 Mar 2010, Kees Cook wrote:
+Thanks.
 
-> I just noticed that libesmtp does not appear to handle NULL-byte CNs, as
-> seen with the original browser-based issue:
-> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2408
+-- 
+    JB
 
-Use CVE-2010-1192
 
-> Related to this are failures in wildcard handling:
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=311191
+----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
 
-Use CVE-2010-1194
-
-I'm guessing that upstream 1.0.4 and earlier are affected by both 
-problems.
-
-- Steve
+> Hi Steve, vendors,
+> 
+>    on 2010-08-30 phpMyAdmin published PMASA-2010-6 addressing one
+> XSS:
+>    [1] http://www.phpmyadmin.net/home_page/security/PMASA-2010-6.php
+> 
+>    Summary (from [1]):
+>      XSS attack using debugging messages.
+>    Description (from [1]):
+>      It was possible to conduct a XSS attack using error messages in
+> PHP backtrace.
+> 
+>    Affected versions (from [1]):
+>    For 3.x: versions before 3.3.6 are affected.
+>    Branch 2.11.x is not affected by this
+> 
+>    Upstream commit:
+>   
+> http://phpmyadmin.git.sourceforge.net/git/gitweb.cgi?p=phpmyadmin/phpmyadmin;a=commitdiff;h=133a77fac7d31a38703db2099a90c1b49de62e37
+> 
+> phpMyAdmin upstream seems to reference CVE-2010-3056 as CVE id to this
+> flaw.
+> 
+> But CVE-2010-3056 was previously assigned to:
+> [2] http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-3056
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=625877
+> [4] http://www.phpmyadmin.net/home_page/security/PMASA-2010-5.php
+> 
+> which affected both (from [4]):
+> For 2.11.x: versions before 2.11.10.1 are affected.
+> For 3.x: versions before 3.3.5.1 are affected.
+> 
+> so this is different issue and new CVE id should be allocated (due
+> different
+> affected versions).
+> 
+> Could you please allocate one?
+> 
+> Thanks && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Resposne Team
