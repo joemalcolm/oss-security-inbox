@@ -1,51 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/10/4
-Message-Id: <201011101525.01464.thomas@suse.de>
-Date: Wed, 10 Nov 2010 15:25:01 +0100
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/02/4
+Message-ID: <20100902191759.5daa4517@redhat.com>
+Date: Thu, 2 Sep 2010 19:17:59 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: mono loading shared libs from cwd
+Cc: dan.j.rosenberg@...il.com, coley@...us.mitre.org
+Subject: Re: CVE id request: libc fortify source information disclosure
 Content-Type: text/plain; charset=utf-8
 
+On Thu, 2 Sep 2010 12:23:23 -0400 Dan Rosenberg wrote:
 
-missed to add:
-http://lists.ximian.com/pipermail/mono-patches/2010-October/177900.html
+> > It seems the fix would need to remove all possibly-useful info from
+> > the error message.
+> 
+> The backtrace or memory map don't really contain any potentially
+> sensitive information that couldn't be obtained otherwise.  It's just
+> the reference to argv[0] (in glibc/debug/fortify_fail.c) that worries
+> me, because this can be directly influenced to cause a printout of
+> process memory.
 
-Am Mittwoch 10 November 2010 15:18:26 schrieb Thomas Biege:
-> Hello folks,
-> 
-> from our bugzilla.
-> 
-> "
-> http://www.mono-project.com/DllNotFoundException explains that the mono
-> runtime
-> searches the current working directory for DLLs.  This opens a serious
-> security
-> hole.  Malicious code can be given the same name as a DLL and left in a
-> directory the user might visit.  Also, it means that no mono application
->  can safely set the current working directory.
-> 
-> Microsoft themselves addressed this issue in Windows
-> http://msdn.microsoft.com/en-us/library/ms682586(v=VS.85).aspx
-> 
-> It's a well known "dummies" question for Unix why you must not have "." on
-> your
-> path
-> http://www.unix.com/unix-dummies-questions-answers/22806-why-bad-idea-inser
-> t- dot-path.html
-> 
-> Mono is exposing users to these same old hat problems.
-> 
-> (As a related problem, many mono programs seem to *assume* that they will
->  be run with the CWD set to their installed directory, and break if it
->  isn't.) "
-> 
-> Filed by Richard Brooksby.
-> 
+In case of stack protector failed check, it's still an attempt to
+print-out info based on what's known to be (partially) corrupted.
 
 -- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
---
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
+Tomas Hoger / Red Hat Security Response Team
