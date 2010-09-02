@@ -1,31 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/23/3
-Message-ID: <4C2182F7.5040700@kernel.sg>
-Date: Wed, 23 Jun 2010 11:43:51 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/02/1
+Message-ID: <4C7F3B8F.4090800@redhat.com>
+Date: Thu, 02 Sep 2010 13:52:15 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: kernel: l2tp: Fix oops in pppol2tp_xmit
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE-2010-2960 kernel: keyctl_session_to_parent null ptr deref
 Content-Type: text/plain; charset=utf-8
 
-"When transmitting L2TP frames, we derive the outgoing interface's UDP 
-checksum hardware assist capabilities from the tunnel dst dev. This can 
-sometimes be NULL, especially when routing protocols are used and 
-routing changes occur. This patch just checks for NULL dst or dev 
-pointers when checking for netdev hardware assist features.
+Reported by Tavis Ormandy.
 
-     BUG: unable to handle kernel NULL pointer dereference at 0000000c
-     IP: [<f89d074c>] pppol2tp_xmit+0x341/0x4da [pppol2tp]
-     *pde = 00000000
-     Oops: 0000 [#1] SMP
-     last sysfs file: /sys/class/net/lo/operstate
-[...]"
+Patches (not in upstream yet):
+https://bugzilla.redhat.com/show_bug.cgi?id=627440#c4
+https://bugzilla.redhat.com/show_bug.cgi?id=627440#c5
 
-Introduced in ffcebb16 (v2.6.29-rc1~581), fixed in 3feec909 (fixed in 
-v2.6.34-rc2). (It was later split into different files in commit 
-fd558d18 v2.6.35-rc1).
+You might need to comment out all the pam_keyinit calls in /etc/pam.d/ 
+to reproduce the problem if the version of the kernel you are using is 
+affected.
 
-I'm not requesting a CVE name for this because it did not affect any of 
-our supported kernels. FYI.
+Introduced via upstream commit ee18d64c (v2.6.32-rc1).
+
+References:
+https://bugzilla.redhat.com/CVE-2010-2960
+https://bugzilla.redhat.com/show_bug.cgi?id=627440#c3
 
 Thanks, Eugene
 -- 
