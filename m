@@ -1,26 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/16/4
-Message-ID: <Pine.GSO.4.64.1008161312520.1035@faron.mitre.org>
-Date: Mon, 16 Aug 2010 13:19:06 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Minor security flaw with pam_xauth
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/02/5
+Message-ID: <AANLkTim88gVkcHjKC++Bd3U=N0jxR=5QcfgpLQxr8A5X@mail.gmail.com>
+Date: Thu, 2 Sep 2010 13:43:57 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: Tomas Hoger <thoger@...hat.com>
+Cc: oss-security@...ts.openwall.com, coley@...us.mitre.org
+Subject: Re: CVE id request: libc fortify source information disclosure
 Content-Type: text/plain; charset=utf-8
 
+I retract my previous statement - you're correct that the backtrace
+also can reveal this same information.  Perhaps this is an acceptable
+risk, since I can't think of a single real-life case where this would
+have actually been useful to an attacker (although it's not too hard
+to imagine such a situation).  Or perhaps printing out any of this
+information to unprivileged users running suid applications should be
+reconsidered.
 
-On Mon, 16 Aug 2010, Tim Brown wrote:
+-Dan
 
-> I don't think this needs a CVE as I haven't found a useful way to exploit it
-> but maybe someone on here will spot something I've missed.  Either way, I
-> would have thought it should be fixed.
-
-If the attacker can execute an 'extra' process in violation of 
-RLIMIT_NPROC, then that would be technically a violation of the *intended* 
-security policy, so it would count for CVE inclusion by itself - even if 
-you can't manipulate the issue for code execution.  (Though somehow 
-manipulating the xauth authority file may be fruitful to mess around with 
-the display as root.)
-
-Thoughts?
-
-- Steve
+On Thu, Sep 2, 2010 at 1:17 PM, Tomas Hoger <thoger@...hat.com> wrote:
+> On Thu, 2 Sep 2010 12:23:23 -0400 Dan Rosenberg wrote:
+>
+>> > It seems the fix would need to remove all possibly-useful info from
+>> > the error message.
+>>
+>> The backtrace or memory map don't really contain any potentially
+>> sensitive information that couldn't be obtained otherwise.  It's just
+>> the reference to argv[0] (in glibc/debug/fortify_fail.c) that worries
+>> me, because this can be directly influenced to cause a printout of
+>> process memory.
+>
+> In case of stack protector failed check, it's still an attempt to
+> print-out info based on what's known to be (partially) corrupted.
+>
+> --
+> Tomas Hoger / Red Hat Security Response Team
+>
