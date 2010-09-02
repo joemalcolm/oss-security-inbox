@@ -1,33 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/14/2
-Message-ID: <20100314163541.GA19323@openwall.com>
-Date: Sun, 14 Mar 2010 19:35:41 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/02/2
+Message-ID: <20100902175639.07169083@redhat.com>
+Date: Thu, 2 Sep 2010 17:56:39 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CFPs and con invitations on the list
+Cc: coley@...us.mitre.org
+Subject: Re: CVE id request: libc fortify source information disclosure
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Mar 12, 2010 at 06:48:05PM -0500, Jon Oberheide wrote:
-> Guofei at Georgia Tech maintains a list of the top few tiers of academic
-> security conferences:
-> 
-> http://faculty.cs.tamu.edu/guofei/sec_conf_stat.htm
-> 
-> While I'm not implying that this should be used as a strict whitelist
-> for academic CFP announcements, it's something to keep in mind when
-> maintaining a high SNR.
+On Tue, 31 Aug 2010 16:02:14 -0400 (EDT) Steven M. Christey wrote:
 
-Thanks.  Unfortunately, this is not usable to screen announcements of
-those non-academic cons like CanSecWest or HITB.  Also, I would like
-moderation decisions to be simpler.  Unfortunately, the only way to make
-them simpler appears to be to get back to rejecting any and all
-"conference stuff".  Maybe this is the right thing to do, maybe not.
+> The risk may be very minimal, but the FORTIFY_SOURCE protection
+> mechanism is not working "as advertised" - it can be manipulated for
+> an admittedly-small information leak.
 
-That said, I won't be approving any further "multi-conference" stuff,
-but I've just approved a HITB announcement...  BTW, Hafez Kamal has been
-a subscriber to oss-security for a while.
+For the sake of correctness, protective technology that kicks in in the
+Dan's example is stack protector, not FORTIFY_SOURCE.  Though it's
+probably still glibc to blame for using the same error-reporting
+function in both cases.
 
-We currently have 473 e-mail addresses subscribed to oss-security
-(including a few feeds for web-based archives).
 
-Alexander
+On Wed, 25 Aug 2010 21:49:20 +0200 Nico Golde wrote:
+
+> As this also works for setuid programs it would be nice to get one
+> assigned and have this patched.
+
+It seems the fix would need to remove all possibly-useful info from the
+error message.
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
