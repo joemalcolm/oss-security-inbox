@@ -1,25 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/17/9
-Message-ID: <20101117200644.GA20394@inutil.org>
-Date: Wed, 17 Nov 2010 21:06:44 +0100
-From: Moritz Muehlenhoff <jmm@...til.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/02/3
+Message-ID: <AANLkTimpyhKJ7hpj7RY5Xsv9Zmbnzac08vp_wD+QTDC8@mail.gmail.com>
+Date: Thu, 2 Sep 2010 12:23:23 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: Clear text password in process list when using MySQL GUI tools
+Cc: coley@...us.mitre.org
+Subject: Re: CVE id request: libc fortify source information disclosure
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Nov 17, 2010 at 08:38:06AM -0500, Josh Bressers wrote:
-> Steve,
-> 
-> What are the thoughts of MITRE on this one? This affects all sorts of stuff,
-> and I don't upstream removing the command line option (which is probably the
-> only fix).
+Tomas,
 
-I didn't look into this specific issue since both mysql-query-browser
-and mysql-admin have been removed and are no longer supported in Debian,
-but there have been cases in the past, where leaking sensitive information
-in the process list was assigned a CVE ID, e.g. CVE-2004-1948 for
-ncftp.
+> For the sake of correctness, protective technology that kicks in in the
+> Dan's example is stack protector, not FORTIFY_SOURCE.  Though it's
+> probably still glibc to blame for using the same error-reporting
+> function in both cases.
 
-Cheers,
-        Moritz
+You are correct.  Both the __stack_chk_fail(), which is inserted due
+to stack protection, and the more general __chk_fail(), which is
+inserted due to FORTIFY_SOURCE and may trigger for static buffer
+overflows in other segments, call out to the same __fortify_fail()
+function to print out the stack trace.
+
+>
+> It seems the fix would need to remove all possibly-useful info from the
+> error message.
+>
+
+The backtrace or memory map don't really contain any potentially
+sensitive information that couldn't be obtained otherwise.  It's just
+the reference to argv[0] (in glibc/debug/fortify_fail.c) that worries
+me, because this can be directly influenced to cause a printout of
+process memory.
+
+> --
+> Tomas Hoger / Red Hat Security Response Team
+>
