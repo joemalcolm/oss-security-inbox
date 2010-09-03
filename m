@@ -1,17 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/22/3
-Message-ID: <8739ryid1j.fsf@mid.deneb.enyo.de>
-Date: Fri, 22 Oct 2010 15:15:36 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/03/2
+Message-ID: <i5rktq$kci$1@dough.gmane.org>
+Date: Fri, 03 Sep 2010 15:13:50 -0500
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: glibc $ORIGIN problem - CVE-2010-3847
+Subject: CVE request: XSS in nusoap
 Content-Type: text/plain; charset=utf-8
 
-* Marcus Meissner:
+Hi,
 
-> Andreas Schwab of Redhat has posted candidate patches to fix the problems:
-> 	http://sourceware.org/ml/libc-hacker/2010-10/msg00007.html
-> 	http://sourceware.org/ml/libc-hacker/2010-10/msg00008.html
+A XSS vulnerability has been reported against the nusoap PHP library caused 
+by insufficient sanitation of untrusted data ($_SERVER['PHP_SELF']) -- 
+CWE-79.
 
-Is the second patch really required?  I'm building our updates without
-that. 8-/
+Original report against mantisbt:
+http://www.mantisbt.org/bugs/view.php?id=12312
+
+Report against nusoap (and further references):
+http://sourceforge.net/projects/nusoap/forums/forum/193579/topic/3834005
+
+The fixes proposed by David Hicks[1] (from mantisbt) add escaping to some 
+other variables, but I haven't verified if they are actually exploitable (if 
+that's so, the patch might need to pass the charset to htmlentities too.)
+
+[1]http://git.mantisbt.org/?p=mantisbt.git;a=commit;h=edb817991b99cd5538f102be26865fde7c6b7212
+
+Could a CVE id be assigned?
+
+Thanks,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
+
+
