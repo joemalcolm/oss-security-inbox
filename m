@@ -1,22 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/09/6
-Message-ID: <20100209155622.GA10153@kroah.com>
-Date: Tue, 9 Feb 2010 07:56:22 -0800
-From: Greg KH <greg@...ah.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - kernel: ima: fix null pointer dereference
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/03/1
+Message-ID: <4C812061.4070704@redhat.com>
+Date: Fri, 03 Sep 2010 18:20:49 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, Richard Moore <rich@...tpoint.ltd.uk>, Simon Ward <simon@...tpoint.ltd.uk>
+Subject: CVE Request 1, NSS 2, Qt: Doesn't handle wildcards in Common Name properly
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Feb 08, 2010 at 09:30:48AM +0800, Eugene Teo wrote:
-> Was cc'ed this in a couple of kernel mailing lists.
-> 
-> This was introduced in 6c21a7fb4 (v2.6.33-rc1).
+Hi Steve, vendors,
 
-Do we need CVE numbers for issues that never showed up in a released
-kernel version?  I don't see how this could affect anyone, unless they
-were foolish enough to ship a product on a non-released kernel :)
+   Richard Moore and Simon Ward reported flaws in the way:
 
-thanks,
+   1, Network Security Services (NSS) handled wildcard (*) character
+      in the Common Name field of a x509v3 digital certificate.
+      If an attacker is able to get a carefully-crafted certificate,
+      signed by a Certificate Authority trusted by Firefox, the attacker
+      could use the certificate during the man-in-the-middle attack and
+      potentially confuse Firefox into accepting it by mistake. Different
+      vulnerability than CVE-2009-2408.
 
-greg k-h
+      References:
+      [1] http://www.westpoint.ltd.uk/advisories/wp-10-0001.txt
+      [2] http://bugs.gentoo.org/show_bug.cgi?id=335731
+
+
+   2, Qt software toolkit (QSslSocket) handled wildcard (*) character
+      in the Common Name field of a x509v3 digital certificate.
+      If an attacker is able to get a carefully-crafted certificate,
+      signed by a Certificate Authority trusted by Konqueror / Arora web browsers,
+      the attacker could use the certificate during the man-in-the-middle attack
+      and potentially confuse Konqueror / Arora into accepting it by mistake.
+      Different vulnerability than CVE-2009-2408.
+
+      References:
+     [3] http://www.westpoint.ltd.uk/advisories/wp-10-0001.txt
+     [4] http://bugs.gentoo.org/show_bug.cgi?id=335730
+
+Yet, in [1] Richard and Simon mention:
+"27 August 2010  At the time of writing the NSS (Firefox) and Qt repositories
+                  both contain fixes for this issue that will be included in
+                  their releases."
+
+so it is possible these two flaws already got their CVE identifiers. But if not,
+could you please allocate them?
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
