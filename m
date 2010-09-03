@@ -1,50 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/02/8
-Message-ID: <1719938780.88521291323309685.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 2 Dec 2010 15:55:09 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/03/3
+Message-Id: <20100903141513.cb00e05a.reed@reedloden.com>
+Date: Fri, 3 Sep 2010 14:15:13 -0700
+From: Reed Loden <reed@...dloden.com>
 To: oss-security@...ts.openwall.com
-Cc: Ulrik Persson <ddefrostt@...il.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- FontForge: Stack-based buffer overflow by processing specially-crafted CHARSET_REGISTRY font file header
+Cc: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Richard Moore <rich@...tpoint.ltd.uk>, Simon Ward <simon@...tpoint.ltd.uk>
+Subject: Re: CVE Request 1, NSS 2, Qt: Doesn't handle wildcards in Common Name properly
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-4259 for this.
+On Fri, 03 Sep 2010 18:20:49 +0200
+Jan Lieskovsky <jlieskov@...hat.com> wrote:
 
-Thanks.
+>    Richard Moore and Simon Ward reported flaws in the way:
+> 
+>    1, Network Security Services (NSS) handled wildcard (*) character
+>       in the Common Name field of a x509v3 digital certificate.
+>       If an attacker is able to get a carefully-crafted certificate,
+>       signed by a Certificate Authority trusted by Firefox, the attacker
+>       could use the certificate during the man-in-the-middle attack and
+>       potentially confuse Firefox into accepting it by mistake. Different
+>       vulnerability than CVE-2009-2408.
+> 
+>       References:
+>       [1] http://www.westpoint.ltd.uk/advisories/wp-10-0001.txt
+>       [2] http://bugs.gentoo.org/show_bug.cgi?id=335731
+
+Mozilla has assigned this CVE-2010-3170. We're tracking this as
+https://bugzilla.mozilla.org/show_bug.cgi?id=578697.
+
+~reed
+Mozilla Security Group
 
 -- 
-    JB
+Reed Loden - <reed@...dloden.com>
 
-
------ "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
-
-> Hello Steve, vendors,
-> 
->    Ulrik Persson reported a stack-based buffer overflow
-> flaw in the way FontForge font editor processed certain
-> Bitmap Distribution Format (BDF) font files, with
-> specially-crafted value of the CHARSET_REGISTRY header.
-> A remote attacker could create a specially-crafted BDF
-> font file and trick a local, unsuspecting user into
-> opening it in FontForge, which could lead to fontforge
-> executable crash or, potentially, arbitrary code execution
-> with the privileges of the user running the executable.
-> 
-> References:
-> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=605537
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=659359
-> 
-> Public PoC:
-> [3]
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=5;filename=fontforge-overflow.txt;att=1;bug=605537
-> 
-> Flaw severity note:
-> On systems with compile time buffer checks (FORTIFY_SOURCE)
-> feature enabled, the impact of this flaw is mitigated to
-> be only crash.
-> 
-> Could you allocate a CVE id for this issue?
-> 
-> Thanks && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
