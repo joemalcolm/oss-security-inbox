@@ -1,48 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/16/3
-Message-ID: <4B9F6F83.7090008@stafford.uklinux.net>
-Date: Tue, 16 Mar 2010 11:46:11 +0000
-From: Brian Stafford <brian@...fford.uklinux.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/03/5
+Message-Id: <20100903150810.3470a783.reed@reedloden.com>
+Date: Fri, 3 Sep 2010 15:08:10 -0700
+From: Reed Loden <reed@...dloden.com>
 To: oss-security@...ts.openwall.com
-Cc: libesmtp@...fford.uklinux.net, security@...ntu.com, Pawel Salek <pawsa@...ochem.kth.se>, jskarvad@...hat.com
-Subject: Re: CVE Request: libesmtp does not check NULL bytes in commonName
+Cc: Julien Cristau <jcristau@...ian.org>, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Richard Moore <rich@...tpoint.ltd.uk>, Simon Ward <simon@...tpoint.ltd.uk>
+Subject: Re: CVE Request 1, NSS 2, Qt: Doesn't handle wildcards in Common Name properly
 Content-Type: text/plain; charset=utf-8
 
-Ludwig Nussel wrote:
-> Brian Stafford wrote:
->   
->> I think the best approach is to apply Pawel's patch as this is the 
->>     
->
-> I must have missed that patch. Could you re-post it?
->   
-It's available at https://bugzilla.redhat.com/attachment.cgi?id=399131
->   
->> simplest in terms of changes to the existing code base, and perhaps move 
->> to Ludwig's for a later release of libESMTP.  In the slightly longer 
->> term, I think the internet draft at
->> http://tools.ietf.org/html/draft-saintandre-tls-server-id-check is the 
->> one to follow but this might change substantially or even fall of the 
->> rails entirely.
->>
->> [...] The I-D says only the leftmost 
->> component may contain a wildcard but this would rule out *.*.google.com 
->> The algorithm I've outlined is really a halfway house between RFC2818, 
->> which I think is too flexible, and the I-D; limit the positions of 
->> wildcards in the hostname and dont allow elaborate matches within a 
->> hostname component.  Any ideas or opinions on this would be useful.
->>     
->
-> Is there a way to comment on the draft? Maybe the author of the
-> draft didn't think about the cases you'd like to handle.
->   
-Normally IETF working groups create a mailing list for discussion of 
-drafts when chartered and any interested party may subscribe.  However, 
-as far as I can tell, this I-D is an individual submission;  I can't 
-find a mailing list address so probably best to mail the authors directly.
-> cu
-> Ludwig
->
->   
-Regards
-Brian
+On Fri, 3 Sep 2010 23:46:16 +0200
+Julien Cristau <jcristau@...ian.org> wrote:
+
+> On Fri, Sep  3, 2010 at 14:15:13 -0700, Reed Loden wrote:
+> 
+> > Mozilla has assigned this CVE-2010-3170. We're tracking this as
+> > https://bugzilla.mozilla.org/show_bug.cgi?id=578697.
+> > 
+> That bug is helpfully (or not) closed down.
+
+Yes, it's a security bug that isn't yet fixed in a released version of
+Firefox. As such, it is restricted until at some point after the
+release has been made and most users have upgraded.
+
+If you (as a @debian.org person) require access to the bug for the
+purpose of coordinating security releases, please contact Moritz
+Muehlenhoff, as he represents Debian on the Mozilla Security Group.
+
+Regards,
+~reed
+Mozilla Security Group
+
+-- 
+Reed Loden - <reed@...dloden.com>
+
