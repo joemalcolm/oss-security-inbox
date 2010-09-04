@@ -1,40 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/14/8
-Message-ID: <1243000043.142171276544097414.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 14 Jun 2010 15:34:57 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - pyftpd insecure usage of temporary directory
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/04/1
+Message-ID: <20100904133725.GA5342@redhat.com>
+Date: Sat, 4 Sep 2010 14:37:25 +0100
+From: Joe Orton <jorton@...hat.com>
+To: Jan Lieskovsky <jlieskov@...hat.com>
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security <oss-security@...ts.openwall.com>, Richard Moore <rich@...tpoint.ltd.uk>, Simon Ward <simon@...tpoint.ltd.uk>
+Subject: Re: CVE Request 1, NSS 2, Qt: Doesn't handle wildcards in Common Name properly
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-2072 for this.
+On Fri, Sep 03, 2010 at 06:20:49PM +0200, Jan Lieskovsky wrote:
+>   1, Network Security Services (NSS) handled wildcard (*) character
+>      in the Common Name field of a x509v3 digital certificate.
+>      If an attacker is able to get a carefully-crafted certificate,
+>      signed by a Certificate Authority trusted by Firefox, the attacker
+>      could use the certificate during the man-in-the-middle attack and
+>      potentially confuse Firefox into accepting it by mistake. Different
+>      vulnerability than CVE-2009-2408.
 
-Thanks.
+I would suspect that many of the usual raft of OpenSSL-based apps with 
+hand-crafted cert identity checks will be vulnerable to this too, where 
+wildcard certs are supported.
 
--- 
-    JB
-
-
------ "Henri Salo" <henri@...v.fi> wrote:
-
-> Pyftpd creates log-file to a temporary directory using predictable
-> name. This allows a local attacker to create a denial of service
-> condition and discloses sensitive information to unprivileged users.
-> For example accounts of other users connecting to server and paths
-> they
-> visit.
-> 
-> One should use tempfile.mkstemp
-> <http://docs.python.org/library/tempfile.html#tempfile.mkstemp> or
-> use /var/log/ -directory instead of /tmp/ and use proper file system
-> modes for the log-file.
-> 
-> This affects version: 0.8.4
-> 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=585773
-> 
-> Can I have CVE-identifier for this issue?
-> 
-> ---
-> Henri Salo
+Regards, Joe
