@@ -1,36 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/14/10
-Message-ID: <1208588851.142891276544463083.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 14 Jun 2010 15:41:03 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/05/5
+Message-ID: <4C83BF66.7030101@debian.org>
+Date: Sun, 05 Sep 2010 18:03:50 +0200
+From: Giuseppe Iuculano <iuculano@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: w3m does not check null bytes CN/subjAltName
+Subject: CVE request: smbind Sql Injection
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-2074 for this.
+Could you allocate CVE id for this please?
 
-Thanks.
-
--- 
-    JB
+http://packetstormsecurity.org/1009-exploits/smbind-sql.txt
 
 
------ "Ludwig Nussel" <ludwig.nussel@...e.de> wrote:
+Cheers,
+Giuseppe.
 
-> Hi,
-> 
-> Yet another occurrence of CVE-2009-2408, this time in w3m. I tried
-> contacting the w3m developers listed on sourceforge but got no
-> response. In the default configuration the missing null checks don't
-> make the situation worse though as w3m doesn't verify certificates
-> by default ('ssl_verify_server' is off by default). Attached two
-> patches turn on 'ssl_verify_server' and fix the null handling.
-> 
-> cu
-> Ludwig
-> 
-> -- 
->  (o_   Ludwig Nussel
->  //\   
->  V_/_  http://www.suse.de/
-> SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
