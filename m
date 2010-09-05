@@ -1,79 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/11/3
-Message-Id: <201008112254.04993.rem@videolan.org>
-Date: Wed, 11 Aug 2010 22:54:04 +0300
-From: "Rémi Denis-Courmont" <rem@...eolan.org>
-To: oss-security@...ts.openwall.com, remi@...lab.net
-Subject: CVE request: VideoLAN advisory 1004
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/05/4
+Message-ID: <4C83A854.7020901@westpoint.ltd.uk>
+Date: Sun, 05 Sep 2010 15:25:24 +0100
+From: Richard Moore <rich@...tpoint.ltd.uk>
+To: Jan Lieskovsky <jlieskov@...hat.com>,  "Steven M. Christey" <coley@...us.mitre.org>, oss-security <oss-security@...ts.openwall.com>,  Simon Ward <simon@...tpoint.ltd.uk>
+Subject: Re: CVE Request 1, NSS 2, Qt: Doesn't handle wildcards in Common Name properly
 Content-Type: text/plain; charset=utf-8
 
-	Hello,
+On 04/09/2010 14:37, Joe Orton wrote:
+> On Fri, Sep 03, 2010 at 06:20:49PM +0200, Jan Lieskovsky wrote:
+>>    1, Network Security Services (NSS) handled wildcard (*) character
+>>       in the Common Name field of a x509v3 digital certificate.
+>>       If an attacker is able to get a carefully-crafted certificate,
+>>       signed by a Certificate Authority trusted by Firefox, the attacker
+>>       could use the certificate during the man-in-the-middle attack and
+>>       potentially confuse Firefox into accepting it by mistake. Different
+>>       vulnerability than CVE-2009-2408.
+>
+> I would suspect that many of the usual raft of OpenSSL-based apps with
+> hand-crafted cert identity checks will be vulnerable to this too, where
+> wildcard certs are supported.
 
-Can I get a CVE number for this? Please CC me on replies.
+We did try some other openssl based apps but most had either no
+wildcard support, no real CN validation, or wildcard support that
+use the old-style shell-globs which is much worse anyway. Unlike NSS
+openssl doesn't provide a function for performing CN validation
+which means that apps have generally rolled their own (poor)
+implementations.
 
-http://www.videolan.org/security/sa1004.html
+Cheers
 
-----8<--------8<--------8<--------8<--------8<--------8<--------8<----
+Rich.
 
-VideoLAN Security Advisory 1004
+>
+> Regards, Joe
+>
+>
 
-Summary           : Insufficient input validation in VLC TagLib plugin
-Date              : August 2011
-Affected versions : VLC media player versions 1.1.2 down to 0.9.0
-ID                : VideoLAN-SA-1004
-CVE reference     : N/A
-
-Details
-
-VLC fails to perform sufficient input validation when trying to extract some 
-meta-informations about input media through ID3v2 tags. In the failure case, 
-VLC attempt dereference an invalid memory address, and a crash will ensure.
-
-Impact
-
-In the failure case, VLC will dereference a memory address within the first 
-page of its process virtual memory. In normal conditions, and on most 
-operating systems, this will result in a segmentation fault (a general 
-protection fault on Windows), and the process will terminate abruptly.
-
-In most usage scenarii, this will only cause user annoyance.
-
-Threat mitigation
-
-Exploitation of this issue requires the user to include a file in its playlist 
-or to attempt to open it.
-
-Workarounds
-
-The user should refrain from opening files from untrusted third parties or 
-accessing untrusted remote sites (or disable the VLC browser plugins), until 
-the patch is applied.
-
-Solution
-
-VLC media player 1.1.3 [will address] this issue. Patches for VLC media player 
-1.1.x and 1.0.x are available from the corresponding official VLC source code 
-repositories.
-
-Credits
-
-This vulnerability was reported by FortiGuard Labs.
-
-References
-
-The VideoLAN project
-    http://www.videolan.org/ 
-FortiGuard Labs
-    http://www.fortinet.com/ 
-Patch for VLC 1.1.2, 1.1.1, 1.1.0
-    commit 24918843e57c7962e28fcb01845adce82bed6516 
-Patch for VLC 1.0.6
-    commit 22a22e356c9d93993086810b2e25b59b55925b3a 
-
-----8<--------8<--------8<--------8<--------8<--------8<--------8<----
-
-Thanks in advance, best regards,
 
 -- 
-Rémi Denis-Courmont
-http://git.remlab.net/cgi-bin/gitweb.cgi?p=vlc-courmisch.git;a=summary
+Richard Moore, Principal Software Engineer,
+Westpoint Ltd,
+Albion Wharf, 19 Albion Street, Manchester, M1 5LN, England
+Tel: +44 161 237 1028
+Fax: +44 161 237 1031
