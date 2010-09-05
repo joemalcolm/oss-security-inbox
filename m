@@ -1,42 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/29/4
-Message-ID: <alpine.LFD.2.01.1003291431210.2892@localhost>
-Date: Mon, 29 Mar 2010 14:36:42 +0200 (CEST)
-From: Petr Matousek <pmatouse@...hat.com>
-To: oss-security@...ts.openwall.com
-cc: coley@...us.mitre.org
-Subject: CVE-2010-0741 qemu: Improper handling of erroneous data provided by Linux virtio-net driver
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/05/1
+Message-ID: <4C83B289.7080904@redhat.com>
+Date: Sun, 05 Sep 2010 17:08:57 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request -- Bip -- Remote Dos (crash) by exchanging user credentials
 Content-Type: text/plain; charset=utf-8
 
-Hello vendors,
+Hello Steve, vendors,
 
-    Josh Bressers has assigned a CVE id CVE-2010-0741 to the following bug:
-
-A flaw was found in the way the QEMU-KVM handled erroneous data provided 
-by the guest Linux virtio-net driver. Due deficiency in the implementation 
-of the TSO (TCP segment offloading), the guest's virtio-net driver 
-transmitted improper data to the particular QEMU-KVM process on the host, 
-resulting in its termination. A remote attacker could use this flaw to 
-cause denial of service (guest crash) by sending certain, 
-specially-crafted data to arbitrary open port on the target guest system.
-
-A remote attacker could exploit this to crash guests which use virtio
-networking on Linux kernels earlier than 2.6.26.
-
-Note that this was previously reported in Canonical's launchpad but no CVE 
-name was ever assigned AFAIK.
+   A denial of service flaw was found in the way Bip IRC Bouncer
+exchanged user credentials by initiating the IRC protocol session.
+A remote, unauthenticated user could send a specially crafted
+connection request, leading to bip daemon crash (NULL pointer dereference)
 
 References:
------------
-https://bugzilla.redhat.com/show_bug.cgi?id=577218
-https://patchwork.kernel.org/patch/56479/
-https://bugs.edge.launchpad.net/ubuntu/+source/qemu-kvm/+bug/458521
-http://lists.gnu.org/archive/html/qemu-devel/2009-10/msg02480.html
+   [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=595409
+   [2] https://bugzilla.redhat.com/show_bug.cgi?id=630437
 
-Upstream patch:
----------------
-http://git.kernel.org/?p=virt/kvm/qemu-kvm.git;a=commit;h=184bd0484533b725194fa517ddc271ffd74da7c9
+Could you allocate CVE id for this one?
 
-Thanks && Regards, Petr.
+Thanks && Regards, Jan.
 --
-Petr Matousek / Red Hat Security Response Team
+Jan iankko Lieskovsky / Red Hat Security Response Team
