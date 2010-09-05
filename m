@@ -1,34 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/05/3
-Message-ID: <806642806.70691288986618217.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 5 Nov 2010 15:50:18 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: kernel: logic error in INET_DIAG bytecode auditing
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/05/3
+Message-ID: <4C83E266.3050803@redhat.com>
+Date: Sun, 05 Sep 2010 20:33:10 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, Valient Gough <vgough@...ox.com>, Micha Riser <micha@...world.org>
+Subject: CVE Request -- EncFS / fuse-encfs [three ids] -- Multiple Vulnerabilities in EncFS
 Content-Type: text/plain; charset=utf-8
 
+Hello Steve, vendors,
 
------ "Nelson Elhage" <nelhage@...lice.com> wrote:
+   Micha Riser reported:
+   [A] http://archives.neohapsis.com/archives/fulldisclosure/2010-08/0316.html
 
-> INET_DIAG is inconsistent about how it looks up the bytecode contained
-> in a
-> netlink message, making it possible for a user to cause the kernel to
-> execute
-> unaudited INET_DIAG bytecode.
-> 
-> This can be abused to make the kernel enter an infinite loop, and
-> possibly other
-> consequences, although I haven't thought of anything else
-> interesting.
-> 
-> Reference:
-> http://www.spinics.net/lists/netdev/msg145899.html
-> 
+three security flaws in EncFS encrypted filesystem (more from [A]):
 
-Please use CVE-2010-3880.
+"A security analysis of EncFS has revealed multiple vulnerabilities:
+(1) Only 32 bit of file IV used
+(2) Watermarking attack
+(3) Last block with single byte is insecure"
 
-Thanks.
+References:
+   [B] http://www.arg0.net/encfs
+   [C] http://bugs.gentoo.org/show_bug.cgi?id=335938
+   [D] http://archives.neohapsis.com/archives/fulldisclosure/2010-08/att-0316/watermark-attack-encfs.tar.gz
+   [E] https://bugzilla.redhat.com/show_bug.cgi?id=630460
 
--- 
-    JB
+
+Solutions / patches information:
+================================
+
+* for issue (1) -- seems it wasn't fixed / isn't possible to
+   fix without breaking backward compatibility. More from [B]:
+
+   "The old IV setup is kept for backwards compatibility."
+
+* for issue (2) -- EncFS upstream has released a fix for the issue:
+   [F] http://code.google.com/p/encfs/source/detail?r=59
+
+Valient, could you please confirm, the above referenced [F] patch,
+is the correct one to address the watermarking attack issue?
+
+* for issue (3) -- not sure about patch status (included in [F] too?)
+
+Steve, could you allocate CVE ids for these flaws?
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
