@@ -1,46 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/28/4
-Message-ID: <233913361.2123201272486507567.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 28 Apr 2010 16:28:27 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: VLC <1.0.6 Multiple issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/06/2
+Message-ID: <4C852FC8.50601@redhat.com>
+Date: Mon, 06 Sep 2010 20:15:36 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, Moritz Naumann <security@...itz-naumann.com>
+Subject: CVE Request -- Horde v3.3.8 -- XSS in icon_browser.php due improper sanitization of 'subdir' URL parameter
 Content-Type: text/plain; charset=utf-8
 
------ "Alex Legler" <a3li@...too.org> wrote:
-> 
-> VLC media player suffers from various vulnerabilities when attempting
-> to parse malformatted or overly long byte streams.
-> 
-> * Heap buffer overflow vulnerability in A/52, DTS and MPEG Audio
->   decoders
-> * Invalid memory access in AVI, ASF, Matroska (MKV)
->   demuxers 
-> * Invalid memory access in XSPF playlist parser
-> * Inavlid memory access in ZIP archive decompressor
-> * Heap buffer overflow in RTMP access
-> 
-> http://www.videolan.org/security/sa1003.html
-> 
+Hello Steve, vendors,
 
-I'm going to trust the upstream advisory regarding version information, so
-here goes:
+   Moritz Naumann reported:
+   [1] http://seclists.org/fulldisclosure/2010/Sep/82
 
-The affected versions are VLC media player 1.0.5 down to 0.5.0
-This is fixed in version 1.0.6 and 1.1.0
+a deficiency in the way Horde framework sanitized user-provided
+'subdir' parameter, when composing final path to the image file.
+A remote, unauthenticated user could use this flaw to conduct
+cross-site scripting attacks (execute arbitrary HTML or scripting
+code) by providing a specially-crafted URL to the running
+Horde framework instance.
 
-The flaws appear to be split based on where in the vlc source they occur.
-I'm going to keep the upstream mapping for CVE ids, as it's possible
-certain other project will have cherry picked the source.
+Upstream patch:
+   [2] http://git.horde.org/diff.php/horde/util/icon_browser.php?rt=horde-git&r1=a978a35c3e95e784253508fd4333d2fbb64830b6&r2=9342addbd2b95f184f230773daa4faf5ef6d65e9
 
-CVE-2010-1441 VLC Heap buffer overflow in A/52, DTS and MPEG Audio decoders
-CVE-2010-1442 VLC Invalid memory access in AVI, ASF, Matroska (MKV) demuxers
-CVE-2010-1443 VLC Invalid memory access in XSPF playlist parser
-CVE-2010-1444 VLC Inavlid memory access in ZIP archive decompressor
-CVE-2010-1445 VLC Heap buffer overflow in RTMP access
+Sample public URL by Moritz to demonstrate the issue:
+   [3] [path_to_horde]/util/icon_browser.php?subdir=<body onload="alert('XSS')">&app=horde
 
-Thanks
+Could you allocate CVE id for this issue?
 
--- 
-    JB
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
