@@ -1,65 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/06/4
-Message-ID: <755900676.738661281119527512.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 6 Aug 2010 14:32:07 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/06/3
+Message-ID: <87bp8arayf.fsf@mid.deneb.enyo.de>
+Date: Mon, 06 Sep 2010 20:19:52 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Werner Lemberg <wl@....org>
-Subject: Re: CVE Request -- FreeType -- Memory corruption flaw by processing certain LWFN fonts + three more
+Subject: Re: CVE Request 1, NSS 2, Qt: Doesn't handle wildcards in Common Name properly
 Content-Type: text/plain; charset=utf-8
 
+* Jan Lieskovsky:
 
------ "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+>   1, Network Security Services (NSS) handled wildcard (*) character
+>      in the Common Name field of a x509v3 digital certificate.
+>      If an attacker is able to get a carefully-crafted certificate,
+>      signed by a Certificate Authority trusted by Firefox, the attacker
+>      could use the certificate during the man-in-the-middle attack and
+>      potentially confuse Firefox into accepting it by mistake. Different
+>      vulnerability than CVE-2009-2408.
+>
+>      References:
+>      [1] http://www.westpoint.ltd.uk/advisories/wp-10-0001.txt
+>      [2] http://bugs.gentoo.org/show_bug.cgi?id=335731
 
-> 
->    just for more complete list. There are more of them:
->      [1] https://savannah.nongnu.org/bugs/?30644
->          Patch at: 
-> http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=45a3c76b547511fa9d97aca34b150a0663257375
-
-I'm going to call this improper bounds checking.
-Use CVE-2010-2805
-
-
->      [2] https://savannah.nongnu.org/bugs/?30656
->          Patch at:
-> http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=c06da1ad34663da7b6fc39b030dc3ae185b96557
-
-We'll also call this improper bounds checking. I'm giving it its own ID, as
-the various versions affected will no doubt differ.
-Use CVE-2010-2806
-
->      [3] https://savannah.nongnu.org/bugs/?30657
->          Patch at:
-> http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=346f1867fd32dae8f56e5b482d1af98f626804ac
-
-I'm not exactly sure what to call this one. It seems to involve improper
-type comparisons (int vs long).
-Use CVE-2010-2807
-
-> >   A memory corruption flaw was found in the way FreeType font rendering
-> >   engine processed certain Adobe Type 1 Mac Font File (LWFN) fonts. An
-> >   attacker could use this flaw to create a specially-crafted font file
-> >   that, when opened, would cause an application linked against
-> >   libfreetype to crash, or, possibly execute arbitrary code.
-> > 
-> > Upstream bug report:
-> >   [1] https://savannah.nongnu.org/bugs/?30658
-> > 
-> > Public reproducer:
-> >   [2] http://alt.swiecki.net/j/f/sigsegv31.ttf
-> > 
-> > Upstream changeset:
-> >   [3] http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=81f3472c0ba7b8f6466e2e214fa8c1c17fade975
-> > 
-> > References:
-> >   [4] https://bugzilla.redhat.com/show_bug.cgi?id=621907
-> > 
-> > Credit: Robert Swiecki
-
-Use CVE-2010-2808 for this one.
-
-Thanks.
-
--- 
-    JB
+Is this really a _security_ bug?  The CN was not validated by the CA,
+so it's the CA's fault (which you have to trust, but still).
