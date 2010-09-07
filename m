@@ -1,63 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/02/6
-Message-ID: <Pine.GSO.4.64.1008021523490.12961@faron.mitre.org>
-Date: Mon, 2 Aug 2010 15:24:06 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Josh Bressers <bressers@...hat.com>
-cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE-2008-id Request -- ssmtp -- standardise() -- Buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/07/3
+Message-ID: <20100907111345.GA19062@suse.de>
+Date: Tue, 7 Sep 2010 13:13:45 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
+To: Andrew Morton <akpm@...ux-foundation.org>
+Cc: oss-security@...ts.openwall.com, security@...nel.org, spender@...ecurity.net
+Subject: Re: [Security] /proc infoleaks
 Content-Type: text/plain; charset=utf-8
 
+On Tue, Sep 07, 2010 at 03:51:03AM -0700, Andrew Morton wrote:
+> On Tue, 7 Sep 2010 10:35:46 +0200 Sebastian Krahmer <krahmer@...e.de> wrote:
+> 
+> > I have been elected to receive the bashing from all sides,
+> > so here we go.
+> > It is not about a new vulnerability or even a new discussion
+> > but needs to be discussed, at least that we have a clear
+> > statement about the status quo.
+> > 
+> > Recent i-CAN-haz-MODHARDEN.c has shown once *again* that
+> > certain file permissions make no sense except to exploitation
+> > development. There is no reason to have files like
+> > 
+> > /proc/kallsyms
+> > /proc/slabinfo
+> > /proc/zoneinfo
+> > 
+> > and probably a lot of others world readable. The symbol
+> > addresses might be hard-coded for a certain targetlist
+> > inside the exploit so you can argue that there
+> > wont be any protection benefit from making it unreadable.
+> > However this argument aint a reason to also leak it for self-compiled
+> > kernels and doesnt even hold for dynamic/runtime content
+> > like slabinfos etc.
+> > It would be nice to have something like
+> > 
+> > echo 1 > /proc/quiet
+> > 
+> > or something like a umask for kernel-owned proc
+> > entries so that you have a polite default and are
+> > still able to enable it for certain profiling tools
+> > or whereever you need it.
+> 
+> chmod 0440 /proc/slabinfo
+> 
+Heh, indeed. :-)
+Would it be a bad idea to have proc_create() use a more strict
+mode so it is non-leaking by default?
 
-> ----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
->
->> Hi Steve, vendors,
->>
->>    Brendan Boerner reported:
->>    [1] https://bugs.launchpad.net/ubuntu/+source/ssmtp/+bug/282424
->>
->> a deficiency in the way ssmtp removed trailing '\n' sequence
->> by processing lines beginning with a leading dot. A local user,
->> could send a specially-crafted e-mail message via ssmtp send-only
->> sendmail emulator, leading to ssmtp executable denial of service (exit
->> with:
->> ssmtp: standardise() -- Buffer overflow). Different vulnerability
->> than CVE-2008-3962.
+Sebastian
 
 
-Use CVE-2008-7258
+-- 
+~
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+~ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
 
-- Steve
-
-
-
->> References:
->>    [2] https://bugzilla.redhat.com/show_bug.cgi?id=582236
->>    [3] https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2008-3962
->>    [4] http://patch-tracker.debian.org/package/ssmtp/2.62-3
->>    [5]
->> http://lists.fedoraproject.org/pipermail/package-announce/2010-May/041012.html
->>    [6]
->> http://lists.fedoraproject.org/pipermail/package-announce/2010-May/041009.html
->>    [7]
->> http://lists.fedoraproject.org/pipermail/package-announce/2010-May/041119.html
->>
->> Debian Linux distribution patch:
->>    [8]
->> http://patch-tracker.debian.org/patch/series/view/ssmtp/2.62-3/345780-standardise-bufsize
->>
->> Public PoC (from
->> https://bugzilla.redhat.com/show_bug.cgi?id=582236#c0):
->>    [9] ( 0. Install & configure ssmtp, of course )
->>          1. (echo -n . ; for i in {1..2050} ; do echo -n $i ; done) |
->> mail root
->>
->> Couldn't find CVE-2008-XXXX ssmtp identifier for this
->> (http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=ssmtp).
->>
->> Steve, could you allocate one?
->>
->> Thanks && Regards, Jan.
->> --
->> Jan iankko Lieskovsky / Red Hat Security Response Team
->
