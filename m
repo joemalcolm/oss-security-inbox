@@ -1,30 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/30/1
-Message-ID: <4BDA2807.3000703@redhat.com>
-Date: Fri, 30 Apr 2010 08:44:55 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/07/2
+Message-ID: <20100907083546.GA19866@suse.de>
+Date: Tue, 7 Sep 2010 10:35:46 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-CC: Hui Zhu <hui.zhu@...driver.com>, Paul Gortmaker <paul.gortmaker@...driver.com>, +security-linux <security-linux@...driver.com>, "Wessel, Jason" <jason.wessel@...driver.com>, Wu Fei <fei.wu@...driver.com>
-Subject: Re: CVE request - Linux Kernel KGDB/ppc issue
+Cc: security@...nel.org, spender@...ecurity.net
+Subject: /proc infoleaks
 Content-Type: text/plain; charset=utf-8
 
-On 04/29/2010 10:13 AM, Hui Zhu wrote:
-> Hi All,
->
-> The problem is that if KGDB is enabled on a powerpc board, a
-> test that checks if a page is user or kernel is bypassed.
-> This means that a user can write to arbitrary kernel address space.
->
-> Upon further investigation, we found that kernels older than
-> the v2.6.30-rc1 release have the same problem for non-booke
-> ppc chips (74xx, 8641D), so we need two patches for kernels
-> up to that date, and then one patch for ones after that date.
+I have been elected to receive the bashing from all sides,
+so here we go.
+It is not about a new vulnerability or even a new discussion
+but needs to be discussed, at least that we have a clear
+statement about the status quo.
 
-http://www.mail-archive.com/linuxppc-dev@lists.ozlabs.org/msg30044.html
-Sun, 01 Mar 2009 22:25:03 -0800
+Recent i-CAN-haz-MODHARDEN.c has shown once *again* that
+certain file permissions make no sense except to exploitation
+development. There is no reason to have files like
 
-"Note: While at it, I removed a non-sensical statement related to 
-CONFIG_KGDB in ppc_mmu_32.c which could cause kernel mappings to be user 
-accessible when that option is enabled. Probably something that bitrot."
+/proc/kallsyms
+/proc/slabinfo
+/proc/zoneinfo
 
-Eugene
+and probably a lot of others world readable. The symbol
+addresses might be hard-coded for a certain targetlist
+inside the exploit so you can argue that there
+wont be any protection benefit from making it unreadable.
+However this argument aint a reason to also leak it for self-compiled
+kernels and doesnt even hold for dynamic/runtime content
+like slabinfos etc.
+It would be nice to have something like
+
+echo 1 > /proc/quiet
+
+or something like a umask for kernel-owned proc
+entries so that you have a polite default and are
+still able to enable it for certain profiling tools
+or whereever you need it.
+
+I know that hardening patches already have these
+secure defaults; with reason. Making kernel exploits
+has been really too easy in past if you get all the
+mem layout and symbols for free. Of course that doesnt
+free one from writing good code but its about time
+(since years actually) to raise the level.
+
+regards,
+Sebastian
+
+
+-- 
+~
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+~ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+
