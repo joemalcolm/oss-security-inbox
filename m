@@ -1,59 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/30/3
-Message-ID: <AANLkTi=0JqyKKcFngq_UDTPb1-Eue+fk8gnZtxQuXdj_@mail.gmail.com>
-Date: Thu, 30 Dec 2010 13:48:23 -0600
-From: Earl Hood <earl@...lhood.com>
-To: Jeff Breidenbach <jeff@....org>
-Cc: oss-security <oss-security@...ts.openwall.com>,  "Steven M. Christey" <coley@...us.mitre.org>, non customers <non-customers@...ramail.com>, geissert@...ian.org
-Subject: Re: CVE Request -- MHonArc: Improper escaping of certain HTML sequences (XSS)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/07/11
+Message-ID: <1969779598.1618541283887948605.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 7 Sep 2010 15:32:28 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Moritz Naumann <security@...itz-naumann.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Horde v3.3.8 -- XSS in icon_browser.php due improper sanitization of 'subdir' URL parameter
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Dec 30, 2010 at 1:01 PM, Jeff Breidenbach <jeff@....org> wrote:
-> Earl,
-> http://www.mhonarc.org/MHonArc/doc/faq/security.html#htmlexchow
-> One of my hats is the Debian package maintainer for mhonarc. I'm tempted to
-> disable HTML mail support by default rather than try to improve it. What do
-> you think about the idea? What do you think about implementation?
+Please use CVE-2010-3077
 
-Personally, I would like HTML disabled by default, but if I do, I,
-and/or the user's list, will get burdened by messages of why
-HTML email does not render correctly.
+Thanks.
 
-Many mhonarc users are not tech savvy, and I do not have the time and
-resources to deal with the potential flood of emails.
+-- 
+    JB
 
-A nice thing to have would be a whitelist-based filter, but such
-a filter would depend on a robust HTML parser, and I'm not sure
-one really exists for Perl.  Because of how different browsers allow
-for different craziness to happen in HTML data, it is a non-trivial
-task to generate a robust parser.  Because of this, it is still
-likely someone could still bypass such a filter by exploiting
-a weakness in the HTML parser.
 
-I think the double pass of the current filter may be the best short-term
-solution now, but the DoS aspect is a concern.  There are some degenerate
-cases in the Perl regex engine (at least in the past) that I had to
-work around with the current filter, and it appears there may still
-be other degenerate cases.  The cases also varied depending on
-the version of Perl being used.
+----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
 
-Thinking about it a bit, the example provided in the original post
-is definitely invalid HTML, and normal email clients would never create
-such a thing.  Therefore, would it be sufficient to strip-out, or reject,
-data that clear has invalid tags like:
-
-  <scr<body>ipt>alert("elsa");</scr<body>ipt>
-
-For example, the sequence of "<scr<" is invalid.  It is simple
-to provide a pre-check for such occurrences, and if it exists,
-"reject" the data.  For example, the following regex, if true,
-indicates bad HTML:
-
-  /<[^>]*</
-
-If a '<' occurs before a '>' after an initial '<', something is
-not right.  The filter would return nothing, signally mhonarc
-to use the next alternative part (if provided), or display no
-content for the message.
-
---ewh
+> Hello Steve, vendors,
+> 
+>    Moritz Naumann reported:
+>    [1] http://seclists.org/fulldisclosure/2010/Sep/82
+> 
+> a deficiency in the way Horde framework sanitized user-provided
+> 'subdir' parameter, when composing final path to the image file.
+> A remote, unauthenticated user could use this flaw to conduct
+> cross-site scripting attacks (execute arbitrary HTML or scripting
+> code) by providing a specially-crafted URL to the running
+> Horde framework instance.
+> 
+> Upstream patch:
+>    [2]
+> http://git.horde.org/diff.php/horde/util/icon_browser.php?rt=horde-git&r1=a978a35c3e95e784253508fd4333d2fbb64830b6&r2=9342addbd2b95f184f230773daa4faf5ef6d65e9
+> 
+> Sample public URL by Moritz to demonstrate the issue:
+>    [3] [path_to_horde]/util/icon_browser.php?subdir=<body
+> onload="alert('XSS')">&app=horde
+> 
+> Could you allocate CVE id for this issue?
+> 
+> Thanks && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
