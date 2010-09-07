@@ -1,32 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/04/5
-Message-ID: <750612039.1191941286219111952.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 4 Oct 2010 15:05:12 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/07/7
+Message-ID: <1979823831.1610061283885156490.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 7 Sep 2010 14:45:56 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Small exposure in ocfs2 fast symlinks.
+Cc: Henrik Nordstrom <henrik@...riknordstrom.net>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Squid --  Denial of service due internal error in string handling (SQUID-2010:3)
 Content-Type: text/plain; charset=utf-8
 
------ "Joel Becker" <Joel.Becker@...cle.com> wrote:
-
-> Hey Everyone,
-> 	We just discovered that ocfs2 could walk off the end of fast symlinks
-> 	-- that is, symlinks that are stored directly in the inode block.
-> 	ocfs2 terminates these with NUL characters, but a disk corruption or an
-> 	attacker with direct access to the ocfs2 disk could overwrite the NUL.
-> 	Following the symlink via the filesystem would walk off the end of the
-> 	in-memory block buffer.  We're not sure how exploitable this is, but I
-> 	figured I'd provide a heads-up.  The fix is in ocfs2's git tree and
-> 	will be sent upstream tonight.  Erratas with the fix are being built.
-> 	If someone thinks we should have a CVE, please provide me with the
-> 	number.  Otherwise, just FYI.
-> 
-
-Unless someone asks for an ID, I don't plan to give this one. I dare say if
-an attacker can modify the disk directly, you probably have far bigger
-worries here than following symlinks.
+Please use CVE-2010-3072
 
 Thanks.
 
 -- 
     JB
+
+
+----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+
+> Hello Steve, vendors,
+> 
+>    Squid upstream has announced SQUID-2010:3:
+>    [1] http://www.squid-cache.org/Advisories/SQUID-2010_3.txt
+> 
+>    addressing one denial of service issue:
+>    A denial of service flaw was found in the way Squid proxy caching
+>    server internally processed NULL buffers. A remote, trusted client
+>    could use this flaw to cause squid daemon crash (dereference NULL
+> pointer)
+>    when processing specially-crafted request.
+> 
+>    ( Flaw description based on details from [1]. Henrik, please
+> correct / complete
+>      me if something isn't appropriate and needs change. Thanks, Jan
+> )
+> 
+>    Upstream patch (against Squid v3.0):
+>    [2]
+> http://www.squid-cache.org/Versions/v3/3.0/changesets/squid-3.0-9189.patch
+> 
+>    Upstream patch (against Squid v3.1):
+>    [3]
+> http://www.squid-cache.org/Versions/v3/3.1/changesets/squid-3.1-10090.patch
+> 
+>    Credit:
+>    The vulnerability was discovered by Phil Oester.
+> 
+>    References:
+>    [4] https://bugzilla.redhat.com/show_bug.cgi?id=630444
+> 
+> Steve, could you please allocate CVE id for this issue?
+> 
+> Thanks && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
