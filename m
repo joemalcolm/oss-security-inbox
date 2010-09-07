@@ -1,33 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/30/5
-Message-ID: <Pine.GSO.4.64.1003301346480.4709@faron.mitre.org>
-Date: Tue, 30 Mar 2010 13:49:08 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request: ViewVC 1.1.5 / 1.0.11 -- XSS via user-provided 'search_re' input
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/07/5
+Message-Id: <20100907035103.64773faa.akpm@linux-foundation.org>
+Date: Tue, 7 Sep 2010 03:51:03 -0700
+From: Andrew Morton <akpm@...ux-foundation.org>
+To: Sebastian Krahmer <krahmer@...e.de>
+Cc: oss-security@...ts.openwall.com, security@...nel.org, spender@...ecurity.net
+Subject: Re: [Security] /proc infoleaks
 Content-Type: text/plain; charset=utf-8
 
+On Tue, 7 Sep 2010 10:35:46 +0200 Sebastian Krahmer <krahmer@...e.de> wrote:
 
-On Tue, 30 Mar 2010, Reed Loden wrote:
+> I have been elected to receive the bashing from all sides,
+> so here we go.
+> It is not about a new vulnerability or even a new discussion
+> but needs to be discussed, at least that we have a clear
+> statement about the status quo.
+> 
+> Recent i-CAN-haz-MODHARDEN.c has shown once *again* that
+> certain file permissions make no sense except to exploitation
+> development. There is no reason to have files like
+> 
+> /proc/kallsyms
+> /proc/slabinfo
+> /proc/zoneinfo
+> 
+> and probably a lot of others world readable. The symbol
+> addresses might be hard-coded for a certain targetlist
+> inside the exploit so you can argue that there
+> wont be any protection benefit from making it unreadable.
+> However this argument aint a reason to also leak it for self-compiled
+> kernels and doesnt even hold for dynamic/runtime content
+> like slabinfos etc.
+> It would be nice to have something like
+> 
+> echo 1 > /proc/quiet
+> 
+> or something like a umask for kernel-owned proc
+> entries so that you have a polite default and are
+> still able to enable it for certain profiling tools
+> or whereever you need it.
 
-> Apparently, Secunia has already assigned this CVE-2010-0132, as per
-> their advisory that just came out...
->
-> http://secunia.com/secunia_research/2010-26/
->
-> Again, still need a CVE for the XSS fix in ViewVC 1.1.4 and 1.1.10,
-> however.
+chmod 0440 /proc/slabinfo
 
+What am I missing here?
 
-Here's what I have:
-
-   CVE-2010-0736 - XSS in view_queryform (lib/viewvc.py) in 1.1.x before
-   1.1.4, and 1.0 before 1.0.10.  (Note that Vincent Danen assigned a CVE
-   last week at http://www.openwall.com/lists/oss-security/2010/03/16/14)
-
-   CVE-2010-0132 - Secunia-assigned; for "regular expression search" before
-   1.0.11 / 1.1.5
-
-
-- Steve
