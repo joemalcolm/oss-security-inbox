@@ -1,25 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/16/2
-Message-ID: <4CE22839.3040809@redhat.com>
-Date: Tue, 16 Nov 2010 12:14:09 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/07/4
+Message-ID: <883697827.1592371283880564488.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 7 Sep 2010 13:29:24 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: libsdp
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: XSS in nusoap
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
-Leif Nixon reported that libsdp is vulnerable to insecure log file
-handling. This is fixed by the latest libsdp version available at:
-
-http://www.openfabrics.org/downloads/libsdp/libsdp-1.1.105-0.4.g1b9b996.tar.gz
-
-More details are available in Red Hat bugzilla:
-https://bugzilla.redhat.com/show_bug.cgi?id=647941
-
-Can a CVE id be please assigned to this flaw?
+Please use CVE-2010-3070
 
 Thanks.
 
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+    JB
+
+
+----- "Raphael Geissert" <geissert@...ian.org> wrote:
+
+> Hi,
+> 
+> A XSS vulnerability has been reported against the nusoap PHP library
+> caused 
+> by insufficient sanitation of untrusted data ($_SERVER['PHP_SELF']) --
+> 
+> CWE-79.
+> 
+> Original report against mantisbt:
+> http://www.mantisbt.org/bugs/view.php?id=12312
+> 
+> Report against nusoap (and further references):
+> http://sourceforge.net/projects/nusoap/forums/forum/193579/topic/3834005
+> 
+> The fixes proposed by David Hicks[1] (from mantisbt) add escaping to
+> some 
+> other variables, but I haven't verified if they are actually
+> exploitable (if 
+> that's so, the patch might need to pass the charset to htmlentities
+> too.)
+> 
+> [1]http://git.mantisbt.org/?p=mantisbt.git;a=commit;h=edb817991b99cd5538f102be26865fde7c6b7212
+> 
+> Could a CVE id be assigned?
+> 
+> Thanks,
+> -- 
+> Raphael Geissert - Debian Developer
+> www.debian.org - get.debian.net
