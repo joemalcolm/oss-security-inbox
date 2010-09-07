@@ -1,49 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/24/3
-Message-ID: <4C73C848.1030300@redhat.com>
-Date: Tue, 24 Aug 2010 15:25:28 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, CERT-FI Vulnerability Co-ordination <vulncoord@...ora.fi>, Chris Hall <chris.hall@...hwayman.com>, Denis Ovsienko <infrastation@...dex.ru>
-Subject: CVE Request -- Quagga (bgpd) [two ids] -- 1, Stack buffer overflow by processing crafted Refresh-Route msgs 2, NULL ptr deref by parsing certain AS paths by BGP update request
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/07/14
+Message-Id: <20100907124656.05353c2b.akpm@linux-foundation.org>
+Date: Tue, 7 Sep 2010 12:46:56 -0700
+From: Andrew Morton <akpm@...ux-foundation.org>
+To: Jon Oberheide <jon@...rheide.org>
+Cc: oss-security@...ts.openwall.com, Sebastian Krahmer <krahmer@...e.de>, security@...nel.org, spender@...ecurity.net
+Subject: Re: Re: [Security] /proc infoleaks
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve, vendors,
+On Tue, 07 Sep 2010 15:24:34 -0400
+Jon Oberheide <jon@...rheide.org> wrote:
 
-   Quagga upstream has released latest vQuagga 0.99.17 version, addressing two security flaws:
+> On Tue, 2010-09-07 at 03:51 -0700, Andrew Morton wrote:
+> > On Tue, 7 Sep 2010 10:35:46 +0200 Sebastian Krahmer <krahmer@...e.de> wrote:
+> > 
+> > > I have been elected to receive the bashing from all sides,
+> > > so here we go.
+> > > It is not about a new vulnerability or even a new discussion
+> > > but needs to be discussed, at least that we have a clear
+> > > statement about the status quo.
+> > > 
+> > > Recent i-CAN-haz-MODHARDEN.c has shown once *again* that
+> > > certain file permissions make no sense except to exploitation
+> > > development. There is no reason to have files like
+> > > 
+> > > /proc/kallsyms
+> > > /proc/slabinfo
+> > > /proc/zoneinfo
+> > > 
+> > > and probably a lot of others world readable. The symbol
+> > > addresses might be hard-coded for a certain targetlist
+> > > inside the exploit so you can argue that there
+> > > wont be any protection benefit from making it unreadable.
+> > > However this argument aint a reason to also leak it for self-compiled
+> > > kernels and doesnt even hold for dynamic/runtime content
+> > > like slabinfos etc.
+> > > It would be nice to have something like
+> > > 
+> > > echo 1 > /proc/quiet
+> > > 
+> > > or something like a umask for kernel-owned proc
+> > > entries so that you have a polite default and are
+> > > still able to enable it for certain profiling tools
+> > > or whereever you need it.
+> > 
+> > chmod 0440 /proc/slabinfo
+> > 
+> > What am I missing here?
+> 
+> You're missing the "secure by default" part.
 
-A, Stack buffer overflow by processing certain Route-Refresh messages
+We're not going to change the kernel defaults, end of story - that
+would break far too much stuff.
 
-   A stack buffer overflow flaw was found in the way Quagga's bgpd daemon
-   processed Route-Refresh messages. A configured Border Gateway Protocol
-   (BGP) peer could send a Route-Refresh message with specially-crafted
-   Outbound Route Filtering (ORF) record, which would cause the master BGP
-   daemon (bgpd) to crash or, possibly, execute arbitrary code with the
-   privileges of the user running bgpd.
+The kernel provides everything that is needed here.  The way to address
+this is within a distro: change the /proc file permissions in
+initscripts and fix up all the resulting fallout in the userspace
+applications.
 
-   Upstream changeset:
-   [1] http://code.quagga.net/?p=quagga.git;a=commit;h=d64379e8f3c0636df53ed08d5b2f1946cfedd0e3
-
-   References:
-   [2] https://bugzilla.redhat.com/show_bug.cgi?id=626783
-   [3] http://www.quagga.net/news2.php?y=2010&m=8&d=19#id1282241100
-
-B, DoS (crash) while processing certain BGP update AS path messages
-
-   A NULL pointer dereference flaw was found in the way Quagga's bgpd daemon
-   parsed paths of autonomous systems (AS). A configured BGP peer could send
-   a BGP update AS path request with unknown AS type, which could lead to
-   denial of service (bgpd daemon crash).
-
-   Upstream changeset:
-   [4] http://code.quagga.net/?p=quagga.git;a=commit;h=cddb8112b80fa9867156c637d63e6e79eeac67bb
-
-   References:
-   [5] https://bugzilla.redhat.com/show_bug.cgi?id=626795
-   [6] http://www.quagga.net/news2.php?y=2010&m=8&d=19#id1282241100
-
-Could you allocate CVE ids for these?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
