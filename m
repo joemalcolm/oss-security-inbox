@@ -1,51 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/05/3
-Message-ID: <4C83E266.3050803@redhat.com>
-Date: Sun, 05 Sep 2010 20:33:10 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, Valient Gough <vgough@...ox.com>, Micha Riser <micha@...world.org>
-Subject: CVE Request -- EncFS / fuse-encfs [three ids] -- Multiple Vulnerabilities in EncFS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/07/15
+Message-Id: <20100907125714.f49700b6.akpm@linux-foundation.org>
+Date: Tue, 7 Sep 2010 12:57:14 -0700
+From: Andrew Morton <akpm@...ux-foundation.org>
+To: Jon Oberheide <jon@...rheide.org>, oss-security@...ts.openwall.com, security@...nel.org, spender@...ecurity.net, Sebastian Krahmer <krahmer@...e.de>
+Subject: Re: [Security] Re:  /proc infoleaks
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve, vendors,
+On Tue, 7 Sep 2010 12:46:56 -0700
+Andrew Morton <akpm@...ux-foundation.org> wrote:
 
-   Micha Riser reported:
-   [A] http://archives.neohapsis.com/archives/fulldisclosure/2010-08/0316.html
+> We're not going to change the kernel defaults, end of story - that
+> would break far too much stuff.
 
-three security flaws in EncFS encrypted filesystem (more from [A]):
+That being said, it *might* be acceptable to obfuscate the kernel-side
+addresses.  Still print them, but they're all zeroes.  I doubt if many
+tools at all are actually using those.  Perhaps a runtime knob which
+obfuscates those addresses for unprivileged users, something like that.
 
-"A security analysis of EncFS has revealed multiple vulnerabilities:
-(1) Only 32 bit of file IV used
-(2) Watermarking attack
-(3) Last block with single byte is insecure"
-
-References:
-   [B] http://www.arg0.net/encfs
-   [C] http://bugs.gentoo.org/show_bug.cgi?id=335938
-   [D] http://archives.neohapsis.com/archives/fulldisclosure/2010-08/att-0316/watermark-attack-encfs.tar.gz
-   [E] https://bugzilla.redhat.com/show_bug.cgi?id=630460
-
-
-Solutions / patches information:
-================================
-
-* for issue (1) -- seems it wasn't fixed / isn't possible to
-   fix without breaking backward compatibility. More from [B]:
-
-   "The old IV setup is kept for backwards compatibility."
-
-* for issue (2) -- EncFS upstream has released a fix for the issue:
-   [F] http://code.google.com/p/encfs/source/detail?r=59
-
-Valient, could you please confirm, the above referenced [F] patch,
-is the correct one to address the watermarking attack issue?
-
-* for issue (3) -- not sure about patch status (included in [F] too?)
-
-Steve, could you allocate CVE ids for these flaws?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
+That also being said, I'm not seeing any kernel-side addresses in
+slabinfo or zoneinfo anyway and I believe some distros already hide
+kallsyms.  More specificity is needed.
