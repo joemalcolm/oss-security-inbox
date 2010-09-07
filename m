@@ -1,33 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/30/9
-Message-ID: <4C2B6EC2.3020603@redhat.com>
-Date: Wed, 30 Jun 2010 18:20:18 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, David Malcolm <dmalcolm@...hat.com>, Kyle VanderBeek <kylev@...ev.com>
-Subject: CVE Request -- Python-Mako (prior v0.3.4): Improper escaping of single quotes in escape.cgi (XSS)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/07/8
+Message-ID: <499168751.1613381283886338548.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 7 Sep 2010 15:05:38 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Valient Gough <vgough@...ox.com>, Micha Riser <micha@...world.org>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- EncFS / fuse-encfs [three ids] -- Multiple Vulnerabilities in EncFS
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve, vendors,
+Here goes:
 
-   Craig Younkins reported:
-     [1] http://bugs.python.org/issue9061
+CVE-2010-3073 encfs Only 32 bit of file IV used
+CVE-2010-3074 encfs Watermarking attack
+CVE-2010-3075 encfs Last block with single byte is insecure"
 
-   that Python Mako (of versions prior v0.3.4), a template library written in Python,
-   improperly escaped single quotes in escape.cgi. An attacker could use this flaw to conduct
-   cross-site scripting (XSS) attacks.
+Thanks
 
-   References:
-     [2] http://www.makotemplates.org/CHANGES
+-- 
+    JB
 
-Sample public PoC (from [1]):
 
-   Proof of concept:
-   print """<body class='%s'></body>""" % cgi.escape("' onload='alert(1);'
-bad='")
+----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
 
-Could you allocate a CVE id for this?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+> Hello Steve, vendors,
+> 
+>    Micha Riser reported:
+>    [A]
+> http://archives.neohapsis.com/archives/fulldisclosure/2010-08/0316.html
+> 
+> three security flaws in EncFS encrypted filesystem (more from [A]):
+> 
+> "A security analysis of EncFS has revealed multiple vulnerabilities:
+> (1) Only 32 bit of file IV used
+> (2) Watermarking attack
+> (3) Last block with single byte is insecure"
+> 
+> References:
+>    [B] http://www.arg0.net/encfs
+>    [C] http://bugs.gentoo.org/show_bug.cgi?id=335938
+>    [D]
+> http://archives.neohapsis.com/archives/fulldisclosure/2010-08/att-0316/watermark-attack-encfs.tar.gz
+>    [E] https://bugzilla.redhat.com/show_bug.cgi?id=630460
+> 
+> 
+> Solutions / patches information:
+> ================================
+> 
+> * for issue (1) -- seems it wasn't fixed / isn't possible to
+>    fix without breaking backward compatibility. More from [B]:
+> 
+>    "The old IV setup is kept for backwards compatibility."
+> 
+> * for issue (2) -- EncFS upstream has released a fix for the issue:
+>    [F] http://code.google.com/p/encfs/source/detail?r=59
+> 
+> Valient, could you please confirm, the above referenced [F] patch,
+> is the correct one to address the watermarking attack issue?
+> 
+> * for issue (3) -- not sure about patch status (included in [F] too?)
+> 
+> Steve, could you allocate CVE ids for these flaws?
+> 
+> Thanks && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
