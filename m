@@ -1,56 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/15/3
-Message-ID: <1266257529.31647.38.camel@x300.fritz.box>
-Date: Mon, 15 Feb 2010 19:12:09 +0100
-From: Thomas Waldmann <tw-public@....de>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- MoinMoin -- 1.8.7
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/08/9
+Message-ID: <4C879083.9000202@redhat.com>
+Date: Wed, 08 Sep 2010 15:32:51 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request -- phpMyAdmin (x < v3.3.7) -- XSS in setup script (PMASA-2010-7)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello Steve, vendors,
 
-sorry about being rather vague in what I told/tell about the issues, but
-this is just to protect the vulnerable systems out there until fixes are
-available and have been widely deployed (or at least every admin
-interested in security had a chance).
+   phpMyAdmin today announced PMASA-2010-7, addressing one XSS issue:
+   [1] http://www.phpmyadmin.net/home_page/security/PMASA-2010-7.php
 
-All the recently discovered issues are basically just 2 issues (the
-sys.argv issue in 1.9 and the other issue more or less in all moin
-versions at different places in the code).
+   More from [1]:
+   Summary:               XSS attack on setup script
+   Description:           It was possible to conduct a XSS attack using spoofed request to setup script.
+   Affected versions:     For 3.x: versions before 3.3.7 are affected.
+   Unaffected versions:   Branch 2.11.x is not affected by this.
+   Upstream changeset:    http://phpmyadmin.git.sourceforge.net/git/gitweb.cgi?p=phpmyadmin/phpmyadmin;a=commitdiff;h=73ce5705bd1e0b62060f75702d62f88247ce09dd
+   Credit:                Upstream acknowledges the Tenable Network Security team as the original reporter.
 
-> Last message in:
->    [7] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=569975#10
-> suggests only the "superuser list" issue was fixed in 1.8.7
+   Further references:
+   [2] http://secunia.com/advisories/41210/
+   [3] https://bugzilla.redhat.com/show_bug.cgi?id=631824
 
-No, all known issues that affect 1.8 (and also all versions before) were
-fixed in 1.8.7.
+Upstream references CVE-2010-2958 as CVE id for this issue. But it was allocated for PMASA-2010-6:
+[4] http://www.openwall.com/lists/oss-security/2010/09/01/3
+[5] http://www.phpmyadmin.net/home_page/security/PMASA-2010-6.php
 
-> and more fixes are about to come -- "<ThomasWaldmann>
-> 1.9.2 planned in about 1 or 2 weeks".
+So could you allocate a new one for PMASA-2010-7?
 
-1.9.2 will fix all known issues that affect 1.9.
-
-The sys.argv issue was already fixed by 1.9.1.
-
-BTW, we won't do a new 1.7.x release, but the fixes can be pulled from
-the repo. Likely this is interesting for package maintainers who have to
-support 1.7.x packages with security fixes. Users who just manually
-downloaded and installed 1.7.x are advised to just do an easy upgrade to
-1.8.7 (or even 1.9.2 soon, with a bit more work needed).
-
-> what was fixed to know, how many CVE identifiers are needed / sufficient
-> for MoinMoin of version v.1.8.7.
-
-I am not very familiar with CVE stuff, but as there are 2 fundamental
-problems that have been fixed, I guess 2 CVEs are right.
-
-a) one CVE for the sys.argv issue in 1.9 that was fixed in 1.9.1
-b) one CVE for the other kind of issues in all moin versions, fixed by
-1.8.7 and soon by 1.9.2
-
-Regards,
-
-Thomas
-
-
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
