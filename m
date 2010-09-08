@@ -1,28 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/04/7
-Message-ID: <Pine.GSO.4.64.1002041157260.8661@faron.mitre.org>
-Date: Thu, 4 Feb 2010 12:00:24 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2009-3297 clarification needed - samba/fuse/ncpfs symlinks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/08/5
+Message-Id: <20100908115948.C919.A69D9226@jp.fujitsu.com>
+Date: Wed,  8 Sep 2010 12:00:42 +0900 (JST)
+From: KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>
+To: Roland McGrath <roland@...hat.com>
+Cc: kosaki.motohiro@...fujitsu.com, Linus Torvalds <torvalds@...ux-foundation.org>, Andrew Morton <akpm@...ux-foundation.org>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Kees Cook <kees.cook@...onical.com>, Al Viro <viro@...iv.linux.org.uk>, Oleg Nesterov <oleg@...hat.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, pageexec@...email.hu, "Brad Spengler <spender@...ecurity.net> Eugene Teo" <eugene@...hat.com>
+Subject: Re: [PATCH 0/3] execve argument-copying fixes
 Content-Type: text/plain; charset=utf-8
 
+> This is my take on parts of the execve large arguments copying issues
+> that Kees posted about, and Brad and others have been discussing.
+> I've only looked at the narrow area of the argument copying code
+> itself.  I think these are good and necessary fixes.  But I'm not
+> addressing the whole OOM killer/mm accounting issue, which also needs
+> to be fixed (and I have the impression others are already looking into that).
+> 
+> The following changes since commit d56557af19867edb8c0e96f8e26399698a08857f:
+> 
+>   Merge branch 'for-linus' of git://git.kernel.org/pub/scm/linux/kernel/git/jbarnes/pci-2.6 (2010-09-07 16:00:17 -0700)
+> 
+> are available in the git repository at:
+> 
+>   git://git.kernel.org/pub/scm/linux/kernel/git/frob/linux-2.6-roland.git topic/exec-fixes
+> 
+> Roland McGrath (3):
+>       setup_arg_pages: diagnose excessive argument size
+>       execve: improve interactivity with large arguments
+>       execve: make responsive to SIGKILL with large arguments
+> 
+>  fs/exec.c |   14 ++++++++++++++
+>  1 files changed, 14 insertions(+), 0 deletions(-)
 
-Regarding these bug reports:
 
-https://bugzilla.redhat.com/show_bug.cgi?id=532940
-https://bugzilla.redhat.com/show_bug.cgi?id=558833
-https://bugzilla.samba.org/show_bug.cgi?id=6853
-
-It seems that a separate CVE should be assigned for samba, fuse, and 
-ncpfs, since these are all distinct codebases.
-
-Since the Samba bug report says that Debian assigned CVE-2009-3297 to the 
-Samba part, it looks like two new CVEs are needed, one for fuse and one 
-for ncpfs.
-
-Am I missing something here?
+All of changes looks nice to me :)
+Thanks.
+	Reviewed-by: KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>
 
 
-Thanks,
-Steve
+
+
