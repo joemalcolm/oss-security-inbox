@@ -1,24 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/04/4
-Message-Id: <201010041712.57836.ludwig.nussel@suse.de>
-Date: Mon, 4 Oct 2010 17:12:57 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
-To: "oss-security" <oss-security@...ts.openwall.com>
-Cc: Timo Sirainen <tss@....fi>
-Subject: CVE Request: more dovecot ACL issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/08/8
+Message-ID: <20100908114731.GA11762@grsecurity.net>
+Date: Wed, 8 Sep 2010 07:47:31 -0400
+From: Brad Spengler <spender@...ecurity.net>
+To: Sebastian Krahmer <krahmer@...e.de>
+Cc: oss-security@...ts.openwall.com, Jon Oberheide <jon@...rheide.org>, security@...nel.org
+Subject: Re: Re: [Security] Re:  /proc infoleaks
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+> I agree that distros also have to do some homework there,
+> but there are things that we cant just do via init harden scripts.
+> Take /proc/pid/stack. Other files like my prefered friend /proc/net/netlink
+> gives info that allows exploitation-deluxe if you overwrite your socket destructor.
 
-dovecot 1.2.15 fixes issues with ACLs:
-http://www.dovecot.org/list/dovecot/2010-October/053450.html
-http://www.dovecot.org/list/dovecot/2010-October/053452.html
+That's true too -- I was just talking about the ones mentioned in the 
+original post.  /proc/pid/stack goes away when you disable 
+CONFIG_STACKTRACE btw, but the best solution going forward (as a lot of 
+these and other infoleaks have been added recently through new features) 
+is this: the internals of the kernel should be a black box to 
+unprivileged processes.  This needs to be considered by the people who 
+write and approve these new features that push out all kinds of 
+information via /proc and elsewhere.  If it doesn't get considered 
+before it goes into the kernel, then we have to play this game after the 
+fact of staying compatible with apps that now depend on that behavior.
 
-cu
-Ludwig
+> Sure. It was just a proposal since I felt nobody really cared about
+> the low hanging fruits. It wont make your system rocket proof but
+> it makes some head-scratching for exploit developers which is
+> all you need if you make them stuck in doing that.
 
--- 
- (o_   Ludwig Nussel
- //\   
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+Be careful about assuming head-scratching -- if something can be worked 
+around (like in the kallsyms case), it only takes one person.  Everyone 
+else can reuse that work without any head-scratching.
+
+-Brad
+
+Download attachment "signature.asc" of type "application/pgp-signature" (198 bytes)
