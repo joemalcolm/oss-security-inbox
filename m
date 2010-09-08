@@ -1,24 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/10/2
-Message-ID: <216940050.616881292013292195.JavaMail.root@zmail05.collab.prod.int.phx2.redhat.com>
-Date: Fri, 10 Dec 2010 15:34:52 -0500 (EST)
-From: Petr Matousek <pmatouse@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: Subject: CVE request: kernel: install_special_mapping skips security_file_mmap check
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/08/3
+Message-Id: <20100908023628.A1F5A401AF@magilla.sf.frob.com>
+Date: Tue,  7 Sep 2010 19:36:28 -0700 (PDT)
+From: Roland McGrath <roland@...hat.com>
+To: Linus Torvalds <torvalds@...ux-foundation.org>, Andrew Morton <akpm@...ux-foundation.org>
+CC: linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Kees Cook <kees.cook@...onical.com>, Al Viro <viro@...iv.linux.org.uk>, Andrew Morton <akpm@...ux-foundation.org>, Oleg Nesterov <oleg@...hat.com>, KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, pageexec@...email.hu, "Brad Spengler <spender@...ecurity.net> Eugene Teo" <eugene@...hat.com>
+Subject: [PATCH 2/3] execve: improve interactivity with large arguments
 Content-Type: text/plain; charset=utf-8
 
-"The install_special_mapping routine (used, for example, to setup the vdso)
-skips the security check before insert_vm_struct, allowing a local attacker to
-bypass the mmap_min_addr security restriction by limiting the available pages
-for special mappings."
+This adds a preemption point during the copying of the argument and
+environment strings for execve, in copy_strings().  There is already
+a preemption point in the count() loop, so this doesn't add any new
+points in the abstract sense.
 
-Credit: Tavis Ormandi
+When the total argument+environment strings are very large, the time
+spent copying them can be much more than a normal user time slice.
+So this change improves the interactivity of the rest of the system
+when one process is doing an execve with very large arguments.
 
-Reference:
-https://lkml.org/lkml/2010/12/9/222
-https://bugzilla.redhat.com/show_bug.cgi?id=662189
+Signed-off-by: Roland McGrath <roland@...hat.com>
+---
+ fs/exec.c |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
 
-Thanks,
---
-Petr Matousek / Red Hat Security Response Team
+diff --git a/fs/exec.c b/fs/exec.c
+index 1b63237..6f2d777 100644
+--- a/fs/exec.c
++++ b/fs/exec.c
+@@ -419,6 +419,8 @@ static int copy_strings(int argc, const char __user *const __user *argv,
+ 		while (len > 0) {
+ 			int offset, bytes_to_copy;
+ 
++			cond_resched();
++
+ 			offset = pos % PAGE_SIZE;
+ 			if (offset == 0)
+ 				offset = PAGE_SIZE;
