@@ -1,44 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/05/4
-Message-ID: <1669227525.537561273091314027.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 5 May 2010 16:28:34 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request - Piwik 0.5.5 - XSS vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/08/1
+Message-Id: <20100908023417.8B055401AF@magilla.sf.frob.com>
+Date: Tue,  7 Sep 2010 19:34:17 -0700 (PDT)
+From: Roland McGrath <roland@...hat.com>
+To: Linus Torvalds <torvalds@...ux-foundation.org>, Andrew Morton <akpm@...ux-foundation.org>
+CC: linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Kees Cook <kees.cook@...onical.com>, Al Viro <viro@...iv.linux.org.uk>, Andrew Morton <akpm@...ux-foundation.org>, Oleg Nesterov <oleg@...hat.com>, KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, pageexec@...email.hu, "Brad Spengler <spender@...ecurity.net> Eugene Teo" <eugene@...hat.com>
+Subject: [PATCH 0/3] execve argument-copying fixes
 Content-Type: text/plain; charset=utf-8
 
-Here you go:
-CVE-2010-1453 Piwik < 0.6 Login form XSS
+This is my take on parts of the execve large arguments copying issues
+that Kees posted about, and Brad and others have been discussing.
+I've only looked at the narrow area of the argument copying code
+itself.  I think these are good and necessary fixes.  But I'm not
+addressing the whole OOM killer/mm accounting issue, which also needs
+to be fixed (and I have the impression others are already looking into that).
 
-Thanks.
+The following changes since commit d56557af19867edb8c0e96f8e26399698a08857f:
 
--- 
-    JB
+  Merge branch 'for-linus' of git://git.kernel.org/pub/scm/linux/kernel/git/jbarnes/pci-2.6 (2010-09-07 16:00:17 -0700)
+
+are available in the git repository at:
+
+  git://git.kernel.org/pub/scm/linux/kernel/git/frob/linux-2.6-roland.git topic/exec-fixes
+
+Roland McGrath (3):
+      setup_arg_pages: diagnose excessive argument size
+      execve: improve interactivity with large arguments
+      execve: make responsive to SIGKILL with large arguments
+
+ fs/exec.c |   14 ++++++++++++++
+ 1 files changed, 14 insertions(+), 0 deletions(-)
 
 
------ "Anthon Pang" <anthon.pang@...il.com> wrote:
-
-> A Piwik XSS vulnerability is fixed by the latest Piwik 0.6 release. 
-> The
-> advisory is published here:
-> http://piwik.org/blog/2010/04/piwik-0-6-security-advisory/
-> 
-> Description:
-> 
-> A non-persistent, cross-site scripting vulnerability (XSS) was found
-> in
-> Piwik's Login form that reflected the form_url parameter without
-> being
-> properly escaped or filtered. To exploit this vulnerability, the
-> attacker
-> tricks a Piwik user into visiting a Login URL crafted by the
-> attacker.
-> 
-> While this is a low risk threat, Piwik users are encouraged to update
-> to the
-> latest version of Piwik. This issue exists in Piwik versions 0.1.6
-> through
-> 0.5.5.
-> 
-> In Piwik 0.6, the form_url parameter has been removed.
+Thanks,
+Roland
