@@ -1,43 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/07/2
-Message-ID: <Pine.GSO.4.64.1006071017120.15053@faron.mitre.org>
-Date: Mon, 7 Jun 2010 10:21:33 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Jan Lieskovsky <jlieskov@...hat.com>
-cc: oss-security@...ts.openwall.com, Nahuel Grisolia <nahuel@...sai-sec.com>, Stefan Esser <stefan.esser@...tioneins.de>, "Steven M. Christey" <coley@...us.mitre.org>, Cacti Developers <developers@...ti.net>, Tony Roman <roman@...order.com>
-Subject: Re: CVE Request -- Cacti v0.8.7 -- three security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/08/7
+Message-ID: <4C874E7C.5070904@redhat.com>
+Date: Wed, 08 Sep 2010 16:51:08 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE-2010-3080 kernel: /dev/sequencer open failure is not handled correctly
 Content-Type: text/plain; charset=utf-8
 
+Reported by Tavis Ormandy. There's a bug in snd_seq_oss_open from 
+sound/core/seq/oss/seq_oss_init.c that can result in dereferencing of a 
+released pointer. On some distros like Red Hat Enterprise Linux 5, 
+/dev/sequencer is restricted to root owner only. On others like Fedora 
+13, it cannot be accessed by a local, unprivileged user unless someone 
+logs in from the console on his/her behalf.
 
-On Tue, 1 Jun 2010, Jan Lieskovsky wrote:
+https://bugzilla.redhat.com/CVE-2010-3080
+http://git.kernel.org/?p=linux/kernel/git/tiwai/sound-2.6.git;a=commitdiff;h=c598337660c21c0afaa9df5a65bb4a7a0cf15be8
 
->> [C], SQL injection and shell escaping issues reported by Bonsai Information 
->> Security (http://www.bonsai-sec.com)
->>            [7] 
->> http://www.bonsai-sec.com/blog/index.php/using-grep-to-find-0days/
->>            [8] 
->> http://www.bonsai-sec.com/en/research/vulnerabilities/cacti-os-command-injection-0105.php
->>
->>
->>...
->>
-
->  2, OS command injection issue, CVE-2010-1645 / BONSAI-2010-0105
->     References:  [2] 
-> http://www.bonsai-sec.com/en/research/vulnerabilities/cacti-os-command-injection-0105.php
->     Proper patches are the following three: (noticed by Tomas Hoger && 
-> confirmed by Tony Roman, thanks for it!)
->       [3] http://svn.cacti.net/viewvc?view=rev&revision=5778
->       [4] http://svn.cacti.net/viewvc?view=rev&revision=5782
->       [5] http://svn.cacti.net/viewvc?view=rev&revision=5784
-
-The BONSAI-2010-0105 references two problems, one for ping.php and another 
-one having to do with a "Vertical Label" in a "Graph Template."
-
-I don't see evidence of this vector in the revisions listed above.  Does 
-anybody else?
-
-(If the "Vertical Label" issue went unpatched, then a separate CVE should 
-probably be assigned to it.)
-
-- Steve
+Thanks, Eugene
+-- 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
