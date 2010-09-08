@@ -1,54 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/19/5
-Message-ID: <1719469004.227941263932377522.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 19 Jan 2010 15:19:37 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: dokuwiki
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/08/10
+Message-ID: <Pine.GSO.4.64.1009081412220.12794@faron.mitre.org>
+Date: Wed, 8 Sep 2010 14:13:50 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security <oss-security@...ts.openwall.com>, oss-security <oss-security@...ts.openwall.com>
+cc: bressers@...hat.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- phpMyAdmin (x < v3.3.7) -- XSS in setup script (PMASA-2010-7)
 Content-Type: text/plain; charset=utf-8
 
------ "Giuseppe Iuculano" <iuculano@...ian.org> wrote:
 
-> Hi,
-> 
-> Multiple vulnerabilities have been discovered in DokuWiki.
-> 
-> References:
-> http://secunia.com/advisories/38183/
-> http://secunia.com/advisories/38205/
-> http://bugs.splitbrain.org/index.php?do=details&task_id=1847
-> http://bugs.splitbrain.org/index.php?do=details&task_id=1853
-> http://www.exploit-db.com/exploits/11141
-> http://www.splitbrain.org/blog/2010-01/17-dokuwiki-security
-> 
-> 
+Josh, I have this one.
 
-I'm using this as my reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=556494#c6
+Use CVE-2010-3263 - the upstream devel just requested an ID separately, 
+too.
 
-http://bugs.splitbrain.org/index.php?do=details&task_id=1847
-http://secunia.com/advisories/38183/
-- directory structure information leak
-- insufficient permissions checks, allowing attacker to change ACLs
+If Josh accidentally answers with an assignment, prefer my CVE, not his.
 
-http://bugs.splitbrain.org/index.php?do=details&task_id=1853
-http://secunia.com/advisories/38205/
-- missing CSRF protections in ACL manager
-
-So for CVE assignment:
-
-CVE-2010-0287
-- directory structure information leak
-
-CVE-2010-0288
-- insufficient permissions checks, allowing attacker to change ACLs
-
-
-CVE-2010-0289
-- missing CSRF protections in ACL manager
-
-Thanks.
-
--- 
-    JB
+- Steve
