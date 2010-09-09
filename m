@@ -1,17 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/26/1
-Message-ID: <4BFC649E.3010202@redhat.com>
-Date: Wed, 26 May 2010 08:00:30 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - kernel: GFS2: The setflags ioctl() doesn't check file ownership
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/09/5
+Message-Id: <20100909141534.C948.A69D9226@jp.fujitsu.com>
+Date: Thu,  9 Sep 2010 14:31:18 +0900 (JST)
+From: KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>
+To: Brad Spengler <spender@...ecurity.net>
+Cc: kosaki.motohiro@...fujitsu.com, Roland McGrath <roland@...hat.com>, Linus Torvalds <torvalds@...ux-foundation.org>, Andrew Morton <akpm@...ux-foundation.org>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Kees Cook <kees.cook@...onical.com>, Al Viro <viro@...iv.linux.org.uk>, Oleg Nesterov <oleg@...hat.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, pageexec@...email.hu, "Brad Spengler <spender@...ecurity.net> Eugene Teo" <eugene@...hat.com>
+Subject: Re: [PATCH 1/3] setup_arg_pages: diagnose excessive argument size
 Content-Type: text/plain; charset=utf-8
 
-On 05/26/2010 04:07 AM, Josh Bressers wrote:
-> Please use CVE-2010-1641
+> I still don't think this addresses the whole problem.  Without question,
+> the rlimit / 4 check is bogus.  If nobody agrees with the intent of that 
+> check, then it should be removed, but I think the better solution is to 
+> fix the check so that it matches its original intent: let the initial 
+> stack setup be up to 1/Xth of the min(rlimit, TASK_SIZE dependent upon 
+> personality), which allows space for additional stack setup in the ELF 
+> loader and then further growth once the process is live.  If that 
+> amount is overstepped, then the exec will return an error to the calling 
+> process instead of being terminated.
+> 
+> It might be useful to consult with the people who introduced/approved 
+> the check in the first place, as they seemed to have reasons for 
+> implementing it.
 
-http://git.kernel.org/linus/7df0e0397b9a18358573274db9fdab991941062f
+Brad, sorry, I have bad news. glibc sysconf(_SC_ARG_MAX) is implemented
+by hard coded RLIMIT_STACK/4 heuristics. That said, at least _now_, we
+can't change this even though you disliked. That said, we can't break
+userland even though userland library is very crazy.
 
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+I don't dislike your "1/Xth of the min(rlimit, TASK_SIZE dependent upon 
+> personality)" idea. however I think You and Roland haven't agreed this
+point yet. he seems to want "unlimited" works as "unlimited". then, now
+I don't make such patch. Instead, I would propose to insert 
+__vm_enough_memory() check in execve() pass. It prevent almost argv attack.
+
+
+
