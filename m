@@ -1,45 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/25/4
-Message-ID: <4BAB7DFB.7050608@gmx.de>
-Date: Thu, 25 Mar 2010 16:15:07 +0100
-From: Matthias Andree <matthias.andree@....de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CFPs and con invitations on the list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/09/7
+Message-ID: <1930913641.1928491284039591379.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 9 Sep 2010 09:39:51 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: coley <coley@...re.org>
+Subject: CVE Assignment: django
 Content-Type: text/plain; charset=utf-8
 
-Am 25.03.2010 15:24, schrieb Josh Bressers:
-[...]
-> I think those headers bring up a good point. This is comparable to the old
-> days of cross posting to lots of gropus on usenet (for you young folks, it
-> was frowned upon). Perhaps we encourage messages DIRECTED at oss-security,
-> rather than shotgun announcements.
+This was just pointed out to me:
 
-Which will then be disassembled into a series of mail-merged individual
-invitations (aka. multi-posting, which was worse than cross-posting)?  If that
-would happen, I'd object.  I also object to "badly cross-posted" invitations.
+http://www.djangoproject.com/weblog/2010/sep/08/security-release/
 
-> 4) Approve posts from list memebers who've been on the list for > 1 month.
->     (I suspect this is the best solution)
+"""
+The provided template tag for inserting the CSRF token into forms -- {% csrf_token %} -- explicitly trusts the cookie value, and displays it as-is. Thus, an attacker who is able to tamper with the value of the CSRF cookie can cause arbitrary content to be inserted, unescaped, into the outgoing HTML of the form, enabling cross-site scripting (XSS) attacks.
+"""
 
-A "List member[...]" might be a lurker, might be an occasional contributor, or a
-regular contributor.  As a pointed question: Would you allow spammers to dump
-their UCE here if they only were subscribers for four weeks?
+Please use CVE-2010-3082
 
-More seriously, what relevance has the duration of a subscription?  My answer
-is: none whatsoever.  There simply isn't any merit in being subscribed alone.
-I find that this criterion, while objective, says nothing about contributions of
-the subscriber to the list, and is therefore not useful.
-
-I acknowledge that finding objective criteria is hard, but #4 is IMO just a very
-bad loophole.
-
-FWIW, I'm getting spamvertisements for conferences directed at me personally,
-and I find that offensive and it should be a reason to prohibit the conference
-altogether, so as to have a real incentive not to spam.
-
-At the very least, conference advertisements, if allowed in moderation, should
-be tagged so that people can automatically filter them. Filter instructions
-could then be on the list's accompanying homepage.
+Thanks.
 
 -- 
-Matthias Andree
+    JB
