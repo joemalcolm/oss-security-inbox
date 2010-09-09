@@ -1,32 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/24/11
-Message-ID: <1525777656.375171290604630513.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 24 Nov 2010 08:17:10 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: inotify memory leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/09/3
+Message-Id: <20100909134842.C93F.A69D9226@jp.fujitsu.com>
+Date: Thu,  9 Sep 2010 14:01:33 +0900 (JST)
+From: KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>
+To: Roland McGrath <roland@...hat.com>
+Cc: kosaki.motohiro@...fujitsu.com, Linus Torvalds <torvalds@...ux-foundation.org>, Andrew Morton <akpm@...ux-foundation.org>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Kees Cook <kees.cook@...onical.com>, Al Viro <viro@...iv.linux.org.uk>, Oleg Nesterov <oleg@...hat.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, pageexec@...email.hu, "Brad Spengler <spender@...ecurity.net>, Eugene Teo" <eugene@...hat.com>, KAMEZAWA Hiroyuki <kamezawa.hiroyu@...fujitsu.com>
+Subject: [PATCH 0/2] execve memory exhaust of argument-copying fixes
 Content-Type: text/plain; charset=utf-8
 
+> This is my take on parts of the execve large arguments copying issues
+> that Kees posted about, and Brad and others have been discussing.
+> I've only looked at the narrow area of the argument copying code
+> itself.  I think these are good and necessary fixes.  But I'm not
+> addressing the whole OOM killer/mm accounting issue, which also needs
+> to be fixed (and I have the impression others are already looking into that).
 
------ "Eugene Teo" <eugene@...hat.com> wrote:
+Now, we have two OOM-Killer/mm acounting problem.
+ 1) OOM-killer doesn't track nascent mm and It may kill innocent task
+ 2) When execve argument-copying, our __vm_enough_memory() doesn't
+    protect any wrong plenty argument. then, execve() invoke OOM instead
+    return failure value when larger argument than system memory.
 
-> Reported by Vegard Nossum, if inotify_init is unable to allocate a new
-> 
-> file for the new inotify group we leak the new group.
-> 
-> Reproducer: http://lkml.org/lkml/2010/11/23/418 (this test case is
-> only 
-> relevant if c44dcc56 (v2.6.34-rc1) is backported)
-> 
-> Issue was introduced in 63c882a0 (v2.6.31-rc1).
-> 
-> https://bugzilla.redhat.com/656830
-> 
+The patch series addressed this two issue.
 
-Please use CVE-2010-4250
 
-Thanks.
 
--- 
-    JB
