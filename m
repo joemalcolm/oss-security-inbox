@@ -1,37 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/12/4
-Message-ID: <Pine.GSO.4.64.1004121812300.2049@faron.mitre.org>
-Date: Mon, 12 Apr 2010 18:18:10 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Josh Bressers <bressers@...hat.com>
-cc: oss-security@...ts.openwall.com, coley@...re.org
-Subject: Re: CVE request: irssi 0.8.15
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/09/8
+Message-Id: <201009091957.47601.hanno@hboeck.de>
+Date: Thu, 9 Sep 2010 19:57:47 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: mednafen stack manipulation
 Content-Type: text/plain; charset=utf-8
 
+http://sourceforge.net/news/?group_id=150840&id=287363
 
-On Mon, 12 Apr 2010, Josh Bressers wrote:
 
->> "This release fixes two security issues: The first being that Irssi
->> didn't check hostname on SSL connections and the other being a hard
->> to
->> exploit remote crash bug."
-> >
+"Fixed a couple of remotely-exploitable(if connected to a malicious server) 
+stack manipulation bugs in the network play code."
 
-> The crash bits mentioned in the changelog are very ambiguous. The git tree
-> isn't any more clear than that. There appear to be two crashes, both sound
-> like NULL pointer dereferences that cannot be triggered by an attacker. If
-> I'm wrong, please speak up.
+Not more info. Please assign CVE.
 
-Josh, I think we should assign another CVE anyway.  The upstream vendor 
-has explicitly labeled this as a security issue, so even if it seems of 
-limited severity, that's enough to trigger creation of a CVE.  The use of 
-the "remote crash" term also reinforces the need for a CVE.
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
-This might be juse a plain old crasher from the perspective of many 
-downstream vendors, but it's still worthy of inclusion in CVE because 
-there is a significant population that would treat it as a "security" 
-problem even if it's low severity.
+http://schokokeks.org - professional webhosting
 
-Should I assign one or should you?
-
-- Steve
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
