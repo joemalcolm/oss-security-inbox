@@ -1,55 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/25/2
-Message-ID: <4C74C3C8.10005@treenet.co.nz>
-Date: Wed, 25 Aug 2010 19:18:32 +1200
-From: Amos Jeffries <squid3@...enet.co.nz>
-To: oss-security <oss-security@...ts.openwall.com>
-CC: "Steven M. Christey" <coley@...us.mitre.org>,  Amos Jeffries <amosjeffries@...id-cache.org>, Stephen Thorne <stephen@...rne.id.au>
-Subject: Re: CVE Request -- Squid v3.1.6 -- DoS (crash) while processing large DNS replies with no IPv6 resolver present
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/09/6
+Message-ID: <4C88DB97.1060602@redhat.com>
+Date: Thu, 09 Sep 2010 15:05:27 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, David Malcolm <dmalcolm@...hat.com>
+Subject: CVE Request -- Python -- accept() implementation in async core is broken => more subcases
 Content-Type: text/plain; charset=utf-8
 
-Jan Lieskovsky wrote:
-> Hi Steve, vendors,
-> 
->   Stephen Thorne reported a buffer overread flaw in the way Squid proxy 
-> caching server
-> processed large DNS replies in cases, when no IPv6 resolver was present.
-> A remote attacker could provide DNS reply with large amount of data,
-> leading to denial of service (squid server crash).
-> 
-> Upstream bug report:
->   [1] http://bugs.squid-cache.org/show_bug.cgi?id=3021
-> 
-> Relevant upstream changeset:
->   [2] http://bazaar.launchpad.net/~squid/squid/3.1/revision/10072
-> 
+Hello Steve, vendors,
 
-Also for use as needed our patch archive copy:
-http://www.squid-cache.org/Versions/v3/3.1/changesets/squid-3.1-10072.patch
+   Giampaolo Rodola reported a deficiency in the implementation of Python's accept() routine:
+   [1] http://bugs.python.org/issue6706
 
-> References:
->   [3] http://marc.info/?l=squid-users&m=128263555724981&w=2
->   [4] https://bugzilla.redhat.com/show_bug.cgi?id=626927
->   [5] http://bugs.gentoo.org/show_bug.cgi?id=334263
-> 
-> Could you allocate CVE id for this issue?
-> 
-> Amos, Stephen please correct me, if some of [1] and [2] doesn't 
-> correspond to:
-> 
-> "One regression introduced with 3.1.6 when contacting IPv4-only DNS
-> resolvers opens a small but exploitable DoS vulnerability."
-> 
-> issue mentioned in [3].
-> 
-> Thanks && Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+   The following seems to be all symptoms for the same issue:
+   A, SMTP (smtpd.py):
+      [2] https://bugzilla.redhat.com/show_bug.cgi?id=632200
+      [3] http://bugs.python.org/issue9129
 
-Henrik covered the rest in your bug report [4].
+   B, pyftpdlib:
+      [4] http://code.google.com/p/pyftpdlib/issues/detail?id=104
 
-Amos
--- 
-Please be using
-   Current Stable Squid 2.7.STABLE9 or 3.1.7
-   Beta testers wanted for 3.2.0.1
+   C, ZODB:
+      [5] https://bugs.launchpad.net/zodb/+bug/135108
+
+   D, more?
+
+Not sure, how to proceed in this case:
+i,  if assign only one CVE id for [1] or,
+ii, assign also separate CVE ids for the child symptoms? ([2], [3], [4])
+
+Cc-ed David Malcom on this post, to shed more light how to handle this case.
+
+Once the way, how to further proceed with this, specified. Steve could you allocate CVE id (ids)?
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
