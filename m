@@ -1,28 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/24/7
-Message-ID: <20100824234550.GF4358@thorne.id.au>
-Date: Wed, 25 Aug 2010 09:45:50 +1000
-From: Stephen Thorne <stephen@...rne.id.au>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Amos Jeffries <amosjeffries@...id-cache.org>, Stephen Thorne <stephen@...rne.id.au>
-Subject: Re: CVE Request -- Squid v3.1.6 -- DoS (crash) while processing large DNS replies with no IPv6 resolver present
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/09/1
+Message-ID: <4C886EAA.7090804@redhat.com>
+Date: Thu, 09 Sep 2010 13:20:42 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: niu buffer overflow for ETHTOOL_GRXCLSRLALL
 Content-Type: text/plain; charset=utf-8
 
-On 2010-08-24, Jan Lieskovsky wrote:
->   Stephen Thorne reported a buffer overread flaw in the way Squid proxy caching server
-> processed large DNS replies in cases, when no IPv6 resolver was present.
-> A remote attacker could provide DNS reply with large amount of data,
-> leading to denial of service (squid server crash).
+https://bugzilla.redhat.com/show_bug.cgi?id=632069
+http://www.spinics.net/lists/netdev/msg140133.html
 
-Those references all look correct, but I have one small niggle, this was not a
-buffer overread flaw.
+"niu_get_ethtool_tcam_all() assumes that its output buffer is the right 
+size, and warns before returning if it is not.  However, the output 
+buffer size is under user control and ETHTOOL_GRXCLSRLALL is an 
+unprivileged ethtool command."
 
-What actually happens is that if a TCP DNS request is required, a logic error
-causes a sockopt to be set on the ipv6 resolver fd, which will be fatal if that
-resolver is not configured.
+Affects kernel v2.6.30-rc1 onwards.
 
+Thanks, Eugene
 -- 
-Regards,
-Stephen Thorne
-Development Engineer
-Netbox Blue
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
