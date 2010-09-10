@@ -1,22 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/09/1
-Message-ID: <4BBE9B39.8060802@kernel.sg>
-Date: Fri, 09 Apr 2010 11:12:57 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
-To: oss-security@...ts.openwall.com
-CC: coley@...us.mitre.org
-Subject: CVE-2010-1146 kernel: reiserfs priv escalation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/10/3
+Message-Id: <20100910092541.2864A405D5@magilla.sf.frob.com>
+Date: Fri, 10 Sep 2010 02:25:41 -0700 (PDT)
+From: Roland McGrath <roland@...hat.com>
+To: KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>
+Cc: Brad Spengler <spender@...ecurity.net>, Linus Torvalds <torvalds@...ux-foundation.org>, Andrew Morton <akpm@...ux-foundation.org>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Kees Cook <kees.cook@...onical.com>, Al Viro <viro@...iv.linux.org.uk>, Oleg Nesterov <oleg@...hat.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, pageexec@...email.hu, Brad Spengler <spender@...ecurity.net>, Eugene Teo <eugene@...hat.com>
+Subject: Re: [PATCH 1/3] setup_arg_pages: diagnose excessive argument size
 Content-Type: text/plain; charset=utf-8
 
-Credit: Matt McCutchen. The kernel allows processes to access the 
-internal ".reiserfs_priv" directory at the top of a reiserfs filesystem 
-which is used to store xattrs. Permissions are not enforced in that 
-tree, so unprivileged users can view and potentially modify the xattrs 
-on arbitrary files.
+> Brad, sorry, I have bad news. glibc sysconf(_SC_ARG_MAX) is implemented
+> by hard coded RLIMIT_STACK/4 heuristics. That said, at least _now_, we
+> can't change this even though you disliked. That said, we can't break
+> userland even though userland library is very crazy.
 
-CERT/CC (http://www.cert.org/), report ID VRF#G7I2H94M
+I'm sorry you think it's "very crazy" to implement the required
+functionality in the only way available.  POSIX requires that execve
+fail with E2BIG when the ARG_MAX limit is exceeded.  sysconf has to
+return the correct actual limit that execve will enforce so that a
+conforming application knows how much it can safely attempt to use.
+Since the kernel uses the hard-coded RLIMIT_STACK/4 heuristic and does
+not expose the true manifest limit any other way, sysconf has to
+parallel the kernel's calculation.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=568041
-http://marc.info/?l=linux-kernel&m=127076012022155&w=2
 
-Thanks, Eugene
+Thanks,
+Roland
