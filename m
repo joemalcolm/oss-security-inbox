@@ -1,38 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/13/3
-Message-ID: <x2p9e1e2b1f1004131347zb8adadf6z374ce23f7531cd3d@mail.gmail.com>
-Date: Tue, 13 Apr 2010 22:47:08 +0200
-From: Wouter Coekaerts <coekie@...si.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: irssi 0.8.15
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/10/2
+Message-Id: <20100910091830.F0893405D5@magilla.sf.frob.com>
+Date: Fri, 10 Sep 2010 02:18:30 -0700 (PDT)
+From: Roland McGrath <roland@...hat.com>
+To: Brad Spengler <spender@...ecurity.net>
+Cc: Linus Torvalds <torvalds@...ux-foundation.org>, Andrew Morton <akpm@...ux-foundation.org>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Kees Cook <kees.cook@...onical.com>, Al Viro <viro@...iv.linux.org.uk>, Oleg Nesterov <oleg@...hat.com>, KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, pageexec@...email.hu, "Brad Spengler <spender@...ecurity.net> Eugene Teo" <eugene@...hat.com>
+Subject: Re: [PATCH 1/3] setup_arg_pages: diagnose excessive argument size
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+> I still don't think this addresses the whole problem.  
 
-> I believe assignment of CVE-2010-1154 is redundant here, given that
-> CVE-2010-1155 is about the completely missing server name check.  If it
-> wasn't checking names, it wasn't handling \0 in names incorrectly.
+You're responding to one of three patches, and I said to begin with that
+all together they only address part of the problem (not the OOM part).
+So the import of this remark is somewhat mysterious.
 
-Indeed. It never checked the hostname at all, so there was no mishandling of \0.
+> Without question, the rlimit / 4 check is bogus.  
 
-> The crash bits mentioned in the changelog are very ambiguous. The git tree
-> isn't any more clear than that. There appear to be two crashes, both sound
-> like NULL pointer dereferences that cannot be triggered by an attacker. If
-> I'm wrong, please speak up.
+I question that assertion.  For a non-RLIM_INFINITY limit, there is nothing
+in particular wrong with it.  The kernel is free to pick its upper bound
+for ARG_MAX by whatever method.  I don't see anything much to object to
+about the rlimit/4 method.  It has no useful effect for RLIM_INFINITY and
+IMHO should not try to impose any limit in that case.  But that's the only
+thing I see a reason to change.
 
-It is about this entry in the changelog/NEWS:
-- Fix crash when checking for fuzzy nick match when not on the channel.
-  Reported by Aurelien Delaitre (SATE 2009).
+> If nobody agrees with the intent of that check, then it should be
+> removed, but I think the better solution is to fix the check so that it
+> matches its original intent: let the initial stack setup be up to 1/Xth
+> of the min(rlimit, TASK_SIZE dependent upon personality), which allows
+> space for additional stack setup in the ELF loader and then further
+> growth once the process is live.  
 
-The fix is revision 5126
-( http://svn.irssi.org/cgi-bin/viewvc.cgi/irssi/trunk/src/core/nicklist.c?root=irssi&r1=4922&r2=5126
-)
+I see no reason to suspect this was the "original intent".  It seems most
+likely to me that the original intent was 1/4th the RLIMIT_STACK size, and
+just nobody thought about what that meant when RLIMIT_STACK was RLIM_INFINITY.
 
-It is only exploitable (resulting in a crash) at the exact moment the
-victim is leaving a channel.
-With some good timing it can be triggered by an attacker.
+> If that amount is overstepped, then the exec will return an error to the
+> calling process instead of being terminated.
 
-Regards,
+That's what happens now when RLIMIT_STACK is smaller, and that's what
+people really care about.  What you suggest would require some more
+significant changes to the exec code path, touching all the binfmt modules
+(though probably only binfmt_elf matters).  
 
-Wouter aka coekie
-Irssi developer.
+In the current structure of the code, the arch-dependent SET_PERSONALITY
+macro used by {compat_,}binfmt_elf is the only place that knows what arch
+bits to set for the new address space size.  This is itself destructive,
+but also runs after flush_old_exec (the point of no return).  So you'd have
+to reorganize things significantly, or add an entirely new arch macro tied
+into struct binfmt somehow, or something like that.
+
+> It might be useful to consult with the people who introduced/approved 
+> the check in the first place, as they seemed to have reasons for 
+> implementing it.
+
+This was done in commit b6a2fea by Ollie Wild <aaw@...gle.com>:
+	mm: variable length argument support
+It was part of going from a fixed maximum to no fixed maximum.
+The log includes:
+    [a.p.zijlstra@...llo.nl: limit stack size]
+So perhaps it was Peter who devised the rlimit/4 idea.
+
+
+Thanks,
+Roland
