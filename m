@@ -1,40 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/15/5
-Message-ID: <87ocjqnrtc.fsf@mid.deneb.enyo.de>
-Date: Mon, 15 Feb 2010 21:54:07 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
-To: oss-security@...ts.openwall.com
-Subject: CouchDB: Don't use a RESTful API from the browser, please
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/10/8
+Message-ID: <20100910172457.GA23393@redhat.com>
+Date: Fri, 10 Sep 2010 19:24:57 +0200
+From: Oleg Nesterov <oleg@...hat.com>
+To: KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>
+Cc: Roland McGrath <roland@...hat.com>, Linus Torvalds <torvalds@...ux-foundation.org>, Andrew Morton <akpm@...ux-foundation.org>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Kees Cook <kees.cook@...onical.com>, Al Viro <viro@...iv.linux.org.uk>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, pageexec@...email.hu, "Brad Spengler <spender@...ecurity.net>, Eugene Teo" <eugene@...hat.com>, KAMEZAWA Hiroyuki <kamezawa.hiroyu@...fujitsu.com>
+Subject: Re: [PATCH] move cred_guard_mutex from task_struct to signal_struct
 Content-Type: text/plain; charset=utf-8
 
-I've recently posted a somewhat fundamental security issue to the
-couchdb developer mailing list, not realizing that some of us
-(including Debian) have couchdb in a shipping product.  Oh well.
+On 09/10, KOSAKI Motohiro wrote:
+>
+> 1) moving cread_guard_mutex itself
+>    - no increase execve overhead
+> 	-> very good
+>    - it also prevent parallel ptrace
 
-Here's what I wrote ("Futon" is the web front end which runs in the
-browser and served from the same domain as the database itself; the
-database uses a RESTful interface, meaning predictable URLs):
+No, it doesn't. Only PTRACE_ATTACH needs this mutex, and as Roland
+pointed out it also needs write_lock(tasklist) which is worse. So
+this change doesn't make any practical harm for ptrace.
 
-  Due to CSRF issues, Futon cannot use that API.  You really need to
-  include some sort of token in the URL (or in an HTTP header) which
-  does not get passed on automatically by the browser.  Right now,
-  you're relying on HttpOnly support in the browser, which is not
-  available universally.
-  
-  You also have a cross-site scripting issue with uploaded document
-  attachments.  Right now, it is possible to use an inline document
-  attachment in a POST request for a new document to upload Javascript
-  to the server, and have it served back to you for execution.  At this
-  point, the same-origin restrictions do not apply anymore.
-  Unfortunately, it is a bit difficult to stop browsers from
-  interpreting crafted blobs as HTML, so I have no good advice to offer
-  here.  Even if the first issue is addressed, you still have to deal
-  with Futon users viewing attachments accidentally.
+> 2) move in_exec_mm to signal_struct too
+>    -> very hard. oom-killer can use very few lock because it's called
+>       from various place. now both ->mm and ->in_exec_mm are protected
+>       task_lock() and it help to avoid messy.
 
-No reaction from the developers so far.
+Yes. But, if ->in_exec_mm is only used by oom_badness(), then I think
+you can use task_lock(tsk->group_leader). oom_badness() needs tasklist
+anyway, this means it can't race with de_thread() changing the leader.
+But up to you.
 
-Note that older versions (such as 0.8.0) are not affected by this
-because they apparently lack any authentication whatsoever.
+Another very minor nit (but again, up to you). Perhaps exec_mmap()
+could clear ->in_exec_mm (in task_struct or signal_struct, this doesnt
+matter), it takes task_lock(current) anyway (and at this point current
+is always the group leader).
 
-Sorry for this, I would have reported it privately if I had realized
-that this particular ship had already sailed...
+> Let's move ->cred_guard_mutex from task_struct to signal_struct. It
+> naturally prevent multiple-threads-inside-exec.
+
+Reviewed-by: Oleg Nesterov <oleg@...hat.com>
+
+
+This is very minor, but perhaps you can also fix a couple of comments
+which mention task->cred_guard_mutex,
+
+	fs/exec.c:1109		the caller must hold current->cred_guard_mutex
+	kernel/cred.c:328	The caller must hold current->cred_guard_mutex
+	include/linux/tracehook.h:153	@task->cred_guard_mutex
+
+Oleg.
+
