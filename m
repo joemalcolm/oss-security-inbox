@@ -1,42 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/24/8
-Message-ID: <486240715.374251290603960112.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 24 Nov 2010 08:06:00 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: xen: request-processing loop is unbounded in blkback
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/10/5
+Message-Id: <20100910183309.C975.A69D9226@jp.fujitsu.com>
+Date: Fri, 10 Sep 2010 18:43:57 +0900 (JST)
+From: KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>
+To: Roland McGrath <roland@...hat.com>
+Cc: kosaki.motohiro@...fujitsu.com, Brad Spengler <spender@...ecurity.net>, Linus Torvalds <torvalds@...ux-foundation.org>, Andrew Morton <akpm@...ux-foundation.org>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Kees Cook <kees.cook@...onical.com>, Al Viro <viro@...iv.linux.org.uk>, Oleg Nesterov <oleg@...hat.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, pageexec@...email.hu, Eugene Teo <eugene@...hat.com>
+Subject: Re: [PATCH 1/3] setup_arg_pages: diagnose excessive argument size
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-4247.
+> > Brad, sorry, I have bad news. glibc sysconf(_SC_ARG_MAX) is implemented
+> > by hard coded RLIMIT_STACK/4 heuristics. That said, at least _now_, we
+> > can't change this even though you disliked. That said, we can't break
+> > userland even though userland library is very crazy.
+> 
+> I'm sorry you think it's "very crazy" to implement the required
+> functionality in the only way available.  POSIX requires that execve
+> fail with E2BIG when the ARG_MAX limit is exceeded.  sysconf has to
+> return the correct actual limit that execve will enforce so that a
+> conforming application knows how much it can safely attempt to use.
+> Since the kernel uses the hard-coded RLIMIT_STACK/4 heuristic and does
+> not expose the true manifest limit any other way, sysconf has to
+> parallel the kernel's calculation.
+
+Hmm...
+Probably my poor english leaded to misunderstood. I didn't intent glibc
+is very crazy. I only intended to "even if userland is crazy, I disagree
+to break userland".
+
+And yes, we obviously need to expose ARG_MAX limit to libc. a duplicated
+heuristic code easily makes confusion and mistake. nobody want such 
+fragile state. however, it's a bit offtopic. anyway.
+
 
 Thanks.
 
--- 
-    JB
-
-
------ "Eugene Teo" <eugene@...hat.com> wrote:
-
-> If the frontend pass a bad index of production request, the backend
-> will 
-> enter an endless loop and then cause a excessive CPU consumption. A
-> Xen 
-> guest can cause the Xen host to be unresponsive.
-> 
-> This issue has been fixed in upstream by:
-> changeset:   391:77f831cbb91d
-> user:        Keir Fraser <keir.fraser@...rix.com>
-> date:        Fri Jan 18 16:52:25 2008 +0000
-> summary:     blkback: Request-processing loop is unbounded and hence 
-> requires a
-> http://xenbits.xensource.com/linux-2.6.18-xen.hg?rev/77f831cbb91d
-> 
-> changeset:   392:7070d34f251c
-> user:        Keir Fraser <keir.fraser@...rix.com>
-> date:        Mon Jan 21 11:43:31 2008 +0000
-> summary:     blkback/blktap: Check for kthread_should_stop() in inner
-> loop,
-> http://xenbits.xensource.com/linux-2.6.18-xen.hg?rev/7070d34f251c
-> 
-> Thanks, Eugene
