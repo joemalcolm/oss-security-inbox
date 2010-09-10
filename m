@@ -1,56 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/20/7
-Message-ID: <AANLkTikn9beTBkkwBgNZqeDUskpTDCop+woTyCCOo=Bh@mail.gmail.com>
-Date: Fri, 20 Aug 2010 13:24:57 +0200
-From: Pierre Joye <pierre.php@...il.com>
-To: Tomas Hoger <thoger@...hat.com>
-Cc: oss-security@...ts.openwall.com, Moritz Muehlenhoff <jmm@...ian.org>,  "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: PHP MOPS-2010-56..60
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/10/4
+Message-Id: <20100910093958.143B5405D5@magilla.sf.frob.com>
+Date: Fri, 10 Sep 2010 02:39:58 -0700 (PDT)
+From: Roland McGrath <roland@...hat.com>
+To: Oleg Nesterov <oleg@...hat.com>
+Cc: KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>, Linus Torvalds <torvalds@...ux-foundation.org>, Andrew Morton <akpm@...ux-foundation.org>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Kees Cook <kees.cook@...onical.com>, Al Viro <viro@...iv.linux.org.uk>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, pageexec@...email.hu, Brad Spengler <spender@...ecurity.net>, Eugene Teo <eugene@...hat.com>, KAMEZAWA Hiroyuki <kamezawa.hiroyu@...fujitsu.com>
+Subject: Re: [PATCH 1/2] oom: don't ignore rss in nascent mm
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Aug 20, 2010 at 1:00 PM, Tomas Hoger <thoger@...hat.com> wrote:
-> On Fri, 20 Aug 2010 12:38:31 +0200 Pierre Joye wrote:
->
->> > MOPS-2010-056 - MOPS-2010-060 as subject indicates.  Those are
->> > mysqlnd issues and session serializer issue allowing data
->> > injection.  Not any from that set of interruption issues that
->> > exposed one or two problems in different ways.
->>
->> As far as I can tell and see, both the mysqlnd and session issues have
->> been fixed.
->
-> Raphael posted commit links earlier in this thread.
->
->> Phar: http://svn.php.net/viewvc?view=revision&revision=298667
->
-> I'm aware of that commit.  It does not change
-> php_stream_wrapper_log_error invocation from phar_stream_flush, as
-> mentioned in MOPS-2010-024:
->
-> http://svn.php.net/viewvc/php/php-src/trunk/ext/phar/stream.c?view=markup&pathrev=298667#l471
->
-> Hence the question if there is some less obvious change that make that
-> particular cases non-issue too.
+> I wonder if it makes sense to move ->cred_guard_mutex from task_struct
+> to signal_struct and thus make multiple-threads-inside-exec impossible.
+> Only one thread can win anyway.
 
-I miss that part, thanks for pointing me to it. I will commit a fix
-later today. However same issue that the other phar flaws in this
-MOPS.
+That probably makes sense.  Note that cred_guard_mutex is also overloaded
+for ptrace_attach, so this would add some more serialization of attaches to
+threads in the same group.  But as long as actual attachment serializes on
+tasklist_lock anyway, it doesn't make a material difference.  (Even without
+that, it would presumably be the same debugger attaching serially to
+threads in the same group, so it wouldn't degrade anything in practice.)
 
->> As far as I remember, the resources related issues are not fixed (-22
->> and -03), it is also not new and related to the same bug. I also don't
->> think that it will get fixed any time soon as it is not possible to
->> fix easily. I think there is already a CVE about this problem.
->
-> Are you aware of any good bugs.php.net reference that covers the issue
-> in greater detail?
 
-There is no bug report about MOPS, sadly. There was a couple of
-discussions on security@ but nothing interesting or new (Joe may have
-them as he is part of this list too). All we had are the blog posts
-from Stefen.
-
-Cheers,
--- 
-Pierre
-
-@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+Thanks,
+Roland
