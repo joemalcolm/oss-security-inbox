@@ -1,38 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/07/2
-Message-ID: <20100107165101.GK8609@ngolde.de>
-Date: Thu, 7 Jan 2010 17:51:01 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request - pidgin MSN arbitrary file upload
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/10/1
+Message-Id: <20100910085915.8CC23405D5@magilla.sf.frob.com>
+Date: Fri, 10 Sep 2010 01:59:15 -0700 (PDT)
+From: Roland McGrath <roland@...hat.com>
+To: pageexec@...email.hu
+Cc: Linus Torvalds <torvalds@...ux-foundation.org>, Andrew Morton <akpm@...ux-foundation.org>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Kees Cook <kees.cook@...onical.com>, Al Viro <viro@...iv.linux.org.uk>, Oleg Nesterov <oleg@...hat.com>, KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, "Brad Spengler <spender@...ecurity.net> Eugene Teo" <eugene@...hat.com>
+Subject: Re: [PATCH 1/3] setup_arg_pages: diagnose excessive argument size
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Josh Bressers <bressers@...hat.com> [2010-01-07 16:19]:
-> ----- "Paul Aurich" <paul@...krain42.org> wrote:
-> > http://events.ccc.de/congress/2009/Fahrplan/events/3596.en.html
-> > 
-> > In Fabian's talk, he describes an issue where Pidgin's MSN prpl does not
-> > validate the filename received in a request for Pidgin to upload a custom
-> > emoticon to a third-party, allowing an attacker to download arbitrary
-> > files on the system via directory traversal.
-> > 
-> > This is fixed in source, but no release yet:
-> > http://d.pidgin.im/viewmtn/revision/info/c64a1adc8bda2b4aeaae1f273541afbc4f71b810
+> > +	if (unlikely(stack_top < mmap_min_addr) ||
 > 
-> As this really needs an ID, please use CVE-2010-0013.
+> this could arguably elicit some warning, or even better, prevent the
+> sysctl from setting mmap_min_addr too high in the first place.
 
-While everyone is talking about the file inclusion vulnerability which is 
-really important, has anyone investigated the SLP memory corruption issue yet?
-Page 24: http://events.ccc.de/congress/2009/Fahrplan/attachments/1483_26c3_ipv4_fuckups.pdf
+This code has local checks to ensure that things don't fail worse later.
+Those are good to have regardless.  If you'd like to add some constraints
+on setting mmap_min_addr, that's certainly fine too.  But it's no reason
+not to have this simple and clear check here.
 
-I had no time to investigate this yet myself but both issues should be fixed 
-probably at once ;)
+> or alternatively, just check for
+> 
+> 	mmap_min_addr > stack_top - (vma->vm_end - vma->vm_start)
 
-Cheers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
+IMHO that is far less clear as to what the intent of the check is than what
+I wrote.  It's especially subtle that this check allows overflow and then
+you check for that later, rather than the formulation I gave where no
+overflow is possible and it's immediately obvious why.
 
-Content of type "application/pgp-signature" skipped
+> which looks even better if done in shift_arg_pages as i've done it in PaX:
+
+My change to setup_arg_pages is consistent with the existing
+CONFIG_STACK_GROWSUP code.  IMHO simple fixes should go in first
+and other restructuring of the code can be done later.
+
+> > +		return -ENOMEM;
+> 
+> i'd say EFAULT is more consistent, ENOMEM is used for cases when the kernel
+> couldn't allocate physical memory for something, EFAULT is when there's some
+> issue with the address space itself (based on the reaction to find_vma or
+> expand_stack failures).
+
+I disagree.  IMHO, the only proper use of EFAULT is for the passing of a
+bad pointer (including passing data that includes a bad pointer, etc.).
+So execve really should only use EFAULT when the pointers passed in the
+system call are bad.  I used ENOMEM purely for the reason that the
+existing CONFIG_STACK_GROWSUP code I paralleled uses it.  But it
+certainly does make more sense than EFAULT does.  ENOMEM is used for
+cases where you couldn't get the address space you wanted (mmap), which
+is a fairly close analogue to this case.
+
+But the one error code that is actually correct for the case is E2BIG.
+Obviously that's really the right thing for Argument list too long cases.
+
+The choice of error code here is fairly academic.  Any failure of
+setup_arg_pages always leads to sending ourselves a SIGKILL before
+returning the error code to percolate back to execve.  So it's only the
+error code seen in syscall tracing before the process dies.  It's not
+"user-visible" in the usual sense (i.e. POSIX doesn't care what code we
+use here).
+
+> also what about the BUG_ON in shift_arg_pages? it could go now, right?
+
+It is now impossible by the logic of the arithmetic, yes.  But it is
+another local sanity check asserting the assumptions of the code in that
+function.  So there is no reason to 
+
+> personally, i prefer to do this the way i did it in PaX: move up the
+> shift_arg_pages call a bit and turn the BUG_ON into a proper check.
+
+I'm more comfortable with a fix that doesn't change any other aspect of the
+behavior.  Probably moving the call to shift_arg_pages around is fine.  But
+IMHO that belongs in a separate set of cleanup patches, and not in the
+isolated fix for the BUG_ON hit.
+
+
+Thanks,
+Roland
