@@ -1,20 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/20/1
-Message-ID: <20101120092828.GC17469@inutil.org>
-Date: Sat, 20 Nov 2010 10:28:28 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Clear text password in process list when using MySQL GUI tools
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/10/7
+Message-ID: <AANLkTik=ZpiCN-5YfWJ6zejSJBknL8Sj4Vtc+X_XpS71@mail.gmail.com>
+Date: Fri, 10 Sep 2010 08:06:41 -0700
+From: Linus Torvalds <torvalds@...ux-foundation.org>
+To: KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>
+Cc: Roland McGrath <roland@...hat.com>, Andrew Morton <akpm@...ux-foundation.org>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Kees Cook <kees.cook@...onical.com>, Al Viro <viro@...iv.linux.org.uk>, Oleg Nesterov <oleg@...hat.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, pageexec@...email.hu, "Brad Spengler <spender@...ecurity.net>, Eugene Teo" <eugene@...hat.com>, KAMEZAWA Hiroyuki <kamezawa.hiroyu@...fujitsu.com>
+Subject: Re: [PATCH 2/2] execve: check the VM has enough memory at first
 Content-Type: text/plain; charset=utf-8
 
-Martin Drescher wrote:
-> I can't follow you with that. Those packages are part of my Debian
-> distribution, which is lenny and the reason I initially posted this
-> issue to Debian security.
+On Wed, Sep 8, 2010 at 10:04 PM, KOSAKI Motohiro
+<kosaki.motohiro@...fujitsu.com> wrote:
+>
+> After this patch, execve() expand stack at first and receive to
+> check vm_enough_memory() properly. then, too long argument of
+> execve() than the machine memory return EFAULT properly.
 
-Indeed. I was confused by the source package mysql-admin, which has been
-dropped from Debian some time ago: 
-http://packages.qa.debian.org/m/mysql-admin.html
+This is horrible. We don't want to walk the arguments one more time
+just for this. Let's just improve the checks that we do as we go
+along.
 
-Cheers,
-         Moritz
+                            Linus
