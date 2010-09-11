@@ -1,28 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/15/3
-Message-ID: <4C172370.4090403@kernel.sg>
-Date: Tue, 15 Jun 2010 14:53:36 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/11/8
+Message-ID: <i6gbmf$l4k$1@dough.gmane.org>
+Date: Sat, 11 Sep 2010 11:45:11 -0500
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: dann frazier <dannf@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request - kernel: put_tty_queue NULL pointer deref
+Subject: CVE request: mailscanner, multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On 06/15/2010 02:31 PM, dann frazier wrote:
-> Going through some old issues, we have this one from 2009:
->   https://bugzilla.kernel.org/show_bug.cgi?id=14605
->
-> Upstream fix went into 2.6.33-rc8:
->    http://git.kernel.org/linus/80e1e823989ec44d8e35bdfddadbddcffec90424
->
-> This was included in 2.6.32.9 and 2.6.27.46, but it looks like our
-> 2.6.26-based kernel may have the issue as well.
+Hi everyone,
 
-Also see, https://bugzilla.redhat.com/show_bug.cgi?id=559100.
+I reported some vulnerabilities in mailscanner but forgot to assign ids. 
+Could somebody assign ones?
 
-If memory serves me well, it should affect kernels v2.6.21-rc1 onwards 
-with the commit ab521dc0.
+Incomplete fix for CVE-2008-5313:
+http://bugs.debian.org/596403
 
-Thanks, Eugene
+update{_bad,}_phishing_sites scripts may download and use spoofed files:
+http://bugs.debian.org/596396
+
+Local users may prevent virus signatures from being updated:
+http://bugs.debian.org/596397
+
+Thanks.
+
+Kind regards,
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
+
+
