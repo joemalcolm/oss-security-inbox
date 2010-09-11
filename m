@@ -1,22 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/17/1
-Message-ID: <4BA029DF.3050906@kernel.sg>
-Date: Wed, 17 Mar 2010 09:01:19 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
-To: oss-security@...ts.openwall.com
-CC: coley@...us.mitre.org
-Subject: CVE-2009-4271 kernel: 32bit process on 64bit system DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/11/7
+Message-ID: <4C8B8692.7649.3E0895B@pageexec.freemail.hu>
+Date: Sat, 11 Sep 2010 15:39:30 +0200
+From: pageexec@...email.hu
+To: KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>, Roland McGrath <roland@...hat.com>
+CC: Brad Spengler <spender@...ecurity.net>, Linus Torvalds <torvalds@...ux-foundation.org>, Andrew Morton <akpm@...ux-foundation.org>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Kees Cook <kees.cook@...onical.com>, Al Viro <viro@...iv.linux.org.uk>, Oleg Nesterov <oleg@...hat.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, Eugene Teo <eugene@...hat.com>
+Subject: Re: [PATCH 1/3] setup_arg_pages: diagnose excessive argument size
 Content-Type: text/plain; charset=utf-8
 
-STMicroelectronics reported a flaw in the Linux kernel, versions 2.6.9 
-to 2.6.17, when running on x86_64, where a user could use a regular 
-32bit process to trigger a kernel panic, without any special privileges. 
-  The bug occurs when a 32bit user process triggers a segfault (i.e. 
-de-reference a null-pointer) after having performed a mprotect() to 
-restrict any rwx access on its VDSO page.
+On 10 Sep 2010 at 2:25, Roland McGrath wrote:
 
-This only affects Red Hat Enterprise Linux 4.
+> > Brad, sorry, I have bad news. glibc sysconf(_SC_ARG_MAX) is implemented
+> > by hard coded RLIMIT_STACK/4 heuristics. That said, at least _now_, we
+> > can't change this even though you disliked. That said, we can't break
+> > userland even though userland library is very crazy.
+> 
+> I'm sorry you think it's "very crazy" to implement the required
+> functionality in the only way available.  POSIX requires that execve
+> fail with E2BIG when the ARG_MAX limit is exceeded.  sysconf has to
+> return the correct actual limit that execve will enforce so that a
+> conforming application knows how much it can safely attempt to use.
+> Since the kernel uses the hard-coded RLIMIT_STACK/4 heuristic and does
+> not expose the true manifest limit any other way, sysconf has to
+> parallel the kernel's calculation.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-4271
+no it doesn't have to, similarly to how it doesn't have to hardcode
+_SC_PAGESIZE either, AT_PAGESZ tells userland what it needs to know
+and i think AT_ARGMAX could exist just as well.
 
-Thanks, Eugene
