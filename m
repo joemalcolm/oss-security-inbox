@@ -1,79 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/25/1
-Message-ID: <20100325002033.GA3427@openwall.com>
-Date: Thu, 25 Mar 2010 03:20:33 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/11/3
+Message-ID: <1533295840.2142191284165430050.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 10 Sep 2010 20:37:10 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CFPs and con invitations on the list
+Cc: coley@...re.org
+Subject: Re: CVE request: mednafen stack manipulation
 Content-Type: text/plain; charset=utf-8
 
-Hi Josh,
+I can't make any sense of this either. Let's just use CVE-2010-3085 to note
+that version 0.8.D fixes some security flaws.
 
-Thank you for speaking up.
+Thanks.
 
-On Mon, Mar 15, 2010 at 09:52:22AM -0400, Josh Bressers wrote:
-> ----- "Solar Designer" <solar@...nwall.com> wrote:
-> > 
-> > That said, I won't be approving any further "multi-conference" stuff, but
-> > I've just approved a HITB announcement...  BTW, Hafez Kamal has been a
-> > subscriber to oss-security for a while.
+-- 
+    JB
+
+
+----- "Hanno Böck" <hanno@...eck.de> wrote:
+
+> http://sourceforge.net/news/?group_id=150840&id=287363
 > 
-> I agree with this decision. I don't see such announcements adding any value
-> here, and probably just increase the noise level.
-
-I find the above confusing.  First you say that you agree with my
-decision to be selective about the announcements (reject some, approve
-some others), then you state that "such announcements" (all of them?)
-don't add any value in your opinion.  Please clarify.
-
-> Unless someone has a compelling argument FOR letting these though,
-
-So far, I only got a few "I don't mind to receive these" responses
-(off-list).  I don't think these count as "compelling arguments", yet I
-am also not very comfortable about rejecting messages that some people
-are sending and others don't mind receiving.
-
-> I think this is an acceptable policy.
-
-Please define the policy first.
-
-I think that it's not great to just do nothing about these postings -
-neither approve nor reject them, letting them get bounced to the senders
-with an automated message stating that "the list moderators for the
-oss-security list have failed to act on your post."  It is best to
-either approve or explicitly reject messages, providing an explanation
-to the sender.
-
-As you have noticed, I've approved two additional HITB postings recently -
-one about the videos (somewhat valuable), the other a correction (of
-little value).  I think the videos posting was in fact desirable, and it
-felt illogical to reject these after having approved the Agenda posting.
-
-Now we have the following in the moderation queue:
-
-Date: Thu, 25 Mar 2010 00:13:06 +0100
-From: Jonathan Brossard <endrazine@...il.com>
-To: bugtraq@...urityfocus.com, full-disclosure@...ts.grok.org.uk,
- darklab@...ts.darklab.org, droit-net@....fr,
- focus-apple@...urityfocus.com, focus-linux@...urityfocus.com,
- focus-ids@...urityfocus.com, framework@...ol.metasploit.com,
- misc@...nbsd-france.org, oss-security@...ts.openwall.com,
- owasp-all@...ts.owasp.org, tmplab@...ts.tmplab.org,
- webappsec@...urityfocus.com, websecurity@...appsec.org,
- Organization team for Hackito Ergo Sum 2010 <hes2010-orga@...ts.hackitoergosum.org>,
- Hackito Ergo Sum 2010 - Call For Paper address <hes2010-cfp@...ts.hackitoergosum.org>
-Subject: Hackito Ergo Sum Conference (Paris 8-10 April 2010) : Schedule
-
-Some of the talk topics they're announcing are quite curious and
-relevant, in my opinion.  Jonathan Brossard has been on the oss-security
-list for some months.
-
-I guess you don't want this approved - at least, you're not doing that.
-If so, I'd appreciate it if you help us define a policy and explicitly
-reject this posting according to that.  Or should we approve it?  Or do
-you want us to not get distracted to this topic, continuing to ignore it
-(as being of little relevance to the purpose of oss-security)?
-
-Thanks again,
-
-Alexander
+> 
+> "Fixed a couple of remotely-exploitable(if connected to a malicious
+> server) 
+> stack manipulation bugs in the network play code."
+> 
+> Not more info. Please assign CVE.
+> 
+> -- 
+> Hanno Böck		Blog:		http://www.hboeck.de/
+> GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+> 
+> http://schokokeks.org - professional webhosting
