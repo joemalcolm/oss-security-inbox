@@ -1,37 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/02/13
-Message-ID: <4C572ABA.7000400@mvista.com>
-Date: Mon, 02 Aug 2010 10:29:46 -1000
-From: akuster <akuster@...sta.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/11/2
+Message-ID: <2144085049.2142031284165154353.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 10 Sep 2010 20:32:34 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Eugene Teo <eugeneteo@...nel.sg>,  "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE-2010-2524 kernel: dns_resolver upcall security issue
+Cc: David Malcolm <dmalcolm@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Python -- accept() implementation in async core is broken => more subcases
 Content-Type: text/plain; charset=utf-8
 
-Eugene,
+Steve,
 
-So would it mean git commit 6103335de8afa5d780dcd512abe85c696af7b040
-introduced the problem?
+I'm going to leave this one up to you. While it's really a python bug, I
+suspect several affected projects will end up patching themselves (I'm not
+sure how MITRE hadnles this situation).
 
-- Armin
+Thanks.
 
-On 08/01/2010 05:47 PM, Eugene Teo wrote:
-> CIFS has the ability to chase MS-DFS referrals. In order to do this it
-> has to be able to resolve hostnames into IP addresses. For this, it uses
-> the keys API to upcall to the cifs.upcall userspace helper. It then
-> resolves the name and hands the address back to the kernel.
+-- 
+    JB
+
+
+----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+
+> Hello Steve, vendors,
 > 
-> The dns_resolver upcall currently used by CIFS is susceptible to cache
-> stuffing. It's possible for a malicious user to stuff the keyring with
-> the results of a lookup, and then trick the server into mounting a
-> server of his choosing.
+>    Giampaolo Rodola reported a deficiency in the implementation of
+> Python's accept() routine:
+>    [1] http://bugs.python.org/issue6706
 > 
-> I have assigned this with CVE-2010-2524. To be susceptible to this, you
-> need CONFIG_CIFS_DFS_UPCALL enabled. Interesting bug.
+>    The following seems to be all symptoms for the same issue:
+>    A, SMTP (smtpd.py):
+>       [2] https://bugzilla.redhat.com/show_bug.cgi?id=632200
+>       [3] http://bugs.python.org/issue9129
 > 
-> https://bugzilla.redhat.com/CVE-2010-2524
+>    B, pyftpdlib:
+>       [4] http://code.google.com/p/pyftpdlib/issues/detail?id=104
 > 
-> Upstream commit:
-> http://git.kernel.org/linus/4c0c03ca54f72fdd5912516ad0a23ec5cf01bda7
+>    C, ZODB:
+>       [5] https://bugs.launchpad.net/zodb/+bug/135108
 > 
-> Thanks, Eugene
+>    D, more?
+> 
+> Not sure, how to proceed in this case:
+> i,  if assign only one CVE id for [1] or,
+> ii, assign also separate CVE ids for the child symptoms? ([2], [3],
+> [4])
+> 
+> Cc-ed David Malcom on this post, to shed more light how to handle this
+> case.
+> 
+> Once the way, how to further proceed with this, specified. Steve could
+> you allocate CVE id (ids)?
+> 
+> Thanks && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
