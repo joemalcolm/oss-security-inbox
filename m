@@ -1,34 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/15/5
-Message-ID: <1292381737.1716.209.camel@hydrus>
-Date: Wed, 15 Dec 2010 13:55:37 +1100
-From: David Hicks <hickseydr@...usnet.com.au>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/12/1
+Message-ID: <20100913002457.100028b07bsvy9fd@horde.stingray.a3li.info>
+Date: Mon, 13 Sep 2010 00:24:57 +0200
+From: Alex Legler <a3li@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: MantisBT <=1.2.3 (db_type) Local File Inclusion Vulnerability
+Subject: CVE Request: pidgin-knotify remote command injection
 Content-Type: text/plain; charset=utf-8
 
-This is a CVE request for a vulnerability discovered in MantisBT <1.2.4
-by Gjoko Krstic of Zero Science Lab as per the following advisory:
+Hi,
 
-http://www.zeroscience.mk/en/vulnerabilities/ZSL-2010-4984.php
+we received a public report [0] in our Bugzilla about the following  
+issue in pidgin-knotify [1]:
 
-MantisBT 1.2.4 has been released to resolve this issue.
+"pidgin-knotify is a pidgin plugin that displays received messages and other
+notices from pidgin as KDE notifications. It uses system() to invoke ktdialog
+and passes the unescaped messages as command line arguments. An attacker could
+use this to inject arbitrary commands by sending a prepared message via any
+protocol supported by pidgin to the victim.
+[...]
+The vulnerable system() call is located in src/pidgin-knotify.c, line 71-74:
 
-For distributions or users using MantisBT 1.1.x, the following patch can
-be applied:
-http://git.mantisbt.org/?p=mantisbt.git;a=commitdiff_plain;h=2641fdc60d2032ae1586338d6416e1eadabd7590
+command = g_strdup_printf("kdialog --title '%s' --passivepopup '%s'  
+%d", title,
+body, timeout);
+[...]
+result = system(command);"
 
-Please note that MantisBT 1.1.x is not recommended for use due to many
-security improvements and features implemented in MantisBT 1.2.x (but
-not backported to 1.1.x).
+All upstream versions seem to be vulnerable. The reporter tried to  
+contact upstream a week ago without a response, and the last release  
+was Dec '09, so we are assuming upstream is inactive. Maybe our  
+maintainer is going to provide a patch. From what I can see only  
+Fedora ships the package besides us.
 
-Detailed information about this vulnerability can be found in this bug
-report: http://www.mantisbt.org/bugs/view.php?id=12607
+Please assign a CVE id.
 
-Regards,
+Thanks,
+Alex
 
-David Hicks
-MantisBT Developer
-mantisbt.org, #mantishelp freenode
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+[0] https://bugs.gentoo.org/show_bug.cgi?id=336916
+[1] http://code.google.com/p/pidgin-knotify/
+
+Content of type "application/pgp-signature" skipped
