@@ -1,20 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/14/13
-Message-Id: <201009142309.36589.hanno@hboeck.de>
-Date: Tue, 14 Sep 2010 23:09:36 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: mantis before 1.2.3 (XSS)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/13/12
+Message-ID: <Pine.GSO.4.64.1009131732170.24720@faron.mitre.org>
+Date: Mon, 13 Sep 2010 17:34:24 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Josh Bressers <bressers@...hat.com>
+cc: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: mailman
 Content-Type: text/plain; charset=utf-8
 
-Addition:
-http://www.mantisbt.org/bugs/changelog_page.php?version_id=111
-lists six different xss issues.
 
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+In this case, all else being equal, lowest ID wins.
 
-http://schokokeks.org - professional webhosting
+We will never be perfect due to the lack of sufficient details (or, way 
+too many details), but where possible I prefer to follow the consistency 
+rules when we can, especially when they're pretty clear-cut like this.
 
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+It happens :-)
+
+In this case, the abstraction issue was discovered quickly, so I'm OK with 
+fixing the abstraction after the fact.
+
+Let's stick with CVE-2010-3089, and I'll flag CVE-2010-3090 for rejection.
+
+- Steve
+
+
+
+On Mon, 13 Sep 2010, Josh Bressers wrote:
+
+> ----- "Steven M. Christey" <coley@...us.mitre.org> wrote:
+>
+>> Josh,
+>>
+>> Was there a particular reason to split these into separate CVEs?  A quick
+>> glance suggests they affect the same version, and since they're the same
+>> type, would normally argue for a merge.
+>>
+>
+> I have no idea why I did that now that I look at the bugs. I'm sorry.
+>
+> I'll let you pick which ID to use (do you have a policy for this? lowest
+> ID?)
+>
+> Thanks.
+>
+> --
+>    JB
+>
