@@ -1,68 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/23/2
-Message-ID: <20100823165535.GA2477@galadriel.inutil.org>
-Date: Mon, 23 Aug 2010 18:55:35 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/13/4
+Message-ID: <1726633949.2314451284408360112.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 13 Sep 2010 16:06:00 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: PHP MOPS-2010-56..60
+Cc: coley@...re.org
+Subject: Re: CVE Request: pidgin-knotify remote command injection
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Aug 23, 2010 at 04:24:53PM +0200, Pierre Joye wrote:
-> hi,
+Please use CVE-2010-3088 for this.
+
+Thanks.
+
+-- 
+    JB
+
+
+----- "Alex Legler" <a3li@...too.org> wrote:
+
+> Hi,
 > 
-> Can you send me a list of the MOPS CVE please? I'm missing some and I
-> would like to update the NEWS file accordingly.
-
-Here's the full list. The missing IDs are for apps written in PHP,
-but not in PHP itself:
-
-001: CVE-2007-1581
-003: CVE-2010-1866
-006: CVE-2010-1864
-008: CVE-2010-1862
-009: CVE-2010-1861
-010: CVE-2010-1860
-012: CVE-2010-1868
-013: CVE-2010-1868
-014: CVE-2010-1914
-015: CVE-2010-1914
-016: CVE-2010-1914
-017: CVE-2010-1915
-021: CVE-2010-1917
-022: CVE-2010-2093
-024: CVE-2010-2094
-025: CVE-2010-2094
-026: CVE-2010-2094
-027: CVE-2010-2094
-028: CVE-2010-2094
-032: CVE-2010-2097
-033: CVE-2010-2097
-034: CVE-2010-2097
-036: CVE-2010-2100
-037: CVE-2010-2100
-038: CVE-2010-2100
-039: CVE-2010-2100
-040: CVE-2010-2100
-041: CVE-2010-2101
-042: CVE-2010-2101
-043: CVE-2010-2101
-044: CVE-2010-2101
-045: CVE-2010-2101
-046: CVE-2010-2101
-047: CVE-2010-2190
-048: CVE-2010-2190
-049: CVE-2010-2191
-050: CVE-2010-2191
-051: CVE-2010-2191
-052: CVE-2010-2191
-053: CVE-2010-2191
-054: CVE-2010-2191
-055: CVE-2010-2191
-056: CVE-2010-3062
-057: CVE-2010-3062
-058: CVE-2010-3063
-059: CVE-2010-3064
-060: CVE-2010-3065
-
-Cheers,
-        Moritz
+> we received a public report [0] in our Bugzilla about the following  
+> issue in pidgin-knotify [1]:
+> 
+> "pidgin-knotify is a pidgin plugin that displays received messages and
+> other
+> notices from pidgin as KDE notifications. It uses system() to invoke
+> ktdialog
+> and passes the unescaped messages as command line arguments. An
+> attacker could
+> use this to inject arbitrary commands by sending a prepared message
+> via any
+> protocol supported by pidgin to the victim.
+> [...]
+> The vulnerable system() call is located in src/pidgin-knotify.c, line
+> 71-74:
+> 
+> command = g_strdup_printf("kdialog --title '%s' --passivepopup '%s'  
+> %d", title,
+> body, timeout);
+> [...]
+> result = system(command);"
+> 
+> All upstream versions seem to be vulnerable. The reporter tried to  
+> contact upstream a week ago without a response, and the last release 
+> 
+> was Dec '09, so we are assuming upstream is inactive. Maybe our  
+> maintainer is going to provide a patch. From what I can see only  
+> Fedora ships the package besides us.
+> 
+> Please assign a CVE id.
+> 
+> Thanks,
+> Alex
+> 
+> 
+> [0] https://bugs.gentoo.org/show_bug.cgi?id=336916
+> [1] http://code.google.com/p/pidgin-knotify/
