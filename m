@@ -1,36 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/08/1
-Message-Id: <20100908023417.8B055401AF@magilla.sf.frob.com>
-Date: Tue,  7 Sep 2010 19:34:17 -0700 (PDT)
-From: Roland McGrath <roland@...hat.com>
-To: Linus Torvalds <torvalds@...ux-foundation.org>, Andrew Morton <akpm@...ux-foundation.org>
-CC: linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Kees Cook <kees.cook@...onical.com>, Al Viro <viro@...iv.linux.org.uk>, Andrew Morton <akpm@...ux-foundation.org>, Oleg Nesterov <oleg@...hat.com>, KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, pageexec@...email.hu, "Brad Spengler <spender@...ecurity.net> Eugene Teo" <eugene@...hat.com>
-Subject: [PATCH 0/3] execve argument-copying fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/13/11
+Message-ID: <20100913212406.GA11053@1wt.eu>
+Date: Mon, 13 Sep 2010 23:24:06 +0200
+From: Willy Tarreau <w@....eu>
+To: Marcus Meissner <meissner@...e.de>
+Cc: oss-security@...ts.openwall.com, Andrew Morton <akpm@...ux-foundation.org>, spender@...ecurity.net, security@...nel.org
+Subject: Re: [Security] Re:  /proc infoleaks
 Content-Type: text/plain; charset=utf-8
 
-This is my take on parts of the execve large arguments copying issues
-that Kees posted about, and Brad and others have been discussing.
-I've only looked at the narrow area of the argument copying code
-itself.  I think these are good and necessary fixes.  But I'm not
-addressing the whole OOM killer/mm accounting issue, which also needs
-to be fixed (and I have the impression others are already looking into that).
+On Tue, Sep 07, 2010 at 09:19:03PM +0200, Marcus Meissner wrote:
+> > > > or something like a umask for kernel-owned proc
+> > > > entries so that you have a polite default and are
+> > > > still able to enable it for certain profiling tools
+> > > > or whereever you need it.
+> > > 
+> > > chmod 0440 /proc/slabinfo
+> > > 
+> > Heh, indeed. :-)
+> > Would it be a bad idea to have proc_create() use a more strict
+> > mode so it is non-leaking by default?
+> 
+> Yeah, sane and a bit more strict, defaults are missing.
+> 
+> The little pieces of information leakage out of the kernel should be fixed,
+> to raise the bar for kernel exploits in little steps at a time.
 
-The following changes since commit d56557af19867edb8c0e96f8e26399698a08857f:
+Personally, I don't see why slabinfo could represent a threat.
+I'm regularly using it as a normal user just to check where all
+my RAM is going from time to time. The more we restrict access to
+harmless information, the more we'll have sudoers in the wild for
+special users who need special accesses. And sudoers are generally
+not as well managed as permissions, believe me ;-)
 
-  Merge branch 'for-linus' of git://git.kernel.org/pub/scm/linux/kernel/git/jbarnes/pci-2.6 (2010-09-07 16:00:17 -0700)
+Cheers,
+Willy
 
-are available in the git repository at:
-
-  git://git.kernel.org/pub/scm/linux/kernel/git/frob/linux-2.6-roland.git topic/exec-fixes
-
-Roland McGrath (3):
-      setup_arg_pages: diagnose excessive argument size
-      execve: improve interactivity with large arguments
-      execve: make responsive to SIGKILL with large arguments
-
- fs/exec.c |   14 ++++++++++++++
- 1 files changed, 14 insertions(+), 0 deletions(-)
-
-
-Thanks,
-Roland
