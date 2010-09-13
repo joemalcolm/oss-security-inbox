@@ -1,23 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/08/4
-Message-ID: <Pine.GSO.4.64.1006081558550.15053@faron.mitre.org>
-Date: Tue, 8 Jun 2010 16:01:30 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/13/6
+Message-ID: <163409936.2314911284408594399.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 13 Sep 2010 16:09:54 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: jar, fastjar directory traversal vulnerabilities
+Subject: Re: CVE id request for non disclosed issue?
 Content-Type: text/plain; charset=utf-8
 
 
-On Tue, 8 Jun 2010, Vincent Danen wrote:
+----- "Kyle Bader" <kyle.bader@...il.com> wrote:
 
-> What makes things worse is that it doesn't look like CVE-2005-1080 was
-> ever fixed.  So I'm not sure if this "new" jar issue needs a new CVE
-> name, or if it would be covered under CVE-2005-1080 (since nothing ever
-> claimed to fix this directory traversal vulnerability in jar).
+> > Another (certainly obvious) question, where/to who can I ask a CVE
+> id
+> > for a flaw not disclosed yet?
+> 
+> http://cve.mitre.org/cve/obtain_id.html
+> 
 
-If a bug appears in versions X and Y, and there is no evidence that a fix 
-was ever applied between versions X and Y, then the original CVE's 
-description is simply updated.
 
-- Steve
+You are also welcome to mail me, I'm a CNA at Red Hat. MITRE is generally
+very busy, so you'll probably get a faster response from a CNA.
+
+Thanks.
+
+-- 
+    JB
