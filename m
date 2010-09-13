@@ -1,40 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/24/6
-Message-ID: <4C74038B.8010103@redhat.com>
-Date: Tue, 24 Aug 2010 19:38:19 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, Amos Jeffries <amosjeffries@...id-cache.org>, Stephen Thorne <stephen@...rne.id.au>
-Subject: CVE Request -- Squid v3.1.6 -- DoS (crash) while processing large DNS replies with no IPv6 resolver present
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/13/2
+Message-ID: <AANLkTi=816NKFKokw-RG_7uvqgCMZd_jsmpcFP8NbBiP@mail.gmail.com>
+Date: Mon, 13 Sep 2010 16:37:46 +0200
+From: Pierre Joye <pierre.php@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE id request for non disclosed issue?
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve, vendors,
+Hi,
 
-   Stephen Thorne reported a buffer overread flaw in the way Squid proxy caching server
-processed large DNS replies in cases, when no IPv6 resolver was present.
-A remote attacker could provide DNS reply with large amount of data,
-leading to denial of service (squid server crash).
+Another (certainly obvious) question, where/to who can I ask a CVE id
+for a flaw not disclosed yet?
 
-Upstream bug report:
-   [1] http://bugs.squid-cache.org/show_bug.cgi?id=3021
+Cheers,
+-- 
+Pierre
 
-Relevant upstream changeset:
-   [2] http://bazaar.launchpad.net/~squid/squid/3.1/revision/10072
-
-References:
-   [3] http://marc.info/?l=squid-users&m=128263555724981&w=2
-   [4] https://bugzilla.redhat.com/show_bug.cgi?id=626927
-   [5] http://bugs.gentoo.org/show_bug.cgi?id=334263
-
-Could you allocate CVE id for this issue?
-
-Amos, Stephen please correct me, if some of [1] and [2] doesn't correspond to:
-
-"One regression introduced with 3.1.6 when contacting IPv4-only DNS
-resolvers opens a small but exploitable DoS vulnerability."
-
-issue mentioned in [3].
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
