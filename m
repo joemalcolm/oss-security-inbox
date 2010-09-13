@@ -1,30 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/21/6
-Message-ID: <hja42b$ubm$1@ger.gmane.org>
-Date: Thu, 21 Jan 2010 11:49:05 -0600
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/13/3
+Message-ID: <AANLkTikVUoVEar03SzU9c3_mZFbGRn_5DG8wJrtiZ+ON@mail.gmail.com>
+Date: Mon, 13 Sep 2010 10:44:15 -0700
+From: Kyle Bader <kyle.bader@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: MoinMoin information disclosure
+Subject: Re: CVE id request for non disclosed issue?
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+> Another (certainly obvious) question, where/to who can I ask a CVE id
+> for a flaw not disclosed yet?
 
-There's not much information about this issue, but there appears to be an 
-information disclosure vulnerability in MoinMoin related to the handling of 
-sys.argv.
+http://cve.mitre.org/cve/obtain_id.html
 
-References:
-http://secunia.com/advisories/38242/
-http://moinmo.in/SecurityFixes
-http://hg.moinmo.in/moin/1.9/rev/9d8e7ce3c3a2
-http://hg.moinmo.in/moin/1.9/rev/04afdde50094
-http://moinmo.in/MoinMoinChat/Logs/moin-dev/2010-01-18 (line 70 and below)
-
-Could a CVE please be assigned? Thanks.
-
-Regards,
 -- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
 
-
+Kyle
