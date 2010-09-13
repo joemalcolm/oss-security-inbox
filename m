@@ -1,37 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/28/4
-Message-Id: <201005281204.31958.ludwig.nussel@suse.de>
-Date: Fri, 28 May 2010 12:04:31 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/13/5
+Message-ID: <600668924.2314631284408486649.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 13 Sep 2010 16:08:06 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: ghostscript and gv
+Cc: coley@...re.org
+Subject: Re: CVE Request: mailman
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-ghostscript executes initialization files relative to the current
-directory. Unfortunately the -dSAFER option has no effect on those
-files. So when viewing a file e.g. in /tmp a local attacker could
-have the victim execute arbitrary postscript programs.
-Upstream suggested to use -P- in addition to -dSAFER. That however
-would mean every program using gs to render postscript has to be
-checked. So fixing ghostscripts default behavior might be easier for
-distributions.
-http://bugs.ghostscript.com/show_bug.cgi?id=691339
-http://www.securityfocus.com/archive/1/511433
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=583316
-https://bugzilla.novell.com/show_bug.cgi?id=608071
+----- "Huzaifa Sidhpurwala" <huzaifas@...hat.com> wrote:
 
-In the Debian bug report Paul also mentiones that gv creates a
-temporary file in an insecure way:
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=583316#10
+> Hi,
+> 
+> There are two mailman vulns. fixed by the following patch:
+> http://mail.python.org/pipermail/mailman-announce/2010-September/000151.html
+> 
+> Particular Red Hat Bugzilla entries are the following:
+> 
+> 	https://bugzilla.redhat.com/show_bug.cgi?id=631881
 
-cu
-Ludwig
+CVE-2010-3089 mailman XSS via list information HTML template
+
+
+> 	https://bugzilla.redhat.com/show_bug.cgi?id=631859
+
+CVE-2010-3090 mailman XSS in list information overview
+
+Thanks.
 
 -- 
- (o_   Ludwig Nussel
- //\   
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+    JB
