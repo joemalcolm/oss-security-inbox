@@ -1,17 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/10/1
-Message-ID: <20100310105632.158d9b3c@foo.fgeek.fi>
-Date: Wed, 10 Mar 2010 10:56:32 +0200
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com, cert@...t.org
-Cc: soc@...cert.gov
-Subject: phpmyvisites 2.3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/13/7
+Message-ID: <1998321318.2315911284408945143.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 13 Sep 2010 16:15:45 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley@...re.org
+Subject: Re: CVE id requests: drupal
 Content-Type: text/plain; charset=utf-8
 
-There is a security vulnerability in phpMyVisites 2.3. Is there a CVE
-assigned for that issue?
+Here goes:
 
-http://www.phpmyvisites.us/phpmv2/CHANGELOG
+CVE-2010-3091 drupal OpenID authentication bypass
+CVE-2010-3092 drupal File download access bypass
+CVE-2010-3093 drupal Comment unpublishing bypass
+CVE-2010-3094 drupal Actions cross site scripting
 
----
-Henri Salo
+Thanks.
+
+-- 
+    JB
+
+
+----- "Steffen Joeris" <steffen.joeris@...lelinux.de> wrote:
+
+> Hi,
+> 
+> I don't think these 4 issues[0] have been assigned CVE ids yet, could
+> I get 
+> some?
+> 
+> Cheers,
+> Steffen
+> 
+> [0]: http://drupal.org/node/880476
+> 
+> OpenID authentication bypass
+> 
+> File download access bypass
+> 
+> Comment unpublishing bypass
+> 
+> Actions cross site scripting
