@@ -1,61 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/07/13
-Message-ID: <1283887474.13260.48.camel@apollo>
-Date: Tue, 07 Sep 2010 15:24:34 -0400
-From: Jon Oberheide <jon@...rheide.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/13/1
+Message-ID: <4C8E189E.5070507@redhat.com>
+Date: Mon, 13 Sep 2010 17:57:10 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Sebastian Krahmer <krahmer@...e.de>, security@...nel.org,  spender@...ecurity.net, Andrew Morton <akpm@...ux-foundation.org>
-Subject: Re: Re: [Security] /proc infoleaks
+Subject: CVE Request: mailman
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 2010-09-07 at 03:51 -0700, Andrew Morton wrote:
-> On Tue, 7 Sep 2010 10:35:46 +0200 Sebastian Krahmer <krahmer@...e.de> wrote:
-> 
-> > I have been elected to receive the bashing from all sides,
-> > so here we go.
-> > It is not about a new vulnerability or even a new discussion
-> > but needs to be discussed, at least that we have a clear
-> > statement about the status quo.
-> > 
-> > Recent i-CAN-haz-MODHARDEN.c has shown once *again* that
-> > certain file permissions make no sense except to exploitation
-> > development. There is no reason to have files like
-> > 
-> > /proc/kallsyms
-> > /proc/slabinfo
-> > /proc/zoneinfo
-> > 
-> > and probably a lot of others world readable. The symbol
-> > addresses might be hard-coded for a certain targetlist
-> > inside the exploit so you can argue that there
-> > wont be any protection benefit from making it unreadable.
-> > However this argument aint a reason to also leak it for self-compiled
-> > kernels and doesnt even hold for dynamic/runtime content
-> > like slabinfos etc.
-> > It would be nice to have something like
-> > 
-> > echo 1 > /proc/quiet
-> > 
-> > or something like a umask for kernel-owned proc
-> > entries so that you have a polite default and are
-> > still able to enable it for certain profiling tools
-> > or whereever you need it.
-> 
-> chmod 0440 /proc/slabinfo
-> 
-> What am I missing here?
+Hi,
 
-You're missing the "secure by default" part.
+There are two mailman vulns. fixed by the following patch:
+http://mail.python.org/pipermail/mailman-announce/2010-September/000151.html
 
-(Obviously hiding slabinfo doesn't prevent exploitation of the vuln, but
-not exposing it by default is a positive step.)
+Particular Red Hat Bugzilla entries are the following:
 
-Regards,
-Jon Oberheide
+	https://bugzilla.redhat.com/show_bug.cgi?id=631881
+	https://bugzilla.redhat.com/show_bug.cgi?id=631859
+
+
+Can CVE ids be please assigned to these flaws?
+
+Thanks
 
 -- 
-Jon Oberheide <jon@...rheide.org>
-GnuPG Key: 1024D/F47C17FE
-Fingerprint: B716 DA66 8173 6EDD 28F6  F184 5842 1C89 F47C 17FE
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+Huzaifa Sidhpurwala / Red Hat Security Response Team
