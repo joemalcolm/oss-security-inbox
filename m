@@ -1,31 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/22/9
-Message-ID: <1704202041.111111290442605172.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 22 Nov 2010 11:16:45 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/13/9
+Message-ID: <732932511.2320481284411612307.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 13 Sep 2010 17:00:12 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
 Cc: coley <coley@...re.org>
-Subject: Re: CVE request: tikiwiki <= 5.2 XSS, CSRF, file inclusion
+Subject: Re: CVE request: mailscanner, multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-
------ "Hanno Böck" <hanno@...eck.de> wrote:
-
-> See:
-> http://packetstormsecurity.org/files/view/94257/tikiwiki52-lfi.txt
-> http://packetstormsecurity.org/files/view/94256/tikiwiki52-xsrf.txt
-> http://packetstormsecurity.org/files/view/94255/tikiwiki52-xss.txt
+----- "Raphael Geissert" <geissert@...ian.org> wrote:
 > 
-> All fixed in 5.3 and 3.8:
-> http://info.tiki.org/article113-Tiki-Wiki-CMS-Groupware-Releases-5-3-and-3-8-LTS-Security-Patches
+> I reported some vulnerabilities in mailscanner but forgot to assign ids.
+> Could somebody assign ones?
+> 
+> Incomplete fix for CVE-2008-5313:
+> http://bugs.debian.org/596403
 
-Sorry for the delay.
+Please use CVE-2010-3095
 
-CVE-2010-4239 tikiwiki local file inclusion
-CVE-2010-4240 tikiwiki xss
-CVE-2010-4241 tikiwiki csrf
+> 
+> update{_bad,}_phishing_sites scripts may download and use spoofed
+> files:
+> http://bugs.debian.org/596396
 
-Thanks.
+CVE-2010-3292
+
+> 
+> Local users may prevent virus signatures from being updated:
+> http://bugs.debian.org/596397
+> 
+
+CVE-2010-3293
+
+Thanks
 
 -- 
     JB
