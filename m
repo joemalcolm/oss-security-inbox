@@ -1,29 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/21/3
-Message-ID: <20100921105612.GA5579@openwall.com>
-Date: Tue, 21 Sep 2010 14:56:12 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/14/6
+Message-ID: <340449951.2448771284491907160.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 14 Sep 2010 15:18:27 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Minor security flaw with pam_xauth
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: xss in pecl-apc before 3.1.4
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Aug 16, 2010 at 12:05:13PM +0100, Tim Brown wrote:
-> Here's another bug where privileged code isn't checking the return value from 
-> setuid():
+Please use CVE-2010-3294.
+
+Thanks.
+
+-- 
+    JB
+
+
+----- "Hanno Böck" <hanno@...eck.de> wrote:
+
+> http://pecl.php.net/package-changelog.php?package=APC&release=3.1.4
 > 
-> http://sourceforge.net/tracker/?func=detail&aid=3028213&group_id=6663&atid=106663
-
-This is fixed in Linux-PAM 1.1.2:
-
-http://git.altlinux.org/people/ldv/packages/?p=pam.git;a=commitdiff;h=06f882f30092a39a1db867c9744b2ca8d60e4ad6
-
-The same commit also introduces previously-missing privilege switching
-into pam_env and pam_mail.  Unfortunately, this pam_env and pam_mail fix
-is incomplete: it only switches the fsuid (should also switch fsgid (or
-egid) and groups), and it fails to check the return value from setfsuid()
-(doing so would require duplicate calls to setfsuid(), like we do in
-libtcb, or switching of euid instead - yet it is desirable).
-
-The pam_env and pam_mail issue was discovered by Sebastian Krahmer of SuSE.
-
-Alexander
+> - Fixed potential XSS in apc.php (Pierre, Matt Chapman)
+> 
+> This is a minor issue as this usually doesn't get installed and should
+> only be 
+> used for debugging-purposes, but still, deserves a CVE.
+> 
+> -- 
+> Hanno Böck		Blog:		http://www.hboeck.de/
+> GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+> 
+> http://schokokeks.org - professional webhosting
