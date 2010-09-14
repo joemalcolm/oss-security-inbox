@@ -1,17 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/23/2
-Message-ID: <4CEBA3E2.5030606@redhat.com>
-Date: Tue, 23 Nov 2010 19:22:10 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/14/10
+Message-ID: <1183300013.2451741284493013759.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 14 Sep 2010 15:36:53 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: posix-cpu-timers: workaround to suppress the problems with mt exec
+Cc: owasp-dotnet@...ts.owasp.org, coley <coley@...re.org>
+Subject: Re: CVE request: padding oracle attack: ruby on rails 2.3, owasp esapi
 Content-Type: text/plain; charset=utf-8
 
-This issue can trigger a BUG_ON() in posix_cpu_timer_del(). More info 
-at: https://bugzilla.redhat.com/show_bug.cgi?id=656264
+I've assgiend two. The details are quite vague unfortunately.
 
-Upstream commit:
-http://git.kernel.org/linus/e0a70217107e6f9844628120412cb27bb4cea194
+CVE-2010-3299 padding oracle attack: ruby on rails 2.3
+CVE-2010-3300 padding oracle attack: owasp esapi
 
-Thanks, Eugene
+Thanks.
+
+-- 
+    JB
+
+
+----- "Thomas Biege" <thomas@...e.de> wrote:
+
+> Hi,
+> the paper [1], about practical padding oracle attacks
+> mentions some programming frameworks as vulnerable (section 5):
+> - Ruby On ails 2.3
+> - OWASP ESAPI
+> 
+> I think they both need a CVE-ID. Thanks.
+> 
+> Cheers
+> Thomas
+> 
+> [1] http://usenix.org/events/woot10/tech/full_papers/Rizzo.pdf
+> 
+> 
+> -- 
+>  Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support &
+> Auditing
+>  SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+> --
+>   Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+>                             -- Marie von Ebner-Eschenbach
