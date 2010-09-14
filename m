@@ -1,20 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/09/8
-Message-ID: <1002091611300.18017@mjc.redhat.com>
-Date: Tue, 9 Feb 2010 16:13:54 +0000 (GMT)
-From: Mark J Cox <mjc@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/14/7
+Message-ID: <2067197162.2450151284492365091.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 14 Sep 2010 15:26:05 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-cc: Greg KH <greg@...ah.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - kernel: ima: fix null pointer dereference
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: numerous infoleaks
 Content-Type: text/plain; charset=utf-8
 
->> Do we need CVE numbers for issues that never showed up in a released
->> kernel version?  I don't see how this could affect anyone, unless they
->> were foolish enough to ship a product on a non-released kernel :)
->
-> You got a point there, but I requested this in order to keep track of 
-> security issues that we might need to backport in our future kernels.
+----- "Eugene Teo" <eugene@...hat.com> wrote:
 
-It shouldn't get a CVE name.  If someone at some point in the future ships 
-a vulnerable version (by selective backporting, or similar) then it would 
-get a name.  Cheers, Mark
+> Reported by Dan Rosenberg,
+> 
+> drivers/net/tulip/de4x5.c: reading uninitialized stack memory
+> http://lkml.org/lkml/2010/9/11/169
+> https://bugzilla.redhat.com/633158
+
+CVE-2010-3295
+
+> 
+> drivers/net/cxgb3/cxgb3_main.c reading uninitialized stack memory
+> http://lkml.org/lkml/2010/9/11/170
+> introduced in 4d22de3e (v2.6.21-rc2)
+> https://bugzilla.redhat.com/633149
+
+CVE-2010-3296
+
+> 
+> drivers/net/eql.c: reading uninitialized stack memory
+> http://lkml.org/lkml/2010/9/11/168
+> https://bugzilla.redhat.com/633145
+
+CVE-2010-3297
+
+> 
+> drivers/net/usb/hso.c: reading uninitialized memory
+> http://lkml.org/lkml/2010/9/11/167
+> introduced in 542f5482 (v2.6.29-rc1)
+> https://bugzilla.redhat.com/633140
+> 
+
+CVE-2010-3298
+
+Thanks.
+
+-- 
+    JB
