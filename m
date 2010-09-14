@@ -1,51 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/16/9
-Message-Id: <201012162255.37008.timb@nth-dimension.org.uk>
-Date: Thu, 16 Dec 2010 22:55:36 +0000
-From: Tim Brown <timb@...-dimension.org.uk>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/14/8
+Message-ID: <AANLkTinCy-2f-sOA31R2VaAiHUeq4S_oLkEbZraxiTYm@mail.gmail.com>
+Date: Tue, 14 Sep 2010 21:26:20 +0200
+From: Pierre Joye <pierre.php@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Ralf Wildenhues <Ralf.Wildenhues@....de>
-Subject: Re: Re: Breaking the links: Exploiting the linker
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: xss in pecl-apc before 3.1.4
 Content-Type: text/plain; charset=utf-8
 
-On Thursday 16 December 2010 17:00:57 Ralf Wildenhues wrote:
-> Hello Tim, all,
-> 
-> Tim Brown <timb@...> writes:
-> > In the interests of a thorough peer review I'd be curious what people
-> > think of the following paper I've been working on Linux and POSIX
-> > linkers:
-> > 
-> > http://www.nth-dimension.org.uk/downloads.php?id=77
-> 
-> Replacing
->   LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/dir/name
-> 
-> with
->   LD_LIBRARY_PATH=${LD_LIBRARY_PATH:-/dir/name}
-> 
-> changes semantics in a way that are not generally desirable: if I want to
-> append a directory to the search path, then the latter is not the way to
-> do it (because it doesn't change the path if the variable is already set).
-> Rather, I think you meant
->   LD_LIBRARY_PATH=${LD_LIBRARY_PATH:-$LD_LIBRARY_PATH:}/dir/name
+thanks, added to the release info.
 
-Actually, I think Tomas' has the correct suggestion although yes, the line in 
-the paper is incorrect.
+On Tue, Sep 14, 2010 at 9:18 PM, Josh Bressers <bressers@...hat.com> wrote:
+> Please use CVE-2010-3294.
+>
+> Thanks.
+>
+> --
+>    JB
+>
+>
+> ----- "Hanno Böck" <hanno@...eck.de> wrote:
+>
+>> http://pecl.php.net/package-changelog.php?package=APC&release=3.1.4
+>>
+>> - Fixed potential XSS in apc.php (Pierre, Matt Chapman)
+>>
+>> This is a minor issue as this usually doesn't get installed and should
+>> only be
+>> used for debugging-purposes, but still, deserves a CVE.
+>>
+>> --
+>> Hanno Böck            Blog:           http://www.hboeck.de/
+>> GPG: 3DBD3B20         Jabber/Mail:    hanno@...eck.de
+>>
+>> http://schokokeks.org - professional webhosting
+>
 
-> On page 5, the footnotes have several markup errors resulting in weird PDF
-> output.
-> 
-> I suggest using the url package for nicer URL typesetting (in case you're
-> writing this with LaTeX) and the hyperref package with
-> \hypersetup{pdfborder={0 0 0}} for decent clickable links.
 
-Great, LaTeX tips are always helpful.
 
-Tim
 -- 
-Tim Brown
-<mailto:timb@...-dimension.org.uk>
-<http://www.nth-dimension.org.uk/>
+Pierre
 
-Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
