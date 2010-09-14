@@ -1,69 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/26/1
-Message-ID: <4BABD158.7010206@gmail.com>
-Date: Thu, 25 Mar 2010 22:10:48 +0100
-From: Jonathan Brossard <endrazine@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CFPs and con invitations on the list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/14/5
+Message-Id: <20100914185135.03DD6403E8@magilla.sf.frob.com>
+Date: Tue, 14 Sep 2010 11:51:34 -0700 (PDT)
+From: Roland McGrath <roland@...hat.com>
+To: pageexec@...email.hu
+Cc: KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>, Brad Spengler <spender@...ecurity.net>, Linus Torvalds <torvalds@...ux-foundation.org>, Andrew Morton <akpm@...ux-foundation.org>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Kees Cook <kees.cook@...onical.com>, Al Viro <viro@...iv.linux.org.uk>, Oleg Nesterov <oleg@...hat.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, Eugene Teo <eugene@...hat.com>
+Subject: Re: [PATCH 1/3] setup_arg_pages: diagnose excessive argument size
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+> no it doesn't have to, similarly to how it doesn't have to hardcode
+> _SC_PAGESIZE either, AT_PAGESZ tells userland what it needs to know
+> and i think AT_ARGMAX could exist just as well.
 
-Hello,
+I was referring to the ways available to userland heretofore.  Certainly,
+the kernel could add new ways and then userland could do different things
+(with new kernels).  
 
-For what it worthes : I didn't expect to trigger such a debate on the
-list. I merely posted here because:
-1) I'd really like to see people from this list to the HES conference.
-2) I saw a hibt post on this very list little time ago.
+auxv in particular is not a mechanism that could fit for this.  The actual
+limit depends on rlimits of the calling process, and rlimits can change
+during the life of the program.  auxv is only appropriate for things that
+are known at the time of the exec and won't change thereafter.
 
-Sorry for the blatant inconvenience...
 
-Best regards,
-
-Jonathan-
-
-Matthias Andree wrote:
-> Am 25.03.2010 15:24, schrieb Josh Bressers:
-> [...]
->> I think those headers bring up a good point. This is comparable to the old
->> days of cross posting to lots of gropus on usenet (for you young folks, it
->> was frowned upon). Perhaps we encourage messages DIRECTED at oss-security,
->> rather than shotgun announcements.
-> 
-> Which will then be disassembled into a series of mail-merged individual
-> invitations (aka. multi-posting, which was worse than cross-posting)?  If that
-> would happen, I'd object.  I also object to "badly cross-posted" invitations.
-> 
->> 4) Approve posts from list memebers who've been on the list for > 1 month.
->>     (I suspect this is the best solution)
-> 
-> A "List member[...]" might be a lurker, might be an occasional contributor, or a
-> regular contributor.  As a pointed question: Would you allow spammers to dump
-> their UCE here if they only were subscribers for four weeks?
-> 
-> More seriously, what relevance has the duration of a subscription?  My answer
-> is: none whatsoever.  There simply isn't any merit in being subscribed alone.
-> I find that this criterion, while objective, says nothing about contributions of
-> the subscriber to the list, and is therefore not useful.
-> 
-> I acknowledge that finding objective criteria is hard, but #4 is IMO just a very
-> bad loophole.
-> 
-> FWIW, I'm getting spamvertisements for conferences directed at me personally,
-> and I find that offensive and it should be a reason to prohibit the conference
-> altogether, so as to have a real incentive not to spam.
-> 
-> At the very least, conference advertisements, if allowed in moderation, should
-> be tagged so that people can automatically filter them. Filter instructions
-> could then be on the list's accompanying homepage.
-> 
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
-
-iEYEARECAAYFAkur0VgACgkQK/YAm7PYybniugCgsGnNATn6j8+Ldlmfw10WEFka
-N8QAoIXD46m7d8qdlmEOgvBlMPwvEEIz
-=AM/1
------END PGP SIGNATURE-----
+Thanks,
+Roland
