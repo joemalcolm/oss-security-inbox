@@ -1,25 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/06/3
-Message-ID: <87bp8arayf.fsf@mid.deneb.enyo.de>
-Date: Mon, 06 Sep 2010 20:19:52 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/14/2
+Message-ID: <4C8EF290.1070008@redhat.com>
+Date: Tue, 14 Sep 2010 11:57:04 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request 1, NSS 2, Qt: Doesn't handle wildcards in Common Name properly
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: numerous infoleaks
 Content-Type: text/plain; charset=utf-8
 
-* Jan Lieskovsky:
+Reported by Dan Rosenberg,
 
->   1, Network Security Services (NSS) handled wildcard (*) character
->      in the Common Name field of a x509v3 digital certificate.
->      If an attacker is able to get a carefully-crafted certificate,
->      signed by a Certificate Authority trusted by Firefox, the attacker
->      could use the certificate during the man-in-the-middle attack and
->      potentially confuse Firefox into accepting it by mistake. Different
->      vulnerability than CVE-2009-2408.
->
->      References:
->      [1] http://www.westpoint.ltd.uk/advisories/wp-10-0001.txt
->      [2] http://bugs.gentoo.org/show_bug.cgi?id=335731
+drivers/net/tulip/de4x5.c: reading uninitialized stack memory
+http://lkml.org/lkml/2010/9/11/169
+https://bugzilla.redhat.com/633158
 
-Is this really a _security_ bug?  The CN was not validated by the CA,
-so it's the CA's fault (which you have to trust, but still).
+drivers/net/cxgb3/cxgb3_main.c reading uninitialized stack memory
+http://lkml.org/lkml/2010/9/11/170
+introduced in 4d22de3e (v2.6.21-rc2)
+https://bugzilla.redhat.com/633149
+
+drivers/net/eql.c: reading uninitialized stack memory
+http://lkml.org/lkml/2010/9/11/168
+https://bugzilla.redhat.com/633145
+
+drivers/net/usb/hso.c: reading uninitialized memory
+http://lkml.org/lkml/2010/9/11/167
+introduced in 542f5482 (v2.6.29-rc1)
+https://bugzilla.redhat.com/633140
+
+Thanks, Eugene
+-- 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
