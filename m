@@ -1,52 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/12/1
-Message-ID: <AANLkTim3fIN5T94OrRRs5aq76FmAo7IfqV8OWXVWsMAL@mail.gmail.com>
-Date: Tue, 11 May 2010 20:33:01 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/14/18
+Message-ID: <AANLkTin=pn9EU2U2JzBTjyuhtos3Bb9+UocMkX+MJs_+@mail.gmail.com>
+Date: Tue, 14 Sep 2010 17:05:02 -0600
+From: Kurt Seifried <kurt@...fried.org>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE assignment: ghostscript stack-based overflow
+Subject: Re: CVE request: mantis before 1.2.3 (XSS)
 Content-Type: text/plain; charset=utf-8
 
-CVE request for the second issue described in this advisory, just published:
-
-http://seclists.org/fulldisclosure/2010/May/134
-
-quote:
-
-GhostScript (all tested versions) fails to properly handle infinitely
-recursive procedure invocations.  By providing a PostScript file with a
-sequence such as:
-
-/A{pop 0 A 0} bind def
-/product A 0
-
-the interpreter's internal stack will be overflowed with recursive calls, at
-which point execution will jump to an attacker-controlled address.  This
-vulnerability can be exploited by enticing a user to open a maliciously crafted
-PostScript file, achieving arbitrary code execution.  This issue has not yet
-been assigned a CVE identifier.
-
-Thanks,
-Dan
-
-On Tue, May 11, 2010 at 7:24 PM, Steven M. Christey
-<coley@...us.mitre.org> wrote:
+On Tue, Sep 14, 2010 at 3:06 PM, Hanno Böck <hanno@...eck.de> wrote:
+> From release notes
 >
-> FYI.  The researcher told me that some distros were notified pre-disclosure,
-> but I had already assigned this CVE when I found out.
->
->
-> ======================================================
-> Name: CVE-2010-1869
-> Status: Candidate
-> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-1869
-> Reference:
-> MISC:http://www.checkpoint.com/defense/advisories/public/2010/cpai-10-May.html
->
-> Stack-based buffer overflow in the parser function in GhostScript 8.70
-> and 8.64 allows context-dependent attackers to execute arbitrary code
-> via a crafted PostScript file.
->
->
->
+> "Issue #12312 covers an XSS vulnerability in the upstream NuSOAP library.
+> The fix has been applied to the library included in MantisBT releases,
+> and a patch has been submitted upstream for future releases of NuSOAP.
+> See http://www.mantisbt.org/bugs/view.php?id=12312 for further details.
+
+Are you talking about the PHP_SELF thing?
+http://sourceforge.net/projects/nusoap/forums/forum/193579/topic/3834005
+https://bugzilla.redhat.com/show_bug.cgi?id=629585
+if so it has a CVE #:
+CVE-2010-3070 php-nusoap: XSS vulnerability due improper escaping of URLs
+
+-- 
+Kurt Seifried
+kurt@...fried.org
+tel: 1-703-879-3176
