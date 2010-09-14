@@ -1,32 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/16/7
-Message-ID: <4B9F8AA0.4020002@edelweb.fr>
-Date: Tue, 16 Mar 2010 14:41:52 +0100
-From: Peter Sylvester <Peter.Sylvester@...lweb.fr>
-To: oss-security@...ts.openwall.com
-Cc: Brian Stafford <brian@...fford.uklinux.net>, libesmtp@...fford.uklinux.net, security@...ntu.com, Pawel Salek <pawsa@...ochem.kth.se>, jskarvad@...hat.com
-Subject: Re: CVE Request: libesmtp does not check NULL bytes in commonName
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/14/4
+Message-Id: <201009141723.40428.thomas@suse.de>
+Date: Tue, 14 Sep 2010 17:23:40 +0200
+From: Thomas Biege <thomas@...e.de>
+To: "oss-security" <oss-security@...ts.openwall.com>
+Cc: owasp-dotnet@...ts.owasp.org
+Subject: CVE request: padding oracle attack: ruby on rails 2.3, owasp esapi
 Content-Type: text/plain; charset=utf-8
 
+Hi,
+the paper [1], about practical padding oracle attacks
+mentions some programming frameworks as vulnerable (section 5):
+- Ruby On ails 2.3
+- OWASP ESAPI
 
-> 
-> Doesn't that lack a null byte check for subjAltNames?
-> 
+I think they both need a CVE-ID. Thanks.
 
-The patch seems broken to me:
-X509_NAME_get_text_by_NID gets the "highest" one, not the leaf value.
-In case of two common names, this is wrong.
+Cheers
+Thomas
 
-So instead of
-int l = X509_NAME_get_text_by_NID (X509_get_subject_name (cert),
-                             NID_commonName, buf, sizeof buf);
-
-one needs something like:
-
-    X509_NAME *name = X509_get_subject_name(cert) ;
-     if(name)
-       while((j=X509_NAME_get_index_by_NID(name,NID_commonName,i))>=0)
-         i=j;
+[1] http://usenix.org/events/woot10/tech/full_papers/Rizzo.pdf
 
 
-
+-- 
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+--
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
