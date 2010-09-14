@@ -1,56 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/10/4
-Message-ID: <1166278498.1082231281476050522.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 10 Aug 2010 17:34:10 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/14/12
+Message-Id: <201009142306.07888.hanno@hboeck.de>
+Date: Tue, 14 Sep 2010 23:06:07 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: Re: CVE Request - ZNC
+Subject: CVE request: mantis before 1.2.3 (XSS)
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-2812 for the PING issue
-Please use CVE-2010-2934 for the substr() issues.
+From release notes
 
-Thanks.
+"Issue #12312 covers an XSS vulnerability in the upstream NuSOAP library. 
+The fix has been applied to the library included in MantisBT releases, 
+and a patch has been submitted upstream for future releases of NuSOAP. 
+See http://www.mantisbt.org/bugs/view.php?id=12312 for further details.
+
+Also included with 1.2.3 are another round of XSS fixes to MantisBT, 
+improved excel export, translation updates, and bug fixes to the SOAP 
+API, installation, plugin system, and email notifications."
+
+
+So although it's both xss, one is in mantis itself and one in the 
+shipped/bundled nusoap, so we should have 2 CVEs.
 
 -- 
-    JB
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
+http://schokokeks.org - professional webhosting
 
------ "Kurt Seifried" <kurt@...fried.org> wrote:
-
-> Sorry forgot to mention it's version 0.092 (currently the latest) is
-> affected.
-> 
-> On Mon, Aug 9, 2010 at 5:36 PM, Kurt Seifried <kurt@...fried.org>
-> wrote:
-> > Vincent Danen      2010-08-09 17:44:43 EDT
-> >
-> > An out-of-range flaw was found in znc where if it received a "PING"
-> from a
-> > client without an argument, std::string would throw a
-> std::out_of_range
-> > exception which killed znc.  This is fixed in subversion [1].
-> >
-> > Some unsafe substr() calls were fixed as well.  These are of lesser
-> impact
-> > because a valid login is required in order to cause a
-> std::out_of_range
-> > exception.  This is also fixed in subversion [2].
-> >
-> > [1]
-> http://znc.svn.sourceforge.net/viewvc/znc?view=revision&revision=2093
-> > [2]
-> http://znc.svn.sourceforge.net/viewvc/znc?view=revision&revision=2095
-> >
-> > http://en.znc.in/wiki/ZNC
-> > https://bugzilla.redhat.com/show_bug.cgi?id=622601
-> > https://bugzilla.redhat.com/show_bug.cgi?id=622600
-> >
-> >
-> 
-> 
-> -- 
-> Kurt Seifried
-> kurt@...fried.org
-> tel: 1-703-879-3176
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
