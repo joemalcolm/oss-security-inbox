@@ -1,25 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/19/8
-Message-ID: <4C6D954E.1030801@FreeBSD.org>
-Date: Thu, 19 Aug 2010 22:34:22 +0200
-From: Niels Heinen <niels@...eBSD.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: SLiM insecure PATH assignment
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/14/14
+Message-Id: <20100914211644.E0C58403E8@magilla.sf.frob.com>
+Date: Tue, 14 Sep 2010 14:16:44 -0700 (PDT)
+From: Roland McGrath <roland@...hat.com>
+To: pageexec@...email.hu
+Cc: KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>, Brad Spengler <spender@...ecurity.net>, Linus Torvalds <torvalds@...ux-foundation.org>, Andrew Morton <akpm@...ux-foundation.org>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Kees Cook <kees.cook@...onical.com>, Al Viro <viro@...iv.linux.org.uk>, Oleg Nesterov <oleg@...hat.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, Eugene Teo <eugene@...hat.com>
+Subject: Re: [PATCH 1/3] setup_arg_pages: diagnose excessive argument size
 Content-Type: text/plain; charset=utf-8
 
+> obviously an AT_ARGMAX computed at execve time would be based on the rlimits
+> as well and if later userland changed the rlimits, it'd be userland's problem,
+> not that of the kernel (or the kernel could refuse a change that would violate
+> its earlier promise).
 
-Hi all,
+This would thoroughly defeat the purpose of adding the thing.  The
+only reason to have a new thing is so that userland does not have to
+mirror the kernel's policy (as it attempts to do now, with the 1/4
+calculation).  If the new thing is not something that userland can
+use consistently so as not to have to know what the kernel's actual
+policy is, then I don't see the point of it at all.
 
-SLiM versions prior to 1.3.1 assigned logged on users a predefined PATH
-which included './'. This allowed unintentional code execution (e.g.
-planted binary) and has been fixed by the developers in version 1.3.2.
+> >  auxv is only appropriate for things that
+> > are known at the time of the exec and won't change thereafter.
+> 
+> you mean stuff like AT_EUID et al.? ;)
 
-Can you allocate a CVE number for this one?
+The information that these give is about the conditions at startup.
+That's what they mean to userland, and userland only uses them to know
+the situation before it has made any calls.  The definition of AT_EUID
+is "effective user ID at program startup", and that fact does not
+change.  You proposed AT_ARGMAX for a purpose that requires knowing
+the current information in the process at the time it might attempt an
+execve call, not at startup.  It is not an equivalent case.
+
 
 Thanks,
-
--- 
-Niels Heinen
-FreeBSD committer | www.freebsd.org
-PGP: 0x5FE39B80
+Roland
 
