@@ -1,10 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/17/3
-Message-ID: <AANLkTikKvPVMUqF01rTHrk5ozX8DKD_8iFUjC1ZCOA3s@mail.gmail.com>
-Date: Wed, 17 Nov 2010 11:36:21 +1100
-From: dave b <db.pub.mail@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/14/19
+Message-ID: <AANLkTikAywmCXXaWuFTjsVgNASfD18mLLF7Qfvtz_f1c@mail.gmail.com>
+Date: Tue, 14 Sep 2010 17:20:10 -0600
+From: Kurt Seifried <kurt@...fried.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- Mercurial --Doesn't verify subject Common Name properly
+Subject: Re: CVE request: mantis before 1.2.3 (XSS)
 Content-Type: text/plain; charset=utf-8
 
-Agreed.
+On Tue, Sep 14, 2010 at 3:09 PM, Hanno Böck <hanno@...eck.de> wrote:
+> Addition:
+> http://www.mantisbt.org/bugs/changelog_page.php?version_id=111
+> lists six different xss issues.
+
+The first two of which have CVE #'s
+
+CVE-2010-3070
+- 0012312: [security] NuSOAP WSDL XSS (cross-site scripting
+vulnerability) in Mantis 1.2.2 (dhx) - resolved.
+
+CVE-2010-2574
+- 0012230: [security] XSS vulnerability when deleting maliciously
+named categories (dhx) - resolved.
+
+These four have no CVE #:
+- 0012231: [security] XSS vulnerability when uninstalling maliciously
+named plugins (dhx) - resolved.
+- 0012232: [security] Multiple XSS issues with custom field
+enumeration values (dhx) - resolved.
+- 0012234: [security] XSS issues when using custom field String values
+(dhx) - resolved.
+- 0012238: [security] XSS in print_all_bug_page_word.php when printing
+project and category names (dhx) - resolved.
+
+-- 
+Kurt Seifried
+kurt@...fried.org
+tel: 1-703-879-3176
