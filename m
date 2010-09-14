@@ -1,18 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/15/4
-Message-ID: <20100415174318.6b86a2b1@redhat.com>
-Date: Thu, 15 Apr 2010 17:43:18 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: OSS Security <oss-security@...ts.openwall.com>
-Subject: CVE request - sudo
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/14/17
+Message-Id: <20100914230411.B1F0D403E8@magilla.sf.frob.com>
+Date: Tue, 14 Sep 2010 16:04:11 -0700 (PDT)
+From: Roland McGrath <roland@...hat.com>
+To: pageexec@...email.hu
+Cc: KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>, Brad Spengler <spender@...ecurity.net>, Linus Torvalds <torvalds@...ux-foundation.org>, Andrew Morton <akpm@...ux-foundation.org>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Kees Cook <kees.cook@...onical.com>, Al Viro <viro@...iv.linux.org.uk>, Oleg Nesterov <oleg@...hat.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, Eugene Teo <eugene@...hat.com>
+Subject: Re: [PATCH 1/3] setup_arg_pages: diagnose excessive argument size
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+> userland could never rely on the kernel's policy at all since get_arg_page
+> could have failed for more reasons than overstepping the currently hardcoded
+> ARG_MAX check in there. 
 
-sudo versions 1.7.2p6 and 1.6.9p22 were released recently fixing
-another sudoedit privilege escalation issue:
+I don't see how it could fail except for OOM cases where get_user_pages()
+failed rather than blocking.  Is that what you mean?
 
-http://sudo.ws/sudo/alerts/sudoedit_escalate2.html
+> so what AT_ARGMAX would buy us is to allow the kernel
+> policy to change over time, but it's never been about guarantees, whether
+> POSIX wants such a thing or not.
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+I understand the motivation for an explicit mechanism for the kernel to
+tell userland its limit.  Since the kernel policy today depends on
+something that can change between execs, AT_ARGMAX is inadequate for
+that purpose for today's policy, let alone any future different policy.
+
+> > The information that these give is about the conditions at startup.
+> > That's what they mean to userland, and userland only uses them to know
+> > the situation before it has made any calls.  The definition of AT_EUID
+> > is "effective user ID at program startup", and that fact does not
+> > change.
+> 
+> just for my own curiosity, where does this definition come from?
+
+You mean documentation?  I'm not really sure if there is any for that.
+But it's the inherent definition of auxv that all its information can
+only be about the conditions at program startup.
+
+
+Thanks,
+Roland
