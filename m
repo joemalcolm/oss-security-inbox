@@ -1,49 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/13/12
-Message-ID: <Pine.GSO.4.64.1009131732170.24720@faron.mitre.org>
-Date: Mon, 13 Sep 2010 17:34:24 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Josh Bressers <bressers@...hat.com>
-cc: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: mailman
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/14/3
+Message-Id: <20100914105147.C996.A69D9226@jp.fujitsu.com>
+Date: Tue, 14 Sep 2010 10:52:45 +0900 (JST)
+From: KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>
+To: Linus Torvalds <torvalds@...ux-foundation.org>
+Cc: kosaki.motohiro@...fujitsu.com, Roland McGrath <roland@...hat.com>, Andrew Morton <akpm@...ux-foundation.org>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Kees Cook <kees.cook@...onical.com>, Al Viro <viro@...iv.linux.org.uk>, Oleg Nesterov <oleg@...hat.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, pageexec@...email.hu, "Brad Spengler <spender@...ecurity.net>, Eugene Teo" <eugene@...hat.com>, KAMEZAWA Hiroyuki <kamezawa.hiroyu@...fujitsu.com>
+Subject: Re: [PATCH 2/2] execve: check the VM has enough memory at first
 Content-Type: text/plain; charset=utf-8
 
+> On Wed, Sep 8, 2010 at 10:04 PM, KOSAKI Motohiro
+> <kosaki.motohiro@...fujitsu.com> wrote:
+> >
+> > After this patch, execve() expand stack at first and receive to
+> > check vm_enough_memory() properly. then, too long argument of
+> > execve() than the machine memory return EFAULT properly.
+> 
+> This is horrible. We don't want to walk the arguments one more time
+> just for this. Let's just improve the checks that we do as we go
+> along.
+> 
+>                             Linus
 
-In this case, all else being equal, lowest ID wins.
-
-We will never be perfect due to the lack of sufficient details (or, way 
-too many details), but where possible I prefer to follow the consistency 
-rules when we can, especially when they're pretty clear-cut like this.
-
-It happens :-)
-
-In this case, the abstraction issue was discovered quickly, so I'm OK with 
-fixing the abstraction after the fact.
-
-Let's stick with CVE-2010-3089, and I'll flag CVE-2010-3090 for rejection.
-
-- Steve
-
+Okey. I'll consider new way in this night.
 
 
-On Mon, 13 Sep 2010, Josh Bressers wrote:
 
-> ----- "Steven M. Christey" <coley@...us.mitre.org> wrote:
->
->> Josh,
->>
->> Was there a particular reason to split these into separate CVEs?  A quick
->> glance suggests they affect the same version, and since they're the same
->> type, would normally argue for a merge.
->>
->
-> I have no idea why I did that now that I look at the bugs. I'm sorry.
->
-> I'll let you pick which ID to use (do you have a policy for this? lowest
-> ID?)
->
-> Thanks.
->
-> --
->    JB
->
