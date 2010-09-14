@@ -1,44 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/08/11
-Message-Id: <20100409001400.JHAGVNYMPPOAKG@hackinthebox.org>
-Date: Fri, 9 Apr 2010 00:14:00 +0800
-From: Hafez Kamal <aphesz@...kinthebox.org>
-To: <oss-security@...ts.openwall.com>
-Subject: [HITB-Announce] FINAL CALL - CFP for HITBSecConf2010 Amsterdam
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/14/11
+Message-ID: <4C8FDAEF.17347.14CA1791@pageexec.freemail.hu>
+Date: Tue, 14 Sep 2010 22:28:31 +0200
+From: pageexec@...email.hu
+To: Roland McGrath <roland@...hat.com>
+CC: KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>, Brad Spengler <spender@...ecurity.net>, Linus Torvalds <torvalds@...ux-foundation.org>, Andrew Morton <akpm@...ux-foundation.org>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Kees Cook <kees.cook@...onical.com>, Al Viro <viro@...iv.linux.org.uk>, Oleg Nesterov <oleg@...hat.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, Eugene Teo <eugene@...hat.com>
+Subject: Re: [PATCH 1/3] setup_arg_pages: diagnose excessive argument size
 Content-Type: text/plain; charset=utf-8
 
-This is the FINAL CALL to submit your talk / presentation proposals for
-the inaugural HITB Security Conference in Europe! Submissions are due
-by 19TH APRIL 2010.
+On 14 Sep 2010 at 11:51, Roland McGrath wrote:
 
-HITBSecConf2010 - Amsterdam takes place at the Grand Krasnapolsky from
-the 29th of June till the 2nd of July (Tuesday - Friday) with keynote
-speakers Anton Chuvakin and Mark Curphey in our _first ever_ QUAD TRACK
-conference.
+> > no it doesn't have to, similarly to how it doesn't have to hardcode
+> > _SC_PAGESIZE either, AT_PAGESZ tells userland what it needs to know
+> > and i think AT_ARGMAX could exist just as well.
+> 
+> I was referring to the ways available to userland heretofore.  Certainly,
+> the kernel could add new ways and then userland could do different things
+> (with new kernels).  
+> 
+> auxv in particular is not a mechanism that could fit for this.  The actual
+> limit depends on rlimits of the calling process, and rlimits can change
+> during the life of the program.
 
-To submit your presentation proposals and for further details on our
-submission process, please see:
+obviously an AT_ARGMAX computed at execve time would be based on the rlimits
+as well and if later userland changed the rlimits, it'd be userland's problem,
+not that of the kernel (or the kernel could refuse a change that would violate
+its earlier promise).
 
-http://cfp.hackinthebox.org/
+>  auxv is only appropriate for things that
+> are known at the time of the exec and won't change thereafter.
 
-On a related note, online registration for HITBSecConf2010 - Dubai is
-closing on the 14TH OF APRIL - Walk in registrations are still accepted
-thereafter.
-
-http://conference.hitb.org/hitbsecconf2010dxb/register/
-
-See you there!
-
-
----
-Hafez Kamal
-HITB Crew
-Hack in The Box (M) Sdn. Bhd.
-Suite 26.3, Level 26, Menara IMC,
-No. 8 Jalan Sultan Ismail,
-50250 Kuala Lumpur,
-Malaysia
-
-Tel: +603-20394724
-Fax: +603-20318359
+you mean stuff like AT_EUID et al.? ;)
 
