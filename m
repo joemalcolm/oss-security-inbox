@@ -1,36 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/29/3
-Message-ID: <282412323.31981280412192803.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 29 Jul 2010 10:03:12 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/14/1
+Message-Id: <201009140230.05862.hanno@hboeck.de>
+Date: Tue, 14 Sep 2010 02:30:05 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request: Piwik < 0.6.4 Arbitrary file inclusion
+Subject: CVE request: xss in pecl-apc before 3.1.4
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-2786
+http://pecl.php.net/package-changelog.php?package=APC&release=3.1.4
 
-Thanks.
+- Fixed potential XSS in apc.php (Pierre, Matt Chapman)
+
+This is a minor issue as this usually doesn't get installed and should only be 
+used for debugging-purposes, but still, deserves a CVE.
 
 -- 
-    JB
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
+http://schokokeks.org - professional webhosting
 
------ "Anthon Pang" <anthon.pang@...il.com> wrote:
-
-> An arbitrary file inclusion vulnerability is fixed by the latest
-> Piwik
-> 0.6.4 release.  The advisory is (or will be) published here:
-> http://piwik.org/blog/2010/07/piwik-0-6-4-security-advisory/
-> 
-> Description:
-> 
-> Piwik versions 0.6 through 0.6.3 are vulnerable to arbitrary, remote
-> file inclusion using a directory traversal pattern in a crafted
-> request for a data renderer.
-> 
-> This vulnerability is rated critical, and Piwik users are strongly
-> encouraged to update to the latest version of Piwik.
-> 
-> The Piwik project and community thanks Enrico Razza for reporting the
-> issue.
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
