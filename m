@@ -1,128 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/03/4
-Message-ID: <C10B9E3687C68B4D98F6ADFD3C3CDDB7015BF281C857@EXCHANGE.sei.cmu.edu>
-Date: Fri, 3 Dec 2010 09:44:01 -0500
-From: Robert Seacord <rcs@...t.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: "Chad R. Dougherty" <crd@...t.org>, David Svoboda <svoboda@...t.org>
-Subject: RE: Interesting behavior with struct initiailization
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/14/15
+Message-ID: <4C8FF6EE.21454.153770F9@pageexec.freemail.hu>
+Date: Wed, 15 Sep 2010 00:27:58 +0200
+From: pageexec@...email.hu
+To: Roland McGrath <roland@...hat.com>
+CC: KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>, Brad Spengler <spender@...ecurity.net>, Linus Torvalds <torvalds@...ux-foundation.org>, Andrew Morton <akpm@...ux-foundation.org>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Kees Cook <kees.cook@...onical.com>, Al Viro <viro@...iv.linux.org.uk>, Oleg Nesterov <oleg@...hat.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, Eugene Teo <eugene@...hat.com>
+Subject: Re: [PATCH 1/3] setup_arg_pages: diagnose excessive argument size
 Content-Type: text/plain; charset=utf-8
 
-With respect to this specific problem:
+On 14 Sep 2010 at 14:16, Roland McGrath wrote:
 
-> then the compiler is free to change the padding bytes after 'x.b' to whatever it likes, because you changed 'x.a', even though you might >  
-> think you cleared them and the compiler would have no reason to make this change.  In practice this might manifest in the case of 
+> > obviously an AT_ARGMAX computed at execve time would be based on the rlimits
+> > as well and if later userland changed the rlimits, it'd be userland's problem,
+> > not that of the kernel (or the kernel could refuse a change that would violate
+> > its earlier promise).
+> 
+> This would thoroughly defeat the purpose of adding the thing.  The
+> only reason to have a new thing is so that userland does not have to
+> mirror the kernel's policy (as it attempts to do now, with the 1/4
+> calculation).  If the new thing is not something that userland can
+> use consistently so as not to have to know what the kernel's actual
+> policy is, then I don't see the point of it at all.
 
-> memset (&x, 0, sizeof(x));
-> x.a = 1; x.b = 2; x.c = 3;
+userland could never rely on the kernel's policy at all since get_arg_page
+could have failed for more reasons than overstepping the currently hardcoded
+ARG_MAX check in there. so what AT_ARGMAX would buy us is to allow the kernel
+policy to change over time, but it's never been about guarantees, whether
+POSIX wants such a thing or not.
 
-> by the compiler optimising out the 'memset' as a dead store.
+> > >  auxv is only appropriate for things that
+> > > are known at the time of the exec and won't change thereafter.
+> > 
+> > you mean stuff like AT_EUID et al.? ;)
+> 
+> The information that these give is about the conditions at startup.
+> That's what they mean to userland, and userland only uses them to know
+> the situation before it has made any calls.  The definition of AT_EUID
+> is "effective user ID at program startup", and that fact does not
+> change.
 
-CERT proposed #5 memset_s() to clear memory, without fear of removal (see http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1358.pdf).  This function is specified in the current working draft of C1X Annex K (normative) Bounds-checking interfaces as follows:
-
-K.3.7.4.1 The memset_s function
-Synopsis
-1 #define _ _STDC_WANT_LIB_EXT1_ _ 1
-#include <string.h>
-errno_t memset_s(void *s, rsize_t smax, int c, rsize_t n)
-Runtime-constraints
-2 s shall not be a null pointer. Neither smax nor n shall be greater than RSIZE_MAX. n
-shall not be greater than smax.
-3 If there is a runtime-constraint violation, then if s is not a null pointer and smax is not
-greater than RSIZE_MAX, the memset_s function stores the value of c (converted to an
-unsigned char) into each of the first smax characters of the object pointed to by s.
-Description
-4 The memset_s function copies the value of c (converted to an unsigned char) into
-each of the first n characters of the object pointed to by s. Unlike memset, any call to
-the memset_s function shall be evaluated strictly according to the rules of the abstract
-machine as described in (5.1.2.3). That is, any call to the memset_s function shall
-assume that the memory indicated by s and n may be accessible in the future and thus
-must contain the values indicated by c.
-Returns
-5 The memset_s function returns zero if there was no runtime-constraint violation.
-Otherwise, a nonzero value is returned.
-
-Annex K is optional but normative.
-
-rCs
-
-----
-Robert C. Seacord
-Secure Coding Manager
-CERT / Software Engineering Institute
-Work: +1 412.268.7608
-FAX:    +1 412.268.6989
-
-
------Original Message-----
-From: Geoff Keating [mailto:geoffk@...le.com] 
-Sent: Monday, November 29, 2010 9:54 PM
-To: oss-security@...ts.openwall.com
-Subject: Re: [oss-security] Interesting behavior with struct initiailization
-
-
-On 25/11/2010, at 5:31 AM, Nelson Elhage wrote:
-
-> Is it possible that the zeroing out of padding bytes by GCC is an 
-> implementation detail that we've been relying on, and never something 
-> that was intended as part of the exposed contract? Is there anyone on 
-> this list more qualified to comment on either the specification or 
-> GCC's implementation?
-
-C99 says, in 6.2.6.1p6,
-
-> When a value is stored in an object of structure or union type, 
-> including in a member object, the bytes of the object representation 
-> that correspond to any padding bytes take unspecified values.42)
-
-and there is a specific footnote in case this wasn't clear enough:
-
-> 42) Thus, for example, structure assignment may be implemented element-at-a-time or via memcpy.
-
-
-but the description goes *much* further than the footnote.  In principle, it means if you write
-
-struct test { int a; char b; int c; } x; memset (&x, 0, sizeof(x)); x.a = 1;
-
-then the compiler is free to change the padding bytes after 'x.b' to whatever it likes, because you changed 'x.a', even though you might think you cleared them and the compiler would have no reason to make this change.  In practice this might manifest in the case of 
-
-memset (&x, 0, sizeof(x));
-x.a = 1; x.b = 2; x.c = 3;
-
-by the compiler optimising out the 'memset' as a dead store.
-
-Since C99 says it is unspecified, you'd have to look at the GCC documentation, and I don't see any specification there either.
-
-In practise, GCC does exactly this, with its own built-in initializer expansion.  If you turn on the right debugging flag (I think -fdump-tree-original -fdump-tree-gimple is what you want), you can see GCC turn
-
-    struct test arg = {.a=1};
-  use (&arg);
-    struct test arg2 = {.a=1, .b=2, .c=3};
-  use (&arg2);
-
-into
-
-  arg = {};
-  arg.a = 1;
-  use (&arg);
-  arg2.a = 1;
-  arg2.b = 2;
-  arg2.c = 3;
-  use (&arg2);
-
-The comment in the code (in gimplify.c) explains that the side-effect of clearing unused bytes is definitely not intentional, it reads:
-
-   Note that we still need to clear any elements that don't have explicit
-   initializers, so if not all elements are initialized we keep the
-   original MODIFY_EXPR, we just remove all of the constructor elements.
-
-and
-
-        /* ??? This bit ought not be needed.  For any element not present
-           in the initializer, we should simply set them to zero.  Except
-           we'd need to *find* the elements that are not present, and that
-           requires trickery to avoid quadratic compile-time behavior in
-           large cases or excessive memory use in small cases.  */
-        else if (num_ctor_elements < num_type_elements)
-          cleared = true;
+just for my own curiosity, where does this definition come from?
 
