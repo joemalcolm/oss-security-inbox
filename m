@@ -1,43 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/14/2
-Message-ID: <4B4E77C3.1060705@redhat.com>
-Date: Thu, 14 Jan 2010 09:47:47 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/15/2
+Message-ID: <AANLkTikDaFntxeAA+GGYB0XBaLp9U_-AVod-Q-f8B4PL@mail.gmail.com>
+Date: Wed, 15 Sep 2010 11:49:45 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-2010-0006 - kernel: ipv6: skb_dst() can be NULL in ipv6_hop_jumbo()
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, jeffm@...e.com
+Subject: Re: CVE request: kernel: numerous infoleaks
 Content-Type: text/plain; charset=utf-8
 
-http://marc.info/?l=linux-netdev&m=126343325807340&w=2
+Jeff Mahoney correctly pointed out that the first case
+(drivers/net/tulip/de4x5.c) is not a security issue because the copied
+data is from a union, not a struct.  I've gone through these again to
+confirm that the remaining three are actually security issues.
 
-This fixes CERT-FI FICORA #341748
+Therefore, CVE-2010-3295 should be marked as invalid.
 
-Discovered by Olli Jarva and Tuomo Untinen from the CROSS
-project at Codenomicon Ltd.
+-Dan
 
-Just like in CVE-2007-4567, we can't rely upon skb_dst() being
-non-NULL at this point.  We fixed that in commit
-e76b2b2567b83448c2ee85a896433b96150c92e6 ("[IPV6]: Do no rely on
-skb->dst before it is assigned.")
-
-However commit 483a47d2fe794328d29950fe00ce26dd405d9437 ("ipv6: added
-net argument to IP6_INC_STATS_BH") put a new version of the same bug
-into this function.
-
-Complicating analysis further, this bug can only trigger when network
-namespaces are enabled in the build.  When namespaces are turned off,
-the dev_net() does not evaluate it's argument, so the dereference
-would not occur.
-
-So, for a long time, namespaces couldn't be turned on unless SYSFS was
-disabled.  Therefore, this code has largely been disabled except by
-people turning it on explicitly for namespace development.
-
-With help from Eugene Teo <eugene@...hat.com>
-
-Signed-off-by: David S. Miller <davem@...emloft.net>
-CC: stable <stable@...nel.org>
-
-Thanks, Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
+On Tue, Sep 14, 2010 at 3:26 PM, Josh Bressers <bressers@...hat.com> wrote:
+> ----- "Eugene Teo" <eugene@...hat.com> wrote:
+>
+>> Reported by Dan Rosenberg,
+>>
+>> drivers/net/tulip/de4x5.c: reading uninitialized stack memory
+>> http://lkml.org/lkml/2010/9/11/169
+>> https://bugzilla.redhat.com/633158
+>
+> CVE-2010-3295
+>
+>>
+>> drivers/net/cxgb3/cxgb3_main.c reading uninitialized stack memory
+>> http://lkml.org/lkml/2010/9/11/170
+>> introduced in 4d22de3e (v2.6.21-rc2)
+>> https://bugzilla.redhat.com/633149
+>
+> CVE-2010-3296
+>
+>>
+>> drivers/net/eql.c: reading uninitialized stack memory
+>> http://lkml.org/lkml/2010/9/11/168
+>> https://bugzilla.redhat.com/633145
+>
+> CVE-2010-3297
+>
+>>
+>> drivers/net/usb/hso.c: reading uninitialized memory
+>> http://lkml.org/lkml/2010/9/11/167
+>> introduced in 542f5482 (v2.6.29-rc1)
+>> https://bugzilla.redhat.com/633140
+>>
+>
+> CVE-2010-3298
+>
+> Thanks.
+>
+> --
+>    JB
+>
