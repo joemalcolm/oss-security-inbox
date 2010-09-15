@@ -1,22 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/20/2
-Message-ID: <4B566CED.8030409@kernel.sg>
-Date: Wed, 20 Jan 2010 10:39:41 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-2009-3556 kernel: qla2xxx NPIV vport management pseudofiles are world writable
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/15/1
+Message-ID: <4C909193.2667.179386C9@pageexec.freemail.hu>
+Date: Wed, 15 Sep 2010 11:27:47 +0200
+From: pageexec@...email.hu
+To: Roland McGrath <roland@...hat.com>
+CC: KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>, Brad Spengler <spender@...ecurity.net>, Linus Torvalds <torvalds@...ux-foundation.org>, Andrew Morton <akpm@...ux-foundation.org>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Kees Cook <kees.cook@...onical.com>, Al Viro <viro@...iv.linux.org.uk>, Oleg Nesterov <oleg@...hat.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, Eugene Teo <eugene@...hat.com>
+Subject: Re: [PATCH 1/3] setup_arg_pages: diagnose excessive argument size
 Content-Type: text/plain; charset=utf-8
 
-As far as I know, this only affects Red Hat Enterprise Linux 5.
+On 14 Sep 2010 at 16:04, Roland McGrath wrote:
 
-The RHBA-2008:0314 update introduced N_Port ID Virtualization (NPIV) 
-support in the qla2xxx driver, resulting in two new sysfs pseudo files, 
-"/sys/class/scsi_host/[a qla2xxx host]/vport_create" and "vport_delete". 
-These two files were world-writable by default, allowing a local user to 
-change SCSI host attributes. This flaw only affects systems using the 
-qla2xxx driver and NPIV capable hardware.
+> > userland could never rely on the kernel's policy at all since get_arg_page
+> > could have failed for more reasons than overstepping the currently hardcoded
+> > ARG_MAX check in there. 
+> 
+> I don't see how it could fail except for OOM cases where get_user_pages()
+> failed rather than blocking.  Is that what you mean?
 
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2009-3556
+yes but it's not only OOM (ENOMEM from some allocation), but it can be also
+EPERM from LSM (if mmap_min_addr is set too high) or EFAULT from get_user_pages
+(e.g., if VM_FAULT_HWPOISON was returned for a requested page).
 
-Thanks, Eugene
