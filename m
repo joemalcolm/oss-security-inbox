@@ -1,38 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/30/1
-Message-ID: <20101130010518.GJ23277@ksplice.com>
-Date: Mon, 29 Nov 2010 20:05:18 -0500
-From: Nelson Elhage <nelhage@...lice.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/16/3
+Message-ID: <4C91AC26.3030807@kernel.sg>
+Date: Thu, 16 Sep 2010 13:33:26 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Subject: kernel: Multiple vulnerabilities in AF_ECONET
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE-2010-3301 kernel: IA32 System Call Entry Point Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-I reported these recently, and they were fixed upstream last week.
+On 09/16/2010 12:56 PM, Eugene Teo wrote:
+> CVE-2007-4573 regression. Local privilege escalation.
+>
+> Introduced in v2.6.27-rc1 via commit d4d67150.
+>
+> Upstream commits:
+> http://git.kernel.org/linus/36d001c70d8a0144ac1d038f6876c484849a74de
+> http://git.kernel.org/linus/eefdca043e8391dcd719711716492063030b55ac
+>
+> References:
+> http://sota.gen.nz/compat2/
+> https://bugzilla.redhat.com/CVE-2010-3301
 
-CVE-2010-3848: Kernel stack overflow in econet_sendmsg
-CVE-2010-3849: NULL pointer dereference in PF_ECONET
-CVE-2010-3850: Missing check for capable(CAP_NET_ADMIN) in econet SIOCSIFADDR
+This was reported by Ben Hawkes.
 
-CVE-2010-3848 is interesting because it's a bug class I haven't seen before,
-although maybe people who have been around longer have. econet_sendmsg() can be
-made to allocate > 8192 bytes on the kernel stack, overflowing the two pages
-allocated for the stack, and allowing an attacker to clobber the 'struct
-thread_info', which provides several easy exploit vectors.
-
-Jon Oberheide has done a more detailed writeup about this bug class here:
-http://jon.oberheide.org/blog/2010/11/29/exploiting-stack-overflows-in-the-linux-kernel/
-
-CVE-2010-3850 is mostly interesting because without it, there is no way an
-unprivileged user can trigger the first two bugs unless an administrator has
-already configured an econet address somewhere (econet_sendmsg fails quickly if
-there are no econet addresses configured on the system).
-
-Reference:
-http://www.debian.org/security/2010/dsa-2126
-
-Upstream commits:
-CVE-2010-3848: http://git.kernel.org/linus/a27e13d370415add3487949c60810e36069a23a6
-CVE-2010-3849: http://git.kernel.org/linus/fa0e846494792e722d817b9d3d625a4ef4896c96
-CVE-2010-3850: http://git.kernel.org/linus/16c41745c7b92a243d0874f534c1655196c64b74
-
-- Nelson
+Eugene
+-- 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
