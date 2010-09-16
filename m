@@ -1,38 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/08/4
-Message-Id: <201010082319.11478.hanno@hboeck.de>
-Date: Fri, 8 Oct 2010 23:19:11 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/16/2
+Message-ID: <4C91AC19.4050205@kernel.sg>
+Date: Thu, 16 Sep 2010 13:33:13 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: joomla before 1.5.21 XSS
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE-2010-3081 kernel: 64-bit Compatibility Mode Stack Pointer Underflow
 Content-Type: text/plain; charset=utf-8
 
+Reported by Ben Hawkes. "A vulnerability in the 32-bit compatibility 
+layer for 64-bit systems was reported. It is caused by insecure 
+allocation of user space memory when translating system call inputs to 
+64-bit. A stack pointer underflow can occur when using the 
+"compat_alloc_user_space" method with an arbitrary length input."
 
-http://developer.joomla.org/security/news/9-security/10-core-security/322-20101001-core-xss-
-vulnerabilities
+Reference:
+http://sota.gen.nz/compat1/
+https://bugzilla.redhat.com/CVE-2010-3081
 
+Upstream commit:
+http://git.kernel.org/linus/c41d68a513c71e35a14f66d71782d27a79a81ea6
 
-  [20101001] - Core - XSS Vulnerabilities
-
-    * Project: Joomla!
-    * SubProject: All
-    * Severity: Medium
-    * Versions: 1.5.20 and all previous 1.5 releases
-    * Exploit type: XSS Injection
-    * Reported Date: 2010-October-05
-    * Fixed Date: 2010-October-08
-
-Description
-
-Inadequate filtering of multiple encoded entities permits XSS attacks in some
-circumstances.
-Affected Installs
-
-All 1.5.x installs prior to and including 1.5.20 are affected.
+Thanks, Eugene
 -- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-
-http://schokokeks.org - professional webhosting
-
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
