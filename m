@@ -1,65 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/26/2
-Message-ID: <1809296454.1554981280172009597.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 26 Jul 2010 15:20:09 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: Cacti XSS fixes in 0.8.7g
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/16/14
+Message-ID: <20100916203441.7caee871@foo.fgeek.fi>
+Date: Thu, 16 Sep 2010 20:34:41 +0300
+From: Henri Salo <henri@...v.fi>
+To: "oss-security" <oss-security@...ts.openwall.com>
+Subject: CVE-identifier request for Dovecot ACL security bug
 Content-Type: text/plain; charset=utf-8
 
-Sorry for the delay. IDs inline.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
+Can I get CVE-identifier for this issue?
 
------ "Tomas Hoger" <thoger@...hat.com> wrote:
+"This release fixes a bug in ACL plugin, which could be considered a
+security bug: If Maildir is used with default settings (INBOX is same
+as Maildir root dir) and user set some ACLs to INBOX, those ACLs were
+copied to all newly created mailboxes. This should have been done only
+for "default ACLs", but with Maildir the INBOX directory is the same as
+the default ACL directory, so this mixup happened. This bug exists only
+in v1.2.x releases."
 
-> Hi!
-> 
-> Cacti 0.8.7g was released some days ago:
->   http://cacti.net/release_notes_0_8_7g.php
-> 
-> Release notes mention couple of security issue previously fixed in
-> (withdrawn) 0.8.7f, but adds new protections against couple of XSS
-> issues.
-> 
-> 
-> "XSS 4" from CVE-2009-4032 was not fixed previously:
->   https://bugzilla.redhat.com/show_bug.cgi?id=541279#c17
-> 
-> Fixed in include/top_graph_header.php change in:
->   http://svn.cacti.net/viewvc?view=rev&revision=6025
+URL to announcement:
+http://www.dovecot.org/list/dovecot-news/2010-July/000163.html
 
-Use CVE-2010-2543
+Please note that this is different issue than: CVE-2010-0745
 
-> 
-> 
-> Search pattern in log file viewer was not filtered for bad
-> characters,
-> or escaped before echoing pattern back to page:
->   https://bugzilla.redhat.com/show_bug.cgi?id=459105
-> 
-> Possible victims are administrative users with access to log viewer
-> page.  Fixed in r6025, which adds escaping to other search patterns
-> too, but others were filtered previously.
+Best regards,
+Henri Salo
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
 
-Use CVE-2010-2544
-
-> 
-> 
-> Multiple persistent XSS via various item names or descriptions.
-> Attacker needs to have certain administrative privileges, so this is
-> fairly lame issue.
->   https://bugzilla.redhat.com/show_bug.cgi?id=459229
-> 
-> Originally discovered for template names, where template XML import
-> provides additional vector (trusted admin tricked to import untrusted
-> template vs. untrusted admin).  HTML escaping added on various places
-> in r6037, r6038, r6041 and r6042.
-> 
-
-Use CVE-2010-2545
-
-Thanks.
-
--- 
-    JB
+iEYEARECAAYFAkySVTEACgkQXf6hBi6kbk9r9wCgs6z72LRTcywrsWIPtRiAR/R0
+fxcAoLQuYxA3NDFPsUiUhe7uTBm6c5xI
+=nWSw
+-----END PGP SIGNATURE-----
