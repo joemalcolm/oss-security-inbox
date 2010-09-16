@@ -1,61 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/21/1
-Message-ID: <AANLkTimFV8vZ0D_GumkU_IZfOOoH28v8t0DzB379CKc0@mail.gmail.com>
-Date: Mon, 21 Jun 2010 00:25:30 -0700
-From: Paul Lesniewski <paul@...irrelmail.org>
-To: Josh Bressers <bressers@...hat.com>
-Cc: oss-security@...ts.openwall.com, security-2010@...irrelmail.org,  security@...de.org, coley@...re.org
-Subject: Re: [SquirrelMail-Security] CVE Request for Horde and  Squirrelmail
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/17/2
+Message-ID: <AANLkTin6-nPh1pc79W9qpzTDsEQrMPiZ45aJ+2LZheCF@mail.gmail.com>
+Date: Thu, 16 Sep 2010 08:01:30 -0700
+From: Linus Torvalds <torvalds@...ux-foundation.org>
+To: KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>
+Cc: Roland McGrath <roland@...hat.com>, Andrew Morton <akpm@...ux-foundation.org>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Kees Cook <kees.cook@...onical.com>, Al Viro <viro@...iv.linux.org.uk>, Oleg Nesterov <oleg@...hat.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, pageexec@...email.hu, "Brad Spengler <spender@...ecurity.net>, Eugene Teo" <eugene@...hat.com>, KAMEZAWA Hiroyuki <kamezawa.hiroyu@...fujitsu.com>
+Subject: Re: [PATCH 2/2] execve: check the VM has enough memory at first
 Content-Type: text/plain; charset=utf-8
 
-Hello all,
+2010/9/15 KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>:
+>
+> Briefly says, to introduce new limit has bad benefit/risk balance. Sadly.
 
->> Is there a CVE number available for the two 0-days exposed during Hack In
->> The Box Dubai 2010 ?
->>
->> Though the exploits were not given during HITB (?), some friends have
->> recently shown me that they found how both products (Squirrelmail and
->> Horde) might be abused to be transformed, so that they become some kind
->> of nmap scanner (banner grab, port scan, etc). It helps at discovering a
->> remote DMZ, internal LAN, etc, by using those webmails as evil internal
->> nmap proxies.
->>
->> More info available on the slides of the corporate hackers who found the
->> 0-days :
->> http://conference.hitb.org/hitbsecconf2010dxb/materials/D1%20-%20Laurent%20Oudot%20-%20Improving%20the%20Stealthiness%20of%20Web%20Hacking.pdf
->> -> Squirrelmail: page 69 (post auth vuln)
->> -> Horde: page 74 (pre auth vuln)
->>
->
-> Here goes, there isn't a lot of data on these.
->
-> For Squirrelmail:
->
-> Here are some important notes from the slide:
->        * Default plugin <mail_fetch>, emulates POP3 fetcher with fsockopen()
->          PHP functions, Post Authentication only
->            - No verification on IP / PORTS
->        * You can transform SquirrelMail as a kind of Nmap scanner
->
->        This has been assigned TEHTRI-SA-2010-009 by the discoverer.
->
->        The danger is that this attack could be used to bypass a firewall.
->
-> Let's use CVE-2010-1637 for Squirrelmail.
+Well, I mostly agree. That said, I do think we could extend the
+limiter some ways.
 
-Sorry for the delay.  A fix for this issue is now available in the
-SquirrelMail source repository.  A new stable version (1.4.21) with
-this fix will be released in the next week or two.  Links to the
-patches if you need them now are:
+For example, I think the "stack limit / 4" is perfectly sane, but it
+would make total sense to perhaps also take into account the AS and
+RSS limits.
 
-Development version (1.5.2):
-http://squirrelmail.svn.sourceforge.net/squirrelmail/?rev=13950&view=rev
-Stable version (1.4.21):
-http://squirrelmail.svn.sourceforge.net/squirrelmail/?rev=13951&view=rev
+And I do think that your attempt to use __vm_enough_memory() was good.
+It happens to be coded in a way that makes it useless for a one-pass
+model, and some of what it does would be too expensive to do up-front
+when you can't short-circuit it, but I do think that it would probably
+be appropriate to at least try to take the _rough_ code there and use
+it as a limit for maximum stack size too.
 
+For example, we could have a function somewhat like
 
--- 
-Paul Lesniewski
-SquirrelMail Team
-Please support Open Source Software by donating to SquirrelMail!
-http://squirrelmail.org/donate_paul_lesniewski.php
+    unsigned long max_stack_size(void)
+   {
+        unsigned long allowed, used, limit;
+
+        switch (sysctl_overcommit_memory) {
+        case OVERCOMMIT_ALWAYS:
+                allowed = ULONG_MAX;
+                break;
+        case OVERCOMMIT_GUESS:
+                .. maybe we can come up with some upper bound here too ..
+                break;
+        default:
+                allowed = (totalram_pages - hugetlb_total_pages())
+                        * sysctl_overcommit_ratio / 100;
+                if (!cap_sys_admin)
+                        allowed -= allowed / 32;
+                allowed += total_swap_pages;
+                /* Don't let a single process grow too big:
+                   leave 3% of the size of this process for other processes */
+                if (mm)
+                        allowed -= mm->total_vm / 32;
+                /* What is already committed to? */
+                used = percpu_counter_read_positive(&vm_committed_as);
+                if (used > allowed)
+                        return 0;
+                allowed -= used;
+                break;
+        }
+        limit = ACCESS_ONCE(rlim[RLIMIT_STACK].rlim_cur) / 4;
+        if (allowed > limit)
+                allowed = limit;
+        return allowed;
+    }
+
+which we'd call once at the beginning of the execve(), and then
+remember that result and use it instead of the current 'rlimit/4'
+value.
+
+Now, admittedly the OVERCOMMIT_GUESS case is the interesting one, and
+the one that is hard to write efficiently. But maybe we could make
+'nr_free_pages()' cheap enough that doin that whole OVERCOMMIT_GUESS
+"approximate free pages" thing from __vm_enough_memory would work out
+too?
+
+I dunno. It doesn't look hopeless.
+
+                      Linus
