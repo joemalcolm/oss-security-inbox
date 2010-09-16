@@ -1,38 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/05/4
-Message-ID: <1500381661.71931288987250141.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 5 Nov 2010 16:00:50 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com, Petr Matousek <pmatouse@...hat.com>
-Cc: coley@...us.mitre.org
-Subject: Re: CVE request: kernel: kvm kernel stack leakage
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/16/13
+Message-ID: <AANLkTikyxAZBp63FxY26_MS6afDZO59r2FNoWF9W-GmT@mail.gmail.com>
+Date: Thu, 16 Sep 2010 10:47:05 +0300
+From: Pekka Enberg <penberg@...nel.org>
+To: KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>
+Cc: David Rientjes <rientjes@...gle.com>, Linus Torvalds <torvalds@...ux-foundation.org>,  Andrew Morton <akpm@...ux-foundation.org>, linux-kernel@...r.kernel.org,  oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>,  Kees Cook <kees.cook@...onical.com>, Al Viro <viro@...iv.linux.org.uk>,  Oleg Nesterov <oleg@...hat.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org,  pageexec@...email.hu, Brad Spengler <spender@...ecurity.net>,  Eugene Teo <eugene@...hat.com>, KAMEZAWA Hiroyuki <kamezawa.hiroyu@...fujitsu.com>,  linux-mm <linux-mm@...ck.org>
+Subject: Re: [PATCH 1/4] oom: remove totalpage normalization from oom_badness()
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-3881
+On Thu, Sep 16, 2010 at 9:57 AM, KOSAKI Motohiro
+<kosaki.motohiro@...fujitsu.com> wrote:
+>> On Thu, 16 Sep 2010, KOSAKI Motohiro wrote:
+>>
+>> > Current oom_score_adj is completely broken because It is strongly bound
+>> > google usecase and ignore other all.
+>> >
+>>
+>> We've talked about this issue three times already.  The last two times
+>> you've sent a revert patch, you failed to followup on the threads:
+>>
+>>       http://marc.info/?t=128272938200002
+>>       http://marc.info/?t=128324705200002
+>>
+>> And now you've gone above Andrew, who is the maintainer of this code, and
+>> straight to Linus.  Between that and your failure to respond to my answers
+>> to your questions, I'm really stunned at how unprofessional you've handled
+>> this.
+>
+> Selfish must die. you failed to persuade to me. and I havgen't get anyone's objection.
+> Then, I don't care your ugly whining.
 
-Thanks.
+I haven't followed the discussion at all so I hope you don't mind me
+jumping in. Are there some real-world bug reports where OOM rewrite is
+to blame? Why haven't those been fixed?
 
--- 
-    JB
-
-
------ "Petr Matousek" <pmatouse@...hat.com> wrote:
-
-> "Structures kvm_vcpu_events, kvm_debugregs, kvm_pit_state2 and
-> kvm_clock_data
-> are copied to userland with some padding and reserved fields
-> unitialized.  It
-> leads to leaking of contents of kernel stack memory."
-> 
-> Upstream commit:
-> http://git.kernel.org/?p=virt/kvm/kvm.git;a=commit;h=831d9d02f9522e739825a51a11e3bc5aa531a905
-> 
-> Credit: Vasiliy Kulikov
-> 
-> Reference:
-> http://www.spinics.net/lists/kvm/msg44130.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=649920
-> 
-> Thanks,
-> --
-> Petr Matousek / Red Hat Security Response Team
+                        Pekka
