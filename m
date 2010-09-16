@@ -1,50 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/01/5
-Message-ID: <660938310.771331265058277259.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 1 Feb 2010 16:04:37 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/16/17
+Message-ID: <14109729.256731284667915233.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 16 Sep 2010 16:11:55 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - kernel: DoS on x86_64
+Cc: coley <coley@...re.org>
+Subject: Re: CVE-identifier request for Dovecot ACL security bug
 Content-Type: text/plain; charset=utf-8
 
------ "Eugene Teo" <eugeneteo@...nel.sg> wrote:
-
-> Reported by Mathias Krause. The problem seams to be located in
-> fs/binfmt_elf.c:load_elf_binary(). It calls SET_PERSONALITY() prior 
-> checking that the ELF interpreter is available. This in turn makes the
-> 
-> previously 32 bit process a 64 bit one which would be fine if execve()
-> 
-> would succeed. But after the SET_PERSONALITY() the open_exec() call 
-> fails (because it cannot find the interpreter) and execve() almost 
-> instantly returns with an error. If you now look at /proc/PID/maps 
-> you'll see, that it has the vsyscall page mapped which shouldn't be.
-> But 
-> the process is not dead yet, it's still running. By now generating a 
-> segmentation fault and in turn trying to generate a core dump the
-> kernel just dies.
-> 
-> Steps to Reproduce:
-> 1. Enable core dumps
-> 2. Start an 32 bit program that tries to execve() an 64 bit program
-> 3. The 64 bit program cannot be started by the kernel because it can't
-> 
-> find the interpreter, i.e. execve returns with an error
-> 4. Generate a segmentation fault
-> 5. panic
-> 
-> Upstream commit:
-> http://git.kernel.org/linus/221af7f87b97431e3ee21ce4b0e77d5411cf1549
-> 
-> References:
-> http://marc.info/?t=126466700200002&r=1&w=2
-> https://bugzilla.redhat.com/show_bug.cgi?id=560547
-> 
-
-Please use CVE-2010-0307 for this.
+Please use CVE-2010-3304
 
 Thanks.
 
 -- 
     JB
+
+
+----- "Henri Salo" <henri@...v.fi> wrote:
+
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> Can I get CVE-identifier for this issue?
+> 
+> "This release fixes a bug in ACL plugin, which could be considered a
+> security bug: If Maildir is used with default settings (INBOX is same
+> as Maildir root dir) and user set some ACLs to INBOX, those ACLs were
+> copied to all newly created mailboxes. This should have been done
+> only
+> for "default ACLs", but with Maildir the INBOX directory is the same
+> as
+> the default ACL directory, so this mixup happened. This bug exists
+> only
+> in v1.2.x releases."
+> 
+> URL to announcement:
+> http://www.dovecot.org/list/dovecot-news/2010-July/000163.html
+> 
+> Please note that this is different issue than: CVE-2010-0745
+> 
+> Best regards,
+> Henri Salo
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.9 (GNU/Linux)
+> 
+> iEYEARECAAYFAkySVTEACgkQXf6hBi6kbk9r9wCgs6z72LRTcywrsWIPtRiAR/R0
+> fxcAoLQuYxA3NDFPsUiUhe7uTBm6c5xI
+> =nWSw
+> -----END PGP SIGNATURE-----
