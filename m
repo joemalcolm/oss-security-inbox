@@ -1,29 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/02/1
-Message-ID: <4C7F3B8F.4090800@redhat.com>
-Date: Thu, 02 Sep 2010 13:52:15 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-2010-2960 kernel: keyctl_session_to_parent null ptr deref
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/16/6
+Message-Id: <20100916144930.3BAE.A69D9226@jp.fujitsu.com>
+Date: Thu, 16 Sep 2010 14:52:56 +0900 (JST)
+From: KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>
+To: Linus Torvalds <torvalds@...ux-foundation.org>
+Cc: kosaki.motohiro@...fujitsu.com, Andrew Morton <akpm@...ux-foundation.org>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Kees Cook <kees.cook@...onical.com>, Al Viro <viro@...iv.linux.org.uk>, Oleg Nesterov <oleg@...hat.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, pageexec@...email.hu, Brad Spengler <spender@...ecurity.net>, Eugene Teo <eugene@...hat.com>, KAMEZAWA Hiroyuki <kamezawa.hiroyu@...fujitsu.com>, linux-mm <linux-mm@...ck.org>, David Rientjes <rientjes@...gle.com>
+Subject: [PATCH 0/4] oom fixes for 2.6.36
 Content-Type: text/plain; charset=utf-8
 
-Reported by Tavis Ormandy.
 
-Patches (not in upstream yet):
-https://bugzilla.redhat.com/show_bug.cgi?id=627440#c4
-https://bugzilla.redhat.com/show_bug.cgi?id=627440#c5
+patch 1 and 2 fix crappy ABI breakage issue since 2.6.36-rc1.
+patch 3 and 4 fix oom dodging issue by using execve
 
-You might need to comment out all the pam_keyinit calls in /etc/pam.d/ 
-to reproduce the problem if the version of the kernel you are using is 
-affected.
+  1) oom: remove totalpage normalization from oom_badness()
+  2) Revert "oom: deprecate oom_adj tunable"
+  3) move cred_guard_mutex from task_struct to signal_struct
+  4) oom: don't ignore rss in nascent mm
 
-Introduced via upstream commit ee18d64c (v2.6.32-rc1).
 
-References:
-https://bugzilla.redhat.com/CVE-2010-2960
-https://bugzilla.redhat.com/show_bug.cgi?id=627440#c3
 
-Thanks, Eugene
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+
