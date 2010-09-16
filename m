@@ -1,21 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/14/3
-Message-Id: <201006141203.39356.hanno@hboeck.de>
-Date: Mon, 14 Jun 2010 12:03:38 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: punbb before 1.3.4 xss
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/16/12
+Message-Id: <20100916155413.3BC0.A69D9226@jp.fujitsu.com>
+Date: Thu, 16 Sep 2010 15:57:16 +0900 (JST)
+From: KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>
+To: David Rientjes <rientjes@...gle.com>
+Cc: kosaki.motohiro@...fujitsu.com, Linus Torvalds <torvalds@...ux-foundation.org>, Andrew Morton <akpm@...ux-foundation.org>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Kees Cook <kees.cook@...onical.com>, Al Viro <viro@...iv.linux.org.uk>, Oleg Nesterov <oleg@...hat.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, pageexec@...email.hu, Brad Spengler <spender@...ecurity.net>, Eugene Teo <eugene@...hat.com>, KAMEZAWA Hiroyuki <kamezawa.hiroyu@...fujitsu.com>, linux-mm <linux-mm@...ck.org>
+Subject: Re: [PATCH 1/4] oom: remove totalpage normalization from oom_badness()
 Content-Type: text/plain; charset=utf-8
 
-A rather old one, but still, please assign a cve:
-http://punbb.informer.com/forums/topic/21669/punbb-134/
+> On Thu, 16 Sep 2010, KOSAKI Motohiro wrote:
+> 
+> > Current oom_score_adj is completely broken because It is strongly bound
+> > google usecase and ignore other all.
+> > 
+> 
+> We've talked about this issue three times already.  The last two times 
+> you've sent a revert patch, you failed to followup on the threads:
+> 
+> 	http://marc.info/?t=128272938200002
+> 	http://marc.info/?t=128324705200002
+> 
+> And now you've gone above Andrew, who is the maintainer of this code, and 
+> straight to Linus.  Between that and your failure to respond to my answers 
+> to your questions, I'm really stunned at how unprofessional you've handled 
+> this.
 
-(a CVE-2008-xxxx one)
+Selfish must die. you failed to persuade to me. and I havgen't get anyone's objection.
+Then, I don't care your ugly whining.
 
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
-http://schokokeks.org - professional webhosting
 
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
