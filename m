@@ -1,62 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/13/5
-Message-ID: <686600886.443491286996310869.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 13 Oct 2010 14:58:30 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Daniel Stenberg <daniel@...x.se>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- cURL / mingw32-cURL -- Did not strip directory parts separated by backslashes, when downloading files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/16/15
+Message-ID: <20100916174433.GA4842@redhat.com>
+Date: Thu, 16 Sep 2010 19:44:33 +0200
+From: Oleg Nesterov <oleg@...hat.com>
+To: KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>
+Cc: Linus Torvalds <torvalds@...ux-foundation.org>, Andrew Morton <akpm@...ux-foundation.org>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Kees Cook <kees.cook@...onical.com>, Al Viro <viro@...iv.linux.org.uk>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, pageexec@...email.hu, Brad Spengler <spender@...ecurity.net>, Eugene Teo <eugene@...hat.com>, KAMEZAWA Hiroyuki <kamezawa.hiroyu@...fujitsu.com>, linux-mm <linux-mm@...ck.org>, David Rientjes <rientjes@...gle.com>
+Subject: Re: [PATCH 4/4] oom: don't ignore rss in nascent mm
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-3842
+On 09/16, KOSAKI Motohiro wrote:
+>
+> ChangeLog
+>  o since v1
+>    - Always use thread group leader's ->in_exec_mm.
 
-Thanks.
+Confused ;)
 
--- 
-    JB
+> +static unsigned long oom_rss_swap_usage(struct task_struct *p)
+> +{
+> +	struct task_struct *t = p;
+> +	struct task_struct *leader = p->group_leader;
+> +	unsigned long points = 0;
+> +
+> +	do {
+> +		task_lock(t);
+> +		if (t->mm) {
+> +			points += get_mm_rss(t->mm);
+> +			points += get_mm_counter(t->mm, MM_SWAPENTS);
+> +			task_unlock(t);
+> +			break;
+> +		}
+> +		task_unlock(t);
+> +	} while_each_thread(p, t);
+> +
+> +	/*
+> +	 * If the process is in execve() processing, we have to concern
+> +	 * about both old and new mm.
+> +	 */
+> +	task_lock(leader);
+> +	if (leader->in_exec_mm) {
+> +		points += get_mm_rss(leader->in_exec_mm);
+> +		points += get_mm_counter(leader->in_exec_mm, MM_SWAPENTS);
+> +	}
+> +	task_unlock(leader);
+> +
+> +	return points;
+> +}
 
+This patch relies on fact that we can't race with de_thread() (and btw
+the change in de_thread() looks bogus). Then why ->in_exec_mm lives in
+task_struct ?
 
------ "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+To me, this looks a bit strange. I think we should either do not use
+->group_leader to hold ->in_exec_mm like your previous patch did, or
+move ->in_exec_mm into signal_struct. The previous 3/4 ensures that
+only one thread can set ->in_exec_mm.
 
-> Hello Steve, vendors,
-> 
->    cURL upstream has released new curl / libcurl v7.21.2 addressing
-> one security flaw,
-> specific for operating systems, where backslashes are used to separate
-> directories from
-> file names. More details follow:
-> 
-> cURL did not properly cut off directory parts from user provided
-> file name to be downloaded on operating systems, where backslashes
-> are used to separate directories and file names. This could allow
-> remote servers to create or overwrite files via a Content-Disposition
-> header that suggests a crafted filename, and possibly execute
-> arbitrary
-> code as a consequence of writing to a certain file in a user's home
-> directory. Different vulnerability than CVE-2010-2251, CVE-2010-2252
-> and CVE-2010-2253.
-> 
-> Note: As already mentioned in [2]. This flaw only affected those
->        operating systems, where backslash is used to separate
-> directories
->        and file names, thus Microsoft Windows, Novell Netware, MSDOS,
-> OS/2
->        and Symbian to mention some of them.
-> 
-> References:
-> [1] http://curl.haxx.se/docs/security.html
-> [2] http://curl.haxx.se/docs/adv_20101013.html
-> 
-> Upstream patch:
-> [3] http://curl.haxx.se/curl-content-disposition.patch
-> 
-> Credit: Upstream acknowledges Dan Fandrich as the original reporter.
-> 
-> Red Hat Bugzilla tracking system record:
-> [4] https://bugzilla.redhat.com/show_bug.cgi?id=642642
-> 
-> Could you please allocate a CVE id for this issue?
-> 
-> Thanks && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+And I don't think oom_rss_swap_usage() should replace find_lock_task_mm()
+in oom_badness(), I mean something like this:
+
+	static unsigned long oom_rss_swap_usage(struct mm_struct *mm)
+	{
+		return get_mm_rss(mm) + get_mm_counter(mm, MM_SWAPENTS);
+	}
+
+	unsigned int oom_badness(struct task_struct *p, ...)
+	{
+		int points = 0;
+
+		if (unlikely(p->signal->in_exec_mm)) {
+			task_lock(p->group_leader);
+			if (p->signal->in_exec_mm)
+				points = oom_rss_swap_usage(p->signal->in_exec_mm);
+			task_unlock(p->group_leader);
+		}
+
+		p = find_lock_task_mm(p);
+		if (!p)
+			return points;
+
+		...
+	}
+
+but this is the matter of taste.
+
+What do you think?
+
+Oleg.
+
