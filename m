@@ -1,32 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/23/4
-Message-Id: <201006231111.19540.ludwig.nussel@suse.de>
-Date: Wed, 23 Jun 2010 11:11:19 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
-To: oss-security@...ts.openwall.com
-Cc: Lennart Poettering <lennart@...ttering.net>
-Subject: CVE Request: avahi DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/16/5
+Message-Id: <20100916111714.CA03.A69D9226@jp.fujitsu.com>
+Date: Thu, 16 Sep 2010 14:51:55 +0900 (JST)
+From: KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>
+To: Linus Torvalds <torvalds@...ux-foundation.org>
+Cc: kosaki.motohiro@...fujitsu.com, Roland McGrath <roland@...hat.com>, Andrew Morton <akpm@...ux-foundation.org>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Kees Cook <kees.cook@...onical.com>, Al Viro <viro@...iv.linux.org.uk>, Oleg Nesterov <oleg@...hat.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, pageexec@...email.hu, "Brad Spengler <spender@...ecurity.net>, Eugene Teo" <eugene@...hat.com>, KAMEZAWA Hiroyuki <kamezawa.hiroyu@...fujitsu.com>
+Subject: Re: [PATCH 2/2] execve: check the VM has enough memory at first
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+> > On Wed, Sep 8, 2010 at 10:04 PM, KOSAKI Motohiro
+> > <kosaki.motohiro@...fujitsu.com> wrote:
+> > >
+> > > After this patch, execve() expand stack at first and receive to
+> > > check vm_enough_memory() properly. then, too long argument of
+> > > execve() than the machine memory return EFAULT properly.
+> > 
+> > This is horrible. We don't want to walk the arguments one more time
+> > just for this. Let's just improve the checks that we do as we go
+> > along.
+> > 
+> >                             Linus
+> 
+> Okey. I'll consider new way in this night.
 
-avahi crashes if it receives a bad packet (broken checksum)
-immediately followed by a good packet. In that case FIONREAD returns
-zero size for the bad packet. avahi doesn't consider that an error
-and calls recvmsg() which succeeds and returns the good packet which
-has a non-zero length of course. This discrepancy causes an assert()
-to fail and avahi terminates.
+After while thinking, I decided to just drop this idea. because
+ 1) If one pass check is must, we can't reuse vm-overcommit check.
+ 2) Glibc has the duplicated hueristic, then we can't change it nor
+    introduce new hard limit. (Sh*t)
+ 3) This is not must fix, it only mitigate a pain when accidental large
+    argv case. Only OOM fixes enough care intended attack case.
+ 4) distro can change default of rlim_max of RLIMIT_STACK. It protect
+    from RLIM_INFINITY smash.
 
-The problem was acknowledged by upstream (Lennart) but no fix
-was commited so far. I've attached my patch proposal.
+Briefly says, to introduce new limit has bad benefit/risk balance. Sadly.
 
-cu
-Ludwig
 
--- 
- (o_   Ludwig Nussel
- //\   
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
 
-View attachment "0001-ignore-packet-if-FIONREAD-returns-zero.diff" of type "text/x-patch" (1200 bytes)
