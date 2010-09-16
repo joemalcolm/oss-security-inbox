@@ -1,37 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/08/3
-Message-ID: <20101008222859.02ebbd43@foo.fgeek.fi>
-Date: Fri, 8 Oct 2010 22:28:59 +0300
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: CVE request eoCMS SQL injection vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/16/4
+Message-Id: <20100914100626.C981.A69D9226@jp.fujitsu.com>
+Date: Thu, 16 Sep 2010 14:51:54 +0900 (JST)
+From: KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>
+To: Oleg Nesterov <oleg@...hat.com>
+Cc: kosaki.motohiro@...fujitsu.com, Roland McGrath <roland@...hat.com>, Linus Torvalds <torvalds@...ux-foundation.org>, Andrew Morton <akpm@...ux-foundation.org>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Kees Cook <kees.cook@...onical.com>, Al Viro <viro@...iv.linux.org.uk>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, pageexec@...email.hu, "Brad Spengler <spender@...ecurity.net>, Eugene Teo" <eugene@...hat.com>, KAMEZAWA Hiroyuki <kamezawa.hiroyu@...fujitsu.com>
+Subject: Re: [PATCH] move cred_guard_mutex from task_struct to signal_struct
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+> On 09/10, KOSAKI Motohiro wrote:
+> >
+> > 1) moving cread_guard_mutex itself
+> >    - no increase execve overhead
+> > 	-> very good
+> >    - it also prevent parallel ptrace
+> 
+> No, it doesn't. Only PTRACE_ATTACH needs this mutex, and as Roland
+> pointed out it also needs write_lock(tasklist) which is worse. So
+> this change doesn't make any practical harm for ptrace.
 
-Description: "Cao Xuan Sang has reported a vulnerability in eoCMS, which
-can be exploited by malicious people to conduct SQL injection attacks.
+I see, thanks.
 
-Certain input passed to the page divide function of the viewboard and
-viewtopic modules is not properly sanitised before being used in SQL
-queries. This can be exploited to manipulate SQL queries by injecting
-arbitrary SQL code."
+> 
+> > 2) move in_exec_mm to signal_struct too
+> >    -> very hard. oom-killer can use very few lock because it's called
+> >       from various place. now both ->mm and ->in_exec_mm are protected
+> >       task_lock() and it help to avoid messy.
+> 
+> Yes. But, if ->in_exec_mm is only used by oom_badness(), then I think
+> you can use task_lock(tsk->group_leader). oom_badness() needs tasklist
+> anyway, this means it can't race with de_thread() changing the leader.
+> But up to you.
 
-References:
-http://secunia.com/advisories/37272/
-http://security.bkis.com/eocms-sql-injection-vulnerability/
+Good idea. will fix.
 
-Fixed in version: 0.9.02
+> 
+> Another very minor nit (but again, up to you). Perhaps exec_mmap()
+> could clear ->in_exec_mm (in task_struct or signal_struct, this doesnt
+> matter), it takes task_lock(current) anyway (and at this point current
+> is always the group leader).
 
-Can I get CVE-identifier for this issue?
+Thanks. will fix.
 
-Best regards,
-Henri Salo
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
 
-iEYEARECAAYFAkyvcPsACgkQXf6hBi6kbk+2rwCcCZamyTdNH/KYU1hUIB6kgHV2
-Lx8AnRny2eowTyJBUz+tEM0I3OdP34RF
-=+rgg
------END PGP SIGNATURE-----
+> 
+> > Let's move ->cred_guard_mutex from task_struct to signal_struct. It
+> > naturally prevent multiple-threads-inside-exec.
+> 
+> Reviewed-by: Oleg Nesterov <oleg@...hat.com>
+> 
+> 
+> This is very minor, but perhaps you can also fix a couple of comments
+> which mention task->cred_guard_mutex,
+> 
+> 	fs/exec.c:1109		the caller must hold current->cred_guard_mutex
+> 	kernel/cred.c:328	The caller must hold current->cred_guard_mutex
+> 	include/linux/tracehook.h:153	@task->cred_guard_mutex
+
+Will fix, of cource.
+
+
+
+
