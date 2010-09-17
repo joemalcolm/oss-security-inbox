@@ -1,40 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/01/2
-Message-Id: <201008020056.25566.hanno@hboeck.de>
-Date: Mon, 2 Aug 2010 00:56:24 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/17/6
+Message-ID: <20100917150402.7fd7c071@redhat.com>
+Date: Fri, 17 Sep 2010 15:04:02 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: cmsmadesimple < 1.8.1
+Cc: Hanno Böck <hanno@...eck.de>
+Subject: Re: CVE request: epiphany not checking ssl certs
 Content-Type: text/plain; charset=utf-8
 
-http://www.cmsmadesimple.org/2010/07/3/announcing-cms-made-simple-1-8-1-
-mankara/?utm_source=feedburner&utm_medium=feed&utm_campaign=Feed%3A+cmsmadesimple%2Fblog+%28CMS+Made+Simple%29
+On Fri, 17 Sep 2010 14:19:03 +0200 Hanno Böck wrote:
 
- NOTE: This release fixes an important security vulnerability,
-we recommend that ALL users upgrade as soon as possible.
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=564690
+> http://blog.fefe.de/?ts=b26ca29d
+> 
+> Did this get a CVE yet?
 
-The local inclusion vulnerability fixed is old and affects many
-previous versions of CMSMS. Therefore it is important for ALL
-installations to be upgraded as soon as possible.
+Any specific reason to only give CVE to epiphany if you want to start
+giving CVEs for this kind of flaw?  IIRC, not long ago, no
+WebKitGtk-based browser I tried verified server SSL certificates and
+all connected without any complaint or indication that SSL certificate
+was not verified.  None seemed to offer any configuration option to
+enable certificate checking.  I guess there may be / was some
+limitations on WebKitGtk side that can explain this.
 
-This release also fixes all of the issues encountered with the
-CMSMS 1.8 release due to the overhaul of the translation function.
-Your performance in the admin section should be back to normal
-following this upgrade.
+I noticed midori now uses different address bar background color, which
+seem to be similar to the epiphany fix described in the Debian bug.
 
-Below is a complete list of the remaining issues that have been
-addressed in this release, enjoy.
+Oh, now I see you're probably asking for CVE for post-deb#564690
+behavior, not pre-deb#564690, right?
 
-Version 1.8.1 - Mankara
-
-
-Security:
-
-    Fixed local inclusion security flaw
 -- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-
-http://schokokeks.org - professional webhosting
-
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+Tomas Hoger / Red Hat Security Response Team
