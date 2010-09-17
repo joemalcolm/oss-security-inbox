@@ -1,30 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/28/2
-Message-ID: <4CA19CDE.6050706@kernel.sg>
-Date: Tue, 28 Sep 2010 15:44:30 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/17/11
+Message-ID: <1093026278.111511284748972193.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 17 Sep 2010 14:42:52 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request - kernel: pktcdvd ioctl dev_minor missing range check
+Cc: coley <coley@...re.org>
+Subject: Re: [oCERT-2010-003] Free Simple CMS path sanitization errors
 Content-Type: text/plain; charset=utf-8
 
-As Dan Rosenberg explained in the patch commit: The PKT_CTRL_CMD_STATUS 
-device ioctl retrieves a pointer to a pktcdvd_device from the global 
-pkt_devs array.  The index into this array is provided directly by the 
-user and is a signed integer, so the comparison to ensure that it falls 
-within the bounds of this array will fail when provided with a negative 
-index.
+Please use CVE-2010-3307 for this.
 
-This can be used to read arbitrary kernel memory or cause a crash due to 
-an invalid pointer dereference.  This can be exploited by users with 
-permission to open /dev/pktcdvd/control (on many distributions, this is 
-readable by group "cdrom").
+Thanks.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=638085
-http://git.kernel.org/linus/252a52aa4fa22a668f019e55b3aac3ff71ec1c29
-
-This was introduced in 2f8e2dc8 (v2.6.10-rc1).
-
-Thanks, Eugene
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+    JB
+
+
+----- "Andrea Barisani" <lcars@...rt.org> wrote:
+
+> #2010-003 Free Simple CMS path sanitization errors
+> 
+> Description:
+> 
+> Free Simple CMS, an open source content management system, suffers
+> from
+> remote file inclusion vulnerabilities.
+> 
+> Insufficient path sanitization on several query string parameters
+> leads to
+> inclusion of arbitrary files from remote sources, this could be
+> exploited to
+> execute arbitrary command or code.
+> 
+> The vulnerable URLs are similar to the one referenced in a previously
+> disclosed file inclusion vulnerability affecting the same version of
+> the
+> software (see References). It has been discovered that 'body',
+> 'footer',
+> 'header', 'menu_left', 'menu_right' are also vulnerable to remote
+> file
+> inclusion.
+> 
+> Affected version:
+> 
+> Free Simple CMS <= 1.0
+> 
+> Fixed version:
+> 
+> Free Simple CMS, N/A
+> 
+> Credit: vulnerability report received from Evan Pitstick,
+> SecureWorks.
+> 
+> CVE: N/A
+> 
+> Timeline:
+> 
+> 2010-08-20: vulnerability report received
+> 2010-08-22: contacted freesimplecms maintainer
+> 2010-08-24: maintainer replies, vulnerability report is provided
+> 2010-09-13: due to lack of feedback oCERT asks reporter to disclose
+> the
+>             issue
+> 2010-09-14: reporter agrees to disclosure
+> 2010-09-17: oCERT advisory published
+> 
+> References:
+> http://packetstormsecurity.org/1008-exploits/freesimplesoftware-rfi.txt
+> http://secunia.com/advisories/41001
+> http://osvdb.org/67329
+> 
+> Permalink:
+> http://www.ocert.org/advisories/ocert-2010-003.html
+> 
+> -- 
+> Andrea Barisani |                Founder & Project Coordinator
+>           oCERT | Open Source Computer Emergency Response Team
+> 
+> <lcars@...rt.org>                         http://www.ocert.org
+>  0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+>         "Pluralitas non est ponenda sine necessitate"
