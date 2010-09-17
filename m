@@ -1,43 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/02/3
-Message-ID: <AANLkTikN8xZKWC3X50-0tpfGw8tUZCnEHniJcci4etPE@mail.gmail.com>
-Date: Tue, 2 Nov 2010 11:24:21 +0100
-From: Pierre Joye <pierre.php@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/17/9
+Message-ID: <i70but$vlc$1@dough.gmane.org>
+Date: Fri, 17 Sep 2010 13:27:55 -0500
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: utf-8 security issue in php
+Subject: Re: CVE request: pixelpost
 Content-Type: text/plain; charset=utf-8
 
-hi,
+Raphael Geissert wrote:
+> It also appears to be using PHP_SELF in some places, so that's another XSS
+> vector. Will confirm it later.
 
-I was about to ask if any of the documents linked there already has a CVE.
+There a few easily-exploitable vectors on the following admin pages:
+admin/index.php?view=comments
+admin/index.php?view=options
+admin/index.php?view=info
 
-In any case, this is another set of fixes (afair it does not fix all
-possible problems) and needs a CVE. I will update the NEWS&bug
-accordingly as soon as we get one.
-
-Thanks!
---
-Pierre
-
-On Tue, Nov 2, 2010 at 10:56 AM, Oden Eriksson <oeriksson@...driva.com> wrote:
-> Hello.
->
-> Another security issue was recently fixed in php-5.3
->
-> http://bugs.php.net/bug.php?id=49687
-> http://svn.php.net/viewvc?view=revision&revision=304959
->
-> I suppose it needs a CVE assignment.
->
-> --
-> Regards // Oden Eriksson
-> Security team manager - Mandriva
-> CEO NUX AB
->
+E.g.
+http://host/pixelpost/admin/index.php/%22%3E%3Cscript%3Ewindow.alert();
+%3C/script%3E'%3E%3Cscript%3Ewindow.alert();%3C/script%3E/?view=info
 
 
+There is also another vector on the feeds generator if a template uses the 
+"old" (according to the code) tag <ATOM_AUTODETECT>.
+Similarly, if a template uses the <TAG_RSS_LINK> or <TAG_ATOM_LINK> tags 
+there's another XSS vector via the tag= GET variable(none of the default 
+templates do, in 1.7.1 and 1.7.3.)
 
+There are a few more in other places, but I guess the picture is clear.
+
+Regards,
 -- 
-Pierre
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
 
-@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+
