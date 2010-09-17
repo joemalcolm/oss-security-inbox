@@ -1,32 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/02/7
-Message-ID: <1239944310.1870341278096562308.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 2 Jul 2010 14:49:22 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/17/1
+Message-ID: <i6ug8m$ald$1@dough.gmane.org>
+Date: Thu, 16 Sep 2010 20:29:08 -0500
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: hanno@...eck.de, coley <coley@...re.org>
-Subject: Re: CVE request: simplemachinesforum
+Subject: CVE request: pixelpost
 Content-Type: text/plain; charset=utf-8
 
+Hi everyone,
 
------ "Henri Salo" <henri@...v.fi> wrote:
+Multiple vulnerabilities have been reported against pixelpost:
 
-> On Mon, 21 Dec 2009 20:21:43 +0100
-> Hanno Böck <hanno@...eck.de> wrote:
-> 
-> > http://secunia.com/advisories/37557/
-> > CSRF
+1) A CSRF vulnerability allows changes to some settings (PoC allows changing 
+the administrator's password.) [1]
+2) SQL injection [2]
+3) XSS [2]
 
-Use CVE-2010-2485
+2) and 3) are from 2009, so I guess we are going to need some help from 
+Steven for those ones. The only information about those is [3] which has 
+some other changes.
 
-> > 
-> > http://securityreason.com/exploitalert/7513
-> > Remote code execution
-> 
+It also appears to be using PHP_SELF in some places, so that's another XSS 
+vector. Will confirm it later.
 
-Use CVE-2010-2486
+[1] http://www.exploit-db.com/exploits/15014/
+[2] http://www.pixelpost.org/blog/2009/09/02/pixelpost-173-security-update/
+[3] http://pastie.textmate.org/616485
 
-Thanks.
-
+Cheers,
 -- 
-    JB
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
+
+
