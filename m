@@ -1,39 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/24/4
-Message-ID: <AANLkTi=oSq49eLutF_mq05khnN3cikXyFqgQFr-Jk=-E@mail.gmail.com>
-Date: Fri, 24 Sep 2010 16:05:44 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/17/8
+Message-ID: <1584645188.109651284748094823.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 17 Sep 2010 14:28:14 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Interesting kernel bug
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: weborf: directory traversal
 Content-Type: text/plain; charset=utf-8
 
-A bug I found was just fixed upstream:
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=767b68e96993e29e3480d7ecdd9c4b84667c5762
+Please use CVE-2010-3306
 
-Disregard the commit statement's mention of a reliable trigger, since
-none exists - a result of a combination of miscommunication and
-careless reporting on my part.
+Thanks.
 
-The bug was introduced in May 2010, and affects >= 2.6.34.1, so no
-distros would appear to be affected.  In 32-bit compatibility mode,
-when invoking the readv() or writev() syscalls, if the provided user
-pointer and length result in an access_ok() check failing, then an
-uninitialized pointer on the stack will be kfree()'d.  This is likely
-to be an exploitable condition (for example, via pre-initializing the
-stack with other carefully chosen syscalls, allowing control of the
-pointer).
+-- 
+    JB
 
-It came up during discussion that on x86-64, the access_ok() will
-never fail, because there's no way for a user running in 32-bit mode
-to supply an address that's outside of userspace address range.
-However, it's possible that this may be triggerable on other
-architectures that I know less about.  S390 was mentioned at one
-point.
+----- "Raphael Geissert" <geissert@...ian.org> wrote:
 
-Anyone who knows more about miscellaneous architectures and their
-address space segmentations?  Perhaps it affects someone after all.
-As of now, I don't think this could be considered a security issue
-since it appears to be completely not exploitable, but maybe someone
-more knowledgeable could shed more light on the issue.
-
--Dan
+> Hi,
+> 
+> A directory traversal vulnerability has been reported against weborf
+> because 
+> of the mitigation code is not URL encoding-aware.
+> 
+> Reference:
+> http://www.exploit-db.com/exploits/14925/
+> 
+> Could a CVE be assigned?
+> 
+> Regards,
+> -- 
+> Raphael Geissert - Debian Developer
+> www.debian.org - get.debian.net
