@@ -1,50 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/02/11
-Message-ID: <269680180.187051280779360813.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 2 Aug 2010 16:02:40 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/17/10
+Message-ID: <1327423490.110981284748754244.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 17 Sep 2010 14:39:14 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Socat -- Stack overflow by lexical scanning of nested character patterns
+Cc: Hanno Böck <hanno@...eck.de>
+Subject: Re: CVE request: epiphany not checking ssl certs
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-2799
+
+----- "Tomas Hoger" <thoger@...hat.com> wrote:
+
+> On Fri, 17 Sep 2010 14:19:03 +0200 Hanno Böck wrote:
+> 
+> > http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=564690
+> > http://blog.fefe.de/?ts=b26ca29d
+> > 
+> > Did this get a CVE yet?
+> 
+> Any specific reason to only give CVE to epiphany if you want to start
+> giving CVEs for this kind of flaw?  IIRC, not long ago, no
+> WebKitGtk-based browser I tried verified server SSL certificates and all
+> connected without any complaint or indication that SSL certificate was
+> not verified.  None seemed to offer any configuration option to enable
+> certificate checking.  I guess there may be / was some limitations on
+> WebKitGtk side that can explain this.
+> 
+> I noticed midori now uses different address bar background color, which
+> seem to be similar to the epiphany fix described in the Debian bug.
+> 
+> Oh, now I see you're probably asking for CVE for post-deb#564690
+> behavior, not pre-deb#564690, right?
+> 
+
+I'm not following this. What exactly is getting a CVE id here?
 
 Thanks.
 
 -- 
     JB
-
-
------ "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
-
-> Hi Steve, vendors,
-> 
->    Socat upstream, released an advisory:
->    [1] http://www.dest-unreach.org/socat/contrib/socat-secadv2.html
-> 
-> describing a stack overflow flaw, present in Socat bidirectional data
-> relay, when
-> processing command line arguments (address specifications, host names,
-> file names),
-> longer than 512 bytes. An attacker, able to to inject data into
-> sockat's command line
-> (potentially remotely via CGI script invocation), could use this flaw
-> to execute
-> arbitrary code with the privileges of the socat process.
-> 
-> References:
->    [2] http://bugs.gentoo.org/show_bug.cgi?id=330785
-> 
-> Upstream patch against v1.7.2:
->    [3] http://www.dest-unreach.org/socat/download/socat-1.7.1.3.patch
-> 
-> Credit:
-> Issue discovered and reported by Felix Gröbert of Google Security
-> Team
-> 
-> Could you allocate a CVE id for this?
-> 
-> Thanks && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
