@@ -1,37 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/16/2
-Message-ID: <1014759682.654471279292894070.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 16 Jul 2010 11:08:14 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/17/7
+Message-ID: <107860923.109251284747817097.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 17 Sep 2010 14:23:37 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: security-alert@...bsd.org, secteam@...ebsd.org, product-security@...le.com, coley <coley@...re.org>
-Subject: Re: CVE request: NetSMB BSD kernel module (minor)
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: pixelpost
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-2530
+----- "Raphael Geissert" <geissert@...ian.org> wrote:
+> 
+> Multiple vulnerabilities have been reported against pixelpost:
+> 
+> 1) A CSRF vulnerability allows changes to some settings (PoC allows
+> changing the administrator's password.) [1]
 
-Sorry for the delay.
+Please use CVE-2010-3305
+
+> 2) SQL injection [2]
+
+CVE-2009-4899
+
+> 3) XSS [2]
+
+CVE-2009-4900
+
+> 
+> 2) and 3) are from 2009, so I guess we are going to need some help from
+> Steven for those ones. The only information about those is [3] which has
+> some other changes.
+> 
+> [1] http://www.exploit-db.com/exploits/15014/
+> [2]
+> http://www.pixelpost.org/blog/2009/09/02/pixelpost-173-security-update/
+> [3] http://pastie.textmate.org/616485
+> 
+
+Thanks.
 
 -- 
     JB
-
-
------ "Dan Rosenberg" <dan.j.rosenberg@...il.com> wrote:
-
-> I discovered and reported a minor security issue in the netsmb kernel
-> module for NetBSD and FreeBSD.  The issue also affects Mac OS X 10.x,
-> where netsmb is available as a kernel extension.
-> 
-> Several of the subroutines in the netsmb module (see reference below
-> for vulnerable functions), which are reachable by unprivileged local
-> users via device ioctls sent to a /dev/nsmb* device, had signedness
-> errors.  By providing a negative value for a size field for certain
-> device ioctls (including SMBIOC_LOOKUP and SMBIOC_OPENSESSION for
-> *BSD), a size check will be bypassed and a memory overallocation will
-> occur, causing a kernel panic.  NetBSD committed their fix to CVS
-> today:
-> 
-> http://cvsweb.netbsd.org/bsdweb.cgi/src/sys/netsmb/smb_subr.c.diff?r1=1.34&r2=1.35&only_with_tag=MAIN&f=h
-> 
-> Regards,
-> Dan Rosenberg
