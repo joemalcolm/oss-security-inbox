@@ -1,32 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/29/2
-Message-ID: <20100529144718.GA27720@pcpool00.mathematik.uni-freiburg.de>
-Date: Sat, 29 May 2010 16:47:18 +0200
-From: "Bernhard R. Link" <brlink@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: ghostscript and gv
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/17/4
+Message-ID: <20100917092103.GW8591@core.inversepath.com>
+Date: Fri, 17 Sep 2010 11:21:03 +0200
+From: Andrea Barisani <lcars@...rt.org>
+To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
+Subject: [oCERT-2010-003] Free Simple CMS path sanitization errors
 Content-Type: text/plain; charset=utf-8
 
-* Ludwig Nussel <ludwig.nussel@...e.de> [100528 12:05]:
-> Upstream suggested to use -P- in addition to -dSAFER.
 
-Either I mix something up or that option does not even help:
+#2010-003 Free Simple CMS path sanitization errors
 
-With the Debian lenny version I get:
+Description:
 
-$ touch gs_init.ps
-$ /usr/bin/gs -P- notneeded.ps
-GPL Ghostscript 8.62: Initialization file gs_init.ps does not begin with an integer.
+Free Simple CMS, an open source content management system, suffers from
+remote file inclusion vulnerabilities.
 
-indicating that the gs_init.ps is looked for in the current directory
-even with -P-.
+Insufficient path sanitization on several query string parameters leads to
+inclusion of arbitrary files from remote sources, this could be exploited to
+execute arbitrary command or code.
 
-And that also seems to be executed:
-$ ls doh
-ls: cannot access doh: No such file or directory
-$ cat gs_init.ps
-862
-(doh) (w) file
-$ /usr/bin/gs -P-
-$ ls doh
-doh
+The vulnerable URLs are similar to the one referenced in a previously
+disclosed file inclusion vulnerability affecting the same version of the
+software (see References). It has been discovered that 'body', 'footer',
+'header', 'menu_left', 'menu_right' are also vulnerable to remote file
+inclusion.
+
+Affected version:
+
+Free Simple CMS <= 1.0
+
+Fixed version:
+
+Free Simple CMS, N/A
+
+Credit: vulnerability report received from Evan Pitstick, SecureWorks.
+
+CVE: N/A
+
+Timeline:
+
+2010-08-20: vulnerability report received
+2010-08-22: contacted freesimplecms maintainer
+2010-08-24: maintainer replies, vulnerability report is provided
+2010-09-13: due to lack of feedback oCERT asks reporter to disclose the
+            issue
+2010-09-14: reporter agrees to disclosure
+2010-09-17: oCERT advisory published
+
+References:
+http://packetstormsecurity.org/1008-exploits/freesimplesoftware-rfi.txt
+http://secunia.com/advisories/41001
+http://osvdb.org/67329
+
+Permalink:
+http://www.ocert.org/advisories/ocert-2010-003.html
+
+-- 
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | Open Source Computer Emergency Response Team
+
+<lcars@...rt.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
