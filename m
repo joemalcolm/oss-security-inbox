@@ -1,35 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/11/1
-Message-ID: <422536504.2141931284164956806.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 10 Sep 2010 20:29:16 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/20/2
+Message-Id: <201009201612.49964.ludwig.nussel@suse.de>
+Date: Mon, 20 Sep 2010 16:12:48 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: niu buffer overflow for ETHTOOL_GRXCLSRLALL
+Subject: Re: CVE request: epiphany not checking ssl certs
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-3084
+Tomas Hoger wrote:
+> On Fri, 17 Sep 2010 14:19:03 +0200 Hanno Böck wrote:
+> 
+> > http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=564690
+> > http://blog.fefe.de/?ts=b26ca29d
+> > 
+> > Did this get a CVE yet?
+> 
+> Any specific reason to only give CVE to epiphany if you want to start
+> giving CVEs for this kind of flaw?  IIRC, not long ago, no
+> WebKitGtk-based browser I tried verified server SSL certificates and
+> all connected without any complaint or indication that SSL certificate
+> was not verified.  None seemed to offer any configuration option to
+> enable certificate checking.  I guess there may be / was some
+> limitations on WebKitGtk side that can explain this.
 
-Thanks.
+Looking at what we have on our Distros I found three different kinds
+of behavior:
+1) epiphany 1.8.5 with mozilla engine raises a popup window if the
+   certificate cant't be verified. The status bar displays a broken
+   lock icon if one chooses to continue anyways.
+2) epiphany 2.28 changes address bar color, displays a lock icon and
+   connects just fine even if it can't verify certificates. The code
+   simply uses a strcmp for 'https' as trigger.
+3) epiphany 2.30 shows the broken lock icon as described in the
+   debian bug report
+
+While the modest security indicators of 3) are probably not the most
+smartest way to tell the user about a potential problem the real
+danger is 2). That version of epiphany really is broken. If a
+program doesn't implement the necessary checks it should at the very
+least not display common https security indicators either.
+
+cu
+Ludwig
 
 -- 
-    JB
-
-
------ "Eugene Teo" <eugene@...hat.com> wrote:
-
-> https://bugzilla.redhat.com/show_bug.cgi?id=632069
-> http://www.spinics.net/lists/netdev/msg140133.html
-> 
-> "niu_get_ethtool_tcam_all() assumes that its output buffer is the
-> right 
-> size, and warns before returning if it is not.  However, the output 
-> buffer size is under user control and ETHTOOL_GRXCLSRLALL is an 
-> unprivileged ethtool command."
-> 
-> Affects kernel v2.6.30-rc1 onwards.
-> 
-> Thanks, Eugene
-> -- 
-> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i);
-> }
+ (o_   Ludwig Nussel
+ //\   
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
