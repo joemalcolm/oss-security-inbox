@@ -1,45 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/24/4
-Message-ID: <20100324075743.23016804@foo.fgeek.fi>
-Date: Wed, 24 Mar 2010 07:57:43 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/20/1
+Message-Id: <201009201406.05890.hanno@hboeck.de>
+Date: Mon, 20 Sep 2010 14:06:05 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: jlieskov@...hat.com, "Steven M. Christey" <coley@...us.mitre.org>, cve@...re.org
-Subject: Re: CVE Request -- MediaWiki - v1.15.2
+Subject: CVE request: egroupware remote code and xss
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 09 Mar 2010 21:46:31 +0100
-Jan Lieskovsky <jlieskov@...hat.com> wrote:
+http://www.egroupware.org/news?item=93
 
-> Hi Steve, vendors,
-> 
->    MediaWiki upstream has released latest v1.15.2 version:
->      [1]
-> http://lists.wikimedia.org/pipermail/mediawiki-announce/2010-March/000088.html
-> 
->    fixing two security issues (from upstream advisory):
->    a, a CSS validation issue was discovered which allows editors to
-> display external images in wiki pages.
->    b, a data leakage vulnerability was discovered in thumb.php which
-> affects wikis which restrict access to private files using
-> img_auth.php, or some similar scheme.
-> 
-> References:
->    [2]
-> http://lists.wikimedia.org/pipermail/mediawiki-announce/2010-March/000088.html
-> [3] http://secunia.com/advisories/38856/ [4]
-> http://download.wikimedia.org/mediawiki/1.15/mediawiki-1.15.2.patch.gz
-> 
-> Could you allocate CVE ids for these?
-> 
-> Thanks && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+Nahuel Grisolia from CYBSEC S.A. Security Systems found two security
+problems in EGroupware:
 
-Has these been assigned? There has been security fixes in
-Linux- distributions for example Debian[1] without CVE.
+    one is a serious remote command execution (allowing to run arbitrary 
+command on the web server by simply issuing a HTTP request!).
+    the other a reflected cross-site scripting (XSS).
 
-1: http://lists.debian.org/debian-security-announce/2010/msg00062.html
+Here's the original advisory for both issues:
+http://www.exploit-db.com/exploits/11777/
 
----
-Henri Salo
+
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+
+http://schokokeks.org - professional webhosting
+
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
