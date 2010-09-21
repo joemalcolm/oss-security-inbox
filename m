@@ -1,59 +1,111 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/01/3
-Message-ID: <4CF69652.6030007@summersault.com>
-Date: Wed, 01 Dec 2010 13:39:14 -0500
-From: Mark Stosberg <mark@...mersault.com>
-To: oss-security <oss-security@...ts.openwall.com>
-CC: Jan Lieskovsky <jlieskov@...hat.com>,  "Steven M. Christey" <coley@...us.mitre.org>, Marcela Maslanova <mmaslano@...hat.com>, Petr Pisar <ppisar@...hat.com>,  Chris 'BinGOs' Williams <chris@...gosnet.co.uk>, Reed Loden <reed@...dloden.com>,  Masahiro Yamada <masa141421356@...il.com>, Byron Jones <glob@...b.com.au>, Lincoln Stein <lincoln.stein@...il.com>
-Subject: Re: CVE Request -- perl-CGI two ids, perl-CGI-Simple one id (CVE-2010-3172 already assigned for Bugzilla part)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/21/15
+Message-ID: <AANLkTikxJXRAGohcGNsoRg4zzkonxaxDAwtpsARFqWac@mail.gmail.com>
+Date: Wed, 22 Sep 2010 09:26:41 +1200
+From: Michael Koziarski <michael@...iarski.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: Thomas Biege <thomas@...e.de>, oss-security@...ts.openwall.com, juliano@...ifera.comt,  thaidn@...ecurity.net, security@...yonrails.org
+Subject: Re: CVE request: padding oracle attack: ruby on rails 2.3, owasp esapi
 Content-Type: text/plain; charset=utf-8
 
-> 
->     Since perl-CGi is different code base than Bugzilla, we suspect a
-> new CVE id is required
->     for this issue? Steve, could you please allocate one? (id #1)
+On Wed, Sep 22, 2010 at 9:07 AM, Steven M. Christey
+<coley@...us.mitre.org> wrote:
+>
+> When it comes to language interpreters and/or code libraries: if an exposed
+> API function has a vuln in it that could affect any application that uses
+> that function, it's suitable for inclusion in CVE - especially if the
+> function seems likely to accept malicious input.  If there's *no way* that
+> these API functions can be used safely, then that would be associated with
+> Rails, and a single CVE could be assigned.  If they *can* be used safely,
+> but lots of different programmers just screw it up (a la strcpy() in C),
+> then the individual applications would get their own separate CVEs.
+>
+> In this case, while the issue is probably not a problem for the bulk of
+> Rails programmers, it might be for some - so a single CVE assignment seems
+> reasonable.
 
-CGI.pm is used by the Bugzilla code base. However, Bugzilla may not
-always be vulnerable to issues in CGI.pm depending on they use it.
+In that case this is much more in the strcpy camp than anything else.
+We can do an announcement to the security list advising against the
+use of the function when there are more secure alternatives available,
+and also ship deprecation warnings in future point releases.
 
->     2. Further improvements to handling of newlines embedded in header
-> values.
->        An exception is thrown if header values contain invalid newlines.
->        Thanks to Michal Zalewski, Max Kanat-Alexander, Yanick Champoux
->        Lincoln Stein, Frederic Buclin and Mark Stosberg
-> 
->        Chris, Mark, could you please provide more details about the
-> issue? Is it
->        related to CVE-2010-3172?
+We'll use the CVE in any announcements we make, but there won't be
+point releases to address it or patches people can install.  Does this
+sound like a plan?
 
-Yes, it is. However, later testing found that the issue wasn't
-completely fixed in 3.50. A new patch has been developed, and is
-currently pending review and acceptance by the primary CGI.pm author,
-Lincoln Stein. (Now CC'ed).
+> Hope that made sense.
+>
+> - Steve
+>
+>
+> On Wed, 22 Sep 2010, Michael Koziarski wrote:
+>
+>> On Wed, Sep 22, 2010 at 2:57 AM, Thomas Biege <thomas@...e.de> wrote:
+>>>
+>>> I got no answer from the POET paper authors yet but it can be
+>>> that CVE-2010-3299 is invalid.
+>>
+>> I'm not sure what the criteria for a CVE is but there's nothing
+>> exploitable here in the vast vast bulk of rails applications.
+>>
+>> It's certainly true that an application using the low level
+>> encrypt/decrypt API is vulnerable to padding oracle attacks, but as
+>> you mentioned those apis aren't actually used anywhere within rails
+>> itself.
+>>
+>> Given the 'shoot yourself in the foot' nature of those low level apis,
+>> we'll probably deprecate them as public apis and advise people to use
+>> encrypt_and_sign/decrypt_and_verify instead.
+>>
+>>
+>>
+>>> Cheers
+>>> Thomas
+>>>
+>>>
+>>> Am Dienstag 14 September 2010 21:36:53 schrieb Josh Bressers:
+>>>>
+>>>> I've assgiend two. The details are quite vague unfortunately.
+>>>>
+>>>> CVE-2010-3299 padding oracle attack: ruby on rails 2.3
+>>>> CVE-2010-3300 padding oracle attack: owasp esapi
+>>>>
+>>>> Thanks.
+>>>>
+>>>>> Hi,
+>>>>> the paper [1], about practical padding oracle attacks
+>>>>> mentions some programming frameworks as vulnerable (section 5):
+>>>>> - Ruby On ails 2.3
+>>>>> - OWASP ESAPI
+>>>>>
+>>>>> I think they both need a CVE-ID. Thanks.
+>>>>>
+>>>>> Cheers
+>>>>> Thomas
+>>>>>
+>>>>> [1] http://usenix.org/events/woot10/tech/full_papers/Rizzo.pdf
+>>>>
+>>>
+>>> --
+>>>  Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+>>>  SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+>>> --
+>>>  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+>>>                            -- Marie von Ebner-Eschenbach
+>>>
+>>
+>>
+>>
+>> --
+>> Cheers
+>>
+>> Koz
+>>
+>
 
->        Steve, could you please allocate CVE id for this? (id #2)
-> 
->   Yet, back to CVE-2010-3172, Masahiro mentions in [2], that
-> perl-CGI-Simple is prone
->   to same deficiency, as CVE-2010-3172 in Bugzilla was:
->   [4] https://bugzilla.mozilla.org/show_bug.cgi?id=600464#c13
-> 
->   Looks, like it was already fixed in perl-CGI-Simple too:
->   [5] https://bugzilla.mozilla.org/show_bug.cgi?id=600464#c31
-> 
->   Relevant perl-CGi-Simple patch:
->   [6]
-> https://github.com/AndyA/CGI--Simple/commit/e4942b871a26c1317a175a91ebb7262eea59b380
 
-Note that CGI::Simple also shares the header newline injection issue
-with CGI.pm, but remains unpatched. I submitted a patch, but it has not
-been applied, as seen in the Network view:
 
-https://github.com/markstos/CGI--Simple/network
+-- 
+Cheers
 
-However, even the patch I submitted is not fully complete, as it mirrors
-the 3.50 state of CGI.pm, and thus also needs further work. Once CGI.pm
-has a final update to address the remaining header injection issue, I'll
-share the same patch with CGI::Simple.
-
-    Mark
+Koz
