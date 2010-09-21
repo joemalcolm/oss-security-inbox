@@ -1,33 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/30/3
-Message-ID: <i0eik7$3fp$1@dough.gmane.org>
-Date: Tue, 29 Jun 2010 23:53:36 -0500
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/21/6
+Message-Id: <201009211657.10963.thomas@suse.de>
+Date: Tue, 21 Sep 2010 16:57:10 +0200
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: HTML Purifier
+Cc: coley <coley@...re.org>, michael@...iarski.com, juliano@...ifera.comt, thaidn@...ecurity.net
+Subject: Re: CVE request: padding oracle attack: ruby on rails 2.3, owasp esapi
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-HTML Purifier 4.1.1 fixes an IE-specific XSS vulnerability.
+grep'ing the Rails code revealed that encrypt() isn't used
+for the cookie by default. Upstream also reports that they
+are not vulnerable.
+Additionally even if encrypt() is used to encrypt data in a cookie
+there is also the digest at the end of the cookie string that might
+indicate tampering. ("might" b/c it depends on the implementation,
+which I didn't look at).
 
-Upstream announcement:
-http://htmlpurifier.org/news/2010/0531-4.1.1-released
+I got no answer from the POET paper authors yet but it can be
+that CVE-2010-3299 is invalid.
 
-Fix:
-http://repo.or.cz/w/htmlpurifier.git/commit/d3abcb90e30592c619047d878cf9c72b7c5836a3
+Cheers
+Thomas
 
-This one is required for the fix to apply (the change is overwritten by the 
-fix):
-http://repo.or.cz/w/htmlpurifier.git/commit/da94d3d6acdf417ac890426eb1fd239ba62b042d
 
-Could a CVE id be assigned?
+Am Dienstag 14 September 2010 21:36:53 schrieb Josh Bressers:
+> I've assgiend two. The details are quite vague unfortunately.
+> 
+> CVE-2010-3299 padding oracle attack: ruby on rails 2.3
+> CVE-2010-3300 padding oracle attack: owasp esapi
+> 
+> Thanks.
+> 
+> > Hi,
+> > the paper [1], about practical padding oracle attacks
+> > mentions some programming frameworks as vulnerable (section 5):
+> > - Ruby On ails 2.3
+> > - OWASP ESAPI
+> >
+> > I think they both need a CVE-ID. Thanks.
+> >
+> > Cheers
+> > Thomas
+> >
+> > [1] http://usenix.org/events/woot10/tech/full_papers/Rizzo.pdf
+> 
 
-Thanks in advance.
-
-Regards,
 -- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
-
-
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+--
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
