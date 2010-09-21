@@ -1,24 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/10/4
-Message-Id: <20100910093958.143B5405D5@magilla.sf.frob.com>
-Date: Fri, 10 Sep 2010 02:39:58 -0700 (PDT)
-From: Roland McGrath <roland@...hat.com>
-To: Oleg Nesterov <oleg@...hat.com>
-Cc: KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>, Linus Torvalds <torvalds@...ux-foundation.org>, Andrew Morton <akpm@...ux-foundation.org>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Kees Cook <kees.cook@...onical.com>, Al Viro <viro@...iv.linux.org.uk>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, pageexec@...email.hu, Brad Spengler <spender@...ecurity.net>, Eugene Teo <eugene@...hat.com>, KAMEZAWA Hiroyuki <kamezawa.hiroyu@...fujitsu.com>
-Subject: Re: [PATCH 1/2] oom: don't ignore rss in nascent mm
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/21/13
+Message-ID: <AANLkTim4V2eM3SmHgq_ZBMRnNRUPLc0nB_stxaMn68tJ@mail.gmail.com>
+Date: Wed, 22 Sep 2010 08:44:05 +1200
+From: Michael Koziarski <michael@...iarski.com>
+To: Thomas Biege <thomas@...e.de>
+Cc: oss-security@...ts.openwall.com, coley <coley@...re.org>, juliano@...ifera.comt,  thaidn@...ecurity.net, security@...yonrails.org
+Subject: Re: CVE request: padding oracle attack: ruby on rails 2.3, owasp esapi
 Content-Type: text/plain; charset=utf-8
 
-> I wonder if it makes sense to move ->cred_guard_mutex from task_struct
-> to signal_struct and thus make multiple-threads-inside-exec impossible.
-> Only one thread can win anyway.
+On Wed, Sep 22, 2010 at 2:57 AM, Thomas Biege <thomas@...e.de> wrote:
+> I got no answer from the POET paper authors yet but it can be
+> that CVE-2010-3299 is invalid.
 
-That probably makes sense.  Note that cred_guard_mutex is also overloaded
-for ptrace_attach, so this would add some more serialization of attaches to
-threads in the same group.  But as long as actual attachment serializes on
-tasklist_lock anyway, it doesn't make a material difference.  (Even without
-that, it would presumably be the same debugger attaching serially to
-threads in the same group, so it wouldn't degrade anything in practice.)
+I'm not sure what the criteria for a CVE is but there's nothing
+exploitable here in the vast vast bulk of rails applications.
+
+It's certainly true that an application using the low level
+encrypt/decrypt API is vulnerable to padding oracle attacks, but as
+you mentioned those apis aren't actually used anywhere within rails
+itself.
+
+Given the 'shoot yourself in the foot' nature of those low level apis,
+we'll probably deprecate them as public apis and advise people to use
+encrypt_and_sign/decrypt_and_verify instead.
 
 
-Thanks,
-Roland
+
+> Cheers
+> Thomas
+>
+>
+> Am Dienstag 14 September 2010 21:36:53 schrieb Josh Bressers:
+>> I've assgiend two. The details are quite vague unfortunately.
+>>
+>> CVE-2010-3299 padding oracle attack: ruby on rails 2.3
+>> CVE-2010-3300 padding oracle attack: owasp esapi
+>>
+>> Thanks.
+>>
+>> > Hi,
+>> > the paper [1], about practical padding oracle attacks
+>> > mentions some programming frameworks as vulnerable (section 5):
+>> > - Ruby On ails 2.3
+>> > - OWASP ESAPI
+>> >
+>> > I think they both need a CVE-ID. Thanks.
+>> >
+>> > Cheers
+>> > Thomas
+>> >
+>> > [1] http://usenix.org/events/woot10/tech/full_papers/Rizzo.pdf
+>>
+>
+> --
+>  Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+>  SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+> --
+>  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+>                            -- Marie von Ebner-Eschenbach
+>
+
+
+
+-- 
+Cheers
+
+Koz
