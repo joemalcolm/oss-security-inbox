@@ -1,38 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/30/5
-Message-ID: <64627846.884771285876509940.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 30 Sep 2010 15:55:09 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/21/7
+Message-ID: <1146304676.208651285082205838.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 21 Sep 2010 11:16:45 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
 Cc: coley <coley@...re.org>
-Subject: Re: CVE request: Horde Gollem <1.1.2 XSS in view.php
+Subject: Re: CVE request: egroupware remote code and xss
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-3447
+----- "Hanno Böck" <hanno@...eck.de> wrote:
+> 
+> http://www.egroupware.org/news?item=93
+> 
+> Nahuel Grisolia from CYBSEC S.A. Security Systems found two security
+> problems in EGroupware:
+> 
+>     one is a serious remote command execution (allowing to run arbitrary
+>     command on the web server by simply issuing a HTTP request!).
 
-Thanks.
+Please use CVE-2010-3313
+
+>     The other a reflected cross-site scripting (XSS).
+
+Please use CVE-2010-3314
+
+> 
+> Here's the original advisory for both issues:
+> http://www.exploit-db.com/exploits/11777/
+> 
+
+Thanks
 
 -- 
     JB
-
-
------ "Alex Legler" <a3li@...too.org> wrote:
-
-> Hi,
-> 
-> while there seem to be CVE IDs for most of the issues fixed in the
-> latest Horde packages, I cannot find one for this issue:
-> 
-> From http://bugs.horde.org/ticket/9191:
-> "http://localhost/horde/gollem/view.php?actionID=view_file&type=txt&file=<script>alert("XSS")</script>&dir=../baddir/&driver=file
-> Vulnerable file : view.php (Line 32 - 46)"
-> 
-> Fixed in git (and released in 1.1.2):
-> http://lists.horde.org/archives/commits/2010-August/004747.html
-> http://lists.horde.org/archives/announce/2010/000565.html
-> 
-> Thanks,
-> Alex
-> -- 
-> Alex Legler <a3li@...too.org>
-> Gentoo Security/Ruby
