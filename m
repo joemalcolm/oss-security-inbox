@@ -1,45 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/11/4
-Message-ID: <928599946.155291286824724318.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 11 Oct 2010 15:18:44 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/21/1
+Message-ID: <AANLkTik=KVOQQm5WMgY0PROt9hFBGr9V_1h1a9Csmw2-@mail.gmail.com>
+Date: Tue, 21 Sep 2010 00:25:33 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: joomla before 1.5.21 XSS
+Subject: CVE request: kernel: Heap corruption in ROSE
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-3712 for this.
+When binding a ROSE socket, the "srose_ndigis" field of the
+user-provided sockaddr_rose struct is intended to be restricted to
+less than ROSE_MAX_DIGIS.  However, since this field is a signed
+integer, this check will pass when provided with a negative value,
+allowing the "source_ndigis" field of the rose_sock struct (which is
+an unsigned char) to be set to arbitrary values.  Then, by calling a
+function such as rose_getname(), heap corruption results, since this
+field is used as a maximum index to read from and write into an array
+of ROSE_MAX_DIGIS size.  This can only be triggered by unprivileged
+users when a ROSE device (e.g. rose0) exists.
 
-Thanks.
+Reference (and fix):
+http://marc.info/?l=linux-netdev&m=128502238927086&w=2
 
--- 
-    JB
------ "Hanno Böck" <hanno@...eck.de> wrote:
-
-> http://developer.joomla.org/security/news/9-security/10-core-security/322-20101001-core-xss-
-> vulnerabilities
-> 
-> 
->   [20101001] - Core - XSS Vulnerabilities
-> 
->     * Project: Joomla!
->     * SubProject: All
->     * Severity: Medium
->     * Versions: 1.5.20 and all previous 1.5 releases
->     * Exploit type: XSS Injection
->     * Reported Date: 2010-October-05
->     * Fixed Date: 2010-October-08
-> 
-> Description
-> 
-> Inadequate filtering of multiple encoded entities permits XSS attacks
-> in some
-> circumstances.
-> Affected Installs
-> 
-> All 1.5.x installs prior to and including 1.5.20 are affected.
-> -- 
-> Hanno Böck		Blog:		http://www.hboeck.de/
-> GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-> 
-> http://schokokeks.org - professional webhosting
+-Dan
