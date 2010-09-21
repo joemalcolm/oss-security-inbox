@@ -1,39 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/09/5
-Message-ID: <4C36B7F0.6020700@kernel.sg>
-Date: Fri, 09 Jul 2010 13:47:28 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/21/8
+Message-ID: <60269379.244181285095443209.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 21 Sep 2010 14:57:23 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Dan Rosenberg <dan.j.rosenberg@...il.com>
-Subject: Re: kernel: gfs2 acl issue
+Cc: coley <coley@...re.org>
+Subject: Re: Minor security flaw with pam_xauth
 Content-Type: text/plain; charset=utf-8
 
-On 07/09/2010 11:56 AM, Dan Rosenberg wrote:
-> To elaborate on the issue: the gfs2 filesystem in 2.6.32 kernels
-> currently allows any user to set arbitrary ACLs for files they do not
-> own, essentially granting full access to everything.  The source of
-> this problem also caused other misbehavior of ACLs.  This fix resolved
-> the issue for 2.6.33, but it was not backported, so 2.6.32 remains
-> vulnerable.
+----- "Solar Designer" <solar@...nwall.com> wrote:
 
-Thanks Dan. I have informed Greg about 2.6.32.y. FWIW, 2.6.{33,34}.y are 
-not affected.
+> On Mon, Aug 16, 2010 at 12:05:13PM +0100, Tim Brown wrote:
+> > Here's another bug where privileged code isn't checking the return
+> value from 
+> > setuid():
+> > 
+> >
+> http://sourceforge.net/tracker/?func=detail&aid=3028213&group_id=6663&atid=106663
+> 
+> This is fixed in Linux-PAM 1.1.2:
+> 
+> http://git.altlinux.org/people/ldv/packages/?p=pam.git;a=commitdiff;h=06f882f30092a39a1db867c9744b2ca8d60e4ad6
+> 
 
-Eugene
+Let's use CVE-2010-3316 for the above flaw.
 
-> On Thu, Jul 8, 2010 at 11:47 PM, Eugene Teo<eugeneteo@...nel.sg>  wrote:
->> Upstream commit 2646a1f6 (2.6.33-rc1) fixed an interesting gfs2 acl issue
->> late last year. Thanks Dan Rosenberg for informing us about this.
->>
->> http://git.kernel.org/linus/2646a1f61a3b5525914757f10fa12b5b94713648
->>
->> I didn't request a CVE name for this but if you need one, ping Steve.
->>
->> Thanks, Eugene
->> --
->> main(i) { putchar(182623909>>  (i-1) * 5&31|!!(i<7)<<6)&&  main(++i); }
->>
 
+> The same commit also introduces previously-missing privilege switching
+> into pam_env and pam_mail.  Unfortunately, this pam_env and pam_mail fix
+> is incomplete: it only switches the fsuid (should also switch fsgid (or
+> egid) and groups), and it fails to check the return value from setfsuid()
+> (doing so would require duplicate calls to setfsuid(), like we do in
+> libtcb, or switching of euid instead - yet it is desirable).
+> 
+
+This one is a bit on the tricky side. I'm going to call it "improper
+setfsuid use" so we can use just one CVE instead of two (as the flaws are
+related):
+
+Use CVE-2010-3430
+
+Steve, feel free to overrule me if MITRE doesn't like this.
+
+Thanks.
 
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+    JB
