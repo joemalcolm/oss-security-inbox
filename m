@@ -1,37 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/05/1
-Message-ID: <loom.20101205T175947-758@post.gmane.org>
-Date: Sun, 5 Dec 2010 17:12:34 +0000 (UTC)
-From: Bhadrinath <bitstrat@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/21/3
+Message-ID: <20100921105612.GA5579@openwall.com>
+Date: Tue, 21 Sep 2010 14:56:12 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Interesting behavior with struct initiailization
+Subject: Re: Minor security flaw with pam_xauth
 Content-Type: text/plain; charset=utf-8
 
-One solution to ensure no padding bits are copied uninitialized,
+On Mon, Aug 16, 2010 at 12:05:13PM +0100, Tim Brown wrote:
+> Here's another bug where privileged code isn't checking the return value from 
+> setuid():
+> 
+> http://sourceforge.net/tracker/?func=detail&aid=3028213&group_id=6663&atid=106663
 
-    struct test{ int a; char b; int c;};
+This is fixed in Linux-PAM 1.1.2:
 
+http://git.altlinux.org/people/ldv/packages/?p=pam.git;a=commitdiff;h=06f882f30092a39a1db867c9744b2ca8d60e4ad6
 
-    unsigned char r[sizeof arg];
+The same commit also introduces previously-missing privilege switching
+into pam_env and pam_mail.  Unfortunately, this pam_env and pam_mail fix
+is incomplete: it only switches the fsuid (should also switch fsgid (or
+egid) and groups), and it fails to check the return value from setfsuid()
+(doing so would require duplicate calls to setfsuid(), like we do in
+libtcb, or switching of euid instead - yet it is desirable).
 
-    struct test  arg = { .a = 1, .b = 2, .c = 3 };
-    .
-    .
-    // Do all operations on arg and just before passing it to the function
-    .
-    .
-    memset(r,0,sizeof r); // initialize everything to zero
-    memcpy(r+offsetof(struct test,a),&arg.a,sizeof arg.a); 
-    memcpy(r+offsetof(struct test,b),&arg.b,sizeof arg.b);
-    memcpy(r+offsetof(struct test,c),&arg.c,sizeof arg.c);
+The pam_env and pam_mail issue was discovered by Sebastian Krahmer of SuSE.
 
-    //now pass r to the function
-    Copy_to_user(ptr, r, sizeof(r));
-
-   Comments and ideas are welcome
-
-With Regards
-Bhadrinath
-
-
-
+Alexander
