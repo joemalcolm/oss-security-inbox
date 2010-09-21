@@ -1,55 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/21/4
-Message-ID: <20100121100156.GA28846@suse.de>
-Date: Thu, 21 Jan 2010 11:01:56 +0100
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/21/11
+Message-ID: <20100921194903.GA9321@openwall.com>
+Date: Tue, 21 Sep 2010 23:49:03 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - kernel: untangle the do_mremap() mess
+Subject: Re: Minor security flaw with pam_xauth
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jan 20, 2010 at 11:38:30AM +0800, Eugene Teo wrote:
-> On 01/20/2010 04:41 AM, Josh Bressers wrote:
-> >----- "Eugene Teo"<eugene@...hat.com>  wrote:
-> >>There's a pile of upstream commits that fixed issues that can lead to
-> >>
-> >>user-triggerable panics on supported boxes:
-> >>http://groups.google.com/group/linux.kernel/msg/895f20870532241e.
-> >>
-> >>http://groups.google.co.jp/group/fa.linux.kernel/browse_thread/thread/8bf22336b1082090
-> >
-> >I don't think CVE ids can be assigned to this without more information. I'm
-> >not knowledgeable enough, nor do I have the time to properly understand
-> >this list.
-> 
-> And upstream continues to give us grief...
-> 
-> Anyway, Al summarised the mess here:
-> http://marc.info/?l=linux-arch&m=126004438008670&w=2
-> 
-> And the pile of upstream commits were meant to address the problems 
-> described AFAIK. It will probably make more sense to associate all these 
-> related commits to just one CVE name.
-> 
-> I rated these cvss2=7.2/AV:L/AC:L/Au:N/C:C/I:C/A:C.
-> 
-> Here are the related links and patch descriptions:
-> 6) fix pgoff in "have to relocate" case of mremap()
-> 935874141df839c706cd6cdc438e85eb69d1525e
-> http://marc.info/?l=linux-kernel&m=126015825720659&w=2
+On Tue, Sep 21, 2010 at 03:22:07PM -0400, Josh Bressers wrote:
+> > > The same commit also introduces previously-missing privilege switching
+> > > into pam_env and pam_mail.  Unfortunately, this pam_env and pam_mail
+> > > fix is incomplete: it only switches the fsuid (should also switch fsgid
+> > > (or egid) and groups), and it fails to check the return value from
+> > > setfsuid() (doing so would require duplicate calls to setfsuid(), like
+> > > we do in libtcb, or switching of euid instead - yet it is desirable).
+...
+> Let's use CVE-2010-3430 for the missing setfsgid.
 
-This is a long standing bug I think, where mremap with MREMAP_MAYMOVE set
-of an address that was offset into a file seems to then use a different
-offset into the file.
+...and the missing setgroups().
 
-I cannot think of a security issue with it right now.
+> Use CVE-2010-3431 for the missing return checks on setfsuid.
 
-> 14) fix a struct file leak in do_mmap_pgoff()
-> 8c7b49b3ecd48923eb64ff57e07a1cdb74782970
-> http://marc.info/?l=linux-kernel&m=126015815920509&w=2
+OK.  BTW, I think this is not exploitable on current kernels, at least
+not via RLIMIT_NPROC (it does not apply to fsuid), yet it is desirable
+to check the return value from such syscalls.
 
-This one is likely a security issue.
-The code however was introduced in 2.6.32, the hugetlb implementation
-was very different in previous kernels.
+What about the completely missing privilege switching in pre-1.1.2 (the
+bug found by Sebastian)?  I don't recall if it already had a CVE id
+assigned or not.
 
-Ciao, Marcus
+Alexander
