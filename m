@@ -1,13 +1,13 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/06/11
-Message-ID: <986803361.2088671278443380193.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 6 Jul 2010 15:09:40 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/21/5
+Message-ID: <112978625.203461285080917580.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 21 Sep 2010 10:55:17 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: kernel: l2tp: Fix oops in pppol2tp_xmit
+Subject: Re: CVE request: epiphany not checking ssl certs
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-2495
+Please use CVE-2010-3312 for this.
 
 Thanks.
 
@@ -15,34 +15,33 @@ Thanks.
     JB
 
 
------ "Eugene Teo" <eugeneteo@...nel.sg> wrote:
+----- "Michael Gilbert" <michael.s.gilbert@...il.com> wrote:
 
-> "When transmitting L2TP frames, we derive the outgoing interface's UDP
+> On Fri, 17 Sep 2010 14:45:28 -0400 (EDT), Steven M. Christey wrote:
+> > 
+> > If an application does not advertise a security feature, then in
+> general 
+> > we will not give a CVE because of its absence of the feature (I
+> don't want 
+> > to give out 50,000 CVEs for every protocol that does cleartext 
+> > transmission... or uses DES... etc.)  Similarly, we generally avoid
 > 
-> checksum hardware assist capabilities from the tunnel dst dev. This
-> can 
-> sometimes be NULL, especially when routing protocols are used and 
-> routing changes occur. This patch just checks for NULL dst or dev 
-> pointers when checking for netdev hardware assist features.
+> > assigning CVEs to "defense in depth" fixes, although the line
+> between 
+> > "vulnerability" and "defense in depth" can get fuzzy.
+> > 
+> > The http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=564690#5 title
+> says 
+> > "Does not longer check certificates" which could be interpreted to
+> mean 
+> > that it used to check certs, and now it doesn't.  If that's the
+> case, then 
+> > it makes sense to assign a CVE.
 > 
->      BUG: unable to handle kernel NULL pointer dereference at
-> 0000000c
->      IP: [<f89d074c>] pppol2tp_xmit+0x341/0x4da [pppol2tp]
->      *pde = 00000000
->      Oops: 0000 [#1] SMP
->      last sysfs file: /sys/class/net/lo/operstate
-> [...]"
+> The feature was lost in the transition from gecko to webkit (or more
+> accurately libsoup for certificate support). I think it makes sense
+> to
+> assign an id since it does involve the loss of an expected security
+> feature.
 > 
-> Introduced in ffcebb16 (v2.6.29-rc1~581), fixed in 3feec909 (fixed in
-> 
-> v2.6.34-rc2). (It was later split into different files in commit 
-> fd558d18 v2.6.35-rc1).
-> 
-> I'm not requesting a CVE name for this because it did not affect any
-> of 
-> our supported kernels. FYI.
-> 
-> Thanks, Eugene
-> -- 
-> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i);
-> }
+> Mike
