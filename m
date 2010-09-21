@@ -1,35 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/03/5
-Message-ID: <20100303211618.4d2e3367@redhat.com>
-Date: Wed, 3 Mar 2010 21:16:18 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: OSS Security <oss-security@...ts.openwall.com>
-Subject: OpenSSL (with KRB5) remote crash - CVE-2010-0433
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/21/12
+Message-ID: <2025306004.256001285099367116.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 21 Sep 2010 16:02:47 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: Minor security flaw with pam_xauth
 Content-Type: text/plain; charset=utf-8
 
-Hi!
 
-We've been pointed out to public reports of remote SSL server crashes
-in OpenSSL builds with kerberos support, triggered by the Nessus'
-ssl_supported_ciphers test.
+----- "Solar Designer" <solar@...nwall.com> wrote:
 
-We've managed to track this problem to a missing return value check,
-causing incorrect input to be passed to the krb5 library, resulting in
-NULL pointer dereference crash in krb5 (recent MIT krb5 versions).
+> > Let's use CVE-2010-3430 for the missing setfsgid.
+> 
+> ...and the missing setgroups().
+> 
+> > Use CVE-2010-3431 for the missing return checks on setfsuid.
+> 
+> OK.  BTW, I think this is not exploitable on current kernels, at least
+> not via RLIMIT_NPROC (it does not apply to fsuid), yet it is desirable to
+> check the return value from such syscalls.
+> 
+> What about the completely missing privilege switching in pre-1.1.2 (the
+> bug found by Sebastian)?  I don't recall if it already had a CVE id
+> assigned or not.
+> 
 
-Issue can be reproduced with chrooted SSL servers (such as dovecot's
-login process or chrooted stunnel).
+Ugh, this has gone south on me.
 
-Report we got, with references to previous public discussions:
-  https://bugzilla.redhat.com/show_bug.cgi?id=567711
+Since you have the best understanding of these, can you break them down
+with reasonable explanations and I'll assign IDs to whatever still needs
+them?
 
-Details of the flaw:
-  https://bugzilla.redhat.com/show_bug.cgi?id=569774
-
-Upstream patch:
-  http://cvs.openssl.org/chngview?cn=19374
-
-We've assigned CVE-2010-0433 to this issue.
+Thanks.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+    JB
