@@ -1,39 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/31/2
-Message-ID: <4BB2A342.2010903@redhat.com>
-Date: Wed, 31 Mar 2010 09:20:02 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/21/4
+Message-ID: <20100921113301.GB6101@openwall.com>
+Date: Tue, 21 Sep 2010 15:33:01 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: ipv6: skb is unexpectedly freed (remote DoS)
+Subject: bzip2 CVE-2010-0405 integer overflow
 Content-Type: text/plain; charset=utf-8
 
-On 03/31/2010 03:38 AM, Steven M. Christey wrote:
-> On Mon, 29 Mar 2010, Eugene Teo wrote:
->
->> Upstream commit:
->> http://git.kernel.org/linus/fb7e2399ec17f1004c0e0ccfd17439f8759ede01
->
-> I'm not clear on the role of ipv6 here. The affected code is in
-> ipv4/tcp_input.c and there's no mention of tcp_v6_conn_request() there.
+Hi,
 
-To trigger this issue, the server actually needs to do something like:
-if (setsockopt(sockfd, IPPROTO_IPV6, IPV6_RECVPKTINFO, &on, ...)) {
-on the listening socket.
+Here's some analysis of this vulnerability and the changes in 1.0.6:
 
-tcp_rcv_state_process() is in ipv4/tcp_input.c but was called in 
-net/ipv6/tcp_ipv6.c.
+http://xorl.wordpress.com/2010/09/21/cve-2010-0405-bzip2-integer-overflow/
 
-> I'm guessing this was fixed in Linux 2.6.20.
+No conclusion on whether it is exploitable or not (and in what cases),
+yet maybe this will save someone a few minutes.
 
-v2.6.20-rc6
-
-> Arguably this could have been given a 2007 ID, but the patch didn't
-> clearly label the problem as a security issue, so I will treat Eugene's
-> request as the first widely-public disclosure - thus a 2010 date.
->
-> Use CVE-2010-1188
-
-Thanks, Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
+Alexander
