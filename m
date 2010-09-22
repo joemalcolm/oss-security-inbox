@@ -1,40 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/19/1
-Message-ID: <4BA3535E.8010805@redhat.com>
-Date: Fri, 19 Mar 2010 11:35:10 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request -- Sahana -- v0.6.2.2 -- Authentication bypass via "acl_enable_acl" URLs 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/22/3
+Message-ID: <813825154.401931285185278932.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 22 Sep 2010 15:54:38 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: David Malcolm <dmalcolm@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Python -- accept() implementation in async core is broken => more subcases
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve, vendors,
+Any update on this Steve?
 
-   Christopher showed:
-     [1] http://archives.neohapsis.com/archives/bugtraq/2010-03/0156.html
+Thanks.
 
-   a deficiency in the way, Sahana disaster management system
-   performed user authentication. Visiting a certain URL
-   would allow an attacker to view (and potentially modify)
-   information, which should be otherwise protected by authentication.
-
-   Upstream bug report:
-     [2] http://sourceforge.net/tracker/?func=detail&aid=2970786&group_id=127855&atid=709778
-
-   References:
-     [3] http://archives.neohapsis.com/archives/bugtraq/2010-03/0156.html
-     [4] http://secunia.com/advisories/39020/
-
-   Affected versions:
-     Issue reported against v0.6.2.2. Other versions may be also affected.
-
-   Credit:
-     Christopher
-
-Could you allocate a CVE id for this?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+-- 
+    JB
 
 
+----- "Josh Bressers" <bressers@...hat.com> wrote:
+
+> Steve,
+> 
+> I'm going to leave this one up to you. While it's really a python bug,
+> I
+> suspect several affected projects will end up patching themselves (I'm
+> not
+> sure how MITRE hadnles this situation).
+> 
+> Thanks.
+> 
+> -- 
+>     JB
+> 
+> 
+> ----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+> 
+> > Hello Steve, vendors,
+> > 
+> >    Giampaolo Rodola reported a deficiency in the implementation of
+> > Python's accept() routine:
+> >    [1] http://bugs.python.org/issue6706
+> > 
+> >    The following seems to be all symptoms for the same issue:
+> >    A, SMTP (smtpd.py):
+> >       [2] https://bugzilla.redhat.com/show_bug.cgi?id=632200
+> >       [3] http://bugs.python.org/issue9129
+> > 
+> >    B, pyftpdlib:
+> >       [4] http://code.google.com/p/pyftpdlib/issues/detail?id=104
+> > 
+> >    C, ZODB:
+> >       [5] https://bugs.launchpad.net/zodb/+bug/135108
+> > 
+> >    D, more?
+> > 
+> > Not sure, how to proceed in this case:
+> > i,  if assign only one CVE id for [1] or,
+> > ii, assign also separate CVE ids for the child symptoms? ([2], [3],
+> > [4])
+> > 
+> > Cc-ed David Malcom on this post, to shed more light how to handle
+> this
+> > case.
+> > 
+> > Once the way, how to further proceed with this, specified. Steve
+> could
+> > you allocate CVE id (ids)?
+> > 
+> > Thanks && Regards, Jan.
+> > --
+> > Jan iankko Lieskovsky / Red Hat Security Response Team
