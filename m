@@ -1,31 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/08/2
-Message-Id: <201001090009.10103.Christoph.Pleger@cs.tu-dortmund.de>
-Date: Sat, 9 Jan 2010 00:09:09 +0100
-From: Christoph Pleger <Christoph.Pleger@...tu-dortmund.de>
-To: Josh Bressers <bressers@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: GNU libc: NIS shadow password  leakage
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/22/1
+Message-Id: <201009222051.55865.hanno@hboeck.de>
+Date: Wed, 22 Sep 2010 20:51:55 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: clamav < 0.96.3 pdf bounds checking
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+As always, clamav doesn't mention security issues in it's release notes, but 
+the changelog gives some insight.
 
-On Friday 08 January 2010 23:11:50, Josh Bressers wrote:
+The bundled bzip2 code is affected by CVE-2010-0405 which is no surprise.
 
-> I may be missing something here, or perhaps I'm not remembering correctly,
-> but NIS basically doesn't have any security in this respect. This bug
-> implies that a user has some sort of access to the NIS client, but the NIS
-> server would happily hand out the same data if the malicious user asked for
-> it (not using glibc let's say). While this may be a glibc bug (I doubt it,
-> as it would just be a false sense of security), I this this is a non issue.
+This however sounds more interesting:
+Mon Sep 20 14:50:34 EEST 2010 (edwin)
+-------------------------------------
+ * libclamav/pdf.c: Add missing boundscheck to pdf code (bb #2226)
 
-No, that's not true. I have no experience with Linux NIS servers, but when the 
-NIS server runs on Solaris (Sun Microsystems is the inventor of NIS), the 
-shadow password information, which is in the passwd.adjunct.byname map, on 
-the NIS clients can only be seen by root. When other users call for 
-example "ypcat passwd.adjunct.byname", they get an error message that the map 
-does not exist. Also, on Solaris NIS clients, the shadow password cannot be 
-seen with getpwnam. 
+The referenced bug report is not public, but it sounds like this deserves a 
+CVE.
 
-Regards
-  Christoph 
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+
+http://schokokeks.org - professional webhosting
+
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
