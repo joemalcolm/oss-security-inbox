@@ -1,18 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/31/4
-Message-Id: <201008312056.FAB26586.OOVFLJQOFFStMH@I-love.SAKURA.ne.jp>
-Date: Tue, 31 Aug 2010 20:56:52 +0900
-From: Tetsuo Handa <penguin-kernel@...ove.SAKURA.ne.jp>
-To: spender@...ecurity.net, solar@...nwall.com
-Cc: roland@...hat.com, kees.cook@...onical.com, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, viro@...iv.linux.org.uk, akpm@...ux-foundation.org, oleg@...hat.com, kosaki.motohiro@...fujitsu.com, nhorman@...driver.com, linux-fsdevel@...r.kernel.org, pageexec@...email.hu
-Subject: Re: [PATCH] exec argument expansion can inappropriately triggerOOM-killer
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/24/2
+Message-ID: <20100924164823.GA21584@openwall.com>
+Date: Fri, 24 Sep 2010 20:48:23 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: Minor security flaw with pam_xauth
 Content-Type: text/plain; charset=utf-8
 
-Brad Spengler wrote:
-> The bug seems to have been introduced in 2.6.23, see:
-> http://thread.gmane.org/gmane.linux.ports.hppa/752
-> http://www.spinics.net/lists/linux-arch/msg01584.html
-> http://www.mail-archive.com/linux-kernel@vger.kernel.org/msg170491.html
-> though I'm guessing the functionality was also backported to major 
-> distros
-As far as I know, RHEL >= 5.3 and Asianux >= 3.2 backported this functionality.
+On Tue, Sep 21, 2010 at 04:02:47PM -0400, Josh Bressers wrote:
+> Since you have the best understanding of these, can you break them down
+> with reasonable explanations and I'll assign IDs to whatever still needs
+> them?
+
+pam_xauth missing return value checks from setuid() and similar calls,
+fixed in Linux-PAM 1.1.2 - CVE-2010-3316
+
+pam_env and pam_mail accessing the target user's files as root (and thus
+susceptible to attacks by the user) in Linux-PAM below 1.1.2, partially
+fixed in 1.1.2 - no CVE ID mentioned yet
+
+pam_env and pam_mail in Linux-PAM 1.1.2 not switching fsgid (or egid)
+and groups when accessing the target user's files (and thus potentially
+susceptible to attacks by the user) - CVE-2010-3430
+
+pam_env and pam_mail in Linux-PAM 1.1.2 not checking whether the
+setfsuid() calls succeed (no known impact with current Linux kernels,
+but poor practice in general) - CVE-2010-3431
+
+Now, in case someone fixes CVE-2010-3430 but fails to add return value
+checks for the added calls, we'll need yet another CVE ID for the
+partial fix... but I hope this won't happen.
+
+Alexander
