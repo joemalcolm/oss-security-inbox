@@ -1,28 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/09/2
-Message-ID: <4D006B54.2080505@redhat.com>
-Date: Thu, 09 Dec 2010 13:38:28 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/24/4
+Message-ID: <AANLkTi=oSq49eLutF_mq05khnN3cikXyFqgQFr-Jk=-E@mail.gmail.com>
+Date: Fri, 24 Sep 2010 16:05:44 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-CC: Nelson Elhage <nelhage@...lice.com>
-Subject: Re: CVE request: kernel: NULL pointer dereference in AF_ECONET
+Subject: Interesting kernel bug
 Content-Type: text/plain; charset=utf-8
 
-On 12/09/2010 11:27 AM, Nelson Elhage wrote:
-> The Linux implementation of ACORN networking over UDP does not
-> properly look up the device an incoming packet was received on,
-> potentially resulting in a denial of service (NULL pointer
-> dereference).
->
-> This is remotely triggerable if the econet module is loaded, but
-> realistically the only reason is likely to have it loaded is because
-> they're trying to run an exploit.
->
-> Reference:
-> http://marc.info/?l=linux-netdev&m=129185496013580&w=2
+A bug I found was just fixed upstream:
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=767b68e96993e29e3480d7ecdd9c4b84667c5762
 
-Proposed patch: http://marc.info/?l=linux-netdev&m=129186011218615&w=2
+Disregard the commit statement's mention of a reliable trigger, since
+none exists - a result of a combination of miscommunication and
+careless reporting on my part.
 
-Please use CVE-2010-4342.
+The bug was introduced in May 2010, and affects >= 2.6.34.1, so no
+distros would appear to be affected.  In 32-bit compatibility mode,
+when invoking the readv() or writev() syscalls, if the provided user
+pointer and length result in an access_ok() check failing, then an
+uninitialized pointer on the stack will be kfree()'d.  This is likely
+to be an exploitable condition (for example, via pre-initializing the
+stack with other carefully chosen syscalls, allowing control of the
+pointer).
 
-Thanks, Eugene
+It came up during discussion that on x86-64, the access_ok() will
+never fail, because there's no way for a user running in 32-bit mode
+to supply an address that's outside of userspace address range.
+However, it's possible that this may be triggerable on other
+architectures that I know less about.  S390 was mentioned at one
+point.
+
+Anyone who knows more about miscellaneous architectures and their
+address space segmentations?  Perhaps it affects someone after all.
+As of now, I don't think this could be considered a security issue
+since it appears to be completely not exploitable, but maybe someone
+more knowledgeable could shed more light on the issue.
+
+-Dan
