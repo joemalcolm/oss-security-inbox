@@ -1,30 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/14/4
-Message-Id: <201009141723.40428.thomas@suse.de>
-Date: Tue, 14 Sep 2010 17:23:40 +0200
-From: Thomas Biege <thomas@...e.de>
-To: "oss-security" <oss-security@...ts.openwall.com>
-Cc: owasp-dotnet@...ts.owasp.org
-Subject: CVE request: padding oracle attack: ruby on rails 2.3, owasp esapi
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/25/1
+Message-ID: <4C9D4BA5.5030605@redhat.com>
+Date: Sat, 25 Sep 2010 09:08:53 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: dann frazier <dannf@...ian.org>, Thomas Dreibholz <dreibh@....uni-due.de>, Vlad Yasevich <vladislav.yasevich@...com>, Ben Hutchings <ben@...adent.org.uk>
+Subject: Re: CVE Request -- Linux/SCTP DoS in sctp_packet_config()
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-the paper [1], about practical padding oracle attacks
-mentions some programming frameworks as vulnerable (section 5):
-- Ruby On ails 2.3
-- OWASP ESAPI
+On 09/25/2010 12:27 AM, dann frazier wrote:
+> Please assign a CVE for the remote DoS issue described here:
+>    http://marc.info/?l=linux-netdev&m=128453869227715&w=3
+>
+> Upstream fix:
+>    http://git.kernel.org/4bdab43323b459900578b200a4b8cf9713ac8fab
 
-I think they both need a CVE-ID. Thanks.
+Please use CVE-2010-3432.
 
-Cheers
-Thomas
-
-[1] http://usenix.org/events/woot10/tech/full_papers/Rizzo.pdf
-
-
+Thanks, Eugene
 -- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
---
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
