@@ -1,53 +1,142 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/24/1
-Message-ID: <4BFA528B.20705@redhat.com>
-Date: Mon, 24 May 2010 12:18:51 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, Nahuel Grisolia <nahuel@...sai-sec.com>, Stefan Esser <stefan.esser@...tioneins.de>
-Subject: CVE Request -- Cacti v0.8.7 -- three security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/25/2
+Message-ID: <AANLkTimysjTz=_5bBh2vjFv5J-bZSWzpNnQ9kP71wrNi@mail.gmail.com>
+Date: Sat, 25 Sep 2010 11:25:15 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: Eugene Teo <eugeneteo@...nel.sg>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: multiple kernel stack memory disclosures
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
+I'd like to request CVEs for a large series of Linux kernel stack
+memory disclosure vulnerabilities, almost all of which have been
+fixed.  They are all examples of declaring various structs on the
+stack and copying them back to the user without filling in all the
+fields, leaking uninitialized stack memory.  Since there are a lot of
+issues here, I trust your judgment in deciding if they should each
+receive a unique ID or if they should be combined in some way.  I
+tried to break them up logically to make it easier.
 
-   Cacti upstream has released:
-    [1] http://www.cacti.net/release_notes_0_8_7f.php
+---
 
-   latest v0.8.7 version, adressing three security flaws:
-     [A], MOPS-2010-023: Cacti Graph Viewer SQL Injection Vulnerability
-            [2] http://php-security.org/2010/05/13/mops-2010-023-cacti-graph-viewer-sql-injection-vulnerability/index.html
-            [3] http://www.vupen.com/english/advisories/2010/1204
+The first batch of issues occurred in the TIOCGICOUNT device ioctls of
+several device drivers.  While several of the issues were fixed on an
+individual basis, Alan Cox fixed it for good by creating a new
+handler.  Since these issues are essentially identical and were fixed
+all at once, I think it might make sense to have them under a single
+CVE.  Note that the final listed item in drivers/net/usb/hso.c was
+already assigned CVE-2010-3298.
 
-          Credit: The vulnerability was discovered by Stefan Esser as part of the SQL Injection Marathon.
-          Upstream changeset:
-            [4] http://svn.cacti.net/viewvc?view=rev&revision=5920
+"The TIOCGICOUNT device ioctl in mos7720.c, mos7840.c, serial_core.c,
+hso.c, amiserial.c, and nozomi.c allows unprivileged users to read
+uninitialized stack memory, because the 'reserved' member of the
+serial_icounter_struct struct declared on the stack is not altered or
+zeroed before being copied back to the user."
 
-     [B], Cross-site scripting issues reported by VUPEN Security (http://www.vupen.com)
-            [5] http://www.vupen.com/english/advisories/2010/1203
 
-          Credit: Vulnerabilities reported by Mohammed Boumediane (VUPEN Security).
-          Upstream changeset:
-            [6] http://svn.cacti.net/viewvc?view=rev&revision=5901
+Alan Cox's fix:
+http://lkml.org/lkml/2010/9/16/294
 
-     [C], SQL injection and shell escaping issues reported by Bonsai Information Security (http://www.bonsai-sec.com)
-            [7] http://www.bonsai-sec.com/blog/index.php/using-grep-to-find-0days/
-            [8] http://www.bonsai-sec.com/en/research/vulnerabilities/cacti-os-command-injection-0105.php
+drivers/usb/serial/mos*
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=a0846f1868b11cd827bdfeaf4527d8b1b1c0b098
 
-          Credit: This vulnerability was discovered by Nahuel Grisolia ( nahuel -at- bonsai-sec.com )
-          Upstream changeset:
-            [9] http://svn.cacti.net/viewvc?view=rev&revision=5747
+drivers/serial/serial_core.c
+http://userweb.kernel.org/~akpm/mmotm/broken-out/drivers-serial-serial_corec-prevent-reading-uninitialized-stack-memory.patch
 
-If a logged Cacti user was tricked into visiting a specially-crafted Web page, it could lead to:
-i,   unauthorized arbitrary database data dislosure (vulnerability [A], from [2]),
-ii,  unauthorized arbitrary scripting code execution (vulnerability [B], from [5]),
-iii, execution of unintended commands or accessing unauthorized data. (vulnerability [C], from [8]).
+drivers/char/amiserial.c
+http://userweb.kernel.org/~akpm/mmotm/broken-out/drivers-char-amiserialc-prevent-reading-uninitialized-stack-memory.patch
 
-References:
-   [10] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=582691
-   [11] https://bugzilla.redhat.com/show_bug.cgi?id=595289
+drivers/char/nozomi.c
+http://userweb.kernel.org/~akpm/mmotm/broken-out/drivers-char-nozomic-prevent-reading-uninitialized-stack-memory.patch
 
-Could you allocate relevant CVE ids?
+drivers/net/usb/hso.c (CVE-2010-3298)
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=7011e660938fc44ed86319c18a5954e95a82ab3e
 
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+---
+
+The next two issues both occurred in the FBIOGET_VBLANK device ioctl:
+
+"The FBIOGET_VBLANK device ioctl in sis_main.c and ivtvfb.c allows
+unprivileged users to read 16 bytes of uninitialized stack memory,
+because the 'reserved' member of the fb_vblank struct declared on the
+stack is not altered or zeroed before being copied back to the user."
+
+drivers/video/sis/sis_main.c
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=fd02db9de73faebc51240619c7c7f99bee9f65c7
+
+drivers/media/video/ivtv/ivtvfb.c
+lkml.org/lkml/2010/9/15/393
+
+---
+
+The following issues occured in miscellaneous device ioctls in a
+variety of drivers.  Note the final two items listed have already been
+assigned CVE-2010-3296 and CVE-2010-3297 - I include them only for
+reference.
+
+
+sound/pci/rme9652/hdsp*.c
+http://marc.info/?l=linux-kernel&m=128542726922720&w=2
+
+"The SNDRV_HDSP_IOCTL_GET_CONFIG_INFO and
+SNDRV_HDSP_IOCTL_GET_CONFIG_INFO ioctls in hdspm.c and hdsp.c allow
+unprivileged users to read uninitialized kernel stack memory, because
+several fields of the hdsp{m}_config_info structs declared on the
+stack are not altered or zeroed before being copied back to the user."
+
+
+drivers/video/via/ioctl.c
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=b4aaa78f4c2f9cde2f335b14f4ca30b01f9651ca
+
+"The VIAFB_GET_INFO device ioctl allows unprivileged users to read 246
+bytes of uninitialized stack memory, because the 'reserved' member of
+the viafb_ioctl_info struct declared on the stack is not altered or
+zeroed before being copied back to the user."
+
+
+drivers/net/cxgb3/cxgb3_main.c (CVE-2010-3296)
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=49c37c0334a9b85d30ab3d6b5d1acb05ef2ef6de
+
+"The CHELSIO_GET_QSET_NUM device ioctl allows unprivileged users to
+read 4 bytes of uninitialized stack memory, because the 'addr' member
+of the ch_reg struct declared on the stack in cxgb_extension_ioctl()
+is not altered or zeroed before being copied back to the user."  This
+issue was assigned CVE-2010-3296.
+
+
+drivers/net/eql.c (CVE-2010-3297)
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=44467187dc22fdd33a1a06ea0ba86ce20be3fe3c
+
+"The EQL_GETMASTRCFG device ioctl allows unprivileged users to read 16
+bytes of uninitialized stack memory, because the 'master_name' member
+of the master_config_t struct declared on the stack in
+eql_g_master_cfg() is not altered or zeroed before being copied back
+to the user."  This issue was assigned CVE-2010-3297.
+
+---
+
+The final identified leak is in the sys_semctl system call, which I
+would say is more serious since it is not driver-specific:
+
+ipc/sem.c
+http://www.spinics.net/lists/mm-commits/msg80234.html
+
+"The semctl syscall has several code paths that lead to the leakage of
+uninitialized kernel stack memory (namely the IPC_INFO, SEM_INFO,
+IPC_STAT, and SEM_STAT commands) during the use of the older, obsolete
+version of the semid_ds struct.  The copy_semid_to_user() function
+declares a semid_ds struct on the stack and copies it back to the user
+without initializing or zeroing the 'sem_base', 'sem_pending',
+'sem_pending_last', and 'undo' pointers, allowing the leakage of 16
+bytes of kernel stack memory.  The code is still reachable on 32-bit
+systems - when calling semctl() newer glibc's automatically OR the IPC
+command with the IPC_64 flag, but invoking the syscall directly allows
+users to use the older versions of the struct."
+
+---
+
+Let me know if you have any questions or need any clarification on any
+of these issues.
+
+Regards,
+Dan
