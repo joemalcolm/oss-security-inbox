@@ -1,95 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/01/5
-Message-ID: <Pine.GSO.4.64.1007011345291.18626@faron.mitre.org>
-Date: Thu, 1 Jul 2010 13:58:11 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/27/10
+Message-ID: <20100927202916.GA4576@openwall.com>
+Date: Tue, 28 Sep 2010 00:29:16 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-cc: Tomas Hoger <thoger@...hat.com>
-Subject: Re: CVE requests: LibTIFF
+Subject: Re: Minor security flaw with pam_xauth
 Content-Type: text/plain; charset=utf-8
 
+On Mon, Sep 27, 2010 at 11:44:03AM -0600, Vincent Danen wrote:
+> >* [2010-09-24 20:48:23 +0400] Solar Designer wrote:
+> >>pam_xauth missing return value checks from setuid() and similar calls,
+> >>fixed in Linux-PAM 1.1.2 - CVE-2010-3316
+> >>
+> >>pam_env and pam_mail accessing the target user's files as root (and thus
+> >>susceptible to attacks by the user) in Linux-PAM below 1.1.2, partially
+> >>fixed in 1.1.2 - no CVE ID mentioned yet
+> >>
+> >>pam_env and pam_mail in Linux-PAM 1.1.2 not switching fsgid (or egid)
+> >>and groups when accessing the target user's files (and thus potentially
+> >>susceptible to attacks by the user) - CVE-2010-3430
+> >>
+> >>pam_env and pam_mail in Linux-PAM 1.1.2 not checking whether the
+> >>setfsuid() calls succeed (no known impact with current Linux kernels,
+> >>but poor practice in general) - CVE-2010-3431
+...
+> Oh, hang on.  Re-read some older messages again trying to grok this and
+> it looks like these checks were introduced in 1.1.2, so they would _not_
+> affect earlier versions if I'm understanding correctly.
 
-Below are some more CVEs from the additional work of one of our analysts 
-on this nasty wasty thread.  (Josh, notice the RHEL one).
+Older versions were "fully vulnerable".  1.1.2 is "partially vulnerable".
 
-For CVE, we will typically cover client-side crashers, although many don't 
-think those are important enough unless there's evidence of a possibility 
-of code execution or some broader problem.  For OSS vendors, I have kind 
-of an unspoken, informal agreement that they might not assign CVEs to 
-crashers, but we might do so after they get published.
+> So only 3316 and the second issue without a CVE name affect pre-1.1.2.
 
-With a library, though, you don't know what that crash is going to affect, 
-because it depends on what software is using the library - it could be an 
-image server, web spider, cron job, etc. for which a crash has worse 
-consequences than just inconvenience.  So, crashers in libraries are 
-especially deserving of a CVE.
+Yes, in a sense.
 
-Personally, I also think that any client that can support multiple 
-"sessions" at the same time should also treat crashers as a security 
-issue.  e.g. in a web browser, someone may be surfing multiple web pages, 
-or in an IRC client, particpating in multiple chats.  An attacker from one 
-"thread" could cause a DoS to all other threads.  Technically, IMO, this 
-violates a security model in which only the endpoints of a communication 
-channel have the "privilege" to close that channel... even if it's really 
-low priority for most people.
+> So what about previous versions that _don't_ have privilege switching in
+> pam_env and pam_mail?  Would that require yet another CVE or would the
+> addition of privilege switching be considered an enhancement, not a
+> security fix?
 
-- Steve
+I think it should be considered a security fix.  Moreover, of these four
+issues (if we keep the separation above), the currently-CVE-less is the
+most serious one.
 
-
-======================================================
-Name: CVE-2010-2595
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-2595
-Reference: CONFIRM:http://bugzilla.maptools.org/show_bug.cgi?id=2208
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=583081
-
-The TIFFYCbCrtoRGB function in LibTIFF 3.9.0 and 3.9.2, as used in
-ImageMagick, does not properly handle invalid ReferenceBlackWhite
-values, which allows remote attackers to cause a denial of service
-(application crash) via a crafted TIFF image that triggers an array
-index error, related to "downsampled OJPEG input."
-
-
-======================================================
-Name: CVE-2010-2596
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-2596
-Reference: CONFIRM:http://bugzilla.maptools.org/show_bug.cgi?id=2209
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=583081
-
-The OJPEGPostDecode function in tif_ojpeg.c in LibTIFF 3.9.0 and
-3.9.2, as used in tiff2ps, allows remote attackers to cause a denial
-of service (assertion failure and application exit) via a crafted TIFF
-image, related to "downsampled OJPEG input."
-
-
-======================================================
-Name: CVE-2010-2597
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-2597
-Reference: CONFIRM:http://bugzilla.maptools.org/show_bug.cgi?id=2215
-Reference: CONFIRM:https://bugs.launchpad.net/bugs/593067
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=583081
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=603703
-
-The TIFFVStripSize function in tif_strip.c in LibTIFF 3.9.0 and 3.9.2
-makes incorrect calls to the TIFFGetField function, which allows
-remote attackers to cause a denial of service (application crash) via
-a crafted TIFF image, related to "downsampled OJPEG input" and
-possibly related to a compiler optimization that triggers a
-divide-by-zero error.
-
-
-======================================================
-Name: CVE-2010-2598
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-2598
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=583081
-
-LibTIFF in Red Hat Enterprise Linux (RHEL) 3 on x86_64 platforms, as
-used in tiff2rgba, attempts to process image data even when the
-required compression functionality is not configured, which allows
-remote attackers to cause a denial of service via a crafted TIFF
-image, related to "downsampled OJPEG input."
-
-
+Alexander
