@@ -1,34 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/25/12
-Message-ID: <1149807827.273891274818055627.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 25 May 2010 16:07:35 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/27/1
+Message-ID: <AANLkTi=ZsipHZU0vK9s=5DKkgGzzW6EY31WhJUykPTtA@mail.gmail.com>
+Date: Sun, 26 Sep 2010 21:01:40 -0600
+From: Kurt Seifried <kurt@...fried.org>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - kernel: GFS2: The setflags ioctl() doesn't check file ownership
+Cc: Thomas Dreibholz <dreibh@....uni-due.de>, Vlad Yasevich <vladislav.yasevich@...com>,  Ben Hutchings <ben@...adent.org.uk>
+Subject: Re: CVE Request -- Linux/SCTP DoS in sctp_packet_config()
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-1641
+On Fri, Sep 24, 2010 at 10:27 AM, dann frazier <dannf@...ian.org> wrote:
+> Please assign a CVE for the remote DoS issue described here:
+>  http://marc.info/?l=linux-netdev&m=128453869227715&w=3
+>
+> Upstream fix:
+>  http://git.kernel.org/4bdab43323b459900578b200a4b8cf9713ac8fab
 
-Thanks.
+Corrected URL:
+
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=4bdab43323b459900578b200a4b8cf9713ac8fab
 
 -- 
-    JB
-
-
------ "Eugene Teo" <eugeneteo@...nel.sg> wrote:
-
-> Besides checking the write permissions, the setflags ioctl should also
-> 
-> be checking for the ownership of the file. It's a minor issue but the
-> 
-> behaviour is unexpected.
-> 
-> References:
-> https://bugzilla.redhat.com/show_bug.cgi?id=595579
-> http://www.linux-archive.org/cluster-development/375481-gfs2-fix-permissions-checking-setflags-ioctl.html
-> 
-> Thanks, Eugene
-> -- 
-> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i);
-> }
+Kurt Seifried
+kurt@...fried.org
+tel: 1-703-879-3176
