@@ -1,40 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/20/4
-Message-ID: <AANLkTikEl2i10wgt9KMB5U9e8KvZMZYrRRBAhoMV_a32@mail.gmail.com>
-Date: Thu, 20 May 2010 15:04:23 +0200
-From: Max Olsterd <max.olsterd@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/27/8
+Message-ID: <254318427.436681285618735599.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 27 Sep 2010 16:18:55 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: security-2010@...irrelmail.org, security@...de.org
-Subject: CVE Request for Horde and Squirrelmail
+Cc: coley <coley@...re.org>
+Subject: Re: Minor security flaw with pam_xauth
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+----- "Solar Designer" <solar@...nwall.com> wrote:
 
-Is there a CVE number available for the two 0-days exposed during Hack In
-The Box Dubai 2010 ?
+Thank you for doing this, it's most apprecited.
 
-Though the exploits were not given during HITB (?), some friends have
-recently shown me that they found how both products (Squirrelmail and Horde)
-might be abused to be transformed, so that they become some kind of nmap
-scanner (banner grab, port scan, etc). It helps at discovering a remote DMZ,
-internal LAN, etc, by using those webmails as evil internal nmap proxies.
+> 
+> pam_xauth missing return value checks from setuid() and similar calls,
+> fixed in Linux-PAM 1.1.2 - CVE-2010-3316
+> 
+> pam_env and pam_mail accessing the target user's files as root (and thus
+> susceptible to attacks by the user) in Linux-PAM below 1.1.2, partially
+> fixed in 1.1.2 - no CVE ID mentioned yet
 
-More info available on the slides of the corporate hackers who found the
-0-days :
-http://conference.hitb.org/hitbsecconf2010dxb/materials/D1%20-%20Laurent%20Oudot%20-%20Improving%20the%20Stealthiness%20of%20Web%20Hacking.pdf
--> Squirrelmail: page 69 (post auth vuln)
--> Horde: page 74 (pre auth vuln)
+Use CVE-2010-3435 for this one.
 
-Regards,
 
-M@X
+> 
+> pam_env and pam_mail in Linux-PAM 1.1.2 not switching fsgid (or egid) and
+> groups when accessing the target user's files (and thus potentially
+> susceptible to attacks by the user) - CVE-2010-3430
+> 
+> pam_env and pam_mail in Linux-PAM 1.1.2 not checking whether the
+> setfsuid() calls succeed (no known impact with current Linux kernels, but
+> poor practice in general) - CVE-2010-3431
+> 
+> Now, in case someone fixes CVE-2010-3430 but fails to add return value
+> checks for the added calls, we'll need yet another CVE ID for the partial
+> fix... but I hope this won't happen.
+> 
 
-NB: Useful links :
+Let's hope not. I guess if they do, they can request a new ID.
 
-SquirrelMail: http://www.squirrelmail.org (one of the most excellent Webmail
-/ Opensource)
-Horde: http://www.horde.org (one of the most excellent Webmail Opensource)
-TEHTRI-Security: http://www.tehtri-security.com (seems to be some kind of
-corporate hackers group / company ? who found some 0-days recently)
-HITB: http://conference.hitb.org/ (HITB Security Conferences)
+Thanks.
 
+-- 
+    JB
