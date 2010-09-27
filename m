@@ -1,36 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/30/8
-Message-ID: <1561504.844751291131757945.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 30 Nov 2010 10:42:37 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/27/6
+Message-ID: <197838274.431221285616867430.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 27 Sep 2010 15:47:47 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Marcus Meissner <meissner@...e.de>
-Subject: Re: CVE request: xen: x86-64: don't crash Xen upon direct pv guest access
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: clamav < 0.96.3 pdf bounds checking
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-4255 for this.
+Use CVE-2010-3434
+
+If someone has more information, or an upstream contact it would be much appreciated.
 
 Thanks.
 
 -- 
-    JB
+    JB
 
 
------ "Eugene Teo" <eugene@...hat.com> wrote:
+----- "Hanno Böck" <hanno@...eck.de> wrote:
 
-> handle_gdt_ldt_mapping_fault() is intended to deal with indirect 
-> accesses (i.e. those caused by descriptor loads) to the GDT/LDT
-> mapping 
-> area only. While for 32-bit segment limits indeed prevent the function
+> As always, clamav doesn't mention security issues in it's release
+> notes, but 
+> the changelog gives some insight.
 > 
-> being entered for direct accesses (i.e. a #GP fault will be raised
-> even 
-> before the address translation gets done, on 64-bit even user mode 
-> accesses would lead to control reaching the BUG_ON() at the beginning
-> of 
-> that function.
+> The bundled bzip2 code is affected by CVE-2010-0405 which is no
+> surprise.
 > 
-> http://lists.xensource.com/archives/html/xen-devel/2010-11/msg01650.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=658155
+> This however sounds more interesting:
+> Mon Sep 20 14:50:34 EEST 2010 (edwin)
+> -------------------------------------
+>  * libclamav/pdf.c: Add missing boundscheck to pdf code (bb #2226)
 > 
-> Thanks, Eugene
+> The referenced bug report is not public, but it sounds like this
+> deserves a 
+> CVE.
+> 
+> -- 
+> Hanno Böck                Blog:                http://www.hboeck.de/
+> GPG: 3DBD3B20                Jabber/Mail:        hanno@...eck.de
+> 
+> http://schokokeks.org - professional webhosting
