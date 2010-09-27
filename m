@@ -1,68 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/18/13
-Message-ID: <20100518234229.GA13745@openwall.com>
-Date: Wed, 19 May 2010 03:42:29 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/27/11
+Message-ID: <20100927212104.GA2569@galadriel.inutil.org>
+Date: Mon, 27 Sep 2010 23:21:04 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: [oCERT-2010-001] multiple http client unexpected download filename vulnerability
+Subject: CVE requests: POE::Component::IRC, Alien Arena, Babiloo, Typo3, abcm2ps, ModSecurity, Linux kernel
 Content-Type: text/plain; charset=utf-8
 
-On Tue, May 18, 2010 at 09:50:27AM +0200, Ludwig Nussel wrote:
-> wget doesn't overwrite existing files by default anyways. Instead it appends a
-> suffix .1, .2 etc to the newly downloaded file.
+Hi,
+here's a few CVE requests for issues in the Debian Security Tracker
+without a CVE ID assigned:
 
-Well, a server can sometimes override that default - please see below.
+1. POE::Component::IRC
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=581194
+http://github.com/bingos/poe-component-irc/compare/d2ead04...675f55cd
 
-> wget also prints the file name it used.
+2. Alien Arena
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=575621
+http://corent.proboards.com/index.cgi?board=bugreport&action=display&thread=4761
 
-This is of limited help - and for interactive uses only.  I am mostly
-concerned about uses from cron jobs and the like.
+3. Babiloo
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=591995
 
-> So IMO it's perfectly fine and useful for wget to take the server
-> provided file name by default.
+4. Typo3
+http://typo3.org/teams/security/security-bulletins/typo3-sa-2010-012/
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=590719
+http://lists.debian.org/debian-security-announce/2010/msg00144.html
 
-I disagree.  Uses from scripts and cron jobs are too common, and they
-often don't care to specify an output filename explicitly.
+5. abcm2ps
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=577014
+http://moinejf.free.fr/abcm2ps-5.txt
+http://secunia.com/advisories/39345/
 
-Let's suppose there's a cron job like this:
+6. ModSecurity
+There was already a CVE request by Jan Lieskovsky, but it doesn't seem
+to have led to an ID assignment:
+http://www.openwall.com/lists/oss-security/2010/02/10/2
 
-1 * * * *	wget http://www.openwall.com/pvt/wget/log &> /dev/null
+7. Linux kernel (local DoS, impact limited to specific hardware)
+http://git.kernel.org/linus/b525c06cdbd8a3963f0173ccd23f9147d4c384b5
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=565790
 
-If the server is malicious or compromised, it can have:
+Cheers,
+        Moritz
 
-RedirectMatch log $1/pvt/wget/.wgetrc
-
-in .htaccess, and
-
-reject=; exec id
-output-document=.bash_profile
-
-in .wgetrc.  When the cron job runs for the first time after the above
-changes made on the server, it does:
-
-02:01:02 (2.64 MB/s) - `.wgetrc' saved [47/47]
-
-At this point, .wgetrc is on the client system.  The second time the
-cron job runs, it does:
-
-03:01:02 (2.99 MB/s) - `.bash_profile' saved [47/47]
-
-This has happily overwritten my .bash_profile file.
-
-(I replaced "/dev/null" in the cron job with another filename for
-obtaining these wget output lines.)
-
-When I am logging in to the affected account, I get the output of "id".
-Of course, the shell command could as well be nastier than that.
-
-Although I used a somewhat tricky approach in the above exploit,
-eventually making wget overwrite a file, it is also possible to mount
-attacks that do not rely on overwriting any files.  Many programs
-support optional startup/config files of fixed/known/guessable names
-that a malicious or compromised server could provide.  In fact, I've
-just demonstrated this attack against wget itself, but it could also
-work against another program.
-
-Is this more convincing now?
-
-Alexander
