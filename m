@@ -1,22 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/22/5
-Message-ID: <20100222195538.2bc554a1@foo.fgeek.fi>
-Date: Mon, 22 Feb 2010 19:55:38 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/27/7
+Message-ID: <20100927201729.GB4485@openwall.com>
+Date: Tue, 28 Sep 2010 00:17:29 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request - coppermine gallery <1.4.26 code execution vulnerability
+Subject: Re: Minor security flaw with pam_xauth
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 10 Feb 2010 11:23:31 +0100
-Hanno Böck <hanno@...eck.de> wrote:
-
-> http://forum.coppermine-gallery.net/index.php/topic,63510.0.html
+On Mon, Sep 27, 2010 at 11:36:13AM -0600, Vincent Danen wrote:
+> * [2010-09-24 20:48:23 +0400] Solar Designer wrote:
+> >pam_env and pam_mail accessing the target user's files as root (and thus
+> >susceptible to attacks by the user) in Linux-PAM below 1.1.2, partially
+> >fixed in 1.1.2 - no CVE ID mentioned yet
+> >
+> >pam_env and pam_mail in Linux-PAM 1.1.2 not switching fsgid (or egid)
+> >and groups when accessing the target user's files (and thus potentially
+> >susceptible to attacks by the user) - CVE-2010-3430
+> >
+> >pam_env and pam_mail in Linux-PAM 1.1.2 not checking whether the
+> >setfsuid() calls succeed (no known impact with current Linux kernels,
+> >but poor practice in general) - CVE-2010-3431
+...
+> These that are partially fixed are fixed in that git commit you noted
+> previously?
 > 
-> "The release covers a recently discovered input validation
-> vulnerability that allows (if unpatched) a malevolent visitor to
-> include own script routines"
+> http://git.altlinux.org/people/ldv/packages/?p=pam.git;a=commitdiff;h=06f882f30092a39a1db867c9744b2ca8d60e4ad6
+> 
+> Or are they fixed in different commits?  It looks like they should all
+> be fixed in that commit, but I want to double-check.
 
-What is the status of this?
+No, they are not fully fixed at all.  We're working on a patch (so you
+don't need to).  The commit has the mentioned partial fixes only.
 
----
-Henri Salo
+> Are there patches available to fully fix these issues?  And are there
+> patches for 3430 and 3431 yet?
+
+This is the same question asked different ways.  We have a patch that
+we're reviewing internally.  To be made available soon.
+
+> I'm assuming also that those issues have
+> always existed although you say 'in 1.1.2', but they would affect
+> earlier versions yet, right?
+
+The original pam_env and pam_mail issues, yes.  The partial fixes, no,
+because there were no fixes at all before 1.1.2.
+
+> Thanks for any clarification.  I'm trying to wrap my head around this
+> and the impact of these issues.  They all strike me as relatively minor
+> issues, but it is possible that I am missing or misunderstanding
+> something here.
+
+They're relatively minor because these modules are normally not used.
+However, if the modules are used in a PAM stack on a given install, then
+the original issues reported against pam_env and pam_mail by Sebastian
+become major ones.
+
+Additionally, as mentioned by Sebastian, pam_env's intended behavior is
+a security risk (user-provided env vars may affect some services in ways
+not expected by the sysadmin).  I am not sure how to deal with that.
+Maybe improve the documentation.
+
+Alexander
