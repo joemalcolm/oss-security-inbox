@@ -1,38 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/23/5
-Message-ID: <4C2237C0.8020702@redhat.com>
-Date: Wed, 23 Jun 2010 18:35:12 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>, Michael Fleming <mfleming+rpm@...tfleminggent.com>
-CC: oss-security <oss-security@...ts.openwall.com>, Florian Streibelt <gentoo@...treibelt.de>, Mads Martin Joergensen <mmj@....dk>, "Morten K. Poulsen" <morten@...elingp.dk>
-Subject: CVE Request -- mlmmj -- Directory traversal flaw by editing and saving list entries via php-admin web interface
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/27/5
+Message-ID: <20100927174403.GN1960@redhat.com>
+Date: Mon, 27 Sep 2010 11:44:03 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: Minor security flaw with pam_xauth
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve, vendors,
+* [2010-09-27 11:36:13 -0600] Vincent Danen wrote:
 
-   Florian Streibelt (yet in 2009) reported:
-   [1] http://bugs.gentoo.org/show_bug.cgi?id=259968#c0
+>* [2010-09-24 20:48:23 +0400] Solar Designer wrote:
+>
+>>On Tue, Sep 21, 2010 at 04:02:47PM -0400, Josh Bressers wrote:
+>>>Since you have the best understanding of these, can you break them down
+>>>with reasonable explanations and I'll assign IDs to whatever still needs
+>>>them?
+>>
+>>pam_xauth missing return value checks from setuid() and similar calls,
+>>fixed in Linux-PAM 1.1.2 - CVE-2010-3316
+>>
+>>pam_env and pam_mail accessing the target user's files as root (and thus
+>>susceptible to attacks by the user) in Linux-PAM below 1.1.2, partially
+>>fixed in 1.1.2 - no CVE ID mentioned yet
+>>
+>>pam_env and pam_mail in Linux-PAM 1.1.2 not switching fsgid (or egid)
+>>and groups when accessing the target user's files (and thus potentially
+>>susceptible to attacks by the user) - CVE-2010-3430
+>>
+>>pam_env and pam_mail in Linux-PAM 1.1.2 not checking whether the
+>>setfsuid() calls succeed (no known impact with current Linux kernels,
+>>but poor practice in general) - CVE-2010-3431
+>>
+>>Now, in case someone fixes CVE-2010-3430 but fails to add return value
+>>checks for the added calls, we'll need yet another CVE ID for the
+>>partial fix... but I hope this won't happen.
+>
+>These that are partially fixed are fixed in that git commit you noted
+>previously?
+>
+>http://git.altlinux.org/people/ldv/packages/?p=pam.git;a=commitdiff;h=06f882f30092a39a1db867c9744b2ca8d60e4ad6
+>
+>Or are they fixed in different commits?  It looks like they should all
+>be fixed in that commit, but I want to double-check.
+>
+>Are there patches available to fully fix these issues?  And are there
+>patches for 3430 and 3431 yet?  I'm assuming also that those issues have
+>always existed although you say 'in 1.1.2', but they would affect
+>earlier versions yet, right?
 
-   a directory traversal flaw in the way mlmmj (Mailing List Managing Made
-   Joyful), mailing list manager, processed users requests to edit and save
-   list entries, originating from php-admin web interface. A remote,
-   authenticated attacker could use these flaws to alter integrity of the system
-   (write and / or delete arbitrary files) by providing a specially-crafted list
-   variable content to the edit or save request.
+Oh, hang on.  Re-read some older messages again trying to grok this and
+it looks like these checks were introduced in 1.1.2, so they would _not_
+affect earlier versions if I'm understanding correctly.
 
-   Florian, please correct me, if I mangled the attack scenario, and it's slightly
-   different.
+So only 3316 and the second issue without a CVE name affect pre-1.1.2.
 
-   Martin, Morten, are these two issues known upstream yet? Is there a patch for them already?
+So what about previous versions that _don't_ have privilege switching in
+pam_env and pam_mail?  Would that require yet another CVE or would the
+addition of privilege switching be considered an enhancement, not a
+security fix?
 
-   Steve, could you please allocate two CVE-2009-XXXX CVE ids?
-   (One for 1, 'edit' case, second for 2, 'save' case.) [Searching "Master Copy of CVE" for "mlmmj"
-    keyword returned nothing for me.]
-
-References:
-   [2] http://bugs.gentoo.org/show_bug.cgi?id=259968
-   [3] https://bugzilla.redhat.com/show_bug.cgi?id=607256
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+-- 
+Vincent Danen / Red Hat Security Response Team 
