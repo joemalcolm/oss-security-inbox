@@ -1,39 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/05/4
-Message-Id: <20100405153100.4220fe46.michael.s.gilbert@gmail.com>
-Date: Mon, 5 Apr 2010 15:31:00 -0400
-From: Michael Gilbert <michael.s.gilbert@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Debian Moin Question
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/28/9
+Message-ID: <Pine.GSO.4.64.1009281721420.24337@faron.mitre.org>
+Date: Tue, 28 Sep 2010 17:28:44 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Josh Bressers <bressers@...hat.com>
+cc: oss-security@...ts.openwall.com
+Subject: Re: CVE requests: POE::Component::IRC, Alien Arena, Babiloo, Typo3, abcm2ps, ModSecurity, Linux kernel
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 5 Apr 2010 14:25:05 -0400 (EDT), Josh Bressers wrote:
-> Hello everyone,
-> 
-> I just ran across this ID from MITRE:
-> 
-> Name: CVE-2010-1238
-> Status: Candidate
-> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-1238
-> Final-Decision:
-> Interim-Decision:
-> Modified:
-> Proposed:
-> Assigned: 20100405
-> Category:
-> Reference: DEBIAN:DSA-2024
-> Reference: URL:http://www.debian.org/security/2010/dsa-2024
-> 
-> MoinMoin 1.7.1 allows remote attackers to bypass the textcha
-> protection mechanism by modifying the textcha-question and
-> textcha-answer fields to have empty values.
-> 
-> The only data I can find on this is from the Debian DSA, and the
-> information is quite slim. Can someone shed more light on this flaw?
 
-would the textcha.patch section in the debian diff [0] as linked
-from the DSA be sufficient?
+On Tue, 28 Sep 2010, Josh Bressers wrote:
 
-mike
+>> 6. ModSecurity
+>> There was already a CVE request by Jan Lieskovsky, but it doesn't
+>> seem
+>> to have led to an ID assignment:
+>> http://www.openwall.com/lists/oss-security/2010/02/10/2
+>>
+>
+> This one is also too big for me to handle properly. Can MITRE take it?
 
-[0] http://security.debian.org/pool/updates/main/m/moin/moin_1.7.1-3+lenny4.diff.gz
+This changelog is too vague to be certain which issues are really about 
+"security" versus which ones are enhancements or feature additions.  So, 
+I'll need some help here.
+
+Here are ones that smell like security issues:
+
+  * Fixed path normalization to better handle backreferences that extend
+    above root directories.  Reported by Sogeti/ESEC R&D.
+
+  * Fixed failure to match internally set TX variables with regex
+    (TX:/.../) syntax.
+
+  * Fixed failure to log full internal TX variable names and populate
+    MATCHED_VAR* vars.
+
+  * Fixed memory leak in v1 cookie parser.  Reported by Sogeti/ESEC R&D.
+
+
+Here are ones that *might* be security issues, but it's unclear:
+
+  * Fixed nolog,auditlog/noauditlog/nolog controls for disruptive actions.
+
+  * Fixed SecUploadFileMode to set the correct mode.
+
+  * Trim whitespace around phrases used with @pmFromFile and allow
+    for both LF and CRLF terminated lines.
+
+  * Allow for more robust parsing for multipart header folding.  Reported
+    by Sogeti/ESEC R&D.
+
+  * Reduced default PCRE match limits reducing impact of REDoS on poorly
+    written regex rules.  Reported by Sogeti/ESEC R&D.
+
+  * Do not escape quotes in macro resolution and only escape NUL in
+    setenv values.
+
+
+Here are ones that smell like "defense in depth" or "fixing non-security 
+bug in security feature" or "addition of new 'signature' type" (thus no 
+CVE):
+
+  * Added SecUploadFileLimit to limit the number of uploaded file parts
+    that will be processed in a multipart POST.  The default is 100.
+
+  * Added PCRE match limits (SecPcreMatchLimit/SecPcreMatchLimitRecursion)
+    to aide in REDoS type attacks.  A rule that goes over the limits will set
+    TX:MSC_PCRE_LIMITS_EXCEEDED.  It is intended that the next major
+    release of ModSecurity (2.6.x) will move these flags to a dedicated
+    collection.
+
+  * Enabled PCRE "studying" by default.  This is now a configure-time
+    option.
+
+  * Now support macro expansion in numeric operators (@eq, @ge, @lt, etc.)
+
+  * Fixed SecAction not working when CONNECT request method is used
+    (MODSEC-110). [Ivan Ristic]
+
+
+- Steve
