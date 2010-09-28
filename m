@@ -1,43 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/30/18
-Message-ID: <1408947388.1643541277925990594.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 30 Jun 2010 15:26:30 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/28/2
+Message-ID: <4CA19CDE.6050706@kernel.sg>
+Date: Tue, 28 Sep 2010 15:44:30 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: HTML Purifier
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request - kernel: pktcdvd ioctl dev_minor missing range check
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-2479
+As Dan Rosenberg explained in the patch commit: The PKT_CTRL_CMD_STATUS 
+device ioctl retrieves a pointer to a pktcdvd_device from the global 
+pkt_devs array.  The index into this array is provided directly by the 
+user and is a signed integer, so the comparison to ensure that it falls 
+within the bounds of this array will fail when provided with a negative 
+index.
 
-Thanks.
+This can be used to read arbitrary kernel memory or cause a crash due to 
+an invalid pointer dereference.  This can be exploited by users with 
+permission to open /dev/pktcdvd/control (on many distributions, this is 
+readable by group "cdrom").
 
+https://bugzilla.redhat.com/show_bug.cgi?id=638085
+http://git.kernel.org/linus/252a52aa4fa22a668f019e55b3aac3ff71ec1c29
+
+This was introduced in 2f8e2dc8 (v2.6.10-rc1).
+
+Thanks, Eugene
 -- 
-    JB
-
-
------ "Raphael Geissert" <geissert@...ian.org> wrote:
-
-> Hi,
-> 
-> HTML Purifier 4.1.1 fixes an IE-specific XSS vulnerability.
-> 
-> Upstream announcement:
-> http://htmlpurifier.org/news/2010/0531-4.1.1-released
-> 
-> Fix:
-> http://repo.or.cz/w/htmlpurifier.git/commit/d3abcb90e30592c619047d878cf9c72b7c5836a3
-> 
-> This one is required for the fix to apply (the change is overwritten
-> by the 
-> fix):
-> http://repo.or.cz/w/htmlpurifier.git/commit/da94d3d6acdf417ac890426eb1fd239ba62b042d
-> 
-> Could a CVE id be assigned?
-> 
-> Thanks in advance.
-> 
-> Regards,
-> -- 
-> Raphael Geissert - Debian Developer
-> www.debian.org - get.debian.net
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
