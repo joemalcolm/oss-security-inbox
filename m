@@ -1,61 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/23/7
-Message-ID: <AANLkTilqU-tsABl89fj7Vm1fkW3S3rsxc0Adyx0zQtiu@mail.gmail.com>
-Date: Wed, 23 Jun 2010 14:01:14 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/28/1
+Message-ID: <4CA1423C.6060800@redhat.com>
+Date: Tue, 28 Sep 2010 09:17:48 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE requests: LibTIFF
+CC: Moritz Muehlenhoff <jmm@...ian.org>
+Subject: Re: CVE requests: POE::Component::IRC, Alien Arena, Babiloo, Typo3, abcm2ps, ModSecurity, Linux kernel
 Content-Type: text/plain; charset=utf-8
 
-In the past week, LibTIFF has released new versions upstream (3.9.3,
-and soon after, 3.9.4) that address a number of potentially
-security-relevant issues, some of which have not been assigned CVE
-identifiers.  The following issues will crash (or worse) any
-application linked against LibTIFF in the trivial case of viewing a
-maliciously crafted image:
+> 7. Linux kernel (local DoS, impact limited to specific hardware)
+> http://git.kernel.org/linus/b525c06cdbd8a3963f0173ccd23f9147d4c384b5
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=565790
 
-1.  Out-of-bounds read in TIFFExtractData() may result in application
-crash (no reference, fixed upstream).  Reported by Dan Rosenberg.
+I emailed this before, please search the archive for subject: 
+"[oss-security] kernel: thinkpad-acpi: lock down video output state access".
 
-2.  Out-of-bounds read in TIFFVGetField() may result in application
-crash (https://bugs.launchpad.net/ubuntu/lucid/+source/tiff/+bug/589145).
- The fix for this issue was combined with the fix for CVE-2010-2065,
-but it appears to be a separate issue.  Reported by Sauli Pahlman.
-
-3.  Memory corruption in TIFFRGBAImageGet() due to buffer overflow
-(https://bugs.launchpad.net/ubuntu/+source/tiff/+bug/591605).
-Reported by Sauli Pahlman.
-
-
-There is another series of issues that each lead to an application
-crash, reported at https://bugzilla.redhat.com/show_bug.cgi?id=583081
-by Nicolae Ghimbovschi.  However, these issues may require more user
-assistance, such as running specific conversion tools to process TIFF
-files, and as such may not need CVE identifiers.  I thought I'd
-include them for completeness:
-
-4.  http://bugzilla.maptools.org/show_bug.cgi?id=2207 ("tif_getimage
-fails when flipping vertically on 64-bit platforms")
-
-5.  http://bugzilla.maptools.org/show_bug.cgi?id=2208 ("Bogus
-ReferenceBlackWhite values can crash libtiff")
-
-6.  http://bugzilla.maptools.org/show_bug.cgi?id=2209 ("Assertion
-failure in OJPEGPostDecode") - this one is an assertion failure and
-not a segfault, so it might not need a CVE.
-
-
-Finally, to avoid confusion, the following more serious issues were
-also fixed and have already received CVE identifiers:
-
-7.  Integer overflows leading to heap overflow in Fax3SetupState().
-Reported by Kevin Finisterre (CVE-2010-1411).
-
-8.  Integer overflow in TIFFFillStrip() leading to heap overflow in
-TIFFReadRawStrip1().  Reported by Sauli Pahlman (CVE-2010-2065).
-
-9.  Stack overflow when processing SubjectDistance EXIF tags allows
-arbitrary code execution.  Reported by Dan Rosenberg (CVE-2010-2067).
-
-Thanks,
-Dan
+Thanks, Eugene
+-- 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
