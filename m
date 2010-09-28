@@ -1,31 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/08/10
-Message-ID: <1270753333.25949.88.camel@severus.strandboge.com>
-Date: Thu, 08 Apr 2010 14:02:13 -0500
-From: Jamie Strandboge <jamie@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/28/7
+Message-ID: <1008984140.598121285704693555.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 28 Sep 2010 16:11:33 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request -- memcached
+Cc: coley <coley@...re.org>
+Subject: Re: CVE requests: POE::Component::IRC, Alien Arena, Babiloo, Typo3, abcm2ps, ModSecurity, Linux kernel
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 2010-04-08 at 11:57 -0500, Jamie Strandboge wrote:
-> People wanting to fix this may want to more thoroughly look at the
-> patch[1]. After a cursory glance at it, I'm not sure it is enough:
-> 1. it uses:
->   if (strcmp(ptr, "get ") && strcmp(ptr, "gets ")) {
-> 
-> Why not use something like (*totally* untested):
->   if (strncmp(ptr, "get ", 5) && strncmp(ptr, "gets ", 5)) {
-> 
-> just in case ptr is not NULL terminated? I haven't checked if this is an
-> actual issue, but it certainly wouldn't hurt. '5' should probably be
-> changed to something more reasonable.
-> 
-
-FYI, looks like upstream decided to use strncmp after all:
-http://github.com/memcached/memcached/commit/d9cd01ede97f4145af9781d448c62a3318952719
+I can assign most of these. Steve, I have two requests below, can MITRE
+take them?
 
 
+----- "Moritz Muehlenhoff" <jmm@...ian.org> wrote:
+
+> Hi,
+> here's a few CVE requests for issues in the Debian Security Tracker
+> without a CVE ID assigned:
+> 
+> 1. POE::Component::IRC
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=581194
+> http://github.com/bingos/poe-component-irc/compare/d2ead04...675f55cd
+
+Use CVE-2010-3438
+
+> 
+> 2. Alien Arena
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=575621
+> http://corent.proboards.com/index.cgi?board=bugreport&action=display&thread=4761
+
+Use CVE-2010-3439
+
+> 
+> 3. Babiloo
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=591995
+
+Use CVE-2010-3440
+
+> 
+> 4. Typo3
+> http://typo3.org/teams/security/security-bulletins/typo3-sa-2010-012/
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=590719
+> http://lists.debian.org/debian-security-announce/2010/msg00144.html
+
+This one is bigger than a breadbox. Steve, can MITRE assign these ones?
+
+> 
+> 5. abcm2ps
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=577014
+> http://moinejf.free.fr/abcm2ps-5.txt
+> http://secunia.com/advisories/39345/
+
+This should probably be more than one, but without more details,
+I can only give it one: CVE-2010-3441
+
+> 
+> 6. ModSecurity
+> There was already a CVE request by Jan Lieskovsky, but it doesn't
+> seem
+> to have led to an ID assignment:
+> http://www.openwall.com/lists/oss-security/2010/02/10/2
+> 
+
+This one is also too big for me to handle properly. Can MITRE take it?
+
+Thanks
 -- 
-Jamie Strandboge             | http://www.canonical.com
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+    JB
