@@ -1,74 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/24/5
-Message-ID: <1213652314.370071290601442480.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 24 Nov 2010 07:24:02 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/29/1
+Message-ID: <i7tufl$5p5$1@dough.gmane.org>
+Date: Tue, 28 Sep 2010 18:42:05 -0500
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: Petr Matousek <pmatouse@...hat.com>, coley@...us.mitre.org
-Subject: Re: CVE request: kernel: L2TP send buffer allocation size overflows
+Subject: RFC: changing the behaviour of ld.so(8) regarding empty items on LD_LIBRARY_PATH
 Content-Type: text/plain; charset=utf-8
 
-I don't understand this comment. Is he saying every send/recv in the kernel
-suffers from this? The below CVE id really only applies to the l2tp
-overflows.
+Hi everyone,
 
-Thanks.
+I have talked to one of the eglibc Debian maintainers about making ld.so 
+ignore empty items on LD_LIBRARY_PATH instead of treating them as '.', and 
+he doesn't have any objection.
 
+Although this is a behaviour change, I do not think there is any real case 
+where an empty item was added in purpose (I even have yet to see one that 
+uses '.'.)
+We are therefore considering making this change starting with our next 
+stable release.
+
+What do the others think about it? do you think you would follow that change 
+too?
+
+This change has been proposed by some people multiple times along the years, 
+yet nothing has changed (not even properly discussed, I believe.) Has this 
+change ever been proposed to glibc upstream? (maybe the RedHat people can 
+help with this.)
+
+
+There is a similar issue with $PATH, but we have no plans for it so far 
+(execvp(8) claims ":/bin:/usr/bin" is the default if $PATH is unset, in some 
+setups.)
+
+Regards,
 -- 
-    JB
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
 
------ "Thomas Biege" <thomas@...e.de> wrote:
 
-> A comment from our kernel maintainer Jeff:
-> "That applies to overflows for any send/recv not just the l2tp ones. I
-> can use
-> that CVE if there isn't another one, though."
-> 
-> Is this known? Should we use only on CVE-ID here?
-> 
-> 
-> Bye
-> Thomas
-> 
-> 
-> Am Mittwoch 10 November 2010 20:44:11 schrieb Josh Bressers:
-> > Please use CVE-2010-4160.
-> > 
-> > Thanks.
-> > 
-> > > "Both PPPoL2TP (in net/l2tp/l2tp_ppp.c, pppol2tp_sendmsg()) and
-> > > IPoL2TP (in
-> > > net/l2tp/l2tp_ip.c, l2tp_ip_sendmsg()) make calls to
-> sock_wmalloc()
-> > > that
-> > > perform arithmetic on the size argument without any maximum bound.
-> As
-> > > a result,
-> > > by issuing sendto() calls with very large sizes, this allocation
-> size
-> > > will wrap
-> > > and result in a small buffer being allocated, leading to ugliness
-> > > immediately
-> > > after (probably kernel panics due to bad sk_buff tail position,
-> but
-> > > possibly
-> > > kernel heap corruption)."
-> > >
-> > > Credit: Dan Rosenberg
-> > >
-> > > Reference:
-> > > http://www.spinics.net/lists/netdev/msg145673.html
-> > > https://bugzilla.redhat.com/show_bug.cgi?id=651892
-> > >
-> > > Thanks,
-> > > --
-> > > Petr Matousek / Red Hat Security Response Team
-> > 
-> 
-> -- 
->  Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support &
-> Auditing
->  SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
-> --
->   Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
->                             -- Marie von Ebner-Eschenbach
