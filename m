@@ -1,20 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/22/17
-Message-ID: <Pine.GSO.4.64.1011221202130.14862@faron.mitre.org>
-Date: Mon, 22 Nov 2010 12:04:49 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/28/3
+Message-Id: <201009281117.56424.ludwig.nussel@suse.de>
+Date: Tue, 28 Sep 2010 11:17:56 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-cc: gerald@...eshark.org
-Subject: CVE assignments for Wireshark LDSS / ZCL issues
+Subject: Re: CVE request: clamav < 0.96.3 pdf bounds checking
 Content-Type: text/plain; charset=utf-8
 
+Hanno Böck wrote:
+> As always, clamav doesn't mention security issues in it's release notes, but 
+> the changelog gives some insight.
+> 
+> The bundled bzip2 code is affected by CVE-2010-0405 which is no surprise.
+> 
+> This however sounds more interesting:
+> Mon Sep 20 14:50:34 EEST 2010 (edwin)
+> -------------------------------------
+>  * libclamav/pdf.c: Add missing boundscheck to pdf code (bb #2226)
+> 
+> The referenced bug report is not public, but it sounds like this deserves a 
+> CVE.
 
-I've assigned the following for the recently-disclosed Wireshark issues.
+Must be this commit:
+http://git.clamav.net/gitweb?p=clamav-devel.git;a=commitdiff;h=dc5143b4669ae39c79c9af50d569c28c798f33da
 
-CVE-2010-4300 - LDSS dissector overflow (wnpa-sec-2010-14.html, 
-wnpa-sec-2010-13.html)
+If bytesleft2 is negative the next memchr would likely cause a
+crash. Previous commits in that file also improve bounds checks.
+cu
+Ludwig
 
-CVE-2010-4301 - ZCL dissector infinite loop (wnpa-sec-2010-14.html)
-
-
-- Steve
+-- 
+ (o_   Ludwig Nussel
+ //\   
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
