@@ -1,65 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/20/2
-Message-ID: <20100520042756.GA18889@openwall.com>
-Date: Thu, 20 May 2010 08:27:56 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/28/6
+Message-ID: <1862982385.592341285702955007.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 28 Sep 2010 15:42:35 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: [oCERT-2010-001] multiple http client unexpected download filename vulnerability
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: pktcdvd ioctl dev_minor missing range check
 Content-Type: text/plain; charset=utf-8
 
-On Wed, May 19, 2010 at 03:28:18PM +0200, Ludwig Nussel wrote:
-> Serving dot files is a neat trick indeed, I've overlooked that
-> paragraph in the ocert advisory. Nevertheless I'm not convinced it's
-> worth changing wget's default behavior in the proposed way. So I can
-> understand upstream here.
+Please use CVE-2010-3437
 
-As far as I'm aware, at the time of the initial oCERT notification, the
-wget upstream was represented by Micah Cowan, who was about to resign.
-And he did:
+Thanks.
 
-http://lists.gnu.org/archive/html/bug-wget/2010-04/msg00027.html
+-- 
+    JB
 
-oCERT has re-notified the new upstream shortly before publishing the
-advisory (we decided this was not enough of a reason to introduce a
-further pre-public-disclosure delay).  I don't think the new wget
-upstream has made a determination on this issue yet; at least I'm not
-aware of that.
 
-...
+----- "Eugene Teo" <eugeneteo@...nel.sg> wrote:
 
-For those producing back-ports for lftp, the approach to take is to
-download 4.0.5 and 4.0.6 from:
-
-http://ftp.yars.free.net/pub/source/lftp/old/
-
-Then diff them with:
-
-diff -purx configure -x po -x 'Makefile*' -x '*.in' -x '*.in.h' -x m4 -x lib -x build-aux -x '*.m4' lftp-4.0.5 lftp-4.0.6
-
-This is a small and relevant diff, which should be easy to manually turn
-into a patch for just the relevant changes.  The NEWS file mentions these:
-
-* use O_EXCL flag when xfer:clobber is off.
-* better validation of server-provided file name.
-* new setting xfer:auto-rename (off by default).
-
-All three of the above are relevant, especially the last one.  A test
-case is downloading WordPress with:
-
-lftpget http://wordpress.org/latest.tar.gz
-
-Vulnerable lftp will silently produce a file named like
-wordpress-2.9.2.tar.gz instead of latest.tar.gz.  Fixed lftp will
-produce latest.tar.gz unless the user explicitly sets xfer:auto-rename.
-
-For Owl, we simply updated to lftp 4.0.7.  Our -stable branch uses a
-too-old lftp (not yet vulnerable), so we did not require a back-port.
-
-When testing tools other than lftp, please note that the WordPress test
-case tests for one of two attack-usable HTTP headers only
-(Content-Disposition but not Location).  We did test a handful of other
-tools, but only three - lftp, lwp-download, wget - were found vulnerable.
-curl, ELinks were found not vulnerable.  Lynx was inconclusive in Hank's
-testing (and we did not investigate further).
-
-Alexander
+> As Dan Rosenberg explained in the patch commit: The
+> PKT_CTRL_CMD_STATUS 
+> device ioctl retrieves a pointer to a pktcdvd_device from the global 
+> pkt_devs array.  The index into this array is provided directly by the
+> 
+> user and is a signed integer, so the comparison to ensure that it
+> falls 
+> within the bounds of this array will fail when provided with a
+> negative 
+> index.
+> 
+> This can be used to read arbitrary kernel memory or cause a crash due
+> to 
+> an invalid pointer dereference.  This can be exploited by users with 
+> permission to open /dev/pktcdvd/control (on many distributions, this
+> is 
+> readable by group "cdrom").
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=638085
+> http://git.kernel.org/linus/252a52aa4fa22a668f019e55b3aac3ff71ec1c29
+> 
+> This was introduced in 2f8e2dc8 (v2.6.10-rc1).
+> 
+> Thanks, Eugene
+> -- 
+> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i);
+> }
