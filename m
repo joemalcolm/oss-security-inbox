@@ -1,27 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/04/5
-Message-ID: <20100204122841.GA19852@ngolde.de>
-Date: Thu, 4 Feb 2010 13:28:41 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/28/5
+Message-Id: <201009281616.18313.ludwig.nussel@suse.de>
+Date: Tue, 28 Sep 2010 16:16:18 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: matthias.andree@....de
-Subject: Re: CVE request - fetchmail 6.3.11-.13 heap overflow in verbose X.509 cert display (only printable chars)
+Subject: Re: CVE request: clamav < 0.96.3 pdf bounds checking
 Content-Type: text/plain; charset=utf-8
 
-Hey,
-* Matthias Andree <matthias.andree@....de> [2010-02-04 11:04]:
-[...] 
-> This might be exploitable to inject code if
-> - fetchmail is run in verbose mode
-> AND
-> - the host running fetchmail considers char unsigned
+Josh Bressers wrote:
+> Use CVE-2010-3434
+> 
+> If someone has more information, or an upstream contact it would be much appreciated.
 
-Imho this needs to say signed, not unsigned.
+The bug was made public now.
 
-Cheers
-Nico
+cu
+Ludwig
+
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+ (o_   Ludwig Nussel
+ //\   
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
