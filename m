@@ -1,29 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/30/19
-Message-ID: <1736993284.1644101277926070301.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 30 Jun 2010 15:27:50 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/29/3
+Message-ID: <20100929070115.GB22643@suse.de>
+Date: Wed, 29 Sep 2010 09:01:15 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- PHP strrchr() Interruption Information Leak  Vulnerability
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: prevent heap corruption in snd_ctl_new()
 Content-Type: text/plain; charset=utf-8
 
-
------ "Péter Veres" <moltesalt@...il.com> wrote:
-
-> Hi Steve,
+On Wed, Sep 29, 2010 at 02:49:52PM +0800, Eugene Teo wrote:
+> Reported by Dan Rosenberg. The snd_ctl_new() function in 
+> sound/core/control.c allocates space for a snd_kcontrol struct by 
+> performing arithmetic operations on a user-provided size without 
+> checking for integer overflow.  If a user provides a large enough size, 
+> an overflow will occur, the allocated chunk will be too small, and a 
+> second user-influenced value will be written repeatedly past the bounds 
+> of this chunk. This code is reachable by unprivileged users who have 
+> permission to open a /dev/snd/controlC* device (on many distros, this is 
+> group "audio") via the SNDRV_CTL_IOCTL_ELEM_ADD and 
+> SNDRV_CTL_IOCTL_ELEM_REPLACE ioctls.
 > 
-> PHP’s strrchr() function can be interrupted and used for information
-> leakage due to call time pass by reference.
-> 
-> Could you allocate a CVE id for this issue?
-> 
+> Upstream commit:
+> http://git.kernel.org/linus/5591bf07225523600450edd9e6ad258bb877b779
 
-Do you have some sort of reference for this? I'm not finding anything in the
-usual places.
-
-I'll assign an ID once I have more information.
-
-Thanks.
-
--- 
-    JB
+Doesnt seem to be valid. There is also no change in sounds/core/control.c
+since April in current mainline git.
+ 
+Ciao, Marcus
