@@ -1,32 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/14/6
-Message-ID: <1456764343.134731276541481613.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 14 Jun 2010 14:51:21 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/29/4
+Message-ID: <4CA2E6E5.8010200@redhat.com>
+Date: Wed, 29 Sep 2010 15:12:37 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: punbb before 1.3.4 xss
+CC: Marcus Meissner <meissner@...e.de>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: prevent heap corruption in snd_ctl_new()
 Content-Type: text/plain; charset=utf-8
 
-Steve,
+On 09/29/2010 03:01 PM, Marcus Meissner wrote:
+> On Wed, Sep 29, 2010 at 02:49:52PM +0800, Eugene Teo wrote:
+>> Reported by Dan Rosenberg. The snd_ctl_new() function in
+>> sound/core/control.c allocates space for a snd_kcontrol struct by
+>> performing arithmetic operations on a user-provided size without
+>> checking for integer overflow.  If a user provides a large enough size,
+>> an overflow will occur, the allocated chunk will be too small, and a
+>> second user-influenced value will be written repeatedly past the bounds
+>> of this chunk. This code is reachable by unprivileged users who have
+>> permission to open a /dev/snd/controlC* device (on many distros, this is
+>> group "audio") via the SNDRV_CTL_IOCTL_ELEM_ADD and
+>> SNDRV_CTL_IOCTL_ELEM_REPLACE ioctls.
+>>
+>> Upstream commit:
+>> http://git.kernel.org/linus/5591bf07225523600450edd9e6ad258bb877b779
+>
+> Doesnt seem to be valid. There is also no change in sounds/core/control.c
+> since April in current mainline git.
 
-Can you handle this one (as I have no 2008 IDs).
+Please use this link.
 
-Thanks.
+http://git.kernel.org/?p=linux/kernel/git/tiwai/sound-2.6.git;a=commitdiff;h=5591bf07225523600450edd9e6ad258bb877b779
 
+Eugene
 -- 
-    JB
-
-
------ "Hanno Böck" <hanno@...eck.de> wrote:
-
-> A rather old one, but still, please assign a cve:
-> http://punbb.informer.com/forums/topic/21669/punbb-134/
-> 
-> (a CVE-2008-xxxx one)
-> 
-> -- 
-> Hanno Böck		Blog:		http://www.hboeck.de/
-> GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-> 
-> http://schokokeks.org - professional webhosting
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
