@@ -1,31 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/04/1
-Message-ID: <AANLkTik8N8P8uDqPZHICcxvtN08aVXOXSuCNi18UqOI3@mail.gmail.com>
-Date: Sat, 3 Jul 2010 23:18:07 -0600
-From: Kurt Seifried <kurt@...fried.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/29/10
+Message-ID: <1827547617.733251285787191204.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 29 Sep 2010 15:06:31 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request for browser IFRAME/file download DoS
+Cc: coley <coley@...re.org>
+Subject: Re: CVE requests: Poppler, Quassel, Pyfribidi, Overkill, DocUtils, FireGPG, Wireshark
 Content-Type: text/plain; charset=utf-8
 
-Denial of service in various browsers:
+Steve,
 
-http://seclists.org/fulldisclosure/2010/Jul/69
+There are a few requests for MITRE below (2008 and 2009 IDs needed).
 
-Basically it opens a lot of iframes that point to a file download/run
-location, you get endlessly spammed with run/save/cancel, in the case
-of affected web browsers they become non-responsive and you need to
-kill them using task manager/etc.
+----- "Moritz Muehlenhoff" <jmm@...ian.org> wrote:
+> 
+> Hi,
+> here's a few more CVE requests for issues in the Debian Security Tracker
+> without a CVE ID assigned:
+> 
+> 1. Poppler (might also affect xpdf and kpdf due to code heritage, not
+> determined yet)
+> http://secunia.com/advisories/41596/
+> -> Links to poppler git commits are given in the Secunia link
 
-Affected
-Firefox 3.6.4
-IE 8
-Safari 5.0 (7533.16)
+This needs to be properly understood. I'm not assigning IDs until someone
+does a proper triage.
 
-Not affected:
-Chrome 5/6
-Opera 10
+> 
+> 2. Quassel
+> http://quassel-irc.org/node/115
+
+I presume this is a DoS (the details are pretty slim)
+CVE-2010-3443
+
+> 
+> 3. Pyfribidi
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=570068
+
+This looks to be a buffer overflow.
+CVE-2010-3444
+
+> 
+> 4. Overkill (this should be a CVE-2009 ID)
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=549310
+
+I'm out of 2009 IDs. Can MITRE take this one.
+
+> 
+> 5. Emacs mode for reStructuredText (from DocUtils) (this should be a
+> CVE-2009 ID)
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=560755
+
+I'm out of 2009 IDs. Can MITRE take this one.
+
+> 
+> 6. FireGPG (this should be a CVE-2008 ID)
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=514386
+> http://securityvulns.com/Udocument757.html
+
+I have no 2008 IDs. This one will have to wait for MITRE.
+
+> 
+> 7. Wireshark BER dissector
+> http://archives.neohapsis.com/archives/bugtraq/2010-09/0088.html
+> 
+
+This one looks like a stack overflow, the advisory isn't very clear, but
+claims there are two possible outcomes. We can always split later if
+needed.
+CVE-2010-3445
+
+Thanks
 
 -- 
-Kurt Seifried
-kurt@...fried.org
-tel: 1-703-879-3176
+    JB
