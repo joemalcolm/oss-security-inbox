@@ -1,51 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/30/2
-Message-Id: <20100830005648.431B7400D9@magilla.sf.frob.com>
-Date: Sun, 29 Aug 2010 17:56:48 -0700 (PDT)
-From: Roland McGrath <roland@...hat.com>
-To: Kees Cook <kees.cook@...onical.com>
-Cc: linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Al Viro <viro@...iv.linux.org.uk>, Andrew Morton <akpm@...ux-foundation.org>, Oleg Nesterov <oleg@...hat.com>, KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org
-Subject: Re: [PATCH] exec argument expansion can inappropriately trigger OOM-killer
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/29/7
+Message-ID: <20100929161912.GA13207@inutil.org>
+Date: Wed, 29 Sep 2010 18:19:12 +0200
+From: Moritz Muehlenhoff <jmm@...til.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE requests: POE::Component::IRC, Alien Arena, Babiloo, Typo3, abcm2ps, ModSecurity, Linux kernel
 Content-Type: text/plain; charset=utf-8
 
-IMHO unlimited should mean unlimited.  So, on that score, I'd leave this
-constraint out and just say whatever deficiencies in the OOM killer (or in
-whatever should make a manifestly too-large allocation get ENOMEM) should
-just be fixed separately.
+Hi Eugene,
 
-But that aside, I'll just consider the intent stated in the comment in
-get_arg_page:
-		 * Limit to 1/4-th the stack size for the argv+env strings.
-		 * This ensures that:
-		 *  - the remaining binfmt code will not run out of stack space,
-		 *  - the program will have a reasonable amount of stack left
-		 *    to work from.
-To effect "1/4th the stack size", a cap at TASK_SIZE/4 does make some sense,
-since TASK_SIZE is less than RLIM_INFINITY even in the pure 32-bit world,
-and that is the true theoretical limit on stack size.
+On Tue, Sep 28, 2010 at 09:17:48AM +0800, Eugene Teo wrote:
+>> 7. Linux kernel (local DoS, impact limited to specific hardware)
+>> http://git.kernel.org/linus/b525c06cdbd8a3963f0173ccd23f9147d4c384b5
+>> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=565790
+>
+> I emailed this before, please search the archive for subject:  
+> "[oss-security] kernel: thinkpad-acpi: lock down video output state 
+> access".
 
-The trouble here, both for that stated intent, and for this "exploit",
-is which TASK_SIZE that is on a biarch machine.  In fact, it's the
-TASK_SIZE of the process that called execve.  (get_arg_page is called
-from copy_strings, from do_execve before search_binary_handler--i.e.,
-before anything has looked at the file to decide whether it's going to
-be a 32-bit or 64-bit task on exec.)  If it's a 32-bit process exec'ing
-a 64-bit program, it's the 32-bit TASK_SIZE (perhaps as little as 3GB).
-So that's a limit of 0.75GB on a 64-bit program, which might actually do
-just fine with 2 or 3GB.  If it's a 64-bit process exec'ing a 32-bit
-program, it's the 64-bit TASK_SIZE (128TB on x86-64).  So that's a limit
-of 32TB, which is perhaps not that helpfully less than 2PB minus 1 byte
-(RLIM_INFINITY/4) as far as preventing any over-allocation DoS in practice.
+Are you suggesting that there was already an assignment (I can't
+find one) or that it should not receive one due to limited impact?
 
-So IMHO your change does marginal harm in some cases (32 execs 64)
-and makes no appreciable difference to anyone interested in malice
-(who can just dodge by exploiting it via 64 execs 64 or 64 execs 32).
-
-If you want to constrain it this way, it's probably simpler just to use
-a smaller hard limit for RLIM_STACK at boot time (and hence system-wide).
-But it sounds like all you really need is to fix the OOM/allocation
-behavior for huge stack allocations.
-
-
-Thanks,
-Roland
+Cheers,
+        Moritz
