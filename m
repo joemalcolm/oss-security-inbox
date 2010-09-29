@@ -1,26 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/26/2
-Message-ID: <20100426181408.18181340@redhat.com>
-Date: Mon, 26 Apr 2010 18:14:08 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: OSS Security <oss-security@...ts.openwall.com>
-Cc: ppisar@...hat.com
-Subject: WordNet wn format string issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/29/11
+Message-Id: <1285787650-sup-6868@stingray>
+Date: Wed, 29 Sep 2010 21:20:10 +0200
+From: Alex Legler <a3li@...too.org>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE request: Horde Gollem <1.1.2 XSS in view.php
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+Hi,
 
-Petr Pisar discovered a format string bug in wordnet while doing review
-of wordnet packages in Fedora / RHEL:
+while there seem to be CVE IDs for most of the issues fixed in the
+latest Horde packages, I cannot find one for this issue:
 
-  https://bugzilla.redhat.com/show_bug.cgi?id=585206
-  https://bugs.gentoo.org/show_bug.cgi?id=317265
+>From http://bugs.horde.org/ticket/9191:
+"http://localhost/horde/gollem/view.php?actionID=view_file&type=txt&file=<script>alert("XSS")</script>&dir=../baddir/&driver=file
+Vulnerable file : view.php (Line 32 - 46)"
 
-We're not treating this as security issue (no good attack vector,
-fortify source mitigation) and fixing it as a regular bug.  Though as
-the issue can be triggered in a similar way as CVE-2008-2149, and some
-vendors fixed that one as security, bringing this to attention if
-anyone wants to use a different approach.
+Fixed in git (and released in 1.1.2):
+http://lists.horde.org/archives/commits/2010-August/004747.html
+http://lists.horde.org/archives/announce/2010/000565.html
 
+Thanks,
+Alex
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Alex Legler <a3li@...too.org>
+Gentoo Security/Ruby
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
