@@ -1,51 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/12/6
-Message-ID: <20100312093452.GI22282@soda.linbit>
-Date: Fri, 12 Mar 2010 10:34:52 +0100
-From: Lars Ellenberg <lars.ellenberg@...bit.com>
-To: dann frazier <dannf@...nf.org>
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com, drbd-dev@...ts.linbit.com, drbd-user@...ts.linbit.com
-Subject: Re: [Drbd-dev] CVE request: kernel: connector security bypass
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/29/9
+Message-ID: <496727109.726411285784536703.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 29 Sep 2010 14:22:16 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Marcus Meissner <meissner@...e.de>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: prevent heap corruption in snd_ctl_new()
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Mar 11, 2010 at 03:18:08PM -0700, dann frazier wrote:
-> On Mon, Nov 02, 2009 at 11:37:21AM +0000, Mark J Cox wrote:
-> > On Mon, 2 Nov 2009, Eugene Teo wrote:
-> > 
-> > >1/ uvesafb/connector: Disallow unprivileged users to send netlink packets
-> > >upstream commit: cc44578b5a508889beb8ae3ccd4d2bbdf17bc86c
-> > >introduced in v2.6.24-rc1; fixed in v2.6.32-rc3
-> > >
-> > >2/ pohmelfs/connector: Disallow unprivileged users to configure pohmelfs
-> > >upstream commit: 98a5783af02f4c9b87b676d7bbda6258045cfc76
-> > >(staging/experimental)
-> > >
-> > >3/ dst/connector: Disallow unprivileged users to configure dst
-> > >upstream commit: 5788c56891cfb310e419c4f9ae20427851797431
-> > >(staging/experimental)
-> > >
-> > >4/ dm/connector: Only process connector packages from privileged processes
-> > >upstream commit: 24836479a126e02be691e073c2b6cad7e7ab836a
-> > >introduced in v2.6.31-rc1; fixed in v2.6.32-rc3
-> > 
-> > >References:
-> > >http://secunia.com/advisories/37113/
-> > >http://xorl.wordpress.com/2009/10/31/linux-kernel-multiple-capabilities-missing-checks/
-> 
-> Debian provides an out-of-tree drbd module (drbd8), and it appears to
-> be affected by this issue as well. I assume we need to allocate an
-> additional CVE ID for it?
+Please use CVE-2010-3442
 
-Maybe just go to current upstream drbd 8.3.7?
-
-> Here's a link to the upstream fix:
-> http://git.drbd.org/?p=drbd-8.3.git;a=commitdiff;h=71915b0d267392c77fe0ae2309535333026cef66
-> 
-> The in-tree version that got merged for 2.6.33 looks fine.
+Thanks.
 
 -- 
-: Lars Ellenberg
-: LINBIT | Your Way to High Availability
-: DRBD/HA support and consulting http://www.linbit.com
+    JB
 
-DRBD® and LINBIT® are registered trademarks of LINBIT, Austria.
+
+----- "Eugene Teo" <eugene@...hat.com> wrote:
+
+> On 09/29/2010 03:01 PM, Marcus Meissner wrote:
+> > On Wed, Sep 29, 2010 at 02:49:52PM +0800, Eugene Teo wrote:
+> >> Reported by Dan Rosenberg. The snd_ctl_new() function in
+> >> sound/core/control.c allocates space for a snd_kcontrol struct by
+> >> performing arithmetic operations on a user-provided size without
+> >> checking for integer overflow.  If a user provides a large enough
+> size,
+> >> an overflow will occur, the allocated chunk will be too small, and
+> a
+> >> second user-influenced value will be written repeatedly past the
+> bounds
+> >> of this chunk. This code is reachable by unprivileged users who
+> have
+> >> permission to open a /dev/snd/controlC* device (on many distros,
+> this is
+> >> group "audio") via the SNDRV_CTL_IOCTL_ELEM_ADD and
+> >> SNDRV_CTL_IOCTL_ELEM_REPLACE ioctls.
+> >>
+> >> Upstream commit:
+> >>
+> http://git.kernel.org/linus/5591bf07225523600450edd9e6ad258bb877b779
+> >
+> > Doesnt seem to be valid. There is also no change in
+> sounds/core/control.c
+> > since April in current mainline git.
+> 
+> Please use this link.
+> 
+> http://git.kernel.org/?p=linux/kernel/git/tiwai/sound-2.6.git;a=commitdiff;h=5591bf07225523600450edd9e6ad258bb877b779
+> 
+> Eugene
+> -- 
+> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i);
+> }
