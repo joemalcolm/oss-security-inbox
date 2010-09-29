@@ -1,53 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/26/6
-Message-ID: <390300551.388131274899534089.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 26 May 2010 14:45:34 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/29/8
+Message-ID: <20100929175030.GA3560@galadriel.inutil.org>
+Date: Wed, 29 Sep 2010 19:50:30 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - kernel: nfsd: fix vm overcommit crash
+Subject: CVE requests: Poppler, Quassel, Pyfribidi, Overkill, DocUtils, FireGPG, Wireshark
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-1643 for this.
+Hi,
+here's a few more CVE requests for issues in the Debian Security Tracker
+without a CVE ID assigned:
 
-Thanks.
+1. Poppler (might also affect xpdf and kpdf due to code heritage, not determined yet)
+http://secunia.com/advisories/41596/
+-> Links to poppler git commits are given in the Secunia link
 
--- 
-    JB
+2. Quassel
+http://quassel-irc.org/node/115
 
------ "Eugene Teo" <eugeneteo@...nel.sg> wrote:
+3. Pyfribidi
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=570068
 
-> "knfsd crashes if you are using it to export shmemfs objects and run 
-> strict overcommit. In this situation the current->mm based modifier to
-> 
-> the overcommit goes through a NULL pointer.
-> 
-> We could simply check for NULL and skip the modifier but we've caught
-> 
-> other real bugs in the past from mm being NULL here - cases where we
-> did 
-> need a valid mm set up (eg the exec bug in 2005).
-> 
-> To preserve the checks and get the logic we want shuffle the checking
-> 
-> around and add a new helper to the vm_ security wrappers
-> 
-> Also fix a current->mm reference in nommu that should use the passed
-> mm"
-> 
-> Upstream commit:
-> nfsd: fix vm overcommit crash
-> http://git.kernel.org/linus/731572d39fcd3498702eda4600db4c43d51e0b26
-> 
-> Reference:
-> [PATCH] knfsd: add nfs-export support to tmpfs
-> http://git.kernel.org/linus/91828a405ae454a9503c41a7744f6ff877a80714
-> https://bugzilla.redhat.com/show_bug.cgi?id=595970
-> 
-> Backtrace (-rt kernel):
-> https://bugzilla.redhat.com/show_bug.cgi?id=595970#c1
-> 
-> Thanks, Eugene
-> -- 
-> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i);
-> }
+4. Overkill (this should be a CVE-2009 ID)
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=549310
+
+5. Emacs mode for reStructuredText (from DocUtils) (this should be a CVE-2009 ID)
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=560755
+
+6. FireGPG (this should be a CVE-2008 ID)
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=514386
+http://securityvulns.com/Udocument757.html
+
+7. Wireshark BER dissector
+http://archives.neohapsis.com/archives/bugtraq/2010-09/0088.html
+
+Cheers,
+        Moritz
