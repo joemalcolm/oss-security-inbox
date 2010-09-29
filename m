@@ -1,37 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/21/3
-Message-ID: <20100121104600.0ef09f3b@tanana.suse.de>
-Date: Thu, 21 Jan 2010 10:46:00 +0100
-From: Ludwig Nussel <ludwig.nussel@...e.de>
-To: oss-security@...ts.openwall.com, Jerome Glisse <jglisse@...hat.com>
-Subject: Re: CVE request - kernel: drm/radeon: r6xx/r7xx possible security issue, system ram access
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/29/5
+Message-Id: <201009290708.13843.timb@nth-dimension.org.uk>
+Date: Wed, 29 Sep 2010 07:08:10 +0100
+From: Tim Brown <timb@...-dimension.org.uk>
+To: oss-security@...ts.openwall.com
+Cc: Raphael Geissert <geissert@...ian.org>
+Subject: Re: RFC: changing the behaviour of ld.so(8) regarding empty items on LD_LIBRARY_PATH
 Content-Type: text/plain; charset=utf-8
 
-Eugene Teo wrote:
-> On 01/21/2010 04:44 PM, Eugene Teo wrote:
-> > Quoting from the patch description:
-> > "This patch workaround a possible security issue which can allow user to
-> > abuse drm on r6xx/r7xx hw to access any system ram memory. This patch
-> > doesn't break userspace, it detect "valid" old use of CB_COLOR[0-7]_FRAG
-> [...]
-> > The attack is theoretical. To exploit this you need access to the drm
-> > device file which is usually set to 666 to allow users to have 3D
-> > acceleration.
+On Wednesday 29 September 2010 00:42:05 Raphael Geissert wrote:
+> Hi everyone,
 > 
-> Sorry, correction, you need to be root to open the drm device file. 
+> I have talked to one of the eglibc Debian maintainers about making ld.so
+> ignore empty items on LD_LIBRARY_PATH instead of treating them as '.', and
+> he doesn't have any objection.
+> 
+> Although this is a behaviour change, I do not think there is any real case
+> where an empty item was added in purpose (I even have yet to see one that
+> uses '.'.)
+> We are therefore considering making this change starting with our next
+> stable release.
+> 
+> What do the others think about it? do you think you would follow that
+> change too?
+> 
+> This change has been proposed by some people multiple times along the
+> years, yet nothing has changed (not even properly discussed, I believe.)
+> Has this change ever been proposed to glibc upstream? (maybe the RedHat
+> people can help with this.)
+> 
+> 
+> There is a similar issue with $PATH, but we have no plans for it so far
+> (execvp(8) claims ":/bin:/usr/bin" is the default if $PATH is unset, in
+> some setups.)
 
-You lost me. Do you mean the driver itself checks for CAP_SYS_ADMIN for this
-particular operation? It wouldn't make much sense to set the device to 666 or
-have udev put ACLs on it otherwise.
+You have my vote, I proposed the very same on oss-security a couple of weeks 
+back (http://www.openwall.com/lists/oss-security/2010/08/29/4).  I'm actually 
+working on a paper about exploiting the linker at the moment (seems many 
+people don't fully understand it), I'll be more than happy to share it when 
+it's complete.
 
-$ grep drm /lib/udev/rules.d/70-acl.rules 
-SUBSYSTEM=="drm", KERNEL=="card*", ENV{ACL_MANAGE}="1"
-
-cu
-Ludwig
-
+Tim
 -- 
- (o_   Ludwig Nussel
- //\   
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+Tim Brown
+<mailto:timb@...-dimension.org.uk>
+<http://www.nth-dimension.org.uk/>
+
+Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
