@@ -1,27 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/26/1
-Message-ID: <fuQd1DJF/QNZzkPoxZfgjX/uB3I@QsmfhJNucgI88DfvPJdT1/nyboE>
-Date: Sun, 26 Dec 2010 14:31:57 +0300
-From: Eygene Ryabinkin <rea-sec@...elabs.ru>
-To: oss-security@...ts.openwall.com
-Cc: kalle@....net, felipe@....net
-Subject: CVE-2010-2094: PECL's phar code is vulnerable too
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/30/3
+Message-ID: <20100930033009.GA32199@kroah.com>
+Date: Wed, 29 Sep 2010 20:30:09 -0700
+From: Greg KH <greg@...ah.com>
+To: Joel Becker <Joel.Becker@...cle.com>, oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Small exposure in ocfs2 fast symlinks.
 Content-Type: text/plain; charset=utf-8
 
-Good day.
+On Wed, Sep 29, 2010 at 07:04:07PM -0700, Joel Becker wrote:
+> Hey Everyone,
+> 	We just discovered that ocfs2 could walk off the end of fast
+> symlinks -- that is, symlinks that are stored directly in the inode
+> block.  ocfs2 terminates these with NUL characters, but a disk
+> corruption or an attacker with direct access to the ocfs2 disk could
+> overwrite the NUL.  Following the symlink via the filesystem would walk
+> off the end of the in-memory block buffer.  We're not sure how
+> exploitable this is, but I figured I'd provide a heads-up.  The fix is
+> in ocfs2's git tree and will be sent upstream tonight.  Erratas with the
+> fix are being built.
 
-It turns out that the PECL's phar extension is vulnerable to the
-string format vulnerabilities announced in MOPS advisories:
-  MOPS-2010-024: http://svn.php.net/viewvc/pecl/phar/trunk/stream.c?revision=286339&view=markup#l473
-  MOPS-2010-025: http://svn.php.net/viewvc/pecl/phar/trunk/dirstream.c?revision=284729&view=markup#l363
-  MOPS-2010-026: http://svn.php.net/viewvc/pecl/phar/trunk/stream.c?revision=286339&view=markup#l764
-  MOPS-2010-027: http://svn.php.net/viewvc/pecl/phar/trunk/stream.c?revision=286339&view=markup#l120,
-    http://svn.php.net/viewvc/pecl/phar/trunk/stream.c?revision=286339&view=markup#l131,
-    http://svn.php.net/viewvc/pecl/phar/trunk/stream.c?revision=286339&view=markup#l143
-  MOPS-2010-028: http://svn.php.net/viewvc/pecl/phar/trunk/stream.c?revision=286339&view=markup#l195
+Care to send the git commit id to the stable@...nel.org tree when it
+hits Linus's tree so it gets backported there?
 
-I think that the entry should be extended.  Don't know if PECL
-code is going to be fixed.  CC'ing PHP developers who were last
-to modify PECL's phar code.
--- 
-Eygene
+thanks,
+
+greg k-h
