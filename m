@@ -1,32 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/16/12
-Message-Id: <20100916155413.3BC0.A69D9226@jp.fujitsu.com>
-Date: Thu, 16 Sep 2010 15:57:16 +0900 (JST)
-From: KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>
-To: David Rientjes <rientjes@...gle.com>
-Cc: kosaki.motohiro@...fujitsu.com, Linus Torvalds <torvalds@...ux-foundation.org>, Andrew Morton <akpm@...ux-foundation.org>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Kees Cook <kees.cook@...onical.com>, Al Viro <viro@...iv.linux.org.uk>, Oleg Nesterov <oleg@...hat.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, pageexec@...email.hu, Brad Spengler <spender@...ecurity.net>, Eugene Teo <eugene@...hat.com>, KAMEZAWA Hiroyuki <kamezawa.hiroyu@...fujitsu.com>, linux-mm <linux-mm@...ck.org>
-Subject: Re: [PATCH 1/4] oom: remove totalpage normalization from oom_badness()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/30/7
+Message-ID: <20100930211356.GA2592@galadriel.inutil.org>
+Date: Thu, 30 Sep 2010 23:13:56 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: Horde Gollem <1.1.2 XSS in view.php
 Content-Type: text/plain; charset=utf-8
 
-> On Thu, 16 Sep 2010, KOSAKI Motohiro wrote:
-> 
-> > Current oom_score_adj is completely broken because It is strongly bound
-> > google usecase and ignore other all.
-> > 
-> 
-> We've talked about this issue three times already.  The last two times 
-> you've sent a revert patch, you failed to followup on the threads:
-> 
-> 	http://marc.info/?t=128272938200002
-> 	http://marc.info/?t=128324705200002
-> 
-> And now you've gone above Andrew, who is the maintainer of this code, and 
-> straight to Linus.  Between that and your failure to respond to my answers 
-> to your questions, I'm really stunned at how unprofessional you've handled 
-> this.
+Hi Alex,
 
-Selfish must die. you failed to persuade to me. and I havgen't get anyone's objection.
-Then, I don't care your ugly whining.
+> while there seem to be CVE IDs for most of the issues fixed in the
+> latest Horde packages, I cannot find one for this issue:
+> 
+> >From http://bugs.horde.org/ticket/9191:
+> "http://localhost/horde/gollem/view.php?actionID=view_file&type=txt&file=<script>alert("XSS")</script>&dir=../baddir/&driver=file
+> Vulnerable file : view.php (Line 32 - 46)"
+> 
+> Fixed in git (and released in 1.1.2):
+> http://lists.horde.org/archives/commits/2010-August/004747.html
+> http://lists.horde.org/archives/announce/2010/000565.html
 
+There appear to be quite a few new issues related to Horde and
+related packages. AFAICT the issues mentioned below are also new
+and haven't been assigned CVE IDs?
+
+Horde:
+http://lists.horde.org/archives/announce/2010/000568.html
+
+Dimp (Dynamic Imp):
+http://lists.horde.org/archives/announce/2010/000561.html
+
+Imp4 
+http://archives.neohapsis.com/archives/fulldisclosure/2010-09/0379.html
+
+Cheers,
+        Moritz
 
 
