@@ -1,62 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/04/5
-Message-ID: <1650101826.1126331288869371401.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 4 Nov 2010 07:16:11 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: kernel stack infoleaks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/30/4
+Message-ID: <20100930054949.GA9118@mail.oracle.com>
+Date: Wed, 29 Sep 2010 22:49:50 -0700
+From: Joel Becker <Joel.Becker@...cle.com>
+To: Greg KH <greg@...ah.com>
+Cc: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Small exposure in ocfs2 fast symlinks.
 Content-Type: text/plain; charset=utf-8
 
------ "Jon Oberheide" <jon@...rheide.org> wrote:
+On Wed, Sep 29, 2010 at 08:30:09PM -0700, Greg KH wrote:
+> On Wed, Sep 29, 2010 at 07:04:07PM -0700, Joel Becker wrote:
+> > Hey Everyone,
+> > 	We just discovered that ocfs2 could walk off the end of fast
+> > symlinks -- that is, symlinks that are stored directly in the inode
+> > block.  ocfs2 terminates these with NUL characters, but a disk
+> > corruption or an attacker with direct access to the ocfs2 disk could
+> > overwrite the NUL.  Following the symlink via the filesystem would walk
+> > off the end of the in-memory block buffer.  We're not sure how
+> > exploitable this is, but I figured I'd provide a heads-up.  The fix is
+> > in ocfs2's git tree and will be sent upstream tonight.  Erratas with the
+> > fix are being built.
+> 
+> Care to send the git commit id to the stable@...nel.org tree when it
+> hits Linus's tree so it gets backported there?
 
-> Vasiliy Kulikov discovered three kernel stack infoleaks in various
-> packet families of the net subsystem:
-> 
-> ===========================================================
-> 
-> net/ax25
-> 
-> Sometimes ax25_getname() doesn't initialize all members of fsa_digipeater
-> field of fsa struct.  This structure is then copied to userland.  It
-> leads to leaking of contents of kernel stack memory.  We have to
-> initialize them to zero.
-> 
-> http://marc.info/?l=linux-netdev&m=128854507120898&w=2
-> 
+	I Cc'd stable@...nel.org in the commit, don't worry ;-)
 
-Use CVE-2010-3875 for this one.
-
-
-> ===========================================================
-> 
-> net/packet
-> 
-> packet_getname_spkt() doesn't initialize all members of sa_data field of
-> sockaddr struct if strlen(dev->name) < 13.  This structure is then copied
-> to userland.  It leads to leaking of contents of kernel stack memory.  We
-> have to fully fill sa_data with strncpy() instead of strlcpy().
-> 
-> http://marc.info/?l=linux-netdev&m=128854507220908&w=2
-> 
-
-CVE-2010-3876
-
-
-> ===========================================================
-> 
-> net/tipc
-> 
-> Structure sockaddr_tipc is copied to userland with padding bytes after
-> "id" field in union field "name" unitialized.  It leads to leaking of
-> contents of kernel stack memory.  We have to initialize them to zero.
-> 
-> http://marc.info/?l=linux-netdev&m=128854507420917&w=2
-> 
-
-CVE-2010-3877
-
-Thanks.
+Joel
 
 -- 
-    JB
+
+Life's Little Instruction Book #267
+
+	"Lie on your back and look at the stars."
+
+Joel Becker
+Consulting Software Developer
+Oracle
+E-mail: joel.becker@...cle.com
+Phone: (650) 506-8127
