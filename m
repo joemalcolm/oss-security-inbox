@@ -1,16 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/27/2
-Message-ID: <20100628012947.0958acf9@foo.fgeek.fi>
-Date: Mon, 28 Jun 2010 01:29:47 +0300
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: makepasswd, Default settings generate insecure passwords
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/30/8
+Message-Id: <1285882843-sup-9076@stingray>
+Date: Thu, 30 Sep 2010 23:58:39 +0200
+From: Alex Legler <a3li@...too.org>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: CVE request: Horde Gollem <1.1.2 XSS in view.php
 Content-Type: text/plain; charset=utf-8
 
-Can I get CVE-identifier for this issue?
+Hey,
 
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=564559
-http://security-tracker.debian.org/tracker/TEMP-0564559-005920
+Excerpts from Moritz Muehlenhoff's message of Thu Sep 30 23:13:56 +0200 2010:
+> 
+> There appear to be quite a few new issues related to Horde and
+> related packages. AFAICT the issues mentioned below are also new
+> and haven't been assigned CVE IDs?
+>
 
----
-Henri Salo
+Right. I didn't finish wading through all Changesets. ;)
+
+> Horde:
+> http://lists.horde.org/archives/announce/2010/000568.html
+>
+
+>From that link:
+>     * Fixed an XSS vulnerability in util/icon_browser.php.
+
+CVE-2010-3077. Also fixed in Horde Application Framework 3.3.9.
+
+>     * Fixed an XSS vulnerability in the Fetchmail configuration.
+
+CVE n/a. Also fixed in Horde IMP 4.3.8
+Reference: http://git.horde.org/diff.php/imp/fetchmailprefs.php?rt=horde&r1=1.39.4.10&r2=1.39.4.11
+
+>     * Fixed an XSS vulnerability when showing mailbox names.
+
+CVE n/a. Also fixed in Horde DIMP 1.1.5
+Reference: http://bugs.horde.org/ticket/9240
+
+>     * Protected preference forms against CSRF attacks.
+
+CVE n/a. Also fixed in Horde Application Framework 3.3.9.
+Reference: http://secunia.com/advisories/39860
+
+
+> Dimp (Dynamic Imp):
+> http://lists.horde.org/archives/announce/2010/000561.html
+>
+
+Already handled above (mailbox name XSS)
+ 
+> Imp4 
+> http://archives.neohapsis.com/archives/fulldisclosure/2010-09/0379.html
+> 
+
+Already handled above (fetchmail XSS)
+
+Additionally, CVE-2010-0463 (DNS prefetching) was resolved in IMP 4.3.8
+and DIMP 1.1.5.
+Reference: http://bugs.horde.org/ticket/8836#c14
+
+Finally, there is the Gollem XSS which just got CVE-2010-3447 from Josh.
+
+This should now be the complete list of fixes in the latest Horde
+updates (I hope). Josh, can you also assign CVEs to the rest of the
+issues?
+
+Thanks,
+Alex
+-- 
+Alex Legler <a3li@...too.org>
+Gentoo Security/Ruby
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
