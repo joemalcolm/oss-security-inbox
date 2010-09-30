@@ -1,22 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/25/1
-Message-ID: <4C9D4BA5.5030605@redhat.com>
-Date: Sat, 25 Sep 2010 09:08:53 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/30/6
+Message-ID: <1585616389.884931285876642314.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 30 Sep 2010 15:57:22 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: dann frazier <dannf@...ian.org>, Thomas Dreibholz <dreibh@....uni-due.de>, Vlad Yasevich <vladislav.yasevich@...com>, Ben Hutchings <ben@...adent.org.uk>
-Subject: Re: CVE Request -- Linux/SCTP DoS in sctp_packet_config()
+Cc: Moritz Muehlenhoff <jmm@...til.org>, coley <coley@...re.org>
+Subject: Re: CVE requests: POE::Component::IRC, Alien Arena, Babiloo, Typo3, abcm2ps, ModSecurity, Linux kernel
 Content-Type: text/plain; charset=utf-8
 
-On 09/25/2010 12:27 AM, dann frazier wrote:
-> Please assign a CVE for the remote DoS issue described here:
->    http://marc.info/?l=linux-netdev&m=128453869227715&w=3
->
-> Upstream fix:
->    http://git.kernel.org/4bdab43323b459900578b200a4b8cf9713ac8fab
 
-Please use CVE-2010-3432.
+----- "Eugene Teo" <eugene@...hat.com> wrote:
 
-Thanks, Eugene
+> On 09/30/2010 12:19 AM, Moritz Muehlenhoff wrote:
+> > Hi Eugene,
+> >
+> > On Tue, Sep 28, 2010 at 09:17:48AM +0800, Eugene Teo wrote:
+> >>> 7. Linux kernel (local DoS, impact limited to specific hardware)
+> >>>
+> http://git.kernel.org/linus/b525c06cdbd8a3963f0173ccd23f9147d4c384b5
+> >>> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=565790
+> >>
+> >> I emailed this before, please search the archive for subject:
+> >> "[oss-security] kernel: thinkpad-acpi: lock down video output
+> state
+> >> access".
+> >
+> > Are you suggesting that there was already an assignment (I can't
+> > find one) or that it should not receive one due to limited impact?
+> 
+> http://seclists.org/oss-sec/2010/q2/318
+> 
+> There's no CVE name. I did not request for one, but gave a heads-up
+> for 
+> this since it only affects certain specific thinkpads/xorg.
+> 
+
+
+Plese use CVE-2010-3448 for this. Sorry for the misunderstanding.
+
+Thanks.
+
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+    JB
