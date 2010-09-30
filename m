@@ -1,46 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/07/5
-Message-Id: <20100907035103.64773faa.akpm@linux-foundation.org>
-Date: Tue, 7 Sep 2010 03:51:03 -0700
-From: Andrew Morton <akpm@...ux-foundation.org>
-To: Sebastian Krahmer <krahmer@...e.de>
-Cc: oss-security@...ts.openwall.com, security@...nel.org, spender@...ecurity.net
-Subject: Re: [Security] /proc infoleaks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/30/2
+Message-ID: <20100930020406.GC23107@mail.oracle.com>
+Date: Wed, 29 Sep 2010 19:04:07 -0700
+From: Joel Becker <Joel.Becker@...cle.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Small exposure in ocfs2 fast symlinks.
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 7 Sep 2010 10:35:46 +0200 Sebastian Krahmer <krahmer@...e.de> wrote:
+Hey Everyone,
+	We just discovered that ocfs2 could walk off the end of fast
+symlinks -- that is, symlinks that are stored directly in the inode
+block.  ocfs2 terminates these with NUL characters, but a disk
+corruption or an attacker with direct access to the ocfs2 disk could
+overwrite the NUL.  Following the symlink via the filesystem would walk
+off the end of the in-memory block buffer.  We're not sure how
+exploitable this is, but I figured I'd provide a heads-up.  The fix is
+in ocfs2's git tree and will be sent upstream tonight.  Erratas with the
+fix are being built.
+	If someone thinks we should have a CVE, please provide me with
+the number.  Otherwise, just FYI.
 
-> I have been elected to receive the bashing from all sides,
-> so here we go.
-> It is not about a new vulnerability or even a new discussion
-> but needs to be discussed, at least that we have a clear
-> statement about the status quo.
-> 
-> Recent i-CAN-haz-MODHARDEN.c has shown once *again* that
-> certain file permissions make no sense except to exploitation
-> development. There is no reason to have files like
-> 
-> /proc/kallsyms
-> /proc/slabinfo
-> /proc/zoneinfo
-> 
-> and probably a lot of others world readable. The symbol
-> addresses might be hard-coded for a certain targetlist
-> inside the exploit so you can argue that there
-> wont be any protection benefit from making it unreadable.
-> However this argument aint a reason to also leak it for self-compiled
-> kernels and doesnt even hold for dynamic/runtime content
-> like slabinfos etc.
-> It would be nice to have something like
-> 
-> echo 1 > /proc/quiet
-> 
-> or something like a umask for kernel-owned proc
-> entries so that you have a polite default and are
-> still able to enable it for certain profiling tools
-> or whereever you need it.
+Joel
 
-chmod 0440 /proc/slabinfo
+-- 
 
-What am I missing here?
+Life's Little Instruction Book #267
 
+	"Lie on your back and look at the stars."
+
+Joel Becker
+Consulting Software Developer
+Oracle
+E-mail: joel.becker@...cle.com
+Phone: (650) 506-8127
