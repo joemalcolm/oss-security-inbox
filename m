@@ -1,41 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/17/10
-Message-ID: <1327423490.110981284748754244.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 17 Sep 2010 14:39:14 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/30/5
+Message-ID: <64627846.884771285876509940.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 30 Sep 2010 15:55:09 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Hanno Böck <hanno@...eck.de>
-Subject: Re: CVE request: epiphany not checking ssl certs
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: Horde Gollem <1.1.2 XSS in view.php
 Content-Type: text/plain; charset=utf-8
 
-
------ "Tomas Hoger" <thoger@...hat.com> wrote:
-
-> On Fri, 17 Sep 2010 14:19:03 +0200 Hanno Böck wrote:
-> 
-> > http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=564690
-> > http://blog.fefe.de/?ts=b26ca29d
-> > 
-> > Did this get a CVE yet?
-> 
-> Any specific reason to only give CVE to epiphany if you want to start
-> giving CVEs for this kind of flaw?  IIRC, not long ago, no
-> WebKitGtk-based browser I tried verified server SSL certificates and all
-> connected without any complaint or indication that SSL certificate was
-> not verified.  None seemed to offer any configuration option to enable
-> certificate checking.  I guess there may be / was some limitations on
-> WebKitGtk side that can explain this.
-> 
-> I noticed midori now uses different address bar background color, which
-> seem to be similar to the epiphany fix described in the Debian bug.
-> 
-> Oh, now I see you're probably asking for CVE for post-deb#564690
-> behavior, not pre-deb#564690, right?
-> 
-
-I'm not following this. What exactly is getting a CVE id here?
+Please use CVE-2010-3447
 
 Thanks.
 
 -- 
     JB
+
+
+----- "Alex Legler" <a3li@...too.org> wrote:
+
+> Hi,
+> 
+> while there seem to be CVE IDs for most of the issues fixed in the
+> latest Horde packages, I cannot find one for this issue:
+> 
+> From http://bugs.horde.org/ticket/9191:
+> "http://localhost/horde/gollem/view.php?actionID=view_file&type=txt&file=<script>alert("XSS")</script>&dir=../baddir/&driver=file
+> Vulnerable file : view.php (Line 32 - 46)"
+> 
+> Fixed in git (and released in 1.1.2):
+> http://lists.horde.org/archives/commits/2010-August/004747.html
+> http://lists.horde.org/archives/announce/2010/000565.html
+> 
+> Thanks,
+> Alex
+> -- 
+> Alex Legler <a3li@...too.org>
+> Gentoo Security/Ruby
