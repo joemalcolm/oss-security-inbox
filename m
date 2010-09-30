@@ -1,69 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/11/1
-Message-ID: <4B985203.80907@stafford.uklinux.net>
-Date: Thu, 11 Mar 2010 02:14:27 +0000
-From: Brian Stafford <brian@...fford.uklinux.net>
-To: Ludwig Nussel <ludwig.nussel@...e.de>
-CC: oss-security@...ts.openwall.com, libesmtp@...fford.uklinux.net,  security@...ntu.com
-Subject: Re: CVE Request: libesmtp does not check NULL bytes in commonName
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/30/1
+Message-ID: <4CA3D732.90608@redhat.com>
+Date: Thu, 30 Sep 2010 08:17:54 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Moritz Muehlenhoff <jmm@...til.org>
+Subject: Re: CVE requests: POE::Component::IRC, Alien Arena, Babiloo, Typo3, abcm2ps, ModSecurity, Linux kernel
 Content-Type: text/plain; charset=utf-8
 
-Ludwig Nussel wrote:
-> The attached patch includes the patch from Debian. However, the
-> match_domain() function probably should be rewritten anyways I
-> guess. It matches patters such as 'foo.bar.*' which is rather weird.
->   
-I've been reviewing match_domain() with a view to how it conforms to RFC 
-2459 and RFC 2818 section 3.1.  Unfortunately, the relevant text is 
-rather less rigourous than it might be so some further input might be 
-useful.
+On 09/30/2010 12:19 AM, Moritz Muehlenhoff wrote:
+> Hi Eugene,
+>
+> On Tue, Sep 28, 2010 at 09:17:48AM +0800, Eugene Teo wrote:
+>>> 7. Linux kernel (local DoS, impact limited to specific hardware)
+>>> http://git.kernel.org/linus/b525c06cdbd8a3963f0173ccd23f9147d4c384b5
+>>> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=565790
+>>
+>> I emailed this before, please search the archive for subject:
+>> "[oss-security] kernel: thinkpad-acpi: lock down video output state
+>> access".
+>
+> Are you suggesting that there was already an assignment (I can't
+> find one) or that it should not receive one due to limited impact?
 
-The text in RFC 2459 is
+http://seclists.org/oss-sec/2010/q2/318
 
-   Finally, the semantics of subject alternative names that include
-   wildcard characters (e.g., as a placeholder for a set of names) are
-   not addressed by this specification.  Applications with specific
-   requirements may use such names but shall define the semantics.
+There's no CVE name. I did not request for one, but gave a heads-up for 
+this since it only affects certain specific thinkpads/xorg.
 
-which is fair enough.  The text from RFC 2818 defining the semantics is
-
-   Matching is performed using the matching rules specified by
-   [RFC2459].  If more than one identity of a given type is present in
-   the certificate (e.g., more than one dNSName name, a match in any one
-   of the set is considered acceptable.) Names may contain the wildcard
-   character * which is considered to match any single domain name
-   component or component fragment. E.g., *.a.com matches foo.a.com but
-   not bar.foo.a.com. f*.com matches foo.com but not bar.com.
-
-My interpretation, in the absense of clarification or an update to RFC 
-2818, follows.
-
-RFC 2818 does not constrain which domain name components may contain 
-wildcards. Names such as *.bar.com, foo.*.com and foo.bar.* are 
-therefore all valid despite the latter two cases appearing 
-unconventional.  The examples from RFC 2818 show wildcards only in the 
-leading domain name components. Examples are neither normative nor 
-exhaustive and may not therefore imply constraints or extensions of a 
-standard's normative text. Comparison bugs aside, I believe that 
-libESMTP's behaviour correctly implements RFC 2818 in this respect.
-
-Currently match_component() accepts a wildcard character * only in the 
-final position of the component pattern.  However RFC 2818 does not 
-actually state that the wildcard is so constrained, although the 
-examples show only this case.  The text from RFC 2818 permits, albeit 
-not explicitly, component patterns interspersed with wildcards, for 
-example, 'foo*bar', '*bar*', 'foo*bar*baz' etc.  I am unclear as to the 
-author's original intent, nevertheless I feel that to correctly 
-implement RFC 2818 libESMTP's match_component() should permit 
-comparisons where the wildcard may appear multiple times in the 
-component pattern (as is permitted in fnmatch(3) for example).
-
-RFC 2818 has INFORMATIONAL status so perhaps there is some latitude 
-here.  On the other hand, while an INFORMATIONAL RFC is not normative 
-there is no other normative text I am aware of so I feel that RFC 2818 
-must be assumed to be normative in this context.
-
-regards
-Brian
-
-
+Eugene
+-- 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
