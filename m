@@ -1,29 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/18/3
-Message-ID: <20100518155034.GA26710@kroah.com>
-Date: Tue, 18 May 2010 08:50:34 -0700
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/01/2
+Message-ID: <4CA5FA68.3090000@hrz.tu-darmstadt.de>
+Date: Fri, 01 Oct 2010 17:12:40 +0200
+From: Joachim Fritschi <fritschi@....tu-darmstadt.de>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: cifs: cifs_create() NULL pointer dereference
+Subject: Re: CVE request - phpCAS: prevent symlink attacks, directory traversal and XSS during a proxy callback
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 05, 2010 at 04:56:03PM +0800, Eugene Teo wrote:
-> On 04/05/2010 04:51 PM, Eugene Teo wrote:
-> >Reported by Eugene Teo. While creating a file on a server which supports
-> >Unix extensions such as Samba, if a file being created does not supply
-> >nameidata (i.e. nd is NULL), cifs client can trigger a NULL pointer
-> >dereference when calling cifs_posix_open().
-> >
-> >http://comments.gmane.org/gmane.linux.file-systems.cifs/5782
-> >https://bugzilla.redhat.com/579445
-> 
-> The code that introduced this is upstream commit c3b2a0c6. Any
-> kernel version from v2.6.29-rc6 onwards are affected.
+Can anyone please supply a CVE ?
 
-Am I correct in that I do not see a fix for this in the upstream kernel
-repository yet?
+Thanks,
 
-thanks,
+Joachim
 
-greg k-h
+Am 29.09.2010 15:06, schrieb Joachim Fritschi:
+> Reported by Raphael Geissert almost 2 years ago but never really made it
+> into the upstream code:
+>
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=495542#82
+>
+> In phpCAS proxy mode the parameters submitted during a callback to the
+> callback() function are not properly sanatized. The parameters are used
+> as file handles for filesystem access and parameters in urls.
+> This allows an attacker symlink attacks, directory traversal attacks and
+> XSS attacks. The issue has been fixed and patches are available:
+>
+> https://issues.jasig.org/browse/PHPCAS-80
+> https://developer.jasig.org/source/changelog/jasigsvn?cs=21538
+>
+> A new 1.1.3 release which contains the patch and various other bugfixes
+> will be released within the next few days.
+>
+> Cheers,
+>
+> Joachim
+>
+>
+
+
+-- 
+Joachim Fritschi
+Hochschulrechenzentrum (HRZ)
+L1|01 Raum 248
+Petersenstr. 30
+64287 Darmstadt
+
+Tel. +49 6151 16-5638
+Fax. +49 6151 16-3050
+E-Mail: fritschi@....tu-darmstadt.de
+
+
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (5024 bytes)
