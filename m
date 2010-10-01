@@ -1,46 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/14/3
-Message-ID: <1281749317.7543.547.camel@localhost>
-Date: Sat, 14 Aug 2010 02:28:37 +0100
-From: Ben Hutchings <ben@...adent.org.uk>
-To: Eugene Teo <eugene@...hat.com>
-Cc: oss-security@...ts.openwall.com, dann frazier <dannf@...ian.org>,  "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: kernel: [PARISC] led.c - fix potential stack overflow in led_proc_write()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/01/6
+Message-ID: <487219407.1015181285963512331.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 1 Oct 2010 16:05:12 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: Horde Gollem <1.1.2 XSS in view.php
 Content-Type: text/plain; charset=utf-8
 
-On Sat, 2010-08-14 at 09:00 +0800, Eugene Teo wrote:
-> On 08/14/2010 08:54 AM, dann frazier wrote:
-> > On Tue, Aug 03, 2010 at 01:51:15AM -0400, Moritz Muehlenhoff wrote:
-> >> On Tue, Aug 03, 2010 at 11:46:58AM +0800, Eugene Teo wrote:
-> >>> Ilja reported way back in Nov 2007. A writer to /proc/pdc/led(?) can
-> >>> cause the kernel to consume an unbounded amount of stack, and result
-> >>> in stack corruption.
-> >>>
-> >>> http://www.spinics.net/lists/linux-parisc/msg02960.html
-> >>>
-> >>> If you need a CVE name, change the subject to indicate that. We are
-> >>> not requesting one as we do not support the PA-RISC architecture in
-> >>> our distribution.
-> >>
-> >> Debian supports hppa.
-> >>
-> >> Steven, please assign a CVE ID.
-> >
-> > Ben Hutchings pointed out that this file is only writeable by root -
-> > can it therefore be considered a security issue?
+
+----- "Alex Legler" <a3li@...too.org> wrote:
 > 
->  From the bug report:
-> "the problem being that the stack is limited and count is not (except 
-> for the MAX_INT check done in sys_write() I guess). this could lead to 
-> stack corruption (when for example calling capable())."
+> > Horde:
+> > http://lists.horde.org/archives/announce/2010/000568.html
+> >
+> 
+> From that link:
+> >     * Fixed an XSS vulnerability in util/icon_browser.php.
+> 
+> CVE-2010-3077. Also fixed in Horde Application Framework 3.3.9.
+> 
+> >     * Fixed an XSS vulnerability in the Fetchmail configuration.
+> 
+> CVE n/a. Also fixed in Horde IMP 4.3.8
+> Reference:
+> http://git.horde.org/diff.php/imp/fetchmailprefs.php?rt=horde&r1=1.39.4.10&r2=1.39.4.11
 
-But the file permissions are checked even before the function is called,
-are they not?
+CVE-2010-3695
 
-Ben.
+
+> 
+> >     * Fixed an XSS vulnerability when showing mailbox names.
+> 
+> CVE n/a. Also fixed in Horde DIMP 1.1.5
+> Reference: http://bugs.horde.org/ticket/9240
+
+CVE-2010-3693
+
+
+> 
+> >     * Protected preference forms against CSRF attacks.
+> 
+> CVE n/a. Also fixed in Horde Application Framework 3.3.9.
+> Reference: http://secunia.com/advisories/39860
+
+CVE-2010-3694
+
+
+I think this is everything else. Let me know if I've missed something.
+
+Thanks.
 
 -- 
-Ben Hutchings
-Once a job is fouled up, anything done to improve it makes it worse.
-
-Download attachment "signature.asc" of type "application/pgp-signature" (829 bytes)
+    JB
