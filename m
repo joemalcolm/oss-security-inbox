@@ -1,26 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/05/1
-Message-ID: <4C83B289.7080904@redhat.com>
-Date: Sun, 05 Sep 2010 17:08:57 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request -- Bip -- Remote Dos (crash) by exchanging user credentials
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/01/1
+Message-ID: <20101001151648.743c6993@redhat.com>
+Date: Fri, 1 Oct 2010 15:16:48 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE requests: Poppler, Quassel, Pyfribidi, Overkill, DocUtils, FireGPG, Wireshark
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve, vendors,
+On Wed, 29 Sep 2010 15:06:31 -0400 (EDT) Josh Bressers wrote:
 
-   A denial of service flaw was found in the way Bip IRC Bouncer
-exchanged user credentials by initiating the IRC protocol session.
-A remote, unauthenticated user could send a specially crafted
-connection request, leading to bip daemon crash (NULL pointer dereference)
+> > 1. Poppler (might also affect xpdf and kpdf due to code heritage,
+> > not determined yet)
+> > http://secunia.com/advisories/41596/
+> > -> Links to poppler git commits are given in the Secunia link
+> 
+> This needs to be properly understood. I'm not assigning IDs until
+> someone does a proper triage.
 
-References:
-   [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=595409
-   [2] https://bugzilla.redhat.com/show_bug.cgi?id=630437
+e853106b58 is uninitialized pointer use flaw.  Pointer value may be
+controlled by PDF content, hence if pointed to attacker-controlled
+memory, code execution may be possible via virtual method call.  This
+should date back to very old xpdf versions.
 
-Could you allocate CVE id for this one?
+bf2055088a seems similar to the above one.  Pointer is to the class
+that has not virtual methods, but may be used to corrupt memory.  This
+should only affect poppler versions after b1d4efb082.
 
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+39d140bfc0 array indexing error / underflow.  On platforms where atoi
+can return negative result, this can allow out-of-array-bounds write.
+Code appears in old xpdf versions too.
+
+There are few that don't seem worth calling security:
+- memory leaks - 473de6f88a c6a0915127
+- NULL deref - 3422638b2a
+- infinite/deep recursion - d2578bd661
+- OOB read - 26a5817ffe + 9706e28657
+
+I'm not yet sure about these:
+
+2fe825deac Prevents use of random value for PDF object that is not of
+numeric type as expected.  This patch, however, does not seem to guard
+against invalid numeric values, so if some random value used due to an
+incorrect object type can cause crash later, I'd expect malicious
+numeric value to be able to achieve the same.
+
+dfdf3602bd Similar to the previous, commit message here does not
+explicitly mention this addresses any crash.
+
+a2dab0238a Commit message does not indicate this is should address any
+crash.  getPos seems mostly used for error reporting.
+
+Does anyone have any different findings?
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
