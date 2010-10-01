@@ -1,25 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/02/1
-Message-ID: <4B3FC110.8050801@darkrain42.org>
-Date: Sat, 02 Jan 2010 13:56:32 -0800
-From: Paul Aurich <paul@...krain42.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/01/3
+Message-ID: <20101001162950.GP1955@redhat.com>
+Date: Fri, 1 Oct 2010 10:29:50 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request - pidgin MSN arbitrary file upload
+Subject: CVE request: freeradius
 Content-Type: text/plain; charset=utf-8
 
-http://events.ccc.de/congress/2009/Fahrplan/events/3596.en.html
+Requesting CVE names for two flaws fix in freeradius 2.1.10:
 
-In Fabian's talk, he describes an issue where Pidgin's MSN prpl does not
-validate the filename received in a request for Pidgin to upload a custom
-emoticon to a third-party, allowing an attacker to download arbitrary files
-on the system via directory traversal.
+DoS via certain DHCP requests
+[1] https://bugs.freeradius.org/bugzilla/show_bug.cgi?id=77
+[2] http://secunia.com/advisories/41621
+[3] http://github.com/alandekok/freeradius-server/commit/4dc7800b866f889a1247685bbaa6dd4238a56279
+[4] https://bugzilla.redhat.com/show_bug.cgi?id=639390
 
-This is fixed in source, but no release yet:
-http://d.pidgin.im/viewmtn/revision/info/c64a1adc8bda2b4aeaae1f273541afbc4f71b810
+crash when processing requests queued for more than 30 seconds
+[1] https://bugs.freeradius.org/bugzilla/show_bug.cgi?id=35
+[2] http://secunia.com/advisories/41621
+[3] http://github.com/alandekok/freeradius-server/commit/ff94dd35673bba1476594299d31ce8293b8bd223
+[4] https://bugzilla.redhat.com/show_bug.cgi?id=639397
 
---
-Paul Aurich
 
+Both issues only affect 2.1.x (1.1.x does not have the affected files or
+functions).  It looks as though the first issue only affected 2.1.9; I'm
+not yet sure if or how far the second issue may go back.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (901 bytes)
+Could two CVE names be assigned to this issue please?
+
+Thanks!
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
