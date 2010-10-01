@@ -1,32 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/30/2
-Message-ID: <20100930020406.GC23107@mail.oracle.com>
-Date: Wed, 29 Sep 2010 19:04:07 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/01/12
+Message-ID: <20101001213111.GB14972@mail.oracle.com>
+Date: Fri, 1 Oct 2010 14:31:12 -0700
 From: Joel Becker <Joel.Becker@...cle.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Small exposure in ocfs2 fast symlinks.
+To: Eugene Teo <eugene@...hat.com>
+Cc: oss-security <oss-security@...ts.openwall.com>, stable@...nel.org
+Subject: Re: Small exposure in ocfs2 fast symlinks.
 Content-Type: text/plain; charset=utf-8
 
-Hey Everyone,
-	We just discovered that ocfs2 could walk off the end of fast
-symlinks -- that is, symlinks that are stored directly in the inode
-block.  ocfs2 terminates these with NUL characters, but a disk
-corruption or an attacker with direct access to the ocfs2 disk could
-overwrite the NUL.  Following the symlink via the filesystem would walk
-off the end of the in-memory block buffer.  We're not sure how
-exploitable this is, but I figured I'd provide a heads-up.  The fix is
-in ocfs2's git tree and will be sent upstream tonight.  Erratas with the
-fix are being built.
-	If someone thinks we should have a CVE, please provide me with
-the number.  Otherwise, just FYI.
+On Thu, Sep 30, 2010 at 10:32:14PM +0800, Eugene Teo wrote:
+> On 09/30/2010 01:49 PM, Joel Becker wrote:
+> >On Wed, Sep 29, 2010 at 08:30:09PM -0700, Greg KH wrote:
+> >>On Wed, Sep 29, 2010 at 07:04:07PM -0700, Joel Becker wrote:
+> >>>Hey Everyone,
+> >>>	We just discovered that ocfs2 could walk off the end of fast
+> >>>symlinks -- that is, symlinks that are stored directly in the inode
+> >>>block.  ocfs2 terminates these with NUL characters, but a disk
+> >>>corruption or an attacker with direct access to the ocfs2 disk could
+> >>>overwrite the NUL.  Following the symlink via the filesystem would walk
+> >>>off the end of the in-memory block buffer.  We're not sure how
+> >>>exploitable this is, but I figured I'd provide a heads-up.  The fix is
+> >>>in ocfs2's git tree and will be sent upstream tonight.  Erratas with the
+> >>>fix are being built.
+> >>
+> >>Care to send the git commit id to the stable@...nel.org tree when it
+> >>hits Linus's tree so it gets backported there?
+> >
+> >	I Cc'd stable@...nel.org in the commit, don't worry ;-)
+> 
+> Thanks, please also cc oss-sec when the commit hash is available.
+
+	The commit hash in Linus's tree is
+1fc8a117865b54590acd773a55fbac9221b018f0.  This problem only exists from
+2.6.30 onwards; it is not present in older kernels.
 
 Joel
 
 -- 
 
-Life's Little Instruction Book #267
-
-	"Lie on your back and look at the stars."
+"In the long run...we'll all be dead."
+                                        -Unknown
 
 Joel Becker
 Consulting Software Developer
