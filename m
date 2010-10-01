@@ -1,22 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/09/6
-Message-ID: <4CD97733.9030001@iuculano.it>
-Date: Tue, 09 Nov 2010 17:30:43 +0100
-From: Giuseppe Iuculano <giuseppe@...ulano.it>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/01/5
+Message-ID: <1322720227.1011571285961622280.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 1 Oct 2010 15:33:42 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: libxml2 xpath
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request - phpCAS: prevent symlink attacks, directory traversal and XSS during a proxy callback
 Content-Type: text/plain; charset=utf-8
 
-On 11/02/2010 03:50 PM, Sebastian Krahmer wrote:
-> was there already a CVE assigned for
+Sorry for the delay:
+
+CVE-2010-3690 phpCAS: XSS during a proxy callback
+CVE-2010-3691 phpCAS: prevent symlink attacks during a proxy callback
+CVE-2010-3692 phpCAS: directory traversal during a proxy callback
+
+Thanks.
+
+-- 
+    JB
+
+
+----- "Joachim Fritschi" <fritschi@....tu-darmstadt.de> wrote:
+
+> Reported by Raphael Geissert almost 2 years ago but never really made
+> it 
+> into the upstream code:
 > 
-> http://git.gnome.org/browse/libxml2/commit/?id=91d19754d46acd4a639a8b9e31f50f31c78f8c9c
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=495542#82
 > 
-
-Yes, CVE-2010-4008
-
-Cheers,
-GIuseppe.
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+> In phpCAS proxy mode the parameters submitted during a callback to the
+> 
+> callback() function are not properly sanatized. The parameters are
+> used 
+> as file handles for filesystem access and parameters in urls.
+> This allows an attacker symlink attacks, directory traversal attacks
+> and 
+> XSS attacks. The issue has been fixed and patches are available:
+> 
+> https://issues.jasig.org/browse/PHPCAS-80
+> https://developer.jasig.org/source/changelog/jasigsvn?cs=21538
+> 
+> A new 1.1.3 release which contains the patch and various other
+> bugfixes 
+> will be released within the next few days.
+> 
+> Cheers,
+> 
+> Joachim
