@@ -1,20 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/09/4
-Message-ID: <20100209094314.30c22f7f@redhat.com>
-Date: Tue, 9 Feb 2010 09:43:14 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com, matthias.andree@....de
-Cc: "cve@...re.org" <cve@...re.org>
-Subject: Re: CVE request - fetchmail 6.3.11-.13 heap overflow in verbose X.509 cert display (only printable chars)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/01/7
+Message-ID: <20101001201237.GU1955@redhat.com>
+Date: Fri, 1 Oct 2010 14:12:37 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: gerald@...eshark.org
+Subject: Re: CVE requests: Poppler, Quassel, Pyfribidi, Overkill, DocUtils, FireGPG, Wireshark
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 09 Feb 2010 09:32:07 +0100 "Matthias Andree"
-<matthias.andree@....de> wrote:
+* [2010-09-29 15:06:31 -0400] Josh Bressers wrote:
 
-> PING?
+>> 7. Wireshark BER dissector
+>> http://archives.neohapsis.com/archives/bugtraq/2010-09/0088.html
+>>
+>
+>This one looks like a stack overflow, the advisory isn't very clear, but
+>claims there are two possible outcomes. We can always split later if
+>needed.
+>CVE-2010-3445
 
-Looks like one got assigned by Mitre:
-  http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2010-0562
+Gerald, are you aware of this issue?  Do you have further details
+regarding it?  I poked around in bugzilla a bit but couldn't find
+anything.
+
+It claims 1.4.0, but is not clear as to whether or not older versions
+are affected.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Vincent Danen / Red Hat Security Response Team 
