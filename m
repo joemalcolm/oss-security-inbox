@@ -1,35 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/26/1
-Message-Id: <201011261600.35676.thomas@suse.de>
-Date: Fri, 26 Nov 2010 16:00:35 +0100
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/01/8
+Message-ID: <1967940197.1017111285964092127.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 1 Oct 2010 16:14:52 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel: unix socket local dos
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: freeradius
 Content-Type: text/plain; charset=utf-8
 
 
-JFYI, additional comments
+----- "Vincent Danen" <vdanen@...hat.com> wrote:
 
-http://lkml.org/lkml/2010/11/25/8
-
-
-
-Am Mittwoch, 24. November 2010, 04:03:27 schrieb Eugene Teo:
-> Reported by Vegard Nossum: "I found this program lying around on my
-> laptop. It kills my box (2.6.35) instantly by consuming a lot of memory
-> (allocated by the kernel, so the process doesn't get killed by the OOM
-> killer). As far as I can tell, the memory isn't being freed when the
-> program exits either. Maybe it will eventually get cleaned up the UNIX
-> socket garbage collector thing, but in that case it doesn't get called
-> quickly enough to save my machine at least."
+> Requesting CVE names for two flaws fix in freeradius 2.1.10:
 > 
-> Reproducer: http://lkml.org/lkml/2010/11/23/395
-> Partial fix: http://lkml.org/lkml/2010/11/23/450
-> Reference: https://bugzilla.redhat.com/show_bug.cgi?id=656756
-> 
-> Thanks, Eugene
+> DoS via certain DHCP requests
+> [1] https://bugs.freeradius.org/bugzilla/show_bug.cgi?id=77
+> [2] http://secunia.com/advisories/41621
+> [3] http://github.com/alandekok/freeradius-server/commit/4dc7800b866f889a1247685bbaa6dd4238a56279
+> [4] https://bugzilla.redhat.com/show_bug.cgi?id=639390
 
+Use CVE-2010-3696
+
+
+> 
+> crash when processing requests queued for more than 30 seconds
+> [1] https://bugs.freeradius.org/bugzilla/show_bug.cgi?id=35
+> [2] http://secunia.com/advisories/41621
+> [3] http://github.com/alandekok/freeradius-server/commit/ff94dd35673bba1476594299d31ce8293b8bd223
+> [4] https://bugzilla.redhat.com/show_bug.cgi?id=639397
+> 
+> 
+> Both issues only affect 2.1.x (1.1.x does not have the affected files or
+> functions).  It looks as though the first issue only affected 2.1.9; I'm
+> not yet sure if or how far the second issue may go back.
+> 
+
+Use CVE-2010-3697
+
+Thanks.
 
 -- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+    JB
