@@ -1,26 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/31/1
-Message-ID: <AANLkTinjjWGQepbZBS7C6fp6uHux5n+8yR+TAzCdTas6@mail.gmail.com>
-Date: Thu, 30 Dec 2010 19:02:42 -0500
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel: buffer overflow in OSS load_mixer_volumes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/01/10
+Message-ID: <20101001214129.GV1955@redhat.com>
+Date: Fri, 1 Oct 2010 15:41:29 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: Gerald Combs <gerald@...eshark.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE requests: Poppler, Quassel, Pyfribidi, Overkill, DocUtils, FireGPG, Wireshark
 Content-Type: text/plain; charset=utf-8
 
-"The load_mixer_volumes() function, which can be triggered by
-unprivileged users via the SOUND_MIXER_SETLEVELS ioctl, is vulnerable to
-a buffer overflow.  Because the provided 'name' argument isn't
-guaranteed to be NULL terminated at the expected 32 bytes, it's possible
-to overflow past the end of the last element in the mixer_vols array.
-Further exploitation can result in an arbitrary kernel write (via
-subsequent calls to load_mixer_volumes()) leading to privilege
-escalation, or arbitrary kernel reads via get_mixer_levels().  In
-addition, the strcmp() may leak bytes beyond the mixer_vols array."
+* [2010-10-01 13:33:47 -0700] Gerald Combs wrote:
 
-http://git.kernel.org/?p=linux/kernel/git/tiwai/sound-2.6.git;a=commit;h=d81a12bc29ae4038770e05dce4ab7f26fd5880fb
+>Vincent Danen wrote:
+>> * [2010-09-29 15:06:31 -0400] Josh Bressers wrote:
+>>
+>>>> 7. Wireshark BER dissector
+>>>> http://archives.neohapsis.com/archives/bugtraq/2010-09/0088.html
+>>>>
+>>>
+>>> This one looks like a stack overflow, the advisory isn't very clear, but
+>>> claims there are two possible outcomes. We can always split later if
+>>> needed.
+>>> CVE-2010-3445
+>>
+>> Gerald, are you aware of this issue?  Do you have further details
+>> regarding it?  I poked around in bugzilla a bit but couldn't find
+>> anything.
+>>
+>> It claims 1.4.0, but is not clear as to whether or not older versions
+>> are affected.
+>
+>It's been fixed in the trunk (r34111) and is scheduled for inclusion in
+>1.4.1 and 1.2.12. We're tracking it in bug 5230:
+>
+>  https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5230
+>
+>The bug affects all BER dissectors and not just SNMP.
 
-This only affects users who are using OSS (not to be confused with the
-OSS emulation provided by ALSA), and requires access to a device file
-normally restricted to users in group audio.
+Great.  Thank you for the information, Gerald.  That is very helpful.
 
--Dan
+-- 
+Vincent Danen / Red Hat Security Response Team 
