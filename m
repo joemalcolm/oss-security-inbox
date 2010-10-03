@@ -1,26 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/21/3
-Message-ID: <4C1FC1F4.5060006@redhat.com>
-Date: Mon, 21 Jun 2010 21:48:04 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, Matthew Wilkes <enquiries@...culartriangle.eu>
-Subject: CVE Request -- Plone -- arbitrary HTML code injection in safe_html
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/03/1
+Message-ID: <20101003220003.GA23811@altlinux.org>
+Date: Mon, 4 Oct 2010 02:00:03 +0400
+From: "Dmitry V. Levin" <ldv@...linux.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Minor security flaw with pam_xauth
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve, vendors,
+Hi,
 
-   Plone upstream has released hotfix:
-     [1] http://plone.org/products/plone/security/advisories/cve-2010-unassigned-html-injection-in-safe_html
+On Fri, Oct 01, 2010 at 04:02:04PM -0600, Vincent Danen wrote:
+> * [2010-09-28 00:17:29 +0400] Solar Designer wrote:
+> >On Mon, Sep 27, 2010 at 11:36:13AM -0600, Vincent Danen wrote:
+> >>* [2010-09-24 20:48:23 +0400] Solar Designer wrote:
+> >>>pam_env and pam_mail accessing the target user's files as root (and thus
+> >>>susceptible to attacks by the user) in Linux-PAM below 1.1.2, partially
+> >>>fixed in 1.1.2 - no CVE ID mentioned yet
+> >>>
+> >>>pam_env and pam_mail in Linux-PAM 1.1.2 not switching fsgid (or egid)
+> >>>and groups when accessing the target user's files (and thus potentially
+> >>>susceptible to attacks by the user) - CVE-2010-3430
+> >>>
+> >>>pam_env and pam_mail in Linux-PAM 1.1.2 not checking whether the
+> >>>setfsuid() calls succeed (no known impact with current Linux kernels,
+> >>>but poor practice in general) - CVE-2010-3431
+[...]
+> >>Are there patches available to fully fix these issues?  And are there
+> >>patches for 3430 and 3431 yet?
+> >
+> >This is the same question asked different ways.  We have a patch that
+> >we're reviewing internally.  To be made available soon.
+> 
+> Great, looking forward to seeing them.
 
-fixing (previous) ability to inject arbitrary HTML code in safe_html by content
-author.
+The patch that fixes CVE-2010-3430 and CVE-2010-3431 was just made public:
+http://git.altlinux.org/people/ldv/packages/?p=pam.git;a=commitdiff;h=pam_modutil_priv
 
-References:
-   [2] http://secunia.com/advisories/40270/
+Besides that, another two issues have been fixed in pam_xauth after
+Linux-PAM 1.1.2 release:
 
-Could you allocate a CVE id for this?
+In pam_sm_close_session(), the attempt to unlink cookie file was made
+without dropping privileges at all if target uid could not be determined:
+http://git.altlinux.org/people/ldv/packages/?p=pam.git;a=commitdiff;h=Linux-PAM-1_1_2-3-g05dafc0
 
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+In check_acl(), there were no check that the acl file provided by target
+user is a regular file:
+http://git.altlinux.org/people/ldv/packages/?p=pam.git;a=commitdiff;h=Linux-PAM-1_1_2-2-gffe7058
+
+
+-- 
+ldv
+
+Content of type "application/pgp-signature" skipped
