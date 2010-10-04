@@ -1,16 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/29/6
-Message-ID: <874ojygbq4.fsf@mid.deneb.enyo.de>
-Date: Mon, 29 Mar 2010 21:38:11 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/04/1
+Message-ID: <20101004110743.320a1f76@redhat.com>
+Date: Mon, 4 Oct 2010 11:07:43 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSL: CVE-2010-0740 and CVE-2009-3245 appear to be dupes
+Cc: coley <coley@...re.org>
+Subject: Re: CVE requests: Poppler, Quassel, Pyfribidi, Overkill, DocUtils, FireGPG, Wireshark
 Content-Type: text/plain; charset=utf-8
 
-* Florian Weimer:
+On Fri, 1 Oct 2010 15:16:48 +0200 Tomas Hoger wrote:
 
-> As far as I can tell, both are the same "record of death
-> vulnerability" (and probably 0.9.8m-only for FLOSS systems because
-> sizeof(short) * CHAR_BITS == 16 for us).
+> 2fe825deac Prevents use of random value for PDF object that is not of
+> numeric type as expected.  This patch, however, does not seem to guard
+> against invalid numeric values, so if some random value used due to an
+> incorrect object type can cause crash later, I'd expect malicious
+> numeric value to be able to achieve the same.
 
-SOrry, I was mistaken.  Please disregard that message.
+Oh, I was too focused on the value and missed OBJECT_TYPE_CHECK checks
+that cause abort() when object is not numeric.  The impact is limited
+to unexpected application termination.
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
