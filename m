@@ -1,28 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/29/3
-Message-ID: <4BD8EB3E.1020809@windriver.com>
-Date: Thu, 29 Apr 2010 10:13:18 +0800
-From: Hui Zhu <hui.zhu@...driver.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/04/6
+Message-ID: <155433307.1192971286219483294.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 4 Oct 2010 15:11:23 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Paul Gortmaker <paul.gortmaker@...driver.com>, +security-linux <security-linux@...driver.com>, "Wessel, Jason" <jason.wessel@...driver.com>, Wu Fei <fei.wu@...driver.com>
-Subject: CVE request - Linux Kernel KGDB/ppc issue
+Cc: coley <coley@...re.org>
+Subject: Re: CVE requests: Poppler, Quassel, Pyfribidi, Overkill, DocUtils, FireGPG, Wireshark
 Content-Type: text/plain; charset=utf-8
 
-Hi All,
+----- "Tomas Hoger" <thoger@...hat.com> wrote:
 
-The problem is that if KGDB is enabled on a powerpc board, a
-test that checks if a page is user or kernel is bypassed.
-This means that a user can write to arbitrary kernel address space.
-
-Upon further investigation, we found that kernels older than
-the v2.6.30-rc1 release have the same problem for non-booke
-ppc chips (74xx, 8641D), so we need two patches for kernels
-up to that date, and then one patch for ones after that date.
-
-Thanks,
-Hui
+According to Tomas, only the first three things needs IDs:
 
 
-View attachment "0001-kgdb-don-t-needlessly-skip-PAGE_USER-test-for-Fsl-bo.patch" of type "text/x-diff" (1448 bytes)
+> 
+> e853106b58 is uninitialized pointer use flaw.  Pointer value may be
+> controlled by PDF content, hence if pointed to attacker-controlled
+> memory, code execution may be possible via virtual method call.  This
+> should date back to very old xpdf versions.
 
-View attachment "0002-kgdb-don-t-needlessly-skip-PAGE_USER-test.patch" of type "text/x-diff" (1439 bytes)
+http://cgit.freedesktop.org/poppler/poppler/commit/?id=e853106b58d6b4b0467dbd6436c9bb1cfbd372cf
+
+Use CVE-2010-3702
+
+> 
+> bf2055088a seems similar to the above one.  Pointer is to the class that
+> has not virtual methods, but may be used to corrupt memory.  This should
+> only affect poppler versions after b1d4efb082.
+
+http://cgit.freedesktop.org/poppler/poppler/commit/?id=bf2055088a3a2d3bb3d3c37d464954ec1a25771f
+
+Use CVE-2010-3703
+> 
+> 39d140bfc0 array indexing error / underflow.  On platforms where atoi can
+> return negative result, this can allow out-of-array-bounds write.  Code
+> appears in old xpdf versions too.
+
+http://cgit.freedesktop.org/poppler/poppler/commit/?id=39d140bfc0b8239bdd96d6a55842034ae5c05473
+
+Use CVE-2010-3704
+
+Thanks.
+
+-- 
+    JB
