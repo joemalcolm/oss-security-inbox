@@ -1,45 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/10/1
-Message-ID: <AANLkTimRwif7c-YXVTLzdo00M1KvfJLP8IMqz7URfGTn@mail.gmail.com>
-Date: Fri, 9 Jul 2010 21:44:20 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: akuster <akuster@...sta.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: kernel: gfs2 acl issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/04/4
+Message-Id: <201010041712.57836.ludwig.nussel@suse.de>
+Date: Mon, 4 Oct 2010 17:12:57 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
+To: "oss-security" <oss-security@...ts.openwall.com>
+Cc: Timo Sirainen <tss@....fi>
+Subject: CVE Request: more dovecot ACL issues
 Content-Type: text/plain; charset=utf-8
 
-Kernels prior to 2.6.32 are not vulnerable.
+Hi,
 
--Dan
+dovecot 1.2.15 fixes issues with ACLs:
+http://www.dovecot.org/list/dovecot/2010-October/053450.html
+http://www.dovecot.org/list/dovecot/2010-October/053452.html
 
-On Fri, Jul 9, 2010 at 1:48 PM, akuster <akuster@...sta.com> wrote:
-> Dan,
->
-> Is 2.6.32 the earliest kernel showing the problem or just what was tested?
->
-> Regards,
-> Armin
->
-> On 07/08/2010 05:56 PM, Dan Rosenberg wrote:
->> To elaborate on the issue: the gfs2 filesystem in 2.6.32 kernels
->> currently allows any user to set arbitrary ACLs for files they do not
->> own, essentially granting full access to everything.  The source of
->> this problem also caused other misbehavior of ACLs.  This fix resolved
->> the issue for 2.6.33, but it was not backported, so 2.6.32 remains
->> vulnerable.
->>
->> -Dan
->>
->> On Thu, Jul 8, 2010 at 11:47 PM, Eugene Teo <eugeneteo@...nel.sg> wrote:
->>> Upstream commit 2646a1f6 (2.6.33-rc1) fixed an interesting gfs2 acl issue
->>> late last year. Thanks Dan Rosenberg for informing us about this.
->>>
->>> http://git.kernel.org/linus/2646a1f61a3b5525914757f10fa12b5b94713648
->>>
->>> I didn't request a CVE name for this but if you need one, ping Steve.
->>>
->>> Thanks, Eugene
->>> --
->>> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
->>>
->
+cu
+Ludwig
+
+-- 
+ (o_   Ludwig Nussel
+ //\   
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
