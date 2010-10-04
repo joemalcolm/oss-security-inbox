@@ -1,42 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/07/4
-Message-ID: <20100707121319.GA6091@suse.de>
-Date: Wed, 7 Jul 2010 14:13:19 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
-To: Josh Bressers <bressers@...hat.com>
-Cc: oss-security@...ts.openwall.com, yoshfuji@...ux-ipv6.org
-Subject: Re: patch for remote buffer overflows and local message spoofing in mipv6 daemon
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/04/8
+Message-ID: <1294336610.1198571286220608206.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 4 Oct 2010 15:30:08 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Timo Sirainen <tss@....fi>, coley <coley@...re.org>
+Subject: Re: CVE Request: more dovecot ACL issues
 Content-Type: text/plain; charset=utf-8
 
-Its probably better to have two IDs, even though its unlikely
-that they will be fixed separately. Its two issues at last.
 
-Sebastian
+----- "Ludwig Nussel" <ludwig.nussel@...e.de> wrote:
+
+> Hi,
+> 
+> dovecot 1.2.15 fixes issues with ACLs:
+> http://www.dovecot.org/list/dovecot/2010-October/053450.html
+> http://www.dovecot.org/list/dovecot/2010-October/053452.html
+> 
+
+If I'm understanding this correctly based off
+http://www.dovecot.org/list/dovecot/2010-October/053452.html
+
+There are two issues here:
+
+a) If admin wanted to remove some rights from mailboxes in user's
+private namespace (e.g. symlinked shared mailboxes), they may not have
+gotten removed.
+
+Use CVE-2010-3706 for this one.
 
 
-On Wed, Jul 07, 2010 at 07:42:50AM -0400, Josh Bressers wrote:
-> 
-> ----- "Sebastian Krahmer" <krahmer@...e.de> wrote:
-> 
-> > Hi,
-> > 
-> > I tried this 2 years ago on vendor-sec and with the maintainers at that
-> > time w/o success. I polished the patch to fit in the current commit.  The
-> > bugs were not fixed during the two years.  Can someone assign CVE(s)?
-> > 
-> 
-> Do you need two IDs? This message sounds like it, but I'm not completely
-> sure.
-> 
-> Thanks.
-> 
-> -- 
->     JB
+b) When mixing up multiple ACL entries, such as groups/users the more
+specific entry may not have replaced the previous entry (e.g.
+group-override may not have worked as expected).
+
+Use CVE-2010-3707.
+
+Thanks.
 
 -- 
-~
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-~ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
-
+    JB
