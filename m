@@ -1,38 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/20/7
-Message-ID: <20100120123142.GI14634@ngolde.de>
-Date: Wed, 20 Jan 2010 13:31:42 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/04/3
+Message-ID: <20101004150726.GK1955@redhat.com>
+Date: Mon, 4 Oct 2010 09:07:26 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: BerliOS.de comrpomise
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request, security issues fixed in MySQL 5.1.51
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Josh Bressers <bressers@...hat.com> [2010-01-18 22:16]:
-> As some of you have heard, it seems that BerliOS was compromised recently.
-> http://lwn.net/Articles/369633/
-> http://www.h-online.com/open/news/item/BerliOS-open-source-project-portal-falls-victim-to-attack-903990.html
-> 
-> I've mailed the BerliOS admins with no reply. I'm wondering if anyone has 
-> any additional details regarding this.
-> 
-> The Apache group had a similar incident some years back, and did an 
-> incredible job of documenting things:
-> http://www.apache.org/info/20010519-hack.html
+MySQL 5.1.51 corrects a few security flaws.  Could we get some CVEs
+assigned?
 
-We (Debian) also contacted them and got a rather distracting reply so far 
-which doesn't help much. We are thinking about informing our maintainers to 
-check the upstream tarballs. But given the replies in the lwn thread and a 
-look at git.berlios.de doesn't give the impression so far that anything has 
-been fixed in a secure manner. I'll keep you updated but so far at least (and 
-this is my personal opinion) it doesn't look to me like it would be a wise 
-decision to host files at BerliOS currently and that BerliOS is interested to 
-do what apache has been done.
+http://dev.mysql.com/doc/refman/5.1/en/news-5-1-51.html
 
-Cheers
-Nico
+Security Fix: During evaluation of arguments to extreme-value functions
+(such as LEAST() and GREATEST()), type errors did not propagate
+properly, causing the server to crash. (Bug#55826)
+
+
+Security Fix: The server could crash after materializing a derived table
+that required a temporary table for grouping. (Bug#55568)
+
+
+Security Fix: A user-variable assignment expression that is evaluated in
+a logical expression context can be precalculated in a temporary table
+for GROUP BY. However, when the expression value is used after creation
+of the temporary table, it was re-evaluated, not read from the table and
+a server crash resulted. (Bug#55564)
+
+
+Security Fix: Pre-evaluation of LIKE predicates during view preparation
+could cause a server crash. (Bug#54568)
+
+
+Security Fix: GROUP_CONCAT() and WITH ROLLUP together could cause a
+server crash. (Bug#54476)
+
+
+Security Fix: Queries could cause a server crash if the GREATEST() or
+LEAST() function had a mixed list of numeric and LONGBLOB arguments, and
+the result of such a function was processed using an intermediate
+temporary table. (Bug#54461)
+
+
+Security Fix: Queries with nested joins could cause an infinite loop in
+the server when used from stored procedures and prepared statements.
+(Bug#53544)
+
+
+Thanks!
+
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+Vincent Danen / Red Hat Security Response Team 
