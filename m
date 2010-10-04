@@ -1,41 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/08/5
-Message-Id: <20100908115948.C919.A69D9226@jp.fujitsu.com>
-Date: Wed,  8 Sep 2010 12:00:42 +0900 (JST)
-From: KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>
-To: Roland McGrath <roland@...hat.com>
-Cc: kosaki.motohiro@...fujitsu.com, Linus Torvalds <torvalds@...ux-foundation.org>, Andrew Morton <akpm@...ux-foundation.org>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Kees Cook <kees.cook@...onical.com>, Al Viro <viro@...iv.linux.org.uk>, Oleg Nesterov <oleg@...hat.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, pageexec@...email.hu, "Brad Spengler <spender@...ecurity.net> Eugene Teo" <eugene@...hat.com>
-Subject: Re: [PATCH 0/3] execve argument-copying fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/04/5
+Message-ID: <750612039.1191941286219111952.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 4 Oct 2010 15:05:12 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Small exposure in ocfs2 fast symlinks.
 Content-Type: text/plain; charset=utf-8
 
-> This is my take on parts of the execve large arguments copying issues
-> that Kees posted about, and Brad and others have been discussing.
-> I've only looked at the narrow area of the argument copying code
-> itself.  I think these are good and necessary fixes.  But I'm not
-> addressing the whole OOM killer/mm accounting issue, which also needs
-> to be fixed (and I have the impression others are already looking into that).
-> 
-> The following changes since commit d56557af19867edb8c0e96f8e26399698a08857f:
-> 
->   Merge branch 'for-linus' of git://git.kernel.org/pub/scm/linux/kernel/git/jbarnes/pci-2.6 (2010-09-07 16:00:17 -0700)
-> 
-> are available in the git repository at:
-> 
->   git://git.kernel.org/pub/scm/linux/kernel/git/frob/linux-2.6-roland.git topic/exec-fixes
-> 
-> Roland McGrath (3):
->       setup_arg_pages: diagnose excessive argument size
->       execve: improve interactivity with large arguments
->       execve: make responsive to SIGKILL with large arguments
-> 
->  fs/exec.c |   14 ++++++++++++++
->  1 files changed, 14 insertions(+), 0 deletions(-)
+----- "Joel Becker" <Joel.Becker@...cle.com> wrote:
 
+> Hey Everyone,
+> 	We just discovered that ocfs2 could walk off the end of fast symlinks
+> 	-- that is, symlinks that are stored directly in the inode block.
+> 	ocfs2 terminates these with NUL characters, but a disk corruption or an
+> 	attacker with direct access to the ocfs2 disk could overwrite the NUL.
+> 	Following the symlink via the filesystem would walk off the end of the
+> 	in-memory block buffer.  We're not sure how exploitable this is, but I
+> 	figured I'd provide a heads-up.  The fix is in ocfs2's git tree and
+> 	will be sent upstream tonight.  Erratas with the fix are being built.
+> 	If someone thinks we should have a CVE, please provide me with the
+> 	number.  Otherwise, just FYI.
+> 
 
-All of changes looks nice to me :)
+Unless someone asks for an ID, I don't plan to give this one. I dare say if
+an attacker can modify the disk directly, you probably have far bigger
+worries here than following symlinks.
+
 Thanks.
-	Reviewed-by: KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>
 
-
-
-
+-- 
+    JB
