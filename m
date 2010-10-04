@@ -1,18 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/22/7
-Message-ID: <4CEA0D83.6020104@redhat.com>
-Date: Mon, 22 Nov 2010 14:28:19 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-2010-4161 kernel: rhel5 backport of 93821778 caused deadlock
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/04/7
+Message-ID: <505590680.1194281286219929364.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 4 Oct 2010 15:18:49 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Eugene Teo <eugeneteo@...nel.sg>, coley <coley@...re.org>
+Subject: Re: CVE request: kernel: SCTP memory corruption in HMAC handling
 Content-Type: text/plain; charset=utf-8
 
-This can be triggered using Dan's reproducer for CVE-2010-4158. The 
-issue was introduced in 93821778def10ec1e69aa3ac10adee975dad4ff3 and was 
-fixed in fda9ef5d679b07c9d9097aaf6ef7f069d794a8f9. This is assigned with 
-CVE-2010-4161. This was mentioned in 
-http://www.spinics.net/lists/netdev/msg146404.html.
+Please use CVE-2010-3705
 
-See https://bugzilla.redhat.com/show_bug.cgi?id=652534#c0 for more info.
+Thanks.
 
-Thanks, Eugene
+-- 
+    JB
+
+
+----- "Dan Rosenberg" <dan.j.rosenberg@...il.com> wrote:
+
+> Reference:
+> http://marc.info/?l=linux-kernel&m=128596992418814&w=2
+> 
+> When parsing a peer's supported HMAC authentication options in the
+> sctp_auth_asoc_get_hmac() function, a malicious peer can craft their
+> HMAC array in such a way as to cause memory corruption (out-of-bounds
+> read followed by use of retrieved out-of-bounds data), which at the
+> very least could cause a denial of service via kernel panic, and
+> possibly worse.  It appears this could be triggered remotely when
+> connecting to a malicious peer, or locally by a user acting as both
+> endpoints.  In both cases, the "auth_enable" sysctl must be set in
+> order to trigger the bug.
+> 
+> -Dan
