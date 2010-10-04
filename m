@@ -1,47 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/03/3
-Message-ID: <20100403135522.GL1975@ngolde.de>
-Date: Sat, 3 Apr 2010 15:55:22 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/04/9
+Message-ID: <1884586003.1202051286221777299.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 4 Oct 2010 15:49:37 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: slusarz@...de.org, chuck@...de.org
-Subject: CVE-2010-0463 incomplete horde fixes
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request, security issues fixed in MySQL 5.1.51
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-from the CVE id description:
-| Horde IMP 4.3.6 and earlier does not request that the web browser
-| avoid DNS prefetching of domain names contained in e-mail messages,
-| which makes it easier for remote attackers to determine the network
-| location of the webmail user by logging DNS requests.
-Additionally: https://secure.grepular.com/DNS_Prefetch_Exposure_on_Thunderbird_and_Webmail
+Steve,
 
-In order to fix this horde upstream added:
-// Build filter stack. Starts with HTML markup and tab expansion.
-$filters = array(
-    'text2html' => array(
-        'charset' => Horde_Nls::getCharset(),
-        // See Ticket #8836
-        'noprefetch' => ($GLOBALS['browser']->isBrowser('mozilla') && !$GLOBALS['browser']->usingSSLConnection()),
-        'parselevel' => Horde_Text_Filter_Text2html::MICRO
-    ),
-    'tabs2spaces' => array(),
-);
+Can MITRE handle this one?
 
-If the noprefetch option is set imp will add <meta http-equiv="x-dns-prefetch-control" value="off" />
-to the page.
-The problem with the above fix is that it is only triggered if the browser is mozilla and the
-connection is not using SSL. I think this comes from a misunderstanding of the above
-blog post which states "Using HTTPS rather than HTTP disables DNS prefetching."
+Thanks.
 
-From my understanding this fix is incomplete because other browsers (e.g. Chrome) do
-DNS prefetching as well and the assumption that this is disabled using HTTPS is also
-for mozilla only true in the default configuration.
+-- 
+    JB
 
-JFYI...
 
-Cheers
-Nico
-P.S. Cced upstream
+----- "Vincent Danen" <vdanen@...hat.com> wrote:
 
-Content of type "application/pgp-signature" skipped
+> MySQL 5.1.51 corrects a few security flaws.  Could we get some CVEs
+> assigned?
+> 
+> http://dev.mysql.com/doc/refman/5.1/en/news-5-1-51.html
+> 
+> Security Fix: During evaluation of arguments to extreme-value
+> functions
+> (such as LEAST() and GREATEST()), type errors did not propagate
+> properly, causing the server to crash. (Bug#55826)
+> 
+> 
+> Security Fix: The server could crash after materializing a derived
+> table
+> that required a temporary table for grouping. (Bug#55568)
+> 
+> 
+> Security Fix: A user-variable assignment expression that is evaluated
+> in
+> a logical expression context can be precalculated in a temporary
+> table
+> for GROUP BY. However, when the expression value is used after
+> creation
+> of the temporary table, it was re-evaluated, not read from the table
+> and
+> a server crash resulted. (Bug#55564)
+> 
+> 
+> Security Fix: Pre-evaluation of LIKE predicates during view
+> preparation
+> could cause a server crash. (Bug#54568)
+> 
+> 
+> Security Fix: GROUP_CONCAT() and WITH ROLLUP together could cause a
+> server crash. (Bug#54476)
+> 
+> 
+> Security Fix: Queries could cause a server crash if the GREATEST() or
+> LEAST() function had a mixed list of numeric and LONGBLOB arguments,
+> and
+> the result of such a function was processed using an intermediate
+> temporary table. (Bug#54461)
+> 
+> 
+> Security Fix: Queries with nested joins could cause an infinite loop
+> in
+> the server when used from stored procedures and prepared statements.
+> (Bug#53544)
+> 
+> 
+> Thanks!
+> 
+> -- 
+> Vincent Danen / Red Hat Security Response Team
