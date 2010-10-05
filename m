@@ -1,38 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/11/1
-Message-ID: <4C627D67.9090007@redhat.com>
-Date: Wed, 11 Aug 2010 12:37:27 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, Caolan McNamara <caolanm@...hat.com>, David Tardon <dtardon@...hat.com>, Malte Timmermann <malte.timmermann@...cle.com>
-Subject: CVE Request -- OpenOffice.org [two ids]: 1, integer truncation error 2, short integer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/05/1
+Message-ID: <87zkush569.fsf@mid.deneb.enyo.de>
+Date: Tue, 05 Oct 2010 20:21:02 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
+To: oss-security@...ts.openwall.com
+Subject: Nagios format string issues
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve, vendors,
+Nagios Core 3.2.3 inclues fixes for a few format string bugs:
 
-   two security flaws have been reported against OpenOffice.org's Impress tool:
-     [1] http://securityevaluators.com/files/papers/CrashAnalysis.pdf
+<http://article.gmane.org/gmane.network.nagios.announce/85>
 
-A, an integer truncation error, leading to heap-based buffer overflow when
-    processing dictionary property items of the input *.ppt file:
+The patch Guillaume submitted is here:
 
-    References:
-      [2] https://bugzilla.redhat.com/show_bug.cgi?id=622529
-      [3] http://secunia.com/advisories/40775/
-      [4] http://securityevaluators.com/files/papers/CrashAnalysis.pdf
-      [5] http://www.openoffice.org/servlets/ReadMsg?list=dev&msgNo=27690
+<http://article.gmane.org/gmane.network.nagios.devel/7493>
 
-B, a short integer overflow, leading to heap-based buffer overflow, when processing
-    *.ppt document with too big polygons
-
-    References:
-      [6] https://bugzilla.redhat.com/show_bug.cgi?id=622555
-      [7] http://secunia.com/advisories/40775/
-      [8] http://securityevaluators.com/files/papers/CrashAnalysis.pdf
-      [9] http://www.openoffice.org/servlets/ReadMsg?list=dev&msgNo=27690
-
-Could you allocate CVE ids for these two issues?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Does anybody know if this is on an exploitable code path?
