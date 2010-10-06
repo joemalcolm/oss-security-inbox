@@ -1,30 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/07/9
-Message-ID: <998299634.765771273257758457.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 7 May 2010 14:42:38 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/06/5
+Message-Id: <201010062156.09985.oeriksson@mandriva.com>
+Date: Wed, 6 Oct 2010 21:56:09 +0200
+From: Oden Eriksson <oeriksson@...driva.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Assignment (gnustep)
+Cc: Josh Bressers <bressers@...hat.com>
+Subject: Re: Nagios format string issues
 Content-Type: text/plain; charset=utf-8
 
-
------ "Dan Rosenberg" <dan.j.rosenberg@...il.com> wrote:
-
-> Note that there's a second bug in there - a potentially exploitable
-> integer overflow leading to heap overflow when reading a file (or
-> socket) with a very large number of lines, causing several malloc()
-> calls to underallocate space.  This should probably receive a second
-> CVE.
+onsdagen den 6 oktober 2010 16.46.54 skrev  Josh Bressers:
+> ----- "Oden Eriksson" <oeriksson@...driva.com> wrote:
+> > We have a whole bunch of similar patches in Mandriva, just fetch the
+> > cooker source rpm packages and do something like:
+> > 
+> > rpm -qlp *.src,rpm | grep format
+> > 
+> > It would be a major task to push that to the upstream projects.
+> > 
+> > Just checked the ones I fixed (in 2008/2009):
+> > 
+> > $ rpm -qlp /SRPMS/contrib/release/*.rpm /SRPMS/main/release/*.rpm |
+> > grep
+> > format_not_a_string_literal_and_no_format_arguments | wc -l
+> > 106
+> > 
+> > So, at least 106 new CVE assignments there.
 > 
-> http://article.gmane.org/gmane.comp.lib.gnustep.bugs/12379
+> It's probably not 106. Just becuase something isn't using format arguments
+> doesn't mean it's a security flaw. Some subset of these probably could be
+> considered security flaws though.
 > 
+> Does anyone know any tricks for wading through this many patches?
+> 
+> It would be wise to see about initiating a process to get these upstream.
+> 
+> Thanks.
 
-Ahh, I missed that one. I see it now, thanks.
+Hello.
 
-Use CVE-2010-1620 for the integer overflow.
+I just extracted the patches I made at the time. I cannot tell which of them 
+deserves CVE assignments though. I have put them here:
 
-Thanks.
+http://n1.nux.se/work/format_not_a_string_literal_and_no_format_arguments/
 
+These are only the ones I fixed. I intentionally named the patches with the 
+long funny name *format_not_a_string_literal_and_no_format_arguments* so that 
+I could easily tell what I touched. There are more patches named differently 
+like "*str*fmt*" or something similar, so someone with a lot of free time 
+should probably look deeper into this.
+
+Anyone can extract the patches or look in our svn for more clues. I'm sorry 
+for not having the time to send the patches upstream. However some of our 
+patches have made it upstream but I have lost track, sorry.
+
+I hope it helps.
+
+Cheers.
 -- 
-    JB
+Regards // Oden Eriksson
+Security team manager - Mandriva
+CEO NUX AB
