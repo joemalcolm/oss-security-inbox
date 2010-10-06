@@ -1,19 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/21/2
-Message-ID: <Pine.GSO.4.64.1002211115420.9538@faron.mitre.org>
-Date: Sun, 21 Feb 2010 11:16:05 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Thomas Waldmann <tw-public@....de>
-cc: oss-security <oss-security@...ts.openwall.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- MoinMoin -- 1.8.7
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/06/1
+Message-Id: <201010061225.11036.oeriksson@mandriva.com>
+Date: Wed, 6 Oct 2010 12:25:10 +0200
+From: Oden Eriksson <oeriksson@...driva.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Nagios format string issues
 Content-Type: text/plain; charset=utf-8
 
+tisdagen den 5 oktober 2010 20.21.02 skrev  Florian Weimer:
+> Nagios Core 3.2.3 inclues fixes for a few format string bugs:
+> 
+> <http://article.gmane.org/gmane.network.nagios.announce/85>
+> 
+> The patch Guillaume submitted is here:
+> 
+> <http://article.gmane.org/gmane.network.nagios.devel/7493>
+> 
+> Does anybody know if this is on an exploitable code path?
 
-On Mon, 15 Feb 2010, Thomas Waldmann wrote:
+We have a whole bunch of similar patches in Mandriva, just fetch the cooker 
+source rpm packages and do something like:
 
-> BTW, I need a 3rd CVE for user profile input sanitizing (all moin
-> versions), also fixed in 1.8.7 (and soon by 1.9.2).
+rpm -qlp *.src,rpm | grep format
 
-Use CVE-2010-0669
+It would be a major task to push that to the upstream projects.
 
-- Steve
+Just checked the ones I fixed (in 2008/2009):
+
+$ rpm -qlp /SRPMS/contrib/release/*.rpm /SRPMS/main/release/*.rpm | grep 
+format_not_a_string_literal_and_no_format_arguments | wc -l
+106
+
+So, at least 106 new CVE assignments there.
+
+
+Cheers.
+
+-- 
+Regards // Oden Eriksson
+Security team manager - Mandriva
+CEO NUX AB
