@@ -1,28 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/23/6
-Message-Id: <201011231212.18654.sgrubb@redhat.com>
-Date: Tue, 23 Nov 2010 12:12:18 -0500
-From: Steve Grubb <sgrubb@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/06/3
+Message-ID: <Pine.GSO.4.64.1010061138200.25305@faron.mitre.org>
+Date: Wed, 6 Oct 2010 11:40:49 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: Dan Rosenberg <dan.j.rosenberg@...il.com>
-Subject: Re: Linux kernel address leaks
+Subject: Re: Nagios format string issues
 Content-Type: text/plain; charset=utf-8
 
-On Tuesday, November 23, 2010 12:00:51 pm Dan Rosenberg wrote:
-> I don't think it's appropriate to use CVEs as a blackmailing tool, and
-> I don't actually think these issues need CVEs.  But claiming that it
-> would be inappropriate to assign them because they're not "security
-> problems" is a bit misguided.  We're not talking about leaking
-> function addresses here - we're talking about leaking the addresses of
-> live kernel data structures, which in my opinion is more of a risk.
 
-But you can't access kernel memory as a common user unless you already have a second 
-bug. That second bug is the CVE. Saying this leak helps escate privs is like saying 
-/etc/password leaks account names. You already have to have system access to use that 
-info.
+On Wed, 6 Oct 2010, Josh Bressers wrote:
 
-That said, why don't upstream kernel allow 0's for the memory addresses? I don't know 
-of any tool that uses the memory address information. What user space uses is the 
-inode, path, and network address/port fields. (netstat, lsof, netcap)
+> ----- "Oden Eriksson" <oeriksson@...driva.com> wrote:
+>
+>>
+>> Just checked the ones I fixed (in 2008/2009):
+>>
+>> $ rpm -qlp /SRPMS/contrib/release/*.rpm /SRPMS/main/release/*.rpm |
+>> grep
+>> format_not_a_string_literal_and_no_format_arguments | wc -l
+>> 106
+>>
+>> So, at least 106 new CVE assignments there.
+>>
+>>
+>
+> It's probably not 106. Just becuase something isn't using format arguments
+> doesn't mean it's a security flaw. Some subset of these probably could be
+> considered security flaws though.
 
--Steve
+I agree.  Closer inspection is necessary.  Some of these variables could 
+be hard-coded constants.  Sounds like there could be a lot, though.
+
+- Steve
