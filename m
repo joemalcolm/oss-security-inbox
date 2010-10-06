@@ -1,36 +1,109 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/14/4
-Message-ID: <20100114120253.GA8661@ngolde.de>
-Date: Thu, 14 Jan 2010 13:02:53 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: viewvc
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/06/6
+Message-ID: <AANLkTi=H4v6UPwZBBObC-Z-mkf4WSeLo9vFsrC4UQZRh@mail.gmail.com>
+Date: Wed, 6 Oct 2010 16:02:53 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com, Eugene Teo <eugeneteo@...nel.sg>
+Subject: Re: CVE request: multiple kernel stack memory disclosures
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Josh Bressers <bressers@...hat.com> [2010-01-13 22:14]:
-> ----- "Ludwig Nussel" <ludwig.nussel@...e.de> wrote:
-> > 
-> > viewvc 1.1.3 was released with security fixes according to the changelog:
-> > http://viewvc.tigris.org/source/browse/viewvc/trunk/CHANGES?r1=2242&r2=2313&pathrev=HEAD
-> > 
-> > More explanations are in this commit:
-> > http://viewvc.tigris.org/source/browse/viewvc?view=rev&revision=2300
-> > 
-> 
-> As best as I can tell, there are only two things that deserve CVE ids:
-> 
-> * security fix: add root listing support of per-root authz config
->     Use CVE-2010-0004
+I'll omit descriptions here to save space, since they were already
+provided.  I'll keep the same organization as last time, just to make
+it easier.  Issues that haven't been fixed yet are for the most part
+planned for 2.6.37.  Patches were submitted for all issues, so it's
+mostly just a matter of time.
 
-In what sense is this a security fix? This looks just like an enhancement to 
-allow admins to configure this behaviour but I see no security bug itself 
-here. Please enlighten me :)
+---
 
-Cheers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
+TIOCGICOUNT stack leaks:
 
-Content of type "application/pgp-signature" skipped
+usb/serial/mos*.c
+Fixed in 2.6.36-rc5
+Affects >= 2.6.19
+
+drivers/serial/serial_core.c
+Not fixed yet (Alan Cox's fix will be in 2.6.37)
+Affects >= 2.6.0
+
+drivers/char/amiserial.c
+Not fixed yet (Alan Cox's fix will be in 2.6.37)
+Affects >= 2.6.0, >= 2.4.0
+
+drivers/char/nozomi.c
+Not fixed yet (Alan Cox's fix will be in 2.6.37)
+Affects >= 2.6.25
+
+drivers/net/usb/hso.c (CVE-2010-3298)
+Fixed in 2.6.36-rc5
+Affects >= 2.6.29
+
+---
+
+FBIOGET_VBLANK stack leaks:
+
+drivers/video/sis/sis_main.c
+Fixed in 2.6.36-rc6
+Affects >= 2.6.11
+
+drivers/video/ivtv/ivtvfb.c
+Not fixed yet (patch has been queued)
+Affects >= 2.6.24
+
+---
+
+Miscellaneous device ioctl stack leaks:
+
+sound/pci/rme9652/hdsp*.c
+Fixed in 2.6.36-rc6
+Affects >= 2.6.0 (hdsp.c), >= 2.6.13 (hdspm.c)
+
+drivers/video/via/ioctl.c
+Fixed in 2.6.36-rc5
+Affects >= 2.6.28
+
+drivers/net/cxgb3/cxgb3_main.c (CVE-2010-3296)
+Fixed in 2.6.36-rc5
+Affects >= 2.6.21
+
+drivers/net/eql.c (CVE-2010-3297)
+Fixed in 2.6.36-rc5
+Affects >= 2.6.0, >= 2.4.0
+
+---
+
+System call stack leak:
+
+ipc/sem.c
+Not fixed yet (patch queued)
+Affects >= 2.6.0, >= 2.4.0
+
+
+
+Whew.
+
+-Dan
+
+On Wed, Oct 6, 2010 at 2:10 PM, Steven M. Christey
+<coley@...us.mitre.org> wrote:
+>
+> When dealing with findings of this scale, sometimes the best we can do
+> (within a reasonable amount of time) is to combine things.
+>
+> Let's consider the general guidelines of "split by vuln type" and "split by
+> affected version."  Although the severity of each bug may vary, they all
+> appear to be related to "not initializing re-used memory."
+>
+> The remaining question is how to determine "affected version."  Ideally one
+> might like to know the minimum set of affected versions for each bug (both
+> in 2.6 and 2.4), but this might not be readily available.  We could then
+> just decide to split things based on which bugs got fixed in which 2.6.x.y
+> release.  If Dan, Eugene, or someone else has that kind of information
+> (which is painful for me to research as a kernel "outsider"), then we can
+> group bugs that are fixed in the same 2.6.x.y release, then assign a single
+> CVE to each group.
+>
+> We effectively exclude those one-off issues that are already assigned CVEs.
+>
+> - Steve
+>
