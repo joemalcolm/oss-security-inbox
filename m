@@ -1,38 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/16/1
-Message-Id: <201005170033.31687.hanno@hboeck.de>
-Date: Mon, 17 May 2010 00:33:31 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/06/2
+Message-ID: <908504848.65321286376414054.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 6 Oct 2010 10:46:54 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>, Josh Bressers <bressers@...hat.com>
-Subject: CVE request: phpbb 3.0.7 and before 3.0.5
+Subject: Re: Nagios format string issues
 Content-Type: text/plain; charset=utf-8
 
-http://www.phpbb.com/community/viewtopic.php?f=14&t=2014195
+----- "Oden Eriksson" <oeriksson@...driva.com> wrote:
 
-Please assign cve. Cite:
-"Otherwise, it is possible for users to bypass permission settings under the 
-following circumstances:
+> 
+> We have a whole bunch of similar patches in Mandriva, just fetch the
+> cooker source rpm packages and do something like:
+> 
+> rpm -qlp *.src,rpm | grep format
+> 
+> It would be a major task to push that to the upstream projects.
+> 
+> Just checked the ones I fixed (in 2008/2009):
+> 
+> $ rpm -qlp /SRPMS/contrib/release/*.rpm /SRPMS/main/release/*.rpm |
+> grep 
+> format_not_a_string_literal_and_no_format_arguments | wc -l
+> 106
+> 
+> So, at least 106 new CVE assignments there.
+> 
+> 
 
-    * Feeds are enabled
-    * Any of the posts or topics feeds are enabled
-    * The unauthorised user - or one of the groups they are a member of - have 
-forum permissions set on a private forum
-    * If you have excluded a forum from the list of forums that provide feeds, 
-it is unaffected"
+It's probably not 106. Just becuase something isn't using format arguments
+doesn't mean it's a security flaw. Some subset of these probably could be
+considered security flaws though.
 
+Does anyone know any tricks for wading through this many patches?
 
-Also, I think this phpbb 3.0.5 still has no cve (I requested that before 
-here):
-http://www.phpbb.com/community/viewtopic.php?f=14&p=9764445
-# [Sec] Only use forum id supplied for posting if global announcement 
-detected. (Reported by nickvergessen)
+It would be wise to see about initiating a process to get these upstream.
 
+Thanks.
 
 -- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-
-http://schokokeks.org - professional webhosting
-
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+    JB
