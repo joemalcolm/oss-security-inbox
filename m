@@ -1,32 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/01/1
-Message-Id: <201004011307.18251.ludwig.nussel@suse.de>
-Date: Thu, 1 Apr 2010 13:07:17 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
-To: "oss-security" <oss-security@...ts.openwall.com>
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE Request: moodle 1.9.8, 1.8.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/06/4
+Message-ID: <Pine.GSO.4.64.1010061150440.25305@faron.mitre.org>
+Date: Wed, 6 Oct 2010 14:10:55 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Dan Rosenberg <dan.j.rosenberg@...il.com>
+cc: oss-security@...ts.openwall.com, Eugene Teo <eugeneteo@...nel.sg>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: multiple kernel stack memory disclosures
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-Moodle 1.9.8 and 1.8.12 were released with security fixes:
-http://docs.moodle.org/en/Moodle_1.9.8_release_notes
-* MSA-10-0001 Vulnerability in KSES text cleaning
-* MSA-10-0002 XSS vulnerabilty in the phpcas module
-* MSA-10-0003 Disclosure of full user names
-* MSA-10-0004 Improved access control in course restore
-* MSA-10-0005 Incorrect validation of forms data
-* MSA-10-0006 SQL injection in Wiki module
-* MSA-10-0007 Reflective Cross Site Scripting (XSS) in the Moodle Global Search Engine
-* MSA-10-0008 Persistent XSS when using Login-as feature
-* MSA-10-0009 Session fixation prevention now turned on by default
+When dealing with findings of this scale, sometimes the best we can do 
+(within a reasonable amount of time) is to combine things.
 
-cu
-Ludwig
+Let's consider the general guidelines of "split by vuln type" and "split 
+by affected version."  Although the severity of each bug may vary, they 
+all appear to be related to "not initializing re-used memory."
 
--- 
- (o_   Ludwig Nussel
- //\   
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+The remaining question is how to determine "affected version."  Ideally 
+one might like to know the minimum set of affected versions for each bug 
+(both in 2.6 and 2.4), but this might not be readily available.  We could 
+then just decide to split things based on which bugs got fixed in which 
+2.6.x.y release.  If Dan, Eugene, or someone else has that kind of 
+information (which is painful for me to research as a kernel "outsider"), 
+then we can group bugs that are fixed in the same 2.6.x.y release, then 
+assign a single CVE to each group.
+
+We effectively exclude those one-off issues that are already assigned 
+CVEs.
+
+- Steve
