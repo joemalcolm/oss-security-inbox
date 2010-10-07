@@ -1,69 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/28/7
-Message-ID: <1008984140.598121285704693555.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 28 Sep 2010 16:11:33 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/07/2
+Message-ID: <20101007105549.7383eb92@redhat.com>
+Date: Thu, 7 Oct 2010 10:55:49 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE requests: POE::Component::IRC, Alien Arena, Babiloo, Typo3, abcm2ps, ModSecurity, Linux kernel
+Subject: Re: Nagios format string issues
 Content-Type: text/plain; charset=utf-8
 
-I can assign most of these. Steve, I have two requests below, can MITRE
-take them?
+On Wed, 6 Oct 2010 21:56:09 +0200 Oden Eriksson wrote:
 
-
------ "Moritz Muehlenhoff" <jmm@...ian.org> wrote:
-
-> Hi,
-> here's a few CVE requests for issues in the Debian Security Tracker
-> without a CVE ID assigned:
+> I just extracted the patches I made at the time. I cannot tell which
+> of them deserves CVE assignments though. I have put them here:
 > 
-> 1. POE::Component::IRC
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=581194
-> http://github.com/bingos/poe-component-irc/compare/d2ead04...675f55cd
+> http://n1.nux.se/work/format_not_a_string_literal_and_no_format_arguments/
 
-Use CVE-2010-3438
+Did you use any specific way to identify all these?  From a quick look
+at a few randomly chosen patches, there seem to be cases where one call
+was fixed, other left unchanged.  That's only for the code visible in
+the context diff.
 
-> 
-> 2. Alien Arena
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=575621
-> http://corent.proboards.com/index.cgi?board=bugreport&action=display&thread=4761
+There are few incorrect fixes too:
 
-Use CVE-2010-3439
+-  g_snprintf (gev.data.b, sizeof (gev.data.b), message);
++  g_snprintf (gev.data.b, sizeof (gev.data.b), message, "%s");
 
-> 
-> 3. Babiloo
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=591995
-
-Use CVE-2010-3440
-
-> 
-> 4. Typo3
-> http://typo3.org/teams/security/security-bulletins/typo3-sa-2010-012/
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=590719
-> http://lists.debian.org/debian-security-announce/2010/msg00144.html
-
-This one is bigger than a breadbox. Steve, can MITRE assign these ones?
-
-> 
-> 5. abcm2ps
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=577014
-> http://moinejf.free.fr/abcm2ps-5.txt
-> http://secunia.com/advisories/39345/
-
-This should probably be more than one, but without more details,
-I can only give it one: CVE-2010-3441
-
-> 
-> 6. ModSecurity
-> There was already a CVE request by Jan Lieskovsky, but it doesn't
-> seem
-> to have led to an ID assignment:
-> http://www.openwall.com/lists/oss-security/2010/02/10/2
-> 
-
-This one is also too big for me to handle properly. Can MITRE take it?
-
-Thanks
 -- 
-    JB
+Tomas Hoger / Red Hat Security Response Team
