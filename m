@@ -1,38 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/02/5
-Message-ID: <AANLkTim88gVkcHjKC++Bd3U=N0jxR=5QcfgpLQxr8A5X@mail.gmail.com>
-Date: Thu, 2 Sep 2010 13:43:57 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: Tomas Hoger <thoger@...hat.com>
-Cc: oss-security@...ts.openwall.com, coley@...us.mitre.org
-Subject: Re: CVE id request: libc fortify source information disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/07/3
+Message-ID: <Pine.GSO.4.64.1010071655550.16065@faron.mitre.org>
+Date: Thu, 7 Oct 2010 16:57:14 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request, security issues fixed in MySQL 5.1.51
 Content-Type: text/plain; charset=utf-8
 
-I retract my previous statement - you're correct that the backtrace
-also can reveal this same information.  Perhaps this is an acceptable
-risk, since I can't think of a single real-life case where this would
-have actually been useful to an attacker (although it's not too hard
-to imagine such a situation).  Or perhaps printing out any of this
-information to unprivileged users running suid applications should be
-reconsidered.
 
--Dan
+Looks like there were 8 security bugs reported at 
+http://dev.mysql.com/doc/refman/5.1/en/news-5-1-51.html, not 7.
 
-On Thu, Sep 2, 2010 at 1:17 PM, Tomas Hoger <thoger@...hat.com> wrote:
-> On Thu, 2 Sep 2010 12:23:23 -0400 Dan Rosenberg wrote:
->
->> > It seems the fix would need to remove all possibly-useful info from
->> > the error message.
->>
->> The backtrace or memory map don't really contain any potentially
->> sensitive information that couldn't be obtained otherwise.  It's just
->> the reference to argv[0] (in glibc/debug/fortify_fail.c) that worries
->> me, because this can be directly influenced to cause a printout of
->> process memory.
->
-> In case of stack protector failed check, it's still an attempt to
-> print-out info based on what's known to be (partially) corrupted.
->
-> --
-> Tomas Hoger / Red Hat Security Response Team
->
+These all have different affected versions claimed, so each gets a 
+separate CVE.
+
+- Steve
+
+
+Bug#55826 - incorrect propagation of type errors in evaluation of
+arguments to extreme-value functions
+
+   CVE-2010-3833
+   "create table .. select crashes with when KILL_BAD_DATA is returned"
+   5.0.91,5.1.49,5.1.50-bzr,5.5.5
+
+Bug#55568 - The server could crash after materializing a derived table
+that required a temporary table for grouping.
+
+   CVE-2010-3834
+   "user variable assignments crash server when used within query"
+   5.0.91-debug,5.1.49-debug
+
+Bug #55564 - A user-variable assignment expression that is evaluated
+in a logical expression context can be precalculated in a temporary
+table for GROUP BY. However, when the expression value is used after
+creation of the temporary table, it was re-evaluated, not read from
+the table and a server crash resulted.
+
+   CVE-2010-3835
+   "crash with user variables, assignments, joins..."
+   5.0.92, 5.1.37, 5.1.49, 5.1.50-bzr, 5.5.6-m3
+
+Bug#54568 - Pre-evaluation of LIKE predicates during view preparation
+could cause a server crash.
+
+   CVE-2010-3836
+   "create view cause Assertion failed: 0, file .\item_subselect.cc, line 836"
+   5.0.91-debug, 5.1.47-debug
+
+Bug#54476 - GROUP_CONCAT() and WITH ROLLUP together could cause a
+server crash.
+
+   CVE-2010-3837
+   "crash when group_concat and 'with rollup' in prepared statements"
+   5.0.91, 5.1.47, 5.1.49-bzr, 5.5.3
+
+   see: [23 Jul 14:25] Alexey Kopytov
+
+Bug#54461 - Queries could cause a server crash if the GREATEST() or
+LEAST() function had a mixed list of numeric and LONGBLOB arguments,
+and the result of such a function was processed using an intermediate
+temporary table.
+
+   CVE-2010-3838
+   "crash with longblob and union or update with subquery"
+   5.0.91,5.1.47, 5.5.3, 5.5.5-m3
+
+Bug#53544 - Queries with nested joins could cause an infinite loop in
+the server when used from stored procedures and prepared statements.
+
+   CVE-2010-3839
+   "Server hangs during JOIN query in stored procedure called twice in a row"
+   5.1.47, 5.6.99-m4 Dahlia, bzr_mysql-6.0-codebase-bugfixing
+
+Bug#51875 - The PolyFromWKB() function could crash the server when
+improper WKB data was passed to the function.
+
+   CVE-2010-3840
+   "crash when loading data into geometry function polyfromwkb"
+   5.0.90,5.1.44
+
