@@ -1,99 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/24/14
-Message-ID: <AANLkTi=Drii85J8ga083McKH4_0CFdJjY_8uE-BVxexW@mail.gmail.com>
-Date: Wed, 24 Nov 2010 09:59:11 -0500
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Interesting behavior with struct initiailization
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/08/2
+Message-ID: <4CAF3396.7070708@redhat.com>
+Date: Fri, 08 Oct 2010 17:07:02 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, Bill Janssen <bill.janssen@...il.com>, Andreas Hasenack <ahasenack@...ra.com.br>, Mads Kiilerich <mads@...lerich.com>
+Subject: CVE Request -- Mercurial --Doesn't verify subject Common Name properly
 Content-Type: text/plain; charset=utf-8
 
-Forgot to mention, my testing was done on gcc 4.4.3.
+Hello Steve, vendors,
 
-Also, s/initiailization/initialization
+   a security flaw was found in the way Mercurial handled subject
+Common Name field of the provided certificate (the check
+if the commonName in the received certificate matches the
+requested hostname was not performed). An attacker, able
+to get a carefully-crafted certificate signed by a Certificate
+Authority could use the certificate during a man-in-the-middle
+attack and potentially confuse Mercurial into accepting it by
+mistake.
 
--Dan
+References:
+[1] http://mercurial.selenic.com/bts/issue2407
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=641373
+[3] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=598841
+Upstream patch:
+[4] http://selenic.com/repo/hg-stable/diff/f2937d6492c5/mercurial/url.py
 
-On Wed, Nov 24, 2010 at 9:52 AM, Dan Rosenberg
-<dan.j.rosenberg@...il.com> wrote:
-> This topic has come up a few times recently on lkml, so I thought I'd
-> share my findings here for the sake of spreading information.
->
-> Lately, there have been a high number of instances in the Linux kernel
-> where uninitialized stack bytes are leaked to unprivileged users as a
-> result of copying structures to userland.  There's been recent
-> discussion on the proper way to make sure this doesn't happen.
->
-> There are three situations in which this might happen:
->
-> ===============================
->
-> 1. Lack of initialization
->
-> This is the easiest to spot.  For example:
->
-> ---
-> struct test { int a; int b; int c; } arg;
->
-> arg.a = 0;
-> arg.b = 0;
->
-> copy_to_user(ptr, &arg, sizeof(arg));
-> ---
->
-> The contents of arg.c will be leaked due to lack of initialization.
-> This is known and expected behavior.
->
-> ===============================
->
-> 2. Lack of initialization of padding bytes
->
-> gcc adds padding bytes to some structures to give them more natural
-> alignment.  If these bytes aren't cleared using memset() or C99
-> initialization (more on this soon), they'll be uninitialized and
-> subsequently leaked:
->
-> ---
-> struct test { int a; char b; int c; } arg;
->
-> arg.a = 0;
-> arg.b = 0;
-> arg.c = 0;
->
-> copy_to_user(ptr, &arg, sizeof(arg));
-> ---
->
-> The three bytes padding after the "char b" member will remain
-> uninitialized and are leaked in this example.
->
-> ===============================
->
-> 3. gcc does not clear padding bytes on full C99 initialization
->
-> I think this is unexpected behavior (at least to me), and it's the
-> reason I'm writing this post.  Normally, C99 initialization
-> automatically zeros out padding bytes as well.  For example:
->
-> ---
-> struct test { int a; char b; int c; } arg = {};
->
-> or
->
-> struct test { int a; char b; int c; } arg = { .a = 1 };
-> ---
->
-> will set the specified fields, and zero out everything else, including
-> padding bytes.  However, if you explicitly initialize every member
-> using C99 initialization, the padding bytes won't be zeroed out:
->
-> ---
-> struct test { int a; char b; int c; } arg = { .a = 0, .b = 0, .c = 0 };
-> ---
->
-> This will leave the padding bytes after "char b" uninitialized,
-> surprisingly.  I imagine this is an attempted optimization on gcc, but
-> now it's coming back to bite (no pun intended) everyone who relied on
-> this construct to prevent leakage.
->
-> Regards,
-> Dan
->
+According to [1] the true reason for this problem is the new python SSL
+module implementation:
+[5] http://bugs.python.org/issue1589
+[6] http://svn.python.org/view?view=rev&revision=85321
+
+and as stated in:
+[7] http://bugs.python.org/issue1589#msg58472
+
+it should be decision made by application designers, if the subject CN
+field will be checked despite of the python SSL module implementation.
+
+So could you allocate a CVE identifier for this issue(s)?
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
