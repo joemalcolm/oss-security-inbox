@@ -1,18 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/26/3
-Message-ID: <xmewXvkdHZjVW7RzZ6Rici7rkc0@QsmfhJNucgI88DfvPJdT1/nyboE>
-Date: Sun, 26 Dec 2010 22:22:07 +0300
-From: Eygene Ryabinkin <rea-sec@...elabs.ru>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/08/8
+Message-Id: <201010082342.24729.hanno@hboeck.de>
+Date: Fri, 8 Oct 2010 23:42:24 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: kalle@....net, felipe@....net, cellog@....net, pajoye@....net
-Subject: Re: Re: CVE-2010-2094: PECL's phar code is vulnerable too
+Subject: Fwd: CVE id request: fluxbb < 1.2.22 XSS
 Content-Type: text/plain; charset=utf-8
 
-Felipe, good day.
+never got a reply to this (please note it's 2009).
 
-Sun, Dec 26, 2010 at 10:29:27AM -0200, Felipe Pena wrote:
-> I've backported the fixes to pecl/phar.
+----------  Weitergeleitete Nachricht  ----------
 
-Good news.  Do you plan to tag a release?
+Subject: [oss-security] CVE id request: fluxbb < 1.2.22 XSS
+Date: Friday 04 September 2009
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+
+http://fluxbb.org/forums/topic/3222/fluxbb1222-released/
+
+
+"Fixed a critical XSS vulnerability, reported by endeavormac."
+
+
 -- 
-Eygene
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+
+http://schokokeks.org - professional webhosting
+
+-------------------------------------------------------
+
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+
+http://schokokeks.org - professional webhosting
+
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
