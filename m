@@ -1,29 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/16/10
-Message-ID: <20100316172339.GH30480@redhat.com>
-Date: Tue, 16 Mar 2010 11:23:39 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/08/1
+Message-ID: <20101008015133.GK1955@redhat.com>
+Date: Thu, 7 Oct 2010 19:51:33 -0600
 From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request: postgresql integer overflow in hash table size calculation
+Subject: qpidd SSL connection DoS (CVE-2010-3083)
 Content-Type: text/plain; charset=utf-8
 
-* [2010-03-09 09:46:49 -0700] Vincent Danen wrote:
+Just a heads up for anyone that ships qpid.  About a year and a half
+ago a blocking condition was found with SSL connections to qpidd, but I
+don't think upstream really thought about the security implications.
 
->I've been looking and can't find a CVE name for this issue.  Could one
->be assigned?
->
->An integer overflow flaw was found in the way postgresql used to
->calculate size for the hashtable for joined relations. An attacker could
->formulate a specially-crafted sql query, which once processed would lead
->to denial of service (postgresql daemon crash).
->
->References:
->
->https://bugzilla.redhat.com/show_bug.cgi?id=546621
->http://archives.postgresql.org/pgsql-bugs/2009-10/msg00277.php
+It was fixed upstream in July 2009.
 
-Please use CVE-2010-0733 for this issue.
+The details are in our bug:
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2010-3083
 
 -- 
 Vincent Danen / Red Hat Security Response Team 
