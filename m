@@ -1,46 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/27/10
-Message-ID: <20100927202916.GA4576@openwall.com>
-Date: Tue, 28 Sep 2010 00:29:16 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/08/3
+Message-ID: <20101008222859.02ebbd43@foo.fgeek.fi>
+Date: Fri, 8 Oct 2010 22:28:59 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: Minor security flaw with pam_xauth
+Subject: CVE request eoCMS SQL injection vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Sep 27, 2010 at 11:44:03AM -0600, Vincent Danen wrote:
-> >* [2010-09-24 20:48:23 +0400] Solar Designer wrote:
-> >>pam_xauth missing return value checks from setuid() and similar calls,
-> >>fixed in Linux-PAM 1.1.2 - CVE-2010-3316
-> >>
-> >>pam_env and pam_mail accessing the target user's files as root (and thus
-> >>susceptible to attacks by the user) in Linux-PAM below 1.1.2, partially
-> >>fixed in 1.1.2 - no CVE ID mentioned yet
-> >>
-> >>pam_env and pam_mail in Linux-PAM 1.1.2 not switching fsgid (or egid)
-> >>and groups when accessing the target user's files (and thus potentially
-> >>susceptible to attacks by the user) - CVE-2010-3430
-> >>
-> >>pam_env and pam_mail in Linux-PAM 1.1.2 not checking whether the
-> >>setfsuid() calls succeed (no known impact with current Linux kernels,
-> >>but poor practice in general) - CVE-2010-3431
-...
-> Oh, hang on.  Re-read some older messages again trying to grok this and
-> it looks like these checks were introduced in 1.1.2, so they would _not_
-> affect earlier versions if I'm understanding correctly.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Older versions were "fully vulnerable".  1.1.2 is "partially vulnerable".
+Description: "Cao Xuan Sang has reported a vulnerability in eoCMS, which
+can be exploited by malicious people to conduct SQL injection attacks.
 
-> So only 3316 and the second issue without a CVE name affect pre-1.1.2.
+Certain input passed to the page divide function of the viewboard and
+viewtopic modules is not properly sanitised before being used in SQL
+queries. This can be exploited to manipulate SQL queries by injecting
+arbitrary SQL code."
 
-Yes, in a sense.
+References:
+http://secunia.com/advisories/37272/
+http://security.bkis.com/eocms-sql-injection-vulnerability/
 
-> So what about previous versions that _don't_ have privilege switching in
-> pam_env and pam_mail?  Would that require yet another CVE or would the
-> addition of privilege switching be considered an enhancement, not a
-> security fix?
+Fixed in version: 0.9.02
 
-I think it should be considered a security fix.  Moreover, of these four
-issues (if we keep the separation above), the currently-CVE-less is the
-most serious one.
+Can I get CVE-identifier for this issue?
 
-Alexander
+Best regards,
+Henri Salo
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkyvcPsACgkQXf6hBi6kbk+2rwCcCZamyTdNH/KYU1hUIB6kgHV2
+Lx8AnRny2eowTyJBUz+tEM0I3OdP34RF
+=+rgg
+-----END PGP SIGNATURE-----
