@@ -1,22 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/29/5
-Message-ID: <20100629162814.GA5880@pool.math.tu-berlin.de>
-Date: Tue, 29 Jun 2010 18:28:15 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/08/5
+Message-Id: <201010082329.52273.hanno@hboeck.de>
+Date: Fri, 8 Oct 2010 23:29:51 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: syscp
+Subject: CVE request: usebb before 1.0.11 unauthorized access to content
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-can I get a CVE id for the following issue:
-"today I received a mail about a severe security problem in 
-the handling of open_basedir paths.  Customers are able to 
-add whatever path they want via the documentroot of a domain 
-by appending a colon to it and setting the open basedir path 
-to use that domain documentroot, not the customer root."
+http://www.usebb.net/community/topic.php?id=2501
 
-http://www.syscp-forum.org/index.php?topic=4981.0
-http://bugs.debian.org/587481
 
-Cheers
-Nico
+A security issue has been discovered in UseBB 1.0.10 with per forum and topic 
+RSS feeds in combination with restricted forum access permissions, giving 
+users access to post contents that should remain hidden. Anyone having a 
+restricted "read" permission set but NOT an equal or more restricted "view" 
+one is prone to this issue.
+
+
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+
+http://schokokeks.org - professional webhosting
+
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
