@@ -1,48 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/26/4
-Message-Id: <20100826222443.RRQINHQUTNSOYR@hackinthebox.org>
-Date: Thu, 26 Aug 2010 22:24:43 +0800
-From: Hafez Kamal <aphesz@...kinthebox.org>
-To: <oss-security@...ts.openwall.com>
-Subject: [HITB-Announce] HITB2010 SIGNINT Sessions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/08/4
+Message-Id: <201010082319.11478.hanno@hboeck.de>
+Date: Fri, 8 Oct 2010 23:19:11 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: joomla before 1.5.21 XSS
 Content-Type: text/plain; charset=utf-8
 
-Hack In The Box is proud to announce, a brand new lightning session
-called HITB SIGINT (Signal Intelligence/Interrupt)! HITB SIGINT
-sessions are designed to provide a quick 15 minute overview for
-material and research that's up and coming - stuff that isn't quite
-ready for the mainstream tracks of the conference but deserve a mention
-nonetheless. Final year students who want to present their projects to
-industry experts are also strongly encouraged to submit their papers.
 
-These sessions are held during the conference coffee and lunch breaks.
-The papers would be reviewed by the main CFP panel and student
-submissions will be reviewed by the HITB Team. The best research paper
-presented will be voted on by the audience. This session is strictly
-meant for research papers that are at least 50% COMPLETE at the time of
-submission.
+http://developer.joomla.org/security/news/9-security/10-core-security/322-20101001-core-xss-
+vulnerabilities
 
-What you get:
 
-# Chance to present your research at an international conference
-# Chance to get your research seen and reviewed by industry experts
-# Full access to the conference on 13th-14th October 2010 worth MYR1299
-# Best research as voted by the audience will be given ONE FREE training in HITB SecConf Malaysia 2011
-# Best research will be uploaded to the HITB conference materials segment and mirrored through HITB affiliates
-/ partners (Packetstorm, etc)
+  [20101001] - Core - XSS Vulnerabilities
 
-Submissions are due 1st October 2010. For further details, please see:
-http://conference.hackinthebox.org/hitbsecconf2010kul/?page_id=961
+    * Project: Joomla!
+    * SubProject: All
+    * Severity: Medium
+    * Versions: 1.5.20 and all previous 1.5 releases
+    * Exploit type: XSS Injection
+    * Reported Date: 2010-October-05
+    * Fixed Date: 2010-October-08
 
----
-Hafez Kamal
-HITB Crew
-Hack in The Box (M) Sdn. Bhd.
-Suite 26.3, Level 26, Menara IMC,
-No. 8 Jalan Sultan Ismail,
-50250 Kuala Lumpur,
-Malaysia
+Description
 
-Tel: +603-20394724
-Fax: +603-20318359
+Inadequate filtering of multiple encoded entities permits XSS attacks in some
+circumstances.
+Affected Installs
 
+All 1.5.x installs prior to and including 1.5.20 are affected.
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+
+http://schokokeks.org - professional webhosting
+
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
