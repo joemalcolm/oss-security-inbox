@@ -1,35 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/18/2
-Message-ID: <1256003053.122761263849342240.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 18 Jan 2010 16:15:42 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/11/11
+Message-ID: <1323460769.162381286827597847.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 11 Oct 2010 16:06:37 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: BerliOS.de comrpomise
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: TYPO3-SA-2010-020
 Content-Type: text/plain; charset=utf-8
 
-Hello all,
 
-As some of you have heard, it seems that BerliOS was compromised recently.
-http://lwn.net/Articles/369633/
-http://www.h-online.com/open/news/item/BerliOS-open-source-project-portal-falls-victim-to-attack-903990.html
+----- "Moritz Muehlenhoff" <jmm@...ian.org> wrote:
 
-I've mailed the BerliOS admins with no reply. I'm wondering if anyone has 
-any additional details regarding this.
+> Hi,
+> Please assign CVE IDs for the following issues:
+> http://typo3.org/teams/security/security-bulletins/typo3-sa-2010-020/
+> 
 
-The Apache group had a similar incident some years back, and did an 
-incredible job of documenting things:
-http://www.apache.org/info/20010519-hack.html
+I'm going to give this four. We can split the XSS and remote file
+disclosure later if it's found they affect different versions.
 
-I suspect that given the large number of distributions this will affect, 
-some sort of coordinated effort may be in order. Unless we are given 
-evidence to the contrary, I think it must be presumed that source hosted at
-berlios.de is not secure and needs to be inspected.
-
-This topic was briefly brought up on a Fedora mailing list:
-http://lists.fedoraproject.org/pipermail/devel/2010-January/129156.html
-
-I suspect each distribution will have their own list of sources that need
-inspection.
+CVE-2010-3714 typo3-sa-2010-20 Multiple Remote File Disclosure
+CVE-2010-3715 typo3-sa-2010-20 Multiple XSS
+CVE-2010-3716 typo3-sa-2010-20 Privilege Escalation
+CVE-2010-3717 typo3-sa-2010-20 DoS
 
 Thanks.
 
