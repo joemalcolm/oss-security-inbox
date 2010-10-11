@@ -1,15 +1,14 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/06/12
-Message-ID: <1509906792.2090521278444274603.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 6 Jul 2010 15:24:34 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/11/9
+Message-ID: <1122453184.160571286826862622.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 11 Oct 2010 15:54:22 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
 Cc: coley <coley@...re.org>
-Subject: Re: CVE request: Apache Axis2 Session Fixation
+Subject: Re: CVE id request: fluxbb < 1.2.22 XSS
 Content-Type: text/plain; charset=utf-8
 
-I'm going to leave this one for MITRE too. The reproter and upstream
-disagree, I'm not certain what the policy is in such cases.
+MITRE will have to assign a 2009 ID.
 
 Thanks.
 
@@ -17,31 +16,33 @@ Thanks.
     JB
 
 
------ "Matthias Weckbecker" <mweckbecker@...e.de> wrote:
+----- "Hanno Böck" <hanno@...eck.de> wrote:
 
-> Hi,
+> never got a reply to this (please note it's 2009).
 > 
-> there has recently been a Session Fixation vulnerability reported in
-> Apache 
-> Axis2, see:
+> ----------  Weitergeleitete Nachricht  ----------
 > 
-> References:
-> https://issues.apache.org/jira/browse/AXIS2-4739
-> http://www.securityfocus.com/archive/1/511955/30/30/threaded
+> Subject: [oss-security] CVE id request: fluxbb < 1.2.22 XSS
+> Date: Friday 04 September 2009
+> From: Hanno Böck <hanno@...eck.de>
+> To: oss-security@...ts.openwall.com
 > 
-> There is already CVE-2010-2103 assigned for the Cross-Site Scripting
-> mentioned 
-> in the advisory above. However, there does not seem to be a CVE for
-> the 
-> Session Fixation flaw, so could you possibly assign one for it too?
+> http://fluxbb.org/forums/topic/3222/fluxbb1222-released/
 > 
-> Thanks!
 > 
-> ciao,
-> Matthias
+> "Fixed a critical XSS vulnerability, reported by endeavormac."
+> 
 > 
 > -- 
-> Matthias Weckbecker, SUSE Security Team
-> SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg   
-> Tel: +49-911-74053-0;  http://www.opensuse.org/   
-> SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+> Hanno Böck		Blog:		http://www.hboeck.de/
+> GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+> 
+> http://schokokeks.org - professional webhosting
+> 
+> -------------------------------------------------------
+> 
+> -- 
+> Hanno Böck		Blog:		http://www.hboeck.de/
+> GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+> 
+> http://schokokeks.org - professional webhosting
