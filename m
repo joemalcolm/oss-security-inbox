@@ -1,31 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/21/1
-Message-ID: <4CBFBA67.90001@redhat.com>
-Date: Thu, 21 Oct 2010 11:58:31 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/11/4
+Message-ID: <928599946.155291286824724318.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 11 Oct 2010 15:18:44 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: setup_arg_pages: diagnose excessive argument size
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: joomla before 1.5.21 XSS
 Content-Type: text/plain; charset=utf-8
 
-"The CONFIG_STACK_GROWSDOWN variant of setup_arg_pages() does not check 
-the size of the argument/environment area on the stack. When it is 
-unworkably large, shift_arg_pages() hits its BUG_ON. This is exploitable 
-with a very large RLIMIT_STACK limit, to create a crash pretty easily.
+Please use CVE-2010-3712 for this.
 
-Check that the initial stack is not too large to make it possible to map 
-in any executable.  We're not checking that the actual executable (or 
-intepreter, for binfmt_elf) will fit.  So those mappings might clobber 
-part of the initial stack mapping.  But that is just userland lossage 
-that userland made happen, not a kernel problem."
+Thanks.
 
-Upstream commit:
-http://git.kernel.org/linus/1b528181b2ffa14721fb28ad1bd539fe1732c583
-
-References:
-http://grsecurity.net/~spender/64bit_dos.c
-https://bugzilla.redhat.com/show_bug.cgi?id=645222
-
-Eugene
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+    JB
+----- "Hanno Böck" <hanno@...eck.de> wrote:
+
+> http://developer.joomla.org/security/news/9-security/10-core-security/322-20101001-core-xss-
+> vulnerabilities
+> 
+> 
+>   [20101001] - Core - XSS Vulnerabilities
+> 
+>     * Project: Joomla!
+>     * SubProject: All
+>     * Severity: Medium
+>     * Versions: 1.5.20 and all previous 1.5 releases
+>     * Exploit type: XSS Injection
+>     * Reported Date: 2010-October-05
+>     * Fixed Date: 2010-October-08
+> 
+> Description
+> 
+> Inadequate filtering of multiple encoded entities permits XSS attacks
+> in some
+> circumstances.
+> Affected Installs
+> 
+> All 1.5.x installs prior to and including 1.5.20 are affected.
+> -- 
+> Hanno Böck		Blog:		http://www.hboeck.de/
+> GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+> 
+> http://schokokeks.org - professional webhosting
