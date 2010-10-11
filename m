@@ -1,31 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/03/4
-Message-ID: <4C57D0D2.7060208@redhat.com>
-Date: Tue, 03 Aug 2010 16:18:26 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/11/8
+Message-ID: <1102902686.160471286826830871.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 11 Oct 2010 15:53:50 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Moritz Muehlenhoff <jmm@...til.org>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request - kernel: [PARISC] led.c - fix potential stack overflow in led_proc_write()
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: mybb before 1.4.11 and before 1.4.12
 Content-Type: text/plain; charset=utf-8
 
-On 08/03/2010 01:51 PM, Moritz Muehlenhoff wrote:
-> On Tue, Aug 03, 2010 at 11:46:58AM +0800, Eugene Teo wrote:
->> Ilja reported way back in Nov 2007. A writer to /proc/pdc/led(?) can
->> cause the kernel to consume an unbounded amount of stack, and result
->> in stack corruption.
->>
->> http://www.spinics.net/lists/linux-parisc/msg02960.html
->>
->> If you need a CVE name, change the subject to indicate that. We are
->> not requesting one as we do not support the PA-RISC architecture in
->> our distribution.
->
-> Debian supports hppa.
->
-> Steven, please assign a CVE ID.
 
-Changed the subject to make sure we don't miss this.
+----- "Hanno Böck" <hanno@...eck.de> wrote:
 
-Eugene
+> http://blog.mybb.com/2009/12/29/mybb-1-4-11-released-minor-patch-security-update/
+
+This will need a 2009 ID.
+
+> 
+> and
+> 
+> http://blog.mybb.com/2010/04/13/mybb-1-4-12-released-security-maintenance-update/
+> 
+
+This update hints there are security fixes, but I can't tell what they are.
+Does someone have more information? If not I'll let MITRE assign a generic
+"something is broken" sort of ID.
+
+Thanks.
+
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+    JB
