@@ -1,46 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/27/11
-Message-ID: <20100927212104.GA2569@galadriel.inutil.org>
-Date: Mon, 27 Sep 2010 23:21:04 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/11/3
+Message-ID: <1364128867.154141286824300900.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 11 Oct 2010 15:11:40 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE requests: POE::Component::IRC, Alien Arena, Babiloo, Typo3, abcm2ps, ModSecurity, Linux kernel
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request eoCMS SQL injection vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-here's a few CVE requests for issues in the Debian Security Tracker
-without a CVE ID assigned:
+This needs a 2009 ID.
 
-1. POE::Component::IRC
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=581194
-http://github.com/bingos/poe-component-irc/compare/d2ead04...675f55cd
+Steve, can MITRE take it.
 
-2. Alien Arena
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=575621
-http://corent.proboards.com/index.cgi?board=bugreport&action=display&thread=4761
+Thanks.
 
-3. Babiloo
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=591995
+-- 
+    JB
 
-4. Typo3
-http://typo3.org/teams/security/security-bulletins/typo3-sa-2010-012/
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=590719
-http://lists.debian.org/debian-security-announce/2010/msg00144.html
 
-5. abcm2ps
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=577014
-http://moinejf.free.fr/abcm2ps-5.txt
-http://secunia.com/advisories/39345/
+----- "Henri Salo" <henri@...v.fi> wrote:
 
-6. ModSecurity
-There was already a CVE request by Jan Lieskovsky, but it doesn't seem
-to have led to an ID assignment:
-http://www.openwall.com/lists/oss-security/2010/02/10/2
-
-7. Linux kernel (local DoS, impact limited to specific hardware)
-http://git.kernel.org/linus/b525c06cdbd8a3963f0173ccd23f9147d4c384b5
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=565790
-
-Cheers,
-        Moritz
-
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> Description: "Cao Xuan Sang has reported a vulnerability in eoCMS,
+> which
+> can be exploited by malicious people to conduct SQL injection
+> attacks.
+> 
+> Certain input passed to the page divide function of the viewboard and
+> viewtopic modules is not properly sanitised before being used in SQL
+> queries. This can be exploited to manipulate SQL queries by injecting
+> arbitrary SQL code."
+> 
+> References:
+> http://secunia.com/advisories/37272/
+> http://security.bkis.com/eocms-sql-injection-vulnerability/
+> 
+> Fixed in version: 0.9.02
+> 
+> Can I get CVE-identifier for this issue?
+> 
+> Best regards,
+> Henri Salo
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.9 (GNU/Linux)
+> 
+> iEYEARECAAYFAkyvcPsACgkQXf6hBi6kbk+2rwCcCZamyTdNH/KYU1hUIB6kgHV2
+> Lx8AnRny2eowTyJBUz+tEM0I3OdP34RF
+> =+rgg
+> -----END PGP SIGNATURE-----
