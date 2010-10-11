@@ -1,28 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/01/3
-Message-ID: <4BB4825A.7070203@redhat.com>
-Date: Thu, 01 Apr 2010 13:24:10 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request -- libnids v1.24 -- Null pointer dereference
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/11/6
+Message-ID: <1767961964.157141286825379393.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 11 Oct 2010 15:29:39 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request (2009): vanilla forums before 1.1.8
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve, vendors,
 
-   libnids upstream has released latest, v1.24 version, addressing
-one NULL pointer dereference:
+----- "Hanno Böck" <hanno@...eck.de> wrote:
 
-   [1] http://libnids.sourceforge.net/
-   [2] http://freefr.dl.sourceforge.net/project/libnids/libnids/1.24/libnids-1.24.releasenotes.txt
+> http://gsasec.blogspot.com/2009/05/vanilla-v117-cross-site-scripting.html
+> 
+> Input passed to the 'RequestName' header parameter when posting to
+> '/ajax/updatecheck.php' is not sanitized before it is returned to the
+> user.  This can be exploited to execute arbitrary HTML and script code in
+> a user's browser session in context of an affected site.
+> 
+> Please note this should be a CVE-2009 id
+> 
 
-   "v1.24 Mar 14 2010
-    - fixed another remotely triggerable NULL dereference in ip_fragment.c"
+Steve,
 
-   [3] http://secunia.com/advisories/39225/
+Can MITRE take this one.
 
-Could you allocate a CVE id for it?
+Thanks.
 
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+-- 
+    JB
