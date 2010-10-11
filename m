@@ -1,26 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/18/1
-Message-ID: <2145490801.697121287418215298.JavaMail.root@zmail05.collab.prod.int.phx2.redhat.com>
-Date: Mon, 18 Oct 2010 12:10:15 -0400 (EDT)
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/11/7
+Message-ID: <890354492.159911286826519275.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 11 Oct 2010 15:48:39 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: CVE request -- libguestfs: missing disk format specifier when adding a disk
+Cc: Bill Janssen <bill.janssen@...il.com>, Andreas Hasenack <ahasenack@...ra.com.br>, Mads Kiilerich <mads@...lerich.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Mercurial --Doesn't verify subject Common Name properly
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve, vendors.
+Steve,
 
-Description:
-Libguestfs doesn't currently allow the format of a disk to be specified explicitly.
-Because of that malicious guest admin can exploit automatic image format detection
-in qemu, when the libguestfs is used to administer the image, to read arbitrary
-file on host via forging a image header with backing store.
+Can I defer this one to MITRE? My initial thought is that python should get
+the ID, but they seem to want to push it up to the application developers,
+but they also added some functionality in
+http://svn.python.org/view?view=rev&revision=85321
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=643958
+Is there a past precedent for this?
 
-Could you please allocate a CVE identifier for this issue?
+Thanks.
 
-Thanks you,
---
-Petr Matousek / Red Hat Security Response Team
+-- 
+    JB
+
+
+----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+
+> Hello Steve, vendors,
+> 
+>    a security flaw was found in the way Mercurial handled subject
+> Common Name field of the provided certificate (the check
+> if the commonName in the received certificate matches the
+> requested hostname was not performed). An attacker, able
+> to get a carefully-crafted certificate signed by a Certificate
+> Authority could use the certificate during a man-in-the-middle
+> attack and potentially confuse Mercurial into accepting it by
+> mistake.
+> 
+> References:
+> [1] http://mercurial.selenic.com/bts/issue2407
+> [2] https://bugzilla.redhat.com/show_bug.cgi?id=641373
+> [3] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=598841
+> Upstream patch:
+> [4]
+> http://selenic.com/repo/hg-stable/diff/f2937d6492c5/mercurial/url.py
+> 
+> According to [1] the true reason for this problem is the new python
+> SSL
+> module implementation:
+> [5] http://bugs.python.org/issue1589
+> [6] http://svn.python.org/view?view=rev&revision=85321
+> 
+> and as stated in:
+> [7] http://bugs.python.org/issue1589#msg58472
+> 
+> it should be decision made by application designers, if the subject
+> CN
+> field will be checked despite of the python SSL module
+> implementation.
+> 
+> So could you allocate a CVE identifier for this issue(s)?
+> 
+> Thanks && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
