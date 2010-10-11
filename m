@@ -1,39 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/08/3
-Message-ID: <711883486.263581276026189246.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 8 Jun 2010 15:43:09 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/11/5
+Message-ID: <40043145.156921286825331188.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 11 Oct 2010 15:28:51 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Guillem Jover <guillem@...ian.org>, Aníbal Monsalve Salazar <anibal@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- rpcbind -- Insecure (predictable) temporary file use
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: usebb before 1.0.11 unauthorized access to content
 Content-Type: text/plain; charset=utf-8
 
 
------ "Steven M. Christey" <coley@...us.mitre.org> wrote:
+----- "Hanno Böck" <hanno@...eck.de> wrote:
 
-> On Fri, 4 Jun 2010, Josh Bressers wrote:
+> http://www.usebb.net/community/topic.php?id=2501
 > 
-> > Please use CVE-2010-2061 for this.
+> A security issue has been discovered in UseBB 1.0.10 with per forum and
+> topic RSS feeds in combination with restricted forum access permissions,
+> giving users access to post contents that should remain hidden. Anyone
+> having a restricted "read" permission set but NOT an equal or more
+> restricted "view" one is prone to this issue.
 > 
-> My read of Guillem's report at 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=583435#5 suggests
-> that we 
-> might have two distinct issues here:
-> 
-> - "*any* user can craft those two files before the daemon
-> has started for the first time, which the daemon will parse."  Nothing
-> to do with symlinks.
 
-Let's use CVE-2010-2061 for this one.
+Here is a slightly better description here:
+http://www.usebb.net/community/topic-2495.html
 
-> 
-> - symlinks are followed on creation of those files
-
-Let's use CVE-2010-2064 for this one.
+Please use CVE-2010-3713 for this.
 
 Thanks.
 
 -- 
     JB
-
-
