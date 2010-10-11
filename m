@@ -1,48 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/21/4
-Message-ID: <4D10B36F.3010205@redhat.com>
-Date: Tue, 21 Dec 2010 15:02:23 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, Earl Hood <earl@...lhood.com>, "non customers" <non-customers@...ramail.com>
-Subject: CVE Request -- MHonArc: Improper escaping of certain HTML sequences (XSS)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/12/1
+Message-ID: <4CB3A0E3.1090809@wireshark.org>
+Date: Mon, 11 Oct 2010 16:42:27 -0700
+From: Gerald Combs <gerald@...eshark.org>
+To: Vincent Danen <vdanen@...hat.com>
+CC: oss-security@...ts.openwall.com
+Subject: Re: CVE requests: Poppler, Quassel, Pyfribidi, Overkill, DocUtils, FireGPG, Wireshark
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve, vendors,
+Vincent Danen wrote:
+> * [2010-10-01 13:33:47 -0700] Gerald Combs wrote:
+> 
+>> Vincent Danen wrote:
+>>> * [2010-09-29 15:06:31 -0400] Josh Bressers wrote:
+>>>
+>>>>> 7. Wireshark BER dissector
+>>>>> http://archives.neohapsis.com/archives/bugtraq/2010-09/0088.html
+>>>>>
+>>>>
+>>>> This one looks like a stack overflow, the advisory isn't very clear,
+>>>> but
+>>>> claims there are two possible outcomes. We can always split later if
+>>>> needed.
+>>>> CVE-2010-3445
+>>>
+>>> Gerald, are you aware of this issue?  Do you have further details
+>>> regarding it?  I poked around in bugzilla a bit but couldn't find
+>>> anything.
+>>>
+>>> It claims 1.4.0, but is not clear as to whether or not older versions
+>>> are affected.
+>>
+>> It's been fixed in the trunk (r34111) and is scheduled for inclusion in
+>> 1.4.1 and 1.2.12. We're tracking it in bug 5230:
+>>
+>>  https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5230
+>>
+>> The bug affects all BER dissectors and not just SNMP.
+> 
+> Great.  Thank you for the information, Gerald.  That is very helpful.
 
-   MHonArc, a Perl mail-to-HTML converter, failed to
-properly escape certain HTML sequences. A remote
-attacker could provide a specially-crafted email
-message and trick the local user to convert it
-into HTML format. Subsequent preview of such
-message might potentially execute arbitrary HTML
-or scripting code (XSS).
-
-References:
-[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=607693
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=664718
-
-Public PoC:
-[3] http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=5;filename=elsatest.mbox;att=1;bug=607693
-
-Further issue note:
--------------------
-MHonArc properly escapes for example:
-
-<script>alert("elsa");</script> =>
-
-&lt;script&gt;alert(&quot;elsa&quot;);&lt;/script&gt;
-
-But fails to do the same example for a string in the form of:
-
-<scr<body>ipt>alert("elsa");</scr<body>ipt> =>
-
-<script>alert("elsa");</script>
-
-Affected versions: Issue confirmed in latest MHonArc-2.6.16 version
-
-Could you allocate a CVE id for this issue?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+FYI, 1.4.1 and 1.2.12 have been released.
