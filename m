@@ -1,69 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/25/1
-Message-ID: <20100225184701.GA2858@redhat.com>
-Date: Thu, 25 Feb 2010 11:47:01 -0700
-From: Vincent Danen <vdanen@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: Frank Eigler <fche@...hat.com>, oss-security@...ts.openwall.com
-Subject: incorrect description for CVE-2010-0412 systemtap flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/11/10
+Message-ID: <478526645.161091286827148802.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 11 Oct 2010 15:59:08 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request:  Simple Machines Forum Cross-Site Request Forgery
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve and other vendors.  There is a bit of confusion around the
-description of CVE-2010-0412.  This was due to some miscommunication as
-to whether or not the full extent of the flaw was public, which is why
-I didn't send a message sooner to explain why it was assigned.
+Hi Steve,
 
->Name: CVE-2010-0412
->Status: Candidate
->URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-0412
->Final-Decision:
->Interim-Decision:
->Modified:
->Proposed:
->Assigned: 20100127
->Category:
->Reference: MLIST:[scm-commits] 20100215 rpms/systemtap/devel systemtap-1.1-tighten-server-params.patch, NONE, 1.1 systemtap.spec, 1.59, 1.60
->Reference: URL:http://lists.fedoraproject.org/pipermail/scm-commits/2010-February/394714.html
->Reference: FEDORA:FEDORA-2010-1373
->Reference: URL:http://lists.fedoraproject.org/pipermail/package-announce/2010-February/035201.html
->Reference: FEDORA:FEDORA-2010-1720
->Reference: URL:http://lists.fedoraproject.org/pipermail/package-announce/2010-February/035261.html
->Reference: BID:38316
->Reference: URL:http://www.securityfocus.com/bid/38316
->
->stap-server in SystemTap 1.1 does not properly restrict the value of
->the -B (aka BUILD) option, which allows attackers to have an
->unspecified impact via vectors associated with executing the make
->program, a different vulnerability than CVE-2009-4273.
+Another 2009 ID needed (lots of these today).
 
-The original fix for CVE-2009-4273 was incomplete, as noted in the
-upstream bug report for the original flaw:
-
-http://sourceware.org/bugzilla/show_bug.cgi?id=11105#c8
-
-This is still the same root flaw as CVE-2009-4273, not a different
-vulnerability, so we had assigned CVE-2010-0412 as a "fix for the
-incomplete fix of CVE-2009-4273", due to the fact CVE-2009-4273 has this
-description:
-
-"stap-server in SystemTap before 1.1 allows remote attackers to execute
-arbitrary commands via shell metacharacters in stap command-line
-arguments in a request."
-
-The original fix secured only the first link (stap server -> stap), but
-the second link (stap -> make) was not fixed.  The -B option is not the
-problem so much as an example of the problem.
-
-I think Frank will agree that this is not a new flaw, so the CVE
-description should be changed to reflect that.
-
-The -B option is not
-the problem so much as an example of the problem.
-
-Upstream's bug report has links to the two patches that solve the
-remaining unfixed bits of CVE-2009-4273 (#c10).
-
-Thanks, and my apologies for the confusion on this.
+Thanks.
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+    JB
+
+
+----- "Henri Salo" <henri@...v.fi> wrote:
+
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> Can I get 2009 CVE-identifier for this issue: 
+> 
+> http://secunia.com/advisories/37557
+> 
+> Description: "Some vulnerabilities have been discovered in Simple
+> Machines Forum, which can be exploited by malicious users and
+> malicious
+> people to conduct cross-site request forgery attacks.
+> 
+> The application allows users to perform certain actions via HTTP
+> requests without performing any validity checks to verify the
+> request.
+> This can be exploited to e.g. perform certain administrative actions
+> when a logged-in user visits a malicious site.
+> 
+> Successful exploitation allows e.g. to delete package servers,
+> conduct
+> script insertion attacks via censor lists and package manager, and
+> execute arbitrary PHP code by uploading arbitrary modules, but
+> requires
+> a valid user account."
+> 
+> Versions affected: "The vulnerabilities are confirmed in version
+> 1.1.10.
+> Other versions may also be affected."
+> 
+> Solution: "Update to version 1.1.11", which is the newest at the
+> moment.
+> 
+> References:
+> http://code.google.com/p/smf2-review/issues/detail?id=10
+> http://code.google.com/p/smf2-review/issues/detail?id=11
+> http://code.google.com/p/smf2-review/issues/detail?id=17
+> http://code.google.com/p/smf2-review/issues/detail?id=42
+> 
+> http://osvdb.org/show/osvdb/60651
+> http://secunia.com/advisories/37557
+> http://download.simplemachines.org/
+> http://download.simplemachines.org/index.php?thanks;filename=smf_1-1-11_changelog.txt
+> 
+> Best regards,
+> Henri Salo
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.9 (GNU/Linux)
+> 
+> iEYEARECAAYFAkyzVXQACgkQXf6hBi6kbk/t5wCgu+5VkF5RTQQGSUTKjWzMNL/w
+> 918AoMneBE8hy/KJvGonlFpgUwvQ0K0v
+> =ds0s
+> -----END PGP SIGNATURE-----
