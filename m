@@ -1,36 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/01/11
-Message-ID: <944349923.230021270150168501.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 1 Apr 2010 15:29:28 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/11/2
+Message-ID: <20101011212036.6e72c246@foo.fgeek.fi>
+Date: Mon, 11 Oct 2010 21:20:36 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- libnids v1.24 -- Null pointer dereference
+Subject: CVE request:  Simple Machines Forum Cross-Site Request Forgery
 Content-Type: text/plain; charset=utf-8
 
------ "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> Hi Steve, vendors,
-> 
->    libnids upstream has released latest, v1.24 version, addressing
-> one NULL pointer dereference:
-> 
->    [1] http://libnids.sourceforge.net/
->    [2]
-> http://freefr.dl.sourceforge.net/project/libnids/libnids/1.24/libnids-1.24.releasenotes.txt
-> 
->    "v1.24 Mar 14 2010
->     - fixed another remotely triggerable NULL dereference in
->     ip_fragment.c"
-> 
->    [3] http://secunia.com/advisories/39225/
-> 
-> Could you allocate a CVE id for it?
-> 
+Can I get 2009 CVE-identifier for this issue: 
 
-Please use CVE-2010-1144
+http://secunia.com/advisories/37557
 
-Thanks
+Description: "Some vulnerabilities have been discovered in Simple
+Machines Forum, which can be exploited by malicious users and malicious
+people to conduct cross-site request forgery attacks.
 
--- 
-    JB
+The application allows users to perform certain actions via HTTP
+requests without performing any validity checks to verify the request.
+This can be exploited to e.g. perform certain administrative actions
+when a logged-in user visits a malicious site.
+
+Successful exploitation allows e.g. to delete package servers, conduct
+script insertion attacks via censor lists and package manager, and
+execute arbitrary PHP code by uploading arbitrary modules, but requires
+a valid user account."
+
+Versions affected: "The vulnerabilities are confirmed in version 1.1.10.
+Other versions may also be affected."
+
+Solution: "Update to version 1.1.11", which is the newest at the moment.
+
+References:
+http://code.google.com/p/smf2-review/issues/detail?id=10
+http://code.google.com/p/smf2-review/issues/detail?id=11
+http://code.google.com/p/smf2-review/issues/detail?id=17
+http://code.google.com/p/smf2-review/issues/detail?id=42
+
+http://osvdb.org/show/osvdb/60651
+http://secunia.com/advisories/37557
+http://download.simplemachines.org/
+http://download.simplemachines.org/index.php?thanks;filename=smf_1-1-11_changelog.txt
+
+Best regards,
+Henri Salo
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkyzVXQACgkQXf6hBi6kbk/t5wCgu+5VkF5RTQQGSUTKjWzMNL/w
+918AoMneBE8hy/KJvGonlFpgUwvQ0K0v
+=ds0s
+-----END PGP SIGNATURE-----
