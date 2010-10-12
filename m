@@ -1,45 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/27/8
-Message-ID: <254318427.436681285618735599.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 27 Sep 2010 16:18:55 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: Minor security flaw with pam_xauth
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/12/5
+Message-ID: <20101012151504.GT1955@redhat.com>
+Date: Tue, 12 Oct 2010 09:15:04 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: Gerald Combs <gerald@...eshark.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE requests: Poppler, Quassel, Pyfribidi, Overkill, DocUtils, FireGPG, Wireshark
 Content-Type: text/plain; charset=utf-8
 
------ "Solar Designer" <solar@...nwall.com> wrote:
+* [2010-10-11 16:42:27 -0700] Gerald Combs wrote:
 
-Thank you for doing this, it's most apprecited.
+>Vincent Danen wrote:
+>> * [2010-10-01 13:33:47 -0700] Gerald Combs wrote:
+>>
+>>> Vincent Danen wrote:
+>>>> * [2010-09-29 15:06:31 -0400] Josh Bressers wrote:
+>>>>
+>>>>>> 7. Wireshark BER dissector
+>>>>>> http://archives.neohapsis.com/archives/bugtraq/2010-09/0088.html
+>>>>>>
+>>>>>
+>>>>> This one looks like a stack overflow, the advisory isn't very clear,
+>>>>> but
+>>>>> claims there are two possible outcomes. We can always split later if
+>>>>> needed.
+>>>>> CVE-2010-3445
+>>>>
+>>>> Gerald, are you aware of this issue?  Do you have further details
+>>>> regarding it?  I poked around in bugzilla a bit but couldn't find
+>>>> anything.
+>>>>
+>>>> It claims 1.4.0, but is not clear as to whether or not older versions
+>>>> are affected.
+>>>
+>>> It's been fixed in the trunk (r34111) and is scheduled for inclusion in
+>>> 1.4.1 and 1.2.12. We're tracking it in bug 5230:
+>>>
+>>>  https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5230
+>>>
+>>> The bug affects all BER dissectors and not just SNMP.
+>>
+>> Great.  Thank you for the information, Gerald.  That is very helpful.
+>
+>FYI, 1.4.1 and 1.2.12 have been released.
 
-> 
-> pam_xauth missing return value checks from setuid() and similar calls,
-> fixed in Linux-PAM 1.1.2 - CVE-2010-3316
-> 
-> pam_env and pam_mail accessing the target user's files as root (and thus
-> susceptible to attacks by the user) in Linux-PAM below 1.1.2, partially
-> fixed in 1.1.2 - no CVE ID mentioned yet
+Thanks for the heads up, Gerald.  On the 1.2.12 release notes page at
+least you have noted CVE-2010-????; the CVE name for that issue is
+CVE-2010-3445 so you may want to update that.
 
-Use CVE-2010-3435 for this one.
-
-
-> 
-> pam_env and pam_mail in Linux-PAM 1.1.2 not switching fsgid (or egid) and
-> groups when accessing the target user's files (and thus potentially
-> susceptible to attacks by the user) - CVE-2010-3430
-> 
-> pam_env and pam_mail in Linux-PAM 1.1.2 not checking whether the
-> setfsuid() calls succeed (no known impact with current Linux kernels, but
-> poor practice in general) - CVE-2010-3431
-> 
-> Now, in case someone fixes CVE-2010-3430 but fails to add return value
-> checks for the added calls, we'll need yet another CVE ID for the partial
-> fix... but I hope this won't happen.
-> 
-
-Let's hope not. I guess if they do, they can request a new ID.
-
-Thanks.
+Thanks again.
 
 -- 
-    JB
+Vincent Danen / Red Hat Security Response Team 
