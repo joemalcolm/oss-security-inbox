@@ -1,20 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/21/2
-Message-ID: <20100721025832.GH12014@dojo.mi.org>
-Date: Wed, 21 Jul 2010 02:58:32 +0000
-From: Mike O'Connor <mjo@...o.mi.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/12/4
+Message-Id: <201010121711.44451.oeriksson@mandriva.com>
+Date: Tue, 12 Oct 2010 17:11:44 +0200
+From: Oden Eriksson <oeriksson@...driva.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE for Intel INTEL-SA-00025
+Subject: Re: Nagios format string issues
 Content-Type: text/plain; charset=utf-8
 
-:Can you assign a CVE for
-:
-:http://security-center.intel.com/advisory.aspx?intelid=INTEL-SA-00025&languageid=en-fr
+torsdag 07 oktober 2010 10:55:49 skrev  Tomas Hoger:
+> On Wed, 6 Oct 2010 21:56:09 +0200 Oden Eriksson wrote:
+> > I just extracted the patches I made at the time. I cannot tell which
+> > of them deserves CVE assignments though. I have put them here:
+> > 
+> > http://n1.nux.se/work/format_not_a_string_literal_and_no_format_arguments
+> > /
+> 
+> Did you use any specific way to identify all these?  From a quick look
+> at a few randomly chosen patches, there seem to be cases where one call
+> was fixed, other left unchanged.  That's only for the code visible in
+> the context diff.
 
-For fear of asking a silly question -- is the Intel MKL open source?
-I'm curious about why you're asking for a CVE on this list, that's all.
+This was discovered when we started using -Wformat -Werror=format-security 
+ 
+> There are few incorrect fixes too:
+> 
+> -  g_snprintf (gev.data.b, sizeof (gev.data.b), message);
+> +  g_snprintf (gev.data.b, sizeof (gev.data.b), message, "%s");
+
+Whoops!
 
 -- 
- Michael J. O'Connor                                          mjo@...o.mi.org
- =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
-"Villains always have antidotes.  They're funny that way."          -The Tick
+Regards // Oden Eriksson
+Security team manager - Mandriva
+CEO NUX AB
