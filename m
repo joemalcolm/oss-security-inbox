@@ -1,21 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/18/3
-Message-ID: <20100818155103.924@usenet.piggo.com>
-Date: Wed, 18 Aug 2010 13:51:38 +0000 (UTC)
-From: Sébastien Delafond <seb@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/13/2
+Message-ID: <AANLkTinpv2DWwGdENOQdzs3j+BdZ3wY=2BakvSS1XFo7@mail.gmail.com>
+Date: Wed, 13 Oct 2010 09:57:36 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: zope-ldapuser
+Subject: CVE request: ettercap GTK
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+The GTK version of ettercap uses a global settings file at
+/tmp/.ettercap_gtk and does not verify ownership of this file before
+reading it. When parsing this file for settings in gtkui_conf_read()
+(src/interfaces/gtk/ec_gtk_conf.c), an unchecked sscanf() call can
+result in a stack-based buffer overflow.  Local users can place
+maliciously crafted settings files at this location to exploit other
+users who run ettercap.  On most distributions, stack-smashing
+protection will mitigate the impact.  I'm unclear as to whether there
+are settings that could be forced upon other users that make ettercap
+misbehave in a dangerous way.
 
-there is an authentication probleme in zope-ldapuser, where any password
-is accepted when attempting to log in as the emergency user (as defined
-in zpasswd.py). See Debian bug 593466[0] for the corresponding patch.
+There are two issues here (insecure temporary file usage and
+stack-based buffer overflow), but they're probably only
+security-relevant when exploited in conjunction.  Not sure if it
+should get one CVE or two.
 
-Cheers,
+Reference:
+https://bugs.launchpad.net/ubuntu/+source/ettercap/+bug/656347
 
---Seb
 
-[0] http://bugs.debian.org/593466
-
+-Dan
