@@ -1,92 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/21/14
-Message-ID: <Pine.GSO.4.64.1009211701320.21207@faron.mitre.org>
-Date: Tue, 21 Sep 2010 17:07:39 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Michael Koziarski <michael@...iarski.com>
-cc: Thomas Biege <thomas@...e.de>, oss-security@...ts.openwall.com, juliano@...ifera.comt, thaidn@...ecurity.net, security@...yonrails.org
-Subject: Re: CVE request: padding oracle attack: ruby on rails 2.3, owasp esapi
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/13/6
+Message-ID: <1798676991.445821286996790804.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 13 Oct 2010 15:06:30 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: ettercap GTK
 Content-Type: text/plain; charset=utf-8
 
 
-When it comes to language interpreters and/or code libraries: if an 
-exposed API function has a vuln in it that could affect any application 
-that uses that function, it's suitable for inclusion in CVE - especially 
-if the function seems likely to accept malicious input.  If there's *no 
-way* that these API functions can be used safely, then that would be 
-associated with Rails, and a single CVE could be assigned.  If they *can* 
-be used safely, but lots of different programmers just screw it up (a la 
-strcpy() in C), then the individual applications would get their own 
-separate CVEs.
+----- "Dan Rosenberg" <dan.j.rosenberg@...il.com> wrote:
 
-In this case, while the issue is probably not a problem for the bulk of 
-Rails programmers, it might be for some - so a single CVE assignment seems 
-reasonable.
+> The GTK version of ettercap uses a global settings file at
+> /tmp/.ettercap_gtk and does not verify ownership of this file before
+> reading it. When parsing this file for settings in gtkui_conf_read()
+> (src/interfaces/gtk/ec_gtk_conf.c), an unchecked sscanf() call can
+> result in a stack-based buffer overflow.  Local users can place
+> maliciously crafted settings files at this location to exploit other
+> users who run ettercap.  On most distributions, stack-smashing
+> protection will mitigate the impact.  I'm unclear as to whether there
+> are settings that could be forced upon other users that make ettercap
+> misbehave in a dangerous way.
+> 
+> There are two issues here (insecure temporary file usage and
+> stack-based buffer overflow), but they're probably only
+> security-relevant when exploited in conjunction.  Not sure if it
+> should get one CVE or two.
+> 
+> Reference:
+> https://bugs.launchpad.net/ubuntu/+source/ettercap/+bug/656347
+> 
+> 
 
-Hope that made sense.
+We'll use two:
 
-- Steve
+CVE-2010-3843 ettercap GTK insecure temporary file use
+CVE-2010-3844 ettercap GTK format string flaw
 
+Thanks.
 
-On Wed, 22 Sep 2010, Michael Koziarski wrote:
-
-> On Wed, Sep 22, 2010 at 2:57 AM, Thomas Biege <thomas@...e.de> wrote:
->> I got no answer from the POET paper authors yet but it can be
->> that CVE-2010-3299 is invalid.
->
-> I'm not sure what the criteria for a CVE is but there's nothing
-> exploitable here in the vast vast bulk of rails applications.
->
-> It's certainly true that an application using the low level
-> encrypt/decrypt API is vulnerable to padding oracle attacks, but as
-> you mentioned those apis aren't actually used anywhere within rails
-> itself.
->
-> Given the 'shoot yourself in the foot' nature of those low level apis,
-> we'll probably deprecate them as public apis and advise people to use
-> encrypt_and_sign/decrypt_and_verify instead.
->
->
->
->> Cheers
->> Thomas
->>
->>
->> Am Dienstag 14 September 2010 21:36:53 schrieb Josh Bressers:
->>> I've assgiend two. The details are quite vague unfortunately.
->>>
->>> CVE-2010-3299 padding oracle attack: ruby on rails 2.3
->>> CVE-2010-3300 padding oracle attack: owasp esapi
->>>
->>> Thanks.
->>>
->>>> Hi,
->>>> the paper [1], about practical padding oracle attacks
->>>> mentions some programming frameworks as vulnerable (section 5):
->>>> - Ruby On ails 2.3
->>>> - OWASP ESAPI
->>>>
->>>> I think they both need a CVE-ID. Thanks.
->>>>
->>>> Cheers
->>>> Thomas
->>>>
->>>> [1] http://usenix.org/events/woot10/tech/full_papers/Rizzo.pdf
->>>
->>
->> --
->>  Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
->>  SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
->> --
->>  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
->>                            -- Marie von Ebner-Eschenbach
->>
->
->
->
-> -- 
-> Cheers
->
-> Koz
->
->
+-- 
+    JB
