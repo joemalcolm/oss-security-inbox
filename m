@@ -1,34 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/06/3
-Message-ID: <Pine.GSO.4.64.1010061138200.25305@faron.mitre.org>
-Date: Wed, 6 Oct 2010 11:40:49 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/13/3
+Message-ID: <20101013173448.GB14661@inutil.org>
+Date: Wed, 13 Oct 2010 19:34:48 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Nagios format string issues
+Subject: CVE request: Apache-AuthenHook perl module
 Content-Type: text/plain; charset=utf-8
 
+Hi,
+please assign a CVE ID for 
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=599712
+https://rt.cpan.org/Public/Bug/Display.html?id=62040
 
-On Wed, 6 Oct 2010, Josh Bressers wrote:
-
-> ----- "Oden Eriksson" <oeriksson@...driva.com> wrote:
->
->>
->> Just checked the ones I fixed (in 2008/2009):
->>
->> $ rpm -qlp /SRPMS/contrib/release/*.rpm /SRPMS/main/release/*.rpm |
->> grep
->> format_not_a_string_literal_and_no_format_arguments | wc -l
->> 106
->>
->> So, at least 106 new CVE assignments there.
->>
->>
->
-> It's probably not 106. Just becuase something isn't using format arguments
-> doesn't mean it's a security flaw. Some subset of these probably could be
-> considered security flaws though.
-
-I agree.  Closer inspection is necessary.  Some of these variables could 
-be hard-coded constants.  Sounds like there could be a lot, though.
-
-- Steve
+Cheers,
+        Moritz
