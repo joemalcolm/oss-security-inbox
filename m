@@ -1,60 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/07/14
-Message-Id: <20100907124656.05353c2b.akpm@linux-foundation.org>
-Date: Tue, 7 Sep 2010 12:46:56 -0700
-From: Andrew Morton <akpm@...ux-foundation.org>
-To: Jon Oberheide <jon@...rheide.org>
-Cc: oss-security@...ts.openwall.com, Sebastian Krahmer <krahmer@...e.de>, security@...nel.org, spender@...ecurity.net
-Subject: Re: Re: [Security] /proc infoleaks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/13/4
+Message-ID: <4CB5FA0B.7070401@redhat.com>
+Date: Wed, 13 Oct 2010 20:27:23 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Daniel Stenberg <daniel@...x.se>, Erik van Pienbroek <erik-fedora@...pienbroek.nl>
+Subject: Re: CVE Request -- cURL / mingw32-cURL -- Did not strip directory parts separated by backslashes, when downloading files
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 07 Sep 2010 15:24:34 -0400
-Jon Oberheide <jon@...rheide.org> wrote:
+Hi Steve,
 
-> On Tue, 2010-09-07 at 03:51 -0700, Andrew Morton wrote:
-> > On Tue, 7 Sep 2010 10:35:46 +0200 Sebastian Krahmer <krahmer@...e.de> wrote:
-> > 
-> > > I have been elected to receive the bashing from all sides,
-> > > so here we go.
-> > > It is not about a new vulnerability or even a new discussion
-> > > but needs to be discussed, at least that we have a clear
-> > > statement about the status quo.
-> > > 
-> > > Recent i-CAN-haz-MODHARDEN.c has shown once *again* that
-> > > certain file permissions make no sense except to exploitation
-> > > development. There is no reason to have files like
-> > > 
-> > > /proc/kallsyms
-> > > /proc/slabinfo
-> > > /proc/zoneinfo
-> > > 
-> > > and probably a lot of others world readable. The symbol
-> > > addresses might be hard-coded for a certain targetlist
-> > > inside the exploit so you can argue that there
-> > > wont be any protection benefit from making it unreadable.
-> > > However this argument aint a reason to also leak it for self-compiled
-> > > kernels and doesnt even hold for dynamic/runtime content
-> > > like slabinfos etc.
-> > > It would be nice to have something like
-> > > 
-> > > echo 1 > /proc/quiet
-> > > 
-> > > or something like a umask for kernel-owned proc
-> > > entries so that you have a polite default and are
-> > > still able to enable it for certain profiling tools
-> > > or whereever you need it.
-> > 
-> > chmod 0440 /proc/slabinfo
-> > 
-> > What am I missing here?
+   just small correction. As stated in:
+   [1] https://bugzilla.redhat.com/show_bug.cgi?id=642642#c4
+
+the mingw32-curl package is not affected by this issue, as the
+error is only present in curl command line tool and that tool
+is not bundled in the final compiled form of mingw32-curl rpm.
+
+So the CVE request applies really only to native systems, using
+backslash as directory entries delimiter / separator.
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+Jan Lieskovsky wrote:
+> Hello Steve, vendors,
 > 
-> You're missing the "secure by default" part.
-
-We're not going to change the kernel defaults, end of story - that
-would break far too much stuff.
-
-The kernel provides everything that is needed here.  The way to address
-this is within a distro: change the /proc file permissions in
-initscripts and fix up all the resulting fallout in the userspace
-applications.
+>   cURL upstream has released new curl / libcurl v7.21.2 addressing one 
+> security flaw,
+> specific for operating systems, where backslashes are used to separate 
+> directories from
+> file names. More details follow:
+> 
+> cURL did not properly cut off directory parts from user provided
+> file name to be downloaded on operating systems, where backslashes
+> are used to separate directories and file names. This could allow
+> remote servers to create or overwrite files via a Content-Disposition
+> header that suggests a crafted filename, and possibly execute arbitrary
+> code as a consequence of writing to a certain file in a user's home
+> directory. Different vulnerability than CVE-2010-2251, CVE-2010-2252
+> and CVE-2010-2253.
+> 
+> Note: As already mentioned in [2]. This flaw only affected those
+>       operating systems, where backslash is used to separate directories
+>       and file names, thus Microsoft Windows, Novell Netware, MSDOS, OS/2
+>       and Symbian to mention some of them.
+> 
+> References:
+> [1] http://curl.haxx.se/docs/security.html
+> [2] http://curl.haxx.se/docs/adv_20101013.html
+> 
+> Upstream patch:
+> [3] http://curl.haxx.se/curl-content-disposition.patch
+> 
+> Credit: Upstream acknowledges Dan Fandrich as the original reporter.
+> 
+> Red Hat Bugzilla tracking system record:
+> [4] https://bugzilla.redhat.com/show_bug.cgi?id=642642
+> 
+> Could you please allocate a CVE id for this issue?
+> 
+> Thanks && Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
 
