@@ -1,19 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/27/2
-Message-Id: <201001272254.08928.steffen.joeris@skolelinux.de>
-Date: Wed, 27 Jan 2010 22:54:04 +0100
-From: Steffen Joeris <steffen.joeris@...lelinux.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/13/5
+Message-ID: <686600886.443491286996310869.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 13 Oct 2010 14:58:30 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: maildrop
+Cc: Daniel Stenberg <daniel@...x.se>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- cURL / mingw32-cURL -- Did not strip directory parts separated by backslashes, when downloading files
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Please use CVE-2010-3842
 
-Could I please get a CVE id for this privilege escalation bug[0] in maildrop?
+Thanks.
 
-Cheers
-Steffen
+-- 
+    JB
 
-[0]: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=564601
 
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+
+> Hello Steve, vendors,
+> 
+>    cURL upstream has released new curl / libcurl v7.21.2 addressing
+> one security flaw,
+> specific for operating systems, where backslashes are used to separate
+> directories from
+> file names. More details follow:
+> 
+> cURL did not properly cut off directory parts from user provided
+> file name to be downloaded on operating systems, where backslashes
+> are used to separate directories and file names. This could allow
+> remote servers to create or overwrite files via a Content-Disposition
+> header that suggests a crafted filename, and possibly execute
+> arbitrary
+> code as a consequence of writing to a certain file in a user's home
+> directory. Different vulnerability than CVE-2010-2251, CVE-2010-2252
+> and CVE-2010-2253.
+> 
+> Note: As already mentioned in [2]. This flaw only affected those
+>        operating systems, where backslash is used to separate
+> directories
+>        and file names, thus Microsoft Windows, Novell Netware, MSDOS,
+> OS/2
+>        and Symbian to mention some of them.
+> 
+> References:
+> [1] http://curl.haxx.se/docs/security.html
+> [2] http://curl.haxx.se/docs/adv_20101013.html
+> 
+> Upstream patch:
+> [3] http://curl.haxx.se/curl-content-disposition.patch
+> 
+> Credit: Upstream acknowledges Dan Fandrich as the original reporter.
+> 
+> Red Hat Bugzilla tracking system record:
+> [4] https://bugzilla.redhat.com/show_bug.cgi?id=642642
+> 
+> Could you please allocate a CVE id for this issue?
+> 
+> Thanks && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
