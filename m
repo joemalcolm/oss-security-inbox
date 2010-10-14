@@ -1,42 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/10/12
-Message-ID: <692863064.573491289417485995.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 10 Nov 2010 14:31:25 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com, Petr Matousek <pmatouse@...hat.com>
-Cc: coley@...us.mitre.org
-Subject: Re: CVE request: kernel: gdth: integer overflow in ioc_general()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/14/2
+Message-ID: <AANLkTikwJH8sF_EWXTxfb3iK8qmDB0R9aovDjwbVD7Z=@mail.gmail.com>
+Date: Thu, 14 Oct 2010 14:58:10 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: ettercap GTK
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-4157
+Based on this, I'd say the buffer overflow CVE-2010-3844 is probably
+extraneous.  The only attack vector is due to the fact that the
+configuration file is globally accessible, so I would argue that, just
+like your example of SQL injection allowing XSS, the insecure
+temporary file usage allows the buffer overflow.  Given that the
+configuration file is hidden by default, I'd assume that there is no
+intention of allowing users to share configurations - I think it's
+only supposed to maintain settings between consecutive executions on
+the same machine.
 
-Thanks.
+-Dan
 
--- 
-    JB
-
-
------ "Petr Matousek" <pmatouse@...hat.com> wrote:
-
-> "gdth_ioctl_alloc() takes the size variable as an int.
-> copy_from_user() takes the size variable as an unsigned long.
-> gen.data_len and gen.sense_len are unsigned longs.
-> On x86_64 longs are 64 bit and ints are 32 bit.
-> 
-> We could pass in a very large number and the allocation would
-> truncate
-> the size to 32 bits and allocate a small buffer.  Then when we do the
-> copy_from_user(), it would result in a memory corruption."
-> 
-> Upstream commit:
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=f63ae56e4e97fb12053590e41a4fa59e7daa74a4
-> 
-> Credit: James E.J. Bottomley
-> 
-> Reference:
-> http://ns3.spinics.net/lists/linux-scsi/msg47361.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=651147
-> 
-> Thanks,
-> --
-> Petr Matousek / Red Hat Security Response Team
+On Thu, Oct 14, 2010 at 2:10 PM, Steven M. Christey
+<coley@...us.mitre.org> wrote:
+>
+> If the config file is intended to be trusted, then any issues that can
+> *only* be exploited through that trusted file, are not relevant for CVE
+> inclusion - basically, it would be the admin attacking himself/herself.
+>
+> If you fix problem X, and it automatically fixes another problem Y (or, at
+> worst, renders it as non-security-relevant) - then you would assign a CVE to
+> X, and perhaps emphasize Y as one of potentially-many consequences.
+>
+> Maybe other attacks are possible through that config file; but would they be
+> irrelevant if the config file was only accessible to the intended user?
+>
+> As a distinct example: you have a web-based application that stores content
+> into a database, including user IDs that are validated to be alphanumeric
+> before insertion into the database.  If an SQL injection vulnerability is
+> exploited, maybe the attacker could injest XSS into the user ID.  But the
+> user ID is "trusted" in the intended security model of the application, so
+> the SQL injection would get the CVE, and the XSS would be listed as a
+> consequence.
+>
+> So, in this case, it might be that CVE-2010-3844 is extraneous.
+>
+> But, if it's reasonable for configuration files to be shared between users
+> or installations (just like pictures, packet captures, or MP3s) - then
+> there's a reasonable exploit scenario where the temp file issue is
+> irrelevant, but the format string still has an attack vector.
+>
+> Hope that makes sense.  This was a bane to us at CVE years ago, and was the
+> source of a lot of confusion and inconsistency.  It happens in the web app
+> world all the time.
+>
+> - Steve
+>
+>
+>
+> On Wed, 13 Oct 2010, Josh Bressers wrote:
+>
+>>> There are two issues here (insecure temporary file usage and
+>>> stack-based buffer overflow), but they're probably only
+>>> security-relevant when exploited in conjunction.  Not sure if it
+>>> should get one CVE or two.
+>>>
+>>> Reference:
+>>> https://bugs.launchpad.net/ubuntu/+source/ettercap/+bug/656347
+>>>
+>>>
+>>
+>> We'll use two:
+>>
+>> CVE-2010-3843 ettercap GTK insecure temporary file use
+>> CVE-2010-3844 ettercap GTK format string flaw
+>
