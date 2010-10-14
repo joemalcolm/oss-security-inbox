@@ -1,21 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/05/3
-Message-ID: <Pine.GSO.4.64.1003051150200.8611@faron.mitre.org>
-Date: Fri, 5 Mar 2010 11:51:32 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/14/1
+Message-ID: <Pine.GSO.4.64.1010141401580.10412@faron.mitre.org>
+Date: Thu, 14 Oct 2010 14:10:34 -0400 (EDT)
 From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Ludwig Nussel <ludwig.nussel@...e.de>
-cc: oss-security@...ts.openwall.com, Simo Sorce <ssorce@...hat.com>
-Subject: Re: Samba symlink 0day flaw
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: ettercap GTK
 Content-Type: text/plain; charset=utf-8
 
 
-On Fri, 5 Mar 2010, Ludwig Nussel wrote:
+If the config file is intended to be trusted, then any issues that can 
+*only* be exploited through that trusted file, are not relevant for CVE 
+inclusion - basically, it would be the admin attacking himself/herself.
 
-> Any update on this? I think unexpected insecure default
-> configurations that surprise admins did get CVE numbers in the past.
+If you fix problem X, and it automatically fixes another problem Y (or, at 
+worst, renders it as non-security-relevant) - then you would assign a CVE 
+to X, and perhaps emphasize Y as one of potentially-many consequences.
 
-Yes, I think this is fair game for CVE.
+Maybe other attacks are possible through that config file; but would they 
+be irrelevant if the config file was only accessible to the intended user?
 
-Use CVE-2010-0926, to be filled in later.
+As a distinct example: you have a web-based application that stores 
+content into a database, including user IDs that are validated to be 
+alphanumeric before insertion into the database.  If an SQL injection 
+vulnerability is exploited, maybe the attacker could injest XSS into the 
+user ID.  But the user ID is "trusted" in the intended security model of 
+the application, so the SQL injection would get the CVE, and the XSS would 
+be listed as a consequence.
+
+So, in this case, it might be that CVE-2010-3844 is extraneous.
+
+But, if it's reasonable for configuration files to be shared between users 
+or installations (just like pictures, packet captures, or MP3s) - then 
+there's a reasonable exploit scenario where the temp file issue is 
+irrelevant, but the format string still has an attack vector.
+
+Hope that makes sense.  This was a bane to us at CVE years ago, and was 
+the source of a lot of confusion and inconsistency.  It happens in the web 
+app world all the time.
 
 - Steve
+
+
+
+On Wed, 13 Oct 2010, Josh Bressers wrote:
+
+>> There are two issues here (insecure temporary file usage and
+>> stack-based buffer overflow), but they're probably only
+>> security-relevant when exploited in conjunction.  Not sure if it
+>> should get one CVE or two.
+>>
+>> Reference:
+>> https://bugs.launchpad.net/ubuntu/+source/ettercap/+bug/656347
+>>
+>>
+>
+> We'll use two:
+>
+> CVE-2010-3843 ettercap GTK insecure temporary file use
+> CVE-2010-3844 ettercap GTK format string flaw
