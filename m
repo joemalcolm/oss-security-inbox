@@ -1,32 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/27/5
-Message-ID: <Pine.GSO.4.64.1001271834030.4937@faron.mitre.org>
-Date: Wed, 27 Jan 2010 18:34:44 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Josh Bressers <bressers@...hat.com>
-cc: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: postgresql bitsubstr overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/18/1
+Message-ID: <2145490801.697121287418215298.JavaMail.root@zmail05.collab.prod.int.phx2.redhat.com>
+Date: Mon, 18 Oct 2010 12:10:15 -0400 (EDT)
+From: Petr Matousek <pmatouse@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley@...us.mitre.org
+Subject: CVE request -- libguestfs: missing disk format specifier when adding a disk
 Content-Type: text/plain; charset=utf-8
 
+Hello Steve, vendors.
 
-On Wed, 27 Jan 2010, Josh Bressers wrote:
+Description:
+Libguestfs doesn't currently allow the format of a disk to be specified explicitly.
+Because of that malicious guest admin can exploit automatic image format detection
+in qemu, when the libguestfs is used to administer the image, to read arbitrary
+file on host via forging a image header with backing store.
 
-> ----- "Nico Golde" <oss-security+ml@...lde.de> wrote:
->
->> Hi,
->> can I please get a CVE id for postgresql?
->>
->> references:
->> http://intevydis.blogspot.com/2010/01/postgresql-8023-bitsubstr-overflow.html
->> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=567058
->>
->
-> Steve,
->
-> Are you following the vulndisco stuff? I don't want to assign a dupe.
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=643958
 
-We're following vulndisco stuff although it's a bit of a pain.
+Could you please allocate a CVE identifier for this issue?
 
-Use CVE-2010-0442
-
-- Steve
+Thanks you,
+--
+Petr Matousek / Red Hat Security Response Team
