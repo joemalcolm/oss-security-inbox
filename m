@@ -1,58 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/23/1
-Message-ID: <AANLkTi=-3vCNGVnJW1XCsKUm0MH2+a_iQUmrt4OgSPRU@mail.gmail.com>
-Date: Mon, 23 Aug 2010 16:24:53 +0200
-From: Pierre Joye <pierre.php@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/18/2
+Message-ID: <4CBC8182.6060903@redhat.com>
+Date: Tue, 19 Oct 2010 01:18:58 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: PHP MOPS-2010-56..60
+CC: Petr Matousek <pmatouse@...hat.com>, coley@...us.mitre.org
+Subject: Re: CVE request -- libguestfs: missing disk format specifier when adding a disk
 Content-Type: text/plain; charset=utf-8
 
-hi,
+On 10/19/2010 12:10 AM, Petr Matousek wrote:
+> Hello Steve, vendors.
+>
+> Description:
+> Libguestfs doesn't currently allow the format of a disk to be specified explicitly.
+> Because of that malicious guest admin can exploit automatic image format detection
+> in qemu, when the libguestfs is used to administer the image, to read arbitrary
+> file on host via forging a image header with backing store.
+>
+> References:
+> https://bugzilla.redhat.com/show_bug.cgi?id=643958
+>
+> Could you please allocate a CVE identifier for this issue?
 
-Can you send me a list of the MOPS CVE please? I'm missing some and I
-would like to update the NEWS file accordingly.
+Petr, please use CVE-2010-3851. Thanks.
 
-Cheers,
-
-On Fri, Aug 20, 2010 at 6:59 PM, Steven M. Christey
-<coley@...us.mitre.org> wrote:
->
-> Apologies to everyone, especially Moritz who pinged me on this privately a
-> while ago.
->
-> Some of these CVEs are SPLIT based on very narrow distinctions between types
-> of buffer overflows, where others might have merged.  This is one area where
-> there can be some variability in CVE assignments depending on the amount of
-> available information.
->
->
-> CVE-2010-3062
->
->  - MOPS-2010-056, MOPS-2010-057
->  - buffer overflow with untrusted length
->
-> CVE-2010-3063
->
->  - MOPS-2010-058
->  - buffer overflow with calculation error
->
-> CVE-2010-3064
->
->  - MOPS-2010-059
->  - classic overflow
->
-> CVE-2010-3065
->  - MOPS-2010-060
->  - session deserializer data injection
->
->
->
-> - Steve
->
-
-
-
+Eugene
 -- 
-Pierre
-
-@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
