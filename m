@@ -1,18 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/15/2
-Message-ID: <20100615063138.GB12897@lackof.org>
-Date: Tue, 15 Jun 2010 00:31:38 -0600
-From: dann frazier <dannf@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE Request - kernel: put_tty_queue NULL pointer deref
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/21/2
+Message-ID: <20101021080645.GD21548@suse.de>
+Date: Thu, 21 Oct 2010 10:06:45 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: glibc $ORIGIN problem - CVE-2010-3847
 Content-Type: text/plain; charset=utf-8
 
-Going through some old issues, we have this one from 2009:
- https://bugzilla.kernel.org/show_bug.cgi?id=14605
+Hi,
 
-Upstream fix went into 2.6.33-rc8:
-  http://git.kernel.org/linus/80e1e823989ec44d8e35bdfddadbddcffec90424
+The actually exploitable impact of Tavis glibc $ORIGIN problem is still a bit open question.
 
-This was included in 2.6.32.9 and 2.6.27.46, but it looks like our
-2.6.26-based kernel may have the issue as well.
+Apparently the bad code has a assert() in front which causes this assertion failure:
+
+$ LD_AUDIT=\$ORIGIN ping
+Inconsistency detected by ld.so: dl-open.c: 231: dl_open_worker: Assertion `(call_map)->l_name[0] == '\0'' failed!
+$ 
+
+If glibc was built with -DNDEBUG the assert() is empty and the code will proceed
+into the exploitable parts.
+
+Sebastian Krahmer of my team looked at this yesterday and was quite confident
+that the problematic zone is protected by this assert(). The source code is however
+quite a labyrinth of c files, headers and macros so we might have missed something.
+
+Andreas Schwab of Redhat has posted candidate patches to fix the problems:
+	http://sourceware.org/ml/libc-hacker/2010-10/msg00007.html
+	http://sourceware.org/ml/libc-hacker/2010-10/msg00008.html
+
+Ciao, Marcus
