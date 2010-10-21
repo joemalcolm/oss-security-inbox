@@ -1,30 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/09/4
-Message-ID: <AANLkTin1BwBnRQxkbI2n16d1ZLmmgz1K6pE_AQrdj-xT@mail.gmail.com>
-Date: Thu, 8 Jul 2010 23:56:21 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/21/3
+Message-ID: <AANLkTikx=kMiVyssQk4qWPnBNsB+Fb4-1YaPifEWvSsA@mail.gmail.com>
+Date: Thu, 21 Oct 2010 11:25:02 +0200
+From: Robert Święcki <robert@...ecki.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: kernel: gfs2 acl issue
+Subject: Re: glibc $ORIGIN problem - CVE-2010-3847
 Content-Type: text/plain; charset=utf-8
 
-To elaborate on the issue: the gfs2 filesystem in 2.6.32 kernels
-currently allows any user to set arbitrary ACLs for files they do not
-own, essentially granting full access to everything.  The source of
-this problem also caused other misbehavior of ACLs.  This fix resolved
-the issue for 2.6.33, but it was not backported, so 2.6.32 remains
-vulnerable.
+> The actually exploitable impact of Tavis glibc $ORIGIN problem is still a bit open question.
+>
+> Apparently the bad code has a assert() in front which causes this assertion failure:
+>
+> $ LD_AUDIT=\$ORIGIN ping
+> Inconsistency detected by ld.so: dl-open.c: 231: dl_open_worker: Assertion `(call_map)->l_name[0] == '\0'' failed!
+> $
 
--Dan
+Yeah.. I looked into it as well on Ubuntu, and couldn't find any way
+to bypass this assert(), but as you mentioned this code is.
+h.o.r.r.i.b.l.e ;) so I wouldn't be surprised if there's a way to
+exploit it.
 
-On Thu, Jul 8, 2010 at 11:47 PM, Eugene Teo <eugeneteo@...nel.sg> wrote:
-> Upstream commit 2646a1f6 (2.6.33-rc1) fixed an interesting gfs2 acl issue
-> late last year. Thanks Dan Rosenberg for informing us about this.
->
-> http://git.kernel.org/linus/2646a1f61a3b5525914757f10fa12b5b94713648
->
-> I didn't request a CVE name for this but if you need one, ping Steve.
->
-> Thanks, Eugene
-> --
-> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
->
+-- 
+Robert Święcki
