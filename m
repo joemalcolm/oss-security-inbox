@@ -1,23 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/03/3
-Message-ID: <AANLkTint0ZwP96gquAc-ozmXyARBHEW9_RiFkWDo90s+@mail.gmail.com>
-Date: Wed, 3 Nov 2010 18:19:56 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/21/1
+Message-ID: <4CBFBA67.90001@redhat.com>
+Date: Thu, 21 Oct 2010 11:58:31 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel: CAN information leak
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: setup_arg_pages: diagnose excessive argument size
 Content-Type: text/plain; charset=utf-8
 
-The CAN protocol uses the address of a kernel heap object as a proc
-filename, revealing information that could be useful during
-exploitation.
+"The CONFIG_STACK_GROWSDOWN variant of setup_arg_pages() does not check 
+the size of the argument/environment area on the stack. When it is 
+unworkably large, shift_arg_pages() hits its BUG_ON. This is exploitable 
+with a very large RLIMIT_STACK limit, to create a crash pretty easily.
 
-The below post also mentions a heap overflow.  While there is a
-semantic overflow (17 bytes being copied into a 9-byte buffer), in
-reality, the object whose member is being overflowed resides in a
-kernel heap slab cache that includes enough padding that there is no
-possible corruption.  So, it's a bug but not a vulnerability.
+Check that the initial stack is not too large to make it possible to map 
+in any executable.  We're not checking that the actual executable (or 
+intepreter, for binfmt_elf) will fit.  So those mappings might clobber 
+part of the initial stack mapping.  But that is just userland lossage 
+that userland made happen, not a kernel problem."
 
-Reference:
-http://marc.info/?l=linux-netdev&m=128872251418192&w=2
+Upstream commit:
+http://git.kernel.org/linus/1b528181b2ffa14721fb28ad1bd539fe1732c583
 
--Dan
+References:
+http://grsecurity.net/~spender/64bit_dos.c
+https://bugzilla.redhat.com/show_bug.cgi?id=645222
+
+Eugene
+-- 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
