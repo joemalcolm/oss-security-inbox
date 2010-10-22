@@ -1,20 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/09/5
-Message-Id: <201004091224.36539.eren@pardus.org.tr>
-Date: Fri, 9 Apr 2010 12:24:36 +0300
-From: Eren Türkay <eren@...dus.org.tr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/22/3
+Message-ID: <8739ryid1j.fsf@mid.deneb.enyo.de>
+Date: Fri, 22 Oct 2010 15:15:36 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: ClamAV small issues
+Subject: Re: glibc $ORIGIN problem - CVE-2010-3847
 Content-Type: text/plain; charset=utf-8
 
-On Friday 09 April 2010 12:22:24 pm Eren Türkay wrote:
-> Accordingly to secunia, these are highly-critical. 
-> 
+* Marcus Meissner:
 
-Sorry, I forgot to mention URLs. :)
+> Andreas Schwab of Redhat has posted candidate patches to fix the problems:
+> 	http://sourceware.org/ml/libc-hacker/2010-10/msg00007.html
+> 	http://sourceware.org/ml/libc-hacker/2010-10/msg00008.html
 
-http://secunia.com/advisories/39329/
-https://wwws.clamav.net/bugzilla/show_bug.cgi?id=1771
-
--- 
-Eren
+Is the second patch really required?  I'm building our updates without
+that. 8-/
