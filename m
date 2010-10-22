@@ -1,28 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/01/2
-Message-ID: <87sjzkeqb3.fsf@mid.deneb.enyo.de>
-Date: Mon, 01 Nov 2010 21:34:24 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/22/5
+Message-ID: <1432075622.1471601287758332552.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 22 Oct 2010 10:38:52 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Proftpd pre-authentication buffer overflow in Telnet code
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: kernel: heap overflow in TIPC
 Content-Type: text/plain; charset=utf-8
 
-I haven't seen a CVE/patch/discussion for this issue yet:
+Please use CVE-2010-3859
 
-| 1.3.3c
-| ---------
-| 
-|   + Fixed Telnet IAC stack overflow vulnerability (ZDI-CAN-925)
+Thanks.
 
-<http://proftpd.org/docs/RELEASE_NOTES-1.3.3c>
+-- 
+    JB
 
-This:
 
-|  + Fixed directory traversal bug in mod_site_misc
+----- "Dan Rosenberg" <dan.j.rosenberg@...il.com> wrote:
 
-is <http://bugs.proftpd.org/show_bug.cgi?id=3519> and also seems to
-lack a CVE assignment.
-
-I don't know yet if the following is a security fix:
-
-|  + Fixed SQLite authentications using "SQLAuthType Backend"
+> The tipc_msg_build() function in net/tipc/msg.c contains an
+> exploitable kernel heap overflow that would allow a local user to
+> escalate privileges to root by issuing maliciously crafted sendmsg()
+> calls via TIPC sockets.
+> 
+> Fortunately, none of the distributions I tested actually define a
+> module alias for TIPC even though it is compiled as a module on
+> nearly
+> all of them (I suspect this is a lucky accident).  Since in these
+> situations, the TIPC module will not be loaded automatically on
+> creation of a TIPC socket, an administrator would have had to
+> explicitly load the TIPC kernel module in order for a system to be
+> vulnerable.
+> 
+> I checked Ubuntu, Debian, and Fedora, none of which define an alias.
+> Any distributions that define a module alias for TIPC (i.e. "alias
+> net-pf-30 tipc") should treat this as a serious vulnerability.  Even
+> if your distribution does not, I highly recommend backporting the fix
+> for this, since it's a bit of defensive programming in the core
+> networking code that handles verifying user-supplied iovecs, which
+> likely resolves other undiscovered (or undisclosed) security issues
+> elsewhere.  I'll post a link to the fix when it's finalized and
+> committed.
+> 
+> Reference:
+> http://marc.info/?l=linux-netdev&m=128770476511716&w=2
+> 
+> -Dan
