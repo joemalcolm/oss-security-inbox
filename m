@@ -1,46 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/29/10
-Message-ID: <Pine.GSO.4.64.1004291537280.5271@faron.mitre.org>
-Date: Thu, 29 Apr 2010 15:40:39 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: moodle 1.9.8, 1.8.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/22/2
+Message-ID: <AANLkTi=8xafPpHCw8UFHJniS2=a+bgmij+gzPmeLxQ8r@mail.gmail.com>
+Date: Fri, 22 Oct 2010 09:11:18 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: kernel: heap overflow in TIPC
 Content-Type: text/plain; charset=utf-8
 
+The tipc_msg_build() function in net/tipc/msg.c contains an
+exploitable kernel heap overflow that would allow a local user to
+escalate privileges to root by issuing maliciously crafted sendmsg()
+calls via TIPC sockets.
 
+Fortunately, none of the distributions I tested actually define a
+module alias for TIPC even though it is compiled as a module on nearly
+all of them (I suspect this is a lucky accident).  Since in these
+situations, the TIPC module will not be loaded automatically on
+creation of a TIPC socket, an administrator would have had to
+explicitly load the TIPC kernel module in order for a system to be
+vulnerable.
 
->MSA-10-0009: Session fixation prevention now turned on by default
+I checked Ubuntu, Debian, and Fedora, none of which define an alias.
+Any distributions that define a module alias for TIPC (i.e. "alias
+net-pf-30 tipc") should treat this as a serious vulnerability.  Even
+if your distribution does not, I highly recommend backporting the fix
+for this, since it's a bit of defensive programming in the core
+networking code that handles verifying user-supplied iovecs, which
+likely resolves other undiscovered (or undisclosed) security issues
+elsewhere.  I'll post a link to the fix when it's finalized and
+committed.
 
-Use CVE-2010-1613
+Reference:
+http://marc.info/?l=linux-netdev&m=128770476511716&w=2
 
->MSA-10-0008: Persistent XSS when using Login-as feature
->MSA-10-0007: Reflective Cross Site Scripting (XSS) in the Moodle
->Global Search Engine
-
-These two are combined into a single CVE.
-
-Use CVE-2010-1614
-
->MSA-10-0006: SQL injection in Wiki module
->MSA-10-0005: Incorrect validation of forms data
-
-These two are combined into a single CVE.
-
-Use CVE-2010-1615
-
->MSA-10-0004: Improved access control in course restore
-
-Use CVE-2010-1616
-
->MSA-10-0003: Disclosure of full user names
-
-Use CVE-2010-1617
-
->MSA-10-0002: XSS vulnerabilty in the phpcas module
-
-Use CVE-2010-1618
-
->MSA-10-0001: Vulnerability in KSES text cleaning
-
-Use CVE-2010-1619
-
+-Dan
