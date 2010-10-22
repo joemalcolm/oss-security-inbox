@@ -1,68 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/01/9
-Message-ID: <651701606.225121270147273499.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 1 Apr 2010 14:41:13 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/22/4
+Message-ID: <282104569.1470581287758019044.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 22 Oct 2010 10:33:39 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
 Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Transmission v1.92
+Subject: Re: CVE request: kernel: setup_arg_pages: diagnose excessive argument size
 Content-Type: text/plain; charset=utf-8
 
------ "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
-
-> Hi Steve, vendors,
-> 
->    Transmission upstream has recently released latest, v1.92 version:
->      [1] http://trac.transmissionbt.com/wiki/Changes
-> 
->    fixing one (potentially two) security issues:
->      a, Fix potential buffer overflow when adding maliciously-crafted
->      magnet links
-> 
->    References:
->      [2] http://trac.transmissionbt.com/ticket/2965
->      [3] http://trac.transmissionbt.com/wiki/Changes
->      [4] http://bugs.gentoo.org/show_bug.cgi?id=309831
-
-Use CVE-2010-0748 for this one. I'm calling it an arbitrary memory write.
-It's not really a buffer overflow.
-
-> 
->      --
-> 
->      b, Fix possible data corruption issue caused by data sent by bad
->      peers during endgame (this one I am not completely sure of, but when
->      looking at the relevant bug record:
->      [5] http://trac.transmissionbt.com/ticket/1242
->          there is written:
->      [6] http://trac.transmissionbt.com/ticket/1242#comment:1
->          "My theory is that for some reason Transmission will download a
->          corrupt part from someone but not realize it until you do a
->          manual verify. At this point T will recognize the bad part and
->          redownload it from the same person, which just causes the
->          problem again."
-> 
->          so to prevent someone from successfully downloading content of
->          some torrent file, for an attacker to should be enough to
->          download a part of it, corrupt it and
->          share it. Not sure about the algorithm, Transmission decides
->          which torrent
->          to retrieve content from, but if it is deterministic /
->          predictable behavior / algorithm, such attack could succeed).
-> 
->    References:
->      [7] http://trac.transmissionbt.com/ticket/1242
->      [8] http://trac.transmissionbt.com/ticket/1242#comment:1
->      [9] http://trac.transmissionbt.com/wiki/Changes
-> 
-
-I'm giving this issue a CVE ID too. I think this issue is a bit on the
-fence, but given a malicious client could corrupt download data in a manner
-that is hard to fix, it should get one.
-
-Use CVE-2010-0749
+Please use CVE-2010-3858
 
 Thanks.
 
 -- 
     JB
+
+
+----- "Eugene Teo" <eugene@...hat.com> wrote:
+
+> "The CONFIG_STACK_GROWSDOWN variant of setup_arg_pages() does not
+> check 
+> the size of the argument/environment area on the stack. When it is 
+> unworkably large, shift_arg_pages() hits its BUG_ON. This is
+> exploitable 
+> with a very large RLIMIT_STACK limit, to create a crash pretty
+> easily.
+> 
+> Check that the initial stack is not too large to make it possible to
+> map 
+> in any executable.  We're not checking that the actual executable (or
+> 
+> intepreter, for binfmt_elf) will fit.  So those mappings might clobber
+> 
+> part of the initial stack mapping.  But that is just userland lossage
+> 
+> that userland made happen, not a kernel problem."
+> 
+> Upstream commit:
+> http://git.kernel.org/linus/1b528181b2ffa14721fb28ad1bd539fe1732c583
+> 
+> References:
+> http://grsecurity.net/~spender/64bit_dos.c
+> https://bugzilla.redhat.com/show_bug.cgi?id=645222
+> 
+> Eugene
+> -- 
+> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i);
+> }
