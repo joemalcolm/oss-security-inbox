@@ -1,16 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/11/3
-Message-ID: <AANLkTimHpj8mnxmzRTDizz1B3BMTPpuuveSRu76s48Hv@mail.gmail.com>
-Date: Fri, 11 Jun 2010 16:32:41 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/25/2
+Message-ID: <20101025035006.GA29268@openwall.com>
+Date: Mon, 25 Oct 2010 07:50:06 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request - kernel: btrfs: prevent users from setting ACLs on files  they do not own
+Subject: Re: Minor security flaw with pam_xauth
 Content-Type: text/plain; charset=utf-8
 
-Shi Weihua discovered that btrfs did not check ownership of files
-before setting ACLs, allowing any user to set ACLs for any file,
-completely bypassing all file permissions.  This wasn't reported as a
-security issue, but it seems pretty serious to me (for those who use
-btrfs).  See http://lkml.org/lkml/2010/5/17/544 for his original post.
+Dmitry has produced a patch against Linux-PAM 1.1.2 with the fixes
+mentioned in the quoted message below.
 
--Dan
+http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/pam/
+
+This is Linux-PAM-1.1.2-up-20101011.diff (same as the changes made
+upstream) and Linux-PAM-1.1.2-owl-Makefile.diff.
+
+We already have this in Owl, documented as follows:
+
+2010/10/18	Package: pam
+SECURITY FIX	Severity: none to medium, local, active
+Updated to 1.1.2+ snapshot 20101011.  This code revision introduces the
+proper privilege switching into pam_env, pam_mail, and pam_xauth.  None
+of these modules are in use on default installs of Owl, and they never
+were, hence there was no impact for default installs.
+References:
+http://www.openwall.com/lists/oss-security/2010/08/16/2
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-3316
+http://www.openwall.com/lists/oss-security/2010/09/21/3
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-3435
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-3430
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-3431
+
+I am posting this in case others want to have the issues fixed before
+the 1.1.3 release comes out.
+
+Alexander
+
+On Mon, Oct 04, 2010 at 02:00:03AM +0400, Dmitry V. Levin wrote:
+> The patch that fixes CVE-2010-3430 and CVE-2010-3431 was just made public:
+> http://git.altlinux.org/people/ldv/packages/?p=pam.git;a=commitdiff;h=pam_modutil_priv
+> 
+> Besides that, another two issues have been fixed in pam_xauth after
+> Linux-PAM 1.1.2 release:
+> 
+> In pam_sm_close_session(), the attempt to unlink cookie file was made
+> without dropping privileges at all if target uid could not be determined:
+> http://git.altlinux.org/people/ldv/packages/?p=pam.git;a=commitdiff;h=Linux-PAM-1_1_2-3-g05dafc0
+> 
+> In check_acl(), there were no check that the acl file provided by target
+> user is a regular file:
+> http://git.altlinux.org/people/ldv/packages/?p=pam.git;a=commitdiff;h=Linux-PAM-1_1_2-2-gffe7058
+> 
+> 
+> -- 
+> ldv
