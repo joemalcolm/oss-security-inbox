@@ -1,31 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/10/2
-Message-ID: <4B977C67.2080404@redhat.com>
-Date: Wed, 10 Mar 2010 12:03:03 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request -- SpamAssassin Mail Filter -- arbitrary shell command injection (priv esc)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/25/1
+Message-ID: <20101025032602.GA29006@openwall.com>
+Date: Mon, 25 Oct 2010 07:26:02 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: glibc $ORIGIN problem - CVE-2010-3847
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve, vendors,
+Hi,
 
-   Security researcher called "Kingcope" pointed out:
-   [1] http://lists.grok.org.uk/pipermail/full-disclosure/2010-March/073489.html
+This was discussed off-list before, but just to have it more widely
+known/available - distros are welcome to reuse our sanitize-env patch
+from Owl:
 
-   a deficiency in the way Mail Filter plugin for the SpamAssassin
-   spam filter sanitized certain mail header field, when spamass-milter
-   was run with the expand flag (-x option).
+http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/glibc/glibc-2.3.5-owl-alt-sanitize-env.diff
 
-   Affected versions:
-     Flaw reported against v0.3.1. Others may be also affected.
+or perhaps a revision of it forward-ported to current glibc in ALT's
+package.  Here's a relevant commit:
 
-   References:
-     [2] http://secunia.com/advisories/38840/
-     [3] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=573228
+http://git.altlinux.org/people/ldv/packages/?p=glibc.git;a=commitdiff;h=64963eb224c9
 
-   Could you allocate CVE id for this?
+Perhaps further changes were made to some of the patched files in
+Dmitry's repository above (the commit is a bit dated, whereas the
+current tree is based on glibc 2.11.2).  Dmitry, you could want to
+comment on that.
 
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+These changes, being a result of exhaustive review of glibc for env var
+uses, might also provide further inspiration for more attacks on glibc
+(without our patch).
+
+Alexander
