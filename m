@@ -1,52 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/17/12
-Message-ID: <Pine.GSO.4.64.1009171442140.21295@faron.mitre.org>
-Date: Fri, 17 Sep 2010 14:45:28 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/25/4
+Message-ID: <20101025233623.GO980@outflux.net>
+Date: Mon, 25 Oct 2010 16:36:23 -0700
+From: Kees Cook <kees@...ntu.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: epiphany not checking ssl certs
+Subject: CVE request: kernel: heap contents leak from ETHTOOL_GRXCLSRLALL
 Content-Type: text/plain; charset=utf-8
 
+This is an uncommon leak I found that was fixed in 2.6.36 here:
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=ae6df5f96a51818d6376da5307d773baeece4014
 
-If an application does not advertise a security feature, then in general 
-we will not give a CVE because of its absence of the feature (I don't want 
-to give out 50,000 CVEs for every protocol that does cleartext 
-transmission... or uses DES... etc.)  Similarly, we generally avoid 
-assigning CVEs to "defense in depth" fixes, although the line between 
-"vulnerability" and "defense in depth" can get fuzzy.
+This is different from CVE-2010-2478, but was introduced at the same time
+(0853ad66, 2.6.27-rc1).
 
-The http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=564690#5 title says 
-"Does not longer check certificates" which could be interpreted to mean 
-that it used to check certs, and now it doesn't.  If that's the case, then 
-it makes sense to assign a CVE.
+Thanks,
 
-- Steve
+-Kees
 
-
-On Fri, 17 Sep 2010, Tomas Hoger wrote:
-
-> On Fri, 17 Sep 2010 14:19:03 +0200 Hanno Böck wrote:
->
->> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=564690
->> http://blog.fefe.de/?ts=b26ca29d
->>
->> Did this get a CVE yet?
->
-> Any specific reason to only give CVE to epiphany if you want to start
-> giving CVEs for this kind of flaw?  IIRC, not long ago, no
-> WebKitGtk-based browser I tried verified server SSL certificates and
-> all connected without any complaint or indication that SSL certificate
-> was not verified.  None seemed to offer any configuration option to
-> enable certificate checking.  I guess there may be / was some
-> limitations on WebKitGtk side that can explain this.
->
-> I noticed midori now uses different address bar background color, which
-> seem to be similar to the epiphany fix described in the Debian bug.
->
-> Oh, now I see you're probably asking for CVE for post-deb#564690
-> behavior, not pre-deb#564690, right?
->
-> -- 
-> Tomas Hoger / Red Hat Security Response Team
->
->
+-- 
+Ubuntu Security Team
+Kees Cook
