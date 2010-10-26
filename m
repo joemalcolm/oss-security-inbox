@@ -1,45 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/20/6
-Message-ID: <20100820130028.4e3849cb@redhat.com>
-Date: Fri, 20 Aug 2010 13:00:28 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/26/2
+Message-ID: <20101026214947.GC30679@altlinux.org>
+Date: Wed, 27 Oct 2010 01:49:47 +0400
+From: "Dmitry V. Levin" <ldv@...linux.org>
 To: oss-security@...ts.openwall.com
-Cc: pierre.php@...il.com, Moritz Muehlenhoff <jmm@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: PHP MOPS-2010-56..60
+Subject: Re: glibc $ORIGIN problem - CVE-2010-3847
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 20 Aug 2010 12:38:31 +0200 Pierre Joye wrote:
-
-> > MOPS-2010-056 - MOPS-2010-060 as subject indicates.  Those are
-> > mysqlnd issues and session serializer issue allowing data
-> > injection.  Not any from that set of interruption issues that
-> > exposed one or two problems in different ways.
+On Mon, Oct 25, 2010 at 07:26:02AM +0400, Solar Designer wrote:
+[...]
+> http://git.altlinux.org/people/ldv/packages/?p=glibc.git;a=commitdiff;h=64963eb224c9
 > 
-> As far as I can tell and see, both the mysqlnd and session issues have
-> been fixed.
+> Perhaps further changes were made to some of the patched files in
+> Dmitry's repository above (the commit is a bit dated, whereas the
+> current tree is based on glibc 2.11.2).  Dmitry, you could want to
+> comment on that.
 
-Raphael posted commit links earlier in this thread.
+The latest version of the change available as a single patch is indeed the
+change for glibc 2.10.1 mentioned above.  It was merged with upstream
+glibc.git since then, and now it's based on release/2.11/master branch.
 
-> Phar: http://svn.php.net/viewvc?view=revision&revision=298667
-
-I'm aware of that commit.  It does not change
-php_stream_wrapper_log_error invocation from phar_stream_flush, as
-mentioned in MOPS-2010-024:
-
-http://svn.php.net/viewvc/php/php-src/trunk/ext/phar/stream.c?view=markup&pathrev=298667#l471
-
-Hence the question if there is some less obvious change that make that
-particular cases non-issue too.
-
-> As far as I remember, the resources related issues are not fixed (-22
-> and -03), it is also not new and related to the same bug. I also don't
-> think that it will get fixed any time soon as it is not possible to
-> fix easily. I think there is already a CVE about this problem.
-
-Are you aware of any good bugs.php.net reference that covers the issue
-in greater detail?
-
-Thank you!
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+ldv
+
+Content of type "application/pgp-signature" skipped
