@@ -1,26 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/11/2
-Message-ID: <20100111104813.38909f52@tanana.suse.de>
-Date: Mon, 11 Jan 2010 10:48:13 +0100
-From: Ludwig Nussel <ludwig.nussel@...e.de>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request: viewvc
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/29/1
+Message-ID: <4CCA1988.1010203@redhat.com>
+Date: Fri, 29 Oct 2010 08:47:04 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: iovec overflow in rds_rdma_pages()
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Reported by Thomas Pollet, more info can be found at:
+http://www.spinics.net/lists/netdev/msg145359.html
+https://bugzilla.redhat.com/show_bug.cgi?id=647416
 
-viewvc 1.1.3 was released with security fixes according to the
-changelog:
-http://viewvc.tigris.org/source/browse/viewvc/trunk/CHANGES?r1=2242&r2=2313&pathrev=HEAD
-
-More explanations are in this commit:
-http://viewvc.tigris.org/source/browse/viewvc?view=rev&revision=2300
-
-cu
-Ludwig
-
+Thanks, Eugene
 -- 
- (o_   Ludwig Nussel
- //\   
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
