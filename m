@@ -1,41 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/01/8
-Message-ID: <1967940197.1017111285964092127.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 1 Oct 2010 16:14:52 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/01/3
+Message-ID: <2062114073.778081288643939128.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 1 Nov 2010 16:38:59 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
 Cc: coley <coley@...re.org>
-Subject: Re: CVE request: freeradius
+Subject: Re: CVE request: moodle 1.9.10
 Content-Type: text/plain; charset=utf-8
 
 
------ "Vincent Danen" <vdanen@...hat.com> wrote:
+----- "Ludwig Nussel" <ludwig.nussel@...e.de> wrote:
 
-> Requesting CVE names for two flaws fix in freeradius 2.1.10:
+> Hi,
 > 
-> DoS via certain DHCP requests
-> [1] https://bugs.freeradius.org/bugzilla/show_bug.cgi?id=77
-> [2] http://secunia.com/advisories/41621
-> [3] http://github.com/alandekok/freeradius-server/commit/4dc7800b866f889a1247685bbaa6dd4238a56279
-> [4] https://bugzilla.redhat.com/show_bug.cgi?id=639390
-
-Use CVE-2010-3696
-
-
-> 
-> crash when processing requests queued for more than 30 seconds
-> [1] https://bugs.freeradius.org/bugzilla/show_bug.cgi?id=35
-> [2] http://secunia.com/advisories/41621
-> [3] http://github.com/alandekok/freeradius-server/commit/ff94dd35673bba1476594299d31ce8293b8bd223
-> [4] https://bugzilla.redhat.com/show_bug.cgi?id=639397
-> 
-> 
-> Both issues only affect 2.1.x (1.1.x does not have the affected files or
-> functions).  It looks as though the first issue only affected 2.1.9; I'm
-> not yet sure if or how far the second issue may go back.
+> Moodle 1.9.10 is a security update again:
+> http://docs.moodle.org/en/Moodle_1.9.10_release_notes
 > 
 
-Use CVE-2010-3697
+This appears to be these things:
+
+* MSA-10-0017 XSS vulnerability in YUI 2.4.0 through YUI 2.8.1
+    Use CVE-2010-3866 for this.
+
+* MSA-10-0016 Multiple phpCAS library vulnerabilities
+    This seems to have CVE ids
+
+* MSA-10-0015 Customised HTML Purifier upgraded to 4.2.0 
+* MSA-10-0014 Customised phpMyAdmin upgraded to 2.11.11 
+
+These two have no real information I can see. They just say to upgrade the
+upstream version. Does anyone have more information (I can't follow the
+link to the tracker).
 
 Thanks.
 
