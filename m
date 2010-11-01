@@ -1,27 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/30/4
-Message-ID: <4CF4847E.6080608@redhat.com>
-Date: Tue, 30 Nov 2010 12:58:38 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/01/4
+Message-ID: <513033065.779981288644931845.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 1 Nov 2010 16:55:31 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Josh Bressers <bressers@...hat.com>, coley <coley@...re.org>
-Subject: Re: CVE request: kernel: Multiple DoS issues in block layer
+Cc: coley <coley@...re.org>
+Subject: Re: Proftpd pre-authentication buffer overflow in Telnet code
 Content-Type: text/plain; charset=utf-8
 
-On 11/29/2010 10:24 PM, Eugene Teo wrote:
->>> 2. By submitting certain I/O requests with 0 length, a local user could
->>> cause a kernel panic:
->>>
->>> http://git.kernel.org/?p=linux/kernel/git/axboe/linux-2.6-block.git;a=commit;h=9284bcf4e335e5f18a8bc7b26461c33ab60d0689
->>>
->>>
->>
->> Use CVE-2010-4163
->
-> Not a complete patch, need this too:
-> https://patchwork.kernel.org/patch/363282/
 
-Has anyone released an update with the regression? If so, we probably 
-need a new CVE name for this.
+----- "Florian Weimer" <fw@...eb.enyo.de> wrote:
 
-Eugene
+> I haven't seen a CVE/patch/discussion for this issue yet:
+> 
+> | 1.3.3c
+> | ---------
+> | 
+> |   + Fixed Telnet IAC stack overflow vulnerability (ZDI-CAN-925)
+> 
+> <http://proftpd.org/docs/RELEASE_NOTES-1.3.3c>
+
+I'm not assigning this an ID at this time. We'll see if it already has one.
+
+> 
+> This:
+> 
+> |  + Fixed directory traversal bug in mod_site_misc
+> 
+> is <http://bugs.proftpd.org/show_bug.cgi?id=3519> and also seems to
+> lack a CVE assignment.
+
+Use CVE-2010-3867
+
+> 
+> I don't know yet if the following is a security fix:
+> 
+> |  + Fixed SQLite authentications using "SQLAuthType Backend"
+
+Even if it is, I have no idea what sort of flaw this would be. Does anyone
+else know?
+
+Thanks.
+
+-- 
+    JB
