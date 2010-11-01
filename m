@@ -1,18 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/26/3
-Message-ID: <4BD5DE69.7030202@oxdef.info>
-Date: Mon, 26 Apr 2010 22:41:45 +0400
-From: Taras <oxdef@...ef.info>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/01/2
+Message-ID: <87sjzkeqb3.fsf@mid.deneb.enyo.de>
+Date: Mon, 01 Nov 2010 21:34:24 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Subject: Searching for vuln apps for testing free code review tools
+Subject: Proftpd pre-authentication buffer overflow in Telnet code
 Content-Type: text/plain; charset=utf-8
 
-Hi, all!
+I haven't seen a CVE/patch/discussion for this issue yet:
 
-Does anybody know good vuln apps/projects for (like test examples for
-lint) testing code review tools like rats, flawfinder and lint?
+| 1.3.3c
+| ---------
+| 
+|   + Fixed Telnet IAC stack overflow vulnerability (ZDI-CAN-925)
 
--- 
-Taras
-----
-"Software is like sex: it's better when it's free." - Linus Torvalds
+<http://proftpd.org/docs/RELEASE_NOTES-1.3.3c>
+
+This:
+
+|  + Fixed directory traversal bug in mod_site_misc
+
+is <http://bugs.proftpd.org/show_bug.cgi?id=3519> and also seems to
+lack a CVE assignment.
+
+I don't know yet if the following is a security fix:
+
+|  + Fixed SQLite authentications using "SQLAuthType Backend"
