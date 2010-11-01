@@ -1,45 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/20/8
-Message-ID: <AANLkTikB4US8kd48URcXpLEZeLmmKN4tO+usLNgfFL67@mail.gmail.com>
-Date: Fri, 20 Aug 2010 18:45:47 +0200
-From: Pierre Joye <pierre.php@...il.com>
-To: Tomas Hoger <thoger@...hat.com>
-Cc: oss-security@...ts.openwall.com, Moritz Muehlenhoff <jmm@...ian.org>,  "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: PHP MOPS-2010-56..60
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/01/1
+Message-ID: <622949449.776341288643349734.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 1 Nov 2010 16:29:09 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: iovec overflow in rds_rdma_pages()
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Aug 20, 2010 at 1:24 PM, Pierre Joye <pierre.php@...il.com> wrote:
-> On Fri, Aug 20, 2010 at 1:00 PM, Tomas Hoger <thoger@...hat.com> wrote:
->> On Fri, 20 Aug 2010 12:38:31 +0200 Pierre Joye wrote:
->>
->>> > MOPS-2010-056 - MOPS-2010-060 as subject indicates.  Those are
->>> > mysqlnd issues and session serializer issue allowing data
->>> > injection.  Not any from that set of interruption issues that
->>> > exposed one or two problems in different ways.
->>>
->>> As far as I can tell and see, both the mysqlnd and session issues have
->>> been fixed.
->>
->> Raphael posted commit links earlier in this thread.
->>
->>> Phar: http://svn.php.net/viewvc?view=revision&revision=298667
->>
->> I'm aware of that commit.  It does not change
->> php_stream_wrapper_log_error invocation from phar_stream_flush, as
->> mentioned in MOPS-2010-024:
->>
->> http://svn.php.net/viewvc/php/php-src/trunk/ext/phar/stream.c?view=markup&pathrev=298667#l471
->>
->> Hence the question if there is some less obvious change that make that
->> particular cases non-issue too.
->
-> I miss that part, thanks for pointing me to it. I will commit a fix
-> later today.
 
-Done: http://svn.php.net/viewvc?view=revision&revision=302565
+----- "Eugene Teo" <eugene@...hat.com> wrote:
 
-Cheers,
+> Reported by Thomas Pollet, more info can be found at:
+> http://www.spinics.net/lists/netdev/msg145359.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=647416
+> 
+
+
+Please use CVE-2010-3865
+
+Thanks.
+
 -- 
-Pierre
-
-@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+    JB
