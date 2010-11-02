@@ -1,55 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/23/1
-Message-Id: <201005231439.21960.thijs@debian.org>
-Date: Sun, 23 May 2010 14:39:16 +0200
-From: Thijs Kinkhorst <thijs@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/02/11
+Message-ID: <AANLkTimEbgV2VeitZ2Bi06Lb8vgjvL4aSZ1fmbNhe-Uz@mail.gmail.com>
+Date: Tue, 2 Nov 2010 20:08:58 +0100
+From: Pierre Joye <pierre.php@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Max Olsterd <max.olsterd@...il.com>, security-2010@...irrelmail.org
-Subject: Re: CVE Request for Horde and Squirrelmail
+Subject: Re: utf-8 security issue in php
 Content-Type: text/plain; charset=utf-8
 
-On sneon 22 Maaie 2010, Max Olsterd wrote:
-> But someone gave me an explanation, with a live hacking demo, and it was
-> awesome : this guy has been able to scan the LAN of an international ISP
-> whereas there was a firewall blocking incoming packets to the LAN (DMZ +
-> internal LAN) !!!
-> 
-> How ?
-> 
-> He had an account on the squirrelmail (ISP) and he has been able to create
-> an exploit for the advisory we are talking about here. Thanks to that, he
-> asked squirrelmail to scan some ranges of IP addresses that were private
-> (10.x.x.x) and unreachable from the outside of this ISP (NAT). Then he
-> found multiple interesting hosts with unpatched services, which gave him
-> an idea of how secure it was for real when you are inside. He also used
-> the DNS scanning attack that was described in the slides of HITB, by
-> bruteforcing names, and he found other IP addresses (but a firewall
-> blocked the scan so deep on the LAN).
+hi,
 
-That this is possible is inherent in providing the ability to your users to 
-configure any POP3 server they want to retreive email. The whole idea of the 
-POP3 fetch mail plugin is to allow to connect to other servers. And hence if 
-you want to provide this functionality there will always be the possibility 
-that someone connects to a local machine, and there's no real solution to that 
-given the premise. It is a choice to not patch internal services but any 
-adminsitrator has the responsibility to determine what 'internal' means and 
-who will have access to this network.
+On Tue, Nov 2, 2010 at 6:10 PM, Vincent Danen <vdanen@...hat.com> wrote:
+> * [2010-11-02 16:35:25 +0100] Pierre Joye wrote:
+>
+>> On Tue, Nov 2, 2010 at 3:24 PM, Josh Bressers <bressers@...hat.com> wrote:
+>>
+>>> As best as I can tell, this only needs one ID. Please use CVE-2010-3870.
+>>
+>> Thanks, I updated the bug report and the NEWS file.
+>>
+>> Please note that only 5.3 and later contains this fix. 5.3.4 will have the
+>> fix.
+>
+> Are you saying that 5.3 and later _need_ this fix?  I.e. that this
+> doesn't affect earlier versions?  Can you clarify?  Thanks.
 
-And note that still the only thing you, as an authenticated user, can do is 
-connect to those ports within a POP3 context.
+This comment was not very clear, sorry.
 
-The only new idea that this research adds, is that they've scripted the 
-changing of the pop3 server info so they can increase the amount of 
-hosts/ports to connect to in a given timeframe. But even if this wouldn't be 
-scriptable, it would still be possible for the user to specify POP3 servers by 
-hand (as that is the goal of the plugin) and hence any network setup that 
-can't deal with this but does enable the plugin, is broken by design.
+I'm saying that 5.3 and later have been changed to fix this problem. I
+have no idea if 5.2 requires a fix and won't investigate either (sadly
+no time). It was more for the CVE description, to be sure that the
+mention of 5.3+ will be present.
 
-It's only a matter of scaling that they add. Anything that is 'vulnerable' 
-with this, is already vulnerable if this scripting wouldn't be possible.
+Cheers,
+-- 
+Pierre
 
-
-cheers,
-Thijs
-
-Download attachment "signature.asc " of type "application/pgp-signature" (491 bytes)
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
