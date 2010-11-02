@@ -1,76 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/09/2
-Message-Id: <C9F27F00-17B8-4C48-8C15-5E89AE0183F7@apple.com>
-Date: Mon, 9 Aug 2010 08:37:01 -0700
-From: Braden Thomas <bthomas@...le.com>
-To: Josh Bressers <bressers@...hat.com>
-Cc: Werner Lemberg <wl@....org>, oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- FreeType -- Memory corruption flaw by processing certain LWFN fonts + three more
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/02/12
+Message-ID: <Pine.GSO.4.64.1011021528190.1928@faron.mitre.org>
+Date: Tue, 2 Nov 2010 15:39:33 -0400 (EDT)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: kernel stack infoleaks
 Content-Type: text/plain; charset=utf-8
 
-So these issues are going to be addressed in upcoming 2.4.3, right?  They still affect 2.4.2?
 
-Thanks,
+On Tue, 2 Nov 2010, Dan Rosenberg wrote:
 
-Braden
+> And since I've already gotten flack for this comment, I'll add for the 
+> sake of clarity: the second item is not a security issue if CAP_NET_RAW 
+> is synonymous with root access in your privilege model, as is the case 
+> on most systems.
 
-On Aug 6, 2010, at 11:32 AM, Josh Bressers wrote:
+Duly noted, but I have something to say anyway ;-) From a CVE purist 
+perspective, successful exploitation gets something more than what you can 
+get with CAP_NET_RAW alone, thus there is a violation of the intended 
+security model, no matter how small.  One exception that I sometimes 
+wonder about is whether you already have chained privileges [1] (e.g. 
+where legitimate use of privilege A can automatically get you privilege 
+B), but that kind of thing sometimes makes me wonder why there are 2 
+separate privileges in the first place.
 
-> 
-> ----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
-> 
->> 
->>   just for more complete list. There are more of them:
->>     [1] https://savannah.nongnu.org/bugs/?30644
->>         Patch at: 
->> http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=45a3c76b547511fa9d97aca34b150a0663257375
-> 
-> I'm going to call this improper bounds checking.
-> Use CVE-2010-2805
-> 
-> 
->>     [2] https://savannah.nongnu.org/bugs/?30656
->>         Patch at:
->> http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=c06da1ad34663da7b6fc39b030dc3ae185b96557
-> 
-> We'll also call this improper bounds checking. I'm giving it its own ID, as
-> the various versions affected will no doubt differ.
-> Use CVE-2010-2806
-> 
->>     [3] https://savannah.nongnu.org/bugs/?30657
->>         Patch at:
->> http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=346f1867fd32dae8f56e5b482d1af98f626804ac
-> 
-> I'm not exactly sure what to call this one. It seems to involve improper
-> type comparisons (int vs long).
-> Use CVE-2010-2807
-> 
->>>  A memory corruption flaw was found in the way FreeType font rendering
->>>  engine processed certain Adobe Type 1 Mac Font File (LWFN) fonts. An
->>>  attacker could use this flaw to create a specially-crafted font file
->>>  that, when opened, would cause an application linked against
->>>  libfreetype to crash, or, possibly execute arbitrary code.
->>> 
->>> Upstream bug report:
->>>  [1] https://savannah.nongnu.org/bugs/?30658
->>> 
->>> Public reproducer:
->>>  [2] http://alt.swiecki.net/j/f/sigsegv31.ttf
->>> 
->>> Upstream changeset:
->>>  [3] http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=81f3472c0ba7b8f6466e2e214fa8c1c17fade975
->>> 
->>> References:
->>>  [4] https://bugzilla.redhat.com/show_bug.cgi?id=621907
->>> 
->>> Credit: Robert Swiecki
-> 
-> Use CVE-2010-2808 for this one.
-> 
-> Thanks.
-> 
-> -- 
->    JB
+So, it would be reasonable to have a CVE, even though its severity would 
+be knocked way down because of the combination of the minor infoleak and 
+requirements for already-high privileges.
+
+I recognize that this approach is probably at odds with many developers 
+who have to implement protection mechanisms related to privileges and 
+access control.
+
+- Steve
 
 
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (3833 bytes)
+
+[1] where "privilege" is placeholder for "privilege, capability, access, 
+permission, etc., whatever the term is that is used for the particular 
+software you have in mind that is an implicit or explicit statement of 
+what a particular user or group of users is allowed to do."
