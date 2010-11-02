@@ -1,20 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/11/1
-Message-ID: <4BC19E34.9040308@gentoo.org>
-Date: Sun, 11 Apr 2010 12:02:28 +0200
-From: Tobias Heinlein <keytoaster@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/02/7
+Message-ID: <1288714032.3197.63.camel@dyson>
+Date: Tue, 02 Nov 2010 12:07:12 -0400
+From: Jon Oberheide <jon@...rheide.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: irssi 0.8.15
+Subject: CVE request: kernel stack infoleaks
 Content-Type: text/plain; charset=utf-8
 
-Not sure if everyone has seen this yet:
+Vasiliy Kulikov discovered three kernel stack infoleaks in various
+packet families of the net subsystem:
 
-http://irssi.org/
+===========================================================
 
-"This release fixes two security issues: The first being that Irssi
-didn't check hostname on SSL connections and the other being a hard to
-exploit remote crash bug."
+net/ax25
 
-Some further information can be found in the ChangeLog:
-http://irssi.org/news/ChangeLog
+Sometimes ax25_getname() doesn't initialize all members of
+fsa_digipeater field of fsa struct.  This structure is then copied to
+userland.  It leads to leaking of contents of kernel stack memory.  We
+have to initialize them to zero.
 
+http://marc.info/?l=linux-netdev&m=128854507120898&w=2
+
+===========================================================
+
+net/packet
+
+packet_getname_spkt() doesn't initialize all members of sa_data field of
+sockaddr struct if strlen(dev->name) < 13.  This structure is then
+copied to userland.  It leads to leaking of contents of kernel stack
+memory.  We have to fully fill sa_data with strncpy() instead of
+strlcpy().
+
+http://marc.info/?l=linux-netdev&m=128854507220908&w=2
+
+===========================================================
+
+net/tipc
+
+Structure sockaddr_tipc is copied to userland with padding bytes after
+"id" field in union field "name" unitialized.  It leads to leaking of
+contents of kernel stack memory.  We have to initialize them to zero.
+
+http://marc.info/?l=linux-netdev&m=128854507420917&w=2
+
+===========================================================
+
+Regards,
+Jon Oberheide
+
+-- 
+Jon Oberheide <jon@...rheide.org>
+GnuPG Key: 1024D/F47C17FE
+Fingerprint: B716 DA66 8173 6EDD 28F6  F184 5842 1C89 F47C 17FE
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
