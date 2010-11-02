@@ -1,34 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/02/4
-Message-Id: <20100702183142.edad0bf7.aluigi@autistici.org>
-Date: Fri, 2 Jul 2010 18:31:42 +0100
-From: Luigi Auriemma <aluigi@...istici.org>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request -- Mumble server (Murmur) / Qt SQLite -- Remotely exploitable DoS (murmur termination) due QueryUsers Qt SQLite database bug
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/02/6
+Message-ID: <AANLkTimEP-Z6_mCr+7xVLEgBSY=i4gXiSWmKezBzxT2z@mail.gmail.com>
+Date: Tue, 2 Nov 2010 16:35:25 +0100
+From: Pierre Joye <pierre.php@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: utf-8 security issue in php
 Content-Type: text/plain; charset=utf-8
 
-> Though not sure, if the true reason for this is:
-> 1, either Mumble server calling relevant Qt SQLite function in
-> improper way or 2, deficiency in that particular Qt function itself
+On Tue, Nov 2, 2010 at 3:24 PM, Josh Bressers <bressers@...hat.com> wrote:
 
-Hey Jan,
+> As best as I can tell, this only needs one ID. Please use CVE-2010-3870.
 
-I have not debugged the problem because I contacted directly the author
-immediately after the finding, so the following are his words in reply
-to the report of this specific bug:
+Thanks, I updated the bug report and the NEWS file.
 
-"The second seems to be a .. "feature" of SQLite; it bails if you have 
-too many almost-but-not-really-utf8 chars in a 'like' query. We can 
-probably add a workaround for that."
+Please note that only 5.3 and later contains this fix. 5.3.4 will have the fix.
 
-So the problem "seems" to be caused by SQLite but should be necessary to
-see in its manual if there are references about limitations that the
-developers should respect or something else.
+Cheers,
+-- 
+Pierre
 
-
-BYEZ
-
-
---- 
-Luigi Auriemma
-http://aluigi.org
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
