@@ -1,65 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/22/14
-Message-ID: <Pine.GSO.4.64.1011221131010.14862@faron.mitre.org>
-Date: Mon, 22 Nov 2010 11:32:38 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com, me@...ji.com
-Subject: Re: CVE Request: gif2png: command-line buffer overflow problem
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/02/9
+Message-ID: <AANLkTima3nMKoCQi1H8KZ5_i16=Sn-8C+UtLqK6fWzgv@mail.gmail.com>
+Date: Tue, 2 Nov 2010 13:11:00 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: kernel stack infoleaks
 Content-Type: text/plain; charset=utf-8
 
+Note that AF_PACKET requires CAP_NET_RAW to open a socket, so the
+second issue isn't reachable by unprivileged users and shouldn't be
+considered a security issue.
 
-This type of error may happen when executing from a shell, but not 
-necessarily *every* shell, and not when shell execution is bypassed e.g. 
-when using exec()... so the vulnerable program might still execute.
+-Dan
 
-- Steve
-
-
-On Mon, 22 Nov 2010, Benji wrote:
-
-> "File name too long"
+On Tue, Nov 2, 2010 at 12:07 PM, Jon Oberheide <jon@...rheide.org> wrote:
+> Vasiliy Kulikov discovered three kernel stack infoleaks in various
+> packet families of the net subsystem:
 >
-> ------Original Message------
-> From: Dan Rosenberg
-> To: oss-security@...ts.openwall.com
-> ReplyTo: oss-security@...ts.openwall.com
-> Subject: Re: [oss-security] CVE Request: gif2png: command-line buffer overflow problem
-> Sent: Nov 22, 2010 00:19
+> ===========================================================
 >
-> How could this possibly be exploited?  If you can trick a user into
-> running gif2png [exploit payload], then that user has already lost.
+> net/ax25
 >
-> See also:
-> make `perl -e 'print "A"x10000'`
+> Sometimes ax25_getname() doesn't initialize all members of
+> fsa_digipeater field of fsa struct.  This structure is then copied to
+> userland.  It leads to leaking of contents of kernel stack memory.  We
+> have to initialize them to zero.
 >
-> -Dan
+> http://marc.info/?l=linux-netdev&m=128854507120898&w=2
 >
-> On Sun, Nov 21, 2010 at 6:45 PM, Kurt Seifried <kurt@...fried.org> wrote:
->> This is from 2009 but doesn't appear to have a CVE (no "gif2png" in
->> the CVE database).
->>
->> Sources:
->> https://bugzilla.redhat.com/show_bug.cgi?id=547515
->> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=550978
->> http://lists.grok.org.uk/pipermail/full-disclosure/2009-December/072009.html
->>
->> Description:
->> A buffer overflow in gif2png 2.5.3 and earlier allows an attacker to
->> execute arbitrary code via a long command line argument passed to the
->> gif2png binary.
->>
->> It was first claimed that it was fixed in 2.5.2 but it is reported
->> that it isn't fixed, I tested 2.5.3 and it still seg faults the same
->> way as 2.5.2 so it would appear it was never fixed, as the software
->> was last updated in 2005 I guess this one never gets fixed.
->>
->> --
->> Kurt Seifried
->> kurt@...fried.org
->> tel: 1-703-879-3176
->>
+> ===========================================================
 >
+> net/packet
 >
-> Sent from my BlackBerry® wireless device
+> packet_getname_spkt() doesn't initialize all members of sa_data field of
+> sockaddr struct if strlen(dev->name) < 13.  This structure is then
+> copied to userland.  It leads to leaking of contents of kernel stack
+> memory.  We have to fully fill sa_data with strncpy() instead of
+> strlcpy().
 >
+> http://marc.info/?l=linux-netdev&m=128854507220908&w=2
+>
+> ===========================================================
+>
+> net/tipc
+>
+> Structure sockaddr_tipc is copied to userland with padding bytes after
+> "id" field in union field "name" unitialized.  It leads to leaking of
+> contents of kernel stack memory.  We have to initialize them to zero.
+>
+> http://marc.info/?l=linux-netdev&m=128854507420917&w=2
+>
+> ===========================================================
+>
+> Regards,
+> Jon Oberheide
+>
+> --
+> Jon Oberheide <jon@...rheide.org>
+> GnuPG Key: 1024D/F47C17FE
+> Fingerprint: B716 DA66 8173 6EDD 28F6  F184 5842 1C89 F47C 17FE
 >
