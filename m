@@ -1,40 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/05/4
-Message-ID: <20100205164335.77544297@willson.li.ssimo.org>
-Date: Fri, 5 Feb 2010 16:43:35 -0500
-From: Simo Sorce <ssorce@...hat.com>
-To: Nico Golde <oss-security+ml@...lde.de>
-Cc: oss-security@...ts.openwall.com, coley <coley@...re.org>
-Subject: Re: Samba symlink 0day flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/02/10
+Message-ID: <AANLkTikqD-mehWS4Jgr2NyFxWc8vWgnqKeJJ0aco+Hd7@mail.gmail.com>
+Date: Tue, 2 Nov 2010 15:08:46 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: kernel stack infoleaks
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 5 Feb 2010 22:05:30 +0100
-Nico Golde <oss-security+ml@...lde.de> wrote:
+And since I've already gotten flack for this comment, I'll add for the
+sake of clarity: the second item is not a security issue if
+CAP_NET_RAW is synonymous with root access in your privilege model, as
+is the case on most systems.
 
-> Hey,
-> * Josh Bressers <bressers@...hat.com> [2010-02-05 20:11]:
-> > As many of you have probably seen, there was a supposed Samba 0day
-> > flaw posted to full-disclosure and youtube.
-> > 
-> > Samba has a response to this:
-> > http://marc.info/?l=samba-technical&m=126539387432412&w=2
-> > 
-> > I'm not sure if this should get a CVE id. It is documented behavior.
-> > Somewhat unexpected though. I think changing the default is the
-> > right way to go, but it may be more of a hardening measure than a
-> > security fix.
-> > 
-> > Thoughts Steve?
-> 
-> Given the count of users that are probably affected by this and it
-> not being documented in e.g. man 5 smb.conf I'd vote for yes! :)
-> 
-> Cheers
-> Nico
+-Dan
 
-Sorry not clear what would not be documented in smb.conf ?
-
-Simo.
-
--- 
-Simo Sorce * Red Hat, Inc * New York
+On Tue, Nov 2, 2010 at 1:11 PM, Dan Rosenberg <dan.j.rosenberg@...il.com> wrote:
+> Note that AF_PACKET requires CAP_NET_RAW to open a socket, so the
+> second issue isn't reachable by unprivileged users and shouldn't be
+> considered a security issue.
+>
+> -Dan
+>
+> On Tue, Nov 2, 2010 at 12:07 PM, Jon Oberheide <jon@...rheide.org> wrote:
+>> Vasiliy Kulikov discovered three kernel stack infoleaks in various
+>> packet families of the net subsystem:
+>>
+>> ===========================================================
+>>
+>> net/ax25
+>>
+>> Sometimes ax25_getname() doesn't initialize all members of
+>> fsa_digipeater field of fsa struct.  This structure is then copied to
+>> userland.  It leads to leaking of contents of kernel stack memory.  We
+>> have to initialize them to zero.
+>>
+>> http://marc.info/?l=linux-netdev&m=128854507120898&w=2
+>>
+>> ===========================================================
+>>
+>> net/packet
+>>
+>> packet_getname_spkt() doesn't initialize all members of sa_data field of
+>> sockaddr struct if strlen(dev->name) < 13.  This structure is then
+>> copied to userland.  It leads to leaking of contents of kernel stack
+>> memory.  We have to fully fill sa_data with strncpy() instead of
+>> strlcpy().
+>>
+>> http://marc.info/?l=linux-netdev&m=128854507220908&w=2
+>>
+>> ===========================================================
+>>
+>> net/tipc
+>>
+>> Structure sockaddr_tipc is copied to userland with padding bytes after
+>> "id" field in union field "name" unitialized.  It leads to leaking of
+>> contents of kernel stack memory.  We have to initialize them to zero.
+>>
+>> http://marc.info/?l=linux-netdev&m=128854507420917&w=2
+>>
+>> ===========================================================
+>>
+>> Regards,
+>> Jon Oberheide
+>>
+>> --
+>> Jon Oberheide <jon@...rheide.org>
+>> GnuPG Key: 1024D/F47C17FE
+>> Fingerprint: B716 DA66 8173 6EDD 28F6  F184 5842 1C89 F47C 17FE
+>>
+>
