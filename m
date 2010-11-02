@@ -1,41 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/05/2
-Message-ID: <4C83C37E.5090007@redhat.com>
-Date: Sun, 05 Sep 2010 18:21:18 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, Henrik Nordstrom <henrik@...riknordstrom.net>
-Subject: CVE Request -- Squid --  Denial of service due internal error in string handling (SQUID-2010:3)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/02/5
+Message-ID: <20101102145055.GA23023@suse.de>
+Date: Tue, 2 Nov 2010 15:50:55 +0100
+From: Sebastian Krahmer <krahmer@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: libxml2 xpath
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve, vendors,
+Hi,
 
-   Squid upstream has announced SQUID-2010:3:
-   [1] http://www.squid-cache.org/Advisories/SQUID-2010_3.txt
+was there already a CVE assigned for
 
-   addressing one denial of service issue:
-   A denial of service flaw was found in the way Squid proxy caching
-   server internally processed NULL buffers. A remote, trusted client
-   could use this flaw to cause squid daemon crash (dereference NULL pointer)
-   when processing specially-crafted request.
+http://git.gnome.org/browse/libxml2/commit/?id=91d19754d46acd4a639a8b9e31f50f31c78f8c9c
 
-   ( Flaw description based on details from [1]. Henrik, please correct / complete
-     me if something isn't appropriate and needs change. Thanks, Jan )
+?
 
-   Upstream patch (against Squid v3.0):
-   [2] http://www.squid-cache.org/Versions/v3/3.0/changesets/squid-3.0-9189.patch
+thx,
+Sebastian
 
-   Upstream patch (against Squid v3.1):
-   [3] http://www.squid-cache.org/Versions/v3/3.1/changesets/squid-3.1-10090.patch
 
-   Credit:
-   The vulnerability was discovered by Phil Oester.
+-- 
+~
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+~ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
 
-   References:
-   [4] https://bugzilla.redhat.com/show_bug.cgi?id=630444
-
-Steve, could you please allocate CVE id for this issue?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
