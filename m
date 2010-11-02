@@ -1,34 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/17/8
-Message-ID: <1584645188.109651284748094823.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 17 Sep 2010 14:28:14 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/02/13
+Message-ID: <20101102194442.GE10332@redhat.com>
+Date: Tue, 2 Nov 2010 13:44:42 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: weborf: directory traversal
+Subject: Re: utf-8 security issue in php
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-3306
+* [2010-11-02 20:08:58 +0100] Pierre Joye wrote:
 
-Thanks.
+>On Tue, Nov 2, 2010 at 6:10 PM, Vincent Danen <vdanen@...hat.com> wrote:
+>> * [2010-11-02 16:35:25 +0100] Pierre Joye wrote:
+>>
+>>> On Tue, Nov 2, 2010 at 3:24 PM, Josh Bressers <bressers@...hat.com> wrote:
+>>>
+>>>> As best as I can tell, this only needs one ID. Please use CVE-2010-3870.
+>>>
+>>> Thanks, I updated the bug report and the NEWS file.
+>>>
+>>> Please note that only 5.3 and later contains this fix. 5.3.4 will have the
+>>> fix.
+>>
+>> Are you saying that 5.3 and later _need_ this fix?  I.e. that this
+>> doesn't affect earlier versions?  Can you clarify?  Thanks.
+>
+>This comment was not very clear, sorry.
+>
+>I'm saying that 5.3 and later have been changed to fix this problem. I
+>have no idea if 5.2 requires a fix and won't investigate either (sadly
+>no time). It was more for the CVE description, to be sure that the
+>mention of 5.3+ will be present.
+
+Ah, ok.  Fair enough.  Thanks for the clarification.
 
 -- 
-    JB
-
------ "Raphael Geissert" <geissert@...ian.org> wrote:
-
-> Hi,
-> 
-> A directory traversal vulnerability has been reported against weborf
-> because 
-> of the mitigation code is not URL encoding-aware.
-> 
-> Reference:
-> http://www.exploit-db.com/exploits/14925/
-> 
-> Could a CVE be assigned?
-> 
-> Regards,
-> -- 
-> Raphael Geissert - Debian Developer
-> www.debian.org - get.debian.net
+Vincent Danen / Red Hat Security Response Team 
