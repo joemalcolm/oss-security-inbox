@@ -1,38 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/19/2
-Message-Id: <201005191014.39610.hanno@hboeck.de>
-Date: Wed, 19 May 2010 10:14:39 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/02/2
+Message-ID: <AANLkTimc4BTaSY0RZwVq+ybe5b1jXepD60Lg7U3d1+OY@mail.gmail.com>
+Date: Tue, 2 Nov 2010 11:24:48 +0100
+From: Pierre Joye <pierre.php@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: phpbb 3.0.7 and before 3.0.5
+Subject: Re: utf-8 security issue in php
 Content-Type: text/plain; charset=utf-8
 
-Am Dienstag 18 Mai 2010 schrieb Josh Bressers:
-> ----- "Steven M. Christey" <coley@...us.mitre.org> wrote:
-> [...]
-> 
-> > So this could use a CVE, too.  At worst it's a signal to consumers that
-> > they need to patch, even if the developer isn't clearly explaining why.
-> > 
-> > Not much different than your typical Linux kernel bug, actually :-/
-> > 
-> > - Steve
-> 
-> Here goes:
-> 
->     http://www.phpbb.com/community/viewtopic.php?f=14&p=9764445
->     # [Sec] Only use forum id supplied for posting if global announcement
->       detected. (Reported by nickvergessen)
-> 
-> CVE-2010-1630 phpbb 3.0.5 unspecified flaw
+hi,
 
-Shouldn't this be CVE-2009-XXXX ?
+I was about to ask if any of the documents linked there already has a CVE.
+
+In any case, this is another set of fixes (afair it does not fix all
+possible problems) and needs a CVE. I will update the NEWS&bug
+accordingly as soon as we get one.
+
+Thanks!
+--
+Pierre
+
+On Tue, Nov 2, 2010 at 10:56 AM, Oden Eriksson <oeriksson@...driva.com> wrote:
+> Hello.
+>
+> Another security issue was recently fixed in php-5.3
+>
+> http://bugs.php.net/bug.php?id=49687
+> http://svn.php.net/viewvc?view=revision&revision=304959
+>
+> I suppose it needs a CVE assignment.
+>
+> --
+> Regards // Oden Eriksson
+> Security team manager - Mandriva
+> CEO NUX AB
+>
+
+
 
 -- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+Pierre
 
-http://schokokeks.org - professional webhosting
-
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
