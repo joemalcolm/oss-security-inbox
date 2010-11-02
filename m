@@ -1,31 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/14/12
-Message-Id: <201009142306.07888.hanno@hboeck.de>
-Date: Tue, 14 Sep 2010 23:06:07 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/02/1
+Message-Id: <201011021056.34921.oeriksson@mandriva.com>
+Date: Tue, 2 Nov 2010 10:56:34 +0100
+From: Oden Eriksson <oeriksson@...driva.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: mantis before 1.2.3 (XSS)
+Subject: utf-8 security issue in php
 Content-Type: text/plain; charset=utf-8
 
-From release notes
+Hello.
 
-"Issue #12312 covers an XSS vulnerability in the upstream NuSOAP library. 
-The fix has been applied to the library included in MantisBT releases, 
-and a patch has been submitted upstream for future releases of NuSOAP. 
-See http://www.mantisbt.org/bugs/view.php?id=12312 for further details.
+Another security issue was recently fixed in php-5.3
 
-Also included with 1.2.3 are another round of XSS fixes to MantisBT, 
-improved excel export, translation updates, and bug fixes to the SOAP 
-API, installation, plugin system, and email notifications."
+http://bugs.php.net/bug.php?id=49687
+http://svn.php.net/viewvc?view=revision&revision=304959
 
-
-So although it's both xss, one is in mantis itself and one in the 
-shipped/bundled nusoap, so we should have 2 CVEs.
+I suppose it needs a CVE assignment.
 
 -- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-
-http://schokokeks.org - professional webhosting
-
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+Regards // Oden Eriksson
+Security team manager - Mandriva
+CEO NUX AB
