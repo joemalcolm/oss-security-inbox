@@ -1,36 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/13/1
-Message-ID: <Pine.GSO.4.64.1001121951070.22906@faron.mitre.org>
-Date: Tue, 12 Jan 2010 19:53:44 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: phpMyAdmin
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/02/8
+Message-ID: <20101102171028.GD10332@redhat.com>
+Date: Tue, 2 Nov 2010 11:10:28 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: utf-8 security issue in php
 Content-Type: text/plain; charset=utf-8
 
+* [2010-11-02 16:35:25 +0100] Pierre Joye wrote:
 
-On Mon, 11 Jan 2010, Ludwig Nussel wrote:
-
-> Hi,
+>On Tue, Nov 2, 2010 at 3:24 PM, Josh Bressers <bressers@...hat.com> wrote:
 >
-> phpMyAdmin 2.11.10 was released with security fixes according to the
-> changelog:
-> http://phpmyadmin.svn.sourceforge.net/viewvc/phpmyadmin/branches/MAINT_2_11_10/phpMyAdmin/ChangeLog?revision=13152&view=markup
+>> As best as I can tell, this only needs one ID. Please use CVE-2010-3870.
 >
-> unserialize fix:
-> http://phpmyadmin.svn.sourceforge.net/viewvc/phpmyadmin?view=rev&revision=13149
+>Thanks, I updated the bug report and the NEWS file.
+>
+>Please note that only 5.3 and later contains this fix. 5.3.4 will have the fix.
 
-Use CVE-2009-4605, to be filled in later
+Are you saying that 5.3 and later _need_ this fix?  I.e. that this
+doesn't affect earlier versions?  Can you clarify?  Thanks.
 
-> the temporary file issues seem to be from 2008 but were not released
-> so far:
-
-> http://phpmyadmin.svn.sourceforge.net/viewvc/phpmyadmin?view=rev&revision=11536
-
-Use CVE-2008-7251
-
-> http://phpmyadmin.svn.sourceforge.net/viewvc/phpmyadmin?view=rev&revision=11528
-
-Use CVE-2008-7252
-
-
-- Steve
+-- 
+Vincent Danen / Red Hat Security Response Team 
