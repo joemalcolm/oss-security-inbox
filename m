@@ -1,30 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/10/6
-Message-ID: <4B97D746.3010700@redhat.com>
-Date: Wed, 10 Mar 2010 18:30:46 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request -- Dovecot v1.2.11 -- DoS (excessive CPU use) by processing email with huge header
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/02/4
+Message-ID: <849846897.866841288707871178.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 2 Nov 2010 10:24:31 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: utf-8 security issue in php
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve, vendors,
 
-   Dovecot upstream has released latest v1.2.11 version of Dovecot IMAP server:
-     [1] http://www.dovecot.org/list/dovecot-news/2010-March/000152.html
+----- "Pierre Joye" <pierre.php@...il.com> wrote:
 
-   addressing one denial of service issue (from upstream announcement):
-   "mbox users really should upgrade, because by sending a message with
-    a huge header you could basically cause a DoS (this problem exists only
-    with v1.2.x, not with v1.0 or v1.1)."
+> hi,
+> 
+> I was about to ask if any of the documents linked there already has a
+> CVE.
+> 
+> >
+> > Another security issue was recently fixed in php-5.3
+> >
+> > http://bugs.php.net/bug.php?id=49687
+> > http://svn.php.net/viewvc?view=revision&revision=304959
+> >
 
-   References:
-     [2] http://dovecot.org/pipermail/dovecot/2010-February/047190.html
-     [3] http://dovecot.org/pipermail/dovecot/2010-February/047058.html
-     [4] http://secunia.com/advisories/38881/
+As best as I can tell, this only needs one ID. Please use CVE-2010-3870.
 
-Could you allocate a CVE id for it?
+Thanks.
 
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+-- 
+    JB
