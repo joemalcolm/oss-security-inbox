@@ -1,81 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/10/15
-Message-ID: <20101110194014.GV5876@outflux.net>
-Date: Wed, 10 Nov 2010 11:40:14 -0800
-From: Kees Cook <kees@...ntu.com>
-To: Steve Grubb <sgrubb@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: filesystem capabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/02/3
+Message-ID: <AANLkTikN8xZKWC3X50-0tpfGw8tUZCnEHniJcci4etPE@mail.gmail.com>
+Date: Tue, 2 Nov 2010 11:24:21 +0100
+From: Pierre Joye <pierre.php@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: utf-8 security issue in php
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Nov 10, 2010 at 02:18:33PM -0500, Steve Grubb wrote:
-> Not that I know of. The library cannot know what the application's threat model is. 
-> The library can make it simple to access the correct things. The following should be 
-> the model that I think solves the problem for either setuid or fs based capabilities. 
-> Assuming you needed CAP_CHOWN:
-> 
-> 		capng_get_caps_process();
->                 switch (capng_have_capabilities(CAPNG_SELECT_CAPS)) {
-> 			case CAPNG_FULL:
-> 				capng_clear(CAPNG_SELECT_BOTH);
-> 				capng_update(CAPNG_ADD, CAPNG_EFFECTIVE|CAPNG_PERMITTED,
-> 						CAP_CHOWN);
-> 				if (capng_apply(CAPNG_SELECT_BOTH))
-> 					exit(0);
-> 				break;
-> 			case CAPNG_PARTIAL:
-> 				// Paranoid double check that we have what we expect
-> 				if (capng_have_capability(CAPNG_EFFECTIVE, CAP_CHOWN)==0)
-> 					exit(0);
-> 				// Now to make sure that is ALL that we have...let's drop it and
-> 				// see if we are empty
-> 				capng_update(CAPNG_DROP, CAPNG_EFFECTIVE|CAPNG_PERMITTED,
-> 						CAP_CHOWN);
-> 				if (capng_have_capabilities(CAPNG_SELECT_CAPS) != CAPNG_NONE)
-> 					exit(0);
-> 				break;
-> 			case CAPNG_FAIL:
-> 			case CAPNG_NONE:
-> 				exit(0);
-> 		}
-> 		// At this point both setuid and fs based caps should have the same thing
+hi,
 
-What about dropping setuid once it has the needed caps, etc? It seems like
-it'd be nice to have something like:
+I was about to ask if any of the documents linked there already has a CVE.
 
-validate_I_have_only_these_caps(CAP_WHATEVER);
-...do stuff...
-drop_all_my_privs();
+In any case, this is another set of fixes (afair it does not fix all
+possible problems) and needs a CVE. I will update the NEWS&bug
+accordingly as soon as we get one.
 
-and those two routines could be in the cap library, and it would handle
-both fscaps and setuid style of priv escalation.
+Thanks!
+--
+Pierre
 
-> You can lead a horse to water, but you cannot make them drink.
-> http://lists.gnu.org/archive/html/bug-tar/2006-08/msg00004.html
-> 
-> We did our part. Its up to them to accept the patch or keep talking about it. Reading 
-> the thread, it sounded like they were going to take it. No idea why they decided 
-> against it unless it was seen as a Linux only patch. You might poke them and ask why 
-> in the last 4 years they never took the patch. Of course since then we've maintained 
-> the patch against current tar releases, so they would want a newer patch.
+On Tue, Nov 2, 2010 at 10:56 AM, Oden Eriksson <oeriksson@...driva.com> wrote:
+> Hello.
+>
+> Another security issue was recently fixed in php-5.3
+>
+> http://bugs.php.net/bug.php?id=49687
+> http://svn.php.net/viewvc?view=revision&revision=304959
+>
+> I suppose it needs a CVE assignment.
+>
+> --
+> Regards // Oden Eriksson
+> Security team manager - Mandriva
+> CEO NUX AB
+>
 
-Well, I have to disagree here: the job isn't done until it's upstream
-or it has been categorically rejected. At the time they had identified
-real crashes in the code, and were working on it. All this said, anyone can
-drive it, which is why I added the TODO item to Ubuntu's list of what was
-needed for fscaps, and it would be great to try to get it in again. Since
-the fscap push is higher on Fedora's list than Ubuntu's, would it be
-possible to try to push that patch upstream again?
 
-Debian/Ubuntu still has to write code for handling it in dpkg directly, so
-we'd still have work to do even after the tar fixes were upstream.
-
-Has there been any discussion of making rsync, cp, and cpio default to
-copying xattrs and acls too? I know at least with rsync they are explicitly
-not included in the "-a" option. :(
-
--Kees
 
 -- 
-Kees Cook
-Ubuntu Security Team
+Pierre
+
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
