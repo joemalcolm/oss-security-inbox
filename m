@@ -1,42 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/04/8
-Message-ID: <1294336610.1198571286220608206.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 4 Oct 2010 15:30:08 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/03/2
+Message-ID: <AANLkTi=ncwzKWFHAgFghGipZH-bZC6B7w8OXTFjt4Re7@mail.gmail.com>
+Date: Wed, 3 Nov 2010 18:15:30 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Timo Sirainen <tss@....fi>, coley <coley@...re.org>
-Subject: Re: CVE Request: more dovecot ACL issues
+Subject: CVE request: X.25 remote DoS
 Content-Type: text/plain; charset=utf-8
 
+Due to bad parsing of malformed X.25 facilities, a remote attacker can
+cause a kernel panic due to heap corruption (assuming both parties are
+communicating using X.25).  Since the below post, the X.25 maintainer
+has confirmed the issue.
 
------ "Ludwig Nussel" <ludwig.nussel@...e.de> wrote:
+Reference:
+http://marc.info/?l=linux-netdev&m=128871017529408&w=2
 
-> Hi,
-> 
-> dovecot 1.2.15 fixes issues with ACLs:
-> http://www.dovecot.org/list/dovecot/2010-October/053450.html
-> http://www.dovecot.org/list/dovecot/2010-October/053452.html
-> 
-
-If I'm understanding this correctly based off
-http://www.dovecot.org/list/dovecot/2010-October/053452.html
-
-There are two issues here:
-
-a) If admin wanted to remove some rights from mailboxes in user's
-private namespace (e.g. symlinked shared mailboxes), they may not have
-gotten removed.
-
-Use CVE-2010-3706 for this one.
-
-
-b) When mixing up multiple ACL entries, such as groups/users the more
-specific entry may not have replaced the previous entry (e.g.
-group-override may not have worked as expected).
-
-Use CVE-2010-3707.
-
-Thanks.
-
--- 
-    JB
+-Dan
