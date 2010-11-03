@@ -1,19 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/09/3
-Message-ID: <4C369BDB.50308@kernel.sg>
-Date: Fri, 09 Jul 2010 11:47:39 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/03/1
+Message-ID: <20101103080719.GA27019@suse.de>
+Date: Wed, 3 Nov 2010 09:07:19 +0100
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: kernel: gfs2 acl issue
+Subject: Re: utf-8 security issue in php
 Content-Type: text/plain; charset=utf-8
 
-Upstream commit 2646a1f6 (2.6.33-rc1) fixed an interesting gfs2 acl 
-issue late last year. Thanks Dan Rosenberg for informing us about this.
+JFYI, our php maintainer found that 5.2 seems to use same xml.c
+so a patch is needed too.
 
-http://git.kernel.org/linus/2646a1f61a3b5525914757f10fa12b5b94713648
+Sebastian
 
-I didn't request a CVE name for this but if you need one, ping Steve.
+On Tue, Nov 02, 2010 at 08:08:58PM +0100, Pierre Joye wrote:
+> hi,
+> 
+> On Tue, Nov 2, 2010 at 6:10 PM, Vincent Danen <vdanen@...hat.com> wrote:
+> > * [2010-11-02 16:35:25 +0100] Pierre Joye wrote:
+> >
+> >> On Tue, Nov 2, 2010 at 3:24 PM, Josh Bressers <bressers@...hat.com> wrote:
+> >>
+> >>> As best as I can tell, this only needs one ID. Please use CVE-2010-3870.
+> >>
+> >> Thanks, I updated the bug report and the NEWS file.
+> >>
+> >> Please note that only 5.3 and later contains this fix. 5.3.4 will have the
+> >> fix.
+> >
+> > Are you saying that 5.3 and later _need_ this fix?  I.e. that this
+> > doesn't affect earlier versions?  Can you clarify?  Thanks.
+> 
+> This comment was not very clear, sorry.
+> 
+> I'm saying that 5.3 and later have been changed to fix this problem. I
+> have no idea if 5.2 requires a fix and won't investigate either (sadly
+> no time). It was more for the CVE description, to be sure that the
+> mention of 5.3+ will be present.
+> 
+> Cheers,
+> -- 
+> Pierre
+> 
+> @pierrejoye | http://blog.thepimp.net | http://www.libgd.org
 
-Thanks, Eugene
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+~
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+~ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+
