@@ -1,82 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/21/2
-Message-ID: <20100521001414.20305gexcwg4cnmu@www.riboflavin.net>
-Date: Fri, 21 May 2010 00:14:14 -0500
-From: "Marcus I. Ryan" <marcus@...de.org>
-To: Max Olsterd <max.olsterd@...il.com>
-Cc: oss-security@...ts.openwall.com, security-2010@...irrelmail.org, security@...de.org
-Subject: Re: [core] CVE Request for Horde and Squirrelmail
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/04/4
+Message-ID: <4CD283FC.8080802@redhat.com>
+Date: Thu, 04 Nov 2010 17:59:24 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Dan Rosenberg <dan.j.rosenberg@...il.com>
+Subject: Re: CVE request: kernel: CAN information leak
 Content-Type: text/plain; charset=utf-8
 
-I'm inactive on the project, so hopefully I'm not speaking out of turn  
-(I'm assuming another horde member will give a more official response  
-and/or provide corrections as necessary), but I don't recall a CVE  
-being issued.  We were only notified just before the presentation  
-which I have to say didn't impress me personally, as it violates  
-fairly well established best-practices for reporting security issues.
+On 11/04/2010 06:19 AM, Dan Rosenberg wrote:
+> The CAN protocol uses the address of a kernel heap object as a proc
+> filename, revealing information that could be useful during
+> exploitation.
+>
+> The below post also mentions a heap overflow.  While there is a
+> semantic overflow (17 bytes being copied into a 9-byte buffer), in
+> reality, the object whose member is being overflowed resides in a
+> kernel heap slab cache that includes enough padding that there is no
+> possible corruption.  So, it's a bug but not a vulnerability.
+>
+> Reference:
+> http://marc.info/?l=linux-netdev&m=128872251418192&w=2
 
-That said, we don't really consider it a bug.  If the administrator  
-reads and follows that documentation, their systems are not exposed.   
-Part of the problem on our end is that the tool being abused needs to  
-be turned on by default to help configure new sites, but many  
-administrators also want to leave these tools enabled after the site  
-is running and simply lock them down through other means (web server  
-configs, application-level firewalls, etc.).  However, most of those  
-means are beyond the ability of Horde to detect, so we can't  
-distinguish between admins who don't read the documentation and admins  
-that choose other ways of protecting themselves.
+Please use CVE-2010-3874.
 
-We're considering possible features we might add in future versions  
-that would help make sure things are as secure as possible without  
-reducing the flexibility we strive for.  As with any software that  
-exposes your system(s) to the public, the best protection is to read,  
-understand, and follow the documentation (docs/INSTALL and  
-docs/SECURITY to be specific here).
-
-As Norm Abram says, "Be sure to read, follow, and understand all of  
-the safety rules that come with your power tools.  Knowing how to use  
-your tools safely greatly reduces the risk of personal injury."  Good  
-advice for woodworkers and IT administrators.
-
-If you have any more concerns, please let us know.
-
+Thanks, Eugene
 -- 
-Marcus I. Ryan, marcus@...de.org
-
-
-Quoting Max Olsterd <max.olsterd@...il.com>:
-
-> Hi,
->
-> Is there a CVE number available for the two 0-days exposed during Hack In
-> The Box Dubai 2010 ?
->
-> Though the exploits were not given during HITB (?), some friends have
-> recently shown me that they found how both products (Squirrelmail and Horde)
-> might be abused to be transformed, so that they become some kind of nmap
-> scanner (banner grab, port scan, etc). It helps at discovering a remote DMZ,
-> internal LAN, etc, by using those webmails as evil internal nmap proxies.
->
-> More info available on the slides of the corporate hackers who found the
-> 0-days :
-> http://conference.hitb.org/hitbsecconf2010dxb/materials/D1%20-%20Laurent%20Oudot%20-%20Improving%20the%20Stealthiness%20of%20Web%20Hacking.pdf
-> -> Squirrelmail: page 69 (post auth vuln)
-> -> Horde: page 74 (pre auth vuln)
->
-> Regards,
->
-> M@X
->
-> NB: Useful links :
->
-> SquirrelMail: http://www.squirrelmail.org (one of the most excellent Webmail
-> / Opensource)
-> Horde: http://www.horde.org (one of the most excellent Webmail Opensource)
-> TEHTRI-Security: http://www.tehtri-security.com (seems to be some kind of
-> corporate hackers group / company ? who found some 0-days recently)
-> HITB: http://conference.hitb.org/ (HITB Security Conferences)
->
->
-
-
-
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
