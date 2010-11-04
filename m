@@ -1,44 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/11/7
-Message-ID: <241062814.111731263252787945.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 11 Jan 2010 18:33:07 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/04/8
+Message-ID: <1288899933.19092.28.camel@mdlinux>
+Date: Thu, 04 Nov 2010 15:45:33 -0400
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request: phpMyAdmin
+Subject: CVE request: fuse
 Content-Type: text/plain; charset=utf-8
 
-Steve,
+Hello,
 
-I'm going to defer this one to you for CVE assignment so you can dish out 2009 and 2008 ids for these.
+There is an issue with FUSE that lets unprivileged users unmount
+arbitrary locations via a symlink attack. This is a different issue than
+CVE-2009-3297 and CVE-2010-0789.
 
-Thanks.
+Ref.:
+
+http://seclists.org/fulldisclosure/2010/Nov/15
+http://www.halfdog.net/Security/FuseTimerace/
+
+Thanks,
+
+Marc.
+
 
 -- 
-    JB
+Marc Deslauriers
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
 
-
------ "Ludwig Nussel" <ludwig.nussel@...e.de> wrote:
-
-> Hi,
-> 
-> phpMyAdmin 2.11.10 was released with security fixes according to the
-> changelog:
-> http://phpmyadmin.svn.sourceforge.net/viewvc/phpmyadmin/branches/MAINT_2_11_10/phpMyAdmin/ChangeLog?revision=13152&view=markup
-> 
-> unserialize fix:
-> http://phpmyadmin.svn.sourceforge.net/viewvc/phpmyadmin?view=rev&revision=13149
-> 
-> the temporary file issues seem to be from 2008 but were not released
-> so far:
-> http://phpmyadmin.svn.sourceforge.net/viewvc/phpmyadmin?view=rev&revision=11536
-> http://phpmyadmin.svn.sourceforge.net/viewvc/phpmyadmin?view=rev&revision=11528
-> 
-> cu
-> Ludwig
-> 
-> -- 
->  (o_   Ludwig Nussel
->  //\   
->  V_/_  http://www.suse.de/
-> SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
