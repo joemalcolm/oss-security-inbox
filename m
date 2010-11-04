@@ -1,37 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/02/8
-Message-ID: <1838575478.1870741278096799133.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 2 Jul 2010 14:53:19 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/04/1
+Message-ID: <4CD25566.1090409@redhat.com>
+Date: Thu, 04 Nov 2010 14:40:38 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: moin multiple XSS
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: sys_semctl: fix kernel stack leakage
 Content-Type: text/plain; charset=utf-8
 
------ "Raphael Geissert" <geissert@...ian.org> wrote:
+"The semctl syscall has several code paths that lead to the leakage of
+uninitialized kernel stack memory (namely the IPC_INFO, SEM_INFO,
+IPC_STAT, and SEM_STAT commands) during the use of the older, obsolete
+version of the semid_ds struct.
 
-> Hi,
-> 
-> Multiple XSS vulnerabilities have been reported in moin.
-> 
-> References:
-> http://moinmo.in/MoinMoinBugs/1.9.2UnescapedInputForThemeAddMsg
-> http://bugs.debian.org/584809
-> 
-> Could a CVE be assigned?
-> 
-> Note that the original bug report only covered PageEditor.py, while
-> upstream fixed multiple others at the same time. Not sure if you want to
-> assign two different ids.
-> 
+The copy_semid_to_user() function declares a semid_ds struct on the 
+stack and copies it back to the user without initializing or zeroing the
+"sem_base", "sem_pending", "sem_pending_last", and "undo" pointers,
+allowing the leakage of 16 bytes of kernel stack memory.
 
-I'm going to go with one ID, as they were all fixed at the same time.
-CVE-2010-2487
+The code is still reachable on 32-bit systems - when calling semctl()
+newer glibc's automatically OR the IPC command with the IPC_64 flag, but
+invoking the syscall directly allows users to use the older versions of
+the struct."
 
->From what I can tell, the extra fixes are mentioned at the end of the moin
-advisory, which is enough for me.
+Upstream commit:
+http://git.kernel.org/linus/982f7c2b2e6a28f8f266e075d92e19c0dd4c6e56
 
-Thanks.
+Credit: Dan Rosenberg
 
+Reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=649614
+
+Thanks, Eugene
 -- 
-    JB
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
