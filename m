@@ -1,67 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/21/3
-Message-ID: <4D107B78.3060709@redhat.com>
-Date: Tue, 21 Dec 2010 11:03:36 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-CC: Colin Walters <walters@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: Re: CVE Request -- D-BUS -- Stack frame overflow by validating message with excessive number of nested variants
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/04/6
+Message-ID: <772988345.1127261288869996748.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 4 Nov 2010 07:26:36 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: libxml2 xpath
 Content-Type: text/plain; charset=utf-8
 
-Hello vendors,
 
-   just FYI, particular bugzilla entry now opened:
-   [1] https://bugs.freedesktop.org/show_bug.cgi?id=32321
+----- "Sebastian Krahmer" <krahmer@...e.de> wrote:
 
-   Issue fixed in dbus-v1.4.1 release:
-   [2] https://bugs.freedesktop.org/show_bug.cgi?id=32321#c12
+> Hi,
+> 
+> was there already a CVE assigned for
+> 
+> http://git.gnome.org/browse/libxml2/commit/?id=91d19754d46acd4a639a8b9e31f50f31c78f8c9c
+> 
 
-   And relevant changeset (from c#13):
-   [3] http://cgit.freedesktop.org/dbus/dbus/commit/?id=7d65a3a6ed8815e34a99c680ac3869fde49dbbd4
+I don't understand what this patches. Can you explain?
 
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Thanks.
 
- > Please use CVE-2010-4352
- >
- > Thanks.
-
--- JB ----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
- > > Hello Josh, Steve, vendors,
- > >
- > >    a stack frame overflow flaw was found in the way the D-BUS message
- > > bus service / messaging facility validated messages with
- > > excessive number of nested variants. A local, authenticated
- > > user could use this flaw to cause dbus daemon to crash
- > > due to a stack frame overflow (denial of service) via a
- > > specially-crafted message sent to the system bus.
- > >
- > > References:
- > > [1] http://www.remlab.net/op/dbus-variant-recursion.shtml
- > >
- > > Upstream bug report:
- > > [2] https://bugs.freedesktop.org/show_bug.cgi?id=32321
- > >      (not public at the moment yet)
- > >
- > > Credit:
- > > Rémi Denis-Courmont
- > >
- > > Note: As noted in [1] this issue may also cause malfunction
- > >        of some other daemons depending on d-bus. Some examples
- > >        (from /var/log/messages on the affected host):
- > >
- > >        Dec 16 09:49:03 hostname avahi-daemon[30120]: Disconnected from
- > > D-Bus, exiting.
- > >        Dec 16 09:49:03 hostname avahi-daemon[30120]: Got SIGQUIT,
- > > quitting.
- > >        Dec 16 09:49:03 hostname NetworkManager[982]: <warn>
- > > disconnected by the system bus.
- > >        Dec 16 09:49:03 hostname NetworkManager[982]: no sender
- > >        Dec 16 09:49:03 hostname init: Disconnected from system bus
- > >
- > > Could you allocate a CVE id for this issue?
- > >
- > > Thanks && Regards, Jan.
- > > --
- > > Jan iankko Lieskovsky / Red Hat Security Response Team
+-- 
+    JB
