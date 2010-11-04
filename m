@@ -1,20 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/22/9
-Message-ID: <loom.20101222T181042-643@post.gmane.org>
-Date: Wed, 22 Dec 2010 17:17:58 +0000 (UTC)
-From: Jamie Nguyen <dyscoria@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/04/5
+Message-ID: <1650101826.1126331288869371401.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 4 Nov 2010 07:16:11 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Breaking the links: Exploiting the linker
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: kernel stack infoleaks
 Content-Type: text/plain; charset=utf-8
 
-Tim Brown <tmb@...> writes:
-> ...
+----- "Jon Oberheide" <jon@...rheide.org> wrote:
 
-Great, all clear now.
-Thanks for the response :-)
+> Vasiliy Kulikov discovered three kernel stack infoleaks in various
+> packet families of the net subsystem:
+> 
+> ===========================================================
+> 
+> net/ax25
+> 
+> Sometimes ax25_getname() doesn't initialize all members of fsa_digipeater
+> field of fsa struct.  This structure is then copied to userland.  It
+> leads to leaking of contents of kernel stack memory.  We have to
+> initialize them to zero.
+> 
+> http://marc.info/?l=linux-netdev&m=128854507120898&w=2
+> 
+
+Use CVE-2010-3875 for this one.
 
 
-Kind regards
+> ===========================================================
+> 
+> net/packet
+> 
+> packet_getname_spkt() doesn't initialize all members of sa_data field of
+> sockaddr struct if strlen(dev->name) < 13.  This structure is then copied
+> to userland.  It leads to leaking of contents of kernel stack memory.  We
+> have to fully fill sa_data with strncpy() instead of strlcpy().
+> 
+> http://marc.info/?l=linux-netdev&m=128854507220908&w=2
+> 
 
-Jamie
+CVE-2010-3876
 
+
+> ===========================================================
+> 
+> net/tipc
+> 
+> Structure sockaddr_tipc is copied to userland with padding bytes after
+> "id" field in union field "name" unitialized.  It leads to leaking of
+> contents of kernel stack memory.  We have to initialize them to zero.
+> 
+> http://marc.info/?l=linux-netdev&m=128854507420917&w=2
+> 
+
+CVE-2010-3877
+
+Thanks.
+
+-- 
+    JB
