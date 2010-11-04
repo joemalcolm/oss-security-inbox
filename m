@@ -1,40 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/20/2
-Message-ID: <186691223.20264.1292870194823.JavaMail.root@zmail05.collab.prod.int.phx2.redhat.com>
-Date: Mon, 20 Dec 2010 13:36:34 -0500 (EST)
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/04/3
+Message-ID: <4CD283EE.5060402@redhat.com>
+Date: Thu, 04 Nov 2010 17:59:10 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org, dan.j.rosenberg@...il.com
-Subject: CVE request: kernel: CAN information leak, 2nd attempt
+CC: Dan Rosenberg <dan.j.rosenberg@...il.com>
+Subject: Re: CVE request: X.25 remote DoS
 Content-Type: text/plain; charset=utf-8
 
-"The CAN protocol uses the address of a kernel heap object as a proc
-filename, revealing information that could be useful during
-exploitation."
+On 11/04/2010 06:15 AM, Dan Rosenberg wrote:
+> Due to bad parsing of malformed X.25 facilities, a remote attacker can
+> cause a kernel panic due to heap corruption (assuming both parties are
+> communicating using X.25).  Since the below post, the X.25 maintainer
+> has confirmed the issue.
+>
+> Reference:
+> http://marc.info/?l=linux-netdev&m=128871017529408&w=2
 
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=664544
-http://seclists.org/oss-sec/2010/q4/103
+Please use CVE-2010-3873.
 
-Credit: Dan Rosenberg
-
-------------
-
-Please note that there has been one attempt to request CVE for this
-issue already [1]. The problem is that vendors (Red Hat more or less
-included) used the assigned CVE for the potential heap overflow issue
-[2, 3] whereas reporter used it for information leak [4].
-
-  [1] http://seclists.org/oss-sec/2010/q4/107
-  [2] http://lists.opensuse.org/opensuse-updates/2010-12/msg00026.html
-  [3] http://www.debian.org/security/2010/dsa-2126
-  [4] http://www.cs.brown.edu/people/drosenbe/research.html
-
-I'd suggest to keep the CVE-2010-3874 id for the heap overflow which
-has some (although very limited) security potential and assign a new id
-for the information leak.
-
-Thanks,
---
-Petr Matousek / Red Hat Security Response Team
-
+Thanks, Eugene
+-- 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
