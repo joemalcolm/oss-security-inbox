@@ -1,122 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/20/1
-Message-Id: <20100520104507.IILSDOMUICMSFB@hackinthebox.org>
-Date: Thu, 20 May 2010 10:45:07 +0800
-From: Hafez Kamal <aphesz@...kinthebox.org>
-To: <oss-security@...ts.openwall.com>
-Subject: [HITB-Announce] HITBSecConf2010 - Malaysia Call for Papers
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/04/10
+Message-ID: <1244677537.1389791288901139402.JavaMail.root@zmail05.collab.prod.int.phx2.redhat.com>
+Date: Thu, 4 Nov 2010 16:05:39 -0400 (EDT)
+From: Petr Matousek <pmatouse@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley@...us.mitre.org
+Subject: CVE request: kernel: kvm kernel stack leakage
 Content-Type: text/plain; charset=utf-8
 
-The Call for Papers for HITB Security Conference 2010 Malaysia is now open!
+"Structures kvm_vcpu_events, kvm_debugregs, kvm_pit_state2 and kvm_clock_data
+are copied to userland with some padding and reserved fields unitialized.  It
+leads to leaking of contents of kernel stack memory."
 
-Talks that are more technical or that discuss new and never before seen
-attack methods are of more interest than a subject that has been covered
-several times before. Submissions are due no later than 9th August 2010.
+Upstream commit:
+http://git.kernel.org/?p=virt/kvm/kvm.git;a=commit;h=831d9d02f9522e739825a51a11e3bc5aa531a905
 
-HITB CFP: http://cfp.hackinthebox.org/
+Credit: Vasiliy Kulikov
 
-===
+Reference:
+http://www.spinics.net/lists/kvm/msg44130.html
+https://bugzilla.redhat.com/show_bug.cgi?id=649920
 
-Date: October 11th - 14th 2010
-Venue: Crowne Plaza Mutiara Kuala Lumpur
-
-Keynote 1: Chris Wysopal (CTO/Co-Founder, Veracode)
-Keynote 2: Paul Vixie (President, ISC)
-
-Day 2 (14th Oct) Special Keynote Panel Discussion
-"The Future of Mobile Malware & Cloud Computing"
-
-Keynote Panelist 1: Mikko Hypponen
-Keynote Panelist 2: Paul Ducklin
-Keynote Panelist 3: Andrey Nishikin
-Keynote Panelist 4: Dr. Jose Nazario
-
-Moderator: Dr. Dinesh Nair
-
-Event Website:
-http://conference.hackinthebox.org/hitbsecconf2010kul/
-
-===
-
-TOPICS
-
-Topics of interest include, but are not limited to the following:
-
-# Next generation attacks and exploits
-# Apple / OS X security vulnerabilities
-# SS7/Backbone telephony networks
-# VoIP security
-# Data Recovery, Forensics and Incident Response
-# HSDPA / CDMA Security / WIMAX Security
-# Network Protocol and Analysis
-# Smart Card and Physical Security
-# Virus and Worms
-# WLAN, GPS, HAM Radio, Satellite, RFID and Bluetooth Security
-# Analysis of malicious code
-# Applications of cryptographic techniques
-# Analysis of attacks against networks and machines
-# File system security
-# Side Channel Analysis of Hardware Devices
-# Cloud Security
-# Exploit Analysis
-
-PLEASE NOTE:
-
-We do not accept product or vendor related pitches. If your talk
-involves an advertisement for a new product or service your company is
-offering, please do not submit.
-
-Your submission should include:
-
-# Name, title, address, email and phone/contact number
-# Short biography, qualification, occupation (limit 250 words)
-# Summary or abstract for your presentation (limit 1250 words)
-# Technical requirements (video, internet, wireless, audio, etc.)
-
-Each non-resident speaker will receive accommodation for 3 nights / 4
-days. For each non-resident speaker, HITB will cover travel expenses up
-to USD 1,200.00.
-
-===
-
-On a related note, the first set of speakers for HITB2010 - Amsterdam
-have been announced with the following presentations lined up:
-
-JIT-SPRAY Attacks & Advanced Shellcode
-http://conference.hackinthebox.org/hitbsecconf2010ams/?page_id=803
-
-Having Fun with Apple's IOKit
-http://conference.hackinthebox.org/hitbsecconf2010ams/?page_id=814
-
-Attacking SAP Users Using sapsploit
-http://conference.hackinthebox.org/hitbsecconf2010ams/?page_id=817
-
-Breaking Virtualization by Switching to Virtual 8086 Mode
-http://conference.hackinthebox.org/hitbsecconf2010ams/?page_id=800
-
->From Russia with Love 2.0
-http://conference.hackinthebox.org/hitbsecconf2010ams/?page_id=812
-
-Owned Live on Stage: Hacking Wireless Presenters
-http://conference.hackinthebox.org/hitbsecconf2010ams/?page_id=820
-
-The Travelling Hacksmith 2009 - 2010
-http://conference.hackinthebox.org/hitbsecconf2010ams/?page_id=382
-
-===
-
-The final set of speakers will be announced week of 24th May 2010. See
-you guys in Amsterdam!
-
----
-Hafez Kamal
-HITB Crew
-Hack in The Box (M) Sdn. Bhd.
-Suite 26.3, Level 26, Menara IMC,
-No. 8 Jalan Sultan Ismail,
-50250 Kuala Lumpur,
-Malaysia
-
-Tel: +603-20394724
-Fax: +603-20318359
-
+Thanks,
+--
+Petr Matousek / Red Hat Security Response Team
