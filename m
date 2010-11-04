@@ -1,46 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/03/5
-Message-ID: <4C57DCC2.8060508@hrz.tu-darmstadt.de>
-Date: Tue, 03 Aug 2010 11:09:22 +0200
-From: Joachim Fritschi <fritschi@....tu-darmstadt.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/04/2
+Message-ID: <4CD2607F.1010403@redhat.com>
+Date: Thu, 04 Nov 2010 15:27:59 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: secalert@...hat.com
-Subject: 2 vulnerabilties in phpCAS
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: sys_semctl: fix kernel stack leakage
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+On 11/04/2010 02:40 PM, Eugene Teo wrote:
+> "The semctl syscall has several code paths that lead to the leakage of
+> uninitialized kernel stack memory (namely the IPC_INFO, SEM_INFO,
+> IPC_STAT, and SEM_STAT commands) during the use of the older, obsolete
+> version of the semid_ds struct.
+>
+> The copy_semid_to_user() function declares a semid_ds struct on the
+> stack and copies it back to the user without initializing or zeroing the
+> "sem_base", "sem_pending", "sem_pending_last", and "undo" pointers,
+> allowing the leakage of 16 bytes of kernel stack memory.
+>
+> The code is still reachable on 32-bit systems - when calling semctl()
+> newer glibc's automatically OR the IPC command with the IPC_64 flag, but
+> invoking the syscall directly allows users to use the older versions of
+> the struct."
+>
+> Upstream commit:
+> http://git.kernel.org/linus/982f7c2b2e6a28f8f266e075d92e19c0dd4c6e56
+>
+> Credit: Dan Rosenberg
+>
+> Reference:
+> https://bugzilla.redhat.com/show_bug.cgi?id=649614
 
-the phpCAS library [1] contains 2 security vulnerabilties that have been 
-fixed in the new phpCAS release [2]. Redhat already provided CVE 
-numbers, thanks.
+Whoops, this has been assigned CVE-2010-4083.
 
-A: CVE-2010-2795 (PHPCAS-61) [3] is a serious issue. It allows you to 
-hijack any authenticated user session if get access to a users service 
-ticket in any way. The submitted service ticket was used to rename the 
-http session before actually validating the ticket. If you intercept or 
-guess a service ticket you can hijack a user session without proper 
-ticket validation.
-
-B: CVE-2010-2796 (PHPCAS-67) [4] is a minor issue. phpCAS is not 
-sanatizing a submitted value. Might be usable for XSS in cas proxy mode.
-
-
-The phpCAS library is included in multiple other projects:
-glpi,moodle,tikiwiki,claroline etc. that might be vulnerable as well
-
-
-Regards,
-
-Joachim Fritschi
-
-
-[1] https://wiki.jasig.org/display/CASC/phpCAS
-[2] http://downloads.jasig.org/cas-clients/php/1.1.2/
-[3] https://issues.jasig.org/browse/PHPCAS-61
-[4] https://issues.jasig.org/browse/PHPCAS-67
-
-
-
-
-
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (5024 bytes)
+Thanks, Eugene
+-- 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
