@@ -1,44 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/25/4
-Message-ID: <20100625171757.GA3646@derf.homelinux.org>
-Date: Fri, 25 Jun 2010 19:17:57 +0200
-From: Daniel Friesel <derf@...osdorf.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/05/3
+Message-ID: <806642806.70691288986618217.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 5 Nov 2010 15:50:18 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: feh
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: kernel: logic error in INET_DIAG bytecode auditing
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-there is an arbitrary code execution hole in feh versions <= 1.7 down to at
-least 1.3.4 (I didn't check earlier ones).
-When the user uses feh to open a remote file (URL) and uses the
---wget-timestamp option, feh passe the unescaped URL to a system() call.
+----- "Nelson Elhage" <nelhage@...lice.com> wrote:
 
-So if an attacker can trick the user into opening an image URL containing
-shell metacharacters with feh --wget-timestamp, he is able to execute
-arbitrary shell code with the rights of the user executing feh. This requires
-the URL to resolve to an existing file, however. Obfuscating the shell code
-with HTTP escapes (like %20) does not seem to work, and a redirect (via
-tinyurl or similar) to a malicious URL will also have no effect.
+> INET_DIAG is inconsistent about how it looks up the bytecode contained
+> in a
+> netlink message, making it possible for a user to cause the kernel to
+> execute
+> unaudited INET_DIAG bytecode.
+> 
+> This can be abused to make the kernel enter an infinite loop, and
+> possibly other
+> consequences, although I haven't thought of anything else
+> interesting.
+> 
+> Reference:
+> http://www.spinics.net/lists/netdev/msg145899.html
+> 
 
-Example:
-remnant /t/feh > ls
-remnant /t/feh > feh --wget-timestamp 'https://derf.homelinux.org/stuff/bar`touch lol_hax`.jpg'
-/bin/cp: cannot stat `/tmp/feh_011422_bar.jpg': No such file or directory
-feh WARNING: /tmp/feh_011422_000001_bar`touch lol_hax`.jpg does not exist - skipping
-feh WARNING: /tmp/feh_011422_000001_bar`touch lol_hax`.jpg - File does not exist
-feh - No loadable images specified.
-Use feh --help for detailed usage information
-remnant /t/feh > ls
-lol_hax
-remnant /t/feh >
+Please use CVE-2010-3880.
 
-This has been fixed in feh 1.8:
-<https://derf.homelinux.org/projects/feh/changelog>
+Thanks.
 
-Please assign a CVE.
-
-Thanks,
-Daniel
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+-- 
+    JB
