@@ -1,26 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/13/1
-Message-ID: <AANLkTinKec6MX5TYZMhKtSwpnk5b+Aj_=OgMXUN4GtYx@mail.gmail.com>
-Date: Sun, 12 Dec 2010 21:45:09 -0500
-From: Havoc Pennington <hp@...ox.com>
-To: Rémi Denis-Courmont <remi@...lab.net>
-Cc: dbus@...ts.freedesktop.org, oss-security@...ts.openwall.com
-Subject: Re: Clarifications on the D-Bus specification
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/05/1
+Message-ID: <1368665710.69661288985786462.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 5 Nov 2010 15:36:26 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE Clarification: OpenFabrics ofed stack also contains RDS protocol
 Content-Type: text/plain; charset=utf-8
 
-I posted patches to the bug that need testing with your exploit and
-need a spec patch. My patches assume the max nest depth is 64. Some
-code in dbus-message.c breaks if a DBusMessage goes over 255, so I'd
-recommend not going over that. But 128 would be pretty easily possible
-if desired.
+----- "Marcus Meissner" <meissner@...e.de> wrote:
 
-I used "2 * DBUS_MAXIMUM_TYPE_RECURSION_DEPTH" instead of adding a new
-constant to dbus-protocol.h since that was already the max nesting in
-a signature if you nested arrays in structs. But maybe it should be a
-new constant, especially if it isn't 64.
+> Hi,
+> 
+> The openfabrics remote messaging / dma stack also contains the RDS
+> protocol family module (actually it seems to be the originator before it
+> came into mainline).
+> 
+> It is in the ofa_kernel package, and SUSE ships it e.g. in the "ofed"
+> packages.
+> 
+> 
+> The net/rds/ code inside of it is pretty much the same as the Linux
+> kernel module. It also is autoloading with module aliases.
+> 
+> CVE-2010-3904 seems to be there up to the latest version after
+> looking
+> at the code (I tried the 1.4 version).
+> 
+> CVE-2010-3865 seems to be present in some versions, but not in the
+> latest version. Unverified.
+> 
+> 
+> Does this need new CVEs? The projects are different, but the history
+> seems clear and the code basically the same.
+> 
 
-Someone else will need to pick this up tomorrow and get it pushed, but
-I hope my start on it is helpful.
+If the code is the same, then you can reuse the CVE id. We see this for
+example when various PDF CVE ids get shared between xpdf and poppler.
 
-Thanks
-Havoc
+If it's the same flaw, but essentially different code, they need new IDs.
+
+>From what you describe, it sounds like they are the same, as your package
+is the parent of what upstream currently has.
+
+If you think it needs some though, let me know.
+
+Thanks.
+
+-- 
+    JB
