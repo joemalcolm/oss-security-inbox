@@ -1,29 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/02/2
-Message-ID: <AANLkTik1o+i+jo80NZXzDcRxWsA7bgcJTYP3hbMfw5W9@mail.gmail.com>
-Date: Thu, 2 Dec 2010 10:31:55 -0500
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/05/2
+Message-ID: <60164758.70081288986071838.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 5 Nov 2010 15:41:11 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel: failure to revert address limit override in OOPS error path
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: fuse
 Content-Type: text/plain; charset=utf-8
 
-Nelson Elhage reported an issue in the Linux kernel.  When the kernel
-performs an address limit override via set_fs(KERNEL_DS) and
-subsequently faults or BUGs before restoring USER_DS, the error path
-includes calls to put_user() to a user-controlled address.  Calls to
-put_user() include access_ok() checks on the provided address to
-ensure it lies in userspace.  However, because of the address limit
-override, these checks will always pass in this case, allowing the
-process owner to turn an OOPS into a write to an arbitrary kernel
-address, which can easily lead to privilege escalation.
+Please use CVE-2010-3879
 
-This problem requires an additional vulnerability to exploit, but as
-Nelson points out, it's not too uncommon for such issues to exist.
-CVE-2010-3849 (NULL pointer dereference in Econet) is a recent example
-that can be triggered under KERNEL_DS and used to escalate privileges
-via this bug.
+Thanks.
 
-Reference:
-http://marc.info/?l=linux-kernel&m=129117048916957&w=2
+-- 
+    JB
 
--Dan
+
+----- "Marc Deslauriers" <marc.deslauriers@...onical.com> wrote:
+
+> Hello,
+> 
+> There is an issue with FUSE that lets unprivileged users unmount
+> arbitrary locations via a symlink attack. This is a different issue
+> than
+> CVE-2009-3297 and CVE-2010-0789.
+> 
+> Ref.:
+> 
+> http://seclists.org/fulldisclosure/2010/Nov/15
+> http://www.halfdog.net/Security/FuseTimerace/
+> 
+> Thanks,
+> 
+> Marc.
+> 
+> 
+> -- 
+> Marc Deslauriers
+> Ubuntu Security Engineer     | http://www.ubuntu.com/
+> Canonical Ltd.               | http://www.canonical.com/
