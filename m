@@ -1,42 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/17/10
-Message-ID: <Pine.GSO.4.64.1011171650010.24946@faron.mitre.org>
-Date: Wed, 17 Nov 2010 17:00:29 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Josh Bressers <bressers@...hat.com>
-cc: oss-security@...ts.openwall.com
-Subject: Re: Clear text password in process list when using MySQL GUI tools
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/05/4
+Message-ID: <1500381661.71931288987250141.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 5 Nov 2010 16:00:50 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com, Petr Matousek <pmatouse@...hat.com>
+Cc: coley@...us.mitre.org
+Subject: Re: CVE request: kernel: kvm kernel stack leakage
 Content-Type: text/plain; charset=utf-8
 
+Please use CVE-2010-3881
 
-On Wed, 17 Nov 2010, Josh Bressers wrote:
+Thanks.
 
-> What are the thoughts of MITRE on this one? This affects all sorts of 
-> stuff, and I don't upstream removing the command line option (which is 
-> probably the only fix).
+-- 
+    JB
 
-As already mentioned, this kind of thing has been covered in CVE before, 
-and I don't see a reason to omit it.  Yes it can be a pain to fix, but in 
-most informal security models, one unprivileged user on a local system 
-should not be able to view any portion of sensitive information that is 
-owned by another unprivileged user.  In the case of password/credential 
-leaks, in some cases this effectively compromises a remote system, too. 
-If an app *only* supports passing of sensitive information through 
-command-line arguments, then IMO it's probably worthy of a CVE.
 
-My understanding is that some OSes or modules don't support listing of 
-process arguments, (or even processes of other users?), but I would guess 
-that most cross-OS (or cross-distro) code has a good likelihood of running 
-on an OS that supports process arguments.
+----- "Petr Matousek" <pmatouse@...hat.com> wrote:
 
-By the way, this also theoretically applies to environment variables, but 
-let's not go there.
-
-Both problems pose a Pandora's box of questions regarding how to define 
-'sensitive information' in a local context (e.g., presumably users on a 
-local system have the "privileges" to know the home directories of all 
-other users) but let's ot go there, either ;-)
-
-CWE-214 (Process Environment Information Leak) includes some examples.
-
-- Steve
+> "Structures kvm_vcpu_events, kvm_debugregs, kvm_pit_state2 and
+> kvm_clock_data
+> are copied to userland with some padding and reserved fields
+> unitialized.  It
+> leads to leaking of contents of kernel stack memory."
+> 
+> Upstream commit:
+> http://git.kernel.org/?p=virt/kvm/kvm.git;a=commit;h=831d9d02f9522e739825a51a11e3bc5aa531a905
+> 
+> Credit: Vasiliy Kulikov
+> 
+> Reference:
+> http://www.spinics.net/lists/kvm/msg44130.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=649920
+> 
+> Thanks,
+> --
+> Petr Matousek / Red Hat Security Response Team
