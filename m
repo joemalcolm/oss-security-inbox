@@ -1,65 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/24/2
-Message-ID: <AANLkTimibXfiFOLn6vjvEtx3ZBv_pznm-Ruw0v8rzTEH@mail.gmail.com>
-Date: Thu, 24 Jun 2010 09:16:20 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: Tomas Hoger <thoger@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE requests: LibTIFF
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/07/1
+Message-ID: <Pine.GSO.4.64.1011071422450.27958@faron.mitre.org>
+Date: Sun, 7 Nov 2010 14:36:42 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: moodle 1.9.10
 Content-Type: text/plain; charset=utf-8
 
-Thanks for your help Tomas, it's hard to keep all these issues straight.
 
-On Thu, Jun 24, 2010 at 3:03 AM, Tomas Hoger <thoger@...hat.com> wrote:
-> On Wed, 23 Jun 2010 14:01:14 -0400 Dan Rosenberg wrote:
->
->> 1.  Out-of-bounds read in TIFFExtractData() may result in application
->> crash (no reference, fixed upstream).  Reported by Dan Rosenberg.
->
-> Do you have any info on this?  I don't see anything obviously related
-> in changelog.  TIFFExtractData itself and all its uses seem unchanged
-> for years.
->
+On Mon, 1 Nov 2010, Josh Bressers wrote:
 
-Revision 1.92.2.9 of libtiff/tif_dirread.c added code for ensuring
-valid tag type information for each TIFF directory entry.  Prior to
-this fix, unknown tag types would result in an out-of-bounds array
-index in TIFFExtractData() on any code path using this macro.  Ubuntu
-security backported this fix as debian/patches/fix-unknown-tags.patch
-in their libtiff4 package.
+>> Moodle 1.9.10 is a security update again:
+>> http://docs.moodle.org/en/Moodle_1.9.10_release_notes
+>>
+>
+> This appears to be these things:
+>
+> * MSA-10-0017 XSS vulnerability in YUI 2.4.0 through YUI 2.8.1
+>    Use CVE-2010-3866 for this.
+
+While many of the sources for YUI imply that there's only one XSS, one of 
+our CVE analysts observed that the "Affected Files and Patches" section at 
+the end of http://yuilibrary.com/support/2.8.2/ makes it clear that three 
+separate .SWF files are affected, and they are all patched in slightly 
+different versions.
+
+So, I'm going to REJECT CVE-2010-3866 and SPLIT it into the following 3 
+CVEs:
+
+CVE-2010-4207
+charts/assets/charts.swf
+YUI 2.4.0 through 2.8.1
 
 
->> 2.  Out-of-bounds read in TIFFVGetField() may result in application
->> crash
->> (https://bugs.launchpad.net/ubuntu/lucid/+source/tiff/+bug/589145).
->
-> This is NULL deref.  Another Sauli's test case shows that similar
-> problem can occur with NULL td_stripbytecount few lines below
-> td_stripoffset case addressed in upstream patch.
->
->> The fix for this issue was combined with the fix for CVE-2010-2065,
->> but it appears to be a separate issue.  Reported by Sauli Pahlman.
->
-> Right, not related to what CVE-2010-2065 was assigned to.
->
->> 3.  Memory corruption in TIFFRGBAImageGet() due to buffer overflow
->> (https://bugs.launchpad.net/ubuntu/+source/tiff/+bug/591605).
->> Reported by Sauli Pahlman.
->
-> IIRC, Sauli's file only demonstrates OOB read.  Upstream bug:
-> http://bugzilla.maptools.org/show_bug.cgi?id=2216
->
+CVE-2010-4208
+uploader/assets/uploader.swf
+YUI 2.5.0 through 2.8.1
 
-Sorry, I misread your comment on the Launchpad post - by "buffer
-over-read", I now understand that you meant that libtiff attempted to
-read well past the boundaries of a buffer, resulting in an
-out-of-bounds read and application crash.  My mistake.
 
->> 4.  http://bugzilla.maptools.org/show_bug.cgi?id=2207 ("tif_getimage
->> fails when flipping vertically on 64-bit platforms")
+CVE-2010-4209
+swfstore/swfstore.swf
+YUI 2.8.0 through 2.8.1
+
+
+> * MSA-10-0015 Customised HTML Purifier upgraded to 4.2.0
+> * MSA-10-0014 Customised phpMyAdmin upgraded to 2.11.11
 >
-> CVE-2010-2233 was assigned to this issue.
->
-> --
-> Tomas Hoger / Red Hat Security Response Team
->
+> These two have no real information I can see. They just say to upgrade the
+> upstream version. Does anyone have more information (I can't follow the
+> link to the tracker).
+
+This lack of information is a fairly common problem.  Generally, we take 
+the approach of assuming that such changes are related to vulnerabilities 
+that originate from the third-party package, but sometimes the 
+vulnerability is in glue code from the main package to the third-party 
+package, so there are limitations to this assumption.
+
+- Steve
