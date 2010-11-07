@@ -1,19 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/01/12
-Message-ID: <1275423715.3021.747.camel@new-desktop>
-Date: Tue, 01 Jun 2010 22:21:55 +0200
-From: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/07/3
+Message-ID: <20101107221632.GR5327@outflux.net>
+Date: Sun, 7 Nov 2010 14:16:32 -0800
+From: Kees Cook <kees@...ntu.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: SFCB vulnerabilities
+Subject: Linux kernel proactive security hardening
 Content-Type: text/plain; charset=utf-8
 
-Le mardi 01 juin 2010 à 13:52 -0400, Josh Bressers a écrit :
-> Please use CVE-2010-2054
+Hi,
 
-Thanks.
-My advisory is attached to this mail.
+A push has started to try to get as much as possible upstream into the
+Linux kernel from the various hardening patches that exist in PaX,
+grsecurity, OpenWall, etc. I've got some details here:
 
-Regards,
-Nicolas Grégoire / Agarri
+http://www.outflux.net/blog/archives/2010/11/07/security-is-more-than-bug-fixing/
 
-View attachment "SFCB-Content_Length_heap_overflows.txt" of type "text/plain" (2808 bytes)
+And there's a sign-up list here, for people interested in helping out:
+
+https://wiki.ubuntu.com/SecurityTeam/Roadmap/KernelHardening#Upstream%20Hardening
+
+We could use the help. :)
+
+-Kees
+
+-- 
+Kees Cook
+Ubuntu Security Team
