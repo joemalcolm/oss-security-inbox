@@ -1,31 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/11/5
-Message-ID: <40043145.156921286825331188.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 11 Oct 2010 15:28:51 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/07/2
+Message-ID: <AANLkTimR+OcYNOrRvA=K_Uo428=1CrtjLXiR37tJ3FDU@mail.gmail.com>
+Date: Sun, 7 Nov 2010 21:22:22 +0100
+From: Pierre Joye <pierre.php@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: usebb before 1.0.11 unauthorized access to content
+Subject: CVE Request: PHP 5.3.3, libmbfl, mb_strcut
 Content-Type: text/plain; charset=utf-8
 
+hi,
 
------ "Hanno Böck" <hanno@...eck.de> wrote:
+Mateusz reported the following issue earlier today.
 
-> http://www.usebb.net/community/topic.php?id=2501
-> 
-> A security issue has been discovered in UseBB 1.0.10 with per forum and
-> topic RSS feeds in combination with restricted forum access permissions,
-> giving users access to post contents that should remain hidden. Anyone
-> having a restricted "read" permission set but NOT an equal or more
-> restricted "view" one is prone to this issue.
-> 
+Updated patch, tests pass now: http://pastie.org/1279682
 
-Here is a slightly better description here:
-http://www.usebb.net/community/topic-2495.html
+Information disclosure flaw. PHP 5.2 is not affected (newer version of libmbfl).
 
-Please use CVE-2010-3713 for this.
+PHP 5.3 and trunk uses libmbfl 1.1.0.
 
-Thanks.
+
+---------- Forwarded message ----------
+From: Mateusz Kocielski <m.kocielski@...il.com>
+Date: Sun, Nov 7, 2010 at 6:47 PM
+Subject: mb_strcut
+To: security@....net
+
+
+Hello,
+
+ I've found flaw in the mb_strcut function, php doesn't the length
+parameter passed to the function in all possible cases.
+
+ Simple exploitation:
+
+<?php
+$b = "bbbbbbbbbbb";
+str_repeat("THIS IS A SECRET MESSAGE, ISN'T IT?", 1);
+$var3 = mb_strcut($b, 0, 1000);
+echo $var3;
+?>
+
+Pierre suggested the following patch:
+http://pastie.org/pastes/1279428/text . I've tested it with your test
+suite, one of the mbstring related test cases failed: Bug #49354
+(mb_strcut() cuts wrong length when offset is in the middle of a
+multibyte character) [ext/mbstring/tests/bug49354.phpt]
+
 
 -- 
-    JB
+Pierre
+
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
