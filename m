@@ -1,32 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/30/12
-Message-ID: <Pine.GSO.4.64.1003301739030.4709@faron.mitre.org>
-Date: Tue, 30 Mar 2010 17:41:39 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/08/10
+Message-Id: <201011080915.41337.sgrubb@redhat.com>
+Date: Mon, 8 Nov 2010 09:15:41 -0500
+From: Steve Grubb <sgrubb@...hat.com>
 To: oss-security@...ts.openwall.com
-cc: cert@...t.org, soc@...cert.gov
-Subject: Re: phpmyvisites 2.3
+Subject: Re: filesystem capabilities
 Content-Type: text/plain; charset=utf-8
 
+>And to make things complete we not only have to deal with
+>libcap (which I personally prefer even if its "more complex to use"),
+>we also have cap-ng (http://people.redhat.com/sgrubb/libcap-ng)
+>where a first look at the provided ping etc patches shows me
+>that again the return values are not checked for
+>capng_apply().
 
-On Wed, 10 Mar 2010, Henri Salo wrote:
+This was a quick example to show the usage. But the libcap-ng library was meant to 
+stop people from doing capabilities tests like this:
 
-> There is a security vulnerability in phpMyVisites 2.3. Is there a CVE
-> assigned for that issue?
->
-> http://www.phpmyvisites.us/phpmv2/CHANGELOG
+if (!getuid()) {
+    I am root, I must have privs
+}
 
-Use CVE-2009-4763
+Instead, you can do:
 
-Notes:
+if (capng_have_capabilities(CAPNG_SELECT_CAPS) > CAPNG_NONE) {
+  I have some privs
+}
 
-1) SourceForge has recently made it difficult/impossible to obtain 
-changelogs for new releases, so I can't find any information on the 
-December release of ClickHeat to get more details.
-
-2) Consequently, it could be that phpMyVisites is fixing an old ClickHeat
-    problem (CVE-2008-5793) but neither is it clear if that ClickHeat is
-    even the same product.
+We have run across problems caused by people doing test #1. I think libnet was a 
+classic example.
 
 
-- Steve
+
+>(My fault if it does and I overlooked it) And the whole cap/priv framework must
+>*always and always* check return values as shown a dozens of times that
+>this gives cool root exploits.
+
+Sure.
+
+>And I dont want to mention the semantics change between
+>the kernel versions (2.6.25 etc).
+
+That was also the second inspiration for libcap-ng. We now have a per task bounding 
+set instead of system wide. What this means is that if you have an application that 
+has been good enough to drop privs and is still running as uid 0, then all an attacker 
+has to do is get the app to call execve and you have all privs back again. Prior to 
+2.6.25, if you drop privs and you are uid 0, the privs stayed gone.
+
+In the new world, you have to drop the bounding set to get the old behavior. This is 
+done by using prctl. And being that there are 33 capabilities, you have to call prctl 
+33 times. So, I figured it would be much better to wrap this up into a flag so that you 
+can just "or" that into the set you want to operate on.
+
+-Steve
