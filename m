@@ -1,54 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/29/2
-Message-ID: <1470672121.25911280410087303.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 29 Jul 2010 09:28:07 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/09/2
+Message-ID: <alpine.LRH.2.00.1011090936150.29639@tundra.namei.org>
+Date: Tue, 9 Nov 2010 10:39:20 +1100 (EST)
+From: James Morris <jmorris@...ei.org>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- KVIrc -- Remote CTCP commands execution via specially-crafted CTCP parameter
+cc: Daniel Walsh <dwalsh@...hat.com>
+Subject: Re: filesystem capabilities
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-2785
+On Mon, 8 Nov 2010, Solar Designer wrote:
 
-Thanks.
+> Thanks for reading this far, and I'd appreciate any comments and/or
+> corrections.
 
+I think it'd be worth taking things a step further and reworking these 
+privileged apps so that they are split into separate privileged and 
+unprivileged sandboxed programs (let's call them launchers and workers).
+
+The general idea is to have a minimal launcher, which does nothing except 
+access a resource requiring privilege, then launch an unprivileged worker 
+to utilize that resource.
+
+Authority is bundled with with the resource via its file descriptor, and 
+passed to the worker, which then requires no general privileges at all.
+
+The worker task can then be tightly sandboxed with seccomp / SELinux / 
+namespaces etc., communicating back to the launcher via the fd.
+
+(This is an application of concepts from object-capabilities and privsep).
+
+SELinux (and possibly TOMOYO) could also be used to help ensure correct 
+invocation of resources and worker tasks.
+
+In the case of ping, the launcher would open a raw socket, then launch a 
+worker, passing in the raw socket's fd.  Anything not absolutely required 
+in the launcher would be implemented in the worker (command line parsing, 
+sending and receiving messages, generating user output etc.).  The worker 
+would not need access to any resources except fds passed by the launcher, 
+so it could for example be launched in a private namespace and in seccomp 
+mode.  Thus, there is no 'ambient' authority to access the system, and the 
+system-level attack surface is also reduced (e.g. prevent a buggy ioctl() 
+being called on a passed-in fd).
+
+Applied across the system, the aim would be to separate out all privileged 
+function into minimal, audtiable programs, while also more fully applying 
+the principle of least privilege to the worker programs.
+
+
+
+- James
 -- 
-    JB
-
------ "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
-
-> Hi Steve,
-> 
->    user with nickname 'unic0rn' reported:
->      [1] https://svn.kvirc.de/kvirc/ticket/858
-> 
-> a deficiency in the way KVIrc IRC client extracted the "next" CTCP
-> parameter from message
-> pointer. A remote, authenticated attacker, valid KVIrc user, could
-> send a specially-crafted
-> DCC Client-To-Client Protocol (CTCP) message, like:
-> 
-> /ctcp nickname DCC GET\rQUIT\r
-> /ctcp nickname DCC GET\rPRIVMSG\40#channel\40:epic\40fail\r
-> 
-> which could lead to / allow remote (KVIrc) CTCP commands execution.
-> Different vulnerability
-> than CVE-2010-2451:
->    [2] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-2451
-> and CVE-2010-2452:
->    [3] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-2452
-> 
-> Upstream patch:
->    [3] https://svn.kvirc.de/kvirc/changeset/4693
-> 
-> Workaround: (from [1])
->    /option boolNotifyFailedDccHandshakes 0
-> 
-> References:
->    [4] http://bugs.gentoo.org/show_bug.cgi?id=330111
-> 
-> Could you please allocate a CVE id for this?
-> 
-> Thanks && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+James Morris
+<jmorris@...ei.org>
