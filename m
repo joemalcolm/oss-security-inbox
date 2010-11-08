@@ -1,37 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/30/7
-Message-Id: <201011300738.00093.thomas@suse.de>
-Date: Tue, 30 Nov 2010 07:38:00 +0100
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/08/6
+Message-Id: <201011081128.14213.ludwig.nussel@suse.de>
+Date: Mon, 8 Nov 2010 11:28:13 +0100
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: Eugene Teo <eugene@...hat.com>
-Subject: Re: CVE request: kernel: Multiple DoS issues in block layer
+Cc: Daniel Walsh <dwalsh@...hat.com>
+Subject: Re: filesystem capabilities
 Content-Type: text/plain; charset=utf-8
 
-Am Dienstag 30 November 2010 05:58:38 schrieb Eugene Teo:
-> On 11/29/2010 10:24 PM, Eugene Teo wrote:
-> >>> 2. By submitting certain I/O requests with 0 length, a local user could
-> >>> cause a kernel panic:
-> >>>
-> >>> http://git.kernel.org/?p=linux/kernel/git/axboe/linux-2.6-block.git;a=c
-> >>>ommit;h=9284bcf4e335e5f18a8bc7b26461c33ab60d0689
-> >>
-> >> Use CVE-2010-4163
-> >
-> > Not a complete patch, need this too:
-> > https://patchwork.kernel.org/patch/363282/
-> 
-> Has anyone released an update with the regression? If so, we probably
-> need a new CVE name for this.
+Solar Designer wrote:
+> There's a lot of talk lately regarding replacing the SUID bit on program
+> binaries in Linux distros with filesystem capabilities.  Specifically,
+> Fedora and Ubuntu are heading in that direction.
 
-No. :)
+There are requests for openSUSE too.
 
-Cheers,
-Thomas
+> - Some currently-SUID programs are aware of them being (potentially)
+> SUID, and will drop the "more privileged" euid when it is no longer
+> needed, but they will probably not be aware of them possessing
+> capabilities.  This may result in larger parts of the programs
+> (sometimes orders of magnitude larger) running with elevated privileges
+> (or with allowed-to-be-elevated privileges, which is a privilege on its
+> own and is usable through vulnerabilities that allow for arbitrary code
+> execution).  Let's consider ping, which appears to be the classical
+> example of "where filesystem capabilities will help" (or so it is
+> claimed).  IIRC, it starts by acquiring a raw socket (NB: of a certain
+> somewhat-limited type), then drops root privs (if it was installed SUID
+> root and run by non-root), then proceeds to parse the command-line,
+> resolve the provided hostname, and so on.  If the SUID bit is replaced
+> with cap_net_raw+ep, as seen in Kees' example above, will ping know to
+> drop this capability?  Hardly.  Not without a source code patch.
+
+Exactly. A community submission of an fscaps enabled iputils package
+brought the issue to our attention. We were astonished that the
+prime example ping doesn't drop it's capabilities. So it actually
+shows why blindly applying fscaps doesn't help security at all.
+So we are going to treat fscaps just like setuid bits and require
+code review by the security team.
+
+> You also absolutely have to deal with passwd, which would be another
+> SUID root program.  Like we did:
+> http://www.openwall.com/tcb/
+> And with all others (e.g., our crontab/at and crond changes). :-)
+
+The next step would be to get rid of those setgid programs too then.
+A daemon controlled via unix domain sockets could do the job just as
+well I suppose.
+
+> Thanks for reading this far, and I'd appreciate any comments and/or
+> corrections.  Some of the info above might be outdated - e.g., I am not
+> sure of what current kernels require (or not) to drop capabilities.
+
+AFAICT there are no special capabilities needed.
+
+> (If they no longer require anything extra to drop CAP_SETUID, then
+> that's a security problem on its own - the "sendmail risk" is back.)
+
+Thanks for the reminder! I actually didn't know. Here's a link
+explaining sendmail's problem:
+http://archives.neohapsis.com/archives/sendmail/2000-q2/0002.html
+
+Indeed I ran into the trap when trying to patch ping to drop
+capabilities. If a program is capability aware but still installed
+setuid it needs to setuid(getuid()) before dropping it's
+capabilities. Doing it the wrong way around keeps the POSIX saved
+uid and setuid(0) is still possible even though getuid() ==
+geteuid() and no capabilities granted.
+
+cu
+Ludwig
 
 -- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
---
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
+ (o_   Ludwig Nussel
+ //\   
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
