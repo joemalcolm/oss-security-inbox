@@ -1,23 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/09/2
-Message-ID: <20100609161639.GA23577@suse.de>
-Date: Wed, 9 Jun 2010 18:16:39 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/08/4
+Message-ID: <20101108030738.GA9280@openwall.com>
+Date: Mon, 8 Nov 2010 06:07:38 +0300
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
-Subject: Re: [oCERT-2010-001] multiple http client unexpected download filename vulnerability
+Subject: Re: Linux kernel proactive security hardening
 Content-Type: text/plain; charset=utf-8
 
-On Mon, May 17, 2010 at 01:03:22PM +0100, Daniele Bianco wrote:
-> 
-> #2010-001 multiple http client unexpected download filename vulnerability
-> 
-> Description:
-> 
-> The lftp, wget and lwp-download applications are ftp/http clients and file
-> transfer tools supporting various network protocols. The lwp-download
-> script is shipped along with the libwww-perl library.
+Dan, Vasiliy -
 
-Did anyone assign CVE ids for these?
+On Sun, Nov 07, 2010 at 08:29:07PM -0500, Dan Rosenberg wrote:
+> I've just posted an RFC for the equivalent of grsecurity's MODHARDEN,
+> which places restrictions on the automatic loading of modules by
+> unprivileged users:
+> 
+> http://lkml.org/lkml/2010/11/7/212
 
-Ciao, Marcus
+We simply don't include module autoloading support in Owl, and we'll
+continue to do so (it's not something we want on servers anyway, not
+only because of the security risk), but I am all for the issue getting
+(partially) addressed in/for other distros. ;-)
+
+On a more relevant issue (to us), any ideas on dealing with kernel stack
+infoleaks in a general manner (not just plugging the bugs one by one)?
+I guess it could be addressed in gcc (an option to wipe stack frames) or
+in the kernel (wipe even more of the stack, beyond the stack pointer, on
+syscall entry).  Unfortunately, either has likely measurable performance
+impact.  (BTW, has some of this been implemented somewhere already?)
+Any other ideas?
+
+In the absence of cheap-enough general solution/workaround in the
+kernel, I'm afraid we'll need to resort to improving and using automated
+tools to detect bugs of this nature - which is apparently what you and
+Vasiliy were doing lately?  What tools did you use?
+
+Thanks,
+
+Alexander
