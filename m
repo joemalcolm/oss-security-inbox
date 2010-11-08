@@ -1,63 +1,94 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/14/2
-Message-ID: <AANLkTilTtVRQZxrPVn2ONCmKf2UNSsRGWE3P7DJ93fBR@mail.gmail.com>
-Date: Fri, 14 May 2010 15:32:18 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/08/5
+Message-ID: <20101108054801.GA9946@openwall.com>
+Date: Mon, 8 Nov 2010 08:48:01 +0300
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: lxr
+Subject: Re: Linux kernel proactive security hardening
 Content-Type: text/plain; charset=utf-8
 
-Josh,
+Dan, Vasiliy -
 
-The XSS in the title string was already assigned CVE-2010-1448.  Do
-you mean to assign issue #2, the XSS reflected in search results?
+On Mon, Nov 08, 2010 at 06:07:38AM +0300, Solar Designer wrote:
+> On a more relevant issue (to us), any ideas on dealing with kernel stack
+> infoleaks in a general manner (not just plugging the bugs one by one)?
+> I guess it could be addressed in gcc (an option to wipe stack frames) or
+> in the kernel (wipe even more of the stack, beyond the stack pointer, on
+> syscall entry).  Unfortunately, either has likely measurable performance
+> impact.  (BTW, has some of this been implemented somewhere already?)
+> Any other ideas?
 
--Dan
+OK, here are some lower-overhead ideas of my own:
 
-On Fri, May 14, 2010 at 3:28 PM, Josh Bressers <bressers@...hat.com> wrote:
-> ----- "Dan Rosenberg" <dan.j.rosenberg@...il.com> wrote:
->
->> Sorry for not making this explicitly clear.  There are three issues:
->>
->> 1.  XSS in the ident parameter, as described in CVE-2009-4497.
->>
->> 2.  XSS that is reflected via the search results page after issuing a
->> search.
->>
->> 3.  XSS that is reflected via the <title> tag on the search page, as
->> described in Raphael's original e-mail a few days ago, which Josh just
->> assigned CVE-2010-1448.
->>
->> Bugs 1 and 2 were fixed simultaneously, as indicated in the 2010-01-05
->> changelog entry for LXR:
->>
->> 2010-01-05 18:00  mbox
->>
->>       * ident, search: Fix for CVE-2009-4497 from Dan Rosenberg
->>
->>         Avoid a XSS vulnerability
->>
->> Bug 3 was fixed a few days later on 2010-01-15, as indicated by:
->>
->> 2010-01-15 23:23  mbox
->>
->>       * lib/LXR/Common.pm: Fix XSS exploit in title string
->>
->> So, while my original intent at the time of disclosure was to have a
->> single CVE identifier assigned to cover all three of these issues, that
->> obviously did not happen.  As it stands, bugs 1 and 3 have their own CVE
->> identifiers, and bug 2 remains unassigned.
->>
->
-> Sorry this took so long.
->
-> CVE-2010-1625 lxr lib/LXR/Common.pm: Fix XSS exploit in title string
->
-> The diff is here:
-> http://lxr.cvs.sourceforge.net/viewvc/lxr/lxr/lib/LXR/Common.pm?r1=1.63&r2=1.64
->
-> Thanks
->
-> --
->    JB
->
+1. Perhaps the majority of infoleaks (maybe over 90% of those being
+discovered these days?) are triggerable via only a handful of syscalls,
+and perhaps only in certain easy-to-check-for circumstances.  I am
+thinking ioctl(2), as well as maybe read(2) (and other read syscalls,
+yes...) from device files (not from other file types).  I haven't
+checked whether this matches the statistics so far or not - we need to
+check and come up with a short list of typical "patterns" like this.
+Then we may implement stack wiping (say, to 1 KB below the stack
+pointer) invoked from top-level functions for these syscalls and only
+when the circumstances are present (e.g., check file type for the
+provided fd).  Do it before calling the deeper layers, indeed.
+
+2. We could turn all function-local non-static definitions of:
+
+struct x y;
+
+into:
+
+struct x y = {};
+
+We could do this by pre-processing the source files or with a patch to
+gcc (introduce a command-line option to assume empty initializers for
+all on-stack structs).
+
+I've just checked - this often produces efficient code: where it is
+obvious enough for gcc that most fields are explicitly initialized by
+the function, then only the few actually uninitialized ones are zeroed.
+Moreover, in cases where the struct or its fields are then copied to
+other variables, the struct itself may get eliminated (and the
+assignments/zeroing are made right to the target variables).  Indeed,
+copy_to_user() should prevent the latter optimization, but I am also
+considering cases where the above change would happen to be applied to
+structs never exported to userspace (if we apply it universally).
+
+Unfortunately, there will be plenty of cases where gcc would not be able
+to tell that the struct is not used until a certain point, so it'd have
+to needlessly initialize it... which will result in performance impact.
+
+Please note that either of the ideas above will take care both of
+uninitialized fields and of alignment gaps.  With the second approach
+this was not obvious to me, so I tested (with gcc 3.4.5 only so far):
+
+struct x {
+	int a;
+	char b;
+	int c;
+};
+
+void f(struct x *y) {
+	struct x x = {};
+
+	x.a = 1;
+	x.b = 2;
+	x.c = 3;
+	*y = x;
+}
+
+The produced code is inefficient, but safe - it zeroizes the entire
+struct (12 bytes), then proceeds to set the three fields (4+1+4).
+
+3. I also briefly thought of post-processing gcc-generated assembly
+files, but I like the above approaches better.
+
+Perhaps #1 above should be it (wipe the stack in _some_ cases only) -
+simple and likely without measurable slowdown for real-world use.
+#2 is more difficult and likely slower (albeit not as slow as wiping
+entire stack frames would be).  Maybe #2 will prevent a larger
+percentage of vulnerabilities and in an easier to confirm way, though.
+
+Comments and other ideas are welcome.
+
+Alexander
