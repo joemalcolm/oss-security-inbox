@@ -1,23 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/03/1
-Message-ID: <4C579132.3000006@kernel.sg>
-Date: Tue, 03 Aug 2010 11:46:58 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/08/2
+Message-ID: <AANLkTinMix7S8__jfQB2V7wnKWeQB_FQZBeAh-otb7nh@mail.gmail.com>
+Date: Sun, 7 Nov 2010 20:29:07 -0500
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: kernel: [PARISC] led.c - fix potential stack overflow in led_proc_write()
+Subject: Re: Linux kernel proactive security hardening
 Content-Type: text/plain; charset=utf-8
 
-Ilja reported way back in Nov 2007. A writer to /proc/pdc/led(?) can 
-cause the kernel to consume an unbounded amount of stack, and result in 
-stack corruption.
+Thanks for your input.
 
-http://www.spinics.net/lists/linux-parisc/msg02960.html
+I've just posted an RFC for the equivalent of grsecurity's MODHARDEN,
+which places restrictions on the automatic loading of modules by
+unprivileged users:
 
-If you need a CVE name, change the subject to indicate that. We are not 
-requesting one as we do not support the PA-RISC architecture in our 
-distribution.
+http://lkml.org/lkml/2010/11/7/212
 
-Thanks, Eugene
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+-Dan
+
+On Sun, Nov 7, 2010 at 8:16 PM, Solar Designer <solar@...nwall.com> wrote:
+> Kees, Dan -
+>
+> Thank you for working on this!
+>
+> On Sun, Nov 07, 2010 at 02:16:32PM -0800, Kees Cook wrote:
+>> And there's a sign-up list here, for people interested in helping out:
+>>
+>> https://wiki.ubuntu.com/SecurityTeam/Roadmap/KernelHardening#Upstream%20Hardening
+>
+> I've just added a few hardening changes to consider (and edited/moved a
+> few others):
+>
+> https://wiki.ubuntu.com/SecurityTeam/Roadmap/KernelHardening?action=diff&rev2=41&rev1=37
+>
+> Sorry I did not sign up for any yet, although if I happen to work on any
+> I'll let you know.
+>
+> I'd appreciate it if you keep the page updated with current status on
+> and links to work-in-progress and proposed patches.
+>
+> Thanks again,
+>
+> Alexander
+>
