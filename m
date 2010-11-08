@@ -1,26 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/17/5
-Message-ID: <20100317132616.GA5801@eltex.net>
-Date: Wed, 17 Mar 2010 16:26:16 +0300
-From: ArkanoiD <ark@...ex.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/08/9
+Message-ID: <20101108130630.GA3495@albatros>
+Date: Mon, 8 Nov 2010 16:06:30 +0300
+From: Vasiliy Kulikov <segooon@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Brian Stafford <brian@...fford.uklinux.net>, libesmtp@...fford.uklinux.net, security@...ntu.com, Pawel Salek <pawsa@...ochem.kth.se>, jskarvad@...hat.com
-Subject: Re: CVE Request: libesmtp does not check NULL bytes in commonName
+Subject: Re: Linux kernel proactive security hardening
 Content-Type: text/plain; charset=utf-8
 
-Formally, they are not. But de facto they are there for a long time.
+Solar,
 
-On Wed, Mar 17, 2010 at 02:23:22PM +0100, Ludwig Nussel wrote:
-> Brian Stafford wrote:
-> > Since both the original and patched versions of match_component() 
-> > implement wildcards rather less liberally than RFC 2818 implies, I 
-> > decided to move towards the approach in the I-D.  match_component() now 
-> > accepts either a string or a single wildcard '*'.  Matched characters 
-> > are validated against the set of valid domain name component characters 
-> > , that is, *.example.org will not match %.example.org, nor for that 
-> > matter will the pattern %.example.org.  Question: should underline '_' 
-> > be in the set of valid characters?
-> 
-> AFAIK underlines are not allowed in DNS. I'm sure someone knows the
-> RFC for that too :-)
+On Mon, Nov 08, 2010 at 06:07 +0300, Solar Designer wrote:
+> In the absence of cheap-enough general solution/workaround in the
+> kernel, I'm afraid we'll need to resort to improving and using automated
+> tools to detect bugs of this nature - which is apparently what you and
+> Vasiliy were doing lately?  What tools did you use?
 
+At first I was using simple "grep copy_to_user" and manually checked all
+calls to copy_to_user().  Then I used coccinelle [1] to search this
+pattern: struct allocated on the stack, not prepared with neither
+copy_from_user() nor memset(), is copied with copy_to_user().  Both
+result are manually checked.  The latter doesn't find all the cases of
+leak, see e.g. [2].  The caller copies array, not struct.  Maybe my
+cocci script should be added with s/struct/array/ too.  Search with
+pahole or similar sucks as many leaks are not only padding bytes leaks,
+but trivial uninitialized fields or using strlcpy() (instead of strncpy()).
+
+
+Also note that even if this "pattern search" process can be fully automated,
+we might have another more difficult to discover "pattern": struct is
+allocated with kmalloc(), is not fully initialized and then is copied to
+userspace, somewhere far from kmalloc() (not in this module or even not
+in this driver layer).  Maybe this can be still automated with
+coccinelle, e.g. search for all copy_to_user() that copies _not local_
+struct/array and then check all dynamic allocation of this struct type
+(hard to check _all_ the cases :( ).
+
+But again, it also can be complicated by "virtual methods" those are called
+through pointers to functions those use different types of struct: the
+caller uses "struct A", the callee uses "struct B" that has struct A as
+the first field.  (Yes, I know that the right code should use
+container_of() macro.)
+
+
+[1] http://coccinelle.lip6.fr/
+
+[2] http://www.openwall.com/lists/oss-security/2010/11/02/7
+
+
+Thanks,
+
+-- 
+Vasiliy
