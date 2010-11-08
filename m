@@ -1,22 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/14/14
-Message-ID: <Pine.GSO.4.64.1006141625400.13177@faron.mitre.org>
-Date: Mon, 14 Jun 2010 16:26:44 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Josh Bressers <bressers@...hat.com>
-cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: punbb before 1.3.4 xss
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/08/12
+Message-ID: <20101108193332.GA4394@albatros>
+Date: Mon, 8 Nov 2010 22:33:32 +0300
+From: Vasiliy Kulikov <segoon@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel proactive security hardening
 Content-Type: text/plain; charset=utf-8
 
+Solar,
 
-On Mon, 14 Jun 2010, Josh Bressers wrote:
+On Mon, Nov 08, 2010 at 08:48 +0300, Solar Designer wrote:
+> 2. We could turn all function-local non-static definitions of:
+> 
+> struct x y;
+> 
+> into:
+> 
+> struct x y = {};
+> 
+> We could do this by pre-processing the source files
 
-> Can you handle this one (as I have no 2008 IDs).
+With coccinelle it is trivial:
 
-This needs to be a 2009 CVE because of the dates of the announcement and 
-the forum posts.  Presumably, Hanno mis-read the poster's registration 
-date (of 2008) as the release date.
+@@
+identifier T, x, f;
+@@
 
-Use CVE-2009-4894
+f(...)
+{
+ ...
+ struct T x
++ = {}
+ ;
+ ...
+}
 
-- Steve
+However, I don't think that all linux maintainers would be happy with
+this.
+
+> or with a patch to
+> gcc (introduce a command-line option to assume empty initializers for
+> all on-stack structs).
+
+IMO much better solution - instead of many MB trivial patch have small
+gcc patch.
+
+
+Thanks,
+
+-- 
+Vasiliy
