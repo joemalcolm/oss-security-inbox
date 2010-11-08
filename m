@@ -1,23 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/27/1
-Message-ID: <20100127170835.GP28326@ngolde.de>
-Date: Wed, 27 Jan 2010 18:08:37 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/08/13
+Message-ID: <1404259840.277251289249903379.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 8 Nov 2010 15:58:23 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: postgresql bitsubstr overflow
+Cc: coley <coley@...re.org>
+Subject: Re: CVE Request: PHP 5.3.3, libmbfl, mb_strcut
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-can I please get a CVE id for postgresql?
+Please use CVE-2010-4156
 
-references:
-http://intevydis.blogspot.com/2010/01/postgresql-8023-bitsubstr-overflow.html
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=567058
+Thanks.
 
-Cheers
-Nico
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
+    JB
 
-Content of type "application/pgp-signature" skipped
+
+----- "Pierre Joye" <pierre.php@...il.com> wrote:
+
+> hi,
+> 
+> Mateusz reported the following issue earlier today.
+> 
+> Updated patch, tests pass now: http://pastie.org/1279682
+> 
+> Information disclosure flaw. PHP 5.2 is not affected (newer version of
+> libmbfl).
+> 
+> PHP 5.3 and trunk uses libmbfl 1.1.0.
+> 
+> 
+> ---------- Forwarded message ----------
+> From: Mateusz Kocielski <m.kocielski@...il.com>
+> Date: Sun, Nov 7, 2010 at 6:47 PM
+> Subject: mb_strcut
+> To: security@....net
+> 
+> 
+> Hello,
+> 
+>  I've found flaw in the mb_strcut function, php doesn't the length
+> parameter passed to the function in all possible cases.
+> 
+>  Simple exploitation:
+> 
+> <?php
+> $b = "bbbbbbbbbbb";
+> str_repeat("THIS IS A SECRET MESSAGE, ISN'T IT?", 1);
+> $var3 = mb_strcut($b, 0, 1000);
+> echo $var3;
+> ?>
+> 
+> Pierre suggested the following patch:
+> http://pastie.org/pastes/1279428/text . I've tested it with your test
+> suite, one of the mbstring related test cases failed: Bug #49354
+> (mb_strcut() cuts wrong length when offset is in the middle of a
+> multibyte character) [ext/mbstring/tests/bug49354.phpt]
+> 
+> 
+> -- 
+> Pierre
+> 
+> @pierrejoye | http://blog.thepimp.net | http://www.libgd.org
