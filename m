@@ -1,76 +1,123 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/04/1
-Message-ID: <20100304014546.GB8457@redhat.com>
-Date: Wed, 3 Mar 2010 18:45:46 -0700
-From: Vincent Danen <vdanen@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2009-3297 samba/ncpfs/fuse issues granted individual 2010 CVE names?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/08/8
+Message-ID: <AANLkTi=ZWg9JmEYXH5KOHHyYdcYqLAJPkMSEQLcjr+mA@mail.gmail.com>
+Date: Mon, 8 Nov 2010 12:52:29 +0100
+From: yersinia <yersinia.spiros@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: Daniel Walsh <dwalsh@...hat.com>, agm@...gle.com
+Subject: Re: filesystem capabilities
 Content-Type: text/plain; charset=utf-8
 
-* [2010-03-03 13:01:18 -0500] Steven M. Christey wrote:
+On Mon, Nov 8, 2010 at 3:52 AM, Solar Designer <solar@...nwall.com> wrote:
 
->On Tue, 2 Mar 2010, Vincent Danen wrote:
+> Kees, all -
 >
->>* [2010-03-02 13:05:28 -0500] nobody@...hat.com via RT wrote:
->>
->>Hi, Steve.  I'm confused about these three CVEs, particularly since
->>CVE-2009-3297 was assigned to this issue (I suppose it would be more
->>correct to have 3 CVEs for the issue, but I'm not sure then why
->>CVE-2009-3297 was completely ignored unless you intend for it to be not
->>used/duplicated to one of these?).
+> There's a lot of talk lately regarding replacing the SUID bit on program
+> binaries in Linux distros with filesystem capabilities.  Specifically,
+> Fedora and Ubuntu are heading in that direction.
 >
->Sorry about not informing oss-security when I did this; I meant to.
+> Fedora:
+> http://fedoraproject.org/wiki/Features/RemoveSETUID
+> https://bugzilla.redhat.com/show_bug.cgi?id=646440
 >
->CVE-2009-3297 has been rejected since it was used heavily for 
->multiple issues that should have been assigned separate entries.  
->People weren't just using CVE-2009-3297 for Samba, they were using it 
->for fuse and others.
+> Ubuntu:
+> http://www.outflux.net/blog/archives/2010/02/09/easy-example-of-fscaps/
+> https://wiki.ubuntu.com/Security/FilesystemCapabilties
+>
+> While in general this is a good idea, there are issues with it, in
+> arbitrary order:
+>
+> - Some currently-SUID programs are aware of them being (potentially)
+> SUID, and will drop the "more privileged" euid when it is no longer
+> needed, but they will probably not be aware of them possessing
+> capabilities.  This may result in larger parts of the programs
+> (sometimes orders of magnitude larger) running with elevated privileges
+> (or with allowed-to-be-elevated privileges, which is a privilege on its
+> own and is usable through vulnerabilities that allow for arbitrary code
+> execution).  Let's consider ping, which appears to be the classical
+> example of "where filesystem capabilities will help" (or so it is
+> claimed).  IIRC, it starts by acquiring a raw socket (NB: of a certain
+> somewhat-limited type), then drops root privs (if it was installed SUID
+> root and run by non-root), then proceeds to parse the command-line,
+> resolve the provided hostname, and so on.  If the SUID bit is replaced
+> with cap_net_raw+ep, as seen in Kees' example above, will ping know to
+> drop this capability?  Hardly.  Not without a source code patch.
+> Besides, dropping the capability might [need to] require privileges
+> beyond CAP_NET_RAW itself (recall the capability-dropping attack on
+> sendmail from a decade ago).  So does moving from SUID root to
+> cap_net_raw+ep improve security?  Most likely not.  On the contrary, it
+> results in hundreds of lines of ping's code and thousands of lines of
+> library code (DNS resolver) running with elevated privileges, as
+> compared to just a few lines of ping.c, which was the case with simple
+> SUID root.  Granted, those "elevated privileges" are a lot less than
+> root privileges, but they're a lot more than having a single raw socket
+> of a specific type.
+>
+Are you perhaps questioning that the linux capability model, based on POSIX
+1.e, is not fine grained ? Well, perhaps. But it the capability model is
+always in a  DAC framework, and it is possible to augment with a MAC
+framework as selinux, for example. That it is what  it was written about
+this (probably you know already
+http://www.linuxsymposium.org/archives/OLS/Reprints-2008/hallyn-reprint.pdf)
 
-Ok, fair enough.  I thought that might have been the reason, but I was
-unsure why we would drop CVE-2009-3297 altogether, but it makes sense.
 
->This rejection has since been uploaded to the CVE site:
+"
+That being said, privilege is not the only use of the root
+identity. There are many files, such as are to be found
+in /proc/ and /etc/, that are owned by root. Even
+without super-user privilege, a process running in the
+context of an impotent root user, can still do a large
+amount of damage to a system by altering these files.
+Here, DAC and MAC based security will continue to be
+important in securing your Linux system.
+"
+But this not make the capability model without use IF the application are
+not capability aware.
+
+In fact I do not see why if I can not use a MAC mechanism, for various
+reasons, why I don't should at least be able to reduce the privileges of
+applications.Just for a simple example if rsyslog could be use a simple user
++ some capability should be probably sufficient for many as a residue risk :
+but today many distro REQUIRE the MAC framework active because rsyslog run
+as root: sure it is better to have a MAC framework ALSO in place if
+possible. In short every security mesure augment the overall security, the
+famous defense in depth.  If i have a MAC system, for example, should be BAD
+to don't pose any other security mesure in place - as a host based firewall
+or a Web application Firewall, if i am using web application.
+
+
+> - In some cases, the capability sets being granted are (almost)
+> equivalent (or expandable to) full root powers.  This is seen in:
 >
->http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3297
+> http://people.fedoraproject.org/~dwalsh/policycoreutils_setuid.patch<http://people.fedoraproject.org/%7Edwalsh/policycoreutils_setuid.patch>
 >
->Along with the three new CVEs:
+> -%attr(4755,root,root) %{_bindir}/newrole
+> +%attr(0755,root,root) %caps(cap_audit_write,cap_setuid) %{_bindir}/newrole
 >
->CVE-2010-0787 (Samba)
->CVE-2010-0788 (ncpfs)
->CVE-2010-0789 (FUSE)
->
->I try very hard to avoid doing this kind of split (and REJECT) except 
->when it seems like there will be a lot of confusion; I know how much 
->work it is to clean these up in advisories and so on.  I recognize 
->that many people have used CVE-2009-3297 for the Samba problem, but 
->it's been used in DEBIAN:DSA-1989 for FUSE and FEDORA-2010-1145 for 
->ncpfs, for example.  An administrator who thinks that "CVE-2009-3297 
->is fixed" might have solved the ncp issue but still be vulnerable to 
->the Samba issue.
+> Well, not a good example newrole . newrole in selinux target policy is a
+confined (newrole_t) selinux application : i don't can, for example, load a
+kernel module (CAP_SYS_MODULE) for example
+sesearch -A -s newrole_t -c capability
+Found 3 semantic av rules:
+   allow newrole_t newrole_t : capability { dac_override fowner setgid
+setuid audit_write } ;
+   allow newrole_t newrole_t : capability { chown fowner fsetid sys_admin }
+;
+   allow newrole_t newrole_t : capability net_bind_service ;
 
-I agree.  Fair enough.
+OTHO, newrule IS capability aware and drops its capabilities, from a quickly
+code reading, almost.
 
->I had originally asked oss-security for clarification on this, 
->without an answer:
->
->http://www.openwall.com/lists/oss-security/2010/02/04/7
->
->(recognizing that I'm the most guilty party for not answering...) but 
->other situations forced me to clear this out.
+In short over the next few years I think there we will be close to the model
+described here
 
-Fair enough.  We probably should have replied to that as well.  =)
+http://www.friedhoff.org/posixfilecaps.html
 
->>I'm also confused on using a 2010-based name since our bugzilla entry is
->>dated 2009-11-04, and Samba upstream has their reported dated
->>2009-10-28, so these should have received 2009-based names.
->
->I agree - this was an error on my part, so I apologize for the confusion.
+But certainly it will not be easy, require much work. Just for example in
+some distro "prelink" drop linux capability
+https://bugzilla.redhat.com/show_bug.cgi?id=456105 for now.
 
-Ok, no worries.  Certainly wouldn't want you to reject the 2010 names
-for 2009 ones now.  =)
+Best Regards
 
-Thanks for the clarification.
+Elia
 
--- 
-Vincent Danen / Red Hat Security Response Team 
