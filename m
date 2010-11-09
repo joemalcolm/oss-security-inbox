@@ -1,133 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/09/3
-Message-ID: <op.u7upztx11e62zd@merlin.emma.line.org>
-Date: Tue, 09 Feb 2010 09:32:07 +0100
-From: "Matthias Andree" <matthias.andree@....de>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Cc: "cve@...re.org" <cve@...re.org>
-Subject: Fwd: CVE request - fetchmail 6.3.11-.13 heap overflow in verbose X.509 cert display (only printable chars)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/09/5
+Message-ID: <AANLkTimGTii32wHjpB=Md=3asfuqtM6yiQzy-=MxkKyR@mail.gmail.com>
+Date: Tue, 9 Nov 2010 07:14:58 -0500
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: Petr Matousek <pmatouse@...hat.com>
+Cc: coley@...us.mitre.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: kernel: gdth: integer overflow in ioc_general()
 Content-Type: text/plain; charset=utf-8
 
-PING?
+>
+> #define SIZE 0x10000029aUL
+>
+> ...
+>    volatile unsigned long t = SIZE;  // volatile so that it does not get optimised (error)
+>
+>    printk("nada: %lx\n", current_thread_info()->addr_limit.seg);
+>    printk("nada2: %lx\n", access_ok(VERIFY_READ, 0, t));
+>    printk("nada3: %lx\n", t);
+>    printk("nada4: %lx\n", t > UINT_MAX);
+> ...
+>
+> nada: ffff810000000000
+> nada2: 1
+> nada3: 10000029a
+> nada4: 1
+>
 
-------- Weitergeleitete Nachricht -------
-Von: "Matthias Andree" <matthias.andree@....de>
-An: oss-security@...ts.openwall.com
-Kopie:
-Betreff: [oss-security] CVE request - fetchmail 6.3.11-.13 heap overflow  
-in verbose X.509 cert display (only printable chars)
-Datum: Thu, 04 Feb 2010 10:59:32 +0100
-
-Please assign a CVE for the issue described below:
-
----------------------------------------------------------------------
-
-fetchmail-SA-2010-01: Heap overrun in verbose SSL cert' info display.
-
-Topics:		Heap overrun in verbose SSL certificate information display.
-
-Author:		Matthias Andree
-Version:	1.0
-Announced:
-Type:		malloc() Buffer overrun with printable characters
-Impact:		Code injection (difficult).
-Danger:		low
-CVSSv2 vectors:
-
-CVE Name:
-URL:		http://www.fetchmail.info/fetchmail-SA-2010-01.txt
-Project URL:	http://www.fetchmail.info/
-
-Affects:	fetchmail releases 6.3.11, 6.3.12, and 6.3.13
-
-Not affected:	fetchmail release 6.3.14 and newer
-
-Corrected:	2010-02-04 fetchmail SVN (r5467)
-
-...
-
-1. Background
-=============
-
-fetchmail is a software package to retrieve mail from remote POP2, POP3,
-IMAP, ETRN or ODMR servers and forward it to local SMTP, LMTP servers or
-message delivery agents. It supports SSL and TLS security layers through
-the OpenSSL library, if enabled at compile time and if also enabled at
-run time.
-
-
-2. Problem description and Impact
-=================================
-
-In verbose mode, fetchmail prints X.509 certificate subject and issuer
-information to the user, and counts and allocates a malloc() buffer for
-that purpose.
-
-If the material to be displayed contains characters with high bit set
-and the platform treats the "char" type as signed, this can cause a heap
-buffer overrun because non-printing characters are escaped as
-\xFF..FFnn, where nn is 80..FF in hex.
-
-This might be exploitable to inject code if
-- fetchmail is run in verbose mode
-AND
-- the host running fetchmail considers char unsigned
-AND
-- the server uses malicious certificates with non-printing characters
-    that have the high bit set
-AND
-- these certificates manage to inject shell-code that consists purely of
-    printable characters.
-
-It is believed to be difficult to achieve all this.
-
-
-3. Solution
-===========
-
-There are two alternatives, either of them by itself is sufficient:
-
-a. Apply the patch found in section B of this announcement to
-     fetchmail 6.3.13, recompile and reinstall it.
-
-b. Install fetchmail 6.3.14 or newer after it will have become available.
-     The fetchmail source code is always available from
-     <http://developer.berlios.de/project/showfiles.php?group_id=1824>.
-
-
-4. Workaround
-=============
-
-Run fetchmail without and verbose options.
-
-...
-
-B. Patch to remedy the problem
-==============================
-
-Note that when taking this from a GnuPG clearsigned file, the lines
-starting with a "-" character are prefixed by another "- " (dash +
-blank) combination. Either feed this file through GnuPG to strip them,
-or strip them manually. You may want to use the "-p1" flag to patch.
-
-Whitespace differences can usually be ignored by invoking "patch -l",
-so try this if the patch does not apply.
-
---- a/sdump.c
-+++ b/sdump.c
-@@ -36,7 +36,7 @@ char *sdump(const char *in, size_t len)
-   	if (isprint((unsigned char)in[i])) {
-   	    *(oi++) = in[i];
-   	} else {
--	    oi += sprintf(oi, "\\x%02X", in[i]);
-+	    oi += sprintf(oi, "\\x%02X", (unsigned char)in[i]);
-   	}
-       }
-       *oi = '\0';
-
-END OF fetchmail-SA-2010-01.txt
-
-
--- 
-Matthias Andree
-Download attachment "attachment48.tmp" of type "application/octet-stream" (205 bytes)
+Huh.  Learn something new every day, I suppose.  I wonder if this is
+kernel version or architecture dependent?  In either case, ignore my
+previous statement, unless someone else sees anything fishy going on.
