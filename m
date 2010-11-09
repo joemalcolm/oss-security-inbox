@@ -1,36 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/30/21
-Message-ID: <AANLkTin-M5vuVgYz6_JXDjJUA5gqXn5VXeci8WzfD3il@mail.gmail.com>
-Date: Wed, 30 Jun 2010 21:33:45 +0200
-From: Pierre Joye <pierre.php@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- PHP strrchr() Interruption  Information Leak Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/09/3
+Message-ID: <AANLkTin2Wh8c6yJqvAk15UJnyq2eWnnT9Ho6J6N9pPFQ@mail.gmail.com>
+Date: Mon, 8 Nov 2010 19:47:29 -0500
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: oss-security@...ts.openwall.com, Petr Matousek <pmatouse@...hat.com>
+Cc: coley@...us.mitre.org
+Subject: Re: CVE request: kernel: gdth: integer overflow in ioc_general()
 Content-Type: text/plain; charset=utf-8
 
-hi,
+This is not actually a security issue.  See the code:
 
-On Wed, Jun 30, 2010 at 9:27 PM, Josh Bressers <bressers@...hat.com> wrote:
->
-> ----- "Péter Veres" <moltesalt@...il.com> wrote:
->
->> Hi Steve,
->>
->> PHP’s strrchr() function can be interrupted and used for information
->> leakage due to call time pass by reference.
->>
->> Could you allocate a CVE id for this issue?
->>
->
-> Do you have some sort of reference for this? I'm not finding anything in the
-> usual places.
->
-> I'll assign an ID once I have more information.
+...
+if (!(buf = gdth_ioctl_alloc(ha, gen.data_len + gen.sense_len,
+                                     FALSE, &paddr)))
+            return -EFAULT;
+if (copy_from_user(buf, arg + sizeof(gdth_ioctl_general),
+                           gen.data_len + gen.sense_len)) {
+...
 
-Correct me if I'm wrong but it looks to me that it is related to the
-MOPS 18-40, which are actually the same issue.
+If gen.data_len + gen.sense_len > UINT_MAX, then a small buffer will
+be allocated.  But then the copy_from_user() will always fault before
+copying any data over because the access_ok() check will fail on sizes
+> UINT_MAX.  It's definitely a bug, but not a vulnerability.
 
-Cheers,
--- 
-Pierre
 
-@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+On Mon, Nov 8, 2010 at 5:02 PM, Petr Matousek <pmatouse@...hat.com> wrote:
+> "gdth_ioctl_alloc() takes the size variable as an int.
+> copy_from_user() takes the size variable as an unsigned long.
+> gen.data_len and gen.sense_len are unsigned longs.
+> On x86_64 longs are 64 bit and ints are 32 bit.
+>
+> We could pass in a very large number and the allocation would truncate
+> the size to 32 bits and allocate a small buffer.  Then when we do the
+> copy_from_user(), it would result in a memory corruption."
+>
+> Upstream commit:
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=f63ae56e4e97fb12053590e41a4fa59e7daa74a4
+>
+> Credit: James E.J. Bottomley
+>
+> Reference:
+> http://ns3.spinics.net/lists/linux-scsi/msg47361.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=651147
+>
+> Thanks,
+> --
+> Petr Matousek / Red Hat Security Response Team
+>
