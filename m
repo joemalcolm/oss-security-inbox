@@ -1,36 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/20/6
-Message-ID: <4B56C674.6050209@kernel.sg>
-Date: Wed, 20 Jan 2010 17:01:40 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/09/6
+Message-ID: <4CD97733.9030001@iuculano.it>
+Date: Tue, 09 Nov 2010 17:30:43 +0100
+From: Giuseppe Iuculano <giuseppe@...ulano.it>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE-2009-4272 kernel: emergency route cache flushing leads to node deadlock
+Subject: Re: libxml2 xpath
 Content-Type: text/plain; charset=utf-8
 
-On 01/20/2010 10:37 AM, Eugene Teo wrote:
-> Reported by the Parallels Virtuozzo Containers team.
->
-> If an attacker was able to cause a large enough number of collisions in
-> the routing hash table (via specially-crafted packets) for the emergency
-> route flush to trigger, a deadlock could occur, or if the kernel routing
-> cache was disabled, an uninitialized pointer would be left behind after
-> a route lookup, leading to a NULL pointer dereference. Both caused by
-> the same issue.
->
-> Introduced via:
-> c6153b5b77650879d78dec76414213c76dd8d574 v2.6.27-rc4~39^2~41
-> 1080d709fb9d8cd4392f93476ee46a9d6ea05a5b v2.6.29-rc1~581^2~973
->
-> Patches:
-> https://bugzilla.redhat.com/show_bug.cgi?id=545411#c6
+On 11/02/2010 03:50 PM, Sebastian Krahmer wrote:
+> was there already a CVE assigned for
+> 
+> http://git.gnome.org/browse/libxml2/commit/?id=91d19754d46acd4a639a8b9e31f50f31c78f8c9c
+> 
 
-^^
-http://git.kernel.org/linus/73e42897
-http://git.kernel.org/linus/b6280b47
+Yes, CVE-2010-4008
 
-> https://bugzilla.redhat.com/show_bug.cgi?id=545411#c15
+Cheers,
+GIuseppe.
 
-I have also fixed the permissions of the file attachments.
 
-Thanks, Eugene
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
