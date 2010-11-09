@@ -1,41 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/03/1
-Message-ID: <173967552.1084241275589839498.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 3 Jun 2010 14:30:39 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: prewikka permission bug
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/09/4
+Message-ID: <1930332048.1695821289294921689.JavaMail.root@zmail05.collab.prod.int.phx2.redhat.com>
+Date: Tue, 9 Nov 2010 04:28:41 -0500 (EST)
+From: Petr Matousek <pmatouse@...hat.com>
+To: Dan Rosenberg <dan.j.rosenberg@...il.com>
+Cc: coley@...us.mitre.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: kernel: gdth: integer overflow in ioc_general()
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-2058
+----- "Dan Rosenberg" <dan.j.rosenberg@...il.com> wrote:
 
-Thanks.
+> This is not actually a security issue.  See the code:
+> 
+> ...
+> if (!(buf = gdth_ioctl_alloc(ha, gen.data_len + gen.sense_len,
+>                                      FALSE, &paddr)))
+>             return -EFAULT;
+> if (copy_from_user(buf, arg + sizeof(gdth_ioctl_general),
+>                            gen.data_len + gen.sense_len)) {
+> ...
+> 
+> If gen.data_len + gen.sense_len > UINT_MAX, then a small buffer will
+> be allocated.  But then the copy_from_user() will always fault before
+> copying any data over because the access_ok() check will fail on
+> sizes
+> > UINT_MAX.  It's definitely a bug, but not a vulnerability.
 
--- 
-    JB
+#define SIZE 0x10000029aUL
 
+...
+    volatile unsigned long t = SIZE;  // volatile so that it does not get optimised (error)
 
------ "Stefan Behte" <craig@...too.org> wrote:
+    printk("nada: %lx\n", current_thread_info()->addr_limit.seg);
+    printk("nada2: %lx\n", access_ok(VERIFY_READ, 0, t));
+    printk("nada3: %lx\n", t);
+    printk("nada4: %lx\n", t > UINT_MAX);
+...
 
-> Hi,
+nada: ffff810000000000
+nada2: 1
+nada3: 10000029a
+nada4: 1
+
 > 
-> I couldn't find a CVE for this:
-> 
-> "The permissions on the prewikka.conf file are world readable and
-> contain the sql database password used by prewikka. This update makes
-> it
-> readable just by the apache group."
-> 
-> https://dev.prelude-technologies.com/projects/prewikka/repository/revisions/17e38c310410be1b7811152172cda4438936063d
-> 
-> Redhat and Gentoo were affected, I'm not sure about others.
-> 
-> https://www.redhat.com/archives/fedora-package-announce/2009-April/msg00771.html
-> 
-> https://bugs.gentoo.org/show_bug.cgi?id=270056
-> 
-> 
-> Best regards,
-> 
-> Stefan Behte
+> On Mon, Nov 8, 2010 at 5:02 PM, Petr Matousek <pmatouse@...hat.com>
+> wrote:
+> > "gdth_ioctl_alloc() takes the size variable as an int.
+> > copy_from_user() takes the size variable as an unsigned long.
+> > gen.data_len and gen.sense_len are unsigned longs.
+> > On x86_64 longs are 64 bit and ints are 32 bit.
+> >
+> > We could pass in a very large number and the allocation would
+> truncate
+> > the size to 32 bits and allocate a small buffer.  Then when we do
+> the
+> > copy_from_user(), it would result in a memory corruption."
+> >
+> > Upstream commit:
+> >
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=f63ae56e4e97fb12053590e41a4fa59e7daa74a4
+> >
+> > Credit: James E.J. Bottomley
+> >
+> > Reference:
+> > http://ns3.spinics.net/lists/linux-scsi/msg47361.html
+> > https://bugzilla.redhat.com/show_bug.cgi?id=651147
+> >
+> > Thanks,
+> > --
+> > Petr Matousek / Red Hat Security Response Team
+> >
