@@ -1,23 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/28/2
-Message-ID: <AANLkTi=Zx5+m7TJ8urf0JNg9=X9LcYsL-STi7_9xZVzG@mail.gmail.com>
-Date: Wed, 28 Jul 2010 11:02:03 -0400
-From: Anthon Pang <anthon.pang@...il.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request: Piwik < 0.6.4 Arbitrary file inclusion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/10/8
+Message-ID: <20101110180128.GQ5876@outflux.net>
+Date: Wed, 10 Nov 2010 10:01:28 -0800
+From: Kees Cook <kees@...ntu.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: filesystem capabilities
 Content-Type: text/plain; charset=utf-8
 
-An arbitrary file inclusion vulnerability is fixed by the latest Piwik
-0.6.4 release.  The advisory is (or will be) published here:
-http://piwik.org/blog/2010/07/piwik-0-6-4-security-advisory/
+On Mon, Nov 08, 2010 at 12:37:35PM +0100, Sebastian Krahmer wrote:
+> To me it looks like an error condition
+> where you should die() if you see +s root AND fscaps applied.
 
-Description:
+Right now the kernel will only apply the caps and will ignore the setuid
+bit, actually, if both are seen:
 
-Piwik versions 0.6 through 0.6.3 are vulnerable to arbitrary, remote
-file inclusion using a directory traversal pattern in a crafted
-request for a data renderer.
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=b5f22a59c0356655a501190959db9f7f5dd07e3f
 
-This vulnerability is rated critical, and Piwik users are strongly
-encouraged to update to the latest version of Piwik.
+-Kees
 
-The Piwik project and community thanks Enrico Razza for reporting the issue.
+-- 
+Kees Cook
+Ubuntu Security Team
