@@ -1,83 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/24/6
-Message-ID: <AANLkTi=2bLRUv_pueoMNArTrbODZgEzHH=jMtaOB2h93@mail.gmail.com>
-Date: Wed, 24 Nov 2010 07:43:12 -0500
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: Petr Matousek <pmatouse@...hat.com>, coley@...us.mitre.org
-Subject: Re: CVE request: kernel: L2TP send buffer allocation size overflows
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/10/15
+Message-ID: <20101110194014.GV5876@outflux.net>
+Date: Wed, 10 Nov 2010 11:40:14 -0800
+From: Kees Cook <kees@...ntu.com>
+To: Steve Grubb <sgrubb@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: filesystem capabilities
 Content-Type: text/plain; charset=utf-8
 
-There are not overflows in every send/recv call.  The fix that
-addresses these issues in l2tp also addresses any other possible
-examples of this problem in other protocols, including CVE-2010-3859
-(heap overflow in TIPC).
+On Wed, Nov 10, 2010 at 02:18:33PM -0500, Steve Grubb wrote:
+> Not that I know of. The library cannot know what the application's threat model is. 
+> The library can make it simple to access the correct things. The following should be 
+> the model that I think solves the problem for either setuid or fs based capabilities. 
+> Assuming you needed CAP_CHOWN:
+> 
+> 		capng_get_caps_process();
+>                 switch (capng_have_capabilities(CAPNG_SELECT_CAPS)) {
+> 			case CAPNG_FULL:
+> 				capng_clear(CAPNG_SELECT_BOTH);
+> 				capng_update(CAPNG_ADD, CAPNG_EFFECTIVE|CAPNG_PERMITTED,
+> 						CAP_CHOWN);
+> 				if (capng_apply(CAPNG_SELECT_BOTH))
+> 					exit(0);
+> 				break;
+> 			case CAPNG_PARTIAL:
+> 				// Paranoid double check that we have what we expect
+> 				if (capng_have_capability(CAPNG_EFFECTIVE, CAP_CHOWN)==0)
+> 					exit(0);
+> 				// Now to make sure that is ALL that we have...let's drop it and
+> 				// see if we are empty
+> 				capng_update(CAPNG_DROP, CAPNG_EFFECTIVE|CAPNG_PERMITTED,
+> 						CAP_CHOWN);
+> 				if (capng_have_capabilities(CAPNG_SELECT_CAPS) != CAPNG_NONE)
+> 					exit(0);
+> 				break;
+> 			case CAPNG_FAIL:
+> 			case CAPNG_NONE:
+> 				exit(0);
+> 		}
+> 		// At this point both setuid and fs based caps should have the same thing
 
--Dan
+What about dropping setuid once it has the needed caps, etc? It seems like
+it'd be nice to have something like:
 
-On Wed, Nov 24, 2010 at 7:24 AM, Josh Bressers <bressers@...hat.com> wrote:
-> I don't understand this comment. Is he saying every send/recv in the kernel
-> suffers from this? The below CVE id really only applies to the l2tp
-> overflows.
->
-> Thanks.
->
-> --
->     JB
->
-> ----- "Thomas Biege" <thomas@...e.de> wrote:
->
->> A comment from our kernel maintainer Jeff:
->> "That applies to overflows for any send/recv not just the l2tp ones. I
->> can use
->> that CVE if there isn't another one, though."
->>
->> Is this known? Should we use only on CVE-ID here?
->>
->>
->> Bye
->> Thomas
->>
->>
->> Am Mittwoch 10 November 2010 20:44:11 schrieb Josh Bressers:
->> > Please use CVE-2010-4160.
->> >
->> > Thanks.
->> >
->> > > "Both PPPoL2TP (in net/l2tp/l2tp_ppp.c, pppol2tp_sendmsg()) and
->> > > IPoL2TP (in
->> > > net/l2tp/l2tp_ip.c, l2tp_ip_sendmsg()) make calls to
->> sock_wmalloc()
->> > > that
->> > > perform arithmetic on the size argument without any maximum bound.
->> As
->> > > a result,
->> > > by issuing sendto() calls with very large sizes, this allocation
->> size
->> > > will wrap
->> > > and result in a small buffer being allocated, leading to ugliness
->> > > immediately
->> > > after (probably kernel panics due to bad sk_buff tail position,
->> but
->> > > possibly
->> > > kernel heap corruption)."
->> > >
->> > > Credit: Dan Rosenberg
->> > >
->> > > Reference:
->> > > http://www.spinics.net/lists/netdev/msg145673.html
->> > > https://bugzilla.redhat.com/show_bug.cgi?id=651892
->> > >
->> > > Thanks,
->> > > --
->> > > Petr Matousek / Red Hat Security Response Team
->> >
->>
->> --
->>  Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support &
->> Auditing
->>  SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
->> --
->>   Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
->>                             -- Marie von Ebner-Eschenbach
->
+validate_I_have_only_these_caps(CAP_WHATEVER);
+...do stuff...
+drop_all_my_privs();
+
+and those two routines could be in the cap library, and it would handle
+both fscaps and setuid style of priv escalation.
+
+> You can lead a horse to water, but you cannot make them drink.
+> http://lists.gnu.org/archive/html/bug-tar/2006-08/msg00004.html
+> 
+> We did our part. Its up to them to accept the patch or keep talking about it. Reading 
+> the thread, it sounded like they were going to take it. No idea why they decided 
+> against it unless it was seen as a Linux only patch. You might poke them and ask why 
+> in the last 4 years they never took the patch. Of course since then we've maintained 
+> the patch against current tar releases, so they would want a newer patch.
+
+Well, I have to disagree here: the job isn't done until it's upstream
+or it has been categorically rejected. At the time they had identified
+real crashes in the code, and were working on it. All this said, anyone can
+drive it, which is why I added the TODO item to Ubuntu's list of what was
+needed for fscaps, and it would be great to try to get it in again. Since
+the fscap push is higher on Fedora's list than Ubuntu's, would it be
+possible to try to push that patch upstream again?
+
+Debian/Ubuntu still has to write code for handling it in dpkg directly, so
+we'd still have work to do even after the tar fixes were upstream.
+
+Has there been any discussion of making rsync, cp, and cpio default to
+copying xattrs and acls too? I know at least with rsync they are explicitly
+not included in the "-a" option. :(
+
+-Kees
+
+-- 
+Kees Cook
+Ubuntu Security Team
