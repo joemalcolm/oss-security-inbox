@@ -1,27 +1,114 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/13/1
-Message-ID: <AANLkTimyhhbPNh4g3OTaUaJfYcobc-Sd599enji5NVoN@mail.gmail.com>
-Date: Tue, 13 Jul 2010 21:00:12 +0200
-From: Pierre Joye <pierre.php@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request, php var_export
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/10/17
+Message-Id: <201011101455.47455.sgrubb@redhat.com>
+Date: Wed, 10 Nov 2010 14:55:47 -0500
+From: Steve Grubb <sgrubb@...hat.com>
+To: Kees Cook <kees@...ntu.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: filesystem capabilities
 Content-Type: text/plain; charset=utf-8
 
-hi,
+On Wednesday, November 10, 2010 02:40:14 pm Kees Cook wrote:
+> On Wed, Nov 10, 2010 at 02:18:33PM -0500, Steve Grubb wrote:
+> > Not that I know of. The library cannot know what the application's threat
+> > model is. The library can make it simple to access the correct things.
+> > The following should be the model that I think solves the problem for
+> > either setuid or fs based capabilities.
+> > 
+> > Assuming you needed CAP_CHOWN:
+> > 		capng_get_caps_process();
+> > 		
+> >                 switch (capng_have_capabilities(CAPNG_SELECT_CAPS)) {
+> > 			
+> > 			case CAPNG_FULL:
+> > 				capng_clear(CAPNG_SELECT_BOTH);
+> > 				capng_update(CAPNG_ADD, CAPNG_EFFECTIVE|CAPNG_PERMITTED,
+> > 				
+> > 						CAP_CHOWN);
+> > 				
+> > 				if (capng_apply(CAPNG_SELECT_BOTH))
+> > 				
+> > 					exit(0);
+> > 				
+> > 				break;
+> > 			
+> > 			case CAPNG_PARTIAL:
+> > 				// Paranoid double check that we have what we expect
+> > 				if (capng_have_capability(CAPNG_EFFECTIVE, CAP_CHOWN)==0)
+> > 				
+> > 					exit(0);
+> > 				
+> > 				// Now to make sure that is ALL that we have...let's drop it and
+> > 				// see if we are empty
+> > 				capng_update(CAPNG_DROP, CAPNG_EFFECTIVE|CAPNG_PERMITTED,
+> > 				
+> > 						CAP_CHOWN);
+> > 				
+> > 				if (capng_have_capabilities(CAPNG_SELECT_CAPS) != CAPNG_NONE)
+> > 				
+> > 					exit(0);
+> > 				
+> > 				break;
+> > 			
+> > 			case CAPNG_FAIL:
+> > 			
+> > 			case CAPNG_NONE:
+> > 				exit(0);
+> > 		
+> > 		}
+> > 		// At this point both setuid and fs based caps should have the same
+> > 		thing
+> 
+> What about dropping setuid once it has the needed caps, etc? It seems like
+> it'd be nice to have something like:
+> 
+> validate_I_have_only_these_caps(CAP_WHATEVER);
 
-I would like to request a new # for a flaw in php's var_export. The
-reason is that a fatal error occurs due to recursion, memory limit or
-execution time var_export bails out. The buffer is never cleared and
-it flushes to the user. It's not affected by display_errors() since
-its considered part of the output.
+Validating the caps is what I did in CAPNG_PARTIAL. But for setuid root apps, you 
+would have all capabilites. And that is why I have the switch statement above. In that 
+case, you would simply drop to the capabilities you needed.
 
-Fix already commited to trunk, 5.2 and 5.3 and will be in the next PHP
-releases (5.2.14 and 5.3.3):
 
-http://svn.php.net/viewvc?view=revision&revision=301143
+> ...do stuff...
+> drop_all_my_privs();
 
-Cheers,
--- 
-Pierre
+drop all privs is a 2 liner:
+capng_clear(CAPNG_SELECT_CAPS);
+if (capng_apply(CAPNG_SELECT_CAPS))
+	exit(0);
 
-@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+Not sure anything that small needs a library function.
+
+
+> and those two routines could be in the cap library, and it would handle
+> both fscaps and setuid style of priv escalation.
+>
+> > You can lead a horse to water, but you cannot make them drink.
+> > http://lists.gnu.org/archive/html/bug-tar/2006-08/msg00004.html
+> > 
+> > We did our part. Its up to them to accept the patch or keep talking about
+> > it. Reading the thread, it sounded like they were going to take it. No
+> > idea why they decided against it unless it was seen as a Linux only
+> > patch. You might poke them and ask why in the last 4 years they never
+> > took the patch. Of course since then we've maintained the patch against
+> > current tar releases, so they would want a newer patch.
+> 
+> Well, I have to disagree here: the job isn't done until it's upstream
+> or it has been categorically rejected. At the time they had identified
+> real crashes in the code, and were working on it. All this said, anyone can
+> drive it, which is why I added the TODO item to Ubuntu's list of what was
+> needed for fscaps, and it would be great to try to get it in again. Since
+> the fscap push is higher on Fedora's list than Ubuntu's, would it be
+> possible to try to push that patch upstream again?
+
+I asked the maintainer if he's had any discussion lately.
+
+
+> Has there been any discussion of making rsync, cp, and cpio default to
+> copying xattrs and acls too? I know at least with rsync they are explicitly
+> not included in the "-a" option. :(
+
+My rsync man page shows a -X option and cp has a --preserve=xattr. cpio doesn't but no 
+one seems to have been missing that.
+
+-Steve
