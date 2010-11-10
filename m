@@ -1,24 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/05/5
-Message-ID: <4BBA5A3C.80003@iuculano.it>
-Date: Mon, 05 Apr 2010 23:46:36 +0200
-From: Giuseppe Iuculano <giuseppe@...ulano.it>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/10/2
+Message-ID: <4CDA3F5D.8070101@redhat.com>
+Date: Wed, 10 Nov 2010 14:44:45 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Josh Bressers <bressers@...hat.com>
-Subject: Re: Debian Moin Question
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE Request: kernel: socket filters infoleak
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+ From Dan Rosenberg, "The "mem" array used as scratch space for socket 
+filters is not initialized, allowing unprivileged users to leak kernel 
+stack bytes."
 
-Il 05/04/2010 20:25, Josh Bressers ha scritto:
-> The only data I can find on this is from the Debian DSA, and the
-> information is quite slim. Can someone shed more light on this flaw?
+proposed fix: http://www.spinics.net/lists/netdev/msg146361.html
 
-Upstream patch:
-http://hg.moinmo.in/moin/1.7/rev/a952d07dea69
+reference: https://bugzilla.redhat.com/show_bug.cgi?id=651698
 
-Cheers,
-Giuseppe.
+For Dave I guess: 
+http://lists.grok.org.uk/pipermail/full-disclosure/2010-November/077321.html
 
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+Eugene
+-- 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
