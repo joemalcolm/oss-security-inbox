@@ -1,57 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/23/2
-Message-Id: <20100423124720.LFAVPRSQVTTAIS@hackinthebox.org>
-Date: Fri, 23 Apr 2010 12:47:20 +0800
-From: Hafez Kamal <aphesz@...kinthebox.org>
-To: <oss-security@...ts.openwall.com>
-Subject: [HITB-Announce] HITB eZine Issue 002 out now!
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/10/18
+Message-ID: <AANLkTim_qPhW5Sfw7oDWET6C=gArWcZWMmqRFO=yTGOg@mail.gmail.com>
+Date: Wed, 10 Nov 2010 18:09:39 -0500
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: kernel: Multiple DoS issues in block layer
 Content-Type: text/plain; charset=utf-8
 
-The second quarterly HITB eZine (issue 002) has been released! Grab your
-copies from here:
+A series of fixes were committed to address several issues I reported
+in the block layer.  These issues require the ability to send device
+ioctls to a SCSI device, which is typically possible for users with
+group 'cdrom' or similar.
 
-https://www.hackinthebox.org/modules.php?op=modload&name=News&file=article&sid=35995
+1. Due to integer underflow and overflow issues when determining the
+number of pages required for maliciously crafted I/O requests, a local
+user could send a device ioctl that results in the sequential
+allocation of a very large number of pages, causing the OOM killer to
+be invoked and crashing the system:
 
-===
+http://git.kernel.org/?p=linux/kernel/git/axboe/linux-2.6-block.git;a=commit;h=cb4644cac4a2797afc847e6c92736664d4b0ea34
 
-3 months ago, our newly 'reborn' ezine was a completely new experience
-to our small team and we didn't expect it to have a lot of followers
-considering its absence for many years. But to our surprise, we received
-over 20K downloads just weeks after its re-launch!
-Despite all this, there are still many things for us to work on and
-improve upon. Our team is still working hard to make sure our ezine will
-not only become a resource our readers love to read, but also something
-they would like to keep. Our promise is that every issue will have
-something unique to offer. You can be a CSO or a hardcore security geek,
-we're confident our content offers something for everyone.
+2. By submitting certain I/O requests with 0 length, a local user
+could cause a kernel panic:
 
-For the second issue, all the articles are now in high resolution. We
-hope by doing this it will increase the quality and and clarity of the
-materials. In addition, the articles are now organized into their
-respective sections and the code listings in them have been improved and
-are now easier to read. Also, a new "Interviews" section has been added
-and for this issue, we have interviewed two well known experts from
-France for their thoughts on the state of computer security.
-
-Finally, we are always looking for feedback from our readers. It's very
-important for us to know how we can improve in terms of content and
-design. Please feel free to drop us an email if you have some
-constructive feedback or ideas that will help us to raise the bar even
-higher.
-
-See you in the summer (Issue 003 will be released at HITBSecConf2010 -
-Amsterdam)
+http://git.kernel.org/?p=linux/kernel/git/axboe/linux-2.6-block.git;a=commit;h=9284bcf4e335e5f18a8bc7b26461c33ab60d0689
 
 
----
-Hafez Kamal
-HITB Crew
-Hack in The Box (M) Sdn. Bhd.
-Suite 26.3, Level 26, Menara IMC,
-No. 8 Jalan Sultan Ismail,
-50250 Kuala Lumpur,
-Malaysia
 
-Tel: +603-20394724
-Fax: +603-20318359
+In addition to the fixes for these identified issues, there were also
+patches committed for improved sanity checking on I/O requests, and
+checks to prevent integer overflows in heap allocation sizes.  In my
+testing, I wasn't able to exploit these issues, so just FYI:
 
+http://git.kernel.org/?p=linux/kernel/git/axboe/linux-2.6-block.git;a=commit;h=9f864c80913467312c7b8690e41fb5ebd1b50e92
+http://git.kernel.org/?p=linux/kernel/git/axboe/linux-2.6-block.git;a=commit;h=f3f63c1c28bc861a931fac283b5bc3585efb8967
+
+-Dan
