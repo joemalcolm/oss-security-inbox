@@ -1,34 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/15/5
-Message-ID: <1306975538.1019611289843415282.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 15 Nov 2010 12:50:15 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/10/5
+Message-ID: <525257199.1863781289402866690.JavaMail.root@zmail05.collab.prod.int.phx2.redhat.com>
+Date: Wed, 10 Nov 2010 10:27:46 -0500 (EST)
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: perf bug
+Cc: coley@...us.mitre.org
+Subject: CVE request: kernel: L2TP send buffer allocation size overflows
 Content-Type: text/plain; charset=utf-8
 
------ "Eugene Teo" <eugene@...hat.com> wrote:
+"Both PPPoL2TP (in net/l2tp/l2tp_ppp.c, pppol2tp_sendmsg()) and IPoL2TP (in
+net/l2tp/l2tp_ip.c, l2tp_ip_sendmsg()) make calls to sock_wmalloc() that
+perform arithmetic on the size argument without any maximum bound. As a result,
+by issuing sendto() calls with very large sizes, this allocation size will wrap
+and result in a small buffer being allocated, leading to ugliness immediately
+after (probably kernel panics due to bad sk_buff tail position, but possibly
+kernel heap corruption)."
 
-> Upstream commit dab5855 ("perf_counter: Add mmap event hooks to 
-> mprotect()") is fundamentally wrong as mprotect_fixup() can free 'vma'
-> 
-> due to merging. Fix the problem by moving perf_event_mmap() hook to
-> mprotect_fixup(). In certain scenario, a local, unprivileged user could
-> use this flaw to trigger a denial of service.
-> 
-> Upstream commit:
-> http://git.kernel.org/linus/63bfd7384b119409685a17d5c58f0b56e5dc03da
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=651671
-> 
-> PS: I thought I requested a CVE name for this already, but it turns out I
-> did not.
-> 
+Credit: Dan Rosenberg
 
-Please use CVE-2010-4169.
+Reference:
+http://www.spinics.net/lists/netdev/msg145673.html
+https://bugzilla.redhat.com/show_bug.cgi?id=651892
 
-Thanks.
-
--- 
-    JB
+Thanks,
+--
+Petr Matousek / Red Hat Security Response Team
