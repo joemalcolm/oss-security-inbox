@@ -1,25 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/25/9
-Message-ID: <AANLkTimPpDBv8VpDJuJNbOAui1ENdTegicoXLMohwW-1@mail.gmail.com>
-Date: Wed, 25 Aug 2010 23:32:33 +0200
-From: Geoffroy Couprie <geal@...eolan.org>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE request: VLC media player - DLL preloading vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/10/1
+Message-ID: <4CDA0CC4.4000207@redhat.com>
+Date: Wed, 10 Nov 2010 11:08:52 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE-2010-3086 kernel panic via futex
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Discovered by Tavis Ormandy, the exception fixup code for the 
+__futex_atomic_op1, __futex_atomic_op2, and 
+futex_atomic_cmpxchg-_inatomic() macros replaced the LOCK prefix with a 
+NOP instruction. This can cause the exceptions to not match the 
+exception table fault fixup. A local, unprivileged user could use this 
+flaw to cause a denial of service. This is assigned with CVE-2010-3086.
 
-We fixed the DLL preloading vulnerability in VLC media player with this commit:
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2010-3086
+http://git.kernel.org/linus/9d55b9923a1b7ea8193b8875c57ec940dc2ff027
 
-http://git.videolan.org/?p=vlc/vlc-1.1.git;a=blobdiff;f=bin/winvlc.c;h=ac9b97ca9f5f9ba001f13bf61eb5127a1c1dbcbf;hp=2d09cba320e3b0def7069ce1ebab25d1340161c5;hb=43a31df56c37bd62c691cdbe3c1f11babd164b56;hpb=2d366da738b19f8d761d7084746c6db6f52808c6
-
-VLC was exploitable by loading wintab32.dll, a component request by
-Qt, as shown in http://www.exploit-db.com/exploits/14750/
-There's another possibility with DMO.
-
-Will there be a CVE ID by vulnerable application (presumably, this
-will need a lot of IDs), or only one for Windows?
-
-Best regards,
-
-Geoffroy Couprie
+Thanks, Eugene
+-- 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
