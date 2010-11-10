@@ -1,27 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/14/3
-Message-Id: <20100914105147.C996.A69D9226@jp.fujitsu.com>
-Date: Tue, 14 Sep 2010 10:52:45 +0900 (JST)
-From: KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>
-To: Linus Torvalds <torvalds@...ux-foundation.org>
-Cc: kosaki.motohiro@...fujitsu.com, Roland McGrath <roland@...hat.com>, Andrew Morton <akpm@...ux-foundation.org>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Kees Cook <kees.cook@...onical.com>, Al Viro <viro@...iv.linux.org.uk>, Oleg Nesterov <oleg@...hat.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, pageexec@...email.hu, "Brad Spengler <spender@...ecurity.net>, Eugene Teo" <eugene@...hat.com>, KAMEZAWA Hiroyuki <kamezawa.hiroyu@...fujitsu.com>
-Subject: Re: [PATCH 2/2] execve: check the VM has enough memory at first
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/10/14
+Message-ID: <1300562402.574981289418000790.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 10 Nov 2010 14:40:00 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: mono loading shared libs from cwd
 Content-Type: text/plain; charset=utf-8
 
-> On Wed, Sep 8, 2010 at 10:04 PM, KOSAKI Motohiro
-> <kosaki.motohiro@...fujitsu.com> wrote:
+Please use CVE-2010-4159
+
+Thanks.
+
+-- 
+    JB
+
+
+----- "Thomas Biege" <thomas@...e.de> wrote:
+
+> missed to add:
+> http://lists.ximian.com/pipermail/mono-patches/2010-October/177900.html
+> 
+> Am Mittwoch 10 November 2010 15:18:26 schrieb Thomas Biege:
+> > Hello folks,
+> > 
+> > from our bugzilla.
+> > 
+> > "
+> > http://www.mono-project.com/DllNotFoundException explains that the
+> mono
+> > runtime
+> > searches the current working directory for DLLs.  This opens a
+> serious
+> > security
+> > hole.  Malicious code can be given the same name as a DLL and left
+> in a
+> > directory the user might visit.  Also, it means that no mono
+> application
+> >  can safely set the current working directory.
+> > 
+> > Microsoft themselves addressed this issue in Windows
+> > http://msdn.microsoft.com/en-us/library/ms682586(v=VS.85).aspx
+> > 
+> > It's a well known "dummies" question for Unix why you must not have
+> "." on
+> > your
+> > path
 > >
-> > After this patch, execve() expand stack at first and receive to
-> > check vm_enough_memory() properly. then, too long argument of
-> > execve() than the machine memory return EFAULT properly.
+> http://www.unix.com/unix-dummies-questions-answers/22806-why-bad-idea-inser
+> > t- dot-path.html
+> > 
+> > Mono is exposing users to these same old hat problems.
+> > 
+> > (As a related problem, many mono programs seem to *assume* that they
+> will
+> >  be run with the CWD set to their installed directory, and break if
+> it
+> >  isn't.) "
+> > 
+> > Filed by Richard Brooksby.
+> > 
 > 
-> This is horrible. We don't want to walk the arguments one more time
-> just for this. Let's just improve the checks that we do as we go
-> along.
-> 
->                             Linus
-
-Okey. I'll consider new way in this night.
-
-
-
+> -- 
+>  Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support &
+> Auditing
+>  SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+> --
+>   Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+>                             -- Marie von Ebner-Eschenbach
