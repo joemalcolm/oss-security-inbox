@@ -1,32 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/06/3
-Message-Id: <201007061133.10450.mweckbecker@suse.de>
-Date: Tue, 6 Jul 2010 11:33:09 +0200
-From: Matthias Weckbecker <mweckbecker@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: Apache Axis2 Session Fixation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/10/12
+Message-ID: <692863064.573491289417485995.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 10 Nov 2010 14:31:25 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com, Petr Matousek <pmatouse@...hat.com>
+Cc: coley@...us.mitre.org
+Subject: Re: CVE request: kernel: gdth: integer overflow in ioc_general()
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Please use CVE-2010-4157
 
-there has recently been a Session Fixation vulnerability reported in Apache 
-Axis2, see:
-
-References:
-https://issues.apache.org/jira/browse/AXIS2-4739
-http://www.securityfocus.com/archive/1/511955/30/30/threaded
-
-There is already CVE-2010-2103 assigned for the Cross-Site Scripting mentioned 
-in the advisory above. However, there does not seem to be a CVE for the 
-Session Fixation flaw, so could you possibly assign one for it too?
-
-Thanks!
-
-ciao,
-Matthias
+Thanks.
 
 -- 
-Matthias Weckbecker, SUSE Security Team
-SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg   
-Tel: +49-911-74053-0;  http://www.opensuse.org/   
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+    JB
+
+
+----- "Petr Matousek" <pmatouse@...hat.com> wrote:
+
+> "gdth_ioctl_alloc() takes the size variable as an int.
+> copy_from_user() takes the size variable as an unsigned long.
+> gen.data_len and gen.sense_len are unsigned longs.
+> On x86_64 longs are 64 bit and ints are 32 bit.
+> 
+> We could pass in a very large number and the allocation would
+> truncate
+> the size to 32 bits and allocate a small buffer.  Then when we do the
+> copy_from_user(), it would result in a memory corruption."
+> 
+> Upstream commit:
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=f63ae56e4e97fb12053590e41a4fa59e7daa74a4
+> 
+> Credit: James E.J. Bottomley
+> 
+> Reference:
+> http://ns3.spinics.net/lists/linux-scsi/msg47361.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=651147
+> 
+> Thanks,
+> --
+> Petr Matousek / Red Hat Security Response Team
