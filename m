@@ -1,60 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/13/2
-Message-ID: <1281695480.13980.53.camel@henriknordstrom.net>
-Date: Fri, 13 Aug 2010 12:31:20 +0200
-From: Henrik Nordström <henrik@...riknordstrom.net>
-To: Thomas Biege <thomas@...e.de>
-Cc: squid-bugs@...id-cache.org, oss-security@...ts.openwall.com
-Subject: Re: RFC: squid: Fix free memory corruption and off-by-on error when comparing SNMP OIDs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/10/13
+Message-ID: <247387242.573631289417601628.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 10 Nov 2010 14:33:21 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request: kernel: socket filters infoleak
 Content-Type: text/plain; charset=utf-8
 
-It's just bugs in the snmp initialization code and not considered a
-security issue. But the invalid free may result in free heap corruption
-(subject to quality of malloc implementation) which may then cause
-stability issues later on. Both issues were introduced in 3.1.4 and
-found in an project internal code quality audit.
+Please use CVE-2010-4158
 
-Regards
-Henrik Nordström
-Squid HTTP Proxy project
+Thanks.
 
-fre 2010-08-13 klockan 09:00 +0200 skrev Thomas Biege:
-> Hello project maintainers,
-> we stumbled over two bugs in your last release because they sound like
-> security vulnerabilities. Can you shed some light on them for us please?
-> 
-> Thanks
-> Thomas
-> 
-> 
-> Am Donnerstag, 12. August 2010, 20:58:13 schrieb Josh Bressers:
-> > ----- "Thomas Biege" <thomas@...e.de> wrote:
-> > > Hello people,
-> > > does someone know if this bug has security implications. TIA!
-> > > 
-> > > http://www.squid-cache.org/Versions/v3/3.1/changesets/SQUID_3_1_5.html
-> > > http://www.squid-cache.org/Versions/v3/3.1/changesets/squid-3.1-10008.pat
-> > > ch
-> > 
-> > This is really two flaws. The first bit of the patch is an off by one on
-> > the loop that could overflow a heap buffer.
-> > 
-> > From looking at the code, I only see this function being called with static
-> > strings for the MIBs. I may be missing something, but it doesn't appear
-> > that arbitrary strings make it into this. I'm not sure if this can be
-> > exploted, or if it's just a bug someone noticed.
-> > 
-> > The second flaw is an invalid free. I'm not sure if arbitrary data can make
-> > it into this, but with current glibc memory protections, this should be a
-> > DoS only.
-> > 
-> > Both only seem to affect modern versions of squid. The code seems present
-> > in 3.1.4, but not 2.6.STABLE21 (these are two versions we ship).
-> > 
-> > Have you mailed upstream at all?
-> > 
-> > Thanks.
-> 
-> 
+-- 
+    JB
 
 
+----- "Eugene Teo" <eugene@...hat.com> wrote:
+
+> From Dan Rosenberg, "The "mem" array used as scratch space for socket
+> 
+> filters is not initialized, allowing unprivileged users to leak kernel
+> 
+> stack bytes."
+> 
+> proposed fix: http://www.spinics.net/lists/netdev/msg146361.html
+> 
+> reference: https://bugzilla.redhat.com/show_bug.cgi?id=651698
+> 
+> For Dave I guess: 
+> http://lists.grok.org.uk/pipermail/full-disclosure/2010-November/077321.html
+> 
+> Eugene
+> -- 
+> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i);
+> }
