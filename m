@@ -1,51 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/10/1
-Message-ID: <20100610204058.GP4828@redhat.com>
-Date: Thu, 10 Jun 2010 14:40:58 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/10/11
+Message-Id: <201011101418.33356.sgrubb@redhat.com>
+Date: Wed, 10 Nov 2010 14:18:33 -0500
+From: Steve Grubb <sgrubb@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: [oCERT-2010-001] multiple http client unexpected download filename vulnerability
+Cc: Kees Cook <kees@...ntu.com>
+Subject: Re: filesystem capabilities
 Content-Type: text/plain; charset=utf-8
 
-* [2010-05-20 08:27:56 +0400] Solar Designer wrote:
+On Wednesday, November 10, 2010 01:06:29 pm Kees Cook wrote:
+> On Mon, Nov 08, 2010 at 12:01:29PM -0500, Steve Grubb wrote:
+> > >While in general this is a good idea, there are issues with it,
+> > >in arbitrary order:
+> > >
+> > >- Some currently-SUID programs are aware of them being (potentially)
+> > >SUID, and will drop the "more privileged" euid when it is no longer
+> > >needed, but they will probably not be aware of them possessing
+> > >capabilities.
+> > 
+> > This is an artifact of having a capabilities library that takes several
+> > lines of code to do anything. It is more correct to check for
+> > capabilities that trusting that euid means that you have certain powers.
+> > In my opinion, a lot of this code should be cleaned up so that its
+> > correct.
+> 
+> Right, it's not just a matter of dropping setuid bits and adding fscaps;
+> these tools each need to be changed to understand fscaps and correctly drop
+> privs. Which is especially true for "mixed" environments where the code
+> could run _either_ as setuid or with fscaps. Building that logic into the
+> cap library (which ever one) is the plan, as I understand.
 
->On Wed, May 19, 2010 at 03:28:18PM +0200, Ludwig Nussel wrote:
->> Serving dot files is a neat trick indeed, I've overlooked that
->> paragraph in the ocert advisory. Nevertheless I'm not convinced it's
->> worth changing wget's default behavior in the proposed way. So I can
->> understand upstream here.
->
->As far as I'm aware, at the time of the initial oCERT notification, the
->wget upstream was represented by Micah Cowan, who was about to resign.
->And he did:
->
->http://lists.gnu.org/archive/html/bug-wget/2010-04/msg00027.html
->
->oCERT has re-notified the new upstream shortly before publishing the
->advisory (we decided this was not enough of a reason to introduce a
->further pre-public-disclosure delay).  I don't think the new wget
->upstream has made a determination on this issue yet; at least I'm not
->aware of that.
->
->...
->
->For those producing back-ports for lftp, the approach to take is to
->download 4.0.5 and 4.0.6 from:
->
->http://ftp.yars.free.net/pub/source/lftp/old/
->
->Then diff them with:
->
->diff -purx configure -x po -x 'Makefile*' -x '*.in' -x '*.in.h' -x m4 -x lib -x build-aux -x '*.m4' lftp-4.0.5 lftp-4.0.6
+Not that I know of. The library cannot know what the application's threat model is. 
+The library can make it simple to access the correct things. The following should be 
+the model that I think solves the problem for either setuid or fs based capabilities. 
+Assuming you needed CAP_CHOWN:
 
-Just to follow up on this, I did some work on this today and a patch is
-attached to our bugzilla:
+		capng_get_caps_process();
+                switch (capng_have_capabilities(CAPNG_SELECT_CAPS)) {
+			case CAPNG_FULL:
+				capng_clear(CAPNG_SELECT_BOTH);
+				capng_update(CAPNG_ADD, CAPNG_EFFECTIVE|CAPNG_PERMITTED,
+						CAP_CHOWN);
+				if (capng_apply(CAPNG_SELECT_BOTH))
+					exit(0);
+				break;
+			case CAPNG_PARTIAL:
+				// Paranoid double check that we have what we expect
+				if (capng_have_capability(CAPNG_EFFECTIVE, CAP_CHOWN)==0)
+					exit(0);
+				// Now to make sure that is ALL that we have...let's drop it and
+				// see if we are empty
+				capng_update(CAPNG_DROP, CAPNG_EFFECTIVE|CAPNG_PERMITTED,
+						CAP_CHOWN);
+				if (capng_have_capabilities(CAPNG_SELECT_CAPS) != CAPNG_NONE)
+					exit(0);
+				break;
+			case CAPNG_FAIL:
+			case CAPNG_NONE:
+				exit(0);
+		}
+		// At this point both setuid and fs based caps should have the same thing
 
-https://bugzilla.redhat.com/show_bug.cgi?id=591580
 
-Also looking at it, this support was introduced in 3.4.7, so anyone
-shipping a version of lftp prior to that shouldn't have to worry about
-it.
+> > The intent of this project is to get the patches and user space work
+> > done. We know that just setting the bit is not all that has to be done.
+> 
+> Yup, and Debian and Ubuntu have even further to go since their userspace
+> and package manager don't even handle xattrs. It would be nice if upstream
+> tar took the xattr patches. Steve, are there any plans to make that happen?
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+You can lead a horse to water, but you cannot make them drink.
+http://lists.gnu.org/archive/html/bug-tar/2006-08/msg00004.html
+
+We did our part. Its up to them to accept the patch or keep talking about it. Reading 
+the thread, it sounded like they were going to take it. No idea why they decided 
+against it unless it was seen as a Linux only patch. You might poke them and ask why 
+in the last 4 years they never took the patch. Of course since then we've maintained 
+the patch against current tar releases, so they would want a newer patch.
+
+-Steve
