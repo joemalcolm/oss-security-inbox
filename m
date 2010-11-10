@@ -1,33 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/01/7
-Message-ID: <575304390.813651275414732700.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 1 Jun 2010 13:52:12 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/10/3
+Message-Id: <201011101518.26566.thomas@suse.de>
+Date: Wed, 10 Nov 2010 15:18:26 +0100
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: SFCB vulnerabilities
+Subject: CVE request: mono loading shared libs from cwd
 Content-Type: text/plain; charset=utf-8
 
+Hello folks,
 
------ "Nicolas Grégoire" <nicolas.gregoire@...rri.fr> wrote:
+from our bugzilla.
 
-> Hi,
-> 
-> SFCB v1.3.8 fixes two remotely exploitable vulnerabilities (3001896 and
-> 3001915 in httpAdapter.c) :
-> http://sblim.cvs.sourceforge.net/sblim/sfcb/ChangeLog?view=markup
-> 
-> CVE-2010-1937 was privately assigned to entry 3001896 but I still don't
-> have a CVE id for 3001915. Could you please assign one before I release
-> the technical advisory ?
-> 
+"
+http://www.mono-project.com/DllNotFoundException explains that the mono 
+runtime
+searches the current working directory for DLLs.  This opens a serious 
+security
+hole.  Malicious code can be given the same name as a DLL and left in a
+directory the user might visit.  Also, it means that no mono application can
+safely set the current working directory.
 
-I presuem this is the bug:
-http://sourceforge.net/tracker/?func=detail&aid=3001915&group_id=128809&atid=712784
+Microsoft themselves addressed this issue in Windows
+http://msdn.microsoft.com/en-us/library/ms682586(v=VS.85).aspx
 
-Please use CVE-2010-2054
+It's a well known "dummies" question for Unix why you must not have "." on 
+your
+path
+http://www.unix.com/unix-dummies-questions-answers/22806-why-bad-idea-insert-
+dot-path.html
 
-Thanks.
+Mono is exposing users to these same old hat problems.
+
+(As a related problem, many mono programs seem to *assume* that they will be
+run with the CWD set to their installed directory, and break if it isn't.)
+"
+
+Filed by Richard Brooksby.
+
 
 -- 
-    JB
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+--
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
+
