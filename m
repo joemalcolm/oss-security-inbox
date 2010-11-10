@@ -1,41 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/02/2
-Message-ID: <20100402202810.GA8430@galadriel.inutil.org>
-Date: Fri, 2 Apr 2010 22:28:10 +0200
-From: Moritz Muehlenhoff <jmm@...til.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/10/4
+Message-Id: <201011101525.01464.thomas@suse.de>
+Date: Wed, 10 Nov 2010 15:25:01 +0100
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Zabbix v1.8.2 and v.1.6.9
+Subject: Re: CVE request: mono loading shared libs from cwd
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Apr 01, 2010 at 03:31:18PM -0400, Josh Bressers wrote:
-> ----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+
+missed to add:
+http://lists.ximian.com/pipermail/mono-patches/2010-October/177900.html
+
+Am Mittwoch 10 November 2010 15:18:26 schrieb Thomas Biege:
+> Hello folks,
 > 
-> > Hi Steve, vendors,
-> > 
-> >    though April the First today, this doesn't seem to be a joke:
-> > 
-> >    a, Zabbix <= 1.8.1 SQL Injection
-> > 
-> >    [1] http://seclists.org/fulldisclosure/2010/Apr/1
-> >    [2] http://www.zabbix.com/rn1.8.2.php
+> from our bugzilla.
 > 
-> Use CVE-2010-1144 for this one
+> "
+> http://www.mono-project.com/DllNotFoundException explains that the mono
+> runtime
+> searches the current working directory for DLLs.  This opens a serious
+> security
+> hole.  Malicious code can be given the same name as a DLL and left in a
+> directory the user might visit.  Also, it means that no mono application
+>  can safely set the current working directory.
+> 
+> Microsoft themselves addressed this issue in Windows
+> http://msdn.microsoft.com/en-us/library/ms682586(v=VS.85).aspx
+> 
+> It's a well known "dummies" question for Unix why you must not have "." on
+> your
+> path
+> http://www.unix.com/unix-dummies-questions-answers/22806-why-bad-idea-inser
+> t- dot-path.html
+> 
+> Mono is exposing users to these same old hat problems.
+> 
+> (As a related problem, many mono programs seem to *assume* that they will
+>  be run with the CWD set to their installed directory, and break if it
+>  isn't.) "
+> 
+> Filed by Richard Brooksby.
+> 
 
-Josh, in a later mail you've assigned the same ID to a libnids issue:
-
-| > http://freefr.dl.sourceforge.net/project/libnids/libnids/1.24/libnids-1.24.releasenotes.txt
-| >
-| >    "v1.24 Mar 14 2010
-| >     - fixed another remotely triggerable NULL dereference in
-| >     ip_fragment.c"
-| >
-| >    [3] http://secunia.com/advisories/39225/
-| >
-| > Could you allocate a CVE id for it?
-| >
-|
-| Please use CVE-2010-1144
-
-Cheers,
-        Moritz
+-- 
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+--
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
