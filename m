@@ -1,53 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/17/12
-Message-ID: <4BA10FCC.8050104@redhat.com>
-Date: Wed, 17 Mar 2010 18:22:20 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request -- Transmission v1.92 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/10/7
+Message-ID: <20101110174721.GP5876@outflux.net>
+Date: Wed, 10 Nov 2010 09:47:21 -0800
+From: Kees Cook <kees@...ntu.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel proactive security hardening
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve, vendors,
+On Mon, Nov 08, 2010 at 10:33:32PM +0300, Vasiliy Kulikov wrote:
+> On Mon, Nov 08, 2010 at 08:48 +0300, Solar Designer wrote:
+> > 2. We could turn all function-local non-static definitions of:
+> > 
+> > struct x y;
+> > 
+> > into:
+> > 
+> > struct x y = {};
+> > 
+> > We could do this by pre-processing the source files
+> 
+> With coccinelle it is trivial:
+> 
+> @@
+> identifier T, x, f;
+> @@
+> 
+> f(...)
+> {
+>  ...
+>  struct T x
+> + = {}
+>  ;
+>  ...
+> }
+> 
+> However, I don't think that all linux maintainers would be happy with
+> this.
+> 
+> > or with a patch to
+> > gcc (introduce a command-line option to assume empty initializers for
+> > all on-stack structs).
+> 
+> IMO much better solution - instead of many MB trivial patch have small
+> gcc patch.
 
-   Transmission upstream has recently released latest, v1.92 version:
-     [1] http://trac.transmissionbt.com/wiki/Changes
+Yeah, I'd like to see this area of gcc improved. It seems like
+-Wmissing-field-initializers doesn't always do the right thing either.
 
-   fixing one (potentially two) security issues:
-     a, Fix potential buffer overflow when adding maliciously-crafted magnet links
+I'm glad to see that using "= { }" wipes the entire structure, though. I
+was worried that it would leave holes for padding, etc.
 
-   References:
-     [2] http://trac.transmissionbt.com/ticket/2965
-     [3] http://trac.transmissionbt.com/wiki/Changes
-     [4] http://bugs.gentoo.org/show_bug.cgi?id=309831
+-Kees
 
-     --
-
-     b, Fix possible data corruption issue caused by data sent by bad peers during endgame
-        (this one I am not completely sure of, but when looking at the relevant bug record:
-     [5] http://trac.transmissionbt.com/ticket/1242
-         there is written:
-     [6] http://trac.transmissionbt.com/ticket/1242#comment:1
-         "My theory is that for some reason Transmission will download a corrupt part
-          from someone but not realize it until you do a manual verify. At this point
-          T will recognize the bad part and redownload it from the same person, which
-         just causes the problem again."
-
-         so to prevent someone from successfully downloading content of some torrent file,
-         for an attacker to should be enough to download a part of it, corrupt it and
-         share it. Not sure about the algorithm, Transmission decides which torrent
-         to retrieve content from, but if it is deterministic / predictable behavior /
-         algorithm, such attack could succeed).
-
-   References:
-     [7] http://trac.transmissionbt.com/ticket/1242
-     [8] http://trac.transmissionbt.com/ticket/1242#comment:1
-     [9] http://trac.transmissionbt.com/wiki/Changes
-
-Could you allocate CVE id(s) for this / these issue(s)?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-
+-- 
+Kees Cook
+Ubuntu Security Team
