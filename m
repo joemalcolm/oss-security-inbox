@@ -1,29 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/03/3
-Message-Id: <201012031532.26831.hanno@hboeck.de>
-Date: Fri, 3 Dec 2010 15:32:26 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/10/9
+Message-ID: <20101110180629.GR5876@outflux.net>
+Date: Wed, 10 Nov 2010 10:06:29 -0800
+From: Kees Cook <kees@...ntu.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: clamav 0.96.5 released
+Subject: Re: filesystem capabilities
 Content-Type: text/plain; charset=utf-8
 
-Am Friday 03 December 2010 schrieb Thomas Biege:
-> JFYI, maybe CVE-IDs are needed...
+On Mon, Nov 08, 2010 at 12:01:29PM -0500, Steve Grubb wrote:
+> >While in general this is a good idea, there are issues with it, 
+> >in arbitrary order:
+> >
+> >- Some currently-SUID programs are aware of them being (potentially) SUID, and 
+> >will drop the "more privileged" euid when it is no longer needed, but they will
+> >probably not be aware of them possessing capabilities.
+> 
+> This is an artifact of having a capabilities library that takes several lines of code 
+> to do anything. It is more correct to check for capabilities that trusting that euid 
+> means that you have certain powers. In my opinion, a lot of this code should be 
+> cleaned up so that its correct.
 
-http://secunia.com/advisories/42426/
+Right, it's not just a matter of dropping setuid bits and adding fscaps;
+these tools each need to be changed to understand fscaps and correctly drop
+privs. Which is especially true for "mixed" environments where the code
+could run _either_ as setuid or with fscaps. Building that logic into the
+cap library (which ever one) is the plan, as I understand.
 
-Seems like two security issues:
+> The intent of this project is to get the patches and user space work done. We know 
+> that just setting the bit is not all that has to be done.
 
-"1) Multiple errors within the processing of PDF files can be exploited to 
-e.g. cause a crash.
+Yup, and Debian and Ubuntu have even further to go since their userspace
+and package manager don't even handle xattrs. It would be nice if upstream
+tar took the xattr patches. Steve, are there any plans to make that happen?
 
-2) An off-by-one error within the "icon_cb()" function can be exploited to 
-cause a memory corruption."
+-Kees
 
 -- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-
-http://schokokeks.org - professional webhosting
-
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+Kees Cook
+Ubuntu Security Team
