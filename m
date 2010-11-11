@@ -1,44 +1,15 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/11/1
-Message-Id: <20101112042927.VMIFGFBFYYMBYP@hackinthebox.org>
-Date: Fri, 12 Nov 2010 04:29:27 +0800
-From: Hafez Kamal <aphesz@...kinthebox.org>
-To: <oss-security@...ts.openwall.com>
-Subject: [HITB-Announce] HITB Magazine #5 Call for Articles
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/11/2
+Message-ID: <AANLkTi=kQ8xkjqG=r8kjVesouTP9WLJaefAV8=1uweYK@mail.gmail.com>
+Date: Thu, 11 Nov 2010 17:51:51 -0500
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: kernel: remote DoS in X.25
 Content-Type: text/plain; charset=utf-8
 
-Good Day!
+A remote (or local) attacker communicating over X.25 could cause a
+kernel panic by attempting to negotiate malformed facilities.  This is
+a separate issue from CVE-2010-3873, which affects the same code path.
 
-As you already know, we have released 4 issues in 2010 and gained a lot of experiences working on them. For 2011, we have some great plans for our readers.  Our main focus for next year is to publish more high quality articles and for that reason, we are now announcing a Call for Articles. =)
-
-
-TOPICS
-
-Topics of interest include, but are not limited to the following:
-
-* New Attack and Defense Techniques
-* Reverse Code Engineering
-* Network Security
-* Forensics and Incident Response
-* WLAN, GPS, HAM Radio, Satellite, RFID and Bluetooth Security
-* Cryptography
-* Hardware Hacking
-* Malware Analysis
-* Lock Picking / Physical Security
-
-HITB Magazine is a deep-knowledge technical magazine. Articles that are more technical or that discuss new and never before seen attack methods are of more interest than a subject that has been covered several times before. Please send your article to editorial@...kinthebox.org
-
-Submissions for issue #5 due no later than 3rd January 2011
-
----
-Hafez Kamal
-HITB Crew
-Hack in The Box (M) Sdn. Bhd.
-Suite 26.3, Level 26, Menara IMC,
-No. 8 Jalan Sultan Ismail,
-50250 Kuala Lumpur,
-Malaysia
-
-Tel: +603-20394724
-Fax: +603-20318359
-
+Reference:
+http://marc.info/?l=linux-netdev&m=128951543005554&w=2
