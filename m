@@ -1,59 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/30/16
-Message-ID: <2046753133.1643151277925743488.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 30 Jun 2010 15:22:23 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: XSS in python paste
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/11/1
+Message-Id: <20101112042927.VMIFGFBFYYMBYP@hackinthebox.org>
+Date: Fri, 12 Nov 2010 04:29:27 +0800
+From: Hafez Kamal <aphesz@...kinthebox.org>
+To: <oss-security@...ts.openwall.com>
+Subject: [HITB-Announce] HITB Magazine #5 Call for Articles
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-2477
+Good Day!
 
-Thanks.
-
--- 
-    JB
+As you already know, we have released 4 issues in 2010 and gained a lot of experiences working on them. For 2011, we have some great plans for our readers.  Our main focus for next year is to publish more high quality articles and for that reason, we are now announcing a Call for Articles. =)
 
 
------ "Raphael Geissert" <geissert@...ian.org> wrote:
+TOPICS
 
-> Hi,
-> 
-> Quoting [1]:
-> 
-> > Paste 1.7.4 is released.  The only real change is to
-> paste.httpexceptions, 
-> > which was using insecure quoting of some parameters and allowed an
-> XSS 
-> > hole, 
-> > most specifically with its 404 messages.  The most notably WSGI 
-> > application 
-> > using this is paste.urlparse.StaticURLParser and PkgResourcesParser.
->  By 
-> > directing someone to an appropriately formed URL an attacker can
-> execute 
-> > arbitrary Javascript on the victim's client.  paste.urlmap.URLMap is
-> also 
-> > affected, but only if you have no application attached to /.  Other
-> 
-> > applications using paste.httpexceptions may be effected (especially
-> 
-> > HTTPNotFound).  WebOb/webob.exc.HTTPNotFound is not affected. 
-> 
-> The commit fixing this bug appears to be:
-> http://bitbucket.org/ianb/paste/changeset/fcae59df8b56
-> Homepage:
-> http://pythonpaste.org/
-> 
-> Could a CVE be assigned?
-> 
-> Thanks in advance.
-> 
-> [1] http://groups.google.com/group/paste-
-> users/browse_thread/thread/3b3fff3dadd0b1e5?pli=1
-> 
-> Regards,
-> -- 
-> Raphael Geissert - Debian Developer
-> www.debian.org - get.debian.net
+Topics of interest include, but are not limited to the following:
+
+* New Attack and Defense Techniques
+* Reverse Code Engineering
+* Network Security
+* Forensics and Incident Response
+* WLAN, GPS, HAM Radio, Satellite, RFID and Bluetooth Security
+* Cryptography
+* Hardware Hacking
+* Malware Analysis
+* Lock Picking / Physical Security
+
+HITB Magazine is a deep-knowledge technical magazine. Articles that are more technical or that discuss new and never before seen attack methods are of more interest than a subject that has been covered several times before. Please send your article to editorial@...kinthebox.org
+
+Submissions for issue #5 due no later than 3rd January 2011
+
+---
+Hafez Kamal
+HITB Crew
+Hack in The Box (M) Sdn. Bhd.
+Suite 26.3, Level 26, Menara IMC,
+No. 8 Jalan Sultan Ismail,
+50250 Kuala Lumpur,
+Malaysia
+
+Tel: +603-20394724
+Fax: +603-20318359
+
