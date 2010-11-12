@@ -1,52 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/29/1
-Message-ID: <4BD8DC25.4080800@kernel.sg>
-Date: Thu, 29 Apr 2010 09:08:53 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/12/4
+Message-ID: <1301976200.802341289567997556.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 12 Nov 2010 08:19:57 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: coley@...us.mitre.org
-Subject: CVE-2010-1173 kernel: skb_over_panic resulting from multiple invalid parameter errors
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: possible kernel oops from user MSS
 Content-Type: text/plain; charset=utf-8
 
-https://bugzilla.redhat.com/CVE-2010-1173
-http://article.gmane.org/gmane.linux.network/159531
 
-Reported by Chris Guo from Nokia China via Red Hat Support. A similar 
-issue was reported by Jukka Taimisto and Olli Jarva from Codenomicon Ltd 
-via CERT-FI. This was also reported by Windriver on behalf of their 
-customer via vendor-sec.
+----- "Eugene Teo" <eugene@...hat.com> wrote:
 
-Kernel crash occurs if sctp listening port receives malformatted init 
-package.
+> With commit f5fff5dc8a7a3f395b0525c02ba92c95d42b7390, a user program
+> can pass in TCP_MAXSEG of 12 (or TCPOLEN_TSTAMP_ALIGNED), and cause
+> kernel oops with division by 0 in tcp_select_initial_window.
+> 
+> Proposed patch:
+> http://www.spinics.net/lists/netdev/msg146495.html
+> 
+> Reference:
+> http://www.spinics.net/lists/netdev/msg146405.html
 
-Its an skb_over_panic BUG halt that results from processing an init 
-chunk in which too many of its variable length parameters are in some 
-way malformed.
 
-The problem is in sctp_process_unk_param:
-if (NULL == *errp)
-  *errp = sctp_make_op_error_space(asoc, chunk,
-       ntohs(chunk->chunk_hdr->length));
+Please use CVE-2010-4165.
 
-  if (*errp) {
-   sctp_init_cause(*errp, SCTP_ERROR_UNKNOWN_PARAM,
-      WORD_ROUND(ntohs(param.p->length)));
-   sctp_addto_chunk(*errp,
-    WORD_ROUND(ntohs(param.p->length)),
-       param.v);
+Thanks.
 
-When we allocate an error chunk, we assume that the worst case scenario
-requires that we have chunk_hdr->length data allocated, which would be 
-correct nominally, given that we call sctp_addto_chunk for the violating 
-parameter. Unfortunately, we also, in sctp_init_cause insert a 
-sctp_errhdr_t structure into the error chunk, so the worst case 
-situation in which all parameters are in violation requires 
-chunk_hdr->length+(sizeof(sctp_errhdr_t)*param_count) bytes of data.
-
-This fix solves the problem by allowing our implementation to only 
-report a fixed number of errors.  When we encounter an error in 
-parameter processing we allocate a chunk that is min(asoc->pathmtu, 
-SCTP_DEFAULT_MAXSEGMENT), limiting our error reporting to a single mtu 
-sized chunk.  Parameter errors that grow beyond that value are discarded.
-
-Thanks, Eugene
+-- 
+    JB
