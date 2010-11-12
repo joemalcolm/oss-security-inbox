@@ -1,27 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/30/3
-Message-ID: <20100930033009.GA32199@kroah.com>
-Date: Wed, 29 Sep 2010 20:30:09 -0700
-From: Greg KH <greg@...ah.com>
-To: Joel Becker <Joel.Becker@...cle.com>, oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Small exposure in ocfs2 fast symlinks.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/12/6
+Message-ID: <45808337.880901289596807903.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 12 Nov 2010 16:20:07 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: Joomla 1.5.21 SQL Injection and Information Disclosure
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Sep 29, 2010 at 07:04:07PM -0700, Joel Becker wrote:
-> Hey Everyone,
-> 	We just discovered that ocfs2 could walk off the end of fast
-> symlinks -- that is, symlinks that are stored directly in the inode
-> block.  ocfs2 terminates these with NUL characters, but a disk
-> corruption or an attacker with direct access to the ocfs2 disk could
-> overwrite the NUL.  Following the symlink via the filesystem would walk
-> off the end of the in-memory block buffer.  We're not sure how
-> exploitable this is, but I figured I'd provide a heads-up.  The fix is
-> in ocfs2's git tree and will be sent upstream tonight.  Erratas with the
-> fix are being built.
 
-Care to send the git commit id to the stable@...nel.org tree when it
-hits Linus's tree so it gets backported there?
+----- "Henri Salo" <henri@...v.fi> wrote:
 
-thanks,
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> Can I get CVE-identifier for this issue?
+> 
+> "Multiple vulnerabilities have been discovered in Joomla, which can be
+> exploited by malicious people to conduct SQL injection attacks.
+> 
+> Input passed via the "filter_order" and "filter_order_Dir" parameters to
+> index.php (e.g. when "option" is set to "com_weblinks", "com_contact", or
+> "com_messages") is not properly verified before being used in a SQL
+> query. This can be exploited to manipulate SQL queries by injecting
+> limited SQL code, which may result in e.g. information disclosure via
+> database errors."
+> 
+> Vulnerable versions: 1.5.21 and all previous 1.5 releases
+> Solution: Update to 1.5.22 (or later)
+> 
+> Referers:
+> http://secunia.com/advisories/42133
+> http://developer.joomla.org/security/news/9-security/10-core-security/323-20101101-core-sqli-info-disclosurevulnerabilities.html
+> http://archives.neohapsis.com/archives/fulldisclosure/2010-10/0514.html
+> 
 
-greg k-h
+This one is confusing. The full-disclosure post also seems to cover
+CVE-2010-3712, which was fixed in Joomla 1.5.21.
+
+For the SQL injection issues, let's use CVE-2010-4166.
+
+Thanks.
+
+-- 
+    JB
