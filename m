@@ -1,57 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/12/2
-Message-ID: <1105342539.801991289567828558.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 12 Nov 2010 08:17:08 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: kernel: Multiple DoS issues in block layer
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/12/5
+Message-ID: <20101112224816.73b27d22@foo.fgeek.fi>
+Date: Fri, 12 Nov 2010 22:48:16 +0200
+From: Henri Salo <henri@...v.fi>
+To: "oss-security" <oss-security@...ts.openwall.com>
+Subject: CVE request: Joomla 1.5.21 SQL Injection and Information Disclosure
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
------ "Dan Rosenberg" <dan.j.rosenberg@...il.com> wrote:
+Can I get CVE-identifier for this issue?
 
-> A series of fixes were committed to address several issues I reported in
-> the block layer.  These issues require the ability to send device ioctls
-> to a SCSI device, which is typically possible for users with group
-> 'cdrom' or similar.
-> 
-> 1. Due to integer underflow and overflow issues when determining the
-> number of pages required for maliciously crafted I/O requests, a local
-> user could send a device ioctl that results in the sequential allocation
-> of a very large number of pages, causing the OOM killer to be invoked and
-> crashing the system:
-> 
-> http://git.kernel.org/?p=linux/kernel/git/axboe/linux-2.6-block.git;a=commit;h=cb4644cac4a2797afc847e6c92736664d4b0ea34
+"Multiple vulnerabilities have been discovered in Joomla, which can be
+exploited by malicious people to conduct SQL injection attacks.
 
-Use CVE-2010-4162 for this one.
+Input passed via the "filter_order" and "filter_order_Dir" parameters
+to index.php (e.g. when "option" is set to "com_weblinks",
+"com_contact", or "com_messages") is not properly verified before being
+used in a SQL query. This can be exploited to manipulate SQL queries by
+injecting limited SQL code, which may result in e.g. information 
+disclosure via database errors."
 
+Vulnerable versions: 1.5.21 and all previous 1.5 releases
+Solution: Update to 1.5.22 (or later)
 
-> 
-> 2. By submitting certain I/O requests with 0 length, a local user could
-> cause a kernel panic:
-> 
-> http://git.kernel.org/?p=linux/kernel/git/axboe/linux-2.6-block.git;a=commit;h=9284bcf4e335e5f18a8bc7b26461c33ab60d0689
-> 
+Referers:
+http://secunia.com/advisories/42133
+http://developer.joomla.org/security/news/9-security/10-core-security/323-20101101-core-sqli-info-disclosurevulnerabilities.html
+http://archives.neohapsis.com/archives/fulldisclosure/2010-10/0514.html
 
-Use CVE-2010-4163
+Best regards,
+Henri Salo
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
 
-
-> 
-> 
-> In addition to the fixes for these identified issues, there were also
-> patches committed for improved sanity checking on I/O requests, and
-> checks to prevent integer overflows in heap allocation sizes.  In my
-> testing, I wasn't able to exploit these issues, so just FYI:
-> 
-> http://git.kernel.org/?p=linux/kernel/git/axboe/linux-2.6-block.git;a=commit;h=9f864c80913467312c7b8690e41fb5ebd1b50e92
-> http://git.kernel.org/?p=linux/kernel/git/axboe/linux-2.6-block.git;a=commit;h=f3f63c1c28bc861a931fac283b5bc3585efb8967
-> 
-
-I'm not assigning anythign to these, but if someone wants IDs, I'll gladly
-do it.
-
-Thanks.
-
--- 
-    JB
+iEYEARECAAYFAkzdqBAACgkQXf6hBi6kbk8lFACgmpIFET/szRnKRNpVO0COQuFd
+pXcAoMwVjrf3/8PzOIOBuWkxMBW9lodS
+=AgJf
+-----END PGP SIGNATURE-----
