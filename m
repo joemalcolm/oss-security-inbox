@@ -1,71 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/26/7
-Message-ID: <215000089.389431274900319124.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 26 May 2010 14:58:39 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/12/2
+Message-ID: <1105342539.801991289567828558.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 12 Nov 2010 08:17:08 -0500 (EST)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Nahuel Grisolia <nahuel@...sai-sec.com>, Stefan Esser <stefan.esser@...tioneins.de>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Cacti v0.8.7 -- three security fixes
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: kernel: Multiple DoS issues in block layer
 Content-Type: text/plain; charset=utf-8
 
-I'm going to butcher this up a bit to make it easier to follow (at least
-for me).
 
------ "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
-> 
->    Cacti upstream has released:
->     [1] http://www.cacti.net/release_notes_0_8_7f.php
-> 
->    latest v0.8.7 version, adressing three security flaws:
+----- "Dan Rosenberg" <dan.j.rosenberg@...il.com> wrote:
 
-
->      [A], MOPS-2010-023: Cacti Graph Viewer SQL Injection Vulnerability
->      http://php-security.org/2010/05/13/mops-2010-023-cacti-graph-viewer-sql-injection-vulnerability/index.html
->      http://www.vupen.com/english/advisories/2010/1204
+> A series of fixes were committed to address several issues I reported in
+> the block layer.  These issues require the ability to send device ioctls
+> to a SCSI device, which is typically possible for users with group
+> 'cdrom' or similar.
 > 
->      Credit: The vulnerability was discovered by Stefan Esser as part of
->      the SQL Injection Marathon.
+> 1. Due to integer underflow and overflow issues when determining the
+> number of pages required for maliciously crafted I/O requests, a local
+> user could send a device ioctl that results in the sequential allocation
+> of a very large number of pages, causing the OOM killer to be invoked and
+> crashing the system:
 > 
->      Upstream changeset:
->      http://svn.cacti.net/viewvc?view=rev&revision=5920
+> http://git.kernel.org/?p=linux/kernel/git/axboe/linux-2.6-block.git;a=commit;h=cb4644cac4a2797afc847e6c92736664d4b0ea34
 
-Steve, you've been handling the MOPS stuff. I'm going to leave this one
-alone unless you tell me otherwise (I don't want to dupe).
+Use CVE-2010-4162 for this one.
 
 
->      [B], Cross-site scripting issues reported by VUPEN Security
->      http://www.vupen.com/english/advisories/2010/1203
 > 
->      Credit: Vulnerabilities reported by Mohammed Boumediane (VUPEN
->      Security).
+> 2. By submitting certain I/O requests with 0 length, a local user could
+> cause a kernel panic:
 > 
->      Upstream changeset:
->      http://svn.cacti.net/viewvc?view=rev&revision=5901
+> http://git.kernel.org/?p=linux/kernel/git/axboe/linux-2.6-block.git;a=commit;h=9284bcf4e335e5f18a8bc7b26461c33ab60d0689
 > 
 
-Use CVE-2010-1644 for this one.
+Use CVE-2010-4163
 
 
-
->      [C], SQL injection and shell escaping issues reported by Bonsai
->      Information Security (http://www.bonsai-sec.com)
->      http://www.bonsai-sec.com/blog/index.php/using-grep-to-find-0days/
->      http://www.bonsai-sec.com/en/research/vulnerabilities/cacti-os-command-injection-0105.php
 > 
->      Credit: This vulnerability was discovered by Nahuel Grisolia (
->      nahuel -at- bonsai-sec.com )
 > 
->      Upstream changeset:
->      http://svn.cacti.net/viewvc?view=rev&revision=5747
+> In addition to the fixes for these identified issues, there were also
+> patches committed for improved sanity checking on I/O requests, and
+> checks to prevent integer overflows in heap allocation sizes.  In my
+> testing, I wasn't able to exploit these issues, so just FYI:
+> 
+> http://git.kernel.org/?p=linux/kernel/git/axboe/linux-2.6-block.git;a=commit;h=9f864c80913467312c7b8690e41fb5ebd1b50e92
+> http://git.kernel.org/?p=linux/kernel/git/axboe/linux-2.6-block.git;a=commit;h=f3f63c1c28bc861a931fac283b5bc3585efb8967
 > 
 
-Use CVE-2010-1645 for this one.
-
-
-> References:
->    [10] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=582691
->    [11] https://bugzilla.redhat.com/show_bug.cgi?id=595289
-> 
+I'm not assigning anythign to these, but if someone wants IDs, I'll gladly
+do it.
 
 Thanks.
 
