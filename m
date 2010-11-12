@@ -1,48 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/14/6
-Message-ID: <AANLkTink6R6rWGT2tZGNwtPscPiAVmRX_NwQqiS1u6KN@mail.gmail.com>
-Date: Sun, 14 Nov 2010 21:30:09 +0100
-From: Pierre Joye <pierre.php@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/12/1
+Message-ID: <4CDCCC12.2040608@redhat.com>
+Date: Fri, 12 Nov 2010 13:09:38 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: utf-8 security issue in php
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: possible kernel oops from user MSS
 Content-Type: text/plain; charset=utf-8
 
-hi,
+With commit f5fff5dc8a7a3f395b0525c02ba92c95d42b7390, a user program
+can pass in TCP_MAXSEG of 12 (or TCPOLEN_TSTAMP_ALIGNED), and cause
+kernel oops with division by 0 in tcp_select_initial_window.
 
-The fix has been applied to 5.2 now:
+Proposed patch:
+http://www.spinics.net/lists/netdev/msg146495.html
 
-http://svn.php.net/viewvc?view=revision&revision=305055
+Reference:
+http://www.spinics.net/lists/netdev/msg146405.html
 
-Cheers,
-
-On Tue, Nov 2, 2010 at 3:24 PM, Josh Bressers <bressers@...hat.com> wrote:
->
-> ----- "Pierre Joye" <pierre.php@...il.com> wrote:
->
->> hi,
->>
->> I was about to ask if any of the documents linked there already has a
->> CVE.
->>
->> >
->> > Another security issue was recently fixed in php-5.3
->> >
->> > http://bugs.php.net/bug.php?id=49687
->> > http://svn.php.net/viewvc?view=revision&revision=304959
->> >
->
-> As best as I can tell, this only needs one ID. Please use CVE-2010-3870.
->
-> Thanks.
->
-> --
->    JB
->
-
-
-
+Thanks, Eugene
 -- 
-Pierre
-
-@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
