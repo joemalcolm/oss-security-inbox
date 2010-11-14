@@ -1,15 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/16/4
-Message-ID: <20100316131322.GA13953@eltex.net>
-Date: Tue, 16 Mar 2010 16:13:22 +0300
-From: ArkanoiD <ark@...ex.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/14/3
+Message-ID: <AANLkTikm6QUjVMqFj1-WNsgzgr9Kvd-MTdWJxJJ0KDYs@mail.gmail.com>
+Date: Sun, 14 Nov 2010 11:06:20 -0500
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: libesmtp@...fford.uklinux.net, security@...ntu.com, Pawel Salek <pawsa@...ochem.kth.se>, jskarvad@...hat.com
-Subject: Re: CVE Request: libesmtp does not check NULL bytes in commonName
+Subject: Re: econet iovec
 Content-Type: text/plain; charset=utf-8
 
-I think the one proposed in draft is the best: it still provides simple
-wildcard functionality and does not affect security much. I'd prefer to 
-avoid *.*.. wildcards.
+Yes, this size calculation can overflow, but there's no negative
+effect, since it is only used to construct a UDP packet, and UDP is
+not susceptible to overflow issues in its sendmsg() path.
 
+On the other hand, the check on line 331 to put an upper bound on the
+total size can overflow, causing an underallocation on line 344 and a
+kernel panic on subsequent usage due to bad skbuff alignment.  This
+only affects people using actual native Econet hardware.  This was
+already fixed by recently added checks in iovec size calculations and
+in the sendto() path for maximum packet size.
 
+-Dan
+
+On Sun, Nov 14, 2010 at 9:56 AM, Thomas Pollet <thomas.pollet@...il.com> wrote:
+> Hi,
+>
+> the AF_ECONET sendmsg iovec code also appears to be vulnerable to an integer
+> overflow that will be fixed by the verify_iovec changes in the 2.6.37
+> kernel.
+> on line 469: size += iov_len
+>
+> Regards,
+> Thomas
+>
