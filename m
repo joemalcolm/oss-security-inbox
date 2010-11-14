@@ -1,33 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/14/6
-Message-ID: <340449951.2448771284491907160.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 14 Sep 2010 15:18:27 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/14/5
+Message-ID: <4CE01844.5000004@openttd.org>
+Date: Sun, 14 Nov 2010 18:11:32 +0100
+From: Rubidium <rubidium@...nttd.org>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: xss in pecl-apc before 3.1.4
+Subject: CVE request for OpenTTD
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-3294.
+Hi folks,
 
-Thanks.
+we, the OpenTTD developers, have identified a security vulnerability in
+OpenTTD (an open source game with multiplayer). Would you be so kind as 
+to allocate a CVE id for this issue?
 
--- 
-    JB
+The issue concerns a denial of service vulnerability in the form of 
+reading and writing already freed memory. The first vulnerable version 
+is 1.0.0, the upcoming 1.0.5 release will have the issue fixed.
 
+Once a CVE id is allocated, the issue will be documented at
+http://security.openttd.org/CVE-2010-xxxx
 
------ "Hanno Böck" <hanno@...eck.de> wrote:
+Thanks in advance,
+Remko 'Rubidium' Bijker
 
-> http://pecl.php.net/package-changelog.php?package=APC&release=3.1.4
-> 
-> - Fixed potential XSS in apc.php (Pierre, Matt Chapman)
-> 
-> This is a minor issue as this usually doesn't get installed and should
-> only be 
-> used for debugging-purposes, but still, deserves a CVE.
-> 
-> -- 
-> Hanno Böck		Blog:		http://www.hboeck.de/
-> GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-> 
-> http://schokokeks.org - professional webhosting
+(Please CC me, I'm not subscribed)
