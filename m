@@ -1,23 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/07/17
-Message-ID: <AANLkTinxyxmOrw48wN7BdQYFz4Y=G=ANtkkBgNaGsHuL@mail.gmail.com>
-Date: Tue, 7 Sep 2010 14:54:58 -0700
-From: Linus Torvalds <torvalds@...ux-foundation.org>
-To: Andrew Morton <akpm@...ux-foundation.org>
-Cc: Jon Oberheide <jon@...rheide.org>, oss-security@...ts.openwall.com, security@...nel.org, spender@...ecurity.net, Sebastian Krahmer <krahmer@...e.de>
-Subject: Re: [Security] Re: /proc infoleaks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/14/6
+Message-ID: <AANLkTink6R6rWGT2tZGNwtPscPiAVmRX_NwQqiS1u6KN@mail.gmail.com>
+Date: Sun, 14 Nov 2010 21:30:09 +0100
+From: Pierre Joye <pierre.php@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: utf-8 security issue in php
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Sep 7, 2010 at 12:46 PM, Andrew Morton
-<akpm@...ux-foundation.org> wrote:
+hi,
+
+The fix has been applied to 5.2 now:
+
+http://svn.php.net/viewvc?view=revision&revision=305055
+
+Cheers,
+
+On Tue, Nov 2, 2010 at 3:24 PM, Josh Bressers <bressers@...hat.com> wrote:
 >
-> We're not going to change the kernel defaults, end of story - that
-> would break far too much stuff.
+> ----- "Pierre Joye" <pierre.php@...il.com> wrote:
+>
+>> hi,
+>>
+>> I was about to ask if any of the documents linked there already has a
+>> CVE.
+>>
+>> >
+>> > Another security issue was recently fixed in php-5.3
+>> >
+>> > http://bugs.php.net/bug.php?id=49687
+>> > http://svn.php.net/viewvc?view=revision&revision=304959
+>> >
+>
+> As best as I can tell, this only needs one ID. Please use CVE-2010-3870.
+>
+> Thanks.
+>
+> --
+>    JB
+>
 
-Hmm. I think the /proc/kallsyms one really is just plain broken. That
-should not be world-readable, there's no reason for normal users
-reading it.
 
-But I don't see why slabinfo etc should care.
 
-                                  Linus
+-- 
+Pierre
+
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
