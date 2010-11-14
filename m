@@ -1,38 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/14/9
-Message-ID: <1224951764.142291276544148872.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 14 Jun 2010 15:35:48 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/14/4
+Message-ID: <AANLkTim=NyV9C=hg8orfAThZHi3ZMGxRZ+F8dAJ7QN=N@mail.gmail.com>
+Date: Sun, 14 Nov 2010 11:09:34 -0500
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - pyftpd default username and password vulnerability
+Subject: Re: econet iovec
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-2073 for this.
+This also raises a question of whether it's worth assigning CVEs to
+every vulnerability that was fixed by a single change in the core
+code.  I'm leaning towards "no".
 
-Thanks.
+-Dan
 
--- 
-    JB
-
-
------ "Henri Salo" <henri@...v.fi> wrote:
-
-> File /etc/pyftpd/auth_db_config.py contains:
-> 
-> passwd = [('test', 'test', 'CY9rzUYh03PK3k6DJie09g=='),
->  ('user', 'users', '7hHLsZBS5AsHqsDKBgwj7g=='),
->  ('roxon', 'users', 'ItZ2pB7rPmzFV6hrtdnZ7A==')]
-> 
-> These accounts can be used to login to the FTP-server and read
-> arbitrary files and list directories. File perm_acl_config.py lists
-> user permissions.
-> 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=585776
-> 
-> This affects version: 0.8.4
-> 
-> Can I have CVE-identifier for this issue?
-> 
-> ---
-> Henri Salo
+On Sun, Nov 14, 2010 at 11:06 AM, Dan Rosenberg
+<dan.j.rosenberg@...il.com> wrote:
+> Yes, this size calculation can overflow, but there's no negative
+> effect, since it is only used to construct a UDP packet, and UDP is
+> not susceptible to overflow issues in its sendmsg() path.
+>
+> On the other hand, the check on line 331 to put an upper bound on the
+> total size can overflow, causing an underallocation on line 344 and a
+> kernel panic on subsequent usage due to bad skbuff alignment.  This
+> only affects people using actual native Econet hardware.  This was
+> already fixed by recently added checks in iovec size calculations and
+> in the sendto() path for maximum packet size.
+>
+> -Dan
+>
+> On Sun, Nov 14, 2010 at 9:56 AM, Thomas Pollet <thomas.pollet@...il.com> wrote:
+>> Hi,
+>>
+>> the AF_ECONET sendmsg iovec code also appears to be vulnerable to an integer
+>> overflow that will be fixed by the verify_iovec changes in the 2.6.37
+>> kernel.
+>> on line 469: size += iov_len
+>>
+>> Regards,
+>> Thomas
+>>
+>
