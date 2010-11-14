@@ -1,51 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/29/7
-Message-ID: <4BD9B2BC.4090404@windriver.com>
-Date: Thu, 29 Apr 2010 11:24:28 -0500
-From: Mark Hatle <mark.hatle@...driver.com>
-To: Eugene Teo <eugene@...hat.com>
-CC: oss-security@...ts.openwall.com, "Zhu, Hui" <hui.zhu@...driver.com>, "Gortmaker, Paul" <paul.gortmaker@...driver.com>, +security-linux <security-linux@...driver.com>, "Wessel, Jason" <jason.wessel@...driver.com>, "Wu, Fei" <fei.wu@...driver.com>
-Subject: Re: [security-linux] Re: CVE request - Linux Kernel KGDB/ppc issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/14/1
+Message-ID: <1289747107.2994.86.camel@mdlinux>
+Date: Sun, 14 Nov 2010 10:05:07 -0500
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
+To: oss-security@...ts.openwall.com
+Cc: Bill Janssen <bill.janssen@...il.com>, Andreas Hasenack <ahasenack@...ra.com.br>, Mads Kiilerich <mads@...lerich.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Mercurial --Doesn't verify subject Common Name properly
 Content-Type: text/plain; charset=utf-8
 
-Eugene Teo wrote:
-> On 04/29/2010 10:13 AM, Hui Zhu wrote:
->> Hi All,
->>
->> The problem is that if KGDB is enabled on a powerpc board, a
->> test that checks if a page is user or kernel is bypassed.
->> This means that a user can write to arbitrary kernel address space.
->>
->> Upon further investigation, we found that kernels older than
->> the v2.6.30-rc1 release have the same problem for non-booke
->> ppc chips (74xx, 8641D), so we need two patches for kernels
->> up to that date, and then one patch for ones after that date.
-
-I'm sorry. This was a mistake on our part. We had intended to send the
-information to vendor-sec and coordinate with other potentially affected
-vendors. Then once a reasonable coordinated time had passed to send it to
-security@...nel.org as well as oss-security and lkml.
-
-Our standard procedure:
-
-* contact vendor-sec and coordinate with other affected vendors
-* send the information to the project specific security list
-* once public send the information to:
-    * oss-security@...ts.openwall.com
-    * other appropriate public project list(s)
-
-Mark Hatle
-Linux Security Incident Lead
-Wind River Systems
-
-> Hi Hui,
+On Mon, 2010-10-11 at 15:48 -0400, Josh Bressers wrote:
+> Steve,
 > 
-> Just FYI, oss-security is a public mailing list. I noticed you have 
-> already cc'ed the KGDB maintainer. If you are trying to report a kernel 
-> security issue that is neither fixed not disclosed previously AFAIK, you 
-> might want to try CC'ing security@...nel.org and LKML. Drop LKML if you 
-> want to keep it private for a short period of time.
+> Can I defer this one to MITRE? My initial thought is that python should get
+> the ID, but they seem to want to push it up to the application developers,
+> but they also added some functionality in
+> http://svn.python.org/view?view=rev&revision=85321
 > 
-> Thanks, Eugene
+> Is there a past precedent for this?
+> 
 
+Has any decision been made regarding CVE assignment for this? I've found
+some more python applications that aren't validating ssl certs, and am
+waiting to know how this is going to be handled.
+
+Thanks,
+
+Marc.
+
+
+-- 
+Marc Deslauriers
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
 
