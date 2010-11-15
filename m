@@ -1,29 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/07/1
-Message-ID: <4C34176C.4060402@kernel.sg>
-Date: Wed, 07 Jul 2010 13:58:04 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request - kernel: nfsd4: bug in read_buf
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/15/8
+Message-ID: <Pine.GSO.4.64.1011151555550.2809@faron.mitre.org>
+Date: Mon, 15 Nov 2010 16:58:27 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Marc Deslauriers <marc.deslauriers@...onical.com>
+cc: oss-security@...ts.openwall.com, Bill Janssen <bill.janssen@...il.com>, Andreas Hasenack <ahasenack@...ra.com.br>, Mads Kiilerich <mads@...lerich.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Mercurial --Doesn't verify subject Common Name properly
 Content-Type: text/plain; charset=utf-8
 
-https://bugzilla.redhat.com/show_bug.cgi?id=612028
-Upstream commit: http://git.kernel.org/linus/2bc3c117
 
-Introduced in commit 89fc0a31 ( v2.5.49) and 099e99f0 (v2.6.0-test3). 
-Fixed in v2.6.34-rc6.
+Ouch, this is painful for a number of reasons.
 
-"When read_buf is called to move over to the next page in the pagelist 
-of an NFSv4 request, it sets argp->end to essentially a random number, 
-certainly not an address within the page which argp->p now points to. 
-So subsequent calls to READ_BUF will think there is much more than a 
-page of spare space (the cast to u32 ensures an unsigned comparison) so 
-we can expect to fall off the end of the second page."
+Maybe Python "should" get the CVE, but the decision to push the issue to 
+application developers means that those developers will each have to 
+provide fixes, and software consumers will have to track these related 
+vulns at the application level.
 
-There's a possibility of triggering this with a specially crafted NFS 
-WRITE request (if accepted by the server).
+(One could make the same argument about fundamental design flaws in 
+standards-based protocols, for which CVE generally assigns a single 
+identifier, but those issues generally feel "different" to me.  Quite 
+logical, I know...)
 
-Thanks, Eugene
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+Anyway, I think we need to assign separate CVEs for each affected product 
+as an instance of "an implementation not working around security-relevant 
+design limitations of APIs" (which is consistent with the approach that 
+CVE has taken with respect to the DLL hijacking / insecure library loading 
+issues of the past couple months.)
+
+I've been tempted to start assigning a single CVE to design limitations 
+such as this Python certificate issue, and (where needed) independent CVEs 
+for affected implementations, but I'm not feeling adventurous enough yet. 
+it kind of goes against the idea where each vuln has only one CVE 
+associated with it.
+
+So - use CVE-2010-4237 for the issue in Mercurial, and feel free to 
+consult with me privately for the other issues if you wish.
+
+- Steve
+
+
+
+On Sun, 14 Nov 2010, Marc Deslauriers wrote:
+
+> On Mon, 2010-10-11 at 15:48 -0400, Josh Bressers wrote:
+>> Steve,
+>>
+>> Can I defer this one to MITRE? My initial thought is that python should get
+>> the ID, but they seem to want to push it up to the application developers,
+>> but they also added some functionality in
+>> http://svn.python.org/view?view=rev&revision=85321
+>>
+>> Is there a past precedent for this?
+>>
+>
+> Has any decision been made regarding CVE assignment for this? I've found
+> some more python applications that aren't validating ssl certs, and am
+> waiting to know how this is going to be handled.
+>
+> Thanks,
+>
+> Marc.
+>
+>
+> -- 
+> Marc Deslauriers
+> Ubuntu Security Engineer     | http://www.ubuntu.com/
+> Canonical Ltd.               | http://www.canonical.com/
+>
+>
