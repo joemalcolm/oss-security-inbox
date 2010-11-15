@@ -1,33 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/29/3
-Message-ID: <4C2A16E1.4040101@mvista.com>
-Date: Tue, 29 Jun 2010 05:53:05 -1000
-From: akuster <akuster@...sta.com>
-To: Eugene Teo <eugeneteo@...nel.sg>
-CC: oss-security@...ts.openwall.com,  "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: kernel: ethtool: kernel buffer overflow in ETHTOOL_GRXCLSRLALL
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/15/3
+Message-ID: <608371453.1017161289842837378.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 15 Nov 2010 12:40:37 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: ImageMagick opens config files in $CWD
 Content-Type: text/plain; charset=utf-8
 
-Eugene,
+----- "Vincent Danen" <vdanen@...hat.com> wrote:
 
-Thanks for the info. Unfortunately it does affect a few MontaVista
-kernels. Is it possible to get a CVE for this?
+> Noticed this in the Debian BTS.  It's been fixed in upstream svn, and
+> would be a fairly low impact issue.  The Debian report has a proof of
+> concept.
+> 
+> Could we get a CVE assigned for this issue?  Thanks.
+> 
+> References:
+> 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=601824
+> https://bugzilla.redhat.com/show_bug.cgi?id=652860
+> 
 
-Mahalo,
-Armin
+Please use CVE-2010-4167.
 
-On 06/28/2010 04:10 PM, Eugene Teo wrote:
-> FYI, "On a 32-bit machine, info.rule_cnt >= 0x40000000 leads to integer
-> overflow and the buffer may be smaller than needed.  Since
-> ETHTOOL_GRXCLSRLALL is unprivileged, this can presumably be used for at
-> least denial of service." This was introduced in v2.6.27-rc1 via
-> upstream commit 0853ad66. Also see commit 59089d8d.
-> 
-> Reference:
-> http://thread.gmane.org/gmane.linux.network/164869
-> https://bugzilla.redhat.com/show_bug.cgi?id=608950
-> 
-> I'm not requesting a CVE name for this as it did not affect any of our
-> Red Hat supported Linux kernels.
-> 
-> Thanks, Eugene
+Thanks.
+
+-- 
+    JB
