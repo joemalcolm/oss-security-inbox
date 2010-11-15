@@ -1,42 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/08/8
-Message-ID: <1270745859.25949.80.camel@severus.strandboge.com>
-Date: Thu, 08 Apr 2010 11:57:39 -0500
-From: Jamie Strandboge <jamie@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/15/5
+Message-ID: <1306975538.1019611289843415282.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 15 Nov 2010 12:50:15 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Jos Boumans <jos.boumans@...onical.com>, Mathias Gug <mathias.gug@...onical.com>, Thierry Carrez <thierry.carrez@...onical.com>
-Subject: CVE request -- memcached
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: perf bug
 Content-Type: text/plain; charset=utf-8
 
-FYI, this issue was recently pointed out to me:
-http://code.google.com/p/memcached/issues/detail?id=102
+----- "Eugene Teo" <eugene@...hat.com> wrote:
 
-A remote attacker who is allowed to connect to memcached can crash the
-server by sending bad input. I've not investigated this to see if it is
-more than a DoS.
+> Upstream commit dab5855 ("perf_counter: Add mmap event hooks to 
+> mprotect()") is fundamentally wrong as mprotect_fixup() can free 'vma'
+> 
+> due to merging. Fix the problem by moving perf_event_mmap() hook to
+> mprotect_fixup(). In certain scenario, a local, unprivileged user could
+> use this flaw to trigger a denial of service.
+> 
+> Upstream commit:
+> http://git.kernel.org/linus/63bfd7384b119409685a17d5c58f0b56e5dc03da
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=651671
+> 
+> PS: I thought I requested a CVE name for this already, but it turns out I
+> did not.
+> 
 
-People wanting to fix this may want to more thoroughly look at the
-patch[1]. After a cursory glance at it, I'm not sure it is enough:
-1. it uses:
-  if (strcmp(ptr, "get ") && strcmp(ptr, "gets ")) {
+Please use CVE-2010-4169.
 
-Why not use something like (*totally* untested):
-  if (strncmp(ptr, "get ", 5) && strncmp(ptr, "gets ", 5)) {
-
-just in case ptr is not NULL terminated? I haven't checked if this is an
-actual issue, but it certainly wouldn't hurt. '5' should probably be
-changed to something more reasonable.
-
-2. As I read the patch, couldn't an attacker send crafted input after
-the 4 reallocs and then achieve the same thing (a DoS)?. Perhaps this
-isn't a problem since it limits the object size to 1MB (according to the
-FAQ [2]).
-
-
-[1]http://github.com/memcached/memcached/commit/75cc83685e103bc8ba380a57468c8f04413033f9
-[2]http://code.google.com/p/memcached/wiki/FAQ
+Thanks.
 
 -- 
-Jamie Strandboge             | http://www.canonical.com
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+    JB
