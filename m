@@ -1,34 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/23/3
-Message-ID: <4C497FF4.5090808@redhat.com>
-Date: Fri, 23 Jul 2010 13:41:40 +0200
-From: Marc Schoenefeld <mschoene@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE assignment notification -- CVE-2010-2474 -- JBossESB
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/15/6
+Message-ID: <Pine.GSO.4.64.1011151456250.2809@faron.mitre.org>
+Date: Mon, 15 Nov 2010 15:02:21 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: econet iovec
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve,
 
-JBossESB: privilege escalation in cross-domain contexts
+On Sun, 14 Nov 2010, Dan Rosenberg wrote:
 
-The security context from an authentication request should check the
-domain and invalidate the information if the service is secured with a
-different security domain.
+> This also raises a question of whether it's worth assigning CVEs to 
+> every vulnerability that was fixed by a single change in the core code. 
+> I'm leaning towards "no".
 
-At present the execution of a service with a different domain could
-result in the pipeline being executed differing credentials, one set
-from the first domain if the request is still valid, a second set
-from the second domain if it has expired.
+This is a big can of worms CVE-wise, since there can be multiple ways to 
+fix a single issue.  As a result, I've come to believe that you shouldn't 
+try to define a vulnerability exclusively in terms of its fix.  In 
+practice within CVE, if a single fix addresses an already-public CVE-xyz 
+and a whole bunch of other things, then we (generally) keep the 
+already-public CVE as is, and assign a new CVE(s) to the "bunch of other 
+things" that are simultaneously addressed.
 
-References:
-----------
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2010-2474
-http://fisheye.jboss.org/changelog/JBossESB/?cs=33454
+For example - in package XYZ, you might have both XSS and SQL injection, 
+where the XSS is fixed by input validation (say, by ensuring that a 
+numeric input is actually converted to a number).  This fix will 
+inadvertently address SQL injection, but a different XSS fix - say, proper 
+encoding - would not.
 
-CVE identifier of CVE-2010-2474 has been already assigned to these issues.
+This is one of those areas where we can't be completely consistent in CVE, 
+and the amount of available information directly affects how many CVEs get 
+assigned.
 
-Thanks && Regards,
-Marc
-
--- 
-Marc Schoenefeld / Red Hat Security Response Team
+- Steve
