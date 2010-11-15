@@ -1,57 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/30/4
-Message-ID: <4C2AE79B.60003@mvista.com>
-Date: Tue, 29 Jun 2010 20:43:39 -1000
-From: akuster <akuster@...sta.com>
-To: Eugene Teo <eugeneteo@...nel.sg>
-CC: oss-security@...ts.openwall.com,  "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - kernel: cifs: Fix a kernel BUG with remote OS/2 server
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/15/7
+Message-ID: <AANLkTim2JzZPkTbNMLSPVB0Ba1p+RXO0SETkqMah1e7h@mail.gmail.com>
+Date: Mon, 15 Nov 2010 15:21:25 -0500
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: econet iovec
 Content-Type: text/plain; charset=utf-8
 
+This makes sense to me.  Just so everyone's on the same page:
 
-Eugene,
+CVE-2010-3859 (kernel heap overflow in TIPC) and CVE-2010-4160 (kernel
+panic and potentially heap corruption in L2TP) are both fixed by
+improved sanity checking on iovec input and new limits on network I/O
+size.
 
-On 06/29/2010 02:02 PM, Eugene Teo wrote:
-> On 06/30/2010 12:57 AM, akuster wrote:
->> pSMBr->CountHigh looks to have been introduce by commit
->> 381a420f5b23cedd9e166e052a93a7f4237bd57c back in 2.6.12-rc2.
->> So would it be said this issue has been around since then?
-> 
-> Which tree are you using? I got: fatal: bad object
-> 381a420f5b23cedd9e166e052a93a7f4237bd57c.
+The above mentioned issue in Econet (kernel panic due to integer
+overflow in sk_buff allocation size on native Econet hardware) is no
+longer an issue due to the previously mentioned fixes.  This has not
+received a CVE, nor do I necessarily think it needs one.
 
-I believe it is the historical git tree.
-git://git.kernel.org/pub/scm/linux/kernel/git/tglx/history.git
+There are likely other protocols that had issues resolved by these
+fixes.  I can dig some up if necessary, but I don't really see the
+point.
 
-> 
-> ->CountHigh was added long ago. Even v2.6.9 (rhel-4) is affected.
-I don't see that in our 2.6.10 tree.
+-Dan
 
-- Armin
-
-> 
-> Eugene
-> 
->> On 06/27/2010 10:41 PM, Eugene Teo wrote:
->>> "This was known to trigger with a OS/2 server. The server sets
->>> pSMBr->CountHigh to a incorrect value even in case of normal writes.
->>> This results in 'nbytes' being computed wrongly and triggers a kernel
->>> BUG at mm/filemap.c.
->>>
->>>      void iov_iter_advance(struct iov_iter *i, size_t bytes)
->>>      {
->>>              BUG_ON(i->count<  bytes);<--- BUG here
->>>
->>> Why the server is setting 'CountHigh' is not clear but only does so
->>> after writing 64k bytes. Though this looks like the server bug, the
->>> client side crash may not be acceptable.
->>>
->>> The workaround is to mask off high 16 bits if the number of bytes
->>> written as returned by the server is greater than the bytes requested by
->>> the client."
->>>
->>> https://bugzilla.redhat.com/show_bug.cgi?id=608583
->>> http://git.kernel.org/linus/6513a81e9325d712f1bfb9a1d7b750134e49ff18
->>>
-> 
-> 
+On Mon, Nov 15, 2010 at 3:02 PM, Steven M. Christey
+<coley@...us.mitre.org> wrote:
+>
+> On Sun, 14 Nov 2010, Dan Rosenberg wrote:
+>
+>> This also raises a question of whether it's worth assigning CVEs to every
+>> vulnerability that was fixed by a single change in the core code. I'm
+>> leaning towards "no".
+>
+> This is a big can of worms CVE-wise, since there can be multiple ways to fix
+> a single issue.  As a result, I've come to believe that you shouldn't try to
+> define a vulnerability exclusively in terms of its fix.  In practice within
+> CVE, if a single fix addresses an already-public CVE-xyz and a whole bunch
+> of other things, then we (generally) keep the already-public CVE as is, and
+> assign a new CVE(s) to the "bunch of other things" that are simultaneously
+> addressed.
+>
+> For example - in package XYZ, you might have both XSS and SQL injection,
+> where the XSS is fixed by input validation (say, by ensuring that a numeric
+> input is actually converted to a number).  This fix will inadvertently
+> address SQL injection, but a different XSS fix - say, proper encoding -
+> would not.
+>
+> This is one of those areas where we can't be completely consistent in CVE,
+> and the amount of available information directly affects how many CVEs get
+> assigned.
+>
+> - Steve
+>
