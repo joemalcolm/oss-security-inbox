@@ -1,42 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/01/10
-Message-ID: <20101001214129.GV1955@redhat.com>
-Date: Fri, 1 Oct 2010 15:41:29 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: Gerald Combs <gerald@...eshark.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE requests: Poppler, Quassel, Pyfribidi, Overkill, DocUtils, FireGPG, Wireshark
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/15/4
+Message-ID: <1126769415.1017381289842951080.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 15 Nov 2010 12:42:31 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com, rubidium@...nttd.org
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request for OpenTTD
 Content-Type: text/plain; charset=utf-8
 
-* [2010-10-01 13:33:47 -0700] Gerald Combs wrote:
 
->Vincent Danen wrote:
->> * [2010-09-29 15:06:31 -0400] Josh Bressers wrote:
->>
->>>> 7. Wireshark BER dissector
->>>> http://archives.neohapsis.com/archives/bugtraq/2010-09/0088.html
->>>>
->>>
->>> This one looks like a stack overflow, the advisory isn't very clear, but
->>> claims there are two possible outcomes. We can always split later if
->>> needed.
->>> CVE-2010-3445
->>
->> Gerald, are you aware of this issue?  Do you have further details
->> regarding it?  I poked around in bugzilla a bit but couldn't find
->> anything.
->>
->> It claims 1.4.0, but is not clear as to whether or not older versions
->> are affected.
->
->It's been fixed in the trunk (r34111) and is scheduled for inclusion in
->1.4.1 and 1.2.12. We're tracking it in bug 5230:
->
->  https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5230
->
->The bug affects all BER dissectors and not just SNMP.
+----- "Rubidium" <rubidium@...nttd.org> wrote:
 
-Great.  Thank you for the information, Gerald.  That is very helpful.
+> Hi folks,
+> 
+> we, the OpenTTD developers, have identified a security vulnerability
+> in
+> OpenTTD (an open source game with multiplayer). Would you be so kind
+> as 
+> to allocate a CVE id for this issue?
+> 
+> The issue concerns a denial of service vulnerability in the form of 
+> reading and writing already freed memory. The first vulnerable version
+> 
+> is 1.0.0, the upcoming 1.0.5 release will have the issue fixed.
+> 
+> Once a CVE id is allocated, the issue will be documented at
+> http://security.openttd.org/CVE-2010-xxxx
+> 
+> Thanks in advance,
+> Remko 'Rubidium' Bijker
+> 
+> (Please CC me, I'm not subscribed)
+
+Please use CVE-2010-4168.
+
+Thanks.
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+    JB
