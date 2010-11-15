@@ -1,22 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/02/1
-Message-ID: <B10972B83D0BD24BA122AF919F7FF3110511BFE4@S300MSMAIL03.intranet-adsn.fr>
-Date: Fri, 2 Apr 2010 12:39:57 +0200
-From: "Nicolas GREGOIRE" <nicolas.gregoire@...aires.fr>
-To: <oss-security@...ts.openwall.com>
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: RE: CVE Request -- Zabbix v1.8.2 and v.1.6.9
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/15/2
+Message-ID: <4CE0BCCC.5020504@redhat.com>
+Date: Mon, 15 Nov 2010 12:53:32 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: perf bug
 Content-Type: text/plain; charset=utf-8
 
-> >    b, also on 25 March 2010, Zabbix v1.6.9 was
-> >       released:
-> > 
-> >    [3] http://www.zabbix.com/rn1.6.9.php
-> >    [4] https://support.zabbix.com/browse/ZBX-1030
-> > 
-> 
-> Use CVE-2010-1145 for this one
+Upstream commit dab5855 ("perf_counter: Add mmap event hooks to 
+mprotect()") is fundamentally wrong as mprotect_fixup() can free 'vma' 
+due to merging. Fix the problem by moving perf_event_mmap() hook to 
+mprotect_fixup(). In certain scenario, a local, unprivileged user could 
+use this flaw to trigger a denial of service.
 
-CVE 2009-4498 is already affected to this vulnerability.
+Upstream commit:
+http://git.kernel.org/linus/63bfd7384b119409685a17d5c58f0b56e5dc03da
 
-Nicob
+https://bugzilla.redhat.com/show_bug.cgi?id=651671
+
+PS: I thought I requested a CVE name for this already, but it turns out 
+I did not.
+
+Thanks, Eugene
+-- 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
