@@ -1,23 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/30/6
-Message-ID: <Pine.GSO.4.64.1003301520170.4709@faron.mitre.org>
-Date: Tue, 30 Mar 2010 15:20:49 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/15/1
+Message-ID: <4CE0AAC5.3080506@redhat.com>
+Date: Mon, 15 Nov 2010 11:36:37 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: tipc: Fix oops on send prior to entering networked mode
+CC: Dan Rosenberg <dan.j.rosenberg@...il.com>
+Subject: Re: econet iovec
 Content-Type: text/plain; charset=utf-8
 
+Thomas, thanks for the heads-up. Appreciated it.
 
-On Tue, 30 Mar 2010, Eugene Teo wrote:
+On 11/15/2010 12:09 AM, Dan Rosenberg wrote:
+> This also raises a question of whether it's worth assigning CVEs to
+> every vulnerability that was fixed by a single change in the core
+> code.  I'm leaning towards "no".
 
-> TIPC - Transparent Inter-Process Communication protocol
->
-> Discussion:
-> http://git.kernel.org/?p=linux/kernel/git/davem/net-2.6.git;a=commit;h=d0021b252eaf65ca07ed14f0d66425dd9ccab9a6
+Yeah, It wouldn't make much sense too.
 
-Use CVE-2010-1187, to be filled in later.
+Distros should backport the changes made to mitigate such issues. See 
+https://bugzilla.redhat.com/651927, and the following patches:
+http://git.kernel.org/linus/253eacc070b114c2ec1f81b067d2fed7305467b0
+http://git.kernel.org/linus/8acfe468b0384e834a303f08ebc4953d72fb690a
 
-What version is affected?  I'm assuming at least 2.6.33.
-
-- Steve
+Thanks, Eugene
+-- 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
