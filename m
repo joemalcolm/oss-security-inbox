@@ -1,29 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/03/4
-Message-ID: <4C07FE2A.3050906@redhat.com>
-Date: Thu, 03 Jun 2010 21:10:34 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>, oss-security <oss-security@...ts.openwall.com>
-CC: Guillem Jover <guillem@...ian.org>, Aníbal Monsalve Salazar <anibal@...ian.org>
-Subject: CVE Request -- rpcbind -- Insecure (predictable) temporary file use
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/16/6
+Message-ID: <4CE2AFCC.5020008@snafu.de>
+Date: Tue, 16 Nov 2010 17:22:36 +0100
+From: Martin Drescher <drescher@...fu.de>
+To: oss-security@...ts.openwall.com
+Subject: Clear text password in process list when using MySQL GUI tools
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve, vendors,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-   Guillem Jover pointed out:
-   [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=583435#5
+Hi ML.
 
-a deficiency in the way rpcbind gathered / saved registrations from / to
-dumped file(s). A local attacker could use this flaw to conduct symbolic
-link attacks, leading to un-authorized disclosure of sensitive information
-and / or to important system files data integrity corruption.
+If you use some MySQL-GUI-tool in most (any?) linux distribution like
+mysql-admin or mysql-query-browser and then open 'Tools -> MySQL Text
+Console' your password, user name and host will become exposed in the
+process list.
 
-References:
-   [2] https://bugzilla.redhat.com/show_bug.cgi?id=599697
-   [3] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=583435#15
+I think this issue must exists over a long time in many distributions
+now but nobody ever cared about.
 
-Could you allocate CVE id for this?
+For Debian users:
+Packages mysql-query-browser, mysql-admin are affected.
 
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+
+So far, Martin
+
+ GnuPG Key Fingerprint, KeyID '4FBE451A':
+ '2237 1E95 8E50 E825 9FE8  AEE1 6FF4 1E34 4FBE 451A'
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iEYEARECAAYFAkzir8gACgkQb/QeNE++RRqfIQCfaLDToS6pAfuj4/XgkYSKnBh0
+nu8An3JJAp2nZWcOODOXX2KGs07ouATd
+=/nj6
+-----END PGP SIGNATURE-----
