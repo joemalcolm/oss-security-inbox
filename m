@@ -1,31 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/09/10
-Message-ID: <20100209161532.GA10561@kroah.com>
-Date: Tue, 9 Feb 2010 08:15:32 -0800
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/16/7
+Message-ID: <1055130019.1197021289930208364.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 16 Nov 2010 12:56:48 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - kernel: ima: fix null pointer dereference
+Cc: coley <coley@...re.org>
+Subject: Re: CVE Request: libsdp
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Feb 10, 2010 at 12:09:23AM +0800, Eugene Teo wrote:
-> On 02/09/2010 11:56 PM, Greg KH wrote:
-> >On Mon, Feb 08, 2010 at 09:30:48AM +0800, Eugene Teo wrote:
-> >>Was cc'ed this in a couple of kernel mailing lists.
-> >>
-> >>This was introduced in 6c21a7fb4 (v2.6.33-rc1).
-> >
-> >Do we need CVE numbers for issues that never showed up in a released
-> >kernel version?  I don't see how this could affect anyone, unless they
-> >were foolish enough to ship a product on a non-released kernel :)
+----- "Huzaifa Sidhpurwala" <huzaifas@...hat.com> wrote:
 > 
-> You got a point there, but I requested this in order to keep track
-> of security issues that we might need to backport in our future
-> kernels.
+> Leif Nixon reported that libsdp is vulnerable to insecure log file
+> handling. This is fixed by the latest libsdp version available at:
+> 
+> http://www.openfabrics.org/downloads/libsdp/libsdp-1.1.105-0.4.g1b9b996.tar.gz
+> 
+> More details are available in Red Hat bugzilla:
+> https://bugzilla.redhat.com/show_bug.cgi?id=647941
+> 
+> Can a CVE id be please assigned to this flaw?
+> 
 
-Fair enough, that makes sense.  Although anyone backporting ima code
-needs to seriously consider the lunacy of what they are doing :)
+Please use
+CVE-2010-4173
 
-good luck,
+Thanks.
 
-greg k-h
+-- 
+    JB
