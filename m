@@ -1,39 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/09/15
-Message-ID: <191191892.863861291928271518.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 9 Dec 2010 15:57:51 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/16/4
+Message-ID: <1289923322.2983.8.camel@mdlinux>
+Date: Tue, 16 Nov 2010 11:02:02 -0500
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: bfa driver sysfs crash
+Cc: Bill Janssen <bill.janssen@...il.com>, Andreas Hasenack <ahasenack@...ra.com.br>, Mads Kiilerich <mads@...lerich.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Mercurial --Doesn't verify subject Common Name properly
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-4343
+Hi,
 
-Thanks.
+On Mon, 2010-11-15 at 16:58 -0500, Steven M. Christey wrote:
+> Ouch, this is painful for a number of reasons.
+> 
+> Maybe Python "should" get the CVE, but the decision to push the issue to 
+> application developers means that those developers will each have to 
+> provide fixes, and software consumers will have to track these related 
+> vulns at the application level.
+> 
+> (One could make the same argument about fundamental design flaws in 
+> standards-based protocols, for which CVE generally assigns a single 
+> identifier, but those issues generally feel "different" to me.  Quite 
+> logical, I know...)
+> 
+> Anyway, I think we need to assign separate CVEs for each affected product 
+> as an instance of "an implementation not working around security-relevant 
+> design limitations of APIs" (which is consistent with the approach that 
+> CVE has taken with respect to the DLL hijacking / insecure library loading 
+> issues of the past couple months.)
+
+Thanks for the clarification. Here are some more projects that need CVEs
+for this issue:
+
+libcloud:
+https://issues.apache.org/jira/browse/LIBCLOUD-55
+https://bugs.launchpad.net/ubuntu/+source/libcloud/+bug/675217
+
+Checkbox:
+https://bugs.launchpad.net/ubuntu/+source/checkbox/+bug/625076
+
+Bazaar:
+https://bugs.edge.launchpad.net/bzr/+bug/651161
+
+
+Thanks,
+
+Marc.
+
 
 -- 
-    JB
+Marc Deslauriers
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
 
-
------ "Eugene Teo" <eugene@...hat.com> wrote:
-
-> The port data structure related to fc_host statistics collection is
-> not
-> initialized. This causes system crash when reading the fc_host 
-> statistics. The fix is to initialize port structure during driver
-> attach.
-> 
-> This can be triggered by reading the fc statistics files under
-> /sys/class/fc_host/host#/statistics.
-> 
-> A bfa adapter must be present in the system for the problem to occur.
-> 
-> Upstream commit:
-> http://git.kernel.org/linus/7873ca4e4401f0ecd8868bf1543113467e6bae61
-> 
-> Reference:
-> https://bugzilla.redhat.com/show_bug.cgi?id=661182
-> http://www.spinics.net/lists/linux-scsi/msg43772.html
-> 
-> Thanks, Eugene
