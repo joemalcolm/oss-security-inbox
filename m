@@ -1,22 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/14/1
-Message-ID: <4C158907.9020302@kernel.sg>
-Date: Mon, 14 Jun 2010 09:42:31 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/16/5
+Message-ID: <AANLkTi=hdwmS4bDzjqPP4Yc6E14Fzh_TSckgczwdN9Qr@mail.gmail.com>
+Date: Tue, 16 Nov 2010 16:10:24 +0000
+From: Ben Laurie <benl@...gle.com>
 To: oss-security@...ts.openwall.com
-CC: Dan Rosenberg <dan.j.rosenberg@...il.com>
-Subject: Re: CVE request - kernel: btrfs: prevent users from setting ACLs on files 	they do not own
+Subject: Re: CVE Request -- Mercurial --Doesn't verify subject Common Name properly
 Content-Type: text/plain; charset=utf-8
 
-On 06/12/2010 04:32 AM, Dan Rosenberg wrote:
-> Shi Weihua discovered that btrfs did not check ownership of files
-> before setting ACLs, allowing any user to set ACLs for any file,
-> completely bypassing all file permissions.  This wasn't reported as a
-> security issue, but it seems pretty serious to me (for those who use
-> btrfs).  See http://lkml.org/lkml/2010/5/17/544 for his original post.
+On 15 November 2010 21:58, Steven M. Christey <coley@...us.mitre.org> wrote:
+>
+> Ouch, this is painful for a number of reasons.
+>
+> Maybe Python "should" get the CVE, but the decision to push the issue to
+> application developers means that those developers will each have to provide
+> fixes, and software consumers will have to track these related vulns at the
+> application level.
 
-Thanks, please use CVE-2010-2071.
+It would certainly be safer if Python did the test by default and
+applications had to explicitly turn it off...
 
-Eugene
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+>
+> (One could make the same argument about fundamental design flaws in
+> standards-based protocols, for which CVE generally assigns a single
+> identifier, but those issues generally feel "different" to me.  Quite
+> logical, I know...)
+>
+> Anyway, I think we need to assign separate CVEs for each affected product as
+> an instance of "an implementation not working around security-relevant
+> design limitations of APIs" (which is consistent with the approach that CVE
+> has taken with respect to the DLL hijacking / insecure library loading
+> issues of the past couple months.)
+>
+> I've been tempted to start assigning a single CVE to design limitations such
+> as this Python certificate issue, and (where needed) independent CVEs for
+> affected implementations, but I'm not feeling adventurous enough yet. it
+> kind of goes against the idea where each vuln has only one CVE associated
+> with it.
+>
+> So - use CVE-2010-4237 for the issue in Mercurial, and feel free to consult
+> with me privately for the other issues if you wish.
+>
+> - Steve
+>
+>
+>
+> On Sun, 14 Nov 2010, Marc Deslauriers wrote:
+>
+>> On Mon, 2010-10-11 at 15:48 -0400, Josh Bressers wrote:
+>>>
+>>> Steve,
+>>>
+>>> Can I defer this one to MITRE? My initial thought is that python should
+>>> get
+>>> the ID, but they seem to want to push it up to the application
+>>> developers,
+>>> but they also added some functionality in
+>>> http://svn.python.org/view?view=rev&revision=85321
+>>>
+>>> Is there a past precedent for this?
+>>>
+>>
+>> Has any decision been made regarding CVE assignment for this? I've found
+>> some more python applications that aren't validating ssl certs, and am
+>> waiting to know how this is going to be handled.
+>>
+>> Thanks,
+>>
+>> Marc.
+>>
+>>
+>> --
+>> Marc Deslauriers
+>> Ubuntu Security Engineer     | http://www.ubuntu.com/
+>> Canonical Ltd.               | http://www.canonical.com/
+>>
+>>
+>
