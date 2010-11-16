@@ -1,42 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/31/5
-Message-ID: <4BB385CE.5060208@redhat.com>
-Date: Wed, 31 Mar 2010 19:26:38 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, Jan Lehnardt <jan@...che.org>
-Subject: CVE Request -- Apache CouchDB v.0.11.0 -- timing attacks flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/16/3
+Message-ID: <AANLkTindXKJfCs3g-0aer3EeCFqk5bFBpJBqKerTt2tp@mail.gmail.com>
+Date: Tue, 16 Nov 2010 16:10:50 +0100
+From: Pierre Joye <pierre.php@...il.com>
+To: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: utf-8 security issue in php - 2 CVEs?
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve, vendors,
+hi,
 
-   Apache CouchDB upstream has released latest, v.0.11.0
-version, addressing timing attack flaw(s). More from Bugtraq
-post:
-   [1] http://seclists.org/bugtraq/2010/Mar/254
+New fixes or improved fixes, even for known flaw, get new CVE #. I was
+not sure about that a couple of months ago, but that's the answer I
+got when I asked about the policy for such cases. I think it makes
+even more sense in this particular flaw.
 
-"Apache CouchDB versions prior to version 0.11.0 are vulnerable to
-timing attacks, also known as side-channel information leakage,
-due to using simple break-on-inequality string comparisons when
-verifying hashes and passwords."
+Cheers,
 
-References:
-   [2] http://wiki.apache.org/couchdb/Breaking_changes
-   [3] http://codahale.com/a-lesson-in-timing-attacks/
-   [4] http://couchdb.apache.org/
-   [5] http://couchdb.apache.org/downloads.html
+On Tue, Nov 16, 2010 at 7:30 AM, Huzaifa Sidhpurwala
+<huzaifas@...hat.com> wrote:
+> Hi,
+> This is regarding the "utf-8 security issue in php", which was discussed
+> on this list[1]
+> From the php bug[2], it is clear that this issue has been assigned
+> CVE-2010-3870
+>
+> However yesterday another CVE was assigned to this bug i.e. CVE-2009-5016[3]
+>
+> The upstream bug report, describes two issues:
+> a. An integer overflow
+> b. flaw in handling ill-formed UTF8 characters.
+>
+> The integer overflow issue was solved somewhere in year 2009, which was
+> however not a complete fix since the ill-formed UTF8 chars., were still
+> not properly validated. The rest of the issues were solved sometime back.
+>
+> It seems that the integer overflow is not exploitable on its own, you
+> need to couple it with the second issue for the exploit to really work.
+>
+> Therefore do we really need two CVEs for this issue?
+>
+> [1] http://thread.gmane.org/gmane.comp.security.oss.general
+> [2] http://bugs.php.net/bug.php?id=49687
+> [3] http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2009-5016
+>
+>
+> --
+>
+> Huzaifa Sidhpurwala / Red Hat Security Response Team
+>
 
-Credit:
-   Jason Davies of the Apache CouchDB development team
 
-[1] references CVE-2008-2370 as CVE id, but CVE-2008-2370 is Apache Tomcat flaw:
-   [6] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2370
 
-Since Apache CouchDB is different code base, susceptible to the same
-issue as in [3], assuming new CVE identifier is required.
+-- 
+Pierre
 
-Steve, could you allocate one?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
