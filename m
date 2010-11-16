@@ -1,32 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/03/1
-Message-ID: <4BB7091C.4090509@redhat.com>
-Date: Sat, 03 Apr 2010 11:23:40 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, Roshan Kumar Singh <roshansingh@...rs.sourceforge.net>
-Subject: CVE Request -- OpenDCHub v0.8.1 -- Stack overflow by handling a specially-crafted MyINFO message
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/16/2
+Message-ID: <4CE22839.3040809@redhat.com>
+Date: Tue, 16 Nov 2010 12:14:09 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: libsdp
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve, vendors
+Hi,
 
-   (based on http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=576308)
+Leif Nixon reported that libsdp is vulnerable to insecure log file
+handling. This is fixed by the latest libsdp version available at:
 
-   Pierre Nogues found a stack overflow flaw, in the way Open DC Hub
-sanitized content of user's MyINFO message. Remote attacker,
-with valid Open DC Hub account, could send a specially-crafted
-MyINFO message to another user / all users connected to particular
-Direct Connect network, leading into denial of service (opendchub
-crash) or, potentially, to arbitrary code execution with the privileges
-of the user running opendchub.
+http://www.openfabrics.org/downloads/libsdp/libsdp-1.1.105-0.4.g1b9b996.tar.gz
 
-References:
-   [1] http://www.indahax.com/exploits/opendchub-0-8-1-remote-code-execution-exploit#more-600
-   [2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=576308
-   [3] https://bugzilla.redhat.com/show_bug.cgi?id=579206
+More details are available in Red Hat bugzilla:
+https://bugzilla.redhat.com/show_bug.cgi?id=647941
 
-Could you allocate a CVE id for this?
+Can a CVE id be please assigned to this flaw?
 
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Thanks.
+
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
