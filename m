@@ -1,23 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/06/4
-Message-Id: <201012061500.13203.hanno@hboeck.de>
-Date: Mon, 6 Dec 2010 15:00:13 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/16/1
+Message-ID: <4CE224F2.2090709@redhat.com>
+Date: Tue, 16 Nov 2010 12:00:10 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: openx unknown vulnerability before 2.8.7
+CC: Pierre Joye <pierre.php@...il.com>
+Subject: utf-8 security issue in php - 2 CVEs?
 Content-Type: text/plain; charset=utf-8
 
-Upstream is not very talkative, but I found a blog claiming this is exploitet 
-in the wild:
-http://blog.openx.org/09/security-update/
-http://blog.sucuri.net/2010/09/openx-users-time-to-upgrade.html
+Hi,
+This is regarding the "utf-8 security issue in php", which was discussed
+on this list[1]
+>From the php bug[2], it is clear that this issue has been assigned
+CVE-2010-3870
 
-Please assign CVE.
+However yesterday another CVE was assigned to this bug i.e. CVE-2009-5016[3]
+
+The upstream bug report, describes two issues:
+a. An integer overflow
+b. flaw in handling ill-formed UTF8 characters.
+
+The integer overflow issue was solved somewhere in year 2009, which was
+however not a complete fix since the ill-formed UTF8 chars., were still
+not properly validated. The rest of the issues were solved sometime back.
+
+It seems that the integer overflow is not exploitable on its own, you
+need to couple it with the second issue for the exploit to really work.
+
+Therefore do we really need two CVEs for this issue?
+
+[1] http://thread.gmane.org/gmane.comp.security.oss.general
+[2] http://bugs.php.net/bug.php?id=49687
+[3] http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2009-5016
+
 
 -- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
-http://schokokeks.org - professional webhosting
-
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+Huzaifa Sidhpurwala / Red Hat Security Response Team
