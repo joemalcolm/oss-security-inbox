@@ -1,26 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/09/11
-Message-ID: <Pine.GSO.4.64.1012091018490.6544@faron.mitre.org>
-Date: Thu, 9 Dec 2010 10:20:57 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/17/9
+Message-ID: <20101117200644.GA20394@inutil.org>
+Date: Wed, 17 Nov 2010 21:06:44 +0100
+From: Moritz Muehlenhoff <jmm@...til.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: NULL byte poisoning fix in php 5.3.4+
+Cc: coley <coley@...re.org>
+Subject: Re: Clear text password in process list when using MySQL GUI tools
 Content-Type: text/plain; charset=utf-8
 
+On Wed, Nov 17, 2010 at 08:38:06AM -0500, Josh Bressers wrote:
+> Steve,
+> 
+> What are the thoughts of MITRE on this one? This affects all sorts of stuff,
+> and I don't upstream removing the command line option (which is probably the
+> only fix).
 
-On Thu, 9 Dec 2010, Pierre Joye wrote:
+I didn't look into this specific issue since both mysql-query-browser
+and mysql-admin have been removed and are no longer supported in Debian,
+but there have been cases in the past, where leaking sensitive information
+in the process list was assigned a CVE ID, e.g. CVE-2004-1948 for
+ncftp.
 
-> We fixed it for all file functions. See the link to the commit for
-> more details about which codes have been changed. Do we need a CVE for
-> every function? I hope not :)
-
-Not really - if all functions were fixed in the same version, then that's 
-not "textbook" CVE but close enough.
-
-The main drivers for my question were (a) were there any other issues that 
-remain unfixed, and (b) in general we try to have the year portion of CVE 
-IDs align with publication (except for year-crossing time frames like 
-Dec/Jan).  In this case it might have been more reasonable to assign a 
-1999 CVE, but the 2006 assignment isn't horrible either...
-
-- Steve
+Cheers,
+        Moritz
