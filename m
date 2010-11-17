@@ -1,39 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/18/5
-Message-ID: <20100218164119.GB16428@suse.de>
-Date: Thu, 18 Feb 2010 17:41:19 +0100
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/17/4
+Message-ID: <4CE34FBC.9090900@redhat.com>
+Date: Wed, 17 Nov 2010 09:15:00 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel information leak via userspace USB interface
+CC: Pierre Joye <pierre.php@...il.com>
+Subject: Re: Re: utf-8 security issue in php - 2 CVEs?
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Feb 18, 2010 at 09:09:15AM +0800, Eugene Teo wrote:
-> Hi Marcus,
+On 11/16/2010 08:40 PM, Pierre Joye wrote:
+> hi,
 > 
-> On 02/17/2010 06:29 PM, Marcus Meissner wrote:
-> >While programming a USB device using libusb I found that a usb read from
-> >the device returned data it should not.
-> [...]
-> >Access to USB userspace devices either requires root access or desktop 
-> >user access
-> >via udev/hal ACLs on non-mass-storage Digital Cameras or Media Players. 
-> >(So the
-> >desktop user needs to plugin such a ACL getting device before being able
-> >to read the memory).
+> New fixes or improved fixes, even for known flaw, get new CVE #. I was
+> not sure about that a couple of months ago, but that's the answer I
+> got when I asked about the policy for such cases. I think it makes
+> even more sense in this particular flaw.
 > 
-> To abuse this, you will need physical access to plug in a USB device, so 
-> I do not think this should be regarded as a security issue.
+Right,
+However i am wondering why there is no mention of CVE-2009-5016 in the
+php NEWS file from the SVN.
+It only mentions:
 
-Hmm.
+"
+- Fixed bug #49687 (utf8_decode vulnerabilities and deficiencies in the
+number
+  of reported malformed sequences). (CVE-2010-3870) (Gustavo)
+"
 
-Or you exploit the desktop user and then wait until he plugs in such a device
-(ok, kind of a theoretical scenario, lets ignore).
 
-
-Are we considering "giving desktop local users unintended rights"
-a security issue or not?
-
-(Hmm, init=/bin/sh booting and pressing reset might come into
- play here too. Then we would not consider that.)
-
-Ciao, Marcus
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
