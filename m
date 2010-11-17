@@ -1,33 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/17/2
-Message-ID: <20100817190905.GA5658@openwall.com>
-Date: Tue, 17 Aug 2010 23:09:05 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/17/2
+Message-ID: <4CE394E3.6020605@gmx.de>
+Date: Wed, 17 Nov 2010 09:40:03 +0100
+From: Matthias Andree <matthias.andree@....de>
 To: oss-security@...ts.openwall.com
-Subject: Re: [oCERT-2010-001] multiple http client unexpected download filename vulnerability
+Subject: Re: CVE Request -- Mercurial --Doesn't verify subject Common Name properly
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jun 09, 2010 at 03:47:42PM -0400, Steven M. Christey wrote:
-> CVE-2010-2252 - wget 
+Am 16.11.2010 17:02, schrieb Marc Deslauriers:
 
-This is finally getting fixed in wget upstream:
+> Thanks for the clarification. Here are some more projects that need CVEs
+> for this issue:
+> 
+> libcloud:
+> https://issues.apache.org/jira/browse/LIBCLOUD-55
+> https://bugs.launchpad.net/ubuntu/+source/libcloud/+bug/675217
+> 
+> Checkbox:
+> https://bugs.launchpad.net/ubuntu/+source/checkbox/+bug/625076
+> 
+> Bazaar:
+> https://bugs.edge.launchpad.net/bzr/+bug/651161
 
-http://lists.gnu.org/archive/html/bug-wget/2010-07/msg00076.html
+In the past, Charles Cazabon's getmail would have had to be added to the
+list, but he didn't care and pointed fingers at the Python library
+developers, and I'm not sure what the current shape of getmail 4 is, and
+don't care sufficiently to look it up.
 
-Giuseppe had to come up with his own patch (included at the end of the
-posting above).  He "couldn't" use Florian's patch for licensing reasons
-(getting a patch into an FSF project requires some paperwork sent to the
-FSF, and somehow this process got stalled at some stage).
+Getmail used to happily connect to sites that have expired certs, for
+instance.
 
-The new option name is "--trust-server-names".
-
-Some criticism from a wget user, and Giuseppe's answer (which I agree with):
-
-http://lists.gnu.org/archive/html/bug-wget/2010-08/msg00004.html
-
-So things look good.  We should expect this feature and the safe default
-in the next wget release.
-
-(I did not test the patch myself, but I "trust" that it works.)
-
-Alexander
+-- 
+Matthias Andree
