@@ -1,28 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/21/2
-Message-ID: <4B5815BA.2040801@redhat.com>
-Date: Thu, 21 Jan 2010 16:52:10 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/17/11
+Message-ID: <4CE45E1C.9030101@snafu.de>
+Date: Wed, 17 Nov 2010 23:58:36 +0100
+From: Martin Drescher <drescher@...fu.de>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>, Jerome Glisse <jglisse@...hat.com>
-Subject: Re: CVE request - kernel: drm/radeon: r6xx/r7xx possible security issue, system ram access
+Subject: Re: Clear text password in process list when using MySQL GUI tools
 Content-Type: text/plain; charset=utf-8
 
-On 01/21/2010 04:44 PM, Eugene Teo wrote:
-> Quoting from the patch description:
-> "This patch workaround a possible security issue which can allow user to
-> abuse drm on r6xx/r7xx hw to access any system ram memory. This patch
-> doesn't break userspace, it detect "valid" old use of CB_COLOR[0-7]_FRAG
-[...]
-> The attack is theoretical. To exploit this you need access to the drm
-> device file which is usually set to 666 to allow users to have 3D
-> acceleration.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Sorry, correction, you need to be root to open the drm device file. 
-However, Jerome discussed with me that it is possible if you use an X 
-program and use dri/dri2 to get access to the gpu cs ioctl. I have cc'ed 
-Jerome to this email who can help answer queries if there are any.
+Hi ML.
 
-Thanks, Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
+On 17/11/10 21:06, Moritz Muehlenhoff wrote:
+> On Wed, Nov 17, 2010 at 08:38:06AM -0500, Josh Bressers wrote:
+>> Steve,
+>>
+>> What are the thoughts of MITRE on this one? This affects all sorts of stuff,
+>> and I don't upstream removing the command line option (which is probably the
+>> only fix).
+> 
+> I didn't look into this specific issue since both mysql-query-browser
+> and mysql-admin have been removed and are no longer supported in Debian,
+
+I can't follow you with that. Those packages are part of my Debian
+distribution, which is lenny and the reason I initially posted this
+issue to Debian security.
+
+> but there have been cases in the past, where leaking sensitive information
+> in the process list was assigned a CVE ID, e.g. CVE-2004-1948 for
+> ncftp.
+
+Let me add that for an experienced user it should/may be clear that
+command line arguments may be visible in process list or via the proc
+fs. The MySQL GUI-tools _and_ mysql command line tool do in fact that
+they care about sensitive information (eg. user, password, host). But
+then the GUI does this epic fail calling 'mysql' through an 'xterm -e
+mysql ...' call. Or some other kind of terminal. This is a kind of stupid.
+
+> 
+> Cheers,
+>         Moritz
+
+- -- 
+ Martin Drescher
+ Manfred-von-Richthofen-Strasse 223
+ 12101 Berlin
+
+ Office:+49.(0)30.746 80 425
+ Mobil: +49.(0)176 101 73 264
+ Email:<drescher@...fu.de>
+ USt-IdNr. DE211832267
+ GnuPG Key Fingerprint, KeyID '4FBE451A':
+ '2237 1E95 8E50 E825 9FE8  AEE1 6FF4 1E34 4FBE 451A'
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iEYEARECAAYFAkzkXhYACgkQb/QeNE++RRpMhwCffUPk6ehCaW9yrdruxmEw4LEo
+JZUAn0LfOhjxrUYdcrAZqP0rWG+Vuxpx
+=caEx
+-----END PGP SIGNATURE-----
