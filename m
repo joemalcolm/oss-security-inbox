@@ -1,38 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/14/19
-Message-ID: <AANLkTikAywmCXXaWuFTjsVgNASfD18mLLF7Qfvtz_f1c@mail.gmail.com>
-Date: Tue, 14 Sep 2010 17:20:10 -0600
-From: Kurt Seifried <kurt@...fried.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: mantis before 1.2.3 (XSS)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/17/7
+Message-ID: <AANLkTimfA08HwCnr0fcY7uQ8-UtV0gxBTrmdYqZUw0Lt@mail.gmail.com>
+Date: Wed, 17 Nov 2010 16:50:59 +0100
+From: Pierre Joye <pierre.php@...il.com>
+To: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Re: utf-8 security issue in php - 2 CVEs?
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Sep 14, 2010 at 3:09 PM, Hanno Böck <hanno@...eck.de> wrote:
-> Addition:
-> http://www.mantisbt.org/bugs/changelog_page.php?version_id=111
-> lists six different xss issues.
+On Wed, Nov 17, 2010 at 4:45 AM, Huzaifa Sidhpurwala
+<huzaifas@...hat.com> wrote:
+> On 11/16/2010 08:40 PM, Pierre Joye wrote:
+>> hi,
+>>
+>> New fixes or improved fixes, even for known flaw, get new CVE #. I was
+>> not sure about that a couple of months ago, but that's the answer I
+>> got when I asked about the policy for such cases. I think it makes
+>> even more sense in this particular flaw.
+>>
+> Right,
+> However i am wondering why there is no mention of CVE-2009-5016 in the
+> php NEWS file from the SVN.
+> It only mentions:
+>
+> "
+> - Fixed bug #49687 (utf8_decode vulnerabilities and deficiencies in the
+> number
+>  of reported malformed sequences). (CVE-2010-3870) (Gustavo)
+> "
 
-The first two of which have CVE #'s
+I only updated the NEWS for the upcoming release as the fix applies to
+this specific CVE.
 
-CVE-2010-3070
-- 0012312: [security] NuSOAP WSDL XSS (cross-site scripting
-vulnerability) in Mantis 1.2.2 (dhx) - resolved.
-
-CVE-2010-2574
-- 0012230: [security] XSS vulnerability when deleting maliciously
-named categories (dhx) - resolved.
-
-These four have no CVE #:
-- 0012231: [security] XSS vulnerability when uninstalling maliciously
-named plugins (dhx) - resolved.
-- 0012232: [security] Multiple XSS issues with custom field
-enumeration values (dhx) - resolved.
-- 0012234: [security] XSS issues when using custom field String values
-(dhx) - resolved.
-- 0012238: [security] XSS in print_all_bug_page_word.php when printing
-project and category names (dhx) - resolved.
+However I can add a ref to CVE-2009-5016 to the related NEWS entry
+(for the record, as it was released already), if you have found it :)
 
 -- 
-Kurt Seifried
-kurt@...fried.org
-tel: 1-703-879-3176
+Pierre
+
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
