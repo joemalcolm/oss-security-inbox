@@ -1,27 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/13/6
-Message-ID: <163409936.2314911284408594399.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 13 Sep 2010 16:09:54 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/17/1
+Message-Id: <201011170928.41646.ludwig.nussel@suse.de>
+Date: Wed, 17 Nov 2010 09:28:41 +0100
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request for non disclosed issue?
+Subject: Re: CVE Request -- Mercurial --Doesn't verify subject Common Name properly
 Content-Type: text/plain; charset=utf-8
 
-
------ "Kyle Bader" <kyle.bader@...il.com> wrote:
-
-> > Another (certainly obvious) question, where/to who can I ask a CVE
-> id
-> > for a flaw not disclosed yet?
+Ben Laurie wrote:
+> On 15 November 2010 21:58, Steven M. Christey <coley@...us.mitre.org> wrote:
+> > Ouch, this is painful for a number of reasons.
+> >
+> > Maybe Python "should" get the CVE, but the decision to push the issue to
+> > application developers means that those developers will each have to provide
+> > fixes, and software consumers will have to track these related vulns at the
+> > application level.
 > 
-> http://cve.mitre.org/cve/obtain_id.html
-> 
+> It would certainly be safer if Python did the test by default and
+> applications had to explicitly turn it off...
 
+Python doesn't verify certificates by default either IIRC. I guess python
+simply follows openssl (mis)behavior here. Well, lame excuse anyways.
 
-You are also welcome to mail me, I'm a CNA at Red Hat. MITRE is generally
-very busy, so you'll probably get a faster response from a CNA.
-
-Thanks.
+cu
+Ludwig
 
 -- 
-    JB
+ (o_   Ludwig Nussel
+ //\   
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
