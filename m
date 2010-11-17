@@ -1,45 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/25/2
-Message-ID: <1090383007.1201011277484327110.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 25 Jun 2010 12:45:27 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/17/8
+Message-ID: <AANLkTi=OYXcFdHLb1xAbzn-L+5Pr02FsEJZ5dKSpeGJA@mail.gmail.com>
+Date: Wed, 17 Nov 2010 11:58:02 -0500
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Florian Streibelt <gentoo@...treibelt.de>, Mads Martin Joergensen <mmj@....dk>, "Morten K. Poulsen" <morten@...elingp.dk>, "Steven M. Christey" <coley@...us.mitre.org>, Michael Fleming <mfleming+rpm@...tfleminggent.com>
-Subject: Re: CVE Request -- mlmmj -- Directory traversal flaw by editing and saving list entries via php-admin web interface
+Subject: CVE request: kernel: integer overflow in RDS
 Content-Type: text/plain; charset=utf-8
 
------ "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+In rds_cmsg_rdma_args(), the user-provided args->nr_local value is
+restricted to less than UINT_MAX.  This needs a tighter upper bound,
+since the calculation of total iov_size can overflow, resulting in a
+small sock_kmalloc() allocation.  This would probably just result in
+walking off the heap and crashing when calling rds_rdma_pages() with a
+high count value.  If it somehow doesn't crash here, then memory
+corruption could occur soon after.
 
-> Hi Steve, vendors,
-> 
->    Florian Streibelt (yet in 2009) reported:
->    [1] http://bugs.gentoo.org/show_bug.cgi?id=259968#c0
-> 
->    a directory traversal flaw in the way mlmmj (Mailing List Managing
->    Made Joyful), mailing list manager, processed users requests to edit
->    and save list entries, originating from php-admin web interface. A
->    remote, authenticated attacker could use these flaws to alter
->    integrity of the system (write and / or delete arbitrary files) by
->    providing a specially-crafted list variable content to the edit or
->    save request.
-> 
->    Florian, please correct me, if I mangled the attack scenario, and it's
->    slightly different.
-> 
->    Martin, Morten, are these two issues known upstream yet? Is there a
->    patch for them already?
-> 
->    Steve, could you please allocate two CVE-2009-XXXX CVE ids?  (One for
->    1, 'edit' case, second for 2, 'save' case.) [Searching "Master Copy of
->    CVE" for "mlmmj" keyword returned nothing for me.]
-> 
+This is closely related to CVE-2010-3865
+(http://www.spinics.net/lists/netdev/msg145359.html), which also
+concerned various integer overflow and memory corruption issues in
+rds_cmsg_rdma_args().  In fact, I'd say it's due to an incomplete fix.
 
-This should only need one ID. The flaw is unchecked input. Steve, if I'
-mistaken, just yell.
+Reference:
+http://marc.info/?l=linux-netdev&m=129001184803080&w=2
 
-CVE-2009-4896
-
-Thanks
-
--- 
-    JB
+-Dan
