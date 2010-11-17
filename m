@@ -1,41 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/12/9
-Message-ID: <1268437685.5856.4.camel@apollo>
-Date: Fri, 12 Mar 2010 18:48:05 -0500
-From: Jon Oberheide <jon@...rheide.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/17/6
+Message-ID: <297054876.1296341290001086716.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 17 Nov 2010 08:38:06 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CFPs and con invitations on the list
+Cc: coley <coley@...re.org>
+Subject: Re: Clear text password in process list when using MySQL GUI tools
 Content-Type: text/plain; charset=utf-8
 
-Guofei at Georgia Tech maintains a list of the top few tiers of academic
-security conferences:
+Steve,
 
-http://faculty.cs.tamu.edu/guofei/sec_conf_stat.htm
+What are the thoughts of MITRE on this one? This affects all sorts of stuff,
+and I don't upstream removing the command line option (which is probably the
+only fix).
 
-While I'm not implying that this should be used as a strict whitelist
-for academic CFP announcements, it's something to keep in mind when
-maintaining a high SNR.
-
-Regards,
-Jon Oberheide
-
-On Sat, 2010-03-13 at 02:36 +0300, Solar Designer wrote:
-> Since there were no followups to my posting/questions, I've just
-> approved a CFP posting by James Heralds, who has been an oss-security
-> subscriber for a month.
-> 
-> On Wed, Mar 03, 2010 at 06:30:02PM +0300, Solar Designer wrote:
-> > I've just approved Laurent's posting, even though this is sort of an
-> > exception lately.  Several other postings of "this nature" (not training
-> > courses but mostly conference CFPs, though) were not approved.  Yet I
-> > thought it was time to revisit this issue, ...
-> 
-> Alexander
-
+Thanks.
 
 -- 
-Jon Oberheide <jon@...rheide.org>
-GnuPG Key: 1024D/F47C17FE
-Fingerprint: B716 DA66 8173 6EDD 28F6  F184 5842 1C89 F47C 17FE
+    JB
 
-Download attachment "signature.asc" of type "application/pgp-signature" (198 bytes)
+
+----- "Martin Drescher" <drescher@...fu.de> wrote:
+
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> Hi ML.
+> 
+> If you use some MySQL-GUI-tool in most (any?) linux distribution like
+> mysql-admin or mysql-query-browser and then open 'Tools -> MySQL Text
+> Console' your password, user name and host will become exposed in the
+> process list.
+> 
+> I think this issue must exists over a long time in many distributions
+> now but nobody ever cared about.
+> 
+> For Debian users:
+> Packages mysql-query-browser, mysql-admin are affected.
+> 
+> 
+> So far, Martin
+> 
+>  GnuPG Key Fingerprint, KeyID '4FBE451A':
+>  '2237 1E95 8E50 E825 9FE8  AEE1 6FF4 1E34 4FBE 451A'
+> 
+> 
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.10 (GNU/Linux)
+> Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+> 
+> iEYEARECAAYFAkzir8gACgkQb/QeNE++RRqfIQCfaLDToS6pAfuj4/XgkYSKnBh0
+> nu8An3JJAp2nZWcOODOXX2KGs07ouATd
+> =/nj6
+> -----END PGP SIGNATURE-----
