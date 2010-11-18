@@ -1,24 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/11/2
-Message-Id: <201008111702.54361.ludwig.nussel@suse.de>
-Date: Wed, 11 Aug 2010 17:02:53 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
-To: "oss-security" <oss-security@...ts.openwall.com>
-Subject: CVE Request: openssl double free
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/18/7
+Message-ID: <4CE58BAE.5080105@redhat.com>
+Date: Thu, 18 Nov 2010 15:25:18 -0500
+From: Daniel J Walsh <dwalsh@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Kees Cook <kees@...ntu.com>, Steve Grubb <sgrubb@...hat.com>
+Subject: Re: filesystem capabilities
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Georgi Guninski found a double free issue in openssl's client implementation:
-http://www.mail-archive.com/openssl-dev@openssl.org/msg28043.html
-The affected code also is in pre 1.0 versions but only 1.0 uses ECDH
-for ssl by default AFAICT.
+On 11/18/2010 01:56 PM, Kees Cook wrote:
+> Hi Steve,
+> 
+> On Wed, Nov 10, 2010 at 02:55:47PM -0500, Steve Grubb wrote:
+>> drop all privs is a 2 liner:
+>> capng_clear(CAPNG_SELECT_CAPS);
+>> if (capng_apply(CAPNG_SELECT_CAPS))
+>> 	exit(0);
+>>
+>> Not sure anything that small needs a library function.
+> 
+> Well, yeah, if it's just caps, I'd agree, but I'm failing to describe what
+> I mean. :)
+> 
+> For the transition from setuid to fscaps, there will be a time where
+> distros may ship a program with both setuid-root and fscaps. (Some
+> stacked filesystems, for example, don't support fscaps.) In these
+> situations, it would be nice to have a single library-based routine that
+> all of these programs can call that will basically do the following:
+> 
+> - remember if I'm running setuid
+> - drop all but needed caps
+> - if I was setuid, drop uid back to real uid
+> 
+> That way the sensitive code isn't cut/pasted into lots of programs, just
+> they all call out to a single place, and everything gets it right,
+> regardless of them being setuid or fscap.
+> 
+>> I asked the maintainer if he's had any discussion [about upstreaming
+>> the tar xattr patches] lately.
+> 
+> Any news here?
+> 
+>>> Has there been any discussion of making rsync, cp, and cpio default to
+>>> copying xattrs and acls too? I know at least with rsync they are explicitly
+>>> not included in the "-a" option. :(
+>>
+>> My rsync man page shows a -X option and cp has a --preserve=xattr. cpio doesn't but no 
+>> one seems to have been missing that.
+> 
+> Right, but I mean, it seems like it would be valuable to make these options
+> _part_ of -a when currently they are explicitly not included.
+> 
+> -Kees
+> 
 
-cu
-Ludwig
+Something like this works in both setuid and fscap systems.
 
--- 
- (o_   Ludwig Nussel
- //\   
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+/**
+ * This function will drop all capabilities
+ * Returns zero on success, non-zero otherwise
+ */
+static int drop_capabilities(uid_t uid)
+{
+	capng_clear(CAPNG_SELECT_BOTH);
+	if (capng_lock() < 0)
+		return -1;
+
+	/* Change uid */
+	if (setresuid(uid, uid, uid)) {
+		fprintf(stderr, _("Error changing uid, aborting.\n"));
+		return -1;
+	}
+	return capng_apply(CAPNG_SELECT_BOTH);
+}
+
+If you are in filecaps, your current UID is the same as what you call
+setresuid with, and it becomes a noop.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+Comment: Using GnuPG with Fedora - http://enigmail.mozdev.org/
+
+iEYEARECAAYFAkzli64ACgkQrlYvE4MpobNK9QCeIL/t5x1RZyfFaFv4McI4lriC
+BiQAnAiM0z4wXkYZTvgrSUekVW4fuCkV
+=SIkj
+-----END PGP SIGNATURE-----
