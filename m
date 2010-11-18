@@ -1,40 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/12/5
-Message-ID: <1461620600.215751281639493592.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 12 Aug 2010 14:58:13 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/18/4
+Message-ID: <AANLkTimJjywX1oQLe9Zx1hYK9UxFvRexFkNhBT42XGbV@mail.gmail.com>
+Date: Thu, 18 Nov 2010 17:22:53 +0100
+From: Pierre Joye <pierre.php@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: RFC: squid: 	Fix free memory corruption and off-by-on error when comparing SNMP OIDs
+Subject: NULL byte poisoning fix in php 5.3.4+
 Content-Type: text/plain; charset=utf-8
 
+hi,
 
------ "Thomas Biege" <thomas@...e.de> wrote:
+The problem describes here http://www.madirish.net/?article=436, in
+http://bugs.php.net/39863 (and numerous other places) has been fixed
+in PHP_5_3, targetting 5.3.4 (RC1 to be released today). It is a well
+(old) known issue in PHP and I wonder if there is a CVE already for
+it? If not I think having one could helpful. or?
 
-> Hello people,
-> does someone know if this bug has security implications. TIA!
-> 
-> http://www.squid-cache.org/Versions/v3/3.1/changesets/SQUID_3_1_5.html
-> http://www.squid-cache.org/Versions/v3/3.1/changesets/squid-3.1-10008.patch
-> 
-
-This is really two flaws. The first bit of the patch is an off by one on
-the loop that could overflow a heap buffer.
-
->From looking at the code, I only see this function being called with static
-strings for the MIBs. I may be missing something, but it doesn't appear
-that arbitrary strings make it into this. I'm not sure if this can be
-exploted, or if it's just a bug someone noticed.
-
-The second flaw is an invalid free. I'm not sure if arbitrary data can make
-it into this, but with current glibc memory protections, this should be a
-DoS only.
-
-Both only seem to affect modern versions of squid. The code seems present
-in 3.1.4, but not 2.6.STABLE21 (these are two versions we ship).
-
-Have you mailed upstream at all?
-
-Thanks.
-
+Cheers,
 -- 
-    JB
+Pierre
+
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
