@@ -1,56 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/22/4
-Message-Id: <201002221416.59018.thomas@suse.de>
-Date: Mon, 22 Feb 2010 14:16:58 +0100
-From: Thomas Biege <thomas@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: WANTED: mikmod patches
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/18/6
+Message-ID: <20101118185627.GE13854@outflux.net>
+Date: Thu, 18 Nov 2010 10:56:27 -0800
+From: Kees Cook <kees@...ntu.com>
+To: Steve Grubb <sgrubb@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: filesystem capabilities
 Content-Type: text/plain; charset=utf-8
 
-Hello,
-has somebody a pointer to the patches for CVE-2009-3996
-and CVE-2009-3995?
+Hi Steve,
 
-The last release from upstream was 2+ yrs old.
+On Wed, Nov 10, 2010 at 02:55:47PM -0500, Steve Grubb wrote:
+> drop all privs is a 2 liner:
+> capng_clear(CAPNG_SELECT_CAPS);
+> if (capng_apply(CAPNG_SELECT_CAPS))
+> 	exit(0);
+> 
+> Not sure anything that small needs a library function.
 
+Well, yeah, if it's just caps, I'd agree, but I'm failing to describe what
+I mean. :)
 
-These IDs are from a Secunia advisory about mikmod:
-..
-====================================================================== 
-3) Vendor's Description of Software 
+For the transition from setuid to fscaps, there will be a time where
+distros may ship a program with both setuid-root and fscaps. (Some
+stacked filesystems, for example, don't support fscaps.) In these
+situations, it would be nice to have a single library-based routine that
+all of these programs can call that will basically do the following:
 
-"Mikmod is a module player and library supporting many formats,
-including mod, s3m, it, and xm.".
+- remember if I'm running setuid
+- drop all but needed caps
+- if I was setuid, drop uid back to real uid
 
-Product Link:
-http://sourceforge.net/projects/mikmod/
+That way the sensitive code isn't cut/pasted into lots of programs, just
+they all call out to a single place, and everything gets it right,
+regardless of them being setuid or fscap.
 
-====================================================================== 
-4) Description of Vulnerability
+> I asked the maintainer if he's had any discussion [about upstreaming
+> the tar xattr patches] lately.
 
-Secunia Research has discovered some vulnerabilities in libmikmod,
-which can be exploited by malicious people to potentially compromise a
-user's system.
+Any news here?
 
-1) Three boundary errors in the Impulse Tracker parser when parsing 
-an instrument containing a column, panning, or pitch envelope with 
-more than ENVPOINTS (32) points can result in a heap-based buffer 
-overflow.
+> > Has there been any discussion of making rsync, cp, and cpio default to
+> > copying xattrs and acls too? I know at least with rsync they are explicitly
+> > not included in the "-a" option. :(
+> 
+> My rsync man page shows a -X option and cp has a --preserve=xattr. cpio doesn't but no 
+> one seems to have been missing that.
 
-2) A boundary error in the Ultratracker parser when parsing a file 
-with more than UF_MAXCHAN (64) channels can result in a heap-based 
-buffer overflow.
+Right, but I mean, it seems like it would be valuable to make these options
+_part_ of -a when currently they are explicitly not included.
 
-Successful exploitation may allow arbitrary code execution in the
-context of the process using the libmikmod library when opening a
-specially crafted module file.
-
-
-
+-Kees
 
 -- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
---
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
+Kees Cook
+Ubuntu Security Team
