@@ -1,34 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/01/3
-Message-ID: <20101001162950.GP1955@redhat.com>
-Date: Fri, 1 Oct 2010 10:29:50 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/18/8
+Message-Id: <201011190022.41113.hanno@hboeck.de>
+Date: Fri, 19 Nov 2010 00:22:40 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: freeradius
+Subject: CVE request: tikiwiki <= 5.2 XSS, CSRF, file inclusion
 Content-Type: text/plain; charset=utf-8
 
-Requesting CVE names for two flaws fix in freeradius 2.1.10:
+See:
+http://packetstormsecurity.org/files/view/94257/tikiwiki52-lfi.txt
+http://packetstormsecurity.org/files/view/94256/tikiwiki52-xsrf.txt
+http://packetstormsecurity.org/files/view/94255/tikiwiki52-xss.txt
 
-DoS via certain DHCP requests
-[1] https://bugs.freeradius.org/bugzilla/show_bug.cgi?id=77
-[2] http://secunia.com/advisories/41621
-[3] http://github.com/alandekok/freeradius-server/commit/4dc7800b866f889a1247685bbaa6dd4238a56279
-[4] https://bugzilla.redhat.com/show_bug.cgi?id=639390
-
-crash when processing requests queued for more than 30 seconds
-[1] https://bugs.freeradius.org/bugzilla/show_bug.cgi?id=35
-[2] http://secunia.com/advisories/41621
-[3] http://github.com/alandekok/freeradius-server/commit/ff94dd35673bba1476594299d31ce8293b8bd223
-[4] https://bugzilla.redhat.com/show_bug.cgi?id=639397
-
-
-Both issues only affect 2.1.x (1.1.x does not have the affected files or
-functions).  It looks as though the first issue only affected 2.1.9; I'm
-not yet sure if or how far the second issue may go back.
-
-Could two CVE names be assigned to this issue please?
-
-Thanks!
+All fixed in 5.3 and 3.8:
+http://info.tiki.org/article113-Tiki-Wiki-CMS-Groupware-Releases-5-3-and-3-8-LTS-Security-Patches
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+
+http://schokokeks.org - professional webhosting
+
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
