@@ -1,26 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/04/2
-Message-ID: <4B8F20D4.8090501@redhat.com>
-Date: Thu, 04 Mar 2010 10:54:12 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/18/5
+Message-ID: <AANLkTinH_Kg_+ViJD0s41ow02yemgVQwkS3amjDvQ77Z@mail.gmail.com>
+Date: Thu, 18 Nov 2010 17:43:59 +0100
+From: Pierre Joye <pierre.php@...il.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - kernel: ip6_dst_lookup_tail() NULL pointer dereference
+Subject: Re: NULL byte poisoning fix in php 5.3.4+
 Content-Type: text/plain; charset=utf-8
 
-On 02/11/2010 01:08 PM, Eugene Teo wrote:
-> ipv6: Fix OOPS in ip6_dst_lookup_tail().
->
-> This fixes kernel bugzilla 11469: "TUN with 1024 neighbours:
-> ip6_dst_lookup_tail NULL crash"
->
-> dst->neighbour is not necessarily hooked up at this point in the
-> processing path, so blindly dereferencing it is the wrong thing to do.
-> This NULL check exists in other similar paths and this case was just an
-> oversight.
+forgot to add the fixes revs:
 
-Steve, can you please assign a CVE name for this?
+http://svn.php.net/viewvc?view=revision&revision=305507
+revert of part of the OCI8 fix
+http://svn.php.net/viewvc?view=revision&revision=305509
 
-Thanks, Eugene
+OCI8 fix (committed separately)
+http://svn.php.net/viewvc?view=revision&revision=305412
+
+On Thu, Nov 18, 2010 at 5:22 PM, Pierre Joye <pierre.php@...il.com> wrote:
+> hi,
+>
+> The problem describes here http://www.madirish.net/?article=436, in
+> http://bugs.php.net/39863 (and numerous other places) has been fixed
+> in PHP_5_3, targetting 5.3.4 (RC1 to be released today). It is a well
+> (old) known issue in PHP and I wonder if there is a CVE already for
+> it? If not I think having one could helpful. or?
+>
+> Cheers,
+> --
+> Pierre
+>
+> @pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+>
+
+
+
 -- 
-Eugene Teo / Red Hat Security Response Team
+Pierre
+
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
