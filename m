@@ -1,38 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/25/8
-Message-ID: <2004764319.260691274810477782.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 25 May 2010 14:01:17 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/18/1
+Message-ID: <4CE483C0.4090800@redhat.com>
+Date: Thu, 18 Nov 2010 09:39:12 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: Re: kernel: btrfs: check for read permission on src file in the clone ioctl
+CC: Dan Rosenberg <dan.j.rosenberg@...il.com>
+Subject: Re: CVE request: kernel: integer overflow in RDS
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-1636
-
-Thanks.
-
--- 
-    JB
-
-
------ "Eugene Teo" <eugene@...hat.com> wrote:
-
-> The existing [btrfs] code would have allowed you to clone a file that
-> 
-> was only open for writing. Not an expected behaviour.
-> 
-> Upstream commit:
-> http://git.kernel.org/linus/5dc6416414fb3ec6e2825fd4d20c8bf1d7fe0395
-> 
+On 11/18/2010 12:58 AM, Dan Rosenberg wrote:
+> In rds_cmsg_rdma_args(), the user-provided args->nr_local value is
+> restricted to less than UINT_MAX.  This needs a tighter upper bound,
+> since the calculation of total iov_size can overflow, resulting in a
+> small sock_kmalloc() allocation.  This would probably just result in
+> walking off the heap and crashing when calling rds_rdma_pages() with a
+> high count value.  If it somehow doesn't crash here, then memory
+> corruption could occur soon after.
+>
+> This is closely related to CVE-2010-3865
+> (http://www.spinics.net/lists/netdev/msg145359.html), which also
+> concerned various integer overflow and memory corruption issues in
+> rds_cmsg_rdma_args().  In fact, I'd say it's due to an incomplete fix.
+>
 > Reference:
-> https://bugzilla.redhat.com/show_bug.cgi?id=593226
-> 
-> I'm not requesting a CVE name for this as it did not affect any of Red
-> 
-> Hats' supported Linux kernels.
-> 
-> Thanks, Eugene
-> -- 
-> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i);
-> }
+> http://marc.info/?l=linux-netdev&m=129001184803080&w=2
+
+Please use CVE-2010-4175. Thanks.
+
+Eugene
+-- 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
