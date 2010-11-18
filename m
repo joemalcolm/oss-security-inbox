@@ -1,51 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/14/3
-Message-ID: <2060260017.430061279129531508.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 14 Jul 2010 13:45:31 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/18/2
+Message-ID: <501156925.1443921290087587288.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 18 Nov 2010 08:39:47 -0500 (EST)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
 Cc: coley <coley@...re.org>
-Subject: Re: Multiple bugs in freetype
+Subject: Re: Clear text password in process list when using MySQL GUI tools
 Content-Type: text/plain; charset=utf-8
 
-I'm also adding a CVE id for the buffer overflows in the freetype demo programs:
+----- "Martin Drescher" <drescher@...fu.de> wrote:
+> 
+> If you use some MySQL-GUI-tool in most (any?) linux distribution like
+> mysql-admin or mysql-query-browser and then open 'Tools -> MySQL Text
+> Console' your password, user name and host will become exposed in the
+> process list.
+> 
+> I think this issue must exists over a long time in many distributions
+> now but nobody ever cared about.
+> 
+> For Debian users:
+> Packages mysql-query-browser, mysql-admin are affected.
+> 
 
-CVE-2010-2527
-http://savannah.nongnu.org/bugs/index.php?30054
+While I suspect there are more things with these problems, let's start with
+these two:
 
-The fix is here:
-http://git.savannah.gnu.org/cgit/freetype/freetype2-demos.git/commit/?id=b995299b73ba4cd259f221f500d4e63095508bec
+CVE-2010-4177 mysql-query-browser clear text password in process list
+CVE-2010-4178 mysql-admin clear text password in process list
 
 Thanks.
 
 -- 
     JB
-
-
-
------ "Robert Święcki" <robert@...ecki.net> wrote:
-
-> FYI
-> 
-> I've reported recently multiple problems in freetype (around ~20),
-> most of them are NULL-ptr derefs, stack exhaustion and div by zero
-> issues, but the rest might be interesting. RedHat was kind enough to
-> assign CVE numbers to some of them. vendor-sec members tend to treat
-> it as public issues, so reposting here:
-> 
-> > CVE-2010-2497 freetype integer underflow #30082 #30083
-> > CVE-2010-2498 freetype invalid free #30106
-> > CVE-2010-2499 freetype buffer overflow #30248 #30249
-> > CVE-2010-2500 freetype integer overflow #30263
-> > CVE-2010-2519 freetype heap buffer overflow #30306
-> > CVE-2010-2520 freetype buffer overflow on heap #30361
-> 
-> I wasn't trying to make weaponized exploits, although some of those
-> issues are clearly exploitable.
-> 
-> The full list
-> 
-> http://savannah.nongnu.org/bugs/index.php?group=freetype&func=browse&set=custom&report_id=101&submitted_by=78858
-> 
-> -- 
-> Robert Swiecki - http://www.swiecki.net
