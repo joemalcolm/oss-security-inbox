@@ -1,35 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/07/5
-Message-ID: <loom.20101207T233636-664@post.gmane.org>
-Date: Tue, 7 Dec 2010 22:43:17 +0000 (UTC)
-From: Maksymilian Arciemowicz <cxib@...urityreason.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/20/1
+Message-ID: <20101120092828.GC17469@inutil.org>
+Date: Sat, 20 Nov 2010 10:28:28 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request (PHP 5.3.x getSymbol() DoS; CERT VU#479900)
+Subject: Re: Clear text password in process list when using MySQL GUI tools
 Content-Type: text/plain; charset=utf-8
 
-Tomas Hoger <thoger@...> writes:
+Martin Drescher wrote:
+> I can't follow you with that. Those packages are part of my Debian
+> distribution, which is lenny and the reason I initially posted this
+> issue to Debian security.
 
-> Btw, setSymbol() is affected too, and does not seem to be addressed in
-> r305571.  In both cases, it's PHP exposing ICU bug.
-> 
+Indeed. I was confused by the source package mysql-admin, which has been
+dropped from Debian some time ago: 
+http://packages.qa.debian.org/m/mysql-admin.html
 
-
-setSymbol() give only DoS with strlen(NULL) [CWE-170].
-getSymbol() Integer overflow which causes heap overflow.
-
-see also ZipArchive:extractTo()
-Possible CWE-170 strlen(NULL)
-
-PoC:
-<?php
-
-$zip = new ZipArchive;
-$zip->open('./dupa.zip');
-var_dump($zip->extractTo('/tmp', array('', '')));
-
-
-?>
-
-Fix:
-http://svn.php.net/viewvc/php/php-src/branches/PHP_5_3/ext/zip/php_zip.c?view=log
-
+Cheers,
+         Moritz
