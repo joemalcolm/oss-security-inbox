@@ -1,27 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/30/4
-Message-Id: <20100330070801.4368f31e.reed@reedloden.com>
-Date: Tue, 30 Mar 2010 07:08:01 -0500
-From: Reed Loden <reed@...dloden.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/21/1
+Message-ID: <AANLkTi=0z3OSmUKMgUFBcTGGT_XXGiVMx4Thf91wXCk2@mail.gmail.com>
+Date: Sun, 21 Nov 2010 16:45:26 -0700
+From: Kurt Seifried <kurt@...fried.org>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request: ViewVC 1.1.5 / 1.0.11 -- XSS via user-provided 'search_re' input
+Subject: CVE Request: gif2png: command-line buffer overflow problem
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 30 Mar 2010 07:03:44 -0500
-Reed Loden <reed@...dloden.com> wrote:
+This is from 2009 but doesn't appear to have a CVE (no "gif2png" in
+the CVE database).
 
-> Again, still need a CVE for the XSS fix in ViewVC 1.1.4 and 1.1.10,
-> however.
+Sources:
+https://bugzilla.redhat.com/show_bug.cgi?id=547515
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=550978
+http://lists.grok.org.uk/pipermail/full-disclosure/2009-December/072009.html
 
-Never mind on both these things, considering they've both already been
-discussed on the list (*sigh*). I apparently should stop sending e-mails
-at 7:07am when I haven't slept at all. :(
+Description:
+A buffer overflow in gif2png 2.5.3 and earlier allows an attacker to
+execute arbitrary code via a long command line argument passed to the
+gif2png binary.
 
-Apologies,
-~reed
+It was first claimed that it was fixed in 2.5.2 but it is reported
+that it isn't fixed, I tested 2.5.3 and it still seg faults the same
+way as 2.5.2 so it would appear it was never fixed, as the software
+was last updated in 2005 I guess this one never gets fixed.
 
 -- 
-Reed Loden - <reed@...dloden.com>
-
-Content of type "application/pgp-signature" skipped
+Kurt Seifried
+kurt@...fried.org
+tel: 1-703-879-3176
