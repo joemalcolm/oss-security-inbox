@@ -1,31 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/17/4
-Message-Id: <201003171423.23403.ludwig.nussel@suse.de>
-Date: Wed, 17 Mar 2010 14:23:22 +0100
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/22/2
+Message-ID: <AANLkTikx1ngNcFg57eYVsZnJgijHpU5ibdaD60p5d2H3@mail.gmail.com>
+Date: Mon, 22 Nov 2010 01:35:14 +0100
+From: Pierre Joye <pierre.php@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Brian Stafford <brian@...fford.uklinux.net>, libesmtp@...fford.uklinux.net, security@...ntu.com, Pawel Salek <pawsa@...ochem.kth.se>, jskarvad@...hat.com
-Subject: Re: CVE Request: libesmtp does not check NULL bytes in commonName
+Subject: Re: NULL byte poisoning fix in php 5.3.4+
 Content-Type: text/plain; charset=utf-8
 
-Brian Stafford wrote:
-> Since both the original and patched versions of match_component() 
-> implement wildcards rather less liberally than RFC 2818 implies, I 
-> decided to move towards the approach in the I-D.  match_component() now 
-> accepts either a string or a single wildcard '*'.  Matched characters 
-> are validated against the set of valid domain name component characters 
-> , that is, *.example.org will not match %.example.org, nor for that 
-> matter will the pattern %.example.org.  Question: should underline '_' 
-> be in the set of valid characters?
+anyone?
 
-AFAIK underlines are not allowed in DNS. I'm sure someone knows the
-RFC for that too :-)
+On Thu, Nov 18, 2010 at 5:43 PM, Pierre Joye <pierre.php@...il.com> wrote:
+> forgot to add the fixes revs:
+>
+> http://svn.php.net/viewvc?view=revision&revision=305507
+> revert of part of the OCI8 fix
+> http://svn.php.net/viewvc?view=revision&revision=305509
+>
+> OCI8 fix (committed separately)
+> http://svn.php.net/viewvc?view=revision&revision=305412
+>
+> On Thu, Nov 18, 2010 at 5:22 PM, Pierre Joye <pierre.php@...il.com> wrote:
+>> hi,
+>>
+>> The problem describes here http://www.madirish.net/?article=436, in
+>> http://bugs.php.net/39863 (and numerous other places) has been fixed
+>> in PHP_5_3, targetting 5.3.4 (RC1 to be released today). It is a well
+>> (old) known issue in PHP and I wonder if there is a CVE already for
+>> it? If not I think having one could helpful. or?
+>>
+>> Cheers,
+>> --
+>> Pierre
+>>
+>> @pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+>>
+>
+>
+>
+> --
+> Pierre
+>
+> @pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+>
 
-cu
-Ludwig
+
 
 -- 
- (o_   Ludwig Nussel
- //\   
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+Pierre
+
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
