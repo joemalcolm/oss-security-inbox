@@ -1,17 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/09/1
-Message-ID: <AANLkTi=U6tn1xr3UpHUfeE_LdV4S7qpAfBzZQeWyOHST@mail.gmail.com>
-Date: Mon, 9 Aug 2010 10:17:45 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: oss-security@...ts.openwall.com, coley <coley@...re.org>
-Subject: CVE request: Lynx
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/22/10
+Message-ID: <910412384.111291290442657866.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 22 Nov 2010 11:17:37 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE Request: gif2png: command-line buffer overflow problem
 Content-Type: text/plain; charset=utf-8
 
-The Lynx browser is vulnerable to a heap overflow when parsing
-malformed URLs with a "%" character in the last two characters of the
-hostname.
+Steve,
 
-Reference:
-https://bugs.launchpad.net/ubuntu/+source/lynx-cur/+bug/613254
+I don't have any 2009 IDs. Can you take this one.
 
--Dan
+Thanks.
+
+-- 
+    JB
+
+
+----- "Kurt Seifried" <kurt@...fried.org> wrote:
+
+> This is from 2009 but doesn't appear to have a CVE (no "gif2png" in
+> the CVE database).
+> 
+> Sources:
+> https://bugzilla.redhat.com/show_bug.cgi?id=547515
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=550978
+> http://lists.grok.org.uk/pipermail/full-disclosure/2009-December/072009.html
+> 
+> Description:
+> A buffer overflow in gif2png 2.5.3 and earlier allows an attacker to
+> execute arbitrary code via a long command line argument passed to the
+> gif2png binary.
+> 
+> It was first claimed that it was fixed in 2.5.2 but it is reported
+> that it isn't fixed, I tested 2.5.3 and it still seg faults the same
+> way as 2.5.2 so it would appear it was never fixed, as the software
+> was last updated in 2005 I guess this one never gets fixed.
+> 
+> -- 
+> Kurt Seifried
+> kurt@...fried.org
+> tel: 1-703-879-3176
