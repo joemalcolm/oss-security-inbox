@@ -1,44 +1,15 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/18/6
-Message-ID: <1513020392.1718561274203506044.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 18 May 2010 13:25:06 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/22/18
+Message-ID: <AANLkTi=9iMNwHRy7fZifCfH9d4rqY1kdHvxkOua1GSX3@mail.gmail.com>
+Date: Tue, 23 Nov 2010 04:11:54 +1100
+From: dave b <db.pub.mail@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: phpbb 3.0.7 and before 3.0.5
+Subject: Can I request a cve for pfsense regarding --> "pfSense "graph.php" Cross-Site Scripting Vulnerabilities"
 Content-Type: text/plain; charset=utf-8
 
------ "Hanno Böck" <hanno@...eck.de> wrote:
+Can I request a cve for pfsense regarding --> "pfSense "graph.php"
+Cross-Site Scripting Vulnerabilities"
 
-> http://www.phpbb.com/community/viewtopic.php?f=14&t=2014195
-> 
-> Please assign cve. Cite:
-> "Otherwise, it is possible for users to bypass permission settings
-> under the 
-> following circumstances:
-> 
->     * Feeds are enabled
->     * Any of the posts or topics feeds are enabled
->     * The unauthorised user - or one of the groups they are a member of -
->     have forum permissions set on a private forum
->     * If you have excluded a forum from the list of forums that provide
->     feeds, it is unaffected"
-
-Please use CVE-2010-1627 for this.
-
-> 
-> 
-> Also, I think this phpbb 3.0.5 still has no cve (I requested that
-> before 
-> here):
-> http://www.phpbb.com/community/viewtopic.php?f=14&p=9764445
-> # [Sec] Only use forum id supplied for posting if global announcement
-> detected. (Reported by nickvergessen)
-> 
-
-I don't understand what this means. Do you have more information?
-
-Thanks.
-
--- 
-    JB
+http://secunia.com/advisories/42138
+(the original email can be found at
+http://seclists.org/fulldisclosure/2010/Nov/43 ).
