@@ -1,37 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/02/10
-Message-ID: <4EB17280.8020803@redhat.com>
-Date: Wed, 02 Nov 2011 10:40:32 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/22/3
+Message-ID: <AANLkTikK3k2YJudnA50amoERCjL-S2mDgw5kooOsCScM@mail.gmail.com>
+Date: Sun, 21 Nov 2010 18:04:10 -0700
+From: Kurt Seifried <kurt@...fried.org>
 To: oss-security@...ts.openwall.com
-CC: Yves-Alexis Perez <corsac@...ian.org>
-Subject: Re: Re: [LightDM] Version 1.0.6 released
+Subject: Re: CVE Request: gif2png: command-line buffer overflow problem
 Content-Type: text/plain; charset=utf-8
 
-On 11/02/2011 10:31 AM, Yves-Alexis Perez wrote:
-> On mer., 2011-11-02 at 10:16 -0600, Kurt Seifried wrote:
->> On 11/02/2011 09:54 AM, Yves-Alexis Perez wrote:
->>> On mer., 2011-11-02 at 11:42 -0400, Robert Ancell wrote:
->>>> Fixes a security issue where using ~/.Xauthority as a symlink would
->>>> cause LightDM to set the destination of the link to user ownership.
->>>> All users of 1.0.4 or 1.0.5 should upgrade immediately.
->>>>
->>>> Overview of changes in lightdm 1.0.6
->>>>
->>>>     * Use lchown for correcting ownership of ~/.Xauthority instead of chown
->>> Could a CVE be assigned for this?
->>>
->>> Regards,
->> Can you send me the link to this announcement so I can confirm it? Thanks.
->>
-> Here's the link to the mailing list mail:
-> http://lists.freedesktop.org/archives/lightdm/2011-November/000178.html 
+> How could this possibly be exploited?  If you can trick a user into
+> running gif2png [exploit payload], then that user has already lost.
+
+It was reported that some CGI scripts/etc use it automatically so by
+using a long file name it may be possible.
+
+Personally I'm not worried but Debian/Fedora have fixed it as a
+security issue so if that is the case a CVE would be nice for tracking
+purposes.
+
+> See also:
+> make `perl -e 'print "A"x10000'`
 >
-> Regards,
-Thanks, confirmed (first hand info is much better). Please use
-CVE-2011-4105 for this issue.
+> -Dan
+
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+Kurt Seifried
+kurt@...fried.org
+tel: 1-703-879-3176
