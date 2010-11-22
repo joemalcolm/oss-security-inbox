@@ -1,32 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/25/1
-Message-ID: <20101025032602.GA29006@openwall.com>
-Date: Mon, 25 Oct 2010 07:26:02 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/22/4
+Message-ID: <1856292651-1290385348-cardhu_decombobulator_blackberry.rim.net-643768076-@b16.c11.bise7.blackberry>
+Date: Mon, 22 Nov 2010 00:23:39 +0000
+From: "Benji" <me@...ji.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: glibc $ORIGIN problem - CVE-2010-3847
+Subject: Re: CVE Request: gif2png: command-line buffer overflow problem
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+"File name too long"
 
-This was discussed off-list before, but just to have it more widely
-known/available - distros are welcome to reuse our sanitize-env patch
-from Owl:
+------Original Message------
+From: Dan Rosenberg
+To: oss-security@...ts.openwall.com
+ReplyTo: oss-security@...ts.openwall.com
+Subject: Re: [oss-security] CVE Request: gif2png: command-line buffer overflow problem
+Sent: Nov 22, 2010 00:19
 
-http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/glibc/glibc-2.3.5-owl-alt-sanitize-env.diff
+How could this possibly be exploited?  If you can trick a user into
+running gif2png [exploit payload], then that user has already lost.
 
-or perhaps a revision of it forward-ported to current glibc in ALT's
-package.  Here's a relevant commit:
+See also:
+make `perl -e 'print "A"x10000'`
 
-http://git.altlinux.org/people/ldv/packages/?p=glibc.git;a=commitdiff;h=64963eb224c9
+-Dan
 
-Perhaps further changes were made to some of the patched files in
-Dmitry's repository above (the commit is a bit dated, whereas the
-current tree is based on glibc 2.11.2).  Dmitry, you could want to
-comment on that.
+On Sun, Nov 21, 2010 at 6:45 PM, Kurt Seifried <kurt@...fried.org> wrote:
+> This is from 2009 but doesn't appear to have a CVE (no "gif2png" in
+> the CVE database).
+>
+> Sources:
+> https://bugzilla.redhat.com/show_bug.cgi?id=547515
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=550978
+> http://lists.grok.org.uk/pipermail/full-disclosure/2009-December/072009.html
+>
+> Description:
+> A buffer overflow in gif2png 2.5.3 and earlier allows an attacker to
+> execute arbitrary code via a long command line argument passed to the
+> gif2png binary.
+>
+> It was first claimed that it was fixed in 2.5.2 but it is reported
+> that it isn't fixed, I tested 2.5.3 and it still seg faults the same
+> way as 2.5.2 so it would appear it was never fixed, as the software
+> was last updated in 2005 I guess this one never gets fixed.
+>
+> --
+> Kurt Seifried
+> kurt@...fried.org
+> tel: 1-703-879-3176
+>
 
-These changes, being a result of exhaustive review of glibc for env var
-uses, might also provide further inspiration for more attacks on glibc
-(without our patch).
 
-Alexander
+Sent from my BlackBerry® wireless device
