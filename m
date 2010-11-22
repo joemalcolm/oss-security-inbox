@@ -1,30 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/26/5
-Message-ID: <1443512040.1850561272309804241.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 26 Apr 2010 15:23:24 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/22/9
+Message-ID: <1704202041.111111290442605172.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 22 Nov 2010 11:16:45 -0500 (EST)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
 Cc: coley <coley@...re.org>
-Subject: Re: CVE Request: cacti SQL injection in template_export
+Subject: Re: CVE request: tikiwiki <= 5.2 XSS, CSRF, file inclusion
 Content-Type: text/plain; charset=utf-8
 
------ "Thijs Kinkhorst" <thijs@...ian.org> wrote:
-> 
-> On Wednesday an SQL injection issue was announced on Full Disclosure by
-> "Bonsai Information Security":
-> http://seclists.org/fulldisclosure/2010/Apr/272, quoting:
-> > 
-> > A Vulnerability has been discovered in Cacti, which can be exploited by
-> > any user to conduct SQL Injection attacks. Input passed via the
-> > “export_item_id” parameter to “templates_export.php” script is not
-> > properly sanitized before being used in a SQL query.
-> 
-> Upstream has issued a patch for this issue:
-> http://www.cacti.net/downloads/patches/0.8.7e/sql_injection_template_export.patch
-> (but no new release yet)
-> 
 
-Please use CVE-2010-1431 for this.
+----- "Hanno Böck" <hanno@...eck.de> wrote:
+
+> See:
+> http://packetstormsecurity.org/files/view/94257/tikiwiki52-lfi.txt
+> http://packetstormsecurity.org/files/view/94256/tikiwiki52-xsrf.txt
+> http://packetstormsecurity.org/files/view/94255/tikiwiki52-xss.txt
+> 
+> All fixed in 5.3 and 3.8:
+> http://info.tiki.org/article113-Tiki-Wiki-CMS-Groupware-Releases-5-3-and-3-8-LTS-Security-Patches
+
+Sorry for the delay.
+
+CVE-2010-4239 tikiwiki local file inclusion
+CVE-2010-4240 tikiwiki xss
+CVE-2010-4241 tikiwiki csrf
 
 Thanks.
 
