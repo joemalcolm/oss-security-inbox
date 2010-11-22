@@ -1,45 +1,119 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/19/1
-Message-ID: <20100819150455.7228df85@redhat.com>
-Date: Thu, 19 Aug 2010 15:04:55 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: PHP MOPS-2010-56..60
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/22/19
+Message-ID: <AANLkTim9R=LBPdZePVD7y030sGGN9fwErPBa-=A4hmGn@mail.gmail.com>
+Date: Mon, 22 Nov 2010 18:01:20 -0500
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Linux kernel address leaks
 Content-Type: text/plain; charset=utf-8
 
-Hi Steven!
+I'd like to open up a discussion about this topic, and hopefully
+brainstorm some potential solutions.
 
-This seems to have slipped through the cracks.
+Some background:
+
+There are dozens of interfaces, most notably in /proc, that leak raw
+kernel addresses to unprivileged users.  The most common example is
+the leakage of kernel socket structures via
+/proc/net/{udp,tcp,raw,unix}, and several other packet families.
+These addresses can be very useful when exploiting other kernel
+vulnerabilities.
+
+For example, given an arbitrary kernel write (without a corresponding
+read vulnerability), these structures make appealing targets because
+they are necessarily writable due to their location on the kernel
+heap, and contain function pointers that can be easily triggered by
+the attacker.  An attacker might open a unix socket, read back the
+kernel address of its corresponding sock structure via /proc/net/unix,
+calculate the offset in that structure to a particular function
+pointer, overwrite that function pointer to point into arbitrary
+attacker code by leveraging a kernel write vulnerability, and trigger
+the invocation of that function pointer by performing an operation on
+the socket.  I have written code that does exactly this - it's very
+convenient and reliable.
+
+Much work is in progress to harden the kernel.  One of the primary
+goals is to make it such that even if an attacker has an arbitrary
+write vulnerability, additional kernel read vulnerabilities are
+required for a successful privilege escalation exploit.  Kees Cook has
+been making some headway on this front, by ensuring that NX and
+read-only memory is properly enforced for modules, and by making sure
+statically declared function pointer tables are marked read-only where
+possible.  Further work in this area will involve some combination of
+kernel symbol hiding and potentially the randomization of the kernel
+code base.
+
+However, these measures won't make much of a difference if these leaks
+via /proc remain - closing all of the doors except one still leaves an
+easy entrance for attackers.  I recently proposed a series of patches
+to attempt to resolve these leaks, but due to a number of potentially
+valid criticisms, the patches were not accepted.  The fundamental
+problem is that removing these addresses entirely makes debugging
+difficult or impossible, and no suitable solution has been proposed
+that adequately obfuscates these kernel addresses while retaining
+their usefulness as unique identifiers.
 
 
-On Wed, 30 Jun 2010 11:27:19 -0500 Raphael Geissert wrote:
+The following points have been raised:
 
-> Hi,
-> 
-> According to our tracker there are still some MOPS issues that don't
-> have CVE ids.
-> 
-> More specifically:
-> 
-> > 60: PHP Session Serializer Session Data Injection Vulnerability
-> http://svn.php.net/viewvc?view=revision&revision=298608
-> 
-> > 59: PHP php_mysqlnd_auth_write() Stack Buffer Overflow Vulnerability
-> http://svn.php.net/viewvc?view=revision&revision=298703
-> 
-> > 58: PHP php_mysqlnd_read_error_from_line() [Heap] Buffer Overflow 
-> Vulnerability
-> http://svn.php.net/viewvc?view=revision&revision=298703
-> 
-> > 57 PHP php_mysqlnd_rset_header_read() [Heap] Buffer Overflow
-> > Vulnerability
-> I think this is
-> http://svn.php.net/viewvc?view=revision&revision=298235
-> 
-> > 56 PHP php_mysqlnd_ok_read() Information Leak Vulnerability
-> http://svn.php.net/viewvc?view=revision&revision=298703
-> 
-> Could CVE ids be assigned?
+-Changing the output format (as in, number of fields) of these /proc
+interfaces is unacceptable since it will break a number of userspace
+tools.  This is not much of an issue, as long as the kernel addresses
+are replaced with something else.
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+-A number of utilities require a unique identifier for each socket.
+There has been some debate on this topic.  In most cases, the socket
+inode is provided alongside the socket kernel address and could serve
+as a unique identifier.  This is not always the case, and it is
+questionable as to whether or not it is acceptable to rely on the
+inode number alone [1].
+
+-It may or may not be acceptable to replace the addresses with 0's
+based on privilege level.
+
+-If the output varies based on privilege level, it would be cleaner to
+create a new format specifier (say, %pH) that performs the appropriate
+logic, rather than cluttering up a large amount of code.  This has its
+own ugliness though, since such a format specifier could not be used
+in interrupt context due to the privilege checking required.
+
+-Some kernel functionality may actually require kernel addresses to be
+exposed in this way [2].  Even though this is a pain, it seems to me
+that this is an argument that the situation is "too broken to fix",
+which I don't buy.
+
+
+Several obfuscation schemes have been proposed, none of which are
+especially acceptable:
+
+-Some have suggested randomly generating a value at boot and XORing
+each pointer output with this value.  This has the disadvantage of
+being practically useless for security, since it would be relatively
+easy to infer the value of this global random value.
+
+-Hashing the pointer is unacceptable, since 2^32 is a small enough
+space to brute force.
+
+-Built-in block ciphers seem out of the question as well, since most
+are built as modules, and we don't want to break bare installations'
+IP stacks.  In addition, as far as I know none allow a block length as
+short as a pointer.
+
+
+So I'm mostly out of ideas.  Any input would be appreciated, as I
+think this is an issue that should no longer be ignored, and it's been
+made clear that this is a battle I can't win on my own.  These issues
+have been widely known for a long time now, and are fixed in
+grsecurity by GRKERNSEC_HIDESYMS.  The solution employed by grsecurity
+is to unconditionally replace pointer output with 0's, which is
+unacceptable for the mainline kernel.
+
+I'd even consider these issues as candidates for CVEs (dare I say
+it?), as they fit the textbook definition of an "exposure".  But
+that's a separate conversation I suppose.
+
+Regards,
+Dan
+
+[1] http://marc.info/?l=linux-netdev&m=128954662503066&w=2
+[2] http://marc.info/?l=linux-netdev&m=128959423804021&w=2
