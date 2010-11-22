@@ -1,34 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/15/4
-Message-ID: <1292381657.1716.207.camel@hydrus>
-Date: Wed, 15 Dec 2010 13:54:17 +1100
-From: David Hicks <hickseydr@...usnet.com.au>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/22/12
+Message-ID: <Pine.GSO.4.64.1011221126070.14862@faron.mitre.org>
+Date: Mon, 22 Nov 2010 11:30:34 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: MantisBT <=1.2.3 (db_type) Cross-Site Scripting & Path Disclosure Vulnerability
+Subject: Re: CVE Request: gif2png: command-line buffer overflow problem
 Content-Type: text/plain; charset=utf-8
 
-This is a CVE request for a vulnerability discovered in MantisBT <1.2.4
-by Gjoko Krstic of Zero Science Lab as per the following advisory:
 
-http://www.zeroscience.mk/en/vulnerabilities/ZSL-2010-4983.php
+I'm typically uncomfortable assigning CVEs for such issues, since this 
+makes the distinction between bugs and vulnerabilities even fuzzier than 
+they already are, and potentially creates a "snowball effect" where 
+suddenly CVE sets a precedent and inadvertently grants legitimacy to large 
+numbers of issues that are of very little security concern to most 
+consumers.
 
-MantisBT 1.2.4 has been released to resolve this issue.
+However, when there are common usage scenarios in which the product is 
+used that produce a vulnerability, these have been given CVEs in the past. 
+(Non-exploitable browser crashers kind of fall under this reasoning, 
+because of the common usage scenarios where (1) users will click on links, 
+and (2) users will have multiple tabs/windows/sessions open, so a 
+browser-ending crash will affect those sessions.)
 
-For distributions or users using MantisBT 1.1.x, the following patch can
-be applied:
-http://git.mantisbt.org/?p=mantisbt.git;a=commitdiff_plain;h=2641fdc60d2032ae1586338d6416e1eadabd7590
+That's a long way of saying to use CVE-2009-5018 for this issue.
 
-Please note that MantisBT 1.1.x is not recommended for use due to many
-security improvements and features implemented in MantisBT 1.2.x (but
-not backported to 1.1.x).
-
-Detailed information about this vulnerability can be found in this bug
-report: http://www.mantisbt.org/bugs/view.php?id=12607
-
-Regards,
-
-David Hicks
-MantisBT Developer
-mantisbt.org, #mantishelp freenode
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+- Steve
