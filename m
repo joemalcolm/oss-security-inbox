@@ -1,26 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/02/5
-Message-Id: <201008021726.51586.thomas@suse.de>
-Date: Mon, 2 Aug 2010 17:26:51 +0200
-From: Thomas Biege <thomas@...e.de>
-To: "oss-security" <oss-security@...ts.openwall.com>
-Subject: RFC: squid: 	Fix free memory corruption and off-by-on error when comparing SNMP OIDs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/22/14
+Message-ID: <Pine.GSO.4.64.1011221131010.14862@faron.mitre.org>
+Date: Mon, 22 Nov 2010 11:32:38 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com, me@...ji.com
+Subject: Re: CVE Request: gif2png: command-line buffer overflow problem
 Content-Type: text/plain; charset=utf-8
 
-Hello people,
-does someone know if this bug has security implications. TIA!
 
-http://www.squid-cache.org/Versions/v3/3.1/changesets/SQUID_3_1_5.html
-http://www.squid-cache.org/Versions/v3/3.1/changesets/squid-3.1-10008.patch
+This type of error may happen when executing from a shell, but not 
+necessarily *every* shell, and not when shell execution is bypassed e.g. 
+when using exec()... so the vulnerable program might still execute.
 
-Cheers,
-Thomas
+- Steve
 
 
+On Mon, 22 Nov 2010, Benji wrote:
 
--- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
---
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
+> "File name too long"
+>
+> ------Original Message------
+> From: Dan Rosenberg
+> To: oss-security@...ts.openwall.com
+> ReplyTo: oss-security@...ts.openwall.com
+> Subject: Re: [oss-security] CVE Request: gif2png: command-line buffer overflow problem
+> Sent: Nov 22, 2010 00:19
+>
+> How could this possibly be exploited?  If you can trick a user into
+> running gif2png [exploit payload], then that user has already lost.
+>
+> See also:
+> make `perl -e 'print "A"x10000'`
+>
+> -Dan
+>
+> On Sun, Nov 21, 2010 at 6:45 PM, Kurt Seifried <kurt@...fried.org> wrote:
+>> This is from 2009 but doesn't appear to have a CVE (no "gif2png" in
+>> the CVE database).
+>>
+>> Sources:
+>> https://bugzilla.redhat.com/show_bug.cgi?id=547515
+>> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=550978
+>> http://lists.grok.org.uk/pipermail/full-disclosure/2009-December/072009.html
+>>
+>> Description:
+>> A buffer overflow in gif2png 2.5.3 and earlier allows an attacker to
+>> execute arbitrary code via a long command line argument passed to the
+>> gif2png binary.
+>>
+>> It was first claimed that it was fixed in 2.5.2 but it is reported
+>> that it isn't fixed, I tested 2.5.3 and it still seg faults the same
+>> way as 2.5.2 so it would appear it was never fixed, as the software
+>> was last updated in 2005 I guess this one never gets fixed.
+>>
+>> --
+>> Kurt Seifried
+>> kurt@...fried.org
+>> tel: 1-703-879-3176
+>>
+>
+>
+> Sent from my BlackBerry® wireless device
+>
+>
