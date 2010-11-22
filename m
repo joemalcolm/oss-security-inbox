@@ -1,58 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/16/3
-Message-ID: <AANLkTindXKJfCs3g-0aer3EeCFqk5bFBpJBqKerTt2tp@mail.gmail.com>
-Date: Tue, 16 Nov 2010 16:10:50 +0100
-From: Pierre Joye <pierre.php@...il.com>
-To: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: utf-8 security issue in php - 2 CVEs?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/22/15
+Message-ID: <224296305.115231290443560699.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 22 Nov 2010 11:32:40 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: mm: mem allocated invisible to oom_kill() when not attached to any threads
 Content-Type: text/plain; charset=utf-8
 
-hi,
+Please use CVE-2010-4243
 
-New fixes or improved fixes, even for known flaw, get new CVE #. I was
-not sure about that a couple of months ago, but that's the answer I
-got when I asked about the policy for such cases. I think it makes
-even more sense in this particular flaw.
-
-Cheers,
-
-On Tue, Nov 16, 2010 at 7:30 AM, Huzaifa Sidhpurwala
-<huzaifas@...hat.com> wrote:
-> Hi,
-> This is regarding the "utf-8 security issue in php", which was discussed
-> on this list[1]
-> From the php bug[2], it is clear that this issue has been assigned
-> CVE-2010-3870
->
-> However yesterday another CVE was assigned to this bug i.e. CVE-2009-5016[3]
->
-> The upstream bug report, describes two issues:
-> a. An integer overflow
-> b. flaw in handling ill-formed UTF8 characters.
->
-> The integer overflow issue was solved somewhere in year 2009, which was
-> however not a complete fix since the ill-formed UTF8 chars., were still
-> not properly validated. The rest of the issues were solved sometime back.
->
-> It seems that the integer overflow is not exploitable on its own, you
-> need to couple it with the second issue for the exploit to really work.
->
-> Therefore do we really need two CVEs for this issue?
->
-> [1] http://thread.gmane.org/gmane.comp.security.oss.general
-> [2] http://bugs.php.net/bug.php?id=49687
-> [3] http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2009-5016
->
->
-> --
->
-> Huzaifa Sidhpurwala / Red Hat Security Response Team
->
-
-
+Thanks.
 
 -- 
-Pierre
+    JB
 
-@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+
+----- "Eugene Teo" <eugene@...hat.com> wrote:
+
+> This is the OOM dodging issue that can be triggered with Brad's 
+> reproducer at http://grsecurity.net/~spender/64bit_dos.c. Written
+> in the comments: "The second bug here is that the memory usage
+> explodes 
+> within the kernel from a single 128k allocation in userland The 
+> explosion of memory isn't accounted for by any task so it won't be 
+> terminated by the OOM killer."
+> 
+> I don't recall seeing a CVE name assigned to this, so please assign
+> one. 
+> Upstream is still attempting to fix this.
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=625688#c0
+> 
+> Thanks, Eugene
