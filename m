@@ -1,35 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/15/6
-Message-ID: <Pine.GSO.4.64.1011151456250.2809@faron.mitre.org>
-Date: Mon, 15 Nov 2010 15:02:21 -0500 (EST)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/22/13
+Message-ID: <1548541606.114921290443512775.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 22 Nov 2010 11:31:52 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: econet iovec
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: missing tty ops write function presence check in hci_uart_tty_open()
 Content-Type: text/plain; charset=utf-8
 
+Please use CVE-2010-4242
 
-On Sun, 14 Nov 2010, Dan Rosenberg wrote:
+Thanks.
 
-> This also raises a question of whether it's worth assigning CVEs to 
-> every vulnerability that was fixed by a single change in the core code. 
-> I'm leaning towards "no".
+-- 
+    JB
 
-This is a big can of worms CVE-wise, since there can be multiple ways to 
-fix a single issue.  As a result, I've come to believe that you shouldn't 
-try to define a vulnerability exclusively in terms of its fix.  In 
-practice within CVE, if a single fix addresses an already-public CVE-xyz 
-and a whole bunch of other things, then we (generally) keep the 
-already-public CVE as is, and assign a new CVE(s) to the "bunch of other 
-things" that are simultaneously addressed.
 
-For example - in package XYZ, you might have both XSS and SQL injection, 
-where the XSS is fixed by input validation (say, by ensuring that a 
-numeric input is actually converted to a number).  This fix will 
-inadvertently address SQL injection, but a different XSS fix - say, proper 
-encoding - would not.
+----- "Eugene Teo" <eugene@...hat.com> wrote:
 
-This is one of those areas where we can't be completely consistent in CVE, 
-and the amount of available information directly affects how many CVEs get 
-assigned.
-
-- Steve
+> hci_uart_tty_open() is missing check that tty has a write op (a few 
+> don't), and you should check this at open and refuse if the ops you
+> need 
+> don't exist, eg as SLIP does:
+> 
+> static int slip_open(struct tty_struct *tty)
+> {
+>          struct slip *sl;
+>          int err;
+> 
+>          if (!capable(CAP_NET_ADMIN))
+>                  return -EPERM;
+> 
+>          if (tty->ops->write == NULL)
+>                  return -EOPNOTSUPP;
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=641410
+> http://git.kernel.org/linus/c19483cc5e56ac5e22dd19cf25ba210ab1537773
+> 
+> Thanks, Eugene
