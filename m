@@ -1,40 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/15/2
-Message-ID: <4B9EAFE1.1070008@stafford.uklinux.net>
-Date: Mon, 15 Mar 2010 22:08:33 +0000
-From: Brian Stafford <brian@...fford.uklinux.net>
-To: Ludwig Nussel <ludwig.nussel@...e.de>,  oss-security@...ts.openwall.com, libesmtp@...fford.uklinux.net,  security@...ntu.com, Pawel Salek <pawsa@...ochem.kth.se>,  jlieskov@...hat.com, jskarvad@...hat.com
-Subject: Re: CVE Request: libesmtp does not check NULL bytes in commonName
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/22/7
+Message-ID: <4CEA0D83.6020104@redhat.com>
+Date: Mon, 22 Nov 2010 14:28:19 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE-2010-4161 kernel: rhel5 backport of 93821778 caused deadlock
 Content-Type: text/plain; charset=utf-8
 
-Hello all
+This can be triggered using Dan's reproducer for CVE-2010-4158. The 
+issue was introduced in 93821778def10ec1e69aa3ac10adee975dad4ff3 and was 
+fixed in fda9ef5d679b07c9d9097aaf6ef7f069d794a8f9. This is assigned with 
+CVE-2010-4161. This was mentioned in 
+http://www.spinics.net/lists/netdev/msg146404.html.
 
-I think the best approach is to apply Pawel's patch as this is the 
-simplest in terms of changes to the existing code base, and perhaps move 
-to Ludwig's for a later release of libESMTP.  In the slightly longer 
-term, I think the internet draft at
-http://tools.ietf.org/html/draft-saintandre-tls-server-id-check is the 
-one to follow but this might change substantially or even fall of the 
-rails entirely.
+See https://bugzilla.redhat.com/show_bug.cgi?id=652534#c0 for more info.
 
-For the next libESMTP release I'm considering changing match_domain() as 
-follows:
-for each hostname component accept either a string or a single wildcard 
-character '*' as the pattern.  In either case only characters from the 
-set [A-Za-z0-9-] in the hostname shall be accepted, otherwise the match 
-shall fail.  If the top level domain has only two characters then 
-wildcards are barred from the 3 topmost components, otherwise from the 
-topmost 2 components, e.g. *.example.com is acceptable but not *.co.uk.  
-f*.bar.com would not be acceptable.  The I-D says only the leftmost 
-component may contain a wildcard but this would rule out *.*.google.com 
-The algorithm I've outlined is really a halfway house between RFC2818, 
-which I think is too flexible, and the I-D; limit the positions of 
-wildcards in the hostname and dont allow elaborate matches within a 
-hostname component.  Any ideas or opinions on this would be useful.
-
-Regards
-Brian
-
-
-
-
+Thanks, Eugene
