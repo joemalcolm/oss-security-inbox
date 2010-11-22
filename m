@@ -1,42 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/14/4
-Message-ID: <AANLkTim=NyV9C=hg8orfAThZHi3ZMGxRZ+F8dAJ7QN=N@mail.gmail.com>
-Date: Sun, 14 Nov 2010 11:09:34 -0500
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/22/11
+Message-ID: <1099726965.112341290442874391.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 22 Nov 2010 11:21:14 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: econet iovec
+Cc: coley <coley@...re.org>
+Subject: Re: Re: NULL byte poisoning fix in php 5.3.4+
 Content-Type: text/plain; charset=utf-8
 
-This also raises a question of whether it's worth assigning CVEs to
-every vulnerability that was fixed by a single change in the core
-code.  I'm leaning towards "no".
+Steve,
 
--Dan
+Can MITRE take this one. It looks like it's from 2006 (from looking at the
+upstream bug). I don't see a CVE id for this anywhere.
 
-On Sun, Nov 14, 2010 at 11:06 AM, Dan Rosenberg
-<dan.j.rosenberg@...il.com> wrote:
-> Yes, this size calculation can overflow, but there's no negative
-> effect, since it is only used to construct a UDP packet, and UDP is
-> not susceptible to overflow issues in its sendmsg() path.
->
-> On the other hand, the check on line 331 to put an upper bound on the
-> total size can overflow, causing an underallocation on line 344 and a
-> kernel panic on subsequent usage due to bad skbuff alignment.  This
-> only affects people using actual native Econet hardware.  This was
-> already fixed by recently added checks in iovec size calculations and
-> in the sendto() path for maximum packet size.
->
-> -Dan
->
-> On Sun, Nov 14, 2010 at 9:56 AM, Thomas Pollet <thomas.pollet@...il.com> wrote:
->> Hi,
->>
->> the AF_ECONET sendmsg iovec code also appears to be vulnerable to an integer
->> overflow that will be fixed by the verify_iovec changes in the 2.6.37
->> kernel.
->> on line 469: size += iov_len
->>
->> Regards,
->> Thomas
->>
->
+Thanks.
+
+-- 
+    JB
+
+----- "Pierre Joye" <pierre.php@...il.com> wrote:
+
+> anyone?
+> 
+> On Thu, Nov 18, 2010 at 5:43 PM, Pierre Joye <pierre.php@...il.com>
+> wrote:
+> > forgot to add the fixes revs:
+> >
+> > http://svn.php.net/viewvc?view=revision&revision=305507
+> > revert of part of the OCI8 fix
+> > http://svn.php.net/viewvc?view=revision&revision=305509
+> >
+> > OCI8 fix (committed separately)
+> > http://svn.php.net/viewvc?view=revision&revision=305412
+> >
+> > On Thu, Nov 18, 2010 at 5:22 PM, Pierre Joye <pierre.php@...il.com>
+> > wrote:
+> >> hi,
+> >>
+> >> The problem describes here http://www.madirish.net/?article=436, in
+> >> http://bugs.php.net/39863 (and numerous other places) has been fixed
+> >> in PHP_5_3, targetting 5.3.4 (RC1 to be released today). It is a well
+> >> (old) known issue in PHP and I wonder if there is a CVE already for
+> >> it? If not I think having one could helpful. or?
+> >>
+> >> Cheers,
+> >> --
+> >> Pierre
+> >>
