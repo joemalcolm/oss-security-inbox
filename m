@@ -1,23 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/08/10
-Message-ID: <20101208165635.1537e0ee@redhat.com>
-Date: Wed, 8 Dec 2010 16:56:35 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: cxib@...urityreason.com
-Subject: Re: Re: CVE request (PHP 5.3.x getSymbol() DoS; CERT VU#479900)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/22/8
+Message-ID: <4CEA7FAA.8030706@redhat.com>
+Date: Mon, 22 Nov 2010 15:35:22 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, Dwayne Bailey <dwayne@...nslate.org.za>, F Wolff <friedel@...nslate.org.za>
+Subject: CVE Request -- pootle -- XSS via 'match_names' parameter on translate.html page
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 8 Dec 2010 14:27:22 +0000 (UTC) Maksymilian Arciemowicz wrote:
+Hello Steve, vendors,
 
-> my mistake, not setSybol() but getLocale()
-> 
-> $nx=new IntlDateFormatter("pl", IntlDateFormatter::FULL,
-> IntlDateFormatter::FULL);
-> $nx->getLocale(1);
+   looks like the following didn't get a CVE identifier yet:
+[1] https://bugzilla.redhat.com/show_bug.cgi?id=647832
+[2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=604060
+[3] http://forums.cnet.com/7726-6132_102-5022830.html
+[4] http://sourceforge.net/projects/translate/files//Pootle/2.1.2/RELEASE.txt/view
+[5] http://www.xssed.com/mirror/70160/
+[6] http://secunia.com/advisories/42185/
 
-1 is one of the (two?) values on which this does not crash ;).  Yeah,
-this does strlen(NULL) crash otherwise.
+Could you please allocate one?
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
