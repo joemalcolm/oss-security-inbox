@@ -1,23 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/24/3
-Message-ID: <4BA97612.4070500@kernel.sg>
-Date: Wed, 24 Mar 2010 10:16:50 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/22/1
+Message-ID: <AANLkTinaT5rHCSOqbG5SyFSQj_QQLWKH6B9hxKmQi1mv@mail.gmail.com>
+Date: Sun, 21 Nov 2010 19:19:39 -0500
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: kernel: bluetooth: Fix kernel crash on L2CAP stress tests
+Subject: Re: CVE Request: gif2png: command-line buffer overflow problem
 Content-Type: text/plain; charset=utf-8
 
-Heads-up, I believe this fix addresses a security-relevant issue. See 
-upstream commit c2c77ec8. It was introduced in commit f2fcfcd6 
-(v2.6.32-rc1). I did not request a CVE name for this since it did not 
-affect any of our supported Red Hat kernels.
+How could this possibly be exploited?  If you can trick a user into
+running gif2png [exploit payload], then that user has already lost.
 
-http://git.kernel.org/linus/c2c77ec83bdad17fb688557b5b3fdc36661dd1c6
-http://git.kernel.org/linus/f2fcfcd670257236ebf2088bbdf26f6a8ef459fe
+See also:
+make `perl -e 'print "A"x10000'`
 
-https://bugzilla.redhat.com/show_bug.cgi?id=576433
+-Dan
 
-If it affected your commercially supported kernel, please request a CVE 
-name. Thanks.
-
-Eugene
+On Sun, Nov 21, 2010 at 6:45 PM, Kurt Seifried <kurt@...fried.org> wrote:
+> This is from 2009 but doesn't appear to have a CVE (no "gif2png" in
+> the CVE database).
+>
+> Sources:
+> https://bugzilla.redhat.com/show_bug.cgi?id=547515
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=550978
+> http://lists.grok.org.uk/pipermail/full-disclosure/2009-December/072009.html
+>
+> Description:
+> A buffer overflow in gif2png 2.5.3 and earlier allows an attacker to
+> execute arbitrary code via a long command line argument passed to the
+> gif2png binary.
+>
+> It was first claimed that it was fixed in 2.5.2 but it is reported
+> that it isn't fixed, I tested 2.5.3 and it still seg faults the same
+> way as 2.5.2 so it would appear it was never fixed, as the software
+> was last updated in 2005 I guess this one never gets fixed.
+>
+> --
+> Kurt Seifried
+> kurt@...fried.org
+> tel: 1-703-879-3176
+>
