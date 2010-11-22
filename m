@@ -1,36 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/08/9
-Message-ID: <4C879083.9000202@redhat.com>
-Date: Wed, 08 Sep 2010 15:32:51 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request -- phpMyAdmin (x < v3.3.7) -- XSS in setup script (PMASA-2010-7)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/22/5
+Message-ID: <4CE9FADF.70905@redhat.com>
+Date: Mon, 22 Nov 2010 13:08:47 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: missing tty ops write function presence check in hci_uart_tty_open()
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve, vendors,
+hci_uart_tty_open() is missing check that tty has a write op (a few 
+don't), and you should check this at open and refuse if the ops you need 
+don't exist, eg as SLIP does:
 
-   phpMyAdmin today announced PMASA-2010-7, addressing one XSS issue:
-   [1] http://www.phpmyadmin.net/home_page/security/PMASA-2010-7.php
+static int slip_open(struct tty_struct *tty)
+{
+         struct slip *sl;
+         int err;
 
-   More from [1]:
-   Summary:               XSS attack on setup script
-   Description:           It was possible to conduct a XSS attack using spoofed request to setup script.
-   Affected versions:     For 3.x: versions before 3.3.7 are affected.
-   Unaffected versions:   Branch 2.11.x is not affected by this.
-   Upstream changeset:    http://phpmyadmin.git.sourceforge.net/git/gitweb.cgi?p=phpmyadmin/phpmyadmin;a=commitdiff;h=73ce5705bd1e0b62060f75702d62f88247ce09dd
-   Credit:                Upstream acknowledges the Tenable Network Security team as the original reporter.
+         if (!capable(CAP_NET_ADMIN))
+                 return -EPERM;
 
-   Further references:
-   [2] http://secunia.com/advisories/41210/
-   [3] https://bugzilla.redhat.com/show_bug.cgi?id=631824
+         if (tty->ops->write == NULL)
+                 return -EOPNOTSUPP;
 
-Upstream references CVE-2010-2958 as CVE id for this issue. But it was allocated for PMASA-2010-6:
-[4] http://www.openwall.com/lists/oss-security/2010/09/01/3
-[5] http://www.phpmyadmin.net/home_page/security/PMASA-2010-6.php
+https://bugzilla.redhat.com/show_bug.cgi?id=641410
+http://git.kernel.org/linus/c19483cc5e56ac5e22dd19cf25ba210ab1537773
 
-So could you allocate a new one for PMASA-2010-7?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Thanks, Eugene
