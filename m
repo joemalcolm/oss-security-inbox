@@ -1,36 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/03/3
-Message-Id: <20100903141513.cb00e05a.reed@reedloden.com>
-Date: Fri, 3 Sep 2010 14:15:13 -0700
-From: Reed Loden <reed@...dloden.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/22/16
+Message-ID: <822303483.115991290443731980.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 22 Nov 2010 11:35:31 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Richard Moore <rich@...tpoint.ltd.uk>, Simon Ward <simon@...tpoint.ltd.uk>
-Subject: Re: CVE Request 1, NSS 2, Qt: Doesn't handle wildcards in Common Name properly
+Cc: Dwayne Bailey <dwayne@...nslate.org.za>, F Wolff <friedel@...nslate.org.za>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- pootle -- XSS via 'match_names' parameter on translate.html page
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 03 Sep 2010 18:20:49 +0200
-Jan Lieskovsky <jlieskov@...hat.com> wrote:
+Please use CVE-2010-4245
 
->    Richard Moore and Simon Ward reported flaws in the way:
-> 
->    1, Network Security Services (NSS) handled wildcard (*) character
->       in the Common Name field of a x509v3 digital certificate.
->       If an attacker is able to get a carefully-crafted certificate,
->       signed by a Certificate Authority trusted by Firefox, the attacker
->       could use the certificate during the man-in-the-middle attack and
->       potentially confuse Firefox into accepting it by mistake. Different
->       vulnerability than CVE-2009-2408.
-> 
->       References:
->       [1] http://www.westpoint.ltd.uk/advisories/wp-10-0001.txt
->       [2] http://bugs.gentoo.org/show_bug.cgi?id=335731
-
-Mozilla has assigned this CVE-2010-3170. We're tracking this as
-https://bugzilla.mozilla.org/show_bug.cgi?id=578697.
-
-~reed
-Mozilla Security Group
+Thanks.
 
 -- 
-Reed Loden - <reed@...dloden.com>
+    JB
 
+
+----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+
+> Hello Steve, vendors,
+> 
+>    looks like the following didn't get a CVE identifier yet:
+> [1] https://bugzilla.redhat.com/show_bug.cgi?id=647832
+> [2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=604060
+> [3] http://forums.cnet.com/7726-6132_102-5022830.html
+> [4]
+> http://sourceforge.net/projects/translate/files//Pootle/2.1.2/RELEASE.txt/view
+> [5] http://www.xssed.com/mirror/70160/
+> [6] http://secunia.com/advisories/42185/
+> 
+> Could you please allocate one?
+> 
+> Thanks && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
