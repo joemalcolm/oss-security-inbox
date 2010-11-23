@@ -1,41 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/04/3
-Message-ID: <4C309F29.5040006@kernel.sg>
-Date: Sun, 04 Jul 2010 22:48:09 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/23/10
+Message-ID: <AANLkTimQbegv7_ED4fP0HHoOn9RGmynrP_CJhvv9Z4Jp@mail.gmail.com>
+Date: Tue, 23 Nov 2010 15:06:14 -0500
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-CC: Moritz Muehlenhoff <jmm@...til.org>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request: kernel: l2tp: Fix oops in pppol2tp_xmit
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: Linux kernel address leaks
 Content-Type: text/plain; charset=utf-8
 
-On 07/04/2010 07:13 PM, Moritz Muehlenhoff wrote:
-> On Wed, Jun 23, 2010 at 11:43:51AM +0800, Eugene Teo wrote:
->> "When transmitting L2TP frames, we derive the outgoing interface's
->> UDP checksum hardware assist capabilities from the tunnel dst dev.
->> This can sometimes be NULL, especially when routing protocols are
->> used and routing changes occur. This patch just checks for NULL dst
->> or dev pointers when checking for netdev hardware assist features.
->>
->>      BUG: unable to handle kernel NULL pointer dereference at 0000000c
->>      IP: [<f89d074c>] pppol2tp_xmit+0x341/0x4da [pppol2tp]
->>      *pde = 00000000
->>      Oops: 0000 [#1] SMP
->>      last sysfs file: /sys/class/net/lo/operstate
->> [...]"
->>
->> Introduced in ffcebb16 (v2.6.29-rc1~581), fixed in 3feec909 (fixed
->> in v2.6.34-rc2). (It was later split into different files in commit
->> fd558d18 v2.6.35-rc1).
->>
->> I'm not requesting a CVE name for this because it did not affect any
->> of our supported kernels. FYI.
+> I think that the only way to support your goal is to make the case that
+> the CVE definition does cover such exposures.  In my opinion it
+> certainly does; although at the lowest possible severity.
 >
-> Steve, please assign a CVE ID for this.
+> The best course of action is to ask for the assignments, and perhaps
+> Steve Christey will clarify.  That's not "blackmail" or anything
+> nefarious, that's simply the proper procedure for disclosing a
+> security-relevant issue.
+>
 
-cc'ed coley@...us.mitre.org.
+Fair enough - while the primary goal of my email was to bring about a
+discussion of these issues, I can see how CVE assignments might
+further the cause, so to speak.  Steve, what is your take on all this?
 
-Please change the subject as well so that we know this needs a CVE name.
+> For those that are against increased CVE assignments due to the
+> inevitable sensational "high bug count journalism", get over it.
+> Realize that the people that do this simply do not recognize the hidden
+> factors at play and the fact that quantity does not equal quality.
+> They're a lost cause.
+>
+> Oh, and Dan, don't get discouraged so easily.  You're tackling a hard
+> problem (well, a technically straightforward problem, but a hard
+> social problem). You're bound to run into barriers simply due to human
+> nature. If it were easy it would already be done.
 
-Thanks, Eugene
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+Thanks Mike.  One of the reasons I posted this here was that
+previously, I felt as if I were fighting a one-man, futile battle
+against the kernel devs.  It's obvious to me that plenty of people not
+actively involved in kernel development who care about these kinds of
+security issues, and it's those opinions I want to bring to the table.
+
+-Dan
