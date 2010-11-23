@@ -1,48 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/24/1
-Message-ID: <Pine.GSO.4.64.1003232056560.8753@faron.mitre.org>
-Date: Tue, 23 Mar 2010 21:12:19 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/23/4
+Message-ID: <20101123164647.GA4925@suse.de>
+Date: Tue, 23 Nov 2010 17:46:47 +0100
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-cc: coley@...us.mitre.org
-Subject: Re: CVE requests 6x kernel vulns still pending
+Subject: Re: Linux kernel address leaks
 Content-Type: text/plain; charset=utf-8
 
+On Tue, Nov 23, 2010 at 09:59:13AM +0100, Yves-Alexis Perez wrote:
+> On lun., 2010-11-22 at 18:54 -0500, Michael Gilbert wrote:
+> > Oh, and if you get CVEs assigned, that kind of forces them to fix the
+> > problem, right?
+> > 
+> I'm not that sure (there are CVEs for issues considered too small by the
+> developers involved, not only in Linux, which are still opened), and I'm
+> not sure using CVE system for “blackmailing” is a good usage for that
+> tool.
 
-On Tue, 23 Mar 2010, Eugene Teo wrote:
+CVEs are for security problems. Leaking kernel function addresses to
+userspace is not a security issue in my opinion.
 
-> 1) kernel information leak via userspace USB interface
+(Leaking content of kernel memory however is.)
 
-Use CVE-2010-1083
-
-Seems reasonable to skip the secondary issue brought up by Marcus.
-
-> 2) kernel: ALSA: hda-intel: Avoid divide by zero crash
-
-Use CVE-2010-1085
-
-> 3) kernel: NFS DoS related to "automount" symlinks
-
-What exactly is the DoS that happens here?
-
-Use CVE-2010-1088 (note that this number is out of order)
-
-> 4) kernel: dvb-core: ULE decapsulation DoS
-
-Use CVE-2010-1086
-
-> 5) kernel: NFS: Fix an Oops when truncating a file
-
-I assume that nfs_wait_on_request() can be influenced by a non-root user 
-to generate the interrupt that triggers the Ooops?
-
-Use CVE-2010-1087
-
-> 6) kernel: bluetooth: potential bad memory access with sysfs files
-
-Use CVE-2010-1084 (notice how this number is out of order)
-
-
-All of these will be filled in sometime Wednesday.
-
-- Steve
+Ciao, Marcus
