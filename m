@@ -1,23 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/11/2
-Message-ID: <20100311080124.GJ31822@ngolde.de>
-Date: Thu, 11 Mar 2010 09:01:25 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/23/11
+Message-ID: <20101123224929.GB4925@suse.de>
+Date: Tue, 23 Nov 2010 23:49:29 +0100
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: mydms
+Subject: Re: Linux kernel address leaks
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-multiple CSRF issues and file inclusion in mydms:
-http://seclists.org/fulldisclosure/2010/Jan/267
+On Tue, Nov 23, 2010 at 10:04:06AM -0500, Jon Oberheide wrote:
+> On Tue, 2010-11-23 at 09:59 +0100, Yves-Alexis Perez wrote: 
+> > On lun., 2010-11-22 at 18:54 -0500, Michael Gilbert wrote:
+> > > Oh, and if you get CVEs assigned, that kind of forces them to fix the
+> > > problem, right?
+> > > 
+> > I'm not that sure (there are CVEs for issues considered too small by the
+> > developers involved, not only in Linux, which are still opened), and I'm
+> > not sure using CVE system for “blackmailing” is a good usage for that
+> > tool.
+> 
+> I think calling it "blackmail" is a bit hyperbolic. Rather, it's simply
+> the next step in the vulnerability disclosure process: (1) research
+> reports vulnerability to vendor; (2) vendor refuses to fix
+> vulnerability; (3) research discloses vulnerability and requests CVE.
+> 
+> Am I correct in assuming that it is acceptable procedure to assign CVEs
+> to unpatched vulnerabilities?
 
-Can someone assign CVE ids please?
+CVE is just a directory index to vulnerabilites, regardless of fixed
+status ... so YES.
 
-Cheers
-Nico
-
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+Ciao, Marcus
