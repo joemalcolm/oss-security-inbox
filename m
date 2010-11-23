@@ -1,41 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/19/6
-Message-ID: <2039809097.229341263933540044.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 19 Jan 2010 15:39:00 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/23/8
+Message-ID: <1290524646.5990.4.camel@localhost>
+Date: Tue, 23 Nov 2010 10:04:06 -0500
+From: Jon Oberheide <jon@...rheide.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Evolution denial of service bug ...
+Subject: Re: Linux kernel address leaks
 Content-Type: text/plain; charset=utf-8
 
------ "Marcus Meissner" <meissner@...e.de> wrote:
-> 
-> We received a bugreport for Evolution from "Francis Provencher for Protek
-> Research Lab's" (protekresearchlab@...oo.ca).
-> 
-> The issue is that if Evolution accesses a malicious POP3 server the
-> latter can by sending an overly long ERR message cause a X11 error
-> (BadAlloc) likely due to a overly wide Message Box and so cause evolution
-> to abort.
-> 
-> The commit in evolution that fixes it:
-> http://git.gnome.org/browse/evolution-data-server/commit/?id=22854733409fddf3e313cc637ce3a0309159b41f
-> it also checks for utf-8 validity.
-> 
-> 
-> I am still undecided whether this is a real security issue or not. On one
-> hand getting rid of this malicious server from evolution might be
-> difficult if it is auto-opened. On the other hand, malicious servers have
-> also other denial of service possibilities (like sending 1000000+
-> mailheaders).
-> 
+On Tue, 2010-11-23 at 09:59 +0100, Yves-Alexis Perez wrote: 
+> On lun., 2010-11-22 at 18:54 -0500, Michael Gilbert wrote:
+> > Oh, and if you get CVEs assigned, that kind of forces them to fix the
+> > problem, right?
+> > 
+> I'm not that sure (there are CVEs for issues considered too small by the
+> developers involved, not only in Linux, which are still opened), and I'm
+> not sure using CVE system for “blackmailing” is a good usage for that
+> tool.
 
-I'm thinking not a flaw for this one. If it could execute arbitrary code,
-you'd have a flaw, but a DoS only is pretty gray area.
+I think calling it "blackmail" is a bit hyperbolic. Rather, it's simply
+the next step in the vulnerability disclosure process: (1) research
+reports vulnerability to vendor; (2) vendor refuses to fix
+vulnerability; (3) research discloses vulnerability and requests CVE.
 
-Unless someone gives me a compelling reason to do so, I'm not assigning
-this a CVE id.
+Am I correct in assuming that it is acceptable procedure to assign CVEs
+to unpatched vulnerabilities?
 
-Thanks.
+Regards,
+Jon Oberheide
 
 -- 
-    JB
+Jon Oberheide <jon@...rheide.org>
+GnuPG Key: 1024D/F47C17FE
+Fingerprint: B716 DA66 8173 6EDD 28F6  F184 5842 1C89 F47C 17FE
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
