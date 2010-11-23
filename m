@@ -1,48 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/02/3
-Message-ID: <4C064D9D.7000308@redhat.com>
-Date: Wed, 02 Jun 2010 14:25:01 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/23/5
+Message-ID: <AANLkTikLaACS7oDJVp8aOMyFSiFeMhc+95eVG1=e-1xb@mail.gmail.com>
+Date: Tue, 23 Nov 2010 12:00:51 -0500
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>, Panu Matilainen <pmatilai@...hat.com>, Jindrich Novy <jnovy@...hat.com>, Florian Festi <ffesti@...hat.com>, Matt McCutchen <matt@...tmccutchen.net>
-Subject: Re: CVE Request -- rpm -- Fails to remove the SUID/SGID bits on package upgrade (RH BZ#598775)
+Subject: Re: Linux kernel address leaks
 Content-Type: text/plain; charset=utf-8
 
-Steve,
+For starters, I don't want to turn this into a conversation about
+CVEs.  The point of my post was to generate discussion on a particular
+class of information leakage and talk about how to address it.
 
-Jan Lieskovsky wrote:
-> Hi Steve, vendors,
-> 
->    Matt McCutchen pointed out a deficiency in the way rpm handled rpm 
-> package upgrades --
-> it failed to clear out the SUID/SGID bits of the old file by file 
-> replacement when privileged
-> user performed package upgrade. Under certain circumstances, a local, 
-> authenticated user could
-> use this flaw to escalate their privileges.
+That said, MITRE's website defines an "exposure" (the "E" in "CVE") as
+follows [1]:
 
-Maybe obvious and natural conclusion from previous post already, but Panu clarified
-yet, similar deficiency holds for dealing with posix file capabilities and SELinux
-contexts, i.e. they are not cleared after pkg upgrade. Not sure second CVE is needed
-for this, but if one is enough, wanted to explicitly mention this, so it can be
-described in the text of the CVE too.
+"An information security 'exposure' is a system configuration issue or
+a mistake in software that allows access to information or
+capabilities that can be used by a hacker as a stepping-stone into a
+system or network.
 
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+CVE considers a configuration issue or a mistake an exposure if it
+does not directly allow compromise but could be an important component
+of a successful attack, and is a violation of a reasonable security
+policy."
 
-> 
-> Red Hat Bugzilla entry:
->   [1] https://bugzilla.redhat.com/show_bug.cgi?id=598775
-> 
-> Upstream changeset:
->   [2] 
-> http://rpm.org/gitweb?p=rpm.git;a=commit;h=ca2d6b2b484f1501eafdde02e1688409340d2383 
-> 
-> 
-> Could you allocate CVE id for this?
-> 
-> Thanks && Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
 
+I don't think it's appropriate to use CVEs as a blackmailing tool, and
+I don't actually think these issues need CVEs.  But claiming that it
+would be inappropriate to assign them because they're not "security
+problems" is a bit misguided.  We're not talking about leaking
+function addresses here - we're talking about leaking the addresses of
+live kernel data structures, which in my opinion is more of a risk.
+
+-Dan
+
+[1] http://cve.mitre.org/about/terminology.html
+
+
+On Tue, Nov 23, 2010 at 11:46 AM, Marcus Meissner <meissner@...e.de> wrote:
+> On Tue, Nov 23, 2010 at 09:59:13AM +0100, Yves-Alexis Perez wrote:
+>> On lun., 2010-11-22 at 18:54 -0500, Michael Gilbert wrote:
+>> > Oh, and if you get CVEs assigned, that kind of forces them to fix the
+>> > problem, right?
+>> >
+>> I'm not that sure (there are CVEs for issues considered too small by the
+>> developers involved, not only in Linux, which are still opened), and I'm
+>> not sure using CVE system for “blackmailing” is a good usage for that
+>> tool.
+>
+> CVEs are for security problems. Leaking kernel function addresses to
+> userspace is not a security issue in my opinion.
+>
+> (Leaking content of kernel memory however is.)
+>
+> Ciao, Marcus
+>
