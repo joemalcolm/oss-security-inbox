@@ -1,38 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/26/2
-Message-ID: <4BFC90AE.2090504@kernel.sg>
-Date: Wed, 26 May 2010 11:08:30 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request - kernel: nfsd: fix vm overcommit crash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/23/7
+Message-ID: <AANLkTin_XXK8zMNmoBnER7Qj1-H+AQ1TEQ8rGCwBCxa9@mail.gmail.com>
+Date: Tue, 23 Nov 2010 12:17:43 -0500
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: Steve Grubb <sgrubb@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel address leaks
 Content-Type: text/plain; charset=utf-8
 
-"knfsd crashes if you are using it to export shmemfs objects and run 
-strict overcommit. In this situation the current->mm based modifier to 
-the overcommit goes through a NULL pointer.
+> But you can't access kernel memory as a common user unless you already have a second
+> bug. That second bug is the CVE. Saying this leak helps escate privs is like saying
+> /etc/password leaks account names. You already have to have system access to use that
+> info.
+>
 
-We could simply check for NULL and skip the modifier but we've caught 
-other real bugs in the past from mm being NULL here - cases where we did 
-need a valid mm set up (eg the exec bug in 2005).
+I'm going to stop nitpicking over CVE definitions, because it's not
+the point of this conversation.  Let's forget I ever brought it up.  I
+agree that this isn't a direct threat, but in the interest of being
+proactive rather than reactive, fixing this (in combination with other
+previously mentioned hardening efforts) would make exploitation of
+other vulnerabilities harder.
 
-To preserve the checks and get the logic we want shuffle the checking 
-around and add a new helper to the vm_ security wrappers
+> That said, why don't upstream kernel allow 0's for the memory addresses? I don't know
+> of any tool that uses the memory address information. What user space uses is the
+> inode, path, and network address/port fields. (netstat, lsof, netcap)
+>
 
-Also fix a current->mm reference in nommu that should use the passed mm"
+The argument presented to me was that address information can be
+helpful in debugging the kernel, which makes sense if you're a
+privileged user.  I have yet to hear a coherent argument on why
+unprivileged users should need this same information, but feel free to
+ask the kernel folks - you might get lead around in circles for awhile
+though.
 
-Upstream commit:
-nfsd: fix vm overcommit crash
-http://git.kernel.org/linus/731572d39fcd3498702eda4600db4c43d51e0b26
-
-Reference:
-[PATCH] knfsd: add nfs-export support to tmpfs
-http://git.kernel.org/linus/91828a405ae454a9503c41a7744f6ff877a80714
-https://bugzilla.redhat.com/show_bug.cgi?id=595970
-
-Backtrace (-rt kernel):
-https://bugzilla.redhat.com/show_bug.cgi?id=595970#c1
-
-Thanks, Eugene
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+-Dan
