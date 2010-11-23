@@ -1,21 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/17/2
-Message-Id: <20100417181542.9c519ba2.michael.s.gilbert@gmail.com>
-Date: Sat, 17 Apr 2010 18:15:42 -0400
-From: Michael Gilbert <michael.s.gilbert@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/23/1
+Message-ID: <4CEB7F72.2020202@redhat.com>
+Date: Tue, 23 Nov 2010 16:46:42 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: kernel: hvc_console: Fix race between hvc_close and hvc_remove
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: xen: request-processing loop is unbounded in blkback
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 04 Mar 2010 17:03:58 +0800 Eugene Teo wrote:
+If the frontend pass a bad index of production request, the backend will 
+enter an endless loop and then cause a excessive CPU consumption. A Xen 
+guest can cause the Xen host to be unresponsive.
 
-> Heads-up. You might want to backport this if your kernel is affected. We 
-> are not requesting a CVE name for this as it does not affect any of our 
-> Red Hat supported kernels.
+This issue has been fixed in upstream by:
+changeset:   391:77f831cbb91d
+user:        Keir Fraser <keir.fraser@...rix.com>
+date:        Fri Jan 18 16:52:25 2008 +0000
+summary:     blkback: Request-processing loop is unbounded and hence 
+requires a
+http://xenbits.xensource.com/linux-2.6.18-xen.hg?rev/77f831cbb91d
 
-are you sure about this?  i see the vulnerable code upstream in both
-2.6.26 and 2.6.32.  does redhat not ship hvc in their kernels?  i think
-this should get a cve id because the more vanilla distros will have
-shipped with this included.
+changeset:   392:7070d34f251c
+user:        Keir Fraser <keir.fraser@...rix.com>
+date:        Mon Jan 21 11:43:31 2008 +0000
+summary:     blkback/blktap: Check for kthread_should_stop() in inner loop,
+http://xenbits.xensource.com/linux-2.6.18-xen.hg?rev/7070d34f251c
 
-mike
+Thanks, Eugene
