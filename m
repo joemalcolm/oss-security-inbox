@@ -1,33 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/16/11
-Message-ID: <20100316174007.GI30480@redhat.com>
-Date: Tue, 16 Mar 2010 11:40:07 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/24/1
+Message-ID: <1290555222.20864.190.camel@dyson>
+Date: Tue, 23 Nov 2010 18:33:42 -0500
+From: Jon Oberheide <jon@...rheide.org>
 To: oss-security@...ts.openwall.com
 Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- cURL/libCURL 7.20.0
+Subject: Re: Linux kernel address leaks
 Content-Type: text/plain; charset=utf-8
 
->Hi Steve, vendors,
->
->   cURL upstream has released latest v7.20.0 version of cURL/libCURL
->fixing the "libcurl data callback excessive length" issue.
->
->References:
->[1] http://curl.haxx.se/docs/security.html#20100209
->[2] http://curl.haxx.se/docs/adv_20100209.html
->[3] http://curl.haxx.se/libcurl-contentencoding.patch
->[4] http://curl.haxx.se/download.html
->
->Mitigation factors (from [1]):
->
->"This error is only present in zlib-enabled builds of libcurl and only if
->  automatic decompression has been explicitly enabled by the application - it
->  is disabled by default."
->
->Could you allocate CVE id for this?
+On Tue, 2010-11-23 at 23:49 +0100, Marcus Meissner wrote:
+> On Tue, Nov 23, 2010 at 10:04:06AM -0500, Jon Oberheide wrote:
+> > On Tue, 2010-11-23 at 09:59 +0100, Yves-Alexis Perez wrote: 
+> > > On lun., 2010-11-22 at 18:54 -0500, Michael Gilbert wrote:
+> > > > Oh, and if you get CVEs assigned, that kind of forces them to fix the
+> > > > problem, right?
+> > > > 
+> > > I'm not that sure (there are CVEs for issues considered too small by the
+> > > developers involved, not only in Linux, which are still opened), and I'm
+> > > not sure using CVE system for “blackmailing” is a good usage for that
+> > > tool.
+> > 
+> > I think calling it "blackmail" is a bit hyperbolic. Rather, it's simply
+> > the next step in the vulnerability disclosure process: (1) research
+> > reports vulnerability to vendor; (2) vendor refuses to fix
+> > vulnerability; (3) research discloses vulnerability and requests CVE.
+> > 
+> > Am I correct in assuming that it is acceptable procedure to assign CVEs
+> > to unpatched vulnerabilities?
+> 
+> CVE is just a directory index to vulnerabilites, regardless of fixed
+> status ... so YES.
 
-Please use CVE-2010-0734 for this issue.
+Great. There's plenty of precedent for CVE assignment to vulnerabilities
+that leak information that can assist an attacker in exploitation.
+
+In particular, I'm thinking about the handful of ASLR information leaks
+(eg. CVE-2009-2691 [1]), where userspace addresses are leaked via /proc,
+assisting an attacker in exploiting a vulnerability in a setuid
+userspace binary.
+
+In this case, we have an analogous situation, except that we're leaking
+kernel address via /proc, assisting an attacker in exploiting
+vulnerability in the kernel.
+
+I don't see any reason why it would not be entirely appropriate to
+assign a CVE here.
+
+Regards,
+Jon Oberheide
+
+[1] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2691
+
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Jon Oberheide <jon@...rheide.org>
+GnuPG Key: 1024D/F47C17FE
+Fingerprint: B716 DA66 8173 6EDD 28F6  F184 5842 1C89 F47C 17FE
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
