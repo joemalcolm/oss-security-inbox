@@ -1,23 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/15/1
-Message-ID: <4C909193.2667.179386C9@pageexec.freemail.hu>
-Date: Wed, 15 Sep 2010 11:27:47 +0200
-From: pageexec@...email.hu
-To: Roland McGrath <roland@...hat.com>
-CC: KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>, Brad Spengler <spender@...ecurity.net>, Linus Torvalds <torvalds@...ux-foundation.org>, Andrew Morton <akpm@...ux-foundation.org>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Kees Cook <kees.cook@...onical.com>, Al Viro <viro@...iv.linux.org.uk>, Oleg Nesterov <oleg@...hat.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, Eugene Teo <eugene@...hat.com>
-Subject: Re: [PATCH 1/3] setup_arg_pages: diagnose excessive argument size
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/23/6
+Message-Id: <201011231212.18654.sgrubb@redhat.com>
+Date: Tue, 23 Nov 2010 12:12:18 -0500
+From: Steve Grubb <sgrubb@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Dan Rosenberg <dan.j.rosenberg@...il.com>
+Subject: Re: Linux kernel address leaks
 Content-Type: text/plain; charset=utf-8
 
-On 14 Sep 2010 at 16:04, Roland McGrath wrote:
+On Tuesday, November 23, 2010 12:00:51 pm Dan Rosenberg wrote:
+> I don't think it's appropriate to use CVEs as a blackmailing tool, and
+> I don't actually think these issues need CVEs.  But claiming that it
+> would be inappropriate to assign them because they're not "security
+> problems" is a bit misguided.  We're not talking about leaking
+> function addresses here - we're talking about leaking the addresses of
+> live kernel data structures, which in my opinion is more of a risk.
 
-> > userland could never rely on the kernel's policy at all since get_arg_page
-> > could have failed for more reasons than overstepping the currently hardcoded
-> > ARG_MAX check in there. 
-> 
-> I don't see how it could fail except for OOM cases where get_user_pages()
-> failed rather than blocking.  Is that what you mean?
+But you can't access kernel memory as a common user unless you already have a second 
+bug. That second bug is the CVE. Saying this leak helps escate privs is like saying 
+/etc/password leaks account names. You already have to have system access to use that 
+info.
 
-yes but it's not only OOM (ENOMEM from some allocation), but it can be also
-EPERM from LSM (if mmap_min_addr is set too high) or EFAULT from get_user_pages
-(e.g., if VM_FAULT_HWPOISON was returned for a requested page).
+That said, why don't upstream kernel allow 0's for the memory addresses? I don't know 
+of any tool that uses the memory address information. What user space uses is the 
+inode, path, and network address/port fields. (netstat, lsof, netcap)
 
+-Steve
