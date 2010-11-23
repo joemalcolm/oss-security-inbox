@@ -1,69 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/21/5
-Message-ID: <20100121151908.GC3837@localhost.localdomain>
-Date: Thu, 21 Jan 2010 16:19:08 +0100
-From: Jerome Glisse <jglisse@...hat.com>
-To: Ludwig Nussel <ludwig.nussel@...e.de>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request - kernel: drm/radeon: r6xx/r7xx possible security issue, system ram access
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/23/9
+Message-Id: <20101123144629.8bbdb6db.michael.s.gilbert@gmail.com>
+Date: Tue, 23 Nov 2010 14:46:29 -0500
+From: Michael Gilbert <michael.s.gilbert@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel address leaks
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jan 21, 2010 at 10:46:00AM +0100, Ludwig Nussel wrote:
-> Eugene Teo wrote:
-> > On 01/21/2010 04:44 PM, Eugene Teo wrote:
-> > > Quoting from the patch description:
-> > > "This patch workaround a possible security issue which can allow user to
-> > > abuse drm on r6xx/r7xx hw to access any system ram memory. This patch
-> > > doesn't break userspace, it detect "valid" old use of CB_COLOR[0-7]_FRAG
-> > [...]
-> > > The attack is theoretical. To exploit this you need access to the drm
-> > > device file which is usually set to 666 to allow users to have 3D
-> > > acceleration.
-> > 
-> > Sorry, correction, you need to be root to open the drm device file. 
+On Tue, 23 Nov 2010 12:17:43 -0500, Dan Rosenberg wrote:
+> > But you can't access kernel memory as a common user unless you already have a second
+> > bug. That second bug is the CVE. Saying this leak helps escate privs is like saying
+> > /etc/password leaks account names. You already have to have system access to use that
+> > info.
+> >
 > 
-> You lost me. Do you mean the driver itself checks for CAP_SYS_ADMIN for this
-> particular operation? It wouldn't make much sense to set the device to 666 or
-> have udev put ACLs on it otherwise.
-> 
-> $ grep drm /lib/udev/rules.d/70-acl.rules 
-> SUBSYSTEM=="drm", KERNEL=="card*", ENV{ACL_MANAGE}="1"
-> 
-> cu
-> Ludwig
+> I'm going to stop nitpicking over CVE definitions, because it's not
+> the point of this conversation.  Let's forget I ever brought it up.  I
+> agree that this isn't a direct threat, but in the interest of being
+> proactive rather than reactive, fixing this (in combination with other
+> previously mentioned hardening efforts) would make exploitation of
+> other vulnerabilities harder.
 
-Sorry for being unclear, it has been a while since i last looked into
-how drm allow user to access the GPU. So in standard configuration any
-one can open the /dev/dri/card* file (well it's often restriced to a
-group but most of the time all user of the system are in the group).
+I think that the only way to support your goal is to make the case that
+the CVE definition does cover such exposures.  In my opinion it
+certainly does; although at the lowest possible severity.
 
-Opening the dev file is not enought, drm implement an authentification
-mecanism that was put in place to forbid non X client from accessing
-the hw. So in order to be able to access the hw you have to be an X
-client and to request to the server an authentification cookies (through
-the DRI or DRI2 protocol) when X server receive such request it
-generates a cookie and send it to the kernel and reply to the X client
-with the cookie. Once the X client got the cookie it sends it too to
-the kernel. Once kernel get the cookie it compares against the cookie
-the X server send and if there is a match it consider that the process
-can access the drm ioctl.
+The best course of action is to ask for the assignments, and perhaps
+Steve Christey will clarify.  That's not "blackmail" or anything
+nefarious, that's simply the proper procedure for disclosing a
+security-relevant issue.
 
-drm has also more fine grained authorization for each ioctl. Some
-only need the DRM_AUTH other need the DRM_MASTER or DRM_ROOT_ONLY.
-The X server is a special client for the drm, it the first one to
-open the drm file with root power and so becomes the master, the
-master is the one being able to give other program to get the
-DRM_AUTH level.
+For those that are against increased CVE assignments due to the
+inevitable sensational "high bug count journalism", get over it.
+Realize that the people that do this simply do not recognize the hidden
+factors at play and the fact that quantity does not equal quality.
+They're a lost cause.
 
-Bottom line, as of today any program trying to use the GPU either
-need to be root or to be an X client requesting DRM_AUTH through
-the DRI/DRI2 protocol.
+Oh, and Dan, don't get discouraged so easily.  You're tackling a hard
+problem (well, a technically straightforward problem, but a hard
+social problem). You're bound to run into barriers simply due to human
+nature. If it were easy it would already be done.
 
-Hopes it clarify the situation. The security issue i pointed out
-can only be used localy through the X server, and so far i am not
-even sure it's doable (thing i describe is doable in theory but
-there maybe things that i didn't render this attack unpractible).
-
-Cheers,
-Jerome Glisse
-Red Hat Desktop engineering team
+Best wishes,
+Mike
