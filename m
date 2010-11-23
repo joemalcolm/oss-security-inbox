@@ -1,26 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/07/5
-Message-ID: <Pine.GSO.4.64.1007071241440.8569@faron.mitre.org>
-Date: Wed, 7 Jul 2010 12:44:34 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/23/2
+Message-ID: <4CEBA3E2.5030606@redhat.com>
+Date: Tue, 23 Nov 2010 19:22:10 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: kernel: hvc_console: Fix race between hvc_close and hvc_remove
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: posix-cpu-timers: workaround to suppress the problems with mt exec
 Content-Type: text/plain; charset=utf-8
 
+This issue can trigger a BUG_ON() in posix_cpu_timer_del(). More info 
+at: https://bugzilla.redhat.com/show_bug.cgi?id=656264
 
-On Wed, 30 Jun 2010, dann frazier wrote:
+Upstream commit:
+http://git.kernel.org/linus/e0a70217107e6f9844628120412cb27bb4cea194
 
->> i see that hvc_console is disabled by default in the debian kernels,
->
-> Actually, upon review, I see that it is enabled (see the powerpc64
-> image). Therefore, I'd like to request a CVE ID for it.
->
-
-Use CVE-2010-2653
-
-Let's ignore the default case.  If there's a feature that's available to 
-some set of users, no matter how small, then CVE assignment is reasonable, 
-even if it's not the default.  It's not much different than if you have an 
-issue that only affects a particular chip set or compiler.
-
-- Steve
+Thanks, Eugene
