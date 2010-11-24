@@ -1,46 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/04/2
-Message-ID: <4B6A5675.4090604@redhat.com>
-Date: Thu, 04 Feb 2010 13:09:09 +0800
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/24/3
+Message-ID: <4CECDAFA.8030608@redhat.com>
+Date: Wed, 24 Nov 2010 17:29:30 +0800
 From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: dann frazier <dannf@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - kernel: DoS on x86_64
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: inotify memory leak
 Content-Type: text/plain; charset=utf-8
 
-On 02/04/2010 10:28 AM, dann frazier wrote:
-> On Mon, Feb 01, 2010 at 01:09:12PM +0800, Eugene Teo wrote:
->> Reported by Mathias Krause. The problem seams to be located in
->> fs/binfmt_elf.c:load_elf_binary(). It calls SET_PERSONALITY() prior
->> checking that the ELF interpreter is available. This in turn makes the
->> previously 32 bit process a 64 bit one which would be fine if execve()
->> would succeed. But after the SET_PERSONALITY() the open_exec() call
->> fails (because it cannot find the interpreter) and execve() almost
->> instantly returns with an error. If you now look at /proc/PID/maps
->> you'll see, that it has the vsyscall page mapped which shouldn't be. But
->> the process is not dead yet, it's still running. By now generating a
->> segmentation fault and in turn trying to generate a core dump the
->> kernel just dies.
->>
->> Steps to Reproduce:
->> 1. Enable core dumps
->> 2. Start an 32 bit program that tries to execve() an 64 bit program
->> 3. The 64 bit program cannot be started by the kernel because it can't
->> find the interpreter, i.e. execve returns with an error
->> 4. Generate a segmentation fault
->> 5. panic
->>
->> Upstream commit:
->> http://git.kernel.org/linus/221af7f87b97431e3ee21ce4b0e77d5411cf1549
->
-> Thanks Eugene.
->
-> Also note this fix for a regression in the above:
->    http://git.kernel.org/linus/7ab02af428c2d312c0cf8fb0b01cc1eb21131a3d
+Reported by Vegard Nossum, if inotify_init is unable to allocate a new 
+file for the new inotify group we leak the new group.
 
-Ben Hutchings reported (via stable review list) that the fix did not 
-work for him. Will monitor the list if there are other follow-ups.
+Reproducer: http://lkml.org/lkml/2010/11/23/418 (this test case is only 
+relevant if c44dcc56 (v2.6.34-rc1) is backported)
+
+Issue was introduced in 63c882a0 (v2.6.31-rc1).
+
+https://bugzilla.redhat.com/656830
 
 Thanks, Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
