@@ -1,33 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/12/6
-Message-Id: <20101012182739.3560D11B926@karen.lavabit.com>
-Date: Tue, 12 Oct 2010 13:27:39 -0500
-From: akiphie <akiphie@...abit.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/24/6
+Message-ID: <AANLkTi=2bLRUv_pueoMNArTrbODZgEzHH=jMtaOB2h93@mail.gmail.com>
+Date: Wed, 24 Nov 2010 07:43:12 -0500
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: kernel: avoid pgoff overflow in remap_file_pages
+Cc: Petr Matousek <pmatouse@...hat.com>, coley@...us.mitre.org
+Subject: Re: CVE request: kernel: L2TP send buffer allocation size overflows
 Content-Type: text/plain; charset=utf-8
 
-On Tuesday 12 October 2010 09:19:29 Eugene Teo wrote:
-> Thomas Pollet reported an integer overflow issue in remap_file_pages().
-> While we are able to reproduce the issue, we are unable to find a
-> security impact. If your views differ, do let us know.
+There are not overflows in every send/recv call.  The fix that
+addresses these issues in l2tp also addresses any other possible
+examples of this problem in other protocols, including CVE-2010-3859
+(heap overflow in TIPC).
 
-This made my computer very sad :(
+-Dan
 
-#include <sys/mman.h>
-#include <unistd.h>
-#include <sys/ipc.h>
-#include <sys/shm.h>
-                                                                                                                                                                                    
-int main(int argc, char **argv)                                                                                                                                                     
-{                                                                                                                                                                                   
-        int x = shmget(IPC_PRIVATE, 1, IPC_CREAT | IPC_EXCL | 0600);                                                                                                                
-        void *mem = shmat(x, NULL, 0);                                                                                                                                              
-        mremap(mem, 0x1000, 0x1000, MREMAP_MAYMOVE | MREMAP_FIXED, 0x0);                                                                                                            
-        remap_file_pages((void *) 0xfff, ~0UL, 0, -(~0UL >> 12), 0);                                                                                                                
-        return 0;                                                                                                                                                                   
-}                                                                                                                                                                                   
-
---
-cnu
-
+On Wed, Nov 24, 2010 at 7:24 AM, Josh Bressers <bressers@...hat.com> wrote:
+> I don't understand this comment. Is he saying every send/recv in the kernel
+> suffers from this? The below CVE id really only applies to the l2tp
+> overflows.
+>
+> Thanks.
+>
+> --
+>     JB
+>
+> ----- "Thomas Biege" <thomas@...e.de> wrote:
+>
+>> A comment from our kernel maintainer Jeff:
+>> "That applies to overflows for any send/recv not just the l2tp ones. I
+>> can use
+>> that CVE if there isn't another one, though."
+>>
+>> Is this known? Should we use only on CVE-ID here?
+>>
+>>
+>> Bye
+>> Thomas
+>>
+>>
+>> Am Mittwoch 10 November 2010 20:44:11 schrieb Josh Bressers:
+>> > Please use CVE-2010-4160.
+>> >
+>> > Thanks.
+>> >
+>> > > "Both PPPoL2TP (in net/l2tp/l2tp_ppp.c, pppol2tp_sendmsg()) and
+>> > > IPoL2TP (in
+>> > > net/l2tp/l2tp_ip.c, l2tp_ip_sendmsg()) make calls to
+>> sock_wmalloc()
+>> > > that
+>> > > perform arithmetic on the size argument without any maximum bound.
+>> As
+>> > > a result,
+>> > > by issuing sendto() calls with very large sizes, this allocation
+>> size
+>> > > will wrap
+>> > > and result in a small buffer being allocated, leading to ugliness
+>> > > immediately
+>> > > after (probably kernel panics due to bad sk_buff tail position,
+>> but
+>> > > possibly
+>> > > kernel heap corruption)."
+>> > >
+>> > > Credit: Dan Rosenberg
+>> > >
+>> > > Reference:
+>> > > http://www.spinics.net/lists/netdev/msg145673.html
+>> > > https://bugzilla.redhat.com/show_bug.cgi?id=651892
+>> > >
+>> > > Thanks,
+>> > > --
+>> > > Petr Matousek / Red Hat Security Response Team
+>> >
+>>
+>> --
+>>  Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support &
+>> Auditing
+>>  SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+>> --
+>>   Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+>>                             -- Marie von Ebner-Eschenbach
+>
