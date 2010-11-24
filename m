@@ -1,33 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/16/15
-Message-ID: <20100316210827.2aea6df2@redhat.com>
-Date: Tue, 16 Mar 2010 21:08:27 +0100
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/24/2
+Message-ID: <4CEC807F.1070308@redhat.com>
+Date: Wed, 24 Nov 2010 11:03:27 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- Unbound v1.4.3 -- 64 bit platforms specific remote DoS
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: unix socket local dos
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 16 Mar 2010 11:56:31 -0600 Vincent Danen <vdanen@...hat.com>
-wrote:
+Reported by Vegard Nossum: "I found this program lying around on my 
+laptop. It kills my box (2.6.35) instantly by consuming a lot of memory 
+(allocated by the kernel, so the process doesn't get killed by the OOM 
+killer). As far as I can tell, the memory isn't being freed when the 
+program exits either. Maybe it will eventually get cleaned up the UNIX 
+socket garbage collector thing, but in that case it doesn't get called 
+quickly enough to save my machine at least."
 
-> >  Unbound upstream has released latest, v1.4.3 version:
-> >  [1] http://www.unbound.net/download.html
-> >
-> >  addressing one denial of service issue, specific to 64 bit
-> >  platforms.
-> >
-> >References:
-> >  [2] http://bugs.gentoo.org/show_bug.cgi?id=309117
-> >
-> >Could you allocate CVE id for it?
-> 
-> Please use CVE-2010-0735 for this issue.
+Reproducer: http://lkml.org/lkml/2010/11/23/395
+Partial fix: http://lkml.org/lkml/2010/11/23/450
+Reference: https://bugzilla.redhat.com/show_bug.cgi?id=656756
 
-This just got CVE-2010-0969 from Mitre:
-
-Unbound before 1.4.3 does not properly align structures on 64-bit
-platforms, which allows remote attackers to cause a denial of service
-(daemon crash) via unspecified vectors.
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+Thanks, Eugene
