@@ -1,29 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/29/4
-Message-ID: <20100629182727.5a1d0b6e@redhat.com>
-Date: Tue, 29 Jun 2010 18:27:27 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/24/9
+Message-ID: <499241793.374721290604350380.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 24 Nov 2010 08:12:30 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: dan.j.rosenberg@...il.com
-Subject: Re: CVE requests: LibTIFF
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: posix-cpu-timers: workaround to suppress the problems with mt exec
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 29 Jun 2010 08:05:25 -0400 Dan Rosenberg wrote:
 
-> On request, I'm re-posting the issues which I think actually deserve
-> CVE ids.
+----- "Eugene Teo" <eugene@...hat.com> wrote:
 
-I believe the disagreement here is caused by different opinions on what
-should be and what does not need to be called security.
+> This issue can trigger a BUG_ON() in posix_cpu_timer_del(). More info
+> 
+> at: https://bugzilla.redhat.com/show_bug.cgi?id=656264
+> 
+> Upstream commit:
+> http://git.kernel.org/linus/e0a70217107e6f9844628120412cb27bb4cea194
+> 
 
-> 2.  A NULL pointer derefrence in TIFFVGetField() may result in
-> application crash
-> (https://bugs.launchpad.net/ubuntu/lucid/+source/tiff/+bug/589145).
+Please use CVE-2010-4248
 
-This got CVE-2010-2443 from Mitre few days ago.  But I guess you're
-going to (or should?) ask for one more for td_stripbytecount case I
-pointed out in one of the previous replies (split due to different
-fixed-in version).  Sauli's fuzzer to blame for the discovery again ;).
+Thanks.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+    JB
