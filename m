@@ -1,12 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/29/2
-Message-ID: <878w9bjvhy.fsf@mid.deneb.enyo.de>
-Date: Mon, 29 Mar 2010 12:02:49 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/24/8
+Message-ID: <486240715.374251290603960112.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 24 Nov 2010 08:06:00 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: OpenSSL: CVE-2010-0740 and CVE-2009-3245 appear to be dupes
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: xen: request-processing loop is unbounded in blkback
 Content-Type: text/plain; charset=utf-8
 
-As far as I can tell, both are the same "record of death
-vulnerability" (and probably 0.9.8m-only for FLOSS systems because
-sizeof(short) * CHAR_BITS == 16 for us).
+Please use CVE-2010-4247.
+
+Thanks.
+
+-- 
+    JB
+
+
+----- "Eugene Teo" <eugene@...hat.com> wrote:
+
+> If the frontend pass a bad index of production request, the backend
+> will 
+> enter an endless loop and then cause a excessive CPU consumption. A
+> Xen 
+> guest can cause the Xen host to be unresponsive.
+> 
+> This issue has been fixed in upstream by:
+> changeset:   391:77f831cbb91d
+> user:        Keir Fraser <keir.fraser@...rix.com>
+> date:        Fri Jan 18 16:52:25 2008 +0000
+> summary:     blkback: Request-processing loop is unbounded and hence 
+> requires a
+> http://xenbits.xensource.com/linux-2.6.18-xen.hg?rev/77f831cbb91d
+> 
+> changeset:   392:7070d34f251c
+> user:        Keir Fraser <keir.fraser@...rix.com>
+> date:        Mon Jan 21 11:43:31 2008 +0000
+> summary:     blkback/blktap: Check for kthread_should_stop() in inner
+> loop,
+> http://xenbits.xensource.com/linux-2.6.18-xen.hg?rev/7070d34f251c
+> 
+> Thanks, Eugene
