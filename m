@@ -1,35 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/13/3
-Message-ID: <20101213163300.GD17679@redhat.com>
-Date: Mon, 13 Dec 2010 09:33:00 -0700
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/24/13
+Message-ID: <AANLkTinMUbREsYWFi1eOMoJ+jbPNaG7MuUbxt2oK3__3@mail.gmail.com>
+Date: Wed, 24 Nov 2010 09:52:47 -0500
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Issues without CVE names in PHP 5.3.4/5.2.15 release
+Subject: Interesting behavior with struct initiailization
 Content-Type: text/plain; charset=utf-8
 
-Looking at the PHP web site, there are a few issues fixed in the most
-recent releases that don't seem to have a CVE name:
+This topic has come up a few times recently on lkml, so I thought I'd
+share my findings here for the sake of spreading information.
 
-* Fixed crash in zip extract method (possible CWE-170).
-* Fixed symbolic resolution support when the target is a DFS share.
-* Fixed extract() to do not overwrite $GLOBALS and $this when using EXTR_OVERWRITE.
+Lately, there have been a high number of instances in the Linux kernel
+where uninitialized stack bytes are leaked to unprivileged users as a
+result of copying structures to userland.  There's been recent
+discussion on the proper way to make sure this doesn't happen.
 
-Also doesn't seem to be much info on these readily available.
+There are three situations in which this might happen:
 
-The first seems to be related to this SVN commit (don't see a bug for
-it):
+===============================
 
-http://svn.php.net/viewvc?view=revision&revision=305848
+1. Lack of initialization
 
-The second seems to be Windows-specific and is this bug (haven't found
-the SVN commit for it yet):
+This is the easiest to spot.  For example:
 
-http://bugs.php.net/bug.php?id=51945
+---
+struct test { int a; int b; int c; } arg;
 
-The third seems to be 5.2-specific (no mention in the 5.3 changes), but
-I've not yet found the bug or SVN commit.
+arg.a = 0;
+arg.b = 0;
 
-Do these have CVE names yet?
+copy_to_user(ptr, &arg, sizeof(arg));
+---
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+The contents of arg.c will be leaked due to lack of initialization.
+This is known and expected behavior.
+
+===============================
+
+2. Lack of initialization of padding bytes
+
+gcc adds padding bytes to some structures to give them more natural
+alignment.  If these bytes aren't cleared using memset() or C99
+initialization (more on this soon), they'll be uninitialized and
+subsequently leaked:
+
+---
+struct test { int a; char b; int c; } arg;
+
+arg.a = 0;
+arg.b = 0;
+arg.c = 0;
+
+copy_to_user(ptr, &arg, sizeof(arg));
+---
+
+The three bytes padding after the "char b" member will remain
+uninitialized and are leaked in this example.
+
+===============================
+
+3. gcc does not clear padding bytes on full C99 initialization
+
+I think this is unexpected behavior (at least to me), and it's the
+reason I'm writing this post.  Normally, C99 initialization
+automatically zeros out padding bytes as well.  For example:
+
+---
+struct test { int a; char b; int c; } arg = {};
+
+or
+
+struct test { int a; char b; int c; } arg = { .a = 1 };
+---
+
+will set the specified fields, and zero out everything else, including
+padding bytes.  However, if you explicitly initialize every member
+using C99 initialization, the padding bytes won't be zeroed out:
+
+---
+struct test { int a; char b; int c; } arg = { .a = 0, .b = 0, .c = 0 };
+---
+
+This will leave the padding bytes after "char b" uninitialized,
+surprisingly.  I imagine this is an attempted optimization on gcc, but
+now it's coming back to bite (no pun intended) everyone who relied on
+this construct to prevent leakage.
+
+Regards,
+Dan
