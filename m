@@ -1,31 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/14/16
-Message-ID: <4C8FF89B.24404.153DFD7D@pageexec.freemail.hu>
-Date: Wed, 15 Sep 2010 00:35:07 +0200
-From: pageexec@...email.hu
-To: Roland McGrath <roland@...hat.com>
-CC: Linus Torvalds <torvalds@...ux-foundation.org>, Andrew Morton <akpm@...ux-foundation.org>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Kees Cook <kees.cook@...onical.com>, Al Viro <viro@...iv.linux.org.uk>, Oleg Nesterov <oleg@...hat.com>, KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, Brad Spengler <spender@...ecurity.net>, Eugene Teo <eugene@...hat.com>
-Subject: Re: [PATCH 1/3] setup_arg_pages: diagnose excessive argument size
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/24/7
+Message-ID: <1968136191.373221290603446255.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 24 Nov 2010 07:57:26 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: Can I request a cve for pfsense regarding --> "pfSense "graph.php" Cross-Site Scripting Vulnerabilities"
 Content-Type: text/plain; charset=utf-8
 
-On 14 Sep 2010 at 12:33, Roland McGrath wrote:
 
-> I have no special interest in this area.  I gave my opinions and
-> advice because I was CC'd, and then submitted some patches myself
-> because I was asked to.  I can't really keep track of all the
-> formalities.  The CC list on my submissions represented the set
-> of people I knew to be involved in the discussion.  I'm sorry if
-> you felt slighted.  I just pay attention to the code, not the
-> personalities.
+----- "dave b" <db.pub.mail@...il.com> wrote:
 
-i was referring to Brad, since he reported this (and the wireless
-heap infoleak which he also wasn't credited for). anyway, we won't be
-submitting any further vulnerability reports, so no need to worry about
-any 'formalities' in the future.
+> Can I request a cve for pfsense regarding --> "pfSense "graph.php"
+> Cross-Site Scripting Vulnerabilities"
+> 
+> http://secunia.com/advisories/42138
+> (the original email can be found at
+> http://seclists.org/fulldisclosure/2010/Nov/43 ).
 
->  The most reliable way to make sure your name is
-> associated with a change is to submit patches yourself in a form
-> that Linus wants to merge.
+Please use CVE-2010-4246 for this.
 
-his conditions are unacceptable and therefore it's not going to happen.
+Thanks.
 
+-- 
+    JB
