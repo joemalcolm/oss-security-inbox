@@ -1,41 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/05/3
-Message-Id: <20100205170908.2fbc73eb.michael.s.gilbert@gmail.com>
-Date: Fri, 5 Feb 2010 17:09:08 -0500
-From: Michael Gilbert <michael.s.gilbert@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/24/11
+Message-ID: <1525777656.375171290604630513.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 24 Nov 2010 08:17:10 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: Samba symlink 0day flaw
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: inotify memory leak
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 5 Feb 2010 22:05:30 +0100, Nico Golde wrote:
-> Hey,
-> * Josh Bressers <bressers@...hat.com> [2010-02-05 20:11]:
-> > As many of you have probably seen, there was a supposed Samba 0day flaw
-> > posted to full-disclosure and youtube.
-> > 
-> > Samba has a response to this:
-> > http://marc.info/?l=samba-technical&m=126539387432412&w=2
-> > 
-> > I'm not sure if this should get a CVE id. It is documented behavior.
-> > Somewhat unexpected though. I think changing the default is the right way
-> > to go, but it may be more of a hardening measure than a security fix.
-> > 
-> > Thoughts Steve?
+
+----- "Eugene Teo" <eugene@...hat.com> wrote:
+
+> Reported by Vegard Nossum, if inotify_init is unable to allocate a new
 > 
-> Given the count of users that are probably affected by this and it not being 
-> documented in e.g. man 5 smb.conf I'd vote for yes! :)
+> file for the new inotify group we leak the new group.
+> 
+> Reproducer: http://lkml.org/lkml/2010/11/23/418 (this test case is
+> only 
+> relevant if c44dcc56 (v2.6.34-rc1) is backported)
+> 
+> Issue was introduced in 63c882a0 (v2.6.31-rc1).
+> 
+> https://bugzilla.redhat.com/656830
+> 
 
-i think this should get a CVE.  "wide links = no" is not really a
-hardening feature.  it is a solution for a certain subset of samba
-users [0].  many will need to set "wide links = yes" (in order to
-use symlinks to local files) and will remain vulnerable.
+Please use CVE-2010-4250
 
-besides, the Confidentiality Impact and Integrity Impact are rather
-high since pretty much any file on the victim's system can be read 
-(confidentiality) and /tmp and other locations are writeable
-(integrity).
+Thanks.
 
-mike
-
-[0] http://lists.samba.org/archive/samba-technical/2010-February/069196.html
+-- 
+    JB
