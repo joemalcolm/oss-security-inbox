@@ -1,49 +1,99 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/23/4
-Message-ID: <4B83FFAC.5020609@redhat.com>
-Date: Tue, 23 Feb 2010 17:17:48 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-CC: "Steven M. Christey" <coley@...us.mitre.org>, "Todd C. Miller" <Todd.Miller@...rtesan.com>
-Subject: CVE assignment notification -- CVE-2010-0427 -- sudo fails to reset group permissions if runas_default set
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/24/14
+Message-ID: <AANLkTi=Drii85J8ga083McKH4_0CFdJjY_8uE-BVxexW@mail.gmail.com>
+Date: Wed, 24 Nov 2010 09:59:11 -0500
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Interesting behavior with struct initiailization
 Content-Type: text/plain; charset=utf-8
 
-Hi vendors,
+Forgot to mention, my testing was done on gcc 4.4.3.
 
-   1, apologize for separate post (needed to investigate the
-      issue first).
+Also, s/initiailization/initialization
 
-   2, more about sudo "fails to reset group permissions
-      if runas_default set" issue:
+-Dan
 
-      Sudo failed to properly reset group permissions, when
-      'runas_default' option was used. If a local, unprivileged
-      user was authorized by sudoers file to perform their
-      sudo commands under default user account, it could lead
-      to privilege escalation.
-
-Upstream bug report:
-   [1] http://www.gratisoft.us/bugzilla/show_bug.cgi?id=349
-
-Upstream patch:
-   [2] http://sudo.ws/repos/sudo/rev/aa0b6c01c462 (against v1.6 branch)
-   [3] http://www.sudo.ws/cgi-bin/cvsweb/sudo/set_perms.c.diff?r1=1.30.2.7&> r2=1.30.2.8
-
-Other references:
-   [4] https://bugzilla.redhat.com/show_bug.cgi?id=567622
-
-Affected versions:
-   a, issue tested and confirmed in sudo-1.6.9p17 version, prior v1.6.x
-      based versions might be also affected. Issue fixed
-      in upstream 1.6.9p21 version.
-   b, v1.7.x based versions of sudo are not affected by this
-      flaw due the differences in the way sudoers file is parsed.
-
-CVE: CVE identifier of CVE-2010-0427 has been already assigned to this issue.
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-P.S.: Thanks to Todd C. Miller for pointing me to [2] and sudo
-       v1.7.x situation clarification.
+On Wed, Nov 24, 2010 at 9:52 AM, Dan Rosenberg
+<dan.j.rosenberg@...il.com> wrote:
+> This topic has come up a few times recently on lkml, so I thought I'd
+> share my findings here for the sake of spreading information.
+>
+> Lately, there have been a high number of instances in the Linux kernel
+> where uninitialized stack bytes are leaked to unprivileged users as a
+> result of copying structures to userland.  There's been recent
+> discussion on the proper way to make sure this doesn't happen.
+>
+> There are three situations in which this might happen:
+>
+> ===============================
+>
+> 1. Lack of initialization
+>
+> This is the easiest to spot.  For example:
+>
+> ---
+> struct test { int a; int b; int c; } arg;
+>
+> arg.a = 0;
+> arg.b = 0;
+>
+> copy_to_user(ptr, &arg, sizeof(arg));
+> ---
+>
+> The contents of arg.c will be leaked due to lack of initialization.
+> This is known and expected behavior.
+>
+> ===============================
+>
+> 2. Lack of initialization of padding bytes
+>
+> gcc adds padding bytes to some structures to give them more natural
+> alignment.  If these bytes aren't cleared using memset() or C99
+> initialization (more on this soon), they'll be uninitialized and
+> subsequently leaked:
+>
+> ---
+> struct test { int a; char b; int c; } arg;
+>
+> arg.a = 0;
+> arg.b = 0;
+> arg.c = 0;
+>
+> copy_to_user(ptr, &arg, sizeof(arg));
+> ---
+>
+> The three bytes padding after the "char b" member will remain
+> uninitialized and are leaked in this example.
+>
+> ===============================
+>
+> 3. gcc does not clear padding bytes on full C99 initialization
+>
+> I think this is unexpected behavior (at least to me), and it's the
+> reason I'm writing this post.  Normally, C99 initialization
+> automatically zeros out padding bytes as well.  For example:
+>
+> ---
+> struct test { int a; char b; int c; } arg = {};
+>
+> or
+>
+> struct test { int a; char b; int c; } arg = { .a = 1 };
+> ---
+>
+> will set the specified fields, and zero out everything else, including
+> padding bytes.  However, if you explicitly initialize every member
+> using C99 initialization, the padding bytes won't be zeroed out:
+>
+> ---
+> struct test { int a; char b; int c; } arg = { .a = 0, .b = 0, .c = 0 };
+> ---
+>
+> This will leave the padding bytes after "char b" uninitialized,
+> surprisingly.  I imagine this is an attempted optimization on gcc, but
+> now it's coming back to bite (no pun intended) everyone who relied on
+> this construct to prevent leakage.
+>
+> Regards,
+> Dan
+>
