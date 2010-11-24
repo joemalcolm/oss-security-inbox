@@ -1,23 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/17/1
-Message-ID: <4C19FBFB.9090401@kernel.sg>
-Date: Thu, 17 Jun 2010 18:42:03 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/24/4
+Message-Id: <201011241216.43262.thomas@suse.de>
+Date: Wed, 24 Nov 2010 12:16:42 +0100
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request - kernel: xfs swapext ioctl issue
+Cc: Josh Bressers <bressers@...hat.com>, Petr Matousek <pmatouse@...hat.com>, coley@...us.mitre.org
+Subject: Re: CVE request: kernel: L2TP send buffer allocation size overflows
 Content-Type: text/plain; charset=utf-8
 
-User "foo" can use the SWAPEXT ioctl to swap a write-only file owned by 
-user "bar" into a file owned by "foo" and subsequently reading it. It 
-does so by checking that the file descriptors passed to the ioctl are 
-also opened for reading.
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=605158
-http://archives.free.net.ph/message/20100616.130710.301704aa.en.html
-http://archives.free.net.ph/message/20100616.135735.40f53a32.en.html
+A comment from our kernel maintainer Jeff:
+"That applies to overflows for any send/recv not just the l2tp ones. I can use
+that CVE if there isn't another one, though."
 
-Thanks, Eugene
+Is this known? Should we use only on CVE-ID here?
+
+
+Bye
+Thomas
+
+
+Am Mittwoch 10 November 2010 20:44:11 schrieb Josh Bressers:
+> Please use CVE-2010-4160.
+> 
+> Thanks.
+> 
+> > "Both PPPoL2TP (in net/l2tp/l2tp_ppp.c, pppol2tp_sendmsg()) and
+> > IPoL2TP (in
+> > net/l2tp/l2tp_ip.c, l2tp_ip_sendmsg()) make calls to sock_wmalloc()
+> > that
+> > perform arithmetic on the size argument without any maximum bound. As
+> > a result,
+> > by issuing sendto() calls with very large sizes, this allocation size
+> > will wrap
+> > and result in a small buffer being allocated, leading to ugliness
+> > immediately
+> > after (probably kernel panics due to bad sk_buff tail position, but
+> > possibly
+> > kernel heap corruption)."
+> >
+> > Credit: Dan Rosenberg
+> >
+> > Reference:
+> > http://www.spinics.net/lists/netdev/msg145673.html
+> > https://bugzilla.redhat.com/show_bug.cgi?id=651892
+> >
+> > Thanks,
+> > --
+> > Petr Matousek / Red Hat Security Response Team
+> 
+
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+--
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
