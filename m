@@ -1,39 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/15/2
-Message-ID: <20101215104531.0b6bb05e@redhat.com>
-Date: Wed, 15 Dec 2010 10:45:31 +0100
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/24/5
+Message-ID: <1213652314.370071290601442480.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 24 Nov 2010 07:24:02 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Breaking the links: Exploiting the linker
+Cc: Petr Matousek <pmatouse@...hat.com>, coley@...us.mitre.org
+Subject: Re: CVE request: kernel: L2TP send buffer allocation size overflows
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 15 Dec 2010 02:14:20 +0000 Tim Brown wrote:
+I don't understand this comment. Is he saying every send/recv in the kernel
+suffers from this? The below CVE id really only applies to the l2tp
+overflows.
 
-> In the interests of a thorough peer review I'd be curious what people
-> think of the following paper I've been working on Linux and POSIX
-> linkers:
-> 
-> http://www.nth-dimension.org.uk/downloads.php?id=77
-
-Any specific reason for recommending:
-
-  LD_LIBRARY_PATH="${LD_LIBRARY_PATH:-/path/to/app/lib}"
-
-as a fix for:
-
-  LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/path/to/app/lib
-
-issue in 1.3.2?  It does not do the same thing the right way:
-
-$ LD_LIBRARY_PATH= ; LD_LIBRARY_PATH=${LD_LIBRARY_PATH:-/path/to/app} ; echo $LD_LIBRARY_PATH
-/path/to/app
-
-$ LD_LIBRARY_PATH=/foo ; LD_LIBRARY_PATH=${LD_LIBRARY_PATH:-/path/to/app} ; echo $LD_LIBRARY_PATH
-/foo
-
-Maybe you want to suggest something like this instead:
-
-  LD_LIBRARY_PATH=${LD_LIBRARY_PATH:+$LD_LIBRARY_PATH:}/path/to/app
+Thanks.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+    JB
+
+----- "Thomas Biege" <thomas@...e.de> wrote:
+
+> A comment from our kernel maintainer Jeff:
+> "That applies to overflows for any send/recv not just the l2tp ones. I
+> can use
+> that CVE if there isn't another one, though."
+> 
+> Is this known? Should we use only on CVE-ID here?
+> 
+> 
+> Bye
+> Thomas
+> 
+> 
+> Am Mittwoch 10 November 2010 20:44:11 schrieb Josh Bressers:
+> > Please use CVE-2010-4160.
+> > 
+> > Thanks.
+> > 
+> > > "Both PPPoL2TP (in net/l2tp/l2tp_ppp.c, pppol2tp_sendmsg()) and
+> > > IPoL2TP (in
+> > > net/l2tp/l2tp_ip.c, l2tp_ip_sendmsg()) make calls to
+> sock_wmalloc()
+> > > that
+> > > perform arithmetic on the size argument without any maximum bound.
+> As
+> > > a result,
+> > > by issuing sendto() calls with very large sizes, this allocation
+> size
+> > > will wrap
+> > > and result in a small buffer being allocated, leading to ugliness
+> > > immediately
+> > > after (probably kernel panics due to bad sk_buff tail position,
+> but
+> > > possibly
+> > > kernel heap corruption)."
+> > >
+> > > Credit: Dan Rosenberg
+> > >
+> > > Reference:
+> > > http://www.spinics.net/lists/netdev/msg145673.html
+> > > https://bugzilla.redhat.com/show_bug.cgi?id=651892
+> > >
+> > > Thanks,
+> > > --
+> > > Petr Matousek / Red Hat Security Response Team
+> > 
+> 
+> -- 
+>  Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support &
+> Auditing
+>  SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+> --
+>   Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+>                             -- Marie von Ebner-Eschenbach
