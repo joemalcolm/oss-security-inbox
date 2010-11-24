@@ -1,39 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/02/5
-Message-ID: <4CF7C789.1090400@redhat.com>
-Date: Thu, 02 Dec 2010 17:21:29 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, Ulrik Persson <ddefrostt@...il.com>
-Subject: CVE Request -- FontForge: Stack-based buffer overflow by processing specially-crafted CHARSET_REGISTRY font file header
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/24/10
+Message-ID: <303327254.374911290604505308.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 24 Nov 2010 08:15:05 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: unix socket local dos
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve, vendors,
 
-   Ulrik Persson reported a stack-based buffer overflow
-flaw in the way FontForge font editor processed certain
-Bitmap Distribution Format (BDF) font files, with
-specially-crafted value of the CHARSET_REGISTRY header.
-A remote attacker could create a specially-crafted BDF
-font file and trick a local, unsuspecting user into
-opening it in FontForge, which could lead to fontforge
-executable crash or, potentially, arbitrary code execution
-with the privileges of the user running the executable.
+----- "Eugene Teo" <eugene@...hat.com> wrote:
 
-References:
-[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=605537
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=659359
+> Reported by Vegard Nossum: "I found this program lying around on my 
+> laptop. It kills my box (2.6.35) instantly by consuming a lot of
+> memory 
+> (allocated by the kernel, so the process doesn't get killed by the OOM
+> 
+> killer). As far as I can tell, the memory isn't being freed when the 
+> program exits either. Maybe it will eventually get cleaned up the UNIX
+> 
+> socket garbage collector thing, but in that case it doesn't get called
+> 
+> quickly enough to save my machine at least."
+> 
+> Reproducer: http://lkml.org/lkml/2010/11/23/395
+> Partial fix: http://lkml.org/lkml/2010/11/23/450
+> Reference: https://bugzilla.redhat.com/show_bug.cgi?id=656756
+> 
 
-Public PoC:
-[3] http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=5;filename=fontforge-overflow.txt;att=1;bug=605537
+Please use CVE-2010-4249
 
-Flaw severity note:
-On systems with compile time buffer checks (FORTIFY_SOURCE)
-feature enabled, the impact of this flaw is mitigated to
-be only crash.
+Thanks.
 
-Could you allocate a CVE id for this issue?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+-- 
+    JB
