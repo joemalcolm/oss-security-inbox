@@ -1,68 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/24/5
-Message-ID: <Pine.GSO.4.64.1006241208380.19279@faron.mitre.org>
-Date: Thu, 24 Jun 2010 12:16:37 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/24/12
+Message-ID: <35651733.376061290605313601.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 24 Nov 2010 08:28:33 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE requests: maradns, freeciv, rbot, gitolite, gource, shib, kvirc
+Cc: Petr Matousek <pmatouse@...hat.com>, coley@...us.mitre.org
+Subject: Re: CVE request: kernel: L2TP send buffer allocation size overflows
 Content-Type: text/plain; charset=utf-8
 
 
-On Thu, 10 Jun 2010, Moritz Muehlenhoff wrote:
+----- "Dan Rosenberg" <dan.j.rosenberg@...il.com> wrote:
 
-> Hi,
-> Please assign CVE IDs for these issues current present in the Debian
-> Security Tracker, but for which no CVE IDs have been assigned so far:
->
-> 1. maradns
-> http://maradns.org/download/maradns-1.4.02-parse_segfault.patch
-> Fixed in 1.4.03
+> There are not overflows in every send/recv call.  The fix that
+> addresses these issues in l2tp also addresses any other possible
+> examples of this problem in other protocols, including CVE-2010-3859
+> (heap overflow in TIPC).
+> 
 
-Use CVE-2010-2444
+The way CVE handles this is by flaw, not by fix. So if more flaws are found
+in other modules, but one fix cover them all, each individual flaw gets its
+own ID.
 
-> 2. freeciv
-> http://gna.org/bugs/?15624
-> Fixed in 2.2.1 and 2.3.0
+Let me know if this isn't clear.
 
-Use CVE-2010-2445
+Thanks.
 
-> 3. rbot (http://ruby-rbot.org/)
-> http://www.securityfocus.com/archive/1/509719/30/0/threaded
-
-Use CVE-2010-2446
-
-> 4. gitolite
-> http://secunia.com/advisories/39587/
-> http://github.com/sitaramc/gitolite/commit/1e06fea3b6959faeb72d8dca46cd4753ada48637
-> http://github.com/sitaramc/gitolite/commit/5fd9328c1cd1e7c576b6530b3253061c68b159aa
-
-These two appear to be about "not filtering src/ or hooks/ from pathnames"
-
-Use CVE-2010-2447
-> http://github.com/sitaramc/gitolite/commit/5deffee3cff5f9a13c59b8c1e357c5a32487d1c3
-
-This is OS command injection
-
-Use CVE-2010-2448
-
-> 5. gource
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=577958
-
-Use CVE-2010-2449
-
-> 6. Shibboleth:
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=571631
-
-Use CVE-2010-2450
-
-> 7. kvirc
-> http://lists.omnikron.net/pipermail/kvirc/2010-May/000867.html
-
-format strings - CVE-2010-2451
-
-directory traversal - CVE-2010-2452
-
-
-All will be filled in later.
-
-- Steve
+-- 
+    JB
