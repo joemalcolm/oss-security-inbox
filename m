@@ -1,17 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/29/1
-Message-ID: <4CCA1988.1010203@redhat.com>
-Date: Fri, 29 Oct 2010 08:47:04 +0800
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/25/3
+Message-ID: <4CEE6CE7.6060308@redhat.com>
+Date: Thu, 25 Nov 2010 22:04:23 +0800
 From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
 CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: iovec overflow in rds_rdma_pages()
+Subject: CVE tagged Linux kernel git repositories
 Content-Type: text/plain; charset=utf-8
 
-Reported by Thomas Pollet, more info can be found at:
-http://www.spinics.net/lists/netdev/msg145359.html
-https://bugzilla.redhat.com/show_bug.cgi?id=647416
+Hi,
+
+I have published CVE tagged Linux kernel git repositories for 2.6, 
+2.6.32.y and 2.6.36.y. They are tagged with all the security issues 
+reported this year.
+
+You can find them at http://git.kernel.org or
+* 
+http://git.kernel.org/?p=linux/kernel/git/eugeneteo/linux-2.6-cve-tagged.git;a=summary
+* 
+http://git.kernel.org/?p=linux/kernel/git/eugeneteo/linux-2.6.32.y-cve-tagged.git;a=summary
+* 
+http://git.kernel.org/?p=linux/kernel/git/eugeneteo/linux-2.6.36.y-cve-tagged.git;a=summary
+
+You can see when the security issues were addressed:
+http://git.kernel.org/?p=linux/kernel/git/eugeneteo/linux-2.6-cve-tagged.git;a=tags
+
+You can also search for security fixes by CVE names, e.g. CVE-2010-2943:
+http://git.kernel.org/?p=linux/kernel/git/eugeneteo/linux-2.6-cve-tagged.git;a=shortlog;h=refs/tags/CVE-2010-2943
+
+In this example, you will notice that there are two tags of the same CVE 
+name, CVE-2010-2943 and CVE-2010-2943.05. That means that there are five 
+patches for this CVE name, and you can access them via CVE-2010-2943.01 
+to .05.
+
+Hope this is useful!
 
 Thanks, Eugene
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
