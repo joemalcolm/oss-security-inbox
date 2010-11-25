@@ -1,15 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/23/4
-Message-ID: <876306aunm.fsf@mid.deneb.enyo.de>
-Date: Fri, 23 Jul 2010 21:02:37 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/25/1
+Message-ID: <4CEDF6DE.4080607@redhat.com>
+Date: Thu, 25 Nov 2010 13:40:46 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: GnuPG 2
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE-2010-3699 xen: guest->host denial of service from invalid xenbus transitions
 Content-Type: text/plain; charset=utf-8
 
-GnuPG 2.0 before version 2.0.17 reuses a freed pointer when verifying
-a signature or importing a certificate with many Subject Alternate
-Names, possibly allowing context-dependent attacks to execute
-arbitrary code.
+A guest can cause the backend driver to leak a kernel thread. Such 
+leaked threads hold references to the device, which makes the device 
+impossible to tear down. If shut down, the guest remains a zombie 
+domain, the xenwatch process hangs, and most xm commands will stop working.
 
-<http://lists.gnupg.org/pipermail/gnupg-announce/2010q3/000302.html>
+Upstream commit:
+http://xenbits.xen.org/linux-2.6.18-xen.hg?rev/59f097ef181b
+
+Reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=636411
+
+Thanks, Eugene
