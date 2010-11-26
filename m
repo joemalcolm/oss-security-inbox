@@ -1,35 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/04/6
-Message-ID: <416219434.1050751265289936679.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 4 Feb 2010 08:25:36 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/26/1
+Message-Id: <201011261600.35676.thomas@suse.de>
+Date: Fri, 26 Nov 2010 16:00:35 +0100
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: Eugene Teo <eugene@...hat.com>, Thomas Biege <thomas@...e.de>, coley <coley@...re.org>
-Subject: Re: KVM possible security issues fixed
+Subject: Re: CVE request: kernel: unix socket local dos
 Content-Type: text/plain; charset=utf-8
 
 
------ "Eren Türkay" <eren@...dus.org.tr> wrote:
+JFYI, additional comments
 
-> On Tuesday 02 February 2010 12:15:54 pm Eugene Teo wrote:
-> > Josh wrote some notes here:
-> > https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2010-0297
+http://lkml.org/lkml/2010/11/25/8
+
+
+
+Am Mittwoch, 24. November 2010, 04:03:27 schrieb Eugene Teo:
+> Reported by Vegard Nossum: "I found this program lying around on my
+> laptop. It kills my box (2.6.35) instantly by consuming a lot of memory
+> (allocated by the kernel, so the process doesn't get killed by the OOM
+> killer). As far as I can tell, the memory isn't being freed when the
+> program exits either. Maybe it will eventually get cleaned up the UNIX
+> socket garbage collector thing, but in that case it doesn't get called
+> quickly enough to save my machine at least."
 > 
-> Will new CVEs be assigned for these issues? Or they have already been
-> assigned?
+> Reproducer: http://lkml.org/lkml/2010/11/23/395
+> Partial fix: http://lkml.org/lkml/2010/11/23/450
+> Reference: https://bugzilla.redhat.com/show_bug.cgi?id=656756
 > 
-> usb-linux.c: buffer overflow is CVE-2010-0297 but how about other two,
-> slirp and stack corruption.
-> 
+> Thanks, Eugene
 
-I'm not comfortable assigning IDs without more details. Those bugs don't
-affect Red Hat, so I'm not in a position to spend time on them.
-
-If someone has a decent analysis of the flaws, I'd be happy to hand out
-ids, but otherwise I shall defer to MITRE if they want to give out ids for
-one line changelog entries.
-
-Thanks.
 
 -- 
-    JB
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
