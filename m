@@ -1,30 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/04/8
-Message-ID: <1288899933.19092.28.camel@mdlinux>
-Date: Thu, 04 Nov 2010 15:45:33 -0400
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: fuse
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/29/2
+Message-ID: <Pine.GSO.4.64.1011290952410.27771@faron.mitre.org>
+Date: Mon, 29 Nov 2010 10:06:50 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: Jon Oberheide <jon@...rheide.org>
+cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: Linux kernel address leaks
 Content-Type: text/plain; charset=utf-8
 
-Hello,
 
-There is an issue with FUSE that lets unprivileged users unmount
-arbitrary locations via a symlink attack. This is a different issue than
-CVE-2009-3297 and CVE-2010-0789.
+On Tue, 23 Nov 2010, Jon Oberheide wrote:
 
-Ref.:
+> Great. There's plenty of precedent for CVE assignment to vulnerabilities
+> that leak information that can assist an attacker in exploitation.
+>
+> In particular, I'm thinking about the handful of ASLR information leaks
+> (eg. CVE-2009-2691 [1]), where userspace addresses are leaked via /proc,
+> assisting an attacker in exploiting a vulnerability in a setuid
+> userspace binary.
+>
+> In this case, we have an analogous situation, except that we're leaking
+> kernel address via /proc, assisting an attacker in exploiting
+> vulnerability in the kernel.
+>
+> I don't see any reason why it would not be entirely appropriate to
+> assign a CVE here.
 
-http://seclists.org/fulldisclosure/2010/Nov/15
-http://www.halfdog.net/Security/FuseTimerace/
+I agree that it would be appropriate.
 
-Thanks,
+There is information that leaks from one entity to another entity that 
+should not have access to it, in the "intended" security model of the 
+Linux kernel (documented security model may be a different story... 
+anybody have any pointers?)  No matter how small the leak is.
 
-Marc.
+As Dan pointed out, our original definition of "exposure" (the "E" in 
+"CVE") is that it "allows access to information or capabilities that can 
+be used by a hacker as a stepping-stone into a system or network." 
+(http://cve.mitre.org/about/terminology.html)  Kernel address leaks are 
+useful for attacking a protection mechanism.
+
+The ultimate CVSS score, while likely low, is not relevant - it's still 
+non-zero.
+
+The difficulty of creating a solution is not relevant, either.
+
+There are some practical considerations from the larger CVE perspective, 
+e.g. if there are hundreds or thousands of kernel address leaks (which 
+wouldn't surprise me given what seems to be happening with struct 
+initialization) then there is a risk of having the CVE namespace being 
+overwhelmed by the sheer volume of these issues and making CVE IDs more 
+difficult to manage.  But that's not necessarily a reason to stop 
+assignment (the large number of recent library-loading issues for 
+Windows/Linux come to mind), and reporting these in large groups instead 
+of bug-by-bug would help keep the CVEs manageable.
+
+If there is some formal or semi-formal position taken by, say, the Linux 
+kernel devs or the hardening team that declares "userspace is allowed to 
+know about a kernel address," then this becomes part of the 
+documented/intended security model, and CVE assignment wouldn't be 
+necessary.  (Just trying to be complete here...)
+
+- Steve
 
 
--- 
-Marc Deslauriers
-Ubuntu Security Engineer     | http://www.ubuntu.com/
-Canonical Ltd.               | http://www.canonical.com/
 
+
+> Regards,
+> Jon Oberheide
+>
+> [1] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2691
+>
+>
+> -- 
+> Jon Oberheide <jon@...rheide.org>
+> GnuPG Key: 1024D/F47C17FE
+> Fingerprint: B716 DA66 8173 6EDD 28F6  F184 5842 1C89 F47C 17FE
+>
