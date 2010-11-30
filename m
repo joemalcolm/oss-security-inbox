@@ -1,27 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/18/1
-Message-ID: <4B7C933B.3070705@redhat.com>
-Date: Thu, 18 Feb 2010 09:09:15 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/30/9
+Message-ID: <105072328.846661291132211032.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 30 Nov 2010 10:50:11 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Marcus Meissner <meissner@...e.de>
-Subject: Re: CVE request: kernel information leak via userspace USB interface
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: pipe_fcntl local DoS
 Content-Type: text/plain; charset=utf-8
 
-Hi Marcus,
+Please use CVE-2010-4256
 
-On 02/17/2010 06:29 PM, Marcus Meissner wrote:
-> While programming a USB device using libusb I found that a usb read from
-> the device returned data it should not.
-[...]
-> Access to USB userspace devices either requires root access or desktop user access
-> via udev/hal ACLs on non-mass-storage Digital Cameras or Media Players. (So the
-> desktop user needs to plugin such a ACL getting device before being able
-> to read the memory).
+Thanks.
 
-To abuse this, you will need physical access to plug in a USB device, so 
-I do not think this should be regarded as a security issue.
-
-Thanks, Eugene
 -- 
-Eugene Teo / Red Hat Security Response Team
+    JB
+
+
+----- "Eugene Teo" <eugene@...hat.com> wrote:
+
+> "Export 'get_pipe_info()' to other users
+> 
+> And in particular, use it in 'pipe_fcntl()'.
+> 
+> The other pipe functions do not need to use the 'careful' version,
+> since 
+> they are only ever called for things that are already known to be
+> pipes.
+> 
+> The normal read/write/ioctl functions are called through the file 
+> operations structures, so if a file isn't a pipe, they'd never get 
+> called.  But pipe_fcntl() is special, and called directly from the 
+> generic fcntl code, and needs to use the same careful function that
+> the 
+> splice code is using."
+> 
+> In other words, this is a pipe_fcntl local DoS.
+> 
+> http://git.kernel.org/linus/71993e62a47dabddf10302807d6aa260455503f4
+> http://git.kernel.org/linus/c66fb347946ebdd5b10908866ecc9fa05ee2cf3d
+> 
+> Introduced in v2.6.35-rc1
+> 
+> Thanks, Eugene
