@@ -1,39 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/14/2
-Message-ID: <AANLkTiljcdeGc029EbLwGzVETd0_qHSYQPbVz_uokH6r@mail.gmail.com>
-Date: Wed, 14 Jul 2010 09:34:28 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/30/2
+Message-ID: <AANLkTinDL4GqcgFgjKtAVS7A=vjLbVWq4KA0sA7nFOLE@mail.gmail.com>
+Date: Tue, 30 Nov 2010 03:26:08 +0100
 From: Pierre Joye <pierre.php@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Multiple bugs in freetype
+Cc: coley <coley@...re.org>
+Subject: Re: Re: NULL byte poisoning fix in php 5.3.4+
 Content-Type: text/plain; charset=utf-8
 
-Thanks for the headup. FYI fixes are part of 2.4.0 as far as I can tell.
+Coley? :)
 
-On Tue, Jul 13, 2010 at 11:34 PM, Robert Święcki <robert@...ecki.net> wrote:
-> FYI
+On Mon, Nov 22, 2010 at 5:21 PM, Josh Bressers <bressers@...hat.com> wrote:
+> Steve,
 >
-> I've reported recently multiple problems in freetype (around ~20),
-> most of them are NULL-ptr derefs, stack exhaustion and div by zero
-> issues, but the rest might be interesting. RedHat was kind enough to
-> assign CVE numbers to some of them. vendor-sec members tend to treat
-> it as public issues, so reposting here:
+> Can MITRE take this one. It looks like it's from 2006 (from looking at the
+> upstream bug). I don't see a CVE id for this anywhere.
 >
->> CVE-2010-2497 freetype integer underflow #30082 #30083
->> CVE-2010-2498 freetype invalid free #30106
->> CVE-2010-2499 freetype buffer overflow #30248 #30249
->> CVE-2010-2500 freetype integer overflow #30263
->> CVE-2010-2519 freetype heap buffer overflow #30306
->> CVE-2010-2520 freetype buffer overflow on heap #30361
->
-> I wasn't trying to make weaponized exploits, although some of those
-> issues are clearly exploitable.
->
-> The full list
->
-> http://savannah.nongnu.org/bugs/index.php?group=freetype&func=browse&set=custom&report_id=101&submitted_by=78858
+> Thanks.
 >
 > --
-> Robert Swiecki - http://www.swiecki.net
+>    JB
+>
+> ----- "Pierre Joye" <pierre.php@...il.com> wrote:
+>
+>> anyone?
+>>
+>> On Thu, Nov 18, 2010 at 5:43 PM, Pierre Joye <pierre.php@...il.com>
+>> wrote:
+>> > forgot to add the fixes revs:
+>> >
+>> > http://svn.php.net/viewvc?view=revision&revision=305507
+>> > revert of part of the OCI8 fix
+>> > http://svn.php.net/viewvc?view=revision&revision=305509
+>> >
+>> > OCI8 fix (committed separately)
+>> > http://svn.php.net/viewvc?view=revision&revision=305412
+>> >
+>> > On Thu, Nov 18, 2010 at 5:22 PM, Pierre Joye <pierre.php@...il.com>
+>> > wrote:
+>> >> hi,
+>> >>
+>> >> The problem describes here http://www.madirish.net/?article=436, in
+>> >> http://bugs.php.net/39863 (and numerous other places) has been fixed
+>> >> in PHP_5_3, targetting 5.3.4 (RC1 to be released today). It is a well
+>> >> (old) known issue in PHP and I wonder if there is a CVE already for
+>> >> it? If not I think having one could helpful. or?
+>> >>
+>> >> Cheers,
+>> >> --
+>> >> Pierre
+>> >>
 >
 
 
