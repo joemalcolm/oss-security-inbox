@@ -1,44 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/01/13
-Message-ID: <1109306790.230341270150395240.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 1 Apr 2010 15:33:15 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/30/7
+Message-Id: <201011300738.00093.thomas@suse.de>
+Date: Tue, 30 Nov 2010 07:38:00 +0100
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request: moodle 1.9.8, 1.8.2
+Cc: Eugene Teo <eugene@...hat.com>
+Subject: Re: CVE request: kernel: Multiple DoS issues in block layer
 Content-Type: text/plain; charset=utf-8
 
-
------ "Ludwig Nussel" <ludwig.nussel@...e.de> wrote:
-
-> Hi,
+Am Dienstag 30 November 2010 05:58:38 schrieb Eugene Teo:
+> On 11/29/2010 10:24 PM, Eugene Teo wrote:
+> >>> 2. By submitting certain I/O requests with 0 length, a local user could
+> >>> cause a kernel panic:
+> >>>
+> >>> http://git.kernel.org/?p=linux/kernel/git/axboe/linux-2.6-block.git;a=c
+> >>>ommit;h=9284bcf4e335e5f18a8bc7b26461c33ab60d0689
+> >>
+> >> Use CVE-2010-4163
+> >
+> > Not a complete patch, need this too:
+> > https://patchwork.kernel.org/patch/363282/
 > 
-> Moodle 1.9.8 and 1.8.12 were released with security fixes:
-> http://docs.moodle.org/en/Moodle_1.9.8_release_notes
-> * MSA-10-0001 Vulnerability in KSES text cleaning
-> * MSA-10-0002 XSS vulnerabilty in the phpcas module
-> * MSA-10-0003 Disclosure of full user names
-> * MSA-10-0004 Improved access control in course restore
-> * MSA-10-0005 Incorrect validation of forms data
-> * MSA-10-0006 SQL injection in Wiki module
-> * MSA-10-0007 Reflective Cross Site Scripting (XSS) in the Moodle
-> Global Search Engine
-> * MSA-10-0008 Persistent XSS when using Login-as feature
-> * MSA-10-0009 Session fixation prevention now turned on by default
-> 
+> Has anyone released an update with the regression? If so, we probably
+> need a new CVE name for this.
 
-Steve,
+No. :)
 
-I'm going to defer this one to MITRE.
-
-On that note though, does someone have a Moodle contact, perhaps we could
-get them to request CVE ids in private before a release, to avoid the
-backlog that results.
-
-The same holds for things like typo3, that seem to often have lots of flaws
-all at once.
-
-Thanks.
+Cheers,
+Thomas
 
 -- 
-    JB
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+--
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
