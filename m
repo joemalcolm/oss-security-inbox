@@ -1,53 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/30/4
-Message-ID: <4d1cf59f.26092a0a.1c22.ffff9576@mx.google.com>
-Date: Thu, 30 Dec 2010 15:12:04 -0600
-From: Earl Hood <earl@...lhood.com>
-To: oss-security <oss-security@...ts.openwall.com>
-cc: "Steven M. Christey" <coley@...us.mitre.org>, "non customers" <non-customers@...ramail.com>, jeff@....org, geissert@...ian.org, vendor-sec@....de, mhonarc-dev@...narc.org
-Subject: Fix for CVE-2010-4524 and CVE-2010-1677 ready for verfication
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/30/4
+Message-ID: <4CF4847E.6080608@redhat.com>
+Date: Tue, 30 Nov 2010 12:58:38 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Josh Bressers <bressers@...hat.com>, coley <coley@...re.org>
+Subject: Re: CVE request: kernel: Multiple DoS issues in block layer
 Content-Type: text/plain; charset=utf-8
 
-I've committed in a potential fix, and made a
-snapshot build that should address the following
-recent security issues:
+On 11/29/2010 10:24 PM, Eugene Teo wrote:
+>>> 2. By submitting certain I/O requests with 0 length, a local user could
+>>> cause a kernel panic:
+>>>
+>>> http://git.kernel.org/?p=linux/kernel/git/axboe/linux-2.6-block.git;a=commit;h=9284bcf4e335e5f18a8bc7b26461c33ab60d0689
+>>>
+>>>
+>>
+>> Use CVE-2010-4163
+>
+> Not a complete patch, need this too:
+> https://patchwork.kernel.org/patch/363282/
 
-  CVE-2010-4524
-  CVE-2010-1677
+Has anyone released an update with the regression? If so, we probably 
+need a new CVE name for this.
 
-Snapshot release is available at the following location:
-
-  http://www.mhonarc.org/release/MHonArc/dist/
-
-Any build dated 2010-12-30, or later, will contain the
-fix.
-
-I ask the interested parties verify that the fix addresses
-concerns raised as I would like to make a formal release
-as soon as possible.
-
-Summary of fix:
-
-  mhtxthtml.pl filter modified to reject any message with
-  nested tags. This is invalid HTML, so any message
-  that contains it would likely indicate a possible attack.
-
-Whenever a formal, public, announcement of these vulnerabilities
-are raise, please include link to the MHonArc FAQ that discusses
-the security risks of HTML mail and how to disable HTML mail
-in mhonarc archives:
-
-  http://www.mhonarc.org/MHonArc/doc/faq/security.html#htmldata
-  http://www.mhonarc.org/MHonArc/doc/faq/security.html#htmlexchow
-
-This may be useful for users who may not be able to upgrade
-to the latest release, but need a work-around solution to secure
-their sites.
-
-Thanks,
-
---ewh
--- 
-Earl Hood, <earl@...lhood.com>
-Web: <http://www.earlhood.com/>
-PGP Public Key: <http://www.earlhood.com/gpgpubkey.txt>
+Eugene
