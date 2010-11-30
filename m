@@ -1,29 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/01/3
-Message-ID: <i0gop6$9p$1@dough.gmane.org>
-Date: Wed, 30 Jun 2010 19:50:56 -0500
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/30/3
+Message-Id: <4A4ED40C-6553-4AD8-909F-7FF47E2EFEF0@apple.com>
+Date: Mon, 29 Nov 2010 18:54:22 -0800
+From: Geoff Keating <geoffk@...le.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: moin multiple XSS
+Subject: Re: Interesting behavior with struct initiailization
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-Multiple XSS vulnerabilities have been reported in moin.
+On 25/11/2010, at 5:31 AM, Nelson Elhage wrote:
 
-References:
-http://moinmo.in/MoinMoinBugs/1.9.2UnescapedInputForThemeAddMsg
-http://bugs.debian.org/584809
+> Is it possible that the zeroing out of padding bytes by GCC is an
+> implementation detail that we've been relying on, and never something
+> that was intended as part of the exposed contract? Is there anyone on
+> this list more qualified to comment on either the specification or
+> GCC's implementation?
 
-Could a CVE be assigned?
+C99 says, in 6.2.6.1p6,
 
-Note that the original bug report only covered PageEditor.py, while upstream 
-fixed multiple others at the same time. Not sure if you want to assign two 
-different ids.
+> When a value is stored in an object of structure or union type, including in a member object, the bytes of the object representation that correspond to any padding bytes take unspecified values.42)
 
-Regards,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+and there is a specific footnote in case this wasn't clear enough:
+
+> 42) Thus, for example, structure assignment may be implemented element-at-a-time or via memcpy.
 
 
+but the description goes *much* further than the footnote.  In principle, it means if you write
+
+struct test { int a; char b; int c; } x;
+memset (&x, 0, sizeof(x));
+x.a = 1;
+
+then the compiler is free to change the padding bytes after 'x.b' to whatever it likes, because you changed 'x.a', even though you might think you cleared them and the compiler would have no reason to make this change.  In practice this might manifest in the case of 
+
+memset (&x, 0, sizeof(x));
+x.a = 1; x.b = 2; x.c = 3;
+
+by the compiler optimising out the 'memset' as a dead store.
+
+Since C99 says it is unspecified, you'd have to look at the GCC documentation, and I don't see any specification there either.
+
+In practise, GCC does exactly this, with its own built-in initializer expansion.  If you turn on the right debugging flag (I think -fdump-tree-original -fdump-tree-gimple is what you want), you can see GCC turn
+
+    struct test arg = {.a=1};
+  use (&arg);
+    struct test arg2 = {.a=1, .b=2, .c=3};
+  use (&arg2);
+
+into
+
+  arg = {};
+  arg.a = 1;
+  use (&arg);
+  arg2.a = 1;
+  arg2.b = 2;
+  arg2.c = 3;
+  use (&arg2);
+
+The comment in the code (in gimplify.c) explains that the side-effect of clearing unused bytes is definitely not intentional, it reads:
+
+   Note that we still need to clear any elements that don't have explicit
+   initializers, so if not all elements are initialized we keep the
+   original MODIFY_EXPR, we just remove all of the constructor elements.
+
+and
+
+        /* ??? This bit ought not be needed.  For any element not present
+           in the initializer, we should simply set them to zero.  Except
+           we'd need to *find* the elements that are not present, and that
+           requires trickery to avoid quadratic compile-time behavior in
+           large cases or excessive memory use in small cases.  */
+        else if (num_ctor_elements < num_type_elements)
+          cleared = true;
+
+
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (4221 bytes)
