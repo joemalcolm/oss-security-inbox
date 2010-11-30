@@ -1,42 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/23/10
-Message-ID: <AANLkTimQbegv7_ED4fP0HHoOn9RGmynrP_CJhvv9Z4Jp@mail.gmail.com>
-Date: Tue, 23 Nov 2010 15:06:14 -0500
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/30/1
+Message-ID: <20101130010518.GJ23277@ksplice.com>
+Date: Mon, 29 Nov 2010 20:05:18 -0500
+From: Nelson Elhage <nelhage@...lice.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: Linux kernel address leaks
+Subject: kernel: Multiple vulnerabilities in AF_ECONET
 Content-Type: text/plain; charset=utf-8
 
-> I think that the only way to support your goal is to make the case that
-> the CVE definition does cover such exposures.  In my opinion it
-> certainly does; although at the lowest possible severity.
->
-> The best course of action is to ask for the assignments, and perhaps
-> Steve Christey will clarify.  That's not "blackmail" or anything
-> nefarious, that's simply the proper procedure for disclosing a
-> security-relevant issue.
->
+I reported these recently, and they were fixed upstream last week.
 
-Fair enough - while the primary goal of my email was to bring about a
-discussion of these issues, I can see how CVE assignments might
-further the cause, so to speak.  Steve, what is your take on all this?
+CVE-2010-3848: Kernel stack overflow in econet_sendmsg
+CVE-2010-3849: NULL pointer dereference in PF_ECONET
+CVE-2010-3850: Missing check for capable(CAP_NET_ADMIN) in econet SIOCSIFADDR
 
-> For those that are against increased CVE assignments due to the
-> inevitable sensational "high bug count journalism", get over it.
-> Realize that the people that do this simply do not recognize the hidden
-> factors at play and the fact that quantity does not equal quality.
-> They're a lost cause.
->
-> Oh, and Dan, don't get discouraged so easily.  You're tackling a hard
-> problem (well, a technically straightforward problem, but a hard
-> social problem). You're bound to run into barriers simply due to human
-> nature. If it were easy it would already be done.
+CVE-2010-3848 is interesting because it's a bug class I haven't seen before,
+although maybe people who have been around longer have. econet_sendmsg() can be
+made to allocate > 8192 bytes on the kernel stack, overflowing the two pages
+allocated for the stack, and allowing an attacker to clobber the 'struct
+thread_info', which provides several easy exploit vectors.
 
-Thanks Mike.  One of the reasons I posted this here was that
-previously, I felt as if I were fighting a one-man, futile battle
-against the kernel devs.  It's obvious to me that plenty of people not
-actively involved in kernel development who care about these kinds of
-security issues, and it's those opinions I want to bring to the table.
+Jon Oberheide has done a more detailed writeup about this bug class here:
+http://jon.oberheide.org/blog/2010/11/29/exploiting-stack-overflows-in-the-linux-kernel/
 
--Dan
+CVE-2010-3850 is mostly interesting because without it, there is no way an
+unprivileged user can trigger the first two bugs unless an administrator has
+already configured an econet address somewhere (econet_sendmsg fails quickly if
+there are no econet addresses configured on the system).
+
+Reference:
+http://www.debian.org/security/2010/dsa-2126
+
+Upstream commits:
+CVE-2010-3848: http://git.kernel.org/linus/a27e13d370415add3487949c60810e36069a23a6
+CVE-2010-3849: http://git.kernel.org/linus/fa0e846494792e722d817b9d3d625a4ef4896c96
+CVE-2010-3850: http://git.kernel.org/linus/16c41745c7b92a243d0874f534c1655196c64b74
+
+- Nelson
