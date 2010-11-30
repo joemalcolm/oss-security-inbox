@@ -1,56 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/02/7
-Message-ID: <1030247303.185641280778886880.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 2 Aug 2010 15:54:46 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/30/6
+Message-ID: <4CF489B1.2010800@redhat.com>
+Date: Tue, 30 Nov 2010 13:20:49 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- OpenConnect < v2.25  did not verify SSL server certificates
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: pipe_fcntl local DoS
 Content-Type: text/plain; charset=utf-8
 
-Steve,
+"Export 'get_pipe_info()' to other users
 
-Can MITRE take this one. I'm not sure how to dish out the IDs in this case.
-All the issues are related, but different as to how certificates work.
+And in particular, use it in 'pipe_fcntl()'.
 
-Thanks.
+The other pipe functions do not need to use the 'careful' version, since 
+they are only ever called for things that are already known to be pipes.
 
--- 
-    JB
------ "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+The normal read/write/ioctl functions are called through the file 
+operations structures, so if a file isn't a pipe, they'd never get 
+called.  But pipe_fcntl() is special, and called directly from the 
+generic fcntl code, and needs to use the same careful function that the 
+splice code is using."
 
-> Hello Steve, vendors,
-> 
->    OpenConnect upstream has released OpenConnect v2.25:
->    [1] http://www.infradead.org/openconnect.html
-> 
-> addressing following security related issues (from [1]):
->    OpenConnect v2.25 — 2010-05-15
-> 
->      * Always validate server certificate, even when no extra --cafile
-> is provided.
->      * Add --no-cert-check option to avoid certificate validation.
->      * Check server hostname against its certificate.
->      * Provide text-mode function for reviewing and accepting
-> "invalid" certificates.
->      * Fix libproxy detection on NetBSD.
-> 
-> References:
->    [2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=590873
->    [3]
-> ftp://ftp.infradead.org/pub/openconnect/openconnect-2.25.tar.gz
-> 
-> Though not direct security issue(s) [rather security hardening], once
-> the package has SSL support,
-> it should be enabled by default to avoid unintentional MITM attacks
-> (implying from default package
-> configuration use).
-> 
-> Steve, could you allocate a CVE identifier for this? (but opened for
-> discussion if such security
-> hardening fixes aren't considered enough this to be handled as a
-> security issue).
-> 
-> Thanks && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+In other words, this is a pipe_fcntl local DoS.
+
+http://git.kernel.org/linus/71993e62a47dabddf10302807d6aa260455503f4
+http://git.kernel.org/linus/c66fb347946ebdd5b10908866ecc9fa05ee2cf3d
+
+Introduced in v2.6.35-rc1
+
+Thanks, Eugene
