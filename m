@@ -1,83 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/30/9
-Message-ID: <20100830220847.GA24980@grsecurity.net>
-Date: Mon, 30 Aug 2010 18:08:47 -0400
-From: Brad Spengler <spender@...ecurity.net>
-To: Solar Designer <solar@...nwall.com>
-Cc: Roland McGrath <roland@...hat.com>, Kees Cook <kees.cook@...onical.com>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Al Viro <viro@...iv.linux.org.uk>, Andrew Morton <akpm@...ux-foundation.org>, Oleg Nesterov <oleg@...hat.com>, KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, pageexec@...email.hu
-Subject: Re: [PATCH] exec argument expansion can inappropriately trigger OOM-killer
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/01/3
+Message-ID: <4CF69652.6030007@summersault.com>
+Date: Wed, 01 Dec 2010 13:39:14 -0500
+From: Mark Stosberg <mark@...mersault.com>
+To: oss-security <oss-security@...ts.openwall.com>
+CC: Jan Lieskovsky <jlieskov@...hat.com>,  "Steven M. Christey" <coley@...us.mitre.org>, Marcela Maslanova <mmaslano@...hat.com>, Petr Pisar <ppisar@...hat.com>,  Chris 'BinGOs' Williams <chris@...gosnet.co.uk>, Reed Loden <reed@...dloden.com>,  Masahiro Yamada <masa141421356@...il.com>, Byron Jones <glob@...b.com.au>, Lincoln Stein <lincoln.stein@...il.com>
+Subject: Re: CVE Request -- perl-CGI two ids, perl-CGI-Simple one id (CVE-2010-3172 already assigned for Bugzilla part)
 Content-Type: text/plain; charset=utf-8
 
-Hi guys,
+> 
+>     Since perl-CGi is different code base than Bugzilla, we suspect a
+> new CVE id is required
+>     for this issue? Steve, could you please allocate one? (id #1)
 
-I see you're having fun with my code ;)  Just wanted to remind you that 
-I do exist; I reported this in December 2009 to Ted Tso and again 
-recently (forwarded the same email from 2009) to Kees Cook and James 
-Morris.  So even though nobody's actually emailed me about the issue(s), 
-I am available to answer any questions.  Just CC me on the email as I'm 
-not subscribed to the list.
+CGI.pm is used by the Bugzilla code base. However, Bugzilla may not
+always be vulnerable to issues in CGI.pm depending on they use it.
 
-Anyway, I did actually research the bug(s) involved quite a bit around 
-the time I reported it, so hopefully some of the below will help.
+>     2. Further improvements to handling of newlines embedded in header
+> values.
+>        An exception is thrown if header values contain invalid newlines.
+>        Thanks to Michal Zalewski, Max Kanat-Alexander, Yanick Champoux
+>        Lincoln Stein, Frederic Buclin and Mark Stosberg
+> 
+>        Chris, Mark, could you please provide more details about the
+> issue? Is it
+>        related to CVE-2010-3172?
 
-The bug seems to have been introduced in 2.6.23, see:
-http://thread.gmane.org/gmane.linux.ports.hppa/752
-http://www.spinics.net/lists/linux-arch/msg01584.html
-http://www.mail-archive.com/linux-kernel@vger.kernel.org/msg170491.html
-though I'm guessing the functionality was also backported to major 
-distros
+Yes, it is. However, later testing found that the issue wasn't
+completely fixed in 3.50. A new patch has been developed, and is
+currently pending review and acceptance by the primary CGI.pm author,
+Lincoln Stein. (Now CC'ed).
 
-The check using the current stack limit as a byte value (including when 
-it's RLIMIT_INFINITY) by dividing it by 4 is completely broken for a 
-number of reasons:
-1/4th of a 64bit ~0 is several times larger than the size of addressable 
-userland address space on most 64bit architectures (amd64 is 47 bits)
-1/4th of a 64bit ~0 is way bigger than any 32bit value
-No other place in the kernel treats a limit in this way
-With a high rlimit and high usage, the code doesn't do what it intends 
-to do -- be able to return a meaningful error message to execve, instead 
-of having the process doing the execve terminated with a SIGKILL in 
-later stages of ELF loading.
+>        Steve, could you please allocate CVE id for this? (id #2)
+> 
+>   Yet, back to CVE-2010-3172, Masahiro mentions in [2], that
+> perl-CGI-Simple is prone
+>   to same deficiency, as CVE-2010-3172 in Bugzilla was:
+>   [4] https://bugzilla.mozilla.org/show_bug.cgi?id=600464#c13
+> 
+>   Looks, like it was already fixed in perl-CGI-Simple too:
+>   [5] https://bugzilla.mozilla.org/show_bug.cgi?id=600464#c31
+> 
+>   Relevant perl-CGi-Simple patch:
+>   [6]
+> https://github.com/AndyA/CGI--Simple/commit/e4942b871a26c1317a175a91ebb7262eea59b380
 
-Combined with the fact that the max arg size * max number of args 
-(~256TB) is also again larger than the 32bit address space and the 
-amd64 userland address space (as well as the address space of several other 
-64bit architectures), lots of problems appear.  This was exacerbated by 
-the behavior that, until recently fixed, allowed the stack to grow over 
-any other existing mappings.  Combine this with ASLR and shifting that 
-whole stack range down a random amount via shift_arg_pages/adjust_vma 
-which skips many of the sanity checks that exist elsewhere, and even 
-more problems appear (I think this latter problem may make it possible 
-to still trigger the BUG_ON() on patched kernels if a static binary is 
-used and ASLR shifts the stack over the binary).
+Note that CGI::Simple also shares the header newline injection issue
+with CGI.pm, but remains unpatched. I submitted a patch, but it has not
+been applied, as seen in the Network view:
 
-From my research, it's not possible to successfully execute a binary 
-such that mmap_min_addr with normal values can be bypassed by the stack 
-shifting trick.  I was able to determine the exact number+sizes of 
-arguments to use for ASLR to have a chance to shift the stack down to 0 
-(any more and we would trigger that BUG_ON()).  Though this was 
-successful, after this point in the ELF loader, additional data is set 
-up on the stack, proportional to the number of arguments passed.  It's 
-impossible for this additional setup to consume less than a page, so it 
-triggers a stack expansion which then gets checked against the normal 
-mmap_min_addr checks.  What actually ends up happening on this 
-second-stage setup is the binary gets killed with SIGKILL by the ELF 
-loader.
+https://github.com/markstos/CGI--Simple/network
 
-The fix to the OOM killer looks correct, but the other problem (causing 
-extreme interactivity hits with almost no effort in userland) needs some 
-more thought, especially since it appears no distro is shipping with 
-hard limits on the stack.
+However, even the patch I submitted is not fully complete, as it mirrors
+the 3.50 state of CGI.pm, and thus also needs further work. Once CGI.pm
+has a final update to address the remaining header injection issue, I'll
+share the same patch with CGI::Simple.
 
-If the  "/ 4" check is to be preserved, it needs to take into account 
-the personality of the target binary: this way, the exec'ing task should 
-always get a proper error back instead of being terminated by the 
-kernel.
-
-There shouldn't be any additional risk from adding the extra rescheds, 
-as copy_*_user can already sleep and be raced against via a number of 
-methods.
-
--Brad
-
-Download attachment "signature.asc" of type "application/pgp-signature" (198 bytes)
+    Mark
