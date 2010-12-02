@@ -1,31 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/11/6
-Message-ID: <1767961964.157141286825379393.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 11 Oct 2010 15:29:39 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request (2009): vanilla forums before 1.1.8
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/02/5
+Message-ID: <4CF7C789.1090400@redhat.com>
+Date: Thu, 02 Dec 2010 17:21:29 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, Ulrik Persson <ddefrostt@...il.com>
+Subject: CVE Request -- FontForge: Stack-based buffer overflow by processing specially-crafted CHARSET_REGISTRY font file header
 Content-Type: text/plain; charset=utf-8
 
+Hello Steve, vendors,
 
------ "Hanno Böck" <hanno@...eck.de> wrote:
+   Ulrik Persson reported a stack-based buffer overflow
+flaw in the way FontForge font editor processed certain
+Bitmap Distribution Format (BDF) font files, with
+specially-crafted value of the CHARSET_REGISTRY header.
+A remote attacker could create a specially-crafted BDF
+font file and trick a local, unsuspecting user into
+opening it in FontForge, which could lead to fontforge
+executable crash or, potentially, arbitrary code execution
+with the privileges of the user running the executable.
 
-> http://gsasec.blogspot.com/2009/05/vanilla-v117-cross-site-scripting.html
-> 
-> Input passed to the 'RequestName' header parameter when posting to
-> '/ajax/updatecheck.php' is not sanitized before it is returned to the
-> user.  This can be exploited to execute arbitrary HTML and script code in
-> a user's browser session in context of an affected site.
-> 
-> Please note this should be a CVE-2009 id
-> 
+References:
+[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=605537
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=659359
 
-Steve,
+Public PoC:
+[3] http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=5;filename=fontforge-overflow.txt;att=1;bug=605537
 
-Can MITRE take this one.
+Flaw severity note:
+On systems with compile time buffer checks (FORTIFY_SOURCE)
+feature enabled, the impact of this flaw is mitigated to
+be only crash.
 
-Thanks.
+Could you allocate a CVE id for this issue?
 
--- 
-    JB
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
