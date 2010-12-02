@@ -1,43 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/10/16
-Message-ID: <434215888.575451289418251839.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 10 Nov 2010 14:44:11 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com, Petr Matousek <pmatouse@...hat.com>
-Cc: coley@...us.mitre.org
-Subject: Re: CVE request: kernel: L2TP send buffer allocation size overflows
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/02/3
+Message-ID: <20101202052114.GL18995@ksplice.com>
+Date: Thu, 2 Dec 2010 00:21:14 -0500
+From: Nelson Elhage <nelhage@...lice.com>
+To: oss-security@...ts.openwall.com
+Subject: kernel: Dangerous interaction between clear_child_tid, set_fs(), and kernel oopses
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-4160.
+I've discovered an interesting interaction in the Linux kernel between the
+clear_child_tid feature of clone(2), and the set_fs() function used internally
+in the kernel to temporarily disable access_ok() checking of userspace pointers.
 
-Thanks.
+Under some (not totally uncommon) circumstances, it is possible for a user to
+leverage this interaction to turn a kernel oops or BUG() into a write of an
+integer 0 to a user-controlled address in kernel memory.
 
--- 
-    JB
+I'm not sure if this merits a CVE or not; It is (as far as I can tell) only a
+problem in the presence of another security bug, but it potentially makes a
+large class of bugs significantly more dangerous (DoS -> privesc).
 
+Reference:
+https://lkml.org/lkml/2010/12/1/543
 
------ "Petr Matousek" <pmatouse@...hat.com> wrote:
-
-> "Both PPPoL2TP (in net/l2tp/l2tp_ppp.c, pppol2tp_sendmsg()) and
-> IPoL2TP (in
-> net/l2tp/l2tp_ip.c, l2tp_ip_sendmsg()) make calls to sock_wmalloc()
-> that
-> perform arithmetic on the size argument without any maximum bound. As
-> a result,
-> by issuing sendto() calls with very large sizes, this allocation size
-> will wrap
-> and result in a small buffer being allocated, leading to ugliness
-> immediately
-> after (probably kernel panics due to bad sk_buff tail position, but
-> possibly
-> kernel heap corruption)."
-> 
-> Credit: Dan Rosenberg
-> 
-> Reference:
-> http://www.spinics.net/lists/netdev/msg145673.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=651892
-> 
-> Thanks,
-> --
-> Petr Matousek / Red Hat Security Response Team
+- Nelson
