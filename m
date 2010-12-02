@@ -1,74 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/14/7
-Message-ID: <108390522.135071276541571985.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 14 Jun 2010 14:52:51 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/02/4
+Message-ID: <AANLkTimtdd1VdqzOwtgoUoSxvYtEcf96QugbNxo8j_C2@mail.gmail.com>
+Date: Thu, 2 Dec 2010 11:00:44 -0500
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Gerald Combs <gerald@...eshark.org>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request for new wireshark vulnerabilities
+Subject: Re: kernel: Dangerous interaction between clear_child_tid, set_fs(), and kernel oopses
 Content-Type: text/plain; charset=utf-8
 
-Steve,
+Please note that this is the issue I was referring to in my previous
+post.  Thanks, list moderators, for the amusing timing.  :)
 
-It's been a few days. I presume you're not taking this one (MITRE is
-mentioned at the end)? If not I'll do it.
+-Dan
 
-Thanks.
-
--- 
-    JB
-
------ "Vincent Danen" <vdanen@...hat.com> wrote:
-
-> We've received notification of new wireshark releases (1.2.9 and
-> 1.0.14)
-> and require CVE names assigned (the updates were made available
-> upstream
-> on June 9th).
-> 
-> The following are the particulars, which have more details than the
-> upstream advisory
-> (http://www.wireshark.org/security/wnpa-sec-2010-06.html):
-> 
-> >  The SMB dissector could dereference a NULL pointer.
-> >  Fixed in trunk: r32650
-> >  Fixed in trunk-1.2: r33142
-> >  Fixed in trunk-1.0: r33145
-> >  Bug 4734
-> >  Versions affected: 0.99.6 to 1.0.13, 1.2.0 to 1.2.8
-> >
-> >  J. Oquendo discovered that the ASN.1 BER dissector could overrun
-> >  the stack.
-> >  Fixed in trunk: r32922, r33046
-> >  Fixed in trunk-1.2: r33122
-> >  Fixed in trunk-1.0: r33146
-> >  Versions affected: 0.10.13 to 1.0.13, 1.2.0 to 1.2.8
-> >
-> >  The SMB PIPE dissector could dereference a NULL pointer on some
-> >  platforms.
-> >  Fixed in trunk: r32848
-> >  Fixed in trunk-1.2: r33120
-> >  Fixed in trunk-1.0: r33143
-> >  Versions affected: 0.8.20 to 1.0.13, 1.2.0 to 1.2.8
-> >
-> >  The SigComp Universal Decompressor Virtual Machine could go into
-> >  an infinite loop.
-> >  Fixed in trunk: r33061, r33065
-> >  Fixed in trunk-1.2: r33131
-> >  Fixed in trunk-1.0: r33147
-> >  Bug 4826
-> >  Versions affected: 0.10.7 to 1.0.13, 1.2.0 to 1.2.8
-> >
-> >  The SigComp Universal Decompressor Virtual Machine could overrun
-> >  a buffer.
-> >  Fixed in trunk: r33087, r33090
-> >  Fixed in trunk-1.2: r33134
-> >  Fixed in trunk-1.0: r33149
-> >  Bug 4837
-> >  Versions affected: 0.10.8 to 1.0.13, 1.2.0 to 1.2.8
-> 
-> I'm not sure if MITRE has noticed these already or not, so I've not
-> assigned CVE names to these issues.
-> 
-> -- 
-> Vincent Danen / Red Hat Security Response Team
+On Thu, Dec 2, 2010 at 12:21 AM, Nelson Elhage <nelhage@...lice.com> wrote:
+> I've discovered an interesting interaction in the Linux kernel between the
+> clear_child_tid feature of clone(2), and the set_fs() function used internally
+> in the kernel to temporarily disable access_ok() checking of userspace pointers.
+>
+> Under some (not totally uncommon) circumstances, it is possible for a user to
+> leverage this interaction to turn a kernel oops or BUG() into a write of an
+> integer 0 to a user-controlled address in kernel memory.
+>
+> I'm not sure if this merits a CVE or not; It is (as far as I can tell) only a
+> problem in the presence of another security bug, but it potentially makes a
+> large class of bugs significantly more dangerous (DoS -> privesc).
+>
+> Reference:
+> https://lkml.org/lkml/2010/12/1/543
+>
+> - Nelson
+>
