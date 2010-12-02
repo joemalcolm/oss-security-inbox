@@ -1,63 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/28/4
-Message-ID: <624298254.1378791277755978846.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 28 Jun 2010 16:12:58 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/02/6
+Message-ID: <1565015240.86931291322670509.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 2 Dec 2010 15:44:30 -0500 (EST)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: feh
+Cc: Jon Ciesla <limb@...mserv.net>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Wordpress v3.0.2 SQL injection flaw + two minor XSS issues
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-2246
+
+----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+
+> Hello Steve, vendors,
+> 
+>    Wordpress upstream has released latest v3.0.2 version, addressing
+> one SQL injection
+> flaw:
+> 
+>    1), SQL injection flaw by processing trackbacks
+> 
+>    An improper input sanitization flaw was found in the way Wordpress
+> performed trackbacks (a way to notify a website when an entry that
+> references it is published) maintainance. A remote attacker,
+> with Author-level privilege could use this flaw to conduct
+> SQL injection attacks (gain further access to the site, which
+> should be otherwise prohibited).
+> 
+>    References:
+>    [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=605603
+>    [2] http://codex.wordpress.org/Version_3.0.2
+>    [3] http://core.trac.wordpress.org/changeset/16625
+>    [4] https://bugzilla.redhat.com/show_bug.cgi?id=659265
+
+Use CVE-2010-4257 for the SQL injection flaw.
+
+I'm less sure about the other two.
+
+> The two XSS issues below are minor, as they need Wordpress administrator
+> to perform the attack, but according to CVE philosophy, the CVE ids
+> should be assigned for them too. But these two opened / left for further
+> discussion:
+> 
+>    2), XSS in requesting user credentials in order to connect to the
+> filesystem
+>    References:
+>    [7] https://bugzilla.redhat.com/show_bug.cgi?id=659294
+>    [8] http://codex.wordpress.org/Version_3.0.2
+>    [9] http://core.trac.wordpress.org/changeset/16367
+> 
+>    3), XSS when deleting a plugin
+>    References:
+>    [10] https://bugzilla.redhat.com/show_bug.cgi?id=659299
+>    [11] http://codex.wordpress.org/Version_3.0.2
+>    [12] http://core.trac.wordpress.org/changeset/16373
+> 
+> Note: The other issues mentioned in:
+>        http://codex.wordpress.org/Version_3.0.2
+> 
+>        should be only bugfixes.
+> 
+
+Do these two XSS flaws cross a trust boundary? I'm not familiar with
+wordpress.
+
+I looked back at previous wordpress admin related issues, there were none
+like this. Most XSS things affecting the admin involved an xss that affects
+the admin, not one triggered by an admin.
 
 Thanks.
 
 -- 
     JB
-
-
------ "Daniel Friesel" <derf@...osdorf.de> wrote:
-
-> Hi,
-> 
-> there is an arbitrary code execution hole in feh versions <= 1.7 down
-> to at
-> least 1.3.4 (I didn't check earlier ones).
-> When the user uses feh to open a remote file (URL) and uses the
-> --wget-timestamp option, feh passe the unescaped URL to a system()
-> call.
-> 
-> So if an attacker can trick the user into opening an image URL
-> containing
-> shell metacharacters with feh --wget-timestamp, he is able to execute
-> arbitrary shell code with the rights of the user executing feh. This
-> requires
-> the URL to resolve to an existing file, however. Obfuscating the shell
-> code
-> with HTTP escapes (like %20) does not seem to work, and a redirect
-> (via
-> tinyurl or similar) to a malicious URL will also have no effect.
-> 
-> Example:
-> remnant /t/feh > ls
-> remnant /t/feh > feh --wget-timestamp
-> 'https://derf.homelinux.org/stuff/bar`touch lol_hax`.jpg'
-> /bin/cp: cannot stat `/tmp/feh_011422_bar.jpg': No such file or
-> directory
-> feh WARNING: /tmp/feh_011422_000001_bar`touch lol_hax`.jpg does not
-> exist - skipping
-> feh WARNING: /tmp/feh_011422_000001_bar`touch lol_hax`.jpg - File does
-> not exist
-> feh - No loadable images specified.
-> Use feh --help for detailed usage information
-> remnant /t/feh > ls
-> lol_hax
-> remnant /t/feh >
-> 
-> This has been fixed in feh 1.8:
-> <https://derf.homelinux.org/projects/feh/changelog>
-> 
-> Please assign a CVE.
-> 
-> Thanks,
-> Daniel
