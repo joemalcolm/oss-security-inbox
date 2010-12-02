@@ -1,23 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/08/7
-Message-Id: <201010082340.28109.hanno@hboeck.de>
-Date: Fri, 8 Oct 2010 23:40:27 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/02/7
+Message-ID: <1036691917.88321291323232970.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 2 Dec 2010 15:53:52 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: mybb before 1.4.11 and before 1.4.12
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: kernel: failure to revert address limit override in OOPS error path
 Content-Type: text/plain; charset=utf-8
 
-http://blog.mybb.com/2009/12/29/mybb-1-4-11-released-minor-patch-security-update/
+Please use CVE-2010-4258 for this.
 
-and
-
-http://blog.mybb.com/2010/04/13/mybb-1-4-12-released-security-maintenance-update/
-
+Thanks.
 
 -- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+    JB
 
-http://schokokeks.org - professional webhosting
 
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+----- "Dan Rosenberg" <dan.j.rosenberg@...il.com> wrote:
+
+> Nelson Elhage reported an issue in the Linux kernel.  When the kernel
+> performs an address limit override via set_fs(KERNEL_DS) and
+> subsequently faults or BUGs before restoring USER_DS, the error path
+> includes calls to put_user() to a user-controlled address.  Calls to
+> put_user() include access_ok() checks on the provided address to
+> ensure it lies in userspace.  However, because of the address limit
+> override, these checks will always pass in this case, allowing the
+> process owner to turn an OOPS into a write to an arbitrary kernel
+> address, which can easily lead to privilege escalation.
+> 
+> This problem requires an additional vulnerability to exploit, but as
+> Nelson points out, it's not too uncommon for such issues to exist.
+> CVE-2010-3849 (NULL pointer dereference in Econet) is a recent
+> example
+> that can be triggered under KERNEL_DS and used to escalate privileges
+> via this bug.
+> 
+> Reference:
+> http://marc.info/?l=linux-kernel&m=129117048916957&w=2
+> 
+> -Dan
