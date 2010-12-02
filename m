@@ -1,23 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/07/2
-Message-ID: <20101207120147.284a09d5@redhat.com>
-Date: Tue, 7 Dec 2010 12:01:47 +0100
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/02/8
+Message-ID: <1719938780.88521291323309685.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 2 Dec 2010 15:55:09 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request (PHP 5.3.x getSymbol() DoS; CERT VU#479900)
+Cc: Ulrik Persson <ddefrostt@...il.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- FontForge: Stack-based buffer overflow by processing specially-crafted CHARSET_REGISTRY font file header
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 6 Dec 2010 10:15:28 -0700 Vincent Danen wrote:
+Please use CVE-2010-4259 for this.
 
-> CERT has a bulletin up regarding a DoS in the getSymbol() function
-> (integer overflow vulnerability):
-> 
-> http://www.kb.cert.org/vuls/id/479900
-> http://svn.php.net/viewvc?view=revision&revision=305571
-> http://php.net/manual/en/numberformatter.getsymbol.php
-
-Btw, setSymbol() is affected too, and does not seem to be addressed in
-r305571.  In both cases, it's PHP exposing ICU bug.
+Thanks.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+    JB
+
+
+----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+
+> Hello Steve, vendors,
+> 
+>    Ulrik Persson reported a stack-based buffer overflow
+> flaw in the way FontForge font editor processed certain
+> Bitmap Distribution Format (BDF) font files, with
+> specially-crafted value of the CHARSET_REGISTRY header.
+> A remote attacker could create a specially-crafted BDF
+> font file and trick a local, unsuspecting user into
+> opening it in FontForge, which could lead to fontforge
+> executable crash or, potentially, arbitrary code execution
+> with the privileges of the user running the executable.
+> 
+> References:
+> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=605537
+> [2] https://bugzilla.redhat.com/show_bug.cgi?id=659359
+> 
+> Public PoC:
+> [3]
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=5;filename=fontforge-overflow.txt;att=1;bug=605537
+> 
+> Flaw severity note:
+> On systems with compile time buffer checks (FORTIFY_SOURCE)
+> feature enabled, the impact of this flaw is mitigated to
+> be only crash.
+> 
+> Could you allocate a CVE id for this issue?
+> 
+> Thanks && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
