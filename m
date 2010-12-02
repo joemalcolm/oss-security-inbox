@@ -1,56 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/20/4
-Message-ID: <AANLkTinpfR2=5Xe=L=Z9aZFGM=TwozQLwvm82PQHa+RE@mail.gmail.com>
-Date: Fri, 20 Aug 2010 12:38:31 +0200
-From: Pierre Joye <pierre.php@...il.com>
-To: Tomas Hoger <thoger@...hat.com>
-Cc: oss-security@...ts.openwall.com, Moritz Muehlenhoff <jmm@...ian.org>,  "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: PHP MOPS-2010-56..60
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/02/2
+Message-ID: <AANLkTik1o+i+jo80NZXzDcRxWsA7bgcJTYP3hbMfw5W9@mail.gmail.com>
+Date: Thu, 2 Dec 2010 10:31:55 -0500
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: kernel: failure to revert address limit override in OOPS error path
 Content-Type: text/plain; charset=utf-8
 
-hi,
+Nelson Elhage reported an issue in the Linux kernel.  When the kernel
+performs an address limit override via set_fs(KERNEL_DS) and
+subsequently faults or BUGs before restoring USER_DS, the error path
+includes calls to put_user() to a user-controlled address.  Calls to
+put_user() include access_ok() checks on the provided address to
+ensure it lies in userspace.  However, because of the address limit
+override, these checks will always pass in this case, allowing the
+process owner to turn an OOPS into a write to an arbitrary kernel
+address, which can easily lead to privilege escalation.
 
-On Fri, Aug 20, 2010 at 12:17 PM, Tomas Hoger <thoger@...hat.com> wrote:
-> On Thu, 19 Aug 2010 18:22:29 +0200 pierre.php@...il.com wrote:
->
->> Which one did not get an is? Most of those were actually a single
->> issue.
->
-> MOPS-2010-056 - MOPS-2010-060 as subject indicates.  Those are mysqlnd
-> issues and session serializer issue allowing data injection.  Not any
-> from that set of interruption issues that exposed one or two problems in
-> different ways.
+This problem requires an additional vulnerability to exploit, but as
+Nelson points out, it's not too uncommon for such issues to exist.
+CVE-2010-3849 (NULL pointer dereference in Econet) is a recent example
+that can be triggered under KERNEL_DS and used to escalate privileges
+via this bug.
 
-As far as I can tell and see, both the mysqlnd and session issues have
-been fixed.
+Reference:
+http://marc.info/?l=linux-kernel&m=129117048916957&w=2
 
-Phar: http://svn.php.net/viewvc?view=revision&revision=298667
-
-I don't have the revision at hand for mysqlnd but it is fixed too
-(5.3.x and trunk).
-
-About phar, Stefen plans to make yet another blog post about this
-flaw, to explain it. We'll see if we managed to fix it... (did I
-mention that I love the idea behind responsible disclosure? And I
-really love this list too btw :-).
-
-> Has upstream managed to track MOPS-2010-022 down to a proper fix
-> already?  That one was not fixed in 5.3.3.  I'm also wondering whether
-> the case pointed out in MOPS-2010-024 was not addressed in phar commit
-> intentionally.
-
-As far as I remember, the resources related issues are not fixed (-22
-and -03), it is also not new and related to the same bug. I also don't
-think that it will get fixed any time soon as it is not possible to
-fix easily. I think there is already a CVE about this problem.
-
-The phar flaw is fixed (see link).
-
-Please let me know if you need more details, I can try to dig again
-the archive to figure them out.
-
-Cheers,
--- 
-Pierre
-
-@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+-Dan
