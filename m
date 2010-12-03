@@ -1,32 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/01/1
-Message-ID: <4B8BDEB9.2080901@kernel.sg>
-Date: Mon, 01 Mar 2010 23:35:21 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/03/3
+Message-Id: <201012031532.26831.hanno@hboeck.de>
+Date: Fri, 3 Dec 2010 15:32:26 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: dvb-core: ULE decapsulation DoS
+Subject: Re: clamav 0.96.5 released
 Content-Type: text/plain; charset=utf-8
 
-Reported by Ang Way Chuang.
+Am Friday 03 December 2010 schrieb Thomas Biege:
+> JFYI, maybe CVE-IDs are needed...
 
-"dvb-core: Fix DoS bug in ULE decapsulation code that can be triggered 
-by an invalid Payload Pointer ULE (Unidirectional Lightweight 
-Encapsulation RFC 4326) decapsulation has a bug that causes endless loop 
-when Payload Pointer of MPEG2-TS frame is 182 or 183.  Anyone who sends 
-malicious MPEG2-TS frame will cause the receiver of ULE SNDU to go into 
-endless loop.
+http://secunia.com/advisories/42426/
 
-This patch was generated and tested against linux-2.6.32.9 and should 
-apply cleanly to linux-2.6.33 as well because there was only one typo 
-fix to dvb_net.c since v2.6.32.
+Seems like two security issues:
 
-This bug was brought to you by modern day Santa Claus who decided to 
-shower the satellite dish at Keio University with heavy snow causing 
-huge burst of errors.  We, receiver end, received Santa Claus's gift in 
-the form of kernel bug."
+"1) Multiple errors within the processing of PDF files can be exploited to 
+e.g. cause a crash.
 
-http://git.kernel.org/linus/29e1fa3565a7951cc415c634eb2b78dbdbee151d
-http://bugzilla.redhat.com/569237
+2) An off-by-one error within the "icon_cb()" function can be exploited to 
+cause a memory corruption."
 
-Thanks, Eugene
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+
+http://schokokeks.org - professional webhosting
+
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
