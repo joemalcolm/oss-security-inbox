@@ -1,51 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/05/1
-Message-ID: <1368665710.69661288985786462.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 5 Nov 2010 15:36:26 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Clarification: OpenFabrics ofed stack also contains RDS protocol
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/03/2
+Message-ID: <4CF8EB89.8010308@redhat.com>
+Date: Fri, 03 Dec 2010 14:07:21 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, Ulrik Persson <ddefrostt@...il.com>, Hans de Goede <hdegoede@...hat.com>, Stanislav Ochotnicky <sochotnicky@...hat.com>
+Subject: CVE Request -- Xfig: Stack-based buffer overflow by processing FIG image with crafted color definition
 Content-Type: text/plain; charset=utf-8
 
------ "Marcus Meissner" <meissner@...e.de> wrote:
+Hello Josh, Steve, vendors,
 
-> Hi,
-> 
-> The openfabrics remote messaging / dma stack also contains the RDS
-> protocol family module (actually it seems to be the originator before it
-> came into mainline).
-> 
-> It is in the ofa_kernel package, and SUSE ships it e.g. in the "ofed"
-> packages.
-> 
-> 
-> The net/rds/ code inside of it is pretty much the same as the Linux
-> kernel module. It also is autoloading with module aliases.
-> 
-> CVE-2010-3904 seems to be there up to the latest version after
-> looking
-> at the code (I tried the 1.4 version).
-> 
-> CVE-2010-3865 seems to be present in some versions, but not in the
-> latest version. Unverified.
-> 
-> 
-> Does this need new CVEs? The projects are different, but the history
-> seems clear and the code basically the same.
-> 
+   the Team of Underground Stockholm researchers reported:
+   [1] https://bugzilla.redhat.com/show_bug.cgi?id=657981
 
-If the code is the same, then you can reuse the CVE id. We see this for
-example when various PDF CVE ids get shared between xpdf and poppler.
+   i.e:
 
-If it's the same flaw, but essentially different code, they need new IDs.
+   A stack-based buffer overflow flaw was found in
+   the way Xfig processed certain FIG images. A remote
+   attacker could create a FIG image with specially-crafted
+   color definition, and trick the local, unsuspecting
+   user into opening it, which could lead to xfig executable
+   crash or, potentially, arbitrary code execution with
+   the privileges of the user running the executable.
 
->From what you describe, it sounds like they are the same, as your package
-is the parent of what upstream currently has.
+   Public PoC:
+   [2] https://bugzilla.redhat.com/attachment.cgi?id=463393
 
-If you think it needs some though, let me know.
+   Flaw severity note:
+   On systems with compile time buffer checks (FORTIFY_SOURCE)
+   feature enabled, the impact of this flaw is mitigated to
+   be only crash.
 
-Thanks.
+Could you allocate CVE id for this?
 
--- 
-    JB
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
