@@ -1,94 +1,128 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/08/5
-Message-ID: <20101108054801.GA9946@openwall.com>
-Date: Mon, 8 Nov 2010 08:48:01 +0300
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel proactive security hardening
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/03/4
+Message-ID: <C10B9E3687C68B4D98F6ADFD3C3CDDB7015BF281C857@EXCHANGE.sei.cmu.edu>
+Date: Fri, 3 Dec 2010 09:44:01 -0500
+From: Robert Seacord <rcs@...t.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: "Chad R. Dougherty" <crd@...t.org>, David Svoboda <svoboda@...t.org>
+Subject: RE: Interesting behavior with struct initiailization
 Content-Type: text/plain; charset=utf-8
 
-Dan, Vasiliy -
+With respect to this specific problem:
 
-On Mon, Nov 08, 2010 at 06:07:38AM +0300, Solar Designer wrote:
-> On a more relevant issue (to us), any ideas on dealing with kernel stack
-> infoleaks in a general manner (not just plugging the bugs one by one)?
-> I guess it could be addressed in gcc (an option to wipe stack frames) or
-> in the kernel (wipe even more of the stack, beyond the stack pointer, on
-> syscall entry).  Unfortunately, either has likely measurable performance
-> impact.  (BTW, has some of this been implemented somewhere already?)
-> Any other ideas?
+> then the compiler is free to change the padding bytes after 'x.b' to whatever it likes, because you changed 'x.a', even though you might >  
+> think you cleared them and the compiler would have no reason to make this change.  In practice this might manifest in the case of 
 
-OK, here are some lower-overhead ideas of my own:
+> memset (&x, 0, sizeof(x));
+> x.a = 1; x.b = 2; x.c = 3;
 
-1. Perhaps the majority of infoleaks (maybe over 90% of those being
-discovered these days?) are triggerable via only a handful of syscalls,
-and perhaps only in certain easy-to-check-for circumstances.  I am
-thinking ioctl(2), as well as maybe read(2) (and other read syscalls,
-yes...) from device files (not from other file types).  I haven't
-checked whether this matches the statistics so far or not - we need to
-check and come up with a short list of typical "patterns" like this.
-Then we may implement stack wiping (say, to 1 KB below the stack
-pointer) invoked from top-level functions for these syscalls and only
-when the circumstances are present (e.g., check file type for the
-provided fd).  Do it before calling the deeper layers, indeed.
+> by the compiler optimising out the 'memset' as a dead store.
 
-2. We could turn all function-local non-static definitions of:
+CERT proposed #5 memset_s() to clear memory, without fear of removal (see http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1358.pdf).  This function is specified in the current working draft of C1X Annex K (normative) Bounds-checking interfaces as follows:
 
-struct x y;
+K.3.7.4.1 The memset_s function
+Synopsis
+1 #define _ _STDC_WANT_LIB_EXT1_ _ 1
+#include <string.h>
+errno_t memset_s(void *s, rsize_t smax, int c, rsize_t n)
+Runtime-constraints
+2 s shall not be a null pointer. Neither smax nor n shall be greater than RSIZE_MAX. n
+shall not be greater than smax.
+3 If there is a runtime-constraint violation, then if s is not a null pointer and smax is not
+greater than RSIZE_MAX, the memset_s function stores the value of c (converted to an
+unsigned char) into each of the first smax characters of the object pointed to by s.
+Description
+4 The memset_s function copies the value of c (converted to an unsigned char) into
+each of the first n characters of the object pointed to by s. Unlike memset, any call to
+the memset_s function shall be evaluated strictly according to the rules of the abstract
+machine as described in (5.1.2.3). That is, any call to the memset_s function shall
+assume that the memory indicated by s and n may be accessible in the future and thus
+must contain the values indicated by c.
+Returns
+5 The memset_s function returns zero if there was no runtime-constraint violation.
+Otherwise, a nonzero value is returned.
 
-into:
+Annex K is optional but normative.
 
-struct x y = {};
+rCs
 
-We could do this by pre-processing the source files or with a patch to
-gcc (introduce a command-line option to assume empty initializers for
-all on-stack structs).
+----
+Robert C. Seacord
+Secure Coding Manager
+CERT / Software Engineering Institute
+Work: +1 412.268.7608
+FAX:    +1 412.268.6989
 
-I've just checked - this often produces efficient code: where it is
-obvious enough for gcc that most fields are explicitly initialized by
-the function, then only the few actually uninitialized ones are zeroed.
-Moreover, in cases where the struct or its fields are then copied to
-other variables, the struct itself may get eliminated (and the
-assignments/zeroing are made right to the target variables).  Indeed,
-copy_to_user() should prevent the latter optimization, but I am also
-considering cases where the above change would happen to be applied to
-structs never exported to userspace (if we apply it universally).
 
-Unfortunately, there will be plenty of cases where gcc would not be able
-to tell that the struct is not used until a certain point, so it'd have
-to needlessly initialize it... which will result in performance impact.
+-----Original Message-----
+From: Geoff Keating [mailto:geoffk@...le.com] 
+Sent: Monday, November 29, 2010 9:54 PM
+To: oss-security@...ts.openwall.com
+Subject: Re: [oss-security] Interesting behavior with struct initiailization
 
-Please note that either of the ideas above will take care both of
-uninitialized fields and of alignment gaps.  With the second approach
-this was not obvious to me, so I tested (with gcc 3.4.5 only so far):
 
-struct x {
-	int a;
-	char b;
-	int c;
-};
+On 25/11/2010, at 5:31 AM, Nelson Elhage wrote:
 
-void f(struct x *y) {
-	struct x x = {};
+> Is it possible that the zeroing out of padding bytes by GCC is an 
+> implementation detail that we've been relying on, and never something 
+> that was intended as part of the exposed contract? Is there anyone on 
+> this list more qualified to comment on either the specification or 
+> GCC's implementation?
 
-	x.a = 1;
-	x.b = 2;
-	x.c = 3;
-	*y = x;
-}
+C99 says, in 6.2.6.1p6,
 
-The produced code is inefficient, but safe - it zeroizes the entire
-struct (12 bytes), then proceeds to set the three fields (4+1+4).
+> When a value is stored in an object of structure or union type, 
+> including in a member object, the bytes of the object representation 
+> that correspond to any padding bytes take unspecified values.42)
 
-3. I also briefly thought of post-processing gcc-generated assembly
-files, but I like the above approaches better.
+and there is a specific footnote in case this wasn't clear enough:
 
-Perhaps #1 above should be it (wipe the stack in _some_ cases only) -
-simple and likely without measurable slowdown for real-world use.
-#2 is more difficult and likely slower (albeit not as slow as wiping
-entire stack frames would be).  Maybe #2 will prevent a larger
-percentage of vulnerabilities and in an easier to confirm way, though.
+> 42) Thus, for example, structure assignment may be implemented element-at-a-time or via memcpy.
 
-Comments and other ideas are welcome.
 
-Alexander
+but the description goes *much* further than the footnote.  In principle, it means if you write
+
+struct test { int a; char b; int c; } x; memset (&x, 0, sizeof(x)); x.a = 1;
+
+then the compiler is free to change the padding bytes after 'x.b' to whatever it likes, because you changed 'x.a', even though you might think you cleared them and the compiler would have no reason to make this change.  In practice this might manifest in the case of 
+
+memset (&x, 0, sizeof(x));
+x.a = 1; x.b = 2; x.c = 3;
+
+by the compiler optimising out the 'memset' as a dead store.
+
+Since C99 says it is unspecified, you'd have to look at the GCC documentation, and I don't see any specification there either.
+
+In practise, GCC does exactly this, with its own built-in initializer expansion.  If you turn on the right debugging flag (I think -fdump-tree-original -fdump-tree-gimple is what you want), you can see GCC turn
+
+    struct test arg = {.a=1};
+  use (&arg);
+    struct test arg2 = {.a=1, .b=2, .c=3};
+  use (&arg2);
+
+into
+
+  arg = {};
+  arg.a = 1;
+  use (&arg);
+  arg2.a = 1;
+  arg2.b = 2;
+  arg2.c = 3;
+  use (&arg2);
+
+The comment in the code (in gimplify.c) explains that the side-effect of clearing unused bytes is definitely not intentional, it reads:
+
+   Note that we still need to clear any elements that don't have explicit
+   initializers, so if not all elements are initialized we keep the
+   original MODIFY_EXPR, we just remove all of the constructor elements.
+
+and
+
+        /* ??? This bit ought not be needed.  For any element not present
+           in the initializer, we should simply set them to zero.  Except
+           we'd need to *find* the elements that are not present, and that
+           requires trickery to avoid quadratic compile-time behavior in
+           large cases or excessive memory use in small cases.  */
+        else if (num_ctor_elements < num_type_elements)
+          cleared = true;
+
