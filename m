@@ -1,71 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/09/6
-Message-ID: <AANLkTimCGNagqPK1vjbJv_oV5KymLbu_R74+-MnDu=Sh@mail.gmail.com>
-Date: Thu, 9 Dec 2010 12:53:57 +0100
-From: Pierre Joye <pierre.php@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/03/6
+Message-ID: <762588839.238751291408550691.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 3 Dec 2010 15:35:50 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
 Cc: coley <coley@...re.org>
-Subject: Re: Re: NULL byte poisoning fix in php 5.3.4+
+Subject: Re: clamav 0.96.5 released
 Content-Type: text/plain; charset=utf-8
 
-We are about to release 5.3.4, can anyone get us an CVE for this issue please?
+----- "Hanno Böck" <hanno@...eck.de> wrote:
+> 
+> http://secunia.com/advisories/42426/
+> 
+> Seems like two security issues:
+> 
+> "1) Multiple errors within the processing of PDF files can be
+> exploited to e.g. cause a crash.
 
-On Tue, Nov 30, 2010 at 3:26 AM, Pierre Joye <pierre.php@...il.com> wrote:
-> Coley? :)
->
-> On Mon, Nov 22, 2010 at 5:21 PM, Josh Bressers <bressers@...hat.com> wrote:
->> Steve,
->>
->> Can MITRE take this one. It looks like it's from 2006 (from looking at the
->> upstream bug). I don't see a CVE id for this anywhere.
->>
->> Thanks.
->>
->> --
->>    JB
->>
->> ----- "Pierre Joye" <pierre.php@...il.com> wrote:
->>
->>> anyone?
->>>
->>> On Thu, Nov 18, 2010 at 5:43 PM, Pierre Joye <pierre.php@...il.com>
->>> wrote:
->>> > forgot to add the fixes revs:
->>> >
->>> > http://svn.php.net/viewvc?view=revision&revision=305507
->>> > revert of part of the OCI8 fix
->>> > http://svn.php.net/viewvc?view=revision&revision=305509
->>> >
->>> > OCI8 fix (committed separately)
->>> > http://svn.php.net/viewvc?view=revision&revision=305412
->>> >
->>> > On Thu, Nov 18, 2010 at 5:22 PM, Pierre Joye <pierre.php@...il.com>
->>> > wrote:
->>> >> hi,
->>> >>
->>> >> The problem describes here http://www.madirish.net/?article=436, in
->>> >> http://bugs.php.net/39863 (and numerous other places) has been fixed
->>> >> in PHP_5_3, targetting 5.3.4 (RC1 to be released today). It is a well
->>> >> (old) known issue in PHP and I wonder if there is a CVE already for
->>> >> it? If not I think having one could helpful. or?
->>> >>
->>> >> Cheers,
->>> >> --
->>> >> Pierre
->>> >>
->>
->
->
->
-> --
-> Pierre
->
-> @pierrejoye | http://blog.thepimp.net | http://www.libgd.org
->
+Please use CVE-2010-4260
 
+> 
+> 2) An off-by-one error within the "icon_cb()" function can be
+> exploited to cause a memory corruption."
+> 
 
+Please use CVE-2010-4261
+
+Thanks.
 
 -- 
-Pierre
-
-@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+    JB
