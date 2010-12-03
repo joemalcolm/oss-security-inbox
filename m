@@ -1,32 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/19/7
-Message-ID: <394439939.1007701282247609910.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 19 Aug 2010 15:53:29 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: zope-ldapuser
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/03/1
+Message-Id: <201012031009.36842.thomas@suse.de>
+Date: Fri, 3 Dec 2010 10:09:36 +0100
+From: Thomas Biege <thomas@...e.de>
+To: "oss-security" <oss-security@...ts.openwall.com>
+Subject: clamav 0.96.5 released
 Content-Type: text/plain; charset=utf-8
 
 
------ "Sébastien Delafond" <seb@...ian.org> wrote:
+JFYI, maybe CVE-IDs are needed...
 
-> Hi,
-> 
-> there is an authentication probleme in zope-ldapuser, where any
-> password
-> is accepted when attempting to log in as the emergency user (as
-> defined
-> in zpasswd.py). See Debian bug 593466[0] for the corresponding patch.
-> 
-> 
-> [0] http://bugs.debian.org/593466
+------------------------------------------------------------------------------
+Date: Mon, 22 Nov 2010 15:12:57 +0100
+From: Tomasz Kojm <tkojm@...mav.net>
+Subject: [Clamav-users] Upcoming release of ClamAV (0.96.5)
 
-The debian bug has lots more info.
+Dear Users,
 
-Please use CVE-2010-2944
+we're going to release a new version of ClamAV on Monday, November 29.
+ClamAV 0.96.5 will include bugfixes and minor feature enhancements,
+such as improved handling of detection statistics, better file logging,
+and support for custom database URLs in freshclam. You can find more
+information in the ChangeLog:
 
-Thanks.
+http://git.clamav.net/gitweb?p=clamav-
+devel.git;a=blob_plain;f=ChangeLog;hb=HEAD
+
+and our Bugzilla:
+
+https://wwws.clamav.net/bugzilla/buglist.cgi?resolution=FIXED&query_format=advanced&bug_status=RESOLVED&product=ClamAV&target_milestone=0.96.5
+
+You can help by testing (or just running ./configure && make check) the
+latest code available in our Git repository - the latest snapshot
+tarball can be grabbed here:
+
+http://git.clamav.net/gitweb?p=clamav-
+devel.git;a=snapshot;h=refs/heads/master;sf=tgz
+
+Thank you in advance,
 
 -- 
-    JB
+   oo    .....         Tomasz Kojm <tkojm@...mav.net>
+  (\/)\.........         http://www.ClamAV.net/gpg/tkojm.gpg
+     \..........._         0DCA5A08407D5288279DB43454822DC8985A444B
+       //\   /\              Mon Nov 22 15:02:23 CET 2010
+_______________________________________________
+Help us build a comprehensive ClamAV guide: visit http://wiki.clamav.net
+http://www.clamav.net/support/ml
+
+-- 
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
