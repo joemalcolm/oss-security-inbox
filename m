@@ -1,39 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/02/10
-Message-ID: <1329644874.186801280779272637.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 2 Aug 2010 16:01:12 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/05/1
+Message-ID: <loom.20101205T175947-758@post.gmane.org>
+Date: Sun, 5 Dec 2010 17:12:34 +0000 (UTC)
+From: Bhadrinath <bitstrat@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: gfs2: rename cases kernel panic
+Subject: Re: Interesting behavior with struct initiailization
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-2798
+One solution to ensure no padding bits are copied uninitialized,
 
-Thanks.
-
--- 
-    JB
+    struct test{ int a; char b; int c;};
 
 
------ "Eugene Teo" <eugene@...hat.com> wrote:
+    unsigned char r[sizeof arg];
 
-> The problem was in the way the gfs2 directory code was trying to
-> re-use
-> sentinel directory entries. A local, unprivileged user on a gfs2
-> mounted 
-> directory can trigger this issue, resulting in a NULL pointer
-> dereference.
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=620300
-> 
-> Introduced in upstream commit 71b86f56 (v2.6.19-rc1), and fixed in 
-> commit 728a756b.
-> 
-> http://git.kernel.org/linus/71b86f562b5eb6f94ea00bba060caa64d0137969
-> http://git.kernel.org/linus/728a756b8fcd22d80e2dbba8117a8a3aafd3f203
-> 
-> Thanks, Eugene
-> -- 
-> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i);
-> }
+    struct test  arg = { .a = 1, .b = 2, .c = 3 };
+    .
+    .
+    // Do all operations on arg and just before passing it to the function
+    .
+    .
+    memset(r,0,sizeof r); // initialize everything to zero
+    memcpy(r+offsetof(struct test,a),&arg.a,sizeof arg.a); 
+    memcpy(r+offsetof(struct test,b),&arg.b,sizeof arg.b);
+    memcpy(r+offsetof(struct test,c),&arg.c,sizeof arg.c);
+
+    //now pass r to the function
+    Copy_to_user(ptr, r, sizeof(r));
+
+   Comments and ideas are welcome
+
+With Regards
+Bhadrinath
+
+
+
