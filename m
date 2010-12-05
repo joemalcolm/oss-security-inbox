@@ -1,37 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/12/4
-Message-ID: <4B75AE45.5050606@kde.org>
-Date: Fri, 12 Feb 2010 14:38:45 -0500
-From: Jeff Mitchell <mitchell@....org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/05/2
+Message-ID: <loom.20101205T193941-313@post.gmane.org>
+Date: Sun, 5 Dec 2010 18:58:07 +0000 (UTC)
+From: Bhadrinath <bitstrat@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE Request: KDE screensaver unlock issue similar to GNOME one
+Subject: Re: Interesting behavior with struct initiailization
 Content-Type: text/plain; charset=utf-8
 
-On 2/12/2010 1:18 PM, Jeff Mitchell wrote:
-> Sorry it's not in the same thread, as I wasn't subscribed to this list
-> at the time.
-> 
-> I can verify that only KDE SC 4.4.0 is affected. Released versions of
-> 4.3 are *not* affected by this bug.
-> 
-> I have committed a patch to the KDE SVN server as revision 1089213. See
-> https://bugs.kde.org/show_bug.cgi?id=217882#c16
-> 
-> Although this solved the problem for me locally, I'm in the process of
-> having other testers verify that they can no longer reproduce the
-> problem with this patch, and will report back once this is verified.
+One solution that could ensure no padding bits are copied uninitialized,
 
-Gentoo and Fedora distribution maintainers have also tested this patch
-and verified that it works. The patch against 4.4.0 can easily be
-obtained from here: http://websvn.kde.org/?view=revision&revision=1089241
-
-As this is now backported to the 4.4 branch, it is expected that 4.4.0
-will be the only release affected by this vulnerability.
-
-Thanks,
-Jeff
+*******************************************************************************
+struct test{ int a; char b; int c;};
 
 
+// Let arg be the one to be copied into user space
+struct test arg = { .a = 1, .b = 2, .c = 3 }; 
+
+// Create an equivalent structure
+struct test argC;
+
+.
+.
+.
+// Do all the operations on arg and just before passing it to the function
+// clear the argC to zero
+
+memset_s(&argC, 0,sizeof argC);
+
+// Now copy the contents of arg into argC one by one
+memcpy(&argC.a,&arg.a,sizeof arg.a);
+memcpy(&argC.b,&arg.b,sizeof arg.b);
+memcpy(&argC.c,&arg.c,sizeof arg.c);
+//This ensures that no uninitialized padding bits are passed to the user space
+
+copy_to_user(ptr,&argC,sizeof argC);
+
+*******************************************************************************
+
+Comments and other ideas are welcome.
+
+Regards
+Bhadrinath
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (197 bytes)
+
+
+
+
+
+
