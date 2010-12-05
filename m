@@ -1,30 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/23/2
-Message-ID: <4C217789.1040707@kernel.sg>
-Date: Wed, 23 Jun 2010 10:55:05 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/05/3
+Message-ID: <AANLkTim9X_yPg3DZds8BZadeF+0-n-Q8gi=okFXY-Bp=@mail.gmail.com>
+Date: Sun, 5 Dec 2010 15:03:36 -0500
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: kernel: thinkpad-acpi: lock down video output state access
+Subject: Re: Re: Interesting behavior with struct initiailization
 Content-Type: text/plain; charset=utf-8
 
-Just a heads up. Not requesting a CVE name for this since it only affect 
-certain thinkpads/xorg.
+This is unnecessary and wastes a lot of cycles.  There's no reason to
+even consider anything that performs worse than a simple memset(&arg,
+0, sizeof(arg)).
 
-"Given the right combination of ThinkPad and X.org, just reading the 
-video output control state is enough to hard-crash X.org.
+-Dan
 
-Until the day I somehow find out a model or BIOS cut date to not provide 
-this feature to ThinkPads that can do video switching through X RandR, 
-change permissions so that only processes with CAP_SYS_ADMIN can access 
-any sort of video output control state.
-
-This bug could be considered a local DoS I suppose, as it allows any
-non-privledged local user to cause some versions of X.org to hard-crash 
-some ThinkPads."
-
-Upstream commit:
-http://git.kernel.org/linus/b525c06cdbd8a3963f0173ccd23f9147d4c384b5
-
-Thanks, Eugene
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+On Sun, Dec 5, 2010 at 1:58 PM, Bhadrinath <bitstrat@...il.com> wrote:
+> One solution that could ensure no padding bits are copied uninitialized,
+>
+> *******************************************************************************
+> struct test{ int a; char b; int c;};
+>
+>
+> // Let arg be the one to be copied into user space
+> struct test arg = { .a = 1, .b = 2, .c = 3 };
+>
+> // Create an equivalent structure
+> struct test argC;
+>
+> .
+> .
+> .
+> // Do all the operations on arg and just before passing it to the function
+> // clear the argC to zero
+>
+> memset_s(&argC, 0,sizeof argC);
+>
+> // Now copy the contents of arg into argC one by one
+> memcpy(&argC.a,&arg.a,sizeof arg.a);
+> memcpy(&argC.b,&arg.b,sizeof arg.b);
+> memcpy(&argC.c,&arg.c,sizeof arg.c);
+> //This ensures that no uninitialized padding bits are passed to the user space
+>
+> copy_to_user(ptr,&argC,sizeof argC);
+>
+> *******************************************************************************
+>
+> Comments and other ideas are welcome.
+>
+> Regards
+> Bhadrinath
+>
+>
+>
+>
+>
+>
+>
+>
+>
