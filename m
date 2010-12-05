@@ -1,70 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/10/14
-Message-ID: <1300562402.574981289418000790.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 10 Nov 2010 14:40:00 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/05/4
+Message-ID: <loom.20101205T214528-591@post.gmane.org>
+Date: Sun, 5 Dec 2010 20:52:46 +0000 (UTC)
+From: Bhadrinath <bitstrat@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: mono loading shared libs from cwd
+Subject: Re: Interesting behavior with struct initiailization
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-4159
+There was a specific concern in the previous posts.
 
-Thanks.
+"Even if the memset is not removed, a compiler could implement 'x.b = 2' by
+-setting the low byte of a 32-bit register to 2, leaving the high bytes unchanged
+-storing all 32 bits of the register into memory which would store 
+  nonzero data in the high bytes, possibly containing sensitive information. "
 
--- 
-    JB
+In this case,even after doing a memset the compiler could copy some sensitive 
+information from the 32 bit register into the padding bytes.
+So, I feel it is necessary to implement it by copying it to a new equivalent 
+struct.
+
+Regards
+Bhadrinath
 
 
------ "Thomas Biege" <thomas@...e.de> wrote:
 
-> missed to add:
-> http://lists.ximian.com/pipermail/mono-patches/2010-October/177900.html
-> 
-> Am Mittwoch 10 November 2010 15:18:26 schrieb Thomas Biege:
-> > Hello folks,
-> > 
-> > from our bugzilla.
-> > 
-> > "
-> > http://www.mono-project.com/DllNotFoundException explains that the
-> mono
-> > runtime
-> > searches the current working directory for DLLs.  This opens a
-> serious
-> > security
-> > hole.  Malicious code can be given the same name as a DLL and left
-> in a
-> > directory the user might visit.  Also, it means that no mono
-> application
-> >  can safely set the current working directory.
-> > 
-> > Microsoft themselves addressed this issue in Windows
-> > http://msdn.microsoft.com/en-us/library/ms682586(v=VS.85).aspx
-> > 
-> > It's a well known "dummies" question for Unix why you must not have
-> "." on
-> > your
-> > path
-> >
-> http://www.unix.com/unix-dummies-questions-answers/22806-why-bad-idea-inser
-> > t- dot-path.html
-> > 
-> > Mono is exposing users to these same old hat problems.
-> > 
-> > (As a related problem, many mono programs seem to *assume* that they
-> will
-> >  be run with the CWD set to their installed directory, and break if
-> it
-> >  isn't.) "
-> > 
-> > Filed by Richard Brooksby.
-> > 
-> 
-> -- 
->  Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support &
-> Auditing
->  SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
-> --
->   Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
->                             -- Marie von Ebner-Eschenbach
+
