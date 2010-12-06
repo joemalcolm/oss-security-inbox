@@ -1,21 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/25/1
-Message-ID: <4BFB5899.9080205@kernel.sg>
-Date: Tue, 25 May 2010 12:56:57 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/06/9
+Message-ID: <665501283.418061291670227458.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 6 Dec 2010 16:17:07 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request - kernel: GFS2: The setflags ioctl() doesn't check file ownership
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: igb panics when receiving tag vlan packet
 Content-Type: text/plain; charset=utf-8
 
-Besides checking the write permissions, the setflags ioctl should also 
-be checking for the ownership of the file. It's a minor issue but the 
-behaviour is unexpected.
+Please use CVE-2010-4263
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=595579
-http://www.linux-archive.org/cluster-development/375481-gfs2-fix-permissions-checking-setflags-ioctl.html
+Thanks.
 
-Thanks, Eugene
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+    JB
+
+
+----- "Eugene Teo" <eugene@...hat.com> wrote:
+
+> If igb's SR-IOV and promiscuous mode are enabled and the interface 
+> receives a tag VLAN packet, this will result in a null pointer 
+> dereference. To fix this, we will backport upstream commit 31b24b95 to
+> 
+> ensure that vlan_gro_receive is only used if vlans have been
+> registered 
+> to the adapter structure.
+> 
+> Reference:
+> https://bugzilla.redhat.com/show_bug.cgi?id=660188
+> https://bugzilla.kernel.org/show_bug.cgi?id=15582
+> 
+> Upstream commit:
+> http://git.kernel.org/linus/31b24b95
+> 
+> Thanks, Eugene
