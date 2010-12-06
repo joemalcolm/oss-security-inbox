@@ -1,57 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/01/1
-Message-ID: <20101001151648.743c6993@redhat.com>
-Date: Fri, 1 Oct 2010 15:16:48 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/06/2
+Message-Id: <201012060124.52619.hanno@hboeck.de>
+Date: Mon, 6 Dec 2010 01:24:52 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE requests: Poppler, Quassel, Pyfribidi, Overkill, DocUtils, FireGPG, Wireshark
+Cc: Josh Bressers <bressers@...hat.com>, coley <coley@...re.org>
+Subject: Re: CVE request: mybb before 1.4.11 and before 1.4.12
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 29 Sep 2010 15:06:31 -0400 (EDT) Josh Bressers wrote:
+Those got lost?
 
-> > 1. Poppler (might also affect xpdf and kpdf due to code heritage,
-> > not determined yet)
-> > http://secunia.com/advisories/41596/
-> > -> Links to poppler git commits are given in the Secunia link
+Mitre/steven, can you please assign?
+
+Am Monday 11 October 2010 schrieb Josh Bressers:
+> ----- "Hanno Böck" <hanno@...eck.de> wrote:
+> > http://blog.mybb.com/2009/12/29/mybb-1-4-11-released-minor-patch-security
+> > -update/
 > 
-> This needs to be properly understood. I'm not assigning IDs until
-> someone does a proper triage.
+> This will need a 2009 ID.
+> 
+> > and
+> > 
+> > http://blog.mybb.com/2010/04/13/mybb-1-4-12-released-security-maintenance
+> > -update/
+> 
+> This update hints there are security fixes, but I can't tell what they are.
+> Does someone have more information? If not I'll let MITRE assign a generic
+> "something is broken" sort of ID.
+> 
+> Thanks.
 
-e853106b58 is uninitialized pointer use flaw.  Pointer value may be
-controlled by PDF content, hence if pointed to attacker-controlled
-memory, code execution may be possible via virtual method call.  This
-should date back to very old xpdf versions.
-
-bf2055088a seems similar to the above one.  Pointer is to the class
-that has not virtual methods, but may be used to corrupt memory.  This
-should only affect poppler versions after b1d4efb082.
-
-39d140bfc0 array indexing error / underflow.  On platforms where atoi
-can return negative result, this can allow out-of-array-bounds write.
-Code appears in old xpdf versions too.
-
-There are few that don't seem worth calling security:
-- memory leaks - 473de6f88a c6a0915127
-- NULL deref - 3422638b2a
-- infinite/deep recursion - d2578bd661
-- OOB read - 26a5817ffe + 9706e28657
-
-I'm not yet sure about these:
-
-2fe825deac Prevents use of random value for PDF object that is not of
-numeric type as expected.  This patch, however, does not seem to guard
-against invalid numeric values, so if some random value used due to an
-incorrect object type can cause crash later, I'd expect malicious
-numeric value to be able to achieve the same.
-
-dfdf3602bd Similar to the previous, commit message here does not
-explicitly mention this addresses any crash.
-
-a2dab0238a Commit message does not indicate this is should address any
-crash.  getPos seems mostly used for error reporting.
-
-Does anyone have any different findings?
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+
+http://schokokeks.org - professional webhosting
+
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
