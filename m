@@ -1,38 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/28/1
-Message-ID: <1601861696.2004901272413366763.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 27 Apr 2010 20:09:26 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/06/6
+Message-ID: <20101206171528.GD2076@redhat.com>
+Date: Mon, 6 Dec 2010 10:15:28 -0700
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: Re: CVE request - gfs2 kernel issue
+Subject: CVE request (PHP 5.3.x getSymbol() DoS; CERT VU#479900)
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-1436
+I haven't seen a CVE request for this already, and can't find a CVE name
+if one has been assigned.
 
-Thanks.
+CERT has a bulletin up regarding a DoS in the getSymbol() function
+(integer overflow vulnerability):
+
+http://www.kb.cert.org/vuls/id/479900
+http://svn.php.net/viewvc?view=revision&revision=305571
+http://php.net/manual/en/numberformatter.getsymbol.php
+
+Only affects PHP 5.3.x and probably PECL intl >= 1.0.0 as those are the
+only versions with that function.
+
+Does anyone know if a CVE has been assigned to this?  If not, could one
+be assigned?
 
 -- 
-    JB
-
-
------ "Eugene Teo" <eugene@...hat.com> wrote:
-
-> When a struct gfs2_quota straddles a page boundary, the two pages 
-> required to write out the complete quota were not being updated. 
-> Instead, the first page was being written beyond its end. This buffer
-> 
-> overflow can cause a kernel panic. Since only the value field in
-> struct 
-> gfs2_quota needs to be updated and it's a 64-bit quantity that doesn't
-> 
-> ever straddle a page boundary by itself, we can seek to the proper
-> page 
-> where this value lies and write to it.
-> 
-> Steps to reproduce:
-> https://bugzilla.redhat.com/show_bug.cgi?id=586006
-> 
-> My colleague will be posting the patch for the upstream kernel soon.
-> 
-> Thanks, eugene
+Vincent Danen / Red Hat Security Response Team 
