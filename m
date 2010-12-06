@@ -1,27 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/08/6
-Message-Id: <201010082331.59724.hanno@hboeck.de>
-Date: Fri, 8 Oct 2010 23:31:59 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/06/12
+Message-ID: <329432445.425311291672823572.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 6 Dec 2010 17:00:23 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request (2009): vanilla forums before 1.1.8
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: openx unknown vulnerability before 2.8.7
 Content-Type: text/plain; charset=utf-8
 
-http://gsasec.blogspot.com/2009/05/vanilla-v117-cross-site-scripting.html
+Thanks for the info.
 
+Steve, can you update MITRE's CVE (CVE-2009-4140). I don't need to assign
+anything.
 
-Input passed to the 'RequestName' header parameter when posting to 
-'/ajax/updatecheck.php' is not sanitized before it is returned to the user. 
-This can be exploited to execute arbitrary HTML and script code in a user's 
-browser session in context of an affected site.
-
-Please note this should be a CVE-2009 id
-
+Thanks.
 
 -- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+    JB
 
-http://schokokeks.org - professional webhosting
 
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+----- "Anthon Pang" <anthon.pang@...il.com> wrote:
+
+> The previously reported Open-Flash-Chart2 ofc_upload_image.php file
+> (vulnerable to arbitrary file upload) included in OpenX's video
+> plugin.
+> 
+> This is the commit (truncating it to an empty file):
+> 
+> https://developer.openx.org/fisheye/changelog/openx/trunk?cs=61683
+> 
+> FYI ofc_upload_image.php was found in a number of projects, including
+> Piwik (CVE-2009-4140), Open Web Analytics, and the Woopra plugin for
+> WordPress.
+> 
+> Regards,
+> 
+> Anthon
+> 
+> On Mon, Dec 6, 2010 at 9:00 AM, Hanno Böck <hanno@...eck.de> wrote:
+> > Upstream is not very talkative, but I found a blog claiming this is
+> exploitet
+> > in the wild:
+> > http://blog.openx.org/09/security-update/
+> > http://blog.sucuri.net/2010/09/openx-users-time-to-upgrade.html
+> >
+> > Please assign CVE.
+> >
+> > --
+> > Hanno Böck              Blog:           http://www.hboeck.de/
+> > GPG: 3DBD3B20           Jabber/Mail:    hanno@...eck.de
+> >
+> > http://schokokeks.org - professional webhosting
+> >
