@@ -1,71 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/02/10
-Message-ID: <AANLkTikqD-mehWS4Jgr2NyFxWc8vWgnqKeJJ0aco+Hd7@mail.gmail.com>
-Date: Tue, 2 Nov 2010 15:08:46 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/06/10
+Message-ID: <Pine.GSO.4.64.1012061622190.25660@faron.mitre.org>
+Date: Mon, 6 Dec 2010 16:26:38 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel stack infoleaks
+Subject: Re: CVE request (PHP 5.3.x getSymbol() DoS; CERT VU#479900)
 Content-Type: text/plain; charset=utf-8
 
-And since I've already gotten flack for this comment, I'll add for the
-sake of clarity: the second item is not a security issue if
-CAP_NET_RAW is synonymous with root access in your privilege model, as
-is the case on most systems.
 
--Dan
+CVE-2010-4409 was just assigned by MITRE for this issue.
 
-On Tue, Nov 2, 2010 at 1:11 PM, Dan Rosenberg <dan.j.rosenberg@...il.com> wrote:
-> Note that AF_PACKET requires CAP_NET_RAW to open a socket, so the
-> second issue isn't reachable by unprivileged users and shouldn't be
-> considered a security issue.
+- Steve
+
+
+On Mon, 6 Dec 2010, Vincent Danen wrote:
+
+> I haven't seen a CVE request for this already, and can't find a CVE name
+> if one has been assigned.
 >
-> -Dan
+> CERT has a bulletin up regarding a DoS in the getSymbol() function
+> (integer overflow vulnerability):
 >
-> On Tue, Nov 2, 2010 at 12:07 PM, Jon Oberheide <jon@...rheide.org> wrote:
->> Vasiliy Kulikov discovered three kernel stack infoleaks in various
->> packet families of the net subsystem:
->>
->> ===========================================================
->>
->> net/ax25
->>
->> Sometimes ax25_getname() doesn't initialize all members of
->> fsa_digipeater field of fsa struct.  This structure is then copied to
->> userland.  It leads to leaking of contents of kernel stack memory.  We
->> have to initialize them to zero.
->>
->> http://marc.info/?l=linux-netdev&m=128854507120898&w=2
->>
->> ===========================================================
->>
->> net/packet
->>
->> packet_getname_spkt() doesn't initialize all members of sa_data field of
->> sockaddr struct if strlen(dev->name) < 13.  This structure is then
->> copied to userland.  It leads to leaking of contents of kernel stack
->> memory.  We have to fully fill sa_data with strncpy() instead of
->> strlcpy().
->>
->> http://marc.info/?l=linux-netdev&m=128854507220908&w=2
->>
->> ===========================================================
->>
->> net/tipc
->>
->> Structure sockaddr_tipc is copied to userland with padding bytes after
->> "id" field in union field "name" unitialized.  It leads to leaking of
->> contents of kernel stack memory.  We have to initialize them to zero.
->>
->> http://marc.info/?l=linux-netdev&m=128854507420917&w=2
->>
->> ===========================================================
->>
->> Regards,
->> Jon Oberheide
->>
->> --
->> Jon Oberheide <jon@...rheide.org>
->> GnuPG Key: 1024D/F47C17FE
->> Fingerprint: B716 DA66 8173 6EDD 28F6  F184 5842 1C89 F47C 17FE
->>
->
+> http://www.kb.cert.org/vuls/id/479900
+> http://svn.php.net/viewvc?view=revision&revision=305571
+> http://php.net/manual/en/numberformatter.getsymbol.php
