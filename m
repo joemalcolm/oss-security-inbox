@@ -1,44 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/14/8
-Message-ID: <AANLkTinCy-2f-sOA31R2VaAiHUeq4S_oLkEbZraxiTYm@mail.gmail.com>
-Date: Tue, 14 Sep 2010 21:26:20 +0200
-From: Pierre Joye <pierre.php@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/06/4
+Message-Id: <201012061500.13203.hanno@hboeck.de>
+Date: Mon, 6 Dec 2010 15:00:13 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: xss in pecl-apc before 3.1.4
+Subject: CVE request: openx unknown vulnerability before 2.8.7
 Content-Type: text/plain; charset=utf-8
 
-thanks, added to the release info.
+Upstream is not very talkative, but I found a blog claiming this is exploitet 
+in the wild:
+http://blog.openx.org/09/security-update/
+http://blog.sucuri.net/2010/09/openx-users-time-to-upgrade.html
 
-On Tue, Sep 14, 2010 at 9:18 PM, Josh Bressers <bressers@...hat.com> wrote:
-> Please use CVE-2010-3294.
->
-> Thanks.
->
-> --
->    JB
->
->
-> ----- "Hanno Böck" <hanno@...eck.de> wrote:
->
->> http://pecl.php.net/package-changelog.php?package=APC&release=3.1.4
->>
->> - Fixed potential XSS in apc.php (Pierre, Matt Chapman)
->>
->> This is a minor issue as this usually doesn't get installed and should
->> only be
->> used for debugging-purposes, but still, deserves a CVE.
->>
->> --
->> Hanno Böck            Blog:           http://www.hboeck.de/
->> GPG: 3DBD3B20         Jabber/Mail:    hanno@...eck.de
->>
->> http://schokokeks.org - professional webhosting
->
-
-
+Please assign CVE.
 
 -- 
-Pierre
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
-@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+http://schokokeks.org - professional webhosting
+
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
