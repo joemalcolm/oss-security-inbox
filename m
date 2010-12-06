@@ -1,47 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/10/3
-Message-Id: <201011101518.26566.thomas@suse.de>
-Date: Wed, 10 Nov 2010 15:18:26 +0100
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/06/14
+Message-ID: <20101206225646.GB9588@redhat.com>
+Date: Mon, 6 Dec 2010 15:56:46 -0700
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: mono loading shared libs from cwd
+Subject: Re: CVE request (PHP 5.3.x getSymbol() DoS; CERT VU#479900)
 Content-Type: text/plain; charset=utf-8
 
-Hello folks,
+* [2010-12-06 16:26:38 -0500] Steven M. Christey wrote:
 
-from our bugzilla.
+>CVE-2010-4409 was just assigned by MITRE for this issue.
 
-"
-http://www.mono-project.com/DllNotFoundException explains that the mono 
-runtime
-searches the current working directory for DLLs.  This opens a serious 
-security
-hole.  Malicious code can be given the same name as a DLL and left in a
-directory the user might visit.  Also, it means that no mono application can
-safely set the current working directory.
+Awesome.  Thanks Steve.
 
-Microsoft themselves addressed this issue in Windows
-http://msdn.microsoft.com/en-us/library/ms682586(v=VS.85).aspx
-
-It's a well known "dummies" question for Unix why you must not have "." on 
-your
-path
-http://www.unix.com/unix-dummies-questions-answers/22806-why-bad-idea-insert-
-dot-path.html
-
-Mono is exposing users to these same old hat problems.
-
-(As a related problem, many mono programs seem to *assume* that they will be
-run with the CWD set to their installed directory, and break if it isn't.)
-"
-
-Filed by Richard Brooksby.
-
+>On Mon, 6 Dec 2010, Vincent Danen wrote:
+>
+>>I haven't seen a CVE request for this already, and can't find a CVE name
+>>if one has been assigned.
+>>
+>>CERT has a bulletin up regarding a DoS in the getSymbol() function
+>>(integer overflow vulnerability):
+>>
+>>http://www.kb.cert.org/vuls/id/479900
+>>http://svn.php.net/viewvc?view=revision&revision=305571
+>>http://php.net/manual/en/numberformatter.getsymbol.php
 
 -- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
---
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
-
+Vincent Danen / Red Hat Security Response Team 
