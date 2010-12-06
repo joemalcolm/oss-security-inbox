@@ -1,34 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/12/3
-Message-ID: <20100712170056.GD1969@redhat.com>
-Date: Mon, 12 Jul 2010 11:00:56 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/06/11
+Message-ID: <898557088.423211291672299220.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 6 Dec 2010 16:51:39 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: ghostscript
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: vanilla forums before 2.0.10, xss
 Content-Type: text/plain; charset=utf-8
 
-* [2010-07-12 12:48:35 -0400] Dan Rosenberg wrote:
+Use CVE-2010-4264 for the XSS. The commit is here:
+https://github.com/vanillaforums/Garden/commit/4535a059e4e24ca11a2ef0b4d754f262398bcece
 
->I believe this is identical to CVE-2010-1869
->(http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2010-1869).
+As for the "linkbait" issue, I have no clue. Nothing in git seems to
+point at that.
 
-They don't look identical to me.  Patches differ, upstream bugs differ.
+Steve, does MITRE have a precedent for such a thing?
 
-Can't really do anything hands-on to test since the PoC attached to the
-upstream bug is private.
-
->On Mon, Jul 12, 2010 at 12:28 PM, Marc Deslauriers
-><marc.deslauriers@...onical.com> wrote:
->> Hi,
->>
->> I don't think this ever got a CVE:
->>
->> A memory corruption vulnerability in Ghostscript 8.64 and earlier caused
->> by long names can lead to arbitrary code execution.
->>
->> http://bugs.ghostscript.com/show_bug.cgi?id=690523
->> http://svn.ghostscript.com/viewvc?view=rev&revision=9797
+Thanks.
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+    JB
+
+
+----- "Hanno Böck" <hanno@...eck.de> wrote:
+
+> Hi,
+> 
+> http://vanillaforums.org/discussion/13119/vanilla-2.0.10-released/p1
+> 
+> Two sound like security:
+> #
+> # Added SafeStyles configuration to prevent XSS linkjacking
+> # Patched potential linkbait vulnerability in dispatcher
+> 
+> (although I don't know what a linkbait vulnerability is, maybe someone
+> wants 
+> to enlighten me)
+> 
+> -- 
+> Hanno Böck                Blog:                http://www.hboeck.de/
+> GPG: 3DBD3B20                Jabber/Mail:        hanno@...eck.de
+> 
+> http://schokokeks.org - professional webhosting
