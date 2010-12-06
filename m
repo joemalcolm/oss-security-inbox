@@ -1,25 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/11/2
-Message-ID: <Pine.GSO.4.64.1002111713190.4454@faron.mitre.org>
-Date: Thu, 11 Feb 2010 17:14:36 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/06/13
+Message-ID: <Pine.GSO.4.64.1012061711580.25660@faron.mitre.org>
+Date: Mon, 6 Dec 2010 17:13:02 -0500 (EST)
 From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - kernel: futex: Handle user space corruption gracefully
+Subject: Re: CVE request: vanilla forums before 2.0.10, xss
 Content-Type: text/plain; charset=utf-8
 
 
-On Tue, 9 Feb 2010, Eugene Teo wrote:
+On Mon, 6 Dec 2010, Josh Bressers wrote:
 
-> Upstream commit:
-> http://git.kernel.org/linus/51246bfd189064079c54421507236fd2723b18f3
+> Use CVE-2010-4264 for the XSS. The commit is here:
+> https://github.com/vanillaforums/Garden/commit/4535a059e4e24ca11a2ef0b4d754f262398bcece
+>
+> As for the "linkbait" issue, I have no clue. Nothing in git seems to
+> point at that.
+>
+> Steve, does MITRE have a precedent for such a thing?
 
-Use CVE-2010-0622, to be filled in later.
+The vendor is calling it a "vulnerability" which is good enough to assign 
+a CVE to, as a different vuln type than XSS.
 
-Also, I assigned a CVE for a futex refcount bug listed here:
-
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=5ecb01cfdf96c5f465192bdb2a4fd4a61a24c6cc
-
-Use CVE-2010-0623 for that one.
+My guess is that it's open redirect, which is used to redirect users away 
+from the site towards spam or malware.  Just a guess, though.
 
 - Steve
+
+
+>
+> Thanks.
+>
+> -- 
+>     JB
+>
+>
+> ----- "Hanno Böck" <hanno@...eck.de> wrote:
+>
+>> Hi,
+>>
+>> http://vanillaforums.org/discussion/13119/vanilla-2.0.10-released/p1
+>>
+>> Two sound like security:
+>> #
+>> # Added SafeStyles configuration to prevent XSS linkjacking
+>> # Patched potential linkbait vulnerability in dispatcher
+>>
+>> (although I don't know what a linkbait vulnerability is, maybe someone
+>> wants
+>> to enlighten me)
+>>
+>> --
+>> Hanno Böck                Blog:                http://www.hboeck.de/
+>> GPG: 3DBD3B20                Jabber/Mail:        hanno@...eck.de
+>>
+>> http://schokokeks.org - professional webhosting
+>
+>
