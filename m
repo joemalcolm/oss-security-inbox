@@ -1,37 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/02/2
-Message-ID: <4C2E03B1.4030109@redhat.com>
-Date: Fri, 02 Jul 2010 17:20:17 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, Luigi Auriemma <aluigi@...istici.org>
-Subject: CVE Request -- Mumble server (Murmur) / Qt SQLite -- Remotely exploitable DoS (murmur termination) due QueryUsers Qt SQLite database bug
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/06/7
+Message-ID: <Pine.GSO.4.64.1012061504520.25660@faron.mitre.org>
+Date: Mon, 6 Dec 2010 15:08:56 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Can I request a cve for pfsense regarding --> "pfSense "graph.php" Cross-Site Scripting Vulnerabilities"
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve, vendors,
 
-   Luigi Auriemma reported:
-   [1] http://aluigi.altervista.org/adv/mumbleed-adv.txt
+The original Full-Disclosure post also mentions a number of issues 
+that only affect pfsense 2 beta 4.
 
-a deficiency in the way Mumble server processed malformed SQL query data.
-A remote, authenticated user could use this flaw to cause denial of service
-(mumble server termination) via specially-crafted QueryUsers Qt SQLite SQL
-query.
+So, I've assigned CVE-2010-4412 for these other issues.
 
-References:
-   [2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=587713
+To review:
 
-Public PoC:
-   [3] http://aluigi.org/poc/mumbleed.zip
+CVE-2010-4246 - graph.php (pfsense stable and 2 beta 4)
 
-Though not sure, if the true reason for this is:
-1, either Mumble server calling relevant Qt SQLite function in improper way or
-2, deficiency in that particular Qt function itself
+CVE-2010-4412 - pkg_edit.php, pkg.php, status_graph.php, interfaces.php
+                 (only 2 beta 4)
 
-Luigi, could you please clarify on the above?
 
-Steve, could you allocate a CVE id for this?
+- Steve
 
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+On Wed, 24 Nov 2010, Josh Bressers wrote:
+
+> ----- "dave b" <db.pub.mail@...il.com> wrote:
+>
+>> Can I request a cve for pfsense regarding --> "pfSense "graph.php"
+>> Cross-Site Scripting Vulnerabilities"
+>>
+>> http://secunia.com/advisories/42138
+>> (the original email can be found at
+>> http://seclists.org/fulldisclosure/2010/Nov/43 ).
+>
+> Please use CVE-2010-4246 for this.
+>
+> Thanks.
+>
+> --
+>    JB
+>
