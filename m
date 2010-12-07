@@ -1,42 +1,108 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/28/1
-Message-ID: <4C4FEFBF.10905@redhat.com>
-Date: Wed, 28 Jul 2010 10:52:15 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request -- KVIrc -- Remote CTCP commands execution via specially-crafted CTCP parameter
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/07/4
+Message-ID: <424707284.556191291753111074.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 7 Dec 2010 15:18:31 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE requests: IO::Socket::SSL, cakephp, collectd, gnash, ocrodjvu, hypermail, libcloud, piwigo
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
+This is a great request, thanks. It's quite large but you gave me enough
+info that it's not killed me to figure it out.
 
-   user with nickname 'unic0rn' reported:
-     [1] https://svn.kvirc.de/kvirc/ticket/858
+Steve, I have a request for MITRE to handle at the bottom.
 
-a deficiency in the way KVIrc IRC client extracted the "next" CTCP parameter from message
-pointer. A remote, authenticated attacker, valid KVIrc user, could send a specially-crafted
-DCC Client-To-Client Protocol (CTCP) message, like:
+Thanks.
 
-/ctcp nickname DCC GET\rQUIT\r
-/ctcp nickname DCC GET\rPRIVMSG\40#channel\40:epic\40fail\r
+----- "Raphael Geissert" <geissert@...ian.org> wrote:
 
-which could lead to / allow remote (KVIrc) CTCP commands execution. Different vulnerability
-than CVE-2010-2451:
-   [2] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-2451
-and CVE-2010-2452:
-   [3] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-2452
+> 
+> IO::Socket::SSL: unexpected fallback to VERIFY_NONE if certificate
+> file(s) 
+> are not specified.
+> http://bugs.debian.org/606058
+> http://secunia.com/advisories/42508/
 
-Upstream patch:
-   [3] https://svn.kvirc.de/kvirc/changeset/4693
+CVE-2010-4334
 
-Workaround: (from [1])
-   /option boolNotifyFailedDccHandshakes 0
 
-References:
-   [4] http://bugs.gentoo.org/show_bug.cgi?id=330111
+> 
+> cakephp: code execution via unserialize() call with untrusted data
+> http://malloc.im/CakePHP-unserialize.txt
+> https://github.com/cakephp/cakephp/commit/e431e86aa4301ced4273dc7919b59362cbb353cb
+> http://secunia.com/advisories/42211/
 
-Could you please allocate a CVE id for this?
+CVE-2010-4335
 
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+
+> 
+> collectd: DoS via the RRDtool and RRDCacheD plugins
+> http://bugs.debian.org/605092
+> http://secunia.com/advisories/42393/
+
+CVE-2010-4336
+
+
+> 
+> gnash: insecure handling of temp files at build-time
+> http://bugs.debian.org/605419
+> http://secunia.com/advisories/42416/
+
+CVE-2010-4337
+
+
+> 
+> ocrodjvu: insecure handling of temp files
+> http://bugs.debian.org/598134
+
+CVE-2010-4338
+
+
+> 
+> hypermail: XSS
+> http://bugs.debian.org/598743
+
+CVE-2010-4339
+
+
+> 
+> libcloud: "doesn't verify ssl certificate"
+> It appears that what it doesn't verify is the certificate's CN. From
+> the 
+> references provided in the Debian bug report it looks like it is a 
+> widespread issue on the SSL implementations in Python.
+> Not sure how MITRE would like to handle those.
+> 
+> http://bugs.debian.org/598463
+> https://github.com/tjfontaine/linode-python/issues/issue/1#issue/1
+
+MITRE weighed in on this. Python *should* get the ID, but each fixed app
+also gets one.
+CVE-2010-4340
+
+
+
+Steve, can MITRE take the one below. It's quite large and I don't have time
+to do it right now. Thanks.
+
+> piwigo:
+> a1) CSRF
+> a2) SQL injection
+> a3) stored XSS
+> http://secunia.com/advisories/41365/
+> http://piwigo.org/releases/2.1.3
+> http://www.exploit-db.com/exploits/14973/
+> (the issues mentioned by the exploit-db entry appear to be the same
+> that 
+> were fixed in 2.1.3)
+> b) search.php SQL injection
+> http://secunia.com/advisories/38305/
+> http://piwigo.org/releases/2.0.8
+> c) CSRF in the admin panel:
+> http://secunia.com/advisories/37681/
+> http://www.exploit-db.com/exploits/10417
+> (the exploit-db entry details two other issues, but are "admin-only"
+> -- feel 
+> free to assign or ignore those.)
+> 
