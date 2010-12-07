@@ -1,24 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/14/1
-Message-ID: <4BC53460.6040903@kernel.sg>
-Date: Wed, 14 Apr 2010 11:20:00 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/07/3
+Message-ID: <330660563.552911291751912143.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 7 Dec 2010 14:58:32 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: coley@...re.org
-Subject: Couple of kernel issues
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: vanilla forums before 2.0.10, xss
 Content-Type: text/plain; charset=utf-8
 
-1) oom: fix the unsafe usage of badness() in proc_oom_score()
-https://bugzilla.redhat.com/show_bug.cgi?id=582068
-http://git.kernel.org/linus/b95c35e76b29ba812e5dabdd91592e25ec640e93
-upstream commit 28b83c51 (v2.6.32-rc1) introduced the problem.
 
-2) tty: release_one_tty() forgets to put pids
-https://bugzilla.redhat.com/show_bug.cgi?id=582076
-http://git.kernel.org/linus/6da8d866d0d39e9509ff826660f6a86a6757c966
-Not sure this issue can be triggered by a non-privileged user.
+----- "Steven M. Christey" <coley@...us.mitre.org> wrote:
+> >
+> > As for the "linkbait" issue, I have no clue. Nothing in git seems to
+> > point at that.
+> >
+> > Steve, does MITRE have a precedent for such a thing?
+> 
+> The vendor is calling it a "vulnerability" which is good enough to assign
+> a CVE to, as a different vuln type than XSS.
+> 
+> My guess is that it's open redirect, which is used to redirect users away
+> from the site towards spam or malware.  Just a guess, though.
+> 
 
-Not requesting CVE names for these as these did not affect our supported 
-kernels. Just FYI.
+Let's use CVE-2010-4266 then.
 
-Thanks, Eugene
+Thanks.
+
+-- 
+    JB
