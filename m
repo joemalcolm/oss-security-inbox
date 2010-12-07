@@ -1,27 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/23/1
-Message-ID: <4C21765C.60100@kernel.sg>
-Date: Wed, 23 Jun 2010 10:50:04 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/07/2
+Message-ID: <20101207120147.284a09d5@redhat.com>
+Date: Tue, 7 Dec 2010 12:01:47 +0100
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: timekeeping: Prevent oops when GENERIC_TIME=n
+Subject: Re: CVE request (PHP 5.3.x getSymbol() DoS; CERT VU#479900)
 Content-Type: text/plain; charset=utf-8
 
-"Aaro Koskinen reported an issue in kernel.org bugzilla #15366, where on 
-non-GENERIC_TIME systems, accessing 
-/sys/devices/system/clocksource/clocksource0/current_clocksource results 
-in an oops.
+On Mon, 6 Dec 2010 10:15:28 -0700 Vincent Danen wrote:
 
-It seems the timekeeper/clocksource rework missed initializing the 
-curr_clocksource value in the !GENERIC_TIME case."
+> CERT has a bulletin up regarding a DoS in the getSymbol() function
+> (integer overflow vulnerability):
+> 
+> http://www.kb.cert.org/vuls/id/479900
+> http://svn.php.net/viewvc?view=revision&revision=305571
+> http://php.net/manual/en/numberformatter.getsymbol.php
 
-Upstream commit:
-http://git.kernel.org/linus/ad6759fbf35d104dbf573cd6f4c6784ad6823f7e
+Btw, setSymbol() is affected too, and does not seem to be addressed in
+r305571.  In both cases, it's PHP exposing ICU bug.
 
-I believe distros are using GENERIC_TIME=y, at least this is the case in 
-our supported kernels.
-
-Thanks, Eugene
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+Tomas Hoger / Red Hat Security Response Team
