@@ -1,22 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/07/3
-Message-Id: <201005071411.56216.hanno@hboeck.de>
-Date: Fri, 7 May 2010 14:11:55 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/08/3
+Message-ID: <4CFEFE36.5060905@redhat.com>
+Date: Wed, 08 Dec 2010 11:40:38 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: MOPS and CVEs?
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: bfa driver sysfs crash
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+The port data structure related to fc_host statistics collection is not
+initialized. This causes system crash when reading the fc_host 
+statistics. The fix is to initialize port structure during driver attach.
 
-Is anyone following the "Month of PHP Security" and assigning CVEs to it?
+This can be triggered by reading the fc statistics files under
+/sys/class/fc_host/host#/statistics.
 
-http://www.php-security.org/category/vulnerabilities/index.html
+A bfa adapter must be present in the system for the problem to occur.
 
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+Upstream commit:
+http://git.kernel.org/linus/7873ca4e4401f0ecd8868bf1543113467e6bae61
 
-http://schokokeks.org - professional webhosting
+Reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=661182
+http://www.spinics.net/lists/linux-scsi/msg43772.html
 
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+Thanks, Eugene
