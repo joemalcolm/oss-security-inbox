@@ -1,49 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/22/4
-Message-ID: <282104569.1470581287758019044.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 22 Oct 2010 10:33:39 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/08/6
+Message-ID: <AANLkTinHDiQnJuZYoL_31iURYv_cpPW=QhTouPX_CAjE@mail.gmail.com>
+Date: Wed, 8 Dec 2010 08:56:02 +0100
+From: Pierre Joye <pierre.php@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: setup_arg_pages: diagnose excessive argument size
+Subject: Re: CVE request (PHP 5.3.x getSymbol() DoS; CERT VU#479900)
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-3858
+hi,
 
-Thanks.
+The CVE # has been added to the changes log too.
+
+http://svn.php.net/viewvc?view=revision&revision=306036
+
+On Mon, Dec 6, 2010 at 6:15 PM, Vincent Danen <vdanen@...hat.com> wrote:
+> I haven't seen a CVE request for this already, and can't find a CVE name
+> if one has been assigned.
+>
+> CERT has a bulletin up regarding a DoS in the getSymbol() function
+> (integer overflow vulnerability):
+>
+> http://www.kb.cert.org/vuls/id/479900
+> http://svn.php.net/viewvc?view=revision&revision=305571
+> http://php.net/manual/en/numberformatter.getsymbol.php
+>
+> Only affects PHP 5.3.x and probably PECL intl >= 1.0.0 as those are the
+> only versions with that function.
+>
+> Does anyone know if a CVE has been assigned to this?  If not, could one
+> be assigned?
+>
+> --
+> Vincent Danen / Red Hat Security Response Team
+
+
 
 -- 
-    JB
+Pierre
 
-
------ "Eugene Teo" <eugene@...hat.com> wrote:
-
-> "The CONFIG_STACK_GROWSDOWN variant of setup_arg_pages() does not
-> check 
-> the size of the argument/environment area on the stack. When it is 
-> unworkably large, shift_arg_pages() hits its BUG_ON. This is
-> exploitable 
-> with a very large RLIMIT_STACK limit, to create a crash pretty
-> easily.
-> 
-> Check that the initial stack is not too large to make it possible to
-> map 
-> in any executable.  We're not checking that the actual executable (or
-> 
-> intepreter, for binfmt_elf) will fit.  So those mappings might clobber
-> 
-> part of the initial stack mapping.  But that is just userland lossage
-> 
-> that userland made happen, not a kernel problem."
-> 
-> Upstream commit:
-> http://git.kernel.org/linus/1b528181b2ffa14721fb28ad1bd539fe1732c583
-> 
-> References:
-> http://grsecurity.net/~spender/64bit_dos.c
-> https://bugzilla.redhat.com/show_bug.cgi?id=645222
-> 
-> Eugene
-> -- 
-> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i);
-> }
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
