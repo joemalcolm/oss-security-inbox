@@ -1,42 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/26/2
-Message-ID: <AANLkTin1HLGMUkuCk5Lhbaz1TD82mCW-ZsNtT2LyOm+N@mail.gmail.com>
-Date: Thu, 26 Aug 2010 09:58:24 +0200
-From: Geoffroy Couprie <geal@...eolan.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/08/8
+Message-ID: <loom.20101208T152531-254@post.gmane.org>
+Date: Wed, 8 Dec 2010 14:27:22 +0000 (UTC)
+From: Maksymilian Arciemowicz <cxib@...urityreason.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: VLC media player - DLL preloading vulnerability
+Subject: Re: CVE request (PHP 5.3.x getSymbol() DoS; CERT VU#479900)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Aug 26, 2010 at 1:56 AM, Steven M. Christey
-<coley@...us.mitre.org> wrote:
->
-> We will have one CVE per vulnerable application.  Yes, it's going to be very
-> painful.  Roughly, the rationale is: "the product does not protect against a
-> common configuration/behavior in its environment."
->
->> VLC was exploitable by loading wintab32.dll, a component request by
->> Qt, as shown in http://www.exploit-db.com/exploits/14750/
->
-> Use CVE-2010-3124
+Tomas Hoger <thoger@...> writes:
 
-Thank you.
+> 
+> On Tue, 7 Dec 2010 22:43:17 +0000 (UTC) Maksymilian Arciemowicz wrote:
+> 
+> > > Btw, setSymbol() is affected too, and does not seem to be addressed
+> > > in r305571.  In both cases, it's PHP exposing ICU bug.
+> > 
+> > setSymbol() give only DoS with strlen(NULL) [CWE-170].
+> 
+> I don't see that with ICU 4.2.1 and PHP 5.3.3.   Please clarify if you
+> see some different results with different ICU or PHP.  Or maybe using
+> different way to call setSymbol().
 
->
->
->> There's another possibility with DMO.
->
-> Is this a distinct product outside of VLC, or is it just a different
-> component / attack vector?
->
+my mistake, not setSybol() but getLocale()
 
-DMO stands for DirectX media objects. These are the codecs and video
-filters used in DirectShow. So, potentially, all the applications
-using external codecs or filters are vulnerable. And the issue with
-wintab32.dll is caused by Qt, so developers using Qt should check
-their applications.
+$nx=new IntlDateFormatter("pl", IntlDateFormatter::FULL,
+IntlDateFormatter::FULL);
+$nx->getLocale(1);
 
-Best regards,
 
--- 
-Geoffroy Couprie
-http://unhandledexpression.com
