@@ -1,15 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/11/1
-Message-ID: <20101011174931.GA2389@galadriel.inutil.org>
-Date: Mon, 11 Oct 2010 19:49:31 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/08/1
+Message-ID: <20101208002137.GE9588@redhat.com>
+Date: Tue, 7 Dec 2010 17:21:37 -0700
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: TYPO3-SA-2010-020
+Cc: Eric Blake <eblake@...hat.com>
+Subject: CVE request: libvirt when compiled with openvz support has a potential security hole
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-Please assign CVE IDs for the following issues:
-http://typo3.org/teams/security/security-bulletins/typo3-sa-2010-020/
+We were notified of a fix to upstream libvirt that plugs a potential
+security hole (buffer overflow) via the OpenVZ support in libvirt.
 
-Cheers,
-        Moritz
+Red Hat and Fedora do not ship libvirt with OpenVZ support enabled; I'm
+not sure if other vendors do or not.
+
+The patch was posted publicly today, and although it's a low impact
+issue, probably needs a CVE name.
+
+https://www.redhat.com/archives/libvir-list/2010-December/msg00348.html
+
+Thanks.
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
