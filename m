@@ -1,45 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/08/11
-Message-ID: <20101208162358.GI9588@redhat.com>
-Date: Wed, 8 Dec 2010 09:23:58 -0700
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/08/10
+Message-ID: <20101208165635.1537e0ee@redhat.com>
+Date: Wed, 8 Dec 2010 16:56:35 +0100
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Eric Blake <eblake@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: libvirt when compiled with openvz support has a potential security hole
+Cc: cxib@...urityreason.com
+Subject: Re: Re: CVE request (PHP 5.3.x getSymbol() DoS; CERT VU#479900)
 Content-Type: text/plain; charset=utf-8
 
-* [2010-12-08 09:07:30 +0800] Eugene Teo wrote:
+On Wed, 8 Dec 2010 14:27:22 +0000 (UTC) Maksymilian Arciemowicz wrote:
 
->On 12/08/2010 08:21 AM, Vincent Danen wrote:
->>We were notified of a fix to upstream libvirt that plugs a potential
->>security hole (buffer overflow) via the OpenVZ support in libvirt.
->>
->>Red Hat and Fedora do not ship libvirt with OpenVZ support enabled; I'm
->>not sure if other vendors do or not.
->>
->>The patch was posted publicly today, and although it's a low impact
->>issue, probably needs a CVE name.
->>
->>https://www.redhat.com/archives/libvir-list/2010-December/msg00348.html
->
->CC'ed Steve.
+> my mistake, not setSybol() but getLocale()
+> 
+> $nx=new IntlDateFormatter("pl", IntlDateFormatter::FULL,
+> IntlDateFormatter::FULL);
+> $nx->getLocale(1);
 
-Thanks Eugene.
-
-After some further looking at this, I'd like to retract the request for
-a CVE name as premature.  This is not a security issue because the
-output strings from vzlist are fixed.  So it would need to be
-compromised in some way (fake binary, etc.) before it could cause any
-problems for libvirt, at which point you have a bigger problem on your
-hands.
-
-Since libvirt is calling vzlist with hard-coded parameters as well, it
-is not feasible to have "garbage" returned that could cause this
-overflow in libvirt.
-
-Sorry for the noise; please don't assign a CVE name to this issue (bug).
-
-Thanks!
+1 is one of the (two?) values on which this does not crash ;).  Yeah,
+this does strlen(NULL) crash otherwise.
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Tomas Hoger / Red Hat Security Response Team
