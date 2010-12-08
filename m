@@ -1,49 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/09/3
-Message-ID: <AANLkTin2Wh8c6yJqvAk15UJnyq2eWnnT9Ho6J6N9pPFQ@mail.gmail.com>
-Date: Mon, 8 Nov 2010 19:47:29 -0500
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: oss-security@...ts.openwall.com, Petr Matousek <pmatouse@...hat.com>
-Cc: coley@...us.mitre.org
-Subject: Re: CVE request: kernel: gdth: integer overflow in ioc_general()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/08/5
+Message-ID: <20101208051909.GA21627@openwall.com>
+Date: Wed, 8 Dec 2010 08:19:09 +0300
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: kernel: Dangerous interaction between clear_child_tid, set_fs(), and kernel oopses
 Content-Type: text/plain; charset=utf-8
 
-This is not actually a security issue.  See the code:
+On Wed, Dec 08, 2010 at 07:51:18AM +0300, Solar Designer wrote:
+> To me, things like this are more important than individual NULL pointer
+> dereference bugs or the like.  So if those get CVEs, this one definitely
+> should as well.
 
-...
-if (!(buf = gdth_ioctl_alloc(ha, gen.data_len + gen.sense_len,
-                                     FALSE, &paddr)))
-            return -EFAULT;
-if (copy_from_user(buf, arg + sizeof(gdth_ioctl_general),
-                           gen.data_len + gen.sense_len)) {
-...
+Oh, this was already assigned CVE-2010-4258 by Josh, in response to
+Dan's posting (same topic, separate thread):
 
-If gen.data_len + gen.sense_len > UINT_MAX, then a small buffer will
-be allocated.  But then the copy_from_user() will always fault before
-copying any data over because the access_ok() check will fail on sizes
-> UINT_MAX.  It's definitely a bug, but not a vulnerability.
+http://www.openwall.com/lists/oss-security/2010/12/02/7
 
+Nelson, Dan - there was a "technical detail" behind the "amusing timing"
+of your messages getting through to the list.  It shouldn't happen again
+for the two of you. ;-)
 
-On Mon, Nov 8, 2010 at 5:02 PM, Petr Matousek <pmatouse@...hat.com> wrote:
-> "gdth_ioctl_alloc() takes the size variable as an int.
-> copy_from_user() takes the size variable as an unsigned long.
-> gen.data_len and gen.sense_len are unsigned longs.
-> On x86_64 longs are 64 bit and ints are 32 bit.
->
-> We could pass in a very large number and the allocation would truncate
-> the size to 32 bits and allocate a small buffer.  Then when we do the
-> copy_from_user(), it would result in a memory corruption."
->
-> Upstream commit:
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=f63ae56e4e97fb12053590e41a4fa59e7daa74a4
->
-> Credit: James E.J. Bottomley
->
-> Reference:
-> http://ns3.spinics.net/lists/linux-scsi/msg47361.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=651147
->
-> Thanks,
-> --
-> Petr Matousek / Red Hat Security Response Team
->
+Alexander
