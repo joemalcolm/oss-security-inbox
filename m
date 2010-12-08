@@ -1,68 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/21/13
-Message-ID: <AANLkTim4V2eM3SmHgq_ZBMRnNRUPLc0nB_stxaMn68tJ@mail.gmail.com>
-Date: Wed, 22 Sep 2010 08:44:05 +1200
-From: Michael Koziarski <michael@...iarski.com>
-To: Thomas Biege <thomas@...e.de>
-Cc: oss-security@...ts.openwall.com, coley <coley@...re.org>, juliano@...ifera.comt,  thaidn@...ecurity.net, security@...yonrails.org
-Subject: Re: CVE request: padding oracle attack: ruby on rails 2.3, owasp esapi
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/08/4
+Message-ID: <20101208045118.GA21424@openwall.com>
+Date: Wed, 8 Dec 2010 07:51:18 +0300
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: kernel: Dangerous interaction between clear_child_tid, set_fs(), and kernel oopses
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Sep 22, 2010 at 2:57 AM, Thomas Biege <thomas@...e.de> wrote:
-> I got no answer from the POET paper authors yet but it can be
-> that CVE-2010-3299 is invalid.
+Nelson, Dan, Steve -
 
-I'm not sure what the criteria for a CVE is but there's nothing
-exploitable here in the vast vast bulk of rails applications.
+It's been a few days, so I'll over-quote a little bit.  Please see below:
 
-It's certainly true that an application using the low level
-encrypt/decrypt API is vulnerable to padding oracle attacks, but as
-you mentioned those apis aren't actually used anywhere within rails
-itself.
+On Thu, Dec 02, 2010 at 12:21:14AM -0500, Nelson Elhage wrote:
+> I've discovered an interesting interaction in the Linux kernel between the
+> clear_child_tid feature of clone(2), and the set_fs() function used internally
+> in the kernel to temporarily disable access_ok() checking of userspace pointers.
+> 
+> Under some (not totally uncommon) circumstances, it is possible for a user to
+> leverage this interaction to turn a kernel oops or BUG() into a write of an
+> integer 0 to a user-controlled address in kernel memory.
+> 
+> I'm not sure if this merits a CVE or not; It is (as far as I can tell) only a
+> problem in the presence of another security bug, but it potentially makes a
+> large class of bugs significantly more dangerous (DoS -> privesc).
+> 
+> Reference:
+> https://lkml.org/lkml/2010/12/1/543
 
-Given the 'shoot yourself in the foot' nature of those low level apis,
-we'll probably deprecate them as public apis and advise people to use
-encrypt_and_sign/decrypt_and_verify instead.
+To me, things like this are more important than individual NULL pointer
+dereference bugs or the like.  So if those get CVEs, this one definitely
+should as well.
 
+Nelson - why are you proposing adding set_fs(USER_DS); not to the very
+beginning of do_exit(), but below a few calls/checks?  I don't think
+there's any performance improvement from that, and it feels
+"theoretically safer" to return to the sane/safe state as soon as
+possible.  I am currently looking at do_exit() in OpenVZ's RHEL5-based
+2.6.18-194.26.1.el5.028stab079.1 - it does a bit more work before
+reaching the place you patch.  So I am tempted to introduce
+set_fs(USER_DS); as the very first statement in do_exit() instead.
 
+Did you check whether 2.4 kernels are affected as well?
 
-> Cheers
-> Thomas
->
->
-> Am Dienstag 14 September 2010 21:36:53 schrieb Josh Bressers:
->> I've assgiend two. The details are quite vague unfortunately.
->>
->> CVE-2010-3299 padding oracle attack: ruby on rails 2.3
->> CVE-2010-3300 padding oracle attack: owasp esapi
->>
->> Thanks.
->>
->> > Hi,
->> > the paper [1], about practical padding oracle attacks
->> > mentions some programming frameworks as vulnerable (section 5):
->> > - Ruby On ails 2.3
->> > - OWASP ESAPI
->> >
->> > I think they both need a CVE-ID. Thanks.
->> >
->> > Cheers
->> > Thomas
->> >
->> > [1] http://usenix.org/events/woot10/tech/full_papers/Rizzo.pdf
->>
->
-> --
->  Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
->  SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
-> --
->  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
->                            -- Marie von Ebner-Eschenbach
->
+Thanks,
 
-
-
--- 
-Cheers
-
-Koz
+Alexander
