@@ -1,49 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/14/6
-Message-ID: <734313713.843551271272925855.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 14 Apr 2010 15:22:05 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/08/2
+Message-ID: <4CFEDA52.4060100@redhat.com>
+Date: Wed, 08 Dec 2010 09:07:30 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Chris Allegretta <chrisa@...y.org>, coley <coley@...re.org>
-Subject: Re: CVE request: GNU nano (minor)
+CC: Vincent Danen <vdanen@...hat.com>, Eric Blake <eblake@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: libvirt when compiled with openvz support has a potential security hole
 Content-Type: text/plain; charset=utf-8
 
------ "Dan Rosenberg" <dan.j.rosenberg@...il.com> wrote:
+On 12/08/2010 08:21 AM, Vincent Danen wrote:
+> We were notified of a fix to upstream libvirt that plugs a potential
+> security hole (buffer overflow) via the OpenVZ support in libvirt.
+>
+> Red Hat and Fedora do not ship libvirt with OpenVZ support enabled; I'm
+> not sure if other vendors do or not.
+>
+> The patch was posted publicly today, and although it's a low impact
+> issue, probably needs a CVE name.
+>
+> https://www.redhat.com/archives/libvir-list/2010-December/msg00348.html
 
-> Two issues were recently addressed upstream for GNU nano to provide
-> better security when editing files owned by other untrusted users,
-> especially when editing as root.  I'm not sure if either of these
-> issues require CVE identifiers due to the narrow circumstances in
-> which they can be exploited, but I figured I'd leave that up to you.
-> 
-> Changelog is at
-> http://svn.savannah.gnu.org/viewvc/trunk/nano/ChangeLog?root=nano&view=log,
-> relevant entries at revisions 4490, 4491, 4493, and 4496.
-> 
-> 1.  When editing a file owned by another user, the owner of the file may
-> replace the file mid-editing with a symbolic link, resulting in the
-> editor overwriting the target of the symbolic link on saving with the
-> privileges of the user doing the editing, without any warning to the
-> editor.  Since this could be considered akin to replacing a target being
-> chown'd or chmod'd with a symbolic link and requires a very targeted
-> attack, I would lean towards this not needing a CVE, but that's your
-> call.
+CC'ed Steve.
 
-Since they fixed it, and it is a plausible attack, I'm assigning this
-CVE-2010-1160
-
-> 
-> 2.  When backup files are enabled and root is editing a file by an
-> untrusted user, that user may exploit race conditions in the creation of
-> backup files to take ownership of arbitrary files.  While the scenario
-> for exploitation is somewhat unlikely (root editing untrusted files),
-> this attack can be done reliably and without requiring precise timing, so
-> this seems to be a good candidate for a CVE.
-> 
-
-CVE-2010-1161
-
-Thanks.
-
--- 
-    JB
+Eugene
