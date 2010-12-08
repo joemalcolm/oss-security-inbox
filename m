@@ -1,36 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/07/2
-Message-Id: <201005071235.26905.oeriksson@mandriva.com>
-Date: Fri, 7 May 2010 12:35:26 +0200
-From: Oden Eriksson <oeriksson@...driva.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/08/9
+Message-ID: <20101208153438.GL20041@ksplice.com>
+Date: Wed, 8 Dec 2010 10:34:38 -0500
+From: Nelson Elhage <nelhage@...lice.com>
 To: oss-security@...ts.openwall.com
-Subject: A mysql flaw.
+Subject: Re: kernel: Dangerous interaction between clear_child_tid, set_fs(), and kernel oopses
 Content-Type: text/plain; charset=utf-8
 
-Hello.
+On Wed, Dec 08, 2010 at 07:51:18AM +0300, Solar Designer wrote:
+> Nelson, Dan, Steve -
+> 
+> It's been a few days, so I'll over-quote a little bit.  Please see below:
+> 
+> On Thu, Dec 02, 2010 at 12:21:14AM -0500, Nelson Elhage wrote:
+> > I've discovered an interesting interaction in the Linux kernel between the
+> > clear_child_tid feature of clone(2), and the set_fs() function used internally
+> > in the kernel to temporarily disable access_ok() checking of userspace pointers.
+> > 
+> > Under some (not totally uncommon) circumstances, it is possible for a user to
+> > leverage this interaction to turn a kernel oops or BUG() into a write of an
+> > integer 0 to a user-controlled address in kernel memory.
+> > 
+> > I'm not sure if this merits a CVE or not; It is (as far as I can tell) only a
+> > problem in the presence of another security bug, but it potentially makes a
+> > large class of bugs significantly more dangerous (DoS -> privesc).
+> > 
+> > Reference:
+> > https://lkml.org/lkml/2010/12/1/543
+> 
+> To me, things like this are more important than individual NULL pointer
+> dereference bugs or the like.  So if those get CVEs, this one definitely
+> should as well.
 
-With the mysql-5.1.46 release they fixed a security issue mentioned here:
+Yeah, as you saw, Dan requested a CVE separately and this is CVE-2010-4258.
 
-http://bugs.mysql.com/bug.php?id=51770
+> 
+> Nelson - why are you proposing adding set_fs(USER_DS); not to the very
+> beginning of do_exit(), but below a few calls/checks?  I don't think
+> there's any performance improvement from that, and it feels
+> "theoretically safer" to return to the sane/safe state as soon as
+> possible.  I am currently looking at do_exit() in OpenVZ's RHEL5-based
+> 2.6.18-194.26.1.el5.028stab079.1 - it does a bit more work before
+> reaching the place you patch.  So I am tempted to introduce
+> set_fs(USER_DS); as the very first statement in do_exit() instead.
 
-[...]
+I put the set_fs() after the in_interrupt() check, since set_fs() frobs the
+current thread_info, and IIUC, we aren't guaranteed to have one on an interrupt
+stack. So I wanted to preserve that check/immediate panic(), rather than
+possible triggering a recursive fault or other weird behavior. Other than that,
+I stuck it as early as possible.
 
-3375 Davi Arnaut    2010-03-09
-      Bug#51770: UNINSTALL PLUGIN requires no privileges
+If I'm wrong about it possibly failing on an interrupt stack, then yeah, it
+might make sense to put it even earlier. Or to rearrange things so that the flow
+is "check interrupt -> set_fs() -> everything else".
 
-      The problem was that UNINSTALL PLUGIN wasn't performing privilege
-      checks before removing a plugin. Any user (including users without 
-      any kind of privileges) could uninstall any plugin.
+> 
+> Did you check whether 2.4 kernels are affected as well?
 
-      The solution is to verify if the user has the DELETE privilege for
-      the mysql.plugin table before uninstalling a plugin.
+I have not. My man pages claim that CLONE_CHILD_CLEARTID is new since Linux
+2.5.49, so that specific hole probably isn't there, though.
 
-[...]
+- Nelson
 
-A CVE should probably be assigned for this.
-
-
--- 
-Regards // Oden Eriksson
-Security team manager - Mandriva
-C∞O @ NUX™ AB
+> 
+> Thanks,
+> 
+> Alexander
