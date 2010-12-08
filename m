@@ -1,43 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/13/6
-Message-ID: <1798676991.445821286996790804.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 13 Oct 2010 15:06:30 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/08/11
+Message-ID: <20101208162358.GI9588@redhat.com>
+Date: Wed, 8 Dec 2010 09:23:58 -0700
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: ettercap GTK
+Cc: Eric Blake <eblake@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: libvirt when compiled with openvz support has a potential security hole
 Content-Type: text/plain; charset=utf-8
 
+* [2010-12-08 09:07:30 +0800] Eugene Teo wrote:
 
------ "Dan Rosenberg" <dan.j.rosenberg@...il.com> wrote:
+>On 12/08/2010 08:21 AM, Vincent Danen wrote:
+>>We were notified of a fix to upstream libvirt that plugs a potential
+>>security hole (buffer overflow) via the OpenVZ support in libvirt.
+>>
+>>Red Hat and Fedora do not ship libvirt with OpenVZ support enabled; I'm
+>>not sure if other vendors do or not.
+>>
+>>The patch was posted publicly today, and although it's a low impact
+>>issue, probably needs a CVE name.
+>>
+>>https://www.redhat.com/archives/libvir-list/2010-December/msg00348.html
+>
+>CC'ed Steve.
 
-> The GTK version of ettercap uses a global settings file at
-> /tmp/.ettercap_gtk and does not verify ownership of this file before
-> reading it. When parsing this file for settings in gtkui_conf_read()
-> (src/interfaces/gtk/ec_gtk_conf.c), an unchecked sscanf() call can
-> result in a stack-based buffer overflow.  Local users can place
-> maliciously crafted settings files at this location to exploit other
-> users who run ettercap.  On most distributions, stack-smashing
-> protection will mitigate the impact.  I'm unclear as to whether there
-> are settings that could be forced upon other users that make ettercap
-> misbehave in a dangerous way.
-> 
-> There are two issues here (insecure temporary file usage and
-> stack-based buffer overflow), but they're probably only
-> security-relevant when exploited in conjunction.  Not sure if it
-> should get one CVE or two.
-> 
-> Reference:
-> https://bugs.launchpad.net/ubuntu/+source/ettercap/+bug/656347
-> 
-> 
+Thanks Eugene.
 
-We'll use two:
+After some further looking at this, I'd like to retract the request for
+a CVE name as premature.  This is not a security issue because the
+output strings from vzlist are fixed.  So it would need to be
+compromised in some way (fake binary, etc.) before it could cause any
+problems for libvirt, at which point you have a bigger problem on your
+hands.
 
-CVE-2010-3843 ettercap GTK insecure temporary file use
-CVE-2010-3844 ettercap GTK format string flaw
+Since libvirt is calling vzlist with hard-coded parameters as well, it
+is not feasible to have "garbage" returned that could cause this
+overflow in libvirt.
 
-Thanks.
+Sorry for the noise; please don't assign a CVE name to this issue (bug).
+
+Thanks!
 
 -- 
-    JB
+Vincent Danen / Red Hat Security Response Team 
