@@ -1,66 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/07/8
-Message-ID: <499168751.1613381283886338548.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 7 Sep 2010 15:05:38 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/09/15
+Message-ID: <191191892.863861291928271518.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 9 Dec 2010 15:57:51 -0500 (EST)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Valient Gough <vgough@...ox.com>, Micha Riser <micha@...world.org>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- EncFS / fuse-encfs [three ids] -- Multiple Vulnerabilities in EncFS
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: bfa driver sysfs crash
 Content-Type: text/plain; charset=utf-8
 
-Here goes:
+Please use CVE-2010-4343
 
-CVE-2010-3073 encfs Only 32 bit of file IV used
-CVE-2010-3074 encfs Watermarking attack
-CVE-2010-3075 encfs Last block with single byte is insecure"
-
-Thanks
+Thanks.
 
 -- 
     JB
 
 
------ "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+----- "Eugene Teo" <eugene@...hat.com> wrote:
 
-> Hello Steve, vendors,
+> The port data structure related to fc_host statistics collection is
+> not
+> initialized. This causes system crash when reading the fc_host 
+> statistics. The fix is to initialize port structure during driver
+> attach.
 > 
->    Micha Riser reported:
->    [A]
-> http://archives.neohapsis.com/archives/fulldisclosure/2010-08/0316.html
+> This can be triggered by reading the fc statistics files under
+> /sys/class/fc_host/host#/statistics.
 > 
-> three security flaws in EncFS encrypted filesystem (more from [A]):
+> A bfa adapter must be present in the system for the problem to occur.
 > 
-> "A security analysis of EncFS has revealed multiple vulnerabilities:
-> (1) Only 32 bit of file IV used
-> (2) Watermarking attack
-> (3) Last block with single byte is insecure"
+> Upstream commit:
+> http://git.kernel.org/linus/7873ca4e4401f0ecd8868bf1543113467e6bae61
 > 
-> References:
->    [B] http://www.arg0.net/encfs
->    [C] http://bugs.gentoo.org/show_bug.cgi?id=335938
->    [D]
-> http://archives.neohapsis.com/archives/fulldisclosure/2010-08/att-0316/watermark-attack-encfs.tar.gz
->    [E] https://bugzilla.redhat.com/show_bug.cgi?id=630460
+> Reference:
+> https://bugzilla.redhat.com/show_bug.cgi?id=661182
+> http://www.spinics.net/lists/linux-scsi/msg43772.html
 > 
-> 
-> Solutions / patches information:
-> ================================
-> 
-> * for issue (1) -- seems it wasn't fixed / isn't possible to
->    fix without breaking backward compatibility. More from [B]:
-> 
->    "The old IV setup is kept for backwards compatibility."
-> 
-> * for issue (2) -- EncFS upstream has released a fix for the issue:
->    [F] http://code.google.com/p/encfs/source/detail?r=59
-> 
-> Valient, could you please confirm, the above referenced [F] patch,
-> is the correct one to address the watermarking attack issue?
-> 
-> * for issue (3) -- not sure about patch status (included in [F] too?)
-> 
-> Steve, could you allocate CVE ids for these flaws?
-> 
-> Thanks && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+> Thanks, Eugene
