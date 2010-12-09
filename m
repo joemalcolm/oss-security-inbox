@@ -1,77 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/30/3
-Message-Id: <4A4ED40C-6553-4AD8-909F-7FF47E2EFEF0@apple.com>
-Date: Mon, 29 Nov 2010 18:54:22 -0800
-From: Geoff Keating <geoffk@...le.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/09/10
+Message-ID: <AANLkTinkG15U9Ciqqx+x5d6p9FozP-xrVPq=d+ePypCP@mail.gmail.com>
+Date: Thu, 9 Dec 2010 15:38:00 +0100
+From: Pierre Joye <pierre.php@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Interesting behavior with struct initiailization
+Subject: Re: Re: NULL byte poisoning fix in php 5.3.4+
 Content-Type: text/plain; charset=utf-8
 
+On Thu, Dec 9, 2010 at 3:34 PM, Steven M. Christey
+<coley@...us.mitre.org> wrote:
+>
+> On Thu, 9 Dec 2010, Pierre Joye wrote:
+>
+>> We are about to release 5.2.15 and 5.3.4, can anyone please get an id
+>> for this issue?
+>
+> I just assigned CVE-2006-7243 to the http://bugs.php.net/39863 issue, i.e.
+> NULL injection in file_exists() *only*.
+>
+> However, as already stated, the issue of NULL byte injection with PHP dates
+> back to 1999 or so (ouch... I remember that).  If PHP is addressing NULL
+> byte injection beyond just file_exists(), then that may need a separate CVE.
 
-On 25/11/2010, at 5:31 AM, Nelson Elhage wrote:
+We fixed it for all file functions. See the link to the commit for
+more details about which codes have been changed. Do we need a CVE for
+every function? I hope not :)
 
-> Is it possible that the zeroing out of padding bytes by GCC is an
-> implementation detail that we've been relying on, and never something
-> that was intended as part of the exposed contract? Is there anyone on
-> this list more qualified to comment on either the specification or
-> GCC's implementation?
+Cheers,
+-- 
+Pierre
 
-C99 says, in 6.2.6.1p6,
-
-> When a value is stored in an object of structure or union type, including in a member object, the bytes of the object representation that correspond to any padding bytes take unspecified values.42)
-
-and there is a specific footnote in case this wasn't clear enough:
-
-> 42) Thus, for example, structure assignment may be implemented element-at-a-time or via memcpy.
-
-
-but the description goes *much* further than the footnote.  In principle, it means if you write
-
-struct test { int a; char b; int c; } x;
-memset (&x, 0, sizeof(x));
-x.a = 1;
-
-then the compiler is free to change the padding bytes after 'x.b' to whatever it likes, because you changed 'x.a', even though you might think you cleared them and the compiler would have no reason to make this change.  In practice this might manifest in the case of 
-
-memset (&x, 0, sizeof(x));
-x.a = 1; x.b = 2; x.c = 3;
-
-by the compiler optimising out the 'memset' as a dead store.
-
-Since C99 says it is unspecified, you'd have to look at the GCC documentation, and I don't see any specification there either.
-
-In practise, GCC does exactly this, with its own built-in initializer expansion.  If you turn on the right debugging flag (I think -fdump-tree-original -fdump-tree-gimple is what you want), you can see GCC turn
-
-    struct test arg = {.a=1};
-  use (&arg);
-    struct test arg2 = {.a=1, .b=2, .c=3};
-  use (&arg2);
-
-into
-
-  arg = {};
-  arg.a = 1;
-  use (&arg);
-  arg2.a = 1;
-  arg2.b = 2;
-  arg2.c = 3;
-  use (&arg2);
-
-The comment in the code (in gimplify.c) explains that the side-effect of clearing unused bytes is definitely not intentional, it reads:
-
-   Note that we still need to clear any elements that don't have explicit
-   initializers, so if not all elements are initialized we keep the
-   original MODIFY_EXPR, we just remove all of the constructor elements.
-
-and
-
-        /* ??? This bit ought not be needed.  For any element not present
-           in the initializer, we should simply set them to zero.  Except
-           we'd need to *find* the elements that are not present, and that
-           requires trickery to avoid quadratic compile-time behavior in
-           large cases or excessive memory use in small cases.  */
-        else if (num_ctor_elements < num_type_elements)
-          cleared = true;
-
-
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (4221 bytes)
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
