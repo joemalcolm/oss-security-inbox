@@ -1,61 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/07/1
-Message-ID: <20100207015021.GB22033@suse.de>
-Date: Sun, 7 Feb 2010 02:50:21 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE request: information leak / potential crash in sys_move_pages
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/09/3
+Message-Id: <201012091027.34630.ludwig.nussel@suse.de>
+Date: Thu, 9 Dec 2010 10:27:34 +0100
+From: Ludwig Nussel <ludwig.nussel@...e.de>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE requests: IO::Socket::SSL, cakephp, collectd, gnash, ocrodjvu, hypermail, libcloud, piwigo
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Josh Bressers wrote:
+> ----- "Raphael Geissert" <geissert@...ian.org> wrote:
+> > IO::Socket::SSL: unexpected fallback to VERIFY_NONE if certificate
+> > file(s) 
+> > are not specified.
+> > http://bugs.debian.org/606058
+> > http://secunia.com/advisories/42508/
+> 
+> CVE-2010-4334
 
-I spotted a problem in sys_move_pages, where "node" value is read from userspace,
-but not limited to the node set within the kernel itself.
+There's a duplicate: CVE-2010-4501
 
-Due to the bit tests in mm/migrate.c:do_move_pages it is easy to read out
-the kernel memory (as node can also be negative).
+cu
+Ludwig
 
-(The node_isset and node_state functions just map to test_bit, which has 
- no limiter in the normal implementations.)
-
-There also is (in my eyes) the chance we can corrupt kernel memory later on
-if we have all the right bits setup, but I did not research this further.
-
-Issue was present starting as sys_move_pages was introduced in 2.6.18.
-Solved in mainline by commit below.
-
-Needs a CVE for information leakage at least.
-
-Have a nice weekend, Marcus
-
-commit 6f5a55f1a6c5abee15a0e878e5c74d9f1569b8b0
-Author: Linus Torvalds <torvalds@...ux-foundation.org>
-Date:   Fri Feb 5 16:16:50 2010 -0800
-
-    Fix potential crash with sys_move_pages
-    
-    We incorrectly depended on the 'node_state/node_isset()' functions
-    testing the node range, rather than checking it explicitly.  That's not
-    reliable, even if it might often happen to work.  So do the proper
-    explicit test.
-    
-    Reported-by: Marcus Meissner <meissner@...e.de>
-    Acked-and-tested-by: Brice Goglin <Brice.Goglin@...ia.fr>
-    Acked-by: Hugh Dickins <hugh.dickins@...cali.co.uk>
-    Cc: stable@...nel.org
-    Signed-off-by: Linus Torvalds <torvalds@...ux-foundation.org>
-
-diff --git a/mm/migrate.c b/mm/migrate.c
-index efddbf0..9a0db5b 100644
---- a/mm/migrate.c
-+++ b/mm/migrate.c
-@@ -912,6 +912,9 @@ static int do_pages_move(struct mm_struct *mm, struct task_struct *task,
- 				goto out_pm;
- 
- 			err = -ENODEV;
-+			if (node < 0 || node >= MAX_NUMNODES)
-+				goto out_pm;
-+
- 			if (!node_state(node, N_HIGH_MEMORY))
- 				goto out_pm;
- 
+-- 
+ (o_   Ludwig Nussel
+ //\   
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
