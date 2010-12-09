@@ -1,52 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/05/1
-Message-Id: <20100705092553.KADKUQHHMCAHYN@hackinthebox.org>
-Date: Mon, 5 Jul 2010 09:25:53 +0800
-From: Hafez Kamal <aphesz@...kinthebox.org>
-To: <oss-security@...ts.openwall.com>
-Subject: [HITB-Announce] HITB Magazine Issue 003 + HITBSecConf2010 - Amsterdam
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/09/13
+Message-ID: <20101209173557.GA31308@openwall.com>
+Date: Thu, 9 Dec 2010 20:35:57 +0300
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: [taviso@...xchg8b.com: [PATCH] install_special_mapping skips security_file_mmap check.]
 Content-Type: text/plain; charset=utf-8
 
-Our first ever HITBSecConf in Europe is over! A big big thank you to all
-our sponsors, speakers, crew, volunteers and of course attendees who
-made it over to join us!!!
+Tavis,
 
-We're already planning for 2011 and the tentative timing for the HITB
-Europe is mid May (stay tuned to our @hitbsecconf twitter stream for all
-conference updates).
+That's a nice find.
 
-All conference materials from the event can be downloaded from
-http://conference.hitb.org/hitbsecconf2010ams/materials and photos will
-be released on http://photos.hackinthebox.org in about 2 weeks time.
+On Thu, Dec 09, 2010 at 05:13:47PM +0100, Tavis Ormandy wrote:
+> $ cat /proc/sys/vm/mmap_min_addr
+> 65536
+...
+> $ cat /proc/14303/maps 
+> 0000f000-00010000 r-xp 00000000 00:00 0                                  [vdso]
+...
+> It's worth noting that Red Hat are shipping with mmap_min_addr set to 4096.
 
-==
+Their rationale is described in
+linux-2.6-security-drop-mmap_min_addr-to-4096.patch.  Yet we've been
+overriding this setting to 98304 in /etc/sysctl.conf on Owl, and I am
+going to also patch the default in the kernel source now.
 
-In conjunction with HITBSecConf2010 - Amsterdam, we are proud to
-announce the immediate availability of Issue 003 of the HITB Magazine,
-featuring a brand new double-page design!
+Meanwhile, here's a RHEL5'ish variation of your patch (only tested that
+it compiles).
 
-We now also have our very own sub site for the magazine and you'll find
-all the past and current issues for download at http://magazine.hitb.org
-or http://magazine.hackinthebox.org/
+diff -u linux-2.6.18-194.26.1.el5.028stab079.1-owl/fs/exec.c linux-2.6.18-194.26.1.el5.028stab079.1-owl/fs/exec.c
+--- linux-2.6.18-194.26.1.el5.028stab079.1-owl/fs/exec.c	2010-12-08 05:54:37 +0000
++++ linux-2.6.18-194.26.1.el5.028stab079.1-owl/fs/exec.c	2010-12-09 16:50:30 +0000
+@@ -270,7 +270,10 @@
+ 
+ 	vma->vm_flags = VM_STACK_FLAGS;
+ 	vma->vm_page_prot = protection_map[vma->vm_flags & 0x7];
+-	err = insert_vm_struct(mm, vma);
++
++	err = security_file_mmap_addr(NULL, 0, 0, 0, vma->vm_start, 1);
++	if (!err)
++		err = insert_vm_struct(mm, vma);
+ 	if (err) {
+ 		up_write(&mm->mmap_sem);
+ 		goto err;
+--- linux-2.6.18-194.26.1.el5.028stab079.1/mm/mmap.c	2010-11-30 12:26:53 +0000
++++ linux-2.6.18-194.26.1.el5.028stab079.1-owl/mm/mmap.c	2010-12-09 16:53:29 +0000
+@@ -2398,6 +2398,11 @@ int install_special_mapping(struct mm_st
+ 	vma->vm_ops = &special_mapping_vmops;
+ 	vma->vm_private_data = pages;
+ 
++	if (unlikely(security_file_mmap_addr(NULL, 0, 0, 0, vma->vm_start, 1))) {
++		kmem_cache_free(vm_area_cachep, vma);
++		return -EPERM;
++	}
++
+ 	if (unlikely(insert_vm_struct(mm, vma))) {
+ 		kmem_cache_free(vm_area_cachep, vma);
+ 		return -ENOMEM;
 
-We hope you enjoy the issue and do stay tuned for Issue 004 which we'll
-be releasing in October at HITBSecConf2010 - Malaysia. In addition to
-the electronic version, we're hoping to have a very 'limited edition'
-print issue exclusively for attendees of HITBSecConf2010 - Malaysia!
+Thanks,
 
-Enjoy the rest of the summer sun and see you in October!
-
-- The HITB Team
-
----
-Hafez Kamal
-HITB Crew
-Hack in The Box (M) Sdn. Bhd.
-Suite 26.3, Level 26, Menara IMC,
-No. 8 Jalan Sultan Ismail,
-50250 Kuala Lumpur,
-Malaysia
-
-Tel: +603-20394724
-Fax: +603-20318359
-
+Alexander
