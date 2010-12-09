@@ -1,35 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/10/3
-Message-ID: <4B72AE4D.7040804@redhat.com>
-Date: Wed, 10 Feb 2010 21:02:05 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - kernel: race in ptrace
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/09/7
+Message-ID: <20101209130043.062af939@redhat.com>
+Date: Thu, 9 Dec 2010 13:00:43 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: pierre.php@...il.com
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request (PHP 5.3.x getSymbol() DoS; CERT VU#479900)
 Content-Type: text/plain; charset=utf-8
 
-On 02/09/2010 02:34 PM, Eugene Teo wrote:
-> Discovered by Tavis Ormandy. "The race involves interaction between a
-> tracer, a tracee and an antagonist. The tracer is tracing the tracee
-> with PTRACE_SYSCALL and waits on the tracee. In the mean time, an
-> antagonist blasts the tracee with SIGCONTs.
->
-> The observed issue is that sometimes when the tracer attempts to
-> continue the tracee with PTRACE_SYSCALL, it gets a return value of
-> -ESRCH, indicating that the tracee is already running (or not being
-> traced). It turns out that a SIGCONT wakes up the tracee in kernel mode,
-> and for a moment the tracee's state is TASK_RUNNING then in ptrace_stop
-> we hit the condition where the tracee is found to be running (and thus
-> not traced). If the syscall is repeated, the
-> second time it usually succeeds (because by that time, the tracee has
-> been put into TASK_TRACED)."
->
-> http://lkml.org/lkml/2010/2/8/327
-> https://bugzilla.redhat.com/show_bug.cgi?id=563073
+Hi Pierre!
 
-Hold on with assigning a CVE name for this. We are still investigating 
-this issue.
+On Wed, 8 Dec 2010 08:56:02 +0100 Pierre Joye wrote:
 
-Thanks, Eugene
+> The CVE # has been added to the changes log too.
+> 
+> http://svn.php.net/viewvc?view=revision&revision=306036
+
+Were you following the rest of the discussion in this thread?  Should I
+file upstream bug for NumberFormatter::setSymbol issue so it can be
+fixed before 5.3.4 too?
+
 -- 
-Eugene Teo / Red Hat Security Response Team
+Tomas Hoger / Red Hat Security Response Team
