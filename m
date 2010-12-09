@@ -1,23 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/26/4
-Message-ID: <20100426220345.79e54824@foo.fgeek.fi>
-Date: Mon, 26 Apr 2010 22:03:45 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/09/11
+Message-ID: <Pine.GSO.4.64.1012091018490.6544@faron.mitre.org>
+Date: Thu, 9 Dec 2010 10:20:57 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: oxdef@...ef.info
-Subject: Re: Searching for vuln apps for testing free code review tools
+Subject: Re: Re: NULL byte poisoning fix in php 5.3.4+
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 26 Apr 2010 22:41:45 +0400
-Taras <oxdef@...ef.info> wrote:
 
-> Hi, all!
-> 
-> Does anybody know good vuln apps/projects for (like test examples for
-> lint) testing code review tools like rats, flawfinder and lint?
+On Thu, 9 Dec 2010, Pierre Joye wrote:
 
-OWASP. One should also check <http://www.exploit-db.com/>, because some
-of the PoC-sites has link to the application.
+> We fixed it for all file functions. See the link to the commit for
+> more details about which codes have been changed. Do we need a CVE for
+> every function? I hope not :)
 
----
-Henri Salo
+Not really - if all functions were fixed in the same version, then that's 
+not "textbook" CVE but close enough.
+
+The main drivers for my question were (a) were there any other issues that 
+remain unfixed, and (b) in general we try to have the year portion of CVE 
+IDs align with publication (except for year-crossing time frames like 
+Dec/Jan).  In this case it might have been more reasonable to assign a 
+1999 CVE, but the 2006 assignment isn't horrible either...
+
+- Steve
