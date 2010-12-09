@@ -1,27 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/13/2
-Message-ID: <20100613230830.29efb825@foo.fgeek.fi>
-Date: Sun, 13 Jun 2010 23:08:30 +0300
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request - pyftpd default username and password vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/09/5
+Message-ID: <AANLkTik41hZOJsZ2CiD_xhc8HoZqeWZKaUqTgL1+8qfX@mail.gmail.com>
+Date: Thu, 9 Dec 2010 12:53:23 +0100
+From: Pierre Joye <pierre.php@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: Re: NULL byte poisoning fix in php 5.3.4+
 Content-Type: text/plain; charset=utf-8
 
-File /etc/pyftpd/auth_db_config.py contains:
+We are about to release 5.2.15 and 5.3.4, can anyone please get an id
+for this issue?
 
-passwd = [('test', 'test', 'CY9rzUYh03PK3k6DJie09g=='),
- ('user', 'users', '7hHLsZBS5AsHqsDKBgwj7g=='),
- ('roxon', 'users', 'ItZ2pB7rPmzFV6hrtdnZ7A==')]
+Thanks,
 
-These accounts can be used to login to the FTP-server and read
-arbitrary files and list directories. File perm_acl_config.py lists
-user permissions.
+On Tue, Nov 30, 2010 at 3:26 AM, Pierre Joye <pierre.php@...il.com> wrote:
+> Coley? :)
+>
+> On Mon, Nov 22, 2010 at 5:21 PM, Josh Bressers <bressers@...hat.com> wrote:
+>> Steve,
+>>
+>> Can MITRE take this one. It looks like it's from 2006 (from looking at the
+>> upstream bug). I don't see a CVE id for this anywhere.
+>>
+>> Thanks.
+>>
+>> --
+>>    JB
+>>
+>> ----- "Pierre Joye" <pierre.php@...il.com> wrote:
+>>
+>>> anyone?
+>>>
+>>> On Thu, Nov 18, 2010 at 5:43 PM, Pierre Joye <pierre.php@...il.com>
+>>> wrote:
+>>> > forgot to add the fixes revs:
+>>> >
+>>> > http://svn.php.net/viewvc?view=revision&revision=305507
+>>> > revert of part of the OCI8 fix
+>>> > http://svn.php.net/viewvc?view=revision&revision=305509
+>>> >
+>>> > OCI8 fix (committed separately)
+>>> > http://svn.php.net/viewvc?view=revision&revision=305412
+>>> >
+>>> > On Thu, Nov 18, 2010 at 5:22 PM, Pierre Joye <pierre.php@...il.com>
+>>> > wrote:
+>>> >> hi,
+>>> >>
+>>> >> The problem describes here http://www.madirish.net/?article=436, in
+>>> >> http://bugs.php.net/39863 (and numerous other places) has been fixed
+>>> >> in PHP_5_3, targetting 5.3.4 (RC1 to be released today). It is a well
+>>> >> (old) known issue in PHP and I wonder if there is a CVE already for
+>>> >> it? If not I think having one could helpful. or?
+>>> >>
+>>> >> Cheers,
+>>> >> --
+>>> >> Pierre
+>>> >>
+>>
+>
+>
+>
+> --
+> Pierre
+>
+> @pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+>
 
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=585776
 
-This affects version: 0.8.4
 
-Can I have CVE-identifier for this issue?
+-- 
+Pierre
 
----
-Henri Salo
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
