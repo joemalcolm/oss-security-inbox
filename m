@@ -1,29 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/10/3
-Message-ID: <1384918288.1072801281471791306.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 10 Aug 2010 16:23:11 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/09/14
+Message-ID: <20101209191528.GA32211@openwall.com>
+Date: Thu, 9 Dec 2010 22:15:28 +0300
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE ID Request For 2Wire Broadband Router Session Hijacking  Vulnerability
+Subject: Re: kernel: Dangerous interaction between clear_child_tid, set_fs(), and kernel oopses
 Content-Type: text/plain; charset=utf-8
 
+On Wed, Dec 08, 2010 at 10:34:38AM -0500, Nelson Elhage wrote:
+> ... rearrange things so that the flow
+> is "check interrupt -> set_fs() -> everything else".
 
------ "YGN Ethical Hacker Group" <lists@...g.net> wrote:
+This is what I did.  Works fine so far.
 
-> Hi
-> 
-> Let us request CVE ID for
-> http://seclists.org/fulldisclosure/2010/Aug/95
-> 
-> 
+--- linux-2.6.18-194.26.1.el5.028stab079.1/kernel/exit.c	2010-11-30 12:26:53 +0000
++++ linux-2.6.18-194.26.1.el5.028stab079.1-owl/kernel/exit.c	2010-12-09 09:49:18 +0000
+@@ -949,12 +949,28 @@ fastcall NORET_TYPE void do_exit(long co
+ 	int group_dead;
+ 	unsigned int mycpu;
+ 
++	/*
++	 * Check this first since set_fs() below depends on
++	 * current_thread_info(), which we better not access when we're in
++	 * interrupt context.  Other than that, we want to do the set_fs()
++	 * as early as possible.
++	 */
++	if (unlikely(in_interrupt()))
++		panic("Aiee, killing interrupt handler!");
++
++	/*
++	 * If do_exit is called because this process Oops'ed, it's possible
++	 * that get_fs() was left as KERNEL_DS, so reset it to USER_DS before
++	 * continuing. Amongst other possible reasons, this is to prevent
++	 * mm_release()->clear_child_tid() from writing to a user-controlled
++	 * kernel address.
++	 */
++	set_fs(USER_DS);
++
+ 	profile_task_exit(tsk);
+ 
+ 	WARN_ON(atomic_read(&tsk->fs_excl));
+ 
+-	if (unlikely(in_interrupt()))
+-		panic("Aiee, killing interrupt handler!");
+ 	if (unlikely(!tsk->pid))
+ 		panic("Attempted to kill the idle task!");
+ #ifdef CONFIG_VE
 
-I'm not going to give this an ID. It's not for an open source product,
-which is hte purpose of this this.
+Thanks,
 
-Sorry.
-
-I'm adding MITRE to the CC list, they can assign this.
-
--- 
-    JB
+Alexander
