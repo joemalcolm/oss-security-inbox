@@ -1,55 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/14/1
-Message-ID: <1517560930.1416661273865324209.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 14 May 2010 15:28:44 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/09/2
+Message-ID: <4D006B54.2080505@redhat.com>
+Date: Thu, 09 Dec 2010 13:38:28 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: lxr
+CC: Nelson Elhage <nelhage@...lice.com>
+Subject: Re: CVE request: kernel: NULL pointer dereference in AF_ECONET
 Content-Type: text/plain; charset=utf-8
 
------ "Dan Rosenberg" <dan.j.rosenberg@...il.com> wrote:
+On 12/09/2010 11:27 AM, Nelson Elhage wrote:
+> The Linux implementation of ACORN networking over UDP does not
+> properly look up the device an incoming packet was received on,
+> potentially resulting in a denial of service (NULL pointer
+> dereference).
+>
+> This is remotely triggerable if the econet module is loaded, but
+> realistically the only reason is likely to have it loaded is because
+> they're trying to run an exploit.
+>
+> Reference:
+> http://marc.info/?l=linux-netdev&m=129185496013580&w=2
 
-> Sorry for not making this explicitly clear.  There are three issues:
-> 
-> 1.  XSS in the ident parameter, as described in CVE-2009-4497.
-> 
-> 2.  XSS that is reflected via the search results page after issuing a
-> search.
-> 
-> 3.  XSS that is reflected via the <title> tag on the search page, as
-> described in Raphael's original e-mail a few days ago, which Josh just
-> assigned CVE-2010-1448.
-> 
-> Bugs 1 and 2 were fixed simultaneously, as indicated in the 2010-01-05
-> changelog entry for LXR:
-> 
-> 2010-01-05 18:00  mbox
-> 
-> 	* ident, search: Fix for CVE-2009-4497 from Dan Rosenberg
-> 
-> 	  Avoid a XSS vulnerability
-> 
-> Bug 3 was fixed a few days later on 2010-01-15, as indicated by:
-> 
-> 2010-01-15 23:23  mbox
-> 
-> 	* lib/LXR/Common.pm: Fix XSS exploit in title string
-> 
-> So, while my original intent at the time of disclosure was to have a
-> single CVE identifier assigned to cover all three of these issues, that
-> obviously did not happen.  As it stands, bugs 1 and 3 have their own CVE
-> identifiers, and bug 2 remains unassigned.
-> 
+Proposed patch: http://marc.info/?l=linux-netdev&m=129186011218615&w=2
 
-Sorry this took so long.
+Please use CVE-2010-4342.
 
-CVE-2010-1625 lxr lib/LXR/Common.pm: Fix XSS exploit in title string
-
-The diff is here:
-http://lxr.cvs.sourceforge.net/viewvc/lxr/lxr/lib/LXR/Common.pm?r1=1.63&r2=1.64
-
-Thanks
-
--- 
-    JB
+Thanks, Eugene
