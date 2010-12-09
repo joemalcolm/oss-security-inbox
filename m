@@ -1,75 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/25/3
-Message-ID: <AANLkTikgAYb_MrIVP0-ZMXnOrzdlJXtuNAJTwxmdmu8G@mail.gmail.com>
-Date: Tue, 25 May 2010 02:03:16 -0700
-From: Paul Lesniewski <paul@...irrelmail.org>
-To: Thijs Kinkhorst <thijs@...ian.org>
-Cc: oss-security@...ts.openwall.com, security-2010@...irrelmail.org,  Max Olsterd <max.olsterd@...il.com>, security@...de.org
-Subject: Re: [SquirrelMail-Security] CVE Request for Horde and  Squirrelmail
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/09/6
+Message-ID: <AANLkTimCGNagqPK1vjbJv_oV5KymLbu_R74+-MnDu=Sh@mail.gmail.com>
+Date: Thu, 9 Dec 2010 12:53:57 +0100
+From: Pierre Joye <pierre.php@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: Re: NULL byte poisoning fix in php 5.3.4+
 Content-Type: text/plain; charset=utf-8
 
-On Sun, May 23, 2010 at 5:39 AM, Thijs Kinkhorst <thijs@...ian.org> wrote:
-> On sneon 22 Maaie 2010, Max Olsterd wrote:
->> But someone gave me an explanation, with a live hacking demo, and it was
->> awesome : this guy has been able to scan the LAN of an international ISP
->> whereas there was a firewall blocking incoming packets to the LAN (DMZ +
->> internal LAN) !!!
+We are about to release 5.3.4, can anyone get us an CVE for this issue please?
+
+On Tue, Nov 30, 2010 at 3:26 AM, Pierre Joye <pierre.php@...il.com> wrote:
+> Coley? :)
+>
+> On Mon, Nov 22, 2010 at 5:21 PM, Josh Bressers <bressers@...hat.com> wrote:
+>> Steve,
 >>
->> How ?
+>> Can MITRE take this one. It looks like it's from 2006 (from looking at the
+>> upstream bug). I don't see a CVE id for this anywhere.
 >>
->> He had an account on the squirrelmail (ISP) and he has been able to create
->> an exploit for the advisory we are talking about here. Thanks to that, he
->> asked squirrelmail to scan some ranges of IP addresses that were private
->> (10.x.x.x) and unreachable from the outside of this ISP (NAT). Then he
->> found multiple interesting hosts with unpatched services, which gave him
->> an idea of how secure it was for real when you are inside. He also used
->> the DNS scanning attack that was described in the slides of HITB, by
->> bruteforcing names, and he found other IP addresses (but a firewall
->> blocked the scan so deep on the LAN).
+>> Thanks.
+>>
+>> --
+>>    JB
+>>
+>> ----- "Pierre Joye" <pierre.php@...il.com> wrote:
+>>
+>>> anyone?
+>>>
+>>> On Thu, Nov 18, 2010 at 5:43 PM, Pierre Joye <pierre.php@...il.com>
+>>> wrote:
+>>> > forgot to add the fixes revs:
+>>> >
+>>> > http://svn.php.net/viewvc?view=revision&revision=305507
+>>> > revert of part of the OCI8 fix
+>>> > http://svn.php.net/viewvc?view=revision&revision=305509
+>>> >
+>>> > OCI8 fix (committed separately)
+>>> > http://svn.php.net/viewvc?view=revision&revision=305412
+>>> >
+>>> > On Thu, Nov 18, 2010 at 5:22 PM, Pierre Joye <pierre.php@...il.com>
+>>> > wrote:
+>>> >> hi,
+>>> >>
+>>> >> The problem describes here http://www.madirish.net/?article=436, in
+>>> >> http://bugs.php.net/39863 (and numerous other places) has been fixed
+>>> >> in PHP_5_3, targetting 5.3.4 (RC1 to be released today). It is a well
+>>> >> (old) known issue in PHP and I wonder if there is a CVE already for
+>>> >> it? If not I think having one could helpful. or?
+>>> >>
+>>> >> Cheers,
+>>> >> --
+>>> >> Pierre
+>>> >>
+>>
 >
-> That this is possible is inherent in providing the ability to your users to
-> configure any POP3 server they want to retreive email. The whole idea of the
-> POP3 fetch mail plugin is to allow to connect to other servers. And hence if
-> you want to provide this functionality there will always be the possibility
-> that someone connects to a local machine, and there's no real solution to that
-> given the premise.
-
-But there *is* a solution to the fact that they can connect to *any*
-port on a local machine using this method.  There isn't really a good
-reason not to simply restrict the port number to the standard POP3
-port, which would then remove the possibility that someone can use
-SquirrelMail to port-scan your internal network.  The next release of
-SquirrelMail will do just that, and provide administrators a
-configuration option where they can add other allowable port numbers,
-or open it back up to any and all port numbers if they so feel they
-need to.
-
-> It is a choice to not patch internal services but any
-> adminsitrator has the responsibility to determine what 'internal' means and
-> who will have access to this network.
 >
-> And note that still the only thing you, as an authenticated user, can do is
-> connect to those ports within a POP3 context.
-
-Indeed, however, a port scan is still more than some administrators want.
-
-> The only new idea that this research adds, is that they've scripted the
-> changing of the pop3 server info so they can increase the amount of
-> hosts/ports to connect to in a given timeframe. But even if this wouldn't be
-> scriptable, it would still be possible for the user to specify POP3 servers by
-> hand (as that is the goal of the plugin) and hence any network setup that
-> can't deal with this but does enable the plugin, is broken by design.
 >
-> It's only a matter of scaling that they add. Anything that is 'vulnerable'
-> with this, is already vulnerable if this scripting wouldn't be possible.
+> --
+> Pierre
+>
+> @pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+>
 
-I don't think the question is about whether or not the vulnerability
-can be scripted.  The issue is that there *is* a vulnerability at all
-(albeit a very minor one).  I have thus applied for a CVE recently and
-can report back when I receive it.
+
 
 -- 
-Paul Lesniewski
-SquirrelMail Team
-Please support Open Source Software by donating to SquirrelMail!
-http://squirrelmail.org/donate_paul_lesniewski.php
+Pierre
+
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
