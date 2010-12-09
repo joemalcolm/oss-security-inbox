@@ -1,34 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/05/2
-Message-ID: <20100205210530.GP30053@ngolde.de>
-Date: Fri, 5 Feb 2010 22:05:30 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/09/1
+Message-ID: <20101209032707.GA11560@ksplice.com>
+Date: Wed, 8 Dec 2010 22:27:07 -0500
+From: Nelson Elhage <nelhage@...lice.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>, Simo Sorce <ssorce@...hat.com>
-Subject: Re: Samba symlink 0day flaw
+Subject: CVE request: kernel: NULL pointer dereference in AF_ECONET
 Content-Type: text/plain; charset=utf-8
 
-Hey,
-* Josh Bressers <bressers@...hat.com> [2010-02-05 20:11]:
-> As many of you have probably seen, there was a supposed Samba 0day flaw
-> posted to full-disclosure and youtube.
-> 
-> Samba has a response to this:
-> http://marc.info/?l=samba-technical&m=126539387432412&w=2
-> 
-> I'm not sure if this should get a CVE id. It is documented behavior.
-> Somewhat unexpected though. I think changing the default is the right way
-> to go, but it may be more of a hardening measure than a security fix.
-> 
-> Thoughts Steve?
+The Linux implementation of ACORN networking over UDP does not
+properly look up the device an incoming packet was received on,
+potentially resulting in a denial of service (NULL pointer
+dereference).
 
-Given the count of users that are probably affected by this and it not being 
-documented in e.g. man 5 smb.conf I'd vote for yes! :)
+This is remotely triggerable if the econet module is loaded, but
+realistically the only reason is likely to have it loaded is because
+they're trying to run an exploit.
 
-Cheers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+Reference:
+http://marc.info/?l=linux-netdev&m=129185496013580&w=2
