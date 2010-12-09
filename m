@@ -1,41 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/03/6
-Message-ID: <1232869034.333911280865635594.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 3 Aug 2010 16:00:35 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/09/9
+Message-ID: <Pine.GSO.4.64.1012090928490.6544@faron.mitre.org>
+Date: Thu, 9 Dec 2010 09:34:26 -0500 (EST)
+From: "Steven M. Christey" <coley@...us.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: kernel: [PARISC] led.c - fix potential stack overflow in led_proc_write()
+Subject: Re: Re: NULL byte poisoning fix in php 5.3.4+
 Content-Type: text/plain; charset=utf-8
 
-Steve,
 
-This one will need a 2007 ID.
+On Thu, 9 Dec 2010, Pierre Joye wrote:
 
-Thanks.
+> We are about to release 5.2.15 and 5.3.4, can anyone please get an id
+> for this issue?
 
--- 
-    JB
+I just assigned CVE-2006-7243 to the http://bugs.php.net/39863 issue, i.e. 
+NULL injection in file_exists() *only*.
+
+However, as already stated, the issue of NULL byte injection with PHP 
+dates back to 1999 or so (ouch... I remember that).  If PHP is addressing 
+NULL byte injection beyond just file_exists(), then that may need a 
+separate CVE.
+
+- Steve
 
 
------ "Moritz Muehlenhoff" <jmm@...til.org> wrote:
-
-> On Tue, Aug 03, 2010 at 11:46:58AM +0800, Eugene Teo wrote:
-> > Ilja reported way back in Nov 2007. A writer to /proc/pdc/led(?)
-> can
-> > cause the kernel to consume an unbounded amount of stack, and
-> result
-> > in stack corruption.
-> > 
-> > http://www.spinics.net/lists/linux-parisc/msg02960.html
-> > 
-> > If you need a CVE name, change the subject to indicate that. We are
-> > not requesting one as we do not support the PA-RISC architecture in
-> > our distribution.
-> 
-> Debian supports hppa. 
-> 
-> Steven, please assign a CVE ID.
-> 
-> Cheers,
->         Moritz
+> Thanks,
+>
+> On Tue, Nov 30, 2010 at 3:26 AM, Pierre Joye <pierre.php@...il.com> wrote:
+>> Coley? :)
+>>
+>> On Mon, Nov 22, 2010 at 5:21 PM, Josh Bressers <bressers@...hat.com> wrote:
+>>> Steve,
+>>>
+>>> Can MITRE take this one. It looks like it's from 2006 (from looking at the
+>>> upstream bug). I don't see a CVE id for this anywhere.
+>>>
+>>> Thanks.
+>>>
+>>> --
+>>>    JB
+>>>
+>>> ----- "Pierre Joye" <pierre.php@...il.com> wrote:
+>>>
+>>>> anyone?
+>>>>
+>>>> On Thu, Nov 18, 2010 at 5:43 PM, Pierre Joye <pierre.php@...il.com>
+>>>> wrote:
+>>>>> forgot to add the fixes revs:
+>>>>>
+>>>>> http://svn.php.net/viewvc?view=revision&revision=305507
+>>>>> revert of part of the OCI8 fix
+>>>>> http://svn.php.net/viewvc?view=revision&revision=305509
+>>>>>
+>>>>> OCI8 fix (committed separately)
+>>>>> http://svn.php.net/viewvc?view=revision&revision=305412
+>>>>>
+>>>>> On Thu, Nov 18, 2010 at 5:22 PM, Pierre Joye <pierre.php@...il.com>
+>>>>> wrote:
+>>>>>> hi,
+>>>>>>
+>>>>>> The problem describes here http://www.madirish.net/?article=436, in
+>>>>>> http://bugs.php.net/39863 (and numerous other places) has been fixed
+>>>>>> in PHP_5_3, targetting 5.3.4 (RC1 to be released today). It is a well
+>>>>>> (old) known issue in PHP and I wonder if there is a CVE already for
+>>>>>> it? If not I think having one could helpful. or?
+>>>>>>
+>>>>>> Cheers,
+>>>>>> --
+>>>>>> Pierre
+>>>>>>
+>>>
+>>
+>>
+>>
+>> --
+>> Pierre
+>>
+>> @pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+>>
+>
+>
+>
+> -- 
+> Pierre
+>
+> @pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+>
+>
