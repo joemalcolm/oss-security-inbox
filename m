@@ -1,57 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/02/1
-Message-ID: <4CF7AFEF.5090007@redhat.com>
-Date: Thu, 02 Dec 2010 15:40:47 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, Jon Ciesla <limb@...mserv.net>
-Subject: CVE Request -- Wordpress v3.0.2 SQL injection flaw + two minor XSS issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/10/1
+Message-ID: <1012100939540.799@mjc.redhat.com>
+Date: Fri, 10 Dec 2010 09:48:20 +0000 (GMT)
+From: Mark J Cox <mjc@...hat.com>
+To: oss-security@...ts.openwall.com
+cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Exim remote root
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve, vendors,
+A number of sites are reporting an exim remote root based from this
+report:
+http://www.exim.org/lurker/message/20101207.215955.bb32d4f2.en.html
 
-   Wordpress upstream has released latest v3.0.2 version, addressing one SQL injection
-flaw:
+Quoting David Woodhouse: "There are two bugs here. First a remote exploit 
+where the attacker somehow tricks Exim into evaluating data it shouldn't, 
+and honouring a ${run {/bin/sh...}} directive which ends up giving the 
+attacker a shell (as user 'exim').
 
-   1), SQL injection flaw by processing trackbacks
+Secondly a privilege escalation where the trusted 'exim' user is able to 
+tell Exim to use arbitrary config files, in which further ${run ...} 
+commands will be invoked as root."
+https://bugzilla.redhat.com/show_bug.cgi?id=661756#c3
 
-   An improper input sanitization flaw was found in the way Wordpress
-performed trackbacks (a way to notify a website when an entry that
-references it is published) maintainance. A remote attacker,
-with Author-level privilege could use this flaw to conduct
-SQL injection attacks (gain further access to the site, which
-should be otherwise prohibited).
+The remote vulnerability is still being investigated.  However it is worth 
+allocating the CVE names now to help with co-ordination.
 
-   References:
-   [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=605603
-   [2] http://codex.wordpress.org/Version_3.0.2
-   [3] http://core.trac.wordpress.org/changeset/16625
-   [4] https://bugzilla.redhat.com/show_bug.cgi?id=659265
+CVE-2010-4344 exim vuln that allows remote code execution as 'exim'
+CVE-2010-4345 exim vuln that allows privilege escalation 'exim' to root
 
-The two XSS issues below are minor, as they need Wordpress administrator to perform
-the attack, but according to CVE philosophy, the CVE ids should be assigned for
-them too. But these two opened / left for further discussion:
+A patch for CVE-2010-4345:
+http://lists.exim.org/lurker/message/20101209.172233.abcba158.en.html
 
-   2), XSS in requesting user credentials in order to connect to the filesystem
-   References:
-   [7] https://bugzilla.redhat.com/show_bug.cgi?id=659294
-   [8] http://codex.wordpress.org/Version_3.0.2
-   [9] http://core.trac.wordpress.org/changeset/16367
-
-   3), XSS when deleting a plugin
-   References:
-   [10] https://bugzilla.redhat.com/show_bug.cgi?id=659299
-   [11] http://codex.wordpress.org/Version_3.0.2
-   [12] http://core.trac.wordpress.org/changeset/16373
-
-Note: The other issues mentioned in:
-       http://codex.wordpress.org/Version_3.0.2
-
-       should be only bugfixes.
-
-Steve, could you allocate CVE identifiers for this / these issue / issues?
-
-Thanks && Regards, Jan.
+Thanks, Mark
 --
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
+Mark J Cox / Red Hat Security Response
