@@ -1,27 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/09/2
-Message-ID: <20100309164649.GG7017@redhat.com>
-Date: Tue, 9 Mar 2010 09:46:49 -0700
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE Request: postgresql integer overflow in hash table size calculation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/10/3
+Message-ID: <1795978644.998521292013527646.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 10 Dec 2010 15:38:47 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com, Petr Matousek <pmatouse@...hat.com>
+Cc: coley@...us.mitre.org
+Subject: Re: Subject: CVE request: kernel: install_special_mapping skips security_file_mmap check
 Content-Type: text/plain; charset=utf-8
 
-I've been looking and can't find a CVE name for this issue.  Could one
-be assigned?
-
-An integer overflow flaw was found in the way postgresql used to
-calculate size for the hashtable for joined relations. An attacker could
-formulate a specially-crafted sql query, which once processed would lead
-to denial of service (postgresql daemon crash).
-
-References:
-
-https://bugzilla.redhat.com/show_bug.cgi?id=546621
-http://archives.postgresql.org/pgsql-bugs/2009-10/msg00277.php
+Please use CVE-2010-4346
 
 Thanks.
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+    JB
+
+
+----- "Petr Matousek" <pmatouse@...hat.com> wrote:
+
+> "The install_special_mapping routine (used, for example, to setup the
+> vdso)
+> skips the security check before insert_vm_struct, allowing a local
+> attacker to
+> bypass the mmap_min_addr security restriction by limiting the
+> available pages
+> for special mappings."
+> 
+> Credit: Tavis Ormandi
+> 
+> Reference:
+> https://lkml.org/lkml/2010/12/9/222
+> https://bugzilla.redhat.com/show_bug.cgi?id=662189
+> 
+> Thanks,
+> --
+> Petr Matousek / Red Hat Security Response Team
