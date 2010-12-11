@@ -1,27 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/08/3
-Message-ID: <4CFEFE36.5060905@redhat.com>
-Date: Wed, 08 Dec 2010 11:40:38 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: bfa driver sysfs crash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/11/1
+Message-Id: <201012112017.00150.remi@remlab.net>
+Date: Sat, 11 Dec 2010 20:16:59 +0200
+From: "Rémi Denis-Courmont" <remi@...lab.net>
+To: dbus@...ts.freedesktop.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Clarifications on the D-Bus specification
 Content-Type: text/plain; charset=utf-8
 
-The port data structure related to fc_host statistics collection is not
-initialized. This causes system crash when reading the fc_host 
-statistics. The fix is to initialize port structure during driver attach.
+Replying to self...
 
-This can be triggered by reading the fc statistics files under
-/sys/class/fc_host/host#/statistics.
+On Friday 10 December 2010, Rémi Denis-Courmont wrote:
+> On Fri, 10 Dec 2010 20:52:40 +0100, Thiago Macieira <thiago@....org> wrote:
+> > The other thing is protection against an attack vector -- an exploit
+> > by recursion. If the protection is by applying one of the limits,
+> > then let's use it.
+> 
+> The specification does not specify any limits on variant recursion, that I
+> can find. So it's not a matter of applying a limit that was not applied
+> this far. It's a first matter of adding a new limit to the protocol - if it
+> is needed anyhow.
 
-A bfa adapter must be present in the system for the problem to occur.
+So in fact, the bus daemon does crash with a few tens of thousands of nested 
+variants, at least on 386 (tested Debian D-Bus 1.2.24 and Ubuntu D-Bus 1.4.0):
+http://www.remlab.net/op/dbus-variant-recursion.shtml
 
-Upstream commit:
-http://git.kernel.org/linus/7873ca4e4401f0ecd8868bf1543113467e6bae61
+I already filed the issue as FreeDesktop bug #32321.
 
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=661182
-http://www.spinics.net/lists/linux-scsi/msg43772.html
+The issue might also affect other non-libdbus-based implementations but I have 
+not tested any of those. It might also affect programs that parse 'any' message 
+recursively such as dbus-send, but again I have not tested that.
 
-Thanks, Eugene
+
+I should note that I could not convince libdbus to write a deep enough 
+message. At about two hundred nested containers, libdbus made the glibc heap 
+checks abort - probably a separate bug. If run under valgrind then libdbuds 
+'cleanly' failed to write a message with about 400 nested containers.
+
+-- 
+Rémi Denis-Courmont
+http://www.remlab.net/
