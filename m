@@ -1,32 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/01/4
-Message-ID: <i0gpbq$1q9$1@dough.gmane.org>
-Date: Wed, 30 Jun 2010 20:00:52 -0500
-From: Raphael Geissert <geissert@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: ZNC NULL pointer dereference
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/13/2
+Message-ID: <4d0628c0.6Nejs8SV9Dlr3OLs%nigel@exim.org>
+Date: Mon, 13 Dec 2010 14:08:00 +0000
+From: nigel@...m.org
+To: exim-announce@...m.org, oss-security@...ts.openwall.com, full-disclosure@...ts.grok.org.uk, bugtraq@...urityfocus.com
+Subject: Exim security issue in historical release
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-A NULL pointer dereference has been reported in ZNC.
+It has come to the attention of The Exim Maintainers that there is
+an exploit circulating in the wild which affects versions of Exim
+versions 4.69 and below -- Exim 4.70 was released in November 2009.
+The flaw permits remote code execution over SMTP and, when combined
+with some clever abuse of Exim's configuration, escalation to root
+privileges from the Exim run-time user. [1]
 
->From [1]:
-> Fix a NULL pointer dereference with traffic stats
-> 
-> When something requested traffic statistics while there was an 
-unauthenticated
-> connection to ZNC, there was a NULL pointer dereference.
+The 4.72 release from June 2010 was also a security-fix release,
+for some lesser problems [4]. We suggest that this is the release
+that is safest for deployment.
 
-Please assign a CVE id.
+We encourage all Exim users to remain up-to-date with Exim
+releases. The exim-announce list [2] is a low-volume moderated list
+which announces new releases.
 
-References:
-http://bugs.debian.org/584929
-[1]http://znc.svn.sourceforge.net/viewvc/znc?view=revision&revision=2026
+We regret that the full impact of the problem fixed in 4.70 was not
+appreciated and that we did not draw more attention to it than the
+ChangeLog notice "Potential buffer overflow in string_format". With
+more pro-active notification on our part, vendors who package old
+releases and backport minimal fixes may have included this fix too.
+
+We expect that the 4.73 release of Exim will include changes that
+protect against the privilege escalation seen in the exploit. Some
+of the changes in behaviour may cause issues in certain
+configurations and there may be configuration changes required as a
+result; we take pride in retaining full backwards compatibility of
+configurations within a major number, but we are prepared to make
+an exception in this case.
+
+As always, full details of changes will be listed in "NewStuff" and
+"ChangeLog" and we shall, for the 4.73 release, explicitly detail
+what changes in behaviour may cause issues.
+
+We'd like to thank Eugene Bujak for noticing and patching the
+problem originally and Sergey Kononenko for reporting the active
+exploit. Thanks are due to Intel, UC Berkeley, Red Hat and Astaro
+AG for their work to identify the problem exploited and their work
+on fixes for 4.73.
+
+This is an update to the earlier notification [3] sent to the
+exim-dev list.
 
 Regards,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+   Nigel Metheringham
+   pp The Exim Maintainers
 
+[1] CVE-2010-4344 exim remote code execution flaw
+    CVE-2010-4345 exim privilege escalation
+[2] http://www.exim.org/mailman/listinfo/exim-announce
+[3] http://www.exim.org/lurker/message/20101210.164935.385e04d0.en.html
+[4] CVE-2010-2023 Exim world-writable mail directory with sticky-bit
+    CVE-2010-2024 Exim MBX locking race condition
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (Darwin)
+
+iEYEARECAAYFAk0GJ9kACgkQhauDP93AMmKUugCghxOajkIfoy2Umj+8fNWRijFL
+l+4AnjiqB9vIQATPUgRpxjZe1YlLMkOm
+=3Nky
+-----END PGP SIGNATURE-----
