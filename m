@@ -1,29 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/16/12
-Message-ID: <20100316175630.GJ30480@redhat.com>
-Date: Tue, 16 Mar 2010 11:56:31 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/13/3
+Message-ID: <20101213163300.GD17679@redhat.com>
+Date: Mon, 13 Dec 2010 09:33:00 -0700
 From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Unbound v1.4.3 -- 64 bit platforms specific remote DoS
+Subject: Issues without CVE names in PHP 5.3.4/5.2.15 release
 Content-Type: text/plain; charset=utf-8
 
-* [2010-03-12 14:16:46 +0100] Jan Lieskovsky wrote:
+Looking at the PHP web site, there are a few issues fixed in the most
+recent releases that don't seem to have a CVE name:
 
->Hi Steve, vendors,
->
->  Unbound upstream has released latest, v1.4.3 version:
->  [1] http://www.unbound.net/download.html
->
->  addressing one denial of service issue, specific to 64 bit
->  platforms.
->
->References:
->  [2] http://bugs.gentoo.org/show_bug.cgi?id=309117
->
->Could you allocate CVE id for it?
+* Fixed crash in zip extract method (possible CWE-170).
+* Fixed symbolic resolution support when the target is a DFS share.
+* Fixed extract() to do not overwrite $GLOBALS and $this when using EXTR_OVERWRITE.
 
-Please use CVE-2010-0735 for this issue.
+Also doesn't seem to be much info on these readily available.
+
+The first seems to be related to this SVN commit (don't see a bug for
+it):
+
+http://svn.php.net/viewvc?view=revision&revision=305848
+
+The second seems to be Windows-specific and is this bug (haven't found
+the SVN commit for it yet):
+
+http://bugs.php.net/bug.php?id=51945
+
+The third seems to be 5.2-specific (no mention in the 5.3 changes), but
+I've not yet found the bug or SVN commit.
+
+Do these have CVE names yet?
 
 -- 
 Vincent Danen / Red Hat Security Response Team 
