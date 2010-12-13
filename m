@@ -1,40 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/17/7
-Message-ID: <AANLkTimfA08HwCnr0fcY7uQ8-UtV0gxBTrmdYqZUw0Lt@mail.gmail.com>
-Date: Wed, 17 Nov 2010 16:50:59 +0100
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/13/4
+Message-ID: <AANLkTimfgo3kAgba0+mOXfArEJ_3Mfn_KHqPXYFR9p6S@mail.gmail.com>
+Date: Mon, 13 Dec 2010 18:47:19 +0100
 From: Pierre Joye <pierre.php@...il.com>
-To: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Re: utf-8 security issue in php - 2 CVEs?
+To: oss-security@...ts.openwall.com
+Subject: Re: Issues without CVE names in PHP 5.3.4/5.2.15 release
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Nov 17, 2010 at 4:45 AM, Huzaifa Sidhpurwala
-<huzaifas@...hat.com> wrote:
-> On 11/16/2010 08:40 PM, Pierre Joye wrote:
->> hi,
->>
->> New fixes or improved fixes, even for known flaw, get new CVE #. I was
->> not sure about that a couple of months ago, but that's the answer I
->> got when I asked about the policy for such cases. I think it makes
->> even more sense in this particular flaw.
->>
-> Right,
-> However i am wondering why there is no mention of CVE-2009-5016 in the
-> php NEWS file from the SVN.
-> It only mentions:
+hi,
+
+On Mon, Dec 13, 2010 at 5:33 PM, Vincent Danen <vdanen@...hat.com> wrote:
+> Looking at the PHP web site, there are a few issues fixed in the most
+> recent releases that don't seem to have a CVE name:
 >
-> "
-> - Fixed bug #49687 (utf8_decode vulnerabilities and deficiencies in the
-> number
->  of reported malformed sequences). (CVE-2010-3870) (Gustavo)
-> "
+> * Fixed crash in zip extract method (possible CWE-170).
 
-I only updated the NEWS for the upcoming release as the fix applies to
-this specific CVE.
+Was requested and was not considered as worth a CVE #
 
-However I can add a ref to CVE-2009-5016 to the related NEWS entry
-(for the record, as it was released already), if you have found it :)
 
+> * Fixed symbolic resolution support when the target is a DFS share.
+
+Why does it require a CVE #? That's not a security fix but a fix about
+DFS support on Windows (did not work).
+
+> * Fixed extract() to do not overwrite $GLOBALS and $this when using
+> EXTR_OVERWRITE.
+
+Not sure either if it requires one.
+
+> Also doesn't seem to be much info on these readily available.
+>
+> The first seems to be related to this SVN commit (don't see a bug for
+> it):
+>
+> http://svn.php.net/viewvc?view=revision&revision=305848
+>
+> The second seems to be Windows-specific and is this bug (haven't found
+> the SVN commit for it yet):
+>
+> http://bugs.php.net/bug.php?id=51945
+>
+> The third seems to be 5.2-specific (no mention in the 5.3 changes), but
+> I've not yet found the bug or SVN commit.
+
+In any case I would like to remember you security@....net as well. We
+also added now a security flag in our bug tracker, Joe should have
+access to them as well, ping me if more of the redhat team needs it,
+or other distrubutions.
+
+Cheers,
 -- 
 Pierre
 
