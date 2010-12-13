@@ -1,43 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/12/2
-Message-ID: <AANLkTikg43XowWKMFOnFyD2J6=m8+y-xvQk=v1ASBpDW@mail.gmail.com>
-Date: Thu, 12 Aug 2010 17:07:22 +0200
-From: Robert Święcki <robert@...ecki.net>
-To: Werner LEMBERG <wl@....org>
-Cc: oss-security@...ts.openwall.com, bthomas@...le.com, bressers@...hat.com
-Subject: Re: CVE Request -- FreeType -- Memory corruption flaw by processing certain LWFN fonts + three more
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/13/6
+Message-ID: <AANLkTimCtS4sZ_U4ZSjyS6pvKDmdQHfGfzWqqXcX9V2H@mail.gmail.com>
+Date: Mon, 13 Dec 2010 19:15:32 +0100
+From: Pierre Joye <pierre.php@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Issues without CVE names in PHP 5.3.4/5.2.15 release
 Content-Type: text/plain; charset=utf-8
 
-Looks like it's been fixed with
-http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=a205b3ca85d2d78aac71ea3c1df104972031d6ad
+hi,
 
-Thanks Werner, you're awesome when it comes to fixing security bugs.
+oh my bad, I did not see that they were listed under the security
+enhancement and I reviewed the announce... :P
 
-On Tue, Aug 10, 2010 at 1:51 AM, Werner LEMBERG <wl@....org> wrote:
+On Mon, Dec 13, 2010 at 7:09 PM, Vincent Danen <vdanen@...hat.com> wrote:
+> * [2010-12-13 18:47:19 +0100] Pierre Joye wrote:
 >
->>>> So these issues are going to be addressed in upcoming 2.4.3, right?
->>>> They still affect 2.4.2?
+>> On Mon, Dec 13, 2010 at 5:33 PM, Vincent Danen <vdanen@...hat.com> wrote:
 >>>
->>> All of these issues are fixed in 2.4.2 already.
+>>> Looking at the PHP web site, there are a few issues fixed in the most
+>>> recent releases that don't seem to have a CVE name:
+>>>
+>>> * Fixed crash in zip extract method (possible CWE-170).
 >>
->> Thanks,
+>> Was requested and was not considered as worth a CVE #
+>
+> Ok.
+>
+>>> * Fixed symbolic resolution support when the target is a DFS share.
 >>
->> I've added
+>> Why does it require a CVE #? That's not a security fix but a fix about
+>> DFS support on Windows (did not work).
+>
+> Well, CVEs are, by definition, for security issues.  When your release
+> notes indicate "fixed foo" under the heading "Security Enhancements and
+> Fixes", one assumes they are security-relevant, and if they're
+> security-relevant, generally they get CVE names.
+>
+>>> * Fixed extract() to do not overwrite $GLOBALS and $this when using
+>>> EXTR_OVERWRITE.
 >>
->> https://savannah.nongnu.org/bugs/index.php?30719
+>> Not sure either if it requires one.
+>
+> I can't tell because I can't find any information, however if you don't
+> believe this is security-relevant, I won't pursue it.  However, I would
+> question whether or not it is worth listing under "security enhancements
+> and fixes" instead of just "key bug fixes"?
+>
+>>> Also doesn't seem to be much info on these readily available.
+>>>
+>>> The first seems to be related to this SVN commit (don't see a bug for
+>>> it):
+>>>
+>>> http://svn.php.net/viewvc?view=revision&revision=305848
+>>>
+>>> The second seems to be Windows-specific and is this bug (haven't found
+>>> the SVN commit for it yet):
+>>>
+>>> http://bugs.php.net/bug.php?id=51945
+>>>
+>>> The third seems to be 5.2-specific (no mention in the 5.3 changes), but
+>>> I've not yet found the bug or SVN commit.
 >>
->> which is offspring of https://savannah.nongnu.org/bugs/index.php?30657
+>> In any case I would like to remember you security@....net as well. We
+>> also added now a security flag in our bug tracker, Joe should have
+>> access to them as well, ping me if more of the redhat team needs it,
+>> or other distrubutions.
 >
-> This looks like a pure 64bit issue, and I don't have access to such a
-> machine which makes debugging very hard for me :(
+> I wasn't sure if I had missed some discussion about this or not, so
+> instead of burdening the security team directly, I brought it up here
+> (also under the assumption that others would read the release page notes
+> and see those items listed under security fixes and may have the same
+> questions).
 >
-> Any help is greatly appreciated.
+> Thanks for the info.
 >
->
->    Werner
->
+> --
+> Vincent Danen / Red Hat Security Response Team
 
 
 
 -- 
-Robert Święcki
+Pierre
+
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
