@@ -1,24 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/18/8
-Message-Id: <201011190022.41113.hanno@hboeck.de>
-Date: Fri, 19 Nov 2010 00:22:40 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/13/7
+Message-ID: <ie5rj0$59f$1@dough.gmane.org>
+Date: Mon, 13 Dec 2010 13:19:59 -0600
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: tikiwiki <= 5.2 XSS, CSRF, file inclusion
+Subject: Re: Issues without CVE names in PHP 5.3.4/5.2.15 release
 Content-Type: text/plain; charset=utf-8
 
-See:
-http://packetstormsecurity.org/files/view/94257/tikiwiki52-lfi.txt
-http://packetstormsecurity.org/files/view/94256/tikiwiki52-xsrf.txt
-http://packetstormsecurity.org/files/view/94255/tikiwiki52-xss.txt
+Vincent Danen wrote:
+> * [2010-12-13 18:47:19 +0100] Pierre Joye wrote:
+>>> * Fixed extract() to do not overwrite $GLOBALS and $this when using
+>>> EXTR_OVERWRITE.
+>>
+>>Not sure either if it requires one.
+> 
+> I can't tell because I can't find any information, however if you don't
+> believe this is security-relevant, I won't pursue it.  However, I would
+> question whether or not it is worth listing under "security enhancements
+> and fixes" instead of just "key bug fixes"?
 
-All fixed in 5.3 and 3.8:
-http://info.tiki.org/article113-Tiki-Wiki-CMS-Groupware-Releases-5-3-and-3-8-LTS-Security-Patches
+The commit is http://svn.php.net/viewvc?view=revision&revision=305570
 
+
+OTOH, this one _could_ be considered relevant (local only, not important 
+IMHO):
+http://svn.php.net/viewvc?view=revision&revision=305303
+
+$ php t.php 
+PHP Warning:  openssl_csr_new(): dn: `�
+ �
+�
+����ȿ��ȿXr�
+�
+
+��ȿ���e�        , is not a recognized name in /tmp/t.php on line 3
+
+Cheers,
 -- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
 
-http://schokokeks.org - professional webhosting
 
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
