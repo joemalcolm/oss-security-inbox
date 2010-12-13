@@ -1,49 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/20/14
-Message-ID: <Pine.GSO.4.64.1008201652200.1035@faron.mitre.org>
-Date: Fri, 20 Aug 2010 16:56:02 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: Qt SSL endless loop
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/13/1
+Message-ID: <AANLkTinKec6MX5TYZMhKtSwpnk5b+Aj_=OgMXUN4GtYx@mail.gmail.com>
+Date: Sun, 12 Dec 2010 21:45:09 -0500
+From: Havoc Pennington <hp@...ox.com>
+To: Rémi Denis-Courmont <remi@...lab.net>
+Cc: dbus@...ts.freedesktop.org, oss-security@...ts.openwall.com
+Subject: Re: Clarifications on the D-Bus specification
 Content-Type: text/plain; charset=utf-8
 
+I posted patches to the bug that need testing with your exploit and
+need a spec patch. My patches assume the max nest depth is 64. Some
+code in dbus-message.c breaks if a DBusMessage goes over 255, so I'd
+recommend not going over that. But 128 would be pretty easily possible
+if desired.
 
-Just to close this up.  I have actually preserved CVE-2010-2621 and have 
-marked CVE-2010-2533 as a duplicate, which is contrary to what Vincent 
-said.
+I used "2 * DBUS_MAXIMUM_TYPE_RECURSION_DEPTH" instead of adding a new
+constant to dbus-protocol.h since that was already the max nesting in
+a signature if you nested arrays in structs. But maybe it should be a
+new constant, especially if it isn't 64.
 
-MITRE is ultimately the authority on which CVE should be rejected when 
-duplicates arise.  See 
-http://cve.mitre.org/cve/editorial_policies/duplicates.html for the 
-criteria that I generally follow (every once in a while, a behemoth 
-"authoritative source" wins, though generally there is an expectation that 
-their ID will become more ubiquitous in the future anyway.)
+Someone else will need to pick this up tomorrow and get it pushed, but
+I hope my start on it is helpful.
 
-- Steve
-
-
-
-On Mon, 19 Jul 2010, Vincent Danen wrote:
-
-> * [2010-07-19 10:49:36 +0200] Ludwig Nussel wrote:
->
->> Vincent Danen wrote:
->>> * [2010-07-16 11:19:09 -0400] Josh Bressers wrote:
->>> 
->>> >Please use CVE-2010-2533
->>> 
->>> Wasn't this already assigned CVE-2010-2621?
->>> 
->>> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-2621
->>> 
->>> It links to the same advisory (qtsslame-adv.txt) and that only seems to
->>> be reporting one single problem.
->> 
->> Oops, indeed. We've overlooked that assignment. Sorry for the confusion :-/
->
-> No problem.  We need to discard the new one then (discard CVE-2010-2621
-> as a dupe of CVE-2010-2533).
->
-> -- 
-> Vincent Danen / Red Hat Security Response Team
+Thanks
+Havoc
