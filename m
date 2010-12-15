@@ -1,23 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/06/1
-Message-ID: <4B446811.1090100@debian.org>
-Date: Wed, 06 Jan 2010 11:38:09 +0100
-From: Giuseppe Iuculano <iuculano@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/15/2
+Message-ID: <20101215104531.0b6bb05e@redhat.com>
+Date: Wed, 15 Dec 2010 10:45:31 +0100
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request - uzbl remote code execution
+Subject: Re: Breaking the links: Exploiting the linker
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Wed, 15 Dec 2010 02:14:20 +0000 Tim Brown wrote:
 
-uzbl upstream reported a remote code execution vulnerability:
-http://www.uzbl.org/news.php?id=22
+> In the interests of a thorough peer review I'd be curious what people
+> think of the following paper I've been working on Linux and POSIX
+> linkers:
+> 
+> http://www.nth-dimension.org.uk/downloads.php?id=77
 
-References:
-http://lists.uzbl.org/pipermail/uzbl-dev-uzbl.org/2010-January/000586.html
-http://users.edpnet.be/dieter/exploit.html
+Any specific reason for recommending:
 
-Cheers,
-Giuseppe.
+  LD_LIBRARY_PATH="${LD_LIBRARY_PATH:-/path/to/app/lib}"
 
+as a fix for:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+  LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/path/to/app/lib
+
+issue in 1.3.2?  It does not do the same thing the right way:
+
+$ LD_LIBRARY_PATH= ; LD_LIBRARY_PATH=${LD_LIBRARY_PATH:-/path/to/app} ; echo $LD_LIBRARY_PATH
+/path/to/app
+
+$ LD_LIBRARY_PATH=/foo ; LD_LIBRARY_PATH=${LD_LIBRARY_PATH:-/path/to/app} ; echo $LD_LIBRARY_PATH
+/foo
+
+Maybe you want to suggest something like this instead:
+
+  LD_LIBRARY_PATH=${LD_LIBRARY_PATH:+$LD_LIBRARY_PATH:}/path/to/app
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
