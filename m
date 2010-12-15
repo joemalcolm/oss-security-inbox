@@ -1,37 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/31/5
-Message-ID: <1449401253.941441283282955256.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 31 Aug 2010 15:29:15 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/15/4
+Message-ID: <1292381657.1716.207.camel@hydrus>
+Date: Wed, 15 Dec 2010 13:54:17 +1100
+From: David Hicks <hickseydr@...usnet.com.au>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: serendipity < 1.5.4 xss
+Subject: CVE request: MantisBT <=1.2.3 (db_type) Cross-Site Scripting & Path Disclosure Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-2957
+This is a CVE request for a vulnerability discovered in MantisBT <1.2.4
+by Gjoko Krstic of Zero Science Lab as per the following advisory:
 
-Thanks.
+http://www.zeroscience.mk/en/vulnerabilities/ZSL-2010-4983.php
 
--- 
-    JB
+MantisBT 1.2.4 has been released to resolve this issue.
 
+For distributions or users using MantisBT 1.1.x, the following patch can
+be applied:
+http://git.mantisbt.org/?p=mantisbt.git;a=commitdiff_plain;h=2641fdc60d2032ae1586338d6416e1eadabd7590
 
------ "Hanno Böck" <hanno@...eck.de> wrote:
+Please note that MantisBT 1.1.x is not recommended for use due to many
+security improvements and features implemented in MantisBT 1.2.x (but
+not backported to 1.1.x).
 
-> http://blog.s9y.org/archives/223-Serendipity-1.5.4-released.html
-> 
-> http://www.htbridge.ch/advisory/xss_vulnerability_in_serendipity.html
-> 
-> "as well as a XSS security issue discovered and reported by High-Tech
-> Bridge. 
-> The XSS is only exploitable though, if you are using the "Remember me"
-> feature 
-> in the Serendipity backend to login."
-> 
-> 
-> 
-> -- 
-> Hanno Böck		Blog:		http://www.hboeck.de/
-> GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-> 
-> http://schokokeks.org - professional webhosting
+Detailed information about this vulnerability can be found in this bug
+report: http://www.mantisbt.org/bugs/view.php?id=12607
+
+Regards,
+
+David Hicks
+MantisBT Developer
+mantisbt.org, #mantishelp freenode
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
