@@ -1,51 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/31/7
-Message-ID: <Pine.GSO.4.64.1008311556010.3520@faron.mitre.org>
-Date: Tue, 31 Aug 2010 16:02:14 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: Josh Bressers <bressers@...hat.com>
-cc: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: libc fortify source information disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/15/6
+Message-ID: <4D089A5C.50707@internetionals.nl>
+Date: Wed, 15 Dec 2010 11:37:16 +0100
+From: Justin Ossevoort <justin@...ernetionals.nl>
+To: oss-security@...ts.openwall.com
+CC: Tomas Hoger <thoger@...hat.com>
+Subject: Re: Breaking the links: Exploiting the linker
 Content-Type: text/plain; charset=utf-8
 
+On 15/12/10 10:45, Tomas Hoger wrote:
+> Maybe you want to suggest something like this instead:
+> 
+>   LD_LIBRARY_PATH=${LD_LIBRARY_PATH:+$LD_LIBRARY_PATH:}/path/to/app
 
-I think this technically qualifies as an "exposure" which is the "E" in 
-"CVE" - it can be used as a stepping stone for exploitation of another 
-vulnerability.  (Very old, unwieldy definitions here: 
-http://cve.mitre.org/about/terminology.html)
+And then ofcourse with the recommended quotes:
 
-The risk may be very minimal, but the FORTIFY_SOURCE protection mechanism 
-is not working "as advertised" - it can be manipulated for an 
-admittedly-small information leak.
+LD_LIBRARY_PATH="${LD_LIBRARY_PATH:+$LD_LIBRARY_PATH:}/path/to/app"
 
-Use CVE-2010-3192 for the issue.
+Regards,
 
-- Steve
-
-
-On Tue, 31 Aug 2010, Josh Bressers wrote:
-
-> ----- "Nico Golde" <oss-security+ml@...lde.de> wrote:
->
->> Hi,
->> http://seclists.org/fulldisclosure/2010/Apr/399
->> did this ever get a CVE id? As this also works for setuid programs it
->> would be
->> nice to get one assigned and have this patched.
->>
->
-> Steve,
->
-> What is MITRE policy on this one. By itself I question if this is a
-> security flaw, but it also would appear to have the potential to turn a DoS
-> into something worse.
->
-> I'm not sure what policy is in this instance.
->
-> Thanks.
->
-> --
->    JB
->
->
->
+    justin....
