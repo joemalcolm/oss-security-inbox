@@ -1,44 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/16/5
-Message-ID: <loom.20101216T144016-496@post.gmane.org>
-Date: Thu, 16 Dec 2010 17:00:57 +0000 (UTC)
-From: Ralf Wildenhues <Ralf.Wildenhues@....de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/15/7
+Message-ID: <4D08BBCC.8050508@kernel.org>
+Date: Wed, 15 Dec 2010 20:59:56 +0800
+From: Eugene Teo <eugeneteo@...nel.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Breaking the links: Exploiting the linker
+CC: Marcus Meissner <meissner@...e.de>, stable@...nel.org
+Subject: Re: CVE Request: local privilege escalation via /sys/kernel/debug/acpi/custom_method
 Content-Type: text/plain; charset=utf-8
 
-Hello Tim, all,
+On 12/15/2010 07:00 PM, Marcus Meissner wrote:
+> Hi,
+>
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;h=ed3aada1bf34c5a9e98af167f125f8a740fc726a
+>
+> changes /sys/kernel/debug/acpi/custom_method from -w--w--w- to -w-------.
+>
+> This custom_method file allows to inject custom ACPI methods into the
+> ACPI interpreter tables.
+>
+> This control file was introduced with world writeable permissions
+> in Linux Kernel 2.6.33.
+>
+> Fix is in 2.6.37rc and the 2.6.36.2 stable release so far.
+>
+> I would say that privilege escalation is possible.
 
-Tim Brown <timb@...> writes:
-> 
-> In the interests of a thorough peer review I'd be curious what people think
-> of the following paper I've been working on Linux and POSIX linkers:
-> 
-> http://www.nth-dimension.org.uk/downloads.php?id=77
+Please use CVE-2010-4347.
 
-Replacing
-  LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/dir/name
-
-with
-  LD_LIBRARY_PATH=${LD_LIBRARY_PATH:-/dir/name}
-
-changes semantics in a way that are not generally desirable: if I want to
-append a directory to the search path, then the latter is not the way to
-do it (because it doesn't change the path if the variable is already set).
-Rather, I think you meant
-  LD_LIBRARY_PATH=${LD_LIBRARY_PATH:-$LD_LIBRARY_PATH:}/dir/name
-
-(no quotes are needed on the right hand side of the '=' sign, as the shell
-doesn't word-split there).
-
-On page 5, the footnotes have several markup errors resulting in weird PDF
-output.
-
-I suggest using the url package for nicer URL typesetting (in case you're
-writing this with LaTeX) and the hyperref package with
-\hypersetup{pdfborder={0 0 0}} for decent clickable links.
-
-So much for a quick look.
-Cheers,
-Ralf
-
+Eugene
