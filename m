@@ -1,37 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/20/11
-Message-ID: <1588732992.1101451282325542424.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 20 Aug 2010 13:32:22 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/15/5
+Message-ID: <1292381737.1716.209.camel@hydrus>
+Date: Wed, 15 Dec 2010 13:55:37 +1100
+From: David Hicks <hickseydr@...usnet.com.au>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - kernel: jfs: don't allow os2 xattr namespace overlap with others
+Subject: CVE request: MantisBT <=1.2.3 (db_type) Local File Inclusion Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-2946
+This is a CVE request for a vulnerability discovered in MantisBT <1.2.4
+by Gjoko Krstic of Zero Science Lab as per the following advisory:
 
-Thanks.
+http://www.zeroscience.mk/en/vulnerabilities/ZSL-2010-4984.php
 
--- 
-    JB
+MantisBT 1.2.4 has been released to resolve this issue.
 
+For distributions or users using MantisBT 1.1.x, the following patch can
+be applied:
+http://git.mantisbt.org/?p=mantisbt.git;a=commitdiff_plain;h=2641fdc60d2032ae1586338d6416e1eadabd7590
 
------ "Eugene Teo" <eugeneteo@...nel.sg> wrote:
+Please note that MantisBT 1.1.x is not recommended for use due to many
+security improvements and features implemented in MantisBT 1.2.x (but
+not backported to 1.1.x).
 
-> Upstream commit: aca0fa34bdaba39bfddddba8ca70dba4782e8fe6
-> 
-> Description from the commit: It's currently possible to bypass xattr 
-> namespace access rules by prefixing valid xattr names with "os2.",
-> since 
-> the os2 namespace stores extended attributes in a legacy format with
-> no 
-> prefix.
-> 
-> This patch adds checking to deny access to any valid namespace prefix
-> 
-> following "os2.".
-> 
-> Thanks, Eugene
-> -- 
-> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i);
-> }
+Detailed information about this vulnerability can be found in this bug
+report: http://www.mantisbt.org/bugs/view.php?id=12607
+
+Regards,
+
+David Hicks
+MantisBT Developer
+mantisbt.org, #mantishelp freenode
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
