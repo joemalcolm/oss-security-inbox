@@ -1,21 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/08/17/1
-Message-ID: <4C6A03F0.8020003@redhat.com>
-Date: Tue, 17 Aug 2010 11:37:20 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - kernel: integer overflow in ext4_ext_get_blocks()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/15/1
+Message-Id: <201012150214.27800.timb@nth-dimension.org.uk>
+Date: Wed, 15 Dec 2010 02:14:20 +0000
+From: Tim Brown <timb@...-dimension.org.uk>
+To: oss-security@...ts.openwall.com, dailydave@...ts.immunityinc.com
+Subject: Breaking the links: Exploiting the linker
 Content-Type: text/plain; charset=utf-8
 
-> Use CVE-2010-3015
->
-> What does an attacker have to do to exploit this? Mount a crafted file
-> system?
+In the interests of a thorough peer review I'd be curious what people think of 
+the following paper I've been working on Linux and POSIX linkers:
 
-To trigger this, the attacker needs to write to the last block of a file 
-(of max file size) and sync it.
+http://www.nth-dimension.org.uk/downloads.php?id=77
 
-Thanks, Eugene
+A previous revision has already been reviewed but constructive criticism is 
+always useful.  There are some sections that I have removed whilst I wait on  
+vendors but I'm particularly interested in feedback on pertinent references or 
+threats that I may have missed.  As per the abstract, the aim of the paper 
+wasn't to claim everything as my own but rather to document as much about the 
+current state of art as possible.
+
+Tim
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+Tim Brown
+<mailto:timb@...-dimension.org.uk>
+<http://www.nth-dimension.org.uk/>
+
+Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
