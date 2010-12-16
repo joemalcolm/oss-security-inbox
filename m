@@ -1,35 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/27/3
-Message-ID: <20100927154053.5c287a54@redhat.com>
-Date: Mon, 27 Sep 2010 15:40:53 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/16/8
+Message-Id: <201012162250.20162.timb@nth-dimension.org.uk>
+Date: Thu, 16 Dec 2010 22:50:09 +0000
+From: Tim Brown <timb@...-dimension.org.uk>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request 1, NSS 2, Qt: Doesn't handle wildcards in Common Name properly
+Cc: Tomas Hoger <thoger@...hat.com>
+Subject: Re: Breaking the links: Exploiting the linker
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 06 Sep 2010 20:19:52 +0200 Florian Weimer wrote:
+On Wednesday 15 December 2010 09:45:31 Tomas Hoger wrote:
 
-> >   1, Network Security Services (NSS) handled wildcard (*) character
-> >      in the Common Name field of a x509v3 digital certificate.
-> >      If an attacker is able to get a carefully-crafted certificate,
-> >      signed by a Certificate Authority trusted by Firefox, the
-> >      attacker could use the certificate during the man-in-the-middle
-> >      attack and potentially confuse Firefox into accepting it by
-> >      mistake. Different vulnerability than CVE-2009-2408.
-> >
-> >      References:
-> >      [1] http://www.westpoint.ltd.uk/advisories/wp-10-0001.txt
-> >      [2] http://bugs.gentoo.org/show_bug.cgi?id=335731
+> Maybe you want to suggest something like this instead:
 > 
-> Is this really a _security_ bug?  The CN was not validated by the CA,
-> so it's the CA's fault (which you have to trust, but still).
+>   LD_LIBRARY_PATH=${LD_LIBRARY_PATH:+$LD_LIBRARY_PATH:}/path/to/app
 
-If we look back to CVE-2009-2408, similar bug was fixed at that time
-without being handled as security flaw.  NSS used to allow '*' wildcard
-to match more than one host name label, or even the whole name.  As
-noted elsewhere in this thread, such wildcard handling can be found
-elsewhere too, with fixes handled as security enhancements, rather than
-security flaw fixes.
+Yes, my bad. I'm not sure how I ended up with that, thanks for the correction.
 
+Tim
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Tim Brown
+<mailto:timb@...-dimension.org.uk>
+<http://www.nth-dimension.org.uk/>
+
+Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
