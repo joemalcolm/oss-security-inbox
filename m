@@ -1,29 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/18/2
-Message-ID: <4CBC8182.6060903@redhat.com>
-Date: Tue, 19 Oct 2010 01:18:58 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Petr Matousek <pmatouse@...hat.com>, coley@...us.mitre.org
-Subject: Re: CVE request -- libguestfs: missing disk format specifier when adding a disk
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/16/4
+Message-Id: <201012161659.13150.ludwig.nussel@suse.de>
+Date: Thu, 16 Dec 2010 16:59:12 +0100
+From: Ludwig Nussel <ludwig.nussel@...e.de>
+To: Mark Stosberg <mark@...mersault.com>
+Cc: oss-security@...ts.openwall.com, Marcela Maslanova <mmaslano@...hat.com>, Petr Pisar <ppisar@...hat.com>, "Chris 'BinGOs' Williams" <chris@...gosnet.co.uk>, Reed Loden <reed@...dloden.com>, Masahiro Yamada <masa141421356@...il.com>, Byron Jones <glob@...b.com.au>, Lincoln Stein <lincoln.stein@...il.com>
+Subject: Re: Re: CVE Request -- perl-CGI two ids, perl-CGI-Simple one id (CVE-2010-3172 already assigned for Bugzilla part)
 Content-Type: text/plain; charset=utf-8
 
-On 10/19/2010 12:10 AM, Petr Matousek wrote:
-> Hello Steve, vendors.
->
-> Description:
-> Libguestfs doesn't currently allow the format of a disk to be specified explicitly.
-> Because of that malicious guest admin can exploit automatic image format detection
-> in qemu, when the libguestfs is used to administer the image, to read arbitrary
-> file on host via forging a image header with backing store.
->
-> References:
-> https://bugzilla.redhat.com/show_bug.cgi?id=643958
->
-> Could you please allocate a CVE identifier for this issue?
+Mark Stosberg wrote:
+> Yes, it is. However, later testing found that the issue wasn't
+> completely fixed in 3.50. A new patch has been developed, and is
+> currently pending review and acceptance by the primary CGI.pm author,
+> Lincoln Stein. (Now CC'ed).
 
-Petr, please use CVE-2010-3851. Thanks.
+Any update on this? What are the remaining issues?
 
-Eugene
+cu
+Ludwig
+
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+ (o_   Ludwig Nussel
+ //\   
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
