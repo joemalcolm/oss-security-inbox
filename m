@@ -1,14 +1,14 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/22/4
-Message-ID: <1727366950.46297.1292979231553.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 21 Dec 2010 19:53:51 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/16/6
+Message-ID: <1746187219.1671761292532577515.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 16 Dec 2010 15:49:37 -0500 (EST)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Earl Hood <earl@...lhood.com>, non customers <non-customers@...ramail.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- MHonArc: Improper escaping of certain HTML sequences (XSS)
+Cc: Colin Walters <walters@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- D-BUS -- Stack frame overflow by validating message with excessive number of nested variants
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-4524
+Please use CVE-2010-4352
 
 Thanks.
 
@@ -16,40 +16,39 @@ Thanks.
     JB
 
 
------ Original Message -----
-> Hello Steve, vendors,
+----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+
+> Hello Josh, Steve, vendors,
 > 
-> MHonArc, a Perl mail-to-HTML converter, failed to
-> properly escape certain HTML sequences. A remote
-> attacker could provide a specially-crafted email
-> message and trick the local user to convert it
-> into HTML format. Subsequent preview of such
-> message might potentially execute arbitrary HTML
-> or scripting code (XSS).
+>    a stack frame overflow flaw was found in the way the D-BUS message
+> bus service / messaging facility validated messages with
+> excessive number of nested variants. A local, authenticated
+> user could use this flaw to cause dbus daemon to crash
+> due to a stack frame overflow (denial of service) via a
+> specially-crafted message sent to the system bus.
 > 
 > References:
-> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=607693
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=664718
+> [1] http://www.remlab.net/op/dbus-variant-recursion.shtml
 > 
-> Public PoC:
-> [3]
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=5;filename=elsatest.mbox;att=1;bug=607693
+> Upstream bug report:
+> [2] https://bugs.freedesktop.org/show_bug.cgi?id=32321
+>      (not public at the moment yet)
 > 
-> Further issue note:
-> -------------------
-> MHonArc properly escapes for example:
+> Credit:
+> Rémi Denis-Courmont
 > 
-> <script>alert("elsa");</script> =>
+> Note: As noted in [1] this issue may also cause malfunction
+>        of some other daemons depending on d-bus. Some examples
+>        (from /var/log/messages on the affected host):
 > 
-> &lt;script&gt;alert(&quot;elsa&quot;);&lt;/script&gt;
-> 
-> But fails to do the same example for a string in the form of:
-> 
-> <scr<body>ipt>alert("elsa");</scr<body>ipt> =>
-> 
-> <script>alert("elsa");</script>
-> 
-> Affected versions: Issue confirmed in latest MHonArc-2.6.16 version
+>        Dec 16 09:49:03 hostname avahi-daemon[30120]: Disconnected from
+> D-Bus, exiting.
+>        Dec 16 09:49:03 hostname avahi-daemon[30120]: Got SIGQUIT,
+> quitting.
+>        Dec 16 09:49:03 hostname NetworkManager[982]: <warn>
+> disconnected by the system bus.
+>        Dec 16 09:49:03 hostname NetworkManager[982]: no sender
+>        Dec 16 09:49:03 hostname init: Disconnected from system bus
 > 
 > Could you allocate a CVE id for this issue?
 > 
