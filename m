@@ -1,19 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/05/1
-Message-ID: <4BB9A4A7.60503@kernel.sg>
-Date: Mon, 05 Apr 2010 16:51:51 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/16/5
+Message-ID: <loom.20101216T144016-496@post.gmane.org>
+Date: Thu, 16 Dec 2010 17:00:57 +0000 (UTC)
+From: Ralf Wildenhues <Ralf.Wildenhues@....de>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: cifs: cifs_create() NULL pointer dereference
+Subject: Re: Breaking the links: Exploiting the linker
 Content-Type: text/plain; charset=utf-8
 
-Reported by Eugene Teo. While creating a file on a server which supports 
-Unix extensions such as Samba, if a file being created does not supply 
-nameidata (i.e. nd is NULL), cifs client can trigger a NULL pointer 
-dereference when calling cifs_posix_open().
+Hello Tim, all,
 
-http://comments.gmane.org/gmane.linux.file-systems.cifs/5782
-https://bugzilla.redhat.com/579445
+Tim Brown <timb@...> writes:
+> 
+> In the interests of a thorough peer review I'd be curious what people think
+> of the following paper I've been working on Linux and POSIX linkers:
+> 
+> http://www.nth-dimension.org.uk/downloads.php?id=77
 
-Thanks, Eugene
+Replacing
+  LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/dir/name
+
+with
+  LD_LIBRARY_PATH=${LD_LIBRARY_PATH:-/dir/name}
+
+changes semantics in a way that are not generally desirable: if I want to
+append a directory to the search path, then the latter is not the way to
+do it (because it doesn't change the path if the variable is already set).
+Rather, I think you meant
+  LD_LIBRARY_PATH=${LD_LIBRARY_PATH:-$LD_LIBRARY_PATH:}/dir/name
+
+(no quotes are needed on the right hand side of the '=' sign, as the shell
+doesn't word-split there).
+
+On page 5, the footnotes have several markup errors resulting in weird PDF
+output.
+
+I suggest using the url package for nicer URL typesetting (in case you're
+writing this with LaTeX) and the hyperref package with
+\hypersetup{pdfborder={0 0 0}} for decent clickable links.
+
+So much for a quick look.
+Cheers,
+Ralf
+
