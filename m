@@ -1,42 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/06/1
-Message-Id: <201010061225.11036.oeriksson@mandriva.com>
-Date: Wed, 6 Oct 2010 12:25:10 +0200
-From: Oden Eriksson <oeriksson@...driva.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/16/1
+Message-ID: <1402961491.1582851292507914388.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 16 Dec 2010 08:58:34 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Nagios format string issues
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: MantisBT <=1.2.3 (db_type) Cross-Site Scripting & Path Disclosure Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-tisdagen den 5 oktober 2010 20.21.02 skrev  Florian Weimer:
-> Nagios Core 3.2.3 inclues fixes for a few format string bugs:
-> 
-> <http://article.gmane.org/gmane.network.nagios.announce/85>
-> 
-> The patch Guillaume submitted is here:
-> 
-> <http://article.gmane.org/gmane.network.nagios.devel/7493>
-> 
-> Does anybody know if this is on an exploitable code path?
+Please use CVE-2010-4348 for the XSS.
+CVE-2010-4349 for the path disclosure.
 
-We have a whole bunch of similar patches in Mandriva, just fetch the cooker 
-source rpm packages and do something like:
-
-rpm -qlp *.src,rpm | grep format
-
-It would be a major task to push that to the upstream projects.
-
-Just checked the ones I fixed (in 2008/2009):
-
-$ rpm -qlp /SRPMS/contrib/release/*.rpm /SRPMS/main/release/*.rpm | grep 
-format_not_a_string_literal_and_no_format_arguments | wc -l
-106
-
-So, at least 106 new CVE assignments there.
-
-
-Cheers.
+Thanks.
 
 -- 
-Regards // Oden Eriksson
-Security team manager - Mandriva
-CEO NUX AB
+    JB
+
+
+----- "David Hicks" <hickseydr@...usnet.com.au> wrote:
+
+> This is a CVE request for a vulnerability discovered in MantisBT
+> <1.2.4
+> by Gjoko Krstic of Zero Science Lab as per the following advisory:
+> 
+> http://www.zeroscience.mk/en/vulnerabilities/ZSL-2010-4983.php
+> 
+> MantisBT 1.2.4 has been released to resolve this issue.
+> 
+> For distributions or users using MantisBT 1.1.x, the following patch
+> can
+> be applied:
+> http://git.mantisbt.org/?p=mantisbt.git;a=commitdiff_plain;h=2641fdc60d2032ae1586338d6416e1eadabd7590
+> 
+> Please note that MantisBT 1.1.x is not recommended for use due to
+> many
+> security improvements and features implemented in MantisBT 1.2.x (but
+> not backported to 1.1.x).
+> 
+> Detailed information about this vulnerability can be found in this
+> bug
+> report: http://www.mantisbt.org/bugs/view.php?id=12607
+> 
+> Regards,
+> 
+> David Hicks
+> MantisBT Developer
+> mantisbt.org, #mantishelp freenode
