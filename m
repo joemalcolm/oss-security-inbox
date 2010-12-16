@@ -1,30 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/29/4
-Message-ID: <1789757780.595691264791601925.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 29 Jan 2010 14:00:01 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE id request: Wireshark
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/16/3
+Message-ID: <4D0A340B.4090808@redhat.com>
+Date: Thu, 16 Dec 2010 16:45:15 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, Colin Walters <walters@...hat.com>
+Subject: CVE Request -- D-BUS -- Stack frame overflow by validating message with excessive number of nested variants
 Content-Type: text/plain; charset=utf-8
 
+Hello Josh, Steve, vendors,
 
------ "Eren Türkay" <eren@...dus.org.tr> wrote:
+   a stack frame overflow flaw was found in the way the D-BUS message
+bus service / messaging facility validated messages with
+excessive number of nested variants. A local, authenticated
+user could use this flaw to cause dbus daemon to crash
+due to a stack frame overflow (denial of service) via a
+specially-crafted message sent to the system bus.
 
-> Hello,
-> 
-> Wireshark 1.2.6 was released that fixes buffer overflows in LWRES
-> dissector. I 
-> couldn't find any CVE references regarding to this issue. Could CVE id
-> be 
-> assigned if it hasn't been done yet.
-> 
-> http://www.wireshark.org/security/wnpa-sec-2010-02.html
-> 
+References:
+[1] http://www.remlab.net/op/dbus-variant-recursion.shtml
 
-Please use CVE-2010-0304
+Upstream bug report:
+[2] https://bugs.freedesktop.org/show_bug.cgi?id=32321
+     (not public at the moment yet)
 
-Thanks.
+Credit:
+Rémi Denis-Courmont
 
--- 
-    JB
+Note: As noted in [1] this issue may also cause malfunction
+       of some other daemons depending on d-bus. Some examples
+       (from /var/log/messages on the affected host):
+
+       Dec 16 09:49:03 hostname avahi-daemon[30120]: Disconnected from D-Bus, exiting.
+       Dec 16 09:49:03 hostname avahi-daemon[30120]: Got SIGQUIT, quitting.
+       Dec 16 09:49:03 hostname NetworkManager[982]: <warn> disconnected by the system bus.
+       Dec 16 09:49:03 hostname NetworkManager[982]: no sender
+       Dec 16 09:49:03 hostname init: Disconnected from system bus
+
+Could you allocate a CVE id for this issue?
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+
