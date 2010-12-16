@@ -1,30 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/08/1
-Message-ID: <4B9551D7.3060503@redhat.com>
-Date: Mon, 08 Mar 2010 20:36:55 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request -- Drupal v6.16 / v5.22 SA-CORE-2010-001
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/16/7
+Message-Id: <201012162229.50068.hanno@hboeck.de>
+Date: Thu, 16 Dec 2010 22:29:49 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: Drupal views module CSRF/XSS before 2.11, XSS before 2.12
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve, vendors,
+Two CVEs CSRF and XSS before 2.11:
+http://drupal.org/node/829840
 
-   multiple security issues have been addressed within SA-CORE-2010-001:
+One CVE for XSS before 2.12:
+http://drupal.org/node/999380
 
-* Installation cross site scripting
-* Open redirection
-* Locale module cross site scripting
-* Blocked user session regeneration
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
-References:
-   [1] http://drupal.org/node/731710
-   [2] http://lists.fedoraproject.org/pipermail/package-announce/2010-March/036472.html
-   [3] http://lists.fedoraproject.org/pipermail/package-announce/2010-March/036619.html
-   [4] http://lists.fedoraproject.org/pipermail/package-announce/2010-March/036583.html
+http://schokokeks.org - professional webhosting
 
-Could you allocate CVE ids for these?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
