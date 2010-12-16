@@ -1,19 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/17/2
-Message-ID: <4BA02BA4.4030100@redhat.com>
-Date: Wed, 17 Mar 2010 09:08:52 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/16/2
+Message-ID: <146797506.1583071292507962436.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 16 Dec 2010 08:59:22 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: coley@...us.mitre.org
-Subject: CVE-2010-0008 kernel: sctp remote denial of service
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: MantisBT <=1.2.3 (db_type) Local File Inclusion Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Telesys Software reported a flaw was found in the sctp_rcv_ootb() 
-function in the Linux kernel Stream Control Transmission Protocol (SCTP) 
-implementation. A remote attacker could send a specially-crafted SCTP 
-packet to a target system, resulting in a denial of service.
+Please use CVE-2010-4350.
 
-https://bugzilla.redhat.com/CVE-2010-0008
-http://git.kernel.org/linus/ece25dfa0991f65c4e1d26beb1c3c45bda4239b8
+Thanks.
 
-Thanks, Eugene
+-- 
+    JB
+
+
+----- "David Hicks" <hickseydr@...usnet.com.au> wrote:
+
+> This is a CVE request for a vulnerability discovered in MantisBT
+> <1.2.4
+> by Gjoko Krstic of Zero Science Lab as per the following advisory:
+> 
+> http://www.zeroscience.mk/en/vulnerabilities/ZSL-2010-4984.php
+> 
+> MantisBT 1.2.4 has been released to resolve this issue.
+> 
+> For distributions or users using MantisBT 1.1.x, the following patch
+> can
+> be applied:
+> http://git.mantisbt.org/?p=mantisbt.git;a=commitdiff_plain;h=2641fdc60d2032ae1586338d6416e1eadabd7590
+> 
+> Please note that MantisBT 1.1.x is not recommended for use due to
+> many
+> security improvements and features implemented in MantisBT 1.2.x (but
+> not backported to 1.1.x).
+> 
+> Detailed information about this vulnerability can be found in this
+> bug
+> report: http://www.mantisbt.org/bugs/view.php?id=12607
+> 
+> Regards,
+> 
+> David Hicks
+> MantisBT Developer
+> mantisbt.org, #mantishelp freenode
