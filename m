@@ -1,43 +1,15 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/27/1
-Message-ID: <4D18971F.903@redhat.com>
-Date: Mon, 27 Dec 2010 14:39:43 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>, oss-security <oss-security@...ts.openwall.com>
-CC: John Bailey <rekkanoryo@...kanoryo.org>, Stu Tomlinson <stu@...nilmot.com>, Matthew Barnes <mbarnes@...hat.com>
-Subject: CVE Request -- Pidgin v2.7.6 <= x <= v2.7.8 -- MSN DirectConnect DoS (crash due NULL ptr dereference) after receiving a short P2P message
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/20/1
+Message-ID: <AANLkTimerRs-qj+36tDH8Fpsc-9Fz5xLJhqP_+uMp6Dk@mail.gmail.com>
+Date: Mon, 20 Dec 2010 14:32:48 +0100
+From: Ulrik Persson <ddefrostt@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: MyBB XSS bugs
 Content-Type: text/plain; charset=utf-8
 
-Hello Josh, Steve, vendors,
+MyBB has some XSS bugs:
 
-   Pidgin upstream has released the latest v2.7.9 version:
-   [1] http://pidgin.im/pipermail/support/2010-December/009251.html
+http://blog.mybb.com/2010/12/15/mybb-1-6-1-release-1-4-14-update/
 
-   addressing one security flaw in the MSN protocol:
-   [2] http://pidgin.im/news/security/?id=49
-
-   Upstream changeset:
-   [3] http://developer.pidgin.im/viewmtn/revision/info/aaa07bde3c51d3684391ae6ed86b6dbaeab5d031
-
-   References:
-   [4] https://bugzilla.redhat.com/show_bug.cgi?id=665421
-
-   Further issue details from Stu Tomlinson (issue discoverer):
-   <begin quote>
-   I should clarify that because this is in the direct connection code it
-   is not dependent on what the servers send us but rather what other
-   clients send, so is susceptible to attack by malicious clients.
-
-   I think only libpurple 2.7.6-2.7.8 are vulnerable because it was
-   introduced by the MSN code remodelling that was merged in 2.7.6, not due
-   to what the servers send.
-
-   Regards,
-   Stu.
-   </end quote>
-
-Could you allocate a CVE id for this issue?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+-- 
+Ulrik | Rock Madrid | http://rock-madrid.com/
