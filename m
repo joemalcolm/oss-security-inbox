@@ -1,23 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/02/6
-Message-ID: <AANLkTimEP-Z6_mCr+7xVLEgBSY=i4gXiSWmKezBzxT2z@mail.gmail.com>
-Date: Tue, 2 Nov 2010 16:35:25 +0100
-From: Pierre Joye <pierre.php@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/20/2
+Message-ID: <186691223.20264.1292870194823.JavaMail.root@zmail05.collab.prod.int.phx2.redhat.com>
+Date: Mon, 20 Dec 2010 13:36:34 -0500 (EST)
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: utf-8 security issue in php
+Cc: coley@...us.mitre.org, dan.j.rosenberg@...il.com
+Subject: CVE request: kernel: CAN information leak, 2nd attempt
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Nov 2, 2010 at 3:24 PM, Josh Bressers <bressers@...hat.com> wrote:
+"The CAN protocol uses the address of a kernel heap object as a proc
+filename, revealing information that could be useful during
+exploitation."
 
-> As best as I can tell, this only needs one ID. Please use CVE-2010-3870.
+Reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=664544
+http://seclists.org/oss-sec/2010/q4/103
 
-Thanks, I updated the bug report and the NEWS file.
+Credit: Dan Rosenberg
 
-Please note that only 5.3 and later contains this fix. 5.3.4 will have the fix.
+------------
 
-Cheers,
--- 
-Pierre
+Please note that there has been one attempt to request CVE for this
+issue already [1]. The problem is that vendors (Red Hat more or less
+included) used the assigned CVE for the potential heap overflow issue
+[2, 3] whereas reporter used it for information leak [4].
 
-@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+  [1] http://seclists.org/oss-sec/2010/q4/107
+  [2] http://lists.opensuse.org/opensuse-updates/2010-12/msg00026.html
+  [3] http://www.debian.org/security/2010/dsa-2126
+  [4] http://www.cs.brown.edu/people/drosenbe/research.html
+
+I'd suggest to keep the CVE-2010-3874 id for the heap overflow which
+has some (although very limited) security potential and assign a new id
+for the information leak.
+
+Thanks,
+--
+Petr Matousek / Red Hat Security Response Team
+
