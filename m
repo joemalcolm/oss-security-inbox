@@ -1,28 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/07/02/3
-Message-ID: <4C2E0D59.4050404@redhat.com>
-Date: Fri, 02 Jul 2010 18:01:29 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request -- Roundup: XSS by processing PageTemplate template for a named page
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/20/3
+Message-ID: <AANLkTi=qvFLiV=R+EcdwXpLHWfsq8bqkwqwEVQqC+s2T@mail.gmail.com>
+Date: Mon, 20 Dec 2010 13:45:29 -0500
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: Petr Matousek <pmatouse@...hat.com>, oss-security@...ts.openwall.com,  "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: CAN information leak, 2nd attempt
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve, vendors,
+I'm ok with this, but I wanted to point out that the previously
+mentioned heap overflow is a semantic overflow only.  Because the
+field that is being overflowed is the last field in a struct that is
+always allocated in a chunk significantly larger than the struct
+itself, the overflow will never result in any kind of corruption, so
+it has essentially no security impact.
 
-   A deficiency was found in the way Roundup, simple and flexible issue-tracking system,
-processed PageTemplate templates for named pages. A remote attacker could
-use this flaw to conduct cross-site scripting (XSS) attacks by tricking
-a local, authenticated user into visiting a specially-crafted web page.
+-Dan
 
-References:
-   [1] http://bugs.gentoo.org/show_bug.cgi?id=326395
-
-Upstream changeset:
-   [2] http://roundup.svn.sourceforge.net/viewvc/roundup?view=revision&revision=4486
-
-Could you allocate a CVE identifier for this?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+On Mon, Dec 20, 2010 at 1:36 PM, Petr Matousek <pmatouse@...hat.com> wrote:
+> "The CAN protocol uses the address of a kernel heap object as a proc
+> filename, revealing information that could be useful during
+> exploitation."
+>
+> Reference:
+> https://bugzilla.redhat.com/show_bug.cgi?id=664544
+> http://seclists.org/oss-sec/2010/q4/103
+>
+> Credit: Dan Rosenberg
+>
+> ------------
+>
+> Please note that there has been one attempt to request CVE for this
+> issue already [1]. The problem is that vendors (Red Hat more or less
+> included) used the assigned CVE for the potential heap overflow issue
+> [2, 3] whereas reporter used it for information leak [4].
+>
+>  [1] http://seclists.org/oss-sec/2010/q4/107
+>  [2] http://lists.opensuse.org/opensuse-updates/2010-12/msg00026.html
+>  [3] http://www.debian.org/security/2010/dsa-2126
+>  [4] http://www.cs.brown.edu/people/drosenbe/research.html
+>
+> I'd suggest to keep the CVE-2010-3874 id for the heap overflow which
+> has some (although very limited) security potential and assign a new id
+> for the information leak.
+>
+> Thanks,
+> --
+> Petr Matousek / Red Hat Security Response Team
+>
+>
