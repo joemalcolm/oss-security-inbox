@@ -1,25 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/13/7
-Message-ID: <1809103864.447241286997188664.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 13 Oct 2010 15:13:08 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: Apache-AuthenHook perl module
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/21/1
+Message-ID: <Pine.GSO.4.64.1012201530380.19162@faron.mitre.org>
+Date: Mon, 20 Dec 2010 15:43:44 -0500 (EST)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: Petr Matousek <pmatouse@...hat.com>
+cc: "Steven M. Christey" <coley@...-smtp.mitre.org>, oss-security@...ts.openwall.com, Dan Rosenberg <dan.j.rosenberg@...il.com>
+Subject: Re: CVE request: kernel: CAN information leak, 2nd attempt
 Content-Type: text/plain; charset=utf-8
 
 
------ "Moritz Muehlenhoff" <jmm@...ian.org> wrote:
+Hmmm, a couple things going on here.  I'm fine with associating 
+CVE-2010-3874 with the overflow.  But note - if the overflow does not 
+affect any decision-making, bypass protection logic, or cause a DoS (e.g. 
+if certain values of the overflowed field cause a CPU hit), then it's 
+probably OK to treat it as non-security.  There hasn't been much security 
+analysis done in semantic overflows and we probably have to treat them on 
+a case-by-case basis.  For example - if the last field happens to be a 
+bank account balance, or a flag stating whether a user has some kind of 
+special privilege, then that's a security issue even without memory 
+corruption (or rather, it's still "memory" corruption, just not with the 
+same kinds of management structures that we usually run into currently).
 
-> Hi,
-> please assign a CVE ID for 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=599712
-> https://rt.cpan.org/Public/Bug/Display.html?id=62040
-> 
+Use CVE-2010-4565 for the kernel address leak.
 
-Please use CVE-2010-3845.
+- Steve
 
-Thanks.
 
--- 
-    JB
+
+On Mon, 20 Dec 2010, Petr Matousek wrote:
+
+> ----- Original Message -----
+>> I'm ok with this, but I wanted to point out that the previously
+>> mentioned heap overflow is a semantic overflow only. Because the
+>> field that is being overflowed is the last field in a struct that is
+>> always allocated in a chunk significantly larger than the struct
+>> itself, the overflow will never result in any kind of corruption, so
+>> it has essentially no security impact.
+>
+> Yes, we are aware of this [1]. Personally I'd call it a mitigation factor
+> even though I don't have a strong opinion here. Steve, could you please
+> comment?
+>
+>  [1] https://bugzilla.redhat.com/show_bug.cgi?id=649695#c7
+>
+> Petr
+>
+>>
+>> -Dan
+>>
+>> On Mon, Dec 20, 2010 at 1:36 PM, Petr Matousek <pmatouse@...hat.com>
+>> wrote:
+>>> "The CAN protocol uses the address of a kernel heap object as a proc
+>>> filename, revealing information that could be useful during
+>>> exploitation."
+>>>
+>>> Reference:
+>>> https://bugzilla.redhat.com/show_bug.cgi?id=664544
+>>> http://seclists.org/oss-sec/2010/q4/103
+>>>
+>>> Credit: Dan Rosenberg
+>>>
+>>> ------------
+>>>
+>>> Please note that there has been one attempt to request CVE for this
+>>> issue already [1]. The problem is that vendors (Red Hat more or less
+>>> included) used the assigned CVE for the potential heap overflow
+>>> issue
+>>> [2, 3] whereas reporter used it for information leak [4].
+>>>
+>>>  [1] http://seclists.org/oss-sec/2010/q4/107
+>>>  [2]
+>>>  http://lists.opensuse.org/opensuse-updates/2010-12/msg00026.html
+>>>  [3] http://www.debian.org/security/2010/dsa-2126
+>>>  [4] http://www.cs.brown.edu/people/drosenbe/research.html
+>>>
+>>> I'd suggest to keep the CVE-2010-3874 id for the heap overflow which
+>>> has some (although very limited) security potential and assign a new
+>>> id
+>>> for the information leak.
+>>>
+>>> Thanks,
+>>> --
+>>> Petr Matousek / Red Hat Security Response Team
+>>>
+>>>
+>
+>
