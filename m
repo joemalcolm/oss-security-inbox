@@ -1,54 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/22/6
-Message-ID: <loom.20101222T122944-826@post.gmane.org>
-Date: Wed, 22 Dec 2010 11:46:41 +0000 (UTC)
-From: Jamie Nguyen <dyscoria@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/21/2
+Message-Id: <201012211025.39888.ludwig.nussel@suse.de>
+Date: Tue, 21 Dec 2010 10:25:38 +0100
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Breaking the links: Exploiting the linker
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: opensc buffer overflow
 Content-Type: text/plain; charset=utf-8
-
-Tim Brown <timb@...> writes:
-
-> 
-> In the interests of a thorough peer review I'd be curious what people think of 
-> the following paper I've been working on Linux and POSIX linkers:
-> 
-> http://www.nth-dimension.org.uk/downloads.php?id=77
-> 
-> A previous revision has already been reviewed but constructive criticism is 
-> always useful.  There are some sections that I have removed whilst I wait on  
-> vendors but I'm particularly interested in feedback on pertinent references or 
-> threats that I may have missed.  As per the abstract, the aim of the paper 
-> wasn't to claim everything as my own but rather to document as much about the 
-> current state of art as possible.
-> 
-> Tim
 
 Hi,
 
-I am somewhat unknowledgeable about the whole linking process, but I was testing 
-out the execution of a file using ld on a filesystem mounted with noexec. I 
-followed the example you gave of copying the '/usr/bin/id' executable to a user 
-writeable directory and removing the executable bit.
+Specially crafted smart cards could cause a buffer overflow in opensc:
 
-After removing the executable bit, I was still able to execute this on a normal 
-filesystem using /lib/ld-linux-x86_64.so.2 but on a filesystem mounted with 
-noexec this method did not work.
+http://labs.mwrinfosecurity.com/files/Advisories/mwri_opensc-get-serial-buffer-overflow_2010-12-13.pdf
+http://www.h-online.com/open/news/item/When-a-smart-card-can-root-your-computer-1154829.html
+https://www.opensc-project.org/opensc/changeset/4913
 
-You suggest in the article:
+cu
+Ludwig
 
-"...if you're mounting devices with noexec the you should probably ensure that 
-they [sic] the runtime linker can't be executed either."
-
-Forgive me if I am being dim, because from what I can see, mounting with noexec 
-seems to solve the issue of using ld-linux-x86-64.so.2 to execute non-executable 
-files.
-
-I notice in your example that you are using eglibc. I am testing with glibc, so 
-perhaps this is the reason?
-
-
-Kind regards
-
-Jamie
-
+-- 
+ (o_   Ludwig Nussel
+ //\   
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
