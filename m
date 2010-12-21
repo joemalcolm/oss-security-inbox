@@ -1,64 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/16/4
-Message-Id: <20100914100626.C981.A69D9226@jp.fujitsu.com>
-Date: Thu, 16 Sep 2010 14:51:54 +0900 (JST)
-From: KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>
-To: Oleg Nesterov <oleg@...hat.com>
-Cc: kosaki.motohiro@...fujitsu.com, Roland McGrath <roland@...hat.com>, Linus Torvalds <torvalds@...ux-foundation.org>, Andrew Morton <akpm@...ux-foundation.org>, linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Kees Cook <kees.cook@...onical.com>, Al Viro <viro@...iv.linux.org.uk>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org, pageexec@...email.hu, "Brad Spengler <spender@...ecurity.net>, Eugene Teo" <eugene@...hat.com>, KAMEZAWA Hiroyuki <kamezawa.hiroyu@...fujitsu.com>
-Subject: Re: [PATCH] move cred_guard_mutex from task_struct to signal_struct
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/21/4
+Message-ID: <4D10B36F.3010205@redhat.com>
+Date: Tue, 21 Dec 2010 15:02:23 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, Earl Hood <earl@...lhood.com>, "non customers" <non-customers@...ramail.com>
+Subject: CVE Request -- MHonArc: Improper escaping of certain HTML sequences (XSS)
 Content-Type: text/plain; charset=utf-8
 
-> On 09/10, KOSAKI Motohiro wrote:
-> >
-> > 1) moving cread_guard_mutex itself
-> >    - no increase execve overhead
-> > 	-> very good
-> >    - it also prevent parallel ptrace
-> 
-> No, it doesn't. Only PTRACE_ATTACH needs this mutex, and as Roland
-> pointed out it also needs write_lock(tasklist) which is worse. So
-> this change doesn't make any practical harm for ptrace.
+Hello Steve, vendors,
 
-I see, thanks.
+   MHonArc, a Perl mail-to-HTML converter, failed to
+properly escape certain HTML sequences. A remote
+attacker could provide a specially-crafted email
+message and trick the local user to convert it
+into HTML format. Subsequent preview of such
+message might potentially execute arbitrary HTML
+or scripting code (XSS).
 
-> 
-> > 2) move in_exec_mm to signal_struct too
-> >    -> very hard. oom-killer can use very few lock because it's called
-> >       from various place. now both ->mm and ->in_exec_mm are protected
-> >       task_lock() and it help to avoid messy.
-> 
-> Yes. But, if ->in_exec_mm is only used by oom_badness(), then I think
-> you can use task_lock(tsk->group_leader). oom_badness() needs tasklist
-> anyway, this means it can't race with de_thread() changing the leader.
-> But up to you.
+References:
+[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=607693
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=664718
 
-Good idea. will fix.
+Public PoC:
+[3] http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=5;filename=elsatest.mbox;att=1;bug=607693
 
-> 
-> Another very minor nit (but again, up to you). Perhaps exec_mmap()
-> could clear ->in_exec_mm (in task_struct or signal_struct, this doesnt
-> matter), it takes task_lock(current) anyway (and at this point current
-> is always the group leader).
+Further issue note:
+-------------------
+MHonArc properly escapes for example:
 
-Thanks. will fix.
+<script>alert("elsa");</script> =>
 
+&lt;script&gt;alert(&quot;elsa&quot;);&lt;/script&gt;
 
-> 
-> > Let's move ->cred_guard_mutex from task_struct to signal_struct. It
-> > naturally prevent multiple-threads-inside-exec.
-> 
-> Reviewed-by: Oleg Nesterov <oleg@...hat.com>
-> 
-> 
-> This is very minor, but perhaps you can also fix a couple of comments
-> which mention task->cred_guard_mutex,
-> 
-> 	fs/exec.c:1109		the caller must hold current->cred_guard_mutex
-> 	kernel/cred.c:328	The caller must hold current->cred_guard_mutex
-> 	include/linux/tracehook.h:153	@task->cred_guard_mutex
+But fails to do the same example for a string in the form of:
 
-Will fix, of cource.
+<scr<body>ipt>alert("elsa");</scr<body>ipt> =>
 
+<script>alert("elsa");</script>
 
+Affected versions: Issue confirmed in latest MHonArc-2.6.16 version
 
+Could you allocate a CVE id for this issue?
 
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
