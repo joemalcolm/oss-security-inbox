@@ -1,35 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/25/11
-Message-ID: <1284012454.268771274814670643.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 25 May 2010 15:11:10 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request: off by one DoS in pe_icons.c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/21/7
+Message-ID: <AANLkTinD_DWHauRWCW+=J=U6gFJxBeN=RtsCqOAFKjb7@mail.gmail.com>
+Date: Tue, 21 Dec 2010 15:06:38 -0600
+From: Earl Hood <earl@...lhood.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, non customers <non-customers@...ramail.com>,  Jeff Breidenbach <jeff@....org>
+Subject: Re: CVE Request -- MHonArc: Improper escaping of certain HTML sequences (XSS)
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-1640 for this.
+On Tue, Dec 21, 2010 at 8:02 AM, Jan Lieskovsky <jlieskov@...hat.com> wrote:
+>  MHonArc, a Perl mail-to-HTML converter, failed to
+> properly escape certain HTML sequences. A remote
+> attacker could provide a specially-crafted email
+> message and trick the local user to convert it
+> into HTML format. Subsequent preview of such
+> message might potentially execute arbitrary HTML
+> or scripting code (XSS).
 
-Thanks.
+I hate HTML in mail.
 
--- 
-    JB
+> But fails to do the same example for a string in the form of:
+>
+> <scr<body>ipt>alert("elsa");</scr<body>ipt> =>
+> <script>alert("elsa");</script>
+>
+> Affected versions: Issue confirmed in latest MHonArc-2.6.16 version
 
+I should note that MHonArc documentation warns about HTML mail,
+and the recommendation is to disable support of it:
 
------ "Jamie Strandboge" <jamie@...onical.com> wrote:
+  http://www.mhonarc.org/MHonArc/doc/faq/security.html#htmldata
 
-> Though the bug report and patch have very little details, our clamav
-> maintainer confirmed with upstream that the following commit fixes a
-> DoS
-> via off by one error. It only affects 0.96 (code not present in
-> earlier
-> versions). A quick look at the code and patch suggests an out of
-> bounds
-> access on the dynamically allocated *imagedata array.
-> 
-> https://wwws.clamav.net/bugzilla/show_bug.cgi?id=2031
-> http://git.clamav.net/gitweb?p=clamav-devel.git;a=commit;h=7f0e3bbf77382d9782e0189bf80f5f59a95779b3
-> 
-> 
-> -- 
-> Jamie Strandboge             | http://www.canonical.com
+With that said, do have an available patch that fixes
+the problem?
+
+If not, I can look into it during the holiday break to
+get a fix for it.  Note, even if there is a fix for the
+case you provided, there is no 100% guarantee that there
+could be other data input sequences that get by the filter.
+Hence, those concerned about security disable the
+HTML filter:
+
+  http://www.mhonarc.org/MHonArc/doc/faq/security.html#htmlexchow
+
+--ewh
