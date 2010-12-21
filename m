@@ -1,38 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/01/20/9
-Message-ID: <20100120150309.GD28823@kroah.com>
-Date: Wed, 20 Jan 2010 07:03:09 -0800
-From: Greg KH <greg@...ah.com>
-To: oss-security@...ts.openwall.com
-Cc: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - kernel: untangle the do_mremap() mess
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/21/3
+Message-ID: <4D107B78.3060709@redhat.com>
+Date: Tue, 21 Dec 2010 11:03:36 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+CC: Colin Walters <walters@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: Re: CVE Request -- D-BUS -- Stack frame overflow by validating message with excessive number of nested variants
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jan 20, 2010 at 12:41:04AM -0500, Steven M. Christey wrote:
->
-> On Wed, 20 Jan 2010, Eugene Teo wrote:
->
->> Anyway, Al summarised the mess here:
->> http://marc.info/?l=linux-arch&m=126004438008670&w=2
->>
->> And the pile of upstream commits were meant to address the problems 
->> described AFAIK. It will probably make more sense to associate all these 
->> related commits to just one CVE name.
->
-> I defer to Josh on this, but in a series of patches that is referred to as 
-> "mremap/mmap mess" in some linux-kernel subject lines, for which a 
-> specialist like Eugene is not entirely certain about, in which some of the 
-> patches are assembly-level changes for individual architectures, and where 
-> few of the patch diffs make it clear what the underlying problem was - we 
-> could collectively spend a week of labor trying to figure everything out 
-> from a purist CVE perspective, or anchor on a single series of commits that 
-> are hopefully attached to a single kernel RC or minor version release.  I 
-> suspect the latter would be more helpful to the general CVE consumer 
-> community, so my recommendation is for a single CVE, assuming that all of 
-> these patches make it into a single kernel update.
+Hello vendors,
 
-They are all in the 2.6.32.4 release.
+   just FYI, particular bugzilla entry now opened:
+   [1] https://bugs.freedesktop.org/show_bug.cgi?id=32321
 
-thanks,
+   Issue fixed in dbus-v1.4.1 release:
+   [2] https://bugs.freedesktop.org/show_bug.cgi?id=32321#c12
 
-greg k-h
+   And relevant changeset (from c#13):
+   [3] http://cgit.freedesktop.org/dbus/dbus/commit/?id=7d65a3a6ed8815e34a99c680ac3869fde49dbbd4
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+ > Please use CVE-2010-4352
+ >
+ > Thanks.
+
+-- JB ----- "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+ > > Hello Josh, Steve, vendors,
+ > >
+ > >    a stack frame overflow flaw was found in the way the D-BUS message
+ > > bus service / messaging facility validated messages with
+ > > excessive number of nested variants. A local, authenticated
+ > > user could use this flaw to cause dbus daemon to crash
+ > > due to a stack frame overflow (denial of service) via a
+ > > specially-crafted message sent to the system bus.
+ > >
+ > > References:
+ > > [1] http://www.remlab.net/op/dbus-variant-recursion.shtml
+ > >
+ > > Upstream bug report:
+ > > [2] https://bugs.freedesktop.org/show_bug.cgi?id=32321
+ > >      (not public at the moment yet)
+ > >
+ > > Credit:
+ > > Rémi Denis-Courmont
+ > >
+ > > Note: As noted in [1] this issue may also cause malfunction
+ > >        of some other daemons depending on d-bus. Some examples
+ > >        (from /var/log/messages on the affected host):
+ > >
+ > >        Dec 16 09:49:03 hostname avahi-daemon[30120]: Disconnected from
+ > > D-Bus, exiting.
+ > >        Dec 16 09:49:03 hostname avahi-daemon[30120]: Got SIGQUIT,
+ > > quitting.
+ > >        Dec 16 09:49:03 hostname NetworkManager[982]: <warn>
+ > > disconnected by the system bus.
+ > >        Dec 16 09:49:03 hostname NetworkManager[982]: no sender
+ > >        Dec 16 09:49:03 hostname init: Disconnected from system bus
+ > >
+ > > Could you allocate a CVE id for this issue?
+ > >
+ > > Thanks && Regards, Jan.
+ > > --
+ > > Jan iankko Lieskovsky / Red Hat Security Response Team
