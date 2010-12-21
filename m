@@ -1,46 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/05/4
-Message-ID: <4C83A854.7020901@westpoint.ltd.uk>
-Date: Sun, 05 Sep 2010 15:25:24 +0100
-From: Richard Moore <rich@...tpoint.ltd.uk>
-To: Jan Lieskovsky <jlieskov@...hat.com>,  "Steven M. Christey" <coley@...us.mitre.org>, oss-security <oss-security@...ts.openwall.com>,  Simon Ward <simon@...tpoint.ltd.uk>
-Subject: Re: CVE Request 1, NSS 2, Qt: Doesn't handle wildcards in Common Name properly
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/21/5
+Message-ID: <1292941665.3234.6.camel@luna>
+Date: Tue, 21 Dec 2010 08:27:44 -0600
+From: Jamie Strandboge <jamie@...onical.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: opensc buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-On 04/09/2010 14:37, Joe Orton wrote:
-> On Fri, Sep 03, 2010 at 06:20:49PM +0200, Jan Lieskovsky wrote:
->>    1, Network Security Services (NSS) handled wildcard (*) character
->>       in the Common Name field of a x509v3 digital certificate.
->>       If an attacker is able to get a carefully-crafted certificate,
->>       signed by a Certificate Authority trusted by Firefox, the attacker
->>       could use the certificate during the man-in-the-middle attack and
->>       potentially confuse Firefox into accepting it by mistake. Different
->>       vulnerability than CVE-2009-2408.
->
-> I would suspect that many of the usual raft of OpenSSL-based apps with
-> hand-crafted cert identity checks will be vulnerable to this too, where
-> wildcard certs are supported.
+On Tue, 2010-12-21 at 10:25 +0100, Ludwig Nussel wrote:
+> Hi,
+> 
+> Specially crafted smart cards could cause a buffer overflow in opensc:
+> 
+> http://labs.mwrinfosecurity.com/files/Advisories/mwri_opensc-get-serial-buffer-overflow_2010-12-13.pdf
+> http://www.h-online.com/open/news/item/When-a-smart-card-can-root-your-computer-1154829.html
+> https://www.opensc-project.org/opensc/changeset/4913
 
-We did try some other openssl based apps but most had either no
-wildcard support, no real CN validation, or wildcard support that
-use the old-style shell-globs which is much worse anyway. Unlike NSS
-openssl doesn't provide a function for performing CN validation
-which means that apps have generally rolled their own (poor)
-implementations.
-
-Cheers
-
-Rich.
-
->
-> Regards, Joe
->
->
-
+It is my understanding that you will also want to apply the following
+changeset for the above to work:
+https://www.opensc-project.org/opensc/changeset/4912
 
 -- 
-Richard Moore, Principal Software Engineer,
-Westpoint Ltd,
-Albion Wharf, 19 Albion Street, Manchester, M1 5LN, England
-Tel: +44 161 237 1028
-Fax: +44 161 237 1031
+Jamie Strandboge             | http://www.canonical.com
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
