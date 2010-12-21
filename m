@@ -1,18 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/22/1
-Message-ID: <20101022022050.GB24065@dojo.mi.org>
-Date: Fri, 22 Oct 2010 02:20:51 +0000
-From: Mike O'Connor <mjo@...o.mi.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2010-1693: OFED openibd startup script uses predictable tmpfile
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/21/6
+Message-ID: <4D10F2A9.1080704@redhat.com>
+Date: Tue, 21 Dec 2010 19:32:09 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+CC: Luke Macken <lmacken@...hat.com>
+Subject: FYI -- Tor v0.2.1.28 addressing CVE-2010-1676 -- remotely exploitable heap-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Details at: 
-http://lists.openfabrics.org/pipermail/ewg/2010-October/015886.html
+Hello vendors,
 
-CVE-2010-1693 has been assigned.
+   just FYI, if went unnoticed:
+   [1] https://blog.torproject.org/blog/tor-02128-released-security-patches
 
--- 
- Michael J. O'Connor                                          mjo@...o.mi.org
- =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
-"Technologists are concerned with ideas, not spelling."              -Dilbert
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
