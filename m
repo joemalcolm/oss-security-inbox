@@ -1,24 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/30/9
-Message-ID: <Pine.GSO.4.64.1003301603010.4709@faron.mitre.org>
-Date: Tue, 30 Mar 2010 16:03:14 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
-To: oss-security <oss-security@...ts.openwall.com>, oss-security <oss-security@...ts.openwall.com>
-cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Sahana -- v0.6.2.2 -- Authentication bypass via "acl_enable_acl" URLs 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/22/4
+Message-ID: <1727366950.46297.1292979231553.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 21 Dec 2010 19:53:51 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Earl Hood <earl@...lhood.com>, non customers <non-customers@...ramail.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- MHonArc: Improper escaping of certain HTML sequences (XSS)
 Content-Type: text/plain; charset=utf-8
 
+Please use CVE-2010-4524
 
-On Fri, 19 Mar 2010, Jan Lieskovsky wrote:
+Thanks.
 
->  Christopher showed:
->    [1] http://archives.neohapsis.com/archives/bugtraq/2010-03/0156.html
->
->  a deficiency in the way, Sahana disaster management system
->  performed user authentication. Visiting a certain URL
->  would allow an attacker to view (and potentially modify)
->  information, which should be otherwise protected by authentication.
+-- 
+    JB
 
-Use CVE-2010-1191
 
-- Steve
+----- Original Message -----
+> Hello Steve, vendors,
+> 
+> MHonArc, a Perl mail-to-HTML converter, failed to
+> properly escape certain HTML sequences. A remote
+> attacker could provide a specially-crafted email
+> message and trick the local user to convert it
+> into HTML format. Subsequent preview of such
+> message might potentially execute arbitrary HTML
+> or scripting code (XSS).
+> 
+> References:
+> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=607693
+> [2] https://bugzilla.redhat.com/show_bug.cgi?id=664718
+> 
+> Public PoC:
+> [3]
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=5;filename=elsatest.mbox;att=1;bug=607693
+> 
+> Further issue note:
+> -------------------
+> MHonArc properly escapes for example:
+> 
+> <script>alert("elsa");</script> =>
+> 
+> &lt;script&gt;alert(&quot;elsa&quot;);&lt;/script&gt;
+> 
+> But fails to do the same example for a string in the form of:
+> 
+> <scr<body>ipt>alert("elsa");</scr<body>ipt> =>
+> 
+> <script>alert("elsa");</script>
+> 
+> Affected versions: Issue confirmed in latest MHonArc-2.6.16 version
+> 
+> Could you allocate a CVE id for this issue?
+> 
+> Thanks && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
