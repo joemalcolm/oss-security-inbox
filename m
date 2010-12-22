@@ -1,54 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/12/5
-Message-ID: <20101012151504.GT1955@redhat.com>
-Date: Tue, 12 Oct 2010 09:15:04 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: Gerald Combs <gerald@...eshark.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE requests: Poppler, Quassel, Pyfribidi, Overkill, DocUtils, FireGPG, Wireshark
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/22/6
+Message-ID: <loom.20101222T122944-826@post.gmane.org>
+Date: Wed, 22 Dec 2010 11:46:41 +0000 (UTC)
+From: Jamie Nguyen <dyscoria@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Breaking the links: Exploiting the linker
 Content-Type: text/plain; charset=utf-8
 
-* [2010-10-11 16:42:27 -0700] Gerald Combs wrote:
+Tim Brown <timb@...> writes:
 
->Vincent Danen wrote:
->> * [2010-10-01 13:33:47 -0700] Gerald Combs wrote:
->>
->>> Vincent Danen wrote:
->>>> * [2010-09-29 15:06:31 -0400] Josh Bressers wrote:
->>>>
->>>>>> 7. Wireshark BER dissector
->>>>>> http://archives.neohapsis.com/archives/bugtraq/2010-09/0088.html
->>>>>>
->>>>>
->>>>> This one looks like a stack overflow, the advisory isn't very clear,
->>>>> but
->>>>> claims there are two possible outcomes. We can always split later if
->>>>> needed.
->>>>> CVE-2010-3445
->>>>
->>>> Gerald, are you aware of this issue?  Do you have further details
->>>> regarding it?  I poked around in bugzilla a bit but couldn't find
->>>> anything.
->>>>
->>>> It claims 1.4.0, but is not clear as to whether or not older versions
->>>> are affected.
->>>
->>> It's been fixed in the trunk (r34111) and is scheduled for inclusion in
->>> 1.4.1 and 1.2.12. We're tracking it in bug 5230:
->>>
->>>  https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5230
->>>
->>> The bug affects all BER dissectors and not just SNMP.
->>
->> Great.  Thank you for the information, Gerald.  That is very helpful.
->
->FYI, 1.4.1 and 1.2.12 have been released.
+> 
+> In the interests of a thorough peer review I'd be curious what people think of 
+> the following paper I've been working on Linux and POSIX linkers:
+> 
+> http://www.nth-dimension.org.uk/downloads.php?id=77
+> 
+> A previous revision has already been reviewed but constructive criticism is 
+> always useful.  There are some sections that I have removed whilst I wait on  
+> vendors but I'm particularly interested in feedback on pertinent references or 
+> threats that I may have missed.  As per the abstract, the aim of the paper 
+> wasn't to claim everything as my own but rather to document as much about the 
+> current state of art as possible.
+> 
+> Tim
 
-Thanks for the heads up, Gerald.  On the 1.2.12 release notes page at
-least you have noted CVE-2010-????; the CVE name for that issue is
-CVE-2010-3445 so you may want to update that.
+Hi,
 
-Thanks again.
+I am somewhat unknowledgeable about the whole linking process, but I was testing 
+out the execution of a file using ld on a filesystem mounted with noexec. I 
+followed the example you gave of copying the '/usr/bin/id' executable to a user 
+writeable directory and removing the executable bit.
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+After removing the executable bit, I was still able to execute this on a normal 
+filesystem using /lib/ld-linux-x86_64.so.2 but on a filesystem mounted with 
+noexec this method did not work.
+
+You suggest in the article:
+
+"...if you're mounting devices with noexec the you should probably ensure that 
+they [sic] the runtime linker can't be executed either."
+
+Forgive me if I am being dim, because from what I can see, mounting with noexec 
+seems to solve the issue of using ld-linux-x86-64.so.2 to execute non-executable 
+files.
+
+I notice in your example that you are using eglibc. I am testing with glibc, so 
+perhaps this is the reason?
+
+
+Kind regards
+
+Jamie
+
