@@ -1,32 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/18/4
-Message-ID: <4B7D66A1.7040809@redhat.com>
-Date: Fri, 19 Feb 2010 00:11:13 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Marcus Meissner <meissner@...e.de>
-Subject: Re: additional memory leak in USB userspace handling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/22/7
+Message-ID: <4D11F52C.6060900@redhat.com>
+Date: Wed, 22 Dec 2010 13:55:08 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, Robert Relyea <rrelyea@...hat.com>
+Subject: CVE Request -- 1, ccid -- int.overflow leading to array index error 2, pcsc-lite stack-based buffer overflow in ATR decoder [was:  CVE request: opensc buffer overflow ]
 Content-Type: text/plain; charset=utf-8
 
-On 02/17/2010 06:46 PM, Marcus Meissner wrote:
-> Hi,
->
-> a memory allocation leak (not information, just unfreed memory)
-> was spotted and fixed by Linus during debugging of previous problem.
->
-> On put_user() errors it would leak one "struct async" per REAPURB call.
->
-> Fix is in commit ddeee0b2eec2a51b0712b04de4b39e7bec892a53, also
-> attached.
->
-> Affected code is also going back throughout 2.6 history.
->
-> The issue is of less importance than the information leak fix, I am not
-> sure if it deserves a CVE or not.
+Hello Josh, Steve, vendors,
 
-I was talking to Marcus about this. The attacker needs access to a USB 
-device like the previous bug in order to exploit this.
+   Rafael Dominguez Vega of MWR InfoSecurity reported two more flaws related with smart cards:
 
-Thanks, Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
+   I), CCID: Integer overflow, leading to array index error when processing crafted serial number of certain cards
+
+   Description:
+   An integer overflow, leading to array index error was found
+   in the way USB CCID (Chip/Smart Card Interface Devices) driver
+   processed certain values of card serial number. A local attacker
+   could use this flaw to execute arbitrary code, with the privileges
+   of the user running the pcscd daemon, via a malicious smart card
+   with specially-crafted value of its serial number, inserted to
+   the system USB port.
+
+   References:
+   [1] http://labs.mwrinfosecurity.com/files/Advisories/mwri_pcsc-libccid-buffer-overflow_2010-12-13.pdf
+   [2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=607780
+   [3] https://bugzilla.redhat.com/show_bug.cgi?id=664986
+
+   Upstream changesets:
+   [4] http://lists.alioth.debian.org/pipermail/pcsclite-cvs-commit/2010-November/004934.html
+   [5] http://lists.alioth.debian.org/pipermail/pcsclite-cvs-commit/2010-November/004935.html
+
+   II), pcsc-lite: Stack-based buffer overflow in Answer-to-Reset (ATR) decoder
+
+   Description:
+   A stack-based buffer overflow flaw was found in the way
+   PC/SC Lite smart card framework decoded certain attribute
+   values of the Answer-to-Reset (ATR) message, received back
+   from the card after connecting. A local attacker could
+   use this flaw to execute arbitrary code with the privileges
+   of the user running the pcscd daemon, via a malicious smart
+   card inserted to the system USB port.
+
+   References:
+   [1] http://labs.mwrinfosecurity.com/files/Advisories/mwri_pcsc-atr-handler-buffer-overflow_2010-12-13.pdf
+   [2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=607781
+   [3] http://www.vupen.com/english/advisories/2010/3264
+   [4] https://bugzilla.redhat.com/show_bug.cgi?id=664999
+
+   Upstream changeset:
+   [5] http://lists.alioth.debian.org/pipermail/pcsclite-cvs-commit/2010-November/004923.html
+
+Could you allocate CVE ids for these two too?
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
