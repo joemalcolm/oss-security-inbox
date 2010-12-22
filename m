@@ -1,33 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/09/10
-Message-ID: <AANLkTinkG15U9Ciqqx+x5d6p9FozP-xrVPq=d+ePypCP@mail.gmail.com>
-Date: Thu, 9 Dec 2010 15:38:00 +0100
-From: Pierre Joye <pierre.php@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/22/3
+Message-ID: <1940341980.46274.1292978876477.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 21 Dec 2010 19:47:56 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: NULL byte poisoning fix in php 5.3.4+
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: opensc buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Dec 9, 2010 at 3:34 PM, Steven M. Christey
-<coley@...us.mitre.org> wrote:
->
-> On Thu, 9 Dec 2010, Pierre Joye wrote:
->
->> We are about to release 5.2.15 and 5.3.4, can anyone please get an id
->> for this issue?
->
-> I just assigned CVE-2006-7243 to the http://bugs.php.net/39863 issue, i.e.
-> NULL injection in file_exists() *only*.
->
-> However, as already stated, the issue of NULL byte injection with PHP dates
-> back to 1999 or so (ouch... I remember that).  If PHP is addressing NULL
-> byte injection beyond just file_exists(), then that may need a separate CVE.
+Please use CVE-2010-4523 for this.
 
-We fixed it for all file functions. See the link to the commit for
-more details about which codes have been changed. Do we need a CVE for
-every function? I hope not :)
+Thanks.
 
-Cheers,
 -- 
-Pierre
+    JB
 
-@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+
+----- Original Message -----
+> Hi,
+> 
+> Specially crafted smart cards could cause a buffer overflow in opensc:
+> 
+> http://labs.mwrinfosecurity.com/files/Advisories/mwri_opensc-get-serial-buffer-overflow_2010-12-13.pdf
+> http://www.h-online.com/open/news/item/When-a-smart-card-can-root-your-computer-1154829.html
+> https://www.opensc-project.org/opensc/changeset/4913
+> 
+> cu
+> Ludwig
+> 
+> --
+> (o_ Ludwig Nussel
+> //\
+> V_/_ http://www.suse.de/
+> SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
