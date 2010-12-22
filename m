@@ -1,61 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/01/3
-Message-ID: <1586659856.1104131283370417096.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 1 Sep 2010 15:46:57 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/22/8
+Message-Id: <201012221406.53271.tmb@65535.com>
+Date: Wed, 22 Dec 2010 14:06:35 +0000
+From: Tim Brown <tmb@...35.com>
 To: oss-security@...ts.openwall.com
-Cc: Marc Delisle <Marc.Delisle@...epsherbrooke.qc.ca>, Michal Cihar <michal@...ar.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- phpMyAdmin - v3.6.6 -- XSS attack using debugging messages (CVE-2010-3056 discussion)
+Subject: Re: Re: Breaking the links: Exploiting the linker
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-2958
+On Wednesday 22 December 2010 11:46:41 Jamie Nguyen wrote:
+> Tim Brown <timb@...> writes:
+> > In the interests of a thorough peer review I'd be curious what people
+> > think of the following paper I've been working on Linux and POSIX
+> > linkers:
+> > 
+> > http://www.nth-dimension.org.uk/downloads.php?id=77
+> > 
+> > A previous revision has already been reviewed but constructive criticism
+> > is always useful.  There are some sections that I have removed whilst I
+> > wait on vendors but I'm particularly interested in feedback on pertinent
+> > references or threats that I may have missed.  As per the abstract, the
+> > aim of the paper wasn't to claim everything as my own but rather to
+> > document as much about the current state of art as possible.
+> > 
+> > Tim
+> 
+> Hi,
+> 
+> I am somewhat unknowledgeable about the whole linking process, but I was
+> testing out the execution of a file using ld on a filesystem mounted with
+> noexec. I followed the example you gave of copying the '/usr/bin/id'
+> executable to a user writeable directory and removing the executable bit.
+> 
+> After removing the executable bit, I was still able to execute this on a
+> normal filesystem using /lib/ld-linux-x86_64.so.2 but on a filesystem
+> mounted with noexec this method did not work.
+> 
+> You suggest in the article:
+> 
+> "...if you're mounting devices with noexec the you should probably ensure
+> that they [sic] the runtime linker can't be executed either."
+> 
+> Forgive me if I am being dim, because from what I can see, mounting with
+> noexec seems to solve the issue of using ld-linux-x86-64.so.2 to execute
+> non-executable files.
 
-Thanks.
+You're not being dim.  On Linux, mounting the file system with noexec prevents 
+the kernel mmap()ing the pages with execute permissions.  Removing the execute 
+bit on a binary doesn't cause the same behaviour.  In the paper I was 
+describing the general case.  This is something taviso or stealth mentioned to 
+me too so I will update the paper to make this distinction clear.  Thanks for 
+the feedback.
 
+Tim
 -- 
-    JB
+Tim Brown
+<mailto:tmb@...35.com>
 
-
------ "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
-
-> Hi Steve, vendors,
-> 
->    on 2010-08-30 phpMyAdmin published PMASA-2010-6 addressing one
-> XSS:
->    [1] http://www.phpmyadmin.net/home_page/security/PMASA-2010-6.php
-> 
->    Summary (from [1]):
->      XSS attack using debugging messages.
->    Description (from [1]):
->      It was possible to conduct a XSS attack using error messages in
-> PHP backtrace.
-> 
->    Affected versions (from [1]):
->    For 3.x: versions before 3.3.6 are affected.
->    Branch 2.11.x is not affected by this
-> 
->    Upstream commit:
->   
-> http://phpmyadmin.git.sourceforge.net/git/gitweb.cgi?p=phpmyadmin/phpmyadmin;a=commitdiff;h=133a77fac7d31a38703db2099a90c1b49de62e37
-> 
-> phpMyAdmin upstream seems to reference CVE-2010-3056 as CVE id to this
-> flaw.
-> 
-> But CVE-2010-3056 was previously assigned to:
-> [2] http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-3056
-> [3] https://bugzilla.redhat.com/show_bug.cgi?id=625877
-> [4] http://www.phpmyadmin.net/home_page/security/PMASA-2010-5.php
-> 
-> which affected both (from [4]):
-> For 2.11.x: versions before 2.11.10.1 are affected.
-> For 3.x: versions before 3.3.5.1 are affected.
-> 
-> so this is different issue and new CVE id should be allocated (due
-> different
-> affected versions).
-> 
-> Could you please allocate one?
-> 
-> Thanks && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Resposne Team
+Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
