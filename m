@@ -1,31 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/30/15
-Message-ID: <1478872270.1642731277925622871.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 30 Jun 2010 15:20:22 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE id request: syscp
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/22/5
+Message-ID: <4d118c16.cf05ec0a.1275.ffffec8a@mx.google.com>
+Date: Tue, 21 Dec 2010 23:27:46 -0600
+From: Raphael Geissert <geissert@...ian.org>
+To: oss-security@...ts.openwall.com, earl@...lhood.com, 607693@...s.debian.org
+Subject: Re: CVE Request -- MHonArc: Improper escaping of certain HTML sequences (XSS)
 Content-Type: text/plain; charset=utf-8
 
-
------ "Nico Golde" <oss-security+ml@...lde.de> wrote:
-
-> Hi,
-> can I get a CVE id for the following issue:
-> "today I received a mail about a severe security problem in 
-> the handling of open_basedir paths.  Customers are able to 
-> add whatever path they want via the documentroot of a domain 
-> by appending a colon to it and setting the open basedir path 
-> to use that domain documentroot, not the customer root."
+Earl Hood wrote:
+> With that said, do have an available patch that fixes
+> the problem?
 > 
-> http://www.syscp-forum.org/index.php?topic=4981.0
-> http://bugs.debian.org/587481
-> 
+> If not, I can look into it during the holiday break to
+> get a fix for it.  Note, even if there is a fix for the
+> case you provided, there is no 100% guarantee that there
+> could be other data input sequences that get by the filter.
+> Hence, those concerned about security disable the
+> HTML filter:
 
-Please use CVE-2010-2476
+Attached patch is a quick way to fix it. It increases the processing time 
+(it has to run filter() at least twice per message,) but ensures that no 
+undesired html is returned (unless one of the existing routines misses 
+something.)
 
-Thanks.
+What do you think about it?
 
+Regards,
 -- 
-    JB
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
+
+View attachment "mhonarc.CVE-2010-4524.patch" of type "text/x-patch" (710 bytes)
