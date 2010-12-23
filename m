@@ -1,37 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/16/13
-Message-ID: <AANLkTikyxAZBp63FxY26_MS6afDZO59r2FNoWF9W-GmT@mail.gmail.com>
-Date: Thu, 16 Sep 2010 10:47:05 +0300
-From: Pekka Enberg <penberg@...nel.org>
-To: KOSAKI Motohiro <kosaki.motohiro@...fujitsu.com>
-Cc: David Rientjes <rientjes@...gle.com>, Linus Torvalds <torvalds@...ux-foundation.org>,  Andrew Morton <akpm@...ux-foundation.org>, linux-kernel@...r.kernel.org,  oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>,  Kees Cook <kees.cook@...onical.com>, Al Viro <viro@...iv.linux.org.uk>,  Oleg Nesterov <oleg@...hat.com>, Neil Horman <nhorman@...driver.com>, linux-fsdevel@...r.kernel.org,  pageexec@...email.hu, Brad Spengler <spender@...ecurity.net>,  Eugene Teo <eugene@...hat.com>, KAMEZAWA Hiroyuki <kamezawa.hiroyu@...fujitsu.com>,  linux-mm <linux-mm@...ck.org>
-Subject: Re: [PATCH 1/4] oom: remove totalpage normalization from oom_badness()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/23/4
+Message-ID: <4D13820A.7060205@redhat.com>
+Date: Thu, 23 Dec 2010 18:08:26 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, Luke Macken <lmacken@...hat.com>
+Subject: CVE Request -- Django 1.2.4, Django 1.1.3 and Django 1.3 beta 1 -- addressing two security flaws
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Sep 16, 2010 at 9:57 AM, KOSAKI Motohiro
-<kosaki.motohiro@...fujitsu.com> wrote:
->> On Thu, 16 Sep 2010, KOSAKI Motohiro wrote:
->>
->> > Current oom_score_adj is completely broken because It is strongly bound
->> > google usecase and ignore other all.
->> >
->>
->> We've talked about this issue three times already.  The last two times
->> you've sent a revert patch, you failed to followup on the threads:
->>
->>       http://marc.info/?t=128272938200002
->>       http://marc.info/?t=128324705200002
->>
->> And now you've gone above Andrew, who is the maintainer of this code, and
->> straight to Linus.  Between that and your failure to respond to my answers
->> to your questions, I'm really stunned at how unprofessional you've handled
->> this.
->
-> Selfish must die. you failed to persuade to me. and I havgen't get anyone's objection.
-> Then, I don't care your ugly whining.
+Hello Steve, vendors,
 
-I haven't followed the discussion at all so I hope you don't mind me
-jumping in. Are there some real-world bug reports where OOM rewrite is
-to blame? Why haven't those been fixed?
+   Django upstream recently released Django 1.2.4, Django 1.1.3 and Django 1.3 beta 1
+versions of Django addressing two security flaws:
 
-                        Pekka
+   I),   Information leakage in Django administrative interface
+   II),  Denial-of-service attack in password-reset mechanism
+
+   References:
+   [1] http://www.djangoproject.com/weblog/2010/dec/22/security/
+   [2] https://bugzilla.redhat.com/show_bug.cgi?id=665373
+
+Could you allocate CVE ids for these issues?
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
