@@ -1,18 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/05/1
-Message-ID: <87zkush569.fsf@mid.deneb.enyo.de>
-Date: Tue, 05 Oct 2010 20:21:02 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/23/1
+Message-ID: <4D12C094.4020005@redhat.com>
+Date: Thu, 23 Dec 2010 11:23:00 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Nagios format string issues
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: irda: prevent integer underflow in IRLMP_ENUMDEVICES
 Content-Type: text/plain; charset=utf-8
 
-Nagios Core 3.2.3 inclues fixes for a few format string bugs:
+ From Dan Rosenbugs :>, "If the user-provided len is less than the 
+expected offset, the IRLMP_ENUMDEVICES getsockopt will do a 
+copy_to_user() with a very large size value.  While this isn't be a 
+security issue on x86 because it will get caught by the access_ok() 
+check, it may leak large amounts of kernel heap on other architectures. 
+  In any event, this patch fixes it."
 
-<http://article.gmane.org/gmane.network.nagios.announce/85>
+http://www.spinics.net/lists/netdev/msg150842.html
 
-The patch Guillaume submitted is here:
-
-<http://article.gmane.org/gmane.network.nagios.devel/7493>
-
-Does anybody know if this is on an exploitable code path?
+Thanks, Eugene2
