@@ -1,22 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/15/6
-Message-ID: <4D089A5C.50707@internetionals.nl>
-Date: Wed, 15 Dec 2010 11:37:16 +0100
-From: Justin Ossevoort <justin@...ernetionals.nl>
-To: oss-security@...ts.openwall.com
-CC: Tomas Hoger <thoger@...hat.com>
-Subject: Re: Breaking the links: Exploiting the linker
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/23/2
+Message-ID: <4D13601C.3030703@redhat.com>
+Date: Thu, 23 Dec 2010 15:43:40 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, Nicolas Sebrecht <nicolas.s-dev@...oste.net>, david b <db.pub.mail@...il.com>, Johannes Stezenbach <js@...21.net>, Christoph Höger <choeger@...tu-berlin.de>, John Goerzen <jgoerzen@...plete.org>
+Subject: CVE Request -- OfflineIMAP -- 1), failed to validate remote SSL server certificate 2), allows SSLv2 protocol
 Content-Type: text/plain; charset=utf-8
 
-On 15/12/10 10:45, Tomas Hoger wrote:
-> Maybe you want to suggest something like this instead:
-> 
->   LD_LIBRARY_PATH=${LD_LIBRARY_PATH:+$LD_LIBRARY_PATH:}/path/to/app
+Hello Steve, vendors,
 
-And then ofcourse with the recommended quotes:
+   two issues with security implications have been recently reported against OfflineIMAP:
 
-LD_LIBRARY_PATH="${LD_LIBRARY_PATH:+$LD_LIBRARY_PATH:}/path/to/app"
+   I), Didn't check SSL server certificate
 
-Regards,
+   Description:
+   OfflineIMAP prior commit:
+   [1] https://github.com/nicolas33/offlineimap/commit/4f57b94e2333c37c5a7251fc88dfeda9bc0b226a
 
-    justin....
+   did not perform SSL server certificate validation,
+   even when "ssl = yes" option was specified in the
+   configuration file. If an attacker was able to get
+   a carefully-crafted certificate signed by a
+   Certificate Authority trusted by OfflineIMAP,
+   the attacker could use the certificate during a
+   man-in-the-middle attack and potentially confuse
+   OfflineIMAP into accepting it by mistake.
+
+   References:
+   [2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=603450
+   [3] https://bugzilla.redhat.com/show_bug.cgi?id=665382
+
+   II), Allows SSLv2 protocol
+
+   Description:
+   In commit:
+   [4] https://github.com/nicolas33/offlineimap/commit/4f57b94e2333c37c5a7251fc88dfeda9bc0b226a
+
+   when SSL server certificate validation support was added
+   to OfflineIMAP it was still possible to use SSL v2 protocol
+   version. Version 2 of SSL protocol version is known
+   to be prone to multiple deficiencies, each of them
+   having security implications (to mention some of them):
+   [5] http://en.wikipedia.org/wiki/Secure_Sockets_Layer#Security
+
+   Thus SSLv2 protocol version should be disabled in OfflineIMAP.
+
+   References:
+   [6] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=606962
+   [7] https://bugzilla.redhat.com/show_bug.cgi?id=665386
+
+Could you allocate CVE ids for these issues? (though opened for
+discussion of any / none of them worthy of it)
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
