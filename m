@@ -1,40 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/01/10
-Message-ID: <1677914590.229811270149964194.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 1 Apr 2010 15:26:04 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request: policykit (minor)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/23/7
+Message-ID: <20101223192602.GA4105@sig21.net>
+Date: Thu, 23 Dec 2010 20:26:03 +0100
+From: Johannes Stezenbach <js@...21.net>
+To: Nicolas Sebrecht <nicolas.s-dev@...oste.net>
+Cc: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, oss-security <oss-security@...ts.openwall.com>, david b <db.pub.mail@...il.com>, Christoph Höger <choeger@...tu-berlin.de>, John Goerzen <jgoerzen@...plete.org>
+Subject: Re: CVE Request -- OfflineIMAP -- 1), failed to validate remote SSL server certificate 2), allows SSLv2 protocol
 Content-Type: text/plain; charset=utf-8
 
------ "Kees Cook" <kees@...ntu.com> wrote:
+On Thu, Dec 23, 2010 at 07:55:50PM +0100, Nicolas Sebrecht wrote:
+> On Thu, Dec 23, 2010 at 03:43:40PM +0100, Jan Lieskovsky wrote:
+> > 
+> >   II), Allows SSLv2 protocol
+...
+> >   [6] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=606962
 
-> Hi,
-> 
-> Dan Rosenberg found[1] a minor information disclosure vulnerability
-> in pkexec, which has been fixed[2] upstream.  It would disclose the
-> existence of files a given user would normally not be able to
-> confirm:
-> 
-> $ pkexec /home/drosenbe/secret/hidden
-> (password prompt)
-> $ pkexec /home/drosenbe/secret/doesnotexist
-> Error getting information about /home/drosenbe/secret/doesnotexist: No
-> such file or directory
-> 
-> Thanks,
-> 
-> -Kees
-> 
-> [1] Ubuntu bug: https://launchpad.net/bugs/532852
-> [2]
-> http://cgit.freedesktop.org/PolicyKit/commit/?id=14bdfd816512a82b1ad258fa143ae5faa945df8a
-> 
+Please note that I reported this issue for the python2.6
+package and not for the offlineimap package.  While I
+noticed it with offlineimap, I think the bug is either
+in Python or in openssl.  According to Python documentation
+it should default to use SSLv3.
 
-Please use CVE-2010-0750
+OTOH it wouldn't hurt if offlineimap would allow the user
+to specify the protocol version (TLSv1, SSLv3, SSLv2).
 
-Thanks.
 
--- 
-    JB
+Thanks
+Johannes
