@@ -1,37 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/23/8
-Message-ID: <1290524646.5990.4.camel@localhost>
-Date: Tue, 23 Nov 2010 10:04:06 -0500
-From: Jon Oberheide <jon@...rheide.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel address leaks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/23/6
+Message-ID: <20101223185550.GA14193@vidovic>
+Date: Thu, 23 Dec 2010 19:55:50 +0100
+From: Nicolas Sebrecht <nicolas.s-dev@...oste.net>
+To: Jan Lieskovsky <jlieskov@...hat.com>
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security <oss-security@...ts.openwall.com>, Nicolas Sebrecht <nicolas.s-dev@...oste.net>, david b <db.pub.mail@...il.com>, Johannes Stezenbach <js@...21.net>, Christoph Höger <choeger@...tu-berlin.de>, John Goerzen <jgoerzen@...plete.org>
+Subject: Re: CVE Request -- OfflineIMAP -- 1), failed to validate remote SSL server certificate 2), allows SSLv2 protocol
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 2010-11-23 at 09:59 +0100, Yves-Alexis Perez wrote: 
-> On lun., 2010-11-22 at 18:54 -0500, Michael Gilbert wrote:
-> > Oh, and if you get CVEs assigned, that kind of forces them to fix the
-> > problem, right?
-> > 
-> I'm not that sure (there are CVEs for issues considered too small by the
-> developers involved, not only in Linux, which are still opened), and I'm
-> not sure using CVE system for “blackmailing” is a good usage for that
-> tool.
+On Thu, Dec 23, 2010 at 03:43:40PM +0100, Jan Lieskovsky wrote:
+> 
+>   I), Didn't check SSL server certificate
+> 
+>   Description:
+>   OfflineIMAP prior commit:
+>   [1] https://github.com/nicolas33/offlineimap/commit/4f57b94e2333c37c5a7251fc88dfeda9bc0b226a
+> 
+>   did not perform SSL server certificate validation,
+>   even when "ssl = yes" option was specified in the
+>   configuration file. If an attacker was able to get
+>   a carefully-crafted certificate signed by a
+>   Certificate Authority trusted by OfflineIMAP,
+>   the attacker could use the certificate during a
+>   man-in-the-middle attack and potentially confuse
+>   OfflineIMAP into accepting it by mistake.
+>
+>   References:
+>   [2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=603450
+>   [3] https://bugzilla.redhat.com/show_bug.cgi?id=665382
+> 
 
-I think calling it "blackmail" is a bit hyperbolic. Rather, it's simply
-the next step in the vulnerability disclosure process: (1) research
-reports vulnerability to vendor; (2) vendor refuses to fix
-vulnerability; (3) research discloses vulnerability and requests CVE.
+First of all, thank you very much Jan and all the Redhat team for
+reporting it up to the CVE database.
 
-Am I correct in assuming that it is acceptable procedure to assign CVEs
-to unpatched vulnerabilities?
+The given patch from Sebastian Spaeth has been released in v6.3.2-rc1. I
+encourage distribution maintainers who want this fix to either
+
+  deploy the RC release as is
+
+or 
+
+  backport the fix against the last release they own.
+
+I expect to release a new stable soon but I still didn't have feedback
+from users using SSL. The lack of feedback could mean that
+
+  OfflineIMAP users don't expect SSL to work by still refering to the
+  documentation they know (stating that SSL checks is not supported)
+
+or 
+
+  they don't hit problems at all.
+
+So, I'll wait a bit more before releasing the next stable.
+
+>   II), Allows SSLv2 protocol
+> 
+>   Description:
+>   In commit:
+>   [4] https://github.com/nicolas33/offlineimap/commit/4f57b94e2333c37c5a7251fc88dfeda9bc0b226a
+> 
+>   when SSL server certificate validation support was added
+>   to OfflineIMAP it was still possible to use SSL v2 protocol
+>   version. Version 2 of SSL protocol version is known
+>   to be prone to multiple deficiencies, each of them
+>   having security implications (to mention some of them):
+>   [5] http://en.wikipedia.org/wiki/Secure_Sockets_Layer#Security
+> 
+>   Thus SSLv2 protocol version should be disabled in OfflineIMAP.
+> 
+>   References:
+>   [6] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=606962
+>   [7] https://bugzilla.redhat.com/show_bug.cgi?id=665386
+
+True.
+
+> Could you allocate CVE ids for these issues? (though opened for
+> discussion of any / none of them worthy of it)
+
+As the maintainer of OfflineIMAP, I think both issues should have their
+entry in the CVE List.
+
+Let us know if you want more clarifications.
 
 Regards,
-Jon Oberheide
 
 -- 
-Jon Oberheide <jon@...rheide.org>
-GnuPG Key: 1024D/F47C17FE
-Fingerprint: B716 DA66 8173 6EDD 28F6  F184 5842 1C89 F47C 17FE
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+Nicolas Sebrecht
