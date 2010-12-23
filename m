@@ -1,57 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/24/5
-Message-ID: <4B854AC1.4070206@redhat.com>
-Date: Wed, 24 Feb 2010 16:50:25 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: Jamie Strandboge <jamie@...onical.com>
-CC: oss-security@...ts.openwall.com
-Subject: Re: CVE assignment notification -- CVE-2010-0427 -- sudo fails to reset group permissions if runas_default set
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/23/5
+Message-ID: <4D138220.2050503@complete.org>
+Date: Thu, 23 Dec 2010 11:08:48 -0600
+From: John Goerzen <jgoerzen@...plete.org>
+To: oss-security <oss-security@...ts.openwall.com>
+CC: Jan Lieskovsky <jlieskov@...hat.com>,  "Steven M. Christey" <coley@...us.mitre.org>, Nicolas Sebrecht <nicolas.s-dev@...oste.net>,  david b <db.pub.mail@...il.com>, Johannes Stezenbach <js@...21.net>, Christoph Höger <choeger@...tu-berlin.de>
+Subject: Re: CVE Request -- OfflineIMAP -- 1), failed to validate remote SSL server certificate 2), allows SSLv2 protocol
 Content-Type: text/plain; charset=utf-8
 
-Hi Jamie,
+On 12/23/2010 08:43 AM, Jan Lieskovsky wrote:
+> Hello Steve, vendors,
+>
+> two issues with security implications have been recently reported
+> against OfflineIMAP:
+>
+> I), Didn't check SSL server certificate
 
-   there are two sudo issues:
-   a, CVE-2010-0426 sudoedit to allow to run arbitrary code
-   b, CVE-2010-0427 sudo fails to reset cached groups, when
-                     runas_default option set
+Please note, by the way, that I am no longer OfflineIMAP maintainer; 
+Nicolas Sebrecht, who I see CC'd, is.  Since I was CC'd, I'm assuming 
+someone is looking for some historical perspective.
 
-Jamie Strandboge wrote:
-> On Tue, 2010-02-23 at 17:17 +0100, Jan Lieskovsky wrote:
-> 
-> Thanks for your investigation.
-> 
->>    b, v1.7.x based versions of sudo are not affected by this
->>       flaw due the differences in the way sudoers file is parsed.
+This isn't recent.  OfflineIMAP didn't check the certificate because it 
+was impossible to do so in Python until Python 2.6; Python's built-in 
+SSL API (socket.ssl) simply didn't provide any way to do it. 
+OfflineIMAP's SSL support *significantly* predates Python 2.6 (it has 
+been in OfflineIMAP since at least 2002).  This limitation has been well 
+and widely documented, both in OfflineIMAP and in Python.  For instance, 
+at http://docs.python.org/release/2.5/lib/module-socket.html in the 
+description of ssl:
 
-   This comment speaks only about CVE-2010-0427 issue.
-> 
-> This is in conflict with Todd's statement in his writeup:
-> "Sudo versions affected:
-> 1.6.9 through 1.7.2p3 inclusive.
-> ...
-> Fix:
-> The bug is fixed in sudo 1.7.2p4 and 1.6.9p21"
+"Warning: This does not do any certificate verification!"
 
-   Above quotes from Todd are referring to CVE-2010-0426 issue (and these
-   are valid).
-> 
-> 
-> Upstream appears to have patched 1.7.2. Can you explain why it is not
-> affected?
+So if you're going to have a list of vulnerable versions, it probably 
+goes back all the way to 1.0.0.
 
-   But you mean CVE-2010-0426 here, right? For CVE-2010-0427 wrt to v1.7.x
-   you can check reproducer in:
+It is up to you folks whether you want to issue a CVE for it or not.
 
-     http://www.gratisoft.us/bugzilla/show_bug.cgi?id=349
+In my *personal* opinion, it's a little silly; you might as well issue a 
+CVE on telnet because it is vulnerable to sniffing and MITM attacks. 
+"Well, yes it is," you might say, "and everybody knows it is, and it's 
+widely known, so why issue an advisory?"  SSL support in OfflineIMAP 
+provided some measure of utility to connect to servers that only 
+accepted SSL connections, as well as some measure of making attacks more 
+difficult.  It was all that was practical in Python at the time.  But I 
+don't expect to have a voice on that now, so feel free to ignore my opinion.
 
-   that it isn't working against v1.7.x.
+That's not to say I was happy with the situation.  I wasn't.  But such 
+was all that was available.
 
-   I probably confused you with 'more about sudo "fails to reset group
-   permissions if runas_default set" issue', when not saying this is
-   different / new issue.
+I have seen patches to address this go across the mailing list, and I'm 
+sure Nicolas could discuss that better than I at this point, so with 
+that I'll bow out and leave this discussion of what to do with this to 
+the people that are involved with the project presently.
 
-   Sorry for that.
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+- John
