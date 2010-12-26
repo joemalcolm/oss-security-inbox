@@ -1,58 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/07/2
-Message-ID: <20100907083546.GA19866@suse.de>
-Date: Tue, 7 Sep 2010 10:35:46 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
-To: oss-security@...ts.openwall.com
-Cc: security@...nel.org, spender@...ecurity.net
-Subject: /proc infoleaks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/26/2
+Message-ID: <AANLkTimAWN8gB3DZrHN_4qappYdOM0PzZjjiF+0EZqSz@mail.gmail.com>
+Date: Sun, 26 Dec 2010 10:29:27 -0200
+From: Felipe Pena <felipensp@...il.com>
+To: Eygene Ryabinkin <rea-sec@...elabs.ru>
+Cc: oss-security@...ts.openwall.com, kalle@....net, felipe@....net,  cellog@....net, pajoye@....net
+Subject: Re: CVE-2010-2094: PECL's phar code is vulnerable too
 Content-Type: text/plain; charset=utf-8
 
-I have been elected to receive the bashing from all sides,
-so here we go.
-It is not about a new vulnerability or even a new discussion
-but needs to be discussed, at least that we have a clear
-statement about the status quo.
+Hi Eygene,
 
-Recent i-CAN-haz-MODHARDEN.c has shown once *again* that
-certain file permissions make no sense except to exploitation
-development. There is no reason to have files like
+2010/12/26 Eygene Ryabinkin <rea-sec@...elabs.ru>
 
-/proc/kallsyms
-/proc/slabinfo
-/proc/zoneinfo
+> Good day.
+>
+> It turns out that the PECL's phar extension is vulnerable to the
+> string format vulnerabilities announced in MOPS advisories:
+>  MOPS-2010-024:
+> http://svn.php.net/viewvc/pecl/phar/trunk/stream.c?revision=286339&view=markup#l473
+>  MOPS-2010-025:
+> http://svn.php.net/viewvc/pecl/phar/trunk/dirstream.c?revision=284729&view=markup#l363
+>  MOPS-2010-026:
+> http://svn.php.net/viewvc/pecl/phar/trunk/stream.c?revision=286339&view=markup#l764
+>  MOPS-2010-027:
+> http://svn.php.net/viewvc/pecl/phar/trunk/stream.c?revision=286339&view=markup#l120
+> ,
+>
+> http://svn.php.net/viewvc/pecl/phar/trunk/stream.c?revision=286339&view=markup#l131
+> ,
+>
+> http://svn.php.net/viewvc/pecl/phar/trunk/stream.c?revision=286339&view=markup#l143
+>  MOPS-2010-028:
+> http://svn.php.net/viewvc/pecl/phar/trunk/stream.c?revision=286339&view=markup#l195
+>
+> I think that the entry should be extended.  Don't know if PECL
+> code is going to be fixed.  CC'ing PHP developers who were last
+> to modify PECL's phar code.
+>
 
-and probably a lot of others world readable. The symbol
-addresses might be hard-coded for a certain targetlist
-inside the exploit so you can argue that there
-wont be any protection benefit from making it unreadable.
-However this argument aint a reason to also leak it for self-compiled
-kernels and doesnt even hold for dynamic/runtime content
-like slabinfos etc.
-It would be nice to have something like
-
-echo 1 > /proc/quiet
-
-or something like a umask for kernel-owned proc
-entries so that you have a polite default and are
-still able to enable it for certain profiling tools
-or whereever you need it.
-
-I know that hardening patches already have these
-secure defaults; with reason. Making kernel exploits
-has been really too easy in past if you get all the
-mem layout and symbols for free. Of course that doesnt
-free one from writing good code but its about time
-(since years actually) to raise the level.
-
-regards,
-Sebastian
-
+I've backported the fixes to pecl/phar. Thanks.
 
 -- 
-~
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-~ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+Regards,
+Felipe Pena
 
