@@ -1,53 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/11/22/4
-Message-ID: <1856292651-1290385348-cardhu_decombobulator_blackberry.rim.net-643768076-@b16.c11.bise7.blackberry>
-Date: Mon, 22 Nov 2010 00:23:39 +0000
-From: "Benji" <me@...ji.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/26/3
+Message-ID: <xmewXvkdHZjVW7RzZ6Rici7rkc0@QsmfhJNucgI88DfvPJdT1/nyboE>
+Date: Sun, 26 Dec 2010 22:22:07 +0300
+From: Eygene Ryabinkin <rea-sec@...elabs.ru>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: gif2png: command-line buffer overflow problem
+Cc: kalle@....net, felipe@....net, cellog@....net, pajoye@....net
+Subject: Re: Re: CVE-2010-2094: PECL's phar code is vulnerable too
 Content-Type: text/plain; charset=utf-8
 
-"File name too long"
+Felipe, good day.
 
-------Original Message------
-From: Dan Rosenberg
-To: oss-security@...ts.openwall.com
-ReplyTo: oss-security@...ts.openwall.com
-Subject: Re: [oss-security] CVE Request: gif2png: command-line buffer overflow problem
-Sent: Nov 22, 2010 00:19
+Sun, Dec 26, 2010 at 10:29:27AM -0200, Felipe Pena wrote:
+> I've backported the fixes to pecl/phar.
 
-How could this possibly be exploited?  If you can trick a user into
-running gif2png [exploit payload], then that user has already lost.
-
-See also:
-make `perl -e 'print "A"x10000'`
-
--Dan
-
-On Sun, Nov 21, 2010 at 6:45 PM, Kurt Seifried <kurt@...fried.org> wrote:
-> This is from 2009 but doesn't appear to have a CVE (no "gif2png" in
-> the CVE database).
->
-> Sources:
-> https://bugzilla.redhat.com/show_bug.cgi?id=547515
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=550978
-> http://lists.grok.org.uk/pipermail/full-disclosure/2009-December/072009.html
->
-> Description:
-> A buffer overflow in gif2png 2.5.3 and earlier allows an attacker to
-> execute arbitrary code via a long command line argument passed to the
-> gif2png binary.
->
-> It was first claimed that it was fixed in 2.5.2 but it is reported
-> that it isn't fixed, I tested 2.5.3 and it still seg faults the same
-> way as 2.5.2 so it would appear it was never fixed, as the software
-> was last updated in 2005 I guess this one never gets fixed.
->
-> --
-> Kurt Seifried
-> kurt@...fried.org
-> tel: 1-703-879-3176
->
-
-
-Sent from my BlackBerry® wireless device
+Good news.  Do you plan to tag a release?
+-- 
+Eygene
