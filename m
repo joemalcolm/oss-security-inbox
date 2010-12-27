@@ -1,43 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/10/12/1
-Message-ID: <4CB3A0E3.1090809@wireshark.org>
-Date: Mon, 11 Oct 2010 16:42:27 -0700
-From: Gerald Combs <gerald@...eshark.org>
-To: Vincent Danen <vdanen@...hat.com>
-CC: oss-security@...ts.openwall.com
-Subject: Re: CVE requests: Poppler, Quassel, Pyfribidi, Overkill, DocUtils, FireGPG, Wireshark
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/27/1
+Message-ID: <4D18971F.903@redhat.com>
+Date: Mon, 27 Dec 2010 14:39:43 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>, oss-security <oss-security@...ts.openwall.com>
+CC: John Bailey <rekkanoryo@...kanoryo.org>, Stu Tomlinson <stu@...nilmot.com>, Matthew Barnes <mbarnes@...hat.com>
+Subject: CVE Request -- Pidgin v2.7.6 <= x <= v2.7.8 -- MSN DirectConnect DoS (crash due NULL ptr dereference) after receiving a short P2P message
 Content-Type: text/plain; charset=utf-8
 
-Vincent Danen wrote:
-> * [2010-10-01 13:33:47 -0700] Gerald Combs wrote:
-> 
->> Vincent Danen wrote:
->>> * [2010-09-29 15:06:31 -0400] Josh Bressers wrote:
->>>
->>>>> 7. Wireshark BER dissector
->>>>> http://archives.neohapsis.com/archives/bugtraq/2010-09/0088.html
->>>>>
->>>>
->>>> This one looks like a stack overflow, the advisory isn't very clear,
->>>> but
->>>> claims there are two possible outcomes. We can always split later if
->>>> needed.
->>>> CVE-2010-3445
->>>
->>> Gerald, are you aware of this issue?  Do you have further details
->>> regarding it?  I poked around in bugzilla a bit but couldn't find
->>> anything.
->>>
->>> It claims 1.4.0, but is not clear as to whether or not older versions
->>> are affected.
->>
->> It's been fixed in the trunk (r34111) and is scheduled for inclusion in
->> 1.4.1 and 1.2.12. We're tracking it in bug 5230:
->>
->>  https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5230
->>
->> The bug affects all BER dissectors and not just SNMP.
-> 
-> Great.  Thank you for the information, Gerald.  That is very helpful.
+Hello Josh, Steve, vendors,
 
-FYI, 1.4.1 and 1.2.12 have been released.
+   Pidgin upstream has released the latest v2.7.9 version:
+   [1] http://pidgin.im/pipermail/support/2010-December/009251.html
+
+   addressing one security flaw in the MSN protocol:
+   [2] http://pidgin.im/news/security/?id=49
+
+   Upstream changeset:
+   [3] http://developer.pidgin.im/viewmtn/revision/info/aaa07bde3c51d3684391ae6ed86b6dbaeab5d031
+
+   References:
+   [4] https://bugzilla.redhat.com/show_bug.cgi?id=665421
+
+   Further issue details from Stu Tomlinson (issue discoverer):
+   <begin quote>
+   I should clarify that because this is in the direct connection code it
+   is not dependent on what the servers send us but rather what other
+   clients send, so is susceptible to attack by malicious clients.
+
+   I think only libpurple 2.7.6-2.7.8 are vulnerable because it was
+   introduced by the MSN code remodelling that was merged in 2.7.6, not due
+   to what the servers send.
+
+   Regards,
+   Stu.
+   </end quote>
+
+Could you allocate a CVE id for this issue?
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
