@@ -1,38 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/09/13/9
-Message-ID: <732932511.2320481284411612307.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 13 Sep 2010 17:00:12 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/29/1
+Message-ID: <20101229211414.4a2a76ac@redhat.com>
+Date: Wed, 29 Dec 2010 21:14:14 +0100
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: mailscanner, multiple vulnerabilities
+Subject: Re: IO::Socket::SSL perl module: CVE-2010-4501/CVE-2010-4334 dupe
 Content-Type: text/plain; charset=utf-8
 
------ "Raphael Geissert" <geissert@...ian.org> wrote:
-> 
-> I reported some vulnerabilities in mailscanner but forgot to assign ids.
-> Could somebody assign ones?
-> 
-> Incomplete fix for CVE-2008-5313:
-> http://bugs.debian.org/596403
+On Fri, 24 Dec 2010 15:22:04 +0100 Moritz Muehlenhoff wrote:
 
-Please use CVE-2010-3095
+> CVE-2010-4501 seems to be a duplicate of CVE-2010-4334.
 
-> 
-> update{_bad,}_phishing_sites scripts may download and use spoofed
-> files:
-> http://bugs.debian.org/596396
-
-CVE-2010-3292
-
-> 
-> Local users may prevent virus signatures from being updated:
-> http://bugs.debian.org/596397
-> 
-
-CVE-2010-3293
-
-Thanks
+See:
+http://thread.gmane.org/gmane.comp.security.oss.general/3902/focus=3925
 
 -- 
-    JB
+Tomas Hoger / Red Hat Security Response Team
