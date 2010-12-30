@@ -1,58 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/29/7
-Message-Id: <20100329175246.b3e4e1cd.reed@reedloden.com>
-Date: Mon, 29 Mar 2010 17:52:46 -0500
-From: Reed Loden <reed@...dloden.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE Request: ViewVC 1.1.5 / 1.0.11 -- XSS via user-provided 'search_re' input
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/30/3
+Message-ID: <AANLkTi=0JqyKKcFngq_UDTPb1-Eue+fk8gnZtxQuXdj_@mail.gmail.com>
+Date: Thu, 30 Dec 2010 13:48:23 -0600
+From: Earl Hood <earl@...lhood.com>
+To: Jeff Breidenbach <jeff@....org>
+Cc: oss-security <oss-security@...ts.openwall.com>,  "Steven M. Christey" <coley@...us.mitre.org>, non customers <non-customers@...ramail.com>, geissert@...ian.org
+Subject: Re: CVE Request -- MHonArc: Improper escaping of certain HTML sequences (XSS)
 Content-Type: text/plain; charset=utf-8
 
-Just received an announcement stating ViewVC 1.1.5 and 1.0.11 were
-released today (right on the heels of 1.1.4 and 1.0.10, for which I
-still haven't received a CVE). Looks like they fix an XSS that needs
-a CVE assigned.
+On Thu, Dec 30, 2010 at 1:01 PM, Jeff Breidenbach <jeff@....org> wrote:
+> Earl,
+> http://www.mhonarc.org/MHonArc/doc/faq/security.html#htmlexchow
+> One of my hats is the Debian package maintainer for mhonarc. I'm tempted to
+> disable HTML mail support by default rather than try to improve it. What do
+> you think about the idea? What do you think about implementation?
 
-"security fix: escape user-provided search_re input to avoid XSS
-attack"
+Personally, I would like HTML disabled by default, but if I do, I,
+and/or the user's list, will get burdened by messages of why
+HTML email does not render correctly.
 
-http://viewvc.tigris.org/source/browse/viewvc/trunk/CHANGES?r1=2342&r2=2359&pathrev=HEAD
+Many mhonarc users are not tech savvy, and I do not have the time and
+resources to deal with the potential flood of emails.
 
-Here's the patch for the XSS:
-http://viewvc.tigris.org/source/browse/viewvc?view=rev&revision=2344
+A nice thing to have would be a whitelist-based filter, but such
+a filter would depend on a robust HTML parser, and I'm not sure
+one really exists for Perl.  Because of how different browsers allow
+for different craziness to happen in HTML data, it is a non-trivial
+task to generate a robust parser.  Because of this, it is still
+likely someone could still bypass such a filter by exploiting
+a weakness in the HTML parser.
 
-"""
-There were too many ways to do something as simple as HTML escaping in
-the ViewVC codebase.  Simplify, conjoin, remove, etc.
+I think the double pass of the current filter may be the best short-term
+solution now, but the DoS aspect is a concern.  There are some degenerate
+cases in the Perl regex engine (at least in the past) that I had to
+work around with the current filter, and it appears there may still
+be other degenerate cases.  The cases also varied depending on
+the version of Perl being used.
 
-* lib/sapi.py
-  (escape): New function.  *The* preferred HTML-escaping mechanism.
-  (Server.escape): New common Server object escape mechanism (which
-    uses the aforementioned escape(), of course).
-  (CgiServer.escape, WsgiServer.escape, AspServer.escape,
-   ModPythonServer.escape): Lose as unnecessary.
+Thinking about it a bit, the example provided in the original post
+is definitely invalid HTML, and normal email clients would never create
+such a thing.  Therefore, would it be sufficient to strip-out, or reject,
+data that clear has invalid tags like:
 
-* lib/viewvc.py
-  (Request.get_form): Escape hidden form variable names and values.
-  (htmlify): Remove.
-  (): Replace all uses of cgi.escape() and htmlify() with (directly or
-    indirectly) sapi.escape().
-  
-* lib/query.py
-  (main): Use server.escape() instead of cgi.escape().
+  <scr<body>ipt>alert("elsa");</scr<body>ipt>
 
-* lib/blame.py
-  (HTMLBlameSource.__getitem__): Use sapi.escape() instead of
-    cgi.escape().
+For example, the sequence of "<scr<" is invalid.  It is simple
+to provide a pre-check for such occurrences, and if it exists,
+"reject" the data.  For example, the following regex, if true,
+indicates bad HTML:
 
-* lib/idiff.py
-  (_mdiff_split, _differ_split): Use sapi.escape() instead of
-    cgi.escape().
-"""
+  /<[^>]*</
 
-~reed
+If a '<' occurs before a '>' after an initial '<', something is
+not right.  The filter would return nothing, signally mhonarc
+to use the next alternative part (if provided), or display no
+content for the message.
 
--- 
-Reed Loden - <reed@...dloden.com>
-
-Content of type "application/pgp-signature" skipped
+--ewh
