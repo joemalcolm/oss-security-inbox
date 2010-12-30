@@ -1,51 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/05/2
-Message-ID: <loom.20101205T193941-313@post.gmane.org>
-Date: Sun, 5 Dec 2010 18:58:07 +0000 (UTC)
-From: Bhadrinath <bitstrat@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Interesting behavior with struct initiailization
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/30/2
+Message-ID: <AANLkTik=DM41TshM+5HwZ-TGM+trZLXAj_Z2d3yP0SyV@mail.gmail.com>
+Date: Thu, 30 Dec 2010 11:01:35 -0800
+From: Jeff Breidenbach <jeff@....org>
+To: Earl Hood <earl@...lhood.com>
+Cc: oss-security <oss-security@...ts.openwall.com>,  "Steven M. Christey" <coley@...us.mitre.org>, non customers <non-customers@...ramail.com>
+Subject: Re: CVE Request -- MHonArc: Improper escaping of certain HTML sequences (XSS)
 Content-Type: text/plain; charset=utf-8
 
-One solution that could ensure no padding bits are copied uninitialized,
+Earl,
 
-*******************************************************************************
-struct test{ int a; char b; int c;};
+http://www.mhonarc.org/MHonArc/doc/faq/security.html#htmlexchow
 
+One of my hats is the Debian package maintainer for mhonarc. I'm tempted to
+disable HTML mail support by default rather than try to improve it. What do
+you think about the idea? What do you think about implementation? The
+package does not have control over the resource file, so it would probably
+have to be a code patch.
 
-// Let arg be the one to be copied into user space
-struct test arg = { .a = 1, .b = 2, .c = 3 }; 
-
-// Create an equivalent structure
-struct test argC;
-
-.
-.
-.
-// Do all the operations on arg and just before passing it to the function
-// clear the argC to zero
-
-memset_s(&argC, 0,sizeof argC);
-
-// Now copy the contents of arg into argC one by one
-memcpy(&argC.a,&arg.a,sizeof arg.a);
-memcpy(&argC.b,&arg.b,sizeof arg.b);
-memcpy(&argC.c,&arg.c,sizeof arg.c);
-//This ensures that no uninitialized padding bits are passed to the user space
-
-copy_to_user(ptr,&argC,sizeof argC);
-
-*******************************************************************************
-
-Comments and other ideas are welcome.
-
-Regards
-Bhadrinath
-
-
-
-
-
-
-
+-Jeff
 
