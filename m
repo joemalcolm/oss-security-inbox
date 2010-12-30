@@ -1,22 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/04/27/3
-Message-ID: <20100427064538.GC8346@mutt-is-awesome>
-Date: Tue, 27 Apr 2010 09:45:39 +0300
-From: Eren Türkay <eren@...dus.org.tr>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel: tty: release_one_tty() forgets to put pids
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/30/4
+Message-ID: <4d1cf59f.26092a0a.1c22.ffff9576@mx.google.com>
+Date: Thu, 30 Dec 2010 15:12:04 -0600
+From: Earl Hood <earl@...lhood.com>
+To: oss-security <oss-security@...ts.openwall.com>
+cc: "Steven M. Christey" <coley@...us.mitre.org>, "non customers" <non-customers@...ramail.com>, jeff@....org, geissert@...ian.org, vendor-sec@....de, mhonarc-dev@...narc.org
+Subject: Fix for CVE-2010-4524 and CVE-2010-1677 ready for verfication
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Apr 15, 2010 at 08:44:53AM +0800, Eugene Teo wrote:
-> pgrp member in struct tty_struct was converted to struct pid in
-> commit ab521dc0, so kernels of version v2.6.26-rc1 and above are
-> affected by this.
+I've committed in a potential fix, and made a
+snapshot build that should address the following
+recent security issues:
 
-FYI. We use v2.6.25.20 in one of our products. As far as I see from
-include/linux/tty.h in 2.6.25 archive that pgrp member in tty_struct is already converted
-to "struct pid". I haven't checked the older kernel releases but this
-issue exists in 2.6.25. It would be very helpful if someone checked
-older kernel releases to correctly determine which releases are vulnerable.
+  CVE-2010-4524
+  CVE-2010-1677
 
-Regards,
-Eren
+Snapshot release is available at the following location:
+
+  http://www.mhonarc.org/release/MHonArc/dist/
+
+Any build dated 2010-12-30, or later, will contain the
+fix.
+
+I ask the interested parties verify that the fix addresses
+concerns raised as I would like to make a formal release
+as soon as possible.
+
+Summary of fix:
+
+  mhtxthtml.pl filter modified to reject any message with
+  nested tags. This is invalid HTML, so any message
+  that contains it would likely indicate a possible attack.
+
+Whenever a formal, public, announcement of these vulnerabilities
+are raise, please include link to the MHonArc FAQ that discusses
+the security risks of HTML mail and how to disable HTML mail
+in mhonarc archives:
+
+  http://www.mhonarc.org/MHonArc/doc/faq/security.html#htmldata
+  http://www.mhonarc.org/MHonArc/doc/faq/security.html#htmlexchow
+
+This may be useful for users who may not be able to upgrade
+to the latest release, but need a work-around solution to secure
+their sites.
+
+Thanks,
+
+--ewh
+-- 
+Earl Hood, <earl@...lhood.com>
+Web: <http://www.earlhood.com/>
+PGP Public Key: <http://www.earlhood.com/gpgpubkey.txt>
