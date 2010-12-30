@@ -1,50 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/02/01/8
-Message-Id: <201002020032.15522.lighttpd@stbuehler.de>
-Date: Tue, 2 Feb 2010 00:32:15 +0100
-From: Stefan Bühler <lighttpd@...uehler.de>
-To: "oss-security" <oss-security@...ts.openwall.com>
-Subject: lighttpd: slow request dos/oom attack [CVE-2010-0295]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/30/1
+Message-Id: <201012301643.27772.hanno@hboeck.de>
+Date: Thu, 30 Dec 2010 16:43:27 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: wordpress before 3.0.4 XSS
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Details here:
 
-Li Ming reported a serious bug in lighttpd:
+http://wordpress.org/news/2010/12/3-0-4-update/
+http://core.trac.wordpress.org/changeset/17172/branches/3.0
+http://www.heise.de/newsticker/meldung/Security-Bugfix-fuer-Wordpress-1161909.html
 
-If you send the request data very slow (e.g. sleep 0.01 after each byte), 
-lighttpd will easily use all available memory and die (especially for parallel 
-requests), allowing a DoS within minutes.
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
-The problem is that is doesn't append to previous buffer but allocates a new 
-buffer for each read; this means that for every received block (which could be 
-only one byte) lighttpd may use either 4k or 16k.
+http://schokokeks.org - professional webhosting
 
-In lighttpd 1.4.x this problem is not too bad, as the allocated buffer is just 
-as big as the content available to be read (if the system supports FIONREAD); 
-but even with ssl (or if the system doesn't support FIONREAD), lighttpd 1.4.x 
-will allocate 4k or 16k buffers for each read.
-
-Lighttpd 1.5 (our old development branch) always allocates 16k buffers for a 
-read.
-
-Our solution is to append to the previous buffer if it is still in the raw-in 
-queue (while waiting for a request header), and to pack the buffers if they 
-get moved to the next queue (for the request body).
-
-In order to append to the previous buffer in lighttpd 1.4.x we ignored a 
-SSL_read requirement: we don't pass the same buffer in the next call after 
-SSL_ERROR_WANT_*; there is no good reason for this, and it has worked in 1.5 
-for a long time now.
-
-Please note that lighttpd 1.x always trusts the backend: it will always try to 
-read from the backend (cgi,fastcgi,scgi,proxy,...) as fast as possible, so 
-backends sending large files will lead to high memory usage in lighttpd.
-
-See:
-* http://redmine.lighttpd.net/issues/2147
-* http://download.lighttpd.net/lighttpd/security/lighttpd_sa_2010_01.txt
-
-This bug is tracked as CVE-2010-0295.
-
-Kind regards,
-lighttpd developer team
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
