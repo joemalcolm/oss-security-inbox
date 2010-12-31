@@ -1,34 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/05/18/8
-Message-ID: <Pine.GSO.4.64.1005181335260.13965@faron.mitre.org>
-Date: Tue, 18 May 2010 13:36:27 -0400 (EDT)
-From: "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/31/4
+Message-ID: <4D1D84DF.3090302@redhat.com>
+Date: Fri, 31 Dec 2010 12:53:11 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: phorum < 5.2.15 backend XSS
+CC: Dan Rosenberg <dan.j.rosenberg@...il.com>
+Subject: Re: CVE request: kernel: buffer overflow in OSS load_mixer_volumes
 Content-Type: text/plain; charset=utf-8
 
+On 12/31/2010 05:32 AM, Dan Rosenberg wrote:
+> "The load_mixer_volumes() function, which can be triggered by
+> unprivileged users via the SOUND_MIXER_SETLEVELS ioctl, is vulnerable to
+> a buffer overflow.  Because the provided 'name' argument isn't
+> guaranteed to be NULL terminated at the expected 32 bytes, it's possible
+> to overflow past the end of the last element in the mixer_vols array.
+> Further exploitation can result in an arbitrary kernel write (via
+> subsequent calls to load_mixer_volumes()) leading to privilege
+> escalation, or arbitrary kernel reads via get_mixer_levels().  In
+> addition, the strcmp() may leak bytes beyond the mixer_vols array."
+> 
 
-On Tue, 18 May 2010, Josh Bressers wrote:
+Please use CVE-2010-4527 for this one.
 
-> ----- "Hanno Böck" <hanno@...eck.de> wrote:
->
->> Release notes:
->> http://www.facebook.com/note.php?note_id=371190874581
->>
->>
->> "It also has some security fixes for another less important XSS where a
->> user could "attack himself" with adding an invalid email address (thanks
->> to Carlos Ghan for pointing out this issue), see the changelog below for
->> details. "
->>
->
-> Does someone have some additional details for this? I don't see enough
-> information for me to assign a CVE id.
 
-Welcome to daily life in CVE.
-
-In this case we have an announcement from the vendor alluding to at least 
-one security problem, and a fix for it.  This is (unfortunately) 
-sufficient for us to assign a CVE to it.
-
-- Steve
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
