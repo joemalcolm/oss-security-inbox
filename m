@@ -1,29 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/30/12
-Message-ID: <1386461965.1636071277923333713.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 30 Jun 2010 14:42:13 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/31/1
+Message-ID: <AANLkTinjjWGQepbZBS7C6fp6uHux5n+8yR+TAzCdTas6@mail.gmail.com>
+Date: Thu, 30 Dec 2010 19:02:42 -0500
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: dan j rosenberg <dan.j.rosenberg@...il.com>
-Subject: Re: CVE requests: LibTIFF
+Subject: CVE request: kernel: buffer overflow in OSS load_mixer_volumes
 Content-Type: text/plain; charset=utf-8
 
------ "Tomas Hoger" <thoger@...hat.com> wrote:
+"The load_mixer_volumes() function, which can be triggered by
+unprivileged users via the SOUND_MIXER_SETLEVELS ioctl, is vulnerable to
+a buffer overflow.  Because the provided 'name' argument isn't
+guaranteed to be NULL terminated at the expected 32 bytes, it's possible
+to overflow past the end of the last element in the mixer_vols array.
+Further exploitation can result in an arbitrary kernel write (via
+subsequent calls to load_mixer_volumes()) leading to privilege
+escalation, or arbitrary kernel reads via get_mixer_levels().  In
+addition, the strcmp() may leak bytes beyond the mixer_vols array."
 
-> On Tue, 29 Jun 2010 08:05:25 -0400 Dan Rosenberg wrote:
-> 
-> > On request, I'm re-posting the issues which I think actually deserve
-> > CVE ids.
-> 
-> I believe the disagreement here is caused by different opinions on what
-> should be and what does not need to be called security.
-> 
+http://git.kernel.org/?p=linux/kernel/git/tiwai/sound-2.6.git;a=commit;h=d81a12bc29ae4038770e05dce4ab7f26fd5880fb
 
-This thread confuses me (it's not hard to do).
+This only affects users who are using OSS (not to be confused with the
+OSS emulation provided by ALSA), and requires access to a device file
+normally restricted to users in group audio.
 
-Can someone sum up what still needs CVE ids with a reference link or two?
-
-Thanks.
-
--- 
-    JB
+-Dan
