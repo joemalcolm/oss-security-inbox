@@ -1,45 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/06/28/6
-Message-ID: <1208294075.1380471277756617586.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 28 Jun 2010 16:23:37 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/31/5
+Message-ID: <4D1D8540.10102@redhat.com>
+Date: Fri, 31 Dec 2010 12:54:48 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - kernel: cifs: Fix a kernel BUG with remote OS/2 server
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, John Bailey <rekkanoryo@...kanoryo.org>, Stu Tomlinson <stu@...nilmot.com>, Matthew Barnes <mbarnes@...hat.com>
+Subject: Re: CVE Request -- Pidgin v2.7.6 <= x <= v2.7.8 -- MSN DirectConnect DoS (crash due NULL ptr dereference) after receiving a short P2P message
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-2248
+On 12/27/2010 07:09 PM, Jan Lieskovsky wrote:
+> Hello Josh, Steve, vendors,
+> 
+>   Pidgin upstream has released the latest v2.7.9 version:
+>   [1] http://pidgin.im/pipermail/support/2010-December/009251.html
+> 
+>   addressing one security flaw in the MSN protocol:
+>   [2] http://pidgin.im/news/security/?id=49
+> 
+>   Upstream changeset:
+>   [3]
+> http://developer.pidgin.im/viewmtn/revision/info/aaa07bde3c51d3684391ae6ed86b6dbaeab5d031
+> 
 
-Thanks.
+This has been assigned CVE-2010-4528
 
 -- 
-    JB
-
-
------ "Eugene Teo" <eugeneteo@...nel.sg> wrote:
-
-> "This was known to trigger with a OS/2 server. The server sets 
-> pSMBr->CountHigh to a incorrect value even in case of normal writes. 
-> This results in 'nbytes' being computed wrongly and triggers a kernel
-> 
-> BUG at mm/filemap.c.
-> 
->      void iov_iter_advance(struct iov_iter *i, size_t bytes)
->      {
->              BUG_ON(i->count < bytes);    <--- BUG here
-> 
-> Why the server is setting 'CountHigh' is not clear but only does so 
-> after writing 64k bytes. Though this looks like the server bug, the 
-> client side crash may not be acceptable.
-> 
-> The workaround is to mask off high 16 bits if the number of bytes 
-> written as returned by the server is greater than the bytes requested
-> by 
-> the client."
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=608583
-> http://git.kernel.org/linus/6513a81e9325d712f1bfb9a1d7b750134e49ff18
-> 
-> -- 
-> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i);
-> }
+Huzaifa Sidhpurwala / Red Hat Security Response Team
