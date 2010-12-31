@@ -1,35 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/03/30/3
-Message-Id: <20100330070344.33199361.reed@reedloden.com>
-Date: Tue, 30 Mar 2010 07:03:44 -0500
-From: Reed Loden <reed@...dloden.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request: ViewVC 1.1.5 / 1.0.11 -- XSS via user-provided 'search_re' input
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2010/12/31/2
+Message-ID: <AANLkTimnAX6T=kZFSME-tw7Vn7TvE5iubLFSdGPHZwpp@mail.gmail.com>
+Date: Fri, 31 Dec 2010 00:28:22 -0500
+From: Anthon Pang <anthon.pang@...il.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request: OpenWebAnalytics < 1.2.4 - remote/local file inclusion vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 29 Mar 2010 17:52:46 -0500
-Reed Loden <reed@...dloden.com> wrote:
+I was searching OSVDB, and I see this one wasn't reported (and
+presumably, not assigned a CVE).
 
-> Just received an announcement stating ViewVC 1.1.5 and 1.0.11 were
-> released today (right on the heels of 1.1.4 and 1.0.10, for which I
-> still haven't received a CVE). Looks like they fix an XSS that needs
-> a CVE assigned.
-> 
-> "security fix: escape user-provided search_re input to avoid XSS
-> attack"
+Versions of OpenWebAnalytics prior to 1.2.4 are vulnerable to a
+remote/local file inclusion attack.
 
-Apparently, Secunia has already assigned this CVE-2010-0132, as per
-their advisory that just came out...
+OWA 1.2.4 was released March, 28, 2010
 
-http://secunia.com/secunia_research/2010-26/
+Vendor release announcement:  http://www.openwebanalytics.com/?p=87
 
-Again, still need a CVE for the XSS fix in ViewVC 1.1.4 and 1.1.10,
-however.
-
-~reed
-
--- 
-Reed Loden - <reed@...dloden.com>
-
-Content of type "application/pgp-signature" skipped
+Commits:
+- http://trac.openwebanalytics.com/changeset/847/trunk/owa_coreAPI.php
+- http://trac.openwebanalytics.com/changeset/847/trunk/owa_lib.php
+- http://trac.openwebanalytics.com/changeset/847/trunk/owa_requestContainer.php
