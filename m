@@ -1,19 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/09/3
-Message-ID: <4DC75C64.6040207@redhat.com>
-Date: Mon, 09 May 2011 11:15:48 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/03/10
+Message-ID: <1294090435.10245.133.camel@localhost>
+Date: Mon, 03 Jan 2011 15:33:55 -0600
+From: Jamie Strandboge <jamie@...onical.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: validate size of EFI GUID partition entries
+Cc: John Johansen <john@...x.net>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Possible CVE Request: improper AppArmor exec transition
 Content-Type: text/plain; charset=utf-8
 
-The kernel automatically evaluates partition tables of storage devices. 
-The code for evaluating GUID partitions (in fs/partitions/efi.c) 
-contains a bug that can cause a kernel heap overflow on certain 
-corrupted GUID partition tables.
+In AppArmor versions that support unconfined fallback exec transitions
+before r1587 of the 2.6 development branch[1], the apparmor_parser did
+not generate correct policy when mixing exec transitions with and
+without unconfined fallback transitions.
 
-http://git.kernel.org/linus/fa039d5f6b126fbd65eefa05db2f67e44df8f121
-http://bugzilla.redhat.com/show_bug.cgi?id=703026
+Unconfined fallback exec transitions are specified like:
+  /usr/bin/foo pux,
 
-Thanks, Eugene
+This means if foo has a profile defined, transition to the foo profile
+on exec. If foo does not have a profile defined, transition to the
+unconfined profile.
+
+The bug[2] is that the first rule specifying a 'p', 'P', 'c' or 'C' type
+exec transition will influence subsequent transitions of the same type
+(eg, 'p' affects other 'p' transitions, but not 'P', 'c', or 'C'). To
+illustrate:
+
+If the policy is:
+/usr/bin/baz {
+  ...
+  /usr/bin/bar px,
+  /usr/bin/foo pux,
+}
+
+Then when baz executes /usr/bin/bar, bar will correctly run under the
+'bar' profile if it exists, otherwise baz will receive a failed exec.
+The problem is when baz execs /usr/bin/foo, foo will run under the 'foo'
+profile if it exists (correct), otherwise baz will receive a failed exec
+(incorrect). bar should instead run unconfined. This is a bug, but not
+security relevant as the 'foo pux' rule is treated as a more strict 'foo
+px'.
+
+Conversely, if the policy is:
+/usr/bin/baz {
+  ...
+  /usr/bin/foo pux,
+  /usr/bin/bar px,
+}
+
+Then when baz execs /usr/bin/foo, foo will correctly run under the 'foo'
+profile if it exists, otherwise run unconfined. The problem is when baz
+execs /usr/bin/bar, bar will run under the 'bar' profile if it exists
+(correct), otherwise run unconfined (incorrect). baz should instead
+receive a failed exec on bar if the profile does not exist. This is
+security relevant as the 'bar px' rule is treated as a looser 'bar pux'.
+
+Confined fallback exec transitions (ie, 'pix', 'Pix', 'cix' and 'Cix')
+are not affected by this bug and work as expected.
+
+The question is whether or not this is just a normal bug or one
+requiring a CVE. While this bug does allow for an unconfined exec when
+policy states it shouldn't, in order to hit the bug the system requires
+misconfigured policy (ie, a policy author would always write the
+accompanying policy for a 'px' transition since the exec is not expected
+to work without it).
+
+John Johansen (CC'd) discovered the bug and prepared a fix[1] for the
+2.6 branch. Patches for the 2.5 series[3] will be available soon.
+
+[1]http://bazaar.launchpad.net/~apparmor-dev/apparmor/master/revision/1587
+[2]https://launchpad.net/bugs/693082
+[3]https://code.launchpad.net/~apparmor-dev/apparmor/release-2.5
+
+-- 
+Jamie Strandboge             | http://www.canonical.com
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
