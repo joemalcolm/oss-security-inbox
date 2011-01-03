@@ -1,17 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/23
-Message-ID: <Pine.GSO.4.64.1103041157200.3265@faron.mitre.org>
-Date: Fri, 4 Mar 2011 11:59:52 -0500 (EST)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/03/11
+Message-ID: <1294097965.10245.158.camel@localhost>
+Date: Mon, 03 Jan 2011 17:39:25 -0600
+From: Jamie Strandboge <jamie@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Vendor-sec hosting and future of closed lists
+Cc: John Johansen <john@...x.net>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: Possible CVE Request: improper AppArmor exec transition
 Content-Type: text/plain; charset=utf-8
 
+On Mon, 2011-01-03 at 15:33 -0600, Jamie Strandboge wrote:
+> If the policy is:
+> /usr/bin/baz {
+>   ...
+>   /usr/bin/bar px,
+>   /usr/bin/foo pux,
+> }
+> 
+> Then when baz executes /usr/bin/bar, bar will correctly run under the
+> 'bar' profile if it exists, otherwise baz will receive a failed exec.
+> The problem is when baz execs /usr/bin/foo, foo will run under the 'foo'
+> profile if it exists (correct), otherwise baz will receive a failed exec
+> (incorrect). bar should instead run unconfined. This is a bug, but not
+> security relevant as the 'foo pux' rule is treated as a more strict 'foo
+> px'.
 
-As already stated, projects can make requests from the cve@...re address. 
-While we try to respond within 48 business hours, unfortunately that 
-doesn't always happen.  But sometimes you get a response within 2 minutes 
-:-)  This year, I hope to improve our responsiveness with some internal 
-process improvements.
+This:
+"bar should instead run unconfined"
 
-- Steve
+should have been:
+"foo should instead run unconfined"
+
+Sorry for any confusion.
+
+-- 
+Jamie Strandboge             | http://www.canonical.com
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
