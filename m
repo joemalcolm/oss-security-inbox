@@ -1,23 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/22/8
-Message-ID: <20110922163236.GD4095@suse.de>
-Date: Thu, 22 Sep 2011 18:32:36 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Request: X.org ProcRenderGlyps input sanitation issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/03/11
+Message-ID: <1294097965.10245.158.camel@localhost>
+Date: Mon, 03 Jan 2011 17:39:25 -0600
+From: Jamie Strandboge <jamie@...onical.com>
+To: oss-security@...ts.openwall.com
+Cc: John Johansen <john@...x.net>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: Possible CVE Request: improper AppArmor exec transition
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Mon, 2011-01-03 at 15:33 -0600, Jamie Strandboge wrote:
+> If the policy is:
+> /usr/bin/baz {
+>   ...
+>   /usr/bin/bar px,
+>   /usr/bin/foo pux,
+> }
+> 
+> Then when baz executes /usr/bin/bar, bar will correctly run under the
+> 'bar' profile if it exists, otherwise baz will receive a failed exec.
+> The problem is when baz execs /usr/bin/foo, foo will run under the 'foo'
+> profile if it exists (correct), otherwise baz will receive a failed exec
+> (incorrect). bar should instead run unconfined. This is a bug, but not
+> security relevant as the 'foo pux' rule is treated as a more strict 'foo
+> px'.
 
-Also from 2010 and me@...fdog.net and the x.org bugtracker:
+This:
+"bar should instead run unconfined"
 
-https://bugs.freedesktop.org/show_bug.cgi?id=28801
+should have been:
+"foo should instead run unconfined"
 
-Adam in comment #c2 thinks this might just discloses memory
-but could not overwrite arbitrary x server memory ... 
-However the comment #c0 has a x.org server crash, so I am unsure
-about code execution possibilities.
+Sorry for any confusion.
 
-Needs one 2010 CVE id I guess.
+-- 
+Jamie Strandboge             | http://www.canonical.com
 
-Ciao, Marcus
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
