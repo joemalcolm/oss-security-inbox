@@ -1,35 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/27/3
-Message-ID: <4EA94975.30401@redhat.com>
-Date: Thu, 27 Oct 2011 14:07:17 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, Dmitry Butskoy <buc@...sz.so-cdu.ru>
-Subject: CVE Request -- phpLDAPadmin -- Local file inclusion flaw in "common.php" via "Accept-Language" HTTP header leading to DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/03/9
+Message-ID: <281326318.128481.1294088078415.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 3 Jan 2011 15:54:38 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley  <coley@...re.org>
+Subject: Re: CVE request for subversion
 Content-Type: text/plain; charset=utf-8
 
-Hello Josh, Steve, vendors,
 
-   a local file inclusion flaw was found in the way the phpLDAPadmin,
-a web based LDAP client for managing LDAP servers, processed certain
-values of the "Accept-Language" HTTP header. A remote attacker could
-use this flaw to cause a denial of service (generate recursive 
-inclusions leading to resource exhaustion) via specially-crafted request.
 
-Note: A different issue than CVE-2011-4075 (due the different
-       attack vector and different source code file in question).
+----- Original Message -----
+> Unspecified vulnerability in the server component in Apache Subversion
+> 1.6.x before 1.6.15 allows remote attackers to cause a denial of
+> service via unknown vectors, related to a "several bug fixes,
+> including two which can cause client-initiated crashes on the server."
+> 
 
-References:
-[1] http://www.securityfocus.com/bid/50328/info
+I admit, this isn't obvious, so let's use CVE-2010-4539 for now.
+We can split it if needed once more information is known.
 
-Relevant exploit:
-[2] http://www.securityfocus.com/data/vulnerabilities/exploits/50328.java
+Thanks.
 
-According to Dmitry, this issue should be fixed in upstream v0.9.8.5
-version too.
-
-Could you allocate a CVE id for this?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+-- 
+    JB
