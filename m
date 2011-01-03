@@ -1,23 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/19
-Message-ID: <20110403222237.GI9516@openwall.com>
-Date: Mon, 4 Apr 2011 02:22:37 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/03/12
+Message-Id: <201101040050.19789.hanno@hboeck.de>
+Date: Tue, 4 Jan 2011 00:50:19 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: CVE request: silverstripe before 2.4.4
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Apr 03, 2011 at 10:54:54PM +0100, Steve Kemp wrote:
-> I too was subscribed through the team@...urity.debian.org exploder. My key:
-> 
-> pub   1024D/CD4C0D9D 2002-05-29
-> uid                  Steve Kemp <steve@...ve.org.uk>
-> uid                  Steve Kemp <skx@...ian.org>
-> sub   2048g/AC995563 2002-05-29
-> 
->   Full key at : http://www.steve.org.uk/contact/steve_kemp.gpg
+http://www.silverstripe.org/security-releases/
 
-Added.  This gives us three representatives from Debian, which feels
-like a bit too many.
+Silverstripe 2.4.4 notes:
+SQL information disclosure, SQL injection in Translatable extension, Cross 
+Site Request Forgery in various CMS interfaces, XSS in controller action 
+handling
 
-Alexander
+(if someone is motivated one could also assign CVEs to all the old version 
+issues)
+
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+
+http://schokokeks.org - professional webhosting
+
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
