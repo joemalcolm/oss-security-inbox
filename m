@@ -1,32 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/26/8
-Message-ID: <1594226822.1603980.1311708746578.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 26 Jul 2011 15:32:26 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/03/8
+Message-ID: <487113238.127098.1294084305578.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 3 Jan 2011 14:51:45 -0500 (EST)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: justin@...irish.net, coley <coley@...re.org>
-Subject: Re: CVE request: Drupal Data-module multiple vulnerabilities
+Cc: coley  <coley@...re.org>
+Subject: Re: CVE Request: Wireshark
 Content-Type: text/plain; charset=utf-8
 
 
 
 ----- Original Message -----
-> These issues does not have CVE-identifiers. Could we get one?
-> 
-> http://seclists.org/fulldisclosure/2011/Feb/219
-> 
-> I asked from Justin Klein Keane and he wasn't aware of CVE-identifier.
-> I think this needs identifier even this is an alpha release as this
-> module is used by some production instances. If I am correct two
-> identifiers should be enough. One for XSS and another for SQL
-> injections.
-> 
-> Discussion about the issue: http://drupal.org/node/1056470
+> Wireshark has a buffer overflow in ENTTEC DMX Data RLE:
+> https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5539
 > 
 
-Please use CVE-2011-2714 for the XSS.
-
-CVE-2011-2715 is for the SQL injection.
+Please use CVE-2010-4538.
 
 Thanks.
 
