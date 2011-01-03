@@ -1,46 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/04/2
-Message-ID: <1315116323.9806.72@d.hx.id.au>
-Date: Sun, 04 Sep 2011 16:05:20 +1000
-From: David Hicks <d@...id.au>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/03/5
+Message-ID: <1592608722.126042.1294081074377.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 3 Jan 2011 13:57:54 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE requests: <mantisbt-1.2.8 multiple vulnerabilities (1xLFI+XSS, 2xXSS)
+Cc: Luke Macken <lmacken@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Django 1.2.4, Django 1.1.3 and Django 1.3 beta 1 -- addressing two security flaws
 Content-Type: text/plain; charset=utf-8
 
-On Sun, 2011-09-04 at 15:18 +1000, David Hicks wrote:
-> Request #2: LFI and XSS via bug_actiongroup_ext_page.php
+----- Original Message -----
+> Hello Steve, vendors,
+> 
+> Django upstream recently released Django 1.2.4, Django 1.1.3 and
+> Django 1.3 beta 1
+> versions of Django addressing two security flaws:
+> 
+> I), Information leakage in Django administrative interface
 
-I don't think my earlier message conveyed the severity of this bug well
-enough.
+Use CVE-2010-4534
 
-MantisBT allows users to upload attachments to bug reports. These
-attachments are commonly stored on the disk in an 'attachments'
-directory that should be stored outside the web root (but are still
-accessible to MantisBT for retrieval).
+> II), Denial-of-service attack in password-reset mechanism
 
-This LFI vulnerbility therefore allows arbitrary remote code execution
-on a target server (as the web user ID). This level of access could be
-used to connect to the MantisBT database and access files and
-configuration of other web applications operating under the same uid/gid
-as the MantisBT installation.
+Use CVE-2010-4535
 
-For example, this LFI vulnerability may allow an attacker to call:
-require_once('../var/www/example.com/data/mantisbt/attachments/123456-malicious_attachment.php')
+> 
+> References:
+> [1] http://www.djangoproject.com/weblog/2010/dec/22/security/
+> [2] https://bugzilla.redhat.com/show_bug.cgi?id=665373
+> 
 
-Note that as per the earlier notice, some users (such as those using
-nginx) may not be impacted at all.
+Thanks.
 
-release-1.2.8 has been tagged at
-https://github.com/mantisbt/mantisbt/tree/release-1.2.8 and should be
-packaged and distributed via usual channels shortly. Distributors and
-users are advised not to wait - patch ASAP or put workarounds in place
-such as disallowing attachment uploads ($g_allow_file_upload = OFF in
-config_inc.php) if you're using $g_file_upload_method = DISK.
-
-Thanks,
-
-David Hicks
-MantisBT Developer
-mantisbt.org, #mantishelp irc.freenode.net
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+-- 
+    JB
