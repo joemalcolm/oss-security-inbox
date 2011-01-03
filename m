@@ -1,36 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/28/3
-Message-ID: <4D4307AE.4000404@redhat.com>
-Date: Fri, 28 Jan 2011 19:15:10 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, Wouter Verhelst <wouter@...ian.org>
-Subject: CVE Request -- NDB: CVE-2005-3534 reintroduced in upstream nbd-v2.9.0 version
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/03/5
+Message-ID: <1592608722.126042.1294081074377.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 3 Jan 2011 13:57:54 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Luke Macken <lmacken@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Django 1.2.4, Django 1.1.3 and Django 1.3 beta 1 -- addressing two security flaws
 Content-Type: text/plain; charset=utf-8
 
-Hello Josh, Steve, vendors,
+----- Original Message -----
+> Hello Steve, vendors,
+> 
+> Django upstream recently released Django 1.2.4, Django 1.1.3 and
+> Django 1.3 beta 1
+> versions of Django addressing two security flaws:
+> 
+> I), Information leakage in Django administrative interface
 
-   Originally, CVE-2005-3534:
-   [1] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2005-3534
+Use CVE-2010-4534
 
-has been assigned to NBD and addressed in nbd-v2.8.3 version:
-[2] http://sourceforge.net/project/shownotes.php?release_id=380202&group_id=13229
+> II), Denial-of-service attack in password-reset mechanism
 
-via changeset:
-[3] https://github.com/yoe/nbd/commit/4ed24fe0d64c7cc9963c57b52cad1555ad7c6b60
+Use CVE-2010-4535
 
-But nbd-v2.9.0:
-[4] http://sourceforge.net/projects/nbd/files/nbd/2.9.0/
+> 
+> References:
+> [1] http://www.djangoproject.com/weblog/2010/dec/22/security/
+> [2] https://bugzilla.redhat.com/show_bug.cgi?id=665373
+> 
 
-contains the issue again. This flaw was fixed second time via upstream changeset:
-[5] https://github.com/yoe/nbd/commit/3ef52043861ab16352d49af89e048ba6339d6df8
+Thanks.
 
-References:
-[6] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=611187
-[7] https://bugzilla.redhat.com/show_bug.cgi?id=673562
-
-Could you allocate a CVE id for this?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+-- 
+    JB
