@@ -1,56 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/10/8
-Message-ID: <20110810142649.GH23625@core.inversepath.com>
-Date: Wed, 10 Aug 2011 16:26:49 +0200
-From: Daniele Bianco <danbia@...rt.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/03/9
+Message-ID: <281326318.128481.1294088078415.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 3 Jan 2011 15:54:38 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: [oCERT-2011-002] libavcodec insufficient boundary check
+Cc: coley  <coley@...re.org>
+Subject: Re: CVE request for subversion
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Aug 10, 2011 at 10:04:34AM -0400, Dan Rosenberg wrote:
-> On Wed, Aug 10, 2011 at 9:19 AM, Daniele Bianco <danbia@...rt.org> wrote:
-> >
-> > #2011-002 libavcodec insufficient boundary check
-> >
-> > Description:
-> >
-> > The libavcodec library, an open source video encoding/decoding library part
-> > of the FFmpeg and Libav projects, performs insufficient boundary check
-> > against a buffer index. The missing check can result in arbitrary read/write
-> > of data outside a destination buffer boundaries.
-> >
-> > The vulnerability affects the Chinese AVS video (CAVS) file format decoder,
-> > specially crafted CAVS files may lead to arbitrary code execution during
-> > decoding.
-> >
-> 
-> While you're at it, here are a couple more:
-> 
-> * Out-of-bounds read on lines 166-171 due to signedness error
-> * Out-of-bounds read on lines 224-240 due to signedness error
-> 
-> Line numbers based on upstream git:
-> http://git.videolan.org/?p=ffmpeg.git;a=blob;f=libavcodec/cavsdec.c;h=acf040788c9a4c34807ba2efa10312b5b8e84f02;hb=6481a36010d8f7d834676f17ba555d0a3815c760
-> 
-> 
-> Hint to distributions and software developers: if you're going to use
-> libavcodec (or libavformat, etc.) for your project, consider
-> restricting the default build to include only *commonly* used codecs
-> and demuxers.  The code quality of many of the more obscure formats is
-> questionable at best.
-> 
-> Regards,
-> Dan
 
-Hi Dan,
-just forwarded this to the maintainer.
 
-Cheers,
-Daniele
+----- Original Message -----
+> Unspecified vulnerability in the server component in Apache Subversion
+> 1.6.x before 1.6.15 allows remote attackers to cause a denial of
+> service via unknown vectors, related to a "several bug fixes,
+> including two which can cause client-initiated crashes on the server."
+> 
 
---
-  Daniele Bianco      Open Source Computer Security Incident Response Team
-  <danbia@...rt.org>                                  http://www.ocert.org
+I admit, this isn't obvious, so let's use CVE-2010-4539 for now.
+We can split it if needed once more information is known.
 
-  GPG Key 0x9544A497
-  GPG Key fingerprint = 88A7 43F4 F28F 1B9D 6F2D  4AC5 AE75 822E 9544 A497
+Thanks.
+
+-- 
+    JB
