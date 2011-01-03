@@ -1,29 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/20/2
-Message-ID: <20110520140200.459a81e7@redhat.com>
-Date: Fri, 20 May 2011 14:02:00 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: OSS Security <oss-security@...ts.openwall.com>
-Cc: systemtap@...rceware.org
-Subject: systemtap divide-by-zero issues (CVE-2011-1769, CVE-2011-1781)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/03/6
+Message-ID: <662783063.126228.1294081837675.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 3 Jan 2011 14:10:37 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley  <coley@...re.org>
+Subject: Re: CVE request: wordpress before 3.0.4 XSS
 Content-Type: text/plain; charset=utf-8
 
-Hi!
 
-Two divide-by-zero flaws were recently discovered and fixed in
-systemtap:
 
-http://sourceware.org/git/?p=systemtap.git;a=commit;h=fa2e3415185a28542d419a641ecd6cddd52e3cd9
+----- Original Message -----
+> Details here:
+> 
+> http://wordpress.org/news/2010/12/3-0-4-update/
+> http://core.trac.wordpress.org/changeset/17172/branches/3.0
+> http://www.heise.de/newsticker/meldung/Security-Bugfix-fuer-Wordpress-1161909.html
+> 
 
-These issues can be use to crash the system.  The decision was to
-handle these issues as security because of the unprivileged systemtap
-mode, where stap author is not to be considered a root-equivalent.  In
-normal mode, unprivileged user can only trigger this if she's able to
-trick some privileged user to instrument specially crafted ELF file.
+Use CVE-2010-4536 for these (from reading the text, it's multiple XSS flaws).
 
-More details on the CVE allocation is in:
-
-https://bugzilla.redhat.com/show_bug.cgi?id=702687#c29
+Thanks.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+    JB
