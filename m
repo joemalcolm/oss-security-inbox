@@ -1,31 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/21/2
-Message-ID: <20110721172906.GA20394@steve.org.uk>
-Date: Thu, 21 Jul 2011 18:29:06 +0100
-From: Steve Kemp <steve@...ve.org.uk>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/03/2
+Message-ID: <4D216A7B.7000704@redhat.com>
+Date: Mon, 03 Jan 2011 11:49:39 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request for buffer overflows in gimp
 Content-Type: text/plain; charset=utf-8
 
-On Sun Apr 03, 2011 at 22:54:54 +0100, Steve Kemp wrote:
+Hello Steve, Vendors,
 
-> I too was subscribed through the team@...urity.debian.org exploder. My key:
-> 
-> pub   1024D/CD4C0D9D 2002-05-29
-> uid                  Steve Kemp <steve@...ve.org.uk>
-> uid                  Steve Kemp <skx@...ian.org>
-> sub   2048g/AC995563 2002-05-29
-> 
->   Full key at : http://www.steve.org.uk/contact/steve_kemp.gpg
+This one is from the debian bug tracker [1], there are four buffer
+overflows in gimp plugins.
 
-  I should now be removed; currently subscribed as steve@...ve.org.uk.
+I am not sure if this would need one CVE or four?
 
-  (I'm no longer a member of the Debian project, nor the Debian security
- team.)
+[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=608497
 
-Steve
---
-Let me steal your soul?
-http://stolen-souls.com
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+Regards,
+
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
