@@ -1,84 +1,100 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/21/1
-Message-ID: <4D86D588.8020302@redhat.com>
-Date: Mon, 21 Mar 2011 12:35:20 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/03/4
+Message-ID: <590237914.125935.1294080671893.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 3 Jan 2011 13:51:11 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Vasiliy Kulikov <segoon@...nwall.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: netfilter & econet infoleaks
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Nicolas Sebrecht <nicolas.s-dev@...oste.net>, david b <db.pub.mail@...il.com>, Johannes Stezenbach <js@...21.net>, Christoph Höger <choeger@...tu-berlin.de>, John Goerzen <jgoerzen@...plete.org>, Jan Lieskovsky <jlieskov@...hat.com>
+Subject: Re: Re: CVE Request -- OfflineIMAP -- 1), failed to validate remote SSL server certificate 2), allows SSLv2 protocol
 Content-Type: text/plain; charset=utf-8
 
-> "Structures ipt_replace, compat_ipt_replace, and xt_get_revision are
-> copied from userspace.  Fields of these structs that are
-> zero-terminated strings are not checked.  When they are used as argument
-> to a format string containing "%s" in request_module(), some sensitive
-> information is leaked to userspace via argument of spawned modprobe
-> process.
->
-> The first bug was introduced before the git epoch;  the second is
-> introduced by 6b7d31fc (v2.6.15-rc1);  the third is introduced by
-> 6b7d31fc (v2.6.15-rc1).  To trigger the bug one should have
-> CAP_NET_ADMIN."
-> http://marc.info/?l=netfilter-devel&m=129978081009955&w=2
 
-[PATCH] ipv4: netfilter: arp_tables: fix infoleak to userspace
-CVE-2011-1170
 
-> "Structures ipt_replace, compat_ipt_replace, and xt_get_revision are
-> copied from userspace.  Fields of these structs that are
-> zero-terminated strings are not checked.  When they are used as argument
-> to a format string containing "%s" in request_module(), some sensitive
-> information is leaked to userspace via argument of spawned modprobe
-> process.
->
-> The first and the third bugs were introduced before the git epoch; the
-> second was introduced in 2722971c (v2.6.17-rc1).  To trigger the bug
-> one should have CAP_NET_ADMIN."
-> http://marc.info/?l=linux-kernel&m=129978077609894&w=2
+----- Original Message -----
+> On Thu, Dec 23, 2010 at 03:43:40PM +0100, Jan Lieskovsky wrote:
+> >
+> >   I), Didn't check SSL server certificate
+> >
+> >   Description:
+> >   OfflineIMAP prior commit:
+> >   [1]
+> >   https://github.com/nicolas33/offlineimap/commit/4f57b94e2333c37c5a7251fc88dfeda9bc0b226a
+> >
+> >   did not perform SSL server certificate validation,
+> >   even when "ssl = yes" option was specified in the
+> >   configuration file. If an attacker was able to get
+> >   a carefully-crafted certificate signed by a
+> >   Certificate Authority trusted by OfflineIMAP,
+> >   the attacker could use the certificate during a
+> >   man-in-the-middle attack and potentially confuse
+> >   OfflineIMAP into accepting it by mistake.
+> >
+> >   References:
+> >   [2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=603450
+> >   [3] https://bugzilla.redhat.com/show_bug.cgi?id=665382
+> >
+> 
+> First of all, thank you very much Jan and all the Redhat team for
+> reporting it up to the CVE database.
+> 
+> The given patch from Sebastian Spaeth has been released in v6.3.2-rc1.
+> I
+> encourage distribution maintainers who want this fix to either
+> 
+> deploy the RC release as is
+> 
+> or
+> 
+> backport the fix against the last release they own.
+> 
+> I expect to release a new stable soon but I still didn't have feedback
+> from users using SSL. The lack of feedback could mean that
+> 
+> OfflineIMAP users don't expect SSL to work by still refering to the
+> documentation they know (stating that SSL checks is not supported)
+> 
+> or
+> 
+> they don't hit problems at all.
+> 
+> So, I'll wait a bit more before releasing the next stable.
+> 
+> >   II), Allows SSLv2 protocol
+> >
+> >   Description:
+> >   In commit:
+> >   [4]
+> >   https://github.com/nicolas33/offlineimap/commit/4f57b94e2333c37c5a7251fc88dfeda9bc0b226a
+> >
+> >   when SSL server certificate validation support was added
+> >   to OfflineIMAP it was still possible to use SSL v2 protocol
+> >   version. Version 2 of SSL protocol version is known
+> >   to be prone to multiple deficiencies, each of them
+> >   having security implications (to mention some of them):
+> >   [5] http://en.wikipedia.org/wiki/Secure_Sockets_Layer#Security
+> >
+> >   Thus SSLv2 protocol version should be disabled in OfflineIMAP.
+> >
+> >   References:
+> >   [6] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=606962
+> >   [7] https://bugzilla.redhat.com/show_bug.cgi?id=665386
+> 
+> True.
+> 
+> > Could you allocate CVE ids for these issues? (though opened for
+> > discussion of any / none of them worthy of it)
+> 
+> As the maintainer of OfflineIMAP, I think both issues should have
+> their
+> entry in the CVE List.
+> 
 
-[PATCH] ipv4: netfilter: ip_tables: fix infoleak to userspace
-CVE-2011-1171
+As upstream has requested two, here you go:
 
-> "'buffer' string is copied from userspace.  It is not checked whether it is
-> zero terminated.  This may lead to overflow inside of simple_strtoul().
-> Changli Gao suggested to copy not more than user supplied 'size' bytes.
->
-> It was introduced before the git epoch.  Files "ipt_CLUSTERIP/*" are
-> root writable only by default, however, on some setups permissions might be
-> relaxed to e.g. network admin user."
-> http://marc.info/?l=netfilter&m=129978077509888&w=2
-> http://marc.info/?l=netfilter-devel&m=130036157327564&w=2
+CVE-2010-4532 offlineimap doesn't check SSL server certificate
+CVE-2010-4533 offlineimap allows sslv2
 
-I'm reluctant to assign a CVE name for this one. The default perms for 
-this is S_IWUSR|S_IRUSR. I will let Steve decide for this one.
+Thanks.
 
-> "Structures ip6t_replace, compat_ip6t_replace, and xt_get_revision are
-> copied from userspace.  Fields of these structs that are
-> zero-terminated strings are not checked.  When they are used as argument
-> to a format string containing "%s" in request_module(), some sensitive
-> information is leaked to userspace via argument of spawned modprobe
-> process.
->
-> The first bug was introduced before the git epoch;  the second was
-> introduced in 3bc3fe5e (v2.6.25-rc1);  the third is introduced by
-> 6b7d31fc (v2.6.15-rc1).  To trigger the bug one should have
-> CAP_NET_ADMIN."
-> http://marc.info/?l=linux-kernel&m=129978086410061&w=2
-
-[PATCH] ipv6: netfilter: ip6_tables: fix infoleak to userspace
-CVE-2011-1172
-
-> "struct aunhdr has 4 padding bytes between 'pad' and 'handle' fields on
-> x86_64.  These bytes are not initialized in the variable 'ah' before
-> sending 'ah' to the network.  This leads to 4 bytes kernel stack
-> infoleak.
->
-> This bug was introduced before the git epoch."
-> http://marc.info/?l=linux-netdev&m=130036203528021&w=2
-
-[PATCH] econet: 4 byte infoleak to the network
-CVE-2011-1173
-
-Thanks, Eugene
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+    JB
