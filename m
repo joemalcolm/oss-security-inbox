@@ -1,27 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/08/2
-Message-ID: <4D9F1CE1.1000600@debian.org>
-Date: Fri, 08 Apr 2011 10:34:09 -0400
-From: Luke Faraone <lfaraone@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/03/6
+Message-ID: <662783063.126228.1294081837675.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 3 Jan 2011 14:10:37 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request for pithos information disclosure
+Cc: coley  <coley@...re.org>
+Subject: Re: CVE request: wordpress before 3.0.4 XSS
 Content-Type: text/plain; charset=utf-8
 
-Ian Daniher discovered that 'pithos' stores the username and password
-for external services in plain text in a configuration file. This
-configuration file is world-readable by defualt, resulting in a loss of
-user privacy.
 
-Reference: http://pad.lv/733307
 
-Can I get a CVE identifier for this flaw?
+----- Original Message -----
+> Details here:
+> 
+> http://wordpress.org/news/2010/12/3-0-4-update/
+> http://core.trac.wordpress.org/changeset/17172/branches/3.0
+> http://www.heise.de/newsticker/meldung/Security-Bugfix-fuer-Wordpress-1161909.html
+> 
+
+Use CVE-2010-4536 for these (from reading the text, it's multiple XSS flaws).
+
+Thanks.
 
 -- 
-Luke Faraone;; Debian & Ubuntu Developer; Sugar Labs, Systems
-lfaraone on irc.[freenode,oftc].net -- http://luke.faraone.cc
-PGP fprint: 5189 2A7D 16D0 49BB 046B DC77 9732 5DD8 F9FD D506
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+    JB
