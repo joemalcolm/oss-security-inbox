@@ -1,49 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/26/3
-Message-ID: <4E2E9907.9090008@redhat.com>
-Date: Tue, 26 Jul 2011 12:37:59 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, aCaB <acab@...mav.net>, Török Edvin <edwin@...mav.net>
-Subject: CVE Request -- Clam AntiVirus -- v0.97.2 -- Off-by-one error by scanning message hashes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/03/3
+Message-ID: <1350430544.125849.1294080440354.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 3 Jan 2011 13:47:20 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Robert Relyea <rrelyea@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- 1, ccid -- int.overflow leading to array index error 2, pcsc-lite stack-based buffer overflow in ATR decoder [was: CVE request: opensc buffer overflow ]
 Content-Type: text/plain; charset=utf-8
 
-Hello Josh, Steve, vendors,
 
-   based on:
-   [1] 
-http://git.clamav.net/gitweb?p=clamav-devel.git;a=blob_plain;f=ChangeLog;hb=clamav-0.97.2
 
-an off-by-one error was found in the way the hash manager of Clam
-AntiVirus, a GPL anti-virus toolkit for UNIX, performed scan of
-messages with certain hashes. A remote attacker could provide a message
-with specially-crafted hash signature in it, leading to denial of
-service (clamscan executable crash).
+----- Original Message -----
+> Hello Josh, Steve, vendors,
+> 
+> Rafael Dominguez Vega of MWR InfoSecurity reported two more flaws
+> related with smart cards:
+> 
+> I), CCID: Integer overflow, leading to array index error when
+> processing crafted serial number of certain cards
+> 
+> Description:
+> An integer overflow, leading to array index error was found
+> in the way USB CCID (Chip/Smart Card Interface Devices) driver
+> processed certain values of card serial number. A local attacker
+> could use this flaw to execute arbitrary code, with the privileges
+> of the user running the pcscd daemon, via a malicious smart card
+> with specially-crafted value of its serial number, inserted to
+> the system USB port.
+> 
+> References:
+> [1]
+> http://labs.mwrinfosecurity.com/files/Advisories/mwri_pcsc-libccid-buffer-overflow_2010-12-13.pdf
+> [2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=607780
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=664986
+> 
+> Upstream changesets:
+> [4]
+> http://lists.alioth.debian.org/pipermail/pcsclite-cvs-commit/2010-November/004934.html
+> [5]
+> http://lists.alioth.debian.org/pipermail/pcsclite-cvs-commit/2010-November/004935.html
 
-Upstream bug report:
-[2] https://wwws.clamav.net/bugzilla/show_bug.cgi?id=2818
+Please use CVE-2010-4530 for the above issue.
 
-Relevant patch:
-[3] 
-http://git.clamav.net/gitweb?p=clamav-devel.git;a=commit;h=4842733eb3f09be61caeed83778bb6679141dbc5
 
-Other references:
-[4] https://bugzilla.novell.com/show_bug.cgi?id=708263
-[5] 
-http://git.clamav.net/gitweb?p=clamav-devel.git;a=blob_plain;f=ChangeLog;hb=clamav-0.97.2
-[6] http://www.clamav.net/lang/en/
-[7] https://bugzilla.redhat.com/show_bug.cgi?id=725694
+> 
+> II), pcsc-lite: Stack-based buffer overflow in Answer-to-Reset (ATR)
+> decoder
+> 
+> Description:
+> A stack-based buffer overflow flaw was found in the way
+> PC/SC Lite smart card framework decoded certain attribute
+> values of the Answer-to-Reset (ATR) message, received back
+> from the card after connecting. A local attacker could
+> use this flaw to execute arbitrary code with the privileges
+> of the user running the pcscd daemon, via a malicious smart
+> card inserted to the system USB port.
+> 
+> References:
+> [1]
+> http://labs.mwrinfosecurity.com/files/Advisories/mwri_pcsc-atr-handler-buffer-overflow_2010-12-13.pdf
+> [2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=607781
+> [3] http://www.vupen.com/english/advisories/2010/3264
+> [4] https://bugzilla.redhat.com/show_bug.cgi?id=664999
+> 
+> Upstream changeset:
+> [5]
+> http://lists.alioth.debian.org/pipermail/pcsclite-cvs-commit/2010-November/004923.html
+> 
 
-Note: The rest of the issues fixed in [1] seem to be just bug fixes.
-       Cc-ed upstream Clam Antivirus maintainers to confirm this (that
-       there is only one issue with security implications) and correct
-       the description of the issue, if necessary (just guessing that
-       "cli_hm_scan()" stands for
-       command_line_interface_hash_manager_scan, since it doesn't seem
-       to be described in the code anywhere).
+Please use CVE-2010-4531 for the above issue.
 
-Josh, Steve, could you allocate a CVE id for this?
+Thanks.
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+-- 
+    JB
