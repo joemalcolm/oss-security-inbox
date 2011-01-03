@@ -1,54 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/17
-Message-ID: <1579872259.144003.1313783381867.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 19 Aug 2011 15:49:41 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/03/1
+Message-ID: <4D215E0B.9050703@redhat.com>
+Date: Mon, 03 Jan 2011 10:56:35 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: heap overflow in perl while decoding Unicode string
+CC: Eugene Teo <eugene@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: irda: prevent integer underflow in IRLMP_ENUMDEVICES
 Content-Type: text/plain; charset=utf-8
 
-I'm going to assign this CVE-2011-2939. It looks like a single byte
-overflow. It's probably not exploitable (even as a DoS), but to play it
-safe, I'm assigning this ID.
+On 12/23/2010 08:53 AM, Eugene Teo wrote:
+> From Dan Rosenbugs :>, "If the user-provided len is less than the
+> expected offset, the IRLMP_ENUMDEVICES getsockopt will do a
+> copy_to_user() with a very large size value.  While this isn't be a
+> security issue on x86 because it will get caught by the access_ok()
+> check, it may leak large amounts of kernel heap on other architectures.
+>  In any event, this patch fixes it."
 
-Thanks.
+Assigned CVE-2010-4529 to this one.
+
 
 -- 
-    JB
-
------ Original Message -----
-> Does anyone know more about this flaw? It's in perl and the Encode
-> module:
-> 
-> http://cpansearch.perl.org/src/DANKOGAI/Encode-2.44/Changes
-> 
-> ! Unicode/Unicode.xs
-> Addressed the following:
-> Date: Fri, 22 Jul 2011 13:58:43 +0200
-> From: Robert Zacek <zacek@...st.com>
-> To: perl5-security-report@...l.org
-> Subject: Unicode.xs!decode_xs n-byte heap-overflow
-> 
-> It's been fixed in perl:
-> 
-> http://perl5.git.perl.org/perl.git/commitdiff/e46d973584785af1f445c4dedbee4243419cb860#patch5
-> 
-> Seems to be in all versions of perl since 5.10.0.
-> 
-> There isn't really information on the impact of this though. I don't
-> know enough to determine whether this is something that can cause
-> arbitrary code execution, whether some gcc/glibc hardening prevents or
-> minimizes the impact, whether it's a crash-only, etc. It has been
-> asked
-> on the perl5-porters list, but no response was given:
-> 
-> http://permalink.gmane.org/gmane.comp.lang.perl.perl5.porters/98004
-> 
-> Does anyone know anything more about this flaw? Could a CVE be
-> assigned
-> to it as well?
-> 
-> Thanks.
-> 
-> --
-> Vincent Danen / Red Hat Security Response Team
+Huzaifa Sidhpurwala / Red Hat Security Response Team
