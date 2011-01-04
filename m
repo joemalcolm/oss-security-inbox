@@ -1,26 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/20/17
-Message-ID: <20110620194911.GM11550@foo.fgeek.fi>
-Date: Mon, 20 Jun 2011 22:49:11 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/04/1
+Message-Id: <201101040209.20874.hanno@hboeck.de>
+Date: Tue, 4 Jan 2011 02:09:20 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: bressers@...hat.com, incidents@...rt.org
-Subject: CVE request: Joomla unspecified information disclosure vulnerability
+Subject: CVE request: AusweisApp
 Content-Type: text/plain; charset=utf-8
 
-Couldn't find a CVE-identifier for this issue. Joomla does have too many vulnerabilities. Joomla prior to 1.5.23 contains a flaw that may lead to an unauthorized information disclosure. Should this one get a 2010 or 2011 identifier?
+The "AusweisApp" is an official government application for the electronic ID
+in germany.
 
-Reported: 2010-12-08
-Joomla advisory: 2011-04-01
-Release with a fix (version 1.5.23): 2011-04-04
+The original version contained a vulnerability in the update function. It
+didn't verify the host of the https connection and allowed to install
+malicious files through a directory traversal vuln in the used unzip
+routine.
+I'm not sure if this makes one or two CVEs, as there are two "vulns" that
+can only be used together to do malicious things.
 
-References:
-http://developer.joomla.org/security/news/9-security/10-core-security/340-20110401-core-information-disclosure.html
-http://www.joomla.org/announcements/release-news/5367-joomla-1523-released.html
-http://osvdb.org/show/osvdb/71587
-http://secunia.com/advisories/44028/
+Original source:
+https://janschejbal.wordpress.com/2010/11/09/ausweisapp-gehackt-malware-uber-autoupdate/
 
-I hope this request isn't duplicate. I included oCERT to this email as Joomla is part of that group. Please notify me and mailing-list if this issue already has a CVE-identifier.
+Also, the versioning is a bit broken, the article claims that the version
+was both 1.0.0 and 1.0.1 depending on the source, but the new "fixed" version
+is also called 1.0:
+https://www.ausweisapp.bund.de/
 
-Best regards,
-Henri Salo
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+
+http://schokokeks.org - professional webhosting
+
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
