@@ -1,51 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/09/5
-Message-ID: <597760943.1021587.1315590644281.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 9 Sep 2011 13:50:44 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/04/1
+Message-Id: <201101040209.20874.hanno@hboeck.de>
+Date: Tue, 4 Jan 2011 02:09:20 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Zikula (v1.3.x) -- XSS flaw due improper sanitization of 'themename' parameter by setting default, modifying and deleting themes
+Subject: CVE request: AusweisApp
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-3352
+The "AusweisApp" is an official government application for the electronic ID
+in germany.
 
-Thanks.
+The original version contained a vulnerability in the update function. It
+didn't verify the host of the https connection and allowed to install
+malicious files through a directory traversal vuln in the used unzip
+routine.
+I'm not sure if this makes one or two CVEs, as there are two "vulns" that
+can only be used together to do malicious things.
+
+Original source:
+https://janschejbal.wordpress.com/2010/11/09/ausweisapp-gehackt-malware-uber-autoupdate/
+
+Also, the versioning is a bit broken, the article claims that the version
+was both 1.0.0 and 1.0.1 depending on the source, but the new "fixed" version
+is also called 1.0:
+https://www.ausweisapp.bund.de/
 
 -- 
-    JB
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
+http://schokokeks.org - professional webhosting
 
------ Original Message -----
-> Hello Josh, Steve, vendors,
-> 
-> it was found that the Zikula web application framework did not
-> properly sanitize the 'themename' parameter, while setting particular
-> theme as a default one, modifying the theme or deleting it. A remote
-> attacker, with Zikula administrator privilege, could use this flaw to
-> execute arbitrary HTML or web script code in the context of the
-> affected website.
-> 
-> References:
-> [1] http://www.securityfocus.com/archive/1/519565/30/0/threaded
-> [2] https://www.htbridge.ch/advisory/xss_in_zikula.html
-> [3] https://bugzilla.redhat.com/show_bug.cgi?id=736707
-> 
-> Relevant upstream patch:
-> [4]
-> https://github.com/zikula/core/commit/c27dc3ddce8c9ff519ed57397e3bdf8f281aade6
-> 
-> Vulnerable Zikula versions: Development versions prior to patch [4].
-> Not vulnerable versions: Zikula v1.2.7 (stable). Doesn't contain
-> code in question yet.
-> 
-> Provided PoC (from [1], [2]):
-> =============================
-> http://host/index.php?module=theme&type=admin&func=setasdefault&themename=%3Cscript%3Ealert%28docu
-> ment.cookie%29%3C/script%3E
-> 
-> Could you allocate a CVE id for this?
-> 
-> Thanks && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
