@@ -1,70 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/25
-Message-ID: <20110404142635.GA24248@suse.de>
-Date: Mon, 4 Apr 2011 16:26:35 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: my key
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/04/5
+Message-ID: <4D22F2A6.2080604@redhat.com>
+Date: Tue, 04 Jan 2011 11:12:54 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: Mark Stosberg <mark@...mersault.com>, Andy Armstrong <andy@...ten.net>
+CC: oss-security@...ts.openwall.com, Marcela Maslanova <mmaslano@...hat.com>, Petr Pisar <ppisar@...hat.com>, "Chris 'BinGOs' Williams" <chris@...gosnet.co.uk>, Reed Loden <reed@...dloden.com>, Masahiro Yamada <masa141421356@...il.com>, Byron Jones <glob@...b.com.au>, Lincoln Stein <lincoln.stein@...il.com>, Tom spot Callaway <tcallawa@...hat.com>
+Subject: Re: Re: CVE Request -- perl-CGI two ids, perl-CGI-Simple one id (CVE-2010-3172 already assigned for Bugzilla part)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi Mark, Andy,
 
-"we have nothing to hide", thats why we use GPG keys and force
-the whole Open Source security community to run naked on
-the grass with a unique (key-) ID on the back.
-Someone got "transparency" wrong.
+Ludwig Nussel wrote:
+> Mark Stosberg wrote:
+>> Yes, it is. However, later testing found that the issue wasn't
+>> completely fixed in 3.50. A new patch has been developed, and is
+>> currently pending review and acceptance by the primary CGI.pm author,
+>> Lincoln Stein. (Now CC'ed).
+> 
+> Any update on this? What are the remaining issues?
 
-Nevertheless, I generated a fresh key for that purpose,
-signed with our security@...e.de key (3D25D3D9).
+   Are there some patches to come yet wrt to Perl's CPAN CGI-Simple module
+and those two CVE ids yet?
 
-I am not sure whether this fits in the "2" which was required.
+I can see latest CGi-Simple-v113 released on Monday, 27-th December 2010:
+[1] http://search.cpan.org/dist/CGI-Simple/
 
-Please use this key:
+Does it contain fixes for both CVE issues (so it is possible to rebase to new
+version) or anything else to be done in this part of the world yet?
 
------BEGIN PGP PUBLIC KEY BLOCK-----
-Version: GnuPG v1.4.2 (GNU/Linux)
+Is the fix, we were waiting for on the CGI-Simple side:
+[2] https://github.com/AndyA/CGI--Simple/commit/5a861280ef524661105e132536ff7d1a9084941f
 
-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
-Ubt/OMPw
-=g6bi
------END PGP PUBLIC KEY BLOCK-----
+or yet another one?
 
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
-
--- 
-~
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-~ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+> 
+> cu
+> Ludwig
+> 
 
