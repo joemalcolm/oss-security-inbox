@@ -1,37 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/33
-Message-ID: <BANLkTikN_qR0cHiRWRuxLrZGMw6FPHG-BA@mail.gmail.com>
-Date: Sun, 3 Apr 2011 23:58:21 +0100
-From: Benji <me@...ji.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/04/12
+Message-ID: <1656770654.148983.1294165629945.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 4 Jan 2011 13:27:09 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: jmw@...ian.org, coley <coley@...re.org>
+Subject: Re: (possible) CVE request: Clickjacking in Mediawiki
 Content-Type: text/plain; charset=utf-8
 
-This is pathetic. You've all just made your personal and 'work' email
-addresses targets by having a ridiculous public 'signup' system, and
-the fact you all feel the need to hide behind some sort of veil for
-security issues.
+----- Original Message -----
+> Hi,
+> 
+> Mediawiki <= 1.16 is vulnerable to clickjacking when showing iframes
+> in a
+> wiki:
+> 
+> https://bugzilla.wikimedia.org/show_bug.cgi?id=26561
+> 
+> I don't know if this warrants a CVE ID, but if so please assign one.
+> 
 
+Please use CVE-2011-0003
 
+Thanks.
 
-On 4/3/11, Solar Designer <solar@...nwall.com> wrote:
-> Mike,
->
-> On Fri, Apr 01, 2011 at 06:58:52PM -0400, Mike O'Connor wrote:
->> pub    512R/205BBF7D 2001-12-30
->>       Key fingerprint = 8F 85 89 E1 A2 FC EB D2  27 49 56 1E CC DF C9
->>       C1
->> uid                  Michael J. O'Connor <mjo@...o.mi.org>
->
-> I've subscribed you with this key for now, but you really ought to
-> upgrade to a larger key, and I'd appreciate a statement on what Linux
-> distro you represent on the new list.
->
-> All: my decision is based on some info known to me, but I'd prefer to
-> base it on Mike's posting to oss-security.  I am saying this to explain
-> that there's a reason why I subscribed Mike, whereas I would not
-> subscribe another "random" person posting the same kind of message from
-> a personal address. ;-)
->
-> Alexander
->
+-- 
+    JB
