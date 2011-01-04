@@ -1,31 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/09/2
-Message-ID: <20111109064019.GD1655@redhat.com>
-Date: Tue, 8 Nov 2011 23:40:19 -0700
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/04/6
+Message-ID: <20110104122018.GA1795@lupin.powdarrmonkey.net>
+Date: Tue, 4 Jan 2011 12:20:18 +0000
+From: Jonathan Wiltshire <jmw@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: gnutls possible DoS (GNUTLS-SA-2011-2)
+Subject: (possible) CVE request: Clickjacking in Mediawiki
 Content-Type: text/plain; charset=utf-8
 
-A potential DoS flaw was found in gnutls:
+Hi,
 
-http://www.gnu.org/s/gnutls/security.html
-http://article.gmane.org/gmane.comp.encryption.gpg.gnutls.devel/5596
-https://bugzilla.redhat.com/show_bug.cgi?id=752308
+Mediawiki <= 1.16 is vulnerable to clickjacking when showing iframes in a
+wiki:
 
-Fixes are available in git, and fixed in upstream 2.12.14 and 3.0.7
-versions:
+https://bugzilla.wikimedia.org/show_bug.cgi?id=26561
 
-http://git.savannah.gnu.org/gitweb/?p=gnutls.git;a=commitdiff;h=190cef6eed37d0e73a73c1e205eb31d45ab60a3c
-http://git.savannah.gnu.org/gitweb/?p=gnutls.git;a=commitdiff;h=e82ef4545e9e98cbcb032f55d7c750b81e3a0450
+I don't know if this warrants a CVE ID, but if so please assign one.
 
-It seems to me like the DoS is on the client side, from a malicious
-server, and upstream also indicates it is unaware of any clients that
-use the code improperly (as not documented) and would be vulnerable.
+(please CC me on replies, TIA)
 
-Could a CVE be assigned to this issue please?
-
-Thanks.
+Thanks,
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Jonathan Wiltshire                                      jmw@...ian.org
+Debian Developer                         http://people.debian.org/~jmw
+
+4096R: 0xD3524C51 / 0A55 B7C5 1223 3942 86EC  74C3 5394 479D D352 4C51
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
