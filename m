@@ -1,24 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/17/3
-Message-ID: <4D5CCAAD.8070304@redhat.com>
-Date: Thu, 17 Feb 2011 15:13:49 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/04/2
+Message-Id: <201101040211.35057.hanno@hboeck.de>
+Date: Tue, 4 Jan 2011 02:11:34 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request - kernel: thp: prevent hugepages during args/env copying into the user stack
+Cc: coley@...us.mitre.org
+Subject: Re: CVE request: AusweisApp
 Content-Type: text/plain; charset=utf-8
 
-"Transparent hugepages can only be created if rmap is fully functional. 
-A specially crafted binary could allow the user stack to grow huge and 
-backed by hugepages without this patch while is_vma_temporary_stack() is 
-true.
+Sorry, after sending this I noted myself that it's probably not the right 
+place here, as it's OSS-security.
 
-This also optmizes away some harmless but unnecessary setting of 
-khugepaged_scan.address and it switches some BUG_ON to VM_BUG_ON."
+I just got so used to send CVE requests here I didn't think about that.
 
-mm/huge_memory.c - introduced in 71e3aac0 (v2.6.38-rc1)
+Still, MITRE, please assign CVE(s).
 
-https://bugzilla.redhat.com/show_bug.cgi?id=678209
-http://git.kernel.org/linus/a7d6e4ecdb7648478ddec76d30d87d03d6e22b31
+-- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
-Thanks, Eugene
+http://schokokeks.org - professional webhosting
+
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
