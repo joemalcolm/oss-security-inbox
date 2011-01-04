@@ -1,34 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/14/10
-Message-Id: <201104141531.06743.meltem@pardus.org.tr>
-Date: Thu, 14 Apr 2011 15:31:06 +0300
-From: Meltem Parmaksız <meltem@...dus.org.tr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/04/13
+Message-ID: <20110104233131.GD28060@kroah.com>
+Date: Tue, 4 Jan 2011 15:31:31 -0800
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: Closed list
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE-2010-4526 kernel: sctp: a race between ICMP protocol unreachable and connect()
 Content-Type: text/plain; charset=utf-8
 
-12 Nisan 2011 Salı günü (saat 19:58:18) Onur Küçük şunları yazmıştı:
-> On Fri, 1 Apr 2011 14:03:12 -0400 (EDT)
-> Josh Bressers <bressers@...hat.com> wrote:
-> ...
+On Tue, Jan 04, 2011 at 02:33:04PM +0800, Eugene Teo wrote:
+> http://git.kernel.org/linus/50b5d6ad63821cea324a5a7a19854d4de1a0a819
+> https://bugzilla.redhat.com/CVE-2010-4526
 > 
-> > Initial members will have had to be a vendor-sec member (no exploders
-> > this time around). You must reply to this thread, in public (on
-> > oss-security). We want this to be very public, we have nothing to
-> > hide. You must have a public gpg key ID included in your reply. The
-> > new list will gpg encrypt all mail (it does accept plaintext messages
-> > though).
+> commit 50b5d6ad63821cea324a5a7a19854d4de1a0a819
+> Author: Vlad Yasevich <vladislav.yasevich@...com>
+> Date:   Thu May 6 00:56:07 2010 -0700
 > 
->  Sorry for the late reply, we had to resolve some issues on our side
-> about who should join. I was a subscriber of vendor-sec as a
-> representitive of Pardus, please add me to the new list(s).
+> sctp: Fix a race between ICMP protocol unreachable and connect()
+> 
+>     ICMP protocol unreachable handling completely disregarded
+>     the fact that the user may have locked the socket.  It proceeded
+>     to destroy the association, even though the user may have
+>     held the lock and had a ref on the association.
+> [...]
+>     This was because the sctp_wait_for_connect() would aqcure the socket
+>     lock and then proceed to release the last reference count on the
+>     association, thus cause the fully destruction path to finish freeing
+>     the socket.
+> 
+> This affects kernels v2.6.11-rc2 and above.
 
-Sorry, I'm late. I was  a vendor-sec member representing Pardus, please add me 
-to the new list.  
+Not all, it was fixed in the 2.6.34 kernel, which was released back in
+May of 2010.
 
-pub   4096R/29661BF8 2011-04-14 [son kullanma tarihi: 2016-04-12]
-         Key fingerprint = 0136 2B51 FD70 0545 30D2  5C3F FDA1 B5DB 2966 1BF8 
-uid                  Meltem Parmaksız <meltem@...dus.org.tr>
+thanks,
 
-
-Thanks.
+greg k-h
