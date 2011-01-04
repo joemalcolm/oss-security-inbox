@@ -1,33 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/29/12
-Message-ID: <20110729163415.GW1476@redhat.com>
-Date: Fri, 29 Jul 2011 10:34:16 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/04/2
+Message-Id: <201101040211.35057.hanno@hboeck.de>
+Date: Tue, 4 Jan 2011 02:11:34 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE mistake in libsoup release notes
+Cc: coley@...us.mitre.org
+Subject: Re: CVE request: AusweisApp
 Content-Type: text/plain; charset=utf-8
 
-Upstream mistakenly used the wrong CVE name in the recent libsoup
-releases.  They should have used CVE-2011-2524, but used CVE-2011-2054
-instead.
+Sorry, after sending this I noted myself that it's probably not the right 
+place here, as it's OSS-security.
 
-I don't know who's pool CVE-2011-2054 might be in, but I would recommend
-rejecting that CVE name and duping it against CVE-2011-2524.
+I just got so used to send CVE requests here I didn't think about that.
 
-I've seen both Gentoo and Novell reference the wrong CVE name in
-bugzilla entries, so I thought I should bring this up.
-
-See:
-
-https://bugzilla.redhat.com/show_bug.cgi?id=720509#c15 and it's
-follow-up comment from upstream (they've made the appropriate changes in
-git now to reflect the correct CVE name).
-
-So CVE-2011-2524 is the correct CVE, and CVE-2011-2054 is the _wrong_
-CVE.
-
-Thanks.
+Still, MITRE, please assign CVE(s).
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+
+http://schokokeks.org - professional webhosting
+
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
