@@ -1,51 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/15
-Message-ID: <1427368006.383179.1302007409505.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 5 Apr 2011 08:43:29 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/04/7
+Message-ID: <887697103.140954.1294149892279.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 4 Jan 2011 09:04:52 -0500 (EST)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request for buffer overflows in gimp
 Content-Type: text/plain; charset=utf-8
 
 
+
 ----- Original Message -----
-> On Tue, Apr 05, 2011 at 07:19:08AM -0400, Josh Bressers wrote:
-> > Not adding Apple to any coordination list would be plain silly. They
-> > were far more active than most of the distributions.
+> Hello Steve, Vendors,
 > 
-> Yes. But why do they need to be aware, say, of glibc vulnerabilities
-> (ones that are in fact believed to be glibc-specific)?
-
-This is an excellent point. It's a hard problem to solve honestly. I guess
-the question really comes down to this. Do the disadvantages of one list
-outweigh the benefits? I'm not sure what the answer is. There probably
-isn't an "answer" though, just lots of opinions.
-
+> This one is from the debian bug tracker [1], there are four buffer
+> overflows in gimp plugins.
 > 
-> > I'm starting to worry we've created rules for the sake of rules, which
-> > almost never has a net positive outcome.
+> I am not sure if this would need one CVE or four?
 > 
-> What do you propose? Go back to a vendor-sec style list, open to anyone
-> who is approved by other list members, and accept the accusations of
-> being subjective in who we subscribe? I can set one up alongside the
-> Linux distros list... then let the senders decide which list they want.
+> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=608497
+> 
 > 
 
-I don't have a proposal right now, which is why I'm glad we're having this
-discussion.
+I'm going to give this four. We *might* be able to get away with two, but
+since they're all in quite different bits of code, I'm betting the affected
+versions are different, and it's likely upstream is going to fix these all
+at different times in their SCM.
 
-I guess at the end of the day it comes down to the projects and reporters.
-Thinking in this regard, I think there could be advantages to having
-multiple lists with people subscribed to the various groups they belong,
-then the projects and researchers decide how they want their information
-distributed.
-
-This is why I like the idea of the membership list being public, it's makes
-it quite clear who would be receiving the information in question. We're
-really talking about a group that's a service to reporters, not the
-distributions or vendors. We want to make it easy for researchers and
-projects who approve of embargoes to work with us, and allow us to work
-with them in return.
+CVE-2010-4540 gimp LIGHTING EFFECTS > LIGHT plugin stack buffer overflow
+CVE-2010-4541 gimp SPHERE DESIGNER plugin stack buffer overflow
+CVE-2010-4542 gimp GFIG plugin stack buffer overflow
+CVE-2010-4543 gimp heap overflow read_channel_data() in file-psp.c
 
 Thanks.
 
