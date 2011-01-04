@@ -1,18 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/13
-Message-ID: <4D708A74.1040807@redhat.com>
-Date: Fri, 04 Mar 2011 14:45:08 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/04/11
+Message-ID: <623047261.146712.1294160312126.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 4 Jan 2011 11:58:32 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-2011-1076 kernel: DNS: Fix a NULL pointer deref when trying to read an error key
+Cc: "Steven M. Christey" <coley@...re.org>
+Subject: Re: CVE request: silverstripe before 2.4.4
 Content-Type: text/plain; charset=utf-8
 
-http://git.kernel.org/linus/1362fa078dae16776cd439791c6605b224ea6171 has 
-very detailed explanation about the issue.
+----- Original Message -----
+> http://www.silverstripe.org/security-releases/
+> 
+> Silverstripe 2.4.4 notes:
+> SQL information disclosure, SQL injection in Translatable extension,
+> Cross Site Request Forgery in various CMS interfaces, XSS in controller
+> action handling
+> 
+> (if someone is motivated one could also assign CVEs to all the old
+> version issues)
+> 
 
-net/dns_resolver/dns_key.c was added in 1a4240f4 (v2.6.36-rc1).
+This one is way bigger than I can handle. I shall defer it to MITRE. It's
+going to take a lot of work and CVE ids.
 
-Eugene
+Thanks.
+
 -- 
-Eugene Teo / Red Hat Security Response Team
+    JB
