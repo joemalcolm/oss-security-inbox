@@ -1,43 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/24/4
-Message-ID: <1493366954.102437.1295894087346.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 24 Jan 2011 13:34:47 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/04/6
+Message-ID: <20110104122018.GA1795@lupin.powdarrmonkey.net>
+Date: Tue, 4 Jan 2011 12:20:18 +0000
+From: Jonathan Wiltshire <jmw@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Vasiliy Kulikov <segoon@...nwall.com>
-Subject: Re: Re: [PATCH] acpi: debugfs: fix buffer overflows, double free
+Subject: (possible) CVE request: Clickjacking in Mediawiki
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> On 01/23/2011 04:13 AM, Steven M. Christey wrote:
-> >
-> > On Fri, 21 Jan 2011, Eugene Teo wrote:
-> >
-> >> On 01/21/2011 04:08 AM, Vasiliy Kulikov wrote:
-> >>> File position is not controlled, it may lead to overwrites of
-> >>> arbitrary
-> >>> kernel memory. Also the code may kfree() the same pointer multiple
-> >>> times.
-> >>
-> >> http://lkml.org/lkml/2011/1/20/348
-> >> https://bugzilla.redhat.com/CVE-2011-0023
-> >>
-> >> Please use CVE-2011-0023 (this does not include the unresolved flaw
-> >> described in the following paragraph below).
-> >
-> > There seem to be 2 types of issues described above - the
-> > uncontrolled
-> > file position / memory overwrite, and a "double free". So there
-> > should
-> > probably be 2 separate CVEs, not one. Am I missing something?
-> 
-> Sorry about it. Please see http://seclists.org/oss-sec/2011/q1/106.
-> 
+Hi,
 
-Eugene, does the "unresolved flaw" still need an ID? This thread now
-confuses me.
+Mediawiki <= 1.16 is vulnerable to clickjacking when showing iframes in a
+wiki:
 
-Thanks.
+https://bugzilla.wikimedia.org/show_bug.cgi?id=26561
+
+I don't know if this warrants a CVE ID, but if so please assign one.
+
+(please CC me on replies, TIA)
+
+Thanks,
 
 -- 
-    JB
+Jonathan Wiltshire                                      jmw@...ian.org
+Debian Developer                         http://people.debian.org/~jmw
+
+4096R: 0xD3524C51 / 0A55 B7C5 1223 3942 86EC  74C3 5394 479D D352 4C51
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
