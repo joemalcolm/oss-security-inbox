@@ -1,47 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/25/2
-Message-ID: <4EA6D1C7.5020302@redhat.com>
-Date: Tue, 25 Oct 2011 09:12:07 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/04/3
+Message-ID: <4D22BF20.30401@redhat.com>
+Date: Tue, 04 Jan 2011 14:33:04 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>
-Subject: Re: CVE request: phpldapadmin <= 1.2.1.1 XSS and and code injection flaws
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE-2010-4526 kernel: sctp: a race between ICMP protocol unreachable and connect()
 Content-Type: text/plain; charset=utf-8
 
-On 10/24/2011 12:19 PM, Vincent Danen wrote:
-> Two flaws were found in phpldapadmin <= 1.2.1.1 that can lead to an XSS
-> or code injection:
->
-> 1) Input appended to the URL in cmd.php (when "cmd" is set to "_debug")
-> is not properly sanitised before being returned to the user. This can be
-> exploited to execute arbitrary HTML and script code in a user's browser
-> session in context of an affected site.
+http://git.kernel.org/linus/50b5d6ad63821cea324a5a7a19854d4de1a0a819
+https://bugzilla.redhat.com/CVE-2010-4526
 
-Please use CVE-2011-4074 for this one
->
-> 2) Input passed to the "orderby" parameter in cmd.php (when "cmd" is set
-> to "query_engine", "query" is set to "none", and "search" is set to e.g.
-> "1") is not properly sanitised in lib/functions.php before being used in
-> a "create_function()" function call. This can be exploited to inject and
-> execute arbitrary PHP code.
-Please use CVE-2011-4075 for this one
+commit 50b5d6ad63821cea324a5a7a19854d4de1a0a819
+Author: Vlad Yasevich <vladislav.yasevich@...com>
+Date:   Thu May 6 00:56:07 2010 -0700
 
->
-> Could CVEs be assigned to these please?
->
-> References:
->
-> http://sourceforge.net/tracker/index.php?func=detail&aid=3417184&group_id=61828&atid=498546
->
-> http://www.exploit-db.com/exploits/18021/
-> https://secunia.com/advisories/46551/
-> http://phpldapadmin.git.sourceforge.net/git/gitweb.cgi?p=phpldapadmin/phpldapadmin;a=blobdiff;f=htdocs/cmd.php;h=0ddf0044355abc94160be73122eb34f3e48ab2d9;hp=34f3848fe4a6d4c00c7c568afa81f59579f5d724;hb=64668e882b8866fae0fa1b25375d1a2f3b4672e2;hpb=caeba72171ade4f588fef1818aa4f6243a68b85e
->
-> http://phpldapadmin.git.sourceforge.net/git/gitweb.cgi?p=phpldapadmin/phpldapadmin;a=blobdiff;f=lib/functions.php;h=eb160dc9f7d74e563131e21d4c85d7849a0c6638;hp=19fde9974d4e5eb3bfac04bb223ccbefdb98f9a0;hb=76e6dad13ef77c5448b8dfed1a61e4acc7241165;hpb=5d4245f93ae6f065e7535f268e3cd87a23b07744
->
->
+sctp: Fix a race between ICMP protocol unreachable and connect()
 
--- 
+     ICMP protocol unreachable handling completely disregarded
+     the fact that the user may have locked the socket.  It proceeded
+     to destroy the association, even though the user may have
+     held the lock and had a ref on the association.
+[...]
+     This was because the sctp_wait_for_connect() would aqcure the socket
+     lock and then proceed to release the last reference count on the
+     association, thus cause the fully destruction path to finish freeing
+     the socket.
 
--Kurt Seifried / Red Hat Security Response Team
+This affects kernels v2.6.11-rc2 and above.
 
+Thanks, Eugene
