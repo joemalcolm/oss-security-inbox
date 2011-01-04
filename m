@@ -1,42 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/04/1
-Message-ID: <4E8AC434.9090100@redhat.com>
-Date: Tue, 04 Oct 2011 10:30:44 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com
-Subject: CVE Request -- phpPgAdmin -- Multiple XSS flaws fixed in v5.0.3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/04/10
+Message-ID: <AANLkTi=3tF6zHvTRy-fVSKHE6sbEXJYeq1MrJD7ntdPH@mail.gmail.com>
+Date: Tue, 4 Jan 2011 10:19:39 -0500
+From: Hyrum Wright <hwright@...che.org>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: Kurt Seifried <kurt@...fried.org>, Josh Bressers <bressers@...hat.com>,  "Steven M. Christey" <coley@...us.mitre.org>, Joe Orton <jorton@...hat.com>,  Subversion Development <dev@...version.apache.org>
+Subject: Re: CVE request for subversion
 Content-Type: text/plain; charset=utf-8
 
-Hello Josh, Steve, vendors,
+On Tue, Jan 4, 2011 at 10:02 AM, Jan Lieskovsky <jlieskov@...hat.com> wrote:
+> Hello Kurt, Josh, vendors,
+>
+> Josh Bressers wrote:
+>>
+>> ----- Original Message -----
+>>>
+>>> Unspecified vulnerability in the server component in Apache Subversion
+>>> 1.6.x before 1.6.15 allows remote attackers to cause a denial of
+>>> service via unknown vectors, related to a "several bug fixes,
+>>> including two which can cause client-initiated crashes on the server."
+>>>
+>>> [1] http://svn.haxx.se/dev/archive-2010-11/0475.shtml
+>
+>  Cc-ed Hyrum to shed more light into this one. [1] mentions two issues:
+> <begin quote>
+> ...
+> several bug fixes, including two which can cause client-initiated
+> crashes on the server.
+> </end quote>
+>
+> Further look at:
+> [2] http://svn.apache.org/repos/asf/subversion/tags/1.6.15/CHANGES
+>
+> suggest:
+>
+> A, "* prevent crash in mod_dav_svn when using SVNParentPath (r1033166)"
+> being the first one.
+>   Upstream changeset:
+>   http://svn.apache.org/viewvc?view=revision&revision=1033166
+>
+> and after discussion with Joe Orton, Joe suggested:
+>
+> B, * fix server-side memory leaks triggered by 'blame -g' (r1032808)
+>   References:
+>   http://svn.haxx.se/dev/archive-2010-11/0102.shtml
+>   Upstream changeset:
+>   http://svn.apache.org/viewvc?view=revision&revision=1032808
+>
+>   being the second one as denial of service attack (by memory consumption)
+> against
+>   svnserve.
+>
+> Questions:
+> ----------
+> Hyrum, could you confirm A, and B, issues are those two, mentioned in [2]
+> to be able to cause client-initiated crashes on the server?
 
-   multiple cross-site scripting (XSS) flaws were reported in phpPgAdmin:
+I can confirm that A and B are the two issues mentioned in [2].
 
-1) the 'title' argument of a particular web page was not sanitized
-    properly prior displaying the page header,
+>> I admit, this isn't obvious, so let's use CVE-2010-4539 for now.
+>> We can split it if needed once more information is known.
+>
+> Josh, since CVE-2010-4539 was assigned. Once Hyrum confirms, can
+> we consider CVE-2010-4539 to be a CVE identifier for A, issue
+> and request yet another / second one for B, issue?
 
-2) the return ULR ('return_url') and return link name ('return_desc')
-    were not sanitized properly prior displaying the requested page data.
+We didn't initially reserve CVEs for these vulnerabilities, but will
+be happy to update our documentation to reflect them.  (See
+http://subversion.apache.org/security/ )   The two issues really are
+orthogonal, so B should probably  not be included in a CVE for A.
 
-A remote attacker could provide a specially-crafted URL, which once
-visited by an unsuspecting phpPgAdmin user could lead to arbitrary HTML
-or web script execution.
+I've CC'd dev@...version.apache.org to help coordinate advisory authoring.
 
-References:
-[1] https://secunia.com/advisories/46248/
-[2] https://bugs.gentoo.org/show_bug.cgi?id=385505
-[3] http://phppgadmin.sourceforge.net/doku.php?id=download
-[4] 
-http://sourceforge.net/mailarchive/forum.php?thread_name=4E897F6C.90905%40free.fr&forum_name=phppgadmin-news
-
-[5] https://bugzilla.redhat.com/show_bug.cgi?id=743205
-
-Upstream patch:
-[6] 
-https://github.com/phppgadmin/phppgadmin/commit/1df248203de055f97e092b50b1dd9643ccb73842
-
-Could you allocate a CVE id for this?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+-Hyrum
