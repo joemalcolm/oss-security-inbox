@@ -1,32 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/20/6
-Message-ID: <AANLkTimFDaP1ZDrpfkMtRpYSFmdi7tMNP00R0ZXADQE9@mail.gmail.com>
-Date: Thu, 20 Jan 2011 18:15:49 -0500
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: xpdf
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/04/8
+Message-ID: <4D23366C.9000108@redhat.com>
+Date: Tue, 04 Jan 2011 16:02:04 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: Kurt Seifried <kurt@...fried.org>, Josh Bressers <bressers@...hat.com>
+CC: oss-security <oss-security@...ts.openwall.com>, "Steven M. Christey" <coley@...us.mitre.org>, Joe Orton <jorton@...hat.com>, Hyrum Wright <hwright@...che.org>
+Subject: Re: CVE request for subversion
 Content-Type: text/plain; charset=utf-8
 
-I identified two issues in xpdf.  I don't think the first requires a
-CVE, since it's incredibly unlikely to be exploitable, but I include
-it here in case someone disagrees.
+Hello Kurt, Josh, vendors,
 
-1. Due to an integer overflow when parsing CharCodes for fonts and a
-failure to check the return value of a memory allocation, it is
-possible to trigger writes to a narrow range of offsets from a NULL
-pointer.  The chance of being able to exploit this for anything other
-than a crash is very remote: on x86 32-bit, there's no chance (since
-the write occurs between 0xffffffc4 and 0xfffffffc).  At least the
-write lands in valid userspace on x86-64, but in my testing this
-memory is never mapped.  Fixed in poppler commit at [1], hopefully
-fixed soon at xpdf upstream.
+Josh Bressers wrote:
+> 
+> ----- Original Message -----
+>> Unspecified vulnerability in the server component in Apache Subversion
+>> 1.6.x before 1.6.15 allows remote attackers to cause a denial of
+>> service via unknown vectors, related to a "several bug fixes,
+>> including two which can cause client-initiated crashes on the server."
+>>
+ >> [1] http://svn.haxx.se/dev/archive-2010-11/0475.shtml
 
-2. Malformed commands may cause corruption of the internal stack used
-to maintain graphics contexts, leading to potentially exploitable
-memory corruption.  Fixed in poppler commit at [2], hopefully fixed
-soon at xpdf upstream.
+   Cc-ed Hyrum to shed more light into this one. [1] mentions two issues:
+<begin quote>
+...
+several bug fixes, including two which can cause client-initiated
+crashes on the server.
+</end quote>
 
--Dan
+Further look at:
+[2] http://svn.apache.org/repos/asf/subversion/tags/1.6.15/CHANGES
 
-[1] http://cgit.freedesktop.org/poppler/poppler/commit/?id=cad66a7d25abdb6aa15f3aa94a35737b119b2659
-[2] http://cgit.freedesktop.org/poppler/poppler/commit/?id=8284008aa8230a92ba08d547864353d3290e9bf9
+suggest:
+
+A, "* prevent crash in mod_dav_svn when using SVNParentPath (r1033166)" being the first one.
+    Upstream changeset:
+    http://svn.apache.org/viewvc?view=revision&revision=1033166
+
+and after discussion with Joe Orton, Joe suggested:
+
+B, * fix server-side memory leaks triggered by 'blame -g' (r1032808)
+    References:
+    http://svn.haxx.se/dev/archive-2010-11/0102.shtml
+    Upstream changeset:
+    http://svn.apache.org/viewvc?view=revision&revision=1032808
+
+    being the second one as denial of service attack (by memory consumption) against
+    svnserve.
+
+Questions:
+----------
+Hyrum, could you confirm A, and B, issues are those two, mentioned in [2]
+to be able to cause client-initiated crashes on the server?
+
+> I admit, this isn't obvious, so let's use CVE-2010-4539 for now.
+> We can split it if needed once more information is known.
+
+Josh, since CVE-2010-4539 was assigned. Once Hyrum confirms, can
+we consider CVE-2010-4539 to be a CVE identifier for A, issue
+and request yet another / second one for B, issue?
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+> 
+> Thanks.
+> 
+
