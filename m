@@ -1,28 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/13/1
-Message-ID: <4E1D07DA.2050805@redhat.com>
-Date: Wed, 13 Jul 2011 10:50:02 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/04/12
+Message-ID: <1656770654.148983.1294165629945.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 4 Jan 2011 13:27:09 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-2011-2689 kernel: gfs2: make sure fallocate bytes is a multiple of blksize
+Cc: jmw@...ian.org, coley <coley@...re.org>
+Subject: Re: (possible) CVE request: Clickjacking in Mediawiki
 Content-Type: text/plain; charset=utf-8
 
-The GFS2 fallocate code chooses a target size to for allocating chunks
-of space. Whenever it can't find any resource groups with enough space
-free, it halves its target. Since this target is in bytes, eventually it
-will no longer be a multiple of blksize. As long as there is more space
-available in the resource group than the target, this isn't a problem,
-since gfs2 will use the actual space available, which is always a
-multiple of blksize. However, when gfs couldn't fallocate a bigger chunk
-than the target, it was using the non-blksize aligned number. This
-caused a BUG in later code that required blksize aligned offsets.
+----- Original Message -----
+> Hi,
+> 
+> Mediawiki <= 1.16 is vulnerable to clickjacking when showing iframes
+> in a
+> wiki:
+> 
+> https://bugzilla.wikimedia.org/show_bug.cgi?id=26561
+> 
+> I don't know if this warrants a CVE ID, but if so please assign one.
+> 
 
-Upstream commit:
-http://git.kernel.org/linus/6905d9e4dda6112f007e9090bca80507da158e63
+Please use CVE-2011-0003
 
-Reference:
-https://bugzilla.redhat.com/CVE-2011-2689
+Thanks.
 
-Thanks, Eugene
-@eugeneteo
+-- 
+    JB
