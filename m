@@ -1,35 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/25/5
-Message-ID: <4D3E5ABB.6080306@redhat.com>
-Date: Tue, 25 Jan 2011 13:08:11 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Kees Cook <kees@...ntu.com>, coley <coley@...re.org>
-Subject: Re: CVE request: linux kernel heap issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/04/9
+Message-ID: <4D233932.2080509@summersault.com>
+Date: Tue, 04 Jan 2011 10:13:54 -0500
+From: Mark Stosberg <mark@...mersault.com>
+To: Jan Lieskovsky <jlieskov@...hat.com>
+CC: Andy Armstrong <andy@...ten.net>, oss-security@...ts.openwall.com,  Marcela Maslanova <mmaslano@...hat.com>, Petr Pisar <ppisar@...hat.com>,  Chris 'BinGOs' Williams <chris@...gosnet.co.uk>, Reed Loden <reed@...dloden.com>,  Masahiro Yamada <masa141421356@...il.com>, Byron Jones <glob@...b.com.au>, Lincoln Stein <lincoln.stein@...il.com>,  Tom spot Callaway <tcallawa@...hat.com>
+Subject: Re: Re: CVE Request -- perl-CGI two ids, perl-CGI-Simple one id (CVE-2010-3172 already assigned for Bugzilla part)
 Content-Type: text/plain; charset=utf-8
 
-On 01/25/2011 11:48 AM, Eugene Teo wrote:
-> On 01/25/2011 05:46 AM, Kees Cook wrote:
->> Hello,
->>
->> I don't think these minor issues I reported to the Linux Kernel have
->> had CVEs assigned to them:
->>
->> heap contents leak for CAP_NET_ADMIN via ethtool ioctl
->> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=b00916b189d13a615ff05c9242201135992fcda3
->>
->
-> These require CAP_NET_ADMIN.
->
-> CVE-2010-4655.
 
-Take note that you will need this too:
-http://marc.info/?l=linux-kernel&m=129593098003553&w=2
+>   Are there some patches to come yet wrt to Perl's CPAN CGI-Simple module
+> and those two CVE ids yet?
 
->> iowarrior usb device heap overflow
->> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=3ed780117dbe5acb64280d218f0347f238dafed0
->>
->
-> CVE-2010-4656.
+Yes, this one. It is not currently applied in the master branch yet:
 
-Eugene
+https://github.com/markstos/CGI--Simple/commit/e811ab874a5e0ac8a99e76b645a0e537d8f714da
+
+> I can see latest CGi-Simple-v113 released on Monday, 27-th December 2010:
+> [1] http://search.cpan.org/dist/CGI-Simple/
+> 
+> Does it contain fixes for both CVE issues (so it is possible to rebase
+> to new
+> version) or anything else to be done in this part of the world yet?
+
+It contains only a partial fix, mirroring what happened with CGI.pm.
+
+> Is the fix, we were waiting for on the CGI-Simple side:
+> [2]
+> https://github.com/AndyA/CGI--Simple/commit/5a861280ef524661105e132536ff7d1a9084941f
+
+That's not it, that's separate.
+
+Lincoln is the primary maintainer of CGI.pm, but I have upload rights.
+However, we haven't heard from recently. A week ago I asked again for
+his input and notified him that I would upload a new release myself I
+hadn't heard from him in another week. That time has come now-- I will
+plan to upload a new release of CGI.pm in the next 24 hours.
+
+   Mark
