@@ -1,28 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/01/16
-Message-ID: <20110401210823.GR4050@outflux.net>
-Date: Fri, 1 Apr 2011 14:08:23 -0700
-From: Kees Cook <kees@...ntu.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/04/3
+Message-ID: <4D22BF20.30401@redhat.com>
+Date: Tue, 04 Jan 2011 14:33:04 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE-2010-4526 kernel: sctp: a race between ICMP protocol unreachable and connect()
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Apr 01, 2011 at 02:03:12PM -0400, Josh Bressers wrote:
-> Initial members will have had to be a vendor-sec member (no exploders this
-> time around). You must reply to this thread, in public (on oss-security).
-> We want this to be very public, we have nothing to hide. You must have a
-> public gpg key ID included in your reply. The new list will gpg encrypt all
-> mail (it does accept plaintext messages though).
+http://git.kernel.org/linus/50b5d6ad63821cea324a5a7a19854d4de1a0a819
+https://bugzilla.redhat.com/CVE-2010-4526
 
-Hi, please add me to the list. I was a member via the Ubuntu exploder.
+commit 50b5d6ad63821cea324a5a7a19854d4de1a0a819
+Author: Vlad Yasevich <vladislav.yasevich@...com>
+Date:   Thu May 6 00:56:07 2010 -0700
 
-pub   4096R/DC6DC026 2010-09-27
-      Key fingerprint = A5C3 F68F 229D D60F 723E  6E13 8972 F4DF DC6D C026
-uid                  Kees Cook <kees@...ntu.com>
-sub   4096R/650DE414 2010-09-27
+sctp: Fix a race between ICMP protocol unreachable and connect()
 
--Kees
+     ICMP protocol unreachable handling completely disregarded
+     the fact that the user may have locked the socket.  It proceeded
+     to destroy the association, even though the user may have
+     held the lock and had a ref on the association.
+[...]
+     This was because the sctp_wait_for_connect() would aqcure the socket
+     lock and then proceed to release the last reference count on the
+     association, thus cause the fully destruction path to finish freeing
+     the socket.
 
--- 
-Kees Cook
-Ubuntu Security Team
+This affects kernels v2.6.11-rc2 and above.
+
+Thanks, Eugene
