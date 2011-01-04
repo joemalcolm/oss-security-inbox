@@ -1,30 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/30/1
-Message-ID: <20110930054632.GA29071@inutil.org>
-Date: Fri, 30 Sep 2011 07:46:32 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
-To: oss-security@...ts.openwall.com, coley@...re.org
-Subject: Firefox: CVE-2011-3867 a dupe of CVE-2011-2998
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/04/8
+Message-ID: <4D23366C.9000108@redhat.com>
+Date: Tue, 04 Jan 2011 16:02:04 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: Kurt Seifried <kurt@...fried.org>, Josh Bressers <bressers@...hat.com>
+CC: oss-security <oss-security@...ts.openwall.com>, "Steven M. Christey" <coley@...us.mitre.org>, Joe Orton <jorton@...hat.com>, Hyrum Wright <hwright@...che.org>
+Subject: Re: CVE request for subversion
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-When http://www.mozilla.org/security/announce/2011/mfsa2011-37.html
-went live it initially listed "CVE-2011-XXXX" as the CVE ID. However,
-since it was obvious that CVE-2011-2998 was missing in the block of
-Mozilla IDs I asked the Mozilla security group for confirmation if
-MFSA 2011-37 is in fact CVE-2011-2998, which they confirmed  and 
-fixed on the website later the day.
+Hello Kurt, Josh, vendors,
 
-MITRE then seems to have assigned CVE-2011-3867 to this issue:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-3867, which
-links to the MFSA page, which itself mentions CVE-2011-2998.
+Josh Bressers wrote:
+> 
+> ----- Original Message -----
+>> Unspecified vulnerability in the server component in Apache Subversion
+>> 1.6.x before 1.6.15 allows remote attackers to cause a denial of
+>> service via unknown vectors, related to a "several bug fixes,
+>> including two which can cause client-initiated crashes on the server."
+>>
+ >> [1] http://svn.haxx.se/dev/archive-2010-11/0475.shtml
 
-Beside Debian CVE-2011-2998 was also used by Red Hat:
-https://rhn.redhat.com/errata/RHSA-2011-1341.html and since it's also 
-mentioned on the Mozilla page my recommendation would be to reject 
-CVE-2011-3867, before it gets used more widely.
+   Cc-ed Hyrum to shed more light into this one. [1] mentions two issues:
+<begin quote>
+...
+several bug fixes, including two which can cause client-initiated
+crashes on the server.
+</end quote>
 
-Cheers,
-        Moritz
+Further look at:
+[2] http://svn.apache.org/repos/asf/subversion/tags/1.6.15/CHANGES
 
+suggest:
+
+A, "* prevent crash in mod_dav_svn when using SVNParentPath (r1033166)" being the first one.
+    Upstream changeset:
+    http://svn.apache.org/viewvc?view=revision&revision=1033166
+
+and after discussion with Joe Orton, Joe suggested:
+
+B, * fix server-side memory leaks triggered by 'blame -g' (r1032808)
+    References:
+    http://svn.haxx.se/dev/archive-2010-11/0102.shtml
+    Upstream changeset:
+    http://svn.apache.org/viewvc?view=revision&revision=1032808
+
+    being the second one as denial of service attack (by memory consumption) against
+    svnserve.
+
+Questions:
+----------
+Hyrum, could you confirm A, and B, issues are those two, mentioned in [2]
+to be able to cause client-initiated crashes on the server?
+
+> I admit, this isn't obvious, so let's use CVE-2010-4539 for now.
+> We can split it if needed once more information is known.
+
+Josh, since CVE-2010-4539 was assigned. Once Hyrum confirms, can
+we consider CVE-2010-4539 to be a CVE identifier for A, issue
+and request yet another / second one for B, issue?
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+> 
+> Thanks.
+> 
 
