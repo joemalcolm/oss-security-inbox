@@ -1,32 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/27/8
-Message-ID: <20110627145835.GA14674@foo.fgeek.fi>
-Date: Mon, 27 Jun 2011 17:58:35 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/04/13
+Message-ID: <20110104233131.GD28060@kroah.com>
+Date: Tue, 4 Jan 2011 15:31:31 -0800
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Cc: incidents@...rt.org, lists@...g.net, bressers@...hat.com
-Subject: Re: CVE request: Joomla unspecified information disclosure vulnerability
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE-2010-4526 kernel: sctp: a race between ICMP protocol unreachable and connect()
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jun 27, 2011 at 03:53:27PM +0800, YGN Ethical Hacker Group wrote:
-> Path Disclosure should better be regarded as more closely related to
-> server-side issue.
-> It may be too redundant or unnecessary to create one path disclosure
-> issue per CVE.
+On Tue, Jan 04, 2011 at 02:33:04PM +0800, Eugene Teo wrote:
+> http://git.kernel.org/linus/50b5d6ad63821cea324a5a7a19854d4de1a0a819
+> https://bugzilla.redhat.com/CVE-2010-4526
 > 
-> Another Path Disclosure issue in Joomla! 1.6.1
+> commit 50b5d6ad63821cea324a5a7a19854d4de1a0a819
+> Author: Vlad Yasevich <vladislav.yasevich@...com>
+> Date:   Thu May 6 00:56:07 2010 -0700
 > 
-> http://bl0g.yehg.net/2011/04/joomla-161-and-lower-information.html
+> sctp: Fix a race between ICMP protocol unreachable and connect()
 > 
+>     ICMP protocol unreachable handling completely disregarded
+>     the fact that the user may have locked the socket.  It proceeded
+>     to destroy the association, even though the user may have
+>     held the lock and had a ref on the association.
+> [...]
+>     This was because the sctp_wait_for_connect() would aqcure the socket
+>     lock and then proceed to release the last reference count on the
+>     association, thus cause the fully destruction path to finish freeing
+>     the socket.
 > 
-> Almost all php CMS applications have this issue going on where  some
-> of them are listed at:
-> 
-> http://code.google.com/p/inspathx/source/browse/#svn%2Ftrunk%2Fpaths_vuln
+> This affects kernels v2.6.11-rc2 and above.
 
-I think this deserves own CVE-identifier as Joomla did announce security vulnerability. As far as I know the vulnerability was described as "Information Disclosure" not patch disclosure. Path disclosures should be fixed from software also, but usually it is a problem in web-server configuration. Do you have more information about issue CVE-2011-2488? Still no reply from Joomla security team regarding issue CVE-2011-2488. I asked more details nearly a week ago.
+Not all, it was fixed in the 2.6.34 kernel, which was released back in
+May of 2010.
 
-Btw. I would use domain example.org in advisories if I were you. You might not always want to keep that attacker.in domain.
+thanks,
 
-Best regards,
-Henri Salo
+greg k-h
