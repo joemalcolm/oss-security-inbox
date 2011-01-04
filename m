@@ -1,85 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/27/1
-Message-ID: <4EF94C1B.3070608@kde.org>
-Date: Mon, 26 Dec 2011 23:39:55 -0500
-From: Jeff Mitchell <mitchell@....org>
-To: Solar Designer <solar@...nwall.com>
-CC: oss-security@...ts.openwall.com, cve@...re.org, ossi@....org
-Subject: Re: Disputing CVE-2011-4122
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/04/5
+Message-ID: <4D22F2A6.2080604@redhat.com>
+Date: Tue, 04 Jan 2011 11:12:54 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: Mark Stosberg <mark@...mersault.com>, Andy Armstrong <andy@...ten.net>
+CC: oss-security@...ts.openwall.com, Marcela Maslanova <mmaslano@...hat.com>, Petr Pisar <ppisar@...hat.com>, "Chris 'BinGOs' Williams" <chris@...gosnet.co.uk>, Reed Loden <reed@...dloden.com>, Masahiro Yamada <masa141421356@...il.com>, Byron Jones <glob@...b.com.au>, Lincoln Stein <lincoln.stein@...il.com>, Tom spot Callaway <tcallawa@...hat.com>
+Subject: Re: Re: CVE Request -- perl-CGI two ids, perl-CGI-Simple one id (CVE-2010-3172 already assigned for Bugzilla part)
 Content-Type: text/plain; charset=utf-8
 
-On 12/23/2011 06:22 PM, Solar Designer wrote:
-> On Wed, Dec 07, 2011 at 09:26:44AM -0500, Jeff Mitchell wrote:
->> I've been asked by the kcheckpass maintainer to lodge a dispute of
->> CVE-2011-4122.
->>
->> As explained in the blog entry linked from the CVE[1], the problem is
->> that neither kcheckpass nor OpenPAM validate the 'service_name' input
->> argument of pam_start(). This hole can be used to make PAM load
->> arbitrary shared libraries, which can be used to execute arbitrary code
->> as root, as kcheckpass is setuid root.
+Hi Mark, Andy,
+
+Ludwig Nussel wrote:
+> Mark Stosberg wrote:
+>> Yes, it is. However, later testing found that the issue wasn't
+>> completely fixed in 3.50. A new patch has been developed, and is
+>> currently pending review and acceptance by the primary CGI.pm author,
+>> Lincoln Stein. (Now CC'ed).
 > 
-> Besides loading of arbitrary shared libraries due to the OpenPAM
-> peculiarity, doesn't this kcheckpass feature allow a user to specify an
-> arbitrary PAM service name that is actually valid on the system, not
-> limited to PAM services intended for use by KDE?  Isn't that a
-> vulnerability of itself?  While kcheckpass itself doesn't grant access
-> to any resource, an alternate PAM stack (maybe only intended for use by
-> a specific service) might have modules with side-effects.
+> Any update on this? What are the remaining issues?
+
+   Are there some patches to come yet wrt to Perl's CPAN CGI-Simple module
+and those two CVE ids yet?
+
+I can see latest CGi-Simple-v113 released on Monday, 27-th December 2010:
+[1] http://search.cpan.org/dist/CGI-Simple/
+
+Does it contain fixes for both CVE issues (so it is possible to rebase to new
+version) or anything else to be done in this part of the world yet?
+
+Is the fix, we were waiting for on the CGI-Simple side:
+[2] https://github.com/AndyA/CGI--Simple/commit/5a861280ef524661105e132536ff7d1a9084941f
+
+or yet another one?
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
 > 
-> To me, kcheckpass looks poorly designed in letting the invoking user
-> specify an arbitrary PAM service name.  Instead, the service name should
-> either be obtained from a trusted place or it should be checked against
-> a trusted whitelist.
+> cu
+> Ludwig
 > 
-> For example, passwd(1) from SimplePAMApps does the latter: it has a
-> command-line option to specify a PAM service name suffix (which it'd
-> append to "passwd"), but the suffix must be whitelisted in
-> /etc/security/passwd.conf.
 
-<snip>
-
-My understanding -- and I'm not the maintainer, so I'm typing this based
-on my own understanding of the program and this problem from my talks
-with the maintainer, whom I've CCed -- is that at a simple level it can
-be used for normal PAM user authentication, but that it's also designed
-to provide a simple interface to do arbitrary kinds of PAM
-authentication depending on user/application needs. For instance, you
-when invoking kcheckpass you can not only specify the PAM service name
-but can also choose whether to use a stdin-based interface or a file
-descriptor handle to communicate with it. So you get access to
-authenticate with PAM for PAM services that use passwords but without
-having to interface directly with PAM libraries.
-
-This kind of behavior is not restricted within OpenPAM itself, and there
-is nothing in the documentation that indicates that such external
-accessor programs need to perform any sort of input sanitation on the
-service name field. Sure -- ideally you want such programs performing
-some kind of sanitation, but then you have to decide, rather than the
-application developer using your accessor program, what is appropriate
-and what isn't. There are some obvious candidates but a lot of choices
-that would be harder.
-
-So kcheckpass, at least for the moment, punts all of this down to
-OpenPAM. Is it *nice*? No. Is it *valid*? Yes, unless OpenPAM changes
-its programming guide to require sanity checking of inputs at a higher
-level (and then it should still do its own checking anyways).
-
-That's the basis for the maintainer wanting to challenge this CVE. Even
-if everyone agrees that kcheckpass should do some kind of filtering of
-service names, the fact remains that OpenPAM should have been doing its
-own sanity checking anyways (since it should never simply trust user
-input), and OpenPAM wasn't. If it wasn't kcheckpass that exposed this
-problem, it would eventually have been something else.
-
-I'll happily pass your comments along to the kcheckpass maintainer, and
-he indicated to me during our discussions that some level of filtering
-would probably be appropriate, but this CVE is due to OpenPAM's lack of
-sanity checking and blaming the program that exposes it via valid (if
-ugly) usage scenarios is misguided.
-
-Thanks,
-Jeff
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (260 bytes)
