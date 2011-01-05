@@ -1,42 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/23
-Message-ID: <1442939499.87938.1300135991782.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 14 Mar 2011 16:53:11 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/05/12
+Message-ID: <20110105221707.GM15891@redhat.com>
+Date: Wed, 5 Jan 2011 15:17:07 -0700
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE requests - kernel: tpm infoleaks
+Subject: Re: CVE request: patch directory traversal flaw
 Content-Type: text/plain; charset=utf-8
 
-I'm not able to properly parse this. Should this get one CVE id or three?
+* [2011-01-05 17:04:59 -0500] Dan Rosenberg wrote:
 
-Thanks.
+>Be sure to be careful while applying the patch to fix this one. :p
+
+heh, yes indeed.  =)
+
+>On Wed, Jan 5, 2011 at 4:54 PM, Vincent Danen <vdanen@...hat.com> wrote:
+>> We got a heads up on a directory traversal flaw in patch.  I don't think
+>> a CVE name has been assigned to it; could we get one?  It allows for the
+>> creation of arbitrary files in unexpected places due to the use of '..'.
+>>
+>> References:
+>>
+>> https://bugzilla.redhat.com/show_bug.cgi?id=667529
+>> http://osdir.com/ml/bug-patch-gnu/2010-12/msg00000.html
+>>
+>> Thanks.
 
 -- 
-    JB
-
-
------ Original Message -----
-> [PATCH 1/3] char/tpm: Fix uninitialized usage of data buffer
-> 
-> http://tpmdd.git.sourceforge.net/git/gitweb.cgi?p=tpmdd/tpmdd;a=commitdiff;h=459e0537ebb7b786cd29a26f4e41c721632cd840
-> infoleak
-> 
-> [PATCH 2/3] char/tpm: Call tpm_transmit with correct size
-> 
-> http://tpmdd.git.sourceforge.net/git/gitweb.cgi?p=tpmdd/tpmdd;a=commitdiff;h=f0bbed1ee49a4779dfb32159fea669ced8789336
-> infoleak
-> 
-> [PATCH 3/3] char/tpm: zero buffer after copying to userspace
-> 
-> http://tpmdd.git.sourceforge.net/git/gitweb.cgi?p=tpmdd/tpmdd;a=commitdiff;h=44480e4077cd782aa8f54eb472b292547f030520
-> prevents storing of previous result, leakage to other drivers
-> 
-> Credit to Peter Huewe.
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=684671
-> 
-> Thanks, Eugene
-> --
-> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i);
-> }
+Vincent Danen / Red Hat Security Response Team 
