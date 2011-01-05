@@ -1,37 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/05/1
-Message-ID: <4E8BC22B.6030207@redhat.com>
-Date: Wed, 05 Oct 2011 08:04:19 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/05/1
+Message-ID: <4D23F024.2030804@redhat.com>
+Date: Wed, 05 Jan 2011 12:14:28 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: kexec-tools: Multiple security flaws by management of kdump core files and ramdisk images
+CC: "Steven M. Christey" <coley@...us.mitre.org>, Greg KH <gregkh@...e.de>
+Subject: CVE-2010-4525 kvm: x86: zero kvm_vcpu_events->interrupt.pad infoleak
 Content-Type: text/plain; charset=utf-8
 
-Hi All,
+In addition to CVE-2010-3881, some versions of the Linux kernel forgot 
+to initialize the kvm_vcpu_events.interrupt.pad field before being 
+copied to userspace. I have assigned CVE-2010-4525 to this. I briefly 
+checked, linux-2.6.33/34.y are affected, linux-2.6/.31/.32.y are not.
 
-Kevan Carstensen reported multiple security flaws in kexec-tools, 
-details are as follows:
+https://bugzilla.redhat.com/CVE-2010-4525
 
-1. CVE-2011-3588:
-
-The default value of "StrictHostKeyChecking=no" has been used for kdump/ 
-mkdumprd openssh integration. A remote malicious kdump server could use 
-this flaw to impersonate the intended, correct kdump server to obtain 
-security sensitive information (kdump core files).
-
-2. CVE-2011-3589
-
-mkdumprd utility copied content of certain directories into newly 
-created initial ramdisk images, potentially leading to information leak.
-
-3. CVE-2011-2390
-
-mkdumprd utility created the final initial ramdisk image with 
-world-readable permissions, possibly leading to information leak.
-
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=716439
-
-
--- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+Thanks, Eugene
