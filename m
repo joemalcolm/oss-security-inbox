@@ -1,41 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/05/7
-Message-ID: <20110305212535.GX372@outflux.net>
-Date: Sat, 5 Mar 2011 13:25:36 -0800
-From: Kees Cook <kees@...ntu.com>
-To: Dan Rosenberg <dan.j.rosenberg@...il.com>
-Cc: oss-security@...ts.openwall.com, Ludwig Nussel <ludwig.nussel@...e.de>, security <security@...ntu.com>, security@...ian.org, secalert@...hat.com, security@...e.de
-Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/05/8
+Message-ID: <AANLkTikfKh_2M7Stg9z0PJ0fz_nXq02Rnhh39kr=9Z87@mail.gmail.com>
+Date: Wed, 5 Jan 2011 20:23:57 +0100
+From: Pierre Joye <pierre.php@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: possible flaw in widely used strtod.c implementation
 Content-Type: text/plain; charset=utf-8
 
-Hi Dan,
+On Wed, Jan 5, 2011 at 5:52 PM, Michael Gilbert
+<michael.s.gilbert@...il.com> wrote:
 
-On Sat, Mar 05, 2011 at 01:57:41PM -0500, Dan Rosenberg wrote:
-> This is all good to know, but what do we think is the best way to
-> actually fix this specific issue for all the systems supported by
-> distros that are using older versions of util-linux, or for various
-> other reasons can't get rid of /etc/mtab?
-> 
-> Fixing every suid mount helper individually seems a bit tedious, but
-> there might not be a way around it.
-> [...]
-> There are a few possible options   We could patch glibc to try to
-> raise the rlimit in addmntent().  Or we could fix every suid mount
-> helper to raise the rlimit or have proper error handling for the case
-> when addmntent() fails.  This final option requires that mtab editing
-> be done in a temporary file and aborted on failure, which isn't the
-> case for all helpers.
+> The fact that this bug can lead to a denial-of-service in PHP is
+> sufficient to warrant a CVE for PHP, but nothing else (I think).  If it
+> can lead to a dos in other apps, then each should get their own CVE
+> (again in my opinion).
 
-It seems like fixing glibc to either raise the rlimit or correctly handle
-the error condition is the way to go (as you already mentioned). I share
-the concern of the helpers maybe not checking addmntent() return codes,
-though. If they all do, I would think that just correct error handling
-in glibc would be accepted upstream. Whatever the fix, it really feels like
-it should be in glibc. It is what is responsible for actually writing to
-the file...
+I think so too but in any case it would rock if I could get a CVE #
+asap, we are going to release 5.2.17/5.3.5 tomorrow (packaging now).
 
--Kees
-
+Cheers,
 -- 
-Kees Cook
-Ubuntu Security Team
+Pierre
+
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
