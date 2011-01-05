@@ -1,57 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/15/6
-Message-ID: <1302879971.2013.10.camel@oban>
-Date: Fri, 15 Apr 2011 17:06:11 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/05/3
+Message-Id: <201101051224.40565.hanno@hboeck.de>
+Date: Wed, 5 Jan 2011 12:24:40 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request for Thunar (format string errors)
+Subject: CVE request: hastymail before 1.01 XSS
 Content-Type: text/plain; charset=utf-8
 
-On ven., 2011-04-15 at 16:50 +0200, Tomas Hoger wrote:
-> On Fri, 15 Apr 2011 15:54:08 +0200 Yves-Alexis Perez wrote:
-> 
-> > The first one is
-> >
-> http://git.xfce.org/xfce/thunar/commit/?id=1d4dfafda30df071d7c1e0b370f0613cbc92ba74
-> > (bug at https://bugzilla.xfce.org/show_bug.cgi?id=7128)  fixed in
-> > Thunar 1.2.1) and triggers when creating file from templates and
-> > calling it with a format string.
-> 
-> Does this have real attack vector where trust boundary is crossed?
-> This sounds like a bug.
+See
+http://www.hastymail.org/security/
 
-Yeah, I don't think there's a way to ask Thunar to create a new file
-from a template programmatically, so the user really needs to go to the
-menu and create it.
-> 
-> > The second is
-> >
-> http://git.xfce.org/xfce/thunar/commit/?id=03dd312e157d4fa8a11d5fa402706ae5b05806fa
-> > and is triggered when copy/pasting a file named from a format
-> string.
-> > There's no released version including the fix right now.
-> 
-> This would probably qualify.
+"Many thanks to Julien CAYSSOL who discovered and reported the issue. The 
+specific problem is an XSS attack vector in HTML formatted messages that takes 
+advantage of background attributes used with table cell elements. Due to an 
+incorrect implementation of the new htmLawed HTML filter this attribute value 
+was not properly sanitized and could be used to inject executable JavaScript. 
+This was NOT a flaw in the htmLawed filter code itself, but a problem with 
+it's specific use in Hastymail2. The Hastymail2 1.01 release was pacakages 
+specifically to address this one issue. "
 
-Even if the user has to manually Ctrl-C/Ctrl-V the file in Thunar?
-Thanks.
-> 
-> > As a side note, I do use -Wformat -Wformat-security
-> > -Werror=format-security (thanks to hardening-includes) for my Debian
-> > builds, but as those function are wrappers of wrappers of wrappers
-> to
-> > printf() and stuff like that, -Wformat-security won't help. Is there
-> a
-> > way to work around that?
-> 
-> Fortify source should block code execution even in this case, I'd
-> expect.
-
-Yeah hopefully, but I was more thinking on a way to detect the format
-string error at compilation time. Manually it's kind of a pain as one
-has to check every usage of a function using va_args.
-
-Regards,
 -- 
-Yves-Alexis
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
+http://schokokeks.org - professional webhosting
+
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
