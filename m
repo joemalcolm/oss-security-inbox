@@ -1,28 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/13/7
-Message-Id: <1307983372.28614@webmin.com>
-Date: Mon, 13 Jun 2011 09:42:52 -0700 (PDT)
-From: "Jamie Cameron" <jcameron@...min.com>
-To: Henri Salo <henri@...v.fi>
-Cc: oss-security@...ts.openwall.com, webadmin-devel@...ts.sourceforge.net, javierbassi@...il.com
-Subject: Re: CVE-request: XSS in Webmin 1.540
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/05/9
+Message-ID: <20110105201627.GB11372@kroah.com>
+Date: Wed, 5 Jan 2011 12:16:27 -0800
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Greg KH <gregkh@...e.de>
+Subject: Re: CVE-2010-4525 kvm: x86: zero kvm_vcpu_events->interrupt.pad infoleak
 Content-Type: text/plain; charset=utf-8
 
-On 13/Jun/2011 06:40 Henri Salo <henri@...v.fi> wrote ..
-> Hi,
+On Wed, Jan 05, 2011 at 12:14:28PM +0800, Eugene Teo wrote:
+> In addition to CVE-2010-3881, some versions of the Linux kernel
+> forgot to initialize the kvm_vcpu_events.interrupt.pad field before
+> being copied to userspace. I have assigned CVE-2010-4525 to this. I
+> briefly checked, linux-2.6.33/34.y are affected, linux-2.6/.31/.32.y
+> are not.
 > 
-> I would like to receive CVE-identifier for this issue in Webmin. References:
-> 
-> http://seclists.org/fulldisclosure/2011/Apr/393
-> 
-> Javier Bassi told me that the Bugtraq ID is 47558. Couldn't find this from OSVDB.
-> Fixed in commit: https://github.com/webmin/webmin/commit/46e3d3ad195dcdc1af1795c96b6e0dc778fb6881
-> which is included to Webmin 1.550 release.
-> 
-> Should be 2011 identifier.
+> https://bugzilla.redhat.com/CVE-2010-4525
 
-There is no CVE for this - the original submitter Javier had trouble obtaining one.
+Is there a fix for this in the upstream kernels?  How about kernels
+greater than .35?
 
-Actually, I have no idea where CVEs come from either!
+thanks,
 
- - Jamie
+greg k-h
