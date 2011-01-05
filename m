@@ -1,18 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/13/4
-Message-ID: <20110913164254.GA32407@inutil.org>
-Date: Tue, 13 Sep 2011 18:42:55 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: ffmpeg/libav insufficuent boundary check in CAVS decoding
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/05/6
+Message-ID: <4D24B97D.3000801@summersault.com>
+Date: Wed, 05 Jan 2011 13:33:33 -0500
+From: Mark Stosberg <mark@...mersault.com>
+To: Jan Lieskovsky <jlieskov@...hat.com>
+CC: Andy Armstrong <andy@...ten.net>, oss-security@...ts.openwall.com,  Marcela Maslanova <mmaslano@...hat.com>, Petr Pisar <ppisar@...hat.com>,  Chris 'BinGOs' Williams <chris@...gosnet.co.uk>, Reed Loden <reed@...dloden.com>,  Masahiro Yamada <masa141421356@...il.com>, Byron Jones <glob@...b.com.au>, Lincoln Stein <lincoln.stein@...il.com>,  Tom spot Callaway <tcallawa@...hat.com>, Max Kanat-Alexander <mkanat@...zilla.org>
+Subject: CGI.pm 3.51 released
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-this oCert advisory never seems to have received a CVE
-assignment: http://www.ocert.org/advisories/ocert-2011-002.html
 
-Upstream fix in ffmpeg:
-http://git.videolan.org/?p=ffmpeg.git;a=commit;h=c5cbda50793e311aa73489d12184ffd6761c9fbf
+As discussed, CGI.pm 3.51 was released today, including the related
+security fix. It is available here:
 
-Cheers,
-        Moritz
+http://cpan.cpantesters.org/authors/id/M/MA/MARKSTOS/CGI.pm-3.51.tar.gz
+
+CGI.pm has had a backlog of bug fixes that were pending release, so it
+includes a number of other improvements as well.
+
+Thanks to the related security teams and other contributors for the help.
+
+   Mark
