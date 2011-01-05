@@ -1,45 +1,106 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/26
-Message-ID: <1538145496.192012.1298495409359.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 23 Feb 2011 16:10:09 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/05/4
+Message-ID: <881228981.167400.1294243783522.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 5 Jan 2011 11:09:43 -0500 (EST)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE requests: freebsd kernel/tesseract/xinha/proftpd
+Cc: Kurt Seifried <kurt@...fried.org>, "Steven M. Christey" <coley@...us.mitre.org>, Joe Orton <jorton@...hat.com>, Subversion Development <dev@...version.apache.org>
+Subject: Re: CVE request for subversion
 Content-Type: text/plain; charset=utf-8
 
-Steve,
+----- Original Message -----
+> On Tue, Jan 4, 2011 at 10:02 AM, Jan Lieskovsky <jlieskov@...hat.com>
+> wrote:
+> > Hello Kurt, Josh, vendors,
+> >
+> > Josh Bressers wrote:
+> >>
+> >> ----- Original Message -----
+> >>>
+> >>> Unspecified vulnerability in the server component in Apache
+> >>> Subversion
+> >>> 1.6.x before 1.6.15 allows remote attackers to cause a denial of
+> >>> service via unknown vectors, related to a "several bug fixes,
+> >>> including two which can cause client-initiated crashes on the
+> >>> server."
+> >>>
+> >>> [1] http://svn.haxx.se/dev/archive-2010-11/0475.shtml
+> >
+> >  Cc-ed Hyrum to shed more light into this one. [1] mentions two
+> >  issues:
+> > <begin quote>
+> > ...
+> > several bug fixes, including two which can cause client-initiated
+> > crashes on the server.
+> > </end quote>
+> >
+> > Further look at:
+> > [2] http://svn.apache.org/repos/asf/subversion/tags/1.6.15/CHANGES
+> >
+> > suggest:
+> >
+> > A, "* prevent crash in mod_dav_svn when using SVNParentPath
+> > (r1033166)"
+> > being the first one.
+> >   Upstream changeset:
+> >   http://svn.apache.org/viewvc?view=revision&revision=1033166
+> >
+> > and after discussion with Joe Orton, Joe suggested:
+> >
+> > B, * fix server-side memory leaks triggered by 'blame -g' (r1032808)
+> >   References:
+> >   http://svn.haxx.se/dev/archive-2010-11/0102.shtml
+> >   Upstream changeset:
+> >   http://svn.apache.org/viewvc?view=revision&revision=1032808
+> >
+> >   being the second one as denial of service attack (by memory
+> >   consumption)
+> > against
+> >   svnserve.
+> >
+> > Questions:
+> > ----------
+> > Hyrum, could you confirm A, and B, issues are those two, mentioned
+> > in [2]
+> > to be able to cause client-initiated crashes on the server?
+> 
+> I can confirm that A and B are the two issues mentioned in [2].
+> 
+> >> I admit, this isn't obvious, so let's use CVE-2010-4539 for now.
+> >> We can split it if needed once more information is known.
+> >
+> > Josh, since CVE-2010-4539 was assigned. Once Hyrum confirms, can
+> > we consider CVE-2010-4539 to be a CVE identifier for A, issue
+> > and request yet another / second one for B, issue?
+> 
+> We didn't initially reserve CVEs for these vulnerabilities, but will
+> be happy to update our documentation to reflect them. (See
+> http://subversion.apache.org/security/ ) The two issues really are
+> orthogonal, so B should probably not be included in a CVE for A.
+> 
+> I've CC'd dev@...version.apache.org to help coordinate advisory
+> authoring.
+> 
 
-Can MITRE handle this one. It's getting old and I'm starting to think
-I won't be able to get to it before the week ends.
+OK, let's split the CVE id then.
+
+So for 
+A, "* prevent crash in mod_dav_svn when using SVNParentPath (r1033166)"
+  Upstream changeset:
+  http://svn.apache.org/viewvc?view=revision&revision=1033166
+
+Let's use CVE-2010-4539.
+
+For 
+B, * fix server-side memory leaks triggered by 'blame -g' (r1032808)
+  References:
+  http://svn.haxx.se/dev/archive-2010-11/0102.shtml
+  Upstream changeset:
+  http://svn.apache.org/viewvc?view=revision&revision=1032808
+
+Let's use CVE-2010-4644.
 
 Thanks.
 
 -- 
     JB
-
------ Original Message -----
-> Hi,
-> Please assign CVE IDs for the following issues from the Debian
-> Security Tracker:
-> 
-> 1. FreeBSD kernel: local DoS
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=613312
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=611476
-> http://www.exploit-db.com/exploits/16064/
-> http://svn.debian.org/wsvn/glibc-bsd/branches/squeeze/kfreebsd-8/debian/patches/000_tcp_usrreq.diff
-> 
-> 2. Xinha: Multiple vulnerabilities
-> (The code is included in a few web apps, e.g. serendipity, openacs or
-> dotlrn)
-> http://secunia.com/advisories/40669/
-> 
-> 3. tesseract: Insecure temp file handling
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=612032
-> 
-> 4. proftpd mod_sftp integer overflow
-> http://bugs.proftpd.org/show_bug.cgi?id=3586
-> http://www.exploit-db.com/exploits/16129/
-> 
-> Cheers,
-> Moritz
