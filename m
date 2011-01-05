@@ -1,78 +1,106 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/12
-Message-Id: <201107201023.05570.aboudreault@mapgears.com>
-Date: Wed, 20 Jul 2011 10:23:05 -0400
-From: Alan Boudreault <aboudreault@...gears.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/05/4
+Message-ID: <881228981.167400.1294243783522.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 5 Jan 2011 11:09:43 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Even Rouault <even.rouault@...es-paris.org>, "Steven M. Christey" <coley@...us.mitre.org>, Pavel  Lisý <pavel.lisy@...il.com>
-Subject: Re: CVE Request -- MapServer -- Stack based buffer overflow [was: Re: Re: CVE Request -- MapServer -- SQL injections in OGC filter encoding and in WMS time support.]
+Cc: Kurt Seifried <kurt@...fried.org>, "Steven M. Christey" <coley@...us.mitre.org>, Joe Orton <jorton@...hat.com>, Subversion Development <dev@...version.apache.org>
+Subject: Re: CVE request for subversion
 Content-Type: text/plain; charset=utf-8
 
-Looks like the issue is already on oss-security? Who created it ?
+----- Original Message -----
+> On Tue, Jan 4, 2011 at 10:02 AM, Jan Lieskovsky <jlieskov@...hat.com>
+> wrote:
+> > Hello Kurt, Josh, vendors,
+> >
+> > Josh Bressers wrote:
+> >>
+> >> ----- Original Message -----
+> >>>
+> >>> Unspecified vulnerability in the server component in Apache
+> >>> Subversion
+> >>> 1.6.x before 1.6.15 allows remote attackers to cause a denial of
+> >>> service via unknown vectors, related to a "several bug fixes,
+> >>> including two which can cause client-initiated crashes on the
+> >>> server."
+> >>>
+> >>> [1] http://svn.haxx.se/dev/archive-2010-11/0475.shtml
+> >
+> >  Cc-ed Hyrum to shed more light into this one. [1] mentions two
+> >  issues:
+> > <begin quote>
+> > ...
+> > several bug fixes, including two which can cause client-initiated
+> > crashes on the server.
+> > </end quote>
+> >
+> > Further look at:
+> > [2] http://svn.apache.org/repos/asf/subversion/tags/1.6.15/CHANGES
+> >
+> > suggest:
+> >
+> > A, "* prevent crash in mod_dav_svn when using SVNParentPath
+> > (r1033166)"
+> > being the first one.
+> >   Upstream changeset:
+> >   http://svn.apache.org/viewvc?view=revision&revision=1033166
+> >
+> > and after discussion with Joe Orton, Joe suggested:
+> >
+> > B, * fix server-side memory leaks triggered by 'blame -g' (r1032808)
+> >   References:
+> >   http://svn.haxx.se/dev/archive-2010-11/0102.shtml
+> >   Upstream changeset:
+> >   http://svn.apache.org/viewvc?view=revision&revision=1032808
+> >
+> >   being the second one as denial of service attack (by memory
+> >   consumption)
+> > against
+> >   svnserve.
+> >
+> > Questions:
+> > ----------
+> > Hyrum, could you confirm A, and B, issues are those two, mentioned
+> > in [2]
+> > to be able to cause client-initiated crashes on the server?
+> 
+> I can confirm that A and B are the two issues mentioned in [2].
+> 
+> >> I admit, this isn't obvious, so let's use CVE-2010-4539 for now.
+> >> We can split it if needed once more information is known.
+> >
+> > Josh, since CVE-2010-4539 was assigned. Once Hyrum confirms, can
+> > we consider CVE-2010-4539 to be a CVE identifier for A, issue
+> > and request yet another / second one for B, issue?
+> 
+> We didn't initially reserve CVEs for these vulnerabilities, but will
+> be happy to update our documentation to reflect them. (See
+> http://subversion.apache.org/security/ ) The two issues really are
+> orthogonal, so B should probably not be included in a CVE for A.
+> 
+> I've CC'd dev@...version.apache.org to help coordinate advisory
+> authoring.
+> 
 
-Alan
+OK, let's split the CVE id then.
 
-On July 19, 2011 12:28:53 pm Jan Lieskovsky wrote:
-> Alan, Even, thanks for your replies.
-> 
-> Just to clarify this one a bit yet. Two CVE identifiers (one for the
-> multiple SQL injection flaws, the other for the stack based buffer
-> overflow issue) seem to be necessary in this case (due different
-> versions affected):
-> 
-> [1] http://lists.osgeo.org/pipermail/mapserver-users/2011-July/069430.html
-> 
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
-> 
-> On 07/19/2011 05:32 PM, Alan Boudreault wrote:
-> > I got new from the debian security guy yesterday. I should get the CVE id
-> > soon.
-> > 
-> > Thanks,
-> > Alan
-> > 
-> > On July 19, 2011 11:28:29 am Even Rouault wrote:
-> >> Selon Jan Lieskovsky<jlieskov@...hat.com>:
-> >> 
-> >> Jan,
-> >> 
-> >> I believe Alan Boudreault (MapServer team member that I've added to the
-> >> CC list) has already asked the Debian security team to request for a
-> >> CVE number, but without any result for now. Maybe he can confirm.
-> >> 
-> >> Best regards,
-> >> 
-> >> Even
-> >> 
-> >>> Hello Josh, Steve, vendors,
-> >>> 
-> >>>     the following has been brought to our attention:
-> >>>     [1] https://bugzilla.redhat.com/show_bug.cgi?id=722545
-> >>>     [2] http://trac.osgeo.org/mapserver/ticket/3903
-> >>> 
-> >>> More from [2]:
-> >>> 
-> >>> This ticket is to track fixes to prevent SQL injections through OGC
-> >>> filter encoding (in WMS, WFS and SOS), as well as a potential SQL
-> >>> injection in WMS time support.
-> >>> 
-> >>> Your system may be vulnerable if it has MapServer with OGC protocols
-> >>> enabled, with layers connecting to an SQL RDBMS backend, either
-> >>> natively or via OGR.
-> >>> 
-> >>> All versions of MapServer 4.x, 5.x and 6.x are potentially vulnerable.
-> >>> All users are ** strongly encouraged ** to upgrade to one of the latest
-> >>> releases with the fixes.
-> >>> 
-> >>> Could you allocate a CVE id for this?
-> >>> 
-> >>> Thank you&&  Regards, Jan.
-> >>> --
-> >>> Jan iankko Lieskovsky / Red Hat Security Response Team
+So for 
+A, "* prevent crash in mod_dav_svn when using SVNParentPath (r1033166)"
+  Upstream changeset:
+  http://svn.apache.org/viewvc?view=revision&revision=1033166
+
+Let's use CVE-2010-4539.
+
+For 
+B, * fix server-side memory leaks triggered by 'blame -g' (r1032808)
+  References:
+  http://svn.haxx.se/dev/archive-2010-11/0102.shtml
+  Upstream changeset:
+  http://svn.apache.org/viewvc?view=revision&revision=1032808
+
+Let's use CVE-2010-4644.
+
+Thanks.
 
 -- 
-Alan Boudreault
-Mapgears
-http://www.mapgears.com
+    JB
