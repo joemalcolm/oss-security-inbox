@@ -1,32 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/19/7
-Message-ID: <20110719132457.GA25477@openwall.com>
-Date: Tue, 19 Jul 2011 17:24:57 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: dfncert@...-cert.de
-Subject: Re: CVE request: vulnerability in FreeRADIUS (OCSP)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/05/6
+Message-ID: <4D24B97D.3000801@summersault.com>
+Date: Wed, 05 Jan 2011 13:33:33 -0500
+From: Mark Stosberg <mark@...mersault.com>
+To: Jan Lieskovsky <jlieskov@...hat.com>
+CC: Andy Armstrong <andy@...ten.net>, oss-security@...ts.openwall.com,  Marcela Maslanova <mmaslano@...hat.com>, Petr Pisar <ppisar@...hat.com>,  Chris 'BinGOs' Williams <chris@...gosnet.co.uk>, Reed Loden <reed@...dloden.com>,  Masahiro Yamada <masa141421356@...il.com>, Byron Jones <glob@...b.com.au>, Lincoln Stein <lincoln.stein@...il.com>,  Tom spot Callaway <tcallawa@...hat.com>, Max Kanat-Alexander <mkanat@...zilla.org>
+Subject: CGI.pm 3.51 released
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jul 19, 2011 at 02:37:46AM +0400, Solar Designer wrote:
-> On Tue, Jul 19, 2011 at 12:06:15AM +0200, Stefan Behte wrote:
-> > Then posting it to the new vendor-sec (linux-distros@...openwall.org)
-> > sounds like the right thing to do.
-> 
-> This is not exactly the new vendor-sec.  As the name suggests, it is a
-> Linux distros only list.  Also, please note that the maximum acceptable
-> embargo period on this list is 14 days.  We need to communicate this
-> detail to whoever we're asking to disclose anything to the list, before
-> they disclose.  When posting to the list, you may encrypt messages to
-> the attached key.
 
-I've just described the new list and some of its policies in the newly
-added "Linux distribution security contacts list" section at:
+As discussed, CGI.pm 3.51 was released today, including the related
+security fix. It is available here:
 
-http://oss-security.openwall.org/wiki/mailing-lists/vendor-sec
+http://cpan.cpantesters.org/authors/id/M/MA/MARKSTOS/CGI.pm-3.51.tar.gz
 
-Maybe this will need to be moved to its own wiki page or to a wiki page
-on multiple non-historical closed lists if we ever host several at once.
-(Non-Linux lists may be setup if there's demand.)
+CGI.pm has had a backlog of bug fixes that were pending release, so it
+includes a number of other improvements as well.
 
-Alexander
+Thanks to the related security teams and other contributors for the help.
+
+   Mark
