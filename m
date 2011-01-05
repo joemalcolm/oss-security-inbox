@@ -1,46 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/25/2
-Message-ID: <4E7E6623.5090408@sugarcrm.com>
-Date: Sat, 24 Sep 2011 16:22:11 -0700
-From: Stas Malyshev <smalyshev@...arcrm.com>
-To: Vincent Danen <vdanen@...hat.com>
-CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>,  "security@....net" <security@....net>
-Subject: Re: CVE request: is_a() function may allow arbitrary code execution in PHP 5.3.7/5.3.8
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/05/5
+Message-Id: <20110105115255.a4a3f9e6.michael.s.gilbert@gmail.com>
+Date: Wed, 5 Jan 2011 11:52:55 -0500
+From: Michael Gilbert <michael.s.gilbert@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: possible flaw in widely used strtod.c implementation
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+On Wed, 5 Jan 2011 09:14:27 +0100, Pierre Joye wrote:
+> hi,
+> 
+> Referring to: http://bugs.php.net/53632
+> 
+> This bug affects PHP and can be remotely triggered if someone actually
+> process an input as double (p.php?id=... and then $d
+> = $id +1 for example). However this issue could also affect any
+> software relying on the "strtod for IEEE-, VAX-, and IBM-arithmetic
+> machines." implementation (quite a lot actually do, according to
+> codesearch&co). See a non exhaustive list here:
+> 
+> http://www.google.com/codesearch?as_q=strtod+for+IEEE-,+VAX-,+and+IBM-arithmetic+machines.&btnG=Search+Code&hl=en&as_package=&as_lang=&as_filename=&as_class=&as_function=&as_license=&as_case=
+> 
+> Whether the bug exists in the respective builds of each of these
+> softwares may depend on how they are built (options, arch, etc.).
+> 
+> A fix is already in php's svn:
+> http://svn.php.net/viewvc?view=revision&revision=307095
+> 
+> A good explanation about this issue is in the gcc bug tracker (thanks
+> Rasmus for the pointer):
+> 
+> It is a design flaw in the x87 fpu registers, so keeping the float out
+> of those registers circumvents the problem.  It is
+> one of the suggested ways of fixing this that is mentioned in the famous
+> gcc bug 323 report:
+> 
+> http://gcc.gnu.org/bugzilla/show_bug.cgi?id=323
+> 
+> See Comment 87:
+> 
+>  bruno 2006-12-21 15:08:57 UTC
+>  The option -ffloat-store, recommended by Richard Henderson, has
+>  the effect of decreasing the performance of floating-point
+>  operations for the entire compilation unit. If you want a minimal
+>  fix that does not affect other functions in the same compilation
+>  unit, you can use 'volatile double' instead of 'double'. It's
+>  like a one-shot -ffloat-store. Example:
+> 
+>  #include <stdio.h>
+> 
+>  void test(double x, double y) {
+>    const volatile double y2 = x + 1.0;
+>    if (y != y2) printf("error\n");
+>  }
+> 
+>  void main() {
+>    const double x = .012;
+>    const double y = x + 1.0;
+> 
+>    test(x, y);
+>  }
+> 
+> On windows it is slightly more complicated as it seems to do some more
+> under the wood work. I was able to reproduce the problem on certain
+> CPUs (i7) and not on other  (xeon) using the exact same binaries. I
+> still have to verify what is done exactly.
+> 
+> About getting a CVE #, I'm not sure it should be categorized only for
+> php or more generally about this strtod.c (newest version has the same
+> problem btw). Ideas? Comments?
 
-On 9/24/11 6:56 AM, Vincent Danen wrote:
-> Could a CVE be assigned for this flaw?  PHP 5.3.7 changed how the is_a()
-> function worked, and as a result it could allow for remote arbitrary
-> code execution if certain specific conditions are met (the blog post
-> referenced below has a good writeup of the flaw).
+The x87 floating point extended precision issue itself is just a bug
+(well a hardware bug at that), and as of gcc >= 4.5 it can be avoided
+with the -fexcess-precision=standard option [0].
 
-I don't see what is to assign CVE to. Almost any function dealing with 
-classes as strings (including new $foo operator) can result in 
-autoloader call. If your autoloader is broken and your security 
-practices are non-existant, this can cause remote code execution. Just 
-as if you write in your script eval($_GET['hackme']), it can lead to 
-remote code execution. It is not a flaw in PHP, _GET or eval() function 
-- it is a flaw in how you use them. You should not be using them this 
-way, and if you have autoloader that does includes, you should check 
-what are you including and set allow_url_includes to Off.
+The fact that this bug can lead to a denial-of-service in PHP is
+sufficient to warrant a CVE for PHP, but nothing else (I think).  If it
+can lead to a dos in other apps, then each should get their own CVE
+(again in my opinion).
 
-> http://www.byte.nl/blog/2011/09/23/security-bug-in-is_a-function-in-php-5-3-7-5-3-8/
-> https://bugs.php.net/bug.php?id=55475
-> https://bugzilla.redhat.com/show_bug.cgi?id=741020
->
-> It looks like this is the fix:
->
-> http://svn.php.net/viewvc/?view=revision&amp;revision=317183
+Best wishes,
+Mike
 
-This is not a "fix"  - it is a reversal of BC break because it should 
-not be introduced in 5.3 version. However, that does not fix broken 
-autoloaders that accept any string as class name and try to load them. 
-It removes one specific code path that people misusing one specific 
-function were taking. If their autoloader is broken, they still can be 
-in trouble in other ways, and they need to fix their code.
--- 
-Stanislav Malyshev, Software Architect
-SugarCRM: http://www.sugarcrm.com/
-(408)454-6900 ext. 227
+[0] http://gcc.gnu.org/bugzilla/show_bug.cgi?id=323#c127
