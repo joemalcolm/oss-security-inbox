@@ -1,55 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/04/2
-Message-ID: <4EB3FAD5.6000806@nixnuts.net>
-Date: Fri, 04 Nov 2011 09:46:45 -0500
-From: John Lightsey <john@...nuts.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/05/2
+Message-ID: <AANLkTikvhcN5Fe9ik=1_fiMk+Rw+qPuO_psax1jLMaqX@mail.gmail.com>
+Date: Wed, 5 Jan 2011 09:14:27 +0100
+From: Pierre Joye <pierre.php@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: unsafe use of /tmp in multiple CPAN modules
+Subject: possible flaw in widely used strtod.c implementation
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+hi,
 
-These were reported to the upstream authors a while back. None of these
-bugs are fixed in the currently available versions:
+Referring to: http://bugs.php.net/53632
 
+This bug affects PHP and can be remotely triggered if someone actually
+process an input as double (p.php?id=... and then $d
+= $id +1 for example). However this issue could also affect any
+software relying on the "strtod for IEEE-, VAX-, and IBM-arithmetic
+machines." implementation (quite a lot actually do, according to
+codesearch&co). See a non exhaustive list here:
 
-PAR::Packer - PAR packed files are extracted to unsafe and predictable
-temporary directories
+http://www.google.com/codesearch?as_q=strtod+for+IEEE-,+VAX-,+and+IBM-arithmetic+machines.&btnG=Search+Code&hl=en&as_package=&as_lang=&as_filename=&as_class=&as_function=&as_license=&as_case=
 
-https://rt.cpan.org/Public/Bug/Display.html?id=69560
+Whether the bug exists in the respective builds of each of these
+softwares may depend on how they are built (options, arch, etc.).
 
+A fix is already in php's svn:
+http://svn.php.net/viewvc?view=revision&revision=307095
 
-Parallel::ForkManager - Insecure /tmp file handling
+A good explanation about this issue is in the gcc bug tracker (thanks
+Rasmus for the pointer):
 
-https://rt.cpan.org/Public/Bug/Display.html?id=68298
+It is a design flaw in the x87 fpu registers, so keeping the float out
+of those registers circumvents the problem.  It is
+one of the suggested ways of fixing this that is mentioned in the famous
+gcc bug 323 report:
 
+http://gcc.gnu.org/bugzilla/show_bug.cgi?id=323
 
-File::Temp - _is_safe() allows unsafe traversal of symlinks
+See Comment 87:
 
-https://rt.cpan.org/Public/Bug/Display.html?id=69106
+ bruno 2006-12-21 15:08:57 UTC
+ The option -ffloat-store, recommended by Richard Henderson, has
+ the effect of decreasing the performance of floating-point
+ operations for the entire compilation unit. If you want a minimal
+ fix that does not affect other functions in the same compilation
+ unit, you can use 'volatile double' instead of 'double'. It's
+ like a one-shot -ffloat-store. Example:
 
+ #include <stdio.h>
 
-Batch::BatchRun - Unsafe /tmp file usage
+ void test(double x, double y) {
+   const volatile double y2 = x + 1.0;
+   if (y != y2) printf("error\n");
+ }
 
-https://rt.cpan.org/Public/Bug/Display.html?id=69594
+ void main() {
+   const double x = .012;
+   const double y = x + 1.0;
 
+   test(x, y);
+ }
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+On windows it is slightly more complicated as it seems to do some more
+under the wood work. I was able to reproduce the problem on certain
+CPUs (i7) and not on other  (xeon) using the exact same binaries. I
+still have to verify what is done exactly.
 
-iQIcBAEBAgAGBQJOs/rHAAoJEORPgBbTYw+JY8kP/RTQuY2il0nMIRnG2D1OrBpu
-vHA9uyeOx5QuEliatgWaaAFrlXCi7gSkMdq91JxCK2QM8feJ2EGqOBhbrX9CShsb
-jpVO5xvo9mUVe70yBpplu3y0S5qPaNw3BjN6baiVlN04sl/rrhFeGigfkJo7erPH
-RSBaTTUyNTHjwEjyl8WFgpl8kJDyeQoHDGEZhb106l6uAsNCscF+6thxUoEZUMo8
-8ljxylnobzvzL2TNhhTuTX5NtFH5TjvKGm/NeuSH2avCrY+S4dM9MZtAI+ofp1Z6
-3DuTSUpjA4hJDK43KqWGEpxvEpVjwd5jo887uYvfzLev9YTz3fc78H+rb0ishkH3
-mdsmq42n8WGdoFMduZpDWzxdYi5mBCDipgd95PuQAT6+ya7/hSZRZ4KvgInP6Bcv
-bLCyqtMFm+z3KaufFKK6M3wafR+DCvsBM/8MT+EyQJgrClPBLFJ2J3d0N4u6qZCc
-vNYMrj4L6Vxfm7VoEe6gSwKKaRxvPdboXlxS6ubK6E9LLNcWewObm6foFIddXotD
-RtCSnROZrWubG73RFTKrjqrHIaK4ktO/x6bCdQyA3ziBIQOM9xUvTHkJeDtuIe+W
-RcwZVAtM4U8wmVVlkqBgEde2ipBKITEUPXLbLyQ7MrAeiuRBLT6wsfTqPh+EJ5ga
-r7V7cmFNq/btoySXFcI8
-=WTKm
------END PGP SIGNATURE-----
+About getting a CVE #, I'm not sure it should be categorized only for
+php or more generally about this strtod.c (newest version has the same
+problem btw). Ideas? Comments?
+
+Cheers,
+--
+Pierre
+
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
