@@ -1,36 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/01/3
-Message-ID: <4D95E5ED.1050903@redhat.com>
-Date: Fri, 01 Apr 2011 16:49:17 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request -- perl -- lc(), uc() routines are laundering tainted data
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/05/9
+Message-ID: <20110105201627.GB11372@kroah.com>
+Date: Wed, 5 Jan 2011 12:16:27 -0800
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Greg KH <gregkh@...e.de>
+Subject: Re: CVE-2010-4525 kvm: x86: zero kvm_vcpu_events->interrupt.pad infoleak
 Content-Type: text/plain; charset=utf-8
 
+On Wed, Jan 05, 2011 at 12:14:28PM +0800, Eugene Teo wrote:
+> In addition to CVE-2010-3881, some versions of the Linux kernel
+> forgot to initialize the kvm_vcpu_events.interrupt.pad field before
+> being copied to userspace. I have assigned CVE-2010-4525 to this. I
+> briefly checked, linux-2.6.33/34.y are affected, linux-2.6/.31/.32.y
+> are not.
+> 
+> https://bugzilla.redhat.com/CVE-2010-4525
 
-Hello Josh, Steve, vendors,
+Is there a fix for this in the upstream kernels?  How about kernels
+greater than .35?
 
-   A security flaw was found in the way Perl performed
-laundering of tainted data. A remote attacker could
-use this flaw to bypass Perl TAINT mode protection
-mechanism (leading to commands execution on dirty
-arguments or file system access via contaminated
-variables) via specially-crafted input provided
-to the web application / CGI script.
+thanks,
 
-Upstream bug report:
-http://rt.perl.org/rt3/Public/Bug/Display.html?id=87336
-
-Relevant patch:
-http://perl5.git.perl.org/perl.git/commitdiff/539689e74a3bcb04d29e4cd9396de91a81045b99
-(contains also information when the issue was introduced)
-
-References:
-[1] https://bugzilla.redhat.com/show_bug.cgi?id=692844
-
-Could you allocate a CVE id for this?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+greg k-h
