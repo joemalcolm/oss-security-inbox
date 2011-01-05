@@ -1,47 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/18/9
-Message-ID: <BANLkTim6Z1avns8uLPjzq27Xej0i9UPTJw@mail.gmail.com>
-Date: Wed, 18 May 2011 16:41:29 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: maximilian attems <max@...o.at>
-Cc: oss-security@...ts.openwall.com, klibc@...or.com
-Subject: Re: [klibc] CVE request: klibc: ipconfig sh script with unescaped DHCP options
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/05/8
+Message-ID: <AANLkTikfKh_2M7Stg9z0PJ0fz_nXq02Rnhh39kr=9Z87@mail.gmail.com>
+Date: Wed, 5 Jan 2011 20:23:57 +0100
+From: Pierre Joye <pierre.php@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: possible flaw in widely used strtod.c implementation
 Content-Type: text/plain; charset=utf-8
 
-On Wed, May 18, 2011 at 4:29 PM, maximilian attems <max@...o.at> wrote:
-> On Wed, May 18, 2011 at 04:13:05PM -0400, Dan Rosenberg wrote:
->> Might it be worth fixing the insecure temporary file usage?
->>
->> 122         snprintf(fn, sizeof(fn), "/tmp/net-%s.conf", dev->name);
->> 123         f = fopen(fn, "w");
->>
->> What if someone else has already created that file, or put a symlink
->> or hard link there?
->
-> for the initramfs case I don't see how.
-> outside of initramfs usage I'd agree that this needs fixing.
->
+On Wed, Jan 5, 2011 at 5:52 PM, Michael Gilbert
+<michael.s.gilbert@...il.com> wrote:
 
-Right, this only applies after boot is done.
+> The fact that this bug can lead to a denial-of-service in PHP is
+> sufficient to warrant a CVE for PHP, but nothing else (I think).  If it
+> can lead to a dos in other apps, then each should get their own CVE
+> (again in my opinion).
 
->> What if someone overwrites your string with
->> command injection characters despite your stripping?
->
-> please be more verbose, what example do you have in mind?
->
+I think so too but in any case it would rock if I could get a CVE #
+asap, we are going to release 5.2.17/5.3.5 tomorrow (packaging now).
 
-Sorry for not being clear.  If you're concerned about scripts parsing
-this file while it has command injection strings in it, what's to stop
-someone from putting a malicious file there if one doesn't already
-exist?  It sounds like the scripts that depend on this file should
-probably be fixed here, or the file itself should be moved to a
-location where it's not writable by unprivileged users.
+Cheers,
+-- 
+Pierre
 
--Dan
-
-> thank you for the review.
->
-> --
-> maks
->
->
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
