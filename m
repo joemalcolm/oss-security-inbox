@@ -1,32 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/26/1
-Message-ID: <4E7FE264.1080603@redhat.com>
-Date: Mon, 26 Sep 2011 10:24:36 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/05/11
+Message-ID: <AANLkTikbpB-ES6CsuxefjSxwtOEHzEyQ0QgATXPTeZTg@mail.gmail.com>
+Date: Wed, 5 Jan 2011 17:04:59 -0500
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-CC: akuster <akuster@...sta.com>, Josh Bressers <bressers@...hat.com>, coley@...us.mitre.org, cve-assign@...re.org
-Subject: Re: CVE request -- kernel: cifs: always do is_path_accessible check in cifs_mount
+Subject: Re: CVE request: patch directory traversal flaw
 Content-Type: text/plain; charset=utf-8
 
-On 09/23/2011 11:18 PM, akuster wrote:
-> so this was introduced by e4cce94c9c8797b08faf6a79396df4d175e377fa ?
+Be sure to be careful while applying the patch to fix this one. :p
 
-Yes,
+-Dan
 
-[CIFS] Prevent OOPs when mounting with remote prefixpath.
-e4cce94c9c8797b08faf6a79396df4d175e377fa
-
-If you have this, you might also want
-cifs: add fallback in is_path_accessible for old servers
-221d1d797202984cb874e3ed9f1388593d34ee22
-
-Thanks, Eugene
-
-> - Armin
-> 
-> On 09/14/2011 08:51 AM, Josh Bressers wrote:
->> Please use CVE-2011-3363 for this.
->>
->> Thanks.
->>
-
+On Wed, Jan 5, 2011 at 4:54 PM, Vincent Danen <vdanen@...hat.com> wrote:
+> We got a heads up on a directory traversal flaw in patch.  I don't think
+> a CVE name has been assigned to it; could we get one?  It allows for the
+> creation of arbitrary files in unexpected places due to the use of '..'.
+>
+> References:
+>
+> https://bugzilla.redhat.com/show_bug.cgi?id=667529
+> http://osdir.com/ml/bug-patch-gnu/2010-12/msg00000.html
+>
+> Thanks.
+>
+> --
+> Vincent Danen / Red Hat Security Response Team
