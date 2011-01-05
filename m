@@ -1,43 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/04/4
-Message-ID: <4EB41048.4050009@redhat.com>
-Date: Fri, 04 Nov 2011 10:18:16 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/05/3
+Message-Id: <201101051224.40565.hanno@hboeck.de>
+Date: Wed, 5 Jan 2011 12:24:40 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-CC: John Lightsey <john@...nuts.net>
-Subject: Re: CVE request: unsafe use of /tmp in multiple CPAN modules
+Subject: CVE request: hastymail before 1.01 XSS
 Content-Type: text/plain; charset=utf-8
 
-On 11/04/2011 08:46 AM, John Lightsey wrote:
-> These were reported to the upstream authors a while back. None of these
-> bugs are fixed in the currently available versions:
->
->
-> PAR::Packer - PAR packed files are extracted to unsafe and predictable
-> temporary directories
->
-> https://rt.cpan.org/Public/Bug/Display.html?id=69560
-Please use CVE-2011-4114 for this issue
+See
+http://www.hastymail.org/security/
 
-> Parallel::ForkManager - Insecure /tmp file handling
->
-> https://rt.cpan.org/Public/Bug/Display.html?id=68298
->
-Please use CVE-2011-4115 for this issue
-
-> File::Temp - _is_safe() allows unsafe traversal of symlinks
->
-> https://rt.cpan.org/Public/Bug/Display.html?id=69106
->
-Please use CVE-2011-4116 for this issue
-
-> Batch::BatchRun - Unsafe /tmp file usage
->
-> https://rt.cpan.org/Public/Bug/Display.html?id=69594
->
-Please use CVE-2011-4117 for this issue
+"Many thanks to Julien CAYSSOL who discovered and reported the issue. The 
+specific problem is an XSS attack vector in HTML formatted messages that takes 
+advantage of background attributes used with table cell elements. Due to an 
+incorrect implementation of the new htmLawed HTML filter this attribute value 
+was not properly sanitized and could be used to inject executable JavaScript. 
+This was NOT a flaw in the htmLawed filter code itself, but a problem with 
+it's specific use in Hastymail2. The Hastymail2 1.01 release was pacakages 
+specifically to address this one issue. "
 
 -- 
+Hanno Böck		Blog:		http://www.hboeck.de/
+GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
--Kurt Seifried / Red Hat Security Response Team
+http://schokokeks.org - professional webhosting
 
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
