@@ -1,20 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/04/4
-Message-ID: <20110704172538.GA10255@openwall.com>
-Date: Mon, 4 Jul 2011 21:25:38 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/05/10
+Message-ID: <20110105215457.GL15891@redhat.com>
+Date: Wed, 5 Jan 2011 14:54:57 -0700
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: vsftpd download backdoored
+Subject: CVE request: patch directory traversal flaw
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jul 04, 2011 at 06:56:57PM +0200, Moritz Muehlenhoff wrote:
-> IIRC for such backdoored downloads CVE IDs were assigned in the past
-> to properly track the status of distributions providing the affected 
-> piece of code.
+We got a heads up on a directory traversal flaw in patch.  I don't think
+a CVE name has been assigned to it; could we get one?  It allows for the
+creation of arbitrary files in unexpected places due to the use of '..'.
 
-I suspect that no distributions provide the affected code this time.
-So if affected distributions is the only reason for CVE ID assignment in
-this case, it might make sense to postpone CVE ID allocation until we
-learn of an affected distribution (which we probably won't).
+References:
 
-Alexander
+https://bugzilla.redhat.com/show_bug.cgi?id=667529
+http://osdir.com/ml/bug-patch-gnu/2010-12/msg00000.html
+
+Thanks.
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
