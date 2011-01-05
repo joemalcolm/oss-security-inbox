@@ -1,19 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/06/9
-Message-ID: <20110406170403.GB23639@openwall.com>
-Date: Wed, 6 Apr 2011 21:04:03 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/05/1
+Message-ID: <4D23F024.2030804@redhat.com>
+Date: Wed, 05 Jan 2011 12:14:28 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+CC: "Steven M. Christey" <coley@...us.mitre.org>, Greg KH <gregkh@...e.de>
+Subject: CVE-2010-4525 kvm: x86: zero kvm_vcpu_events->interrupt.pad infoleak
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Apr 06, 2011 at 09:33:21AM +0200, Milan Berger wrote:
-> I want to subscribe for Project-Mindstorm
+In addition to CVE-2010-3881, some versions of the Linux kernel forgot 
+to initialize the kvm_vcpu_events.interrupt.pad field before being 
+copied to userspace. I have assigned CVE-2010-4525 to this. I briefly 
+checked, linux-2.6.33/34.y are affected, linux-2.6/.31/.32.y are not.
 
-I went to http://www.project-mindstorm.net and I also did a Google
-search on "Project-Mindstorm".  You do not appear to be a Linux distro
-(nor any other distro, for that matter), so there's no reason for you to
-be on the list that is being setup.  (Besides, we're initially
-subscribing ex-vendor-sec members only, although this should change.)
+https://bugzilla.redhat.com/CVE-2010-4525
 
-Alexander
+Thanks, Eugene
