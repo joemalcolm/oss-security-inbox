@@ -1,28 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/02/11
-Message-ID: <20111102164236.GB2764@wopr.local.invalid>
-Date: Wed, 2 Nov 2011 17:42:36 +0100
-From: Guido Berhoerster <gber@...nsuse.org>
-To: oss-security@...ts.openwall.com, kseifried@...hat.com
-Subject: Re: Re: [LightDM] Version 1.0.6 released
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/05/10
+Message-ID: <20110105215457.GL15891@redhat.com>
+Date: Wed, 5 Jan 2011 14:54:57 -0700
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: patch directory traversal flaw
 Content-Type: text/plain; charset=utf-8
 
-* Kurt Seifried <kseifried@...hat.com> [2011-11-02 17:17]:
-> On 11/02/2011 09:54 AM, Yves-Alexis Perez wrote:
-> > On mer., 2011-11-02 at 11:42 -0400, Robert Ancell wrote:
-> >> Fixes a security issue where using ~/.Xauthority as a symlink would
-> >> cause LightDM to set the destination of the link to user ownership.
-> >> All users of 1.0.4 or 1.0.5 should upgrade immediately.
-> >>
-> >> Overview of changes in lightdm 1.0.6
-> >>
-> >>     * Use lchown for correcting ownership of ~/.Xauthority instead of chown
-> >
-> > Could a CVE be assigned for this?
-> >
-> > Regards,
-> Can you send me the link to this announcement so I can confirm it? Thanks.
+We got a heads up on a directory traversal flaw in patch.  I don't think
+a CVE name has been assigned to it; could we get one?  It allows for the
+creation of arbitrary files in unexpected places due to the use of '..'.
 
-http://lists.freedesktop.org/archives/lightdm/2011-November/000178.html
+References:
+
+https://bugzilla.redhat.com/show_bug.cgi?id=667529
+http://osdir.com/ml/bug-patch-gnu/2010-12/msg00000.html
+
+Thanks.
+
 -- 
-Guido Berhoerster
+Vincent Danen / Red Hat Security Response Team 
