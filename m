@@ -1,23 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/10/2
-message-id: <5d43-4df1f880-27-199e2240@89295843>
-date: Fri, 10 Jun 2011 12:56:58 +0200
-from: "Bernhard Rosenkraenzer" <bero@...linux.ch>
-to: oss-security@...ts.openwall.com
-Subject: Re: CVE request -- coreutils -- tty hijacking possible in "su" via TIOCSTI ioctl
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/05/2
+Message-ID: <AANLkTikvhcN5Fe9ik=1_fiMk+Rw+qPuO_psax1jLMaqX@mail.gmail.com>
+Date: Wed, 5 Jan 2011 09:14:27 +0100
+From: Pierre Joye <pierre.php@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: possible flaw in widely used strtod.c implementation
 Content-Type: text/plain; charset=utf-8
 
-On Friday, June 10, 2011 11:55 CEST, Ludwig Nussel <ludwig.nussel@...e.de> wrote: 
- 
-> The issue also reminds me that there are several su implemenations.
-> On Fedora and SUSE we have a patched coreutils version, Debian uses
-> the one from shadow-utils and then there's also a su from
-> SimplePAMApps, used by e.g. Owl. Of course each one has it's own
-> quirks and weird features. Does anyone still remember why a
-> particular implementation was chosen? :-)
+hi,
 
+Referring to: http://bugs.php.net/53632
 
-In Ark Linux, we switched from the coreutils one to the shadow-utils one about 2 years ago because the shadow-utils one does what we need (incl. PAM support) without having to port the PAM patch on every new coreutils release.
+This bug affects PHP and can be remotely triggered if someone actually
+process an input as double (p.php?id=... and then $d
+= $id +1 for example). However this issue could also affect any
+software relying on the "strtod for IEEE-, VAX-, and IBM-arithmetic
+machines." implementation (quite a lot actually do, according to
+codesearch&co). See a non exhaustive list here:
 
-ttyl
-bero
+http://www.google.com/codesearch?as_q=strtod+for+IEEE-,+VAX-,+and+IBM-arithmetic+machines.&btnG=Search+Code&hl=en&as_package=&as_lang=&as_filename=&as_class=&as_function=&as_license=&as_case=
+
+Whether the bug exists in the respective builds of each of these
+softwares may depend on how they are built (options, arch, etc.).
+
+A fix is already in php's svn:
+http://svn.php.net/viewvc?view=revision&revision=307095
+
+A good explanation about this issue is in the gcc bug tracker (thanks
+Rasmus for the pointer):
+
+It is a design flaw in the x87 fpu registers, so keeping the float out
+of those registers circumvents the problem.  It is
+one of the suggested ways of fixing this that is mentioned in the famous
+gcc bug 323 report:
+
+http://gcc.gnu.org/bugzilla/show_bug.cgi?id=323
+
+See Comment 87:
+
+ bruno 2006-12-21 15:08:57 UTC
+ The option -ffloat-store, recommended by Richard Henderson, has
+ the effect of decreasing the performance of floating-point
+ operations for the entire compilation unit. If you want a minimal
+ fix that does not affect other functions in the same compilation
+ unit, you can use 'volatile double' instead of 'double'. It's
+ like a one-shot -ffloat-store. Example:
+
+ #include <stdio.h>
+
+ void test(double x, double y) {
+   const volatile double y2 = x + 1.0;
+   if (y != y2) printf("error\n");
+ }
+
+ void main() {
+   const double x = .012;
+   const double y = x + 1.0;
+
+   test(x, y);
+ }
+
+On windows it is slightly more complicated as it seems to do some more
+under the wood work. I was able to reproduce the problem on certain
+CPUs (i7) and not on other  (xeon) using the exact same binaries. I
+still have to verify what is done exactly.
+
+About getting a CVE #, I'm not sure it should be categorized only for
+php or more generally about this strtod.c (newest version has the same
+problem btw). Ideas? Comments?
+
+Cheers,
+--
+Pierre
+
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
