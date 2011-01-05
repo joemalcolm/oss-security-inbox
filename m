@@ -1,30 +1,154 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/12/3
-Message-ID: <4EE63C66.5070003@redhat.com>
-Date: Mon, 12 Dec 2011 10:39:50 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>
-Subject: Re: CVE request: rocksndiamonds world-writable working/config directory
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/05/7
+Message-ID: <4D24BAE4.8030108@summersault.com>
+Date: Wed, 05 Jan 2011 13:39:32 -0500
+From: Mark Stosberg <mark@...mersault.com>
+To: Jan Lieskovsky <jlieskov@...hat.com>
+CC: Andy Armstrong <andy@...ten.net>, oss-security@...ts.openwall.com,  Marcela Maslanova <mmaslano@...hat.com>, Petr Pisar <ppisar@...hat.com>,  Chris 'BinGOs' Williams <chris@...gosnet.co.uk>, Reed Loden <reed@...dloden.com>,  Masahiro Yamada <masa141421356@...il.com>, Byron Jones <glob@...b.com.au>, Lincoln Stein <lincoln.stein@...il.com>,  Tom spot Callaway <tcallawa@...hat.com>, Max Kanat-Alexander <mkanat@...zilla.org>
+Subject: Re: CGI.pm 3.51 released (revised)
 Content-Type: text/plain; charset=utf-8
 
-On 12/12/2011 09:24 AM, Vincent Danen wrote:
-> rocksndiamonds creates its ~/.rocksndiamonds/ directory as
-> world-writable.  This could allow a local attacker to replace a cache
-> file with a symbolic link to a file they would not otherwise have access
-> to, and the next time the victim loaded the game, it would be
-> overwritten.
->
-> Could a CVE be assigned to this please?
->
-> References:
->
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=651620
-> https://bugzilla.redhat.com/show_bug.cgi?id=766805
->
-Please use CVE-2011-4606 for this issue.
+On 01/05/2011 01:33 PM, Mark Stosberg wrote:
+> 
+> As discussed, CGI.pm 3.51 was released today, including the related
+> security fix. It is available here:
+> 
+> http://cpan.cpantesters.org/authors/id/M/MA/MARKSTOS/CGI.pm-3.51.tar.gz
 
--- 
+Now having announced that, I was notified that while I have permission
+to upload in the "CGI" name space, there are several other parts of the
+distribution which I don't have permission to upload to, so the release
+many not become "official" and be downloadable by the "cpan" client
+until this is resolved.
 
--Kurt Seifried / Red Hat Security Response Team
+I will work with Lincoln Stein on making this release official so that
+the bits available at the link above will eventually be deemed official
+as the 3.51 release.
 
+If for some reason the release needs to be changed, I will be sure to
+move the version number further forward so there is no confusion.
+
+Details about the permission issue are below (of possible interest to
+those who are also CPAN authors)
+
+   Mark
+
+###
+
+The following report has been written by the PAUSE namespace indexer.
+Please contact modules@...l.org if there are any open questions.
+  Id
+
+               User: MARKSTOS (Mark Stosberg)
+  Distribution file: CGI.pm-3.51.tar.gz
+    Number of files: 77
+         *.pm files: 9
+             README: CGI.pm-3.51/README
+           META.yml: CGI.pm-3.51/META.yml
+        YAML-Parser: YAML::XS 0.32
+  META-driven index: no
+  Timestamp of file: Wed Jan  5 18:28:41 2011 UTC
+   Time of this run: Wed Jan  5 18:30:23 2011 UTC
+
+Status of this distro: Permission missing
+=========================================
+
+The following packages (grouped by status) have been found in the distro:
+
+Status: Permission missing
+==========================
+
+     module: CGI::Apache
+    version: 1.01
+    in file: CGI.pm-3.51/lib/CGI/Apache.pm
+     status: Not indexed because permission missing. Current registered
+             primary maintainer is P5P. Hint: you can always find the
+             legitimate maintainer(s) on PAUSE under "View Permissions".
+
+     module: CGI::Carp
+    version: 3.51
+    in file: CGI.pm-3.51/lib/CGI/Carp.pm
+     status: Not indexed because permission missing. Current registered
+             primary maintainer is CGIP. Hint: you can always find the
+             legitimate maintainer(s) on PAUSE under "View Permissions".
+
+     module: CGI::Cookie
+    version: 1.30
+    in file: CGI.pm-3.51/lib/CGI/Cookie.pm
+     status: Not indexed because permission missing. Current registered
+             primary maintainer is LDS. Hint: you can always find the
+             legitimate maintainer(s) on PAUSE under "View Permissions".
+
+     module: CGI::Fast
+    version: 1.08
+    in file: CGI.pm-3.51/lib/CGI/Fast.pm
+     status: Not indexed because permission missing. Current registered
+             primary maintainer is LDS. Hint: you can always find the
+             legitimate maintainer(s) on PAUSE under "View Permissions".
+
+     module: CGI::Pretty
+    version: 3.46
+    in file: CGI.pm-3.51/lib/CGI/Pretty.pm
+     status: Not indexed because permission missing. Current registered
+             primary maintainer is LDS. Hint: you can always find the
+             legitimate maintainer(s) on PAUSE under "View Permissions".
+
+     module: CGI::Push
+    version: 1.05
+    in file: CGI.pm-3.51/lib/CGI/Push.pm
+     status: Not indexed because permission missing. Current registered
+             primary maintainer is P5P. Hint: you can always find the
+             legitimate maintainer(s) on PAUSE under "View Permissions".
+
+     module: CGI::Switch
+    version: 1.01
+    in file: CGI.pm-3.51/lib/CGI/Switch.pm
+     status: Not indexed because permission missing. Current registered
+             primary maintainer is LDS. Hint: you can always find the
+             legitimate maintainer(s) on PAUSE under "View Permissions".
+
+     module: CGI::Util
+    version: 3.51
+    in file: CGI.pm-3.51/lib/CGI/Util.pm
+     status: Not indexed because permission missing. Current registered
+             primary maintainer is LDS. Hint: you can always find the
+             legitimate maintainer(s) on PAUSE under "View Permissions".
+
+     module: CGITempFile
+    version: 3.51
+    in file: CGI.pm-3.51/lib/CGI.pm
+     status: Not indexed because permission missing. Current registered
+             primary maintainer is LDS. Hint: you can always find the
+             legitimate maintainer(s) on PAUSE under "View Permissions".
+
+     module: Fh
+    version: 3.51
+    in file: CGI.pm-3.51/lib/CGI.pm
+     status: Not indexed because permission missing. Current registered
+             primary maintainer is LDS. Hint: you can always find the
+             legitimate maintainer(s) on PAUSE under "View Permissions".
+
+     module: MultipartBuffer
+    version: 3.51
+    in file: CGI.pm-3.51/lib/CGI.pm
+     status: Not indexed because permission missing. Current registered
+             primary maintainer is P5P. Hint: you can always find the
+             legitimate maintainer(s) on PAUSE under "View Permissions".
+
+     module: utf8
+    version: 3.51
+    in file: CGI.pm-3.51/lib/CGI/Util.pm
+     status: Not indexed because permission missing. Current registered
+             primary maintainer is NWCLARK. Hint: you can always find
+             the legitimate maintainer(s) on PAUSE under "View
+             Permissions".
+
+Status: Successfully indexed
+============================
+
+     module: CGI
+    version: 3.51
+    in file: CGI.pm-3.51/lib/CGI.pm
+     status: indexed
+
+__END__
