@@ -1,56 +1,154 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/27/7
-Message-ID: <20110727094320.GD16080@suse.de>
-Date: Wed, 27 Jul 2011 11:43:20 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request - dhcp clients
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/05/7
+Message-ID: <4D24BAE4.8030108@summersault.com>
+Date: Wed, 05 Jan 2011 13:39:32 -0500
+From: Mark Stosberg <mark@...mersault.com>
+To: Jan Lieskovsky <jlieskov@...hat.com>
+CC: Andy Armstrong <andy@...ten.net>, oss-security@...ts.openwall.com,  Marcela Maslanova <mmaslano@...hat.com>, Petr Pisar <ppisar@...hat.com>,  Chris 'BinGOs' Williams <chris@...gosnet.co.uk>, Reed Loden <reed@...dloden.com>,  Masahiro Yamada <masa141421356@...il.com>, Byron Jones <glob@...b.com.au>, Lincoln Stein <lincoln.stein@...il.com>,  Tom spot Callaway <tcallawa@...hat.com>, Max Kanat-Alexander <mkanat@...zilla.org>
+Subject: Re: CGI.pm 3.51 released (revised)
 Content-Type: text/plain; charset=utf-8
 
-
-Ah ok, so the delivered scripts actually do this. Thanks
-for the pointer.
-
-Sebastian
-
-On Wed, Jul 27, 2011 at 11:26:13AM +0200, Tomas Hoger wrote:
-> On Wed, 27 Jul 2011 10:57:39 +0200 Sebastian Krahmer wrote:
+On 01/05/2011 01:33 PM, Mark Stosberg wrote:
 > 
-> > Can you point us to the exact version and location in code where
-> > the vulnerability is?
+> As discussed, CGI.pm 3.51 was released today, including the related
+> security fix. It is available here:
 > 
-> I've not previously looked at the code more closely to find the exact
-> spot to be fixed.  However, I have successfully reproduced the issue
-> with busybox 1.15.1 at least, not sure if I looked at any older
-> version too.  It should be trivial to reproduce by running udhcpc -s
-> <script>, where script just dumps whole env.  You should see
-> server-provided options exported (hostname, domain).
-> 
-> > I remember to have checked udhcpc at that time and neither I found it
-> > setting a hostname or parsing the options for a hostname.
-> 
-> Looks like fill_envp is the place:
-> http://git.busybox.net/busybox/tree/networking/udhcp/dhcpc.c#n341
-> 
-> The logic was little different in older versions:
-> http://git.busybox.net/busybox/tree/networking/udhcp/dhcpc.c?id=9ac5596a#n336
-> 
-> When I talked to upstream, they did see the issue and opened the bug:
-> https://bugs.busybox.net/show_bug.cgi?id=3979
-> 
-> -- 
-> Tomas Hoger / Red Hat Security Response Team
+> http://cpan.cpantesters.org/authors/id/M/MA/MARKSTOS/CGI.pm-3.51.tar.gz
 
--- 
+Now having announced that, I was notified that while I have permission
+to upload in the "CGI" name space, there are several other parts of the
+distribution which I don't have permission to upload to, so the release
+many not become "official" and be downloadable by the "cpan" client
+until this is resolved.
 
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
+I will work with Lincoln Stein on making this release official so that
+the bits available at the link above will eventually be deemed official
+as the 3.51 release.
 
----
-SUSE LINUX Products GmbH,
-GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
-Maxfeldstraße 5
-90409 Nürnberg
-Germany
+If for some reason the release needs to be changed, I will be sure to
+move the version number further forward so there is no confusion.
 
+Details about the permission issue are below (of possible interest to
+those who are also CPAN authors)
+
+   Mark
+
+###
+
+The following report has been written by the PAUSE namespace indexer.
+Please contact modules@...l.org if there are any open questions.
+  Id
+
+               User: MARKSTOS (Mark Stosberg)
+  Distribution file: CGI.pm-3.51.tar.gz
+    Number of files: 77
+         *.pm files: 9
+             README: CGI.pm-3.51/README
+           META.yml: CGI.pm-3.51/META.yml
+        YAML-Parser: YAML::XS 0.32
+  META-driven index: no
+  Timestamp of file: Wed Jan  5 18:28:41 2011 UTC
+   Time of this run: Wed Jan  5 18:30:23 2011 UTC
+
+Status of this distro: Permission missing
+=========================================
+
+The following packages (grouped by status) have been found in the distro:
+
+Status: Permission missing
+==========================
+
+     module: CGI::Apache
+    version: 1.01
+    in file: CGI.pm-3.51/lib/CGI/Apache.pm
+     status: Not indexed because permission missing. Current registered
+             primary maintainer is P5P. Hint: you can always find the
+             legitimate maintainer(s) on PAUSE under "View Permissions".
+
+     module: CGI::Carp
+    version: 3.51
+    in file: CGI.pm-3.51/lib/CGI/Carp.pm
+     status: Not indexed because permission missing. Current registered
+             primary maintainer is CGIP. Hint: you can always find the
+             legitimate maintainer(s) on PAUSE under "View Permissions".
+
+     module: CGI::Cookie
+    version: 1.30
+    in file: CGI.pm-3.51/lib/CGI/Cookie.pm
+     status: Not indexed because permission missing. Current registered
+             primary maintainer is LDS. Hint: you can always find the
+             legitimate maintainer(s) on PAUSE under "View Permissions".
+
+     module: CGI::Fast
+    version: 1.08
+    in file: CGI.pm-3.51/lib/CGI/Fast.pm
+     status: Not indexed because permission missing. Current registered
+             primary maintainer is LDS. Hint: you can always find the
+             legitimate maintainer(s) on PAUSE under "View Permissions".
+
+     module: CGI::Pretty
+    version: 3.46
+    in file: CGI.pm-3.51/lib/CGI/Pretty.pm
+     status: Not indexed because permission missing. Current registered
+             primary maintainer is LDS. Hint: you can always find the
+             legitimate maintainer(s) on PAUSE under "View Permissions".
+
+     module: CGI::Push
+    version: 1.05
+    in file: CGI.pm-3.51/lib/CGI/Push.pm
+     status: Not indexed because permission missing. Current registered
+             primary maintainer is P5P. Hint: you can always find the
+             legitimate maintainer(s) on PAUSE under "View Permissions".
+
+     module: CGI::Switch
+    version: 1.01
+    in file: CGI.pm-3.51/lib/CGI/Switch.pm
+     status: Not indexed because permission missing. Current registered
+             primary maintainer is LDS. Hint: you can always find the
+             legitimate maintainer(s) on PAUSE under "View Permissions".
+
+     module: CGI::Util
+    version: 3.51
+    in file: CGI.pm-3.51/lib/CGI/Util.pm
+     status: Not indexed because permission missing. Current registered
+             primary maintainer is LDS. Hint: you can always find the
+             legitimate maintainer(s) on PAUSE under "View Permissions".
+
+     module: CGITempFile
+    version: 3.51
+    in file: CGI.pm-3.51/lib/CGI.pm
+     status: Not indexed because permission missing. Current registered
+             primary maintainer is LDS. Hint: you can always find the
+             legitimate maintainer(s) on PAUSE under "View Permissions".
+
+     module: Fh
+    version: 3.51
+    in file: CGI.pm-3.51/lib/CGI.pm
+     status: Not indexed because permission missing. Current registered
+             primary maintainer is LDS. Hint: you can always find the
+             legitimate maintainer(s) on PAUSE under "View Permissions".
+
+     module: MultipartBuffer
+    version: 3.51
+    in file: CGI.pm-3.51/lib/CGI.pm
+     status: Not indexed because permission missing. Current registered
+             primary maintainer is P5P. Hint: you can always find the
+             legitimate maintainer(s) on PAUSE under "View Permissions".
+
+     module: utf8
+    version: 3.51
+    in file: CGI.pm-3.51/lib/CGI/Util.pm
+     status: Not indexed because permission missing. Current registered
+             primary maintainer is NWCLARK. Hint: you can always find
+             the legitimate maintainer(s) on PAUSE under "View
+             Permissions".
+
+Status: Successfully indexed
+============================
+
+     module: CGI
+    version: 3.51
+    in file: CGI.pm-3.51/lib/CGI.pm
+     status: indexed
+
+__END__
