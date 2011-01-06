@@ -1,86 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/12/4
-Message-ID: <0F278B0E7FB40349B635BE500A9BA27F0E225ED7@ALA-MBB.corp.ad.wrs.com>
-Date: Tue, 12 Apr 2011 09:04:05 +0000
-From: "Zhao, Zhenfeng" <Zhenfeng.Zhao@...driver.com>
-To: Josh Bressers <bressers@...hat.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: RE: [security-vendor] Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/8
+Message-ID: <20110106161811.GE12671@dannf.org>
+Date: Thu, 6 Jan 2011 09:18:11 -0700
+From: dann frazier <dannf@...nf.org>
+To: Ben Hutchings <ben@...adent.org.uk>, "Steven M. Christey" <coley@...us.mitre.org>
+Cc: Debian kernel maintainers <debian-kernel@...ts.debian.org>, stable-review@...nel.org, oss-security@...ts.openwall.com
+Subject: CVE Request: kernel [Re: Security review of 2.6.32.28]
 Content-Type: text/plain; charset=utf-8
 
-Sorry for the late response. Please add me with the mail address as the member of the vendor-sec . Thanks.
+On Thu, Jan 06, 2011 at 01:05:47AM +0000, Ben Hutchings wrote:
+> These are the patches that looked security-relevant, from a fairly quick
+> review:
 
-pub   2048R/66FBA52A 2011-04-12
-      Key fingerprint = BF45 878D 7941 567D 732C  D153 F997 3E81 66FB A52A
-uid                  Zhenfeng Zhao (Wind River) <security-vendor@...driver.com>
-sub   2048R/BD99FF83 2011-04-12
+Thanks for the review Ben! Steve, can you assign CVEs for the
+following issues?
+
+> [03/49] fuse: verify ioctl retries
+> Kernel buffer overflow, but only CUSE servers could exploit it and
+> /dev/cuse is normally restricted to root.
+
+Upstream fix:
+  http://git.kernel.org/linus/7572777eef78ebdee1ecb7c258c0ef94d35bad16
+Introduced in 2.6.29.
+
+> [16/49] IB/uverbs: Handle large number of entries in poll CQ
+> Fixes integer overflow and information leak which I assume can be triggered
+> by unprivileged local users.
+
+Sounds like it - Documentation/infiniband/user_verbs.txt says:
+
+ "Since the InfiniBand userspace verbs should be safe for use by
+ non-privileged processes, it may be useful to add an appropriate MODE
+ or GROUP to the udev rule."
+
+Upstream fix:
+  http://git.kernel.org/linus/7182afea8d1afd432a17c18162cc3fd441d0da93
+Introduced in 2.6.15.
+
+> [20/49] orinoco: fix TKIP countermeasure behaviour
+> Fixes cryptographic weakness potentially leaking information to remote
+> (but physically nearby) users.
+
+Upstream fix:
+  http://git.kernel.org/linus/0a54917c3fc295cb61f3fb52373c173fd3b69f48
+Introduced in 2.6.28.
+
+> [24/49] tracing: Fix panic when lseek() called on "trace" opened for writing
+> File is normally only writable by root, so not a security issue.
+
+ack
+
+> [33/49] [SCSI] bfa: fix system crash when reading sysfs fc_host statistics
+> Local denial-of-service.
+> CVE-2010-4343
+> 
+> [36/49] install_special_mapping skips security_file_mmap check.
+> May enable privilege escalation through null pointer bugs that would
+> otherwise only cause denial-of-service.
+> CVE-2010-4346
+> 
+> [42/49] sound: Prevent buffer overflow in OSS load_mixer_volumes
+> Not relevant to Debian kernel images since we don't build OSS.
+> CVE-2010-4257
+> 
+> [44/49] ima: fix add LSM rule bug
+> Allows subversion of IMA.  Not relevant to Debian kernel images since we
+> don't build IMA.
+
+Upstream fix:
+  http://git.kernel.org/linus/867c20265459d30a01b021a9c1e81fb4c5832aa9
+Introoduced in 2.6.30.
+
+> [48/49] sctp: Fix a race between ICMP protocol unreachable and connect()
+> Remote denial-of-service.
+> CVE-2010-4526
+> 
+> Ben.
+> 
 
 
------BEGIN PGP PUBLIC KEY BLOCK-----
-Version: GnuPG v2.0.14 (GNU/Linux)
-
-mQENBE2kEBcBCADGU94a4sScP87HK5a9DGaTmlWyp0y7STrJlCXUDKotOm2swiFl
-uBLZD50drMw35zH6nhHPJ5gjuA9im3BThhDIybNuf0htiSQIfm0lfeRigM6GOi8i
-+1qtxJIJyq85TqZ36FQJ/frNHZ5hKG6++rF9r/HhDJZkyztu2ht2Mt2G+WsXjPPT
-c/11nHEapI6LhI1lJi27Qmn/btehWgAbKsswMLEeUARzumTvM7NV7iNDKVPcwwCp
-EDVu9ynreQoNx2Ts3d9MKCR5xtQiMODCkWfqsjXIxRNCD0AA6FBVG4dudI5MiLsI
-0BKvcvosV9WZivh4L0CIdndGEbTR0iRiyA8vABEBAAG0OlpoZW5mZW5nIFpoYW8g
-KFdpbmQgUml2ZXIpIDxzZWN1cml0eS12ZW5kb3JAd2luZHJpdmVyLmNvbT6JATgE
-EwECACIFAk2kEBcCGwMGCwkIBwMCBhUIAgkKCwQWAgMBAh4BAheAAAoJEPmXPoFm
-+6UqfmEH/2mDk4nUqvK9KfSIeRZ5bPASkDop2+6XebHEyspZMeD4XfMd8hVtkujN
-r/GvhhIMNmia5aAwYYvYOajF8yJWKGEarC75NGQXx7RKuIj4ZPRKk7sstDpomx2e
-Ykg1RM72k54nniEhaqKuzqaB/A/kYQ5h+1y+J/+5IlbQvqMg3HHzxKPYZzWmkC+X
-wBr6+RxGXsKxmuySXw2poHCrMXmZurgHmVxOn2ZKLCJUAbBkiDHJtTMnIyzPuOF8
-2PdkjtFQlOm7g6fKCYleAPm+0p7def9LifWE793RfzQ9Otfoyj7kISQdNdO+UIw5
-jj5dQboz4GJn25aV3PvMq2CSU92ZFhO5AQ0ETaQQFwEIAL09RT5SYAFa5GuIY3oW
-wzeBEhPYh4YQWMPYTLow5Xd56FUhNEoxMYzoKuR9SiFOdcRBTmYXozuVqhkewx+O
-dKPWmOoQrba0G/dEW4UnCjmWviDFdQKOQs/WY3xgUZfjEvAB0ijQKiwFcteH3oo9
-a4rSRcClh+pFJp4XflqKr9HCVwNOT7cmVOM++91cWHbhXwt+HCXOmkQbgvnXdsaa
-Y9pku5OHFUNZ02pNFwZDMppFwB4gFZj3FI9B8WgLNt0iEuYB9WgofrLwDehFx7tO
-JgnWhBMz4rXgGehU50uKZ6omRWFl/cZC98EWR7P4lYYsv/1gy+9ruqhahsOETrrz
-B3UAEQEAAYkBHwQYAQIACQUCTaQQFwIbDAAKCRD5lz6BZvulKnvDB/9AzCamF6cw
-KCalit32iGbwPNsuTkk6OFU9roXLVWuzWJZlUV443xGVCxedeg6PKytIHh+ebll8
-1WtqnWCoqtZ+yguOrrLiTc4qs78kecKW7GhfxVjF2EoQPTNch68jCL5j75GJDffg
-129M/m4/TZWU8JkS3hJC9kI4ZDg3z1Pj8ecocKt6MSCwgPbrgkmNf7aFsHV1CnbT
-5ZCUYF00jeGnfK2wnLeraTDVD0i/+1KiTdaufOCvMlDDWlDfFwK3NBnbsf03F8ot
-/KSWSvp0uB6+G3w5acuBfgnsAI66RujU6xq+i5IMMnkDyYilazftnRBcTG2Mg9eP
-Peaf8ujaWsJU
-=n1zi
------END PGP PUBLIC KEY BLOCK-----
-
-Thanks,
-Zhenfeng(Jeffrey) Zhao
-
-
-> -----Original Message-----
-> From: owner-security-vendor@...driver.com [mailto:owner-security-
-> vendor@...driver.com] On Behalf Of Josh Bressers
-> Sent: Saturday, April 02, 2011 2:03 AM
-> To: oss-security@...ts.openwall.com
-> Subject: [security-vendor] [oss-security] Closed list
-> 
-> Hello everyone,
-> 
-> This topic has lost focus lately. Rather than let it slip away, I think we should
-> go ahead with the simplest solution right now, we can always do something
-> different at a future date.
-> 
-> Openwall has graciously volunteered to run a new list, and they currently
-> have some infrastructure in place to do this. The new list can start up right
-> away. In this instance, I fear perfect is the enemy of the good. I'd rather see
-> something functional in place than nothing.
-> 
-> Here is the plan for initial membership (this is also approved by Openwall).
-> 
-> Initial members will have had to be a vendor-sec member (no exploders this
-> time around). You must reply to this thread, in public (on oss-security).
-> We want this to be very public, we have nothing to hide. You must have a
-> public gpg key ID included in your reply. The new list will gpg encrypt all mail
-> (it does accept plaintext messages though).
-> 
-> Once we have an initial seed group, we can focus on future membership
-> ideas.
-> 
-> Thanks.
-> 
-> --
->     JB
