@@ -1,24 +1,127 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/18
-Message-ID: <20110224235706.GU4212@outflux.net>
-Date: Thu, 24 Feb 2011 15:57:06 -0800
-From: Kees Cook <kees@...ntu.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/16
+Message-ID: <1847100923.193538.1294340697777.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 6 Jan 2011 14:04:57 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel: /proc/$pid/ leaks contents across setuid exec
+Cc: coley <coley@...re.org>, lists@...g.net
+Subject: Re: CVE Request: Eclipse IDE Version: 3.6.1 | Help Server Local Cross Site Scripting (XSS)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Please use CVE-2010-4647 for this.
 
-I'd like to get a CVE assigned for this information leak issue:
-https://lkml.org/lkml/2011/2/7/368
-
-Pre-opened file descriptors in /proc/$pid/ can bypass DAC allowing
-visibility into setuid process state, especially leaking ASLR offset.
-
-Thanks,
-
--Kees
+Thanks.
 
 -- 
-Kees Cook
-Ubuntu Security Team
+    JB
+
+
+----- Original Message -----
+> ==============================================================================
+> Eclipse IDE | Help Server Local Cross Site Scripting (XSS)
+> Vulnerability
+> ==============================================================================
+> 
+> 
+> 1. OVERVIEW
+> 
+> The Help Content web application of Eclipse IDE was vulnerable to
+> Cross Site Scripting (XSS) Vulnerability.
+> 
+> 
+> 2. PRODUCT DESCRIPTION
+> 
+> Eclipse is a multi-language software development environment
+> comprising an integrated development environment (IDE) and an
+> extensible plug-in system. It is written mostly in Java and can be
+> used to develop applications in Java and, by means of various
+> plug-ins, other programming languages including Ada, C, C++, COBOL,
+> Perl, PHP, Python, Ruby (including Ruby on Rails framework), Scala,
+> and Scheme. The IDE is often called Eclipse ADT for Ada, Eclipse CDT
+> for C/C++, Eclipse JDT for Java, and Eclipse PDT for PHP.
+> 
+> 
+> 3. VULNERABILITY DESCRIPTION
+> 
+> Eclipse Help Contents are served as a web application via the built-in
+> Jetty Web Server plugin. Cross Site Scripting vulnerabilities were
+> found in /help/index.jsp and /help/advanced/content.jsp URLs. XSS on
+> /help/advanced/content.jsp url makes the browser hang
+> but even after clicking "Stop Executing" button, users can still get
+> XSS.
+> 
+> 
+> 4. VERSIONS AFFECTED
+> 
+> Eclipse IDE Version: 3.6.1 <=
+> 
+> Tested Editions(SDK, Java, J2EE)
+> 
+> 
+> 5. PROOF-OF-CONCEPT/EXPLOIT
+> 
+> http://localhost:[REPLACE]/help/index.jsp?'onload='alert(0)
+> http://localhost:[REPLACE]/help/advanced/content.jsp?'onload='alert(0)
+> 
+> Script-Check:
+> Request: /advanced/content.jsp?'onload='alert(0)
+> Response: src='contentToolbar.jsp?'onload='alert(0)'
+> 
+> 
+> 6. IMPACT
+> 
+> In a situation where users' browser security settings are weak, the
+> localized XSS vector could enable attackers to perform a number of
+> black acts including cross site content access, smb shares
+> enumeration, remote code execution, malicious trojan downloading and
+> execution ...etc.
+> 
+> 
+> 7. SOLUTION
+> 
+> Apply the recent error-free nightly builds (ie.
+> http://download.eclipse.org/eclipse/downloads/drops/N20101110-2000/index.php)
+> .
+> According to the developer, "Chris Goldthorpe", the fix is in the
+> nightly build,
+> http://download.eclipse.org/eclipse/downloads/drops/N20101108-2000/index.php
+> , it will also be in 3.6.2 (February 2011) and 3.7 (June 2011).
+> 
+> 
+> 8. VENDOR
+> 
+> Eclipse Developers Team
+> http://www.eclipse.org/
+> 
+> 
+> 9. CREDIT
+> 
+> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+> Ethical Hacker Group, Myanmar.
+> 
+> 
+> 10. DISCLOSURE TIME-LINE
+> 
+> 2010-11-04 : vulnerability discovered
+> 2010-11-05 : notified vendor
+> 2010-11-08 : patch released and applied to svn
+> 2010-11-16 : vulnerability disclosed
+> 
+> 
+> 11. REFERENCES
+> 
+> Original Advisory URL:
+> http://yehg.net/lab/pr0js/advisories/eclipse/[eclipse_help_server]_cross_site_scripting
+> Eclipse Bug Tracker:
+> https://bugs.eclipse.org/bugs/show_bug.cgi?id=329582
+> Previous XSS Flaws:
+> http://r00tin.blogspot.com/2008/04/eclipse-local-web-server-exploitation.html
+> (searchView.jsp, workingSetManager.jsp)
+> Cross Environment Hopping:
+> http://blog.watchfire.com/wfblog/2008/06/cross-environ-1.html
+> About Eclipse IDE:
+> https://secure.wikimedia.org/wikipedia/en/wiki/Eclipse_%28software%29
+> 
+> #yehg [2010-11-16]
+> 
+> last updated: 2010-12-24
