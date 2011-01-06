@@ -1,38 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/19/3
-Message-ID: <20111119223800.GA4092@openwall.com>
-Date: Sun, 20 Nov 2011 02:38:00 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/9
+Message-Id: <20110106125422.790cbf0b.michael.s.gilbert@gmail.com>
+Date: Thu, 6 Jan 2011 12:54:22 -0500
+From: Michael Gilbert <michael.s.gilbert@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: closed-list membership transition
+Subject: Re: CVE-NONE kernel: PHONET signedness issue
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Sep 19, 2011 at 02:36:34PM +0400, Solar Designer wrote:
-> Per the Chromium OS FAQ:
+On Thu, 06 Jan 2011 13:20:49 +0800, Eugene Teo wrote:
+> re: http://seclists.org/fulldisclosure/2011/Jan/39
 > 
-> http://www.chromium.org/chromium-os/chromium-os-faq
-> 
-> it appears that Chrome OS is only available with a Chromebook purchase,
-> but those may be purchased from multiple OEMs.  I think this latter fact
-> qualifies Chrome OS for the closed list since it's similar to how
-> multiple hardware product vendors redistribute the distros of MontaVista
-> Software and Wind River, who we accepted (thereby setting a precedent).
-> 
-> "Multiple" is the keyword here.  (We might have difficulty making a
-> determination in case a distro is only used by a very low and fixed
-> number of hardware vendors, though - like just two.)
-> 
-> Also, Chromium OS is generally available, albeit not in a form suitable
-> for end-users (there's a public git repository, but no images ready to
-> boot/install).  Arguably, this makes Chromium OS eligible too, and I
-> guess the security team behind Chrome OS and Chromium OS is the same.
+> Just in case someone tries to request a CVE name for this, I'm not 
+> requesting for one because if you need CAP_SYS_ADMIN capability to 
+> exploit this, you are already privileged.
 
-Is this the real Chromium OS thing pre-built for end-users? -
+Right, but CAP_SYS_ADMIN != root, or at least it isn't meant to be. I
+mean if CAP_SYS_ADMIN == root, then one or the other doesn't need to
+exist. There is an exposure here, and for that it deserves a CVE
+identifier (of course in my opinion).  See Brad Spengler's recent
+write-up [0]. There should be some effort toward making those 21 root
+equivalent capabilities discussed there non-equivalent.
 
-http://chromeos.hexxeh.net
+Best wishes,
+Mike
 
-Anyway, I updated my notes on Kees' subscription to the linux-distros
-list noting that he's there for Chrome OS now, even though in practice I
-think Kees also remains active at Debian/Ubuntu, which is great.
-
-Alexander
+[0] http://forums.grsecurity.net/viewtopic.php?f=7&t=2522
