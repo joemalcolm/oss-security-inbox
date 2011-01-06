@@ -1,26 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/21/3
-Message-ID: <20111221221041.GB7178@dhcp-25-225.brq.redhat.com>
-Date: Wed, 21 Dec 2011 23:10:42 +0100
-From: Petr Matousek <pmatouse@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request -- kernel: tight loop and no preemption can cause system stall
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/1
+Message-ID: <AANLkTika9qwJUfh_+LEGS1bP_w8Q6gfm6YZfTG-RB+hK@mail.gmail.com>
+Date: Wed, 5 Jan 2011 19:46:02 -0500
+From: Anthon Pang <anthon.pang@...il.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE Request: Multiple XSS Vulnerabiliies < Piwik 1.1
 Content-Type: text/plain; charset=utf-8
 
-A tight loop in user level process isn't preempted unless a realtime
-process is woken up on the cpu.  Some important kernel threads such as
-events/*, kblockd/* can be blocked by the process, and the machine
-stalls.
+Piwik 1.1 released on Jan 4, 2011, addresses numerous security issues
+following a security audit by SektionEins (led by Stefan Esser), an internal
+review, and coordinated disclosures from Jarosław Sajko (Pentesters.pl) and
+Fabian Becker.
 
-Unprivileged local user could use this flaw to DoS the system.
+Notably, versions of Piwik prior to 1.1 contain multiple persistent and
+reflective XSS vulnerabilities through unescaped parameters and/or output.
 
-Upstream commit:
-f26f9aff6aaf67e9a430d16c266f91b13a5bff64
+Security advisory:
+http://piwik.org/blog/2011/01/piwik-1-1-security-advisory/
+Other advisory:
+http://piwik.org/blog/2011/01/professional-security-audit-in-piwik/
+Changelog: http://piwik.org/blog/2011/01/piwik-1-1-2/
 
-Reference:
-https://lkml.org/lkml/2010/11/20/212
-https://bugzilla.redhat.com/show_bug.cgi?id=769711
-
-Thanks,
--- 
-Petr Matousek / Red Hat Security Response Team
