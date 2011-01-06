@@ -1,19 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/13
-Message-ID: <20110720170837.0033138e@redhat.com>
-Date: Wed, 20 Jul 2011 17:08:37 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: OSS Security <oss-security@...ts.openwall.com>
-Subject: New IcedTea and IcedTea-Web releases
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/3
+Message-ID: <4D257F9D.8090707@redhat.com>
+Date: Thu, 06 Jan 2011 16:38:53 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Greg KH <greg@...ah.com>, "Steven M. Christey" <coley@...us.mitre.org>, Greg KH <gregkh@...e.de>
+Subject: Re: CVE-2010-4525 kvm: x86: zero kvm_vcpu_events->interrupt.pad infoleak
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+On 01/06/2011 04:16 AM, Greg KH wrote:
+> On Wed, Jan 05, 2011 at 12:14:28PM +0800, Eugene Teo wrote:
+>> In addition to CVE-2010-3881, some versions of the Linux kernel
+>> forgot to initialize the kvm_vcpu_events.interrupt.pad field before
+>> being copied to userspace. I have assigned CVE-2010-4525 to this. I
+>> briefly checked, linux-2.6.33/34.y are affected, linux-2.6/.31/.32.y
+>> are not.
+>>
+>> https://bugzilla.redhat.com/CVE-2010-4525
+>
+> Is there a fix for this in the upstream kernels?  How about kernels
+> greater than .35?
 
-New IcedTea6 and IcedTea-Web releases fix two issues affecting browser
-plugin and javaws:
+The upstream kernel and .35.y onwards are not affected.
 
-http://mail.openjdk.java.net/pipermail/distro-pkg-dev/2011-July/015170.html
-http://mail.openjdk.java.net/pipermail/distro-pkg-dev/2011-July/015171.html
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+Thanks, Eugene
