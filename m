@@ -1,132 +1,113 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/14/1
-Message-ID: <4EC06C99.9090300@redhat.com>
-Date: Sun, 13 Nov 2011 18:19:21 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/7
+Message-ID: <AANLkTikGHZ1z8w4b=dw0Wf5DSU8iUDWL6y=ZBh=G87YL@mail.gmail.com>
+Date: Thu, 6 Jan 2011 17:14:30 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
 To: oss-security@...ts.openwall.com
-CC: jmm@...ian.org
-Subject: Re: Fwd: DSA 2338-1 moodle security update
+Subject: CVE Request: Eclipse IDE Version: 3.6.1 | Help Server Local Cross Site Scripting (XSS)
 Content-Type: text/plain; charset=utf-8
 
-Ok so for the sake of completeness the following is all Moodle Security
-Advisories from 2011 so far. One has a CVE assigned (rather, it moodle
-repackages phpMyAdmin which has a CVE assigned), several are security
-hardening fixes (so no CVE) and several require admin access (so they
-don't cross a security boundary, so no CVE). Notes are included.
+==============================================================================
+ Eclipse IDE | Help Server Local Cross Site Scripting (XSS) Vulnerability
+==============================================================================
 
-I also found CVE-2011-3757, I'm unable to confirm this issue (I just get
-a 500 internal server error) but
-http://git.moodle.org/gw?p=moodle.git;a=commitdiff;h=2c28fa7643b168006883a81a2421012d357a22d6
-would indicate it's been fixed.
 
-P.S. could someone from moodle maybe request CVE's when they assign a
-security advisory (just forward a copy of the MSA to the OSS list would
-do the trick), barrnig that if a community member could take it upon
-themselves that would be nice (then CVE's can be assigned promptly).
+1. OVERVIEW
 
-=====================
+The Help Content web application of Eclipse IDE was vulnerable to
+Cross Site Scripting (XSS) Vulnerability.
 
-MSA-11-0001: ALREADY ASSIGNED CVE-2011-0987 Customised phpMyAdmin
-upgraded to 2.11.11.3 and 3.3.9.2
 
-MSA-11-0002: CVE-2011-4133 Cross-site request forgery vulnerability in
-RSS block
+2. PRODUCT DESCRIPTION
 
-MSA-11-0003: CVE-2011-4278 Cross-site scripting vulnerability in tag
-autocomplete
+Eclipse is a multi-language software development environment
+comprising an integrated development environment (IDE) and an
+extensible plug-in system. It is written mostly in Java and can be
+used to develop applications in Java and, by means of various
+plug-ins, other programming languages including Ada, C, C++, COBOL,
+Perl, PHP, Python, Ruby (including Ruby on Rails framework), Scala,
+and Scheme. The IDE is often called Eclipse ADT for Ada, Eclipse CDT
+for C/C++, Eclipse JDT for Java, and Eclipse PDT for PHP.
 
-MSA-11-0004: CVE-2011-4279 $CFG->forceloginforprofiles setting ignored
-in course profiles
 
-MSA-11-0005: CVE-2011-4280 Cross-site scripting vulnerability in
-spikephpcoverage
+3. VULNERABILITY DESCRIPTION
 
-MSA-11-0006: CVE-2011-4281 Cross-site request forgery and missing access
-control in course completion
+Eclipse Help Contents are served as a web application via the built-in
+Jetty Web Server plugin. Cross Site Scripting vulnerabilities were
+found in  /help/index.jsp and /help/advanced/content.jsp URLs. XSS on
+/help/advanced/content.jsp url makes the browser hang
+but even after clicking "Stop Executing" button, users can still get XSS.
 
-MSA-11-0007: CVE-2011-4282 Cross-site scripting vulnerability in course tags
 
-MSA-11-0008: CVE-2011-4283 IMS enterprise enrolment file may disclose
-sensitive information
+4. VERSIONS AFFECTED
 
-MSA-11-0009: CVE-2011-4284 My profile block may disclose private
-information if used in user context
+Eclipse IDE Version: 3.6.1 <=
 
-MSA-11-0010: CVE-2011-4285 Incorrect default for mod:course/delete
-capability in teacher role
+Tested Editions(SDK, Java, J2EE)
 
-MSA-11-0011: CVE-2011-4286 Multiple cross-site scripting problems in
-media filter
 
-MSA-11-0012: CVE-2011-4287 Authentication issue
+5. PROOF-OF-CONCEPT/EXPLOIT
 
-MSA-11-0013: CVE-2011-4288 Group/Quiz permissions issue
+http://localhost:[REPLACE]/help/index.jsp?'onload='alert(0)
+http://localhost:[REPLACE]/help/advanced/content.jsp?'onload='alert(0)
 
-MSA-11-0014: CVE-2011-4289 Personal details displayed without permission
+Script-Check:
+Request: /advanced/content.jsp?'onload='alert(0)	
+Response: src='contentToolbar.jsp?'onload='alert(0)'
 
-MSA-11-0015: CVE-2011-4290 Cross Site Scripting through URL encoding
 
-MSA-11-0016: CVE-2011-4291 Ability to fill a database with invalid
-records through ratings
+6. IMPACT
 
-MSA-11-0017: CVE-2011-4292 Ability to generate invalid records in the
-comments table in the database
+In a situation where users' browser security settings are weak, the
+localized XSS vector could enable attackers to perform a number of
+black acts including cross site content access, smb shares
+enumeration, remote code execution, malicious trojan downloading and
+execution ...etc.
 
-MSA-11-0018: NO CVE Lacking capability controls over cohorts (hardening)
 
-MSA-11-0019: CVE-2011-4293 Themes writing to files outside Moodle data
-directory
+7. SOLUTION
 
-MSA-11-0020: CVE-2011-4294 Continue links in error messages can lead offsite
+Apply the recent error-free nightly builds (ie.
+http://download.eclipse.org/eclipse/downloads/drops/N20101110-2000/index.php)
+.
+According to the developer, "Chris Goldthorpe", the fix is in the
+nightly build, http://download.eclipse.org/eclipse/downloads/drops/N20101108-2000/index.php
+, it will also be in 3.6.2 (February 2011) and 3.7 (June 2011).
 
-MSA-11-0021: CVE-2011-4295 Role assignment web service function not
-following restrictions
 
-MSA-11-0022: CVE-2011-4296 Course creators could change filters at
-course level
+8. VENDOR
 
-MSA-11-0023: CVE-2011-4297 Guests can add comments to front page activities
+Eclipse Developers Team
+http://www.eclipse.org/
 
-MSA-11-0024: NO CVE Recaptcha images were being authenticated from an
-older server (hardening)
 
-MSA-11-0025: NO CVE Group names in user upload CSV not being escaped
-(need to be admin)
+9. CREDIT
 
-MSA-11-0026: NO CVE Fields in user upload CSV not being escaped (need to
-be admin)
+This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+Ethical Hacker Group, Myanmar.
 
-MSA-11-0027: CVE-2011-4298 Wiki pages reference forgery issue
 
-MSA-11-0028: CVE-2011-4299 Wiki comments cross site scripting issue
+10. DISCLOSURE TIME-LINE
 
-MSA-11-0029: CVE-2011-4300 File visibility issue
+2010-11-04 : vulnerability discovered
+2010-11-05 : notified vendor
+2010-11-08 : patch released and applied to svn
+2010-11-16 : vulnerability disclosed
 
-MSA-11-0030: NO CVE Box.net repository integration authentication issue
-(hardening)
 
-MSA-11-0031: CVE-2011-4301 Forms API constant issue
+11. REFERENCES
 
-MSA-11-0032: CVE-2011-4302 MNET SSL validation issue
+Original Advisory URL:
+http://yehg.net/lab/pr0js/advisories/eclipse/[eclipse_help_server]_cross_site_scripting
+Eclipse Bug Tracker: https://bugs.eclipse.org/bugs/show_bug.cgi?id=329582
+Previous XSS Flaws:
+http://r00tin.blogspot.com/2008/04/eclipse-local-web-server-exploitation.html
+(searchView.jsp, workingSetManager.jsp)
+Cross Environment Hopping:
+http://blog.watchfire.com/wfblog/2008/06/cross-environ-1.html
+About Eclipse IDE:
+https://secure.wikimedia.org/wikipedia/en/wiki/Eclipse_%28software%29
 
-MSA-11-0033: CVE-2011-4303 Site-hub registration identity issue
+#yehg [2010-11-16]
 
-MSA-11-0034: CVE-2011-4304 Chat module information leak
-
-MSA-11-0035: NO CVE Cookie-less session vulnerability (hardening)
-
-MSA-11-0036: CVE-2011-4305 Messaging refresh vulnerability
-
-MSA-11-0037: CVE-2011-4306 Course section editing injection vulnerability
-
-MSA-11-0038: NO CVE Database injection protection strengthened (hardening)
-
-MSA-11-0039: CVE-2011-4307 Wiki section vulnerability
-
-MSA-11-0040: CVE-2011-4308 Potential personal information leak
-
-MSA-11-0041: CVE-2011-4309 Global search authentication issue
-
---
-
-Kurt Seifried / Red Hat Security Response Team
+last updated: 2010-12-24
