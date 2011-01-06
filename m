@@ -1,39 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/18/6
-Message-ID: <20110518200633.GA5730@pisco.westfalen.local>
-Date: Wed, 18 May 2011 22:06:33 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/19
+Message-ID: <ig57re$eb8$1@dough.gmane.org>
+Date: Thu, 06 Jan 2011 14:14:38 -0600
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE requests: ffmpeg/widelands/jifty::db/lilo/libpcap
+Subject: Re: CVE request: patch directory traversal flaw
 Content-Type: text/plain; charset=utf-8
 
 Hi,
-please assign CVE IDs for the following issues tracked in the Debian Security Tracker:
 
-1. ffmpeg/libav out of array write in AMV parsing
+Steve Beattie wrote:
 
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=624339
-http://seclists.org/bugtraq/2011/Apr/257
-http://git.videolan.org/?p=ffmpeg.git;a=commit;h=89f903b3d5ec38c9c5d90fba7e626fa0eda61a32
+> On Wed, Jan 05, 2011 at 02:54:57PM -0700, Vincent Danen wrote:
+>> We got a heads up on a directory traversal flaw in patch.  I don't think
+>> a CVE name has been assigned to it; could we get one?  It allows for the
+>> creation of arbitrary files in unexpected places due to the use of '..'.
+>> 
+>> References:
+>> 
+>> https://bugzilla.redhat.com/show_bug.cgi?id=667529
+>> http://osdir.com/ml/bug-patch-gnu/2010-12/msg00000.html
+>> 
+>> Thanks.
+> 
+> I believe the Debian security team assigned CVE-2010-1679 for this
+> issue.
 
-2. widelands directory traversal
 
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=617960
-http://bazaar.launchpad.net/~widelands-dev/widelands/build-15/revision/5021
-
-3. SQL injection in Jifty::DBI
-
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=622919
-http://lists.jifty.org/pipermail/jifty-devel/2011-April/002426.html
-
-4. lilo: lilo-uuid-diskid makes lilo.conf world-readable
-
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=615103
-
-5. libpcap packet truncation
-
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=623868
-http://thread.gmane.org/gmane.network.tcpdump.devel/5018
+That CVE is for dpkg (same principle, different code).
+My opinion is that patch should be fixed too and it would require another 
+CVE (we've run out of them atm.)
 
 Cheers,
-        Moritz
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
+
+
