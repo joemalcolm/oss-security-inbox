@@ -1,31 +1,109 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/04/4
-Message-ID: <20111204200746.2bc22fe0@laverne>
-Date: Sun, 4 Dec 2011 20:07:46 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/17
+Message-ID: <1280434049.193561.1294340814006.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 6 Jan 2011 14:06:54 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-request: Serendipity 'serendipity[filter][bp.ALT]' Cross-Site Scripting vulnerability
+Cc: coley <coley@...re.org>, lists@...g.net
+Subject: Re: CVE Request for Joomla! 1.0.x ~ 1.0.15 | Cross Site Scripting (XSS) Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Am Thu, 01 Dec 2011 13:24:19 -0700
-schrieb Kurt Seifried <kseifried@...hat.com>:
+Please use CVE-2011-0005.
 
-> My mistake, this should have been merged into CVE-2011-4090, it's the
-> same vuln type (XSS) and the same version of Serendipity,
-> CVE-2011-4365 is a bad assignment and should be marked as a duplicate
-> of CVE-2011-4090.
-
-I'd disagree on that.
-
-CVE-2011-4090 is in an (optional) plugin, while CVE-2011-4365 is an
-issue in the main s9y code.
-
-Although the plugin is shipped with the core s9y, the impact is quite
-different. For 4090, you only need to care if you do something with the
-karma-plugin.
+Thanks.
 
 -- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
+    JB
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+
+----- Original Message -----
+> http://seclists.org/fulldisclosure/2011/Jan/43
+> 
+> http://yehg.net/lab/pr0js/advisories/joomla/core/%5Bjoomla_1.0.x~15%5D_cross_site_scripting
+> 
+> 
+> 
+> ==============================================================================
+> Joomla! 1.0.x ~ 1.0.15 | Cross Site Scripting (XSS) Vulnerability
+> ==============================================================================
+> 
+> 
+> 1. OVERVIEW
+> 
+> The Joomla! 1.0.x series are currently vulnerable to Cross Site
+> Scripting.
+> 
+> 
+> 2. BACKGROUND
+> 
+> Joomla! is a free and open source content management system (CMS) for
+> publishing content on the World Wide Web and intranets.
+> 
+> 
+> 3. VULNERABILITY DESCRIPTION
+> 
+> The "ordering" parameter in a core module,com_search, is not properly
+> sanitized and thus vulnerable to XSS.
+> By leveraging this vulnerability, attackers can compromise currently
+> logged-in user/administrator session and impersonate arbitrary user
+> actions available under /administrator/ functions. As the
+> vulnerability is based on the core module, it affects both classic and
+> customized Joomla! 1.0.x based web sites.
+> 
+> 
+> 4. VERSIONS AFFECTED
+> 
+> Joomla! 1.0.x ~ 1.0.15 series
+> 
+> 
+> 5. PROOF-OF-CONCEPT/EXPLOIT
+> 
+> http://attacker.in/joomla1015/index.php?option=com_search&searchword=xss&searchphrase=any&ordering=newest%22%20onmousemove=alert%28document.cookie%29%20style=position:fixed;top:0;left:0;width:100%;height:100%;%22
+> 
+> 
+> 6. SOLUTION
+> 
+> Joomla 1.0.x series has been at end of life since 2009-07-22.
+> 
+> Upgrade to Joomla! 1.5.x family (1.5.22 as of 2011-01-06)
+> 
+> 
+> 7. VENDOR
+> 
+> Joomla! Developer Team
+> http://www.joomla.org
+> 
+> 
+> 8. CREDIT
+> 
+> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+> Ethical Hacker Group, Myanmar.
+> 
+> 
+> 9. DISCLOSURE TIME-LINE
+> 
+> 2011-01-03: notified Joomla! Security Strike Team regardless of EOL
+> status
+> 2011-01-06: vulnerability disclosed
+> 
+> 
+> 10. REFERENCES
+> 
+> Original Advisory URL:
+> http://yehg.net/lab/pr0js/advisories/joomla/core/[joomla_1.0.x~15]_cross_site_scripting
+> Joomla! 1.0.x End of Life -
+> http://community.joomla.org/blogs/community/509-an-old-friend-comes-of-age.html
+> OWASP Top 10:
+> http://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project
+> CWE-79: http://cwe.mitre.org/data/definitions/79.html
+> 
+> 
+> #yehg [2011-01-06]
+> 
+> ---------------------------------
+> Best regards,
+> YGN Ethical Hacker Group
+> Yangon, Myanmar
+> http://yehg.net
+> Our Lab | http://yehg.net/lab
+> Our Directory | http://yehg.net/hwd
