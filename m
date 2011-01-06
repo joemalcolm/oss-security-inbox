@@ -1,31 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/29
-Message-ID: <4D99D975.5080700@redhat.com>
-Date: Mon, 04 Apr 2011 22:45:09 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/19
+Message-ID: <ig57re$eb8$1@dough.gmane.org>
+Date: Thu, 06 Jan 2011 14:14:38 -0600
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: Ludwig Nussel <ludwig.nussel@...e.de>
-Subject: Re: Closed list
+Subject: Re: CVE request: patch directory traversal flaw
 Content-Type: text/plain; charset=utf-8
 
-On 04/04/2011 10:38 PM, Ludwig Nussel wrote:
-> Josh Bressers wrote:
->> Initial members will have had to be a vendor-sec member (no exploders this
->> time around). You must reply to this thread, in public (on oss-security).
->> We want this to be very public, we have nothing to hide. You must have a
->> public gpg key ID included in your reply. The new list will gpg encrypt all
->> mail (it does accept plaintext messages though).
->
-> I've created a dedicated key for this purpose:
->
-> pub   2048R/1F334FA6 2011-04-04 [expires: 2012-04-03]
-> uid                  Ludwig Nussel (vendor-sec)<ludwig.nussel@...e.de>
-> sub   2048R/4F5FEB97 2011-04-04 [expires: 2012-04-03]
+Hi,
 
-Maybe once we have a list of initial members, we should start using a 
-vouching system, that the applicant must be referred by someone from the 
-list, and we only accept members whom we met and trust. Just a suggestion.
+Steve Beattie wrote:
 
-Eugene
+> On Wed, Jan 05, 2011 at 02:54:57PM -0700, Vincent Danen wrote:
+>> We got a heads up on a directory traversal flaw in patch.  I don't think
+>> a CVE name has been assigned to it; could we get one?  It allows for the
+>> creation of arbitrary files in unexpected places due to the use of '..'.
+>> 
+>> References:
+>> 
+>> https://bugzilla.redhat.com/show_bug.cgi?id=667529
+>> http://osdir.com/ml/bug-patch-gnu/2010-12/msg00000.html
+>> 
+>> Thanks.
+> 
+> I believe the Debian security team assigned CVE-2010-1679 for this
+> issue.
+
+
+That CVE is for dpkg (same principle, different code).
+My opinion is that patch should be fixed too and it would require another 
+CVE (we've run out of them atm.)
+
+Cheers,
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
+
+
