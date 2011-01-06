@@ -1,87 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/11/10
-Message-ID: <CAPYM6VyyQBoAbPM8iB1bzH94U8Vosmy7GxcSbkCDuLCW-67fmw@mail.gmail.com>
-Date: Fri, 12 Aug 2011 04:45:57 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/18
+Message-ID: <1961486340.193615.1294341196350.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 6 Jan 2011 14:13:16 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: Mambo CMS 4.6.x (4.6.5) | SQL Injection
+Cc: Debian kernel maintainers <debian-kernel@...ts.debian.org>, stable-review@...nel.org, Ben Hutchings <ben@...adent.org.uk>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request: kernel [Re: Security review of 2.6.32.28]
 Content-Type: text/plain; charset=utf-8
 
-Mambo CMS 4.6.x (4.6.5) | SQL Injection
+> 
+> > [03/49] fuse: verify ioctl retries
+> > Kernel buffer overflow, but only CUSE servers could exploit it and
+> > /dev/cuse is normally restricted to root.
+> 
+> Upstream fix:
+> http://git.kernel.org/linus/7572777eef78ebdee1ecb7c258c0ef94d35bad16
+> Introduced in 2.6.29.
+
+Please use CVE-2010-4650
 
 
-1. OVERVIEW
+> > [16/49] IB/uverbs: Handle large number of entries in poll CQ
+> > Fixes integer overflow and information leak which I assume can be
+> > triggered by unprivileged local users.
+> 
+> Sounds like it - Documentation/infiniband/user_verbs.txt says:
+> 
+> "Since the InfiniBand userspace verbs should be safe for use by
+> non-privileged processes, it may be useful to add an appropriate MODE
+> or GROUP to the udev rule."
+> 
+> Upstream fix:
+> http://git.kernel.org/linus/7182afea8d1afd432a17c18162cc3fd441d0da93
+> Introduced in 2.6.15.
+> 
 
-Mambo CMS 4.6.5 and lower versions are vulnerable to SQL Injection.
-
-
-2. BACKGROUND
-
-Mambo is a full-featured, award-winning content management system that can
-be used for everything from simple websites to complex corporate
-applications. It is used all over the world to power government portals,
-corporate intranets and extranets, ecommerce sites, nonprofit outreach,
-schools, church, and community sites. Mambo's "power in simplicity" also
-makes it the CMS of choice for many small businesses and personal sites.
-
-
-3. VULNERABILITY DESCRIPTION
-
-The "zorder" parameter was not properly sanitized upon submission to the
-administrator/index2.php url, which allows attacker to conduct  SQL
-Injection attack. This could an attacker to inject or manipulate SQL queries
-in the back-end database, allowing for the manipulation or disclosure of
-arbitrary data.
+Please use CVE-2010-4649
 
 
-4. VERSIONS AFFECTED
+> > [20/49] orinoco: fix TKIP countermeasure behaviour
+> > Fixes cryptographic weakness potentially leaking information to remote
+> > (but physically nearby) users.
+> 
+> Upstream fix:
+> http://git.kernel.org/linus/0a54917c3fc295cb61f3fb52373c173fd3b69f48
+> Introduced in 2.6.28.
+> 
 
-Tested on Mambo CMS 4.6.5
-
-
-5. PROOF-OF-CONCEPT/EXPLOIT
-
-http://localhost/mambo/administrator/index2.php?limit=10&order[]=11&boxchecked=0&toggle=on&search=sqli&task=&limitstart=0&cid[]=on&zorder=-1OR
-(SELECT 9999 FROM(SELECT
-COUNT(*),CONCAT(CHAR(58,98,112,101,58),(SELECT
-(CASE WHEN (9999=9999) THEN 1 ELSE 0
-END)),CHAR(58,110,100,107,58),FLOOR(RAND(0)*2))x FROM
-INFORMATION_SCHEMA.CHARACTER_SETS GROUP BY
-x)a)&filter_authorid=62&hidemainmenu=0&option=com_typedcontent
+Please use CVE-2010-4648.
 
 
-6. SOLUTION
+> > [44/49] ima: fix add LSM rule bug
+> > Allows subversion of IMA. Not relevant to Debian kernel images since
+> > we
+> > don't build IMA.
+> 
+> Upstream fix:
+> http://git.kernel.org/linus/867c20265459d30a01b021a9c1e81fb4c5832aa9
+> Introoduced in 2.6.30.
 
-The vendor seems to discontinue the development. It is recommended to use
-another CMS in active development.
+Please use CVE-2011-0006
 
+Thanks.
 
-7. VENDOR
-
-Mambo CMS Development Team
-http://mambo-developer.org
-
-
-8. CREDIT
-
-This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-Ethical Hacker Group, Myanmar.
-
-
-9. DISCLOSURE TIME-LINE
-
-2010-11-31: notified vendor through bug tracker
-2011-08-12: no patched version released up to date
-2011-08-12: vulnerability disclosed
-
-
-10. REFERENCES
-
-Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/[mambo4.6_x]_sql_injection
-Mambo CMS:
-http://mambo-code.org/gf/download/frsrelease/388/791/MamboV4.6.5.zip
-
-
-#yehg [2011-08-12]
-
+-- 
+    JB
