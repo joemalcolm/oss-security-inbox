@@ -1,29 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/28/3
-Message-ID: <20111028070425.GD14711@foo.fgeek.fi>
-Date: Fri, 28 Oct 2011 10:04:25 +0300
-From: Henri Salo <henri@...v.fi>
-To: Josh Bressers <bressers@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: piwik before 1.6
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/5
+Message-ID: <180567066.183928.1294315826808.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 6 Jan 2011 07:10:26 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: possible flaw in widely used strtod.c implementation
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Oct 23, 2011 at 02:41:17PM -0400, Josh Bressers wrote:
-> The advisory just says there are a bunch of security fixes by all these
-> people, with no actual information. Such vagueness is only going to create
-> confusion, which will create extra work for me if I try to assign IDs to
-> such an advisory.
 
-Now there is information in the URI.
 
-Facts:
+----- Original Message -----
+> On Wed, Jan 5, 2011 at 8:23 PM, Pierre Joye <pierre.php@...il.com>
+> wrote:
+> > On Wed, Jan 5, 2011 at 5:52 PM, Michael Gilbert
+> > <michael.s.gilbert@...il.com> wrote:
+> >
+> >> The fact that this bug can lead to a denial-of-service in PHP is
+> >> sufficient to warrant a CVE for PHP, but nothing else (I think). If
+> >> it
+> >> can lead to a dos in other apps, then each should get their own CVE
+> >> (again in my opinion).
+> >
+> > I think so too but in any case it would rock if I could get a CVE #
+> > asap, we are going to release 5.2.17/5.3.5 tomorrow (packaging now).
+> 
+> Anyone?
 
-- Affect all Piwik users that have let granted some access to the "anonymous" user
-- Remotely exploitable vulnerability that could allow a remote attacker to execute arbitrary code
-- Versions affected Piwik 1.2, 1.3, and 1.4
-- Credits: Neal Poole
+Please use CVE-2010-4645
 
-These details should be enough information for CVE assignment. I can also verify this issue if you want for every version? If there isn't enough details I can dig more :)
+Thanks.
 
-Best regards,
-Henri Salo
+-- 
+    JB
