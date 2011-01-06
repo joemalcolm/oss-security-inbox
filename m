@@ -1,41 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/23/1
-Message-ID: <53126a5a-83dd-40fd-ad0c-3792600bdcf3@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 23 Sep 2011 11:22:48 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/12
+Message-ID: <20110106183147.GE2808@ksplice.com>
+Date: Thu, 6 Jan 2011 13:31:47 -0500
+From: Nelson Elhage <nelhage@...lice.com>
 To: oss-security@...ts.openwall.com
-Cc: Drupal Security Team <security@...pal.org>
-Subject: Re: CVE Request -- drupal6-views_bulk_operations: XSS due improper escaping of a vocabulary help (SA-CONTRIB-2011-042)
+Subject: Re: CVE-NONE kernel: PHONET signedness issue
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Hello Josh, Steve, vendors,
-> 
-> it was found in the way Drupal Views Builk Operations (VBO) module did
-> not escape the vocabulary help properly, when the vocabulary has had user
-> tagging enabled and "Modify node taxonomy terms" action was used for
-> modification of the taxonomy. A remote attacker could provide a
-> specially-crafted URL, which once visited by unsuspecting Drupal user,
-> disposing with the 'administer taxonomy' permission / privilege, could
-> lead to arbitrary HTML or web script execution (cross-site scripting
-> [XSS] attack).
-> 
-> References:
-> [1] http://drupal.org/node/1286844
-> [2] http://secunia.com/advisories/46114/
-> [3] https://bugzilla.redhat.com/show_bug.cgi?id=740553
-> 
-> Upstream solution:
-> 
-> Upgrage to 6.x-1.11:
-> [4] http://drupal.org/node/1286778
-> 
-> Could you allocate a CVE id for this?
-> 
+IMO, there is a (usually fairly clear) distinction between ways that a
+capability can transition to root "by design" and ones that are implementation
+bugs.
 
-Please use CVE-2011-3373.
+If I, as a system administrator, grant you CAP_SYS_ADMIN, assuming that I know
+what I'm doing, I intend you to have the ability to (for example) mount and
+unmount filesystems. It is conceivable, although barely, that I have put in
+other protections in place to prevent you from using that ability from
+escalating yourself to full root.
 
-Thanks.
+I almost certainly did /not/ intend to grant you the ability to corrupt kernel
+memory using a signedness error in the phonet subsystem. And so, in my opinion,
+this does represent a deviation from the intended security model that could
+"allow an attacker to [...] violate a reasonable security policy for that
+system", even if it's extremely unlikely that anyone is actually operating under
+such a security model.
 
--- 
-    JB
+Admittedly, in the case of CAP_SYS_ADMIN, this is a hopelessly fine distinction
+because of the number of ways that CAP_SYS_ADMIN is equivalent to "full control
+of the machine".
+
+I don't personally care whether this issue gets a CVE, but I do think there is a
+distinction to be made here that is worth being aware of.
+
+- Nelson
+
+On Thu, Jan 06, 2011 at 01:08:59PM -0500, Dan Rosenberg wrote:
+> This is a slippery slope.  I'm in favor of not having a CVE assigned
+> for this issue.
+> 
+> Otherwise, wouldn't we need a CVE for every vector that allows
+> transitioning from various capabilities to root?  The capability
+> system may be poorly designed to allow such transitions, but I don't
+> think they represent unexpected behavior.
+> 
+> -Dan
+> 
+> On Thu, Jan 6, 2011 at 12:54 PM, Michael Gilbert
+> <michael.s.gilbert@...il.com> wrote:
+> > On Thu, 06 Jan 2011 13:20:49 +0800, Eugene Teo wrote:
+> >> re: http://seclists.org/fulldisclosure/2011/Jan/39
+> >>
+> >> Just in case someone tries to request a CVE name for this, I'm not
+> >> requesting for one because if you need CAP_SYS_ADMIN capability to
+> >> exploit this, you are already privileged.
+> >
+> > Right, but CAP_SYS_ADMIN != root, or at least it isn't meant to be. I
+> > mean if CAP_SYS_ADMIN == root, then one or the other doesn't need to
+> > exist. There is an exposure here, and for that it deserves a CVE
+> > identifier (of course in my opinion).  See Brad Spengler's recent
+> > write-up [0]. There should be some effort toward making those 21 root
+> > equivalent capabilities discussed there non-equivalent.
+> >
+> > Best wishes,
+> > Mike
+> >
+> > [0] http://forums.grsecurity.net/viewtopic.php?f=7&t=2522
+> >
