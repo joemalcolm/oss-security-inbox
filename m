@@ -1,50 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/07/3
-Message-ID: <20110907082301.GD2141@suse.de>
-Date: Wed, 7 Sep 2011 10:23:01 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/20
+Message-ID: <1064790982.196142.1294347129282.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 6 Jan 2011 15:52:09 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: OFED 1.5.2 /proc/net/sdpstats reading local denial of service/crash
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: patch directory traversal flaw
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Sep 07, 2011 at 09:39:21AM +0200, Petr Matousek wrote:
-> On Tue, Sep 06, 2011 at 11:40:43PM +0200, Marcus Meissner wrote:
-> > One of our customers reported an issue in the "ib_sdp" module in the
-> > ofa_kernel package of the Open Fabrics OFED Infiband driverstack, version
-> > 1.5.2 (and potentially older, I did not check in detail, at least 1.4.2
-> > does not have it).
-> > 
-> > Module is drivers/infiniband/ulp/sdp/ib_sdp.ko
-> > 
-> > /proc/net/sdpstats is user readable (S_IRUGO | S_IWUGO), so it can be
-> > triggered by users on machines with infiniband stack.
-> > 
-> > While there is report of stack corruption and overflow on process (cat
-> > /proc/net/sdpstats) exit ("Thread overran stack, or stack corrupted"),
-> > I can't see where it actually comes from but perhaps the per_cpu vs
-> > single variable printing does something to the stack and not just reads
-> > over arrays.
-> 
-> #define __sdpstats_seq_hist_pcpu(seq, msg, hist) ({             \
->         u32 h[NR_CPUS];                                         \
->         unsigned int __i;                                       \
->         memset(h, 0, sizeof(h));                                \
-> 
-> NR_CPUS can be big (4096 on RHEL6@..._64) and the array is located on
-> the stack.
->  
-> > ofed 1.5.3.2 has a different stat printing algorith according to our developer,
-> > so it no longer is affected.
-> 
-> The array ^^^ is no longer allocated from the stack but via vmalloc().
-> 
-> > Patch below. Please assign a CVE.
-> 
-> Please use CVE-2011-3345.
+Please use CVE-2010-4651.
 
-Thanks!
+Thanks.
 
-So the issue is not actually the wrong array iterator, but that there
-is a implicit too huge stack usage caused by the helper.
+-- 
+    JB
 
-Ciao, Marcus
+----- Original Message -----
+> We got a heads up on a directory traversal flaw in patch. I don't
+> think
+> a CVE name has been assigned to it; could we get one? It allows for
+> the
+> creation of arbitrary files in unexpected places due to the use of
+> '..'.
+> 
+> References:
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=667529
+> http://osdir.com/ml/bug-patch-gnu/2010-12/msg00000.html
+> 
+> Thanks.
+> 
+> --
+> Vincent Danen / Red Hat Security Response Team
