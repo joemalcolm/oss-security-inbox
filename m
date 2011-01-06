@@ -1,48 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/28
-Message-ID: <20110405161838.GA18574@openwall.com>
-Date: Tue, 5 Apr 2011 20:18:38 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/1
+Message-ID: <AANLkTika9qwJUfh_+LEGS1bP_w8Q6gfm6YZfTG-RB+hK@mail.gmail.com>
+Date: Wed, 5 Jan 2011 19:46:02 -0500
+From: Anthon Pang <anthon.pang@...il.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE Request: Multiple XSS Vulnerabiliies < Piwik 1.1
 Content-Type: text/plain; charset=utf-8
 
-I wish we had this discussion for real a month ago, but apparently most
-folks won't comment until the setup of a closed list becomes a reality.
-So I think there was some use in setting it up even if we end up re-doing
-or removing it, which is within consideration. ;-)
+Piwik 1.1 released on Jan 4, 2011, addresses numerous security issues
+following a security audit by SektionEins (led by Stefan Esser), an internal
+review, and coordinated disclosures from Jarosław Sajko (Pentesters.pl) and
+Fabian Becker.
 
-On Tue, Apr 05, 2011 at 09:40:13AM -0600, Vincent Danen wrote:
-> A lot of userland stuff is shared between BSD and Linux, and probably
-> some other operating systems.  About the only things that differ between
-> a lot of these are the Linux kernel, and the *libc.
+Notably, versions of Piwik prior to 1.1 contain multiple persistent and
+reflective XSS vulnerabilities through unescaped parameters and/or output.
 
-There are also userland tools specific to the Linux kernel, there's
-Linux-PAM, there are package managers that are rarely used on non-Linux.
+Security advisory:
+http://piwik.org/blog/2011/01/piwik-1-1-security-advisory/
+Other advisory:
+http://piwik.org/blog/2011/01/professional-security-audit-in-piwik/
+Changelog: http://piwik.org/blog/2011/01/piwik-1-1-2/
 
-I mostly agree with you, though.
-
-> I think if the disqualifier to Apple is that they don't ship a Linux
-> kernel and glibc, then we're doing them (and ourselves) a disservice.
-> Apple contributed a lot to vendor-sec (and I'm not going all pro-Apple
-> here, just stating a fact).
-
-Yes.
-
-> I think it would be reasonable to s/Linux list/open source vendor list/,
-> like vendor-sec used to be.
-
-If it's not just Linux, then where do we draw the line?  Do we accept
-Solaris distros (of which there are several), Haiku, ReactOS, Cygwin,
-and who knows what else (no offense intended to any of these fine
-projects)?  I think this would make leaks and misuse of the information
-significantly more likely, and make some members and reporters
-uncomfortable about posting to the list.  So we'll be back to CC lists.
-
-> ... letting Apple/FreeBSD/OpenBSD/etc. have a seat at our table.
-
-I am comfortable about "Apple/FreeBSD/OpenBSD", but not about "etc." -
-so we'd be forced to introduce a vouching system (well, maybe we'd be
-forced to do that for Linux distros as well...)
-
-Alexander
