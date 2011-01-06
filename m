@@ -1,58 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/11/7
-Message-ID: <1313072471.19030.0.camel@localhost.localdomain>
-Date: Thu, 11 Aug 2011 10:21:11 -0400
-From: Jon Oberheide <jon@...rheide.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/13
+Message-ID: <20110106184038.GA2780@nxnw.org>
+Date: Thu, 6 Jan 2011 10:40:38 -0800
+From: Steve Beattie <steve@...w.org>
 To: oss-security@...ts.openwall.com
-Cc: Thomas Osterried <thomas@...erried.de>, Eren Türkay <eren@...dus.org.tr>, Thomas Osterried <ax25@...erg.in-berlin.de>
-Subject: Re: CVE request (and disclosure): ax25d missing setuid return code check
+Subject: Re: CVE request: patch directory traversal flaw
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 2011-08-11 at 15:05 +0100, Ralf Baechle wrote:
-> On Thu, Aug 11, 2011 at 02:13:23PM +0200, Thomas Osterried wrote:
+On Wed, Jan 05, 2011 at 02:54:57PM -0700, Vincent Danen wrote:
+> We got a heads up on a directory traversal flaw in patch.  I don't think
+> a CVE name has been assigned to it; could we get one?  It allows for the
+> creation of arbitrary files in unexpected places due to the use of '..'.
 > 
-> > Am Donnerstag, den 11. August 2011 um 07:20:41 Uhr, schrieb Eren Türkay <eren@...dus.org.tr> in <20110811052041.GB2043@...t-is@...some>:
-> > > On Tue, Aug 09, 2011 at 11:33:04PM -0400, Dan Rosenberg wrote:
-> > > > The AX.25 daemon (ax25d), typically provided in the ax25-tools
-> > > > package, allows administrators to associate incoming AX.25, NET/ROM,
-> > > > and ROSE traffic with the execution of an endpoint program (most
-> > > > commonly "node"), which is run under a specified user account.
-> > > > Because ax25d is missing a check on the return code for a setuid call
-> > > > responsible for dropping privileges to the specified user, it may be
-> > > > possible to cause setuid to fail, after which the chosen program will
-> > > > be executed with root privileges.  In other words, if you're in the
-> > > > business of handing out unprivileged shells over amateur radio (don't
-> > > > we all? :p ), this would allow for remote compromise.
-> > > 
-> > > Hello,
-> > > 
-> > > Thank you for your investigation on the topic. Although this issue seems
-> > > to be low-priority, it's good to let the maintainers know.
-> > > 
-> > > I'm CCing Ralf Baechle, and Thomas Osterried who, accordingly to
-> > > linux-ac25 site, are the maintainers of ax25 utilities.
-> > 
-> > thank you for your information.
-> > 
-> > I know that code fragment, but I never imagined that if root calls
-> > setuid/setgid that this could fail, because root has by definition enough
-> > rights.
+> References:
 > 
-> Welcome to the new world where things are more complicated ...
+> https://bugzilla.redhat.com/show_bug.cgi?id=667529
+> http://osdir.com/ml/bug-patch-gnu/2010-12/msg00000.html
 > 
-> These days setuid and similar syscalls need to allocate memory for the
-> credentials of a process and memory allocations may fail.  A system could
-> even be put under massive memory pressure with the intend to make this
-> allocation fail.
+> Thanks.
 
-The important vector is RLIMIT_NPROC.
-
-Regards,
-Jon Oberheide
+I believe the Debian security team assigned CVE-2010-1679 for this
+issue.
 
 -- 
-Jon Oberheide <jon@...rheide.org>
-GnuPG Key: 1024D/F47C17FE
-Fingerprint: B716 DA66 8173 6EDD 28F6  F184 5842 1C89 F47C 17FE
+Steve Beattie
+<sbeattie@...ntu.com>
+http://NxNW.org/~steve/
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
