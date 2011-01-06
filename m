@@ -1,20 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/29/6
-Message-ID: <210a6f1d-f909-403d-9753-7f37e9ec305e@zmail15.collab.prod.int.phx2.redhat.com>
-Date: Thu, 29 Dec 2011 17:55:43 -0500 (EST)
-From: David Jorm <djorm@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/21
+Message-ID: <ig59jn$okq$1@dough.gmane.org>
+Date: Thu, 06 Jan 2011 14:44:36 -0600
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: kseifried@...hat.com
-Subject: Re: More CVEs? (was Re: [oCERT-2011-003] multiple implementations denial-of-service via hash algorithm collision)
+Subject: Re: CVE request: patch directory traversal flaw
 Content-Type: text/plain; charset=utf-8
 
+Vincent Danen wrote:
+> We got a heads up on a directory traversal flaw in patch.  I don't think
+> a CVE name has been assigned to it; could we get one?  It allows for the
+> creation of arbitrary files in unexpected places due to the use of '..'.
+> 
+> References:
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=667529
+> http://osdir.com/ml/bug-patch-gnu/2010-12/msg00000.html
 
-> Kurt or other CVE assigners, can you please assign a bunch for
-> python,
-> java, tomcat etc. pp.
+Talking to Steve it looks like some things are not very clear, so I hope the 
+following explains it:
 
-Tomcat has been assigned CVE-2011-4084.
+* dpkg uses patch to apply patches in source packages format 1.0 and 3.0 
+quilt (in spite of the name, dpkg uses an internal implementation of quilt)
+* under the hood, patch is the one traversing directories when applying 
+patches
+* dpkg has its own set of checks for such traversals and general patch 
+sanity checks. In fact, CVE-2010-0396 was also related to directory 
+traversals.
 
-Thanks
---
-David Jorm / Red Hat Security Response Team
+CVE-2010-1679 is about dpkg being happy to pass patches with invalid paths 
+to patch and following symlinks in the .pc directory.
+
+That said, I don't know if quilt itself is affected by the .pc directory 
+issue, and if it is, whether it is really relevant.
+
+For further reference, DSA-2142-1 addresses the flaws in dpkg:
+http://lists.debian.org/debian-security-announce/2011/msg00004.html
+
+
+Cheers,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
+
+
