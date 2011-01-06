@@ -1,89 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/13
-Message-ID: <1649414500.142079.1313781155628.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 19 Aug 2011 15:12:35 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/11
+Message-Id: <20110106132934.dd49fe67.michael.s.gilbert@gmail.com>
+Date: Thu, 6 Jan 2011 13:29:34 -0500
+From: Michael Gilbert <michael.s.gilbert@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request: WebsiteBaker 2.8.1 <= Cross Site Request Forgery (CSRF) Vulnerability
+Subject: Re: CVE-NONE kernel: PHONET signedness issue
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-2934
+On Thu, 6 Jan 2011 13:08:59 -0500, Dan Rosenberg wrote:
+> This is a slippery slope.  I'm in favor of not having a CVE assigned
+> for this issue.
+> 
+> Otherwise, wouldn't we need a CVE for every vector that allows
+> transitioning from various capabilities to root?  The capability
+> system may be poorly designed to allow such transitions, but I don't
+> think they represent unexpected behavior.
 
------ Original Message -----
-> 1. OVERVIEW
-> 
-> WebsiteBaker 2.8.1 and lower versions are vulnerable to Cross Site
-> Request Forgery (CSRF).
-> 
-> 
-> 2. BACKGROUND
-> 
-> WebsiteBaker is a PHP-based Content Management System (CMS) designed
-> with one goal in mind: to enable its users to produce websites with
-> ease.
-> 
-> 
-> 3. VULNERABILITY DESCRIPTION
-> 
-> WebsiteBaker 2.8.1 and lower versions contain a flaw that allows a
-> remote Cross-site Request Forgery (CSRF / XSRF) attack. The flaw
-> exists because the application does not require multiple steps or
-> explicit confirmation for sensitive transactions for majority of
-> administrator functions such as adding new user. By using a crafted
-> URL, an attacker may trick the victim into visiting to his web page to
-> take advantage of the trust relationship between the authenticated
-> victim and the application. Such an attack could trick the victim into
-> executing arbitrary commands in the context of their session with the
-> application, without further prompting or verification.
-> 
-> 
-> 4. VERSIONS AFFECTED
-> 
-> 2.8.1 <=
-> 
-> 
-> 5. PROOF-OF-CONCEPT/EXPLOIT
-> 
-> The following request adds an administrator.
-> 
-> [REQUEST]
-> POST /admin/users/add.php HTTP/1.1
-> Content-Type: application/x-www-form-urlencoded
-> Content-Length: 193
-> 
-> user_id=&username_fieldname=username_abcdefg&username_abcdefg=test&password=test&password2=test&display_name=test&email=tester%40yehg.net&home_folder=&groups%5B%5D=1&active%5B%5D=1&submit=Add
-> [/REQUEST]
-> 
-> 
-> 6. SOLUTION
-> 
-> Upgrade to 2.8.2 or higher
-> 
-> 
-> 7. VENDOR
-> 
-> WebsiteBaker Org e. V.
-> http://www.websitebaker2.org/
-> 
-> 
-> 8. CREDIT
-> 
-> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-> Ethical Hacker Group, Myanmar.
-> 
-> 
-> 9. DISCLOSURE TIME-LINE
-> 
-> 2011-01-26: notified vendor
-> 2011-08-01: vendor released fix
-> 2011-08-13: vulnerability disclosed
-> 
-> 
-> 10. REFERENCES
-> 
-> Original Advisory URL:
-> http://yehg.net/lab/pr0js/advisories/[websitebaker-2.8.1]_cross_site_request_forgery
-> 
-> 
-> #yehg [2011-08-13]
+What's the point of a capabilities system if its equivalent to root
+in the majority of cases anyway?  For file access/operations, there is
+always sudo and the /etc/sudoers file for making it easy to access to
+stuff thats accessed often without a password.  For port binding, the
+capabilities system makes sense; and according to Brad Spengler's list,
+those caps don't appear to be root equivalent so that could stay.
+Otherwise, I don't see the point.
+
+I'm not sure if there is a written security model for the capabilities
+system, but this looks to me like it would be a violation of it.
+
+Best wishes,
+Mike
