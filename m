@@ -1,19 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/17/6
-Message-ID: <1305626972.32333.75.camel@new-desktop>
-Date: Tue, 17 May 2011 12:09:32 +0200
-From: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/21
+Message-ID: <ig59jn$okq$1@dough.gmane.org>
+Date: Thu, 06 Jan 2011 14:44:36 -0600
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request : client-side file creation via XSLT in Webkit
+Subject: Re: CVE request: patch directory traversal flaw
 Content-Type: text/plain; charset=utf-8
 
+Vincent Danen wrote:
+> We got a heads up on a directory traversal flaw in patch.  I don't think
+> a CVE name has been assigned to it; could we get one?  It allows for the
+> creation of arbitrary files in unexpected places due to the use of '..'.
+> 
+> References:
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=667529
+> http://osdir.com/ml/bug-patch-gnu/2010-12/msg00000.html
 
-> So, i propose to :
-> - remove references to Webkit from the CVE-2011-1425 page
-> - affect CVE-2011-1774 to the Webkit bug #52688
+Talking to Steve it looks like some things are not very clear, so I hope the 
+following explains it:
 
-Any news ?
+* dpkg uses patch to apply patches in source packages format 1.0 and 3.0 
+quilt (in spite of the name, dpkg uses an internal implementation of quilt)
+* under the hood, patch is the one traversing directories when applying 
+patches
+* dpkg has its own set of checks for such traversals and general patch 
+sanity checks. In fact, CVE-2010-0396 was also related to directory 
+traversals.
 
-Regards,
-Nicolas Grégoire
+CVE-2010-1679 is about dpkg being happy to pass patches with invalid paths 
+to patch and following symlinks in the .pc directory.
+
+That said, I don't know if quilt itself is affected by the .pc directory 
+issue, and if it is, whether it is really relevant.
+
+For further reference, DSA-2142-1 addresses the flaws in dpkg:
+http://lists.debian.org/debian-security-announce/2011/msg00004.html
+
+
+Cheers,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
+
 
