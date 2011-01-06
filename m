@@ -1,43 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/18
-Message-ID: <20110318190538.GU5174@redhat.com>
-Date: Fri, 18 Mar 2011 13:05:38 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: Raphael Geissert <geissert@...ian.org>
-Cc: oss-security@...ts.openwall.com, list@...adns.org, bressers@...hat.com, coley@...re.org
-Subject: Re: MaraDNS 1.4.06 and 1.3.07.11 released
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/4
+Message-ID: <AANLkTi=CYJEv4pdUghLN39h6bpYhknrWLaAq=VSizWXE@mail.gmail.com>
+Date: Thu, 6 Jan 2011 11:01:12 +0100
+From: Pierre Joye <pierre.php@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: possible flaw in widely used strtod.c implementation
 Content-Type: text/plain; charset=utf-8
 
-* [2011-03-18 12:52:32 -0600] Raphael Geissert wrote:
-
->On Friday 18 March 2011 12:11:15 Vincent Danen wrote:
->> * [2011-01-29 22:21:08 -0700] Sam Trenholme wrote:
->> >In 2002, when I rewrote the compression code for MaraDNS for the first
->> >time, I made a mistake in allocating an array of integers, allocating
->> >it in bytes instead of sizeof(int) units.  The resulted in a buffer
->> >being too small, allowing it to be overwritten.
->> >
->> >The impact of this programming error is that MaraDNS can be crashed by
->> >sending MaraDNS a single "packet of death".  Since the data placed in
->> >the overwritten array can not be remotely controlled (it is a list of
->> >increasing integers), there is no way to increase privileges
->> >exploiting this bug.
->> >
->> >The attached patch resolves this issue by allocating in sizeof(int)
->> >units instead of byte-sized units for an integer array.  In addition,
->> >it uses a smaller array because a DNS name can only have, at most, 128
->> >labels.
->>
->> Was a CVE name ever assigned to this issue?
+On Wed, Jan 5, 2011 at 8:23 PM, Pierre Joye <pierre.php@...il.com> wrote:
+> On Wed, Jan 5, 2011 at 5:52 PM, Michael Gilbert
+> <michael.s.gilbert@...il.com> wrote:
 >
->Yes, Josh assigned CVE-2011-0520.
->(his message is also recorded on the Debian bug you CC'ed)
+>> The fact that this bug can lead to a denial-of-service in PHP is
+>> sufficient to warrant a CVE for PHP, but nothing else (I think).  If it
+>> can lead to a dos in other apps, then each should get their own CVE
+>> (again in my opinion).
+>
+> I think so too but in any case it would rock if I could get a CVE #
+> asap, we are going to release 5.2.17/5.3.5 tomorrow (packaging now).
 
-Sorry, I should have looked at the Debian bug.  I was looking at the
-GMANE archive and only saw Tomas' reply the next day, but no further
-followups.
-
-Thanks!
+Anyone?
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Pierre
+
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
