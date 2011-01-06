@@ -1,19 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/32
-Message-ID: <20110403230951.GI10158@openwall.com>
-Date: Mon, 4 Apr 2011 03:09:51 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/13
+Message-ID: <20110106184038.GA2780@nxnw.org>
+Date: Thu, 6 Jan 2011 10:40:38 -0800
+From: Steve Beattie <steve@...w.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: Re: CVE request: patch directory traversal flaw
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Apr 01, 2011 at 02:48:08PM -0400, Marc Deslauriers wrote:
-> Please subscribe me to the new list. I was a vendor-sec subscriber.
+On Wed, Jan 05, 2011 at 02:54:57PM -0700, Vincent Danen wrote:
+> We got a heads up on a directory traversal flaw in patch.  I don't think
+> a CVE name has been assigned to it; could we get one?  It allows for the
+> creation of arbitrary files in unexpected places due to the use of '..'.
 > 
-> pub  4096R/A744BE93 2010-09-30
-> uid Marc Deslauriers <marc.deslauriers@...onical.com>
-> Fingerprint 50C4 A0DD CF31 E452 CEB1 9B51 6569 D855 A744 BE93
+> References:
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=667529
+> http://osdir.com/ml/bug-patch-gnu/2010-12/msg00000.html
+> 
+> Thanks.
 
-Subscribed.
+I believe the Debian security team assigned CVE-2010-1679 for this
+issue.
 
-Alexander
+-- 
+Steve Beattie
+<sbeattie@...ntu.com>
+http://NxNW.org/~steve/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
