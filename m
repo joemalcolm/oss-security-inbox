@@ -1,25 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/20/1
-Message-ID: <4DFEA775.2070909@redhat.com>
-Date: Mon, 20 Jun 2011 09:50:45 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/11
+Message-Id: <20110106132934.dd49fe67.michael.s.gilbert@gmail.com>
+Date: Thu, 6 Jan 2011 13:29:34 -0500
+From: Michael Gilbert <michael.s.gilbert@...il.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: inet_diag: fix inet_diag_bc_audit()
+Subject: Re: CVE-NONE kernel: PHONET signedness issue
 Content-Type: text/plain; charset=utf-8
 
-[PATCH] inet_diag: fix inet_diag_bc_audit()
+On Thu, 6 Jan 2011 13:08:59 -0500, Dan Rosenberg wrote:
+> This is a slippery slope.  I'm in favor of not having a CVE assigned
+> for this issue.
+> 
+> Otherwise, wouldn't we need a CVE for every vector that allows
+> transitioning from various capabilities to root?  The capability
+> system may be poorly designed to allow such transitions, but I don't
+> think they represent unexpected behavior.
 
-A malicious user or buggy application can inject code and trigger an
-infinite loop in inet_diag_bc_audit()
+What's the point of a capabilities system if its equivalent to root
+in the majority of cases anyway?  For file access/operations, there is
+always sudo and the /etc/sudoers file for making it easy to access to
+stuff thats accessed often without a password.  For port binding, the
+capabilities system makes sense; and according to Brad Spengler's list,
+those caps don't appear to be root equivalent so that could stay.
+Otherwise, I don't see the point.
 
-Also make sure each instruction is aligned on 4 bytes boundary, to avoid
-unaligned accesses.
+I'm not sure if there is a written security model for the capabilities
+system, but this looks to me like it would be a violation of it.
 
-Reported-by: Dan Rosenberg <drosenberg@...curity.com>
-
-http://thread.gmane.org/gmane.linux.network/197206/focus=197386
-http://patchwork.ozlabs.org/patch/100857/
-https://bugzilla.redhat.com/show_bug.cgi?id=714536
-
-Thanks, Eugene
+Best wishes,
+Mike
