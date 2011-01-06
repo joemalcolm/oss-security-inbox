@@ -1,31 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/14
-Message-ID: <20110502184046.GA20492@openwall.com>
-Date: Mon, 2 May 2011 22:40:46 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/10
+Message-ID: <AANLkTimnYgV=38DEZKmenoMQ821H1PqU3FWCFSiAdntt@mail.gmail.com>
+Date: Thu, 6 Jan 2011 13:08:59 -0500
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: Re: CVE-NONE kernel: PHONET signedness issue
 Content-Type: text/plain; charset=utf-8
 
-On Mon, May 02, 2011 at 02:09:08PM -0400, Josh Bressers wrote:
-> I think this is suitable. The goal here is to ensure that a vendor is
-> actually producing updates and aren't just a potential leak.
+This is a slippery slope.  I'm in favor of not having a CVE assigned
+for this issue.
 
-OK, so do you propose that we subscribe Wind River, and wait for
-MontaVista to setup something similar to these RSS feeds before we also
-subscribe them?
+Otherwise, wouldn't we need a CVE for every vector that allows
+transitioning from various capabilities to root?  The capability
+system may be poorly designed to allow such transitions, but I don't
+think they represent unexpected behavior.
 
-A secondary goal behind requiring access to advisories and updates (not
-just metainfo) would be to be able to draw the line between vendors and
-companies that build their own Linux distros in house.  The latter could
-also publish an RSS feed showing how they update their packages, yet
-they would not be a vendor to anyone other than themselves...  On the
-other hand, publishing updates without publishing the distro itself
-doesn't make them more of a vendor to others.  So to achieve this goal
-we'd probably need to require the distro itself to be public (in at
-least one form - e.g., Red Hat's .src.rpm's are sufficient), not just
-advisories and updates.
+-Dan
 
-We may choose not to pursue this secondary goal now.
-
-Alexander
+On Thu, Jan 6, 2011 at 12:54 PM, Michael Gilbert
+<michael.s.gilbert@...il.com> wrote:
+> On Thu, 06 Jan 2011 13:20:49 +0800, Eugene Teo wrote:
+>> re: http://seclists.org/fulldisclosure/2011/Jan/39
+>>
+>> Just in case someone tries to request a CVE name for this, I'm not
+>> requesting for one because if you need CAP_SYS_ADMIN capability to
+>> exploit this, you are already privileged.
+>
+> Right, but CAP_SYS_ADMIN != root, or at least it isn't meant to be. I
+> mean if CAP_SYS_ADMIN == root, then one or the other doesn't need to
+> exist. There is an exposure here, and for that it deserves a CVE
+> identifier (of course in my opinion).  See Brad Spengler's recent
+> write-up [0]. There should be some effort toward making those 21 root
+> equivalent capabilities discussed there non-equivalent.
+>
+> Best wishes,
+> Mike
+>
+> [0] http://forums.grsecurity.net/viewtopic.php?f=7&t=2522
+>
