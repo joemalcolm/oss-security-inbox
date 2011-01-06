@@ -1,46 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/17/12
-Message-ID: <20111117184351.GA21076@openwall.com>
-Date: Thu, 17 Nov 2011 22:43:51 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/9
+Message-Id: <20110106125422.790cbf0b.michael.s.gilbert@gmail.com>
+Date: Thu, 6 Jan 2011 12:54:22 -0500
+From: Michael Gilbert <michael.s.gilbert@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2011-4313: BIND 9 Resolver crashes after logging an error in query.c
+Subject: Re: CVE-NONE kernel: PHONET signedness issue
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Nov 17, 2011 at 10:13:41AM -0700, Vincent Danen wrote:
-> Our bind maintainer believes that 9.3.6 is affected (but possibly harder
-> to exploit or via a different vector).
+On Thu, 06 Jan 2011 13:20:49 +0800, Eugene Teo wrote:
+> re: http://seclists.org/fulldisclosure/2011/Jan/39
 > 
-> However, he does not believe that 9.2.x and earlier are affected due to
-> the old DNSSEC implementation (so 9.2.x wouldn't understand current
-> DNSSEC signatures so would not cache them).
+> Just in case someone tries to request a CVE name for this, I'm not 
+> requesting for one because if you need CAP_SYS_ADMIN capability to 
+> exploit this, you are already privileged.
 
-Thanks for the info!
+Right, but CAP_SYS_ADMIN != root, or at least it isn't meant to be. I
+mean if CAP_SYS_ADMIN == root, then one or the other doesn't need to
+exist. There is an exposure here, and for that it deserves a CVE
+identifier (of course in my opinion).  See Brad Spengler's recent
+write-up [0]. There should be some effort toward making those 21 root
+equivalent capabilities discussed there non-equivalent.
 
-> Some further details can be found in our bug:
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-4313
+Best wishes,
+Mike
 
-This has Adam Tkac's comment about the patch for 9.3.x that I posted
-yesterday:
-
-"The patch is not 100% correct because 9.3.X version handles negative rdatasets
-differently. The rbtdb.c part of the patch uses RDATASET_ATTR_NEGATIVE
-attribute but this attribute is never set. However the query.c part of the
-patch is correct and in my opinion it's sufficient to prevent the crash."
-
-This confirms my understanding that the changes to rbtdb.c were a no-op
-in 9.3.x and it adds the opinion that the changes to query.c are both
-needed and sufficient to prevent the crash.
-
-So do we (distro vendors) choose to go ahead and release updates with
-just those changes for now?
-
-So far, I haven't heard a single report of 9.3.x crashing in the wild
-(ours are running fine, too, but most of them are built without DNSSEC),
-and several reports regarding newer versions crashing.
-
-It's a pity that we do not have a reproducer even though the crashes are
-happening in the wild.
-
-Alexander
+[0] http://forums.grsecurity.net/viewtopic.php?f=7&t=2522
