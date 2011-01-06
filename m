@@ -1,97 +1,113 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/07/12
-Message-ID: <779518721.427287.1299531063022.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 7 Mar 2011 15:51:03 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/7
+Message-ID: <AANLkTikGHZ1z8w4b=dw0Wf5DSU8iUDWL6y=ZBh=G87YL@mail.gmail.com>
+Date: Thu, 6 Jan 2011 17:14:30 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - kernel: nfs4: Ensure that ACL pages sent over NFS were not allocated from the slab
+Subject: CVE Request: Eclipse IDE Version: 3.6.1 | Help Server Local Cross Site Scripting (XSS)
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-1090 for this.
+==============================================================================
+ Eclipse IDE | Help Server Local Cross Site Scripting (XSS) Vulnerability
+==============================================================================
 
-Thanks.
 
--- 
-    JB
+1. OVERVIEW
 
------ Original Message -----
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=e9e3d724e2145f5039b423c290ce2b2c3d8f94bc
-> 
-> The "bad_page()" page allocator sanity check was reported recently
-> (call
-> chain as follows):
-> 
-> bad_page+0x69/0x91
-> free_hot_cold_page+0x81/0x144
-> skb_release_data+0x5f/0x98
-> __kfree_skb+0x11/0x1a
-> tcp_ack+0x6a3/0x1868
-> tcp_rcv_established+0x7a6/0x8b9
-> tcp_v4_do_rcv+0x2a/0x2fa
-> tcp_v4_rcv+0x9a2/0x9f6
-> do_timer+0x2df/0x52c
-> ip_local_deliver+0x19d/0x263
-> ip_rcv+0x539/0x57c
-> netif_receive_skb+0x470/0x49f
-> :virtio_net:virtnet_poll+0x46b/0x5c5
-> net_rx_action+0xac/0x1b3
-> __do_softirq+0x89/0x133
-> call_softirq+0x1c/0x28
-> do_softirq+0x2c/0x7d
-> do_IRQ+0xec/0xf5
-> default_idle+0x0/0x50
-> ret_from_intr+0x0/0xa
-> default_idle+0x29/0x50
-> cpu_idle+0x95/0xb8
-> start_kernel+0x220/0x225
-> _sinittext+0x22f/0x236
-> 
-> It occurs because an skb with a fraglist was freed from the tcp
-> retransmit queue when it was acked, but a page on that fraglist had
-> PG_Slab set (indicating it was allocated from the Slab allocator
-> (which
-> means the free path above can't safely free it via put_page.
-> 
-> We tracked this back to an nfsv4 setacl operation, in which the nfs
-> code
-> attempted to fill convert the passed in buffer to an array of pages in
-> __nfs4_proc_set_acl, which gets used by the skb->frags list in
-> xs_sendpages. __nfs4_proc_set_acl just converts each page in the
-> buffer
-> to a page struct via virt_to_page, but the vfs allocates the buffer
-> via
-> kmalloc, meaning the PG_slab bit is set. We can't create a buffer with
-> kmalloc and free it later in the tcp ack path with put_page, so we
-> need
-> to either:
-> 
-> 1) ensure that when we create the list of pages, no page struct has
-> PG_Slab set
-> 
-> or
-> 
-> 2) not use a page list to send this data
-> 
-> Given that these buffers can be multiple pages and arbitrarily sized,
-> I
-> think (1) is the right way to go. I've written the below patch to
-> allocate a page from the buddy allocator directly and copy the data
-> over
-> to it. This ensures that we have a put_page free-able page for every
-> entry that winds up on an skb frag list, so it can be safely freed
-> when
-> the frame is acked. We do a put page on each entry after the
-> rpc_call_sync call so as to drop our own reference count to the page,
-> leaving only the ref count taken by tcp_sendpages. This way the data
-> will be properly freed when the ack comes in
-> 
-> Successfully tested by [Neil Horman] to solve the above oops.
-> 
-> Note, as this is the result of a setacl operation that exceeded a page
-> of data, I think this amounts to a local DOS trigger-able by an
-> privileged user, so [Neil Horman] CCing security on this as well.
-> 
-> Thanks, Eugene
-> --
-> Eugene Teo / Red Hat Security Response Team
+The Help Content web application of Eclipse IDE was vulnerable to
+Cross Site Scripting (XSS) Vulnerability.
+
+
+2. PRODUCT DESCRIPTION
+
+Eclipse is a multi-language software development environment
+comprising an integrated development environment (IDE) and an
+extensible plug-in system. It is written mostly in Java and can be
+used to develop applications in Java and, by means of various
+plug-ins, other programming languages including Ada, C, C++, COBOL,
+Perl, PHP, Python, Ruby (including Ruby on Rails framework), Scala,
+and Scheme. The IDE is often called Eclipse ADT for Ada, Eclipse CDT
+for C/C++, Eclipse JDT for Java, and Eclipse PDT for PHP.
+
+
+3. VULNERABILITY DESCRIPTION
+
+Eclipse Help Contents are served as a web application via the built-in
+Jetty Web Server plugin. Cross Site Scripting vulnerabilities were
+found in  /help/index.jsp and /help/advanced/content.jsp URLs. XSS on
+/help/advanced/content.jsp url makes the browser hang
+but even after clicking "Stop Executing" button, users can still get XSS.
+
+
+4. VERSIONS AFFECTED
+
+Eclipse IDE Version: 3.6.1 <=
+
+Tested Editions(SDK, Java, J2EE)
+
+
+5. PROOF-OF-CONCEPT/EXPLOIT
+
+http://localhost:[REPLACE]/help/index.jsp?'onload='alert(0)
+http://localhost:[REPLACE]/help/advanced/content.jsp?'onload='alert(0)
+
+Script-Check:
+Request: /advanced/content.jsp?'onload='alert(0)	
+Response: src='contentToolbar.jsp?'onload='alert(0)'
+
+
+6. IMPACT
+
+In a situation where users' browser security settings are weak, the
+localized XSS vector could enable attackers to perform a number of
+black acts including cross site content access, smb shares
+enumeration, remote code execution, malicious trojan downloading and
+execution ...etc.
+
+
+7. SOLUTION
+
+Apply the recent error-free nightly builds (ie.
+http://download.eclipse.org/eclipse/downloads/drops/N20101110-2000/index.php)
+.
+According to the developer, "Chris Goldthorpe", the fix is in the
+nightly build, http://download.eclipse.org/eclipse/downloads/drops/N20101108-2000/index.php
+, it will also be in 3.6.2 (February 2011) and 3.7 (June 2011).
+
+
+8. VENDOR
+
+Eclipse Developers Team
+http://www.eclipse.org/
+
+
+9. CREDIT
+
+This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+Ethical Hacker Group, Myanmar.
+
+
+10. DISCLOSURE TIME-LINE
+
+2010-11-04 : vulnerability discovered
+2010-11-05 : notified vendor
+2010-11-08 : patch released and applied to svn
+2010-11-16 : vulnerability disclosed
+
+
+11. REFERENCES
+
+Original Advisory URL:
+http://yehg.net/lab/pr0js/advisories/eclipse/[eclipse_help_server]_cross_site_scripting
+Eclipse Bug Tracker: https://bugs.eclipse.org/bugs/show_bug.cgi?id=329582
+Previous XSS Flaws:
+http://r00tin.blogspot.com/2008/04/eclipse-local-web-server-exploitation.html
+(searchView.jsp, workingSetManager.jsp)
+Cross Environment Hopping:
+http://blog.watchfire.com/wfblog/2008/06/cross-environ-1.html
+About Eclipse IDE:
+https://secure.wikimedia.org/wikipedia/en/wiki/Eclipse_%28software%29
+
+#yehg [2010-11-16]
+
+last updated: 2010-12-24
