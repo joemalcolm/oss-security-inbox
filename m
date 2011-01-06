@@ -1,28 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/18/2
-Message-Id: <201110181503.17556.mweckbecker@suse.de>
-Date: Tue, 18 Oct 2011 15:03:15 +0200
-From: Matthias Weckbecker <mweckbecker@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/4
+Message-ID: <AANLkTi=CYJEv4pdUghLN39h6bpYhknrWLaAq=VSizWXE@mail.gmail.com>
+Date: Thu, 6 Jan 2011 11:01:12 +0100
+From: Pierre Joye <pierre.php@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Ruby 1.9.2-p290 WEBrick::HTTPRequest X-Forwarded-*
+Subject: Re: possible flaw in widely used strtod.c implementation
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday 12 October 2011 23:37:29 Kurt Seifried wrote:
-> Got my Ruby/Ruby on rails mixed up.
+On Wed, Jan 5, 2011 at 8:23 PM, Pierre Joye <pierre.php@...il.com> wrote:
+> On Wed, Jan 5, 2011 at 5:52 PM, Michael Gilbert
+> <michael.s.gilbert@...il.com> wrote:
 >
-[...]
+>> The fact that this bug can lead to a denial-of-service in PHP is
+>> sufficient to warrant a CVE for PHP, but nothing else (I think).  If it
+>> can lead to a dos in other apps, then each should get their own CVE
+>> (again in my opinion).
 >
-> https://redmine.ruby-lang.org/issues/5418
->
-> Can we get a CVE for this please?
->
+> I think so too but in any case it would rock if I could get a CVE #
+> asap, we are going to release 5.2.17/5.3.5 tomorrow (packaging now).
 
-I think this is already covered by CVE-2011-3187.
-
-> -Kurt Seifried / Red Hat Security Response Team
+Anyone?
 
 -- 
-Matthias Weckbecker, Junior Software Engineer, SUSE Security Team
-SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
-Tel: +49-911-74053-0;  http://suse.com/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
+Pierre
+
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
